@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1d56cdc8_ffddd91e",
+        "filename": "ios/net/cookies/cookie_store_ios.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-09-26T17:40:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e128c1a_edcbaf1f",
+      "range": {
+        "startLine": 191,
+        "startChar": 54,
+        "endLine": 191,
+        "endChar": 61
+      },
+      "revId": "ddd2d504310305feb8e2187febb6a3d9e82e21e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89321779_1380356f",
         "filename": "ios/net/cookies/cookie_store_ios.h",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "ddd2d504310305feb8e2187febb6a3d9e82e21e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02db4678_b2bbf749",
+        "filename": "ios/net/cookies/cookie_store_ios.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-09-26T17:40:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89321779_1380356f",
+      "range": {
+        "startLine": 192,
+        "startChar": 6,
+        "endLine": 192,
+        "endChar": 10
+      },
+      "revId": "ddd2d504310305feb8e2187febb6a3d9e82e21e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7327f50a_3cfae195",
+        "filename": "ios/net/cookies/cookie_store_ios.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-09-26T17:40:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83eb8169_7b192b4e",
+      "range": {
+        "startLine": 196,
+        "startChar": 48,
+        "endLine": 196,
+        "endChar": 59
+      },
+      "revId": "ddd2d504310305feb8e2187febb6a3d9e82e21e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b5a67e5_f980f906",
         "filename": "ios/net/cookies/cookie_store_ios.mm",
         "patchSetId": 5
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "4e5b77db_d56399d0",
+        "filename": "ios/net/cookies/cookie_store_ios.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-09-26T17:40:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b5a67e5_f980f906",
+      "range": {
+        "startLine": 480,
+        "startChar": 23,
+        "endLine": 480,
+        "endChar": 27
+      },
+      "revId": "ddd2d504310305feb8e2187febb6a3d9e82e21e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa6f8e68_d3343a47",
         "filename": "ios/net/cookies/cookie_store_ios.mm",
         "patchSetId": 5
@@ -105,6 +201,30 @@
       "writtenOn": "2017-09-22T18:23:18Z",
       "side": 1,
       "message": "Is there a guarantee that system_store_ will be alive when this callback is called?",
+      "range": {
+        "startLine": 482,
+        "startChar": 12,
+        "endLine": 482,
+        "endChar": 25
+      },
+      "revId": "ddd2d504310305feb8e2187febb6a3d9e82e21e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ff53282_96d8e316",
+        "filename": "ios/net/cookies/cookie_store_ios.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-09-26T17:40:33Z",
+      "side": 1,
+      "message": "There is no grantee however based on our chat, It\u0027s the responsibility of the client to make sure that the object doesn\u0027t get deleted and it\u0027s our responsibility to make sure we don\u0027t have dangling pointers. updated accordingly",
+      "parentUuid": "fa6f8e68_d3343a47",
       "range": {
         "startLine": 482,
         "startChar": 12,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "71fcf913_ab76a4f1",
+        "filename": "ios/net/cookies/cookie_store_ios.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-09-26T17:40:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee231ba8_b5327b74",
+      "range": {
+        "startLine": 715,
+        "startChar": 22,
+        "endLine": 715,
+        "endChar": 32
+      },
+      "revId": "ddd2d504310305feb8e2187febb6a3d9e82e21e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34dc26c4_c5dfd6d5",
         "filename": "ios/net/cookies/cookie_store_ios_client.mm",
         "patchSetId": 5
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "4b49dd7f_d453cb79",
+        "filename": "ios/net/cookies/cookie_store_ios_client.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-09-26T17:40:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34dc26c4_c5dfd6d5",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 6
+      },
+      "revId": "ddd2d504310305feb8e2187febb6a3d9e82e21e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31585e06_9bf34573",
         "filename": "ios/net/cookies/cookie_store_ios_persistent_unittest.mm",
         "patchSetId": 5
@@ -180,6 +348,24 @@
     },
     {
       "key": {
+        "uuid": "111c941c_2594c75a",
+        "filename": "ios/net/cookies/cookie_store_ios_persistent_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-09-26T17:40:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31585e06_9bf34573",
+      "revId": "ddd2d504310305feb8e2187febb6a3d9e82e21e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a37a652d_647ae15b",
         "filename": "ios/net/cookies/ns_http_system_cookie_store.h",
         "patchSetId": 5
@@ -191,6 +377,30 @@
       "writtenOn": "2017-09-22T18:23:18Z",
       "side": 1,
       "message": "Do we still need sync methods in public API? If these methods are only used in tests, then we should delete them and only tests methods which are used in production code.",
+      "range": {
+        "startLine": 18,
+        "startChar": 17,
+        "endLine": 18,
+        "endChar": 24
+      },
+      "revId": "ddd2d504310305feb8e2187febb6a3d9e82e21e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b38fb50_54a7efbc",
+        "filename": "ios/net/cookies/ns_http_system_cookie_store.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-09-26T17:40:33Z",
+      "side": 1,
+      "message": "NSHTTPSystemCookieStore maybe used by it self as a non-async CookieStore. \nFor different places that uses NSHTTPCookieStorage, i\u0027d like to replace that usage with NSHTTSystemCookieStore",
+      "parentUuid": "a37a652d_647ae15b",
       "range": {
         "startLine": 18,
         "startChar": 17,
@@ -220,6 +430,24 @@
     },
     {
       "key": {
+        "uuid": "3a620e18_d2a10005",
+        "filename": "ios/net/cookies/ns_http_system_cookie_store.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-09-26T17:40:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46caa86f_4e2b1cc1",
+      "revId": "ddd2d504310305feb8e2187febb6a3d9e82e21e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c808521_4bea0ced",
         "filename": "ios/net/cookies/ns_http_system_cookie_store.mm",
         "patchSetId": 5
@@ -234,6 +462,24 @@
       "revId": "ddd2d504310305feb8e2187febb6a3d9e82e21e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb80ac26_9510a3d6",
+        "filename": "ios/net/cookies/ns_http_system_cookie_store.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-09-26T17:40:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c808521_4bea0ced",
+      "revId": "ddd2d504310305feb8e2187febb6a3d9e82e21e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -260,6 +506,30 @@
     },
     {
       "key": {
+        "uuid": "36d40510_6f2d91f9",
+        "filename": "ios/net/cookies/ns_http_system_cookie_store.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-09-26T17:40:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e47801d6_6a3c40bb",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 8
+      },
+      "revId": "ddd2d504310305feb8e2187febb6a3d9e82e21e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "111dfd1a_dc10d137",
         "filename": "ios/net/cookies/ns_http_system_cookie_store.mm",
         "patchSetId": 5
@@ -277,6 +547,24 @@
     },
     {
       "key": {
+        "uuid": "933c51f9_8cf7102c",
+        "filename": "ios/net/cookies/ns_http_system_cookie_store.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-09-26T17:40:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "111dfd1a_dc10d137",
+      "revId": "ddd2d504310305feb8e2187febb6a3d9e82e21e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebd99e52_ba8cd395",
         "filename": "ios/net/cookies/system_cookie_store.h",
         "patchSetId": 5
@@ -288,6 +576,30 @@
       "writtenOn": "2017-09-22T18:23:18Z",
       "side": 1,
       "message": "Is this method used by SystemCookieStore clients? Should it be protected instead?",
+      "range": {
+        "startLine": 70,
+        "startChar": 13,
+        "endLine": 70,
+        "endChar": 34
+      },
+      "revId": "ddd2d504310305feb8e2187febb6a3d9e82e21e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ca0bd99_778adfd8",
+        "filename": "ios/net/cookies/system_cookie_store.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-09-26T17:40:33Z",
+      "side": 1,
+      "message": "It\u0027s used by cookie_store_ios as the conversion between SystemCookieStore to CookieMonster or any other cookie\u0027s system that require keeping the creation time is not the responsibility of SystemCookieStore.",
+      "parentUuid": "ebd99e52_ba8cd395",
       "range": {
         "startLine": 70,
         "startChar": 13,
@@ -320,6 +632,30 @@
       "revId": "ddd2d504310305feb8e2187febb6a3d9e82e21e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "026fdd0c_77665485",
+        "filename": "ios/net/cookies/system_cookie_store.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-09-26T17:40:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6f2101f_1ab456b7",
+      "range": {
+        "startLine": 77,
+        "startChar": 60,
+        "endLine": 77,
+        "endChar": 62
+      },
+      "revId": "ddd2d504310305feb8e2187febb6a3d9e82e21e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
