@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "d6d7eda0_0dbc7b03",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-26T21:47:27Z",
+      "side": 1,
+      "message": "I see. \"FocusNextWidget\" is added back now.",
+      "parentUuid": "b2b59a1a_3bcd95af",
+      "range": {
+        "startLine": 203,
+        "startChar": 0,
+        "endLine": 212,
+        "endChar": 3
+      },
+      "revId": "41556b24323565556146fb235ac9d292716333f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "411b59eb_e22e03f5",
         "filename": "ash/shelf/login_shelf_view.cc",
         "patchSetId": 10
