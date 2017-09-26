@@ -6,6 +6,7 @@
 import argparse
 import os
 import re
+import shutil
 import sys
 
 
@@ -43,6 +44,10 @@ def unpack(pak_path, out_path):
       if res:
         resource_filenames[res.group(2)] = res.group(1)
   assert resource_filenames
+
+  # Delete top level unpak directory, to ensure that it will have the latest
+  # timestamp.
+  shutil.rmtree(out_path)
 
   # Extract packed files, while preserving directory structure.
   for (resource_id, text) in data.resources.iteritems():
