@@ -12,10 +12,13 @@
 #include "build/build_config.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/ui/browser.h"
+#include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/find_bar/find_bar.h"
 #include "chrome/browser/ui/find_bar/find_bar_state.h"
 #include "chrome/browser/ui/find_bar/find_bar_state_factory.h"
 #include "chrome/browser/ui/find_bar/find_tab_helper.h"
+#include "chrome/browser/ui/location_bar/location_bar.h"
 #include "content/public/browser/navigation_details.h"
 #include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/notification_details.h"
@@ -79,6 +82,13 @@ void FindBarController::EndFindSession(SelectionAction selection_action,
     // When we get dismissed we restore the focus to where it belongs.
     find_bar_->RestoreSavedFocus();
   }
+}
+
+void FindBarController::FindBarVisiblityChanged() {
+  Browser::FromWebContents(web_contents_)
+      ->window()
+      ->GetLocationBar()
+      ->UpdateFindBarImageViewVisibility();
 }
 
 void FindBarController::ChangeWebContents(WebContents* contents) {

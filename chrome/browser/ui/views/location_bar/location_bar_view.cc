@@ -29,6 +29,8 @@
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/content_settings/content_setting_bubble_model.h"
+#include "chrome/browser/ui/find_bar/find_bar.h"
+#include "chrome/browser/ui/find_bar/find_bar_controller.h"
 #include "chrome/browser/ui/layout_constants.h"
 #include "chrome/browser/ui/omnibox/chrome_omnibox_client.h"
 #include "chrome/browser/ui/passwords/manage_passwords_ui_controller.h"
@@ -37,6 +39,7 @@
 #include "chrome/browser/ui/views/frame/browser_view.h"
 #include "chrome/browser/ui/views/location_bar/background_with_1_px_border.h"
 #include "chrome/browser/ui/views/location_bar/content_setting_image_view.h"
+#include "chrome/browser/ui/views/location_bar/find_bar_image_view.h"
 #include "chrome/browser/ui/views/location_bar/keyword_hint_view.h"
 #include "chrome/browser/ui/views/location_bar/location_bar_layout.h"
 #include "chrome/browser/ui/views/location_bar/location_icon_view.h"
@@ -241,6 +244,11 @@ void LocationBarView::Init() {
   translate_icon_view_->SetVisible(false);
   AddChildView(translate_icon_view_);
 
+  find_bar_image_view_ = new FindBarImageView(command_updater(), browser_);
+  find_bar_image_view_->Init();
+  find_bar_image_view_->SetVisible(false);
+  AddChildView(find_bar_image_view_);
+
   star_view_ = new StarView(command_updater(), browser_);
   star_view_->Init();
   star_view_->SetVisible(false);
@@ -325,6 +333,13 @@ void LocationBarView::ZoomChangedForActiveTab(bool can_show_bubble) {
     ZoomBubbleView::ShowBubble(web_contents, gfx::Point(),
                                ZoomBubbleView::AUTOMATIC);
   }
+}
+
+void LocationBarView::ShowFindBar() {
+  FindBarController* controller = browser_->GetFindBarController();
+  controller->Show();
+  find_bar_image_view_->SetVisible(controller->find_bar()->IsFindBarVisible());
+  SchedulePaint();
 }
 
 void LocationBarView::SetStarToggled(bool on) {
@@ -522,6 +537,10 @@ void LocationBarView::Layout() {
   if (star_view_->visible()) {
     trailing_decorations.AddDecoration(vertical_padding, location_height,
                                        star_view_);
+  }
+  if (find_bar_image_view_->visible()) {
+    trailing_decorations.AddDecoration(vertical_padding, location_height,
+                                       find_bar_image_view_);
   }
   if (translate_icon_view_->visible()) {
     trailing_decorations.AddDecoration(vertical_padding, location_height,
@@ -886,6 +905,13 @@ void LocationBarView::UpdateSaveCreditCardIcon() {
   if (RefreshSaveCreditCardIconView()) {
     Layout();
     SchedulePaint();
+  }
+}
+
+void LocationBarView::UpdateFindBarImageViewVisibility() {
+  if (find_bar_image_view_) {
+    find_bar_image_view_->SetVisible(
+        browser_->GetFindBarController()->find_bar()->IsFindBarVisible());
   }
 }
 

@@ -32,6 +32,7 @@
 class CommandUpdater;
 class ContentSettingBubbleModelDelegate;
 class ContentSettingImageView;
+class FindBarImageView;
 class GURL;
 class KeywordHintView;
 class LocationIconView;
@@ -145,6 +146,9 @@ class LocationBarView : public LocationBar,
   ManagePasswordsIconViews* manage_passwords_icon_view() {
     return manage_passwords_icon_view_;
   }
+
+  // Display the find bar.
+  void ShowFindBar();
 
   // Toggles the star on or off.
   void SetStarToggled(bool on);
@@ -306,6 +310,7 @@ class LocationBarView : public LocationBar,
   void UpdateContentSettingsIcons() override;
   void UpdateManagePasswordsIconAndBubble() override;
   void UpdateSaveCreditCardIcon() override;
+  void UpdateFindBarImageViewVisibility() override;
   void UpdateBookmarkStarVisibility() override;
   void UpdateZoomViewVisibility() override;
   void UpdateLocationBarVisibility(bool visible, bool animation) override;
@@ -390,6 +395,9 @@ class LocationBarView : public LocationBar,
 
   // The icon for Translate.
   TranslateIconView* translate_icon_view_ = nullptr;
+
+  // The icon displayed when the find bar is visible.
+  FindBarImageView* find_bar_image_view_ = nullptr;
 
   // The star for bookmarking.
   StarView* star_view_ = nullptr;
