@@ -1,0 +1,33 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#ifndef MEDIA_MOJO_COMMON_MOJO_VIDEO_FRAME_PROVIDER_H_
+#define MEDIA_MOJO_COMMON_MOJO_VIDEO_FRAME_PROVIDER_H_
+
+#include "media/base/video_frame_provider.h"
+
+namespace media {
+
+class MojoVideoFrameProvider final : public VideoFrameProvider {
+ public:
+  MojoVideoFrameProvider();
+  ~MojoVideoFrameProvider() override;
+
+  scoped_refptr<VideoFrame> CreateZeroInitializedFrame(
+      VideoPixelFormat format,
+      const gfx::Size& coded_size,
+      const gfx::Rect& visible_rect,
+      const gfx::Size& natural_size,
+      base::TimeDelta timestamp) override;
+
+  scoped_refptr<VideoFrame> WrapVideoFrame(
+      const scoped_refptr<VideoFrame>& frame) override;
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(MojoVideoFrameProvider);
+};
+
+}  // namespace media
+
+#endif  // MEDIA_MOJO_COMMON_MOJO_VIDEO_FRAME_PROVIDER_H_

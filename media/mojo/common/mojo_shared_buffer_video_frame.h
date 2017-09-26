@@ -29,6 +29,15 @@ class MojoSharedBufferVideoFrame : public VideoFrame {
       base::Callback<void(mojo::ScopedSharedBufferHandle buffer,
                           size_t capacity)>;
 
+  static scoped_refptr<MojoSharedBufferVideoFrame>
+  WrapMojoSharedBufferVideoFrame(
+      const scoped_refptr<MojoSharedBufferVideoFrame>& frame);
+
+  static scoped_refptr<MojoSharedBufferVideoFrame> CreateYUV(
+      VideoPixelFormat format,
+      const gfx::Size& dimensions,
+      base::TimeDelta timestamp);
+
   // Creates a new I420 frame in shared memory with provided parameters
   // (coded_size() == natural_size() == visible_rect()), or returns nullptr.
   // Buffers for the frame are allocated but not initialized. The caller must

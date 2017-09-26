@@ -35,6 +35,8 @@ namespace media {
 class MEDIA_EXPORT VpxVideoDecoder : public VideoDecoder {
  public:
   VpxVideoDecoder();
+  explicit VpxVideoDecoder(
+      std::unique_ptr<VideoFrameProvider> video_frame_provider);
   ~VpxVideoDecoder() override;
 
   // VideoDecoder implementation.

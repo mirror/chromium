@@ -25,6 +25,7 @@
 #include "media/base/media_switches.h"
 #include "media/base/timestamp_constants.h"
 #include "media/base/video_frame.h"
+#include "media/base/video_frame_provider.h"
 #include "media/base/video_util.h"
 #include "media/ffmpeg/ffmpeg_common.h"
 #include "media/filters/ffmpeg_glue.h"
@@ -115,6 +116,16 @@ bool FFmpegVideoDecoder::IsCodecSupported(VideoCodec codec) {
 
 FFmpegVideoDecoder::FFmpegVideoDecoder(MediaLog* media_log)
     : media_log_(media_log), state_(kUninitialized), decode_nalus_(false) {
+  thread_checker_.DetachFromThread();
+}
+
+FFmpegVideoDecoder::FFmpegVideoDecoder(
+    MediaLog* media_log,
+    std::unique_ptr<VideoFrameProvider> video_frame_provider)
+    : media_log_(media_log),
+      state_(kUninitialized),
+      frame_pool_(std::move(video_frame_provider)),
+      decode_nalus_(false) {
   thread_checker_.DetachFromThread();
 }
 
