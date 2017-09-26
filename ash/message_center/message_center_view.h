@@ -74,6 +74,8 @@ class ASH_EXPORT MessageCenterView
   void OnDidChangeFocus(views::View* before, views::View* now) override;
 
   static const SkColor kBackgroundColor;
+  static const SkColor kButtonBarBackgroundColor;
+  static const SkColor kSettingsBackgroundColor;
   static const size_t kMaxVisibleNotifications;
 
  protected:
