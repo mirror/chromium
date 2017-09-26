@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99f9dae5_1a78c412",
+        "filename": "chrome/browser/ui/views/location_bar/bubble_icon_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-26T20:08:50Z",
+      "side": 1,
+      "message": "Do you need the virtual here?",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 9
+      },
+      "revId": "d611453655b4366e973b0f251a765ecbba201f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
