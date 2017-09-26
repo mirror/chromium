@@ -59,7 +59,8 @@ TabIconView::TabIconView(TabIconViewModel* model,
                          views::MenuButtonListener* listener)
     : views::MenuButton(base::string16(), listener, false),
       model_(model),
-      is_light_(false) {
+      is_light_(false),
+      show_default_favicon_(true) {
   InitializeIfNeeded();
 }
 
@@ -135,6 +136,6 @@ void TabIconView::PaintButtonContents(gfx::Canvas* canvas) {
     }
   }
 
-  if (!rendered)
+  if (!rendered && show_default_favicon_)
     PaintFavicon(canvas, *g_default_favicon);
 }

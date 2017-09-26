@@ -26,6 +26,7 @@
 #include "chrome/browser/bookmarks/bookmark_stats.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chrome_notification_types.h"
+#include "chrome/browser/extensions/bookmark_app_util.h"
 #include "chrome/browser/extensions/extension_util.h"
 #include "chrome/browser/extensions/tab_helper.h"
 #include "chrome/browser/infobars/infobar_service.h"
@@ -92,10 +93,8 @@
 #include "chrome/browser/ui/views/translate/translate_bubble_view.h"
 #include "chrome/browser/ui/views/update_recommended_message_box.h"
 #include "chrome/browser/ui/window_sizer/window_sizer.h"
-#include "chrome/common/chrome_features.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/extensions/command.h"
-#include "chrome/common/features.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/generated_resources.h"
@@ -271,6 +270,28 @@ bool GetGestureCommand(ui::GestureEvent* event, int* command) {
   }
 #endif  // OS_MACOSX
   return false;
+}
+
+gfx::ImageSkia GetExtensionAppIcon(Browser* browser) {
+  if (!browser->is_app())
+    return gfx::ImageSkia();
+
+  // TODO(calamity): Use the app name to retrieve the app icon without using the
+  // extensions tab helper to make icon load more immediate.
+  WebContents* contents = browser->tab_strip_model()->GetActiveWebContents();
+  if (!contents)
+    return gfx::ImageSkia();
+
+  extensions::TabHelper* extensions_tab_helper =
+      extensions::TabHelper::FromWebContents(contents);
+  if (!extensions_tab_helper)
+    return gfx::ImageSkia();
+
+  SkBitmap* icon_bitmap = extensions_tab_helper->GetExtensionAppIcon();
+  if (!icon_bitmap)
+    return gfx::ImageSkia();
+
+  return gfx::ImageSkia::CreateFrom1xBitmap(*icon_bitmap);
 }
 
 }  // namespace
@@ -1609,9 +1630,8 @@ bool BrowserView::ShouldShowWindowTitle() const {
 #if defined(OS_CHROMEOS)
   // For Chrome OS only, trusted windows (apps and settings) do not show a
   // title, crbug.com/119411. Child windows (i.e. popups) do show a title.
-  // PWAs on ChromeOS should always show their title.
-  if ((!base::FeatureList::IsEnabled(features::kDesktopPWAWindowing) ||
-       !browser_->is_app()) &&
+  // Bookmark apps on ChromeOS should always show their title.
+  if (!extensions::IsExperimentalBookmarkAppBrowser(browser_.get()) &&
       browser_->is_trusted_source()) {
     return false;
   }
@@ -1621,16 +1641,8 @@ bool BrowserView::ShouldShowWindowTitle() const {
 }
 
 gfx::ImageSkia BrowserView::GetWindowAppIcon() {
-  if (browser_->is_app()) {
-    WebContents* contents = browser_->tab_strip_model()->GetActiveWebContents();
-    extensions::TabHelper* extensions_tab_helper =
-        contents ? extensions::TabHelper::FromWebContents(contents) : nullptr;
-    if (extensions_tab_helper && extensions_tab_helper->GetExtensionAppIcon())
-      return gfx::ImageSkia::CreateFrom1xBitmap(
-          *extensions_tab_helper->GetExtensionAppIcon());
-  }
-
-  return GetWindowIcon();
+  gfx::ImageSkia extension_app_icon = GetExtensionAppIcon(browser());
+  return extension_app_icon.isNull() ? extension_app_icon : GetWindowIcon();
 }
 
 gfx::ImageSkia BrowserView::GetWindowIcon() {
@@ -1638,8 +1650,16 @@ gfx::ImageSkia BrowserView::GetWindowIcon() {
   if (browser_->is_devtools())
     return gfx::ImageSkia();
 
+  // Bookmark apps always show their app icon.
+  if (extensions::IsExperimentalBookmarkAppBrowser(browser())) {
+    gfx::ImageSkia extension_app_icon = GetExtensionAppIcon(browser());
+    if (!extension_app_icon.isNull())
+      return extension_app_icon;
+  }
+
   if (browser_->is_app() || browser_->is_type_popup())
     return browser_->GetCurrentPageIcon().AsImageSkia();
+
   return gfx::ImageSkia();
 }
 
@@ -1647,8 +1667,11 @@ bool BrowserView::ShouldShowWindowIcon() const {
 #if defined(OS_CHROMEOS)
   // For Chrome OS only, trusted windows (apps and settings) do not show an
   // icon, crbug.com/119411. Child windows (i.e. popups) do show an icon.
-  if (browser_->is_trusted_source())
+  // Bookmark apps on ChromeOS should always show their window icon.
+  if (!extensions::IsExperimentalBookmarkAppBrowser(browser()) &&
+      browser_->is_trusted_source()) {
     return false;
+  }
 #endif  // OS_CHROMEOS
 
   return browser_->SupportsWindowFeature(Browser::FEATURE_TITLEBAR);
