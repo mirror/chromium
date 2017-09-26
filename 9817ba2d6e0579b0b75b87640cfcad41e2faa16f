@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab6b49f6_58a12ed2",
+        "filename": "chrome/browser/vr/elements/transient_element.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-26T14:51:23Z",
+      "side": 1,
+      "message": "nit: !\u003d, here and elsewhere",
+      "revId": "9817ba2d6e0579b0b75b87640cfcad41e2faa16f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
