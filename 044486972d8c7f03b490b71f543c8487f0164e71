@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7460f44d_ee3e7c20",
+        "filename": "content/browser/android/text_suggestion_host_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-09-26T09:31:57Z",
+      "side": 1,
+      "message": "Yes. Both RenderWidgetHostConnector and WebContentsObserver are parents of TextSuggestionHostAndroid and at the same time, both of them have web_contents() as a member function. Without the above explicit class selection, it results in compile error.",
+      "parentUuid": "2f652ba3_1aeb67c2",
+      "range": {
+        "startLine": 138,
+        "startChar": 26,
+        "endLine": 138,
+        "endChar": 53
+      },
+      "revId": "044486972d8c7f03b490b71f543c8487f0164e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a13ab2a_ba8fead7",
         "filename": "content/browser/android/text_suggestion_host_android.cc",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2017-09-26T05:19:03Z",
       "side": 1,
       "message": "I would probably just pass IsUseZoomForDSFEnabled() into Java_TextSuggestionHost_showSpellCheckSuggestionMenu() (unless there\u0027s an easy way to get this flag from Java), and then not do the density multiplication if it\u0027s true.",
+      "revId": "044486972d8c7f03b490b71f543c8487f0164e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b543999b_0a8cabc8",
+        "filename": "content/browser/android/text_suggestion_host_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-09-26T09:31:57Z",
+      "side": 1,
+      "message": "Thank you for the suggestion! I agree with the idea to remove the redundant multiplication, but we can just multiply carets by DSF here only when --use-zoom-for-dsf is disabled (rather than passing an argument). Please see the updated code.",
+      "parentUuid": "2a13ab2a_ba8fead7",
       "revId": "044486972d8c7f03b490b71f543c8487f0164e71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
