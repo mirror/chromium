@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "180fcb54_8f38df88",
+        "filename": "components/cast_channel/cast_socket_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-26T17:59:39Z",
+      "side": 1,
+      "message": "Do we need to remove observers when a socket is closed (normally or by an error)?",
+      "revId": "0ed04ca56472f535ed791773560420afec6edb09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f2d2df6_e1154a57",
+        "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-26T17:59:39Z",
+      "side": 1,
+      "message": "Could keep track of the number of listeners and remove |observer_| from CastSocketService if the last listener is removed?",
+      "revId": "0ed04ca56472f535ed791773560420afec6edb09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
