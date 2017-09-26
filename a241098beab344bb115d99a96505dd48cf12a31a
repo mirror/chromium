@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b1ce917_88cd3c5e",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-09-26T14:27:58Z",
+      "side": 1,
+      "message": "I think this should be (undefined|!string)\n\n(Same with the others, ! instead of ?)",
+      "range": {
+        "startLine": 63,
+        "startChar": 32,
+        "endLine": 63,
+        "endChar": 0
+      },
+      "revId": "a241098beab344bb115d99a96505dd48cf12a31a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23e9b828_6b81d63d",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-09-26T14:27:58Z",
+      "side": 1,
+      "message": "I don\u0027t know if the closure compiler is going to be happy about this. ChromeCleanupCardFlags is an enum with possible values 0,1,2,4,8 while |flags| is a number with any value between 0 and 15.",
+      "range": {
+        "startLine": 66,
+        "startChar": 55,
+        "endLine": 66,
+        "endChar": 56
+      },
+      "revId": "a241098beab344bb115d99a96505dd48cf12a31a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d99486fe_75bc0cf8",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-09-26T14:27:58Z",
+      "side": 1,
+      "message": "(If not doing the last optional comment)\n\nPlease add private member for this.card_components_",
+      "revId": "a241098beab344bb115d99a96505dd48cf12a31a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0737daf8_0bf565d0",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-09-26T14:27:58Z",
+      "side": 1,
+      "message": "nit: maybe rename to this.card_state_to_components_map_",
+      "range": {
+        "startLine": 187,
+        "startChar": 54,
+        "endLine": 187,
+        "endChar": 0
+      },
+      "revId": "a241098beab344bb115d99a96505dd48cf12a31a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2514ccd9_86acab68",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-09-26T14:27:58Z",
+      "side": 1,
+      "message": "nit: space between param and {\n\n(here and below)",
+      "range": {
+        "startLine": 321,
+        "startChar": 13,
+        "endLine": 321,
+        "endChar": 21
+      },
+      "revId": "a241098beab344bb115d99a96505dd48cf12a31a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb7b0d05_a228e1a3",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-09-26T14:27:58Z",
+      "side": 1,
+      "message": "nit: consistency with updateIcon\u0027s comment (render vs add to the card)",
+      "range": {
+        "startLine": 354,
+        "startChar": 25,
+        "endLine": 354,
+        "endChar": 0
+      },
+      "revId": "a241098beab344bb115d99a96505dd48cf12a31a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5936d8a_5aa9e451",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-09-26T14:27:58Z",
+      "side": 1,
+      "message": "This might be a little simpler with \"!\u003d 0\" instead of \"!\u003d settings.ChromeCleanupCardFlags.NONE\"",
+      "range": {
+        "startLine": 379,
+        "startChar": 45,
+        "endLine": 379,
+        "endChar": 0
+      },
+      "revId": "a241098beab344bb115d99a96505dd48cf12a31a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b379bbfb_f237eb0c",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-09-26T14:27:58Z",
+      "side": 1,
+      "message": "Re-use HIDDEN_CARD?",
+      "range": {
+        "startLine": 426,
+        "startChar": 43,
+        "endLine": 426,
+        "endChar": 51
+      },
+      "revId": "a241098beab344bb115d99a96505dd48cf12a31a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98a8fe87_50803810",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-09-26T14:27:58Z",
+      "side": 1,
+      "message": "opt: maybe move the card states, ChromeCleanupFlags and other typedefs to another file.\n\nIn this file, we would call \nthis.renderCleanupCard_(settings.ChromeCleanupCardStates.CLEANUP_OFFERED, files);\ninstead of this.card_components_.CLEANING",
+      "range": {
+        "startLine": 452,
+        "startChar": 34,
+        "endLine": 452,
+        "endChar": 0
+      },
+      "revId": "a241098beab344bb115d99a96505dd48cf12a31a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
