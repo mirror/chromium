@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baa41657_9df08a68",
+        "filename": "base/containers/README.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-26T08:14:42Z",
+      "side": 1,
+      "message": "Nit: remove \u0027the\u0027",
+      "range": {
+        "startLine": 266,
+        "startChar": 52,
+        "endLine": 266,
+        "endChar": 55
+      },
+      "revId": "01429fd025525b223b086a558f6291842b50d522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f13c450c_b52201e3",
+        "filename": "base/containers/queue.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-26T08:14:42Z",
+      "side": 1,
+      "message": "Nit: wrapper",
+      "range": {
+        "startLine": 16,
+        "startChar": 3,
+        "endLine": 16,
+        "endChar": 9
+      },
+      "revId": "01429fd025525b223b086a558f6291842b50d522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a2656b8_63714c48",
+        "filename": "base/containers/stack.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-26T08:14:42Z",
+      "side": 1,
+      "message": "Nit: \u0027wrapper\u0027 here as well",
+      "range": {
+        "startLine": 16,
+        "startChar": 3,
+        "endLine": 16,
+        "endChar": 9
+      },
+      "revId": "01429fd025525b223b086a558f6291842b50d522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
