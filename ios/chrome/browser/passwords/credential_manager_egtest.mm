@@ -15,7 +15,9 @@
 #include "ios/chrome/browser/passwords/credential_manager_features.h"
 #include "ios/chrome/browser/passwords/ios_chrome_password_store_factory.h"
 #import "ios/chrome/test/app/chrome_test_util.h"
+#import "ios/chrome/test/app/tab_test_util.h"
 #import "ios/chrome/test/earl_grey/chrome_earl_grey.h"
+#import "ios/chrome/test/earl_grey/chrome_earl_grey_ui.h"
 #import "ios/chrome/test/earl_grey/chrome_matchers.h"
 #import "ios/chrome/test/earl_grey/chrome_test_case.h"
 #import "ios/testing/wait_util.h"
@@ -147,6 +149,72 @@ std::unique_ptr<net::test_server::HttpResponse> StandardResponse(
   GREYAssert(testing::WaitUntilConditionOrTimeout(kDisappearanceTimeout,
                                                   waitForDisappearance),
              @"Notification did not disappear");
+}
+
+// Tests that when navigator.credentials.get() was called from inactive tab, the
+// autosign-in notification appears once tab becomes active.
+- (void)testNotificationAppearsWhenTabIsActive {
+  // Loads simple page. It is on localhost so it is considered a secure context.
+  const GURL URL = self.testServer->GetURL("/example");
+  [ChromeEarlGrey loadURL:URL];
+  [ChromeEarlGrey waitForWebViewContainingText:"You are here"];
+
+  // Sets preferences required for autosign-in to true.
+  chrome_test_util::SetBooleanUserPref(
+      chrome_test_util::GetOriginalBrowserState(),
+      password_manager::prefs::kWasAutoSignInFirstRunExperienceShown, true);
+  chrome_test_util::SetBooleanUserPref(
+      chrome_test_util::GetOriginalBrowserState(),
+      password_manager::prefs::kCredentialsEnableAutosignin, true);
+
+  // Obtain a PasswordStore.
+  scoped_refptr<password_manager::PasswordStore> passwordStore =
+      IOSChromePasswordStoreFactory::GetForBrowserState(
+          chrome_test_util::GetOriginalBrowserState(),
+          ServiceAccessType::IMPLICIT_ACCESS)
+          .get();
+  GREYAssertTrue(passwordStore != nullptr,
+                 @"PasswordStore is unexpectedly null for BrowserState");
+
+  // Store a PasswordForm in PasswordStore.
+  autofill::PasswordForm passwordCredentialForm;
+  passwordCredentialForm.username_value =
+      base::ASCIIToUTF16("johndoe@example.com");
+  passwordCredentialForm.password_value = base::ASCIIToUTF16("ilovejanedoe123");
+  passwordCredentialForm.origin =
+      chrome_test_util::GetCurrentWebState()->GetLastCommittedURL().GetOrigin();
+  passwordCredentialForm.signon_realm = passwordCredentialForm.origin.spec();
+  passwordCredentialForm.scheme = autofill::PasswordForm::SCHEME_HTML;
+  passwordStore->AddLogin(passwordCredentialForm);
+
+  // Get WebState before switching the tab.
+  web::WebState* webState = chrome_test_util::GetCurrentWebState();
+
+  // Open new tab.
+  [ChromeEarlGreyUI openNewTab];
+  [ChromeEarlGrey waitForMainTabCount:2];
+
+  // Execute JavaScript from inactive tab.
+  webState->ExecuteJavaScript(
+      base::UTF8ToUTF16("typeof navigator.credentials.get({password: true})"));
+
+  // Switch to previous tab.
+  chrome_test_util::SelectTabAtIndexInCurrentMode(0);
+
+  // Matches the UILabel by its accessibilityLabel.
+  id<GREYMatcher> matcher = chrome_test_util::StaticTextWithAccessibilityLabel(
+      @"Signing in as johndoe@example.com");
+  // Wait for notification to appear.
+  ConditionBlock waitForAppearance = ^{
+    NSError* error = nil;
+    [[EarlGrey selectElementWithMatcher:matcher] assertWithMatcher:grey_notNil()
+                                                             error:&error];
+    return error == nil;
+  };
+  // Check that the notification has appeared.
+  GREYAssert(testing::WaitUntilConditionOrTimeout(
+                 testing::kWaitForUIElementTimeout, waitForAppearance),
+             @"Notification did not appear");
 }
 
 @end
