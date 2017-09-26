@@ -307,6 +307,7 @@ bool RenderViewHostImpl::CreateRenderView(
     RenderFrameHostImpl* main_rfh = RenderFrameHostImpl::FromID(
         GetProcess()->GetID(), main_frame_routing_id_);
     DCHECK(main_rfh);
+    params->main_frame_interfaces = main_rfh->TakePendingInitialInterfaces();
     RenderWidgetHostImpl* main_rwh = main_rfh->GetRenderWidgetHost();
     params->main_frame_widget_routing_id = main_rwh->GetRoutingID();
   }

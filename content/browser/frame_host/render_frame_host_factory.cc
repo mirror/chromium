@@ -23,19 +23,20 @@ std::unique_ptr<RenderFrameHostImpl> RenderFrameHostFactory::Create(
     FrameTree* frame_tree,
     FrameTreeNode* frame_tree_node,
     int32_t routing_id,
+    service_manager::mojom::InterfaceProviderRequest interfaces_request,
     int32_t widget_routing_id,
     bool hidden,
     bool renderer_initiated_creation) {
   if (factory_) {
     return factory_->CreateRenderFrameHost(
         site_instance, render_view_host, delegate, rwh_delegate, frame_tree,
-        frame_tree_node, routing_id, widget_routing_id, hidden,
-        renderer_initiated_creation);
+        frame_tree_node, routing_id, std::move(interfaces_request),
+        widget_routing_id, hidden, renderer_initiated_creation);
   }
   return base::WrapUnique(new RenderFrameHostImpl(
       site_instance, render_view_host, delegate, rwh_delegate, frame_tree,
-      frame_tree_node, routing_id, widget_routing_id, hidden,
-      renderer_initiated_creation));
+      frame_tree_node, routing_id, std::move(interfaces_request),
+      widget_routing_id, hidden, renderer_initiated_creation));
 }
 
 // static
