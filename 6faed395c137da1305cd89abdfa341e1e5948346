@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "0b1f6d36_82349b87",
+        "filename": "chrome/browser/media/webrtc/desktop_capture_access_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-26T16:42:45Z",
+      "side": 1,
+      "message": "I refactored this and GetDevicesForDesktopCapture() to take a DesktopMediaID which makes them much easier to understand.",
+      "parentUuid": "6df1fe76_5db15693",
+      "range": {
+        "startLine": 112,
+        "startChar": 13,
+        "endLine": 112,
+        "endChar": 65
+      },
+      "revId": "6faed395c137da1305cd89abdfa341e1e5948346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "83f2ca55_50db06cb",
         "filename": "content/public/browser/desktop_media_id.cc",
         "patchSetId": 6
@@ -93,6 +117,30 @@
       "revId": "6faed395c137da1305cd89abdfa341e1e5948346",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "203b0d8a_dcdc7664",
+        "filename": "content/public/browser/desktop_media_id.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-26T16:42:45Z",
+      "side": 1,
+      "message": "I updated the implementation but didn\u0027t inline it to save binary size.",
+      "parentUuid": "83f2ca55_50db06cb",
+      "range": {
+        "startLine": 125,
+        "startChar": 1,
+        "endLine": 125,
+        "endChar": 16
+      },
+      "revId": "6faed395c137da1305cd89abdfa341e1e5948346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -143,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "dbc2deca_861b8dd9",
+        "filename": "content/public/browser/desktop_media_id.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-26T16:42:45Z",
+      "side": 1,
+      "message": "The audio setter is required because of the \"share audio\" checkbox in the UI and is now used in the desktop_capture_access_handler.  The video setter is unused.  If you feel strongly I can remove the video setter.",
+      "parentUuid": "aa905404_f4b6be4f",
+      "range": {
+        "startLine": 67,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 39
+      },
+      "revId": "6faed395c137da1305cd89abdfa341e1e5948346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aed8d1ef_3db8d9c0",
         "filename": "content/public/browser/desktop_media_id.h",
         "patchSetId": 6
@@ -154,6 +226,30 @@
       "writtenOn": "2017-09-25T22:29:47Z",
       "side": 1,
       "message": "is this used anywhere? As far as I can tell DesktopCaptureAccessHandler will create video data stream even when this flag isn\u0027t set.",
+      "range": {
+        "startLine": 69,
+        "startChar": 7,
+        "endLine": 69,
+        "endChar": 25
+      },
+      "revId": "6faed395c137da1305cd89abdfa341e1e5948346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45509083_1a1ac778",
+        "filename": "content/public/browser/desktop_media_id.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-26T16:42:45Z",
+      "side": 1,
+      "message": "Good catch. Fixed in the current patchset, the video stream is only created if is_video_capture is set.",
+      "parentUuid": "aed8d1ef_3db8d9c0",
       "range": {
         "startLine": 69,
         "startChar": 7,
