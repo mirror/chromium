@@ -6,7 +6,13 @@ import("//mojo/public/tools/bindings/mojom.gni")
 
 mojom("interfaces") {
   sources = [
+    "cookie_manager.mojom",
     "fetch_api.mojom",
     "http_request_headers.mojom",
+  ]
+
+  public_deps = [
+    "//mojo/common:common_custom_types",
+    "//url/mojo:url_mojom_gurl",
   ]
 }
