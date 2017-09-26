@@ -271,7 +271,7 @@ ImageData* ImageData::Create(const IntSize& size,
 }
 
 ImageData* ImageData::Create(const IntSize& size,
-                             NotShared<DOMArrayBufferView> data_array,
+                             MaybeShared<DOMArrayBufferView> data_array,
                              const ImageDataColorSettings* color_settings) {
   if (!ImageData::ValidateConstructorArguments(kParamSize | kParamData, &size,
                                                0, 0, data_array.View(),
@@ -294,7 +294,7 @@ ImageData* ImageData::Create(unsigned width,
                     : nullptr;
 }
 
-ImageData* ImageData::Create(NotShared<DOMUint8ClampedArray> data,
+ImageData* ImageData::Create(MaybeShared<DOMUint8ClampedArray> data,
                              unsigned width,
                              ExceptionState& exception_state) {
   if (!ImageData::ValidateConstructorArguments(kParamData | kParamWidth,
@@ -306,7 +306,7 @@ ImageData* ImageData::Create(NotShared<DOMUint8ClampedArray> data,
   return new ImageData(IntSize(width, height), data.View());
 }
 
-ImageData* ImageData::Create(NotShared<DOMUint8ClampedArray> data,
+ImageData* ImageData::Create(MaybeShared<DOMUint8ClampedArray> data,
                              unsigned width,
                              unsigned height,
                              ExceptionState& exception_state) {

@@ -143,10 +143,11 @@ def member_context(member, info_provider):
     _update_includes_and_forward_decls(member, info_provider)
     if member.is_nullable:
         member = member.inner_type
+    extended_attributes = member.extended_attributes or {}
     return {
         'cpp_name': to_snake_case(v8_utilities.cpp_name(member)),
-        'cpp_type': member.cpp_type_args(used_in_cpp_sequence=True),
-        'cpp_local_type': member.cpp_type,
+        'cpp_type': member.cpp_type_args(extended_attributes=extended_attributes, used_in_cpp_sequence=True),
+        'cpp_local_type': member.cpp_type_args(extended_attributes=extended_attributes),
         'cpp_value_to_v8_value': member.cpp_value_to_v8_value(
             cpp_value='impl.getAs%s()' % member.name, isolate='isolate',
             creation_context='creationContext'),
@@ -154,7 +155,7 @@ def member_context(member, info_provider):
         'is_array_buffer_or_view_type': member.is_array_buffer_or_view,
         'is_array_buffer_view_or_typed_array': member.is_array_buffer_view_or_typed_array,
         'is_traceable': member.is_traceable,
-        'rvalue_cpp_type': member.cpp_type_args(used_as_rvalue_type=True),
+        'rvalue_cpp_type': member.cpp_type_args(extended_attributes=extended_attributes, used_as_rvalue_type=True),
         'specific_type_enum': 'SpecificType' + member.name,
         'type_name': member.name,
         'v8_value_to_local_cpp_value': member.v8_value_to_local_cpp_value(

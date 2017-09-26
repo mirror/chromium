@@ -1645,13 +1645,13 @@ ImageData* BaseRenderingContext2D::getImageData(
         ImageData::ConvertPixelsFromCanvasPixelFormatToImageDataStorageFormat(
             contents, PixelFormat(), storage_format);
     return ImageData::Create(image_data_rect.Size(),
-                             NotShared<DOMArrayBufferView>(array_buffer_view),
+                             MaybeShared<DOMArrayBufferView>(array_buffer_view),
                              &color_settings);
   }
   DOMArrayBuffer* array_buffer = DOMArrayBuffer::Create(contents);
   return ImageData::Create(
       image_data_rect.Size(),
-      NotShared<DOMUint8ClampedArray>(DOMUint8ClampedArray::Create(
+      MaybeShared<DOMUint8ClampedArray>(DOMUint8ClampedArray::Create(
           array_buffer, 0, array_buffer->ByteLength())),
       &color_settings);
 }
@@ -1746,7 +1746,7 @@ void BaseRenderingContext2D::putImageData(ImageData* data,
                          IntSize(data->width(), data->height()), source_rect,
                          IntPoint(dest_offset));
   } else {
-    buffer->PutByteArray(kUnmultiplied, data->data()->Data(),
+    buffer->PutByteArray(kUnmultiplied, data->data()->DataMaybeShared(),
                          IntSize(data->width(), data->height()), source_rect,
                          IntPoint(dest_offset));
   }
