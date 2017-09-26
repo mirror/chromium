@@ -146,6 +146,21 @@ TEST_F(SurfaceReferencesTest, AddReference) {
   EXPECT_THAT(GetReferencesFrom(id1), IsEmpty());
 }
 
+#if DCHECK_IS_ON()
+// The test sets up a surface reference with a label and verifies that the label
+// is in the surface references string. It then invalidates the FrameSinkId
+// associated with the label and verifies that the label no longer exists in
+// the surface reference string.
+TEST_F(SurfaceReferencesTest, DebugLabelLookup) {
+  CreateSurface(kFrameSink1, 1);
+  const std::string kLabel = "kFrameSink1";
+  GetSurfaceManager().SetFrameSinkDebugLabel(kFrameSink1, kLabel);
+  DCHECK_EQ(kLabel, GetSurfaceManager().GetFrameSinkDebugLabel(kFrameSink1));
+  GetSurfaceManager().InvalidateFrameSinkId(kFrameSink1);
+  DCHECK_EQ("", GetSurfaceManager().GetFrameSinkDebugLabel(kFrameSink1));
+}
+#endif
+
 TEST_F(SurfaceReferencesTest, AddRemoveReference) {
   SurfaceId id1 = CreateSurface(kFrameSink1, 1);
   SurfaceId id2 = CreateSurface(kFrameSink2, 1);
