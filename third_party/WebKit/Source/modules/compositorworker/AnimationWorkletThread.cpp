@@ -20,6 +20,8 @@
 
 namespace blink {
 
+template class WorkletThreadHolder<AnimationWorkletThread>;
+
 std::unique_ptr<AnimationWorkletThread> AnimationWorkletThread::Create(
     ThreadableLoadingContext* loading_context,
     WorkerReportingProxy& worker_reporting_proxy) {
@@ -38,6 +40,54 @@ AnimationWorkletThread::AnimationWorkletThread(
     : WorkerThread(loading_context, worker_reporting_proxy) {}
 
 AnimationWorkletThread::~AnimationWorkletThread() {}
+
+WorkerBackingThread& AnimationWorkletThread::GetWorkerBackingThread() {
+  return *WorkletThreadHolder<AnimationWorkletThread>::GetInstance()
+              ->GetThread();
+}
+
+void CollectAllGarbageOnAnimationWorkletThread(WaitableEvent* done_event) {
+  blink::ThreadState::Current()->CollectAllGarbage();
+  done_event->Signal();
+}
+
+void AnimationWorkletThread::CollectAllGarbage() {
+  DCHECK(IsMainThread());
+  auto* worklet_thread_holder =
+      WorkletThreadHolder<AnimationWorkletThread>::GetInstance();
+  if (!worklet_thread_holder)
+    return;
+  WaitableEvent done_event;
+  worklet_thread_holder->GetThread()->BackingThread().PostTask(
+      BLINK_FROM_HERE,
+      CrossThreadBind(&CollectAllGarbageOnAnimationWorkletThread,
+                      CrossThreadUnretained(&done_event)));
+  done_event.Wait();
+}
+
+void AnimationWorkletThread::EnsureSharedBackingThread() {
+  DCHECK(IsMainThread());
+  WorkletThreadHolder<AnimationWorkletThread>::EnsureInstance(
+      "AnimationWorkletThread");
+}
+
+void AnimationWorkletThread::ClearSharedBackingThread() {
+  DCHECK(IsMainThread());
+  WorkletThreadHolder<AnimationWorkletThread>::ClearInstance();
+}
+
+WebThread* AnimationWorkletThread::GetSharedBackingThread() {
+  DCHECK(IsMainThread());
+  auto* instance = WorkletThreadHolder<AnimationWorkletThread>::GetInstance();
+  if (!instance)
+    return nullptr;
+  return &(instance->GetThread()->BackingThread().PlatformThread());
+}
+
+void AnimationWorkletThread::CreateSharedBackingThreadForTest() {
+  WorkletThreadHolder<AnimationWorkletThread>::CreateForTest(
+      "AnimationWorkletThread");
+}
 
 WorkerOrWorkletGlobalScope* AnimationWorkletThread::CreateWorkerGlobalScope(
     std::unique_ptr<GlobalScopeCreationParams> creation_params) {

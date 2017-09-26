@@ -23,7 +23,7 @@ class MODULES_EXPORT AnimationWorkletThread final : public WorkerThread {
 
   WorkerBackingThread& GetWorkerBackingThread() override;
 
-  // The backing thread is cleared by clearSharedBackingThread().
+  // The backing thread is cleared by ClearSharedBackingThread().
   void ClearWorkerBackingThread() override {}
 
   // This may block the main thread.
@@ -33,6 +33,11 @@ class MODULES_EXPORT AnimationWorkletThread final : public WorkerThread {
   static void ClearSharedBackingThread();
 
   static void CreateSharedBackingThreadForTest();
+
+  // This only can be called after EnsureSharedBackingThread() is performed.
+  // Currently AnimationWorkletThread owns only one thread and it is shared
+  // by all the customers.
+  static WebThread* GetSharedBackingThread();
 
  protected:
   WorkerOrWorkletGlobalScope* CreateWorkerGlobalScope(
