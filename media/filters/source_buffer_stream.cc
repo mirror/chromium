@@ -274,7 +274,7 @@ bool SourceBufferStream<RangeClass>::Append(const BufferQueue& buffers) {
   SetConfigIds(buffers);
 
   // Save a snapshot of stream state before range modifications are made.
-  DecodeTimestamp next_buffer_timestamp = GetNextBufferTimestamp();
+  DecodeTimestamp next_buffer_timestamp = GetNextBufferTimestamp();  // BIG TODO
   BufferQueue deleted_buffers;
 
   PrepareRangesForNextAppend(buffers, &deleted_buffers);
@@ -289,13 +289,13 @@ bool SourceBufferStream<RangeClass>::Append(const BufferQueue& buffers) {
       // A large gap (larger than our normal buffer adjacency test) can occur in
       // a muxed set of streams (which share a common coded frame group start
       // time) with a significantly jagged start across the streams.
-      (*range_for_next_append_)
-          ->AppendBuffersToEnd(buffers, coded_frame_group_start_time_);
+      RangeAppendBuffersToEnd(range_for_next_append_->get(), buffers,
+                              coded_frame_group_start_time_);
     } else {
       // Otherwise, use the first new buffer's timestamp as the proof of
       // adjacency.
-      (*range_for_next_append_)
-          ->AppendBuffersToEnd(buffers, kNoDecodeTimestamp());
+      RangeAppendBuffersToEnd(range_for_next_append_->get(), buffers,
+                              kNoDecodeTimestamp());
     }
 
     last_appended_buffer_timestamp_ = buffers.back()->GetDecodeTimestamp();
@@ -395,7 +395,7 @@ bool SourceBufferStream<RangeClass>::Append(const BufferQueue& buffers) {
       PruneTrackBuffer(keyframe_timestamp);
   }
 
-  SetSelectedRangeIfNeeded(next_buffer_timestamp);
+  SetSelectedRangeIfNeeded(next_buffer_timestamp);  // BIG TODO
 
   DVLOG(1) << __func__ << " " << GetStreamTypeName()
            << ": done. ranges_=" << RangesToString<RangeClass>(ranges_);
@@ -448,6 +448,8 @@ void SourceBufferStream<RangeClass>::Remove(base::TimeDelta start,
 template <typename RangeClass>
 DecodeTimestamp SourceBufferStream<RangeClass>::PotentialNextAppendTimestamp()
     const {
+  // BIG TODO: NOPE! (redo this in PTS-template-ized version)
+  //
   // The next potential append will either be just at or after
   // |last_appended_buffer_timestamp_| (if known), or if unknown and we are
   // still at the beginning of a new coded frame group, then will be into the
@@ -487,7 +489,9 @@ void SourceBufferStream<RangeClass>::UpdateLastAppendStateForRemove(
       // Note start and end of last appended GOP.
       DecodeTimestamp gop_end = last_appended_buffer_timestamp_;
       DecodeTimestamp gop_start =
-          (*range_for_next_append_)->KeyframeBeforeTimestamp(gop_end);
+          (*range_for_next_append_)
+              ->KeyframeBeforeTimestamp(
+                  gop_end);  // BIG TODO consider SAP Type 2
 
       // If last append is about to be disrupted, reset associated state so we
       // know to create a new range for future appends and require an initial
@@ -594,6 +598,10 @@ void SourceBufferStream<RangeClass>::RemoveInternal(
       DecodeTimestamp potential_next_append_timestamp =
           PotentialNextAppendTimestamp();
 
+      // BIG TODO: need to figure how to do this better, since potential next
+      // append could be a DTS or a PTS and the next frame could be a
+      // nonkeyframe or keyframe (respectively)... (in PTS-template-ized
+      // version).
       if (!range->BelongsToRange(potential_next_append_timestamp)) {
         DVLOG(1) << "Resetting range_for_next_append_ since the next append"
                  <<  " can't add to the current range.";
@@ -804,7 +812,7 @@ bool SourceBufferStream<RangeClass>::GarbageCollectIfNeeded(
            << last_appended_buffer_timestamp_.InSecondsF();
 
   if (selected_range_ && !seek_pending_ &&
-      media_time > selected_range_->GetBufferedEndTimestamp()) {
+      media_time > RangeGetBufferedEndTimestamp(selected_range_)) {
     // Strictly speaking |media_time| (taken from HTMLMediaElement::currentTime)
     // should always be in the buffered ranges, but media::Pipeline uses audio
     // stream as the main time source, when audio is present.
@@ -814,7 +822,7 @@ bool SourceBufferStream<RangeClass>::GarbageCollectIfNeeded(
     // stream buffered ranges, to ensure the MSE garbage collection algorithm
     // works correctly (see crbug.com/563292 for details).
     DecodeTimestamp selected_buffered_end =
-        selected_range_->GetBufferedEndTimestamp();
+        RangeGetBufferedEndTimestamp(selected_range_);
 
     DVLOG(2) << __func__ << " media_time " << media_time.InSecondsF()
              << " is outside of selected_range_=["
@@ -848,8 +856,9 @@ bool SourceBufferStream<RangeClass>::GarbageCollectIfNeeded(
     // the most recently appended data, i.e. data belonging to the same buffered
     // range as the most recent append.
     if (range_for_next_append_ != ranges_.end()) {
-      DCHECK((*range_for_next_append_)->GetStartTimestamp() <= media_time);
-      media_time = (*range_for_next_append_)->GetStartTimestamp();
+      DCHECK(RangeGetStartTimestamp(range_for_next_append_->get()) <=
+             media_time);
+      media_time = RangeGetStartTimestamp(range_for_next_append_->get());
       DVLOG(3) << __func__ << " media_time adjusted to "
                << media_time.InSecondsF();
     }
@@ -881,8 +890,9 @@ bool SourceBufferStream<RangeClass>::GarbageCollectIfNeeded(
     // If even that wasn't enough, then try greedily deleting from the front,
     // that should allow us to remove as much data as necessary to succeed.
     if (bytes_freed < bytes_to_free) {
-      size_t front2 = FreeBuffers(bytes_to_free - bytes_freed,
-                                  ranges_.back()->GetEndTimestamp(), false);
+      size_t front2 =
+          FreeBuffers(bytes_to_free - bytes_freed,
+                      RangeGetEndTimestamp(ranges_.back().get()), false);
       DVLOG(3) << __func__ << " Removed " << front2
                << " bytes from the front. ranges_="
                << RangesToString<RangeClass>(ranges_);
@@ -972,14 +982,15 @@ size_t SourceBufferStream<RangeClass>::GetRemovalRange(
   for (typename RangeList::iterator itr = ranges_.begin();
        itr != ranges_.end() && bytes_freed < total_bytes_to_free; ++itr) {
     RangeClass* range = itr->get();
-    if (range->GetStartTimestamp() >= end_timestamp)
+    if (RangeGetStartTimestamp(range) >= end_timestamp)
       break;
-    if (range->GetEndTimestamp() < start_timestamp)
+    if (RangeGetEndTimestamp(range) < start_timestamp)
       continue;
 
     size_t bytes_to_free = total_bytes_to_free - bytes_freed;
-    size_t bytes_removed = range->GetRemovalGOP(
-        start_timestamp, end_timestamp, bytes_to_free, removal_end_timestamp);
+    size_t bytes_removed =
+        RangeGetRemovalGOP(range, start_timestamp, end_timestamp, bytes_to_free,
+                           removal_end_timestamp);
     bytes_freed += bytes_removed;
   }
   return bytes_freed;
@@ -1025,7 +1036,7 @@ size_t SourceBufferStream<RangeClass>::FreeBuffers(size_t total_bytes_to_free,
       // FirstGOPContainsNextBufferPosition() is useful here especially if
       // |!seek_pending_| to protect against DeleteGOPFromFront() if
       // FirstGOPEarlierThanMediaTime() was insufficient alone.
-      if (!current_range->FirstGOPEarlierThanMediaTime(media_time) ||
+      if (!RangeFirstGOPEarlierThanMediaTime(current_range, media_time) ||
           current_range->FirstGOPContainsNextBufferPosition()) {
         // We have removed all data up to the GOP that contains current playback
         // position, we can't delete any further.
@@ -1218,6 +1229,7 @@ void SourceBufferStream<RangeClass>::PrepareRangesForNextAppend(
   //    beginning of |new_buffers|.
   if (prev_timestamp != kNoDecodeTimestamp() &&
       prev_timestamp != next_timestamp) {
+    // BIG TODO: this will need to change to allow SBRByPts out-of-order PTS.
     RemoveInternal(prev_timestamp, next_timestamp, true, deleted_buffers);
   }
 
@@ -1261,6 +1273,7 @@ void SourceBufferStream<RangeClass>::PrepareRangesForNextAppend(
   }
 
   // Finally do the deletion of overlap.
+  // BIG TODO: this may need to change to allow SBRByPts out-of-order PTS.
   RemoveInternal(next_timestamp, end, exclude_start, deleted_buffers);
 }
 
@@ -1341,7 +1354,7 @@ void SourceBufferStream<RangeClass>::Seek(base::TimeDelta timestamp) {
 
   typename RangeList::iterator itr = ranges_.end();
   for (itr = ranges_.begin(); itr != ranges_.end(); ++itr) {
-    if ((*itr)->CanSeekTo(seek_dts))
+    if (RangeCanSeekTo(itr->get(), seek_dts))
       break;
   }
 
@@ -1349,12 +1362,13 @@ void SourceBufferStream<RangeClass>::Seek(base::TimeDelta timestamp) {
     return;
 
   if (!audio_configs_.empty()) {
-    const auto& config = audio_configs_[(*itr)->GetConfigIdAtTime(seek_dts)];
+    const auto& config =
+        audio_configs_[RangeGetConfigIdAtTime(itr->get(), seek_dts)];
     if (config.codec() == kCodecOpus) {
-      DecodeTimestamp preroll_dts = std::max(seek_dts - config.seek_preroll(),
-                                             (*itr)->GetStartTimestamp());
-      if ((*itr)->CanSeekTo(preroll_dts) &&
-          (*itr)->SameConfigThruRange(preroll_dts, seek_dts)) {
+      DecodeTimestamp preroll_dts = std::max(
+          seek_dts - config.seek_preroll(), RangeGetStartTimestamp(itr->get()));
+      if (RangeCanSeekTo(itr->get(), preroll_dts) &&
+          RangeSameConfigThruRange(itr->get(), preroll_dts, seek_dts)) {
         seek_dts = preroll_dts;
       }
     }
@@ -1379,7 +1393,7 @@ void SourceBufferStream<RangeClass>::OnSetDuration(base::TimeDelta duration) {
     return;
 
   DecodeTimestamp start = DecodeTimestamp::FromPresentationTime(duration);
-  DecodeTimestamp end = ranges_.back()->GetBufferedEndTimestamp();
+  DecodeTimestamp end = RangeGetBufferedEndTimestamp(ranges_.back().get());
 
   // Trim the end if it exceeds the new duration.
   if (start < end) {
@@ -1522,13 +1536,13 @@ void SourceBufferStream<RangeClass>::WarnIfTrackBufferExhaustionSkipsForward(
 template <typename RangeClass>
 DecodeTimestamp SourceBufferStream<RangeClass>::GetNextBufferTimestamp() {
   if (!track_buffer_.empty())
-    return track_buffer_.front()->GetDecodeTimestamp();
+    return track_buffer_.front()->GetDecodeTimestamp();  // BIG TODO
 
   if (!selected_range_)
     return kNoDecodeTimestamp();
 
   DCHECK(selected_range_->HasNextBufferPosition());
-  return selected_range_->GetNextTimestamp();
+  return selected_range_->GetNextTimestamp();  // BIG TODO
 }
 
 template <typename RangeClass>
@@ -1570,7 +1584,7 @@ SourceBufferStream<RangeClass>::GetSelectedRangeItr() {
 }
 
 template <typename RangeClass>
-void SourceBufferStream<RangeClass>::SeekAndSetSelectedRange(
+void SourceBufferStream<RangeClass>::SeekAndSetSelectedRange(  // BIG TODO...
     RangeClass* range,
     DecodeTimestamp seek_timestamp) {
   if (range)
@@ -1595,8 +1609,8 @@ Ranges<base::TimeDelta> SourceBufferStream<RangeClass>::GetBufferedTime()
   Ranges<base::TimeDelta> ranges;
   for (typename RangeList::const_iterator itr = ranges_.begin();
        itr != ranges_.end(); ++itr) {
-    ranges.Add((*itr)->GetStartTimestamp().ToPresentationTime(),
-               (*itr)->GetBufferedEndTimestamp().ToPresentationTime());
+    ranges.Add(RangeGetStartTimestamp(itr->get()).ToPresentationTime(),
+               RangeGetBufferedEndTimestamp(itr->get()).ToPresentationTime());
   }
   return ranges;
 }
@@ -1607,9 +1621,7 @@ SourceBufferStream<RangeClass>::GetHighestPresentationTimestamp() const {
   if (ranges_.empty())
     return base::TimeDelta();
 
-  // TODO(wolenetz): Report actual highest PTS here, not DTS cast to PTS. See
-  // https://crbug.com/398130.
-  return ranges_.back()->GetEndTimestamp().ToPresentationTime();
+  return RangeGetEndTimestamp(ranges_.back().get()).ToPresentationTime();
 }
 
 template <typename RangeClass>
@@ -1617,7 +1629,8 @@ base::TimeDelta SourceBufferStream<RangeClass>::GetBufferedDuration() const {
   if (ranges_.empty())
     return base::TimeDelta();
 
-  return ranges_.back()->GetBufferedEndTimestamp().ToPresentationTime();
+  return RangeGetBufferedEndTimestamp(ranges_.back().get())
+      .ToPresentationTime();
 }
 
 template <typename RangeClass>
@@ -1766,7 +1779,7 @@ void SourceBufferStream<RangeClass>::CompleteConfigChange() {
 }
 
 template <typename RangeClass>
-void SourceBufferStream<RangeClass>::SetSelectedRangeIfNeeded(
+void SourceBufferStream<RangeClass>::SetSelectedRangeIfNeeded(  // BIG TODO
     const DecodeTimestamp timestamp) {
   DVLOG(2) << __func__ << " " << GetStreamTypeName() << "("
            << timestamp.InSecondsF() << ")";
@@ -1783,6 +1796,7 @@ void SourceBufferStream<RangeClass>::SetSelectedRangeIfNeeded(
 
   DecodeTimestamp start_timestamp = timestamp;
 
+  // BIG TODO
   // If the next buffer timestamp is not known then use a timestamp just after
   // the timestamp on the last buffer returned by GetNextBuffer().
   if (start_timestamp == kNoDecodeTimestamp()) {
@@ -1797,7 +1811,7 @@ void SourceBufferStream<RangeClass>::SetSelectedRangeIfNeeded(
   }
 
   DecodeTimestamp seek_timestamp =
-      FindNewSelectedRangeSeekTimestamp(start_timestamp);
+      FindNewSelectedRangeSeekTimestamp(start_timestamp);  // BIG TODO
 
   // If we don't have buffered data to seek to, then return.
   if (seek_timestamp == kNoDecodeTimestamp()) {
@@ -1807,6 +1821,7 @@ void SourceBufferStream<RangeClass>::SetSelectedRangeIfNeeded(
   }
 
   DCHECK(track_buffer_.empty());
+  // BIG TODO
   SeekAndSetSelectedRange(FindExistingRangeFor(seek_timestamp)->get(),
                           seek_timestamp);
 }
@@ -1852,7 +1867,7 @@ SourceBufferStream<RangeClass>::FindNewSelectedRangeSeekTimestamp(
 
 template <typename RangeClass>
 DecodeTimestamp SourceBufferStream<RangeClass>::FindKeyframeAfterTimestamp(
-    const DecodeTimestamp timestamp) {
+    const DecodeTimestamp timestamp) {  // BIG TODO change to PTS for SBRByPts
   DCHECK(timestamp != kNoDecodeTimestamp());
 
   typename RangeList::iterator itr = FindExistingRangeFor(timestamp);
@@ -1923,6 +1938,151 @@ bool SourceBufferStream<RangeClass>::SetPendingBuffer(
   pending_buffer_.swap(*out_buffer);
   pending_buffers_complete_ = false;
   return true;
+}
+
+template <>
+void SourceBufferStream<SourceBufferRangeByDts>::RangeAppendBuffersToEnd(
+    SourceBufferRangeByDts* range,
+    const BufferQueue& buffers,
+    DecodeTimestamp group_start_time) {
+  range->AppendBuffersToEnd(buffers, group_start_time);
+}
+
+template <>
+void SourceBufferStream<SourceBufferRangeByPts>::RangeAppendBuffersToEnd(
+    SourceBufferRangeByPts* range,
+    const BufferQueue& buffers,
+    DecodeTimestamp group_start_time) {
+  range->AppendBuffersToEnd(buffers, group_start_time.ToPresentationTime());
+}
+
+template <>
+DecodeTimestamp
+SourceBufferStream<SourceBufferRangeByDts>::RangeGetBufferedEndTimestamp(
+    SourceBufferRangeByDts* range) const {
+  return range->GetBufferedEndTimestamp();
+}
+
+template <>
+DecodeTimestamp
+SourceBufferStream<SourceBufferRangeByPts>::RangeGetBufferedEndTimestamp(
+    SourceBufferRangeByPts* range) const {
+  return DecodeTimestamp::FromPresentationTime(
+      range->GetBufferedEndTimestamp());
+}
+
+template <>
+DecodeTimestamp
+SourceBufferStream<SourceBufferRangeByDts>::RangeGetEndTimestamp(
+    SourceBufferRangeByDts* range) const {
+  return range->GetEndTimestamp();
+}
+
+template <>
+DecodeTimestamp
+SourceBufferStream<SourceBufferRangeByPts>::RangeGetEndTimestamp(
+    SourceBufferRangeByPts* range) const {
+  return DecodeTimestamp::FromPresentationTime(range->GetEndTimestamp());
+}
+
+template <>
+DecodeTimestamp
+SourceBufferStream<SourceBufferRangeByDts>::RangeGetStartTimestamp(
+    SourceBufferRangeByDts* range) const {
+  return range->GetStartTimestamp();
+}
+
+template <>
+DecodeTimestamp
+SourceBufferStream<SourceBufferRangeByPts>::RangeGetStartTimestamp(
+    SourceBufferRangeByPts* range) const {
+  return DecodeTimestamp::FromPresentationTime(range->GetStartTimestamp());
+}
+
+template <>
+bool SourceBufferStream<SourceBufferRangeByDts>::RangeCanSeekTo(
+    SourceBufferRangeByDts* range,
+    DecodeTimestamp seek_time) const {
+  return range->CanSeekTo(seek_time);
+}
+
+template <>
+bool SourceBufferStream<SourceBufferRangeByPts>::RangeCanSeekTo(
+    SourceBufferRangeByPts* range,
+    DecodeTimestamp seek_time) const {
+  return range->CanSeekTo(seek_time.ToPresentationTime());
+}
+
+template <>
+int SourceBufferStream<SourceBufferRangeByDts>::RangeGetConfigIdAtTime(
+    SourceBufferRangeByDts* range,
+    DecodeTimestamp config_time) {
+  return range->GetConfigIdAtTime(config_time);
+}
+
+template <>
+int SourceBufferStream<SourceBufferRangeByPts>::RangeGetConfigIdAtTime(
+    SourceBufferRangeByPts* range,
+    DecodeTimestamp config_time) {
+  return range->GetConfigIdAtTime(config_time.ToPresentationTime());
+}
+
+template <>
+bool SourceBufferStream<SourceBufferRangeByDts>::RangeSameConfigThruRange(
+    SourceBufferRangeByDts* range,
+    DecodeTimestamp start,
+    DecodeTimestamp end) {
+  return range->SameConfigThruRange(start, end);
+}
+
+template <>
+bool SourceBufferStream<SourceBufferRangeByPts>::RangeSameConfigThruRange(
+    SourceBufferRangeByPts* range,
+    DecodeTimestamp start,
+    DecodeTimestamp end) {
+  return range->SameConfigThruRange(start.ToPresentationTime(),
+                                    end.ToPresentationTime());
+}
+
+template <>
+bool SourceBufferStream<SourceBufferRangeByDts>::
+    RangeFirstGOPEarlierThanMediaTime(SourceBufferRangeByDts* range,
+                                      DecodeTimestamp media_time) const {
+  return range->FirstGOPEarlierThanMediaTime(media_time);
+}
+
+template <>
+bool SourceBufferStream<SourceBufferRangeByPts>::
+    RangeFirstGOPEarlierThanMediaTime(SourceBufferRangeByPts* range,
+                                      DecodeTimestamp media_time) const {
+  return range->FirstGOPEarlierThanMediaTime(media_time.ToPresentationTime());
+}
+
+template <>
+size_t SourceBufferStream<SourceBufferRangeByDts>::RangeGetRemovalGOP(
+    SourceBufferRangeByDts* range,
+    DecodeTimestamp start_timestamp,
+    DecodeTimestamp end_timestamp,
+    size_t bytes_to_free,
+    DecodeTimestamp* end_removal_timestamp) {
+  return range->GetRemovalGOP(start_timestamp, end_timestamp, bytes_to_free,
+                              end_removal_timestamp);
+}
+
+template <>
+size_t SourceBufferStream<SourceBufferRangeByPts>::RangeGetRemovalGOP(
+    SourceBufferRangeByPts* range,
+    DecodeTimestamp start_timestamp,
+    DecodeTimestamp end_timestamp,
+    size_t bytes_to_free,
+    DecodeTimestamp* end_removal_timestamp) {
+  base::TimeDelta end_removal_pts = end_removal_timestamp->ToPresentationTime();
+  size_t result = range->GetRemovalGOP(start_timestamp.ToPresentationTime(),
+                                       end_timestamp.ToPresentationTime(),
+                                       bytes_to_free, &end_removal_pts);
+  *end_removal_timestamp =
+      DecodeTimestamp::FromPresentationTime(end_removal_pts);
+  return result;
 }
 
 template class SourceBufferStream<SourceBufferRangeByDts>;

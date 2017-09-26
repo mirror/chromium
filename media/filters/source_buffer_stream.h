@@ -376,6 +376,27 @@ class MEDIA_EXPORT SourceBufferStream {
   // returns true.  Otherwise returns false.
   bool SetPendingBuffer(scoped_refptr<StreamParserBuffer>* out_buffer);
 
+  // Proxy methods that adapt SBRByPts and SBRByDts to a common internal
+  // interface until SBRByDts can be dropped. See https://crbug.com/718641.
+  void RangeAppendBuffersToEnd(RangeClass* range,
+                               const BufferQueue& buffers,
+                               DecodeTimestamp group_start_time);
+  DecodeTimestamp RangeGetBufferedEndTimestamp(RangeClass* range) const;
+  DecodeTimestamp RangeGetEndTimestamp(RangeClass* range) const;
+  DecodeTimestamp RangeGetStartTimestamp(RangeClass* range) const;
+  bool RangeCanSeekTo(RangeClass* range, DecodeTimestamp seek_time) const;
+  int RangeGetConfigIdAtTime(RangeClass* range, DecodeTimestamp config_time);
+  bool RangeSameConfigThruRange(RangeClass* range,
+                                DecodeTimestamp start,
+                                DecodeTimestamp end);
+  bool RangeFirstGOPEarlierThanMediaTime(RangeClass* range,
+                                         DecodeTimestamp media_time) const;
+  size_t RangeGetRemovalGOP(RangeClass* range,
+                            DecodeTimestamp start_timestamp,
+                            DecodeTimestamp end_timestamp,
+                            size_t bytes_to_free,
+                            DecodeTimestamp* end_removal_timestamp);
+
   // Used to report log messages that can help the web developer figure out what
   // is wrong with the content.
   MediaLog* media_log_;
