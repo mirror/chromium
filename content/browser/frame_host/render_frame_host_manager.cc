@@ -84,21 +84,23 @@ RenderFrameHostManager::~RenderFrameHostManager() {
   SetRenderFrameHost(std::unique_ptr<RenderFrameHostImpl>());
 }
 
-void RenderFrameHostManager::Init(SiteInstance* site_instance,
-                                  int32_t view_routing_id,
-                                  int32_t frame_routing_id,
-                                  int32_t widget_routing_id,
-                                  bool renderer_initiated_creation) {
+void RenderFrameHostManager::Init(
+    SiteInstance* site_instance,
+    int32_t view_routing_id,
+    int32_t frame_routing_id,
+    service_manager::mojom::InterfaceProviderRequest interfaces_request,
+    int32_t widget_routing_id,
+    bool renderer_initiated_creation) {
   DCHECK(site_instance);
   // TODO(avi): While RenderViewHostImpl is-a RenderWidgetHostImpl, this must
   // hold true to avoid having two RenderWidgetHosts for the top-level frame.
   // https://crbug.com/545684
   DCHECK(!frame_tree_node_->IsMainFrame() ||
          view_routing_id == widget_routing_id);
-  SetRenderFrameHost(CreateRenderFrameHost(site_instance, view_routing_id,
-                                           frame_routing_id, widget_routing_id,
-                                           delegate_->IsHidden(),
-                                           renderer_initiated_creation));
+  SetRenderFrameHost(CreateRenderFrameHost(
+      site_instance, view_routing_id, frame_routing_id,
+      std::move(interfaces_request), widget_routing_id, delegate_->IsHidden(),
+      renderer_initiated_creation));
 
   // Notify the delegate of the creation of the current RenderFrameHost.
   // Do this only for subframes, as the main frame case is taken care of by
@@ -1668,6 +1670,7 @@ RenderFrameHostManager::CreateRenderFrameHost(
     SiteInstance* site_instance,
     int32_t view_routing_id,
     int32_t frame_routing_id,
+    service_manager::mojom::InterfaceProviderRequest interfaces_request,
     int32_t widget_routing_id,
     bool hidden,
     bool renderer_initiated_creation) {
@@ -1702,7 +1705,8 @@ RenderFrameHostManager::CreateRenderFrameHost(
   return RenderFrameHostFactory::Create(
       site_instance, render_view_host, render_frame_delegate_,
       render_widget_delegate_, frame_tree, frame_tree_node_, frame_routing_id,
-      widget_routing_id, hidden, renderer_initiated_creation);
+      std::move(interfaces_request), widget_routing_id, hidden,
+      renderer_initiated_creation);
 }
 
 // PlzNavigate
@@ -1762,10 +1766,10 @@ std::unique_ptr<RenderFrameHostImpl> RenderFrameHostManager::CreateRenderFrame(
           instance) {
     widget_routing_id = instance->GetProcess()->GetNextRoutingID();
   }
-
-  new_render_frame_host = CreateRenderFrameHost(
-      instance, MSG_ROUTING_NONE, MSG_ROUTING_NONE, widget_routing_id, hidden,
-      false);
+  new_render_frame_host =
+      CreateRenderFrameHost(instance, MSG_ROUTING_NONE, MSG_ROUTING_NONE,
+                            service_manager::mojom::InterfaceProviderRequest(),
+                            widget_routing_id, hidden, false);
   RenderViewHostImpl* render_view_host =
       new_render_frame_host->render_view_host();
 

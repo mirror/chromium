@@ -53,6 +53,9 @@ class TestRenderFrameHost : public RenderFrameHostImpl,
   TestRenderViewHost* GetRenderViewHost() override;
   MockRenderProcessHost* GetProcess() override;
 
+  service_manager::mojom::InterfaceProviderRequest RouteThroughCapabilityFilter(
+      service_manager::mojom::InterfaceProviderRequest request) override;
+
   // RenderFrameHostTester implementation.
   void InitializeRenderFrameIfNeeded() override;
   TestRenderFrameHost* AppendChild(const std::string& frame_name) override;
@@ -162,6 +165,9 @@ class TestRenderFrameHost : public RenderFrameHostImpl,
   bool last_commit_was_error_page() const {
     return last_commit_was_error_page_;
   }
+
+  // Exposes the interface registry to be manipulated for testing.
+  service_manager::BinderRegistry& binder_registry() { return *registry_; }
 
  private:
   void SendNavigateWithParameters(int nav_entry_id,
