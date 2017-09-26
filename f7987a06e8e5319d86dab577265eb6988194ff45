@@ -52,6 +52,24 @@
       "revId": "f7987a06e8e5319d86dab577265eb6988194ff45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0ca81b46_75126b01",
+        "filename": "base/threading/thread_restrictions.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-09-26T04:00:52Z",
+      "side": 1,
+      "message": "Right, I understand why - but hopefully you can see why it\u0027s slightly unfortunate to have //base knowing about its consumers - particularly when these consumers won\u0027t go away. That is, this isn\u0027t a \u0027burndown list\u0027 so much as a whitelist, and the API is, well, an API that\u0027s exposed :)\n\nAnyways, it was more an unfortunate layering break that, say, something like Cronet or libchrome has to \"know\" about all these consumers. It feels like it\u0027s something that in an ideal world would be something like a presubmit script (noting new includes) or a Clang plugin (noting new instantiations), tied to the product and its product-specific restrictions on the API.\n\nThat\u0027s not strictly related to this CL, other than worth noting that we\u0027ve identified that this won\u0027t be going away :)",
+      "parentUuid": "0e2e077e_15608d33",
+      "revId": "f7987a06e8e5319d86dab577265eb6988194ff45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
