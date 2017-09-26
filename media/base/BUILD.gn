@@ -103,6 +103,7 @@ source_set("base") {
     "container_names.h",
     "content_decryption_module.cc",
     "content_decryption_module.h",
+    "context_provider_callback.h",
     "data_buffer.cc",
     "data_buffer.h",
     "data_source.cc",
