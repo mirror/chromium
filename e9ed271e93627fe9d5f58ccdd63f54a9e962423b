@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fefebceb_3342c48e",
+        "filename": "ui/compositor/layer_animation_element.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1002110
+      },
+      "writtenOn": "2017-09-26T21:49:15Z",
+      "side": 1,
+      "message": "Is it worth making this change for transform animations too? Or are transform animations with the same start and target values pretty rare in practice?",
+      "revId": "e9ed271e93627fe9d5f58ccdd63f54a9e962423b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
