@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c68de9d9_5ad142b2",
+        "filename": "chrome/browser/ui/views/try_chrome_dialog.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-26T11:30:26Z",
+      "side": 1,
+      "message": "\u003e This isn\u0027t quite right. If the mouse is pressed and you move out you\u0027ll get an exit and in that case I wouldn\u0027t expect the button to hide.\n\nI see. I think I have the corner cases handled now, although this is all new to me so I won\u0027t be surprised if you think of something I missed. :-)\n\n\u003e Also, you\u0027ll need to deal with capture loss.\n\nDoes it suffice to treat OnMouseCaptureLost as if it were MouseExited? This seems to do the job.",
+      "parentUuid": "f32571f5_26c6af4e",
+      "range": {
+        "startLine": 152,
+        "startChar": 9,
+        "endLine": 152,
+        "endChar": 28
+      },
+      "revId": "6c6654573bfd9630c1c832b348fa6699a9dc2084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3c832b8e_ea8bdb56",
         "filename": "chrome/browser/ui/views/try_chrome_dialog.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-22T21:35:58Z",
       "side": 1,
       "message": "This doesn\u0027t actually animate. Do you need is to animate? Also, be aware that if you don\u0027t change the visibility this button is still really there, which could effect screen readers and other things.",
+      "range": {
+        "startLine": 536,
+        "startChar": 4,
+        "endLine": 536,
+        "endChar": 42
+      },
+      "revId": "6c6654573bfd9630c1c832b348fa6699a9dc2084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23b6222a_a02cfbc7",
+        "filename": "chrome/browser/ui/views/try_chrome_dialog.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-26T11:30:26Z",
+      "side": 1,
+      "message": "\u003e This doesn\u0027t actually animate. Do you need is to animate?\n\nWell, maybe not. The call to SetOpacity ends up going into a LayerAnimator, so I thought it was doing a fast animation. Ah, but without a ScopedLayerAnimationSettings, the duration is 0. I\u0027ll check with UX to see if the animation is necessary.\n\n\u003e Also, be aware that if you don\u0027t change the visibility this button is still really there, which could effect screen readers and other things.\n\nThanks for pointing that out. Will it suffice to only flip visibility and leave opacity alone?",
+      "parentUuid": "3c832b8e_ea8bdb56",
       "range": {
         "startLine": 536,
         "startChar": 4,
