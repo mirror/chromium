@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "68cffbb2_16f2f1df",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/HarfBuzzShaper.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-09-26T07:46:07Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "9a9c84e4_801f0d84",
+      "revId": "7b29aac25281dbf22f4dfcf2886727c9c53911d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c27c0eaa_3705a0c1",
         "filename": "third_party/WebKit/Source/platform/fonts/shaping/HarfBuzzShaper.cpp",
         "patchSetId": 15
@@ -30,6 +48,30 @@
       "writtenOn": "2017-09-26T00:55:59Z",
       "side": 1,
       "message": "Given that this code path is entirely different form the one above it might make sense to change the loop condition form \"glyph_index \u003c\u003d num_glyphs\" to \"glyph_index \u003c num_glyphs\" and move this code to after the loop.\n\nMight improve readability over the triple-nested branching.\nJust a suggestion.",
+      "range": {
+        "startLine": 367,
+        "startChar": 20,
+        "endLine": 367,
+        "endChar": 21
+      },
+      "revId": "7b29aac25281dbf22f4dfcf2886727c9c53911d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a70e0c5a_78e01a08",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/HarfBuzzShaper.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-09-26T07:46:07Z",
+      "side": 1,
+      "message": "That\u0027s a good idea and improves readability even more. Move the run end processing out of the loop and replaced glyph_index with num_glyphs there. I finally start to like how the core of this function looks.",
+      "parentUuid": "c27c0eaa_3705a0c1",
       "range": {
         "startLine": 367,
         "startChar": 20,
