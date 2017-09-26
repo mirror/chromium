@@ -145,6 +145,30 @@
     },
     {
       "key": {
+        "uuid": "7f2b123e_39a7028b",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-09-26T22:36:06Z",
+      "side": 1,
+      "message": "Fair enough, it sounds like we need a test of some sort. Could we just check that deserializing the saved dat file still works in  the same way that TestBackwardsCompat does already? \n\nThis would require bumps to the version number and a new serialized_vxx.dat file for each addition to the schema. But it avoids failing benign changes and lets us test compatibility from every past schema version to the present.",
+      "parentUuid": "265dae57_dd468850",
+      "range": {
+        "startLine": 56,
+        "startChar": 7,
+        "endLine": 56,
+        "endChar": 12
+      },
+      "revId": "731690d54f88cd12712ab97294bc1b7a05dec1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2522ff5_c71d5440",
         "filename": "content/common/page_state.mojom",
         "patchSetId": 9
