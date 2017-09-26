@@ -26,7 +26,8 @@ class TestPrefetchDispatcher : public PrefetchDispatcher {
       const std::vector<PrefetchURL>& prefetch_urls) override;
   void RemoveAllUnprocessedPrefetchURLs(const std::string& name_space) override;
   void RemovePrefetchURLsByClientId(const ClientId& client_id) override;
-  void BeginBackgroundTask(std::unique_ptr<ScopedBackgroundTask> task) override;
+  void BeginBackgroundTask(
+      std::unique_ptr<PrefetchBackgroundTask> task) override;
   void StopBackgroundTask() override;
   void SetService(PrefetchService* service) override;
   void SchedulePipelineProcessing() override;

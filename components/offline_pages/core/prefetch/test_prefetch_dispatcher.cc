@@ -33,7 +33,7 @@ void TestPrefetchDispatcher::RemovePrefetchURLsByClientId(
 }
 
 void TestPrefetchDispatcher::BeginBackgroundTask(
-    std::unique_ptr<ScopedBackgroundTask> task) {}
+    std::unique_ptr<PrefetchBackgroundTask> task) {}
 
 void TestPrefetchDispatcher::StopBackgroundTask() {}
 
