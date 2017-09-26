@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99ee5af3_1fd87e48",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_web_contents_data.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-09-26T00:52:54Z",
+      "side": 1,
+      "message": "Let\u0027s please add a bool to encode whether it was being shown or destroyed, which lets us separate the two cases in backend analysis. It\u0027s very useful to know if a site tends to get backgrounded and never shown again vs one that gets backgrounded and interacted with again.",
+      "range": {
+        "startLine": 237,
+        "startChar": 31,
+        "endLine": 237,
+        "endChar": 32
+      },
+      "revId": "85fd70e60120c177532935d08f2b8daea4e8961b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
