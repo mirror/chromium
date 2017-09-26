@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec76e5cc_583b0310",
+        "filename": "content/browser/permissions/permission_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-26T07:48:37Z",
+      "side": 1,
+      "message": "Should we close the paren after \u0027i.e. this is a worker\u0027?  Or please complete the sentence.",
+      "revId": "2e138685cf5f225d496c603d0d4cc660b0e72511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
