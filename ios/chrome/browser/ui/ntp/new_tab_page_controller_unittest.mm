@@ -120,7 +120,7 @@ class NewTabPageControllerTest : public BlockCleanupTest {
 TEST_F(NewTabPageControllerTest, NewTabBarItemDidChange) {
   // Switching the selected index in the NewTabPageBar should cause
   // newTabBarItemDidChange to get called.
-  NewTabPageBar* bar = [[controller_ ntpView] tabBar];
+  NewTabPageBar* bar = [[controller_ view] tabBar];
   NSUInteger bookmarkIndex = 0;
   UIButton* button = [[bar buttons] objectAtIndex:bookmarkIndex];
   UIControlEvents event =

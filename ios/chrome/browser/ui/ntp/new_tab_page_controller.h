@@ -109,7 +109,7 @@ std::string FragmentFromIdentifier(ntp_home::PanelIdentifier panel);
 @class NewTabPageView;
 
 @interface NewTabPageController (TestSupport)
-@property(nonatomic, strong) NewTabPageView* ntpView;
+@property(nonatomic, strong) NewTabPageView* view;
 
 - (id<NewTabPagePanelProtocol>)currentController;
 - (BookmarkHomeTabletNTPController*)bookmarkController;
