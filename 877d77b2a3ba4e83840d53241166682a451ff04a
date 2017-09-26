@@ -16,6 +16,24 @@
       "revId": "877d77b2a3ba4e83840d53241166682a451ff04a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd1f4812_2e775200",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-26T00:43:14Z",
+      "side": 1,
+      "message": "Sorry, I misunderstood. Done.",
+      "parentUuid": "302a7795_46cfba00",
+      "revId": "877d77b2a3ba4e83840d53241166682a451ff04a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
