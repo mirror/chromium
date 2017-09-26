@@ -655,17 +655,6 @@ blink::WebInputElement FindUsernameElementPrecedingPasswordElement(
   return blink::WebInputElement();
 }
 
-bool ShouldShowStandaloneManuallFallback(const blink::WebInputElement& element,
-                                         const GURL& url) {
-  return (
-      element.IsPasswordField() &&
-      !IsCreditCardVerificationPasswordField(element) &&
-      !HasCreditCardAutocompleteAttributes(element) &&
-      !base::StartsWith(url.scheme(), "chrome", base::CompareCase::SENSITIVE) &&
-      !url.SchemeIs(url::kAboutScheme) &&
-      base::FeatureList::IsEnabled(
-          password_manager::features::kEnableManualFallbacksFillingStandalone));
-}
 
 }  // namespace
 
@@ -1055,7 +1044,6 @@ bool PasswordAutofillAgent::ShowSuggestions(
       }
 #endif
       if (!generation_popup_showing && !blacklisted_form_found_ &&
-          ShouldShowStandaloneManuallFallback(element, frame_url) &&
           ShowManualFallbackSuggestion(element)) {
         return true;
       }

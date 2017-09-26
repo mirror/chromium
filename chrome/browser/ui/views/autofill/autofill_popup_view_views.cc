@@ -7,6 +7,7 @@
 #include "base/optional.h"
 #include "chrome/browser/ui/autofill/autofill_popup_controller.h"
 #include "chrome/browser/ui/autofill/autofill_popup_layout_model.h"
+#include "chrome/browser/ui/views/autofill/autofill_popup_view_toolkit_views.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/autofill/core/browser/popup_item_ids.h"
 #include "components/autofill/core/browser/suggestion.h"
@@ -264,6 +265,16 @@ AutofillPopupView* AutofillPopupView::Create(
   if (!observing_widget)
     return NULL;
 
+  bool text_only = true;
+  for (int i = 0; i < controller->GetLineCount(); ++i) {
+    int type = controller->GetSuggestionAt(i).frontend_id;
+    if (type != POPUP_ITEM_ID_USERNAME_ENTRY && type != POPUP_ITEM_ID_TITLE) {
+      text_only = false;
+      break;
+    }
+  }
+  if (text_only)
+    return new AutofillPopupViewToolkitViews(controller, observing_widget);
   return new AutofillPopupViewViews(controller, observing_widget);
 }
 
