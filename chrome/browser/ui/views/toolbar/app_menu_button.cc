@@ -16,12 +16,13 @@
 #include "chrome/browser/themes/theme_service.h"
 #include "chrome/browser/themes/theme_service_factory.h"
 #include "chrome/browser/ui/browser.h"
+#include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/browser_otr_state.h"
 #include "chrome/browser/ui/layout_constants.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/toolbar/app_menu_model.h"
 #include "chrome/browser/ui/views/extensions/browser_action_drag_data.h"
-#include "chrome/browser/ui/views/feature_promos/incognito_window_promo_bubble_view.h"
+#include "chrome/browser/ui/views/frame/browser_view.h"
 #include "chrome/browser/ui/views/toolbar/app_menu.h"
 #include "chrome/browser/ui/views/toolbar/toolbar_button.h"
 #include "chrome/browser/ui/views/toolbar/toolbar_view.h"
@@ -230,18 +231,6 @@ void AppMenuButton::AnimateIconIfPossible() {
   new_icon_->Animate(views::AnimatedIconView::END);
 }
 
-void AppMenuButton::ShowPromo() {
-  // Owned by its native widget. Will be destroyed when its widget is destroyed.
-  IncognitoWindowPromoBubbleView* incognito_window_promo =
-      IncognitoWindowPromoBubbleView::CreateOwned(this);
-  views::Widget* widget = incognito_window_promo->GetWidget();
-  if (!incognito_window_promo_observer_.IsObserving(widget)) {
-    incognito_window_promo_observer_.Add(widget);
-    AnimateInkDrop(views::InkDropState::ACTIVATED, nullptr);
-    AppMenuButton::SchedulePaint();
-  }
-}
-
 const char* AppMenuButton::GetClassName() const {
   return "AppMenuButton";
 }
@@ -305,12 +294,4 @@ void AppMenuButton::OnDragExited() {
 
 int AppMenuButton::OnPerformDrop(const ui::DropTargetEvent& event) {
   return ui::DragDropTypes::DRAG_MOVE;
-}
-
-void AppMenuButton::OnWidgetDestroying(views::Widget* widget) {
-  if (incognito_window_promo_observer_.IsObserving(widget)) {
-    incognito_window_promo_observer_.Remove(widget);
-    AnimateInkDrop(views::InkDropState::DEACTIVATED, nullptr);
-    AppMenuButton::SchedulePaint();
-  }
 }
