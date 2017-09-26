@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3967bd32_9ec9df33",
+        "filename": "chrome/browser/extensions/bookmark_app_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-26T04:41:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd9a4345_4cc7bfb0",
+      "revId": "983138f3f8f078732d64d057539d52c3320672db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5b599d7_210c2198",
         "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "983138f3f8f078732d64d057539d52c3320672db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4118d372_77726598",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-26T04:41:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5b599d7_210c2198",
+      "revId": "983138f3f8f078732d64d057539d52c3320672db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ad58f4f5_6c4ed08a",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-26T04:41:09Z",
+      "side": 1,
+      "message": "As discussed, there\u0027s a lot of complexity and refactoring that should be done to MenuManager/ExtensionIconManager to make the semantics here reasonable. Since the functionality hit here is acceptable (that the icon displays after page load), we will opt to keep this patch simple.\n\nAdded a TODO to make the icon loading more immediate, which we can remove if we end up being happy with this functionality.",
+      "parentUuid": "1a9f031c_ce297d49",
+      "revId": "983138f3f8f078732d64d057539d52c3320672db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99f58eee_780132d6",
         "filename": "chrome/browser/ui/views/frame/browser_view.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "983138f3f8f078732d64d057539d52c3320672db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee1cca25_d0511417",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1631,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-26T04:41:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99f58eee_780132d6",
+      "revId": "983138f3f8f078732d64d057539d52c3320672db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "1691c9b5_2ed52073",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1651,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-26T04:41:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0123a48_a94a42e0",
+      "revId": "983138f3f8f078732d64d057539d52c3320672db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "295af379_a33ef399",
         "filename": "chrome/browser/ui/views/frame/browser_view.cc",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "983138f3f8f078732d64d057539d52c3320672db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11a87a0e_0b5fbbab",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1668,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-26T04:41:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "295af379_a33ef399",
+      "revId": "983138f3f8f078732d64d057539d52c3320672db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
