@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e7be36a_e35428a8",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-09-26T23:44:50Z",
+      "side": 1,
+      "message": "Is there a test somewhere for the copy of the logic at this layer we could add to?",
+      "revId": "acbc7c84d57c6e3ba6ad7237302c87332c72b7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8186655a_0b315db7",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-09-26T23:44:50Z",
+      "side": 1,
+      "message": "(Ditto here.)",
+      "revId": "acbc7c84d57c6e3ba6ad7237302c87332c72b7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ced62b4_b5cfdaa3",
+        "filename": "net/url_request/url_request.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 936,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-09-26T23:44:50Z",
+      "side": 1,
+      "message": "It seems we ought to remove it for all method changes and not just POST/PUT. This area is woefully underspecified, but I think the right spec citation here is that the Origin header is sent on anything that is not a GET or HEAD. If you believe that logic is evaluated at every redirect leg rather than when we create the request, that suggests that all redirects that change methods (since they always change to GET) should drop the Origin header.\n\nhttps://fetch.spec.whatwg.org/#origin-header",
+      "revId": "acbc7c84d57c6e3ba6ad7237302c87332c72b7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
