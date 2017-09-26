@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f88bb9d_dbbca8d7",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-09-26T10:21:28Z",
+      "side": 1,
+      "message": "that seems to collide with the one in line 211? Maybe update the old rule?",
+      "revId": "b852944d5d4f1eb8b593ccf037a0f8e56e9bce07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
