@@ -447,6 +447,30 @@
       "revId": "46f945057ba714304ed4e56f893b6e02d3622b83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b844d6b_b205691e",
+        "filename": "content/public/common/url_loader_throttle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-26T21:41:17Z",
+      "side": 1,
+      "message": "\u003e\u003e I\u0027d be fine with PauseNetworkBodyRead().\n\nThe name sounds a little harder to understand than \"PauseBodyReadFromNet\"/\"PauseReadingBodyFromNet\". (But you are definitely a better English speaker. :) I could be wrong.)\n\nI am fine with the current name but I am open to the idea of renaming if it is more clear.\nRenaming will touch ~20 files. So I hope we agree on a great name first.\n\nJohn: Do you have any comments on the naming:\n- PauseCachingResponseBody() or\n- PauseNetworkBodyRead() / PauseBodyReadFromNet() / PauseReadingBodyFromNet()\n\n\n\u003e\u003e If Resume() is OOB, no need to do anything else with the comments.\nYes, Resume() could be out-of-band.",
+      "parentUuid": "35b0d0e7_39b6c90e",
+      "range": {
+        "startLine": 43,
+        "startChar": 17,
+        "endLine": 43,
+        "endChar": 42
+      },
+      "revId": "46f945057ba714304ed4e56f893b6e02d3622b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
