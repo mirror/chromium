@@ -6,10 +6,14 @@
 
 #include <utility>
 
+#include "base/memory/ptr_util.h"
 #include "base/time/time.h"
 #include "base/values.h"
 #include "chrome/browser/chromeos/policy/proto/chrome_device_policy.pb.h"
 #include "chrome/browser/chromeos/settings/device_settings_test_helper.h"
+#include "chromeos/dbus/dbus_thread_manager.h"
+#include "chromeos/dbus/fake_power_manager_client.h"
+#include "testing/gmock/include/gmock/gmock.h"
 
 namespace em = enterprise_management;
 
@@ -154,5 +158,8 @@ TEST_F(DeviceOffHoursControllerTest, CheckOffHoursModeOn) {
                   ->guest_mode_enabled()
                   .guest_mode_enabled());
 }
+
+// TODO(yakovleva): Add tests for PowerManagerClient observer, SuspendDone
+// calls.
 
 }  // namespace chromeos
