@@ -71,6 +71,7 @@ void DriverEGL::InitializeStaticBindings() {
       reinterpret_cast<eglGetDisplayProc>(GetGLProcAddress("eglGetDisplay"));
   fn.eglGetErrorFn =
       reinterpret_cast<eglGetErrorProc>(GetGLProcAddress("eglGetError"));
+  fn.eglGetNativeClientBufferANDROIDFn = 0;
   fn.eglGetPlatformDisplayEXTFn = 0;
   fn.eglGetProcAddressFn = reinterpret_cast<eglGetProcAddressProc>(
       GetGLProcAddress("eglGetProcAddress"));
@@ -146,6 +147,8 @@ void DriverEGL::InitializeExtensionBindings() {
   ExtensionSet extensions(MakeExtensionSet(platform_extensions));
   ALLOW_UNUSED_LOCAL(extensions);
 
+  ext.b_EGL_ANDROID_get_native_client_buffer =
+      HasExtension(extensions, "EGL_ANDROID_get_native_client_buffer");
   ext.b_EGL_ANGLE_d3d_share_handle_client_buffer =
       HasExtension(extensions, "EGL_ANGLE_d3d_share_handle_client_buffer");
   ext.b_EGL_ANGLE_program_cache_control =
@@ -203,6 +206,12 @@ void DriverEGL::InitializeExtensionBindings() {
   if (ext.b_EGL_KHR_stream) {
     fn.eglDestroyStreamKHRFn = reinterpret_cast<eglDestroyStreamKHRProc>(
         GetGLProcAddress("eglDestroyStreamKHR"));
+  }
+
+  if (ext.b_EGL_ANDROID_get_native_client_buffer) {
+    fn.eglGetNativeClientBufferANDROIDFn =
+        reinterpret_cast<eglGetNativeClientBufferANDROIDProc>(
+            GetGLProcAddress("eglGetNativeClientBufferANDROID"));
   }
 
   if (ext.b_EGL_CHROMIUM_sync_control) {
@@ -463,6 +472,11 @@ EGLDisplay EGLApiBase::eglGetDisplayFn(EGLNativeDisplayType display_id) {
 
 EGLint EGLApiBase::eglGetErrorFn(void) {
   return driver_->fn.eglGetErrorFn();
+}
+
+EGLClientBuffer EGLApiBase::eglGetNativeClientBufferANDROIDFn(
+    void* ahardwarebuffer) {
+  return driver_->fn.eglGetNativeClientBufferANDROIDFn(ahardwarebuffer);
 }
 
 EGLDisplay EGLApiBase::eglGetPlatformDisplayEXTFn(EGLenum platform,
@@ -869,6 +883,13 @@ EGLDisplay TraceEGLApi::eglGetDisplayFn(EGLNativeDisplayType display_id) {
 EGLint TraceEGLApi::eglGetErrorFn(void) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglGetError")
   return egl_api_->eglGetErrorFn();
+}
+
+EGLClientBuffer TraceEGLApi::eglGetNativeClientBufferANDROIDFn(
+    void* ahardwarebuffer) {
+  TRACE_EVENT_BINARY_EFFICIENT0("gpu",
+                                "TraceGLAPI::eglGetNativeClientBufferANDROID")
+  return egl_api_->eglGetNativeClientBufferANDROIDFn(ahardwarebuffer);
 }
 
 EGLDisplay TraceEGLApi::eglGetPlatformDisplayEXTFn(EGLenum platform,
@@ -1421,6 +1442,16 @@ EGLint DebugEGLApi::eglGetErrorFn(void) {
                  << "("
                  << ")");
   EGLint result = egl_api_->eglGetErrorFn();
+  GL_SERVICE_LOG("GL_RESULT: " << result);
+  return result;
+}
+
+EGLClientBuffer DebugEGLApi::eglGetNativeClientBufferANDROIDFn(
+    void* ahardwarebuffer) {
+  GL_SERVICE_LOG("eglGetNativeClientBufferANDROID"
+                 << "(" << static_cast<const void*>(ahardwarebuffer) << ")");
+  EGLClientBuffer result =
+      egl_api_->eglGetNativeClientBufferANDROIDFn(ahardwarebuffer);
   GL_SERVICE_LOG("GL_RESULT: " << result);
   return result;
 }
