@@ -22,6 +22,30 @@
       "revId": "691f2ce357c2f1d0fbb75a33f173786fbe01d938",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bb887d7_5bbba7cd",
+        "filename": "ios/showcase/payments/sc_payments_editor_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-09-26T15:58:34Z",
+      "side": 1,
+      "message": "I don\u0027t have a good answer to that question yet. I\u0027m not sure what exactly is causing EarlGrey\u0027s synchronization think the app is not idle. I opened a bug and left a TODO to come back to this in the future.",
+      "parentUuid": "2c5fcf83_8f642e7b",
+      "range": {
+        "startLine": 348,
+        "startChar": 2,
+        "endLine": 348,
+        "endChar": 76
+      },
+      "revId": "691f2ce357c2f1d0fbb75a33f173786fbe01d938",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
