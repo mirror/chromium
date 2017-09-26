@@ -42,6 +42,14 @@ public final class DownloadInfo {
     private final boolean mIsOfflinePage;
     private final int mState;
     private final long mLastAccessTime;
+    private long mSystemDownloadId;
+    private boolean mCanResolve;
+    private boolean mIsSupportedMimeType;
+    private long mStartTime;
+    private boolean mCanDownloadWhileMetered;
+    private boolean mIsAutoResumable;
+    private int mNotificationId;
+    private boolean mIsDownloadPending;
 
     // New variables to assist with the migration to OfflineItems.
     private final ContentId mContentId;
@@ -72,6 +80,14 @@ public final class DownloadInfo {
         mIsOfflinePage = builder.mIsOfflinePage;
         mState = builder.mState;
         mLastAccessTime = builder.mLastAccessTime;
+        mSystemDownloadId = builder.mSystemDownloadId;
+        mCanResolve = builder.mCanResolve;
+        mIsSupportedMimeType = builder.mIsSupportedMimeType;
+        mStartTime = builder.mStartTime;
+        mCanDownloadWhileMetered = builder.mCanDownloadWhileMetered;
+        mIsAutoResumable = builder.mIsAutoResumable;
+        mNotificationId = builder.mNotificationId;
+        mIsDownloadPending = builder.mIsDownloadPending;
 
         if (builder.mContentId != null) {
             mContentId = builder.mContentId;
@@ -190,6 +206,38 @@ public final class DownloadInfo {
         return mIcon;
     }
 
+    public long getSystemDownloadId() {
+        return mSystemDownloadId;
+    }
+
+    public boolean getCanResolve() {
+        return mCanResolve;
+    }
+
+    public boolean getIsSupportedMimeType() {
+        return mIsSupportedMimeType;
+    }
+
+    public long getStartTime() {
+        return mStartTime;
+    }
+
+    public boolean getCanDownloadWhileMetered() {
+        return mCanDownloadWhileMetered;
+    }
+
+    public boolean getIsAutoResumable() {
+        return mIsAutoResumable;
+    }
+
+    public int getNotificationId() {
+        return mNotificationId;
+    }
+
+    public boolean getIsDownloadPending() {
+        return mIsDownloadPending;
+    }
+
     /**
      * Helper method to build a {@link DownloadInfo} from an {@link OfflineItem}.
      * @param item The {@link OfflineItem} to mimic.
@@ -268,6 +316,14 @@ public final class DownloadInfo {
         private boolean mIsOpenable = true;
         private boolean mIsTransient;
         private Bitmap mIcon;
+        private long mSystemDownloadId;
+        private boolean mCanResolve;
+        private boolean mIsSupportedMimeType;
+        private long mStartTime;
+        private boolean mCanDownloadWhileMetered;
+        private boolean mIsAutoResumable;
+        private int mNotificationId;
+        private boolean mIsDownloadPending;
 
         public Builder setUrl(String url) {
             mUrl = url;
@@ -399,6 +455,46 @@ public final class DownloadInfo {
             return this;
         }
 
+        public Builder setSystemDownloadId(long systemDownloadId) {
+            mSystemDownloadId = systemDownloadId;
+            return this;
+        }
+
+        public Builder setCanResolve(boolean canResolve) {
+            mCanResolve = canResolve;
+            return this;
+        }
+
+        public Builder setIsSupportedMimeType(boolean isSupportedMimeType) {
+            mIsSupportedMimeType = isSupportedMimeType;
+            return this;
+        }
+
+        public Builder setStartTime(long startTime) {
+            mStartTime = startTime;
+            return this;
+        }
+
+        public Builder setCanDownloadWhileMetered(boolean canDownloadWhileMetered) {
+            mCanDownloadWhileMetered = canDownloadWhileMetered;
+            return this;
+        }
+
+        public Builder setIsAutoResumable(boolean isAutoResumable) {
+            mIsAutoResumable = isAutoResumable;
+            return this;
+        }
+
+        public Builder setNotificationId(int notificationId) {
+            mNotificationId = notificationId;
+            return this;
+        }
+
+        public Builder setIsDownloadPending(boolean isDownloadPending) {
+            mIsDownloadPending = isDownloadPending;
+            return this;
+        }
+
         public DownloadInfo build() {
             return new DownloadInfo(this);
         }
@@ -432,7 +528,24 @@ public final class DownloadInfo {
                     .setIsOfflinePage(downloadInfo.isOfflinePage())
                     .setState(downloadInfo.state())
                     .setLastAccessTime(downloadInfo.getLastAccessTime())
-                    .setIcon(downloadInfo.getIcon());
+                    .setIcon(downloadInfo.getIcon())
+                    .setSystemDownloadId(downloadInfo.getSystemDownloadId())
+                    .setCanResolve(downloadInfo.getCanResolve())
+                    .setIsSupportedMimeType(downloadInfo.getIsSupportedMimeType())
+                    .setStartTime(downloadInfo.getStartTime())
+                    .setCanDownloadWhileMetered(downloadInfo.getCanDownloadWhileMetered())
+                    .setIsAutoResumable(downloadInfo.getIsAutoResumable())
+                    .setNotificationId(downloadInfo.getNotificationId())
+                    .setIsDownloadPending(downloadInfo.getIsDownloadPending());
+            return builder;
+        }
+
+        public static Builder fromSharedPreferenceEntry(DownloadSharedPreferenceEntry entry) {
+            Builder builder = new Builder();
+            builder.setContentId(entry.id)
+                    .setFileName(entry.fileName)
+                    .setIsOffTheRecord(entry.isOffTheRecord)
+                    .setIsTransient(entry.isTransient);
             return builder;
         }
     }

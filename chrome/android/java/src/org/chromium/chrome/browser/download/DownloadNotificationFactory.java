@@ -61,7 +61,7 @@ public final class DownloadNotificationFactory {
      * @return Notification that is built based on these parameters.
      */
     public static Notification buildNotification(
-            Context context, DownloadStatus downloadStatus, DownloadUpdate downloadUpdate) {
+            Context context, DownloadStatus downloadStatus, DownloadInfo downloadInfo) {
         ChromeNotificationBuilder builder =
                 NotificationBuilderFactory
                         .createChromeNotificationBuilder(
@@ -75,58 +75,56 @@ public final class DownloadNotificationFactory {
 
         switch (downloadStatus) {
             case IN_PROGRESS:
-                Preconditions.checkNotNull(downloadUpdate.getProgress());
-                Preconditions.checkNotNull(downloadUpdate.getContentId());
-                Preconditions.checkArgument(downloadUpdate.getNotificationId() != -1);
+                Preconditions.checkNotNull(downloadInfo.getProgress());
+                Preconditions.checkNotNull(downloadInfo.getContentId());
+                Preconditions.checkArgument(downloadInfo.getNotificationId() != -1);
 
-                boolean indeterminate = downloadUpdate.getProgress().isIndeterminate()
-                        || downloadUpdate.getIsDownloadPending();
-                if (downloadUpdate.getIsDownloadPending()) {
+                boolean indeterminate = downloadInfo.getProgress().isIndeterminate()
+                        || downloadInfo.getIsDownloadPending();
+                if (downloadInfo.getIsDownloadPending()) {
                     contentText = context.getResources().getString(
                             R.string.download_notification_pending);
-                } else if (indeterminate || downloadUpdate.getTimeRemainingInMillis() < 0) {
+                } else if (indeterminate || downloadInfo.getTimeRemainingInMillis() < 0) {
                     // TODO(dimich): Enable the byte count back in M59. See bug 704049 for more info
                     // and details of what was temporarily reverted (for M58).
                     contentText = context.getResources().getString(R.string.download_started);
                 } else {
                     contentText = DownloadUtils.getTimeOrFilesLeftString(context,
-                            downloadUpdate.getProgress(),
-                            downloadUpdate.getTimeRemainingInMillis());
+                            downloadInfo.getProgress(), downloadInfo.getTimeRemainingInMillis());
                 }
-                iconId = downloadUpdate.getIsDownloadPending()
-                        ? R.drawable.ic_download_pending
-                        : android.R.drawable.stat_sys_download;
+                iconId = downloadInfo.getIsDownloadPending() ? R.drawable.ic_download_pending
+                                                             : android.R.drawable.stat_sys_download;
 
                 Intent pauseIntent = buildActionIntent(context, ACTION_DOWNLOAD_PAUSE,
-                        downloadUpdate.getContentId(), downloadUpdate.getIsOffTheRecord());
+                        downloadInfo.getContentId(), downloadInfo.isOffTheRecord());
                 Intent cancelIntent = buildActionIntent(context, ACTION_DOWNLOAD_CANCEL,
-                        downloadUpdate.getContentId(), downloadUpdate.getIsOffTheRecord());
+                        downloadInfo.getContentId(), downloadInfo.isOffTheRecord());
 
                 builder.setOngoing(true)
                         .setPriority(Notification.PRIORITY_HIGH)
                         .setAutoCancel(false)
-                        .setLargeIcon(downloadUpdate.getIcon())
+                        .setLargeIcon(downloadInfo.getIcon())
                         .addAction(R.drawable.ic_pause_white_24dp,
                                 context.getResources().getString(
                                         R.string.download_notification_pause_button),
                                 buildPendingIntent(
-                                        context, pauseIntent, downloadUpdate.getNotificationId()))
+                                        context, pauseIntent, downloadInfo.getNotificationId()))
                         .addAction(R.drawable.btn_close_white,
                                 context.getResources().getString(
                                         R.string.download_notification_cancel_button),
                                 buildPendingIntent(
-                                        context, cancelIntent, downloadUpdate.getNotificationId()));
+                                        context, cancelIntent, downloadInfo.getNotificationId()));
 
-                if (!downloadUpdate.getIsDownloadPending()) {
+                if (!downloadInfo.getIsDownloadPending()) {
                     builder.setProgress(100,
-                            indeterminate ? -1 : downloadUpdate.getProgress().getPercentage(),
+                            indeterminate ? -1 : downloadInfo.getProgress().getPercentage(),
                             indeterminate);
                 }
 
                 if (!indeterminate
-                        && !LegacyHelpers.isLegacyOfflinePage(downloadUpdate.getContentId())) {
+                        && !LegacyHelpers.isLegacyOfflinePage(downloadInfo.getContentId())) {
                     String percentText = DownloadUtils.getPercentageString(
-                            downloadUpdate.getProgress().getPercentage());
+                            downloadInfo.getProgress().getPercentage());
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                         builder.setSubText(percentText);
                     } else {
@@ -134,81 +132,80 @@ public final class DownloadNotificationFactory {
                     }
                 }
 
-                if (downloadUpdate.getStartTime() > 0) {
-                    builder.setWhen(downloadUpdate.getStartTime());
+                if (downloadInfo.getStartTime() > 0) {
+                    builder.setWhen(downloadInfo.getStartTime());
                 }
 
                 break;
             case PAUSED:
-                Preconditions.checkNotNull(downloadUpdate.getContentId());
-                Preconditions.checkArgument(downloadUpdate.getNotificationId() != -1);
+                Preconditions.checkNotNull(downloadInfo.getContentId());
+                Preconditions.checkArgument(downloadInfo.getNotificationId() != -1);
 
                 contentText =
                         context.getResources().getString(R.string.download_notification_paused);
                 iconId = R.drawable.ic_download_pause;
 
                 Intent resumeIntent = buildActionIntent(context, ACTION_DOWNLOAD_RESUME,
-                        downloadUpdate.getContentId(), downloadUpdate.getIsOffTheRecord());
+                        downloadInfo.getContentId(), downloadInfo.isOffTheRecord());
                 cancelIntent = buildActionIntent(context, ACTION_DOWNLOAD_CANCEL,
-                        downloadUpdate.getContentId(), downloadUpdate.getIsOffTheRecord());
-                PendingIntent deleteIntent = buildPendingIntent(
-                        context, cancelIntent, downloadUpdate.getNotificationId());
+                        downloadInfo.getContentId(), downloadInfo.isOffTheRecord());
+                PendingIntent deleteIntent =
+                        buildPendingIntent(context, cancelIntent, downloadInfo.getNotificationId());
 
                 builder.setAutoCancel(false)
-                        .setLargeIcon(downloadUpdate.getIcon())
+                        .setLargeIcon(downloadInfo.getIcon())
                         .addAction(R.drawable.ic_file_download_white_24dp,
                                 context.getResources().getString(
                                         R.string.download_notification_resume_button),
                                 buildPendingIntent(
-                                        context, resumeIntent, downloadUpdate.getNotificationId()))
+                                        context, resumeIntent, downloadInfo.getNotificationId()))
                         .addAction(R.drawable.btn_close_white,
                                 context.getResources().getString(
                                         R.string.download_notification_cancel_button),
                                 buildPendingIntent(
-                                        context, cancelIntent, downloadUpdate.getNotificationId()))
+                                        context, cancelIntent, downloadInfo.getNotificationId()))
                         .setDeleteIntent(deleteIntent);
 
                 break;
 
             case SUCCESSFUL:
-                Preconditions.checkArgument(downloadUpdate.getNotificationId() != -1);
+                Preconditions.checkArgument(downloadInfo.getNotificationId() != -1);
 
                 contentText =
                         context.getResources().getString(R.string.download_notification_completed);
                 iconId = R.drawable.offline_pin;
 
-                if (downloadUpdate.getIsOpenable()) {
+                if (downloadInfo.getIsOpenable()) {
                     Intent intent;
-                    if (LegacyHelpers.isLegacyDownload(downloadUpdate.getContentId())) {
-                        Preconditions.checkNotNull(downloadUpdate.getContentId());
-                        Preconditions.checkArgument(downloadUpdate.getSystemDownloadId() != -1);
+                    if (LegacyHelpers.isLegacyDownload(downloadInfo.getContentId())) {
+                        Preconditions.checkNotNull(downloadInfo.getContentId());
+                        Preconditions.checkArgument(downloadInfo.getSystemDownloadId() != -1);
 
                         intent = new Intent(ACTION_NOTIFICATION_CLICKED);
-                        long[] idArray = {downloadUpdate.getSystemDownloadId()};
+                        long[] idArray = {downloadInfo.getSystemDownloadId()};
                         intent.putExtra(EXTRA_NOTIFICATION_CLICK_DOWNLOAD_IDS, idArray);
-                        intent.putExtra(EXTRA_DOWNLOAD_FILE_PATH, downloadUpdate.getFilePath());
+                        intent.putExtra(EXTRA_DOWNLOAD_FILE_PATH, downloadInfo.getFilePath());
                         intent.putExtra(EXTRA_IS_SUPPORTED_MIME_TYPE,
-                                downloadUpdate.getIsSupportedMimeType());
+                                downloadInfo.getIsSupportedMimeType());
+                        intent.putExtra(EXTRA_IS_OFF_THE_RECORD, downloadInfo.isOffTheRecord());
                         intent.putExtra(
-                                EXTRA_IS_OFF_THE_RECORD, downloadUpdate.getIsOffTheRecord());
-                        intent.putExtra(
-                                EXTRA_DOWNLOAD_CONTENTID_ID, downloadUpdate.getContentId().id);
+                                EXTRA_DOWNLOAD_CONTENTID_ID, downloadInfo.getContentId().id);
                         intent.putExtra(EXTRA_DOWNLOAD_CONTENTID_NAMESPACE,
-                                downloadUpdate.getContentId().namespace);
+                                downloadInfo.getContentId().namespace);
                         intent.putExtra(NotificationConstants.EXTRA_NOTIFICATION_ID,
-                                downloadUpdate.getNotificationId());
-                        DownloadUtils.setOriginalUrlAndReferralExtraToIntent(intent,
-                                downloadUpdate.getOriginalUrl(), downloadUpdate.getReferrer());
+                                downloadInfo.getNotificationId());
+                        DownloadUtils.setOriginalUrlAndReferralExtraToIntent(
+                                intent, downloadInfo.getOriginalUrl(), downloadInfo.getReferrer());
                     } else {
-                        intent = buildActionIntent(context, ACTION_DOWNLOAD_OPEN,
-                                downloadUpdate.getContentId(), false);
+                        intent = buildActionIntent(
+                                context, ACTION_DOWNLOAD_OPEN, downloadInfo.getContentId(), false);
                     }
 
                     ComponentName component = new ComponentName(
                             context.getPackageName(), DownloadBroadcastManager.class.getName());
                     intent.setComponent(component);
                     builder.setContentIntent(
-                            PendingIntent.getService(context, downloadUpdate.getNotificationId(),
+                            PendingIntent.getService(context, downloadInfo.getNotificationId(),
                                     intent, PendingIntent.FLAG_UPDATE_CURRENT));
                 }
                 break;
@@ -217,18 +214,6 @@ public final class DownloadNotificationFactory {
                 iconId = android.R.drawable.stat_sys_download_done;
                 contentText =
                         context.getResources().getString(R.string.download_notification_failed);
-                break;
-
-            case SUMMARY:
-                Preconditions.checkArgument(downloadUpdate.getIconId() != -1);
-
-                iconId = downloadUpdate.getIconId();
-                contentText = "";
-                builder.setContentTitle(
-                               context.getString(R.string.download_notification_summary_title))
-                        .setSubText(context.getString(R.string.menu_downloads))
-                        .setSmallIcon(iconId)
-                        .setGroupSummary(true);
                 break;
 
             default:
@@ -242,18 +227,18 @@ public final class DownloadNotificationFactory {
 
         builder.setContentText(contentText).setSmallIcon(iconId).addExtras(extras);
 
-        if (downloadUpdate.getFileName() != null) {
+        if (downloadInfo.getFileName() != null) {
             builder.setContentTitle(DownloadUtils.getAbbreviatedFileName(
-                    downloadUpdate.getFileName(), MAX_FILE_NAME_LENGTH));
+                    downloadInfo.getFileName(), MAX_FILE_NAME_LENGTH));
         }
-        if (downloadUpdate.getIcon() != null) builder.setLargeIcon(downloadUpdate.getIcon());
-        if (!downloadUpdate.getIsTransient() && downloadUpdate.getNotificationId() != -1
+        if (downloadInfo.getIcon() != null) builder.setLargeIcon(downloadInfo.getIcon());
+        if (!downloadInfo.getIsTransient() && downloadInfo.getNotificationId() != -1
                 && downloadStatus != DownloadStatus.SUCCESSFUL
                 && downloadStatus != DownloadStatus.FAILED) {
             Intent downloadHomeIntent = buildActionIntent(
-                    context, ACTION_NOTIFICATION_CLICKED, null, downloadUpdate.getIsOffTheRecord());
+                    context, ACTION_NOTIFICATION_CLICKED, null, downloadInfo.isOffTheRecord());
             builder.setContentIntent(
-                    PendingIntent.getService(context, downloadUpdate.getNotificationId(),
+                    PendingIntent.getService(context, downloadInfo.getNotificationId(),
                             downloadHomeIntent, PendingIntent.FLAG_UPDATE_CURRENT));
         }
 
@@ -278,7 +263,7 @@ public final class DownloadNotificationFactory {
      * @param id The {@link ContentId} of the download.
      * @param isOffTheRecord Whether the download is incognito.
      */
-    public static Intent buildActionIntent(
+    static Intent buildActionIntent(
             Context context, String action, ContentId id, boolean isOffTheRecord) {
         ComponentName component = new ComponentName(
                 context.getPackageName(), DownloadBroadcastManager.class.getName());
