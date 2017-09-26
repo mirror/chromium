@@ -1372,11 +1372,12 @@ void PasswordAutofillAgent::WillSendSubmitEvent(
   // cleared by some scripts (http://crbug.com/28910, http://crbug.com/391693).
   // Had the user cleared the password, |provisionally_saved_form_| would
   // already have been updated in TextDidChangeInTextField.
-  std::unique_ptr<PasswordForm> password_form = CreatePasswordFormFromWebForm(
-      form, &field_value_and_properties_map_, &form_predictions_);
-  ProvisionallySavePassword(std::move(password_form), form,
+  /* std::unique_ptr<PasswordForm> password_form =
+  CreatePasswordFormFromWebForm( form, &field_value_and_properties_map_,
+  &form_predictions_); ProvisionallySavePassword(std::move(password_form), form,
                             blink::WebInputElement(),
                             RESTRICTION_NON_EMPTY_PASSWORD);
+*/
 }
 
 void PasswordAutofillAgent::WillSubmitForm(const blink::WebFormElement& form) {
