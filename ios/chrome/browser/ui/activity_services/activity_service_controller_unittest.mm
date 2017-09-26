@@ -15,8 +15,8 @@
 #import "ios/chrome/browser/ui/activity_services/requirements/activity_service_password.h"
 #import "ios/chrome/browser/ui/activity_services/requirements/activity_service_positioner.h"
 #import "ios/chrome/browser/ui/activity_services/requirements/activity_service_presentation.h"
-#import "ios/chrome/browser/ui/activity_services/requirements/activity_service_snackbar.h"
 #import "ios/chrome/browser/ui/activity_services/share_to_data.h"
+#import "ios/chrome/browser/ui/commands/snackbar_commands.h"
 #include "ios/chrome/grit/ios_strings.h"
 #include "ios/web/public/test/test_web_thread_bundle.h"
 #include "testing/gtest_mac.h"
@@ -73,16 +73,15 @@
        completionMessage:(NSString*)message;
 
 // Setter function for mocking during testing
-- (void)setProvidersForTesting:(id<ActivityServicePassword,
-                                   ActivityServicePresentation,
-                                   ActivityServiceSnackbar>)provider;
+- (void)setProvidersForTesting:
+            (id<ActivityServicePassword, ActivityServicePresentation>)provider
+                    dispatcher:(id<SnackbarCommands>)dispatcher;
 @end
 
 @interface FakeActivityServiceControllerTestProvider
     : NSObject<ActivityServicePassword,
                ActivityServicePositioner,
-               ActivityServicePresentation,
-               ActivityServiceSnackbar>
+               ActivityServicePresentation>
 
 @property(nonatomic, readonly, strong) UIViewController* parentViewController;
 @property(nonatomic, readonly, strong)
@@ -97,7 +96,6 @@
 // Stores the latest values that were passed to the associated provider methods.
 @property(nonatomic, readonly, copy) NSString* latestErrorAlertTitle;
 @property(nonatomic, readonly, copy) NSString* latestErrorAlertMessage;
-@property(nonatomic, readonly, copy) NSString* latestSnackbarMessage;
 
 // Resets the values of the properties above.
 - (void)resetState;
@@ -114,7 +112,6 @@
     _activityServiceDidEndPresentingWasCalled;
 @synthesize latestErrorAlertTitle = _latestErrorAlertTitle;
 @synthesize latestErrorAlertMessage = _latestErrorAlertMessage;
-@synthesize latestSnackbarMessage = _latestSnackbarMessage;
 @synthesize parentViewController = _parentViewController;
 @synthesize fakePasswordFormFiller = _fakePasswordFormFiller;
 
@@ -159,16 +156,11 @@
   return self.parentViewController.view;
 }
 
-- (void)showSnackbar:(NSString*)message {
-  _latestSnackbarMessage = [message copy];
-}
-
 - (void)resetState {
   _presentActivityServiceViewControllerWasCalled = NO;
   _activityServiceDidEndPresentingWasCalled = NO;
   _latestErrorAlertTitle = nil;
   _latestErrorAlertMessage = nil;
-  _latestSnackbarMessage = nil;
 }
 
 @end
@@ -272,7 +264,7 @@ class ActivityServiceControllerTest : public PlatformTest {
     FakeActivityServiceControllerTestProvider* provider =
         [[FakeActivityServiceControllerTestProvider alloc]
             initWithParentViewController:nil];
-    [activityController setProvidersForTesting:provider];
+    [activityController setProvidersForTesting:provider dispatcher:nil];
 
     // The following call to |processItemsReturnedFromActivity| should not
     // trigger any calls to the PasswordFormFiller.
@@ -314,8 +306,7 @@ TEST_F(ActivityServiceControllerTest, PresentAndDismissController) {
                          dispatcher:nil
                    passwordProvider:provider
                    positionProvider:provider
-               presentationProvider:provider
-                   snackbarProvider:provider];
+               presentationProvider:provider];
   EXPECT_TRUE(provider.presentActivityServiceViewControllerWasCalled);
   EXPECT_FALSE(provider.activityServiceDidEndPresentingWasCalled);
   EXPECT_TRUE([activityController isActive]);
@@ -448,7 +439,7 @@ TEST_F(ActivityServiceControllerTest, ProcessItemsReturnedSuccessfully) {
       [[FakeActivityServiceControllerTestProvider alloc]
           initWithParentViewController:nil];
   ASSERT_TRUE([provider currentPasswordFormFiller]);
-  [activityController setProvidersForTesting:provider];
+  [activityController setProvidersForTesting:provider dispatcher:nil];
 
   EXPECT_TRUE(provider.fakePasswordFormFiller);
   EXPECT_FALSE(provider.fakePasswordFormFiller.methodCalled);
@@ -580,14 +571,14 @@ TEST_F(ActivityServiceControllerTest, TestShareDidCompleteWithSuccess) {
   FakeActivityServiceControllerTestProvider* provider =
       [[FakeActivityServiceControllerTestProvider alloc]
           initWithParentViewController:nil];
-  [controller setProvidersForTesting:provider];
-
   NSString* completion_message = @"Completion!";
+  id dispatcher = OCMProtocolMock(@protocol(SnackbarCommands));
+  [[dispatcher expect] showSnackbarWithMessage:completion_message];
+  [controller setProvidersForTesting:provider dispatcher:dispatcher];
   [controller shareDidComplete:ShareTo::SHARE_SUCCESS
              completionMessage:completion_message];
-
+  EXPECT_OCMOCK_VERIFY(dispatcher);
   EXPECT_TRUE(provider.activityServiceDidEndPresentingWasCalled);
-  EXPECT_NSEQ(completion_message, provider.latestSnackbarMessage);
 }
 
 // Verifies that the snackbar and error alert providers are not invoked for a
@@ -598,14 +589,15 @@ TEST_F(ActivityServiceControllerTest, TestShareDidCompleteWithCancellation) {
   FakeActivityServiceControllerTestProvider* provider =
       [[FakeActivityServiceControllerTestProvider alloc]
           initWithParentViewController:nil];
-  [controller setProvidersForTesting:provider];
-
+  id dispatcher = OCMProtocolMock(@protocol(SnackbarCommands));
+  [[dispatcher reject] showSnackbarWithMessage:[OCMArg any]];
+  [controller setProvidersForTesting:provider dispatcher:dispatcher];
   [controller shareDidComplete:ShareTo::SHARE_CANCEL
              completionMessage:@"dummy"];
+  EXPECT_OCMOCK_VERIFY(dispatcher);
   EXPECT_TRUE(provider.activityServiceDidEndPresentingWasCalled);
   EXPECT_FALSE(provider.latestErrorAlertTitle);
   EXPECT_FALSE(provider.latestErrorAlertMessage);
-  EXPECT_FALSE(provider.latestSnackbarMessage);
 }
 
 // Verifies that the error alert provider is invoked with the proper error
@@ -616,17 +608,17 @@ TEST_F(ActivityServiceControllerTest, TestShareDidCompleteWithError) {
   FakeActivityServiceControllerTestProvider* provider =
       [[FakeActivityServiceControllerTestProvider alloc]
           initWithParentViewController:nil];
-  [controller setProvidersForTesting:provider];
-
+  id dispatcher = OCMProtocolMock(@protocol(SnackbarCommands));
+  [[dispatcher reject] showSnackbarWithMessage:[OCMArg any]];
+  [controller setProvidersForTesting:provider dispatcher:dispatcher];
   [controller shareDidComplete:ShareTo::SHARE_ERROR completionMessage:@"dummy"];
-
+  EXPECT_OCMOCK_VERIFY(dispatcher);
   NSString* error_title =
       l10n_util::GetNSString(IDS_IOS_SHARE_TO_ERROR_ALERT_TITLE);
   NSString* error_message =
       l10n_util::GetNSString(IDS_IOS_SHARE_TO_ERROR_ALERT);
   EXPECT_NSEQ(error_title, provider.latestErrorAlertTitle);
   EXPECT_NSEQ(error_message, provider.latestErrorAlertMessage);
-  EXPECT_FALSE(provider.latestSnackbarMessage);
 }
 
 }  // namespace
