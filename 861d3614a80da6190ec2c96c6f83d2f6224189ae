@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ec506c4e_3e579cbf",
+        "filename": "chromeos/components/tether/ble_scanner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-26T03:36:33Z",
+      "side": 1,
+      "message": "As discussed offline, we don\u0027t want to create one of these each time the function is called.",
+      "parentUuid": "fae74c5c_a8b5e96f",
+      "range": {
+        "startLine": 246,
+        "startChar": 6,
+        "endLine": 246,
+        "endChar": 41
+      },
+      "revId": "861d3614a80da6190ec2c96c6f83d2f6224189ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "43a062d6_72a59074",
         "filename": "chromeos/components/tether/ble_synchronizer.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-26T03:32:06Z",
       "side": 1,
       "message": "Please make a common helper method for adding to the queue?",
+      "range": {
+        "startLine": 121,
+        "startChar": 2,
+        "endLine": 121,
+        "endChar": 14
+      },
+      "revId": "861d3614a80da6190ec2c96c6f83d2f6224189ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7da7a629_c2972898",
+        "filename": "chromeos/components/tether/ble_synchronizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-26T03:36:33Z",
+      "side": 1,
+      "message": "As discussed offline, this wouldn\u0027t really aid readability. Keeping as-is.",
+      "parentUuid": "43a062d6_72a59074",
       "range": {
         "startLine": 121,
         "startChar": 2,
