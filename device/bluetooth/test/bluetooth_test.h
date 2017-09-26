@@ -67,6 +67,7 @@ class BluetoothTestBase : public testing::Test {
 
   static const std::string kTestDeviceName;
   static const std::string kTestDeviceNameEmpty;
+  static const std::string kTestDeviceNameU2f;
 
   static const std::string kTestDeviceAddress1;
   static const std::string kTestDeviceAddress2;
@@ -93,6 +94,7 @@ class BluetoothTestBase : public testing::Test {
   static const std::string kTestUUIDImmediateAlert;
   static const std::string kTestUUIDLinkLoss;
   static const std::string kTestUUIDHeartRate;
+  static const std::string kTestUUIDU2f;
   // Characteristics
   // The following three characteristics are for kTestUUIDGenericAccess.
   static const std::string kTestUUIDDeviceName;
@@ -100,6 +102,8 @@ class BluetoothTestBase : public testing::Test {
   static const std::string kTestUUIDReconnectionAddress;
   // This characteristic is for kTestUUIDHeartRate.
   static const std::string kTestUUIDHeartRateMeasurement;
+  // This characteristic is for kTestUUIDU2f.
+  static const std::string kTestUUIDU2fControlPointLength;
   // Descriptors
   static const std::string kTestUUIDCharacteristicUserDescription;
   static const std::string kTestUUIDClientCharacteristicConfiguration;
@@ -193,6 +197,13 @@ class BluetoothTestBase : public testing::Test {
   //      No Service Data
   //      No Tx Power
   //      Supports BR/EDR and LE.
+  //   7: Name:    kTestDeviceNameU2f
+  //      Address: kTestDeviceAddress1
+  //      RSSI:    kTestRSSI1,
+  //      Advertised UUIDs: {kTestUUIDU2fControlPointLength}
+  //      Service Data:     {kTestUUIDU2fControlPointLength: [0, 20]}
+  //      No Tx Power
+  //      Supports LE.
   virtual BluetoothDevice* SimulateLowEnergyDevice(int device_ordinal);
 
   // Simulates a connected low energy device. Used before starting a low energy
