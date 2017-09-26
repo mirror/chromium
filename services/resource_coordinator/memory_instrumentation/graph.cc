@@ -9,8 +9,9 @@
 namespace memory_instrumentation {
 
 using base::trace_event::MemoryAllocatorDumpGuid;
-using Process = GlobalDumpGraph::Process;
+using Edge = GlobalDumpGraph::Edge;
 using Node = GlobalDumpGraph::Node;
+using Process = GlobalDumpGraph::Process;
 
 GlobalDumpGraph::GlobalDumpGraph() {}
 GlobalDumpGraph::~GlobalDumpGraph() {}
@@ -25,6 +26,19 @@ Process* GlobalDumpGraph::CreateGraphForProcess(base::ProcessId process_id) {
 Node* GlobalDumpGraph::CreateNode(Process* process_graph) {
   all_nodes_.emplace_front(process_graph);
   return &*all_nodes_.begin();
+}
+
+bool GlobalDumpGraph::AddNodeOwnershipEdge(Node* owner,
+                                           Node* owned,
+                                           int importance) {
+  all_edges_.emplace_front(owner, owned, importance);
+
+  // TODO(lalitm): add a check that there is no existing owner and return false
+  // when that happens.
+  Edge* edge = &*all_edges_.begin();
+  owner->SetOwnsEdge(edge);
+  owned->AddOwnedByEdge(edge);
+  return true;
 }
 
 Process::Process(GlobalDumpGraph* global_graph)
@@ -85,6 +99,14 @@ void Node::InsertChild(base::StringPiece subpath, Node* node) {
   children_.emplace(subpath.as_string(), node);
 }
 
+void Node::AddOwnedByEdge(Edge* edge) {
+  owned_by_edges_.push_back(edge);
+}
+
+void Node::SetOwnsEdge(Edge* owns_edge) {
+  owns_edge_ = owns_edge;
+}
+
 void Node::AddEntry(std::string name,
                     Node::Entry::ScalarUnits units,
                     uint64_t value) {
@@ -103,5 +125,8 @@ Node::Entry::Entry(std::string value)
       units(Node::Entry::ScalarUnits::kObjects),
       value_string(value),
       value_uint64(0) {}
+
+Edge::Edge(Node* source, Node* target, int priority)
+    : source_(source), target_(target), priority_(priority), weak_(false) {}
 
 }  // namespace memory_instrumentation
