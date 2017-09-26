@@ -23,6 +23,7 @@ cr.define('settings', function() {
   /** @interface */
   class AndroidAppsBrowserProxy {
     requestAndroidAppsInfo() {}
+    showAndroidManageAppLinks() {}
 
     /**
      * @param {boolean} keyboardAction True if the app was opened using a
@@ -43,6 +44,11 @@ cr.define('settings', function() {
     /** @override */
     showAndroidAppsSettings(keyboardAction) {
       chrome.send('showAndroidAppsSettings', [keyboardAction]);
+    }
+
+    /** @override */
+    showAndroidManageAppLinks() {
+      chrome.send('showAndroidManageAppLinks');
     }
   }
 
