@@ -2664,9 +2664,8 @@ public class LocationBarLayout extends FrameLayout
 
     /**
      * Scroll to ensure the TLD is visible.
-     * @return Whether the TLD was discovered and successfully scrolled to.
      */
-    public boolean scrollUrlBarToTld() {
-        return mUrlBar.scrollToTLD();
+    public void scrollUrlBarToTld() {
+        mUrlBar.scrollToTLD();
     }
 }
