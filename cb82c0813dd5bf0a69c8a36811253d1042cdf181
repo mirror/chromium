@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ddccb1e_70671a95",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-09-26T22:36:36Z",
+      "side": 1,
+      "message": "LOG(INFO)",
+      "range": {
+        "startLine": 183,
+        "startChar": 4,
+        "endLine": 183,
+        "endChar": 14
+      },
+      "revId": "cb82c0813dd5bf0a69c8a36811253d1042cdf181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b6e16fc_243e3923",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-09-26T22:36:36Z",
+      "side": 1,
+      "message": "nit: |doesn\u0027t work| -\u003e |can\u0027t be used|, as actually it will still work, but incorrectly, so it\u0027s explicitly forbidden.",
+      "range": {
+        "startLine": 57,
+        "startChar": 19,
+        "endLine": 57,
+        "endChar": 32
+      },
+      "revId": "cb82c0813dd5bf0a69c8a36811253d1042cdf181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce590d16_453438d1",
+        "filename": "chromeos/dbus/system_clock_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-09-26T22:36:36Z",
+      "side": 1,
+      "message": "Why not \u0027return network_synchronized\u0027? What if it has \u0027false\u0027 value?",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 14
+      },
+      "revId": "cb82c0813dd5bf0a69c8a36811253d1042cdf181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18c1c0e9_5a5d3a80",
+        "filename": "chromeos/dbus/system_clock_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-09-26T22:36:36Z",
+      "side": 1,
+      "message": "Is it OK to retry DBus call every second?\nDid you ensure whether \u0027TimeUpdated\u0027 event happen as soon as it\u0027s synchronized, so that we can/can\u0027t rely on that?",
+      "range": {
+        "startLine": 183,
+        "startChar": 10,
+        "endLine": 183,
+        "endChar": 50
+      },
+      "revId": "cb82c0813dd5bf0a69c8a36811253d1042cdf181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
