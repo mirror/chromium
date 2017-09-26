@@ -6,7 +6,6 @@
 
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
-#include "ash/shell_delegate.h"
 #include "ash/system/system_notifier.h"
 #include "components/signin/core/account_id/account_id.h"
 #include "ui/message_center/message_center.h"
@@ -15,22 +14,20 @@ namespace ash {
 
 InactiveUserNotificationBlocker::InactiveUserNotificationBlocker(
     message_center::MessageCenter* message_center)
-    : NotificationBlocker(message_center), scoped_observer_(this) {
-  auto* session = Shell::Get()->session_controller()->GetUserSession(0);
-  if (session)
-    active_account_id_ = session->user_info->account_id;
-}
+    : NotificationBlocker(message_center), scoped_observer_(this) {}
 
 InactiveUserNotificationBlocker::~InactiveUserNotificationBlocker() = default;
 
 bool InactiveUserNotificationBlocker::ShouldShowNotification(
     const message_center::Notification& notification) const {
-  if (!Shell::Get()->shell_delegate()->IsMultiProfilesEnabled())
+  if (!Shell::Get()->session_controller()->IsMultiProfileAvailable())
     return true;
 
   if (system_notifier::IsAshSystemNotifier(notification.notifier_id()))
     return true;
 
+  // TODO(jamescook): Should this allow notifications where the profile_id
+  // is not set?
   return AccountId::FromUserEmail(notification.notifier_id().profile_id) ==
          active_account_id_;
 }

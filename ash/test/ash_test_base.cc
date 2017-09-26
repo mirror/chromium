@@ -384,12 +384,7 @@ void AshTestBase::CreateUserSessions(int n) {
 }
 
 void AshTestBase::SimulateUserLogin(const std::string& user_email) {
-  TestSessionControllerClient* const session_controller_client =
-      GetSessionControllerClient();
-  session_controller_client->AddUserSession(user_email);
-  session_controller_client->SwitchActiveUser(
-      AccountId::FromUserEmail(user_email));
-  session_controller_client->SetSessionState(SessionState::ACTIVE);
+  GetSessionControllerClient()->SimulateUserLogin(user_email);
 }
 
 void AshTestBase::ClearLogin() {

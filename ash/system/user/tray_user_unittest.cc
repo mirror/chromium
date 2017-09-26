@@ -47,7 +47,7 @@ gfx::ImageSkia CreateImageSkiaWithColor(int width, int height, SkColor color) {
   return gfx::ImageSkia::CreateFrom1xBitmap(bitmap);
 }
 
-class TrayUserTest : public AshTestBase {
+class TrayUserTest : public NoSessionAshTestBase {
  public:
   TrayUserTest() = default;
 
@@ -87,10 +87,6 @@ void TrayUserTest::SetUp() {
 
 void TrayUserTest::InitializeParameters(int users_logged_in,
                                         bool multiprofile) {
-  TestShellDelegate* shell_delegate =
-      static_cast<TestShellDelegate*>(Shell::Get()->shell_delegate());
-  shell_delegate->set_multi_profiles_enabled(multiprofile);
-
   // Set our default assumptions. Note that it is sufficient to set these
   // after everything was created.
   GetSessionControllerClient()->Reset();
@@ -98,6 +94,9 @@ void TrayUserTest::InitializeParameters(int users_logged_in,
             static_cast<int>(arraysize(kPredefinedUserEmails)));
   for (int i = 0; i < users_logged_in; ++i)
     SimulateUserLogin(kPredefinedUserEmails[i]);
+
+  if (multiprofile)
+    GetSessionControllerClient()->SetMultiProfileAvailable();
 
   // Instead of using the existing tray panels we create new ones which makes
   // the access easier.
@@ -193,14 +192,12 @@ TEST_F(TrayUserTest, AccessibleLabelContainsMultiUserInfo) {
 // Note: the mouse watcher (for automatic closing upon leave) cannot be tested
 // here since it does not work with the event system in unit tests.
 TEST_F(TrayUserTest, MultiUserModeDoesNotAllowToAddUser) {
-  InitializeParameters(1, true);
+  // Sign in more than one user.
+  InitializeParameters(2, true);
 
   // Move the mouse over the status area and click to open the status menu.
   ui::test::EventGenerator& generator = GetEventGenerator();
   generator.set_async(false);
-
-  // Set the number of logged in users.
-  CreateUserSessions(5);
 
   // Verify that nothing is shown.
   EXPECT_FALSE(tray()->IsSystemBubbleVisible());
