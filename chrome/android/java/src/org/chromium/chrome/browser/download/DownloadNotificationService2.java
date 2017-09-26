@@ -157,11 +157,11 @@ public class DownloadNotificationService2 {
      * @param icon                    A {@link Bitmap} to be used as the large icon for display.
      */
     @VisibleForTesting
-    public void notifyDownloadProgress(ContentId id, String fileName, Progress progress,
-            long bytesReceived, long timeRemainingInMillis, long startTime, boolean isOffTheRecord,
-            boolean canDownloadWhileMetered, boolean isTransient, Bitmap icon) {
-        updateActiveDownloadNotification(id, fileName, progress, timeRemainingInMillis, startTime,
-                isOffTheRecord, canDownloadWhileMetered, false, isTransient, icon, false);
+    public void notifyDownloadProgress(DownloadInfo downloadInfo) {
+        downloadInfo = DownloadInfo.Builder.fromDownloadInfo(downloadInfo)
+                               .setIsDownloadPending(false)
+                               .build();
+        updateActiveDownloadNotification(downloadInfo, false);
     }
 
     /**
@@ -174,11 +174,14 @@ public class DownloadNotificationService2 {
      *                                downloads home.
      * @param icon                    A {@link Bitmap} to be used as the large icon for display.
      */
-    void notifyDownloadPending(ContentId id, String fileName, boolean isOffTheRecord,
-            boolean canDownloadWhileMetered, boolean isTransient, Bitmap icon,
-            boolean hasUserGesture) {
-        updateActiveDownloadNotification(id, fileName, Progress.createIndeterminateProgress(), 0, 0,
-                isOffTheRecord, canDownloadWhileMetered, true, isTransient, icon, hasUserGesture);
+    void notifyDownloadPending(DownloadInfo downloadInfo, boolean hasUserGesture) {
+        downloadInfo = DownloadInfo.Builder.fromDownloadInfo(downloadInfo)
+                               .setProgress(Progress.createIndeterminateProgress())
+                               .setTimeRemainingInMillis(0)
+                               .setStartTime(0)
+                               .setIsDownloadPending(true)
+                               .build();
+        updateActiveDownloadNotification(downloadInfo, hasUserGesture);
     }
 
     /**
@@ -197,27 +200,16 @@ public class DownloadNotificationService2 {
      *                                downloads home.
      * @param icon                    A {@link Bitmap} to be used as the large icon for display.
      */
-    private void updateActiveDownloadNotification(ContentId id, String fileName, Progress progress,
-            long timeRemainingInMillis, long startTime, boolean isOffTheRecord,
-            boolean canDownloadWhileMetered, boolean isDownloadPending, boolean isTransient,
-            Bitmap icon, boolean hasUserGesture) {
-        int notificationId = getNotificationId(id);
+    private void updateActiveDownloadNotification(
+            DownloadInfo downloadInfo, boolean hasUserGesture) {
+        int notificationId = getNotificationId(downloadInfo.getContentId());
+        downloadInfo = DownloadInfo.Builder.fromDownloadInfo(downloadInfo)
+                               .setNotificationId(notificationId)
+                               .build();
         Context context = ContextUtils.getApplicationContext();
 
-        DownloadUpdate downloadUpdate = new DownloadUpdate.Builder()
-                                                .setContentId(id)
-                                                .setFileName(fileName)
-                                                .setProgress(progress)
-                                                .setTimeRemainingInMillis(timeRemainingInMillis)
-                                                .setStartTime(startTime)
-                                                .setIsOffTheRecord(isOffTheRecord)
-                                                .setIsDownloadPending(isDownloadPending)
-                                                .setIsTransient(isTransient)
-                                                .setIcon(icon)
-                                                .setNotificationId(notificationId)
-                                                .build();
         Notification notification = DownloadNotificationFactory.buildNotification(
-                context, DownloadNotificationFactory.DownloadStatus.IN_PROGRESS, downloadUpdate);
+                context, DownloadNotificationFactory.DownloadStatus.IN_PROGRESS, downloadInfo);
 
         // If called from DownloadBroadcastManager, only update notification, not tracking.
         if (hasUserGesture) {
@@ -225,15 +217,16 @@ public class DownloadNotificationService2 {
             return;
         }
 
-        updateNotification(notificationId, notification, id,
-                new DownloadSharedPreferenceEntry(id, notificationId, isOffTheRecord,
-                        canDownloadWhileMetered, fileName, true, isTransient));
+        updateNotification(notificationId, notification, downloadInfo.getContentId(),
+                new DownloadSharedPreferenceEntry(downloadInfo.getContentId(), notificationId,
+                        downloadInfo.isOffTheRecord(), downloadInfo.getCanDownloadWhileMetered(),
+                        downloadInfo.getFileName(), true, downloadInfo.getIsTransient()));
         // TODO(jming): do we want to handle the pending option in a different manner?
         mDownloadForegroundServiceManager.updateDownloadStatus(context,
                 DownloadForegroundServiceManager.DownloadStatus.IN_PROGRESS, notificationId,
                 notification);
 
-        startTrackingInProgressDownload(id);
+        startTrackingInProgressDownload(downloadInfo.getContentId());
     }
 
     public void cancelNotification(int notificationId) {
@@ -289,39 +282,35 @@ public class DownloadNotificationService2 {
      * @param icon            A {@link Bitmap} to be used as the large icon for display.
      */
     @VisibleForTesting
-    void notifyDownloadPaused(ContentId id, String fileName, boolean isResumable,
-            boolean isAutoResumable, boolean isOffTheRecord, boolean isTransient, Bitmap icon,
-            boolean hasUserGesture) {
+    void notifyDownloadPaused(DownloadInfo downloadInfo, boolean hasUserGesture) {
         DownloadSharedPreferenceEntry entry =
-                mDownloadSharedPreferenceHelper.getDownloadSharedPreferenceEntry(id);
-        if (!isResumable) {
-            notifyDownloadFailed(id, fileName, icon);
+                mDownloadSharedPreferenceHelper.getDownloadSharedPreferenceEntry(
+                        downloadInfo.getContentId());
+        if (!downloadInfo.isResumable()) {
+            notifyDownloadFailed(downloadInfo);
             return;
         }
         // If download is already paused, do nothing.
         if (entry != null && !entry.isAutoResumable) return;
         boolean canDownloadWhileMetered = entry == null ? false : entry.canDownloadWhileMetered;
         // If download is interrupted due to network disconnection, show download pending state.
-        if (isAutoResumable) {
-            notifyDownloadPending(id, fileName, isOffTheRecord, canDownloadWhileMetered,
-                    isTransient, icon, hasUserGesture);
-            stopTrackingInProgressDownload(id);
+        if (downloadInfo.getIsAutoResumable()) {
+            downloadInfo = DownloadInfo.Builder.fromDownloadInfo(downloadInfo)
+                                   .setCanDownloadWhileMetered(canDownloadWhileMetered)
+                                   .build();
+            notifyDownloadPending(downloadInfo, hasUserGesture);
+            stopTrackingInProgressDownload(downloadInfo.getContentId());
             return;
         }
-        int notificationId = entry == null ? getNotificationId(id) : entry.notificationId;
+        int notificationId = entry == null ? getNotificationId(downloadInfo.getContentId())
+                                           : entry.notificationId;
+        downloadInfo = DownloadInfo.Builder.fromDownloadInfo(downloadInfo)
+                               .setNotificationId(notificationId)
+                               .build();
         Context context = ContextUtils.getApplicationContext();
 
-        DownloadUpdate downloadUpdate = new DownloadUpdate.Builder()
-                                                .setContentId(id)
-                                                .setFileName(fileName)
-                                                .setIsOffTheRecord(isOffTheRecord)
-                                                .setIsTransient(isTransient)
-                                                .setIcon(icon)
-                                                .setNotificationId(notificationId)
-                                                .build();
-
         Notification notification = DownloadNotificationFactory.buildNotification(
-                context, DownloadNotificationFactory.DownloadStatus.PAUSED, downloadUpdate);
+                context, DownloadNotificationFactory.DownloadStatus.PAUSED, downloadInfo);
 
         // If called from DownloadBroadcastManager, only update notification, not tracking.
         if (hasUserGesture) {
@@ -329,15 +318,17 @@ public class DownloadNotificationService2 {
             return;
         }
 
-        updateNotification(notificationId, notification, id,
-                new DownloadSharedPreferenceEntry(id, notificationId, isOffTheRecord,
-                        canDownloadWhileMetered, fileName, isAutoResumable, isTransient));
+        updateNotification(notificationId, notification, downloadInfo.getContentId(),
+                new DownloadSharedPreferenceEntry(downloadInfo.getContentId(), notificationId,
+                        downloadInfo.isOffTheRecord(), canDownloadWhileMetered,
+                        downloadInfo.getFileName(), downloadInfo.getIsAutoResumable(),
+                        downloadInfo.getIsTransient()));
 
         mDownloadForegroundServiceManager.updateDownloadStatus(context,
                 DownloadForegroundServiceManager.DownloadStatus.PAUSE, notificationId,
                 notification);
 
-        stopTrackingInProgressDownload(id);
+        stopTrackingInProgressDownload(downloadInfo.getContentId());
     }
 
     /**
@@ -355,39 +346,32 @@ public class DownloadNotificationService2 {
      *                            notification when user click on the snackbar.
      */
     @VisibleForTesting
-    public int notifyDownloadSuccessful(ContentId id, String filePath, String fileName,
-            long systemDownloadId, boolean isOffTheRecord, boolean isSupportedMimeType,
-            boolean isOpenable, Bitmap icon, String originalUrl, String referrer) {
+    public int notifyDownloadSuccessful(DownloadInfo downloadInfo) {
         Context context = ContextUtils.getApplicationContext();
-        int notificationId = getNotificationId(id);
-        if (icon == null && mDownloadSuccessLargeIcon == null) {
+        int notificationId = getNotificationId(downloadInfo.getContentId());
+        downloadInfo = DownloadInfo.Builder.fromDownloadInfo(downloadInfo)
+                               .setNotificationId(notificationId)
+                               .build();
+
+        if (downloadInfo.getIcon() == null && mDownloadSuccessLargeIcon == null) {
             Bitmap bitmap =
                     BitmapFactory.decodeResource(context.getResources(), R.drawable.offline_pin);
             mDownloadSuccessLargeIcon = getLargeNotificationIcon(bitmap);
         }
-        if (icon == null) icon = mDownloadSuccessLargeIcon;
+        if (downloadInfo.getIcon() == null) {
+            downloadInfo = DownloadInfo.Builder.fromDownloadInfo(downloadInfo)
+                                   .setIcon(mDownloadSuccessLargeIcon)
+                                   .build();
+        }
 
-        DownloadUpdate downloadUpdate = new DownloadUpdate.Builder()
-                                                .setContentId(id)
-                                                .setFileName(fileName)
-                                                .setFilePath(filePath)
-                                                .setSystemDownload(systemDownloadId)
-                                                .setIsOffTheRecord(isOffTheRecord)
-                                                .setIsSupportedMimeType(isSupportedMimeType)
-                                                .setIsOpenable(isOpenable)
-                                                .setIcon(icon)
-                                                .setNotificationId(notificationId)
-                                                .setOriginalUrl(originalUrl)
-                                                .setReferrer(referrer)
-                                                .build();
         Notification notification = DownloadNotificationFactory.buildNotification(
-                context, DownloadNotificationFactory.DownloadStatus.SUCCESSFUL, downloadUpdate);
+                context, DownloadNotificationFactory.DownloadStatus.SUCCESSFUL, downloadInfo);
 
-        updateNotification(notificationId, notification, id, null);
+        updateNotification(notificationId, notification, downloadInfo.getContentId(), null);
         mDownloadForegroundServiceManager.updateDownloadStatus(context,
                 DownloadForegroundServiceManager.DownloadStatus.COMPLETE, notificationId,
                 notification);
-        stopTrackingInProgressDownload(id);
+        stopTrackingInProgressDownload(downloadInfo.getContentId());
         return notificationId;
     }
 
@@ -398,32 +382,33 @@ public class DownloadNotificationService2 {
      * @param icon     A {@link Bitmap} to be used as the large icon for display.
      */
     @VisibleForTesting
-    public void notifyDownloadFailed(ContentId id, String fileName, Bitmap icon) {
+    public void notifyDownloadFailed(DownloadInfo downloadInfo) {
         // If the download is not in history db, fileName could be empty. Get it from
         // SharedPreferences.
-        if (TextUtils.isEmpty(fileName)) {
+        if (TextUtils.isEmpty(downloadInfo.getFileName())) {
             DownloadSharedPreferenceEntry entry =
-                    mDownloadSharedPreferenceHelper.getDownloadSharedPreferenceEntry(id);
+                    mDownloadSharedPreferenceHelper.getDownloadSharedPreferenceEntry(
+                            downloadInfo.getContentId());
             if (entry == null) return;
-            fileName = entry.fileName;
+            downloadInfo = DownloadInfo.Builder.fromDownloadInfo(downloadInfo)
+                                   .setFileName(entry.fileName)
+                                   .build();
         }
 
-        int notificationId = getNotificationId(id);
+        int notificationId = getNotificationId(downloadInfo.getContentId());
+        downloadInfo = DownloadInfo.Builder.fromDownloadInfo(downloadInfo)
+                               .setNotificationId(notificationId)
+                               .build();
         Context context = ContextUtils.getApplicationContext();
 
-        DownloadUpdate downloadUpdate = new DownloadUpdate.Builder()
-                                                .setContentId(id)
-                                                .setFileName(fileName)
-                                                .setIcon(icon)
-                                                .build();
         Notification notification = DownloadNotificationFactory.buildNotification(
-                context, DownloadNotificationFactory.DownloadStatus.FAILED, downloadUpdate);
+                context, DownloadNotificationFactory.DownloadStatus.FAILED, downloadInfo);
 
-        updateNotification(notificationId, notification, id, null);
+        updateNotification(notificationId, notification, downloadInfo.getContentId(), null);
         mDownloadForegroundServiceManager.updateDownloadStatus(context,
                 DownloadForegroundServiceManager.DownloadStatus.FAIL, notificationId, notification);
 
-        stopTrackingInProgressDownload(id);
+        stopTrackingInProgressDownload(downloadInfo.getContentId());
     }
 
     private Bitmap getLargeNotificationIcon(Bitmap bitmap) {
@@ -509,8 +494,12 @@ public class DownloadNotificationService2 {
             if (!canResumeDownload(context, entry)) continue;
             if (mDownloadsInProgress.contains(entry.id)) continue;
 
-            notifyDownloadPending(entry.id, entry.fileName, entry.isOffTheRecord,
-                    entry.canDownloadWhileMetered, entry.isTransient, null, false);
+            DownloadInfo downloadInfo =
+                    DownloadInfo.Builder.fromSharedPreferenceEntry(entry)
+                            .setCanDownloadWhileMetered(entry.canDownloadWhileMetered)
+                            .setIcon(null)
+                            .build();
+            notifyDownloadPending(downloadInfo, false);
 
             Intent intent = new Intent();
             intent.setAction(ACTION_DOWNLOAD_RESUME);
@@ -598,8 +587,12 @@ public class DownloadNotificationService2 {
             // Move all regular downloads to pending.  Don't propagate the pause because
             // if native is still working and it triggers an update, then the service will be
             // restarted.
-            notifyDownloadPaused(
-                    entry.id, entry.fileName, true, true, false, entry.isTransient, null, false);
+            DownloadInfo downloadInfo = DownloadInfo.Builder.fromSharedPreferenceEntry(entry)
+                                                .setIsResumable(true)
+                                                .setIsAutoResumable(true)
+                                                .setIcon(null)
+                                                .build();
+            notifyDownloadPaused(downloadInfo, false);
         }
     }
 
