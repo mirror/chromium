@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a24eabf_83b85791",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-26T22:29:22Z",
+      "side": 1,
+      "message": "Thanks for using real TimeDelta instead of int!",
+      "revId": "90ed3e557e1dfa4a864fc4af55a2964fb7827944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a287e267_3cd90a0b",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-26T22:29:22Z",
+      "side": 1,
+      "message": "nit: docs",
+      "revId": "90ed3e557e1dfa4a864fc4af55a2964fb7827944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c8f898c_c3e2417c",
+        "filename": "chrome/browser/ui/ash/multi_user/user_switch_animator_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-26T22:29:22Z",
+      "side": 1,
+      "message": "Just to double-check: Now that SetAnimationDurationOverride() is async via mojo, does ash get the new value before the wallpaper animation starts? I can\u0027t tell from reading the SetUserWallpaperNow() implementation.",
+      "revId": "90ed3e557e1dfa4a864fc4af55a2964fb7827944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
