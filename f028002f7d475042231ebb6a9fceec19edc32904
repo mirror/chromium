@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b7cea5d_97c409a7",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-26T08:03:13Z",
+      "side": 1,
+      "message": "It\u0027s confusing to allow ExpandedLayoutText holding a non-text layout object.\n\nI prefer making |primary| a LayoutText*, and constructing ExpandedLayoutText only on LayoutText.\n\nBtw, I always thought remaining text is the primary part, since the first letter part is under a pseudo element. Does renaming the variables to |primary| and |first_letter| improve readability?",
+      "revId": "f028002f7d475042231ebb6a9fceec19edc32904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5f051dc_d7921368",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-26T08:03:13Z",
+      "side": 1,
+      "message": "The use of ExpandedLayoutText doesn\u0027t seem to help here. I prefer keeping this function untouched.",
+      "revId": "f028002f7d475042231ebb6a9fceec19edc32904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ad09ab0_0158aae6",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-26T08:03:13Z",
+      "side": 1,
+      "message": "I prefer using |layout_object-\u003eIsText()| as branch condition, which seems more intuitive, and DCHECKing start/end_offset.has_value() when the condition is false.",
+      "revId": "f028002f7d475042231ebb6a9fceec19edc32904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11e0f87a_25df6f1b",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-26T08:03:13Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "f028002f7d475042231ebb6a9fceec19edc32904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3e5d242_95716f25",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-26T08:03:13Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "f028002f7d475042231ebb6a9fceec19edc32904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
