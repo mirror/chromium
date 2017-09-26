@@ -46,6 +46,30 @@
       "revId": "c33fc3e10840e013659d706e45205b30c3a4f457",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ea5668a_04ff9c7a",
+        "filename": "media/blink/webmediaplayer_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-09-26T20:49:45Z",
+      "side": 1,
+      "message": "Ugh, I have string distaste for glue functions, but I see the logic of the 1:1 mapping.",
+      "parentUuid": "714c7ca5_a235ecd9",
+      "range": {
+        "startLine": 55,
+        "startChar": 1,
+        "endLine": 55,
+        "endChar": 2
+      },
+      "revId": "c33fc3e10840e013659d706e45205b30c3a4f457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
