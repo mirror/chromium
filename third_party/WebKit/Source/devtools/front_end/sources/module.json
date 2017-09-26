@@ -26,6 +26,8 @@
             "iconClass": "largeicon-pause",
             "toggledIconClass": "largeicon-resume",
             "className": "Sources.SourcesPanel.RevealingActionDelegate",
+            "helpSection": "Debugger",
+            "helpDescription": "Pause/ Continue",
             "contextTypes": [
                 "Sources.SourcesPanel",
                 "UI.ShortcutRegistry.ForwardedShortcut"
@@ -57,6 +59,8 @@
             "className": "Sources.SourcesPanel.DebuggingActionDelegate",
             "title": "Step over next function call",
             "iconClass": "largeicon-step-over",
+            "helpSection": "Debugger",
+            "helpDescription": "Step over",
             "contextTypes": [
                 "Sources.SourcesPanel"
             ],
@@ -77,6 +81,8 @@
             "className": "Sources.SourcesPanel.DebuggingActionDelegate",
             "title": "Step into next function call",
             "iconClass": "largeicon-step-in",
+            "helpSection": "Debugger",
+            "helpDescription": "Step into",
             "contextTypes": [
                 "Sources.SourcesPanel"
             ],
@@ -97,6 +103,8 @@
             "className": "Sources.SourcesPanel.DebuggingActionDelegate",
             "title": "Step out of current function",
             "iconClass": "largeicon-step-out",
+            "helpSection": "Debugger",
+            "helpDescription": "Step out",
             "contextTypes": [
                 "Sources.SourcesPanel"
             ],
@@ -137,6 +145,7 @@
             "title": "Search all files",
             "className": "Sources.AdvancedSearchView.ActionDelegate",
             "category": "DevTools",
+            "helpSection": "All Panels",
             "bindings": [
                 {
                     "platform": "mac",
@@ -158,6 +167,8 @@
             "contextTypes": [
                 "Sources.SourcesPanel"
             ],
+            "helpSection": "Debugger",
+            "helpDescription": "Toggle all breakpoints",
             "options": [
                 {
                     "value": true,
@@ -184,6 +195,8 @@
             "actionId": "sources.add-to-watch",
             "className": "Sources.WatchExpressionsSidebarPane",
             "title": "Add selected text to watches",
+            "helpSection": "Debugger",
+            "helpDescription": "Add selection to watch",
             "contextTypes": [
                 "SourceFrame.UISourceCodeFrame"
             ],
@@ -205,6 +218,8 @@
             "actionId": "debugger.evaluate-selection",
             "className": "Sources.SourcesPanel.DebuggingActionDelegate",
             "title": "Evaluate in console",
+            "helpSection": "Debugger",
+            "helpDescription": "Evaluate selection in console",
             "contextTypes": [
                 "SourceFrame.UISourceCodeFrame"
             ],
@@ -572,6 +587,8 @@
             "contextTypes": [
                 "Sources.SourcesPanel"
             ],
+            "helpSection": "Debugger",
+            "helpDescription": "Toggle breakpoint",
             "bindings": [
                 {
                     "platform":"windows,linux",
@@ -590,6 +607,8 @@
             "contextTypes": [
                 "Sources.SourcesPanel"
             ],
+            "helpSection": "Debugger",
+            "helpDescription": "Toggle breakpoint enabled",
             "bindings": [
                 {
                     "platform":"windows,linux",
@@ -751,8 +770,26 @@
         {
             "type": "action",
             "category": "Debugger",
+            "actionId": "debugger.next-call-frame",
+            "className": "Sources.CallStackSidebarPane.ActionDelegate",
+            "helpSection": "Debugger",
+            "helpDescription": "Next/previous call frame",
+            "contextTypes": [
+                "Sources.SourcesPanel"
+            ],
+            "bindings": [
+                {
+                    "shortcut": "Ctrl+."
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "category": "Debugger",
             "actionId": "debugger.previous-call-frame",
             "className": "Sources.CallStackSidebarPane.ActionDelegate",
+            "helpSection": "Debugger",
+            "helpDescription": "Next/previous call frame",
             "contextTypes": [
                 "Sources.SourcesPanel"
             ],
@@ -760,19 +797,49 @@
                 {
                     "shortcut": "Ctrl+,"
                 }
+           ]
+        },
+        {
+            "type": "action",
+            "actionId": "increase-unit-by-one",
+            "helpSection": "Text Editor",
+            "helpDescription": "Increment CSS unit by 1",
+            "bindings": [
+                {
+                    "shortcut": "Alt+Up"
+                }
             ]
         },
         {
             "type": "action",
-            "category": "Debugger",
-            "actionId": "debugger.next-call-frame",
-            "className": "Sources.CallStackSidebarPane.ActionDelegate",
-            "contextTypes": [
-                "Sources.SourcesPanel"
-            ],
+            "actionId": "decrease-unit-by-on",
+            "helpSection": "Text Editor",
+            "helpDescription": "Decrement CSS unit by 1",
             "bindings": [
                 {
-                    "shortcut": "Ctrl+."
+                    "shortcut": "Alt+Down"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "increase-unit-by-ten",
+            "helpSection": "Text Editor",
+            "helpDescription": "Increment CSS unit by 10",
+            "bindings": [
+                {
+                    "shortcut": "Alt+PageUp"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "decrease-unit-by-te",
+            "helpSection": "Text Editor",
+            "helpDescription": "Decrement CSS unit by 10",
+            "bindings": [
+                {
+                    "shortcut": "Alt+PageDown"
                 }
             ]
         }

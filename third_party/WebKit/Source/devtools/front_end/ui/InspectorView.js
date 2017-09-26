@@ -265,16 +265,6 @@ UI.InspectorView = class extends UI.VBox {
         }
       }
     }
-
-    if (event.key === '[') {
-      this._tabbedPane.selectPrevTab();
-      event.consume(true);
-    }
-
-    if (event.key === ']') {
-      this._tabbedPane.selectNextTab();
-      event.consume(true);
-    }
   }
 
   /**
@@ -331,7 +321,7 @@ UI.inspectorView;
  * @implements {UI.ActionDelegate}
  * @unrestricted
  */
-UI.InspectorView.DrawerToggleActionDelegate = class {
+UI.InspectorView.ActionDelegate = class {
   /**
    * @override
    * @param {!UI.Context} context
@@ -339,10 +329,20 @@ UI.InspectorView.DrawerToggleActionDelegate = class {
    * @return {boolean}
    */
   handleAction(context, actionId) {
-    if (UI.inspectorView.drawerVisible())
-      UI.inspectorView._closeDrawer();
-    else
-      UI.inspectorView._showDrawer(true);
-    return true;
+    switch (actionId) {
+      case 'main.toggle-drawer':
+        if (UI.inspectorView.drawerVisible())
+          UI.inspectorView._closeDrawer();
+        else
+          UI.inspectorView._showDrawer(true);
+        return true;
+      case 'main.previous-tab':
+        UI.inspectorView._tabbedPane.selectPrevTab();
+        return true;
+      case 'main.next-tab':
+        UI.inspectorView._tabbedPane.selectNextTab();
+        return true;
+    }
+    return false;
   }
 };

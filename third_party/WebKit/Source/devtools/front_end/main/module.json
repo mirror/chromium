@@ -67,12 +67,47 @@
             "type": "action",
             "category": "Drawer",
             "actionId": "main.toggle-drawer",
-            "className": "UI.InspectorView.DrawerToggleActionDelegate",
+            "className": "UI.InspectorView.ActionDelegate",
             "order": 100,
             "title": "Toggle drawer",
+            "helpSection": "All Panels",
             "bindings": [
                 {
                     "shortcut": "Esc"
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "main.previous-tab",
+            "className": "UI.InspectorView.ActionDelegate",
+            "helpSection": "All Panels",
+            "helpDescription": "Go to the panel to the left/right",
+            "bindings": [
+                {
+                    "platform": "windows,linux",
+                    "shortcut": "Ctrl+["
+                },
+                {
+                    "platform": "mac",
+                    "shortcut": "Meta+["
+                }
+            ]
+        },
+        {
+            "type": "action",
+            "actionId": "main.next-tab",
+            "className": "UI.InspectorView.ActionDelegate",
+            "helpSection": "All Panels",
+            "helpDescription": "Go to the panel to the left/right",
+            "bindings": [
+                {
+                    "platform": "windows,linux",
+                    "shortcut": "Ctrl+]"
+                },
+                {
+                    "platform": "mac",
+                    "shortcut": "Meta+]"
                 }
             ]
         },
@@ -92,6 +127,8 @@
             "title": "Restore last dock position",
             "actionId": "main.toggle-dock",
             "className": "Components.DockController.ToggleDockActionDelegate",
+            "helpSection": "All Panels",
+            "helpDescription": "Toggle dock side",
             "bindings": [
                 {
                     "platform": "windows,linux",
@@ -152,6 +189,8 @@
             "type": "action",
             "actionId": "main.search-in-panel.find",
             "className": "Main.Main.SearchActionDelegate",
+            "title": "Search",
+            "helpSection": "All Panels",
             "bindings": [
                 {
                     "platform": "windows,linux",
@@ -178,6 +217,8 @@
             "type": "action",
             "actionId": "main.search-in-panel.find-next",
             "className": "Main.Main.SearchActionDelegate",
+            "helpSection": "All Panels",
+            "helpDescription": "Find next/previous",
             "bindings": [
                 {
                     "platform": "mac",
@@ -189,6 +230,8 @@
             "type": "action",
             "actionId": "main.search-in-panel.find-previous",
             "className": "Main.Main.SearchActionDelegate",
+            "helpSection": "All Panels",
+            "helpDescription": "Find next/previous",
             "bindings": [
                 {
                     "platform": "mac",

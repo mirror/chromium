@@ -85,9 +85,6 @@ Sources.SourcesView = class extends UI.VBox {
 
     if (!window.opener)
       window.addEventListener('beforeunload', handleBeforeUnload, true);
-
-    this._shortcuts = {};
-    this.element.addEventListener('keydown', this._handleKeyDown.bind(this), false);
   }
 
   /**
@@ -146,22 +143,6 @@ Sources.SourcesView = class extends UI.VBox {
    */
   bottomToolbar() {
     return this._bottomToolbar;
-  }
-
-  /**
-   * @param {!Array.<!UI.KeyboardShortcut.Descriptor>} keys
-   * @param {function(!Event=):boolean} handler
-   */
-  _registerShortcuts(keys, handler) {
-    for (var i = 0; i < keys.length; ++i)
-      this._shortcuts[keys[i].key] = handler;
-  }
-
-  _handleKeyDown(event) {
-    var shortcutKey = UI.KeyboardShortcut.makeKeyFromEvent(event);
-    var handler = this._shortcuts[shortcutKey];
-    if (handler && handler())
-      event.consume(true);
   }
 
   /**
