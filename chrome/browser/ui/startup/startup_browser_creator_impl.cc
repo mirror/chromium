@@ -69,6 +69,8 @@
 
 #if defined(OS_MACOSX)
 #include "base/mac/mac_util.h"
+#import "chrome/browser/mac/dock.h"
+#include "chrome/browser/mac/install_from_dmg.h"
 #include "chrome/browser/ui/cocoa/keystone_infobar_delegate.h"
 #endif
 
@@ -97,24 +99,30 @@ namespace {
 // Utility functions ----------------------------------------------------------
 
 enum LaunchMode {
-  LM_TO_BE_DECIDED = 0,     // Possibly direct launch or via a shortcut.
-  LM_AS_WEBAPP,             // Launched as a installed web application.
-  LM_WITH_URLS,             // Launched with urls in the cmd line.
-  LM_OTHER,                 // Not launched from a shortcut.
-  LM_SHORTCUT_NONAME,       // Launched from shortcut but no name available.
-  LM_SHORTCUT_UNKNOWN,      // Launched from user-defined shortcut.
-  LM_SHORTCUT_QUICKLAUNCH,  // Launched from the quick launch bar.
-  LM_SHORTCUT_DESKTOP,      // Launched from a desktop shortcut.
-  LM_SHORTCUT_TASKBAR,      // Launched from the taskbar.
-  LM_USER_EXPERIMENT,       // Launched after acceptance of a user experiment.
-  LM_LINUX_MAC_BEOS         // Other OS buckets start here.
+  LM_TO_BE_DECIDED = 0,      // Possibly direct launch or via a shortcut.
+  LM_AS_WEBAPP,              // Launched as a installed web application.
+  LM_WITH_URLS,              // Launched with urls in the cmd line.
+  LM_OTHER,                  // Not launched from a shortcut.
+  LM_SHORTCUT_NONAME,        // Launched from shortcut but no name available.
+  LM_SHORTCUT_UNKNOWN,       // Launched from user-defined shortcut.
+  LM_SHORTCUT_QUICKLAUNCH,   // Launched from the quick launch bar.
+  LM_SHORTCUT_DESKTOP,       // Launched from a desktop shortcut.
+  LM_SHORTCUT_TASKBAR,       // Launched from the taskbar.
+  LM_USER_EXPERIMENT,        // Launched after acceptance of a user experiment.
+  LM_MAC_UNDOCKED_LAUNCH,    // Not present in the dock on launch.
+  LM_MAC_DOCKED_LAUNCH,      // Present in the dock on launch.
+  LM_MAC_DMG_LAUNCH,         // Launched from a dmg.
+  LM_MAC_DOCKED_DMG_LAUNCH,  // Lives in a dmg, resides in the dock.
+  LM_MAC_DOCK_ERROR,         // There was an error determining dock presense.
+  LM_MAC_DMG_ERROR,          // There was an error determining dmg presence.
+  LM_LINUX_BEOS              // Other OS buckets start here.
 };
 
 #if defined(OS_WIN)
 // Undocumented flag in the startup info structure tells us what shortcut was
 // used to launch the browser. See http://www.catch22.net/tuts/undoc01 for
 // more information. Confirmed to work on XP, Vista and Win7.
-LaunchMode GetLaunchShortcutKind() {
+LaunchMode GetLaunchMode() {
   STARTUPINFOW si = { sizeof(si) };
   GetStartupInfoW(&si);
   if (si.dwFlags & 0x800) {
@@ -134,17 +142,43 @@ LaunchMode GetLaunchShortcutKind() {
   }
   return LM_OTHER;
 }
+#elif defined(OS_MACOSX)
+LaunchMode GetLaunchMode() {
+  DiskImageStatus launched_from_a_dmg_status =
+      IsAppRunningFromReadOnlyDiskImage(nullptr);
+  if (launched_from_a_dmg_status == DiskImageStatusFailure) {
+    return LM_MAC_DMG_ERROR;
+  }
+  bool launched_from_a_dmg = launched_from_a_dmg_status == DiskImageStatusTrue;
+
+  dock::ChromeInDockStatus launched_from_the_dock_status =
+      dock::ChromeIsInTheDock();
+  if (launched_from_the_dock_status == dock::ChromeInDockFailure) {
+    return LM_MAC_DOCK_ERROR;
+  }
+  bool launched_from_the_dock =
+      launched_from_the_dock_status == dock::ChromeInDockTrue;
+
+  if (launched_from_a_dmg && launched_from_the_dock) {
+    return LM_MAC_DOCKED_DMG_LAUNCH;
+  } else if (launched_from_the_dock) {
+    return LM_MAC_DOCKED_LAUNCH;
+  } else if (launched_from_a_dmg) {
+    return LM_MAC_DMG_LAUNCH;
+  }
+  return LM_MAC_UNDOCKED_LAUNCH;
+}
 #else
 // TODO(cpu): Port to other platforms.
-LaunchMode GetLaunchShortcutKind() {
-  return LM_LINUX_MAC_BEOS;
+LaunchMode GetLaunchMode() {
+  return LM_LINUX_BEOS;
 }
 #endif
 
 // Log in a histogram the frequency of launching by the different methods. See
 // LaunchMode enum for the actual values of the buckets.
 void RecordLaunchModeHistogram(LaunchMode mode) {
-  int bucket = (mode == LM_TO_BE_DECIDED) ? GetLaunchShortcutKind() : mode;
+  int bucket = (mode == LM_TO_BE_DECIDED) ? GetLaunchMode() : mode;
   UMA_HISTOGRAM_COUNTS_100("Launch.Modes", bucket);
 }
 

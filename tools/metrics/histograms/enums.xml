@@ -22604,6 +22604,24 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="9" label="LM_USER_EXPERIMENT">
     Launched from the installer as part of a retention experiment
   </int>
+  <int value="10" label="LM_MAC_UNDOCKED_LAUNCH">
+    Mac - Chrome not present in the Dock at launch
+  </int>
+  <int value="11" label="LM_MAC_DOCKED_LAUNCH">
+    Mac - Chrome present in the Dock at launch
+  </int>
+  <int value="12" label="LM_MAC_DMG_LAUNCH">
+    Mac - Chrome present on a disk image at launch
+  </int>
+  <int value="13" label="LM_MAC_DOCKED_DMG_LAUNCH">
+    Mac - Chrome present on a disk image and in the Dock at launch
+  </int>
+  <int value="14" label="LM_MAC_DOCK_ERROR">
+    Mac - Error determining Chrome's presense in the Dock
+  </int>
+  <int value="15" label="LM_MAC_DMG_ERROR">
+    Mac - Error determining Chrome's presense on a disk image
+  </int>
 </enum>
 
 <enum name="LazyCSSParseUsage">
