@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "c0d37cc2_1a5c9ebf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-26T01:35:30Z",
+      "side": 1,
+      "message": "CDDs",
+      "range": {
+        "startLine": 7,
+        "startChar": 19,
+        "endLine": 7,
+        "endChar": 23
+      },
+      "revId": "3d0a8b5906f8dcf99fb58ba80c650f388749f3bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b895ac58_bdaebc4d",
         "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
         "patchSetId": 4
@@ -18,6 +41,63 @@
         "startChar": 10,
         "endLine": 1518,
         "endChar": 15
+      },
+      "revId": "3d0a8b5906f8dcf99fb58ba80c650f388749f3bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d917e240_8a289d28",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-26T01:35:30Z",
+      "side": 1,
+      "message": "This looks very unit-testable.",
+      "revId": "3d0a8b5906f8dcf99fb58ba80c650f388749f3bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76dce74e_d4ca9629",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-26T01:35:30Z",
+      "side": 1,
+      "message": "If you make this take a const base::DictionaryValue\u0026, then ExtensionPrinterHandler::WrapGetCapabilityCallback() won\u0027t have to do a Clone(), only to have ValidateCddForPrintPreview() clone it again.",
+      "revId": "3d0a8b5906f8dcf99fb58ba80c650f388749f3bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b278171_dd495a34",
+        "filename": "chrome/browser/ui/webui/print_preview/privet_printer_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-26T01:35:30Z",
+      "side": 1,
+      "message": "BTW, can we make these use some constants from somewhere?",
+      "range": {
+        "startLine": 196,
+        "startChar": 39,
+        "endLine": 196,
+        "endChar": 48
       },
       "revId": "3d0a8b5906f8dcf99fb58ba80c650f388749f3bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
