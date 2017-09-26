@@ -22,6 +22,30 @@
       "revId": "c33fc3e10840e013659d706e45205b30c3a4f457",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "714c7ca5_a235ecd9",
+        "filename": "media/blink/webmediaplayer_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1232886
+      },
+      "writtenOn": "2017-09-26T19:24:00Z",
+      "side": 1,
+      "message": "I decided against a single seek method in order to have a 1:1 mapping of action to method with the Media Session actions defined in media_session.mojom (SEEK_BACKWARD, SEEK_FORWARD), similarly to how we have OnPlay/OnPause methods and PLAY/PAUSE actions.\nTo be honest, this isn\u0027t something I feel super strongly about but would prefer to leave as is for the simple reason that it\u0027s less to change in the CL.\n\nTimeDelta is used right up until we hit the media/blink layer (see RendererWebMediaPlayerDelegate::OnMediaDelegateSeek[Forward|Backward]) for consistency with webmediaplayer_impl.h which has \"void Seek(double seconds)\", \"double Duration()\", and \"double CurrentTime()\" methods.",
+      "parentUuid": "a29d596e_b0c73fd4",
+      "range": {
+        "startLine": 55,
+        "startChar": 1,
+        "endLine": 55,
+        "endChar": 2
+      },
+      "revId": "c33fc3e10840e013659d706e45205b30c3a4f457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
