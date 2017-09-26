@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9309cc03_a6dc7f16",
+        "filename": "chrome_elf/nt_registry/nt_registry.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-26T21:44:23Z",
+      "side": 1,
+      "message": "nit: use the enum hack since you don\u0027t really need storage for this:\nenum { kMaxTries \u003d 5 };",
+      "revId": "d559a96237fbdd8b22d0e11f854959e54dc1bba8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f86cc5c_8d87f842",
+        "filename": "chrome_elf/nt_registry/nt_registry.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 766,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-26T21:44:23Z",
+      "side": 1,
+      "message": "nit:\n  return NT_SUCCESS(status):",
+      "revId": "d559a96237fbdd8b22d0e11f854959e54dc1bba8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a421ccb5_b738eec7",
+        "filename": "chrome_elf/nt_registry/nt_registry.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-26T21:44:23Z",
+      "side": 1,
+      "message": "can you roll this first call into the loop, too?",
+      "revId": "d559a96237fbdd8b22d0e11f854959e54dc1bba8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f39a0a2_b7bfe268",
+        "filename": "chrome_elf/nt_registry/nt_registry.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-26T21:44:23Z",
+      "side": 1,
+      "message": "int as per https://google.github.io/styleguide/cppguide.html#Integer_Types",
+      "revId": "d559a96237fbdd8b22d0e11f854959e54dc1bba8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a51f5b5_3b3b6fb0",
+        "filename": "chrome_elf/nt_registry/nt_registry.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-26T21:44:23Z",
+      "side": 1,
+      "message": "nit: make this \"++tries \u003c kMaxTries\" and remove line 831\n(same comment below)",
+      "range": {
+        "startLine": 832,
+        "startChar": 50,
+        "endLine": 832,
+        "endChar": 55
+      },
+      "revId": "d559a96237fbdd8b22d0e11f854959e54dc1bba8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e999074c_bb80deba",
+        "filename": "chrome_elf/nt_registry/nt_registry.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-26T21:44:23Z",
+      "side": 1,
+      "message": "nice!",
+      "revId": "d559a96237fbdd8b22d0e11f854959e54dc1bba8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36c69cb2_0495c952",
+        "filename": "chrome_elf/nt_registry/nt_registry_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-26T21:44:23Z",
+      "side": 1,
+      "message": "EXPECT_EQ(get_dword, dword_val);",
+      "revId": "d559a96237fbdd8b22d0e11f854959e54dc1bba8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e43b854a_970ea03b",
+        "filename": "chrome_elf/nt_registry/nt_registry_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-26T21:44:23Z",
+      "side": 1,
+      "message": "EXPECT_EQ(get_sz, sz_val);\nhere and elsewhere",
+      "revId": "d559a96237fbdd8b22d0e11f854959e54dc1bba8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
