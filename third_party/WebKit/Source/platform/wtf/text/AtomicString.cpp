@@ -44,6 +44,16 @@ AtomicString::AtomicString(const UChar* chars)
           chars,
           chars ? LengthOfNullTerminatedString(chars) : 0)) {}
 
+AtomicString::AtomicString(const UChar* chars,
+                           unsigned length,
+                           ReturnEmptyInsteadOfNull) {
+  if (!chars || !length) {
+    string_ = StringImpl::empty_;
+  } else {
+    string_ = AtomicStringTable::Instance().Add(chars, length);
+  }
+}
+
 RefPtr<StringImpl> AtomicString::AddSlowCase(StringImpl* string) {
   DCHECK(!string->IsAtomic());
   return AtomicStringTable::Instance().Add(string);

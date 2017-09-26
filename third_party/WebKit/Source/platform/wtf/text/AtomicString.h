@@ -69,6 +69,11 @@ class WTF_EXPORT AtomicString {
   AtomicString(const char16_t* chars)
       : AtomicString(reinterpret_cast<const UChar*>(chars)) {}
 
+  enum ReturnEmptyInsteadOfNull { kReturnEmptyInsteadOfNull };
+  // Creates empty atom instead of null atom when chars is null. Used in
+  // parsing attributes with no values.
+  AtomicString(const UChar* chars, unsigned length, ReturnEmptyInsteadOfNull);
+
   template <size_t inlineCapacity>
   explicit AtomicString(const Vector<UChar, inlineCapacity>& vector)
       : AtomicString(vector.data(), vector.size()) {}

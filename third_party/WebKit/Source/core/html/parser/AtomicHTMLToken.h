@@ -229,7 +229,9 @@ inline void AtomicHTMLToken::InitializeAttributes(
     attribute.NameRange().CheckValid();
     attribute.ValueRange().CheckValid();
 
-    AtomicString value(attribute.Value8BitIfNecessary());
+    AtomicString value(attribute.ValueAsVector().data(),
+                       attribute.ValueAsVector().size(),
+                       AtomicString::kReturnEmptyInsteadOfNull);
     const QualifiedName& name = NameForAttribute(attribute);
     // FIXME: This is N^2 for the number of attributes.
     if (!FindAttributeInVector(attributes_, name))
