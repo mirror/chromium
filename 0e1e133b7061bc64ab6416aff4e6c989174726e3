@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "97e80fb0_3c810829",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-09-26T22:54:52Z",
+      "side": 1,
+      "message": "I think we could remove SmartSelectionToggle and put sdk version check in SmartSelectionClient#create to simplify code. SmartSelectionToggle#setEnabled is only used to distinguish Chrome and WebView currently IMO.",
+      "parentUuid": "247cbe5b_a85f65f1",
+      "revId": "0e1e133b7061bc64ab6416aff4e6c989174726e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "78b1e039_8398cf1a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchFieldTrial.java",
         "patchSetId": 3
@@ -269,6 +287,29 @@
       "revId": "0e1e133b7061bc64ab6416aff4e6c989174726e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ec8e818_036839be",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-09-26T22:54:52Z",
+      "side": 1,
+      "message": "If we removed \"private final int TextClassifier mTextClassifier\" above, this is the one in SmartSelectionProvider now, looks like there is no logic change for now, but it reads confusing to me.",
+      "range": {
+        "startLine": 127,
+        "startChar": 12,
+        "endLine": 127,
+        "endChar": 27
+      },
+      "revId": "0e1e133b7061bc64ab6416aff4e6c989174726e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
