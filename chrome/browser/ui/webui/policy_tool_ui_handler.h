@@ -18,6 +18,11 @@ class PolicyToolUIHandler : public PolicyUIHandler {
   void OnJavascriptDisallowed() override;
 
  private:
+  friend class PolicyToolUITest;
+
+  static const base::FilePath::CharType kPolicyToolSessionsDir[];
+  static const base::FilePath::CharType kPolicyToolDefaultSessionName[];
+  static const base::FilePath::CharType kPolicyToolSessionExtension[];
   // Reads the current session file (based on the session_name_) and sends the
   // contents to the UI.
   void ImportFile();
@@ -36,6 +41,23 @@ class PolicyToolUIHandler : public PolicyUIHandler {
   void ShowErrorMessageToUser(const std::string& message);
 
   base::FilePath GetSessionPath(const base::FilePath::StringType& name) const;
+
+  // Returns the current list of all sessions sorted by last access time in
+  // decreasing order.
+  base::ListValue GetSessionsList();
+
+  void SetDefaultSessionName();
+
+  // Checks the policy types. A value is considered valid in 3 cases:
+  // 1. Chrome doesn't have the information about the policy type (e.g. the
+  // policy is unknown);
+  // 2. The value matches the actual type specifications;
+  // 3. The value is stringified JSON of a valid value. In this case the value
+  // is also unstringified.
+  //
+  // For invalid values, an additional field "invalid" with a value |true| is
+  // added to the policy information (on the same level as "value" field).
+  void CheckPolicyTypes(base::DictionaryValue* values);
 
   base::FilePath sessions_dir_;
   base::FilePath::StringType session_name_;
