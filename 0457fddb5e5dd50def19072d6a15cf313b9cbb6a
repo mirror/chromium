@@ -70,6 +70,23 @@
     },
     {
       "key": {
+        "uuid": "e37ff9ca_a24d345a",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1667,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-26T07:17:50Z",
+      "side": 1,
+      "message": "actually.. why is this entire method not simply \n\n  // Currently the icon and title are always shown together.\n  return ShouldShowWindowTitle();",
+      "revId": "0457fddb5e5dd50def19072d6a15cf313b9cbb6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "17b19d69_7aab91d5",
         "filename": "chrome/browser/ui/views/frame/browser_view.cc",
         "patchSetId": 3
