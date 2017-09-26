@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "a7177940_ea862dea",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-09-26T17:25:24Z",
+      "side": 1,
+      "message": "fair enough. About whether or not a user is waiting: chances are good a user is seeing this (that\u0027s why we do it), so it\u0027s best to assume a user is waiting.",
+      "parentUuid": "cec19e45_d3369151",
+      "range": {
+        "startLine": 37,
+        "startChar": 15,
+        "endLine": 37,
+        "endChar": 51
+      },
+      "revId": "918a61dc3508773dccdcc471a05cb0bff6a5a8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97f9c100_63cf7b30",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 6
@@ -190,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "8bce7c73_efa2f414",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-09-26T17:25:24Z",
+      "side": 1,
+      "message": "thanks! Keep in mind that unnecessary configurability can add quite some complexity. (strive for the simplest thing that can possibly work).",
+      "parentUuid": "3ce8b5d3_1c85fd0a",
+      "range": {
+        "startLine": 210,
+        "startChar": 5,
+        "endLine": 210,
+        "endChar": 58
+      },
+      "revId": "918a61dc3508773dccdcc471a05cb0bff6a5a8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3339fedc_b8976c5c",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 6
@@ -225,6 +273,30 @@
       "side": 1,
       "message": "The idea is that I do not mess with the status of any section that is not AVAILABLE (neither here not later). This means that for any such section, we would not see any placeholder, etc.\n\nWhat\u0027s wrong with this?",
       "parentUuid": "3339fedc_b8976c5c",
+      "range": {
+        "startLine": 446,
+        "startChar": 37,
+        "endLine": 446,
+        "endChar": 0
+      },
+      "revId": "918a61dc3508773dccdcc471a05cb0bff6a5a8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7884a8ec_d3227bed",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-09-26T17:25:24Z",
+      "side": 1,
+      "message": "there\u0027s nothing wrong with that, but this is quite hidden. There\u0027s nowhere the explicit handling of this. NotifyForFetchDisplayStarted() ignores non-available categories. Instead it would be much easier to reason about the flow if we simply exit here if the articles suggestion category is not in available state.",
+      "parentUuid": "b0c8d4be_ac27d366",
       "range": {
         "startLine": 446,
         "startChar": 37,
@@ -765,6 +837,30 @@
       "side": 1,
       "message": "Hours should work fine here.\n\nRenamed to \"stale fetch\" for sake of consistency. This is not meant to be clearer, I frankly do not know how to make it more intuitive (without breaking layers of abstraction).",
       "parentUuid": "8ea7aa45_ae1d7e99",
+      "range": {
+        "startLine": 147,
+        "startChar": 5,
+        "endLine": 147,
+        "endChar": 42
+      },
+      "revId": "918a61dc3508773dccdcc471a05cb0bff6a5a8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "640581c8_ecb85b75",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-09-26T17:25:24Z",
+      "side": 1,
+      "message": "sgtm.",
+      "parentUuid": "5e180513_e0d95397",
       "range": {
         "startLine": 147,
         "startChar": 5,
