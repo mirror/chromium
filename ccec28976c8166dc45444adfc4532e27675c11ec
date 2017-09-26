@@ -16,6 +16,24 @@
       "revId": "ccec28976c8166dc45444adfc4532e27675c11ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c281533b_e7b33f30",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-09-26T05:13:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f31ef8e_b45128c6",
+      "revId": "ccec28976c8166dc45444adfc4532e27675c11ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
