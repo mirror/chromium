@@ -16,6 +16,24 @@
       "revId": "b21d08a1b767126262d6dbb070a17b2ca80a51e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3d0050f_4e768f01",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSLazyPropertyParserImpl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-09-26T07:14:43Z",
+      "side": 1,
+      "message": "I guess it\u0027s null if you a append a stylesheet and start modifying CSSStyleDeclaration before computing styles?\n\nIf RuleSet is null, you can early return after ParseDeclarationListForLazyStyle() because the properties will be parsed and invalidation sets correctly updated when EnsureRuleSet() is called later on.",
+      "parentUuid": "7b4acc2a_a8ecfbcf",
+      "revId": "b21d08a1b767126262d6dbb070a17b2ca80a51e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
