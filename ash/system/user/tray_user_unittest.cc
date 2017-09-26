@@ -47,7 +47,7 @@ gfx::ImageSkia CreateImageSkiaWithColor(int width, int height, SkColor color) {
   return gfx::ImageSkia::CreateFrom1xBitmap(bitmap);
 }
 
-class TrayUserTest : public AshTestBase {
+class TrayUserTest : public NoSessionAshTestBase {
  public:
   TrayUserTest() = default;
 
@@ -87,9 +87,9 @@ void TrayUserTest::SetUp() {
 
 void TrayUserTest::InitializeParameters(int users_logged_in,
                                         bool multiprofile) {
-  TestShellDelegate* shell_delegate =
-      static_cast<TestShellDelegate*>(Shell::Get()->shell_delegate());
-  shell_delegate->set_multi_profiles_enabled(multiprofile);
+  // TestShellDelegate* shell_delegate =
+  //     static_cast<TestShellDelegate*>(Shell::Get()->shell_delegate());
+  // shell_delegate->set_multi_profiles_enabled(multiprofile);
 
   // Set our default assumptions. Note that it is sufficient to set these
   // after everything was created.
@@ -98,6 +98,9 @@ void TrayUserTest::InitializeParameters(int users_logged_in,
             static_cast<int>(arraysize(kPredefinedUserEmails)));
   for (int i = 0; i < users_logged_in; ++i)
     SimulateUserLogin(kPredefinedUserEmails[i]);
+
+  if (multiprofile)
+    GetSessionControllerClient()->SetMultiProfileAvailable();
 
   // Instead of using the existing tray panels we create new ones which makes
   // the access easier.
@@ -193,20 +196,22 @@ TEST_F(TrayUserTest, AccessibleLabelContainsMultiUserInfo) {
 // Note: the mouse watcher (for automatic closing upon leave) cannot be tested
 // here since it does not work with the event system in unit tests.
 TEST_F(TrayUserTest, MultiUserModeDoesNotAllowToAddUser) {
+  // Create several available users.
+  CreateUserSessions(5);
+
+  // Login the first user.
   InitializeParameters(1, true);
 
   // Move the mouse over the status area and click to open the status menu.
   ui::test::EventGenerator& generator = GetEventGenerator();
   generator.set_async(false);
 
-  // Set the number of logged in users.
-  CreateUserSessions(5);
-
   // Verify that nothing is shown.
   EXPECT_FALSE(tray()->IsSystemBubbleVisible());
   EXPECT_FALSE(tray_user()->GetStateForTest());
   // After clicking on the tray the menu should get shown and for each logged
   // in user we should get a visible item.
+  LOG(ERROR) << "JAMES opening menu";
   ShowTrayMenu(&generator);
 
   EXPECT_TRUE(tray()->HasSystemBubble());
@@ -214,20 +219,24 @@ TEST_F(TrayUserTest, MultiUserModeDoesNotAllowToAddUser) {
   EXPECT_EQ(TrayUser::SHOWN, tray_user()->GetStateForTest());
 
   // Move the mouse over the user item and it should hover.
+  LOG(ERROR) << "JAMES moving over item";
   MoveOverUserItem(&generator);
   EXPECT_EQ(TrayUser::HOVERED, tray_user()->GetStateForTest());
 
   // Check that clicking the button allows to add item if we have still room
   // for one more user.
+  LOG(ERROR) << "JAMES clicking item";
   ClickUserItem(&generator);
   EXPECT_EQ(TrayUser::ACTIVE, tray_user()->GetStateForTest());
 
   // Click the button again to see that the menu goes away.
+  LOG(ERROR) << "JAMES click and move";
   ClickUserItem(&generator);
   MoveOverUserItem(&generator);
   EXPECT_EQ(TrayUser::HOVERED, tray_user()->GetStateForTest());
 
   // Close and check that everything is deleted.
+  LOG(ERROR) << "JAMES closing";
   tray()->CloseBubble();
   EXPECT_FALSE(tray()->IsSystemBubbleVisible());
   EXPECT_EQ(TrayUser::HIDDEN, tray_user()->GetStateForTest());

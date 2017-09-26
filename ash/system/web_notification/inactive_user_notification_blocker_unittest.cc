@@ -4,11 +4,12 @@
 
 #include "ash/system/web_notification/inactive_user_notification_blocker.h"
 
+#include "ash/message_center/message_center_controller.h"
 #include "ash/session/test_session_controller_client.h"
 #include "ash/shell.h"
+#include "ash/shell_test_api.h"
 #include "ash/system/system_notifier.h"
 #include "ash/test/ash_test_base.h"
-#include "ash/test_shell_delegate.h"
 #include "base/macros.h"
 #include "base/strings/utf_string_conversions.h"
 #include "components/signin/core/account_id/account_id.h"
@@ -22,7 +23,7 @@ namespace {
 using base::UTF8ToUTF16;
 
 class InactiveUserNotificationBlockerTest
-    : public AshTestBase,
+    : public NoSessionAshTestBase,
       public message_center::NotificationBlocker::Observer {
  public:
   InactiveUserNotificationBlockerTest() {}
@@ -31,22 +32,13 @@ class InactiveUserNotificationBlockerTest
   // AshTestBase overrides:
   void SetUp() override {
     AshTestBase::SetUp();
-    TestShellDelegate* shell_delegate =
-        static_cast<TestShellDelegate*>(Shell::Get()->shell_delegate());
-    shell_delegate->set_multi_profiles_enabled(true);
 
-    test_session_controller_ = std::make_unique<TestSessionControllerClient>(
-        Shell::Get()->session_controller());
-    test_session_controller_->CreatePredefinedUserSessions(1);
-
-    blocker_ = std::make_unique<InactiveUserNotificationBlocker>(
-        message_center::MessageCenter::Get());
+    blocker_ = ShellTestApi().message_center_controller()->inactive_user_notification_blocker_for_testing();
     blocker_->AddObserver(this);
   }
 
   void TearDown() override {
     blocker_->RemoveObserver(this);
-    blocker_.reset();
     AshTestBase::TearDown();
   }
 
@@ -60,12 +52,12 @@ class InactiveUserNotificationBlockerTest
   const std::string GetDefaultUserId() { return "user0@tray"; }
 
   void AddUserSession(const std::string& email) {
-    test_session_controller_->AddUserSession(email);
+    GetSessionControllerClient()->AddUserSession(email);
   }
 
   void SwitchActiveUser(const std::string& email) {
     const AccountId account_id(AccountId::FromUserEmail(email));
-    test_session_controller_->SwitchActiveUser(account_id);
+    GetSessionControllerClient()->SwitchActiveUser(account_id);
   }
 
   int GetStateChangedCountAndReset() {
@@ -104,10 +96,7 @@ class InactiveUserNotificationBlockerTest
 
  private:
   int state_changed_count_ = 0;
-
-  std::unique_ptr<InactiveUserNotificationBlocker> blocker_;
-
-  std::unique_ptr<TestSessionControllerClient> test_session_controller_;
+  InactiveUserNotificationBlocker* blocker_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(InactiveUserNotificationBlockerTest);
 };
@@ -122,6 +111,12 @@ TEST_F(InactiveUserNotificationBlockerTest, Basic) {
   // Other system notifiers should be treated as same as a normal notifier.
   message_center::NotifierId random_system_notifier(
       message_center::NotifierId::SYSTEM_COMPONENT, "random_system_component");
+
+  // Login triggers blocking state change.
+  LOG(ERROR) << "JAMES SimulateUserLogin";
+  SimulateUserLogin(GetDefaultUserId());
+  GetSessionControllerClient()->SetMultiProfileAvailable();
+  EXPECT_EQ(1, GetStateChangedCountAndReset());
 
   // Notifications from a user other than the active one (in this case, default)
   // are generally blocked unless they're ash system notifications.

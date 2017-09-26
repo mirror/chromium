@@ -75,6 +75,10 @@ class ASH_EXPORT SessionController : public mojom::SessionController {
   // Returns true if the session is in a kiosk-like mode running a single app.
   bool IsRunningInAppMode() const;
 
+  // Returns true if a multi-profile user can be added to the session or if
+  // multiple users are already signed in.
+  bool IsMultiProfileAvailable() const;
+
   // Returns true if user session blocked by some overlying UI. It can be
   // login screen, lock screen or screen for adding users into multi-profile
   // session.

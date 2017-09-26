@@ -75,7 +75,7 @@ class SessionControllerClient
   void CycleActiveUser(ash::CycleUserDirection direction) override;
   void ShowMultiProfileLogin() override;
 
-  static bool IsMultiProfileEnabled();
+  static bool IsMultiProfileAvailable();
 
   // user_manager::UserManager::UserSessionStateObserver:
   void ActiveUserChanged(const user_manager::User* active_user) override;
@@ -103,6 +103,8 @@ class SessionControllerClient
   static void DoLockScreen();
   static void DoSwitchActiveUser(const AccountId& account_id);
   static void DoCycleActiveUser(ash::CycleUserDirection direction);
+
+  static void SetMultiProfileAvailableForTesting();
 
   // Flushes the mojo pipe to ash.
   static void FlushForTesting();

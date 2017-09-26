@@ -8,6 +8,7 @@
 #include <string>
 
 #include "ash/login_status.h"
+#include "ash/public/cpp/session_types.h"
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
 #include "base/logging.h"
@@ -57,6 +58,8 @@ void TestSessionControllerClient::Reset() {
   session_info_ = mojom::SessionInfo::New();
   session_info_->can_lock_screen = true;
   session_info_->should_lock_screen_automatically = false;
+  // By default, act like there is only one user account on the device.
+  //session_info_->add_user_session_policy = AddUserSessionPolicy::ERROR_NO_ELIGIBLE_USERS;
   session_info_->add_user_session_policy = AddUserSessionPolicy::ALLOWED;
   session_info_->state = session_manager::SessionState::LOGIN_PRIMARY;
 
@@ -79,6 +82,11 @@ void TestSessionControllerClient::SetShouldLockScreenAutomatically(
     bool should_lock) {
   session_info_->should_lock_screen_automatically = should_lock;
   controller_->SetSessionInfo(session_info_->Clone());
+}
+
+void TestSessionControllerClient::SetMultiProfileAvailable() {
+ session_info_->add_user_session_policy = AddUserSessionPolicy::ALLOWED;
+ controller_->SetSessionInfo(session_info_->Clone());
 }
 
 void TestSessionControllerClient::SetSessionState(
@@ -104,6 +112,25 @@ void TestSessionControllerClient::CreatePredefinedUserSessions(int count) {
 
   // Updates session state after adding user sessions.
   SetSessionState(session_manager::SessionState::ACTIVE);
+
+  // If we signed in the only available user then we can't add more users for
+  // multi-profile.
+  if (count == 1) {
+    session_info_->add_user_session_policy =
+        AddUserSessionPolicy::ERROR_NO_ELIGIBLE_USERS;
+    controller_->SetSessionInfo(session_info_->Clone());
+  }
+}
+
+void TestSessionControllerClient::SimulateUserLogin(const std::string &user_email) {
+  AddUserSession(user_email);
+  SwitchActiveUser(
+      AccountId::FromUserEmail(user_email));
+  SetSessionState(session_manager::SessionState::ACTIVE);
+  // Assume there are no more users that can be added for multi-profile.
+  session_info_->add_user_session_policy =
+      AddUserSessionPolicy::ERROR_NO_ELIGIBLE_USERS;
+  controller_->SetSessionInfo(session_info_->Clone());
 }
 
 void TestSessionControllerClient::AddUserSession(

@@ -100,6 +100,13 @@ bool SessionController::IsRunningInAppMode() const {
   return is_running_in_app_mode_;
 }
 
+bool SessionController::IsMultiProfileAvailable() const {
+  // LOG(ERROR) << "JAMES IsMultiProfileAvailable users " << NumberOfLoggedInUsers()
+  // << " policy " << bool(add_user_session_policy_ == AddUserSessionPolicy::ALLOWED);
+  return NumberOfLoggedInUsers() > 1 ||
+         add_user_session_policy_ == AddUserSessionPolicy::ALLOWED;
+}
+
 bool SessionController::IsUserSessionBlocked() const {
   // User sessions are blocked when session state is not ACTIVE, with two
   // exceptions:
