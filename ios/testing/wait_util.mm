@@ -30,4 +30,17 @@ bool WaitUntilConditionOrTimeout(NSTimeInterval timeout,
   return success;
 }
 
+bool WaitUntilConditionOrTimeoutWithLoopDelay(NSTimeInterval timeout,
+                                              ConditionBlock condition,
+                                              NSTimeInterval loop_delay) {
+  NSDate* deadline = [NSDate dateWithTimeIntervalSinceNow:timeout];
+  bool success = condition();
+  while (!success && [[NSDate date] compare:deadline] != NSOrderedDescending) {
+    base::test::ios::SpinRunLoopWithMinDelay(
+        base::TimeDelta::FromSecondsD(loop_delay));
+    success = condition();
+  }
+  return success;
+}
+
 }  // namespace testing
