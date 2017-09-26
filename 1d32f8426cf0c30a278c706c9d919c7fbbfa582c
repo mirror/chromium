@@ -25,6 +25,259 @@
     },
     {
       "key": {
+        "uuid": "25825270_23096ae7",
+        "filename": "components/autofill/core/browser/personal_data_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2406,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-26T21:00:02Z",
+      "side": 1,
+      "message": "address?",
+      "range": {
+        "startLine": 2406,
+        "startChar": 14,
+        "endLine": 2406,
+        "endChar": 26
+      },
+      "revId": "1d32f8426cf0c30a278c706c9d919c7fbbfa582c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1828e492_e37f31c1",
+        "filename": "components/autofill/core/browser/personal_data_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2421,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-26T21:00:02Z",
+      "side": 1,
+      "message": "in this case, I feel like the full type is useful to see\n\nconst std::vector\u003cAutofillProfile*\u003e\u0026",
+      "range": {
+        "startLine": 2421,
+        "startChar": 2,
+        "endLine": 2421,
+        "endChar": 6
+      },
+      "revId": "1d32f8426cf0c30a278c706c9d919c7fbbfa582c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbccc1da_fd2e79b7",
+        "filename": "components/autofill/core/browser/personal_data_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2423,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-26T21:00:02Z",
+      "side": 1,
+      "message": "nit: are",
+      "range": {
+        "startLine": 2423,
+        "startChar": 27,
+        "endLine": 2423,
+        "endChar": 29
+      },
+      "revId": "1d32f8426cf0c30a278c706c9d919c7fbbfa582c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a0e35e7_62e5ead9",
+        "filename": "components/autofill/core/browser/personal_data_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2435,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-26T21:00:02Z",
+      "side": 1,
+      "message": "nit: guids_to_delete",
+      "range": {
+        "startLine": 2435,
+        "startChar": 27,
+        "endLine": 2435,
+        "endChar": 41
+      },
+      "revId": "1d32f8426cf0c30a278c706c9d919c7fbbfa582c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fb9c594_f048aa6e",
+        "filename": "components/autofill/core/browser/personal_data_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-26T21:00:02Z",
+      "side": 1,
+      "message": "nit: replace by disused? Since we could decide to change the time at any point.\n\nThanks!",
+      "range": {
+        "startLine": 537,
+        "startChar": 49,
+        "endLine": 538,
+        "endChar": 10
+      },
+      "revId": "1d32f8426cf0c30a278c706c9d919c7fbbfa582c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c901a175_6b55d1f2",
+        "filename": "components/autofill/core/browser/personal_data_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-26T21:00:02Z",
+      "side": 1,
+      "message": "Could you mention the fact that you update cards in both the comment and the name? \n\nAt first glance I couldn\u0027t see why I should use that instead of directly calling the database. But your function does a very useful task, it should advertise it more :)",
+      "range": {
+        "startLine": 607,
+        "startChar": 65,
+        "endLine": 607,
+        "endChar": 0
+      },
+      "revId": "1d32f8426cf0c30a278c706c9d919c7fbbfa582c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20696a24_c7c26d7b",
+        "filename": "components/autofill/core/browser/personal_data_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-26T21:00:02Z",
+      "side": 1,
+      "message": "Can you put the const before the type? Thanks!",
+      "range": {
+        "startLine": 614,
+        "startChar": 58,
+        "endLine": 614,
+        "endChar": 63
+      },
+      "revId": "1d32f8426cf0c30a278c706c9d919c7fbbfa582c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0914ca93_c01ea2e7",
+        "filename": "components/autofill/core/browser/personal_data_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-26T21:00:02Z",
+      "side": 1,
+      "message": "Can you describe what this is in the comment? Thanks!\n\nAlso it took me a while to parse the name. Do you think billing_addresses_guids would convey the same meaning? Or used_billing_address_guids?",
+      "range": {
+        "startLine": 615,
+        "startChar": 30,
+        "endLine": 615,
+        "endChar": 65
+      },
+      "revId": "1d32f8426cf0c30a278c706c9d919c7fbbfa582c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ccb23ff_b4f7ee8e",
+        "filename": "components/autofill/core/browser/personal_data_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 6322,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-26T21:00:02Z",
+      "side": 1,
+      "message": "Update comment",
+      "range": {
+        "startLine": 6322,
+        "startChar": 2,
+        "endLine": 6322,
+        "endChar": 77
+      },
+      "revId": "1d32f8426cf0c30a278c706c9d919c7fbbfa582c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf03304f_ef625ef4",
+        "filename": "components/autofill/core/browser/personal_data_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 6331,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-26T21:00:02Z",
+      "side": 1,
+      "message": "Add the previous comment here :)",
+      "range": {
+        "startLine": 6331,
+        "startChar": 2,
+        "endLine": 6331,
+        "endChar": 14
+      },
+      "revId": "1d32f8426cf0c30a278c706c9d919c7fbbfa582c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "829127ad_b763cb25",
+        "filename": "components/autofill/core/browser/personal_data_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 6410,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-26T21:00:02Z",
+      "side": 1,
+      "message": "Update comment",
+      "range": {
+        "startLine": 6410,
+        "startChar": 2,
+        "endLine": 6410,
+        "endChar": 77
+      },
+      "revId": "1d32f8426cf0c30a278c706c9d919c7fbbfa582c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ea469e5_3d3e9e7c",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 6
