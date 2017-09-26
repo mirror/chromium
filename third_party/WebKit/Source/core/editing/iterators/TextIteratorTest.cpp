@@ -507,7 +507,7 @@ TEST_F(TextIteratorTest, copyTextTo) {
       "three <content select=#two></content> <content select=#one></content> "
       "zero";
   SetBodyContent(body_content);
-  SetShadowContent(shadow_content, "host");
+  SetShadowContentDeprecated(shadow_content, "host");
 
   Element* host = GetDocument().getElementById("host");
   const char* message = "|iter%d| should have emitted '%s'.";
@@ -577,7 +577,7 @@ TEST_F(TextIteratorTest, characterAt) {
       "three <content select=#two></content> <content select=#one></content> "
       "zero";
   SetBodyContent(body_content);
-  SetShadowContent(shadow_content, "host");
+  SetShadowContentDeprecated(shadow_content, "host");
 
   Element* host = GetDocument().getElementById("host");
 
@@ -667,7 +667,7 @@ TEST_F(TextIteratorTest, EndingConditionWithDisplayNoneInShadowTree) {
       "ipsum dolor sit amet.";
   const char* shadow_content = "<i><b id=end>he</b></i>llo";
   SetBodyContent(body_content);
-  SetShadowContent(shadow_content, "host");
+  SetShadowContentDeprecated(shadow_content, "host");
 
   ShadowRoot* shadow_root =
       GetDocument().getElementById("host")->OpenShadowRoot();

@@ -163,7 +163,7 @@ TEST_F(FrameSelectionTest, SelectWordAroundPosition2) {
 
 TEST_F(FrameSelectionTest, ModifyExtendWithFlatTree) {
   SetBodyContent("<span id=host></span>one");
-  SetShadowContent("two<content></content>", "host");
+  SetShadowContentDeprecated("two<content></content>", "host");
   Element* host = GetDocument().getElementById("host");
   Node* const two = FlatTreeTraversal::FirstChild(*host);
   // Select "two" for selection in DOM tree
@@ -415,8 +415,8 @@ TEST_F(FrameSelectionTest, SelectInvalidPositionInFlatTreeDoesntCrash) {
 
 TEST_F(FrameSelectionTest, CaretInShadowTree) {
   SetBodyContent("<p id=host></p>bar");
-  ShadowRoot* shadow_root =
-      SetShadowContent("<div contenteditable id='ce'>foo</div>", "host");
+  ShadowRoot* shadow_root = SetShadowContentDeprecated(
+      "<div contenteditable id='ce'>foo</div>", "host");
   EXPECT_TRUE(Selection().GetSelectionInDOMTree().IsNone());
   EXPECT_FALSE(Selection().SelectionHasFocus());
   EXPECT_TRUE(Selection().IsHidden());
@@ -453,7 +453,7 @@ TEST_F(FrameSelectionTest, CaretInTextControl) {
 
 TEST_F(FrameSelectionTest, RangeInShadowTree) {
   SetBodyContent("<p id='host'></p>");
-  ShadowRoot* shadow_root = SetShadowContent("hey", "host");
+  ShadowRoot* shadow_root = SetShadowContentDeprecated("hey", "host");
   EXPECT_TRUE(Selection().GetSelectionInDOMTree().IsNone());
   EXPECT_FALSE(Selection().SelectionHasFocus());
   EXPECT_TRUE(Selection().IsHidden());
@@ -717,8 +717,8 @@ TEST_F(FrameSelectionTest, RangeInEditableDiv) {
 
 TEST_F(FrameSelectionTest, RangeInEditableDivInShadowTree) {
   SetBodyContent("<p id='host'></p>");
-  ShadowRoot* shadow_root =
-      SetShadowContent("<div id='ce' contenteditable>foo</div>", "host");
+  ShadowRoot* shadow_root = SetShadowContentDeprecated(
+      "<div id='ce' contenteditable>foo</div>", "host");
 
   Element* const ce = shadow_root->getElementById("ce");
   ce->focus();
@@ -996,7 +996,7 @@ TEST_F(FrameSelectionTest, RangeOutsideFocus) {
 // crbug.com/725457
 TEST_F(FrameSelectionTest, InconsistentVisibleSelectionNoCrash) {
   SetBodyContent("foo<div id=host><span id=anchor>bar</span></div>baz");
-  SetShadowContent("shadow", "host");
+  SetShadowContentDeprecated("shadow", "host");
 
   Element* anchor = GetDocument().getElementById("anchor");
 

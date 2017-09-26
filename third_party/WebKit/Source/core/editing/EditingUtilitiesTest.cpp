@@ -19,7 +19,7 @@ TEST_F(EditingUtilitiesTest, DirectionOfEnclosingBlockOf) {
       "<content select=#two></content><p dir=rtl><content "
       "select=#one></content><p>";
   SetBodyContent(body_content);
-  SetShadowContent(shadow_content, "host");
+  SetShadowContentDeprecated(shadow_content, "host");
   Node* one = GetDocument().getElementById("one");
 
   EXPECT_EQ(TextDirection::kLtr, DirectionOfEnclosingBlockOf(Position(one, 0)));
@@ -34,7 +34,7 @@ TEST_F(EditingUtilitiesTest, firstEditablePositionAfterPositionInRoot) {
       "<content select=#two></content><content select=#one></content><b "
       "id='three'>333</b>";
   SetBodyContent(body_content);
-  ShadowRoot* shadow_root = SetShadowContent(shadow_content, "host");
+  ShadowRoot* shadow_root = SetShadowContentDeprecated(shadow_content, "host");
   Element* host = GetDocument().getElementById("host");
   Node* one = GetDocument().getElementById("one");
   Node* two = GetDocument().getElementById("two");
@@ -77,7 +77,7 @@ TEST_F(EditingUtilitiesTest, enclosingBlock) {
       "<content select=#two></content><div id='three'><content "
       "select=#one></content></div>";
   SetBodyContent(body_content);
-  ShadowRoot* shadow_root = SetShadowContent(shadow_content, "host");
+  ShadowRoot* shadow_root = SetShadowContentDeprecated(shadow_content, "host");
   Node* host = GetDocument().getElementById("host");
   Node* one = GetDocument().getElementById("one");
   Node* three = shadow_root->getElementById("three");
@@ -94,7 +94,7 @@ TEST_F(EditingUtilitiesTest, enclosingNodeOfType) {
       "<content select=#two></content><div id='three'><content "
       "select=#one></div></content>";
   SetBodyContent(body_content);
-  ShadowRoot* shadow_root = SetShadowContent(shadow_content, "host");
+  ShadowRoot* shadow_root = SetShadowContentDeprecated(shadow_content, "host");
   Node* host = GetDocument().getElementById("host");
   Node* one = GetDocument().getElementById("one");
   Node* three = shadow_root->getElementById("three");
@@ -128,7 +128,7 @@ TEST_F(EditingUtilitiesTest, tableElementJustBefore) {
   const char* shadow_content =
       "<content select=#two></content><content select=#table></content>";
   SetBodyContent(body_content);
-  SetShadowContent(shadow_content, "host");
+  SetShadowContentDeprecated(shadow_content, "host");
   Node* host = GetDocument().getElementById("host");
   Node* table = GetDocument().getElementById("table");
 
@@ -163,7 +163,7 @@ TEST_F(EditingUtilitiesTest, lastEditablePositionBeforePositionInRoot) {
       "<content select=#two></content><content select=#one></content><b "
       "id='three'>333</b>";
   SetBodyContent(body_content);
-  ShadowRoot* shadow_root = SetShadowContent(shadow_content, "host");
+  ShadowRoot* shadow_root = SetShadowContentDeprecated(shadow_content, "host");
   Element* host = GetDocument().getElementById("host");
   Node* one = GetDocument().getElementById("one");
   Node* two = GetDocument().getElementById("two");
@@ -206,7 +206,7 @@ TEST_F(EditingUtilitiesTest, NextNodeIndex) {
   const char* shadow_content =
       "<content select=#two></content><content select=#one></content>";
   SetBodyContent(body_content);
-  SetShadowContent(shadow_content, "host");
+  SetShadowContentDeprecated(shadow_content, "host");
   Node* host = GetDocument().getElementById("host");
   Node* two = GetDocument().getElementById("two");
 
@@ -226,7 +226,7 @@ TEST_F(EditingUtilitiesTest, NextVisuallyDistinctCandidate) {
       "<content select=#two></content><content select=#one></content><content "
       "select=#three></content>";
   SetBodyContent(body_content);
-  SetShadowContent(shadow_content, "host");
+  SetShadowContentDeprecated(shadow_content, "host");
   Node* one = GetDocument().getElementById("one");
   Node* two = GetDocument().getElementById("two");
   Node* three = GetDocument().getElementById("three");
