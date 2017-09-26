@@ -157,27 +157,27 @@ TEST_F(FrameTreeTest, Shape) {
   EXPECT_EQ("2: []", GetTreeState(frame_tree));
 
   // Simulate attaching a series of frames to build the frame tree.
-  frame_tree->AddFrame(root, process_id, 14, blink::WebTreeScopeType::kDocument,
-                       std::string(), "uniqueName0",
-                       blink::WebSandboxFlags::kNone,
+  frame_tree->AddFrame(root, process_id, 14, nullptr,
+                       blink::WebTreeScopeType::kDocument, std::string(),
+                       "uniqueName0", blink::WebSandboxFlags::kNone,
                        ParsedFeaturePolicyHeader(), FrameOwnerProperties());
-  frame_tree->AddFrame(root, process_id, 15, blink::WebTreeScopeType::kDocument,
-                       std::string(), "uniqueName1",
-                       blink::WebSandboxFlags::kNone,
+  frame_tree->AddFrame(root, process_id, 15, nullptr,
+                       blink::WebTreeScopeType::kDocument, std::string(),
+                       "uniqueName1", blink::WebSandboxFlags::kNone,
                        ParsedFeaturePolicyHeader(), FrameOwnerProperties());
-  frame_tree->AddFrame(root, process_id, 16, blink::WebTreeScopeType::kDocument,
-                       std::string(), "uniqueName2",
-                       blink::WebSandboxFlags::kNone,
+  frame_tree->AddFrame(root, process_id, 16, nullptr,
+                       blink::WebTreeScopeType::kDocument, std::string(),
+                       "uniqueName2", blink::WebSandboxFlags::kNone,
                        ParsedFeaturePolicyHeader(), FrameOwnerProperties());
-  frame_tree->AddFrame(root->child_at(0), process_id, 244,
+  frame_tree->AddFrame(root->child_at(0), process_id, 244, nullptr,
                        blink::WebTreeScopeType::kDocument, std::string(),
                        "uniqueName3", blink::WebSandboxFlags::kNone,
                        ParsedFeaturePolicyHeader(), FrameOwnerProperties());
-  frame_tree->AddFrame(root->child_at(1), process_id, 255,
+  frame_tree->AddFrame(root->child_at(1), process_id, 255, nullptr,
                        blink::WebTreeScopeType::kDocument, no_children_node,
                        "uniqueName4", blink::WebSandboxFlags::kNone,
                        ParsedFeaturePolicyHeader(), FrameOwnerProperties());
-  frame_tree->AddFrame(root->child_at(0), process_id, 245,
+  frame_tree->AddFrame(root->child_at(0), process_id, 245, nullptr,
                        blink::WebTreeScopeType::kDocument, std::string(),
                        "uniqueName5", blink::WebSandboxFlags::kNone,
                        ParsedFeaturePolicyHeader(), FrameOwnerProperties());
@@ -189,44 +189,45 @@ TEST_F(FrameTreeTest, Shape) {
       GetTreeState(frame_tree));
 
   FrameTreeNode* child_16 = root->child_at(2);
-  frame_tree->AddFrame(child_16, process_id, 264,
+  frame_tree->AddFrame(child_16, process_id, 264, nullptr,
                        blink::WebTreeScopeType::kDocument, std::string(),
                        "uniqueName6", blink::WebSandboxFlags::kNone,
                        ParsedFeaturePolicyHeader(), FrameOwnerProperties());
-  frame_tree->AddFrame(child_16, process_id, 265,
+  frame_tree->AddFrame(child_16, process_id, 265, nullptr,
                        blink::WebTreeScopeType::kDocument, std::string(),
                        "uniqueName7", blink::WebSandboxFlags::kNone,
                        ParsedFeaturePolicyHeader(), FrameOwnerProperties());
-  frame_tree->AddFrame(child_16, process_id, 266,
+  frame_tree->AddFrame(child_16, process_id, 266, nullptr,
                        blink::WebTreeScopeType::kDocument, std::string(),
                        "uniqueName8", blink::WebSandboxFlags::kNone,
                        ParsedFeaturePolicyHeader(), FrameOwnerProperties());
-  frame_tree->AddFrame(child_16, process_id, 267,
+  frame_tree->AddFrame(child_16, process_id, 267, nullptr,
                        blink::WebTreeScopeType::kDocument, deep_subtree,
                        "uniqueName9", blink::WebSandboxFlags::kNone,
                        ParsedFeaturePolicyHeader(), FrameOwnerProperties());
-  frame_tree->AddFrame(child_16, process_id, 268,
+  frame_tree->AddFrame(child_16, process_id, 268, nullptr,
                        blink::WebTreeScopeType::kDocument, std::string(),
                        "uniqueName10", blink::WebSandboxFlags::kNone,
                        ParsedFeaturePolicyHeader(), FrameOwnerProperties());
 
   FrameTreeNode* child_267 = child_16->child_at(3);
-  frame_tree->AddFrame(child_267, process_id, 365,
+  frame_tree->AddFrame(child_267, process_id, 365, nullptr,
                        blink::WebTreeScopeType::kDocument, std::string(),
                        "uniqueName11", blink::WebSandboxFlags::kNone,
                        ParsedFeaturePolicyHeader(), FrameOwnerProperties());
-  frame_tree->AddFrame(child_267->child_at(0), process_id, 455,
+  frame_tree->AddFrame(child_267->child_at(0), process_id, 455, nullptr,
                        blink::WebTreeScopeType::kDocument, std::string(),
                        "uniqueName12", blink::WebSandboxFlags::kNone,
                        ParsedFeaturePolicyHeader(), FrameOwnerProperties());
   frame_tree->AddFrame(child_267->child_at(0)->child_at(0), process_id, 555,
-                       blink::WebTreeScopeType::kDocument, std::string(),
-                       "uniqueName13", blink::WebSandboxFlags::kNone,
+                       nullptr, blink::WebTreeScopeType::kDocument,
+                       std::string(), "uniqueName13",
+                       blink::WebSandboxFlags::kNone,
                        ParsedFeaturePolicyHeader(), FrameOwnerProperties());
   frame_tree->AddFrame(child_267->child_at(0)->child_at(0)->child_at(0),
-                       process_id, 655, blink::WebTreeScopeType::kDocument,
-                       std::string(), "uniqueName14",
-                       blink::WebSandboxFlags::kNone,
+                       process_id, 655, nullptr,
+                       blink::WebTreeScopeType::kDocument, std::string(),
+                       "uniqueName14", blink::WebSandboxFlags::kNone,
                        ParsedFeaturePolicyHeader(), FrameOwnerProperties());
 
   // Now that's it's fully built, verify the tree structure is as expected.
@@ -299,16 +300,16 @@ TEST_F(FrameTreeTest, FindFrames) {
   FrameTreeNode* root = frame_tree->root();
 
   main_test_rfh()->OnCreateChildFrame(
-      22, blink::WebTreeScopeType::kDocument, "child0", "uniqueName0",
+      22, nullptr, blink::WebTreeScopeType::kDocument, "child0", "uniqueName0",
       blink::WebSandboxFlags::kNone, ParsedFeaturePolicyHeader(),
       FrameOwnerProperties());
   main_test_rfh()->OnCreateChildFrame(
-      23, blink::WebTreeScopeType::kDocument, "child1", "uniqueName1",
+      23, nullptr, blink::WebTreeScopeType::kDocument, "child1", "uniqueName1",
       blink::WebSandboxFlags::kNone, ParsedFeaturePolicyHeader(),
       FrameOwnerProperties());
   main_test_rfh()->OnCreateChildFrame(
-      24, blink::WebTreeScopeType::kDocument, std::string(), "uniqueName2",
-      blink::WebSandboxFlags::kNone, ParsedFeaturePolicyHeader(),
+      24, nullptr, blink::WebTreeScopeType::kDocument, std::string(),
+      "uniqueName2", blink::WebSandboxFlags::kNone, ParsedFeaturePolicyHeader(),
       FrameOwnerProperties());
   FrameTreeNode* child0 = root->child_at(0);
   FrameTreeNode* child1 = root->child_at(1);
@@ -317,8 +318,8 @@ TEST_F(FrameTreeTest, FindFrames) {
 
   // Add one grandchild frame.
   child1->current_frame_host()->OnCreateChildFrame(
-      33, blink::WebTreeScopeType::kDocument, "grandchild", "uniqueName3",
-      blink::WebSandboxFlags::kNone, ParsedFeaturePolicyHeader(),
+      33, nullptr, blink::WebTreeScopeType::kDocument, "grandchild",
+      "uniqueName3", blink::WebSandboxFlags::kNone, ParsedFeaturePolicyHeader(),
       FrameOwnerProperties());
   FrameTreeNode* grandchild = child1->child_at(0);
 
@@ -356,15 +357,15 @@ TEST_F(FrameTreeTest, GetSibling) {
   FrameTree* frame_tree = contents()->GetFrameTree();
   FrameTreeNode* root = frame_tree->root();
   main_test_rfh()->OnCreateChildFrame(
-      22, blink::WebTreeScopeType::kDocument, "child0", "uniqueName0",
+      22, nullptr, blink::WebTreeScopeType::kDocument, "child0", "uniqueName0",
       blink::WebSandboxFlags::kNone, ParsedFeaturePolicyHeader(),
       FrameOwnerProperties());
   main_test_rfh()->OnCreateChildFrame(
-      23, blink::WebTreeScopeType::kDocument, "child1", "uniqueName1",
+      23, nullptr, blink::WebTreeScopeType::kDocument, "child1", "uniqueName1",
       blink::WebSandboxFlags::kNone, ParsedFeaturePolicyHeader(),
       FrameOwnerProperties());
   main_test_rfh()->OnCreateChildFrame(
-      24, blink::WebTreeScopeType::kDocument, "child2", "uniqueName2",
+      24, nullptr, blink::WebTreeScopeType::kDocument, "child2", "uniqueName2",
       blink::WebSandboxFlags::kNone, ParsedFeaturePolicyHeader(),
       FrameOwnerProperties());
   FrameTreeNode* child0 = root->child_at(0);
@@ -373,8 +374,8 @@ TEST_F(FrameTreeTest, GetSibling) {
 
   // Add one grandchild frame.
   child1->current_frame_host()->OnCreateChildFrame(
-      33, blink::WebTreeScopeType::kDocument, "grandchild", "uniqueName3",
-      blink::WebSandboxFlags::kNone, ParsedFeaturePolicyHeader(),
+      33, nullptr, blink::WebTreeScopeType::kDocument, "grandchild",
+      "uniqueName3", blink::WebSandboxFlags::kNone, ParsedFeaturePolicyHeader(),
       FrameOwnerProperties());
   FrameTreeNode* grandchild = child1->child_at(0);
 
@@ -405,16 +406,16 @@ TEST_F(FrameTreeTest, ObserverWalksTreeDuringFrameCreation) {
 
   // Simulate attaching a series of frames to build the frame tree.
   main_test_rfh()->OnCreateChildFrame(
-      14, blink::WebTreeScopeType::kDocument, std::string(), "uniqueName0",
-      blink::WebSandboxFlags::kNone, ParsedFeaturePolicyHeader(),
+      14, nullptr, blink::WebTreeScopeType::kDocument, std::string(),
+      "uniqueName0", blink::WebSandboxFlags::kNone, ParsedFeaturePolicyHeader(),
       FrameOwnerProperties());
   EXPECT_EQ(
       "RenderFrameHostChanged(new)(14) -> 2: []\n"
       "RenderFrameCreated(14) -> 2: [14: []]",
       activity.GetLog());
   main_test_rfh()->OnCreateChildFrame(
-      18, blink::WebTreeScopeType::kDocument, std::string(), "uniqueName1",
-      blink::WebSandboxFlags::kNone, ParsedFeaturePolicyHeader(),
+      18, nullptr, blink::WebTreeScopeType::kDocument, std::string(),
+      "uniqueName1", blink::WebSandboxFlags::kNone, ParsedFeaturePolicyHeader(),
       FrameOwnerProperties());
   EXPECT_EQ(
       "RenderFrameHostChanged(new)(18) -> 2: [14: []]\n"
@@ -434,16 +435,16 @@ TEST_F(FrameTreeTest, ObserverWalksTreeAfterCrash) {
   EXPECT_EQ("RenderFrameCreated(2) -> 2: []", activity.GetLog());
 
   main_test_rfh()->OnCreateChildFrame(
-      22, blink::WebTreeScopeType::kDocument, std::string(), "uniqueName0",
-      blink::WebSandboxFlags::kNone, ParsedFeaturePolicyHeader(),
+      22, nullptr, blink::WebTreeScopeType::kDocument, std::string(),
+      "uniqueName0", blink::WebSandboxFlags::kNone, ParsedFeaturePolicyHeader(),
       FrameOwnerProperties());
   EXPECT_EQ(
       "RenderFrameHostChanged(new)(22) -> 2: []\n"
       "RenderFrameCreated(22) -> 2: [22: []]",
       activity.GetLog());
   main_test_rfh()->OnCreateChildFrame(
-      23, blink::WebTreeScopeType::kDocument, std::string(), "uniqueName1",
-      blink::WebSandboxFlags::kNone, ParsedFeaturePolicyHeader(),
+      23, nullptr, blink::WebTreeScopeType::kDocument, std::string(),
+      "uniqueName1", blink::WebSandboxFlags::kNone, ParsedFeaturePolicyHeader(),
       FrameOwnerProperties());
   EXPECT_EQ(
       "RenderFrameHostChanged(new)(23) -> 2: [22: []]\n"
@@ -472,7 +473,7 @@ TEST_F(FrameTreeTest, FailAddFrameWithWrongProcessId) {
 
   // Simulate attaching a frame from mismatched process id.
   ASSERT_FALSE(frame_tree->AddFrame(
-      root, process_id + 1, 1, blink::WebTreeScopeType::kDocument,
+      root, process_id + 1, 1, nullptr, blink::WebTreeScopeType::kDocument,
       std::string(), "uniqueName0", blink::WebSandboxFlags::kNone,
       ParsedFeaturePolicyHeader(), FrameOwnerProperties()));
   ASSERT_EQ("2: []", GetTreeState(frame_tree));
@@ -487,19 +488,19 @@ TEST_F(FrameTreeTest, ProcessCrashClearsGlobalMap) {
   FrameTreeNode* root = contents()->GetFrameTree()->root();
 
   main_test_rfh()->OnCreateChildFrame(
-      22, blink::WebTreeScopeType::kDocument, std::string(), "uniqueName0",
-      blink::WebSandboxFlags::kNone, ParsedFeaturePolicyHeader(),
+      22, nullptr, blink::WebTreeScopeType::kDocument, std::string(),
+      "uniqueName0", blink::WebSandboxFlags::kNone, ParsedFeaturePolicyHeader(),
       FrameOwnerProperties());
   main_test_rfh()->OnCreateChildFrame(
-      23, blink::WebTreeScopeType::kDocument, std::string(), "uniqueName1",
-      blink::WebSandboxFlags::kNone, ParsedFeaturePolicyHeader(),
+      23, nullptr, blink::WebTreeScopeType::kDocument, std::string(),
+      "uniqueName1", blink::WebSandboxFlags::kNone, ParsedFeaturePolicyHeader(),
       FrameOwnerProperties());
 
   // Add one grandchild frame.
   RenderFrameHostImpl* child1_rfh = root->child_at(0)->current_frame_host();
   child1_rfh->OnCreateChildFrame(
-      33, blink::WebTreeScopeType::kDocument, std::string(), "uniqueName2",
-      blink::WebSandboxFlags::kNone, ParsedFeaturePolicyHeader(),
+      33, nullptr, blink::WebTreeScopeType::kDocument, std::string(),
+      "uniqueName2", blink::WebSandboxFlags::kNone, ParsedFeaturePolicyHeader(),
       FrameOwnerProperties());
 
   // Ensure they can be found by id.

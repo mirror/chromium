@@ -64,6 +64,7 @@ TestRenderFrameHost::TestRenderFrameHost(SiteInstance* site_instance,
                           frame_tree,
                           frame_tree_node,
                           routing_id,
+                          nullptr,
                           widget_routing_id,
                           flags,
                           false),
@@ -84,6 +85,13 @@ MockRenderProcessHost* TestRenderFrameHost::GetProcess() {
   return static_cast<MockRenderProcessHost*>(RenderFrameHostImpl::GetProcess());
 }
 
+service_manager::mojom::InterfaceProviderRequest
+TestRenderFrameHost::RouteThroughCapabilityFilter(
+    service_manager::mojom::InterfaceProviderRequest request) {
+  // Bypass filtering in unit tests where we usually have ServiceManager.
+  return request;
+}
+
 void TestRenderFrameHost::InitializeRenderFrameIfNeeded() {
   if (!render_view_host()->IsRenderViewLive()) {
     render_view_host()->GetProcess()->Init();
@@ -95,7 +103,7 @@ void TestRenderFrameHost::InitializeRenderFrameIfNeeded() {
 TestRenderFrameHost* TestRenderFrameHost::AppendChild(
     const std::string& frame_name) {
   std::string frame_unique_name = base::GenerateGUID();
-  OnCreateChildFrame(GetProcess()->GetNextRoutingID(),
+  OnCreateChildFrame(GetProcess()->GetNextRoutingID(), nullptr,
                      blink::WebTreeScopeType::kDocument, frame_name,
                      frame_unique_name, blink::WebSandboxFlags::kNone,
                      ParsedFeaturePolicyHeader(), FrameOwnerProperties());
