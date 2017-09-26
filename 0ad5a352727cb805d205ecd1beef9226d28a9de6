@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db8d05cd_8b74ff19",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunFlowSequencer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-26T12:50:00Z",
+      "side": 0,
+      "message": "It looks like FRE was specifically implemented to support external provision of screen sequence. Are you sure that it is no longer used? Removing it would be great, I just want to double-check that it is not used by other apps.",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 55
+      },
+      "revId": "0ad5a352727cb805d205ecd1beef9226d28a9de6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36620a55_3a4b94ed",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-26T12:50:00Z",
+      "side": 1,
+      "message": "Missing leading 7.",
+      "range": {
+        "startLine": 14,
+        "startChar": 4,
+        "endLine": 14,
+        "endChar": 9
+      },
+      "revId": "47ef1197cf5eea41cb3a8031d3a8d5bd6a68f2de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91ade544_7334d39d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-26T12:50:00Z",
+      "side": 1,
+      "message": "IUUC, in current implementation mFreProperties will remain empty until FirstRunFlowSequencer invokes onFlowIsKnown. It probably makes sense to leave mFreProperties to be null so we\u0027re sure it\u0027s not used until it is initialized by FirstRunFlowSequencer.",
+      "range": {
+        "startLine": 203,
+        "startChar": 0,
+        "endLine": 203,
+        "endChar": 38
+      },
+      "revId": "47ef1197cf5eea41cb3a8031d3a8d5bd6a68f2de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fcd621a_250d10ca",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-26T12:50:00Z",
+      "side": 1,
+      "message": "Nit: with current interface it\u0027s not obvious that markFlowAsCompleted uses only RESULT_SIGNIN_ACCOUNT_NAME and RESULT_SHOW_SIGNIN_SETTINGS. Does it make sense to change signature to clarify that?",
+      "range": {
+        "startLine": 396,
+        "startChar": 30,
+        "endLine": 396,
+        "endChar": 49
+      },
+      "revId": "47ef1197cf5eea41cb3a8031d3a8d5bd6a68f2de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
