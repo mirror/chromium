@@ -1,0 +1,39 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module media.mojom;
+
+import "media/mojo/interfaces/audio_parameters.mojom";
+import "media/mojo/interfaces/media_types.mojom";
+import "media/mojo/interfaces/output_device_info.mojom";
+import "mojo/common/time.mojom";
+
+interface AudioRendererSinkRenderCallback {
+
+  [Sync]
+  Render(mojo.common.mojom.TimeDelta delay,
+         mojo.common.mojom.TimeTicks delay_timestamp,
+         int32 prior_frames_skipped,
+         int32 nb_frames) => (int32 nb_filled_frames, AudioBus? dest);
+
+  OnRenderError();
+};
+
+interface AudioRendererSink {
+
+  Initialize(AudioParameters params, AudioRendererSinkRenderCallback? render_callback);
+  Start();
+  Stop();
+  Pause();
+  Play();
+
+  [Sync]
+  SetVolume(double volume) => (bool success);
+
+  [Sync]
+  GetOutputDeviceInfo() => (OutputDeviceInfo info);
+
+  [Sync]
+  CurrentThreadIsRenderingThread() => (bool is_rendering_thread);
+};

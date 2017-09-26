@@ -25,6 +25,8 @@ source_set("clients") {
   sources = [
     "mojo_audio_decoder.cc",
     "mojo_audio_decoder.h",
+    "mojo_audio_renderer_sink_impl.cc",
+    "mojo_audio_renderer_sink_impl.h",
     "mojo_cdm.cc",
     "mojo_cdm.h",
     "mojo_cdm_factory.cc",
