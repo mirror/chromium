@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "389c2312_0cf382cc",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-09-26T21:19:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07a078dd_5c1c8da5",
+      "revId": "40e4464cb8092a271593ee6b1fab86f758b25f07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c29ec54_6cdb1e29",
         "filename": "media/blink/webmediaplayer_impl.cc",
         "patchSetId": 4
@@ -48,6 +66,24 @@
       "writtenOn": "2017-09-26T20:49:13Z",
       "side": 1,
       "message": "std::move()",
+      "revId": "40e4464cb8092a271593ee6b1fab86f758b25f07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad735149_1afeaf63",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-09-26T21:19:57Z",
+      "side": 1,
+      "message": "It wont let me do std::move() here. Not sure why. Get an error about it being temporary.",
+      "parentUuid": "7c29ec54_6cdb1e29",
       "revId": "40e4464cb8092a271593ee6b1fab86f758b25f07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "40a08725_52064529",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1032,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-09-26T21:19:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75fdf05f_38f07085",
+      "revId": "40e4464cb8092a271593ee6b1fab86f758b25f07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77ac2a8f_eaff94fe",
         "filename": "media/blink/webmediaplayer_impl.cc",
         "patchSetId": 4
@@ -85,6 +139,24 @@
       "revId": "40e4464cb8092a271593ee6b1fab86f758b25f07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9e4095a_2a1a0d2e",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1035,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-09-26T21:19:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77ac2a8f_eaff94fe",
+      "revId": "40e4464cb8092a271593ee6b1fab86f758b25f07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "23a81a37_2bf484d9",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1135,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-09-26T21:19:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "946521bc_ca1dddd5",
+      "revId": "40e4464cb8092a271593ee6b1fab86f758b25f07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68b83312_977a6d94",
         "filename": "media/blink/webmediaplayer_impl.cc",
         "patchSetId": 4
@@ -119,6 +209,24 @@
       "revId": "40e4464cb8092a271593ee6b1fab86f758b25f07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d1cd81e_38373d10",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1138,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-09-26T21:19:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68b83312_977a6d94",
+      "revId": "40e4464cb8092a271593ee6b1fab86f758b25f07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
