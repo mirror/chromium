@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b3d54901_189a26e1",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-26T23:24:22Z",
+      "side": 1,
+      "message": "Stop logging NO_CARD for address form using is_for_credit_card_ in autofill_metrics.\n\nAs for the new metrics we want to log, prefer to handle it in another CL. To be clear about what we want to log, is it:\n - # of user used Autofill, form submitted / # of suggestions shown, form submitted. This is already logged: https://uma.googleplex.com/p/chrome/timeline_v2/?sid\u003d5b1b957f9e11b5f13103cf17b3124530",
+      "parentUuid": "db2e6dcf_95006e74",
+      "range": {
+        "startLine": 432,
+        "startChar": 22,
+        "endLine": 432,
+        "endChar": 47
+      },
+      "revId": "f0714a8a3e100fa38e7e4ac4a3b717457a4009fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6f9ee10_7821428a",
         "filename": "components/autofill/core/browser/personal_data_manager.cc",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "f0714a8a3e100fa38e7e4ac4a3b717457a4009fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0118d81_fe7a25a6",
+        "filename": "components/autofill/core/browser/personal_data_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1810,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-26T23:24:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6f9ee10_7821428a",
+      "range": {
+        "startLine": 1810,
+        "startChar": 8,
+        "endLine": 1810,
+        "endChar": 56
+      },
+      "revId": "f0714a8a3e100fa38e7e4ac4a3b717457a4009fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -85,6 +133,48 @@
       "revId": "f0714a8a3e100fa38e7e4ac4a3b717457a4009fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c18f39e_ab70909c",
+        "filename": "components/autofill/core/browser/personal_data_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1815,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-26T23:24:22Z",
+      "side": 1,
+      "message": "credit_card.number() should be full card number. Added the check anyway to make the code reads better.",
+      "parentUuid": "9a616bd9_d73d2adc",
+      "revId": "f0714a8a3e100fa38e7e4ac4a3b717457a4009fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b270564e_a71a3fa1",
+        "filename": "components/autofill/core/browser/personal_data_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1815,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-26T23:24:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a7f66fd_81482c88",
+      "range": {
+        "startLine": 1815,
+        "startChar": 8,
+        "endLine": 1815,
+        "endChar": 56
+      },
+      "revId": "f0714a8a3e100fa38e7e4ac4a3b717457a4009fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
