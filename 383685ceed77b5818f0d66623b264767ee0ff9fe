@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90dadf94_59262050",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-09-26T22:19:35Z",
+      "side": 1,
+      "message": "This seems correct now but unnecessarily complex. How about replacing this condition and DCHECK with simply:\n\n if (ui::PageTransitionTypeIncludingQualifiersIs(\n        match.transition, ui::PAGE_TRANSITION_TYPED))\n\nIf some hypothetical new type is added in the future that\u0027s not any of these three I think it\u0027s way more likely that it\u0027s a thing we won\u0027t care to record here than it is that it\u0027s a thing we wish triggered a DCHECK.",
+      "revId": "383685ceed77b5818f0d66623b264767ee0ff9fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
