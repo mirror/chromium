@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bdd477b1_b7d230be",
+        "filename": "content/browser/renderer_host/p2p/socket_host_udp.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-26T20:01:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94df7692_2e98d45d",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 0
+      },
+      "revId": "805841d04075f8eb089db2b93351a3f0523a8115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0c972b0_1dadcccb",
         "filename": "content/browser/renderer_host/p2p/socket_host_udp_unittest.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-26T19:49:54Z",
       "side": 1,
       "message": "nit: I think it\u0027s more common to format this as /*net_log\u003d*/nullptr.",
+      "range": {
+        "startLine": 213,
+        "startChar": 34,
+        "endLine": 213,
+        "endChar": 55
+      },
+      "revId": "805841d04075f8eb089db2b93351a3f0523a8115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad0d371c_d1413f82",
+        "filename": "content/browser/renderer_host/p2p/socket_host_udp_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-26T20:01:02Z",
+      "side": 1,
+      "message": "Done.  I\u0027ve looked into this before, and I believe this was more common (It certainly is in network code), but happy to switch.",
+      "parentUuid": "f0c972b0_1dadcccb",
       "range": {
         "startLine": 213,
         "startChar": 34,
