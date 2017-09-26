@@ -35,6 +35,7 @@ source_set("utility") {
     "//content/public/child:child_sources",
     "//content/public/common:common_sources",
     "//media:media_features",
+    "//media/mojo:features",
     "//mojo/common",
     "//mojo/public/cpp/bindings",
     "//sandbox",
@@ -57,7 +58,6 @@ source_set("utility") {
   if (enable_library_cdms) {
     deps += [
       "//media",
-      "//media/mojo:features",
       "//media/mojo/interfaces:constants",
       "//media/mojo/services",
     ]

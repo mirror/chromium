@@ -35,6 +35,10 @@ CreateGpuMediaService(
 std::unique_ptr<service_manager::Service> MEDIA_MOJO_EXPORT
 CreateMediaServiceForTesting();
 
+// Creates a MediaService instance using the UtilityMojoMediaClient.
+std::unique_ptr<service_manager::Service> MEDIA_MOJO_EXPORT
+CreateUtilityMediaService();
+
 }  // namespace media
 
 #endif  // MEDIA_MOJO_SERVICES_MEDIA_SERVICE_FACTORY_H_
