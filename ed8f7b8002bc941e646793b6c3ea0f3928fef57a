@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4970b128_ce570ed4",
+        "filename": "cc/trees/layer_tree_host_pixeltest_mask_as_blending.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-26T22:31:36Z",
+      "side": 1,
+      "message": "Done. I was thinking that if one day we can completely delete the layer-based masks, that source file can be simply deleted. I\u0027m open to either approach.",
+      "parentUuid": "1188f11f_87e993f6",
+      "revId": "ed8f7b8002bc941e646793b6c3ea0f3928fef57a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82ca7286_4fd283f5",
         "filename": "cc/trees/layer_tree_host_pixeltest_mask_as_blending.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "ed8f7b8002bc941e646793b6c3ea0f3928fef57a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbca4f62_258c1479",
+        "filename": "cc/trees/layer_tree_host_pixeltest_mask_as_blending.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-26T22:31:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82ca7286_4fd283f5",
+      "revId": "ed8f7b8002bc941e646793b6c3ea0f3928fef57a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3f8b38ac_684c7932",
+        "filename": "cc/trees/layer_tree_host_pixeltest_mask_as_blending.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-26T22:31:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93b1eb2b_5709fcb8",
+      "revId": "ed8f7b8002bc941e646793b6c3ea0f3928fef57a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a097eb4_58863e7a",
         "filename": "cc/trees/occlusion_tracker.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "ed8f7b8002bc941e646793b6c3ea0f3928fef57a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f4f3e65_9958a75d",
+        "filename": "cc/trees/occlusion_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-26T22:31:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a097eb4_58863e7a",
+      "revId": "ed8f7b8002bc941e646793b6c3ea0f3928fef57a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
