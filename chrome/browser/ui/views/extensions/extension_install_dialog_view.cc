@@ -26,6 +26,7 @@
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_dialogs.h"
 #include "chrome/browser/ui/scoped_tabbed_browser_displayer.h"
+#include "chrome/browser/ui/views/bullet_view.h"
 #include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
 #include "chrome/browser/ui/views/harmony/chrome_typography.h"
 #include "chrome/common/extensions/extension_constants.h"
@@ -103,15 +104,6 @@ void AddResourceIcon(const gfx::ImageSkia* skia_image, void* data) {
   parent->AddChildView(image_view);
 }
 
-// Creates a string for displaying |message| to the user. If it has to look
-// like a entry in a bullet point list, one is added.
-base::string16 PrepareForDisplay(const base::string16& message,
-                                 bool bullet_point) {
-  return bullet_point ? l10n_util::GetStringFUTF16(
-      IDS_EXTENSION_PERMISSION_LINE,
-      message) : message;
-}
-
 void ShowExtensionInstallDialogImpl(
     ExtensionInstallPromptShowParams* show_params,
     const ExtensionInstallPrompt::DoneCallback& done_callback,
@@ -155,7 +147,15 @@ class CustomScrollableView : public views::View {
 
 }  // namespace
 
-BulletedView::BulletedView(views::View* view) {
+class BulletedView : public views::View {
+ public:
+  explicit BulletedView(views::Label* view);
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(BulletedView);
+};
+
+BulletedView::BulletedView(views::Label* view) {
   views::GridLayout* layout = views::GridLayout::CreateAndInstall(this);
   views::ColumnSet* column_set = layout->AddColumnSet(0);
   column_set->AddColumn(views::GridLayout::CENTER,
@@ -171,7 +171,7 @@ BulletedView::BulletedView(views::View* view) {
                         0,  // No fixed width.
                         0);
   layout->StartRow(0, 0);
-  layout->AddView(new views::Label(PrepareForDisplay(base::string16(), true)));
+  layout->AddView(new BulletView(view->enabled_color()));
   layout->AddView(view);
 }
 
@@ -430,8 +430,7 @@ bool ExtensionInstallDialogView::AddPermissions(
     if (!prompt_->GetPermissionsDetails(i, perm_type).empty()) {
       layout->StartRow(0, column_set_id);
       PermissionDetails details;
-      details.push_back(PrepareForDisplay(
-          prompt_->GetPermissionsDetails(i, perm_type), false));
+      details.push_back(prompt_->GetPermissionsDetails(i, perm_type));
       ExpandableContainerView* details_container =
           new ExpandableContainerView(details, left_column_width, true);
       layout->AddView(details_container);
@@ -648,8 +647,7 @@ void ExpandableContainerView::DetailsView::AddDetail(
   layout_->StartRowWithPadding(0, 0, 0,
                                ChromeLayoutProvider::Get()->GetDistanceMetric(
                                    DISTANCE_RELATED_CONTROL_VERTICAL_SMALL));
-  views::Label* detail_label =
-      new views::Label(PrepareForDisplay(detail, false));
+  views::Label* detail_label = new views::Label(detail, false);
   detail_label->SetMultiLine(true);
   detail_label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
   layout_->AddView(detail_label);

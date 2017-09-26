@@ -114,14 +114,12 @@ SadTabView::SadTabView(content::WebContents* web_contents,
     column_set->AddPaddingColumn(1, unrelated_horizontal_spacing);
 
     for (int bullet_string_id : bullet_string_ids) {
-      const base::string16 bullet_character(base::WideToUTF16(L"\u2022"));
-      views::Label* bullet_label = CreateFormattedLabel(bullet_character);
       views::Label* label =
           CreateFormattedLabel(l10n_util::GetStringUTF16(bullet_string_id));
 
       layout->StartRowWithPadding(0, bullet_columnset_id, 0,
                                   kBulletBottomSpacing);
-      layout->AddView(bullet_label);
+      layout->AddView(new BulletView(label->enabled_color()));
       layout->AddView(label);
 
       bullet_labels_.push_back(label);
