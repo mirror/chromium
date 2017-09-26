@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "dbb2ee10_a6de3740",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-09-26T17:06:53Z",
+      "side": 1,
+      "message": "I think (undefined|number) should work.",
+      "parentUuid": "34255cfb_e4e0e13c",
+      "range": {
+        "startLine": 66,
+        "startChar": 55,
+        "endLine": 66,
+        "endChar": 56
+      },
+      "revId": "a241098beab344bb115d99a96505dd48cf12a31a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d99486fe_75bc0cf8",
         "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
         "patchSetId": 5
