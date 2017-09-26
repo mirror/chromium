@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "ef49a295_640ac59a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-09-26T23:19:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97e80fb0_3c810829",
+      "revId": "0e1e133b7061bc64ab6416aff4e6c989174726e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78b1e039_8398cf1a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchFieldTrial.java",
         "patchSetId": 3
@@ -310,6 +328,30 @@
       "revId": "0e1e133b7061bc64ab6416aff4e6c989174726e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db217699_e64716f4",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-09-26T23:19:06Z",
+      "side": 1,
+      "message": "Oh, sorry about the confusion.  Eclipse flagged a warning here and I assumed it was due to an unused member, but it\u0027s really a conflict with the member of the same name in the outer class.  \n\nI don\u0027t think there\u0027s any good reason to change this now, so I\u0027ve reverted it.  Let me know if you think it would be good to rename this member to something like \"localClassifier\" to prevent the warning and clarify the code.",
+      "parentUuid": "4ec8e818_036839be",
+      "range": {
+        "startLine": 127,
+        "startChar": 12,
+        "endLine": 127,
+        "endChar": 27
+      },
+      "revId": "0e1e133b7061bc64ab6416aff4e6c989174726e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
