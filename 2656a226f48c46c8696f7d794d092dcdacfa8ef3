@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff460435_88a7540b",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v2/compositing/layer-creation/fixed-position-nonscrollable-body-expected.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-26T03:59:24Z",
+      "side": 1,
+      "message": "This line is different from the common baseline which has \"[800, 4021]\". It changes to [800, 600] with this CL because \u003chtml\u003e has overflow:hidden and the viewport is not user scrollable and we apply the viewport clip on the contents layer.\n\nMost of the other new baselines are of the same reason.",
+      "revId": "2656a226f48c46c8696f7d794d092dcdacfa8ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eae3979a_a99f1b1f",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1103,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-26T03:59:24Z",
+      "side": 1,
+      "message": "Re: https://chromium-review.googlesource.com/c/chromium/src/+/679596/6/third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp#1221\n\nUsing VerticalScrollbarWith() because the extra ScrollTranslation happens for vertical scrollbar only in flipped blocks writing mode. In the following case:\n  \u003cdiv style\u003d\"width: 100px; height: 100px; overflow: scroll-y; writing-mode: vertical-rl\"\u003e...\u003c/div\u003e\neven if the div is not scrollable, we create a ScrollTranslation node with translation -15,0 to move the contents to the left. The div\u0027s ScrollOrigin is zero, and ContentsSize is 85x100. FlipForWritingMode() doesn\u0027t work for the case because it flips in the border box rect, not the client rect.",
+      "revId": "2656a226f48c46c8696f7d794d092dcdacfa8ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bbc3981_e0eb920b",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-26T03:59:24Z",
+      "side": 1,
+      "message": "This allows more accurate opaqueness tracking when we clip the layer bounds. With known_to_be_opaque, when we merged layers, we might set known_to_be_opaque to false, and when we clip the layer bounds, we left it to false even if the contents in the clipped bounds were opaque.",
+      "revId": "2656a226f48c46c8696f7d794d092dcdacfa8ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
