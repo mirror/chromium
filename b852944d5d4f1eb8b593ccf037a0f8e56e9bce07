@@ -16,6 +16,24 @@
       "revId": "b852944d5d4f1eb8b593ccf037a0f8e56e9bce07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a4eaf61_5e7ff1ee",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-26T13:43:01Z",
+      "side": 1,
+      "message": "Good point. I removed the old rule.\n\nScopedAllowIO was replaced with ScopedAllowBlocking. Usage of ScopedAllowBlocking is controlled by a friend list instead of a presubmit check (the friend list is guaranteed to be up to date while the list of presubmit exceptions is not).\n\nI\u0027m working on migrating from old APIs to new APIs, starting with https://chromium-review.googlesource.com/c/chromium/src/+/672666",
+      "parentUuid": "8f88bb9d_dbbca8d7",
+      "revId": "b852944d5d4f1eb8b593ccf037a0f8e56e9bce07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
