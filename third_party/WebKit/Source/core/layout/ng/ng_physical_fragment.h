@@ -10,7 +10,7 @@
 #include "core/layout/ng/geometry/ng_physical_size.h"
 #include "core/layout/ng/ng_break_token.h"
 #include "core/loader/resource/ImageResourceObserver.h"
-#include "platform/graphics/paint/DisplayItemClient.h"
+#include "platform/geometry/LayoutRect.h"
 #include "platform/wtf/RefPtr.h"
 
 namespace blink {
@@ -39,9 +39,7 @@ struct NGPixelSnappedPhysicalBoxStrut;
 //   (See https://drafts.csswg.org/css-backgrounds-3/#the-background-image)
 // - image (<img>, svg <image>) or video (<video>) elements that are
 //   placeholders for displaying them.
-class CORE_EXPORT NGPhysicalFragment : public RefCounted<NGPhysicalFragment>,
-                                       public DisplayItemClient,
-                                       public ImageResourceObserver {
+class CORE_EXPORT NGPhysicalFragment : public RefCounted<NGPhysicalFragment> {
  public:
   enum NGFragmentType {
     kFragmentBox = 0,
@@ -87,11 +85,7 @@ class CORE_EXPORT NGPhysicalFragment : public RefCounted<NGPhysicalFragment>,
   // with LegacyLayout.
   LayoutObject* GetLayoutObject() const { return layout_object_; }
 
-  // DisplayItemClient methods.
-  String DebugName() const override { return "NGPhysicalFragment"; }
-
   // TODO(layout-dev): Implement when we have oveflow support.
-  bool HasOverflowClip() const { return false; }
   LayoutRect VisualRect() const { return visual_rect_; }
   LayoutRect VisualOverflowRect() const { return VisualRect(); }
 

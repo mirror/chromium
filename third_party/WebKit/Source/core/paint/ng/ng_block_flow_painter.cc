@@ -7,6 +7,7 @@
 #include "core/layout/ng/inline/ng_physical_line_box_fragment.h"
 #include "core/layout/ng/layout_ng_block_flow.h"
 #include "core/layout/ng/ng_physical_box_fragment.h"
+#include "core/paint/ng/ng_paint_fragment.h"
 #include "core/paint/PaintInfo.h"
 #include "core/paint/ng/ng_box_fragment_painter.h"
 
@@ -15,11 +16,13 @@ namespace blink {
 void NGBlockFlowPainter::PaintContents(const PaintInfo& paint_info,
                                        const LayoutPoint& paint_offset) {
   RefPtr<const NGPhysicalBoxFragment> box_fragment = block_.RootFragment();
-  if (box_fragment)
-    PaintBoxFragment(*box_fragment, paint_info, paint_offset);
+  if (box_fragment) {
+    auto paint_fragment = WTF::MakeUnique<NGPaintFragment>(box_fragment);
+    PaintBoxFragment(*paint_fragment, paint_info, paint_offset);
+  }
 }
 
-void NGBlockFlowPainter::PaintBoxFragment(const NGPhysicalBoxFragment& fragment,
+void NGBlockFlowPainter::PaintBoxFragment(const NGPaintFragment& fragment,
                                           const PaintInfo& paint_info,
                                           const LayoutPoint& paint_offset) {
   PaintInfo ng_paint_info(paint_info);
