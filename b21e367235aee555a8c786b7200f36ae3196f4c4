@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e8f9ad8_4af3a13b",
+        "filename": "chrome/browser/ui/webui/extensions/chromeos/kiosk_apps_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-26T23:22:03Z",
+      "side": 1,
+      "message": "Nit: Perhaps add a comment that this is needed because during testing OnJavascriptDisallowed has not been called?",
+      "revId": "b21e367235aee555a8c786b7200f36ae3196f4c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
