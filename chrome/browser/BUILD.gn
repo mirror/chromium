@@ -399,6 +399,8 @@ split_static_library("browser") {
     "download/download_ui_controller.cc",
     "download/download_ui_controller.h",
     "download/drag_download_item.h",
+    "download/navigation_monitor_factory.cc",
+    "download/navigation_monitor_factory.h",
     "download/save_package_file_picker.cc",
     "download/save_package_file_picker.h",
     "download/trusted_sources_manager.cc",

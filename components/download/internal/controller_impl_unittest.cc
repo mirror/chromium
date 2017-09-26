@@ -25,7 +25,7 @@
 #include "components/download/internal/scheduler/scheduler.h"
 #include "components/download/internal/stats.h"
 #include "components/download/internal/test/entry_utils.h"
-#include "components/download/internal/test/test_device_status_listener.h"
+#include "components/download/internal/test/fake_device_status_listener.h"
 #include "components/download/internal/test/test_download_driver.h"
 #include "components/download/internal/test/test_store.h"
 #include "components/download/public/test/empty_client.h"
@@ -164,7 +164,7 @@ class DownloadServiceControllerImplTest : public testing::Test {
     auto client_set = base::MakeUnique<ClientSet>(std::move(clients));
     auto model = base::MakeUnique<ModelImpl>(std::move(store));
     auto device_status_listener =
-        base::MakeUnique<test::TestDeviceStatusListener>();
+        base::MakeUnique<test::FakeDeviceStatusListener>();
     auto scheduler = base::MakeUnique<NiceMock<MockScheduler>>();
     auto task_scheduler = base::MakeUnique<MockTaskScheduler>();
 
@@ -218,7 +218,7 @@ class DownloadServiceControllerImplTest : public testing::Test {
   test::TestDownloadDriver* driver_;
   test::TestStore* store_;
   ModelImpl* model_;
-  test::TestDeviceStatusListener* device_status_listener_;
+  test::FakeDeviceStatusListener* device_status_listener_;
   MockScheduler* scheduler_;
   MockTaskScheduler* task_scheduler_;
   MockFileMonitor* file_monitor_;
