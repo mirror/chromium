@@ -2127,7 +2127,7 @@ void remote_surface_activate(wl_client* client,
 }
 
 void remote_surface_maximize(wl_client* client, wl_resource* resource) {
-  GetUserDataAs<ShellSurface>(resource)->Maximize();
+  GetUserDataAs<ShellSurface>(resource)->MaximizeWithCommit();
 }
 
 void remote_surface_minimize(wl_client* client, wl_resource* resource) {
@@ -2135,7 +2135,7 @@ void remote_surface_minimize(wl_client* client, wl_resource* resource) {
 }
 
 void remote_surface_restore(wl_client* client, wl_resource* resource) {
-  GetUserDataAs<ShellSurface>(resource)->Restore();
+  GetUserDataAs<ShellSurface>(resource)->RestoreWithCommit();
 }
 
 void remote_surface_fullscreen(wl_client* client, wl_resource* resource) {
