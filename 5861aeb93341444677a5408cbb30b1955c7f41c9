@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c46c2403_d95076e2",
+        "filename": "chrome/android/java/res/layout/chrome_home_promo_toggle.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-26T16:42:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed0c92df_addca054",
+      "range": {
+        "startLine": 17,
+        "startChar": 8,
+        "endLine": 19,
+        "endChar": 63
+      },
+      "revId": "5861aeb93341444677a5408cbb30b1955c7f41c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97c633d1_03be3844",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "5861aeb93341444677a5408cbb30b1955c7f41c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0671fc02_5c45606b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-26T16:42:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97c633d1_03be3844",
+      "range": {
+        "startLine": 810,
+        "startChar": 7,
+        "endLine": 813,
+        "endChar": 9
+      },
+      "revId": "5861aeb93341444677a5408cbb30b1955c7f41c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "fe72c188_7fe94415",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-26T16:42:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06a778b6_bd9e0ee5",
+      "range": {
+        "startLine": 276,
+        "startChar": 20,
+        "endLine": 276,
+        "endChar": 48
+      },
+      "revId": "5861aeb93341444677a5408cbb30b1955c7f41c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "faf64b1c_84e64733",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-09-26T00:51:46Z",
       "side": 1,
       "message": "What are our thoughts on metrics collection/analysis? Maybe we should do a sync with Kingston since he\u0027s on the hook for analysis...",
+      "range": {
+        "startLine": 285,
+        "startChar": 20,
+        "endLine": 285,
+        "endChar": 38
+      },
+      "revId": "5861aeb93341444677a5408cbb30b1955c7f41c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0543edc8_cee9f9e7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-26T16:42:04Z",
+      "side": 1,
+      "message": "I\u0027ll have a chat with him.",
+      "parentUuid": "faf64b1c_84e64733",
       "range": {
         "startLine": 285,
         "startChar": 20,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "8e2f2451_75bdc646",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/ChromeHomePromoDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-26T16:42:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b8ecbe9_2d0e4dae",
+      "range": {
+        "startLine": 65,
+        "startChar": 72,
+        "endLine": 65,
+        "endChar": 78
+      },
+      "revId": "5861aeb93341444677a5408cbb30b1955c7f41c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d19589b2_51163e57",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/ChromeHomePromoDialog.java",
         "patchSetId": 2
@@ -128,6 +248,30 @@
       "writtenOn": "2017-09-26T00:51:46Z",
       "side": 1,
       "message": "Will this recreate the activity in the same window it was previously in?",
+      "range": {
+        "startLine": 98,
+        "startChar": 16,
+        "endLine": 98,
+        "endChar": 36
+      },
+      "revId": "5861aeb93341444677a5408cbb30b1955c7f41c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "825cfb43_df0c6204",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/ChromeHomePromoDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-26T16:42:04Z",
+      "side": 1,
+      "message": "Yes, that appears to be the behavior.",
+      "parentUuid": "d19589b2_51163e57",
       "range": {
         "startLine": 98,
         "startChar": 16,
@@ -160,6 +304,30 @@
       "revId": "5861aeb93341444677a5408cbb30b1955c7f41c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3c4fb03_eddd172b",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 3205,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-26T16:42:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f414ed3_76da4cde",
+      "range": {
+        "startLine": 3205,
+        "startChar": 154,
+        "endLine": 3205,
+        "endChar": 278
+      },
+      "revId": "5861aeb93341444677a5408cbb30b1955c7f41c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
