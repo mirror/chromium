@@ -448,6 +448,8 @@ void SourceBufferStream<RangeClass>::Remove(base::TimeDelta start,
 template <typename RangeClass>
 DecodeTimestamp SourceBufferStream<RangeClass>::PotentialNextAppendTimestamp()
     const {
+  // BIG TODO: NOPE! (redo this in PTS-template-ized version)
+  //
   // The next potential append will either be just at or after
   // |last_appended_buffer_timestamp_| (if known), or if unknown and we are
   // still at the beginning of a new coded frame group, then will be into the
@@ -594,6 +596,10 @@ void SourceBufferStream<RangeClass>::RemoveInternal(
       DecodeTimestamp potential_next_append_timestamp =
           PotentialNextAppendTimestamp();
 
+      // BIG TODO: need to figure how to do this better, since potential next
+      // append could be a DTS or a PTS and the next frame could be a
+      // nonkeyframe or keyframe (respectively)... (in PTS-template-ized
+      // version).
       if (!range->BelongsToRange(potential_next_append_timestamp)) {
         DVLOG(1) << "Resetting range_for_next_append_ since the next append"
                  <<  " can't add to the current range.";
@@ -1218,6 +1224,7 @@ void SourceBufferStream<RangeClass>::PrepareRangesForNextAppend(
   //    beginning of |new_buffers|.
   if (prev_timestamp != kNoDecodeTimestamp() &&
       prev_timestamp != next_timestamp) {
+    // BIG TODO: this will need to change to allow SBRByPts out-of-order PTS.
     RemoveInternal(prev_timestamp, next_timestamp, true, deleted_buffers);
   }
 
@@ -1261,6 +1268,7 @@ void SourceBufferStream<RangeClass>::PrepareRangesForNextAppend(
   }
 
   // Finally do the deletion of overlap.
+  // BIG TODO: this may need to change to allow SBRByPts out-of-order PTS.
   RemoveInternal(next_timestamp, end, exclude_start, deleted_buffers);
 }
 
@@ -1350,7 +1358,7 @@ void SourceBufferStream<RangeClass>::Seek(base::TimeDelta timestamp) {
 
   if (!audio_configs_.empty()) {
     const auto& config = audio_configs_[(*itr)->GetConfigIdAtTime(seek_dts)];
-    if (config.codec() == kCodecOpus) {
+    if (config.codec() == kCodecOpus) {  // BIG TODO change this to PTS preroll and seek... (in template-ized PTS version)
       DecodeTimestamp preroll_dts = std::max(seek_dts - config.seek_preroll(),
                                              (*itr)->GetStartTimestamp());
       if ((*itr)->CanSeekTo(preroll_dts) &&
@@ -1570,7 +1578,7 @@ SourceBufferStream<RangeClass>::GetSelectedRangeItr() {
 }
 
 template <typename RangeClass>
-void SourceBufferStream<RangeClass>::SeekAndSetSelectedRange(
+void SourceBufferStream<RangeClass>::SeekAndSetSelectedRange(  // BIG TODO...
     RangeClass* range,
     DecodeTimestamp seek_timestamp) {
   if (range)
@@ -1766,7 +1774,7 @@ void SourceBufferStream<RangeClass>::CompleteConfigChange() {
 }
 
 template <typename RangeClass>
-void SourceBufferStream<RangeClass>::SetSelectedRangeIfNeeded(
+void SourceBufferStream<RangeClass>::SetSelectedRangeIfNeeded(  // BIG TODO
     const DecodeTimestamp timestamp) {
   DVLOG(2) << __func__ << " " << GetStreamTypeName() << "("
            << timestamp.InSecondsF() << ")";
@@ -1783,6 +1791,7 @@ void SourceBufferStream<RangeClass>::SetSelectedRangeIfNeeded(
 
   DecodeTimestamp start_timestamp = timestamp;
 
+  // BIG TODO
   // If the next buffer timestamp is not known then use a timestamp just after
   // the timestamp on the last buffer returned by GetNextBuffer().
   if (start_timestamp == kNoDecodeTimestamp()) {
@@ -1797,7 +1806,7 @@ void SourceBufferStream<RangeClass>::SetSelectedRangeIfNeeded(
   }
 
   DecodeTimestamp seek_timestamp =
-      FindNewSelectedRangeSeekTimestamp(start_timestamp);
+      FindNewSelectedRangeSeekTimestamp(start_timestamp);  // BIG TODO
 
   // If we don't have buffered data to seek to, then return.
   if (seek_timestamp == kNoDecodeTimestamp()) {
@@ -1807,6 +1816,7 @@ void SourceBufferStream<RangeClass>::SetSelectedRangeIfNeeded(
   }
 
   DCHECK(track_buffer_.empty());
+  // BIG TODO
   SeekAndSetSelectedRange(FindExistingRangeFor(seek_timestamp)->get(),
                           seek_timestamp);
 }
