@@ -55,6 +55,8 @@ class BASE_EXPORT Sequence : public RefCountedThreadSafe<Sequence> {
   // is already nullptr.
   std::unique_ptr<Task> TakeTask();
 
+  Task* Peek() const { return queue_.front().get(); }
+
   // Returns the TaskTraits of the Task in front of the Sequence. Cannot be
   // called on an empty Sequence or on a Sequence whose front slot is empty.
   TaskTraits PeekTaskTraits() const;
