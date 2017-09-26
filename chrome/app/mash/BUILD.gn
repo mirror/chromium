@@ -21,6 +21,7 @@ source_set("embedded_services") {
     "//chrome/common:constants",
     "//components/tracing:startup_tracing",
     "//content/public/common",
+    "//content/public/browser",
     "//mash/catalog_viewer:lib",
     "//mash/catalog_viewer/public/interfaces:constants",
     "//mash/common",
@@ -61,7 +62,10 @@ source_set("embedded_services") {
   }
 
   if (is_linux && !is_android) {
-    deps += [ "//components/font_service:lib" ]
+    deps += [
+      "//components/font_service:lib",
+      "//components/font_service/public/interfaces",
+    ]
   }
 }
 

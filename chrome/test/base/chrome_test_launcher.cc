@@ -82,6 +82,8 @@ int ChromeTestLauncherDelegate::RunTestSuite(int argc, char** argv) {
 bool ChromeTestLauncherDelegate::AdjustChildProcessCommandLine(
     base::CommandLine* command_line,
     const base::FilePath& temp_data_dir) {
+  LOG(ERROR) << "AdjustChildProcessCommandLine "
+             << command_line->GetCommandLineString();
   base::CommandLine new_command_line(command_line->GetProgram());
   base::CommandLine::SwitchMap switches = command_line->GetSwitches();
 
@@ -102,6 +104,16 @@ bool ChromeTestLauncherDelegate::AdjustChildProcessCommandLine(
 content::ContentMainDelegate*
 ChromeTestLauncherDelegate::CreateContentMainDelegate() {
   return new ChromeMainDelegate();
+}
+
+base::FilePath ChromeTestLauncherDelegate::GetUtilityServiceProgramPath() {
+  const base::FilePath exe_path(
+      base::CommandLine::ForCurrentProcess()->GetProgram());
+#if defined(OS_WIN)
+  return exe_path.DirName().Append(FILE_PATH_LITERAL("chrome.exe"));
+#else
+  return exe_path.DirName().Append(FILE_PATH_LITERAL("chrome"));
+#endif
 }
 
 void ChromeTestLauncherDelegate::PreSharding() {

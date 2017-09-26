@@ -7,10 +7,13 @@
 
 #include <memory>
 
+#include "content/public/browser/content_browser_client.h"
 #include "services/service_manager/public/cpp/service.h"
 
 // Starts one of Mash's embedded services.
 std::unique_ptr<service_manager::Service> CreateEmbeddedMashService(
     const std::string& service_name);
+void RegisterOutOfProcessServicesForMash(
+    content::ContentBrowserClient::OutOfProcessServiceMap* services);
 
 #endif  // CHROME_APP_MASH_EMBEDDED_SERVICES_H_
