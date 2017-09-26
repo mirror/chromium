@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4801fb8_23d8fce4",
+        "filename": "ui/gfx/render_text.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-26T15:20:59Z",
+      "side": 1,
+      "message": "FYI: This is fine (if we\u0027re going to allow inconsistency between \u0027*\u0027 and \u0027•\u0027 on ChromeOS, at least this helps limit the inconsistency to just two variations)... but I\u0027m also not opposed to adding set_password_replacement_char(base::char16 char); as a RenderText function.",
+      "revId": "ec311741b63129d992c8bd249da6ce25643f807f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1cdcd2f_f791529a",
+        "filename": "ui/gfx/render_text.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-26T15:20:59Z",
+      "side": 1,
+      "message": "nit: const",
+      "revId": "ec311741b63129d992c8bd249da6ce25643f807f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
