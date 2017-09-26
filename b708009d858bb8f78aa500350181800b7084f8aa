@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "280c42f9_f9efdeb3",
+        "filename": "components/arc/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-26T18:24:13Z",
+      "side": 1,
+      "message": "Can you add a comment?\n\n # ARC is built outside of the Chromium source tree, so we need to have stable\n # message IDs for the generated bindings.",
+      "range": {
+        "startLine": 208,
+        "startChar": 2,
+        "endLine": 208,
+        "endChar": 22
+      },
+      "revId": "b708009d858bb8f78aa500350181800b7084f8aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8f98ea9f_41764b2c",
         "filename": "mojo/public/tools/bindings/mojom_bindings_generator.py",
         "patchSetId": 1
