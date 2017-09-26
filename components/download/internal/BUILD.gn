@@ -12,6 +12,7 @@ static_library("internal") {
     ":*",
     "//components/download/content/factory",
     "//components/download/content/internal",
+    "//components/download/content/test:test_support",
     "//components/download/internal/test:test_support",
   ]
 

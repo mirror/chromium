@@ -11,6 +11,7 @@
 #include "base/task_scheduler/post_task.h"
 #include "base/task_scheduler/task_traits.h"
 #include "chrome/browser/download/download_task_scheduler_impl.h"
+#include "chrome/browser/download/navigation_monitor_factory.h"
 #include "chrome/browser/profiles/incognito_helpers.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/chrome_constants.h"
@@ -45,7 +46,9 @@ download::DownloadService* DownloadServiceFactory::GetForBrowserContext(
 DownloadServiceFactory::DownloadServiceFactory()
     : BrowserContextKeyedServiceFactory(
           "download::DownloadService",
-          BrowserContextDependencyManager::GetInstance()) {}
+          BrowserContextDependencyManager::GetInstance()) {
+  DependsOn(NavigationMonitorFactory::GetInstance());
+}
 
 DownloadServiceFactory::~DownloadServiceFactory() = default;
 
@@ -58,8 +61,6 @@ KeyedService* DownloadServiceFactory::BuildServiceInstanceFor(
       download::DownloadClient::OFFLINE_PAGE_PREFETCH,
       base::MakeUnique<offline_pages::OfflinePrefetchDownloadClient>(context)));
 #endif  // BUILDFLAG(ENABLE_OFFLINE_PAGES)
-
-  auto* download_manager = content::BrowserContext::GetDownloadManager(context);
 
   base::FilePath storage_dir;
   if (!context->IsOffTheRecord() && !context->GetPath().empty()) {
@@ -79,9 +80,12 @@ KeyedService* DownloadServiceFactory::BuildServiceInstanceFor(
   task_scheduler = base::MakeUnique<DownloadTaskSchedulerImpl>(context);
 #endif
 
-  return download::CreateDownloadService(std::move(clients), download_manager,
-                                         storage_dir, background_task_runner,
-                                         std::move(task_scheduler));
+  download::NavigationMonitor* navigation_monitor =
+      NavigationMonitorFactory::GetForBrowserContext(context);
+
+  return download::CreateDownloadService(
+      std::move(clients), context, storage_dir, background_task_runner,
+      std::move(task_scheduler), navigation_monitor);
 }
 
 content::BrowserContext* DownloadServiceFactory::GetBrowserContextToUse(

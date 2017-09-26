@@ -28,3 +28,12 @@ source_set("components_unittests_gtest_filter") {
     "components_unittests.filter",
   ]
 }
+
+group("test_support") {
+  testonly = true
+
+  public_deps = [
+    "//components/download/content/test:test_support",
+    "//components/download/public/test:test_support",
+  ]
+}
