@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c2d0fa00_4eb75dc0",
+        "filename": "chrome/browser/resources/settings/appearance_page/appearance_page.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-09-26T20:58:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb67289e_671d5881",
+      "revId": "a1960e99f9d673f86a19a8575c4086cc9fb6c24f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f5f793c_f70c4627",
         "filename": "chrome/browser/resources/settings/page_visibility.js",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2d9a0f71_e738989c",
+        "filename": "chrome/browser/resources/settings/page_visibility.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-09-26T20:58:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f5f793c_f70c4627",
+      "revId": "a1960e99f9d673f86a19a8575c4086cc9fb6c24f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f97046e5_a016981e",
         "filename": "chrome/browser/resources/settings/page_visibility.js",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-25T23:12:21Z",
       "side": 1,
       "message": "I wonder if we shouldn\u0027t just set this explicitly for all platforms and \u003cif\u003e out the cros specific parts. The \u0027undefined\u0027 \u003d\u003d visible was convenient but also confusing. hcarmona@ WDYT?",
+      "revId": "a1960e99f9d673f86a19a8575c4086cc9fb6c24f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e8950fd_6a761e79",
+        "filename": "chrome/browser/resources/settings/page_visibility.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-09-26T20:58:39Z",
+      "side": 1,
+      "message": "stevenjb@, hcarmona@, what\u0027s the suggestion here? Thanks.",
+      "parentUuid": "f97046e5_a016981e",
       "revId": "a1960e99f9d673f86a19a8575c4086cc9fb6c24f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
