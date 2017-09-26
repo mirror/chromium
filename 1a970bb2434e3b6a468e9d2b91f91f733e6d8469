@@ -188,6 +188,30 @@
       "revId": "1a970bb2434e3b6a468e9d2b91f91f733e6d8469",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4565a0a8_0fa30df9",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1192,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-09-26T17:09:16Z",
+      "side": 1,
+      "message": "Done - I added a method BubbleIconView::OnBubbleCreated() which is responsible for the actual AddObserver(), so at least both calls are in the same class.",
+      "parentUuid": "13b1909f_c200310e",
+      "range": {
+        "startLine": 1192,
+        "startChar": 4,
+        "endLine": 1192,
+        "endChar": 47
+      },
+      "revId": "1a970bb2434e3b6a468e9d2b91f91f733e6d8469",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
