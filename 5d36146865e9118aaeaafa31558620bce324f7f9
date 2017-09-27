@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "b5b8bbc3_7d697d01",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-27T22:42:09Z",
+      "side": 1,
+      "message": "The reason I prefer always setting the placeholder is because it eliminates an edge case. But either way is fine.",
+      "parentUuid": "8a680219_a9db92fc",
+      "revId": "5d36146865e9118aaeaafa31558620bce324f7f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6bc39ee4_c9d5ea93",
         "filename": "ash/login/ui/login_password_view.cc",
         "patchSetId": 3

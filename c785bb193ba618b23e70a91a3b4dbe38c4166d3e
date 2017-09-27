@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2510a6e_9f353362",
+        "filename": "ash/login/ui/login_password_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-27T22:42:09Z",
+      "side": 1,
+      "message": "Drop non-null comment, DCHECKs make it obvious.",
+      "revId": "c785bb193ba618b23e70a91a3b4dbe38c4166d3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
