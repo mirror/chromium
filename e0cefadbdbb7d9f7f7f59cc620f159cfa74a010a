@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b33eb265_6cf2bd90",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-27T09:52:21Z",
+      "side": 1,
+      "message": "nit: remove trailing whitespace.",
+      "revId": "e0cefadbdbb7d9f7f7f59cc620f159cfa74a010a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eca0d35_b607ec45",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-27T09:52:21Z",
+      "side": 1,
+      "message": "browsing?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 7
+      },
+      "revId": "e0cefadbdbb7d9f7f7f59cc620f159cfa74a010a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
