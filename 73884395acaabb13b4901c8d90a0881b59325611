@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da475416_011dc5b0",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-27T16:43:11Z",
+      "side": 1,
+      "message": "should we call RemoveDeferredPaintRequestRecursive(layer_) here in case child layers are not also being destroyed?\n\nbtw, what happens if a child layer is re-parented during animation? or a new child layer is added?",
+      "revId": "73884395acaabb13b4901c8d90a0881b59325611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
