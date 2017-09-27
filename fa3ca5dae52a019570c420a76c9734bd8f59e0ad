@@ -34,6 +34,24 @@
       "revId": "fa3ca5dae52a019570c420a76c9734bd8f59e0ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec043f4c_77c9c3b5",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-27T02:41:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ef40da4_87bcd54c",
+      "revId": "fa3ca5dae52a019570c420a76c9734bd8f59e0ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
