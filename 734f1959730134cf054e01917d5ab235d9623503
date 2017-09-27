@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0eeb9921_bab2ced0",
+        "filename": "chrome/browser/resources/md_extensions/kiosk_dialog.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-27T00:29:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aff0d01a_d0b1fa06",
+      "revId": "734f1959730134cf054e01917d5ab235d9623503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ff52689_d960d4a9",
         "filename": "chrome/browser/resources/md_extensions/kiosk_dialog.js",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9056a822_a1b58433",
+        "filename": "chrome/browser/resources/md_extensions/kiosk_dialog.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-27T00:29:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ff52689_d960d4a9",
+      "revId": "734f1959730134cf054e01917d5ab235d9623503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85a9d943_0373fcd0",
         "filename": "chrome/browser/ui/webui/extensions/extensions_ui.cc",
         "patchSetId": 7
@@ -50,6 +86,24 @@
       "revId": "734f1959730134cf054e01917d5ab235d9623503",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "408100e8_a96bc882",
+        "filename": "chrome/browser/ui/webui/extensions/extensions_ui.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-27T00:29:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85a9d943_0373fcd0",
+      "revId": "734f1959730134cf054e01917d5ab235d9623503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
