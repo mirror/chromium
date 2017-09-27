@@ -118,6 +118,30 @@
       "revId": "b8ccb86116bbcd437815028c7f1850d52f25551a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73ef571d_7c6e12e7",
+        "filename": "services/viz/public/interfaces/compositing/copy_output_request.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-27T21:07:31Z",
+      "side": 1,
+      "message": "Hmm...Probably a simple oversight when these mojom were moved over from src/cc/ipc. I\u0027ll add a TODO to my clean-up list. :)",
+      "parentUuid": "26ce3117_875ced32",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 30
+      },
+      "revId": "b8ccb86116bbcd437815028c7f1850d52f25551a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
