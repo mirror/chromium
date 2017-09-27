@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9bd2649f_5c87ec59",
+        "filename": "chrome/browser/chromeos/printing/cups_printers_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2017-09-27T19:58:03Z",
+      "side": 1,
+      "message": "This function does not actually have anything to do with the observers of CupsPrintersManager, but rather the fact that CupsPrintersManager is itself an observer of the Usb and Zeroconf printer detectors. I will rename this method to \"StartObservingPrinterDetectors\" to hopefully provide some more clarity.\n\nThis function is only meant to be called a single time, so I have added a flag to the implementation which for the function to execute once.",
+      "parentUuid": "271aadc3_a9662bf0",
+      "revId": "8eb9f837a8a46c4fcca21fec9f22c095aee632df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "28c6015f_5220ea94",
         "filename": "chrome/browser/chromeos/printing/printer_detector_unittest.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-26T18:06:06Z",
       "side": 1,
       "message": "It\u0027s not wrong, and the code seems reasonable but this is an unusual way to organize tests -- you\u0027re not testing the printer_detector interface here, you\u0027re testing the implementations of it  \n\nIn the future if you want to do something like this, my advise would be to pull the common code (FakePrinterDetectorObserver and a parameterized version of PrinterDetectorTest that takes the PrinterDetector to test in SetUp()) out to a printer_detector_test_util library, then put the actual unit tests into usb_printer_detector_unittest.cc and zeroconf_printer_detector_unittest.cc\n\nHowever, the gain of doing so over what you\u0027ve done here is minimal, so I don\u0027t think you need to rewrite what you have.",
+      "revId": "8eb9f837a8a46c4fcca21fec9f22c095aee632df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2fbb62d4_3da763d8",
+        "filename": "chrome/browser/chromeos/printing/printer_detector_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2017-09-27T19:58:03Z",
+      "side": 1,
+      "message": "I created removed this test and created a separate unit test for each of the implementations of PrinterDetector, and created a util file with shared functionality.",
+      "parentUuid": "28c6015f_5220ea94",
       "revId": "8eb9f837a8a46c4fcca21fec9f22c095aee632df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "22825246_7391093f",
+        "filename": "chrome/browser/chromeos/printing/printer_detector_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2017-09-27T19:58:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7292f449_de11bd89",
+      "revId": "8eb9f837a8a46c4fcca21fec9f22c095aee632df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbbe5c8c_d506dd3c",
         "filename": "chrome/browser/chromeos/printing/printer_detector_unittest.cc",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "6a694a91_2c7481e7",
+        "filename": "chrome/browser/chromeos/printing/printer_detector_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2017-09-27T19:58:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbbe5c8c_d506dd3c",
+      "revId": "8eb9f837a8a46c4fcca21fec9f22c095aee632df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b343a383_006e63f8",
         "filename": "chrome/browser/chromeos/printing/printer_detector_unittest.cc",
         "patchSetId": 2
@@ -84,6 +156,24 @@
       "revId": "8eb9f837a8a46c4fcca21fec9f22c095aee632df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93c8292c_9900a1df",
+        "filename": "chrome/browser/chromeos/printing/printer_detector_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2017-09-27T19:58:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b343a383_006e63f8",
+      "revId": "8eb9f837a8a46c4fcca21fec9f22c095aee632df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "08a2273a_77af2c81",
+        "filename": "chrome/browser/chromeos/printing/printer_detector_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2017-09-27T19:58:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec16f188_3bbb78fa",
+      "revId": "8eb9f837a8a46c4fcca21fec9f22c095aee632df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5d2586b_2c11059f",
         "filename": "chrome/browser/ui/webui/print_preview/local_printer_handler_chromeos.cc",
         "patchSetId": 2
@@ -136,6 +244,24 @@
       "revId": "8eb9f837a8a46c4fcca21fec9f22c095aee632df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96955565_80e72be4",
+        "filename": "chrome/browser/ui/webui/print_preview/local_printer_handler_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2017-09-27T19:58:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5d2586b_2c11059f",
+      "revId": "8eb9f837a8a46c4fcca21fec9f22c095aee632df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +282,24 @@
     },
     {
       "key": {
+        "uuid": "cc889103_28d00f84",
+        "filename": "chrome/browser/ui/webui/print_preview/local_printer_handler_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2017-09-27T19:58:03Z",
+      "side": 1,
+      "message": "This isn\u0027t explicitly adding an observer, it is simply telling CupsPrintersManager that it may begin \"observing\" the Usb and Zeroconf printer detectors. The method allows the printer detectors to register callbacks for their observers (in this case CupsPrintersManager).",
+      "parentUuid": "4697cfb2_39be396c",
+      "revId": "8eb9f837a8a46c4fcca21fec9f22c095aee632df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d423421f_12590506",
         "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
         "patchSetId": 2
@@ -167,6 +311,24 @@
       "writtenOn": "2017-09-26T18:16:07Z",
       "side": 1,
       "message": "Any C++ observers should be registered within OnJavascriptAllowed and unregistered within OnJavascriptDisallowed, see more details at https://chromium.googlesource.com/chromium/src/+/master/docs/webui_explainer.md#webuimessagehandler_onjavascriptallowed",
+      "revId": "8eb9f837a8a46c4fcca21fec9f22c095aee632df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc94e0d5_5954cb68",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2017-09-27T19:58:03Z",
+      "side": 1,
+      "message": "See other comment.",
+      "parentUuid": "d423421f_12590506",
       "revId": "8eb9f837a8a46c4fcca21fec9f22c095aee632df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
