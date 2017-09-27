@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d7f3f2f_a7127170",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-27T04:30:48Z",
+      "side": 1,
+      "message": "Can you comment on https://chromium-review.googlesource.com/682883 then? What\u0027s the relationship between the 3 different .bin files?",
+      "revId": "123dfc770901b6b73270dde0a9a253bdc233e518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f00393c3_86355226",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-27T04:30:48Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 163,
+        "startChar": 47,
+        "endLine": 163,
+        "endChar": 57
+      },
+      "revId": "123dfc770901b6b73270dde0a9a253bdc233e518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07d0f54f_930b2384",
+        "filename": "chrome/tools/build/linux/FILES.cfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-27T04:30:48Z",
+      "side": 1,
+      "message": "Can you update chrome/tools/build/chromeos/FILES.cfg as well?",
+      "revId": "123dfc770901b6b73270dde0a9a253bdc233e518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3dcf775_fe75e46f",
+        "filename": "chrome/tools/build/linux/FILES.cfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-27T04:30:48Z",
+      "side": 1,
+      "message": "This is in a section for content shell files. Move it up to line 90?",
+      "revId": "123dfc770901b6b73270dde0a9a253bdc233e518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
