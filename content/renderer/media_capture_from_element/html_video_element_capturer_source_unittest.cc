@@ -32,7 +32,10 @@ class MockWebMediaPlayer : public blink::WebMediaPlayer,
   MockWebMediaPlayer()  = default;
   ~MockWebMediaPlayer() override = default;
 
-  void Load(LoadType, const blink::WebMediaPlayerSource&, CORSMode) override {}
+  void Load(LoadType,
+            const blink::WebMediaPlayerSource&,
+            CORSMode,
+            bool taints_canvas) override {}
   void Play() override {}
   void Pause() override {}
   bool SupportsSave() const override { return true; }
@@ -72,15 +75,16 @@ class MockWebMediaPlayer : public blink::WebMediaPlayer,
   size_t AudioDecodedByteCount() const override { return 0; }
   size_t VideoDecodedByteCount() const override { return 0; }
 
-  void Paint(blink::WebCanvas* canvas,
+  bool Paint(blink::WebCanvas* canvas,
              const blink::WebRect& paint_rectangle,
              cc::PaintFlags&,
              int already_uploaded_id,
+             bool check_cross_origin,
              VideoFrameUploadMetadata* out_metadata) override {
     // We could fill in |canvas| with a meaningful pattern in ARGB and verify
     // that is correctly captured (as I420) by HTMLVideoElementCapturerSource
     // but I don't think that'll be easy/useful/robust, so just let go here.
-    return;
+    return false;
   }
 };
 

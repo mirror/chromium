@@ -358,7 +358,8 @@ WebMediaPlayerImpl::~WebMediaPlayerImpl() {
 
 void WebMediaPlayerImpl::Load(LoadType load_type,
                               const blink::WebMediaPlayerSource& source,
-                              CORSMode cors_mode) {
+                              CORSMode cors_mode,
+                              bool taints_canvas) {
   DVLOG(1) << __func__;
   // Only URL or MSE blob URL is supported.
   DCHECK(source.IsURL());
@@ -367,10 +368,10 @@ void WebMediaPlayerImpl::Load(LoadType load_type,
            << cors_mode << ")";
   if (!defer_load_cb_.is_null()) {
     defer_load_cb_.Run(base::Bind(&WebMediaPlayerImpl::DoLoad, AsWeakPtr(),
-                                  load_type, url, cors_mode));
+                                  load_type, url, cors_mode, taints_canvas));
     return;
   }
-  DoLoad(load_type, url, cors_mode);
+  DoLoad(load_type, url, cors_mode, taints_canvas);
 }
 
 void WebMediaPlayerImpl::OnWebLayerReplaced() {
@@ -507,7 +508,8 @@ void WebMediaPlayerImpl::OnDisplayTypeChanged(
 
 void WebMediaPlayerImpl::DoLoad(LoadType load_type,
                                 const blink::WebURL& url,
-                                CORSMode cors_mode) {
+                                CORSMode cors_mode,
+                                bool taints_canvas) {
   TRACE_EVENT0("media", "WebMediaPlayerImpl::DoLoad");
   DVLOG(1) << __func__;
   DCHECK(main_task_runner_->BelongsToCurrentThread());
@@ -531,6 +533,8 @@ void WebMediaPlayerImpl::DoLoad(LoadType load_type,
   loaded_url_ = gurl;
 
   load_type_ = load_type;
+
+  taints_canvas_ = taints_canvas;
 
   SetNetworkState(WebMediaPlayer::kNetworkStateLoading);
   SetReadyState(WebMediaPlayer::kReadyStateHaveNothing);
@@ -1010,17 +1014,23 @@ bool WebMediaPlayerImpl::DidLoadingProgress() {
   return pipeline_progress || data_progress;
 }
 
-void WebMediaPlayerImpl::Paint(blink::WebCanvas* canvas,
+bool WebMediaPlayerImpl::Paint(blink::WebCanvas* canvas,
                                const blink::WebRect& rect,
                                cc::PaintFlags& flags,
                                int already_uploaded_id,
+                               bool check_cross_origin,
                                VideoFrameUploadMetadata* out_metadata) {
   DCHECK(main_task_runner_->BelongsToCurrentThread());
   TRACE_EVENT0("media", "WebMediaPlayerImpl:paint");
 
+  if (check_cross_origin && (!HasSingleSecurityOrigin() ||
+                             (taints_canvas_ && !DidPassCORSAccessCheck()))) {
+    return true;
+  }
+
   // We can't copy from protected frames.
   if (cdm_)
-    return;
+    return false;
 
   scoped_refptr<VideoFrame> video_frame = GetCurrentFrameFromCompositor();
 
@@ -1030,9 +1040,11 @@ void WebMediaPlayerImpl::Paint(blink::WebCanvas* canvas,
     if (!context_3d_cb_.is_null())
       context_3d = context_3d_cb_.Run();
     if (!context_3d.gl)
-      return;  // Unable to get/create a shared main thread context.
-    if (!context_3d.gr_context)
-      return;  // The context has been lost since and can't setup a GrContext.
+      return false;  // Unable to get/create a shared main thread context.
+    if (!context_3d.gr_context) {
+      // The context has been lost since and can't setup a GrContext.
+      return false;
+    }
   }
   if (out_metadata) {
     // WebGL last-uploaded-frame-metadata API enabled. https://crbug.com/639174
@@ -1040,12 +1052,13 @@ void WebMediaPlayerImpl::Paint(blink::WebCanvas* canvas,
                                out_metadata);
     if (out_metadata->skipped) {
       // Skip uploading this frame.
-      return;
+      return false;
     }
   }
   skcanvas_video_renderer_.Paint(video_frame, canvas, gfx::RectF(gfx_rect),
                                  flags, pipeline_metadata_.video_rotation,
                                  context_3d);
+  return false;
 }
 
 bool WebMediaPlayerImpl::HasSingleSecurityOrigin() const {

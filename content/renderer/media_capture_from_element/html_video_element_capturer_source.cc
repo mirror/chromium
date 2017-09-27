@@ -118,7 +118,7 @@ void HtmlVideoElementCapturerSource::sendNewFrame() {
   TRACE_EVENT0("video", "HtmlVideoElementCapturerSource::sendNewFrame");
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  if (!web_media_player_ || new_frame_callback_.is_null())
+  if (is_tainted_ || !web_media_player_ || new_frame_callback_.is_null())
     return;
 
   const base::TimeTicks current_time = base::TimeTicks::Now();
@@ -127,9 +127,13 @@ void HtmlVideoElementCapturerSource::sendNewFrame() {
   cc::PaintFlags flags;
   flags.setBlendMode(SkBlendMode::kSrc);
   flags.setFilterQuality(kLow_SkFilterQuality);
-  web_media_player_->Paint(
+  is_tainted_ = web_media_player_->Paint(
       canvas_.get(), blink::WebRect(0, 0, resolution.width, resolution.height),
-      flags);
+      flags, /*already_uploaded_id = */ -1, /*check_cross_origin = */ true);
+  if (is_tainted_) {
+    StopCapture();
+    return;
+  }
   DCHECK_NE(kUnknown_SkColorType, canvas_->imageInfo().colorType());
   DCHECK_EQ(canvas_->imageInfo().width(), resolution.width);
   DCHECK_EQ(canvas_->imageInfo().height(), resolution.height);
