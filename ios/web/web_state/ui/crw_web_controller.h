@@ -221,6 +221,10 @@ class WebStateImpl;
 // containing a credit card field.
 - (void)didShowCreditCardInputOnHTTP;
 
+// Notifies the CRWWebController that the user has edited an input field
+// on a non-secure page.
+- (void)didEditInsecureField;
+
 // Notifies the CRWWebController that it has been hidden.
 - (void)wasHidden;
 

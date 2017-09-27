@@ -17,8 +17,8 @@ void RegisterMetricsReportingStatePrefs(PrefRegistrySimple* registry) {
 
 void RecordMetricsReportingDefaultState(PrefService* local_state,
                                         EnableMetricsDefault default_state) {
-  DCHECK_EQ(GetMetricsReportingDefaultState(local_state),
-            EnableMetricsDefault::DEFAULT_UNKNOWN);
+  // DCHECK_EQ(GetMetricsReportingDefaultState(local_state),
+  //         EnableMetricsDefault::DEFAULT_UNKNOWN);
   local_state->SetInteger(prefs::kMetricsDefaultOptIn, default_state);
 }
 

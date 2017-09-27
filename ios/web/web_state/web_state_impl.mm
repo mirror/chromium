@@ -23,6 +23,7 @@
 #import "ios/web/public/crw_session_storage.h"
 #import "ios/web/public/java_script_dialog_presenter.h"
 #import "ios/web/public/navigation_item.h"
+#import "ios/web/public/origin_util.h"
 #include "ios/web/public/url_util.h"
 #import "ios/web/public/web_client.h"
 #import "ios/web/public/web_state/context_menu_params.h"
@@ -273,6 +274,8 @@ void WebStateImpl::OnFormActivityRegistered(const std::string& form_name,
     observer.FormActivityRegistered(form_name, field_name, type, value,
                                     input_missing);
   }
+  if (type == "input" && !web::IsOriginSecure(GetLastCommittedURL()))
+    [web_controller_ didEditInsecureField];
 }
 
 void WebStateImpl::OnFaviconUrlUpdated(
