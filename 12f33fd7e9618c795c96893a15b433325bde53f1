@@ -22,6 +22,30 @@
       "revId": "12f33fd7e9618c795c96893a15b433325bde53f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7de39dc2_a43e2230",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5009,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-27T19:44:25Z",
+      "side": 0,
+      "message": "Could we get rid of setting the target for current_history_item_ in a followup? When we send it in FrameHostMsg_UpdateState, I think we could set it around https://cs.chromium.org/chromium/src/content/browser/web_contents/web_contents_impl.cc?rcl\u003dc56e4960d8d090c50e5a2e296f78af8e03bf2dc9\u0026l\u003d5135 (though we\u0027d have to reserialize). Would that be too complex?",
+      "parentUuid": "2f78165b_1b253c6c",
+      "range": {
+        "startLine": 5009,
+        "startChar": 2,
+        "endLine": 5009,
+        "endChar": 66
+      },
+      "revId": "12f33fd7e9618c795c96893a15b433325bde53f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
