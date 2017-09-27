@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00a65caf_56b2d4fb",
+        "filename": "ash/login/lock_screen_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-27T16:54:05Z",
+      "side": 1,
+      "message": "Move block below |lock_screen_client_| if.\n\nAlso update the comment to say that using an invalid/bad password is fine.\n\nConsider moving this block to |DoAuthenticateUser|, as we can skip the request if |is_pin| is true.",
+      "revId": "ba26564396f842daa717a736ae801f69810e457d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
