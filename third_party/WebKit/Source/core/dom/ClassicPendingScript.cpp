@@ -33,7 +33,8 @@ ClassicPendingScript::ClassicPendingScript(
     const TextPosition& starting_position)
     : PendingScript(element, starting_position),
       ready_state_(resource ? kWaitingForResource : kReady),
-      integrity_failure_(false) {
+      integrity_failure_(false),
+      is_currently_streaming_(false) {
   CheckState();
   SetResource(resource);
   MemoryCoordinator::Instance().RegisterClient(this);
@@ -52,8 +53,7 @@ NOINLINE void ClassicPendingScript::CheckState() const {
 void ClassicPendingScript::Prefinalize() {
   // TODO(hiroshige): Consider moving this to ScriptStreamer's prefinalizer.
   // https://crbug.com/715309
-  if (streamer_)
-    streamer_->Cancel();
+  CancelStreaming();
   prefinalizer_called_ = true;
 }
 
@@ -61,16 +61,14 @@ void ClassicPendingScript::DisposeInternal() {
   MemoryCoordinator::Instance().UnregisterClient(this);
   SetResource(nullptr);
   integrity_failure_ = false;
-  if (streamer_)
-    streamer_->Cancel();
-  streamer_ = nullptr;
+  CancelStreaming();
 }
 
 void ClassicPendingScript::StreamingFinished() {
   CheckState();
   DCHECK(streamer_);  // Should only be called by ScriptStreamer.
+  DCHECK(IsCurrentlyStreaming());
 
-  WTF::Closure done = std::move(streamer_done_);
   if (ready_state_ == kWaitingForStreaming) {
     FinishWaitingForStreaming();
   } else if (ready_state_ == kReadyStreaming) {
@@ -79,8 +77,7 @@ void ClassicPendingScript::StreamingFinished() {
     NOTREACHED();
   }
 
-  if (done)
-    done();
+  DCHECK(!IsCurrentlyStreaming());
 }
 
 void ClassicPendingScript::FinishWaitingForStreaming() {
@@ -97,6 +94,15 @@ void ClassicPendingScript::FinishReadyStreaming() {
   DCHECK(GetResource());
   DCHECK_EQ(ready_state_, kReadyStreaming);
   AdvanceReadyState(kReady);
+}
+
+void ClassicPendingScript::CancelStreaming() {
+  if (!streamer_)
+    return;
+
+  streamer_->Cancel();
+  streamer_ = nullptr;
+  WTF::Closure discard_done = std::move(streamer_done_);
 }
 
 void ClassicPendingScript::NotifyFinished(Resource* resource) {
@@ -186,6 +192,7 @@ void ClassicPendingScript::SetStreamer(ScriptStreamer* streamer) {
   DCHECK(ready_state_ == kWaitingForResource || ready_state_ == kReady);
 
   streamer_ = streamer;
+  is_currently_streaming_ = true;
   if (streamer && ready_state_ == kReady)
     AdvanceReadyState(kReadyStreaming);
 
@@ -231,19 +238,42 @@ void ClassicPendingScript::AdvanceReadyState(ReadyState new_ready_state) {
   // Did we transition into a 'ready' state?
   if (IsReady() && !old_is_ready && IsWatchingForLoad())
     Client()->PendingScriptFinished(this);
+
+  // Did we finish streaming?
+  if (is_currently_streaming_) {
+    if (ready_state_ == kReady || ready_state_ == kErrorOccurred) {
+      WTF::Closure done = std::move(streamer_done_);
+      if (done)
+        done();
+      is_currently_streaming_ = false;
+    }
+  }
+
+  // Streaming-related post conditions:
+
+  // is_currently_streaming_ should match what streamer_ thinks.
+  DCHECK_EQ(is_currently_streaming_, streamer_ && !streamer_->IsFinished());
+  // is_currently_streaming_ should match the ready_state_.
+  DCHECK_EQ(is_currently_streaming_,
+            ready_state_ == kReadyStreaming ||
+                (ready_state_ == kWaitingForResource ||
+                 ready_state_ == kWaitingForStreaming) &&
+                    streamer_);
+  // We can only have a streamer_done_ callback if we are actually streaming.
+  DCHECK(is_currently_streaming_ || !streamer_done_);
 }
 
 void ClassicPendingScript::OnPurgeMemory() {
   CheckState();
-  if (!streamer_)
-    return;
-  streamer_->Cancel();
-  streamer_ = nullptr;
+  CancelStreaming();
 }
 
 bool ClassicPendingScript::StartStreamingIfPossible(
     ScriptStreamer::Type streamer_type,
     WTF::Closure done) {
+  if (IsCurrentlyStreaming())
+    return false;
+
   // We can start streaming in two states: While still loading
   // (kWaitingForResource), or after having loaded (kReady).
   if (ready_state_ != kWaitingForResource && ready_state_ != kReady)
@@ -264,6 +294,7 @@ bool ClassicPendingScript::StartStreamingIfPossible(
       streamer_->IsFinished()) {
     DCHECK_EQ(ready_state_, kReady);
     DCHECK(!streamer_done_);
+    DCHECK(!IsCurrentlyStreaming());
     streamer_.Clear();
   }
 
@@ -283,6 +314,7 @@ bool ClassicPendingScript::StartStreamingIfPossible(
 
   DCHECK_EQ(ready_state_ == kReady, GetResource()->IsLoaded());
   DCHECK(!streamer_);
+  DCHECK(!IsCurrentlyStreaming());
   DCHECK(!streamer_done_);
   bool success = false;
   if (ready_state_ == kReady) {
@@ -299,6 +331,7 @@ bool ClassicPendingScript::StartStreamingIfPossible(
 
   // If we have successfully started streaming, we are required to call the
   // callback.
+  DCHECK_EQ(success, IsCurrentlyStreaming());
   if (success) {
     streamer_done_ = std::move(done);
   }
@@ -306,11 +339,7 @@ bool ClassicPendingScript::StartStreamingIfPossible(
 }
 
 bool ClassicPendingScript::IsCurrentlyStreaming() const {
-  // We could either check our local state, or ask the streamer. Let's
-  // double-check these are consistent.
-  DCHECK_EQ(streamer_ && !streamer_->IsStreamingFinished(),
-            ready_state_ == kReadyStreaming || (streamer_ && !IsReady()));
-  return ready_state_ == kReadyStreaming || (streamer_ && !IsReady());
+  return is_currently_streaming_;
 }
 
 bool ClassicPendingScript::WasCanceled() const {
