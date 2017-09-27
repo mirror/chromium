@@ -16,6 +16,24 @@
       "revId": "fddf86ec80157052b854e125e0917f01ec3f4b30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be0b38fc_37bde0cc",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css-paint-api/hidpi/geometry-with-hidip-zoom.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-27T14:15:47Z",
+      "side": 1,
+      "message": "Yeah, that makes sense. I moved the test out of wpt/",
+      "parentUuid": "2e5bce85_67f667e4",
+      "revId": "fddf86ec80157052b854e125e0917f01ec3f4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

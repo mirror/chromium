@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a626c342_b2242857",
+        "filename": "third_party/WebKit/Source/core/css/CSSPaintImageGenerator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-27T14:15:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "368d6587_dc6a811d",
+      "revId": "467a0f3e9708556890d6be18dd475c68eee36db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a57d325_905a0f6a",
         "filename": "third_party/WebKit/Source/core/css/CSSPaintValue.h",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "467a0f3e9708556890d6be18dd475c68eee36db9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef51fd1f_bb852703",
+        "filename": "third_party/WebKit/Source/core/css/CSSPaintValue.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-27T14:15:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a57d325_905a0f6a",
+      "revId": "467a0f3e9708556890d6be18dd475c68eee36db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5eb3c3d1_1dd0c53e",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutImageResourceStyleImage.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-27T14:15:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e8e3e1c_4230dbcb",
+      "revId": "467a0f3e9708556890d6be18dd475c68eee36db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3e3b2df_1d76f599",
         "filename": "third_party/WebKit/Source/core/style/StyleImage.h",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "467a0f3e9708556890d6be18dd475c68eee36db9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc926119_c056cb71",
+        "filename": "third_party/WebKit/Source/core/style/StyleImage.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-27T14:15:47Z",
+      "side": 1,
+      "message": "I updated the comments. Also, I applied the comments by chrishtr@ which uses LayoutSize* as the last parameter.",
+      "parentUuid": "f3e3b2df_1d76f599",
+      "revId": "467a0f3e9708556890d6be18dd475c68eee36db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -90,6 +162,30 @@
       "revId": "467a0f3e9708556890d6be18dd475c68eee36db9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88e7de68_e903e3c5",
+        "filename": "third_party/WebKit/Source/core/style/StyleImage.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-27T14:15:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ceec1a70_58a863a4",
+      "range": {
+        "startLine": 74,
+        "startChar": 64,
+        "endLine": 75,
+        "endChar": 27
+      },
+      "revId": "467a0f3e9708556890d6be18dd475c68eee36db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
