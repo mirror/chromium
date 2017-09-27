@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "73012355_21e93d46",
+        "filename": "components/arc/common/auth.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-09-27T20:55:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1ed211a_b84eb9b8",
+      "range": {
+        "startLine": 195,
+        "startChar": 2,
+        "endLine": 195,
+        "endChar": 75
+      },
+      "revId": "4069852dfc0c75d575fd64d96df0a33cfa0a00a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ed198ca_d4233be7",
         "filename": "components/arc/common/auth.mojom",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-27T20:00:06Z",
       "side": 1,
       "message": "You can declare this as\n\n [MinVersion\u003d5] OnAccountInfoReady(AccountInfo? account_info,\n                                   [MinVersion\u003d10] ArcSignInFailureReason failure_reason);",
+      "range": {
+        "startLine": 203,
+        "startChar": 0,
+        "endLine": 204,
+        "endChar": 78
+      },
+      "revId": "4069852dfc0c75d575fd64d96df0a33cfa0a00a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9b0c4bf_d3bc9b7b",
+        "filename": "components/arc/common/auth.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-09-27T20:55:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ed198ca_d4233be7",
       "range": {
         "startLine": 203,
         "startChar": 0,
