@@ -26,6 +26,7 @@
 
 #include "core/CSSPropertyNames.h"
 #include "core/HTMLNames.h"
+#include "core/dom/Policy.h"
 #include "core/frame/UseCounter.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/html/HTMLDocument.h"
@@ -291,6 +292,10 @@ bool HTMLIFrameElement::IsInteractiveContent() const {
 
 ReferrerPolicy HTMLIFrameElement::ReferrerPolicyAttribute() {
   return referrer_policy_;
+}
+
+Policy* HTMLIFrameElement::policy() const {
+  return Policy::Create(&GetDocument());
 }
 
 }  // namespace blink

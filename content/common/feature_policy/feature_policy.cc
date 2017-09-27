@@ -84,6 +84,14 @@ bool FeaturePolicy::Whitelist::Contains(const url::Origin& origin) const {
   return false;
 }
 
+bool FeaturePolicy::Whitelist::MatchesAllOrigins() const {
+  return matches_all_origins_;
+}
+
+std::vector<url::Origin> FeaturePolicy::Whitelist::Origins() const {
+  return origins_;
+}
+
 // static
 std::unique_ptr<FeaturePolicy> FeaturePolicy::CreateFromParentPolicy(
     const FeaturePolicy* parent_policy,
@@ -110,6 +118,40 @@ std::unique_ptr<FeaturePolicy> FeaturePolicy::CreateFromPolicyWithOrigin(
 bool FeaturePolicy::IsFeatureEnabled(
     blink::WebFeaturePolicyFeature feature) const {
   return IsFeatureEnabledForOrigin(feature, origin_);
+}
+
+bool FeaturePolicy::IsFeatureEnabledForOrigin(
+    blink::WebFeaturePolicyFeature feature,
+    blink::WebSecurityOrigin origin) const {
+  return IsFeatureEnabledForOrigin(feature, url::Origin(origin));
+}
+
+blink::WebVector<blink::WebString> FeaturePolicy::GetOriginsForFeature(
+    blink::WebFeaturePolicyFeature feature) const {
+  DCHECK(base::ContainsKey(inherited_policies_, feature));
+  const FeaturePolicy::FeatureDefault default_policy =
+      feature_list_.at(feature);
+  std::vector<blink::WebString> result;
+  if (!inherited_policies_.at(feature))
+    return result;
+  auto whitelist = whitelists_.find(feature);
+  if (whitelist != whitelists_.end()) {
+    if (whitelist->second->MatchesAllOrigins()) {
+      result.push_back("*");
+      return result;
+    }
+    for (auto origin : whitelist->second->Origins())
+      result.push_back(blink::WebString::FromUTF8(origin.Serialize()));
+  } else if (default_policy == FeaturePolicy::FeatureDefault::EnableForAll) {
+    result.push_back({"*"});
+  } else if (default_policy == FeaturePolicy::FeatureDefault::EnableForSelf) {
+    // TODO(iclelland): Remove the pointer equality check once it is possible to
+    // compare opaque origins successfully against themselves.
+    // https://crbug.com/690520
+    result.push_back(blink::WebString::FromUTF8(origin_.Serialize()));
+  }
+
+  return result;
 }
 
 bool FeaturePolicy::IsFeatureEnabledForOrigin(

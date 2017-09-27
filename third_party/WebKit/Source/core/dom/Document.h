@@ -146,6 +146,7 @@ class NthIndexCache;
 class OriginAccessEntry;
 class Page;
 class PendingAnimations;
+class Policy;
 class ProcessingInstruction;
 class PropertyRegistry;
 class QualifiedName;
@@ -278,6 +279,9 @@ class CORE_EXPORT Document : public ContainerNode,
   // https://dom.spec.whatwg.org/#dom-document-document
   static Document* Create(const Document&);
   ~Document() override;
+
+  // Support JS introspection of frame policy (e.g. feature policy).
+  Policy* policy();
 
   MediaQueryMatcher& GetMediaQueryMatcher();
 
