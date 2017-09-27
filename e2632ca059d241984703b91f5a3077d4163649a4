@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f84d8c8a_3c36c4c5",
+        "filename": "chrome/browser/ui/views/try_chrome_dialog.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-27T17:39:50Z",
+      "side": 1,
+      "message": "I don\u0027t think you actually need this.",
+      "range": {
+        "startLine": 374,
+        "startChar": 2,
+        "endLine": 374,
+        "endChar": 33
+      },
+      "revId": "e2632ca059d241984703b91f5a3077d4163649a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89104f52_90029fe6",
+        "filename": "chrome/browser/ui/views/try_chrome_dialog.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-27T17:39:50Z",
+      "side": 1,
+      "message": "Isn\u0027t close_button_layer_ always non-null when you hit this path? DCHECK?",
+      "range": {
+        "startLine": 547,
+        "startChar": 6,
+        "endLine": 547,
+        "endChar": 25
+      },
+      "revId": "e2632ca059d241984703b91f5a3077d4163649a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
