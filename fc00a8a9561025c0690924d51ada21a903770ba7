@@ -46,6 +46,30 @@
       "revId": "fc00a8a9561025c0690924d51ada21a903770ba7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3712c25_163242bb",
+        "filename": "content/test/fuzzer/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-09-27T16:12:25Z",
+      "side": 0,
+      "message": "But the buildbot complains: https://luci-logdog.appspot.com/v/?s\u003dchromium%2Fbb%2Ftryserver.chromium.linux%2Flinux_chromium_compile_dbg_ng%2F382695%2F%2B%2Frecipes%2Fsteps%2Fanalyze%2F0%2Fstdout",
+      "parentUuid": "5c33d3d1_b78d1a43",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 26
+      },
+      "revId": "fc00a8a9561025c0690924d51ada21a903770ba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
