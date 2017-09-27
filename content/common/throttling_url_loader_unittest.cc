@@ -17,17 +17,29 @@
 namespace content {
 namespace {
 
-class TestURLLoaderFactory : public mojom::URLLoaderFactory {
+class TestURLLoaderFactory : public mojom::URLLoaderFactory,
+                             public mojom::URLLoader {
  public:
-  TestURLLoaderFactory() : binding_(this) {
+  TestURLLoaderFactory() : binding_(this), url_loader_binding_(this) {
     binding_.Bind(mojo::MakeRequest(&factory_ptr_));
   }
 
   mojom::URLLoaderFactoryPtr& factory_ptr() { return factory_ptr_; }
   mojom::URLLoaderClientPtr& client_ptr() { return client_ptr_; }
+  mojo::Binding<mojom::URLLoader>& url_loader_binding() {
+    return url_loader_binding_;
+  }
 
   size_t create_loader_and_start_called() const {
     return create_loader_and_start_called_;
+  }
+
+  size_t pause_caching_response_body_called() const {
+    return pause_caching_response_body_called_;
+  }
+
+  size_t resume_caching_response_body_called() const {
+    return resume_caching_response_body_called_;
   }
 
   void NotifyClientOnReceiveResponse() {
@@ -59,14 +71,32 @@ class TestURLLoaderFactory : public mojom::URLLoaderFactory {
                                 traffic_annotation) override {
     create_loader_and_start_called_++;
 
+    url_loader_binding_.Bind(std::move(request));
     client_ptr_ = std::move(client);
   }
 
   void Clone(mojom::URLLoaderFactoryRequest request) override { NOTREACHED(); }
 
+  // mojom::URLLoader implementation.
+  void FollowRedirect() override {}
+
+  void SetPriority(net::RequestPriority priority,
+                   int32_t intra_priority_value) override {}
+
+  void PauseCachingResponseBody() override {
+    pause_caching_response_body_called_++;
+  }
+
+  void ResumeCachingResponseBody() override {
+    resume_caching_response_body_called_++;
+  }
+
   size_t create_loader_and_start_called_ = 0;
+  size_t pause_caching_response_body_called_ = 0;
+  size_t resume_caching_response_body_called_ = 0;
 
   mojo::Binding<mojom::URLLoaderFactory> binding_;
+  mojo::Binding<mojom::URLLoader> url_loader_binding_;
   mojom::URLLoaderFactoryPtr factory_ptr_;
   mojom::URLLoaderClientPtr client_ptr_;
   DISALLOW_COPY_AND_ASSIGN(TestURLLoaderFactory);
@@ -743,6 +773,60 @@ TEST_F(ThrottlingURLLoaderTest, BlockWithMultipleThrottles) {
   EXPECT_EQ(1u, client_.on_received_response_called());
   EXPECT_EQ(0u, client_.on_received_redirect_called());
   EXPECT_EQ(1u, client_.on_complete_called());
+}
+
+TEST_F(ThrottlingURLLoaderTest, PauseResumeCachingResponseBody) {
+  throttles_.emplace_back(base::MakeUnique<TestURLLoaderThrottle>());
+  auto* throttle2 =
+      static_cast<TestURLLoaderThrottle*>(throttles_.back().get());
+
+  // Test that it is okay to call delegate->PauseCachingResponseBody() even
+  // before the loader is created.
+  throttle_->set_will_start_request_callback(
+      base::Bind([](URLLoaderThrottle::Delegate* delegate, bool* defer) {
+        delegate->PauseCachingResponseBody();
+        *defer = true;
+      }));
+  throttle2->set_will_start_request_callback(
+      base::Bind([](URLLoaderThrottle::Delegate* delegate, bool* defer) {
+        delegate->PauseCachingResponseBody();
+      }));
+
+  CreateLoaderAndStart();
+
+  throttle_->delegate()->Resume();
+
+  factory_.factory_ptr().FlushForTesting();
+  EXPECT_EQ(1u, factory_.create_loader_and_start_called());
+
+  // Make sure all URLLoader calls before this point are delivered to the impl
+  // side.
+  factory_.url_loader_binding().FlushForTesting();
+
+  // Although there were two calls to delegate->PauseCachingResponseBody(), only
+  // one URLLoader::PauseCachingResponseBody() Mojo call was made.
+  EXPECT_EQ(1u, factory_.pause_caching_response_body_called());
+  EXPECT_EQ(0u, factory_.resume_caching_response_body_called());
+
+  throttle_->delegate()->ResumeCachingResponseBody();
+  factory_.url_loader_binding().FlushForTesting();
+
+  EXPECT_EQ(1u, factory_.pause_caching_response_body_called());
+  EXPECT_EQ(0u, factory_.resume_caching_response_body_called());
+
+  // Caching is still paused by |throttle2|. Calling ResumeCachingResponseBody()
+  // on |throttle_| shouldn't have any effect.
+  throttle_->delegate()->ResumeCachingResponseBody();
+  factory_.url_loader_binding().FlushForTesting();
+
+  EXPECT_EQ(1u, factory_.pause_caching_response_body_called());
+  EXPECT_EQ(0u, factory_.resume_caching_response_body_called());
+
+  throttle2->delegate()->ResumeCachingResponseBody();
+  factory_.url_loader_binding().FlushForTesting();
+
+  EXPECT_EQ(1u, factory_.pause_caching_response_body_called());
+  EXPECT_EQ(1u, factory_.resume_caching_response_body_called());
 }
 
 }  // namespace
