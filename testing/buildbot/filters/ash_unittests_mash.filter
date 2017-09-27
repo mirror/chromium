@@ -283,6 +283,8 @@
 -SystemGestureEventFilterTest.WindowsWithMaxSizeDontSnap
 -ToastManagerTest.NullMessageHasNoDismissButton
 -ToplevelWindowEventHandlerTest.GestureDragCaptureLoss
+-TouchCalibratorControllerTest.CustomCalibration
+-TouchCalibratorControllerTest.TouchDeviceIdIsSet
 -TouchHudDebugTest.DualDisplays
 -TouchHudDebugTest.Headless
 -TouchHudDebugTest.MirrorDisplays
