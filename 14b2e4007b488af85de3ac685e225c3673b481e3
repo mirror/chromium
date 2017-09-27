@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5103e156_a10f97a2",
+        "filename": "net/cert/internal/trust_store_nss.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-09-27T01:25:29Z",
+      "side": 1,
+      "message": "Good call. But in addition, we actually need to use CERT_NewTempCertificate, not CERT_FindCertByDERCert, otherwise we won\u0027t be able to find distrust records that don\u0027t have the matching cert in NSS\u0027s database.",
+      "parentUuid": "6ec54600_b2f5a094",
+      "revId": "14b2e4007b488af85de3ac685e225c3673b481e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4c58ebc_57dd21d5",
         "filename": "net/cert/internal/trust_store_nss.cc",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "5930b613_69716656",
+        "filename": "net/cert/internal/trust_store_nss.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-09-27T01:25:29Z",
+      "side": 1,
+      "message": "Ah, it looks like we can remove that macro. We require NSS \u003e\u003d 3.26 now (enforced in nss_util.cc). I\u0027ll make a CL for that too.",
+      "parentUuid": "e4c58ebc_57dd21d5",
+      "range": {
+        "startLine": 117,
+        "startChar": 42,
+        "endLine": 117,
+        "endChar": 64
+      },
+      "revId": "14b2e4007b488af85de3ac685e225c3673b481e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a037cae7_839d2f9e",
         "filename": "net/cert/internal/trust_store_nss.cc",
         "patchSetId": 1
@@ -53,6 +95,24 @@
       "writtenOn": "2017-09-27T00:33:21Z",
       "side": 1,
       "message": "Perhaps we introduce a new value for CertificateTrust::ForTrustedLeaf(), and then teach path validation (https://cs.chromium.org/chromium/src/net/cert/internal/verify_certificate_chain.h?q\u003dverifycertificatechain\u0026sq\u003dpackage:chromium\u0026l\u003d226) how to interpret that?",
+      "revId": "14b2e4007b488af85de3ac685e225c3673b481e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef2baba2_d2cb2706",
+        "filename": "net/cert/internal/trust_store_nss.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-09-27T01:25:29Z",
+      "side": 1,
+      "message": "Yeah, that sounds reasonable. I\u0027ll take a look at that later.",
+      "parentUuid": "a037cae7_839d2f9e",
       "revId": "14b2e4007b488af85de3ac685e225c3673b481e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
