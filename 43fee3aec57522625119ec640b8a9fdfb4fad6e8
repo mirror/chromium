@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28c45aa8_61a53850",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-27T20:31:22Z",
+      "side": 1,
+      "message": "Isn\u0027t this assuming that the renderer respects that info?",
+      "revId": "43fee3aec57522625119ec640b8a9fdfb4fad6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
