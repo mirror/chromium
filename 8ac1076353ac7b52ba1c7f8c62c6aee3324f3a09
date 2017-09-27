@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f7623e0_f5e3aa87",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleSelectionTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-27T01:32:35Z",
+      "side": 1,
+      "message": "This test should be written with SetSelectionTextForBody() as below,\ninstead of using comparison of positions.\n\nconst SelectionInDOMTree selection \u003d SetSelectioNTextForBody(\n  .... with TEMPLATE and ^...|);\nconst VisibleSelectionInFlatTree visible_selection \u003d\n CreateVisibleSelection(ConvertToFlatTreeSelection(selection));\nEXPECT_EQ(\n  \"... dump in flat tree ...\",\n  GetSelectionTextFromBody(visible_selection.AsSelection()));",
+      "revId": "8ac1076353ac7b52ba1c7f8c62c6aee3324f3a09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
