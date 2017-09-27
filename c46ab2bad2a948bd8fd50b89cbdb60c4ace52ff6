@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3ea4777_d39b3b4f",
+        "filename": "chromeos/components/tether/ble_synchronizer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1128430
+      },
+      "writtenOn": "2017-09-27T16:56:53Z",
+      "side": 1,
+      "message": "Won\u0027t this stop all further processing of the queue until the next command is entered? Iiuc, you could have commands stuck in the queue for a while.",
+      "range": {
+        "startLine": 206,
+        "startChar": 8,
+        "endLine": 206,
+        "endChar": 13
+      },
+      "revId": "c46ab2bad2a948bd8fd50b89cbdb60c4ace52ff6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
