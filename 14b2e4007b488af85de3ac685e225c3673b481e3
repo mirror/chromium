@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ec54600_b2f5a094",
+        "filename": "net/cert/internal/trust_store_nss.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-09-27T00:33:21Z",
+      "side": 1,
+      "message": "Is this the expectation for meaning of distrust in NSS?\n\nOr would it be reasonable to apply distrust for any matching issuer+serialnumber and hence not short-circuit here.",
+      "revId": "14b2e4007b488af85de3ac685e225c3673b481e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4c58ebc_57dd21d5",
+        "filename": "net/cert/internal/trust_store_nss.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-09-27T00:33:21Z",
+      "side": 1,
+      "message": "Do we need to use a macro for this as in https://cs.chromium.org/chromium/src/net/cert/nss_cert_database.cc?type\u003dcs\u0026q\u003dCERTDB_TERMINAL_RECORD\u0026sq\u003dpackage:chromium\u0026l\u003d34 ?",
+      "range": {
+        "startLine": 117,
+        "startChar": 42,
+        "endLine": 117,
+        "endChar": 64
+      },
+      "revId": "14b2e4007b488af85de3ac685e225c3673b481e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a037cae7_839d2f9e",
+        "filename": "net/cert/internal/trust_store_nss.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-09-27T00:33:21Z",
+      "side": 1,
+      "message": "Perhaps we introduce a new value for CertificateTrust::ForTrustedLeaf(), and then teach path validation (https://cs.chromium.org/chromium/src/net/cert/internal/verify_certificate_chain.h?q\u003dverifycertificatechain\u0026sq\u003dpackage:chromium\u0026l\u003d226) how to interpret that?",
+      "revId": "14b2e4007b488af85de3ac685e225c3673b481e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
