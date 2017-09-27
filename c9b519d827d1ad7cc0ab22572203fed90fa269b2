@@ -2,6 +2,137 @@
   "comments": [
     {
       "key": {
+        "uuid": "06f72493_0db56641",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-27T20:44:24Z",
+      "side": 1,
+      "message": "nit: is there a need for two unnamed namespaces? how about moving the contents of this one down into the one below?",
+      "revId": "c9b519d827d1ad7cc0ab22572203fed90fa269b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e648f62_33ee4904",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-27T20:44:24Z",
+      "side": 1,
+      "message": "nit: no trailing underscore on local var",
+      "range": {
+        "startLine": 52,
+        "startChar": 53,
+        "endLine": 52,
+        "endChar": 54
+      },
+      "revId": "c9b519d827d1ad7cc0ab22572203fed90fa269b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e2fbcbe_a61cc345",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-27T20:44:24Z",
+      "side": 1,
+      "message": "add:\n    *out_len \u003d 0;\nto this block",
+      "revId": "c9b519d827d1ad7cc0ab22572203fed90fa269b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b520fb22_167eb90e",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-27T20:44:24Z",
+      "side": 1,
+      "message": "unused",
+      "revId": "c9b519d827d1ad7cc0ab22572203fed90fa269b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bd0aac3_cd94009c",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-27T20:44:24Z",
+      "side": 1,
+      "message": "nit: consistent -\u003e available?",
+      "range": {
+        "startLine": 64,
+        "startChar": 60,
+        "endLine": 64,
+        "endChar": 70
+      },
+      "revId": "c9b519d827d1ad7cc0ab22572203fed90fa269b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c6c8c32_4c1abeee",
+        "filename": "base/win/scoped_hstring_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-27T20:44:24Z",
+      "side": 1,
+      "message": "#include \"testing/gtest/include/gtest/gtest.h\" rather than this",
+      "revId": "c9b519d827d1ad7cc0ab22572203fed90fa269b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8daff6a1_bcea27b5",
+        "filename": "base/win/scoped_hstring_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-27T20:44:24Z",
+      "side": 1,
+      "message": "omit \"static\" on consts at namespace scope, and make this \"constexpr\" rather than \"cost\"",
+      "revId": "c9b519d827d1ad7cc0ab22572203fed90fa269b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94f4a113_0286282f",
         "filename": "base/win/scoped_hstring_unittest.cc",
         "patchSetId": 22
@@ -13,6 +144,80 @@
       "writtenOn": "2017-09-27T19:31:56Z",
       "side": 1,
       "message": "I think this can just be EXPECT_EQ if c_str() is dropped (here and elsewhere) Same comment applies to data() for the StringPiece comparison below.",
+      "revId": "c9b519d827d1ad7cc0ab22572203fed90fa269b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f47784c_b5950bbe",
+        "filename": "base/win/scoped_hstring_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-27T20:44:24Z",
+      "side": 1,
+      "message": "fyi: data() is not guaranteed to return a pointer to a null-terminated string, so it shouldn\u0027t be used like this. c_str() would be correct here, but dcheng\u0027s comment above is better -- use EXPECT_EQ.",
+      "range": {
+        "startLine": 38,
+        "startChar": 38,
+        "endLine": 38,
+        "endChar": 42
+      },
+      "revId": "c9b519d827d1ad7cc0ab22572203fed90fa269b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44d8e888_7339f553",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-27T20:44:24Z",
+      "side": 1,
+      "message": "remove -- unused",
+      "revId": "c9b519d827d1ad7cc0ab22572203fed90fa269b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54093893_8aec4947",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-27T20:44:24Z",
+      "side": 1,
+      "message": "i think i commented on this already -- this isn\u0027t good. either:\n  CHECK(preload_success);\nif you want to crash the process, or remove the CHECK. since the old code returned false if combase.dll couldn\u0027t be found, i suspect you should return false in case of preload failure, so i\u0027d just simplify all of this to:\n  if (!ResolveCoreWinRTDelayload() ||\n      !ScopedHString::ResolveCoreWinRTStringDelayload()) {\n    return false;\n  }",
+      "revId": "c9b519d827d1ad7cc0ab22572203fed90fa269b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "492d9b12_45fa33d5",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-27T20:44:24Z",
+      "side": 1,
+      "message": "remove this in favor of:\n  HRESULT hr \u003d base::win::...\non line 120",
       "revId": "c9b519d827d1ad7cc0ab22572203fed90fa269b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
