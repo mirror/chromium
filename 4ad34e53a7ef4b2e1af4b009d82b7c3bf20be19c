@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70ba6821_62ff9c47",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/dom/events/Event-timestamp-safe-resolution.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-09-27T14:03:42Z",
+      "side": 1,
+      "message": "I think this needs to be \u003e\u003d not \u003d\u003d",
+      "range": {
+        "startLine": 47,
+        "startChar": 15,
+        "endLine": 47,
+        "endChar": 16
+      },
+      "revId": "4ad34e53a7ef4b2e1af4b009d82b7c3bf20be19c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
