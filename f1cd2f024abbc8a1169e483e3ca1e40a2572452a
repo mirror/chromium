@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "456ad0dc_45bfceb7",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-27T13:45:05Z",
+      "side": 1,
+      "message": "Ah, so it\u0027s persisted. I suppose that makes sense...meh.\nThanks for the explanation!",
+      "parentUuid": "c9dc0694_5ccd50d8",
+      "range": {
+        "startLine": 148,
+        "startChar": 47,
+        "endLine": 148,
+        "endChar": 0
+      },
+      "revId": "f1cd2f024abbc8a1169e483e3ca1e40a2572452a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92e47773_c55aa6da",
         "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
         "patchSetId": 5
