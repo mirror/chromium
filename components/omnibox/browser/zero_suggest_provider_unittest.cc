@@ -8,6 +8,7 @@
 #include "base/metrics/field_trial.h"
 #include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/test/scoped_feature_list.h"
 #include "base/test/scoped_task_environment.h"
 #include "components/history/core/browser/top_sites.h"
 #include "components/metrics/proto/omnibox_event.pb.h"
@@ -107,6 +108,8 @@ class FakeAutocompleteProviderClient
         top_sites_(new FakeEmptyTopSites()) {
     pref_service_.registry()->RegisterStringPref(
         omnibox::kZeroSuggestCachedResults, std::string());
+    pref_service_.registry()->RegisterBooleanPref(
+        omnibox::kZeroSuggestChromeHomePersonalized, false);
   }
 
   bool SearchSuggestEnabled() const override { return true; }
