@@ -112,7 +112,8 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
 
   void Load(LoadType load_type,
             const blink::WebMediaPlayerSource& source,
-            CORSMode cors_mode) override;
+            CORSMode cors_mode,
+            bool taints_canvas) override;
 
   // Playback controls.
   void Play() override;
@@ -132,10 +133,11 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   // paint() the current video frame into |canvas|. This is used to support
   // various APIs and functionalities, including but not limited to: <canvas>,
   // WebGL texImage2D, ImageBitmap, printing and capturing capabilities.
-  void Paint(blink::WebCanvas* canvas,
+  bool Paint(blink::WebCanvas* canvas,
              const blink::WebRect& rect,
              cc::PaintFlags& flags,
              int already_uploaded_id,
+             bool check_cross_origin,
              VideoFrameUploadMetadata* out_metadata) override;
 
   // True if the loaded media has a playable video/audio track.
@@ -313,7 +315,8 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   // |defer_load_cb_| is null this is called immediately.
   void DoLoad(LoadType load_type,
               const blink::WebURL& url,
-              CORSMode cors_mode);
+              CORSMode cors_mode,
+              bool taints_canvas);
 
   // Called after asynchronous initialization of a data source completed.
   void DataSourceInitialized(bool success);
@@ -838,6 +841,8 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
 
   base::Callback<mojom::VideoDecodeStatsRecorderPtr()>
       create_decode_stats_recorder_cb_;
+
+  bool taints_canvas_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(WebMediaPlayerImpl);
 };

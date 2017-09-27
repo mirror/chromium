@@ -230,7 +230,8 @@ WebMediaPlayerMS::~WebMediaPlayerMS() {
 
 void WebMediaPlayerMS::Load(LoadType load_type,
                             const blink::WebMediaPlayerSource& source,
-                            CORSMode /*cors_mode*/) {
+                            CORSMode /*cors_mode*/,
+                            bool /*taints_canvas*/) {
   DVLOG(1) << __func__;
   DCHECK(thread_checker_.CalledOnValidThread());
 
@@ -621,10 +622,11 @@ bool WebMediaPlayerMS::DidLoadingProgress() {
   return true;
 }
 
-void WebMediaPlayerMS::Paint(blink::WebCanvas* canvas,
+bool WebMediaPlayerMS::Paint(blink::WebCanvas* canvas,
                              const blink::WebRect& rect,
                              cc::PaintFlags& flags,
                              int already_uploaded_id,
+                             bool check_cross_origin,
                              VideoFrameUploadMetadata* out_metadata) {
   DVLOG(3) << __func__;
   DCHECK(thread_checker_.CalledOnValidThread());
@@ -638,13 +640,14 @@ void WebMediaPlayerMS::Paint(blink::WebCanvas* canvas,
         RenderThreadImpl::current()->SharedMainThreadContextProvider().get();
     // GPU Process crashed.
     if (!provider)
-      return;
+      return false;
     context_3d = media::Context3D(provider->ContextGL(), provider->GrContext());
     DCHECK(context_3d.gl);
   }
   const gfx::RectF dest_rect(rect.x, rect.y, rect.width, rect.height);
   video_renderer_.Paint(frame, canvas, dest_rect, flags, video_rotation_,
                         context_3d);
+  return false;
 }
 
 bool WebMediaPlayerMS::HasSingleSecurityOrigin() const {

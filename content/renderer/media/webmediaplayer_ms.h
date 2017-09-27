@@ -89,7 +89,8 @@ class CONTENT_EXPORT WebMediaPlayerMS
 
   void Load(LoadType load_type,
             const blink::WebMediaPlayerSource& source,
-            CORSMode cors_mode) override;
+            CORSMode cors_mode,
+            bool taints_canvas) override;
 
   // Playback controls.
   void Play() override;
@@ -106,10 +107,11 @@ class CONTENT_EXPORT WebMediaPlayerMS
   blink::WebTimeRanges Seekable() const override;
 
   // Methods for painting.
-  void Paint(blink::WebCanvas* canvas,
+  bool Paint(blink::WebCanvas* canvas,
              const blink::WebRect& rect,
              cc::PaintFlags& flags,
              int already_uploaded_id,
+             bool check_cross_origin,
              VideoFrameUploadMetadata* out_metadata) override;
   media::SkCanvasVideoRenderer* GetSkCanvasVideoRenderer();
   void ResetCanvasCache();
