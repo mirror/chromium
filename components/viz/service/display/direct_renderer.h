@@ -13,6 +13,7 @@
 #include "base/containers/flat_map.h"
 #include "base/macros.h"
 #include "cc/resources/display_resource_provider.h"
+#include "cc/resources/local_resource_provider.h"
 #include "components/viz/common/quads/tile_draw_quad.h"
 #include "components/viz/service/display/ca_layer_overlay.h"
 #include "components/viz/service/display/dc_layer_overlay.h"
@@ -48,6 +49,10 @@ class VIZ_SERVICE_EXPORT DirectRenderer {
   DirectRenderer(const RendererSettings* settings,
                  OutputSurface* output_surface,
                  cc::DisplayResourceProvider* resource_provider);
+  DirectRenderer(const RendererSettings* settings,
+                 OutputSurface* output_surface,
+                 cc::DisplayResourceProvider* resource_provider,
+                 cc::LocalResourceProvider* local_resource_provider);
   virtual ~DirectRenderer();
 
   void Initialize();
@@ -188,6 +193,7 @@ class VIZ_SERVICE_EXPORT DirectRenderer {
   const RendererSettings* const settings_;
   OutputSurface* const output_surface_;
   cc::DisplayResourceProvider* const resource_provider_;
+  cc::LocalResourceProvider* const local_resource_provider_;
   // This can be replaced by test implementations.
   std::unique_ptr<OverlayProcessor> overlay_processor_;
 
