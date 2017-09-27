@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9525fe48_095e257b",
+        "filename": "chrome/browser/task_manager/task_manager_observer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-09-27T17:43:10Z",
+      "side": 1,
+      "message": "As currently factored, it\u0027s not clear to me why it\u0027s safe to repurpose PHYSICAL_MEMORY as MEMORY_FOOTPRINT.\n\nThe idea of RefreshType is that each separately-collectible metric should have its own bit, so that we can avoid the cost of collecting the source data for columns that aren\u0027t visible. MEMORY_DETAILS and PHYSICAL_MEMORY were separately-collected data sources: SharedSamplerWin provided the REFRESH_TYPE_PHYSICAL_MEMORY source for the \u0027physical mem\u0027 column (using the all-processes-in-one-shot technique), but on Windows, the REFRESH_TYPE_MEMORY_DETAILS source for the \u0027shared mem, swapped mem, and private mem\u0027 columns were collected via task_group.cc (i.e. they were gathered separately for each pid, rather than all-in-one shot via the shared_sampler).\n\nSince you\u0027re now adding a new column, with its own source, it seems like you ought to add a new RefreshType as well.\n\nLet me know if I\u0027ve misunderstood the above -- I\u0027m not against reifying the RefreshType enum if you\u0027ve in fact noticed that we were doing something unnecessary.",
+      "revId": "0a8ee48f83a4d10736ad4e8e792e935b19a842c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
