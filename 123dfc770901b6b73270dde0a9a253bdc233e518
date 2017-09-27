@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "a70d145f_a37f52df",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-27T06:03:00Z",
+      "side": 1,
+      "message": "I agree to ship one. I\u0027d like to finish the replace before branch cut for M63.",
+      "parentUuid": "d4a2e0c7_877c67da",
+      "revId": "123dfc770901b6b73270dde0a9a253bdc233e518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f00393c3_86355226",
         "filename": "chrome/installer/linux/common/installer.include",
         "patchSetId": 2
@@ -152,6 +170,24 @@
       "revId": "123dfc770901b6b73270dde0a9a253bdc233e518",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d4145ab_fcca6b5f",
+        "filename": "chrome/tools/build/linux/FILES.cfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-27T06:03:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f24d3fd2_42070e71",
+      "revId": "123dfc770901b6b73270dde0a9a253bdc233e518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
