@@ -33,7 +33,6 @@
 #include "core/editing/EditingStyle.h"
 #include "core/editing/FindOptions.h"
 #include "core/editing/Forward.h"
-#include "core/editing/FrameSelection.h"
 #include "core/editing/VisibleSelection.h"
 #include "core/editing/WritingDirection.h"
 #include "core/events/InputEvent.h"
@@ -51,6 +50,7 @@ class LocalFrame;
 class HitTestResult;
 class KillRing;
 class Pasteboard;
+class SetSelectionOptions;
 class SpellChecker;
 class StylePropertySet;
 class TextEvent;
@@ -350,8 +350,7 @@ class CORE_EXPORT Editor final : public GarbageCollectedFinalized<Editor> {
                         PasteMode = kAllMimeTypes);
 
   void RevealSelectionAfterEditingOperation(
-      const ScrollAlignment& = ScrollAlignment::kAlignCenterIfNeeded,
-      RevealExtentOption = kDoNotRevealExtent);
+      const ScrollAlignment& = ScrollAlignment::kAlignCenterIfNeeded);
   void ChangeSelectionAfterCommand(const SelectionInDOMTree&,
                                    const SetSelectionOptions&);
 
