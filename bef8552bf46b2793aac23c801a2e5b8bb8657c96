@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ac91185_012a1537",
+        "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_apitest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-09-27T16:22:10Z",
+      "side": 1,
+      "message": "TODO(crbug.com/177163) (this is the current todo style), the same in other comment.",
+      "range": {
+        "startLine": 262,
+        "startChar": 5,
+        "endLine": 262,
+        "endChar": 17
+      },
+      "revId": "bef8552bf46b2793aac23c801a2e5b8bb8657c96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9479110a_332274b1",
+        "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_apitest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-09-27T16:22:10Z",
+      "side": 1,
+      "message": "Nit: please avoid using we (go/avoidwe), here and in the next comment.",
+      "range": {
+        "startLine": 264,
+        "startChar": 22,
+        "endLine": 264,
+        "endChar": 24
+      },
+      "revId": "bef8552bf46b2793aac23c801a2e5b8bb8657c96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
