@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fbd9c5b_63ca6b3f",
+        "filename": "ios/chrome/browser/passwords/credential_manager_egtest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-27T13:16:51Z",
+      "side": 1,
+      "message": "Up to this point it looks like it is the same code as the previous test. Can you move it to a helper method?",
+      "range": {
+        "startLine": 188,
+        "startChar": 0,
+        "endLine": 188,
+        "endChar": 50
+      },
+      "revId": "7fa273ead722af65651b0be09517434b1c00beee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19b13c95_26175ec6",
+        "filename": "ios/chrome/browser/passwords/credential_manager_egtest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-27T13:16:51Z",
+      "side": 1,
+      "message": "This is switching instantaneously. So the call to showAutosigninNotification might be done with the tab being presented.\nMaybe you can wait a little on the empty tab, check that there is no snackbar presented (so you test that the snackbar is not presented on another tab), then switch and test for the presence of the snackbar. WDYT?",
+      "range": {
+        "startLine": 202,
+        "startChar": 0,
+        "endLine": 202,
+        "endChar": 53
+      },
+      "revId": "7fa273ead722af65651b0be09517434b1c00beee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06c232ec_cfa877c0",
+        "filename": "ios/chrome/browser/passwords/credential_manager_egtest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-27T13:16:51Z",
+      "side": 1,
+      "message": "You should use grey_sufficientlyVisible(). grey_notNil() will be true even if the snackbar is not visible. This is needed to check that the animation is working and is showing the snackbar on screen (and not get stuck hidden).",
+      "range": {
+        "startLine": 210,
+        "startChar": 67,
+        "endLine": 210,
+        "endChar": 78
+      },
+      "revId": "7fa273ead722af65651b0be09517434b1c00beee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
