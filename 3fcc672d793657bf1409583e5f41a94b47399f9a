@@ -16,6 +16,24 @@
       "revId": "3fcc672d793657bf1409583e5f41a94b47399f9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e019832_08c42367",
+        "filename": "docs/accessibility/overview.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1242552
+      },
+      "writtenOn": "2017-09-27T16:10:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c00caf86_982c7998",
+      "revId": "3fcc672d793657bf1409583e5f41a94b47399f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
