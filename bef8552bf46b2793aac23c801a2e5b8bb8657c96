@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "744bcc31_2fe08f28",
+        "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_apitest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-27T17:00:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ac91185_012a1537",
+      "range": {
+        "startLine": 262,
+        "startChar": 5,
+        "endLine": 262,
+        "endChar": 17
+      },
+      "revId": "bef8552bf46b2793aac23c801a2e5b8bb8657c96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9479110a_332274b1",
         "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_apitest.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "bef8552bf46b2793aac23c801a2e5b8bb8657c96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecf7e17a_4f466a9b",
+        "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_apitest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-27T17:00:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9479110a_332274b1",
+      "range": {
+        "startLine": 264,
+        "startChar": 22,
+        "endLine": 264,
+        "endChar": 24
+      },
+      "revId": "bef8552bf46b2793aac23c801a2e5b8bb8657c96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
