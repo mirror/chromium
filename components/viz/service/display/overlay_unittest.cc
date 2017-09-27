@@ -670,7 +670,7 @@ TEST_F(FullscreenOverlayTest, OnTopFail) {
   EXPECT_EQ(2U, main_pass->quad_list.size());
 }
 
-TEST_F(FullscreenOverlayTest, NotCoveringFullscreenFail) {
+TEST_F(FullscreenOverlayTest, SuccessfulNotCoveringFullscreen) {
   std::unique_ptr<RenderPass> pass = CreateRenderPass();
   gfx::Rect inset_rect = pass->output_rect;
   inset_rect.Inset(0, 1, 0, 1);
@@ -689,10 +689,10 @@ TEST_F(FullscreenOverlayTest, NotCoveringFullscreenFail) {
       resource_provider_.get(), &pass_list, render_pass_filters,
       render_pass_background_filters, &candidate_list, nullptr, nullptr,
       &damage_rect_, &content_bounds_);
-  ASSERT_EQ(0U, candidate_list.size());
+  ASSERT_EQ(1U, candidate_list.size());
 
-  // Check that the quad is not gone.
-  EXPECT_EQ(1U, main_pass->quad_list.size());
+  // Check that the quad is gone.
+  EXPECT_EQ(0U, main_pass->quad_list.size());
 }
 
 TEST_F(FullscreenOverlayTest, RemoveFullscreenQuadFromQuadList) {
