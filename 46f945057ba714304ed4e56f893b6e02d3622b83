@@ -495,6 +495,30 @@
       "revId": "46f945057ba714304ed4e56f893b6e02d3622b83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbe5f75d_67bd821b",
+        "filename": "content/public/common/url_loader_throttle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-09-27T01:41:41Z",
+      "side": 1,
+      "message": "I defer to you guys on the naming; I don\u0027t have a preference.\n\nRandy: like you I was confused by these names, but in-person Yuzhu had explained the reasoning.",
+      "parentUuid": "d0a7a36d_18399a68",
+      "range": {
+        "startLine": 43,
+        "startChar": 17,
+        "endLine": 43,
+        "endChar": 42
+      },
+      "revId": "46f945057ba714304ed4e56f893b6e02d3622b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
