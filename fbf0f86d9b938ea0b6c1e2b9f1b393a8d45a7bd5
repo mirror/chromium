@@ -53,6 +53,41 @@
     },
     {
       "key": {
+        "uuid": "0e912de2_2760af2b",
+        "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1046,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-27T07:20:00Z",
+      "side": 1,
+      "message": "FYI: OnPoweredOn/Off should also take OnceCallback, because these are intended to be called once.\nACFR should be for SetPowered() instead (because the interface is just not yet switching to OnceCallback).\n\nCould you see my comment, below, too.",
+      "parentUuid": "34042247_c6ed937b",
+      "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8159975_b288dfa8",
+        "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1515,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-27T07:20:00Z",
+      "side": 1,
+      "message": "Could you add TODO to get rid of ACFR?",
+      "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab9fec90_00b31245",
         "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.cc",
         "patchSetId": 3
@@ -64,6 +99,92 @@
       "writtenOn": "2017-09-26T17:42:50Z",
       "side": 1,
       "message": "(see my comment above.)",
+      "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d705d62_cc22adbe",
+        "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2169,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-27T07:20:00Z",
+      "side": 1,
+      "message": "So, I\u0027d recommend to use OnceCallback here, too, because conceptually it should be called once.\n\nEnqueueRemotePowerChange(..., OnceCallback\u003c...\u003e callback) {\n  ...\n  // TODO: get rid of this.\n  auto adapted_callback \u003d base::ACFR(std::move(callback));\n  bluetooth_adaptor_-\u003eSetPowerd(\n    turn_on,\n    // TODO: use BindOnce, when bluetooth_adaptor_ supports.\n    base::Bind(turn_on ? \u0026OnPoweredOn : \u0026OnPoweredOff, GetWeakPtr(), adapted_callback),\n    base::Bind(\u0026OnPoweredError, GetWeakPtr(), adapted_callback));\n}\n\nNote that, it is valid to pass RepeatingCallback to a function taking OnceCallback. I.e,\n\nvoid foo(OnceCallback\u003cT\u003e callback);\nRepeatingCallback\u003cT\u003e callback \u003d　...;\nfoo(callback);\n\nis valid, AFAIK.",
+      "parentUuid": "ab9fec90_00b31245",
+      "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b27a424_ab0b275f",
+        "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-27T07:20:00Z",
+      "side": 1,
+      "message": "Conceptually, these are not Repeating but Once. Ditto for below.",
+      "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72129b17_f23ce422",
+        "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-27T07:20:00Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14fe8f83_f8f30eb6",
+        "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-27T07:20:00Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f9a2faa_2bfb9e36",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-27T07:20:00Z",
+      "side": 1,
+      "message": "style: as you\u0027re here, could you kindly elide {} for consistency?",
       "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +208,40 @@
     },
     {
       "key": {
+        "uuid": "1f1cdf89_b59943d3",
+        "filename": "chrome/browser/chromeos/arc/policy/arc_policy_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-27T07:20:00Z",
+      "side": 1,
+      "message": "OnceCallback, too?",
+      "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "844875a7_ca9cb6ef",
+        "filename": "chrome/browser/chromeos/arc/policy/arc_policy_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-27T07:20:00Z",
+      "side": 1,
+      "message": "OnceCallback, too?",
+      "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16db24c4_209af4c4",
         "filename": "chrome/gpu/gpu_arc_video_encode_accelerator.cc",
         "patchSetId": 3
@@ -104,6 +259,23 @@
     },
     {
       "key": {
+        "uuid": "b75642e4_39543c6b",
+        "filename": "chrome/gpu/gpu_arc_video_encode_accelerator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-27T07:20:00Z",
+      "side": 1,
+      "message": "emplace(bitstream_buffer_serial_, std::move(callback))\n\nshould work?",
+      "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d867f9f6_cb8bfb4d",
         "filename": "components/arc/net/arc_net_host_impl.cc",
         "patchSetId": 3
@@ -115,6 +287,57 @@
       "writtenOn": "2017-09-26T17:42:50Z",
       "side": 1,
       "message": "callback_helper.h",
+      "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3048f934_b1969986",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-27T07:20:00Z",
+      "side": 1,
+      "message": "OnceCallback, too, here and below.",
+      "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ba63c96_c019f8cf",
+        "filename": "components/arc/net/arc_net_host_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-27T07:20:00Z",
+      "side": 1,
+      "message": "OnceCallback, here, too.",
+      "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33837d94_87d1e648",
+        "filename": "components/arc/net/arc_net_host_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-27T07:20:00Z",
+      "side": 1,
+      "message": "ditto.",
       "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
