@@ -9,7 +9,6 @@
 #include "platform/CrossThreadFunctional.h"
 #include "platform/WaitableEvent.h"
 #include "platform/WebTaskRunner.h"
-#include "platform/graphics/CompositorMutationsTarget.h"
 #include "platform/graphics/CompositorMutatorClient.h"
 #include "platform/heap/Handle.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
@@ -24,7 +23,7 @@ void CreateCompositorMutatorClient(
     std::unique_ptr<CompositorMutatorClient>* ptr,
     WaitableEvent* done_event) {
   CompositorMutatorImpl* mutator = CompositorMutatorImpl::Create();
-  ptr->reset(new CompositorMutatorClient(mutator, mutator->AnimationManager()));
+  ptr->reset(new CompositorMutatorClient(mutator));
   mutator->SetClient(ptr->get());
   done_event->Signal();
 }
