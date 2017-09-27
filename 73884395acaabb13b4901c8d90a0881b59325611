@@ -70,6 +70,24 @@
       "revId": "73884395acaabb13b4901c8d90a0881b59325611",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b18c894_14abcbc8",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-27T17:37:03Z",
+      "side": 1,
+      "message": "Yes, that should work too. child layer being added can simply be ignored I think. we just need to make sure we don\u0027t remove a defer paint request without having added one.",
+      "parentUuid": "1aecd067_637bab0e",
+      "revId": "73884395acaabb13b4901c8d90a0881b59325611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
