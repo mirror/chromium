@@ -12,6 +12,7 @@
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/containers/hash_tables.h"
+#include "base/guid.h"
 #include "base/lazy_instance.h"
 #include "base/memory/ptr_util.h"
 #include "content/browser/frame_host/frame_tree_node.h"
@@ -108,6 +109,7 @@ FrameTree::FrameTree(Navigator* navigator,
                               blink::WebTreeScopeType::kDocument,
                               std::string(),
                               std::string(),
+                              base::GenerateGUID(),
                               FrameOwnerProperties())),
       focused_frame_tree_node_id_(FrameTreeNode::kFrameTreeNodeInvalidId),
       load_progress_(0.0) {}
@@ -175,6 +177,7 @@ bool FrameTree::AddFrame(FrameTreeNode* parent,
                          blink::WebTreeScopeType scope,
                          const std::string& frame_name,
                          const std::string& frame_unique_name,
+                         const std::string& devtools_frame_guid,
                          blink::WebSandboxFlags sandbox_flags,
                          const ParsedFeaturePolicyHeader& container_policy,
                          const FrameOwnerProperties& frame_owner_properties) {
@@ -190,7 +193,7 @@ bool FrameTree::AddFrame(FrameTreeNode* parent,
   std::unique_ptr<FrameTreeNode> new_node = base::WrapUnique(new FrameTreeNode(
       this, parent->navigator(), render_frame_delegate_,
       render_widget_delegate_, manager_delegate_, parent, scope, frame_name,
-      frame_unique_name, frame_owner_properties));
+      frame_unique_name, devtools_frame_guid, frame_owner_properties));
 
   // Set sandbox flags and container policy and make them effective immediately,
   // since initial sandbox flags and feature policy should apply to the initial

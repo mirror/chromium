@@ -74,10 +74,11 @@ class RenderFrameImplTest : public RenderViewTest {
         view_->GetMainRenderFrame()->GetWebFrame()->FirstChild())
         ->OnSwapOut(kFrameProxyRouteId, false, frame_replication_state);
 
-    RenderFrameImpl::CreateFrame(
-        kSubframeRouteId, MSG_ROUTING_NONE, MSG_ROUTING_NONE,
-        kFrameProxyRouteId, MSG_ROUTING_NONE, frame_replication_state,
-        &compositor_deps_, widget_params, FrameOwnerProperties());
+    RenderFrameImpl::CreateFrame(kSubframeRouteId, MSG_ROUTING_NONE,
+                                 MSG_ROUTING_NONE, kFrameProxyRouteId,
+                                 MSG_ROUTING_NONE, std::string(),
+                                 frame_replication_state, &compositor_deps_,
+                                 widget_params, FrameOwnerProperties());
 
     frame_ = RenderFrameImpl::FromRoutingID(kSubframeRouteId);
     EXPECT_FALSE(frame_->is_main_frame_);

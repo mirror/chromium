@@ -267,7 +267,8 @@ void MockRenderThread::OnCreateWidget(int opener_id,
 // The Frame expects to be returned a valid route_id different from its own.
 void MockRenderThread::OnCreateChildFrame(
     const FrameHostMsg_CreateChildFrame_Params& params,
-    int* new_render_frame_id) {
+    int* new_render_frame_id,
+    std::string* devtools_frame_guid) {
   *new_render_frame_id = new_frame_routing_id_++;
 }
 

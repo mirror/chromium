@@ -295,9 +295,6 @@ class BLINK_EXPORT WebFrameClient {
   // Called the first time this frame is the target of a user gesture.
   virtual void SetHasReceivedUserGesture() {}
 
-  // Notification of the devtools id for this frame.
-  virtual void SetDevToolsFrameId(const blink::WebString& devtools_frame_id) {}
-
   // Console messages ----------------------------------------------------
 
   // Whether or not we should report a detailed message for the given source.
@@ -505,6 +502,8 @@ class BLINK_EXPORT WebFrameClient {
   // This frame tried to navigate its top level frame to the given url without
   // ever having received a user gesture.
   virtual void DidBlockFramebust(const WebURL&) {}
+
+  virtual WebString GetDevToolsFrameGUID() { return WebString(); }
 
   // PlzNavigate
   // Called to abort a navigation that is being handled by the browser process.

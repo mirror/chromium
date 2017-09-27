@@ -225,8 +225,6 @@ class LocalFrameClientImpl final : public LocalFrameClient {
 
   void SetHasReceivedUserGesture(bool received_previously) override;
 
-  void SetDevToolsFrameId(const String& devtools_frame_id) override;
-
   void AbortClientNavigation() override;
 
   WebSpellCheckPanelHostClient* SpellCheckPanelHostClient() const override;
@@ -241,6 +239,8 @@ class LocalFrameClientImpl final : public LocalFrameClient {
   void AnnotatedRegionsChanged() override;
 
   void DidBlockFramebust(const KURL&) override;
+
+  String GetDevToolsFrameGUID() override;
 
  private:
   explicit LocalFrameClientImpl(WebLocalFrameImpl*);
