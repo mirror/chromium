@@ -223,7 +223,7 @@ public class GamepadList {
         int index = getNextAvailableIndex();
         if (index == -1) return false; // invalid index
 
-        GamepadDevice gamepad = new GamepadDevice(index, inputDevice);
+        GamepadDevice gamepad = new GamepadDeviceImpl(index, inputDevice);
         mGamepadDevices[index] = gamepad;
         return true;
     }

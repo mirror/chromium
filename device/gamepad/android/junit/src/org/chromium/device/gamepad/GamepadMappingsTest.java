@@ -48,8 +48,8 @@ public class GamepadMappingsTest {
     private BitSet mUnmappedAxes = new BitSet(CanonicalAxisIndex.COUNT);
     private float[] mMappedButtons = new float[CanonicalButtonIndex.COUNT];
     private float[] mMappedAxes = new float[CanonicalAxisIndex.COUNT];
-    private float[] mRawButtons = new float[GamepadDevice.MAX_RAW_BUTTON_VALUES];
-    private float[] mRawAxes = new float[GamepadDevice.MAX_RAW_AXIS_VALUES];
+    private float[] mRawButtons = new float[GamepadDeviceImpl.MAX_RAW_BUTTON_VALUES];
+    private float[] mRawAxes = new float[GamepadDeviceImpl.MAX_RAW_AXIS_VALUES];
 
     @Before
     public void setUp() throws Exception {
@@ -62,10 +62,10 @@ public class GamepadMappingsTest {
         Arrays.fill(mMappedAxes, Float.NaN);
 
         // Set each raw value to something unique.
-        for (int i = 0; i < GamepadDevice.MAX_RAW_AXIS_VALUES; i++) {
+        for (int i = 0; i < GamepadDeviceImpl.MAX_RAW_AXIS_VALUES; i++) {
             mRawAxes[i] = -i - 1.0f;
         }
-        for (int i = 0; i < GamepadDevice.MAX_RAW_BUTTON_VALUES; i++) {
+        for (int i = 0; i < GamepadDeviceImpl.MAX_RAW_BUTTON_VALUES; i++) {
             mRawButtons[i] = i + 1.0f;
         }
     }
