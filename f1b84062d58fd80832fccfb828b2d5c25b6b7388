@@ -16,6 +16,24 @@
       "revId": "f1b84062d58fd80832fccfb828b2d5c25b6b7388",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcfd598a_19820214",
+        "filename": "ui/ozone/platform/drm/gpu/crtc_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-09-27T21:55:48Z",
+      "side": 0,
+      "message": "Thank you for pointing out. I\u0027ll participate in the discussion. :)",
+      "parentUuid": "65d2b7de_16d0d04f",
+      "revId": "f1b84062d58fd80832fccfb828b2d5c25b6b7388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
