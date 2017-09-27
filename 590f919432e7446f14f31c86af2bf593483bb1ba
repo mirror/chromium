@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "f6e1998d_1d3de85b",
+        "filename": "ash/system/web_notification/inactive_user_notification_blocker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-27T20:31:18Z",
+      "side": 1,
+      "message": "I found this comment hard to read. It seems the intention of the \"if\" is to allow all notifications when there is no multiple users. How about just say so?\n\n// Allow all notifications before login or in a single user session.",
+      "revId": "590f919432e7446f14f31c86af2bf593483bb1ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0ba5175_68cea001",
         "filename": "ash/system/web_notification/inactive_user_notification_blocker.cc",
         "patchSetId": 6
@@ -13,6 +30,30 @@
       "writtenOn": "2017-09-27T18:13:33Z",
       "side": 1,
       "message": "It\u0027s pretty clearly not true at the moment that all non-system notifications will have a user profile, but I agree with \"should\" here and hopefully the NOTREACHED will help flush out the exceptions.\n\nJust from a little poking around I found inconsistencies like the a11y notifier (which I think appears when you enable chromevox) [1] which uses type APPLICATION, a system notifier id, and no profile id. I also happened to find recently that profile_id gets filled with different things in different places, e.g. email or user name, luckily user name apparently (usually?) \u003d\u003d email.\n\n[1] https://cs.chromium.org/chromium/src/ash/system/tray_accessibility.cc?rcl\u003d04278134435eb551fa5d513b77bf8c32a32375a9\u0026l\u003d495",
+      "range": {
+        "startLine": 30,
+        "startChar": 5,
+        "endLine": 30,
+        "endChar": 67
+      },
+      "revId": "590f919432e7446f14f31c86af2bf593483bb1ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a00db499_182b5afb",
+        "filename": "ash/system/web_notification/inactive_user_notification_blocker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-27T20:31:18Z",
+      "side": 1,
+      "message": "We were using terms username, user email and sometimes user id interchangeably . Not ideal, but historically they are the same thing before we have AccountId. However, we should be careful to only use canonicalized version (gaia::CanonicalizeEmail) for that purpose.",
+      "parentUuid": "c0ba5175_68cea001",
       "range": {
         "startLine": 30,
         "startChar": 5,
