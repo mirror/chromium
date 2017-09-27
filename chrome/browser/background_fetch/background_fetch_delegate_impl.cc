@@ -121,22 +121,22 @@ void BackgroundFetchDelegateImpl::OnDownloadReceived(
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   using StartResult = download::DownloadParams::StartResult;
+
+  if (!client())
+    return;
+
   switch (result) {
     case StartResult::ACCEPTED:
       // Nothing to do.
       break;
-    case StartResult::BACKOFF:
-      // TODO(delphick): try again later?
-      // TODO(delphick): Due to a bug at the moment, this happens all the time
-      // because successful downloads are not removed, so don't NOTREACHED.
-      break;
-    case StartResult::UNEXPECTED_CLIENT:
-      // This really should never happen since we're supplying the
-      // DownloadClient.
-      NOTREACHED();
     case StartResult::UNEXPECTED_GUID:
-      // TODO(delphick): try again with a different GUID.
-      NOTREACHED();
+      client()->OnDownloadReceived(
+          guid, BackgroundFetchDelegate::StartResult::UNEXPECTED_GUID);
+      break;
+    case StartResult::BACKOFF:
+      client()->OnDownloadReceived(
+          guid, BackgroundFetchDelegate::StartResult::BACKOFF);
+      return;
     case StartResult::CLIENT_CANCELLED:
       // TODO(delphick): do we need to do anything here, since we will have
       // cancelled it?
@@ -144,6 +144,10 @@ void BackgroundFetchDelegateImpl::OnDownloadReceived(
     case StartResult::INTERNAL_ERROR:
       // TODO(delphick): We need to handle this gracefully.
       NOTREACHED();
+      return;
+    case StartResult::UNEXPECTED_CLIENT:
+    // This really should never happen since we're supplying the
+    // DownloadClient.
     case StartResult::COUNT:
       NOTREACHED();
   }

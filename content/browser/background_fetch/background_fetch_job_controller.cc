@@ -72,6 +72,16 @@ void BackgroundFetchJobController::DidStartRequest(
                                       download_guid);
 }
 
+void BackgroundFetchJobController::DidNotStartRequest(
+    const scoped_refptr<BackgroundFetchRequestInfo>& request,
+    BackgroundFetchDelegate::StartResult result) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+  // TODO(crbug.com/741609): Handle backoff requests here by rescheduling a
+  // little later.
+  NOTIMPLEMENTED();
+}
+
 void BackgroundFetchJobController::DidCompleteRequest(
     const scoped_refptr<BackgroundFetchRequestInfo>& request) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);

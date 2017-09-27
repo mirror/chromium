@@ -29,11 +29,15 @@ class FakeBackgroundFetchDelegate : public BackgroundFetchDelegate {
     if (!client())
       return;
 
+    client()->OnDownloadReceived(guid, start_result_);
+    if (start_result_ != BackgroundFetchDelegate::StartResult::ACCEPTED)
+      return;
+
     auto response = std::make_unique<BackgroundFetchResponse>(
         std::vector<GURL>({url}),
         base::MakeRefCounted<net::HttpResponseHeaders>("200 OK"));
-
     client()->OnDownloadStarted(guid, std::move(response));
+
     if (complete_downloads_) {
       auto result = std::make_unique<BackgroundFetchResult>(
           base::Time::Now(), base::FilePath(), 10u);
@@ -44,11 +48,17 @@ class FakeBackgroundFetchDelegate : public BackgroundFetchDelegate {
     }
   }
 
+  void set_start_result(BackgroundFetchDelegate::StartResult start_result) {
+    start_result_ = start_result;
+  }
+
   void set_complete_downloads(bool complete_downloads) {
     complete_downloads_ = complete_downloads;
   }
 
  private:
+  BackgroundFetchDelegate::StartResult start_result_ =
+      BackgroundFetchDelegate::StartResult::ACCEPTED;
   bool complete_downloads_ = true;
 };
 
@@ -61,6 +71,12 @@ class FakeController : public BackgroundFetchDelegateProxy::Controller {
     request_started_ = true;
   }
 
+  void DidNotStartRequest(
+      const scoped_refptr<BackgroundFetchRequestInfo>& request,
+      BackgroundFetchDelegate::StartResult result) override {
+    request_aborted_early_ = true;
+  }
+
   // Called when the given |request| has been completed.
   void DidCompleteRequest(
       const scoped_refptr<BackgroundFetchRequestInfo>& request) override {
@@ -68,6 +84,7 @@ class FakeController : public BackgroundFetchDelegateProxy::Controller {
   }
 
   bool request_started_ = false;
+  bool request_aborted_early_ = false;
   bool request_completed_ = false;
   base::WeakPtrFactory<FakeController> weak_ptr_factory_;
 };
@@ -94,6 +111,7 @@ TEST_F(BackgroundFetchDelegateProxyTest, StartRequest) {
       0 /* request_index */, fetch_request);
 
   EXPECT_FALSE(controller.request_started_);
+  EXPECT_FALSE(controller.request_aborted_early_);
   EXPECT_FALSE(controller.request_completed_);
 
   delegate_proxy_.StartRequest(controller.weak_ptr_factory_.GetWeakPtr(),
@@ -101,7 +119,28 @@ TEST_F(BackgroundFetchDelegateProxyTest, StartRequest) {
   base::RunLoop().RunUntilIdle();
 
   EXPECT_TRUE(controller.request_started_);
+  EXPECT_FALSE(controller.request_aborted_early_);
   EXPECT_TRUE(controller.request_completed_);
+}
+
+TEST_F(BackgroundFetchDelegateProxyTest, StartRequest_Backoff) {
+  FakeController controller;
+  ServiceWorkerFetchRequest fetch_request;
+  auto request = base::MakeRefCounted<BackgroundFetchRequestInfo>(
+      0 /* request_index */, fetch_request);
+
+  EXPECT_FALSE(controller.request_started_);
+  EXPECT_FALSE(controller.request_aborted_early_);
+  EXPECT_FALSE(controller.request_completed_);
+
+  delegate_.set_start_result(BackgroundFetchDelegate::StartResult::BACKOFF);
+  delegate_proxy_.StartRequest(controller.weak_ptr_factory_.GetWeakPtr(),
+                               url::Origin(), request);
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_FALSE(controller.request_started_);
+  EXPECT_TRUE(controller.request_aborted_early_);
+  EXPECT_FALSE(controller.request_completed_);
 }
 
 TEST_F(BackgroundFetchDelegateProxyTest, StartRequest_NotCompleted) {
@@ -110,15 +149,13 @@ TEST_F(BackgroundFetchDelegateProxyTest, StartRequest_NotCompleted) {
   auto request = base::MakeRefCounted<BackgroundFetchRequestInfo>(
       0 /* request_index */, fetch_request);
 
-  EXPECT_FALSE(controller.request_started_);
-  EXPECT_FALSE(controller.request_completed_);
-
   delegate_.set_complete_downloads(false);
   delegate_proxy_.StartRequest(controller.weak_ptr_factory_.GetWeakPtr(),
                                url::Origin(), request);
   base::RunLoop().RunUntilIdle();
 
   EXPECT_TRUE(controller.request_started_);
+  EXPECT_FALSE(controller.request_aborted_early_);
   EXPECT_FALSE(controller.request_completed_);
 }
 

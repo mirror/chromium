@@ -70,6 +70,12 @@ class CONTENT_EXPORT BackgroundFetchDelegate {
    public:
     virtual ~Client() {}
 
+    // Called after the download has been received by the underlying download
+    // mechanism but before any network activity. The download will only proceed
+    // if |result| is ACCEPTED. Always called on the UI thread.
+    virtual void OnDownloadReceived(const std::string& guid,
+                                    StartResult result) = 0;
+
     // Called after the download has started with the initial response
     // (including headers and URL chain). Always called on the UI thread.
     virtual void OnDownloadStarted(

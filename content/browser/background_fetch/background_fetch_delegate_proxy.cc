@@ -115,6 +115,8 @@ class BackgroundFetchDelegateProxy::Core
       std::unique_ptr<BackgroundFetchResult> result) override;
   void OnDownloadFailed(const std::string& guid,
                         BackgroundFetchDelegate::FailureReason reason) override;
+  void OnDownloadReceived(const std::string& guid,
+                          BackgroundFetchDelegate::StartResult result) override;
   void OnDownloadStarted(
       const std::string& guid,
       std::unique_ptr<content::BackgroundFetchResponse> response) override;
@@ -153,6 +155,20 @@ void BackgroundFetchDelegateProxy::Core::OnDownloadFailed(
     const std::string& guid,
     BackgroundFetchDelegate::FailureReason reason) {
   // TODO(delphick): do something with this
+}
+
+void BackgroundFetchDelegateProxy::Core::OnDownloadReceived(
+    const std::string& guid,
+    BackgroundFetchDelegate::StartResult result) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+  if (result == BackgroundFetchDelegate::StartResult::ACCEPTED)
+    return;
+
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(&BackgroundFetchDelegateProxy::OnDownloadNotStarted,
+                     io_parent_, guid, result));
 }
 
 void BackgroundFetchDelegateProxy::Core::OnDownloadStarted(
@@ -230,6 +246,19 @@ void BackgroundFetchDelegateProxy::DidStartRequest(
 
   if (job_controller)
     job_controller->DidStartRequest(request_info, guid);
+}
+
+void BackgroundFetchDelegateProxy::OnDownloadNotStarted(
+    const std::string& guid,
+    BackgroundFetchDelegate::StartResult result) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  using StartResult = BackgroundFetchDelegate::StartResult;
+
+  base::WeakPtr<Controller> controller = controller_map_[guid].second;
+  if (!controller)
+    return;
+
+  controller->DidNotStartRequest(controller_map_[guid].first, result);
 }
 
 void BackgroundFetchDelegateProxy::OnDownloadComplete(

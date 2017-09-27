@@ -13,6 +13,7 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "content/browser/background_fetch/background_fetch_request_info.h"
+#include "content/public/browser/background_fetch_delegate.h"
 #include "content/public/browser/browser_thread.h"
 
 namespace content {
@@ -34,6 +35,12 @@ class CONTENT_EXPORT BackgroundFetchDelegateProxy {
     virtual void DidStartRequest(
         const scoped_refptr<BackgroundFetchRequestInfo>& request,
         const std::string& download_guid) = 0;
+
+    // Called when the given download has failed to start before even hitting
+    // the network.
+    virtual void DidNotStartRequest(
+        const scoped_refptr<BackgroundFetchRequestInfo>& request,
+        BackgroundFetchDelegate::StartResult result) = 0;
 
     // Called when the given |request| has been completed.
     virtual void DidCompleteRequest(
@@ -71,6 +78,11 @@ class CONTENT_EXPORT BackgroundFetchDelegateProxy {
   // Should only be called on the IO thread.
   void OnDownloadComplete(const std::string& guid,
                           std::unique_ptr<BackgroundFetchResult> result);
+
+  // Called when the given download has failed to start before even hitting the
+  // network.
+  void OnDownloadNotStarted(const std::string& guid,
+                            BackgroundFetchDelegate::StartResult result);
 
   // Should only be called from the BackgroundFetchDelegate (on the IO thread).
   void DidStartRequest(const std::string& guid,
