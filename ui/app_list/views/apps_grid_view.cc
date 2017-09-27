@@ -56,6 +56,12 @@ namespace app_list {
 
 namespace {
 
+// The preferred width/height for apps grid. For page #01, it includes the
+// top/bottom 24px padding. For page #02 and all the followings, it includes top
+// 24px padding and bottom 56px padding.
+constexpr int kAppsGridPreferredWidth = 576;
+constexpr int kAppsGridPreferredHeight = 623;
+
 // Distance a drag needs to be from the app grid to be considered 'outside', at
 // which point we rearrange the apps to their pre-drag configuration, as a drop
 // then would be canceled. We have a buffer to make it easier to drag apps to
@@ -66,7 +72,7 @@ constexpr int kDragBufferPx = 20;
 constexpr int kPagePadding = 40;
 
 // Padding space in pixels between pages for fullscreen launcher.
-constexpr int kPagePaddingFullscreen = 48;
+//constexpr int kPagePaddingFullscreen = 48;
 
 // Preferred tile size when showing in fixed layout.
 constexpr int kPreferredTileWidth = 100;
@@ -810,18 +816,21 @@ bool AppsGridView::IsAnimatingView(AppListItemView* view) {
 }
 
 gfx::Size AppsGridView::CalculatePreferredSize() const {
-  const gfx::Insets insets(GetInsets());
-  gfx::Size size = GetTileGridSize();
   if (is_fullscreen_app_list_enabled_) {
+    gfx::Size size =
+        gfx::Size(kAppsGridPreferredWidth, kAppsGridPreferredHeight);
     // Add padding to both side of the apps grid to keep it horizontally
-    // centered.
+    // centered since we place page switcher on the right side.
     size.Enlarge(kAppsGridLeftRightPaddingFullscreen * 2, 0);
-  } else {
-    // If we are in a folder, ignore the page switcher for height calculations.
-    int page_switcher_height =
-        folder_delegate_ ? 0 : page_switcher_view_->GetPreferredSize().height();
-    size.Enlarge(insets.width(), insets.height() + page_switcher_height);
+    return size;
   }
+
+  gfx::Size size = GetTileGridSize();
+  const gfx::Insets insets(GetInsets());
+  // If we are in a folder, ignore the page switcher for height calculations.
+  int page_switcher_height =
+      folder_delegate_ ? 0 : page_switcher_view_->GetPreferredSize().height();
+  size.Enlarge(insets.width(), insets.height() + page_switcher_height);
   return size;
 }
 
@@ -855,46 +864,43 @@ void AppsGridView::Layout() {
     rect.Inset(0, kSearchBoxFullscreenBottomPadding, 0, 0);
   }
 
-  if (!folder_delegate_) {
-    gfx::Rect indicator_rect(rect);
-    gfx::Rect arrow_rect(rect);
-    if (suggestions_container_) {
-      gfx::Rect suggestions_rect(rect);
-      suggestions_rect.set_height(
-          suggestions_container_->GetHeightForWidth(suggestions_rect.width()));
-      suggestions_rect.Offset((suggestions_rect.width() - kGridTileWidth) / 2 -
-                                  (kGridTileWidth + kGridTileSpacing) * 2,
-                              0);
-      suggestions_rect.Offset(CalculateTransitionOffset(0));
-      suggestions_container_->SetBoundsRect(suggestions_rect);
-      indicator_rect.Inset(0,
-                           suggestions_container_->GetPreferredSize().height() +
-                               kSuggestionsAllAppsIndicatorPadding,
-                           0, 0);
-      arrow_rect.Inset(0,
-                       suggestions_container_->GetPreferredSize().height() +
-                           kExpandArrowTopPadding,
-                       0, 0);
-    }
+  gfx::Rect indicator_rect(rect);
+  gfx::Rect arrow_rect(rect);
+  if (suggestions_container_) {
+    gfx::Rect suggestions_rect(rect);
+    suggestions_rect.set_height(
+        suggestions_container_->GetHeightForWidth(suggestions_rect.width()));
+    suggestions_rect.Offset((suggestions_rect.width() - kGridTileWidth) / 2 -
+                                (kGridTileWidth + kGridTileSpacing) * 2,
+                            0);
+    suggestions_rect.Offset(CalculateTransitionOffset(0));
+    suggestions_container_->SetBoundsRect(suggestions_rect);
+    indicator_rect.Inset(0,
+                         suggestions_container_->GetPreferredSize().height() +
+                             kSuggestionsAllAppsIndicatorPadding,
+                         0, 0);
+    arrow_rect.Inset(0,
+                     suggestions_container_->GetPreferredSize().height() +
+                         kExpandArrowTopPadding,
+                     0, 0);
+  }
 
-    if (all_apps_indicator_) {
-      gfx::Size indicator_size;
-      indicator_size = all_apps_indicator_->GetPreferredSize();
-      indicator_rect.Inset(
-          (indicator_rect.width() - indicator_size.width()) / 2, 0);
-      indicator_rect.Offset(CalculateTransitionOffset(0));
-      all_apps_indicator_->SetBoundsRect(indicator_rect);
-    }
+  if (all_apps_indicator_) {
+    gfx::Size indicator_size;
+    indicator_size = all_apps_indicator_->GetPreferredSize();
+    indicator_rect.Inset((indicator_rect.width() - indicator_size.width()) / 2,
+                         0);
+    indicator_rect.Offset(CalculateTransitionOffset(0));
+    all_apps_indicator_->SetBoundsRect(indicator_rect);
+  }
 
-    if (expand_arrow_view_) {
-      int left_right_padding =
-          (arrow_rect.width() -
-           expand_arrow_view_->GetPreferredSize().width()) /
-          2;
-      arrow_rect.Inset(left_right_padding, 0);
-      arrow_rect.set_height(expand_arrow_view_->GetPreferredSize().height());
-      expand_arrow_view_->SetBoundsRect(arrow_rect);
-    }
+  if (expand_arrow_view_) {
+    int left_right_padding =
+        (arrow_rect.width() - expand_arrow_view_->GetPreferredSize().width()) /
+        2;
+    arrow_rect.Inset(left_right_padding, 0);
+    arrow_rect.set_height(expand_arrow_view_->GetPreferredSize().height());
+    expand_arrow_view_->SetBoundsRect(arrow_rect);
   }
 
   CalculateIdealBounds();
@@ -1490,7 +1496,7 @@ const gfx::Vector2d AppsGridView::CalculateTransitionOffset(
       }
     }
   } else {
-    const int page_height = grid_size.height() + kPagePaddingFullscreen;
+    const int page_height = grid_size.height();
     if (page_of_view < current_page)
       y_offset = -page_height;
     else if (page_of_view > current_page)
@@ -1536,12 +1542,10 @@ void AppsGridView::CalculateIdealBounds() {
           offset.set_y(offset.y() + GetHeightOnTopOfAllAppsTiles(0) -
                        GetHeightOnTopOfAllAppsTiles(1));
         } else {
-          offset.set_y(offset.y() + GetHeightOnTopOfAllAppsTiles(current_page) +
-                       2 * kTileVerticalPadding);
+          //offset.set_y(offset.y() + GetHeightOnTopOfAllAppsTiles(current_page));
         }
       } else if (view_index.page == current_page + 1) {
-        offset.set_y(offset.y() - GetHeightOnTopOfAllAppsTiles(current_page) -
-                     2 * kTileVerticalPadding);
+        //offset.set_y(offset.y() - GetHeightOnTopOfAllAppsTiles(current_page));
       }
     }
     tile_slot.Offset(offset.x(), offset.y());
@@ -2567,6 +2571,9 @@ AppsGridView::Index AppsGridView::GetNearestTileIndexForPoint(
 }
 
 gfx::Size AppsGridView::GetTileGridSize() const {
+  if (is_fullscreen_app_list_enabled_)
+    return gfx::Size(kAppsGridPreferredWidth, kAppsGridPreferredHeight);
+
   gfx::Rect bounds = GetExpectedTileBounds(0, 0);
   const int current_page = pagination_model_.selected_page();
   bool show_suggested_apps =
@@ -2587,9 +2594,9 @@ int AppsGridView::GetHeightOnTopOfAllAppsTiles(int page) const {
            suggestions_container_->GetPreferredSize().height() +
            kSuggestionsAllAppsIndicatorPadding +
            all_apps_indicator_->GetPreferredSize().height() +
-           kAllAppsIndicatorExtraPadding;
+           kAllAppsIndicatorExtraPadding + 6;
   }
-  return kSearchBoxFullscreenBottomPadding - kTileVerticalPadding;
+  return kSearchBoxFullscreenBottomPadding;
 }
 
 gfx::Rect AppsGridView::GetExpectedTileBounds(int slot) const {
@@ -2598,14 +2605,16 @@ gfx::Rect AppsGridView::GetExpectedTileBounds(int slot) const {
 
 gfx::Rect AppsGridView::GetExpectedTileBounds(int row, int col) const {
   gfx::Rect bounds(GetContentsBounds());
+  if (is_fullscreen_app_list_enabled_) {
+    bounds.Offset(kAppsGridLeftRightPaddingFullscreen - kTileHorizontalPadding,
+                  0);
+  }
   bounds.Inset(
       0, GetHeightOnTopOfAllAppsTiles(pagination_model_.selected_page()), 0, 0);
   const gfx::Size total_tile_size = GetTotalTileSize();
   gfx::Rect tile_bounds(gfx::Point(bounds.x() + col * total_tile_size.width(),
                                    bounds.y() + row * total_tile_size.height()),
                         total_tile_size);
-  if (is_fullscreen_app_list_enabled_)
-    tile_bounds.Offset(kAppsGridLeftRightPaddingFullscreen, 0);
   tile_bounds.Inset(-GetTilePadding());
   return tile_bounds;
 }
