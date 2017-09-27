@@ -485,6 +485,30 @@
     },
     {
       "key": {
+        "uuid": "577bd0c7_a6843701",
+        "filename": "ios/net/cookies/ns_http_system_cookie_store.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-09-27T14:37:35Z",
+      "side": 1,
+      "message": "As agreed on chat i\u0027ll make these sync functions private",
+      "parentUuid": "da13e241_3a299cc4",
+      "range": {
+        "startLine": 18,
+        "startChar": 17,
+        "endLine": 18,
+        "endChar": 24
+      },
+      "revId": "ddd2d504310305feb8e2187febb6a3d9e82e21e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46caa86f_4e2b1cc1",
         "filename": "ios/net/cookies/ns_http_system_cookie_store.h",
         "patchSetId": 5
@@ -744,6 +768,30 @@
       "side": 1,
       "message": "Which client except SystemCookieStoreIOS is going to use this method? It is better to prefer simple interfaces to simple implementations and SystemCookieStore is not very good fit for SystemCookieStore interface.",
       "parentUuid": "970b6367_84c6f1ae",
+      "range": {
+        "startLine": 70,
+        "startChar": 13,
+        "endLine": 70,
+        "endChar": 34
+      },
+      "revId": "ddd2d504310305feb8e2187febb6a3d9e82e21e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "069a77af_6955ec23",
+        "filename": "ios/net/cookies/system_cookie_store.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-09-27T14:37:35Z",
+      "side": 1,
+      "message": "Adding the time is making the it simpler to use, and providing simple interface actually rather than implementation.\nThe alternative will be either each method that calls that wrap its callback to add call for the time or make each function here take a callback specific for the creation time.\n\nAlso the creation time is directly related to the cookie it self, and it\u0027s makes more sense for the Cookiestore to manage cookie creation time - so it can put it to be as accurate as possible",
+      "parentUuid": "272e6afa_db81dcdf",
       "range": {
         "startLine": 70,
         "startChar": 13,
