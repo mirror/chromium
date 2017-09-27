@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c222f652_3b7e0bf3",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-27T23:45:46Z",
+      "side": 1,
+      "message": "Thanks for the explanation. So IIUC printer_manager_ does not invoke any asynchronous callbacks within this class, so it seems safe.\n\nHaving said that, the fact that this is called within RegisterMessages is confusing me. Presumably this is called here, because JS can call back to C++ (like HandleGetCupsPrintersList) and this function has to be already called by that time. Is that right? If so, could we simply move it in the constructor instead?",
+      "revId": "505badd9a0759b56a13670199326505f95e742f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
