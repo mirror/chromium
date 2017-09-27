@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e91b739f_988f7c5a",
+        "filename": "components/history/core/browser/thumbnail_database.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-27T12:51:42Z",
+      "side": 0,
+      "message": "Should we add a test that check icons with \"favicon_bitmaps.last_requested \u003d\u003d 0\" are not deleted?\n\nShould we add a test that check icons that aren\u0027t \"on-demand\" are not deleted?",
+      "range": {
+        "startLine": 428,
+        "startChar": 15,
+        "endLine": 428,
+        "endChar": 45
+      },
+      "revId": "4f507cbe3282cec5b6915962aefab77aa89cd835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
