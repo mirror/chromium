@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18c31ffe_ca1805b4",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-27T17:47:48Z",
+      "side": 1,
+      "message": "All these should be BindOnce",
+      "range": {
+        "startLine": 326,
+        "startChar": 37,
+        "endLine": 326,
+        "endChar": 41
+      },
+      "revId": "2259967c5190713aeb435a69faff2b5e245f304d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3539269_7096e936",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-27T17:47:48Z",
+      "side": 1,
+      "message": "This can be a base::ClosureOnce",
+      "range": {
+        "startLine": 418,
+        "startChar": 19,
+        "endLine": 418,
+        "endChar": 44
+      },
+      "revId": "2259967c5190713aeb435a69faff2b5e245f304d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aeee3eb_16999cbe",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-27T17:47:48Z",
+      "side": 1,
+      "message": "This will have to be a base::OnceCallback due to https://chromium-review.googlesource.com/c/chromium/src/+/683225\n\nAlso, IWYU: #include \"base/callback_forward.h\"",
+      "range": {
+        "startLine": 98,
+        "startChar": 56,
+        "endLine": 98,
+        "endChar": 64
+      },
+      "revId": "2259967c5190713aeb435a69faff2b5e245f304d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2a99987_5dcfae41",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-27T17:47:48Z",
+      "side": 1,
+      "message": "This will have to be passed by value instead of const-reference.",
+      "range": {
+        "startLine": 103,
+        "startChar": 6,
+        "endLine": 103,
+        "endChar": 11
+      },
+      "revId": "2259967c5190713aeb435a69faff2b5e245f304d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
