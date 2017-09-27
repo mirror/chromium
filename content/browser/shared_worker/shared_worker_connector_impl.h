@@ -25,11 +25,11 @@ class CONTENT_EXPORT SharedWorkerConnectorImpl
  private:
   friend class SharedWorkerServiceImplTest;
 
-  static void CreateOnIOThread(int process_id,
-                               int frame_id,
-                               ResourceContext* resource_context,
-                               const WorkerStoragePartition& partition,
-                               mojom::SharedWorkerConnectorRequest request);
+  static void CreateInternal(int process_id,
+                             int frame_id,
+                             ResourceContext* resource_context,
+                             const WorkerStoragePartition& partition,
+                             mojom::SharedWorkerConnectorRequest request);
 
   SharedWorkerConnectorImpl(
       int process_id,

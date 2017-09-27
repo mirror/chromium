@@ -20,10 +20,10 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/synchronization/lock.h"
 #include "content/browser/shared_worker/shared_worker_connector_impl.h"
-#include "content/browser/shared_worker/shared_worker_message_filter.h"
 #include "content/browser/shared_worker/worker_storage_partition.h"
 #include "content/common/message_port.h"
 #include "content/public/browser/storage_partition.h"
+#include "content/public/test/mock_render_process_host.h"
 #include "content/public/test/test_browser_context.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/test_utils.h"
@@ -34,34 +34,32 @@ namespace content {
 
 class SharedWorkerServiceImplTest : public testing::Test {
  public:
-  static void RegisterRunningProcessID(int process_id) {
-    base::AutoLock lock(s_lock_);
-    s_running_process_id_set_.insert(process_id);
-  }
-  static void UnregisterRunningProcessID(int process_id) {
-    base::AutoLock lock(s_lock_);
-    s_running_process_id_set_.erase(process_id);
-  }
-
   static void CreateSharedWorkerConnector(
       int process_id,
       int frame_id,
       ResourceContext* resource_context,
       WorkerStoragePartition partition,
       mojom::SharedWorkerConnectorRequest request) {
-    SharedWorkerConnectorImpl::CreateOnIOThread(
+    SharedWorkerConnectorImpl::CreateInternal(
         process_id, frame_id, resource_context, partition, std::move(request));
   }
 
-  static void CheckReceivedFactoryRequest(
+  static bool CheckReceivedFactoryRequest(
       mojom::SharedWorkerFactoryRequest* request) {
-    ASSERT_FALSE(s_factory_request_received_.empty());
+    if (s_factory_request_received_.empty())
+      return false;
     *request = std::move(s_factory_request_received_.front());
     s_factory_request_received_.pop();
+    return true;
   }
 
-  static void CheckNotReceivedFactoryRequest() {
-    EXPECT_TRUE(s_factory_request_received_.empty());
+  static bool CheckNotReceivedFactoryRequest() {
+    return s_factory_request_received_.empty();
+  }
+
+  static void BindSharedWorkerFactory(mojo::ScopedMessagePipeHandle handle) {
+    s_factory_request_received_.push(
+        mojom::SharedWorkerFactoryRequest(std::move(handle)));
   }
 
  protected:
@@ -78,46 +76,21 @@ class SharedWorkerServiceImplTest : public testing::Test {
             nullptr /* database_tracker */,
             nullptr /* indexed_db_context */,
             nullptr /* service_worker_context */)) {
-    SharedWorkerServiceImpl::GetInstance()
-        ->ChangeUpdateWorkerDependencyFuncForTesting(
-            &SharedWorkerServiceImplTest::MockUpdateWorkerDependency);
-    SharedWorkerServiceImpl::GetInstance()
-        ->ChangeTryReserveWorkerFuncForTesting(
-            &SharedWorkerServiceImplTest::MockTryReserveWorker);
+    //    SharedWorkerServiceImpl::s_make_process_helper_func_ =
+    //        &MockProcessHelper::Create;
   }
 
   void SetUp() override {}
+
   void TearDown() override {
-    s_update_worker_dependency_call_count_ = 0;
-    s_worker_dependency_added_ids_.clear();
-    s_worker_dependency_removed_ids_.clear();
-    s_running_process_id_set_.clear();
     SharedWorkerServiceImpl::GetInstance()->ResetForTesting();
   }
-  static void MockUpdateWorkerDependency(const std::vector<int>& added_ids,
-                                         const std::vector<int>& removed_ids) {
-    ++s_update_worker_dependency_call_count_;
-    s_worker_dependency_added_ids_ = added_ids;
-    s_worker_dependency_removed_ids_ = removed_ids;
-  }
-  static bool MockTryReserveWorker(
-      int worker_process_id,
-      mojom::SharedWorkerFactoryPtrInfo* factory_info) {
-    if (factory_info)
-      s_factory_request_received_.push(mojo::MakeRequest(factory_info));
-    base::AutoLock lock(s_lock_);
-    return s_running_process_id_set_.find(worker_process_id) !=
-           s_running_process_id_set_.end();
-  }
 
+ public:
   TestBrowserThreadBundle browser_thread_bundle_;
   std::unique_ptr<TestBrowserContext> browser_context_;
   std::unique_ptr<WorkerStoragePartition> partition_;
-  static int s_update_worker_dependency_call_count_;
-  static std::vector<int> s_worker_dependency_added_ids_;
-  static std::vector<int> s_worker_dependency_removed_ids_;
-  static base::Lock s_lock_;
-  static std::set<int> s_running_process_id_set_;
+  static int s_next_routing_id_;
   static std::queue<mojom::SharedWorkerFactoryRequest>
       s_factory_request_received_;
 
@@ -126,17 +99,12 @@ class SharedWorkerServiceImplTest : public testing::Test {
 };
 
 // static
-int SharedWorkerServiceImplTest::s_update_worker_dependency_call_count_;
-std::vector<int> SharedWorkerServiceImplTest::s_worker_dependency_added_ids_;
-std::vector<int> SharedWorkerServiceImplTest::s_worker_dependency_removed_ids_;
-base::Lock SharedWorkerServiceImplTest::s_lock_;
-std::set<int> SharedWorkerServiceImplTest::s_running_process_id_set_;
 std::queue<mojom::SharedWorkerFactoryRequest>
     SharedWorkerServiceImplTest::s_factory_request_received_;
 
 namespace {
 
-static const int kProcessIDs[] = {100, 101, 102};
+// static const int kProcessIDs[] = {100, 101, 102};
 static const int kRenderFrameRouteIDs[] = {300, 301, 302};
 
 std::vector<uint8_t> StringPieceToVector(base::StringPiece s) {
@@ -154,55 +122,29 @@ void BlockingReadFromMessagePort(MessagePort port,
   EXPECT_TRUE(should_be_empty.empty());
 }
 
-class MockSharedWorkerMessageFilter : public SharedWorkerMessageFilter {
- public:
-  MockSharedWorkerMessageFilter(
-      int render_process_id,
-      ResourceContext* resource_context,
-      const WorkerStoragePartition& partition,
-      const SharedWorkerMessageFilter::NextRoutingIDCallback& callback)
-      : SharedWorkerMessageFilter(render_process_id, callback) {
-    OnFilterAdded(nullptr);
-  }
-
-  bool Send(IPC::Message* message) override {
-    CHECK(false);  // not reached
-    return false;
-  }
-
-  void Close() {
-    OnChannelClosing();
-    OnFilterRemoved();
-  }
-
-  bool OnMessageReceived(const IPC::Message& message) override {
-    CHECK(false);  // not reached
-    return false;
-  }
-
- private:
-  ~MockSharedWorkerMessageFilter() override {}
-};
-
 class MockSharedWorker : public mojom::SharedWorker {
  public:
   explicit MockSharedWorker(mojom::SharedWorkerRequest request)
       : binding_(this, std::move(request)) {}
 
-  void CheckReceivedConnect(int* connection_request_id, MessagePort* port) {
-    ASSERT_FALSE(connect_received_.empty());
+  bool CheckReceivedConnect(int* connection_request_id, MessagePort* port) {
+    if (connect_received_.empty())
+      return false;
     if (connection_request_id)
       *connection_request_id = connect_received_.front().first;
     if (port)
       *port = connect_received_.front().second;
     connect_received_.pop();
+    return true;
   }
 
-  void CheckNotReceivedConnect() { EXPECT_TRUE(connect_received_.empty()); }
+  bool CheckNotReceivedConnect() { return connect_received_.empty(); }
 
-  void CheckReceivedTerminate() {
-    EXPECT_TRUE(terminate_received_);
+  bool CheckReceivedTerminate() {
+    if (!terminate_received_)
+      return false;
     terminate_received_ = false;
+    return true;
   }
 
  private:
@@ -214,6 +156,7 @@ class MockSharedWorker : public mojom::SharedWorker {
   }
   void Terminate() override {
     // Allow duplicate events.
+    terminate_received_ = true;
     terminate_received_ = true;
   }
 
@@ -227,23 +170,23 @@ class MockSharedWorkerFactory : public mojom::SharedWorkerFactory {
   explicit MockSharedWorkerFactory(mojom::SharedWorkerFactoryRequest request)
       : binding_(this, std::move(request)) {}
 
-  void CheckReceivedCreateSharedWorker(
+  bool CheckReceivedCreateSharedWorker(
       const std::string& expected_url,
       const std::string& expected_name,
       blink::WebContentSecurityPolicyType expected_content_security_policy_type,
       mojom::SharedWorkerHostPtr* host,
       mojom::SharedWorkerRequest* request) {
     std::unique_ptr<CreateParams> create_params = std::move(create_params_);
-    ASSERT_TRUE(create_params);
+    if (!create_params)
+      return false;
     EXPECT_EQ(GURL(expected_url), create_params->info->url);
     EXPECT_EQ(expected_name, create_params->info->name);
     EXPECT_EQ(expected_content_security_policy_type,
               create_params->info->content_security_policy_type);
     *host = std::move(create_params->host);
     *request = std::move(create_params->request);
+    return true;
   }
-
-  void CheckNotReceivedCreateSharedWorker() { EXPECT_FALSE(create_params_); }
 
  private:
   // mojom::SharedWorkerFactory methods:
@@ -287,27 +230,33 @@ class MockSharedWorkerClient : public mojom::SharedWorkerClient {
 
   void Close() { binding_.Close(); }
 
-  void CheckReceivedOnCreated() {
-    EXPECT_TRUE(on_created_received_);
+  bool CheckReceivedOnCreated() {
+    if (!on_created_received_)
+      return false;
     on_created_received_ = false;
+    return true;
   }
 
-  void CheckReceivedOnConnected(
-      std::set<blink::mojom::WebFeature> expected_used_features) {
-    EXPECT_TRUE(on_connected_received_);
+  bool CheckReceivedOnConnected(
+      std::set<blink::mojom::WebFeature>* used_features) {
+    if (!on_connected_received_)
+      return false;
     on_connected_received_ = false;
-    EXPECT_EQ(expected_used_features, on_connected_features_);
+    if (used_features)
+      *used_features = std::move(on_connected_features_);
+    return true;
   }
 
-  void CheckReceivedOnFeatureUsed(blink::mojom::WebFeature feature) {
-    EXPECT_TRUE(on_feature_used_received_);
+  bool CheckReceivedOnFeatureUsed(blink::mojom::WebFeature* feature) {
+    if (!on_feature_used_received_)
+      return false;
     on_feature_used_received_ = false;
-    EXPECT_EQ(feature, on_feature_used_feature_);
+    if (feature)
+      *feature = on_feature_used_feature_;
+    return true;
   }
 
-  void CheckNotReceivedOnFeatureUsed() {
-    EXPECT_FALSE(on_feature_used_received_);
-  }
+  bool CheckNotReceivedOnFeatureUsed() { return !on_feature_used_received_; }
 
  private:
   // mojom::SharedWorkerClient methods:
@@ -341,50 +290,48 @@ class MockSharedWorkerClient : public mojom::SharedWorkerClient {
 
 class MockRendererProcessHost {
  public:
-  MockRendererProcessHost(int process_id,
+  MockRendererProcessHost(BrowserContext* browser_context,
                           ResourceContext* resource_context,
                           const WorkerStoragePartition& partition)
-      : process_id_(process_id),
-        resource_context_(resource_context),
+      : resource_context_(resource_context),
         partition_(partition),
-        worker_filter_(new MockSharedWorkerMessageFilter(
-            process_id,
-            resource_context,
-            partition,
-            base::Bind(&base::AtomicSequenceNumber::GetNext,
-                       base::Unretained(&next_routing_id_)))) {
-    SharedWorkerServiceImplTest::RegisterRunningProcessID(process_id);
+        process_host_(new MockRenderProcessHost(browser_context)) {
+    process_host_->OverrideBinderForTesting(
+        mojom::SharedWorkerFactory::Name_,
+        base::Bind(&SharedWorkerServiceImplTest::BindSharedWorkerFactory));
   }
 
   ~MockRendererProcessHost() {
-    SharedWorkerServiceImplTest::UnregisterRunningProcessID(process_id_);
-    worker_filter_->Close();
   }
 
   void FastShutdownIfPossible() {
-    SharedWorkerServiceImplTest::UnregisterRunningProcessID(process_id_);
+    process_host_->FastShutdownIfPossible(0, true);
   }
 
   void CreateSharedWorkerConnector(
       int frame_id,
       mojom::SharedWorkerConnectorRequest request) {
     SharedWorkerServiceImplTest::CreateSharedWorkerConnector(
-        process_id_, frame_id, resource_context_, partition_,
+        process_host_->GetID(), frame_id, resource_context_, partition_,
         std::move(request));
   }
 
+  int GetID() { return process_host_->GetID(); }
+  size_t GetKeepAliveRefCount() const {
+    return process_host_->GetKeepAliveRefCount();
+  }
+
  private:
-  const int process_id_;
   ResourceContext* resource_context_;
   WorkerStoragePartition partition_;
-  base::AtomicSequenceNumber next_routing_id_;
-  scoped_refptr<MockSharedWorkerMessageFilter> worker_filter_;
+  std::unique_ptr<content::MockRenderProcessHost> process_host_;
 };
 
 class MockSharedWorkerConnector {
  public:
   MockSharedWorkerConnector(MockRendererProcessHost* renderer_host)
       : renderer_host_(renderer_host) {}
+
   void Create(const std::string& url,
               const std::string& name,
               int render_frame_route_id,
@@ -409,7 +356,9 @@ class MockSharedWorkerConnector {
                        blink::mojom::SharedWorkerCreationContextType::kSecure,
                        std::move(message_pipe.handle1));
   }
+
   MessagePort local_port() { return local_port_; }
+
  private:
   mojom::SharedWorkerClientRequest client_request_;
   MockRendererProcessHost* renderer_host_;
@@ -420,7 +369,7 @@ class MockSharedWorkerConnector {
 
 TEST_F(SharedWorkerServiceImplTest, BasicTest) {
   std::unique_ptr<MockRendererProcessHost> renderer_host(
-      new MockRendererProcessHost(kProcessIDs[0],
+      new MockRendererProcessHost(browser_context_.get(),
                                   browser_context_->GetResourceContext(),
                                   *partition_.get()));
   std::unique_ptr<MockSharedWorkerConnector> connector(
@@ -432,22 +381,22 @@ TEST_F(SharedWorkerServiceImplTest, BasicTest) {
   RunAllPendingInMessageLoop();
 
   mojom::SharedWorkerFactoryRequest factory_request;
-  CheckReceivedFactoryRequest(&factory_request);
+  EXPECT_TRUE(CheckReceivedFactoryRequest(&factory_request));
   MockSharedWorkerFactory factory(std::move(factory_request));
   RunAllPendingInMessageLoop();
 
   mojom::SharedWorkerHostPtr worker_host;
   mojom::SharedWorkerRequest worker_request;
-  factory.CheckReceivedCreateSharedWorker(
+  EXPECT_TRUE(factory.CheckReceivedCreateSharedWorker(
       "http://example.com/w.js", "name",
       blink::kWebContentSecurityPolicyTypeReport, &worker_host,
-      &worker_request);
+      &worker_request));
   MockSharedWorker worker(std::move(worker_request));
   RunAllPendingInMessageLoop();
 
   int connection_request_id;
   MessagePort port;
-  worker.CheckReceivedConnect(&connection_request_id, &port);
+  EXPECT_TRUE(worker.CheckReceivedConnect(&connection_request_id, &port));
 
   client.CheckReceivedOnCreated();
 
@@ -457,7 +406,10 @@ TEST_F(SharedWorkerServiceImplTest, BasicTest) {
   worker_host->OnConnected(connection_request_id);
 
   RunAllPendingInMessageLoop();
-  client.CheckReceivedOnConnected(std::set<blink::mojom::WebFeature>());
+
+  std::set<blink::mojom::WebFeature> features;
+  EXPECT_TRUE(client.CheckReceivedOnConnected(&features));
+  EXPECT_TRUE(features.empty());
 
   // Verify that |port| corresponds to |connector->local_port()|.
   std::vector<uint8_t> expected_message(StringPieceToVector("test1"));
@@ -468,58 +420,59 @@ TEST_F(SharedWorkerServiceImplTest, BasicTest) {
   BlockingReadFromMessagePort(port, &received_message);
   EXPECT_EQ(expected_message, received_message);
 
+  blink::mojom::WebFeature feature;
+
   // Send feature from shared worker to host.
   auto feature1 = static_cast<blink::mojom::WebFeature>(124);
   worker_host->OnFeatureUsed(feature1);
   RunAllPendingInMessageLoop();
-  client.CheckReceivedOnFeatureUsed(feature1);
+  EXPECT_TRUE(client.CheckReceivedOnFeatureUsed(&feature));
+  EXPECT_EQ(feature1, feature);
+
   // A message should be sent only one time per feature.
   worker_host->OnFeatureUsed(feature1);
   RunAllPendingInMessageLoop();
-  client.CheckNotReceivedOnFeatureUsed();
+  EXPECT_TRUE(client.CheckNotReceivedOnFeatureUsed());
 
   // Send another feature.
   auto feature2 = static_cast<blink::mojom::WebFeature>(901);
   worker_host->OnFeatureUsed(feature2);
   RunAllPendingInMessageLoop();
-  client.CheckReceivedOnFeatureUsed(feature2);
-
-  // UpdateWorkerDependency should not be called.
-  EXPECT_EQ(0, s_update_worker_dependency_call_count_);
+  EXPECT_TRUE(client.CheckReceivedOnFeatureUsed(&feature));
+  EXPECT_EQ(feature2, feature);
 }
 
 TEST_F(SharedWorkerServiceImplTest, TwoRendererTest) {
   // The first renderer host.
   std::unique_ptr<MockRendererProcessHost> renderer_host0(
-      new MockRendererProcessHost(kProcessIDs[0],
+      new MockRendererProcessHost(browser_context_.get(),
                                   browser_context_->GetResourceContext(),
                                   *partition_.get()));
   std::unique_ptr<MockSharedWorkerConnector> connector0(
       new MockSharedWorkerConnector(renderer_host0.get()));
   MockSharedWorkerClient client0;
 
-  // Sends ViewHostMsg_CreateWorker.
   connector0->Create("http://example.com/w.js", "name", kRenderFrameRouteIDs[0],
                      &client0);
   RunAllPendingInMessageLoop();
 
   mojom::SharedWorkerFactoryRequest factory_request;
-  CheckReceivedFactoryRequest(&factory_request);
+  EXPECT_TRUE(CheckReceivedFactoryRequest(&factory_request));
   MockSharedWorkerFactory factory(std::move(factory_request));
   RunAllPendingInMessageLoop();
 
   mojom::SharedWorkerHostPtr worker_host;
   mojom::SharedWorkerRequest worker_request;
-  factory.CheckReceivedCreateSharedWorker(
+  EXPECT_TRUE(factory.CheckReceivedCreateSharedWorker(
       "http://example.com/w.js", "name",
       blink::kWebContentSecurityPolicyTypeReport, &worker_host,
-      &worker_request);
+      &worker_request));
   MockSharedWorker worker(std::move(worker_request));
   RunAllPendingInMessageLoop();
 
   int connection_request_id0;
   MessagePort port0;
-  worker.CheckReceivedConnect(&connection_request_id0, &port0);
+  EXPECT_TRUE(worker.CheckReceivedConnect(&connection_request_id0, &port0));
 
   client0.CheckReceivedOnCreated();
 
@@ -529,7 +482,10 @@ TEST_F(SharedWorkerServiceImplTest, TwoRendererTest) {
   worker_host->OnConnected(connection_request_id0);
 
   RunAllPendingInMessageLoop();
-  client0.CheckReceivedOnConnected(std::set<blink::mojom::WebFeature>());
+
+  std::set<blink::mojom::WebFeature> features0;
+  EXPECT_TRUE(client0.CheckReceivedOnConnected(&features0));
+  EXPECT_TRUE(features0.empty());
 
   // Verify that |port0| corresponds to |connector0->local_port()|.
   std::vector<uint8_t> expected_message0(StringPieceToVector("test1"));
@@ -540,53 +496,56 @@ TEST_F(SharedWorkerServiceImplTest, TwoRendererTest) {
   BlockingReadFromMessagePort(port0, &received_message0);
   EXPECT_EQ(expected_message0, received_message0);
 
+  blink::mojom::WebFeature feature;
+
   auto feature1 = static_cast<blink::mojom::WebFeature>(124);
   worker_host->OnFeatureUsed(feature1);
   RunAllPendingInMessageLoop();
-  client0.CheckReceivedOnFeatureUsed(feature1);
+  EXPECT_TRUE(client0.CheckReceivedOnFeatureUsed(&feature));
+  EXPECT_EQ(feature1, feature);
   auto feature2 = static_cast<blink::mojom::WebFeature>(901);
   worker_host->OnFeatureUsed(feature2);
   RunAllPendingInMessageLoop();
-  client0.CheckReceivedOnFeatureUsed(feature2);
+  EXPECT_TRUE(client0.CheckReceivedOnFeatureUsed(&feature));
+  EXPECT_EQ(feature2, feature);
+
+  // Only a single worker instance in process 0.
+  EXPECT_EQ(1u, renderer_host0->GetKeepAliveRefCount());
 
   // The second renderer host.
   std::unique_ptr<MockRendererProcessHost> renderer_host1(
-      new MockRendererProcessHost(kProcessIDs[1],
+      new MockRendererProcessHost(browser_context_.get(),
                                   browser_context_->GetResourceContext(),
                                   *partition_.get()));
   std::unique_ptr<MockSharedWorkerConnector> connector1(
       new MockSharedWorkerConnector(renderer_host1.get()));
   MockSharedWorkerClient client1;
 
-  // UpdateWorkerDependency should not be called yet.
-  EXPECT_EQ(0, s_update_worker_dependency_call_count_);
-
-  // SharedWorkerConnector creates two message ports and sends
-  // ViewHostMsg_CreateWorker.
   connector1->Create("http://example.com/w.js", "name", kRenderFrameRouteIDs[1],
                      &client1);
-  // We need to go to UI thread to call ReserveRenderProcessOnUI().
   RunAllPendingInMessageLoop();
 
   // Should not have tried to create a new shared worker.
-  CheckNotReceivedFactoryRequest();
+  EXPECT_TRUE(CheckNotReceivedFactoryRequest());
 
   int connection_request_id1;
   MessagePort port1;
-  worker.CheckReceivedConnect(&connection_request_id1, &port1);
+  EXPECT_TRUE(worker.CheckReceivedConnect(&connection_request_id1, &port1));
 
   client1.CheckReceivedOnCreated();
 
-  // UpdateWorkerDependency should be called.
-  EXPECT_EQ(1, s_update_worker_dependency_call_count_);
-  EXPECT_EQ(1U, s_worker_dependency_added_ids_.size());
-  EXPECT_EQ(kProcessIDs[0], s_worker_dependency_added_ids_[0]);
-  EXPECT_EQ(0U, s_worker_dependency_removed_ids_.size());
+  // Only a single worker instance in process 0.
+  EXPECT_EQ(1u, renderer_host0->GetKeepAliveRefCount());
+  EXPECT_EQ(0u, renderer_host1->GetKeepAliveRefCount());
 
   worker_host->OnConnected(connection_request_id1);
 
   RunAllPendingInMessageLoop();
-  client1.CheckReceivedOnConnected({feature1, feature2});
+
+  std::set<blink::mojom::WebFeature> features1;
+  EXPECT_TRUE(client1.CheckReceivedOnConnected(&features1));
+  EXPECT_EQ(std::set<blink::mojom::WebFeature>({feature1, feature2}),
+            features1);
 
   // Verify that |worker_msg_port2| corresponds to |connector1->local_port()|.
   std::vector<uint8_t> expected_message1(StringPieceToVector("test2"));
@@ -599,27 +558,19 @@ TEST_F(SharedWorkerServiceImplTest, TwoRendererTest) {
 
   worker_host->OnFeatureUsed(feature1);
   RunAllPendingInMessageLoop();
-  client0.CheckNotReceivedOnFeatureUsed();
-  client1.CheckNotReceivedOnFeatureUsed();
+  EXPECT_TRUE(client0.CheckNotReceivedOnFeatureUsed());
+  EXPECT_TRUE(client1.CheckNotReceivedOnFeatureUsed());
 
   auto feature3 = static_cast<blink::mojom::WebFeature>(1019);
   worker_host->OnFeatureUsed(feature3);
   RunAllPendingInMessageLoop();
-  client0.CheckReceivedOnFeatureUsed(feature3);
-  client1.CheckReceivedOnFeatureUsed(feature3);
+  EXPECT_TRUE(client0.CheckReceivedOnFeatureUsed(&feature));
+  EXPECT_EQ(feature3, feature);
+  EXPECT_TRUE(client1.CheckReceivedOnFeatureUsed(&feature));
+  EXPECT_EQ(feature3, feature);
 
-  EXPECT_EQ(1, s_update_worker_dependency_call_count_);
   renderer_host1.reset();
-  // UpdateWorkerDependency should NOT be called. The shared worker is still
-  // alive.
-  EXPECT_EQ(1, s_update_worker_dependency_call_count_);
-
   renderer_host0.reset();
-  // UpdateWorkerDependency should be called.
-  EXPECT_EQ(2, s_update_worker_dependency_call_count_);
-  EXPECT_EQ(0U, s_worker_dependency_added_ids_.size());
-  EXPECT_EQ(1U, s_worker_dependency_removed_ids_.size());
-  EXPECT_EQ(kProcessIDs[0], s_worker_dependency_removed_ids_[0]);
 }
 
 TEST_F(SharedWorkerServiceImplTest, CreateWorkerTest_NormalCase) {
@@ -628,12 +579,12 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerTest_NormalCase) {
 
   // The first renderer host.
   std::unique_ptr<MockRendererProcessHost> renderer_host0(
-      new MockRendererProcessHost(kProcessIDs[0],
+      new MockRendererProcessHost(browser_context_.get(),
                                   browser_context_->GetResourceContext(),
                                   *partition_.get()));
   // The second renderer host.
   std::unique_ptr<MockRendererProcessHost> renderer_host1(
-      new MockRendererProcessHost(kProcessIDs[1],
+      new MockRendererProcessHost(browser_context_.get(),
                                   browser_context_->GetResourceContext(),
                                   *partition_.get()));
 
@@ -646,19 +597,19 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerTest_NormalCase) {
   RunAllPendingInMessageLoop();
 
   mojom::SharedWorkerFactoryRequest factory_request;
-  CheckReceivedFactoryRequest(&factory_request);
+  EXPECT_TRUE(CheckReceivedFactoryRequest(&factory_request));
   MockSharedWorkerFactory factory(std::move(factory_request));
   RunAllPendingInMessageLoop();
 
   mojom::SharedWorkerHostPtr worker_host;
   mojom::SharedWorkerRequest worker_request;
-  factory.CheckReceivedCreateSharedWorker(
+  EXPECT_TRUE(factory.CheckReceivedCreateSharedWorker(
       kURL, kName, blink::kWebContentSecurityPolicyTypeReport, &worker_host,
-      &worker_request);
+      &worker_request));
   MockSharedWorker worker(std::move(worker_request));
   RunAllPendingInMessageLoop();
 
-  worker.CheckReceivedConnect(nullptr, nullptr);
+  EXPECT_TRUE(worker.CheckReceivedConnect(nullptr, nullptr));
   client0.CheckReceivedOnCreated();
 
   // Second client, same worker.
@@ -669,9 +620,9 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerTest_NormalCase) {
   connector1->Create(kURL, kName, kRenderFrameRouteIDs[1], &client1);
   RunAllPendingInMessageLoop();
 
-  CheckNotReceivedFactoryRequest();
+  EXPECT_TRUE(CheckNotReceivedFactoryRequest());
 
-  worker.CheckReceivedConnect(nullptr, nullptr);
+  EXPECT_TRUE(worker.CheckReceivedConnect(nullptr, nullptr));
   client1.CheckReceivedOnCreated();
 
   // Cleanup
@@ -680,7 +631,7 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerTest_NormalCase) {
   client1.Close();
   RunAllPendingInMessageLoop();
 
-  worker.CheckReceivedTerminate();
+  EXPECT_TRUE(worker.CheckReceivedTerminate());
 }
 
 TEST_F(SharedWorkerServiceImplTest, CreateWorkerTest_NormalCase_URLMismatch) {
@@ -690,12 +641,12 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerTest_NormalCase_URLMismatch) {
 
   // The first renderer host.
   std::unique_ptr<MockRendererProcessHost> renderer_host0(
-      new MockRendererProcessHost(kProcessIDs[0],
+      new MockRendererProcessHost(browser_context_.get(),
                                   browser_context_->GetResourceContext(),
                                   *partition_.get()));
   // The second renderer host.
   std::unique_ptr<MockRendererProcessHost> renderer_host1(
-      new MockRendererProcessHost(kProcessIDs[1],
+      new MockRendererProcessHost(browser_context_.get(),
                                   browser_context_->GetResourceContext(),
                                   *partition_.get()));
 
@@ -708,19 +659,19 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerTest_NormalCase_URLMismatch) {
   RunAllPendingInMessageLoop();
 
   mojom::SharedWorkerFactoryRequest factory_request0;
-  CheckReceivedFactoryRequest(&factory_request0);
+  EXPECT_TRUE(CheckReceivedFactoryRequest(&factory_request0));
   MockSharedWorkerFactory factory0(std::move(factory_request0));
   RunAllPendingInMessageLoop();
 
   mojom::SharedWorkerHostPtr worker_host0;
   mojom::SharedWorkerRequest worker_request0;
-  factory0.CheckReceivedCreateSharedWorker(
+  EXPECT_TRUE(factory0.CheckReceivedCreateSharedWorker(
       kURL0, kName, blink::kWebContentSecurityPolicyTypeReport, &worker_host0,
-      &worker_request0);
+      &worker_request0));
   MockSharedWorker worker0(std::move(worker_request0));
   RunAllPendingInMessageLoop();
 
-  worker0.CheckReceivedConnect(nullptr, nullptr);
+  EXPECT_TRUE(worker0.CheckReceivedConnect(nullptr, nullptr));
   client0.CheckReceivedOnCreated();
 
   // Second client, creates worker.
@@ -732,19 +683,19 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerTest_NormalCase_URLMismatch) {
   RunAllPendingInMessageLoop();
 
   mojom::SharedWorkerFactoryRequest factory_request1;
-  CheckReceivedFactoryRequest(&factory_request1);
+  EXPECT_TRUE(CheckReceivedFactoryRequest(&factory_request1));
   MockSharedWorkerFactory factory1(std::move(factory_request1));
   RunAllPendingInMessageLoop();
 
   mojom::SharedWorkerHostPtr worker_host1;
   mojom::SharedWorkerRequest worker_request1;
-  factory1.CheckReceivedCreateSharedWorker(
+  EXPECT_TRUE(factory1.CheckReceivedCreateSharedWorker(
       kURL1, kName, blink::kWebContentSecurityPolicyTypeReport, &worker_host1,
-      &worker_request1);
+      &worker_request1));
   MockSharedWorker worker1(std::move(worker_request1));
   RunAllPendingInMessageLoop();
 
-  worker1.CheckReceivedConnect(nullptr, nullptr);
+  EXPECT_TRUE(worker1.CheckReceivedConnect(nullptr, nullptr));
   client1.CheckReceivedOnCreated();
 
   // Cleanup
@@ -753,8 +704,8 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerTest_NormalCase_URLMismatch) {
   client1.Close();
   RunAllPendingInMessageLoop();
 
-  worker0.CheckReceivedTerminate();
-  worker1.CheckReceivedTerminate();
+  EXPECT_TRUE(worker0.CheckReceivedTerminate());
+  EXPECT_TRUE(worker1.CheckReceivedTerminate());
 }
 
 TEST_F(SharedWorkerServiceImplTest, CreateWorkerTest_NormalCase_NameMismatch) {
@@ -764,12 +715,12 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerTest_NormalCase_NameMismatch) {
 
   // The first renderer host.
   std::unique_ptr<MockRendererProcessHost> renderer_host0(
-      new MockRendererProcessHost(kProcessIDs[0],
+      new MockRendererProcessHost(browser_context_.get(),
                                   browser_context_->GetResourceContext(),
                                   *partition_.get()));
   // The second renderer host.
   std::unique_ptr<MockRendererProcessHost> renderer_host1(
-      new MockRendererProcessHost(kProcessIDs[1],
+      new MockRendererProcessHost(browser_context_.get(),
                                   browser_context_->GetResourceContext(),
                                   *partition_.get()));
 
@@ -782,19 +733,19 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerTest_NormalCase_NameMismatch) {
   RunAllPendingInMessageLoop();
 
   mojom::SharedWorkerFactoryRequest factory_request0;
-  CheckReceivedFactoryRequest(&factory_request0);
+  EXPECT_TRUE(CheckReceivedFactoryRequest(&factory_request0));
   MockSharedWorkerFactory factory0(std::move(factory_request0));
   RunAllPendingInMessageLoop();
 
   mojom::SharedWorkerHostPtr worker_host0;
   mojom::SharedWorkerRequest worker_request0;
-  factory0.CheckReceivedCreateSharedWorker(
+  EXPECT_TRUE(factory0.CheckReceivedCreateSharedWorker(
       kURL, kName0, blink::kWebContentSecurityPolicyTypeReport, &worker_host0,
-      &worker_request0);
+      &worker_request0));
   MockSharedWorker worker0(std::move(worker_request0));
   RunAllPendingInMessageLoop();
 
-  worker0.CheckReceivedConnect(nullptr, nullptr);
+  EXPECT_TRUE(worker0.CheckReceivedConnect(nullptr, nullptr));
   client0.CheckReceivedOnCreated();
 
   // Second client, creates worker.
@@ -806,19 +757,19 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerTest_NormalCase_NameMismatch) {
   RunAllPendingInMessageLoop();
 
   mojom::SharedWorkerFactoryRequest factory_request1;
-  CheckReceivedFactoryRequest(&factory_request1);
+  EXPECT_TRUE(CheckReceivedFactoryRequest(&factory_request1));
   MockSharedWorkerFactory factory1(std::move(factory_request1));
   RunAllPendingInMessageLoop();
 
   mojom::SharedWorkerHostPtr worker_host1;
   mojom::SharedWorkerRequest worker_request1;
-  factory1.CheckReceivedCreateSharedWorker(
+  EXPECT_TRUE(factory1.CheckReceivedCreateSharedWorker(
       kURL, kName1, blink::kWebContentSecurityPolicyTypeReport, &worker_host1,
-      &worker_request1);
+      &worker_request1));
   MockSharedWorker worker1(std::move(worker_request1));
   RunAllPendingInMessageLoop();
 
-  worker1.CheckReceivedConnect(nullptr, nullptr);
+  EXPECT_TRUE(worker1.CheckReceivedConnect(nullptr, nullptr));
   client1.CheckReceivedOnCreated();
 
   // Cleanup
@@ -827,8 +778,8 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerTest_NormalCase_NameMismatch) {
   client1.Close();
   RunAllPendingInMessageLoop();
 
-  worker0.CheckReceivedTerminate();
-  worker1.CheckReceivedTerminate();
+  EXPECT_TRUE(worker0.CheckReceivedTerminate());
+  EXPECT_TRUE(worker1.CheckReceivedTerminate());
 }
 
 TEST_F(SharedWorkerServiceImplTest, CreateWorkerTest_PendingCase) {
@@ -837,12 +788,12 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerTest_PendingCase) {
 
   // The first renderer host.
   std::unique_ptr<MockRendererProcessHost> renderer_host0(
-      new MockRendererProcessHost(kProcessIDs[0],
+      new MockRendererProcessHost(browser_context_.get(),
                                   browser_context_->GetResourceContext(),
                                   *partition_.get()));
   // The second renderer host.
   std::unique_ptr<MockRendererProcessHost> renderer_host1(
-      new MockRendererProcessHost(kProcessIDs[1],
+      new MockRendererProcessHost(browser_context_.get(),
                                   browser_context_->GetResourceContext(),
                                   *partition_.get()));
 
@@ -863,26 +814,26 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerTest_PendingCase) {
   // Check that the worker was created.
 
   mojom::SharedWorkerFactoryRequest factory_request;
-  CheckReceivedFactoryRequest(&factory_request);
+  EXPECT_TRUE(CheckReceivedFactoryRequest(&factory_request));
   MockSharedWorkerFactory factory(std::move(factory_request));
 
   RunAllPendingInMessageLoop();
 
   mojom::SharedWorkerHostPtr worker_host;
   mojom::SharedWorkerRequest worker_request;
-  factory.CheckReceivedCreateSharedWorker(
+  EXPECT_TRUE(factory.CheckReceivedCreateSharedWorker(
       kURL, kName, blink::kWebContentSecurityPolicyTypeReport, &worker_host,
-      &worker_request);
+      &worker_request));
   MockSharedWorker worker(std::move(worker_request));
 
   RunAllPendingInMessageLoop();
 
   // Check that the worker received two connections.
 
-  worker.CheckReceivedConnect(nullptr, nullptr);
+  EXPECT_TRUE(worker.CheckReceivedConnect(nullptr, nullptr));
   client0.CheckReceivedOnCreated();
 
-  worker.CheckReceivedConnect(nullptr, nullptr);
+  EXPECT_TRUE(worker.CheckReceivedConnect(nullptr, nullptr));
   client1.CheckReceivedOnCreated();
 
   // Cleanup
@@ -891,7 +842,7 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerTest_PendingCase) {
   client1.Close();
   RunAllPendingInMessageLoop();
 
-  worker.CheckReceivedTerminate();
+  EXPECT_TRUE(worker.CheckReceivedTerminate());
 }
 
 TEST_F(SharedWorkerServiceImplTest, CreateWorkerTest_PendingCase_URLMismatch) {
@@ -901,12 +852,12 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerTest_PendingCase_URLMismatch) {
 
   // The first renderer host.
   std::unique_ptr<MockRendererProcessHost> renderer_host0(
-      new MockRendererProcessHost(kProcessIDs[0],
+      new MockRendererProcessHost(browser_context_.get(),
                                   browser_context_->GetResourceContext(),
                                   *partition_.get()));
   // The second renderer host.
   std::unique_ptr<MockRendererProcessHost> renderer_host1(
-      new MockRendererProcessHost(kProcessIDs[1],
+      new MockRendererProcessHost(browser_context_.get(),
                                   browser_context_->GetResourceContext(),
                                   *partition_.get()));
 
@@ -927,39 +878,39 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerTest_PendingCase_URLMismatch) {
   // Check that both workers were created.
 
   mojom::SharedWorkerFactoryRequest factory_request0;
-  CheckReceivedFactoryRequest(&factory_request0);
+  EXPECT_TRUE(CheckReceivedFactoryRequest(&factory_request0));
   MockSharedWorkerFactory factory0(std::move(factory_request0));
 
   mojom::SharedWorkerFactoryRequest factory_request1;
-  CheckReceivedFactoryRequest(&factory_request1);
+  EXPECT_TRUE(CheckReceivedFactoryRequest(&factory_request1));
   MockSharedWorkerFactory factory1(std::move(factory_request1));
 
   RunAllPendingInMessageLoop();
 
   mojom::SharedWorkerHostPtr worker_host0;
   mojom::SharedWorkerRequest worker_request0;
-  factory0.CheckReceivedCreateSharedWorker(
+  EXPECT_TRUE(factory0.CheckReceivedCreateSharedWorker(
       kURL0, kName, blink::kWebContentSecurityPolicyTypeReport, &worker_host0,
-      &worker_request0);
+      &worker_request0));
   MockSharedWorker worker0(std::move(worker_request0));
 
   mojom::SharedWorkerHostPtr worker_host1;
   mojom::SharedWorkerRequest worker_request1;
-  factory1.CheckReceivedCreateSharedWorker(
+  EXPECT_TRUE(factory1.CheckReceivedCreateSharedWorker(
       kURL1, kName, blink::kWebContentSecurityPolicyTypeReport, &worker_host1,
-      &worker_request1);
+      &worker_request1));
   MockSharedWorker worker1(std::move(worker_request1));
 
   RunAllPendingInMessageLoop();
 
   // Check that the workers each received a connection.
 
-  worker0.CheckReceivedConnect(nullptr, nullptr);
-  worker0.CheckNotReceivedConnect();
+  EXPECT_TRUE(worker0.CheckReceivedConnect(nullptr, nullptr));
+  EXPECT_TRUE(worker0.CheckNotReceivedConnect());
   client0.CheckReceivedOnCreated();
 
-  worker1.CheckReceivedConnect(nullptr, nullptr);
-  worker1.CheckNotReceivedConnect();
+  EXPECT_TRUE(worker1.CheckReceivedConnect(nullptr, nullptr));
+  EXPECT_TRUE(worker1.CheckNotReceivedConnect());
   client1.CheckReceivedOnCreated();
 
   // Cleanup
@@ -968,8 +919,8 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerTest_PendingCase_URLMismatch) {
   client1.Close();
   RunAllPendingInMessageLoop();
 
-  worker0.CheckReceivedTerminate();
-  worker1.CheckReceivedTerminate();
+  EXPECT_TRUE(worker0.CheckReceivedTerminate());
+  EXPECT_TRUE(worker1.CheckReceivedTerminate());
 }
 
 TEST_F(SharedWorkerServiceImplTest, CreateWorkerTest_PendingCase_NameMismatch) {
@@ -979,12 +930,12 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerTest_PendingCase_NameMismatch) {
 
   // The first renderer host.
   std::unique_ptr<MockRendererProcessHost> renderer_host0(
-      new MockRendererProcessHost(kProcessIDs[0],
+      new MockRendererProcessHost(browser_context_.get(),
                                   browser_context_->GetResourceContext(),
                                   *partition_.get()));
   // The second renderer host.
   std::unique_ptr<MockRendererProcessHost> renderer_host1(
-      new MockRendererProcessHost(kProcessIDs[1],
+      new MockRendererProcessHost(browser_context_.get(),
                                   browser_context_->GetResourceContext(),
                                   *partition_.get()));
 
@@ -1005,39 +956,39 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerTest_PendingCase_NameMismatch) {
   // Check that both workers were created.
 
   mojom::SharedWorkerFactoryRequest factory_request0;
-  CheckReceivedFactoryRequest(&factory_request0);
+  EXPECT_TRUE(CheckReceivedFactoryRequest(&factory_request0));
   MockSharedWorkerFactory factory0(std::move(factory_request0));
 
   mojom::SharedWorkerFactoryRequest factory_request1;
-  CheckReceivedFactoryRequest(&factory_request1);
+  EXPECT_TRUE(CheckReceivedFactoryRequest(&factory_request1));
   MockSharedWorkerFactory factory1(std::move(factory_request1));
 
   RunAllPendingInMessageLoop();
 
   mojom::SharedWorkerHostPtr worker_host0;
   mojom::SharedWorkerRequest worker_request0;
-  factory0.CheckReceivedCreateSharedWorker(
+  EXPECT_TRUE(factory0.CheckReceivedCreateSharedWorker(
       kURL, kName0, blink::kWebContentSecurityPolicyTypeReport, &worker_host0,
-      &worker_request0);
+      &worker_request0));
   MockSharedWorker worker0(std::move(worker_request0));
 
   mojom::SharedWorkerHostPtr worker_host1;
   mojom::SharedWorkerRequest worker_request1;
-  factory1.CheckReceivedCreateSharedWorker(
+  EXPECT_TRUE(factory1.CheckReceivedCreateSharedWorker(
       kURL, kName1, blink::kWebContentSecurityPolicyTypeReport, &worker_host1,
-      &worker_request1);
+      &worker_request1));
   MockSharedWorker worker1(std::move(worker_request1));
 
   RunAllPendingInMessageLoop();
 
   // Check that the workers each received a connection.
 
-  worker0.CheckReceivedConnect(nullptr, nullptr);
-  worker0.CheckNotReceivedConnect();
+  EXPECT_TRUE(worker0.CheckReceivedConnect(nullptr, nullptr));
+  EXPECT_TRUE(worker0.CheckNotReceivedConnect());
   client0.CheckReceivedOnCreated();
 
-  worker1.CheckReceivedConnect(nullptr, nullptr);
-  worker1.CheckNotReceivedConnect();
+  EXPECT_TRUE(worker1.CheckReceivedConnect(nullptr, nullptr));
+  EXPECT_TRUE(worker1.CheckNotReceivedConnect());
   client1.CheckReceivedOnCreated();
 
   // Cleanup
@@ -1046,8 +997,8 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerTest_PendingCase_NameMismatch) {
   client1.Close();
   RunAllPendingInMessageLoop();
 
-  worker0.CheckReceivedTerminate();
-  worker1.CheckReceivedTerminate();
+  EXPECT_TRUE(worker0.CheckReceivedTerminate());
+  EXPECT_TRUE(worker1.CheckReceivedTerminate());
 }
 
 TEST_F(SharedWorkerServiceImplTest, CreateWorkerRaceTest) {
@@ -1056,15 +1007,15 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerRaceTest) {
 
   // Create three renderer hosts.
   std::unique_ptr<MockRendererProcessHost> renderer_host0(
-      new MockRendererProcessHost(kProcessIDs[0],
+      new MockRendererProcessHost(browser_context_.get(),
                                   browser_context_->GetResourceContext(),
                                   *partition_.get()));
   std::unique_ptr<MockRendererProcessHost> renderer_host1(
-      new MockRendererProcessHost(kProcessIDs[1],
+      new MockRendererProcessHost(browser_context_.get(),
                                   browser_context_->GetResourceContext(),
                                   *partition_.get()));
   std::unique_ptr<MockRendererProcessHost> renderer_host2(
-      new MockRendererProcessHost(kProcessIDs[2],
+      new MockRendererProcessHost(browser_context_.get(),
                                   browser_context_->GetResourceContext(),
                                   *partition_.get()));
 
@@ -1083,21 +1034,21 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerRaceTest) {
   // Starts a worker.
 
   mojom::SharedWorkerFactoryRequest factory_request0;
-  CheckReceivedFactoryRequest(&factory_request0);
+  EXPECT_TRUE(CheckReceivedFactoryRequest(&factory_request0));
   MockSharedWorkerFactory factory0(std::move(factory_request0));
 
   RunAllPendingInMessageLoop();
 
   mojom::SharedWorkerHostPtr worker_host0;
   mojom::SharedWorkerRequest worker_request0;
-  factory0.CheckReceivedCreateSharedWorker(
+  EXPECT_TRUE(factory0.CheckReceivedCreateSharedWorker(
       kURL, kName, blink::kWebContentSecurityPolicyTypeReport, &worker_host0,
-      &worker_request0);
+      &worker_request0));
   MockSharedWorker worker0(std::move(worker_request0));
 
   RunAllPendingInMessageLoop();
 
-  worker0.CheckReceivedConnect(nullptr, nullptr);
+  EXPECT_TRUE(worker0.CheckReceivedConnect(nullptr, nullptr));
   client0.CheckReceivedOnCreated();
 
   // Kill this process, which should make worker0 unavailable.
@@ -1112,22 +1063,22 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerRaceTest) {
   // The previous worker is unavailable, so a new worker is created.
 
   mojom::SharedWorkerFactoryRequest factory_request1;
-  CheckReceivedFactoryRequest(&factory_request1);
+  EXPECT_TRUE(CheckReceivedFactoryRequest(&factory_request1));
   MockSharedWorkerFactory factory1(std::move(factory_request1));
 
   RunAllPendingInMessageLoop();
 
   mojom::SharedWorkerHostPtr worker_host1;
   mojom::SharedWorkerRequest worker_request1;
-  factory1.CheckReceivedCreateSharedWorker(
+  EXPECT_TRUE(factory1.CheckReceivedCreateSharedWorker(
       kURL, kName, blink::kWebContentSecurityPolicyTypeReport, &worker_host1,
-      &worker_request1);
+      &worker_request1));
   MockSharedWorker worker1(std::move(worker_request1));
 
   RunAllPendingInMessageLoop();
 
-  worker0.CheckNotReceivedConnect();
-  worker1.CheckReceivedConnect(nullptr, nullptr);
+  EXPECT_TRUE(worker0.CheckNotReceivedConnect());
+  EXPECT_TRUE(worker1.CheckReceivedConnect(nullptr, nullptr));
   client1.CheckReceivedOnCreated();
 
   // Start another client to confirm that it can connect to the same worker.
@@ -1136,9 +1087,9 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerRaceTest) {
 
   RunAllPendingInMessageLoop();
 
-  CheckNotReceivedFactoryRequest();
+  EXPECT_TRUE(CheckNotReceivedFactoryRequest());
 
-  worker1.CheckReceivedConnect(nullptr, nullptr);
+  EXPECT_TRUE(worker1.CheckReceivedConnect(nullptr, nullptr));
   client2.CheckReceivedOnCreated();
 }
 
@@ -1148,15 +1099,15 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerRaceTest2) {
 
   // Create three renderer hosts.
   std::unique_ptr<MockRendererProcessHost> renderer_host0(
-      new MockRendererProcessHost(kProcessIDs[0],
+      new MockRendererProcessHost(browser_context_.get(),
                                   browser_context_->GetResourceContext(),
                                   *partition_.get()));
   std::unique_ptr<MockRendererProcessHost> renderer_host1(
-      new MockRendererProcessHost(kProcessIDs[1],
+      new MockRendererProcessHost(browser_context_.get(),
                                   browser_context_->GetResourceContext(),
                                   *partition_.get()));
   std::unique_ptr<MockRendererProcessHost> renderer_host2(
-      new MockRendererProcessHost(kProcessIDs[2],
+      new MockRendererProcessHost(browser_context_.get(),
                                   browser_context_->GetResourceContext(),
                                   *partition_.get()));
 
@@ -1181,28 +1132,24 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerRaceTest2) {
 
   // The previous worker is unavailable, so a new worker is created.
 
-  mojom::SharedWorkerFactoryRequest factory_request0;
-  CheckReceivedFactoryRequest(&factory_request0);
-  MockSharedWorkerFactory factory0(std::move(factory_request0));
-
   mojom::SharedWorkerFactoryRequest factory_request1;
-  CheckReceivedFactoryRequest(&factory_request1);
+  EXPECT_TRUE(CheckReceivedFactoryRequest(&factory_request1));
   MockSharedWorkerFactory factory1(std::move(factory_request1));
+
+  EXPECT_TRUE(CheckNotReceivedFactoryRequest());
 
   RunAllPendingInMessageLoop();
 
-  factory0.CheckNotReceivedCreateSharedWorker();
-
   mojom::SharedWorkerHostPtr worker_host1;
   mojom::SharedWorkerRequest worker_request1;
-  factory1.CheckReceivedCreateSharedWorker(
+  EXPECT_TRUE(factory1.CheckReceivedCreateSharedWorker(
       kURL, kName, blink::kWebContentSecurityPolicyTypeReport, &worker_host1,
-      &worker_request1);
+      &worker_request1));
   MockSharedWorker worker1(std::move(worker_request1));
 
   RunAllPendingInMessageLoop();
 
-  worker1.CheckReceivedConnect(nullptr, nullptr);
+  EXPECT_TRUE(worker1.CheckReceivedConnect(nullptr, nullptr));
   client1.CheckReceivedOnCreated();
 
   // Start another client to confirm that it can connect to the same worker.
@@ -1211,9 +1158,9 @@ TEST_F(SharedWorkerServiceImplTest, CreateWorkerRaceTest2) {
 
   RunAllPendingInMessageLoop();
 
-  CheckNotReceivedFactoryRequest();
+  EXPECT_TRUE(CheckNotReceivedFactoryRequest());
 
-  worker1.CheckReceivedConnect(nullptr, nullptr);
+  EXPECT_TRUE(worker1.CheckReceivedConnect(nullptr, nullptr));
   client2.CheckReceivedOnCreated();
 }
 
