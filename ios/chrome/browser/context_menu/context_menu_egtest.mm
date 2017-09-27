@@ -7,6 +7,7 @@
 #import <XCTest/XCTest.h>
 
 #include "base/ios/ios_util.h"
+#import "base/test/ios/wait_util.h"
 #include "ios/chrome/browser/ui/ui_util.h"
 #include "ios/chrome/grit/ios_strings.h"
 #import "ios/chrome/test/app/chrome_test_util.h"
@@ -198,11 +199,6 @@ void SelectTabAtIndexInCurrentMode(NSUInteger index) {
 // on the page to verify that context menu can be properly triggered in the
 // current screen view.
 - (void)testContextMenuOpenInNewTabFromTallPage {
-// TODO(crbug.com/755888): Reenable this test.
-  if (!IsIPadIdiom()) {
-    EARL_GREY_TEST_DISABLED(@"Failing constently on iPhone devices.");
-  }
-
   // Set up test simple http server.
   std::map<GURL, std::string> responses;
   GURL initialURL =
@@ -252,9 +248,11 @@ void SelectTabAtIndexInCurrentMode(NSUInteger index) {
                     error:&error];
     return !error;
   };
-  GREYAssert(testing::WaitUntilConditionOrTimeout(
-                 testing::kWaitForUIElementTimeout, condition),
-             @"Web view did not become interactable");
+  CGFloat inLoopDelaySeconds = 0.5;
+  GREYAssert(
+      testing::WaitUntilConditionOrTimeoutWithLoopDelay(
+          testing::kWaitForUIElementTimeout, condition, inLoopDelaySeconds),
+      @"Web view did not become interactable");
 
   // Make the toolbar visible by scrolling up on the web view to select the
   // newly opened tab.

@@ -31,6 +31,12 @@ extern const NSTimeInterval kWaitForPageLoadTimeout;
 bool WaitUntilConditionOrTimeout(NSTimeInterval timeout,
                                  ConditionBlock condition);
 
+// Returns true when condition() becomes true, otherwise returns false after
+// |timeout|. Wait at least |loop_delay| between two eveluation of |condition|.
+bool WaitUntilConditionOrTimeoutWithLoopDelay(NSTimeInterval timeout,
+                                              ConditionBlock condition,
+                                              NSTimeInterval loop_delay);
+
 }  // namespace testing
 
 #endif  // IOS_TESTING_WAIT_UTIL_H_
