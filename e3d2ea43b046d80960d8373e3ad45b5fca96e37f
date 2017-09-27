@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "108cab98_58f2aa0e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/misc/webtiming-cross-origin-and-back-expected.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1242274
+      },
+      "writtenOn": "2017-09-27T13:15:52Z",
+      "side": 1,
+      "message": "Updated webtiming-cross-origin-and-back.html instead of modifying webtiming-cross-origin-and-back-expected.txt.Since setTimeout() returns number where as addEventListener expects function object so exception comes.\n\nSince this test case was intended to call function doRedirect() , So calling doRedirect() directly.",
+      "parentUuid": "10047128_892ebd68",
+      "revId": "e3d2ea43b046d80960d8373e3ad45b5fca96e37f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0b565a6_d7fa3d4d",
         "filename": "third_party/WebKit/LayoutTests/images/image-document-remove-listener-expected.txt",
         "patchSetId": 4
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "Ditto.",
       "parentUuid": "ba878966_3e4d95c0",
+      "revId": "e3d2ea43b046d80960d8373e3ad45b5fca96e37f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f838ab4b_692105a3",
+        "filename": "third_party/WebKit/LayoutTests/images/image-document-remove-listener-expected.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1242274
+      },
+      "writtenOn": "2017-09-27T13:15:52Z",
+      "side": 1,
+      "message": "Updated image-document-remove-listener.html instead of adding image-document-remove-listener-expected.txt.\n\nSince this test case was intended to remove invalid event listeners \u00272\u0027, so removeEventListener throws exception which is now handled using try-catch.",
+      "parentUuid": "ec59b031_1fc7c3eb",
       "revId": "e3d2ea43b046d80960d8373e3ad45b5fca96e37f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
