@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "23879358_19f2b7b7",
+        "filename": "third_party/WebKit/Source/core/frame/Deprecation.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1126101
+      },
+      "writtenOn": "2017-09-27T18:25:59Z",
+      "side": 1,
+      "message": "Just something I noticed that was unnecessary. No reason to call body-\u003emessage() after we just put |message| in there. They are equivalent.",
+      "parentUuid": "c0354180_f69d9b21",
+      "revId": "b82348a864c6456c2c447b685a4469404b09ffc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9138a18b_6a76f9fa",
         "filename": "third_party/WebKit/Source/core/frame/InterventionReport.h",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-27T18:08:04Z",
       "side": 1,
       "message": "Why is this necessary?",
+      "revId": "b82348a864c6456c2c447b685a4469404b09ffc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11e9acd4_3b527349",
+        "filename": "third_party/WebKit/Source/core/frame/InterventionReport.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1126101
+      },
+      "writtenOn": "2017-09-27T18:25:59Z",
+      "side": 1,
+      "message": "This (or rather the lack of this) is what was making some tests fail. In some cases, there is no URL available (and this is expected in the spec), but what I hadn\u0027t realized before is that when that happens, |location_-\u003eUrl()| returns a null string instead of an empty string. Passing a null string through a mojo interface is not allowed, so I am just replacing null strings with empty strings here.",
+      "parentUuid": "9138a18b_6a76f9fa",
       "revId": "b82348a864c6456c2c447b685a4469404b09ffc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
