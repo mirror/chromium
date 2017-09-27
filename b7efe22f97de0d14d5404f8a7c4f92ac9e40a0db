@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9677871_f894b64f",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-27T19:25:22Z",
+      "side": 1,
+      "message": "nit: Can you remove the trailing whitespace please?\n\nhttps://google.github.io/styleguide/cppguide.html#Horizontal_Whitespace says to \"never put trailing whitespace at the end of a line.\"",
+      "range": {
+        "startLine": 14,
+        "startChar": 80,
+        "endLine": 14,
+        "endChar": 81
+      },
+      "revId": "b7efe22f97de0d14d5404f8a7c4f92ac9e40a0db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7f2de3b_5488d35f",
+        "filename": "content/common/page_state_serialization_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-27T19:25:22Z",
+      "side": 1,
+      "message": "This probably should be reverted, right?",
+      "range": {
+        "startLine": 418,
+        "startChar": 4,
+        "endLine": 418,
+        "endChar": 5
+      },
+      "revId": "b7efe22f97de0d14d5404f8a7c4f92ac9e40a0db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
