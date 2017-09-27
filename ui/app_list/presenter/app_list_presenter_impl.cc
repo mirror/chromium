@@ -4,6 +4,8 @@
 
 #include "ui/app_list/presenter/app_list_presenter_impl.h"
 
+#include <iostream>
+
 #include "base/metrics/user_metrics.h"
 #include "ui/app_list/app_list_constants.h"
 #include "ui/app_list/app_list_features.h"
@@ -154,8 +156,10 @@ void AppListPresenterImpl::EndDragFromShelf(
 }
 
 void AppListPresenterImpl::ProcessMouseWheelOffset(int y_scroll_offset) {
-  if (view_)
+  if (view_) {
+    std::cout << "0" << std::endl;
     view_->HandleScroll(y_scroll_offset, ui::ET_MOUSEWHEEL);
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
