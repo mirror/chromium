@@ -30,6 +30,7 @@ source_set("web") {
     ":user_agent",
     "//base",
     "//components/payments/core",
+    "//components/security_state/ios",
     "//components/url_formatter",
     "//ios/net",
     "//ios/third_party/blink:html_tokenizer",
@@ -47,6 +48,8 @@ source_set("web") {
     "//ui/resources",
     "//url",
   ]
+
+  allow_circular_includes_from = [ "//components/security_state/ios" ]
 
   sources = [
     "active_state_manager_impl.h",

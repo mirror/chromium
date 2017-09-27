@@ -35,6 +35,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
 #include "base/values.h"
+#include "components/security_state/ios/ssl_status_input_event_data.h"
 #import "ios/net/http_response_headers_util.h"
 #import "ios/net/nsurlrequest_util.h"
 #include "ios/web/history_state_util.h"
@@ -3753,6 +3754,30 @@ registerLoadRequestForURL:(const GURL&)requestURL
   item->GetSSL().content_status |=
       web::SSLStatus::DISPLAYED_CREDIT_CARD_FIELD_ON_HTTP;
   _webStateImpl->OnVisibleSecurityStateChange();
+}
+
+- (void)didEditInsecureField {
+  DCHECK(!web::IsOriginSecure(self.webState->GetLastCommittedURL()));
+  web::NavigationItem* item =
+      _webStateImpl->GetNavigationManager()->GetLastCommittedItem();
+
+  // Record the non-secure input event in the SSLStatus.
+  web::SSLStatus& ssl = item->GetSSL();
+
+  security_state::SSLStatusInputEventData* input_events =
+      static_cast<security_state::SSLStatusInputEventData*>(
+          ssl.user_data.get());
+  if (!input_events) {
+    ssl.user_data = base::MakeUnique<security_state::SSLStatusInputEventData>();
+    input_events = static_cast<security_state::SSLStatusInputEventData*>(
+        ssl.user_data.get());
+  }
+
+  bool bEditedPreviously = input_events->input_events()->insecure_field_edited;
+  if (!bEditedPreviously) {
+    input_events->input_events()->insecure_field_edited = true;
+    _webStateImpl->OnVisibleSecurityStateChange();
+  }
 }
 
 - (void)handleSSLCertError:(NSError*)error

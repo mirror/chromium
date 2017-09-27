@@ -10,6 +10,7 @@
 #include "base/metrics/field_trial.h"
 #include "base/metrics/histogram_macros.h"
 #include "components/security_state/core/security_state.h"
+#include "components/security_state/ios/ssl_status_input_event_data.h"
 #include "ios/web/public/browser_state.h"
 #include "ios/web/public/navigation_item.h"
 #import "ios/web/public/navigation_manager.h"
@@ -64,6 +65,12 @@ IOSSecurityStateTabHelper::GetVisibleSecurityState() const {
           ? true
           : false;
   state->is_incognito = web_state_->GetBrowserState()->IsOffTheRecord();
+
+  security_state::SSLStatusInputEventData* input_events =
+      static_cast<security_state::SSLStatusInputEventData*>(
+          ssl.user_data.get());
+  if (input_events)
+    state->insecure_input_events = *input_events->input_events();
 
   return state;
 }

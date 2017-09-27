@@ -24,6 +24,7 @@ source_set("ssl") {
     "//components/captive_portal",
     "//components/security_interstitials/core",
     "//components/security_state/core",
+    "//components/security_state/ios",
     "//components/strings",
     "//components/url_formatter",
     "//ios/chrome/app/strings",
