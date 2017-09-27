@@ -268,6 +268,24 @@
     },
     {
       "key": {
+        "uuid": "87846e27_436c4226",
+        "filename": "ash/login/ui/login_password_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-27T17:15:36Z",
+      "side": 1,
+      "message": "Okay, let\u0027s explicitly specify the image size in gfx::CreateVectorIcon then.\n\nIs the submit button pixel-perfect with mocks?",
+      "parentUuid": "cf969a0c_77ffc13f",
+      "revId": "4664bb504eb508e63e450a92ed45a2af01ab7ee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ece60ce_f60b0bf0",
         "filename": "ash/login/ui/login_password_view.cc",
         "patchSetId": 2

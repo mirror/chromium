@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1d4c408_a84aaab3",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-27T17:15:36Z",
+      "side": 1,
+      "message": "nit: declare this next to |has_password|, remove newline at 191, add newline below 192\n\n\n  auth_methods_ \u003d ...\n  bool has_password \u003d ...\n  bool has_pin \u003d ...\n\n  password_view_-\u003eSetEnabled(...)\n  ...",
+      "revId": "5d36146865e9118aaeaafa31558620bce324f7f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86fad964_d16e49d6",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-27T17:15:36Z",
+      "side": 1,
+      "message": "An alternate design to consider is\n\n  auto get_resource_id \u003d [\u003d]() {\n    if (has_pin)\n      return IDS_ASH_LOGIN_POD_PASSWORD_PIN_PLACEHOLDER;\n    return IDS_ASH_LOGIN_POD_PASSWORD_PLACEHOLDER;\n  };\n  password_view_-\u003eSetPlaceholderText(\n      l10n_util::GetStringUTF16(get_resource_id());\n\nDo we want to update placeholder text when |has_password| is false? It seems like that would be more robust.",
+      "revId": "5d36146865e9118aaeaafa31558620bce324f7f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bc39ee4_c9d5ea93",
+        "filename": "ash/login/ui/login_password_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-27T17:15:36Z",
+      "side": 1,
+      "message": "Needs an if (on_password_text_changed_) wrapper, as it might be empty.\n\nFwiw, this is why I prefer encoding |opt_| in the name, as it makes it very obvious this might be empty.",
+      "revId": "5d36146865e9118aaeaafa31558620bce324f7f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cb21d1d_4365c477",
+        "filename": "ash/login/ui/login_password_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-27T17:15:36Z",
+      "side": 1,
+      "message": "nit: explicit is only on 1-arg ctors",
+      "revId": "5d36146865e9118aaeaafa31558620bce324f7f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e65d853a_e1aff9c6",
+        "filename": "ash/login/ui/login_password_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-27T17:15:36Z",
+      "side": 1,
+      "message": "Add comment that you need to call |Init|.",
+      "range": {
+        "startLine": 54,
+        "startChar": 11,
+        "endLine": 54,
+        "endChar": 28
+      },
+      "revId": "5d36146865e9118aaeaafa31558620bce324f7f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d503eee2_f892cfa2",
+        "filename": "ash/login/ui/login_password_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-27T17:15:36Z",
+      "side": 1,
+      "message": "Rename to opt_on_password_text_changed, drop |Can be null|.\n\nBut why do we want to allow it to be null? I\u0027d prefer it if we DCHECKed that it has a value similar to |on_submit|.",
+      "revId": "5d36146865e9118aaeaafa31558620bce324f7f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "051e8983_cbde9463",
+        "filename": "ash/login/ui/login_password_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-27T17:15:36Z",
+      "side": 1,
+      "message": "Rename to |opt_*| or add comment that this can be null.",
+      "revId": "5d36146865e9118aaeaafa31558620bce324f7f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
