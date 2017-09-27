@@ -16,6 +16,24 @@
       "revId": "f5775d03019aaedb595fad36f6b1e582c5c2ee30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "819fee44_2b198e3a",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-09-27T22:44:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78f39fc9_f7534b7a",
+      "revId": "f5775d03019aaedb595fad36f6b1e582c5c2ee30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
