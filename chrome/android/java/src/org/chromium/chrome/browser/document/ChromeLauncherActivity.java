@@ -34,8 +34,9 @@ import org.chromium.chrome.browser.IntentHandler.TabOpenType;
 import org.chromium.chrome.browser.ShortcutHelper;
 import org.chromium.chrome.browser.UrlConstants;
 import org.chromium.chrome.browser.WarmupManager;
+import org.chromium.chrome.browser.browserservices.BrowserSessionContentUtils;
+import org.chromium.chrome.browser.browserservices.BrowserSessionDataProvider;
 import org.chromium.chrome.browser.customtabs.CustomTabActivity;
-import org.chromium.chrome.browser.customtabs.CustomTabIntentDataProvider;
 import org.chromium.chrome.browser.customtabs.SeparateTaskCustomTabActivity;
 import org.chromium.chrome.browser.dom_distiller.ReaderModeManager;
 import org.chromium.chrome.browser.firstrun.FirstRunFlowSequencer;
@@ -371,11 +372,11 @@ public class ChromeLauncherActivity extends Activity
             //                              redirect logic for triggering instant apps.  See if
             //                              this is better addressed in TabRedirectHandler long
             //                              term.
-            newIntent.putExtra(CustomTabIntentDataProvider.EXTRA_IS_OPENED_BY_CHROME, true);
+            newIntent.putExtra(BrowserSessionDataProvider.EXTRA_IS_OPENED_BY_CHROME, true);
             newIntent.putExtra(CustomTabsIntent.EXTRA_DEFAULT_SHARE_MENU_ITEM, true);
         } else {
             IntentUtils.safeRemoveExtra(
-                    intent, CustomTabIntentDataProvider.EXTRA_IS_OPENED_BY_CHROME);
+                    intent, BrowserSessionDataProvider.EXTRA_IS_OPENED_BY_CHROME);
         }
 
         return newIntent;
@@ -386,7 +387,7 @@ public class ChromeLauncherActivity extends Activity
      * in the same task.
      */
     private void launchCustomTabActivity() {
-        boolean handled = CustomTabActivity.handleInActiveContentIfNeeded(getIntent());
+        boolean handled = BrowserSessionContentUtils.handleInActiveContentIfNeeded(getIntent());
         if (handled) return;
 
         maybePrefetchDnsInBackground();

@@ -29,7 +29,7 @@ import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.chrome.browser.IntentHandler;
 import org.chromium.chrome.browser.banners.InstallerDelegateTest.TestPackageManager;
-import org.chromium.chrome.browser.customtabs.CustomTabIntentDataProvider;
+import org.chromium.chrome.browser.browserservices.BrowserSessionDataProvider;
 import org.chromium.chrome.browser.externalnav.ExternalNavigationHandler.OverrideUrlLoadingResult;
 import org.chromium.chrome.browser.instantapps.InstantAppsHandler;
 import org.chromium.chrome.browser.tab.Tab;
@@ -517,7 +517,7 @@ public class ExternalNavigationHandlerTest {
         Intent extraIntent2 = Intent.parseUri("http://youtube.com/", Intent.URI_INTENT_SCHEME);
         extraIntent2.putExtra(CustomTabsIntent.EXTRA_SESSION, "");
         extraIntent2.putExtra(
-                CustomTabIntentDataProvider.EXTRA_SEND_TO_EXTERNAL_DEFAULT_HANDLER, true);
+                BrowserSessionDataProvider.EXTRA_SEND_TO_EXTERNAL_DEFAULT_HANDLER, true);
         extraIntent2.setPackage(context.getPackageName());
         redirectHandler.updateIntent(extraIntent2);
         redirectHandler.updateNewUrlLoading(transTypeLinkFromIntent, false, false, 0, 0);
@@ -532,7 +532,7 @@ public class ExternalNavigationHandlerTest {
         Intent extraIntent3 = Intent.parseUri("http://youtube.com/", Intent.URI_INTENT_SCHEME);
         extraIntent3.putExtra(CustomTabsIntent.EXTRA_SESSION, "");
         extraIntent3.putExtra(
-                CustomTabIntentDataProvider.EXTRA_SEND_TO_EXTERNAL_DEFAULT_HANDLER, true);
+                BrowserSessionDataProvider.EXTRA_SEND_TO_EXTERNAL_DEFAULT_HANDLER, true);
         extraIntent3.setPackage(context.getPackageName());
         redirectHandler.updateIntent(extraIntent3);
         redirectHandler.updateNewUrlLoading(transTypeLinkFromIntent, false, false, 0, 0);

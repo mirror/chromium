@@ -16,7 +16,7 @@ import org.chromium.base.ContextUtils;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.chrome.R;
-import org.chromium.chrome.browser.customtabs.CustomTabIntentDataProvider;
+import org.chromium.chrome.browser.browserservices.BrowserSessionDataProvider;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.TabModel.TabLaunchType;
 import org.chromium.chrome.browser.tabmodel.document.AsyncTabCreationParams;
@@ -168,7 +168,7 @@ public class ServiceTabLauncher {
 
         // Customize items on menu as payment request UI to show 'Find in page', 'Forward arrow',
         // 'Info' and 'Refresh' only.
-        CustomTabIntentDataProvider.addPaymentRequestUIExtras(customTabsIntent.intent);
+        BrowserSessionDataProvider.addPaymentRequestUIExtras(customTabsIntent.intent);
 
         customTabsIntent.launchUrl(lastTrackedActivity, Uri.parse(url));
 
