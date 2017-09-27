@@ -45,6 +45,7 @@ bool IsPreconnectEnabledInternal(Profile* profile, int mode, int mask) {
 
 const char kSpeculativePreconnectFeatureName[] = "SpeculativePreconnect";
 const char kPreconnectMode[] = "preconnect";
+const char kNoPreconnectMode[] = "no-preconnect";
 
 const base::Feature kSpeculativePreconnectFeature{
     kSpeculativePreconnectFeatureName, base::FEATURE_DISABLED_BY_DEFAULT};
@@ -66,11 +67,23 @@ bool MaybeEnableSpeculativePreconnect(LoadingPredictorConfig* config) {
       config->mode |=
           LoadingPredictorConfig::LEARNING | LoadingPredictorConfig::PRECONNECT;
       config->is_origin_learning_enabled = true;
+      config->are_other_preconnects_disabled = true;
     }
     return true;
+  } else if (mode_value == kNoPreconnectMode) {
+    if (config) {
+      config->are_other_preconnects_disabled = true;
+    }
+    return false;
   }
 
   return false;
+}
+
+bool AreOtherPreconnectsDisabled() {
+  LoadingPredictorConfig config;
+  MaybeEnableSpeculativePreconnect(&config);
+  return config.are_other_preconnects_disabled;
 }
 
 bool IsLoadingPredictorEnabled(Profile* profile,
@@ -101,7 +114,8 @@ LoadingPredictorConfig::LoadingPredictorConfig()
       max_prefetches_inflight_per_host_per_navigation(3),
       is_host_learning_enabled(false),
       is_url_learning_enabled(false),
-      is_origin_learning_enabled(false) {}
+      is_origin_learning_enabled(false),
+      are_other_preconnects_disabled(false) {}
 
 LoadingPredictorConfig::LoadingPredictorConfig(
     const LoadingPredictorConfig& other) = default;
