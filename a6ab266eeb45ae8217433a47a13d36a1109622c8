@@ -2,6 +2,144 @@
   "comments": [
     {
       "key": {
+        "uuid": "349b0a99_bdd3390d",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-27T04:35:57Z",
+      "side": 1,
+      "message": "nit: unnecessary, base::Optional has a default constructor that will be called without this",
+      "range": {
+        "startLine": 111,
+        "startChar": 6,
+        "endLine": 111,
+        "endChar": 30
+      },
+      "revId": "a6ab266eeb45ae8217433a47a13d36a1109622c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "598c791e_6ee7fd1d",
+        "filename": "content/browser/frame_host/navigation_handle_impl.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-27T04:35:57Z",
+      "side": 1,
+      "message": "nit: missing \"to\"",
+      "range": {
+        "startLine": 481,
+        "startChar": 55,
+        "endLine": 481,
+        "endChar": 56
+      },
+      "revId": "a6ab266eeb45ae8217433a47a13d36a1109622c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "006e9179_00360bb4",
+        "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-27T04:35:57Z",
+      "side": 1,
+      "message": "comment needs updating... I can\u0027t figure out what this test is testing",
+      "range": {
+        "startLine": 500,
+        "startChar": 19,
+        "endLine": 500,
+        "endChar": 32
+      },
+      "revId": "a6ab266eeb45ae8217433a47a13d36a1109622c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3cfc4a8_59582202",
+        "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-27T04:35:57Z",
+      "side": 1,
+      "message": "Can\u0027t this TODO be done now? (also the bug points to a bug marked duplicate)",
+      "range": {
+        "startLine": 897,
+        "startChar": 10,
+        "endLine": 897,
+        "endChar": 27
+      },
+      "revId": "a6ab266eeb45ae8217433a47a13d36a1109622c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cf08082_503e0b68",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-27T04:35:57Z",
+      "side": 1,
+      "message": "it\u0027s not obvious to me why we skip throttles in these cases; in particular the documentation for |skip_throttles| says that it\u0027s to be used when a throttle itself fails a request, but that\u0027s not the case here",
+      "range": {
+        "startLine": 431,
+        "startChar": 35,
+        "endLine": 431,
+        "endChar": 39
+      },
+      "revId": "a6ab266eeb45ae8217433a47a13d36a1109622c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9274bf8_922d7eac",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-27T04:35:57Z",
+      "side": 1,
+      "message": "TODO is done, right?",
+      "range": {
+        "startLine": 748,
+        "startChar": 0,
+        "endLine": 748,
+        "endChar": 79
+      },
+      "revId": "a6ab266eeb45ae8217433a47a13d36a1109622c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "53ddb6b6_73642bd3",
         "filename": "content/browser/frame_host/navigation_request.cc",
         "patchSetId": 37
@@ -30,6 +168,185 @@
       "writtenOn": "2017-09-27T03:16:39Z",
       "side": 1,
       "message": "clamy@ noted that I\u0027m not actually looking at the result action here.\n\nI believe that this is correct, because PROCEED should fail in the same way as, say CANCEL.\n(We commit an error page iff the error is not net::ERR_ABORTED.)\n\nThe difference between PROCEED and CANCEL comes later on, where CANCEL allows a throttle to attach the custom HTML for the interstitial.",
+      "revId": "a6ab266eeb45ae8217433a47a13d36a1109622c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9839d8a1_e93a075e",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 1001,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-27T04:35:57Z",
+      "side": 1,
+      "message": "I don\u0027t understand this comment. By \"later on\" do you mean in a follow-up CL, or literally later on in the code? If in a follow-up CL, maybe leave a TODO with the bug number.\n\nIf an error code and html can be attached to any result action, is there any point in allowing the throttles to return different result actions? Should we say that the only valid return value of a WillFailRequest throttle is PROCEED, optionally with a net error and html attached?",
+      "parentUuid": "a00c3f5a_1476a6ef",
+      "revId": "a6ab266eeb45ae8217433a47a13d36a1109622c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02b39f1d_91d601d6",
+        "filename": "content/browser/frame_host/navigation_request.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-27T04:35:57Z",
+      "side": 1,
+      "message": "WillFailRequest?",
+      "range": {
+        "startLine": 332,
+        "startChar": 52,
+        "endLine": 332,
+        "endChar": 68
+      },
+      "revId": "a6ab266eeb45ae8217433a47a13d36a1109622c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50192ce3_dc26dfb1",
+        "filename": "content/public/browser/navigation_throttle.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-27T04:35:57Z",
+      "side": 1,
+      "message": "nit: period",
+      "range": {
+        "startLine": 144,
+        "startChar": 36,
+        "endLine": 144,
+        "endChar": 0
+      },
+      "revId": "a6ab266eeb45ae8217433a47a13d36a1109622c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc417f3f_abc91045",
+        "filename": "content/test/navigation_simulator_unittest.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-27T04:35:57Z",
+      "side": 1,
+      "message": "nit:  // namespace",
+      "range": {
+        "startLine": 32,
+        "startChar": 1,
+        "endLine": 32,
+        "endChar": 0
+      },
+      "revId": "a6ab266eeb45ae8217433a47a13d36a1109622c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bed3ba62_7fb6d320",
+        "filename": "content/test/navigation_simulator_unittest.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-27T04:35:57Z",
+      "side": 1,
+      "message": "Just curious, why\u0027d you add this? Is there something different about the new WillFailRequest path for browser vs renderer initiated navigations?",
+      "range": {
+        "startLine": 38,
+        "startChar": 21,
+        "endLine": 38,
+        "endChar": 32
+      },
+      "revId": "a6ab266eeb45ae8217433a47a13d36a1109622c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ce447f2_431af9af",
+        "filename": "content/test/navigation_simulator_unittest.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-27T04:35:57Z",
+      "side": 1,
+      "message": "Why do we only enable plznavigate for browser-initiated navigations?",
+      "range": {
+        "startLine": 50,
+        "startChar": 6,
+        "endLine": 50,
+        "endChar": 33
+      },
+      "revId": "a6ab266eeb45ae8217433a47a13d36a1109622c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b525e994_22783205",
+        "filename": "content/test/navigation_simulator_unittest.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-27T04:35:57Z",
+      "side": 1,
+      "message": "remove default case to force compile failure if there\u0027s a new enum value without handling it in this switch",
+      "range": {
+        "startLine": 65,
+        "startChar": 6,
+        "endLine": 66,
+        "endChar": 20
+      },
+      "revId": "a6ab266eeb45ae8217433a47a13d36a1109622c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "141c9dfd_76851c8c",
+        "filename": "content/test/navigation_simulator_unittest.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-27T04:35:57Z",
+      "side": 1,
+      "message": "Should we also be testing that the throttle-provided net error is as expected?",
+      "range": {
+        "startLine": 148,
+        "startChar": 24,
+        "endLine": 148,
+        "endChar": 50
+      },
       "revId": "a6ab266eeb45ae8217433a47a13d36a1109622c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
