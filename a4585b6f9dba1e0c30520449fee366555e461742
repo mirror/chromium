@@ -111,6 +111,29 @@
     },
     {
       "key": {
+        "uuid": "c7d6823f_28b97b71",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/SurveyController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-27T01:11:42Z",
+      "side": 1,
+      "message": "Can these be combined into an init method?\n\ne.g. public void initialize(Context context, String surveyId, String advertisingId)?\n\nI think it\u0027s a bit easier to understand that one initialize() method needs to called, rather than knowing that 3 methods need to be called before the survey controller is functional.",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 5
+      },
+      "revId": "a4585b6f9dba1e0c30520449fee366555e461742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5aaf6a9a_e6419c9e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarPhone.java",
         "patchSetId": 3
