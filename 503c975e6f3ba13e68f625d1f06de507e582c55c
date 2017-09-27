@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a933aea1_784470dd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-27T09:38:25Z",
+      "side": 1,
+      "message": "Yeah +1",
+      "revId": "503c975e6f3ba13e68f625d1f06de507e582c55c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dafe474f_b961154c",
+        "filename": "content/browser/shared_worker/shared_worker_connector_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-27T09:38:25Z",
+      "side": 1,
+      "message": "nit: looks like this comment needs to be updated",
+      "revId": "503c975e6f3ba13e68f625d1f06de507e582c55c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "236c88f0_2e9fb75b",
+        "filename": "content/browser/shared_worker/shared_worker_connector_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-27T09:38:25Z",
+      "side": 1,
+      "message": "(and probably this comment can be removed then)",
+      "revId": "503c975e6f3ba13e68f625d1f06de507e582c55c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90631226_c9ffab30",
+        "filename": "content/browser/shared_worker/shared_worker_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-27T09:38:25Z",
+      "side": 1,
+      "message": "Can these be just inlined now? NotifyWorkerDestroyed() seems to be called at multiple place so having a shorter form could be still handy, but maybe not for this one?",
+      "revId": "503c975e6f3ba13e68f625d1f06de507e582c55c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06d10269_cef3ce18",
+        "filename": "content/browser/shared_worker/shared_worker_host.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-27T09:38:25Z",
+      "side": 1,
+      "message": "This comment\u0027s now stale too",
+      "revId": "503c975e6f3ba13e68f625d1f06de507e582c55c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94c77390_5faa0273",
+        "filename": "content/browser/shared_worker/shared_worker_service_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-27T09:38:25Z",
+      "side": 1,
+      "message": "Maybe... \u0027ProcessHostWrapper\u0027?",
+      "revId": "503c975e6f3ba13e68f625d1f06de507e582c55c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a874778_30bac352",
+        "filename": "content/browser/shared_worker/shared_worker_service_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-27T09:38:25Z",
+      "side": 1,
+      "message": "nit: I slightly prefer instead having s_make_process_helper_override_for_testing_ and directly call SharedWorkerServiceImpl::ProcessHelperImpl::Create(process_id) if it\u0027s nullptr, having many indirection makes it harder to read.",
+      "revId": "503c975e6f3ba13e68f625d1f06de507e582c55c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24e12523_2f5671bb",
+        "filename": "content/browser/shared_worker/shared_worker_service_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-27T09:38:25Z",
+      "side": 1,
+      "message": "dup\u0027ed line?",
+      "revId": "503c975e6f3ba13e68f625d1f06de507e582c55c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62b3e6ef_e912f833",
+        "filename": "content/browser/shared_worker/shared_worker_service_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-27T09:38:25Z",
+      "side": 1,
+      "message": "Should these also return false early when they fail?",
+      "revId": "503c975e6f3ba13e68f625d1f06de507e582c55c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
