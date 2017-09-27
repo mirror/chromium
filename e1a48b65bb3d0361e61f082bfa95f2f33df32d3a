@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ddb0f421_025f9010",
+        "filename": "chrome/browser/resources/settings/clear_browsing_data_dialog/clear_browsing_data_dialog_tabs.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-27T23:47:12Z",
+      "side": 1,
+      "message": "nit: maybe say something about time in the name? timeDialogOpened_ or dialogOpenedTime_",
+      "revId": "e1a48b65bb3d0361e61f082bfa95f2f33df32d3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c9212b3_a8a3a11b",
+        "filename": "chrome/browser/resources/settings/clear_browsing_data_dialog/clear_browsing_data_dialog_tabs.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-27T23:47:12Z",
+      "side": 1,
+      "message": "The description of this histogram says, \"Time spent in Clear Browsing Data dialog. From opening the dialog until data is cleared. This does not record users who exit the dialog without clearing.\", but it looks like this time is recorded when the clearing is kicked off (rather than when the data is cleared). Consider changing where the time is recorded or change the description (so they match, either way).\n\nIts also odd that this has a \"History.\" prefix and being recorded from settings. Please make a note that this is also called for clearing in settings in the histogram description; or change the histogram name; or make a separate histogram for settings (i.e. have the labels/descriptions line up).",
+      "revId": "e1a48b65bb3d0361e61f082bfa95f2f33df32d3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d13e5fe_97d2e72a",
+        "filename": "chrome/browser/resources/settings/clear_browsing_data_dialog/clear_browsing_data_dialog_tabs.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-27T23:47:12Z",
+      "side": 1,
+      "message": "nit: it\u0027s common to prefix handlers with \"on\" like onTabChanged_; Or name it to refer to the action taken, like recordTabChange_. (either way is ok).",
+      "revId": "e1a48b65bb3d0361e61f082bfa95f2f33df32d3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34595991_7d983d35",
+        "filename": "chrome/browser/ui/webui/settings/settings_clear_browsing_data_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-27T23:47:12Z",
+      "side": 1,
+      "message": "Will there be two different time periods going forward? I somehow (likely assumed) that one was temporary and that going forward there would just be one. (like how font size has a basic and advanced UI to set the font size, but they affect the same pref).\n\nIf it\u0027s temporary, please add a TODO comment about which is short term (like todo remove this after \u003cblah\u003e).",
+      "revId": "e1a48b65bb3d0361e61f082bfa95f2f33df32d3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
