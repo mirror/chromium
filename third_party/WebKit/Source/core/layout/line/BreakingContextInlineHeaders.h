@@ -1470,8 +1470,8 @@ inline bool BreakingContext::CanBreakAtWhitespace(
     }
     // Didn't fit. Jump to the end unless there's still an opportunity to
     // collapse whitespace.
-    if (ignoring_spaces_ || !collapse_white_space_ ||
-        !current_character_is_space_ || !previous_character_is_space) {
+    if (ignoring_spaces_ || !current_character_is_space_ ||
+        !previous_character_is_space) {
       at_end_ = true;
       return true;
     }
