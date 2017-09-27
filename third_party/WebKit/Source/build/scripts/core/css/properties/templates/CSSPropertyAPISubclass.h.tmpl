@@ -120,6 +120,20 @@ class {{api_classname}} : public CSSPropertyAPI {
   {% if not property.affected_by_all %}
   bool IsAffectedByAll() const override { return false; }
   {% endif %}
+
+  // {
+  // % if property.direction_aware %}
+  {% if property.name in ("-webkit-margin-start", "-webkit-margin-end", "-webkit-margin-before", "-webkit-margin-after", "block-size", "inline-size", "min-block-size", 
+  "min-inline-size", "-webkit-logical-height", "-webkit-logical-width", "-webkit-min-logical-height", "-webkit-min-logical-width", "-webkit-max-logical-height", 
+  "-webkit-max-logical-width", "max-block-size", "max-inline-size", "-webkit-border-end-width", "-webkit-border-start-width", "-webkit-border-before-width", 
+  "-webkit-border-after-width", "-webkit-padding-after", "-webkit-padding-before", "-webkit-padding-end", "-webkit-padding-start", "-webkit-border-end-color",
+  "-webkit-border-after-color", "-webkit-border-before-color", "-webkit-border-start-color", "-webkit-border-end",
+  "-webkit-border-after", "-webkit-border-before", "-webkit-border-start", "-webkit-border-end-style",
+  "-webkit-border-after-style", "-webkit-border-before-style", "-webkit-border-start-style", "scroll-snap-margin-inline-start", "scroll-snap-margin-inline-end", "scroll-snap-margin-block-start", "scroll-snap-margin-block-end", "scroll-padding-block-start", "scroll-padding-block-end", "scroll-padding-inline-start", "scroll-padding-inline-end") %}
+  const CSSPropertyAPI& ResolveDirectionAwareProperty(
+      TextDirection direction,
+      WritingMode writing_mode) const override;
+  {% endif %}
 };
 
 }  // namespace blink
