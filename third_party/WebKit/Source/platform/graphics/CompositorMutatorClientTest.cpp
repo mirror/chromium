@@ -6,8 +6,6 @@
 
 #include <memory>
 #include "base/callback.h"
-#include "platform/graphics/CompositorMutation.h"
-#include "platform/graphics/CompositorMutationsTarget.h"
 #include "platform/graphics/CompositorMutator.h"
 #include "platform/wtf/PtrUtil.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -25,28 +23,9 @@ class StubCompositorMutator : public CompositorMutator {
   bool Mutate(double monotonic_time_now) override { return false; }
 };
 
-class MockCompositoMutationsTarget : public CompositorMutationsTarget {
- public:
-  MOCK_METHOD1(ApplyMutations, void(CompositorMutations*));
-};
-
-TEST(CompositorMutatorClient, CallbackForNonNullMutationsShouldApply) {
-  MockCompositoMutationsTarget target;
-
-  CompositorMutatorClient client(new StubCompositorMutator, &target);
-  std::unique_ptr<CompositorMutations> mutations =
-      WTF::MakeUnique<CompositorMutations>();
-  client.SetMutationsForTesting(std::move(mutations));
-
-  EXPECT_CALL(target, ApplyMutations(_));
-  client.TakeMutations().Run();
-}
-
 TEST(CompositorMutatorClient, CallbackForNullMutationsShouldBeNoop) {
-  MockCompositoMutationsTarget target;
-  CompositorMutatorClient client(new StubCompositorMutator, &target);
+  CompositorMutatorClient client(new StubCompositorMutator);
 
-  EXPECT_CALL(target, ApplyMutations(_)).Times(0);
   EXPECT_TRUE(client.TakeMutations().is_null());
 }
 
