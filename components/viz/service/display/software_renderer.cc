@@ -197,10 +197,10 @@ void SoftwareRenderer::PrepareSurfaceForPass(
 
 bool SoftwareRenderer::IsSoftwareResource(ResourceId resource_id) const {
   switch (resource_provider_->GetResourceType(resource_id)) {
-    case cc::ResourceProvider::RESOURCE_TYPE_GPU_MEMORY_BUFFER:
-    case cc::ResourceProvider::RESOURCE_TYPE_GL_TEXTURE:
+    case RemotableResourceType::kGpuMemoryBuffer:
+    case RemotableResourceType::kTexture:
       return false;
-    case cc::ResourceProvider::RESOURCE_TYPE_BITMAP:
+    case RemotableResourceType::kBitmap:
       return true;
   }
 

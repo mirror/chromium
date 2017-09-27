@@ -16,7 +16,7 @@ ScopedResource::~ScopedResource() {
 }
 
 void ScopedResource::Allocate(const gfx::Size& size,
-                              ResourceProvider::TextureHint hint,
+                              viz::RemotableResourceTextureHint hint,
                               viz::ResourceFormat format,
                               const gfx::ColorSpace& color_space) {
   DCHECK(!id());
@@ -42,10 +42,10 @@ void ScopedResource::AllocateWithGpuMemoryBuffer(
 
   set_dimensions(size, format);
   set_id(resource_provider_->CreateGpuMemoryBufferResource(
-      size, ResourceProvider::TEXTURE_HINT_IMMUTABLE, format, usage,
+      size, viz::RemotableResourceTextureHint::kImmutable, format, usage,
       color_space));
   set_color_space(color_space);
-  hint_ = ResourceProvider::TEXTURE_HINT_IMMUTABLE;
+  hint_ = viz::RemotableResourceTextureHint::kImmutable;
 
 #if DCHECK_IS_ON()
   allocate_thread_id_ = base::PlatformThread::CurrentId();
