@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "11987624_e4590176",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableAreaTest.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-27T23:09:18Z",
+      "side": 1,
+      "message": "I was not sure if RuntimeEnableFeatures set by one test would affect other tests running after in the same process, and just thought ScopedSlimmingPaintV2ForTest was safer.\n\nJust tested with the following:\nTEST_F(LayoutObjectTest, Test1) {\n  RuntimeEnabledFeatures::SetSlimmingPaintV2Enabled(true);\n}\nTEST_F(LayoutObjectTest, Test2) {\n  LOG(ERROR) \u003c\u003c RuntimeEnabledFeatures::SlimmingPaintV2Enabled();\n}\nWhen run in webkit_unit_tests --gtest_filter\u003dLayoutObjectTest.Test, Test2 will print \"1\" while it may not expect SPv2 enabled.",
+      "parentUuid": "4bfee05b_997b5b0b",
+      "revId": "fbd076181f25ec2ad641a40d059a4b236106df3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0bc933dd_4bfb8dcc",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableAreaTest.cpp",
         "patchSetId": 13
