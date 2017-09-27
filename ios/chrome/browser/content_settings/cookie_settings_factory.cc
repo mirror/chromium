@@ -16,8 +16,7 @@ namespace ios {
 const char kDummyExtensionScheme[] = ":no-extension-scheme:";
 
 // static
-scoped_refptr<content_settings::CookieSettings>
-CookieSettingsFactory::GetForBrowserState(
+content_settings::CookieSettings* CookieSettingsFactory::GetForBrowserState(
     ios::ChromeBrowserState* browser_state) {
   return static_cast<content_settings::CookieSettings*>(
       GetInstance()->GetServiceForBrowserState(browser_state, true).get());
