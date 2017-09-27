@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7545c07_18ecb981",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/ContentViewCoreSelectionTest.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-09-27T20:56:08Z",
+      "side": 1,
+      "message": "assertEquals(-5, returnResult.startAdjust);\nassertEquals(8, returnResult.endAdjust);\nassertEquals(\"Maps\", returnResult.label);\n\nnit: it\u0027s actually better to check the real popup window. Please see \nhttps://cs.chromium.org/chromium/src/content/public/android/javatests/src/org/chromium/content/browser/input/TextSuggestionMenuTest.java?type\u003dcs\u0026q\u003dsuggestionspan+test.java\u0026sq\u003dpackage:chromium\u0026l\u003d162",
+      "range": {
+        "startLine": 350,
+        "startChar": 15,
+        "endLine": 350,
+        "endChar": 25
+      },
+      "revId": "2dfc74331bae4ad52c2be1e628bbcb3d8b0e880b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
