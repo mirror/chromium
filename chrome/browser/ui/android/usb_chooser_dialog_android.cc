@@ -18,6 +18,7 @@
 #include "chrome/browser/usb/usb_blocklist.h"
 #include "chrome/browser/usb/usb_chooser_context.h"
 #include "chrome/browser/usb/usb_chooser_context_factory.h"
+#include "chrome/browser/usb/usb_util.h"
 #include "chrome/browser/usb/web_usb_histograms.h"
 #include "chrome/browser/vr/vr_tab_helper.h"
 #include "chrome/common/url_constants.h"
@@ -210,9 +211,12 @@ void UsbChooserDialogAndroid::AddDeviceToChooserDialog(
   JNIEnv* env = base::android::AttachCurrentThread();
   base::android::ScopedJavaLocalRef<jstring> device_guid =
       base::android::ConvertUTF8ToJavaString(env, device->guid());
-  base::android::ScopedJavaLocalRef<jstring> device_name =
-      base::android::ConvertUTF16ToJavaString(env, device->product_string());
-  Java_UsbChooserDialog_addDevice(env, java_dialog_, device_guid, device_name);
+
+  base::string16 device_name = GetDeviceName(device);
+  base::android::ScopedJavaLocalRef<jstring> device_name_jstring =
+      base::android::ConvertUTF16ToJavaString(env, device_name);
+  Java_UsbChooserDialog_addDevice(env, java_dialog_, device_guid,
+                                  device_name_jstring);
 }
 
 void UsbChooserDialogAndroid::RemoveDeviceFromChooserDialog(
