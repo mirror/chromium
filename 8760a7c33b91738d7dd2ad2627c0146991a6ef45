@@ -22,6 +22,30 @@
       "revId": "8760a7c33b91738d7dd2ad2627c0146991a6ef45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e303e3b_a5782ce6",
+        "filename": "chrome/browser/chromeos/system_logs/single_log_file_log_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-27T19:28:44Z",
+      "side": 1,
+      "message": "I\u0027m not fully confident about the ordering between response.get() and response.release(). Don\u0027t want this to be a nullptr, so playing it safe. If you are more confident it\u0027s ok, I can change it.",
+      "parentUuid": "40ff93a1_d4372436",
+      "range": {
+        "startLine": 197,
+        "startChar": 59,
+        "endLine": 197,
+        "endChar": 71
+      },
+      "revId": "8760a7c33b91738d7dd2ad2627c0146991a6ef45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
