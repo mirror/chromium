@@ -59,12 +59,6 @@ bool WebNotificationTray::ShowNotifierSettings() {
   return false;
 }
 
-bool WebNotificationTray::IsContextMenuEnabled() const {
-  // It can always return true because the notifications are invisible if
-  // the context menu shouldn't be enabled, such as in the lock screen.
-  return true;
-}
-
 void WebNotificationTray::OnMessageCenterTrayChanged() {
 }
 
