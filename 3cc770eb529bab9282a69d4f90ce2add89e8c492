@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "bc4a55bd_e8e99af6",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-09-27T04:43:28Z",
+      "side": 1,
+      "message": "Done. Implement ComputeLayoutObjectAndOffsetModTextFragment() \n w/o ExpandedLayoutText.",
+      "parentUuid": "ccff8876_c1cda8c1",
+      "revId": "3cc770eb529bab9282a69d4f90ce2add89e8c492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01dbbd9a_cbf852cd",
         "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
         "patchSetId": 17
