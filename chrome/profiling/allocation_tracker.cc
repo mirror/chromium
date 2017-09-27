@@ -53,6 +53,14 @@ void AllocationTracker::OnFree(const FreePacket& free_packet) {
   }
 }
 
+void AllocationTracker::OnBarrier(const BarrierPacket& barrier_packet) {
+  auto found = registered_barrier_callbacks_.find(barrier_packet.barrier_id);
+  if (found != registered_barrier_callbacks_.end()) {
+    std::move(found->second).Run();
+    registered_barrier_callbacks_.erase(found);
+  }
+}
+
 void AllocationTracker::OnComplete() {
   base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
                                                 std::move(complete_callback_));
@@ -60,6 +68,11 @@ void AllocationTracker::OnComplete() {
 
 AllocationCountMap AllocationTracker::GetCounts() const {
   return AllocationEventSetToCountMap(live_allocs_);
+}
+
+void AllocationTracker::NotifyOnBarrier(uint32_t barrier_id,
+                                        base::OnceClosure closure) {
+  registered_barrier_callbacks_[barrier_id] = std::move(closure);
 }
 
 }  // namespace profiling
