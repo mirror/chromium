@@ -71,8 +71,10 @@ RefPtr<Image> StyleGeneratedImage::GetImage(
     const ImageResourceObserver& observer,
     const Document& document,
     const ComputedStyle& style,
-    const IntSize& size) const {
-  return image_generator_value_->GetImage(observer, document, style, size);
+    const IntSize& size,
+    LayoutSize* logical_tile_size) const {
+  return image_generator_value_->GetImage(observer, document, style, size,
+                                          logical_tile_size);
 }
 
 bool StyleGeneratedImage::KnownToBeOpaque(const Document& document,
