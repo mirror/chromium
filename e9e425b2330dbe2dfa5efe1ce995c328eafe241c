@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cfd6081_57fec145",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositorTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 3202,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-27T03:28:42Z",
+      "side": 1,
+      "message": "This is the new test.",
+      "revId": "e9e425b2330dbe2dfa5efe1ce995c328eafe241c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
