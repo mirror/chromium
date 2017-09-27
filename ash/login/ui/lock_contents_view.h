@@ -2,10 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef ASH_LOGIN_UI_CONTENTS_VIEW_H_
-#define ASH_LOGIN_UI_CONTENTS_VIEW_H_
+#ifndef ASH_LOGIN_UI_LOCK_CONTENTS_VIEW_H_
+#define ASH_LOGIN_UI_LOCK_CONTENTS_VIEW_H_
 
 #include <memory>
+#include <string>
+#include <vector>
 
 #include "ash/ash_export.h"
 #include "ash/login/ui/login_data_dispatcher.h"
@@ -28,6 +30,7 @@ namespace ash {
 class LoginAuthUserView;
 class LoginBubble;
 class LoginUserView;
+class NoteActionBubbleView;
 
 // LockContentsView hosts the root view for the lock screen. All other lock
 // screen views are embedded within this one. LockContentsView is per-display,
@@ -145,7 +148,15 @@ class ASH_EXPORT LockContentsView : public NonAccessibleView,
   // in this list.
   std::vector<LoginUserView*> user_views_;
   views::ScrollView* scroller_ = nullptr;
-  views::BoxLayout* root_layout_ = nullptr;
+
+  // View for launching a note taking action handler from the lock screen.
+  NoteActionBubbleView* note_action_ = nullptr;
+
+  // Contains the main lock screen contents - user pods and the user's
+  // authentication UI.
+  NonAccessibleView* main_view_ = nullptr;
+  // Layout used for |main_view_|.
+  views::BoxLayout* main_layout_ = nullptr;
 
   // Actions that should be executed when rotation changes. A full layout pass
   // is performed after all actions are executed.
@@ -161,4 +172,4 @@ class ASH_EXPORT LockContentsView : public NonAccessibleView,
 
 }  // namespace ash
 
-#endif  // ASH_LOGIN_UI_CONTENTS_VIEW_H_
+#endif  // ASH_LOGIN_UI_LOCK_CONTENTS_VIEW_H_
