@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ff69b376_515e734d",
+        "filename": "extensions/renderer/bindings/api_event_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-27T19:17:28Z",
+      "side": 1,
+      "message": "Hmm... I *think* that\u0027s right, but probably am less confident than you. :)  So given neither of us are 100% on this, I\u0027ve made it a CHECK.",
+      "parentUuid": "64979da6_f92023c6",
+      "revId": "7cc6959f5607a6437273ec0843e4b63ec055363b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9bcdbd98_9bbea960",
         "filename": "extensions/renderer/bindings/api_event_handler.h",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "fd5af257_5538d28f",
+        "filename": "extensions/renderer/bindings/api_event_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-27T19:17:28Z",
+      "side": 1,
+      "message": "Whoops!  Done.",
+      "parentUuid": "9bcdbd98_9bbea960",
+      "revId": "7cc6959f5607a6437273ec0843e4b63ec055363b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b08e319d_ba9c0e32",
         "filename": "extensions/renderer/native_renderer_messaging_service.h",
         "patchSetId": 7
@@ -50,6 +86,24 @@
       "revId": "7cc6959f5607a6437273ec0843e4b63ec055363b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8be24eb_212071df",
+        "filename": "extensions/renderer/native_renderer_messaging_service.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-27T19:17:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b08e319d_ba9c0e32",
+      "revId": "7cc6959f5607a6437273ec0843e4b63ec055363b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
