@@ -752,9 +752,10 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
 // the controller.
 // TODO(crbug.com/435048): Animate disappearance.
 - (void)hideAutosigninNotification {
-  [self.notifyAutoSigninViewController willMoveToParentViewController:nil];
-  [self.notifyAutoSigninViewController.view removeFromSuperview];
-  [self.notifyAutoSigninViewController removeFromParentViewController];
+  [self.notifyAutoSigninViewController beginAppearanceTransition:NO animated:YES];
+  //[self.notifyAutoSigninViewController willMoveToParentViewController:nil];
+  //[self.notifyAutoSigninViewController.view removeFromSuperview];
+  //[self.notifyAutoSigninViewController removeFromParentViewController];
   self.notifyAutoSigninViewController = nil;
 }
 

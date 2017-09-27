@@ -60,6 +60,7 @@ const net::NetworkTrafficAnnotationTag kTrafficAnnotation =
 
 @interface NotifyUserAutoSigninViewController () {
   std::unique_ptr<image_fetcher::ImageFetcher> _imageFetcher;
+  __strong NSLayoutConstraint* _bottomConstraint;
 }
 
 // Username, corresponding to Credential.id field in JS.
@@ -154,6 +155,33 @@ const net::NetworkTrafficAnnotationTag kTrafficAnnotation =
   }
 }
 
+- (void)beginAppearanceTransition:(BOOL)isAppearing animated:(BOOL)animated {
+  [super beginAppearanceTransition:isAppearing animated:animated];
+  if (isAppearing) {
+    return;
+  }
+  // find bottom constraint
+  int count = 0;
+  for (NSUInteger i = 0; i < self.view.constraints.count; i++) {
+    if (self.view.constraints[i].firstAnchor == self.view.bottomAnchor) {
+      _bottomConstraint = self.view.constraints[i];
+    }
+    if (self.view.constraints[i].secondAnchor == self.view.bottomAnchor) {
+      count++;
+    }
+  }
+
+  [self.view layoutIfNeeded];
+  _bottomConstraint.constant = -60;
+  [UIView animateWithDuration:0.5 animations:^{
+    [self.view.superview layoutIfNeeded];
+  } completion:^(BOOL finished) {
+    [self willMoveToParentViewController:nil];
+    [self.view removeFromSuperview];
+    [self removeFromParentViewController];
+  }];
+}
+
 - (void)didMoveToParentViewController:(UIViewController*)parent {
   [super didMoveToParentViewController:parent];
   if (parent == nil) {
@@ -162,13 +190,23 @@ const net::NetworkTrafficAnnotationTag kTrafficAnnotation =
 
   // Set constraints for blue background.
   [NSLayoutConstraint activateConstraints:@[
-    [self.view.bottomAnchor
-        constraintEqualToAnchor:self.view.superview.bottomAnchor],
+    //[self.view.bottomAnchor
+    //    constraintEqualToAnchor:self.view.superview.bottomAnchor],
     [self.view.leadingAnchor
         constraintEqualToAnchor:self.view.superview.leadingAnchor],
     [self.view.trailingAnchor
         constraintEqualToAnchor:self.view.superview.trailingAnchor],
   ]];
+
+  _bottomConstraint = [self.view.bottomAnchor constraintEqualToAnchor:self.view.superview.bottomAnchor constant:48];
+  _bottomConstraint.active = YES;
+  [self.view layoutIfNeeded];
+  [self.view.superview layoutIfNeeded];
+
+  _bottomConstraint.constant = 0;
+  [UIView animateWithDuration:0.5 animations:^{
+    [self.view.superview layoutIfNeeded];
+  }];
 }
 
 @end
