@@ -133,7 +133,13 @@ Network.NetworkLogView = class extends UI.VBox {
     filterBar.addFilter(this._resourceCategoryFilterUI);
 
     this._filterParser = new TextUtils.FilterParser(Network.NetworkLogView._searchKeys);
-    this._suggestionBuilder = new Network.FilterSuggestionBuilder(Network.NetworkLogView._searchKeys);
+
+    var priorityOrder = NetworkPriorities.prioritySymbolToNumericMap();
+    var sortedPriorities = priorityOrder.keysArray().sort((a, b) => priorityOrder.get(a) - priorityOrder.get(b));
+    var sortedPriorityLabels = sortedPriorities.map(priority => NetworkPriorities.uiLabelForPriority(priority));
+    var defaultValueSets = /** @type {!Object<string, !Array<string>>} */ ({});
+    defaultValueSets[Network.NetworkLogView.FilterType.Priority] = sortedPriorityLabels;
+    this._suggestionBuilder = new Network.FilterSuggestionBuilder(Network.NetworkLogView._searchKeys, defaultValueSets);
     this._resetSuggestionBuilder();
 
     this._dataGrid = this._columns.dataGrid();
@@ -1062,12 +1068,6 @@ Network.NetworkLogView = class extends UI.VBox {
     this._suggestionBuilder.addItem(Network.NetworkLogView.FilterType.MimeType, request.mimeType);
     this._suggestionBuilder.addItem(Network.NetworkLogView.FilterType.Scheme, '' + request.scheme);
     this._suggestionBuilder.addItem(Network.NetworkLogView.FilterType.StatusCode, '' + request.statusCode);
-
-    var priority = request.initialPriority();
-    if (priority) {
-      this._suggestionBuilder.addItem(
-          Network.NetworkLogView.FilterType.Priority, NetworkPriorities.uiLabelForPriority(priority));
-    }
 
     if (request.mixedContentType !== Protocol.Security.MixedContentType.None) {
       this._suggestionBuilder.addItem(
