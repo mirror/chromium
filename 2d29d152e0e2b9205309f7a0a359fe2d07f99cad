@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4aa1f78a_f8f6a651",
+        "filename": "cc/trees/layer_tree_host_pixeltest_masks.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-27T23:41:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd2a3221_ec939d2c",
+      "revId": "2d29d152e0e2b9205309f7a0a359fe2d07f99cad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e77dd006_91b560bd",
         "filename": "cc/trees/layer_tree_host_pixeltest_masks.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "2d29d152e0e2b9205309f7a0a359fe2d07f99cad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d553b9f_0df91c96",
+        "filename": "cc/trees/layer_tree_host_pixeltest_masks.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-27T23:41:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e77dd006_91b560bd",
+      "revId": "2d29d152e0e2b9205309f7a0a359fe2d07f99cad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0441c133_96d7a9b8",
+        "filename": "cc/trees/layer_tree_host_pixeltest_masks.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-27T23:41:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce746536_2a9fcbe8",
+      "revId": "2d29d152e0e2b9205309f7a0a359fe2d07f99cad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec444250_2f2ffb25",
         "filename": "cc/trees/layer_tree_host_pixeltest_masks.cc",
         "patchSetId": 7
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-27T22:32:31Z",
       "side": 1,
       "message": "FWIW the mode idiomatic way to do this would be to make these each a ContentLayerClient, and connect them to PictureLayers. Inside the client, they would build the PaintOpBuffer instead of making a bitmap. I think you can find many such test examples by looking for other ContentLayerClients in unit tests.",
+      "revId": "2d29d152e0e2b9205309f7a0a359fe2d07f99cad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4368075c_668e0176",
+        "filename": "cc/trees/layer_tree_host_pixeltest_masks.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-27T23:41:55Z",
+      "side": 1,
+      "message": "Done. I mimicked existing blending tests because I thought it is hard, but in fact PictureLayer is much more pleasant to use!",
+      "parentUuid": "ec444250_2f2ffb25",
       "revId": "2d29d152e0e2b9205309f7a0a359fe2d07f99cad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +156,24 @@
       "revId": "2d29d152e0e2b9205309f7a0a359fe2d07f99cad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce0c2ecc_0eb3d16b",
+        "filename": "cc/trees/layer_tree_host_pixeltest_masks.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-27T23:41:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ec74ab3_29d01ec2",
+      "revId": "2d29d152e0e2b9205309f7a0a359fe2d07f99cad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
