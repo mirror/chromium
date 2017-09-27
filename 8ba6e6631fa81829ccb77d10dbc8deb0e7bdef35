@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d65851ec_1e57c1d0",
+        "filename": "third_party/WebKit/Source/core/css/StylePropertySet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-27T06:31:02Z",
+      "side": 1,
+      "message": "Maybe these are meant to be virtual functions and has_before_or_after is stored in CSSLazyPropertyParserImpl?",
+      "revId": "8ba6e6631fa81829ccb77d10dbc8deb0e7bdef35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24ef2259_28bdc47a",
+        "filename": "third_party/WebKit/Source/core/css/StylePropertySet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-27T06:31:02Z",
+      "side": 1,
+      "message": "Make this const?",
+      "revId": "8ba6e6631fa81829ccb77d10dbc8deb0e7bdef35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
