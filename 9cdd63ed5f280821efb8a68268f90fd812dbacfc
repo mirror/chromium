@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99563b74_71b8f25b",
+        "filename": "services/service_manager/sandbox/switches.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-09-27T19:47:50Z",
+      "side": 1,
+      "message": "can we not duplicate these, i.e. remove the declarations in content_switches?",
+      "revId": "9cdd63ed5f280821efb8a68268f90fd812dbacfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
