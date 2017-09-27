@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef0e53ba_c1b879b7",
+        "filename": "chrome/installer/linux/rpm/build.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-27T22:43:31Z",
+      "side": 1,
+      "message": "BTW, want to fix this in another CL?",
+      "revId": "a6163658ca3309943f4573ddc962180a84dc2286",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
