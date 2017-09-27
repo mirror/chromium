@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e73df78_905fa2f3",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1179631
+      },
+      "writtenOn": "2017-09-27T08:30:05Z",
+      "side": 1,
+      "message": "If you don\u0027t use view_pair, maybe it\u0027s better to do MessageView* view \u003d ...-\u003esecond and then check for null like you do in UpdateNotification?",
+      "revId": "dbd2d0919251ceaa4eb7e27114de1fe6e9a0b5af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3819185d_77998c35",
+        "filename": "ash/message_center/message_center_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1179631
+      },
+      "writtenOn": "2017-09-27T08:30:05Z",
+      "side": 1,
+      "message": "Can you remove notification_views_ related code now?",
+      "revId": "dbd2d0919251ceaa4eb7e27114de1fe6e9a0b5af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afde93d6_11c05dd0",
+        "filename": "ash/message_center/message_list_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1179631
+      },
+      "writtenOn": "2017-09-27T08:30:05Z",
+      "side": 1,
+      "message": "Is this pattern common in the Chromium codebase? It seems simpler to me to just call child_at() for both of them.",
+      "revId": "dbd2d0919251ceaa4eb7e27114de1fe6e9a0b5af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
