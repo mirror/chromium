@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6e49ac9b_2f408023",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-27T20:43:40Z",
+      "side": 1,
+      "message": "Thanks for catching this. I didn\u0027t realize CanStartDataCollection is called inside StartCollection.. Removed the conditional check.",
+      "parentUuid": "67016b33_d0172b93",
+      "range": {
+        "startLine": 277,
+        "startChar": 24,
+        "endLine": 277,
+        "endChar": 46
+      },
+      "revId": "f921dab9cfe2975e5a22262caeb893ea71f5df23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1537c4e_55168251",
         "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "f921dab9cfe2975e5a22262caeb893ea71f5df23",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1be8baed_2f428ec5",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-27T20:43:40Z",
+      "side": 1,
+      "message": "As discussed in person. It is easier to let TriggerManager to track the data collection in progress.",
+      "parentUuid": "c1537c4e_55168251",
+      "revId": "f921dab9cfe2975e5a22262caeb893ea71f5df23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "388aac0a_90f20987",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-27T20:43:40Z",
+      "side": 1,
+      "message": "Done. comment added.",
+      "parentUuid": "8f05dd3d_85c16549",
+      "revId": "f921dab9cfe2975e5a22262caeb893ea71f5df23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "987a7ff3_3d712b7e",
         "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
         "patchSetId": 1
@@ -73,6 +133,24 @@
       "revId": "f921dab9cfe2975e5a22262caeb893ea71f5df23",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3651073d_3457b8a4",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-27T20:43:40Z",
+      "side": 1,
+      "message": "Function removed",
+      "parentUuid": "987a7ff3_3d712b7e",
+      "revId": "f921dab9cfe2975e5a22262caeb893ea71f5df23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "570b7fbf_d98e094a",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-27T20:43:40Z",
+      "side": 1,
+      "message": "Due the next comment in this file, I decided to remove all these redundant tests.",
+      "parentUuid": "6661a2e4_63cd6933",
+      "revId": "f921dab9cfe2975e5a22262caeb893ea71f5df23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b9b3d55_a2a9cece",
         "filename": "chrome/browser/safe_browsing/chrome_password_protection_service_browsertest.cc",
         "patchSetId": 1
@@ -107,6 +203,24 @@
       "revId": "f921dab9cfe2975e5a22262caeb893ea71f5df23",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18106250_253b6d1f",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-27T20:43:40Z",
+      "side": 1,
+      "message": "Yeah.. I was thinking about the same thing. It feels like I\u0027m re-testing the trigger manager logic. \nLet me remove these tests for simplicity. \nAnd I\u0027m keeping other minor changes in the ChromePasswordProtectionServiceBrowserTest class since they give more flexibility in future tests.",
+      "parentUuid": "0b9b3d55_a2a9cece",
+      "revId": "f921dab9cfe2975e5a22262caeb893ea71f5df23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
