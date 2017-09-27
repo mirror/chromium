@@ -601,7 +601,7 @@ static void WriteImageNodeToPasteboard(Pasteboard* pasteboard,
   DCHECK(node);
 
   RefPtr<Image> image = ImageFromNode(*node);
-  if (!image.Get())
+  if (!image.get())
     return;
 
   // FIXME: This should probably be reconciled with
@@ -619,7 +619,7 @@ static void WriteImageNodeToPasteboard(Pasteboard* pasteboard,
                  : node->GetDocument().CompleteURL(
                        StripLeadingAndTrailingHTMLSpaces(url_string));
 
-  pasteboard->WriteImage(image.Get(), url, title);
+  pasteboard->WriteImage(image.get(), url, title);
 }
 
 // Returns whether caller should continue with "the default processing", which
