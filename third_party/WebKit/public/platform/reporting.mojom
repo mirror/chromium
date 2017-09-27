@@ -22,4 +22,11 @@ interface ReportingServiceProxy {
                          string message,
                          string source_file,
                          int32 line_number);
+                         
+  QueueCspViolationReport(url.mojom.Url url,
+                          string group,  
+                          string message,
+                          string source_file,
+                          int32 line_number);
+                           
 };
