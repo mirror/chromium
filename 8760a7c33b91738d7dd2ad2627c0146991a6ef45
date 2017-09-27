@@ -46,6 +46,30 @@
       "revId": "8760a7c33b91738d7dd2ad2627c0146991a6ef45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e79dcca5_7a006845",
+        "filename": "chrome/browser/chromeos/system_logs/single_log_file_log_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1000329
+      },
+      "writtenOn": "2017-09-27T19:29:49Z",
+      "side": 1,
+      "message": "I\u0027m fine with this as it is.",
+      "parentUuid": "5e303e3b_a5782ce6",
+      "range": {
+        "startLine": 197,
+        "startChar": 59,
+        "endLine": 197,
+        "endChar": 71
+      },
+      "revId": "8760a7c33b91738d7dd2ad2627c0146991a6ef45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
