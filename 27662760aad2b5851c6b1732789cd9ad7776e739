@@ -63,6 +63,24 @@
       "revId": "27662760aad2b5851c6b1732789cd9ad7776e739",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6138967_f247ece5",
+        "filename": "content/renderer/media/user_media_client_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-27T14:31:52Z",
+      "side": 1,
+      "message": "No, it wouldn\u0027t. \nThis else is basically a minor drive-by optimization.\nThe request cannot be processed and in the queue at the same time, so if the request was deleted from |user_media_processor_| the loop can be skipped.",
+      "parentUuid": "0c3d3164_863422b2",
+      "revId": "27662760aad2b5851c6b1732789cd9ad7776e739",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
