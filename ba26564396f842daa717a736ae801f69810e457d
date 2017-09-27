@@ -16,6 +16,24 @@
       "revId": "ba26564396f842daa717a736ae801f69810e457d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28116f3d_44044f92",
+        "filename": "ash/login/lock_screen_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-09-27T18:07:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00a65caf_56b2d4fb",
+      "revId": "ba26564396f842daa717a736ae801f69810e457d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
