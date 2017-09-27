@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "160c6b5a_7e9ff21f",
+        "filename": "third_party/WebKit/LayoutTests/fast/dom/inert/inert-inlines.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-27T14:05:50Z",
+      "side": 1,
+      "message": "nit: or even\n\nfor (let id of inertElements) {\n  // ...\n}",
+      "revId": "1792cbd125408d65d4b3eb33479c2e97e4adbcae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34126624_017e1723",
+        "filename": "third_party/WebKit/LayoutTests/fast/dom/inert/inert-inlines.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-27T14:05:50Z",
+      "side": 1,
+      "message": "super-nit: \"var\" for this and the below one as well? (or just use \"document\" at its two uses)",
+      "revId": "1792cbd125408d65d4b3eb33479c2e97e4adbcae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
