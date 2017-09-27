@@ -5,6 +5,22 @@
 #include "ui/views/paint_info.h"
 
 namespace views {
+namespace {
+
+// Layer's paint info should use the corner scaling logic to compute
+// the recording which is what Views uses to compte the view's
+// paint_recording_bounds_, with exception that a view touches the right/bottom
+// edges of the parent, and its layer has to be able to paint to these
+// edges. Such cases should be handled case by case basis.
+gfx::Rect GetLayerRecordingBounds(const ui::PaintContext& context,
+                                  const gfx::Rect bounds) {
+  if (!context.is_pixel_canvas())
+    return gfx::Rect(bounds.size());
+  return gfx::Rect(
+      gfx::ScaleToRoundedRect(bounds, context.device_scale_factor()).size());
+}
+
+}  // namespace
 
 // static
 PaintInfo PaintInfo::CreateRootPaintInfo(const ui::PaintContext& root_context,
@@ -16,8 +32,10 @@ PaintInfo PaintInfo::CreateRootPaintInfo(const ui::PaintContext& root_context,
 PaintInfo PaintInfo::CreateChildPaintInfo(const PaintInfo& parent_paint_info,
                                           const gfx::Rect& bounds,
                                           const gfx::Size& parent_size,
-                                          ScaleType scale_type) {
-  return PaintInfo(parent_paint_info, bounds, parent_size, scale_type);
+                                          ScaleType scale_type,
+                                          bool is_layer) {
+  return PaintInfo(parent_paint_info, bounds, parent_size, scale_type,
+                   is_layer);
 }
 
 PaintInfo::~PaintInfo() {}
@@ -34,6 +52,8 @@ PaintInfo::PaintInfo(const PaintInfo& other)
       context_(other.context(), gfx::Vector2d()),
       root_context_(nullptr) {}
 
+// The root layer should use the ScaleToEnclosingRect, the same logic that
+// cc(chrome compositor) is using.
 PaintInfo::PaintInfo(const ui::PaintContext& root_context,
                      const gfx::Size& size)
     : paint_recording_scale_x_(root_context.is_pixel_canvas()
@@ -41,18 +61,22 @@ PaintInfo::PaintInfo(const ui::PaintContext& root_context,
                                    : 1.f),
       paint_recording_scale_y_(paint_recording_scale_x_),
       paint_recording_bounds_(
-          gfx::ScaleToRoundedRect(gfx::Rect(size), paint_recording_scale_x_)),
+          gfx::ScaleToEnclosingRect(gfx::Rect(size), paint_recording_scale_x_)),
       context_(root_context, gfx::Vector2d()),
       root_context_(&root_context) {}
 
 PaintInfo::PaintInfo(const PaintInfo& parent_paint_info,
                      const gfx::Rect& bounds,
                      const gfx::Size& parent_size,
-                     ScaleType scale_type)
+                     ScaleType scale_type,
+                     bool is_layer)
     : paint_recording_scale_x_(1.f),
       paint_recording_scale_y_(1.f),
       paint_recording_bounds_(
-          parent_paint_info.GetSnappedRecordingBounds(parent_size, bounds)),
+          is_layer
+              ? GetLayerRecordingBounds(parent_paint_info.context(), bounds)
+              : parent_paint_info.GetSnappedRecordingBounds(parent_size,
+                                                            bounds)),
       offset_from_parent_(
           paint_recording_bounds_.OffsetFromOrigin() -
           parent_paint_info.paint_recording_bounds_.OffsetFromOrigin()),
