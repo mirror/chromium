@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f193bdbc_e0823803",
+        "filename": "chrome/browser/chromeos/policy/cloud_external_data_policy_observer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-09-27T22:07:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d1d56e0_dfd5b086",
+      "range": {
+        "startLine": 671,
+        "startChar": 2,
+        "endLine": 671,
+        "endChar": 39
+      },
+      "revId": "1b994c46ae04c85b8da85b9fc10252fd429ede9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b3dd180_5836f3c9",
         "filename": "chrome/browser/chromeos/policy/cloud_external_data_policy_observer_unittest.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-27T13:08:20Z",
       "side": 1,
       "message": "nit: This is safe to be EXPECT_EQ, and it\u0027s normally preferred to do that in such cases (as assertions terminate the test completely, without running through all other expectations).\nDitto for lines 822, 886.",
+      "range": {
+        "startLine": 672,
+        "startChar": 2,
+        "endLine": 672,
+        "endChar": 11
+      },
+      "revId": "1b994c46ae04c85b8da85b9fc10252fd429ede9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a68e031_2767f1b3",
+        "filename": "chrome/browser/chromeos/policy/cloud_external_data_policy_observer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-09-27T22:07:38Z",
+      "side": 1,
+      "message": "Replace all ASSERT_EQ with EXPECT_EQ in this file.",
+      "parentUuid": "8b3dd180_5836f3c9",
       "range": {
         "startLine": 672,
         "startChar": 2,
