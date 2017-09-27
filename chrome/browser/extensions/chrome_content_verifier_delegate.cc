@@ -21,6 +21,7 @@
 #include "base/version.h"
 #include "build/build_config.h"
 #include "chrome/browser/extensions/extension_service.h"
+#include "chrome/browser/extensions/install_verifier.h"
 #include "chrome/browser/extensions/policy_extension_reinstaller.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/extensions/extension_constants.h"
@@ -130,7 +131,7 @@ ContentVerifierDelegate::Mode ChromeContentVerifierDelegate::ShouldBeVerified(
   if (!Manifest::IsAutoUpdateableLocation(extension.location()))
     return ContentVerifierDelegate::NONE;
 
-  if (!ManifestURL::UpdatesFromGallery(&extension)) {
+  if (!InstallVerifier::IsFromStore(extension)) {
     // It's possible that the webstore update url was overridden for testing
     // so also consider extensions with the default (production) update url
     // to be from the store as well.
