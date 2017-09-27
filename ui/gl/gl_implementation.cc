@@ -55,6 +55,28 @@ void CleanupNativeLibraries(void* unused) {
   }
 }
 
+std::string GetGLExtensionsFromCurrentContext(GLApi* api,
+                                              GLenum extensions_enum,
+                                              GLenum num_extensions_enum) {
+  if (WillUseGLGetStringForExtensions(api)) {
+    const char* extensions =
+        reinterpret_cast<const char*>(api->glGetStringFn(extensions_enum));
+    return extensions ? std::string(extensions) : std::string();
+  }
+
+  GLint num_extensions = 0;
+  api->glGetIntegervFn(num_extensions_enum, &num_extensions);
+
+  std::vector<base::StringPiece> exts(num_extensions);
+  for (GLint i = 0; i < num_extensions; ++i) {
+    const char* extension =
+        reinterpret_cast<const char*>(api->glGetStringiFn(extensions_enum, i));
+    DCHECK(extension != NULL);
+    exts[i] = extension;
+  }
+  return base::JoinString(exts, " ");
+}
+
 }  // namespace
 
 base::ThreadLocalPointer<CurrentGL>* g_current_gl_context_tls = NULL;
@@ -196,23 +218,17 @@ std::string GetGLExtensionsFromCurrentContext() {
 }
 
 std::string GetGLExtensionsFromCurrentContext(GLApi* api) {
-  if (WillUseGLGetStringForExtensions(api)) {
-    const char* extensions =
-        reinterpret_cast<const char*>(api->glGetStringFn(GL_EXTENSIONS));
-    return extensions ? std::string(extensions) : std::string();
-  }
+  return GetGLExtensionsFromCurrentContext(api, GL_EXTENSIONS,
+                                           GL_NUM_EXTENSIONS);
+}
 
-  GLint num_extensions = 0;
-  api->glGetIntegervFn(GL_NUM_EXTENSIONS, &num_extensions);
+std::string GetRequestableGLExtensionsFromCurrentContext() {
+  return GetRequestableGLExtensionsFromCurrentContext(g_current_gl_context);
+}
 
-  std::vector<base::StringPiece> exts(num_extensions);
-  for (GLint i = 0; i < num_extensions; ++i) {
-    const char* extension =
-        reinterpret_cast<const char*>(api->glGetStringiFn(GL_EXTENSIONS, i));
-    DCHECK(extension != NULL);
-    exts[i] = extension;
-  }
-  return base::JoinString(exts, " ");
+std::string GetRequestableGLExtensionsFromCurrentContext(GLApi* api) {
+  return GetGLExtensionsFromCurrentContext(api, GL_REQUESTABLE_EXTENSIONS_ANGLE,
+                                           GL_NUM_REQUESTABLE_EXTENSIONS_ANGLE);
 }
 
 bool WillUseGLGetStringForExtensions() {
