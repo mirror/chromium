@@ -22,6 +22,30 @@
       "revId": "0aea73dd6299af05d30330bc87260235a4fd11e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c9ff779_96ee294e",
+        "filename": "content/public/browser/webvr_service_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-27T17:57:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d54b2ae7_9f93e9e1",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 18
+      },
+      "revId": "0aea73dd6299af05d30330bc87260235a4fd11e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
