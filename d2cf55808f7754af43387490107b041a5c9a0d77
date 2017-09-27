@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3eb45dd8_5537873c",
+        "filename": "components/error_page_strings.grdp",
+        "patchSetId": 7
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1242012
+      },
+      "writtenOn": "2017-09-27T05:14:51Z",
+      "side": 1,
+      "message": "Done the changes.",
+      "parentUuid": "d515bf4b_8a8f940e",
+      "range": {
+        "startLine": 153,
+        "startChar": 98,
+        "endLine": 153,
+        "endChar": 100
+      },
+      "revId": "d2cf55808f7754af43387490107b041a5c9a0d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "261d54b9_9da2459d",
         "filename": "components/error_page_strings.grdp",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-25T14:22:46Z",
       "side": 1,
       "message": "\"could not be found\" is kind of vague, but that\u0027s not your problem. I\u0027m happy with the \"server IP address\", which is what you changed.",
+      "range": {
+        "startLine": 154,
+        "startChar": 126,
+        "endLine": 154,
+        "endChar": 144
+      },
+      "revId": "d2cf55808f7754af43387490107b041a5c9a0d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6b2f3655_000b7cda",
+        "filename": "components/error_page_strings.grdp",
+        "patchSetId": 7
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1242012
+      },
+      "writtenOn": "2017-09-27T05:14:51Z",
+      "side": 1,
+      "message": "Not changing anything for this as of now. Please let me know if you want me to address this.",
+      "parentUuid": "261d54b9_9da2459d",
       "range": {
         "startLine": 154,
         "startChar": 126,
