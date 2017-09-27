@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "4907b87f_21be04d5",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-09-27T10:35:54Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s a limitation coming from tracing. It is intended that renderer.scheduler.debug matters only when renderer.scheduler.verbose is enabled.\n\nI wonder if we can improve naming a bit. Should we have renderer.scheduler.debug for generating lightweight(-ish) snapshots (as renderer.scheduler.verbose does now) and have renderer.scheduler.enable_verbose_snapshots which will make snapshots in the aforementioned category larger?",
+      "parentUuid": "d4b576fd_1fbdcbb5",
+      "range": {
+        "startLine": 483,
+        "startChar": 2,
+        "endLine": 483,
+        "endChar": 7
+      },
+      "revId": "8ef6638643eb57f40d9d751d014130271eb5b4ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c76b237f_02f42eb3",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
         "patchSetId": 3
