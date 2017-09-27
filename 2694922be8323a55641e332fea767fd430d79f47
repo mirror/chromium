@@ -16,6 +16,24 @@
       "revId": "2694922be8323a55641e332fea767fd430d79f47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41aa8030_26361b9c",
+        "filename": "ui/gl/gl_implementation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-09-27T21:21:24Z",
+      "side": 1,
+      "message": "Done.  These new functions return an ExtensionSet and you can update the others to do the same using the same internal helper once the tests are ready.",
+      "parentUuid": "15799aae_7fc0128f",
+      "revId": "2694922be8323a55641e332fea767fd430d79f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
