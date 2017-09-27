@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fe64da1d_3f207997",
+        "filename": "base/win/core_winrt_util.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-27T00:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f7a3a8e_665f3804",
+      "revId": "f51298346115c2798686d6df2e325003eb54cee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a028c3c_f1be7575",
         "filename": "base/win/core_winrt_util.cc",
         "patchSetId": 20
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "32f1810e_f2783bec",
+        "filename": "base/win/core_winrt_util.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-27T00:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a028c3c_f1be7575",
+      "revId": "f51298346115c2798686d6df2e325003eb54cee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "398b0f88_aca5e6f7",
         "filename": "base/win/core_winrt_util.cc",
         "patchSetId": 20
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-26T20:30:27Z",
       "side": 1,
       "message": "are the Resolve* functions needed? it seems like less typing without:\n\nvoid* LoadComBaseFunction(const char* function_name) {\n  static HMODULE const handle \u003d ::LoadLibrary(L\"combase.dll\");\n  return handle ? ::GetProcAddress(handle, function_name) : nullptr;\n}\n\ndecltype(\u0026::RoActivateInstance) GetRoActivateInstanceFunction() {\n  static decltype(\u0026::RoActivateInstance) const function \u003d []() {\n    return reinterpret_cast\u003cdecltype(\u0026::RoActivateInstance)\u003e(\n        LoadComBaseFunction(\"RoActivateInstance\"));\n  }();\n  return function;\n}\n\ndecltype(\u0026::RoGetActivationFactory) GetRoGetActivationFactoryFunction() {\n  static decltype(\u0026::RoGetActivationFactory) const function \u003d []() {\n    return reinterpret_cast\u003cdecltype(\u0026::RoGetActivationFactory)\u003e(\n        LoadComBaseFunction(\"RoGetActivationFactory\"));\n  }();\n  return function;\n}\n\nthen again, i don\u0027t really love the way there\u0027s a separate static for each function since each has its own overhead. maybe add a todo (or file a bug) to follow this CL with one that manages N loaded functions in a single static variable.",
+      "revId": "f51298346115c2798686d6df2e325003eb54cee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "886b22e3_51d1ec97",
+        "filename": "base/win/core_winrt_util.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-27T00:38:42Z",
+      "side": 1,
+      "message": "I\u0027m not sure what you mean by having a single static variable, but the rest is done.",
+      "parentUuid": "398b0f88_aca5e6f7",
       "revId": "f51298346115c2798686d6df2e325003eb54cee8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "fbfb1b31_20c88cc7",
+        "filename": "base/win/core_winrt_util.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-27T00:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "399ff97d_ac41fa53",
+      "range": {
+        "startLine": 76,
+        "startChar": 6,
+        "endLine": 76,
+        "endChar": 13
+      },
+      "revId": "f51298346115c2798686d6df2e325003eb54cee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc948fbb_c8003463",
         "filename": "base/win/scoped_hstring.cc",
         "patchSetId": 20
@@ -87,6 +165,24 @@
       "writtenOn": "2017-09-26T20:30:27Z",
       "side": 1,
       "message": "these next three functions should be in an unnamed namespace since they are not used outside of this .cc file.",
+      "revId": "f51298346115c2798686d6df2e325003eb54cee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5471295_a27c8d54",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-27T00:38:42Z",
+      "side": 1,
+      "message": "This was covered in a previous comment -- they conflict with the Microsoft definition (winstring.h file) if they are in the anonymous namespace.",
+      "parentUuid": "cc948fbb_c8003463",
       "revId": "f51298346115c2798686d6df2e325003eb54cee8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "acc5571a_ac127004",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-27T00:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85896d2b_0ecb820c",
+      "revId": "f51298346115c2798686d6df2e325003eb54cee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30d52a72_25040191",
         "filename": "base/win/scoped_hstring.h",
         "patchSetId": 20
@@ -124,6 +238,24 @@
       "revId": "f51298346115c2798686d6df2e325003eb54cee8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8b8b0fe_a7038101",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-27T00:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30d52a72_25040191",
+      "revId": "f51298346115c2798686d6df2e325003eb54cee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -150,6 +282,30 @@
     },
     {
       "key": {
+        "uuid": "1e70c779_952a1d61",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-27T00:38:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad911fcc_0f21d927",
+      "range": {
+        "startLine": 67,
+        "startChar": 2,
+        "endLine": 67,
+        "endChar": 8
+      },
+      "revId": "f51298346115c2798686d6df2e325003eb54cee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4518921e_a5f16f4b",
         "filename": "base/win/win_util.cc",
         "patchSetId": 20
@@ -167,6 +323,24 @@
     },
     {
       "key": {
+        "uuid": "3860472d_70bc8e8d",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-27T00:38:42Z",
+      "side": 1,
+      "message": "No, if you look at the old implementation it gracefully handles LoadLibrary failing by returning false and not CHECK()ing. I\u0027m kind of leaning towards changing that behavior being outside the scope of this CL as I don\u0027t know what will happen if I do change it (well, I know some tests will fail on Win7 for starters). :)\n\nI think it is better to leave that kind of change out of this CL so that it won\u0027t suffer... :)",
+      "parentUuid": "4518921e_a5f16f4b",
+      "revId": "f51298346115c2798686d6df2e325003eb54cee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1681941_5d539296",
         "filename": "base/win/win_util.cc",
         "patchSetId": 20
@@ -178,6 +352,24 @@
       "writtenOn": "2017-09-26T20:30:27Z",
       "side": 1,
       "message": "this doesn\u0027t make sense since CHECK will crash the process. do you mean:\n  CHECK(preload_success);\nin place of lines 111-114?",
+      "revId": "f51298346115c2798686d6df2e325003eb54cee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9cc80f2_34e0b0a5",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-27T00:38:42Z",
+      "side": 1,
+      "message": "Dunno. This is in line with the old implementation... Apparently someone really wanted to know if combase.dll could be loaded but the functions could not.",
+      "parentUuid": "d1681941_5d539296",
       "revId": "f51298346115c2798686d6df2e325003eb54cee8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
