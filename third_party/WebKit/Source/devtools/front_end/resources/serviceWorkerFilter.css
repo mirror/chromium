@@ -1,0 +1,78 @@
+.sw-filter {
+    padding-right: 20px;
+}
+
+.sw-filter-show-all-checkbox {
+    height: 1px;
+    width: 1px;
+    margin: 0;
+}
+
+.sw-filter-label {
+    margin-left: 4px;
+}
+
+.sw-filter-label::before {
+    -webkit-user-select: none;
+    -webkit-mask-image: url(Images/treeoutlineTriangles.png);
+    -webkit-mask-size: 32px 24px;
+    content: "aa";
+    color: transparent;
+    background-color: rgb(110, 110, 110);
+    text-shadow: none;
+    height: 12px;
+}
+
+@media (-webkit-min-device-pixel-ratio: 1.1) {
+.sw-filter-label::before {
+    -webkit-mask-image: url(Images/treeoutlineTriangles_2x.png);
+}
+} /* media */
+
+.sw-filter-show-all-checkbox:checked + .sw-filter-label::before {
+    -webkit-mask-position: -16px 0;
+}
+
+.sw-filter-input {
+    align-content: center;
+    align-items: center;
+    background-color: white;
+    border: solid 1px #d8d8d8;
+    border-radius: 2px;
+    display: flex;
+    height: 20px;
+    margin: 24px 10px 8px 16px;
+    max-width: 520px;
+    padding: 3px;
+    width: 100%;
+}
+
+.sw-filter-collapsed .sw-filter-input {
+    display: none;
+}
+
+.sw-filter-input.focused,
+.sw-filter-input.hover {
+    border: solid 1px rgb(202, 202, 202);
+}
+
+.sw-filter-input > input {
+    border: none;
+    flex-grow: 1;
+}
+
+.sw-filter-clear-button {
+    flex-basis: 14px;
+    flex-shrink: 0;
+    height: 100%;
+    margin-top: -3px;
+    opacity: 0.7;
+}
+
+.sw-filter-clear-button:hover {
+    opacity: 1;
+}
+
+.sw-filter-input-empty .sw-filter-clear-button {
+    display: none;
+}

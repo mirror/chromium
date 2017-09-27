@@ -507,6 +507,8 @@ all_devtools_files = [
   "front_end/resources/DatabaseTableView.js",
   "front_end/resources/DOMStorageItemsView.js",
   "front_end/resources/DOMStorageModel.js",
+  "front_end/resources/ServiceWorkerFilter.js",
+  "front_end/resources/serviceWorkerFilter.css",
   "front_end/resources/IndexedDBModel.js",
   "front_end/resources/indexedDBViews.css",
   "front_end/resources/IndexedDBViews.js",
