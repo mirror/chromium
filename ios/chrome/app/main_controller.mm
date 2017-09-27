@@ -362,7 +362,7 @@ const int kExternalFilesCleanupDelaySeconds = 60;
 // |currentBVC| can be made active.
 - (void)activateBVCAndMakeCurrentBVCPrimary;
 // Sets |currentBVC| as the root view controller for the window.
-- (void)displayCurrentBVC;
+- (void)displayCurrentBVC:(ProceduralBlock)completion;
 // Invokes the sign in flow with the specified authentication operation and
 // invokes |callback| when finished.
 - (void)showSigninWithOperation:(AuthenticationOperation)operation
@@ -1666,11 +1666,12 @@ const int kExternalFilesCleanupDelaySeconds = 60;
   DCHECK(_browserViewWrangler);
   [_browserViewWrangler setCurrentBVC:bvc storageSwitcher:self];
 
-  if (!_dismissingStackView)
-    [self displayCurrentBVC];
-
-  // Tell the BVC that was made current that it can use the web.
-  [self activateBVCAndMakeCurrentBVCPrimary];
+  if (!_dismissingStackView) {
+    [self displayCurrentBVC:^{
+        // Tell the BVC that was made current that it can use the web.
+        [self activateBVCAndMakeCurrentBVCPrimary];
+      }];
+  }
 }
 
 #pragma mark - Tab closure handlers
@@ -1741,9 +1742,9 @@ const int kExternalFilesCleanupDelaySeconds = 60;
   [self switchGlobalStateToMode:mode];
 }
 
-- (void)displayCurrentBVC {
+- (void)displayCurrentBVC:(ProceduralBlock)completion {
   [self.mainViewController setActiveViewController:self.currentBVC
-                                        completion:nil];
+                                        completion:completion];
 }
 
 - (TabModel*)currentTabModel {
@@ -1808,14 +1809,16 @@ const int kExternalFilesCleanupDelaySeconds = 60;
                                              otrBVC:self.otrBVC];
     [_tabSwitcherController setTransitionContext:transitionContext];
     [self.mainViewController setActiveViewController:_tabSwitcherController
-                                          completion:nil];
-    [_tabSwitcherController showWithSelectedTabAnimation];
+         completion:^{
+        [_tabSwitcherController showWithSelectedTabAnimation];
+      }];
   } else {
     // User interaction is disabled when the stack controller is dismissed.
     [[_tabSwitcherController view] setUserInteractionEnabled:YES];
     [self.mainViewController setActiveViewController:_tabSwitcherController
-                                          completion:nil];
-    [_tabSwitcherController showWithSelectedTabAnimation];
+         completion:^{
+        [_tabSwitcherController showWithSelectedTabAnimation];
+      }];
   }
 }
 
@@ -1909,20 +1912,20 @@ const int kExternalFilesCleanupDelaySeconds = 60;
 
   _modeToDisplayOnStackViewDismissal = StackViewDismissalMode::NONE;
 
-  // Displaying the current BVC dismisses the stack view.
-  [self displayCurrentBVC];
-
   ProceduralBlock action = [self completionBlockForTriggeringAction:
-                                     self.NTPActionAfterTabSwitcherDismissal];
+                                   self.NTPActionAfterTabSwitcherDismissal];
   self.NTPActionAfterTabSwitcherDismissal = NO_ACTION;
-  if (action) {
-    action();
-  }
 
-  [_tabSwitcherController setDelegate:nil];
+  // Displaying the current BVC dismisses the stack view.
+  [self displayCurrentBVC:^{
+      if (action) {
+        action();
+      }
 
-  _tabSwitcherIsActive = NO;
-  _dismissingStackView = NO;
+      [_tabSwitcherController setDelegate:nil];
+      _tabSwitcherIsActive = NO;
+      _dismissingStackView = NO;
+    }];
 }
 
 - (void)tabSwitcherPresentationTransitionDidEnd:(id<TabSwitcher>)tabSwitcher {

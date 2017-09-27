@@ -680,7 +680,7 @@ UIImage* ImageWithName(NSString* image_name, BOOL is_incognito) {
 
 - (void)updateImageBoundsAndZoom {
   UIImageView* imageView = _contents;
-  DCHECK(!CGRectEqualToRect(self.bounds, CGRectZero));
+  //DCHECK(!CGRectEqualToRect(self.bounds, CGRectZero));
 
   imageView.frame = UIEdgeInsetsInsetRect(self.bounds, kCardImageInsets);
   if (imageView.image) {

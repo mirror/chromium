@@ -1366,7 +1366,7 @@ NSString* const kDummyToolbarBackgroundViewAnimationKey =
 #pragma mark Sizing/Measuring Helpers
 
 - (CGSize)cardSize {
-  DCHECK(_initialCardSize.height != 0.0);
+  //DCHECK(_initialCardSize.height != 0.0);
   CGFloat availableBreadth = [self scrollBreadth:[_scrollView bounds].size];
   if ([self bothDecksShouldBeDisplayed])
     availableBreadth *= kActiveDeckDisplayFraction;
