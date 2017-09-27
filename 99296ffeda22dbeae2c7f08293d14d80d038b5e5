@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52663512_556469a7",
+        "filename": "chrome/test/chromedriver/session_commands.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-09-27T21:18:24Z",
+      "side": 1,
+      "message": "According to https://w3c.github.io/webdriver/webdriver-spec.html#switch-to-window, the error should be invalid argument.",
+      "range": {
+        "startLine": 451,
+        "startChar": 20,
+        "endLine": 451,
+        "endChar": 33
+      },
+      "revId": "99296ffeda22dbeae2c7f08293d14d80d038b5e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
