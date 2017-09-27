@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d5aa702_30147821",
+        "filename": "media/mojo/common/mojo_decoder_buffer_converter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-27T05:57:58Z",
+      "side": 1,
+      "message": "nit: If you use ScopedCallbackRunner() to wrap the pending ReadCBs, then you can just call\npending_read_cbs_.clear() here. Then this function becomes trivial and you can probably fold everything into OnPipeError().",
+      "range": {
+        "startLine": 95,
+        "startChar": 4,
+        "endLine": 95,
+        "endChar": 58
+      },
+      "revId": "b7a193bc4edf7583a6bf1f73432b958772bea7d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f95271a3_da7fde61",
+        "filename": "media/mojo/common/mojo_decoder_buffer_converter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-27T05:57:58Z",
+      "side": 1,
+      "message": "CancleAllPendingReads() is only called in OnPipeError(), which I *think* will always be called asynchronously. So ISTM we shouldn\u0027t have reentrancy issue here. Or are you thinking about something else?",
+      "revId": "b7a193bc4edf7583a6bf1f73432b958772bea7d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

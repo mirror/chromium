@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "d0c6717b_9358d8a0",
+        "filename": "media/mojo/common/mojo_decoder_buffer_converter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-27T05:57:58Z",
+      "side": 1,
+      "message": "Thanks for looking into this. Can you update the documentation on Arm() or ArmOrNotify() to cover the 3rd case? Then add rockot@ to review the change, just to make sure we are understanding it correctly.",
+      "parentUuid": "80d67d16_90ed27e6",
+      "revId": "f4c06dcf474da9a9d8cfb6af5fa516f5bd6956df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3122570a_e751c149",
         "filename": "media/mojo/common/mojo_decoder_buffer_converter.cc",
         "patchSetId": 1
