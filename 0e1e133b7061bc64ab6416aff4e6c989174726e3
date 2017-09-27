@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "291c1eb4_37bc948f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1628,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-27T01:32:55Z",
+      "side": 1,
+      "message": "It sounds like Changwan is proposing a global Chrome/Webview feature that we can use to de/activate smart select, which seems like a reasonable approach to me.",
+      "parentUuid": "39bdc7c7_241bb69d",
+      "range": {
+        "startLine": 1628,
+        "startChar": 45,
+        "endLine": 1628,
+        "endChar": 92
+      },
+      "revId": "0e1e133b7061bc64ab6416aff4e6c989174726e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72d0c43b_d22ca936",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
         "patchSetId": 3
@@ -258,6 +282,30 @@
       "revId": "0e1e133b7061bc64ab6416aff4e6c989174726e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "612e1196_0dcd1b0e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1633,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-27T01:32:55Z",
+      "side": 1,
+      "message": "I thought we had discussed that once CS was showing, it should continue processing the gesture stream. If CS starts with a tap-gesture that turns into a long-press, it continues processing until it\u0027s hidden due to a base page tap or cleared selection.\n\nDid we decide to go a different direction?",
+      "parentUuid": "399daf7e_676aa661",
+      "range": {
+        "startLine": 1632,
+        "startChar": 20,
+        "endLine": 1633,
+        "endChar": 67
+      },
+      "revId": "0e1e133b7061bc64ab6416aff4e6c989174726e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
