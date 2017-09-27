@@ -177,14 +177,12 @@ TEST_F(ServiceWorkerRegistrationTest, SetAndUnsetVersions) {
 TEST_F(ServiceWorkerRegistrationTest, FailedRegistrationNoCrash) {
   const GURL kScope("http://www.example.not/");
   int64_t kRegistrationId = 1L;
-  scoped_refptr<ServiceWorkerRegistration> registration =
-      new ServiceWorkerRegistration(
-          blink::mojom::ServiceWorkerRegistrationOptions(kScope),
-          kRegistrationId, context()->AsWeakPtr());
-  std::unique_ptr<ServiceWorkerRegistrationHandle> handle(
-      new ServiceWorkerRegistrationHandle(
-          context()->AsWeakPtr(), base::WeakPtr<ServiceWorkerProviderHost>(),
-          registration.get()));
+  auto registration = base::MakeRefCounted<ServiceWorkerRegistration>(
+      blink::mojom::ServiceWorkerRegistrationOptions(kScope), kRegistrationId,
+      context()->AsWeakPtr());
+  auto handle = std::make_unique<ServiceWorkerRegistrationHandle>(
+      context()->AsWeakPtr(), nullptr /* dispatcher_host */,
+      base::WeakPtr<ServiceWorkerProviderHost>(), registration.get());
   registration->NotifyRegistrationFailed();
   // Don't crash when handle gets destructed.
 }
