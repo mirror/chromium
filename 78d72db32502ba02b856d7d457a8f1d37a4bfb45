@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34512e58_444490e5",
+        "filename": "chrome/browser/ui/cocoa/scoped_menu_bar_lock.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-27T21:39:40Z",
+      "side": 1,
+      "message": "We generally omit namespaces for things in //chrome",
+      "revId": "78d72db32502ba02b856d7d457a8f1d37a4bfb45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -154,6 +154,24 @@
     },
     {
       "key": {
+        "uuid": "dcebb554_d3ad866e",
+        "filename": "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_mouse_tracker.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-27T21:39:40Z",
+      "side": 1,
+      "message": "I don\u0027t have a strong opinion, so I\u0027ll defer to Sarah who wrote this class.",
+      "parentUuid": "a555ce98_79b0a25c",
+      "revId": "272e704388e918185d00949826641887c3f2ec07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ae29fa2_baefd807",
         "filename": "ui/base/cocoa/scoped_menu_bar_lock.h",
         "patchSetId": 2
