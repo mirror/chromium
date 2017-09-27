@@ -16,6 +16,24 @@
       "revId": "da58446fcaf726dcc24326c7bc4a893760f2c8ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de89f07d_fd02d8b4",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorClient.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-09-27T23:06:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03b903fe_21e90b55",
+      "revId": "da58446fcaf726dcc24326c7bc4a893760f2c8ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
