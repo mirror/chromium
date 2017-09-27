@@ -189,6 +189,9 @@ public abstract class ChromeSwitches {
     /** Switch for enabling downloads as a foreground service for all versions of Android. */
     public static final String ENABLE_DOWNLOADS_FOREGROUND = "enable-downloads-foreground";
 
+    /** Disables expiring histograms for testing. */
+    public static final String DISABLE_EXPIRING_HISTOGRAMS = "disable-expiring-histograms";
+
     // Prevent instantiation.
     private ChromeSwitches() {}
 }
