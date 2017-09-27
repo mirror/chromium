@@ -159,6 +159,30 @@
     },
     {
       "key": {
+        "uuid": "608ae181_46fdb300",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-09-27T20:24:36Z",
+      "side": 1,
+      "message": "we have \nArcAppListPrefs\nstatic std::string GetAppId(const std::string\u0026 package_name,\n                            const std::string\u0026 activity)\nNote, you may access to only registered apps (LAUNCHABLE)\nFor example is package has 2 activities.\nActivity A - Launchable\nActivity B - Private\nthen only Activity A is visible in app launcher and can be launch-able as app_id.\n\nIf you need to launch private activity you better use launch intent (usually private activities require extra parameters, that is why launch intent is preferable).",
+      "parentUuid": "33ff3d21_4d093a82",
+      "range": {
+        "startLine": 138,
+        "startChar": 4,
+        "endLine": 138,
+        "endChar": 42
+      },
+      "revId": "e0dc21e820c5552a2881581656ff0ed16c09293b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23637b2b_1e0fe11d",
         "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
         "patchSetId": 7
