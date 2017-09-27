@@ -282,6 +282,9 @@ class FormStructure {
   // Further processes the extracted |fields_|.
   void ProcessExtractedFields();
 
+  // Returns true if this form contains credit card fields.
+  bool HasCreditCardFields() const;
+
   // Returns the longest common prefix found within |strings|. Strings below a
   // threshold length are excluded when performing this check; this is needed
   // because an exceptional field may be missing a prefix which is otherwise

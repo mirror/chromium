@@ -739,21 +739,21 @@ void AutofillMetrics::LogFormFillDurationFromLoadWithoutAutofill(
 }
 
 // static
-void AutofillMetrics::LogFormFillDurationFromInteractionWithAutofill(
+void AutofillMetrics::LogFormFillDurationFromInteraction(
+    bool is_credit_card_form,
+    bool used_autofill,
     const base::TimeDelta& duration) {
-  UMA_HISTOGRAM_CUSTOM_TIMES(
-      "Autofill.FillDuration.FromInteraction.WithAutofill", duration,
-      base::TimeDelta::FromMilliseconds(100), base::TimeDelta::FromMinutes(10),
-      50);
-}
-
-// static
-void AutofillMetrics::LogFormFillDurationFromInteractionWithoutAutofill(
-    const base::TimeDelta& duration) {
-  UMA_HISTOGRAM_CUSTOM_TIMES(
-      "Autofill.FillDuration.FromInteraction.WithoutAutofill", duration,
-      base::TimeDelta::FromMilliseconds(100), base::TimeDelta::FromMinutes(10),
-      50);
+  static const char* const kMetricNames[4] = {
+      "Autofill.FillDuration.FromInteraction.WithoutAutofill.Address",
+      "Autofill.FillDuration.FromInteraction.WithAutofill.Address"
+      "Autofill.FillDuration.FromInteraction.WithoutAutofill.CreditCard",
+      "Autofill.FillDuration.FromInteraction.WithAutofill.CreditCard",
+  };
+  int index = (static_cast<int>(is_credit_card_form) << 1) +
+              static_cast<int>(used_autofill);
+  UMA_HISTOGRAM_CUSTOM_TIMES(kMetricNames[index], duration,
+                             base::TimeDelta::FromMilliseconds(100),
+                             base::TimeDelta::FromMinutes(10), 50);
 }
 
 // static
