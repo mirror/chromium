@@ -30,6 +30,7 @@
 #include "chrome/test/base/ui_test_utils.h"
 #include "components/signin/core/browser/account_reconcilor.h"
 #include "components/signin/core/browser/account_tracker_service.h"
+#include "components/signin/core/browser/dice_header_helper.h"
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
 #include "components/signin/core/browser/scoped_account_consistency.h"
 #include "components/signin/core/browser/signin_header_helper.h"
@@ -477,10 +478,12 @@ IN_PROC_BROWSER_TEST_F(DiceBrowserTest, Signin) {
   NavigateToURL(kSigninURL);
 
   // Check that the Dice request header was sent.
-  EXPECT_EQ(base::StringPrintf(
-                "client_id=%s",
-                GaiaUrls::GetInstance()->oauth2_chrome_client_id().c_str()),
-            dice_request_header_);
+  std::string client_id = GaiaUrls::GetInstance()->oauth2_chrome_client_id();
+  EXPECT_EQ(
+      base::StringPrintf("version=%s,client_id=%s,signin_mode=all_accounts,"
+                         "signout_mode=show_confirmation",
+                         signin::kDiceProtocolVersion, client_id.c_str()),
+      dice_request_header_);
 
   // Check that the token was requested and added to the token service.
   WaitForTokenReceived();
@@ -511,10 +514,12 @@ IN_PROC_BROWSER_TEST_F(DiceBrowserTest, MAYBE_Reauth) {
   NavigateToURL(kSigninURL);
 
   // Check that the Dice request header was sent.
-  EXPECT_EQ(base::StringPrintf(
-                "client_id=%s",
-                GaiaUrls::GetInstance()->oauth2_chrome_client_id().c_str()),
-            dice_request_header_);
+  std::string client_id = GaiaUrls::GetInstance()->oauth2_chrome_client_id();
+  EXPECT_EQ(
+      base::StringPrintf("version=%s,client_id=%s,signin_mode=all_accounts,"
+                         "signout_mode=show_confirmation",
+                         signin::kDiceProtocolVersion, client_id.c_str()),
+      dice_request_header_);
 
   // Check that the token was requested and added to the token service.
   WaitForTokenReceived();
@@ -651,10 +656,12 @@ IN_PROC_BROWSER_TEST_F(DiceFixAuthErrorsBrowserTest, SigninAccountMismatch) {
   NavigateToURL(kSigninURL);
 
   // Check that the Dice request header was sent.
-  EXPECT_EQ(base::StringPrintf(
-                "client_id=%s",
-                GaiaUrls::GetInstance()->oauth2_chrome_client_id().c_str()),
-            dice_request_header_);
+  std::string client_id = GaiaUrls::GetInstance()->oauth2_chrome_client_id();
+  EXPECT_EQ(
+      base::StringPrintf("version=%s,client_id=%s,signin_mode=sync_account,"
+                         "signout_mode=no_confirmation",
+                         signin::kDiceProtocolVersion, client_id.c_str()),
+      dice_request_header_);
 
   // Check that the token was not requested and the authenticated account did
   // not change.
@@ -679,10 +686,12 @@ IN_PROC_BROWSER_TEST_F(DiceFixAuthErrorsBrowserTest, ReauthFixAuthError) {
   NavigateToURL(kSigninURL);
 
   // Check that the Dice request header was sent.
-  EXPECT_EQ(base::StringPrintf(
-                "client_id=%s",
-                GaiaUrls::GetInstance()->oauth2_chrome_client_id().c_str()),
-            dice_request_header_);
+  std::string client_id = GaiaUrls::GetInstance()->oauth2_chrome_client_id();
+  EXPECT_EQ(
+      base::StringPrintf("version=%s,client_id=%s,signin_mode=sync_account,"
+                         "signout_mode=no_confirmation",
+                         signin::kDiceProtocolVersion, client_id.c_str()),
+      dice_request_header_);
 
   // Check that the token was requested and added to the token service.
   WaitForTokenReceived();
