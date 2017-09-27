@@ -55,6 +55,8 @@ Polymer({
   /** @private {boolean} */
   pointerMoveFired_: false,
 
+  lastPointerUpTime_: 0,
+
   /** @override */
   attached: function() {
     // Note: Doing the same in ready instead of attached produces incorrect
@@ -101,7 +103,8 @@ Polymer({
   },
 
   /** @private */
-  onPointerUp_: function() {
+  onPointerUp_: function(e) {
+    this.lastPointerUpTime_ = e.timeStamp;
     this.removeEventListener('pointermove', this.boundPointerMove_);
   },
 
@@ -114,7 +117,7 @@ Polymer({
     if (e.button != 0)
       return;
 
-    // This is necessary to have follow up events fire on |this|, even
+    // This is necessary to have follow up pointer events fire on |this|, even
     // if they occur outside of its bounds.
     this.setPointerCapture(e.pointerId);
     this.pointerDownX_ = e.clientX;
@@ -123,7 +126,11 @@ Polymer({
   },
 
   /** @private */
-  onTap_: function() {
+  onTap_: function(e) {
+    // Prevent |tap| event from bubbling. It can cause parents of this elements
+    // to erroneously re-toggle this control.
+    e.stopPropagation();
+
     // If pointermove fired it means that user tried to drag the toggle button,
     // and therefore its state has already been handled within the pointermove
     // handler. Do nothing here.
@@ -133,6 +140,10 @@ Polymer({
     // If no pointermove event fired, then user just tapped on the
     // toggle button and therefore it should be toggled.
     this.toggleState_(false);
+  },
+
+  shouldIgnoreHostTap: function(e) {
+    return e.detail.sourceEvent.timeStamp == this.lastPointerUpTime_;
   },
 
   /**
