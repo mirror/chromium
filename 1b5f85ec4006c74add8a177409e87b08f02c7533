@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1e7d4d73_d81ce240",
+        "filename": "chrome/browser/android/tab_web_contents_delegate_android.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-27T18:41:04Z",
+      "side": 1,
+      "message": "Please see https://crbug.com/767526.",
+      "parentUuid": "7660db7d_f9857839",
+      "revId": "1b5f85ec4006c74add8a177409e87b08f02c7533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a579ddb6_8f85a61c",
         "filename": "chrome/browser/extensions/webstore_installer.cc",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "321ac5f0_0ef6d5cb",
+        "filename": "chrome/browser/extensions/webstore_installer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-27T18:41:04Z",
+      "side": 1,
+      "message": "Yes - only blue text.  FWIW, I\u0027ve opened https://crbug.com/769359 to track this.",
+      "parentUuid": "a579ddb6_8f85a61c",
+      "revId": "1b5f85ec4006c74add8a177409e87b08f02c7533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e392c5d_cb915073",
         "filename": "chrome/browser/printing/print_preview_dialog_controller.cc",
         "patchSetId": 10
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-26T19:17:36Z",
       "side": 1,
       "message": "This class worries me a bit (from an oopif correctness perspective). Obviously you\u0027re not regressing it.",
+      "revId": "1b5f85ec4006c74add8a177409e87b08f02c7533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcd140fa_2838b88f",
+        "filename": "chrome/browser/printing/print_preview_dialog_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-27T18:41:04Z",
+      "side": 1,
+      "message": "Ack.\n\nIs there an action we should take?\n\n- Modify something in this CL (e.g. add a TODO comment?)\n\n- Open a bug?\n\n- Make sure this is on weili@\u0027s radar?",
+      "parentUuid": "4e392c5d_cb915073",
       "revId": "1b5f85ec4006c74add8a177409e87b08f02c7533",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "cfe48c70_371f465b",
+        "filename": "chrome/browser/ui/cocoa/hung_renderer_controller.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-27T18:41:04Z",
+      "side": 1,
+      "message": "Right - https://crbug.com/767526.\n\n(maybe I should CC you in these bugs;  I\u0027ve tried to refer to them in a set of comments I\u0027ve added to this CL, but probably they are gone because of the rebasing... sigh...)",
+      "parentUuid": "d2014c40_8f6e0c09",
+      "revId": "1b5f85ec4006c74add8a177409e87b08f02c7533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7188beb6_60ac7cb6",
         "filename": "content/browser/indexed_db/indexed_db_browsertest.cc",
         "patchSetId": 10
@@ -84,6 +156,24 @@
       "revId": "1b5f85ec4006c74add8a177409e87b08f02c7533",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9719c72a_2f8b7b67",
+        "filename": "content/browser/indexed_db/indexed_db_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-27T18:41:04Z",
+      "side": 1,
+      "message": "I\u0027ve tried this and run into the following problem:\n\n    content/browser/indexed_db/indexed_db_browsertest.cc:587:36: error: constexpr variable cannot have non-literal type \u0027const base::StringPiece\u0027 (aka \u0027const BasicStringPiece\u003cbasic_string\u003cchar, char_traits\u003cchar\u003e, allocator\u003cchar\u003e \u003e \u003e\u0027)\n    static constexpr base::StringPiece s_corrupt_db_test_prefix \u003d \"/corrupt/test/\";\n\nIn theory it might be possible to mark the constructor of BasicStringPiece as constexpt.  This seems difficult, because this constructor uses STRING_TYPE::traits_type::length(str) and I see that std::char_traits::length is *not* marked as constexpr.\n\n\nI run into similar problems when trying to use constexpr std::string.\n\n\nNot sure if there is anything to be done here, so I\u0027ll mark this as \"resolved\" for now...",
+      "parentUuid": "7188beb6_60ac7cb6",
+      "revId": "1b5f85ec4006c74add8a177409e87b08f02c7533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "a58ebdfe_2dcf9217",
+        "filename": "content/browser/service_worker/service_worker_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-27T18:41:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd6e0e27_f3056842",
+      "revId": "1b5f85ec4006c74add8a177409e87b08f02c7533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3c4fd68_f572d1e8",
         "filename": "extensions/browser/api/guest_view/web_view/web_view_internal_api.cc",
         "patchSetId": 10
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "3c7dd3af_7cb2f571",
+        "filename": "extensions/browser/api/guest_view/web_view/web_view_internal_api.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-27T18:41:04Z",
+      "side": 1,
+      "message": "Thanks for double-checking this - you are right that this looks fishy and I should have opened a bug when looking at it during a self-review.  FWIW, I\u0027ve opened https://crbug.com/769385 to discuss this further.\n\nI think it is okay to address this in a follow-up, because:\n\n*) it seems desirable to keep the current CL mechanical / behavior preserving\n\n*) I am not 100% confident that |render_frame_host()-\u003eGetProcess()-\u003eGetID()| is the right thing to use here.  Let\u0027s discuss in the bug?",
+      "parentUuid": "f3c4fd68_f572d1e8",
+      "revId": "1b5f85ec4006c74add8a177409e87b08f02c7533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f098ba13_ef40c122",
         "filename": "extensions/browser/api/guest_view/web_view/web_view_internal_api.cc",
         "patchSetId": 10
@@ -135,6 +261,24 @@
       "revId": "1b5f85ec4006c74add8a177409e87b08f02c7533",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fef6faa2_3a7ba0f0",
+        "filename": "extensions/browser/api/guest_view/web_view/web_view_internal_api.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-27T18:41:04Z",
+      "side": 1,
+      "message": "Let\u0027s follow-up in https://crbug.com/769385 as above.",
+      "parentUuid": "f098ba13_ef40c122",
+      "revId": "1b5f85ec4006c74add8a177409e87b08f02c7533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
