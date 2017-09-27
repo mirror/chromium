@@ -156,6 +156,16 @@ void MessageListView::UpdateNotification(MessageView* view,
   DoUpdateIfPossible();
 }
 
+std::pair<int, MessageView*> MessageListView::GetNotificationById(
+    const std::string& id) {
+  for (int i = child_count() - 1; i >= 0; --i) {
+    MessageView* view = notification_at(i);
+    if (view->notification_id() == id)
+      return std::make_pair(i, view);
+  }
+  return std::make_pair(-1, nullptr);
+}
+
 gfx::Size MessageListView::CalculatePreferredSize() const {
   // Just returns the current size. All size change must be done in
   // |DoUpdateIfPossible()| with animation , because we don't want to change
@@ -234,6 +244,15 @@ void MessageListView::UpdateFixedHeight(int requested_height,
 void MessageListView::SetRepositionTarget(const gfx::Rect& target) {
   reposition_top_ = std::max(target.y(), 0);
   UpdateFixedHeight(GetHeightForWidth(width()), false);
+}
+
+const MessageView* MessageListView::notification_at(int index) const {
+  return static_cast<const message_center::MessageView*>(child_at(index));
+}
+
+MessageView* MessageListView::notification_at(int index) {
+  return const_cast<MessageView*>(
+      const_cast<const MessageListView*>(this)->notification_at(index));
 }
 
 void MessageListView::ResetRepositionSession() {
