@@ -16,6 +16,24 @@
       "revId": "34a59f4d08d529f741155b1e88f0906acfb23b1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a127b7e_5dee7c06",
+        "filename": "content/browser/service_worker/service_worker_registration_handle.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-27T06:02:52Z",
+      "side": 1,
+      "message": "Yeah |dispatcher_host_| owns |registration_handles_|, which owns |this|, so coming here means |dispatcher_host_| must still be alive. To make lifetime of |this| clearer, I moved the RegisterSWRegistrationHandle operation into ctor of |this| at ps#10, PTAnL to see whether it makes more sense. Thanks.",
+      "parentUuid": "5350b1e3_bb7360d7",
+      "revId": "34a59f4d08d529f741155b1e88f0906acfb23b1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
