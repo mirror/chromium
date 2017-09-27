@@ -48,6 +48,40 @@
     },
     {
       "key": {
+        "uuid": "aa65c570_4a43d6c1",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-27T16:51:12Z",
+      "side": 1,
+      "message": "1) Use BrowserView::GetBrowserViewForBrowser(BrowserList::GetInstance()-\u003eGetLastActive()) instead.\n2) Please DCHECK that the browser window is already currently active.\n3) What happens when the last active browser window is null, a non-tabbed popup window, an app window, or similar? It seems like the toolbar/app-menu-button might be null or invisible in some cases. This code should probably use chrome/browser/ui/browser_finder.h\u0027s FindTabbedBrowser, and/or early-out/DCHECK for the expected browser type and ui controls.",
+      "revId": "f6993aefadc969a02ec0bf371b4cdfdfd072bfc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "214d3356_e307f245",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-27T16:51:12Z",
+      "side": 1,
+      "message": "q: When would the observer already be observing the widget that was just created? It\u0027s probably safe to remove this condition.",
+      "revId": "f6993aefadc969a02ec0bf371b4cdfdfd072bfc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d3bef487_49f225c2",
         "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.cc",
         "patchSetId": 15
@@ -65,6 +99,40 @@
         "endLine": 80,
         "endChar": 13
       },
+      "revId": "f6993aefadc969a02ec0bf371b4cdfdfd072bfc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ab9feaf_1bc5dc06",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-27T16:51:12Z",
+      "side": 1,
+      "message": "Ditto: Use BrowserView::GetBrowserViewForBrowser(BrowserList::GetInstance()-\u003eGetLastActive()) instead.",
+      "revId": "f6993aefadc969a02ec0bf371b4cdfdfd072bfc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2e18e9a_8e420df2",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-27T16:51:12Z",
+      "side": 1,
+      "message": "Remove this if it\u0027s not needed here.",
       "revId": "f6993aefadc969a02ec0bf371b4cdfdfd072bfc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -140,6 +208,23 @@
     },
     {
       "key": {
+        "uuid": "899c0cdc_4435e7c1",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-27T16:51:12Z",
+      "side": 1,
+      "message": "nit: |incognito_promo_|",
+      "revId": "f6993aefadc969a02ec0bf371b4cdfdfd072bfc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d4253914_c9724a75",
         "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.h",
         "patchSetId": 15
@@ -157,6 +242,74 @@
         "endLine": 74,
         "endChar": 20
       },
+      "revId": "f6993aefadc969a02ec0bf371b4cdfdfd072bfc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "788cb288_28795f61",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-27T16:51:12Z",
+      "side": 1,
+      "message": "nit: add a comment; what does this mock actually do?",
+      "revId": "f6993aefadc969a02ec0bf371b4cdfdfd072bfc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5d1c8f0_42a6bbbd",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-27T16:51:12Z",
+      "side": 1,
+      "message": "Isn\u0027t there a way to make gmock return a specific value without an explicit override?\n(I prefer explicit overrides, but if you\u0027re using gmock, you should go all-in)",
+      "revId": "f6993aefadc969a02ec0bf371b4cdfdfd072bfc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a45f99e7_47167599",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-27T16:51:12Z",
+      "side": 1,
+      "message": "Can this not be mocked?",
+      "revId": "f6993aefadc969a02ec0bf371b4cdfdfd072bfc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5c5a8a4_73c81820",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-27T16:51:12Z",
+      "side": 1,
+      "message": "Should this have a private DISALLOW_COPY_AND_ASSIGN?",
       "revId": "f6993aefadc969a02ec0bf371b4cdfdfd072bfc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -186,6 +339,23 @@
     },
     {
       "key": {
+        "uuid": "2d68c077_a4bc95de",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-27T16:51:12Z",
+      "side": 1,
+      "message": "nit: add a comment.",
+      "revId": "f6993aefadc969a02ec0bf371b4cdfdfd072bfc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4cd20757_2243af18",
         "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker_browsertest.cc",
         "patchSetId": 15
@@ -203,6 +373,159 @@
         "endLine": 81,
         "endChar": 59
       },
+      "revId": "f6993aefadc969a02ec0bf371b4cdfdfd072bfc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ba268a6_c6048be1",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-27T16:51:12Z",
+      "side": 1,
+      "message": "nit: \u003d nullptr",
+      "revId": "f6993aefadc969a02ec0bf371b4cdfdfd072bfc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caa89aac_318305ea",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-27T16:51:12Z",
+      "side": 1,
+      "message": "nit: \"Test\" isn\u0027t helpful as a prefix for this test fixure name, \"ShowPromo\" would suffice",
+      "revId": "f6993aefadc969a02ec0bf371b4cdfdfd072bfc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63e23d81_9d94cb22",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-27T16:51:12Z",
+      "side": 1,
+      "message": "nit: \"Bypass the\"",
+      "revId": "f6993aefadc969a02ec0bf371b4cdfdfd072bfc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26e41e10_8f6c14dd",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-27T16:51:12Z",
+      "side": 1,
+      "message": "This CL doesn\u0027t introduce the acronym, but please note that the addition of acronyms is generally discouraged in the chromium codebase, and the Google C++ Style Guide says \"Prefer to capitalize acronyms as single words (i.e. StartRpc(), not StartRPC()).\" I had to look this up to know that \"IPH\" meant \"In-Product Help\"; acronyms are often less clear to casual readers than full, concise feature names.",
+      "revId": "f6993aefadc969a02ec0bf371b4cdfdfd072bfc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c50883de_af1033be",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-27T16:51:12Z",
+      "side": 1,
+      "message": "This comment doesn\u0027t add any explanatory value beyond the code below.",
+      "revId": "f6993aefadc969a02ec0bf371b4cdfdfd072bfc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14887460_6795edf4",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-27T16:51:12Z",
+      "side": 1,
+      "message": "Remove if no longer used.",
+      "revId": "f6993aefadc969a02ec0bf371b4cdfdfd072bfc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acd8eab8_f334a980",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-27T16:51:12Z",
+      "side": 1,
+      "message": "Remove if no longer used.",
+      "revId": "f6993aefadc969a02ec0bf371b4cdfdfd072bfc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f391ad3_be06b38c",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-27T16:51:12Z",
+      "side": 1,
+      "message": "Remove this if it\u0027s no longer used here.",
+      "revId": "f6993aefadc969a02ec0bf371b4cdfdfd072bfc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05a7021b_8c95db19",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-27T16:51:12Z",
+      "side": 1,
+      "message": "Thank you very much for removing promo ui code from this integral ui control.",
       "revId": "f6993aefadc969a02ec0bf371b4cdfdfd072bfc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
