@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "04270ff1_6db4bf6a",
+        "filename": "third_party/WebKit/Source/core/css/CSSFontFace.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-09-27T06:48:46Z",
+      "side": 1,
+      "message": "Not to fallback here is good, but I think this will still crash inside this:\nCSSFontFace::SetLoadStatus()\n-\u003e FontFace::SetError()\n-\u003e FontFace::SetLoadStatus()\n-\u003e FontFace::GetTaskRunner()\nwhere GetExecutionContext() returns null.\n\nProbably we should check ExecutionContext in FontFace::SetLoadStatus() and return if it\u0027s null.",
+      "range": {
+        "startLine": 66,
+        "startChar": 6,
+        "endLine": 66,
+        "endChar": 19
+      },
+      "revId": "0a6b1c2aacb96de4d706b15acb6e6f192bda64c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "76ddcb00_866e3af1",
         "filename": "third_party/WebKit/Source/core/css/CSSFontFace.h",
         "patchSetId": 3
