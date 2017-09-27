@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f188785_da748bba",
+        "filename": "chrome/browser/ui/views/passwords/auto_signin_first_run_dialog_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-27T11:25:41Z",
+      "side": 0,
+      "message": "this is no longer needed - colors are determined by views::Label during Layout() now, rather than being cached in default_style.color",
+      "revId": "9bd1cfdb5ef8df54b0579538b1e83f9e3f00588f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

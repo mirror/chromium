@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b2e2aec_2abc3a09",
+        "filename": "chrome/browser/ui/views/autofill/password_generation_popup_view_views.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-27T11:25:41Z",
+      "side": 1,
+      "message": "This UI never launched to stable and has been rotting for 2 years :/ . http://crbug.com/769139 if you\u0027re curious",
+      "revId": "23d7e4fc143feba14f73e1c440eebc407aaa15d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfe303e5_760226b6",
+        "filename": "chrome/browser/ui/views/desktop_ios_promotion/desktop_ios_promotion_footnote_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-27T11:25:41Z",
+      "side": 1,
+      "message": "These represent a minor color change 102 -\u003e 97 in most cases pre-harmony, and 102 -\u003e 117 in Harmony. should be fine.",
+      "revId": "23d7e4fc143feba14f73e1c440eebc407aaa15d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a04bede6_9060a847",
+        "filename": "ui/views/controls/styled_label.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-27T11:25:41Z",
+      "side": 1,
+      "message": "echo_dialog_view.cc is the only consumer of this right now - same for |tooltip|",
+      "revId": "23d7e4fc143feba14f73e1c440eebc407aaa15d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd9b3cb4_01022f50",
+        "filename": "ui/views/controls/styled_label.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-27T11:25:41Z",
+      "side": 1,
+      "message": "And (ignoring tests) payment_sheet_view_controller.cc is the only consumer of this - and its use will be redundant with harmony.",
+      "revId": "23d7e4fc143feba14f73e1c440eebc407aaa15d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
