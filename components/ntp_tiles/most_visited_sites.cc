@@ -185,14 +185,6 @@ void MostVisitedSites::SetMostVisitedURLsObserver(Observer* observer,
 }
 
 void MostVisitedSites::Refresh() {
-  if (top_sites_) {
-    // TopSites updates itself after a delay. To ensure up-to-date results,
-    // force an update now.
-    // TODO(mastiz): Is seems unnecessary to refresh TopSites if we will end up
-    // using server-side suggestions.
-    top_sites_->SyncWithHistory();
-  }
-
   suggestions_service_->FetchSuggestionsData();
 }
 
