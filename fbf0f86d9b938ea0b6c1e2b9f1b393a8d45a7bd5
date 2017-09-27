@@ -276,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "9acb9ed2_a1c90a99",
+        "filename": "chrome/gpu/gpu_arc_video_encode_accelerator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001849
+      },
+      "writtenOn": "2017-09-27T08:12:52Z",
+      "side": 1,
+      "message": "I\u0027m wondering, does emplace() really have less cost than [] in this case?\nuse_bitstream_cbs_[bitstream_buffer_serial_] \u003d std::move(callback);",
+      "parentUuid": "b75642e4_39543c6b",
+      "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d867f9f6_cb8bfb4d",
         "filename": "components/arc/net/arc_net_host_impl.cc",
         "patchSetId": 3
