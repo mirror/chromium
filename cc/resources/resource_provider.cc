@@ -31,7 +31,6 @@
 #include "components/viz/common/resources/transferable_resource.h"
 #include "gpu/GLES2/gl2extchromium.h"
 #include "gpu/command_buffer/client/context_support.h"
-#include "gpu/command_buffer/client/gles2_interface.h"
 #include "gpu/command_buffer/client/gpu_memory_buffer_manager.h"
 #include "skia/ext/texture_handle.h"
 #include "third_party/khronos/GLES2/gl2.h"
@@ -88,73 +87,6 @@ class TextureIdAllocator {
 };
 
 namespace {
-
-GLenum TextureToStorageFormat(viz::ResourceFormat format) {
-  GLenum storage_format = GL_RGBA8_OES;
-  switch (format) {
-    case viz::RGBA_8888:
-      break;
-    case viz::BGRA_8888:
-      storage_format = GL_BGRA8_EXT;
-      break;
-    case viz::RGBA_F16:
-      storage_format = GL_RGBA16F_EXT;
-      break;
-    case viz::RGBA_4444:
-    case viz::ALPHA_8:
-    case viz::LUMINANCE_8:
-    case viz::RGB_565:
-    case viz::ETC1:
-    case viz::RED_8:
-    case viz::LUMINANCE_F16:
-    case viz::R16_EXT:
-      NOTREACHED();
-      break;
-  }
-
-  return storage_format;
-}
-
-bool IsFormatSupportedForStorage(viz::ResourceFormat format, bool use_bgra) {
-  switch (format) {
-    case viz::RGBA_8888:
-    case viz::RGBA_F16:
-      return true;
-    case viz::BGRA_8888:
-      return use_bgra;
-    case viz::RGBA_4444:
-    case viz::ALPHA_8:
-    case viz::LUMINANCE_8:
-    case viz::RGB_565:
-    case viz::ETC1:
-    case viz::RED_8:
-    case viz::LUMINANCE_F16:
-    case viz::R16_EXT:
-      return false;
-  }
-  return false;
-}
-
-class ScopedSetActiveTexture {
- public:
-  ScopedSetActiveTexture(GLES2Interface* gl, GLenum unit)
-      : gl_(gl), unit_(unit) {
-    DCHECK_EQ(GL_TEXTURE0, ResourceProvider::GetActiveTextureUnit(gl_));
-
-    if (unit_ != GL_TEXTURE0)
-      gl_->ActiveTexture(unit_);
-  }
-
-  ~ScopedSetActiveTexture() {
-    // Active unit being GL_TEXTURE0 is effectively the ground state.
-    if (unit_ != GL_TEXTURE0)
-      gl_->ActiveTexture(GL_TEXTURE0);
-  }
-
- private:
-  GLES2Interface* gl_;
-  GLenum unit_;
-};
 
 // Generates process-unique IDs to use for tracing a ResourceProvider's
 // resources.
