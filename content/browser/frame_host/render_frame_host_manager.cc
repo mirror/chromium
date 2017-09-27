@@ -1293,6 +1293,17 @@ RenderFrameHostManager::DetermineSiteInstanceForURL(
         dest_url.SchemeIs(kChromeUIScheme)) {
       return SiteInstanceDescriptor(parent_site_instance);
     }
+
+    // TEMPORARY HACK: Don't create OOPIFs on the NTP or hosted apps.  Remove
+    // this when these support OOPIFs or are otherwise omitted from site
+    // isolation policy.  See https://crbug.com/566091 and
+    // https://crbug.com/718516.
+    if (GetContentClient()
+            ->browser()
+            ->ShouldFrameShareParentSiteInstanceDespiteTopDocumentIsolation(
+                dest_url, parent_site_instance)) {
+      return SiteInstanceDescriptor(parent_site_instance);
+    }
   }
 
   // If we haven't used our SiteInstance (and thus RVH) yet, then we can use it
