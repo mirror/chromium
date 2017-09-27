@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2961544_71ce1c57",
+        "filename": "third_party/zlib/patches/README",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-09-27T22:04:10Z",
+      "side": 0,
+      "message": "To clarify for others who might later see this:\n\nThe 0002 and 0003 files themselves contain a description of what was done and why. The README doesn\u0027t need to provide that description.",
+      "revId": "38de4436abc07e86391ee0b1abc4bb1723b89a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
