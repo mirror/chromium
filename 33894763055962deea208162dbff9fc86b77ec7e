@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6ba613ee_48088e83",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_auth_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-09-27T19:08:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5846f33_0a9392b2",
+      "range": {
+        "startLine": 290,
+        "startChar": 52,
+        "endLine": 290,
+        "endChar": 65
+      },
+      "revId": "33894763055962deea208162dbff9fc86b77ec7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6461612_dfadf1a4",
         "filename": "chrome/browser/chromeos/arc/auth/arc_auth_service.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "33894763055962deea208162dbff9fc86b77ec7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d940f54_c19764b9",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_auth_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-09-27T19:08:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6461612_dfadf1a4",
+      "range": {
+        "startLine": 341,
+        "startChar": 61,
+        "endLine": 341,
+        "endChar": 74
+      },
+      "revId": "33894763055962deea208162dbff9fc86b77ec7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -77,6 +125,24 @@
       "side": 1,
       "message": "Oh, also, probably it\u0027s better to move this to the function param of OnAccountInfoReady(),\nas this reason is not a part of AccountInfo.\nAlso, according to the OnAccountInfoReady(), in case of failure, AccountInfo should be null, thus failure reason should not be kept here.",
       "parentUuid": "665e0863_1292756f",
+      "revId": "33894763055962deea208162dbff9fc86b77ec7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "703d3d86_d192ebe1",
+        "filename": "components/arc/common/auth.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-09-27T19:08:24Z",
+      "side": 1,
+      "message": "Nice idea! However it is hard to make enum optional. So I added SUCCESS code.",
+      "parentUuid": "beabccf2_21d501a2",
       "revId": "33894763055962deea208162dbff9fc86b77ec7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
