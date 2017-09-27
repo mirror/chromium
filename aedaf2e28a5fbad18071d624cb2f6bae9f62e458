@@ -2,6 +2,178 @@
   "comments": [
     {
       "key": {
+        "uuid": "151655cf_a02fd0dc",
+        "filename": "extensions/browser/api/feedback_private/access_rate_limiter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-27T16:42:01Z",
+      "side": 1,
+      "message": "access is?",
+      "range": {
+        "startLine": 22,
+        "startChar": 30,
+        "endLine": 22,
+        "endChar": 42
+      },
+      "revId": "aedaf2e28a5fbad18071d624cb2f6bae9f62e458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4d9e54b_80afa9f6",
+        "filename": "extensions/browser/api/feedback_private/access_rate_limiter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-27T16:42:01Z",
+      "side": 1,
+      "message": "const base::TimeTicks now \u003d tick_clock_-\u003eNowTicks();\nif (!last_access_time_.is_null())\n  recharge_counter_ +\u003d now - last_access_time_;\nlast_access_time_ \u003d now;",
+      "range": {
+        "startLine": 26,
+        "startChar": 1,
+        "endLine": 32,
+        "endChar": 26
+      },
+      "revId": "aedaf2e28a5fbad18071d624cb2f6bae9f62e458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ca32f0a_bf5cfbf9",
+        "filename": "extensions/browser/api/feedback_private/access_rate_limiter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-27T16:42:01Z",
+      "side": 1,
+      "message": "formatting is off",
+      "revId": "aedaf2e28a5fbad18071d624cb2f6bae9f62e458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f0f24be_aef089f6",
+        "filename": "extensions/browser/api/feedback_private/access_rate_limiter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-27T16:42:01Z",
+      "side": 1,
+      "message": "access is allowed",
+      "range": {
+        "startLine": 36,
+        "startChar": 51,
+        "endLine": 36,
+        "endChar": 79
+      },
+      "revId": "aedaf2e28a5fbad18071d624cb2f6bae9f62e458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc6eca36_d671c35e",
+        "filename": "extensions/browser/api/feedback_private/access_rate_limiter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-27T16:42:01Z",
+      "side": 1,
+      "message": "nit: Attempt",
+      "range": {
+        "startLine": 39,
+        "startChar": 7,
+        "endLine": 39,
+        "endChar": 10
+      },
+      "revId": "aedaf2e28a5fbad18071d624cb2f6bae9f62e458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52f478f7_b7892bc1",
+        "filename": "extensions/browser/api/feedback_private/access_rate_limiter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-27T16:42:01Z",
+      "side": 1,
+      "message": "suggestion: access is unlimited",
+      "range": {
+        "startLine": 49,
+        "startChar": 8,
+        "endLine": 49,
+        "endChar": 16
+      },
+      "revId": "aedaf2e28a5fbad18071d624cb2f6bae9f62e458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba774424_475cea2d",
+        "filename": "extensions/browser/api/feedback_private/access_rate_limiter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-27T16:42:01Z",
+      "side": 1,
+      "message": "this could also be owned by LogSourceAccessManager (and passed in to this).\n\nBasically,\n\nLogSourceAccessManager would have std::unique_ptr\u003cTickClock\u003e tick_clock_ (set to DefaultTickClock by default, but overridable by SetTickClockForTest), and it would pass tick_clock_.get() to this at construction time.",
+      "range": {
+        "startLine": 62,
+        "startChar": 25,
+        "endLine": 62,
+        "endChar": 44
+      },
+      "revId": "aedaf2e28a5fbad18071d624cb2f6bae9f62e458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d925e63a_af538252",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-27T16:42:01Z",
+      "side": 1,
+      "message": "I\u0027d pass it to the AccessRateLimiter using its constructor",
+      "revId": "aedaf2e28a5fbad18071d624cb2f6bae9f62e458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e603e1f_af446ad8",
         "filename": "extensions/browser/api/feedback_private/log_source_access_manager.h",
         "patchSetId": 4
@@ -13,6 +185,30 @@
       "writtenOn": "2017-09-26T22:35:53Z",
       "side": 1,
       "message": "I changed this from unique_ptr to a bare ptr because this will be shared with all the RateLimiter objects that are created. I can\u0027t use shared_ptr because of Chromium rules. I can\u0027t use const ptrs because NowTicks() is not const. If you know of a better way to do this, let me know.",
+      "range": {
+        "startLine": 44,
+        "startChar": 30,
+        "endLine": 44,
+        "endChar": 52
+      },
+      "revId": "aedaf2e28a5fbad18071d624cb2f6bae9f62e458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a533402_5c7dba04",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-27T16:42:01Z",
+      "side": 1,
+      "message": "you can keep this as unique_ptr, but pass the raw pointer to rate limiters",
+      "parentUuid": "2e603e1f_af446ad8",
       "range": {
         "startLine": 44,
         "startChar": 30,
