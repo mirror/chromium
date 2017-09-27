@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1dc78df_109aeeba",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-27T14:48:20Z",
+      "side": 0,
+      "message": "Have you attempted to repro this bug after removing this \u0027hack\u0027? It\u0027s too bad pkotwicz@ didn\u0027t cite any repro steps... Perhaps he or oshima@ (or maybe James?) know how to trigger the original bug? I dug through history to find the original CL, which cites \u0027immersive\u0027 fullscreen for V2 app with frames: https://chromium.googlesource.com/chromium/src/+/63458430dba41ed11c5fde816d8fd852cb1f75f6\n\nOtherwise, perhaps you could locally wire up the window controls or an ash-debug-shortcuts/ash-dev-shortcuts to explicitly trigger the codepaths cited in the bug (views::Widget::Restore() and ash::wm::WindowState::Restore()) for app windows?\n\nTo be thorough, you could test fullscreen/restore (and repeat) for V1 and V2 app windows via window caption buttons, Shift+F4/F4, and ideally via app/js-triggered fullscreen (see examples using document.body.webkitRequestFullScreen() \u0026 document.webkitCancelFullScreen() and chrome.app.window.current().fullscreen() \u0026 restore()).\n\nSorry that I can\u0027t tell you offhand if removing this workaround causes any defects. It doesn\u0027t seem to cause test failures, but that could just be gaps in coverage. If Peter thinks this is fine, or if you\u0027re confident that manual/automated local tests cover the original defect, then removing this code sounds good to me!",
+      "revId": "5f389b81e934d4ec10307071f1103b26554535b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
