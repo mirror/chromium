@@ -1154,7 +1154,7 @@ RefPtr<StaticBitmapImage> Canvas2DLayerBridge::NewImageSnapshot(
   RefPtr<StaticBitmapImage> image = StaticBitmapImage::Create(
       surface_->makeImageSnapshot(), ContextProviderWrapper());
   if (image->IsTextureBacked()) {
-    static_cast<AcceleratedStaticBitmapImage*>(image.Get())
+    static_cast<AcceleratedStaticBitmapImage*>(image.get())
         ->RetainOriginalSkImageForCopyOnWrite();
   }
   return image;

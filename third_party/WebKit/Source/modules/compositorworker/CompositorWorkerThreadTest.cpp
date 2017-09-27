@@ -118,7 +118,7 @@ class CompositorWorkerThreadTest : public ::testing::Test {
         WTF::MakeUnique<GlobalScopeCreationParams>(
             KURL(kParsedURLString, "http://fake.url/"), "fake user agent",
             "//fake source code", nullptr, kDontPauseWorkerGlobalScopeOnStart,
-            nullptr, "", security_origin_.Get(), clients, kWebAddressSpaceLocal,
+            nullptr, "", security_origin_.get(), clients, kWebAddressSpaceLocal,
             nullptr, nullptr, kV8CacheOptionsDefault),
         WTF::nullopt, parent_frame_task_runners_.Get());
     return worker_thread;
