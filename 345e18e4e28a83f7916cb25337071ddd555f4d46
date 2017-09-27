@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c780675_5a5f1642",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-27T12:53:57Z",
+      "side": 1,
+      "message": "These state checks might look enigmatic to future code readers. How about adding a comment about what these checks mean or adding descriptive methods like this?\n\nbool WasMetadataWritten() const { return !meta_data_sender_; }\nbool WasBodyWritten() const { return !body_handle_.is_valid() \u0026\u0026 !pending_write_; }\n\nif (WasMetadataWritten() \u0026\u0026 WasBodyWritten())\n  owner_-\u003eOnFinishSendingScript();",
+      "revId": "345e18e4e28a83f7916cb25337071ddd555f4d46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
