@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f3130f8_9e3f2a41",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-27T00:56:56Z",
+      "side": 1,
+      "message": "Why wouldn\u0027t ExtensionRegistrar::EnableExtension() do this?",
+      "revId": "fa3ca5dae52a019570c420a76c9734bd8f59e0ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
