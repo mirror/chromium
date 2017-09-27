@@ -85,6 +85,7 @@ class CORE_EXPORT ClassicPendingScript final
   // Handle the end of streaming.
   void FinishWaitingForStreaming();
   void FinishReadyStreaming();
+  void CancelStreaming();
 
   void CheckState() const override;
 
@@ -101,6 +102,7 @@ class CORE_EXPORT ClassicPendingScript final
 
   Member<ScriptStreamer> streamer_;
   WTF::Closure streamer_done_;
+  bool is_currently_streaming_;
 
   // This is a temporary flag to confirm that ClassicPendingScript is not
   // touched after its refinalizer call and thus https://crbug.com/715309
