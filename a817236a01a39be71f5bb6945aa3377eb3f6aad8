@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5229afed_ebc67455",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1011,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-09-27T05:43:30Z",
+      "side": 1,
+      "message": "mlamouri@ - I added this here and below to update the location of download button. This seems to fix one issue for me : The cast button is added late in the media controls, after it is added the download button shifts left. Hence we should send updated rect of download button, or else we will have our IPH pointing to the stale location.\nHowever I really didn\u0027t find a hook in this file that gets called after the cast button is added and layout is settled. Let me know if there is a way that we can know whenever there is a change to the download button location on the viewport.",
+      "revId": "a817236a01a39be71f5bb6945aa3377eb3f6aad8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

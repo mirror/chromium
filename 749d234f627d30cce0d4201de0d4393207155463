@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "92e1973f_5777f414",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1682,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-09-27T05:43:30Z",
+      "side": 1,
+      "message": "For size change, all I could find is OnLayoutChangeListener which didn\u0027t seem to get invoked here. Most of the size change happens in blink where it gets shifted up/down/left/right. If we could send the updated rect from blink, we don\u0027t need to do anything special here. This patch tries to send updated rect on media controls time update.\n\nHowever it is nice to dismiss this IPH on orientation change since it adds jank to the rotation.\nWe should also consider dismissing other types of IPH on orientation change to keep it consistent.",
+      "parentUuid": "e0027fee_16fba8da",
+      "range": {
+        "startLine": 1682,
+        "startChar": 25,
+        "endLine": 1682,
+        "endChar": 50
+      },
+      "revId": "749d234f627d30cce0d4201de0d4393207155463",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79dca9dc_097eb3c2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-18T15:45:26Z",
       "side": 1,
       "message": "Have we thought about popup vs. view in the view hierarchy?",
+      "range": {
+        "startLine": 3191,
+        "startChar": 32,
+        "endLine": 3191,
+        "endChar": 43
+      },
+      "revId": "749d234f627d30cce0d4201de0d4393207155463",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be499b37_e7787c0e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3191,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-09-27T05:43:30Z",
+      "side": 1,
+      "message": "Yes, we can do this as a view added to content view. But it doesnt seem to help, since our IPH bubble is a popup anyway. Also being a popup somewhat makes it cleaner to dismiss or update location.",
+      "parentUuid": "79dca9dc_097eb3c2",
       "range": {
         "startLine": 3191,
         "startChar": 32,
