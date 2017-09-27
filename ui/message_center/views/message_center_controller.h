@@ -9,7 +9,6 @@
 #include <string>
 
 #include "base/strings/string16.h"
-#include "ui/base/models/menu_model.h"
 #include "ui/message_center/notifier_settings.h"
 
 namespace message_center {
