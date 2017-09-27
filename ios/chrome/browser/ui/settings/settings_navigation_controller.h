@@ -12,6 +12,7 @@
 @protocol BrowserCommands;
 @protocol ImportDataControllerDelegate;
 @class OpenUrlCommand;
+@protocol SnackbarCommands;
 @protocol UserFeedbackDataSource;
 
 namespace ios {
@@ -39,7 +40,8 @@ class ChromeBrowserState;
 
 // Asks the delegate for a dispatcher that can be passed into child view
 // controllers when they are created.
-- (id<ApplicationCommands, BrowserCommands>)dispatcherForSettings;
+- (id<ApplicationCommands, BrowserCommands, SnackbarCommands>)
+    dispatcherForSettings;
 
 @end
 

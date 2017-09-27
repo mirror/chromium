@@ -7,6 +7,7 @@
 #import <UIKit/UIKit.h>
 
 @protocol ApplicationCommands;
+@protocol SnackbarCommands;
 @class Tab;
 @protocol UrlLoader;
 
@@ -22,8 +23,8 @@ class ChromeBrowserState;
 - (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState
                               loader:(id<UrlLoader>)loader
                     parentController:(UIViewController*)parentController
-                          dispatcher:(id<ApplicationCommands>)dispatcher
-    NS_DESIGNATED_INITIALIZER;
+                          dispatcher:(id<ApplicationCommands, SnackbarCommands>)
+                                         dispatcher NS_DESIGNATED_INITIALIZER;
 - (instancetype)init NS_UNAVAILABLE;
 
 // Presents the bookmark UI for a single bookmark. The |parentView| and |origin|

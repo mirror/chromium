@@ -11,6 +11,7 @@
 @protocol ApplicationCommands;
 @protocol SettingsMainPageCommands;
 @class SigninInteractionController;
+@protocol SnackbarCommands;
 namespace ios {
 class ChromeBrowserState;
 }  // namespace ios
@@ -47,8 +48,8 @@ extern NSString* const kSettingsVoiceSearchCellId;
 // Initializes a new SettingsCollectionViewController. |browserState| must not
 // be nil and must not be an off-the-record browser state.
 - (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState
-                          dispatcher:(id<ApplicationCommands>)dispatcher
-    NS_DESIGNATED_INITIALIZER;
+                          dispatcher:(id<ApplicationCommands, SnackbarCommands>)
+                                         dispatcher NS_DESIGNATED_INITIALIZER;
 
 - (instancetype)initWithLayout:(UICollectionViewLayout*)layout
                          style:(CollectionViewControllerStyle)style

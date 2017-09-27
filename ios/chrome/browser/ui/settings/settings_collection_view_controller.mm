@@ -234,7 +234,8 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
   BOOL _settingsHasBeenDismissed;
 }
 
-@property(nonatomic, readonly, weak) id<ApplicationCommands> dispatcher;
+@property(nonatomic, readonly, weak) id<ApplicationCommands, SnackbarCommands>
+    dispatcher;
 
 // Stops observing browser state services. This is required during the shutdown
 // phase to avoid observing services for a profile that is being killed.
@@ -249,7 +250,8 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
 #pragma mark Initialization
 
 - (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState
-                          dispatcher:(id<ApplicationCommands>)dispatcher {
+                          dispatcher:(id<ApplicationCommands, SnackbarCommands>)
+                                         dispatcher {
   DCHECK(!browserState->IsOffTheRecord());
   UICollectionViewLayout* layout = [[MDCCollectionViewFlowLayout alloc] init];
   self =

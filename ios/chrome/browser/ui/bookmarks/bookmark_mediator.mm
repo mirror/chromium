@@ -18,9 +18,10 @@
 #import "ios/chrome/browser/ui/bookmarks/bookmark_edit_view_controller.h"
 #import "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.h"
 #import "ios/chrome/browser/ui/bookmarks/bookmark_utils_ios.h"
+#import "ios/chrome/browser/ui/commands/snackbar_action.h"
+#import "ios/chrome/browser/ui/commands/snackbar_commands.h"
 #include "ios/chrome/browser/ui/uikit_ui_util.h"
 #include "ios/chrome/grit/ios_strings.h"
-#import "ios/third_party/material_components_ios/src/components/Snackbar/src/MaterialSnackbar.h"
 #include "ui/base/l10n/l10n_util.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -39,11 +40,15 @@ const int64_t kLastUsedFolderNone = -1;
 // BrowserState for this mediator.
 @property(nonatomic, assign) ios::ChromeBrowserState* browserState;
 
+// Dispatcher for sending commands.
+@property(nonatomic, weak, readonly) id<SnackbarCommands> dispatcher;
+
 @end
 
 @implementation BookmarkMediator
 
 @synthesize browserState = _browserState;
+@synthesize dispatcher = _dispatcher;
 
 + (void)registerBrowserStatePrefs:(user_prefs::PrefRegistrySyncable*)registry {
   registry->RegisterInt64Pref(prefs::kIosBookmarkFolderDefault,
@@ -76,10 +81,12 @@ const int64_t kLastUsedFolderNone = -1;
                                      folder->id());
 }
 
-- (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState {
+- (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState
+                          dispatcher:(id<SnackbarCommands>)dispatcher {
   self = [super init];
   if (self) {
     _browserState = browserState;
+    _dispatcher = dispatcher;
   }
   return self;
 }
@@ -94,8 +101,7 @@ const int64_t kLastUsedFolderNone = -1;
       ios::BookmarkModelFactory::GetForBrowserState(self.browserState);
   bookmarkModel->AddURL(defaultFolder, defaultFolder->child_count(),
                         base::SysNSStringToUTF16(title), URL);
-
-  MDCSnackbarMessageAction* action = [[MDCSnackbarMessageAction alloc] init];
+  SnackbarAction* action = [[SnackbarAction alloc] init];
   action.handler = editAction;
   action.title = l10n_util::GetNSString(IDS_IOS_NAVIGATION_BAR_EDIT_BUTTON);
   action.accessibilityIdentifier = @"Edit";
@@ -109,10 +115,10 @@ const int64_t kLastUsedFolderNone = -1;
                                     base::SysNSStringToUTF16(folderTitle))
           : l10n_util::GetNSString(IDS_IOS_BOOKMARK_PAGE_SAVED);
   TriggerHapticFeedbackForNotification(UINotificationFeedbackTypeSuccess);
-  MDCSnackbarMessage* message = [MDCSnackbarMessage messageWithText:text];
-  message.action = action;
-  message.category = bookmark_utils_ios::kBookmarksSnackbarCategory;
-  [MDCSnackbarManager showMessage:message];
+  [self.dispatcher
+      showSnackbarWithMessage:text
+                     category:bookmark_utils_ios::kBookmarksSnackbarCategory
+                       action:action];
 }
 
 @end

@@ -65,6 +65,7 @@ BOOL ShouldCellsBeFullWidth(UITraitCollection* collection) {
 @synthesize metricsRecorder = _metricsRecorder;
 @synthesize containsToolbar = _containsToolbar;
 @dynamic collectionViewModel;
+@synthesize dispatcher = _dispatcher;
 
 #pragma mark - Lifecycle
 
@@ -87,6 +88,10 @@ BOOL ShouldCellsBeFullWidth(UITraitCollection* collection) {
 }
 
 #pragma mark - Public
+
+- (void)setDispatcher:(id<SnackbarCommands>)dispatcher {
+  self.collectionUpdater.dispatcher = dispatcher;
+}
 
 - (void)setDataSource:(id<ContentSuggestionsDataSource>)dataSource {
   self.collectionUpdater.dataSource = dataSource;

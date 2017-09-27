@@ -9,6 +9,7 @@
 #import "ios/chrome/browser/ui/collection_view/collection_view_controller.h"
 
 @protocol ApplicationCommands;
+@protocol SnackbarCommands;
 
 // Root class for collection view controllers in settings.
 @interface SettingsRootCollectionViewController
@@ -39,7 +40,7 @@
 @property(nonatomic, copy) NSString* collectionViewAccessibilityIdentifier;
 
 // The dispatcher used by this ViewController.
-@property(nonatomic, weak) id<ApplicationCommands> dispatcher;
+@property(nonatomic, weak) id<ApplicationCommands, SnackbarCommands> dispatcher;
 
 @end
 

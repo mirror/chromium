@@ -20,12 +20,14 @@ class PrefRegistrySyncable;
 }  // namespace user_prefs
 
 class GURL;
+@protocol SnackbarCommands;
 
 // Mediator for the bookmarks.
 @interface BookmarkMediator : NSObject
 
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState
+                          dispatcher:(id<SnackbarCommands>)dispatcher
     NS_DESIGNATED_INITIALIZER;
 
 // Registers the feature preferences.

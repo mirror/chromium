@@ -20,6 +20,8 @@
 #import "ios/chrome/browser/ui/commands/browser_commands.h"
 #import "ios/chrome/browser/ui/commands/open_new_tab_command.h"
 #import "ios/chrome/browser/ui/commands/reading_list_add_command.h"
+#import "ios/chrome/browser/ui/commands/snackbar_action.h"
+#import "ios/chrome/browser/ui/commands/snackbar_commands.h"
 #import "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_item.h"
 #import "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_most_visited_item.h"
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.h"
@@ -29,7 +31,6 @@
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 #import "ios/chrome/browser/ui/url_loader.h"
 #include "ios/chrome/grit/ios_strings.h"
-#import "ios/third_party/material_components_ios/src/components/Snackbar/src/MaterialSnackbar.h"
 #import "ios/web/public/navigation_item.h"
 #import "ios/web/public/navigation_manager.h"
 #include "ios/web/public/referrer.h"
@@ -356,24 +357,21 @@ const char kRateThisAppCommand[] = "ratethisapp";
 - (void)showMostVisitedUndoForURL:(GURL)URL {
   GURL copiedURL = URL;
 
-  MDCSnackbarMessageAction* action = [[MDCSnackbarMessageAction alloc] init];
-  __weak NTPHomeMediator* weakSelf = self;
+  SnackbarAction* action = [[SnackbarAction alloc] init];
+  __weak ContentSuggestionsMediator* suggestionsMediator =
+      self.suggestionsMediator;
   action.handler = ^{
-    NTPHomeMediator* strongSelf = weakSelf;
-    if (!strongSelf)
-      return;
-    [strongSelf.suggestionsMediator whitelistMostVisitedURL:copiedURL];
+    [suggestionsMediator whitelistMostVisitedURL:copiedURL];
   };
   action.title = l10n_util::GetNSString(IDS_NEW_TAB_UNDO_THUMBNAIL_REMOVE);
   action.accessibilityIdentifier = @"Undo";
 
   TriggerHapticFeedbackForNotification(UINotificationFeedbackTypeSuccess);
-  MDCSnackbarMessage* message = [MDCSnackbarMessage
-      messageWithText:l10n_util::GetNSString(
-                          IDS_IOS_NEW_TAB_MOST_VISITED_ITEM_REMOVED)];
-  message.action = action;
-  message.category = @"MostVisitedUndo";
-  [MDCSnackbarManager showMessage:message];
+  [self.dispatcher
+      showSnackbarWithMessage:l10n_util::GetNSString(
+                                  IDS_IOS_NEW_TAB_MOST_VISITED_ITEM_REMOVED)
+                     category:@"MostVisitedUndo"
+                       action:action];
 }
 
 @end

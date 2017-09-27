@@ -13,6 +13,8 @@
 #import "ios/chrome/browser/ui/commands/application_commands.h"
 #import "ios/chrome/browser/ui/commands/browser_commands.h"
 #import "ios/chrome/browser/ui/commands/open_new_tab_command.h"
+#import "ios/chrome/browser/ui/commands/snackbar_action.h"
+#import "ios/chrome/browser/ui/commands/snackbar_commands.h"
 #import "ios/chrome/browser/ui/commands/start_voice_search_command.h"
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_utils.h"
 #import "ios/chrome/browser/ui/context_menu/context_menu_coordinator.h"
@@ -30,7 +32,6 @@
 #import "ios/chrome/browser/ui/util/constraints_ui_util.h"
 #include "ios/chrome/common/string_util.h"
 #include "ios/chrome/grit/ios_strings.h"
-#import "ios/third_party/material_components_ios/src/components/Snackbar/src/MaterialSnackbar.h"
 #import "ios/third_party/material_components_ios/src/components/Typography/src/MaterialTypography.h"
 #import "ios/web/public/web_state/context_menu_params.h"
 #import "net/base/mac/url_conversions.h"
@@ -116,7 +117,11 @@ const CGFloat kShiftTilesDownAnimationDuration = 0.2;
   NewTabPageHeaderView* _headerView;
   WhatsNewHeaderView* _promoHeaderView;
   __weak id<GoogleLandingDataSource> _dataSource;
-  __weak id<ApplicationCommands, BrowserCommands, UrlLoader, OmniboxFocuser>
+  __weak id<ApplicationCommands,
+            BrowserCommands,
+            OmniboxFocuser,
+            SnackbarCommands,
+            UrlLoader>
       _dispatcher;
 }
 
@@ -993,26 +998,21 @@ const CGFloat kShiftTilesDownAnimationDuration = 0.2;
 
 - (void)showMostVisitedUndoForURL:(NSURL*)url {
   _deletedUrl = url;
-
-  MDCSnackbarMessageAction* action = [[MDCSnackbarMessageAction alloc] init];
-  __weak GoogleLandingViewController* weakSelf = self;
-  action.handler = ^{
-    GoogleLandingViewController* strongSelf = weakSelf;
-    if (!strongSelf)
-      return;
-    [[strongSelf dataSource]
-        removeBlacklistedURL:net::GURLWithNSURL(_deletedUrl)];
+  __weak id<GoogleLandingDataSource> dataSource = self.dataSource;
+  ProceduralBlock actionHandler = ^{
+    [dataSource removeBlacklistedURL:net::GURLWithNSURL(_deletedUrl)];
   };
-  action.title = l10n_util::GetNSString(IDS_NEW_TAB_UNDO_THUMBNAIL_REMOVE);
-  action.accessibilityIdentifier = @"Undo";
-
   TriggerHapticFeedbackForNotification(UINotificationFeedbackTypeSuccess);
-  MDCSnackbarMessage* message = [MDCSnackbarMessage
-      messageWithText:l10n_util::GetNSString(
-                          IDS_IOS_NEW_TAB_MOST_VISITED_ITEM_REMOVED)];
-  message.action = action;
-  message.category = @"MostVisitedUndo";
-  [MDCSnackbarManager showMessage:message];
+
+  ShowSnackbarActionCommand* command = [[ShowSnackbarActionCommand alloc] init];
+  command.message =
+      l10n_util::GetNSString(IDS_IOS_NEW_TAB_MOST_VISITED_ITEM_REMOVED);
+  command.category = @"MostVisitedUndo";
+  command.actionTitle =
+      l10n_util::GetNSString(IDS_NEW_TAB_UNDO_THUMBNAIL_REMOVE);
+  command.actionAccessibilityIdentifier = @"Undo";
+  command.actionHandler = actionHandler;
+  [self.dispatcher showSnackbar:command];
 }
 
 - (void)onPromoLabelTapped {

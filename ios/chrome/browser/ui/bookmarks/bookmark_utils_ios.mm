@@ -26,10 +26,11 @@
 #import "ios/chrome/browser/ui/bookmarks/bookmark_path_cache.h"
 #import "ios/chrome/browser/ui/bookmarks/bookmark_position_cache.h"
 #include "ios/chrome/browser/ui/bookmarks/undo_manager_wrapper.h"
+#import "ios/chrome/browser/ui/commands/snackbar_action.h"
+#import "ios/chrome/browser/ui/commands/snackbar_commands.h"
 #include "ios/chrome/browser/ui/ui_util.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 #include "ios/chrome/grit/ios_strings.h"
-#import "ios/third_party/material_components_ios/src/components/Snackbar/src/MaterialSnackbar.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/l10n/l10n_util_mac.h"
@@ -296,9 +297,11 @@ void UpdateBookmarkPositionWithUndoToast(
   PresentUndoToastWithWrapper(wrapper, text);
 }
 
-void PresentUndoToastWithWrapper(UndoManagerWrapper* wrapper, NSString* text) {
+void PresentUndoToastWithWrapper(UndoManagerWrapper* wrapper,
+                                 NSString* text,
+                                 id<SnackbarCommands> dispatcher) {
   // Create the block that will be executed if the user taps the undo button.
-  MDCSnackbarMessageAction* action = [[MDCSnackbarMessageAction alloc] init];
+  SnackbarAction* command = [[SnackbarAction alloc] init];
   action.handler = ^{
     if (![wrapper hasUndoManagerChanged])
       [wrapper undo];
@@ -309,10 +312,9 @@ void PresentUndoToastWithWrapper(UndoManagerWrapper* wrapper, NSString* text) {
   action.accessibilityLabel =
       l10n_util::GetNSString(IDS_IOS_BOOKMARK_NEW_UNDO_BUTTON_TITLE);
   TriggerHapticFeedbackForNotification(UINotificationFeedbackTypeSuccess);
-  MDCSnackbarMessage* message = [MDCSnackbarMessage messageWithText:text];
-  message.action = action;
-  message.category = kBookmarksSnackbarCategory;
-  [MDCSnackbarManager showMessage:message];
+  [dispatcher showSnackbarWithMessage:text
+                             category:kBookmarksSnackbarCategory
+                               action:action];
 }
 
 void DeleteBookmarks(const std::set<const BookmarkNode*>& bookmarks,

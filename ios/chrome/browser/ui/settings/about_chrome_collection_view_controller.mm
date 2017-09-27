@@ -14,6 +14,7 @@
 #import "ios/chrome/browser/ui/collection_view/cells/collection_view_item.h"
 #import "ios/chrome/browser/ui/collection_view/cells/collection_view_text_item.h"
 #import "ios/chrome/browser/ui/collection_view/collection_view_model.h"
+#import "ios/chrome/browser/ui/commands/snackbar_commands.h"
 #import "ios/chrome/browser/ui/settings/cells/version_item.h"
 #import "ios/chrome/browser/ui/settings/settings_utils.h"
 #include "ios/chrome/browser/ui/uikit_ui_util.h"
@@ -21,7 +22,6 @@
 #include "ios/chrome/grit/ios_chromium_strings.h"
 #include "ios/chrome/grit/ios_strings.h"
 #import "ios/third_party/material_components_ios/src/components/CollectionCells/src/MaterialCollectionCells.h"
-#import "ios/third_party/material_components_ios/src/components/Snackbar/src/MaterialSnackbar.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/l10n/l10n_util_mac.h"
 #include "url/gurl.h"
@@ -164,10 +164,8 @@ typedef NS_ENUM(NSInteger, ItemType) {
   [[UIPasteboard generalPasteboard] setString:[self versionOnlyString]];
   TriggerHapticFeedbackForNotification(UINotificationFeedbackTypeSuccess);
   NSString* messageText = l10n_util::GetNSString(IDS_IOS_VERSION_COPIED);
-  MDCSnackbarMessage* message =
-      [MDCSnackbarMessage messageWithText:messageText];
-  message.category = @"version copied";
-  [MDCSnackbarManager showMessage:message];
+  [self.dispatcher showSnackbarWithMessage:messageText
+                                  category:@"version copied"];
 }
 
 - (std::string)versionString {

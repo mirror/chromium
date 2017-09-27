@@ -18,6 +18,7 @@
 @protocol BrowserCommands;
 @protocol GoogleLandingDataSource;
 @protocol OmniboxFocuser;
+@protocol SnackbarCommands;
 @protocol UrlLoader;
 
 // Google centric new tab page.
@@ -29,9 +30,12 @@
 
 @property(nonatomic, weak) id<GoogleLandingDataSource> dataSource;
 
-@property(nonatomic, weak)
-    id<ApplicationCommands, BrowserCommands, OmniboxFocuser, UrlLoader>
-        dispatcher;
+@property(nonatomic, weak) id<ApplicationCommands,
+                              BrowserCommands,
+                              OmniboxFocuser,
+                              SnackbarCommands,
+                              UrlLoader>
+    dispatcher;
 
 @end
 

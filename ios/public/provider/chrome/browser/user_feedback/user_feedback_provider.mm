@@ -18,7 +18,7 @@ bool UserFeedbackProvider::IsUserFeedbackEnabled() {
 
 UIViewController* UserFeedbackProvider::CreateViewController(
     id<UserFeedbackDataSource> dataSource,
-    id<ApplicationCommands> dispatcher) {
+    id<ApplicationCommands, SnackbarCommands> dispatcher) {
   return nil;
 }
 

@@ -20,6 +20,7 @@
 #import "ios/chrome/browser/ui/collection_view/cells/collection_view_text_item.h"
 #import "ios/chrome/browser/ui/collection_view/collection_view_model.h"
 #import "ios/chrome/browser/ui/colors/MDCPalette+CrAdditions.h"
+#import "ios/chrome/browser/ui/commands/snackbar_commands.h"
 #import "ios/chrome/browser/ui/settings/cells/password_details_item.h"
 #import "ios/chrome/browser/ui/settings/reauthentication_module.h"
 #import "ios/chrome/browser/ui/settings/save_passwords_collection_view_controller.h"
@@ -28,7 +29,6 @@
 #include "ios/chrome/grit/ios_strings.h"
 #import "ios/third_party/material_components_ios/src/components/CollectionCells/src/MaterialCollectionCells.h"
 #import "ios/third_party/material_components_ios/src/components/Palettes/src/MaterialPalettes.h"
-#import "ios/third_party/material_components_ios/src/components/Snackbar/src/MaterialSnackbar.h"
 #include "ui/base/l10n/l10n_util_mac.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -490,10 +490,8 @@ reauthenticationModule:(id<ReauthenticationProtocol>)reauthenticationModule {
   TriggerHapticFeedbackForNotification(success
                                            ? UINotificationFeedbackTypeSuccess
                                            : UINotificationFeedbackTypeError);
-  MDCSnackbarMessage* copyPasswordResultMessage =
-      [MDCSnackbarMessage messageWithText:message];
-  copyPasswordResultMessage.category = @"PasswordsSnackbarCategory";
-  [MDCSnackbarManager showMessage:copyPasswordResultMessage];
+  [self.dispatcher showSnackbarWithMessage:message
+                                  category:@"PasswordsSnackbarCategory"];
 }
 
 - (void)deletePassword {

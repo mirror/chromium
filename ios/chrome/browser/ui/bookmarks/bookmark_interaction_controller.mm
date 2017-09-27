@@ -27,10 +27,10 @@
 #import "ios/chrome/browser/ui/bookmarks/bookmark_navigation_controller.h"
 #import "ios/chrome/browser/ui/bookmarks/bookmark_utils_ios.h"
 #import "ios/chrome/browser/ui/commands/application_commands.h"
+#import "ios/chrome/browser/ui/commands/snackbar_commands.h"
 #include "ios/chrome/browser/ui/uikit_ui_util.h"
 #include "ios/chrome/browser/ui/url_loader.h"
 #include "ios/chrome/grit/ios_strings.h"
-#import "ios/third_party/material_components_ios/src/components/Snackbar/src/MaterialSnackbar.h"
 #include "ios/web/public/referrer.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -68,7 +68,8 @@ using bookmarks::BookmarkNode;
 
 @property(nonatomic, strong) BookmarkMediator* mediator;
 
-@property(nonatomic, readonly, weak) id<ApplicationCommands> dispatcher;
+@property(nonatomic, readonly, weak) id<ApplicationCommands, SnackbarCommands>
+    dispatcher;
 
 // Builds a controller and brings it on screen.
 - (void)presentBookmarkForTab:(Tab*)tab;
@@ -91,7 +92,8 @@ using bookmarks::BookmarkNode;
 - (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState
                               loader:(id<UrlLoader>)loader
                     parentController:(UIViewController*)parentController
-                          dispatcher:(id<ApplicationCommands>)dispatcher {
+                          dispatcher:(id<ApplicationCommands, SnackbarCommands>)
+                                         dispatcher {
   self = [super init];
   if (self) {
     // Bookmarks are always opened with the main browser state, even in
@@ -103,7 +105,8 @@ using bookmarks::BookmarkNode;
     _dispatcher = dispatcher;
     _bookmarkModel =
         ios::BookmarkModelFactory::GetForBrowserState(_browserState);
-    _mediator = [[BookmarkMediator alloc] initWithBrowserState:_browserState];
+    _mediator = [[BookmarkMediator alloc] initWithBrowserState:_browserState
+                                                    dispatcher:self.dispatcher];
     DCHECK(_bookmarkModel);
     DCHECK(_parentController);
   }
@@ -228,8 +231,8 @@ using bookmarks::BookmarkNode;
 
 - (void)dismissSnackbar {
   // Dismiss any bookmark related snackbar this controller could have presented.
-  [MDCSnackbarManager dismissAndCallCompletionBlocksWithCategory:
-                          bookmark_utils_ios::kBookmarksSnackbarCategory];
+  [self.dispatcher
+      dismissSnackbarCategory:bookmark_utils_ios::kBookmarksSnackbarCategory];
 }
 
 #pragma mark - BookmarkEditViewControllerDelegate

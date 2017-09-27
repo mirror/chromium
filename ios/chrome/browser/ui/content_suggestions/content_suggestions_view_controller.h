@@ -17,6 +17,7 @@
 @protocol ContentSuggestionsMetricsRecording;
 @protocol ContentSuggestionsViewControllerAudience;
 @protocol OverscrollActionsControllerDelegate;
+@protocol SnackbarCommands;
 @protocol SuggestedContent;
 
 // CollectionViewController to display the suggestions items.
@@ -44,6 +45,7 @@
     overscrollDelegate;
 @property(nonatomic, weak) id<ContentSuggestionsMetricsRecording>
     metricsRecorder;
+@property(nonatomic, weak) id<SnackbarCommands> dispatcher;
 
 // TODO(crbug.com/761817): Remove this code once the transition to the new
 // architecture is completed.

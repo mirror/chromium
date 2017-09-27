@@ -20,13 +20,13 @@
 #import "ios/chrome/browser/ui/collection_view/cells/collection_view_switch_item.h"
 #import "ios/chrome/browser/ui/collection_view/cells/collection_view_text_item.h"
 #import "ios/chrome/browser/ui/collection_view/collection_view_model.h"
+#import "ios/chrome/browser/ui/commands/snackbar_commands.h"
 #import "ios/chrome/browser/ui/settings/settings_utils.h"
 #import "ios/chrome/browser/ui/settings/utils/pref_backed_boolean.h"
 #include "ios/chrome/browser/ui/uikit_ui_util.h"
 #include "ios/chrome/grit/ios_chromium_strings.h"
 #include "ios/chrome/grit/ios_strings.h"
 #import "ios/third_party/material_components_ios/src/components/Palettes/src/MaterialPalettes.h"
-#import "ios/third_party/material_components_ios/src/components/Snackbar/src/MaterialSnackbar.h"
 #import "ios/third_party/material_components_ios/src/components/Typography/src/MaterialTypography.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "url/gurl.h"
@@ -168,10 +168,8 @@ NSString* const kTranslateSettingsCategory = @"ChromeTranslateSettings";
     TriggerHapticFeedbackForNotification(UINotificationFeedbackTypeSuccess);
     NSString* messageText =
         l10n_util::GetNSString(IDS_IOS_TRANSLATE_SETTING_RESET_NOTIFICATION);
-    MDCSnackbarMessage* message =
-        [MDCSnackbarMessage messageWithText:messageText];
-    message.category = kTranslateSettingsCategory;
-    [MDCSnackbarManager showMessage:message];
+    [self.dispatcher showSnackbarWithMessage:messageText
+                                    category:kTranslateSettingsCategory];
   }
 }
 

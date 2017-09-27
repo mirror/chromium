@@ -10,6 +10,7 @@
 namespace ios {
 class ChromeBrowserState;
 }
+@protocol SnackbarCommands;
 @class Tab;
 @class TabModel;
 
@@ -64,7 +65,9 @@ class ChromeBrowserState;
 
 // Creates a new wrangler object for |provider| and |tabModel|.
 - (instancetype)initWithProvider:(id<ContextualSearchProvider>)provider
-                        tabModel:(TabModel*)tabModel NS_DESIGNATED_INITIALIZER;
+                        tabModel:(TabModel*)tabModel
+                      dispatcher:(id<SnackbarCommands>)dispatcher
+    NS_DESIGNATED_INITIALIZER;
 
 - (instancetype)init NS_UNAVAILABLE;
 

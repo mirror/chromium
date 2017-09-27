@@ -22,6 +22,7 @@
 #include "ios/chrome/browser/application_context.h"
 #import "ios/chrome/browser/procedural_block_types.h"
 #import "ios/chrome/browser/tabs/tab.h"
+#import "ios/chrome/browser/ui/commands/snackbar_commands.h"
 #include "ios/chrome/browser/ui/contextual_search/contextual_search_context.h"
 #include "ios/chrome/browser/ui/contextual_search/contextual_search_delegate.h"
 #import "ios/chrome/browser/ui/contextual_search/contextual_search_header_view.h"
@@ -40,7 +41,6 @@
 #import "ios/chrome/browser/web/dom_altering_lock.h"
 #include "ios/chrome/common/string_util.h"
 #include "ios/chrome/grit/ios_strings.h"
-#import "ios/third_party/material_components_ios/src/components/Snackbar/src/MaterialSnackbar.h"
 #include "ios/web/public/browser_state.h"
 #include "ios/web/public/load_committed_details.h"
 #include "ios/web/public/referrer.h"
@@ -151,6 +151,9 @@ NSArray* StringValueToRectArray(const std::string& list) {
 // Controller delegate for the controller to call back to.
 @property(nonatomic, readwrite, weak) id<ContextualSearchControllerDelegate>
     controllerDelegate;
+
+// Dispatcher for sending commands.
+@property(nonatomic, readonly, weak) id<SnackbarCommands> dispatcher;
 
 // Permissions interface for this feature. Property is readwrite for testing.
 @property(nonatomic, readwrite, strong)
@@ -381,16 +384,19 @@ dismissPaneWithJavascriptCompletionHandler:(ProceduralBlock)completionHandler
 @synthesize enabled = _enabled;
 @synthesize controllerDelegate = _controllerDelegate;
 @synthesize webState = _webState;
+@synthesize dispatcher = _dispatcher;
 
 - (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState
-                            delegate:(id<ContextualSearchControllerDelegate>)
-                                         delegate {
+                            delegate:
+                                (id<ContextualSearchControllerDelegate>)delegate
+                          dispatcher:(id<SnackbarCommands>)dispatcher {
   if ((self = [super init])) {
     _permissions = [[TouchToSearchPermissionsMediator alloc]
         initWithBrowserState:browserState];
     [_permissions setAudience:self];
 
     self.controllerDelegate = delegate;
+    _dispatcher = dispatcher;
 
     // Set up the web state observer. This lasts as long as this object does,
     // but it will observe and un-observe the web tabs as it changes over time.
@@ -793,13 +799,10 @@ dismissPaneWithJavascriptCompletionHandler:(ProceduralBlock)completionHandler
   if (!text.empty()) {
     UIPasteboard* pasteboard = [UIPasteboard generalPasteboard];
     pasteboard.string = base::SysUTF8ToNSString(_resolvedSearch.display_text);
-    // Let the user know.
-    NSString* messageText = l10n_util::GetNSString(IDS_IOS_SEARCH_COPIED);
-    MDCSnackbarMessage* message =
-        [MDCSnackbarMessage messageWithText:messageText];
-    message.duration = 1.0;
-    message.category = @"search term copied";
-    [MDCSnackbarManager showMessage:message];
+    [self.dispatcher
+        showSnackbarWithMessage:l10n_util::GetNSString(IDS_IOS_SEARCH_COPIED)
+                       category:@"search term copied"
+                       duration:1.0];
   }
 }
 

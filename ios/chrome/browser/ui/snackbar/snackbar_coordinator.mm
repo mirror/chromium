@@ -5,6 +5,7 @@
 #import "ios/chrome/browser/ui/snackbar/snackbar_coordinator.h"
 
 #import "ios/chrome/browser/ui/commands/command_dispatcher.h"
+#import "ios/chrome/browser/ui/commands/snackbar_action.h"
 #import "ios/chrome/browser/ui/commands/snackbar_commands.h"
 #import "ios/third_party/material_components_ios/src/components/Snackbar/src/MaterialSnackbar.h"
 
@@ -32,12 +33,33 @@ NSString* const kDefaultSnackbarCategory = @"DefaultSnackbarCategory";
 #pragma mark - SnackbarCommands
 
 - (void)showSnackbarWithMessage:(NSString*)message {
+  [self showSnackbarWithMessage:message category:kDefaultSnackbarCategory];
+}
+
+- (void)showSnackbarWithMessage:(NSString*)message
+                       category:(NSString*)category {
   MDCSnackbarMessage* snackbarMessage =
       [MDCSnackbarMessage messageWithText:message];
   snackbarMessage.accessibilityLabel = message;
   snackbarMessage.duration = 2.0;
-  snackbarMessage.category = kDefaultSnackbarCategory;
+  snackbarMessage.category = category;
   [MDCSnackbarManager showMessage:snackbarMessage];
+}
+
+- (void)showSnackbar:(ShowSnackbarActionCommand*)command {
+  MDCSnackbarMessageAction* action = [[MDCSnackbarMessageAction alloc] init];
+  action.handler = command.actionHandler;
+  action.title = command.actionTitle;
+  action.accessibilityIdentifier = command.actionAccessibilityIdentifier;
+  MDCSnackbarMessage* snackbarMessage =
+      [MDCSnackbarMessage messageWithText:command.message];
+  snackbarMessage.category = command.category;
+  snackbarMessage.action = action;
+  [MDCSnackbarManager showMessage:snackbarMessage];
+}
+
+- (void)dismissSnackbarCategory:(NSString*)category {
+  [MDCSnackbarManager dismissAndCallCompletionBlocksWithCategory:category];
 }
 
 @end

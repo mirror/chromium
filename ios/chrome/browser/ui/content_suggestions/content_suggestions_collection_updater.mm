@@ -13,6 +13,7 @@
 #import "ios/chrome/browser/ui/collection_view/cells/collection_view_text_item.h"
 #import "ios/chrome/browser/ui/collection_view/collection_view_controller.h"
 #import "ios/chrome/browser/ui/collection_view/collection_view_model.h"
+#import "ios/chrome/browser/ui/commands/snackbar_commands.h"
 #import "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_footer_item.h"
 #import "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_header_item.h"
 #import "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_text_item.h"
@@ -26,7 +27,6 @@
 #import "ios/chrome/browser/ui/content_suggestions/identifier/content_suggestion_identifier.h"
 #import "ios/chrome/browser/ui/content_suggestions/identifier/content_suggestions_section_information.h"
 #import "ios/third_party/material_components_ios/src/components/Palettes/src/MaterialPalettes.h"
-#import "ios/third_party/material_components_ios/src/components/Snackbar/src/MaterialSnackbar.h"
 #include "ui/base/l10n/l10n_util.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -162,6 +162,7 @@ NSString* const kContentSuggestionsCollectionUpdaterSnackbarCategory =
 @synthesize promoAdded = _promoAdded;
 @synthesize sectionIdentifiersFromContentSuggestions =
     _sectionIdentifiersFromContentSuggestions;
+@synthesize dispatcher = _dispatcher;
 
 - (instancetype)init {
   self = [super init];
@@ -775,10 +776,10 @@ addSuggestionsToModel:(NSArray<CSCollectionViewItem*>*)suggestions
   } else if (status == content_suggestions::StatusCodeError) {
     NSString* text =
         l10n_util::GetNSString(IDS_NTP_ARTICLE_SUGGESTIONS_NOT_AVAILABLE);
-    MDCSnackbarMessage* message = [MDCSnackbarMessage messageWithText:text];
-    message.accessibilityLabel = text;
-    message.category = kContentSuggestionsCollectionUpdaterSnackbarCategory;
-    [MDCSnackbarManager showMessage:message];
+    [self.dispatcher
+        showSnackbarWithMessage:text
+                       category:
+                           kContentSuggestionsCollectionUpdaterSnackbarCategory];
   }
 }
 

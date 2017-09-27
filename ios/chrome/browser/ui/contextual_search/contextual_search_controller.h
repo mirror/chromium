@@ -49,6 +49,7 @@ enum StateChangeReason {
 @class ContextualSearchController;
 @class ContextualSearchPanelView;
 @class ContextualSearchResultsView;
+@protocol SnackbarCommands;
 
 @protocol ContextualSearchTabProvider<NSObject>
 // Disassociate the internal WebState from this view and return it.
@@ -96,8 +97,9 @@ enum StateChangeReason {
 
 // Designated initializer.
 - (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState
-                            delegate:(id<ContextualSearchControllerDelegate>)
-                                         delegate;
+                            delegate:
+                                (id<ContextualSearchControllerDelegate>)delegate
+                          dispatcher:(id<SnackbarCommands>)dispatcher;
 
 // Set the Tab to be used as the opener for the search results tab. |opener|'s
 // lifetime should be greater than the receiver's. |opener| can be nil.

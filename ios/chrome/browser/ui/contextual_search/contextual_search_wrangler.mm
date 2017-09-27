@@ -30,6 +30,7 @@
                                        TabModelObserver>
 @property(nonatomic, readonly, weak) TabModel* tabModel;
 @property(nonatomic, readonly, weak) id<ContextualSearchProvider> provider;
+@property(nonatomic, readonly, weak) id<SnackbarCommands> dispatcher;
 @property(nonatomic) ContextualSearchPanelView* panel;
 @property(nonatomic) ContextualSearchController* controller;
 @property(nonatomic) ContextualSearchMaskView* mask;
@@ -40,15 +41,18 @@
 
 @synthesize tabModel = _tabModel;
 @synthesize provider = _provider;
+@synthesize dispatcher = _dispatcher;
 @synthesize panel = _panel;
 @synthesize controller = _controller;
 @synthesize mask = _mask;
 
 - (instancetype)initWithProvider:(id<ContextualSearchProvider>)provider
-                        tabModel:(TabModel*)tabModel {
+                        tabModel:(TabModel*)tabModel
+                      dispatcher:(id<SnackbarCommands>)dispatcher {
   if ((self = [super init])) {
     _provider = provider;
     _tabModel = tabModel;
+    _dispatcher = dispatcher;
   }
   return self;
 }
@@ -77,9 +81,10 @@
     self.panel = [self createPanelView];
     [self.provider.view insertSubview:self.panel
                          aboveSubview:self.provider.toolbarView];
-    self.controller =
-        [[ContextualSearchController alloc] initWithBrowserState:browserState
-                                                        delegate:self];
+    self.controller = [[ContextualSearchController alloc]
+        initWithBrowserState:browserState
+                    delegate:self
+                  dispatcher:self.dispatcher];
     [self.controller setPanel:self.panel];
     [self.controller setTab:[self.tabModel currentTab]];
     [self enable:YES];
