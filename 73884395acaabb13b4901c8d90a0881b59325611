@@ -106,6 +106,24 @@
       "revId": "73884395acaabb13b4901c8d90a0881b59325611",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8920a13b_269c22e0",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-27T18:16:59Z",
+      "side": 1,
+      "message": "multiple observers might be easier for that reason. and just ignore new child layers added during animation as I suggested in previous comment",
+      "parentUuid": "96b736ed_53c2c4f3",
+      "revId": "73884395acaabb13b4901c8d90a0881b59325611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
