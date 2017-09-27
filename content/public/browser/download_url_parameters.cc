@@ -46,7 +46,13 @@ DownloadUrlParameters::DownloadUrlParameters(
       url_(url),
       do_not_prompt_for_login_(false),
       transient_(false),
-      traffic_annotation_(traffic_annotation) {}
+      traffic_annotation_(traffic_annotation) {
+  // The RenderView and RenderFrame should be in the same process.
+  DCHECK(RenderViewHost::FromID(render_process_host_id,
+                                render_view_host_routing_id));
+  DCHECK(RenderFrameHost::FromID(render_process_host_id,
+                                 render_frame_host_routing_id));
+}
 
 DownloadUrlParameters::~DownloadUrlParameters() {
 }
