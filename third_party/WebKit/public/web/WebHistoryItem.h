@@ -119,6 +119,15 @@ class WebHistoryItem {
 
   BLINK_EXPORT bool DidSaveScrollOrScaleState() const;
 
+  BLINK_EXPORT WebString ScrollAnchorSelector() const;
+  BLINK_EXPORT void SetScrollAnchorSelector(const WebString&);
+
+  BLINK_EXPORT WebFloatPoint ScrollAnchorOffset() const;
+  BLINK_EXPORT void SetScrollAnchorOffset(const WebFloatPoint&);
+
+  BLINK_EXPORT uint64_t ScrollAnchorSimhash() const;
+  BLINK_EXPORT void SetScrollAnchorSimhash(const uint64_t);
+
 #if INSIDE_BLINK
   BLINK_EXPORT WebHistoryItem(HistoryItem*);
   BLINK_EXPORT WebHistoryItem& operator=(HistoryItem*);

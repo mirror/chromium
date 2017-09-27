@@ -83,6 +83,11 @@ struct FrameState {
   blink.mojom.ReferrerPolicy referrer_policy;
   HttpBody http_body;
   array<FrameState> children;
+
+  // Serialized scroll anchor fields
+  [MinVersion=1] mojo.common.mojom.String16? scroll_anchor_selector;
+  [MinVersion=1] gfx.mojom.PointF? scroll_anchor_offset;
+  [MinVersion=1] uint64 scroll_anchor_simhash = 0;
 };
 
 struct PageState {

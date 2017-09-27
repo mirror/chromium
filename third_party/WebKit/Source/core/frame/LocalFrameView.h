@@ -275,6 +275,7 @@ class CORE_EXPORT LocalFrameView final
   void DidAttachDocument();
 
   void RestoreScrollbar();
+  bool RestoreScrollAnchor(const ScrollAnchor::SerializedAnchor);
 
   void PostLayoutTimerFired(TimerBase*);
 
