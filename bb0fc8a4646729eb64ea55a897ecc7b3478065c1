@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c792cc4e_c236a4e7",
+        "filename": "chrome/browser/chromeos/input_method/candidate_window_controller_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-27T18:02:59Z",
+      "side": 1,
+      "message": "How do you know the candidate list is associated with a Browser? If the candidate list needs to track a widget, can it take the widget it\u0027s associated with in it\u0027s constructor?",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 52,
+        "endChar": 18
+      },
+      "revId": "bb0fc8a4646729eb64ea55a897ecc7b3478065c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
