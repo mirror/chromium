@@ -127,6 +127,24 @@
       "revId": "c2501b8442275f539335312a96d6d09ea28dbedb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e000bb66_a93963a5",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-27T04:00:24Z",
+      "side": 1,
+      "message": "IMO this is not flaky check. Sorry if I wasn\u0027t clear in my previous comment. :)\n\nThe test passes deterministically. It doesn\u0027t matter how long we wait with the PostDelayedTask() on line 667, or doesn\u0027t have this PostDelayedTask() at all. The test should pass 100% of time.\n\nThe purpose of the PostDelayedTask(), is to widen the race window if the code has a bug and doesn\u0027t actually pause. Because it is a hypothetical failure scenario, we don\u0027t need to worry about whether that is flaky. -- \"The code has a bug\" is not well-undefined and can be of any reason, so it is not possible to guarantee that a test fails deterministically. For example, a simple test EXPECT_EQ(5, 2+3) could fail 50% of time if the adder hardware fails 50% of time.\n\nLine 672-673 ensures that with PauseCachingResponseBody we don\u0027t try to make any further read. So it is one of the two useful checks of this test (the other is line 678-679). I think it makes sense to keep them.\n\nWDYT? Thanks!",
+      "parentUuid": "e79bd9bb_85407664",
+      "revId": "c2501b8442275f539335312a96d6d09ea28dbedb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
