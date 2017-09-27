@@ -43,7 +43,9 @@
 #include "components/omnibox/browser/omnibox_event_global_tracker.h"
 #include "components/omnibox/browser/omnibox_field_trial.h"
 #include "components/omnibox/browser/omnibox_log.h"
+#include "components/omnibox/browser/omnibox_pref_names.h"
 #include "components/omnibox/browser/search_provider.h"
+#include "components/omnibox/browser/zero_suggest_provider.h"
 #include "components/open_from_clipboard/clipboard_recent_content.h"
 #include "components/prefs/pref_service.h"
 #include "components/search_engines/template_url_service.h"
@@ -609,7 +611,7 @@ static void PrefetchZeroSuggestResults(JNIEnv* env,
   if (!profile)
     return;
 
-  if (!OmniboxFieldTrial::InZeroSuggestPersonalizedFieldTrial())
+  if (!ZeroSuggestProvider::PersonalizedSuggestionsEnabled(profile->GetPrefs()))
     return;
 
   // ZeroSuggestPrefetcher deletes itself after it's done prefetching.

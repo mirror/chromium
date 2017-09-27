@@ -1567,6 +1567,11 @@ const char kChromeHomeExpandButtonName[] = "Chrome Home Expand Button";
 const char kChromeHomeExpandButtonDescription[] =
     "Enables the expand button for Chrome Home.";
 
+const char kChromeHomePersonalizedOmniboxSuggestionsName[] =
+    "Chrome Home Personalized Omnibox Suggestions";
+const char kChromeHomePersonalizedOmniboxSuggestionsDescription[] =
+    "Enable personalized omnibox suggestions for Chrome Home.";
+
 const char kChromeHomeSwipeLogicName[] = "Chrome Home Swipe Logic";
 const char kChromeHomeSwipeLogicDescription[] =
     "Various swipe logic options for Chrome Home for sheet expansion.";
