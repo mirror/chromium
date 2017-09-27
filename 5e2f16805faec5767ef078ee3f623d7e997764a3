@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "eac3a68f_79438c4f",
+        "filename": "chrome/browser/chromeos/login/ui/webui_login_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-09-27T18:51:12Z",
+      "side": 1,
+      "message": "I think it is also used in WebUIScreenLocker, so maybe we should still check this here?",
+      "parentUuid": "c7930557_3f883492",
+      "range": {
+        "startLine": 615,
+        "startChar": 6,
+        "endLine": 615,
+        "endChar": 38
+      },
+      "revId": "5e2f16805faec5767ef078ee3f623d7e997764a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fd0947d_dfd37e5e",
         "filename": "chrome/browser/chromeos/login/ui/webui_login_view.cc",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "5e2f16805faec5767ef078ee3f623d7e997764a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7057b3cb_31edac5f",
+        "filename": "chrome/browser/chromeos/login/ui/webui_login_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-09-27T18:51:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fd0947d_dfd37e5e",
+      "revId": "5e2f16805faec5767ef078ee3f623d7e997764a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
