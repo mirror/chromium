@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f234df49_937ec0b7",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-09-27T16:53:19Z",
+      "side": 1,
+      "message": "That reminds me. The DelegateFactory should probably depend on the DownloadServiceFactory.",
+      "parentUuid": "ee108cab_bcb16f61",
+      "range": {
+        "startLine": 56,
+        "startChar": 29,
+        "endLine": 56,
+        "endChar": 46
+      },
+      "revId": "063352f6b10daf0468380b79fae775ae1fd40323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bb40df0_8079ac16",
         "filename": "chrome/browser/background_fetch/background_fetch_download_client.cc",
         "patchSetId": 7
@@ -189,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "8537d785_569739f6",
+        "filename": "chrome/browser/background_fetch/background_fetch_download_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-09-27T16:53:19Z",
+      "side": 1,
+      "message": "Yes it is. I think it pretty much already says that.",
+      "parentUuid": "630473ae_129822b1",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 11
+      },
+      "revId": "063352f6b10daf0468380b79fae775ae1fd40323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5724e3ac_8b49c78d",
         "filename": "chrome/browser/background_fetch/background_fetch_download_client.cc",
         "patchSetId": 7
@@ -200,6 +248,30 @@
       "writtenOn": "2017-09-27T15:59:01Z",
       "side": 1,
       "message": "Nit: std::make_unique",
+      "range": {
+        "startLine": 43,
+        "startChar": 6,
+        "endLine": 43,
+        "endChar": 22
+      },
+      "revId": "063352f6b10daf0468380b79fae775ae1fd40323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "033b2da0_f785aabe",
+        "filename": "chrome/browser/background_fetch/background_fetch_download_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-09-27T16:53:19Z",
+      "side": 1,
+      "message": "I updated this in patch set 9.",
+      "parentUuid": "5724e3ac_8b49c78d",
       "range": {
         "startLine": 43,
         "startChar": 6,
@@ -479,6 +551,30 @@
       "revId": "063352f6b10daf0468380b79fae775ae1fd40323",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16daf3d3_4836f7e1",
+        "filename": "chrome/browser/background_fetch/background_fetch_download_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-09-27T16:53:19Z",
+      "side": 1,
+      "message": "Now you\u0027ve made me thing about it. Especially now that I\u0027ve made the DelegateImplFactory depend on the DownloadService, this is not true.\n\nIt\u0027s probably impossible to trigger since they\u0027ll probably both be destroyed in the same task, so no Client methods could be called in the meantime, but I think I\u0027ll play it safe. I\u0027ll make this a WeakPtr since the DelegateImpl already has a WeakPtrFactory. (The alternative would be for DownloadService to forward its ShutDown method to all of its clients).\n\nI\u0027ll go replace all those DCHECKS with if()s",
+      "parentUuid": "e628c59c_c611a04b",
+      "range": {
+        "startLine": 49,
+        "startChar": 31,
+        "endLine": 49,
+        "endChar": 40
+      },
+      "revId": "063352f6b10daf0468380b79fae775ae1fd40323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

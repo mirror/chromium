@@ -22,6 +22,30 @@
       "revId": "e4aac233fea28a367a0c213cf109318df781a2b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "791fc7d1_4a391555",
+        "filename": "components/download/content/internal/download_driver_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-09-27T16:53:19Z",
+      "side": 1,
+      "message": "I\u0027m not intending to change this file in this change. This is just a bug fix so it will not crash the moment you use BackgroundFetch that will hopefully be submitted in https://chromium-review.googlesource.com/c/chromium/src/+/687055",
+      "parentUuid": "92e2e4cc_32a6a7ae",
+      "range": {
+        "startLine": 88,
+        "startChar": 4,
+        "endLine": 88,
+        "endChar": 9
+      },
+      "revId": "e4aac233fea28a367a0c213cf109318df781a2b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
