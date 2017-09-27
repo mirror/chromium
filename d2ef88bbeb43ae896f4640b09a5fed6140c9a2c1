@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2cafc5e_af459688",
+        "filename": "extensions/browser/api/virtual_keyboard/virtual_keyboard_api.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-27T15:42:30Z",
+      "side": 1,
+      "message": "doesn\u0027t seem to be needed?",
+      "revId": "d2ef88bbeb43ae896f4640b09a5fed6140c9a2c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
