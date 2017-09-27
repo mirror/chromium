@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "488ebfb1_7f9e88c8",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1288,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-27T15:56:59Z",
+      "side": 1,
+      "message": "I think that\u0027s probably sufficient.  I suppose third party NTPs might have other cross-site iframes we could punt into OOPIFs, but we don\u0027t need to worry about that for the trial.  Reusing the existing approach seems fine.",
+      "parentUuid": "a3068931_2c115858",
+      "range": {
+        "startLine": 1288,
+        "startChar": 9,
+        "endLine": 1288,
+        "endChar": 50
+      },
+      "revId": "9c6a4326cb99719333a22b3aeae3ca3264eacf69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "12f2d0c0_133a9f27",
         "filename": "chrome/browser/chrome_content_browser_client.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-27T09:13:38Z",
       "side": 1,
       "message": "Have you tried this with a third-party NTP? E.g. choose Bing as the default search engine and see if the tiles still show up on their NTP.\n(I don\u0027t know what the parent URL will be here - something like \"https://www.bing.com/chrome/newtab\", or has it been rewritten to \"chrome-search://remote-ntp\" at this point?)",
+      "range": {
+        "startLine": 1290,
+        "startChar": 42,
+        "endLine": 1290,
+        "endChar": 0
+      },
+      "revId": "9c6a4326cb99719333a22b3aeae3ca3264eacf69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7c6d684_1587123c",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1290,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-27T15:56:59Z",
+      "side": 1,
+      "message": "Good question.  We do appear to rewrite Bing\u0027s site URL to chrome-search://remote-ntp.  The updated patch works as well.",
+      "parentUuid": "12f2d0c0_133a9f27",
       "range": {
         "startLine": 1290,
         "startChar": 42,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b97b3b48_7c1d8fdb",
+        "filename": "chrome/browser/chrome_content_browser_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-27T15:56:59Z",
+      "side": 1,
+      "message": "\u003e I was wondering whether we should reuse/repurpose ShouldFrameShareParentSiteInstanceDespiteTopDocumentIsolation which 1) also takes a |parent_site_instance| and |url|, 2) and also covers NTP.\n\u003e \n\u003e OTOH:\n\u003e A) I think it is okay to land as-is\n\u003e B) I am not sure if hosted apps should also be exempt from --site-per-process for the planned trial (and ShouldFrameShareParentSiteInstanceDespiteTopDocumentIsolation also excludes hosted apps).\n\nGood point!  I just tested a path-based hosted app, and indeed we\u0027re still creating OOPIFs for same-origin iframes inside it in --site-per-process.  That could break compatibility, so I think your suggesting to reuse ShouldFrameShareParentSiteInstanceDespiteTopDocumentIsolation is worth doing (so that we skip OOPIFs for both the NTP and hosted apps).",
+      "parentUuid": "b27fb148_15b9e732",
+      "range": {
+        "startLine": 120,
+        "startChar": 7,
+        "endLine": 120,
+        "endChar": 38
+      },
+      "revId": "9c6a4326cb99719333a22b3aeae3ca3264eacf69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08278a40_12d054f2",
         "filename": "content/browser/frame_host/render_frame_host_manager.cc",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "9c6a4326cb99719333a22b3aeae3ca3264eacf69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3a7b7b3_1598df2c",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1302,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-27T15:56:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08278a40_12d054f2",
+      "range": {
+        "startLine": 1302,
+        "startChar": 58,
+        "endLine": 1302,
+        "endChar": 0
+      },
+      "revId": "9c6a4326cb99719333a22b3aeae3ca3264eacf69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
