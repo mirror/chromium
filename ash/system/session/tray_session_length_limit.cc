@@ -83,34 +83,42 @@ void TraySessionLengthLimit::OnSessionLengthLimitChanged() {
 }
 
 void TraySessionLengthLimit::Update() {
-  // Don't show notification or tray item until the user is logged in.
-  if (!Shell::Get()->session_controller()->IsActiveUserSessionStarted())
+  if (!IsSessionStarted())
     return;
-
   UpdateState();
   UpdateNotification();
   UpdateTrayBubbleView();
 }
 
-void TraySessionLengthLimit::UpdateState() {
+bool TraySessionLengthLimit::IsSessionStarted() {
+  // Don't show notification or tray item until the user is logged in.
+  return Shell::Get()->session_controller()->IsActiveUserSessionStarted();
+}
+
+void TraySessionLengthLimit::UpdateRemainingSessionTime() {
   SessionController* session = Shell::Get()->session_controller();
   base::TimeDelta time_limit = session->session_length_limit();
   base::TimeTicks session_start_time = session->session_start_time();
-  if (!time_limit.is_zero() && !session_start_time.is_null()) {
+  SetRemainingSessionTime(
+      std::max(time_limit - (base::TimeTicks::Now() - session_start_time),
+               base::TimeDelta()));
+}
+
+void TraySessionLengthLimit::UpdateState() {
+  UpdateRemainingSessionTime();
+  if (IsSessionStarted() && !remaining_session_time_.is_zero()) {
     const base::TimeDelta expiring_soon_threshold(
         base::TimeDelta::FromMinutes(kExpiringSoonThresholdInMinutes));
-    remaining_session_time_ =
-        std::max(time_limit - (base::TimeTicks::Now() - session_start_time),
-                 base::TimeDelta());
     limit_state_ = remaining_session_time_ <= expiring_soon_threshold
                        ? LIMIT_EXPIRING_SOON
                        : LIMIT_SET;
     if (!timer_)
       timer_.reset(new base::RepeatingTimer);
     if (!timer_->IsRunning()) {
-      timer_->Start(FROM_HERE, base::TimeDelta::FromMilliseconds(
-                                   kTimerIntervalInMilliseconds),
-                    this, &TraySessionLengthLimit::Update);
+      timer_->Start(
+          FROM_HERE,
+          base::TimeDelta::FromMilliseconds(kTimerIntervalInMilliseconds), this,
+          &TraySessionLengthLimit::Update);
     }
   } else {
     remaining_session_time_ = base::TimeDelta();

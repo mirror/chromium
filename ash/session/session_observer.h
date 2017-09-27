@@ -51,6 +51,9 @@ class ASH_EXPORT SessionObserver {
   // with null.
   virtual void OnActiveUserPrefServiceChanged(PrefService* pref_service) {}
 
+  // Called when "OffHours" policy mode or duration are changed.
+  virtual void OnOffHoursModeOrDurationChanged() {}
+
  protected:
   virtual ~SessionObserver() {}
 };

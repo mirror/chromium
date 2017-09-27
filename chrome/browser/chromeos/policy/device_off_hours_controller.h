@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "base/macros.h"
+#include "base/observer_list.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
 #include "base/values.h"
@@ -55,9 +56,22 @@ ApplyOffHoursPolicyToProto(
 // decoding process from proto to PolicyMap.
 class DeviceOffHoursController : public chromeos::PowerManagerClient::Observer {
  public:
+  // Observer interface.
+  class Observer {
+   public:
+    // Gets called when "OffHours" mode or "OffHours" duration is changed.
+    virtual void OnOffHoursModeOrDurationChanged();
+
+   protected:
+    virtual ~Observer();
+  };
+
   // Creates a device off hours controller instance.
   DeviceOffHoursController();
   ~DeviceOffHoursController() override;
+
+  void AddObserver(Observer* observer);
+  void RemoveObserver(Observer* observer);
 
   // Return current "OffHours" mode status.
   bool IsOffHoursMode();
@@ -71,22 +85,42 @@ class DeviceOffHoursController : public chromeos::PowerManagerClient::Observer {
   // chromeos::PowerManagerClient::Observer:
   void SuspendDone(const base::TimeDelta& sleep_duration) override;
 
+  // Return "OffHours" mode end time.
+  base::TimeTicks GetOffHoursEndTime() { return off_hours_end_time_; }
+
  private:
+  // Run OnOffHoursModeOrDurationChanged() for observers.
+  void NotifyOffHoursDurationChanged() const;
+
   // Call when "OffHours" mode is changed and ask DeviceSettingsService to
   // update current proto.
-  void OffHoursModeIsChanged();
+  // Run OnOffHoursModeOrDurationChanged() for observers.
+  void NotifyOffHoursModeChanged() const;
 
-  // Check if "OffHours" mode is in current time. Update current status in
-  // |off_hours_mode_|. Set timer to next update "OffHours" mode.
+  // If "OffHours" mode is in current time then apply current "OffHours"
+  // interval and turn "OffHours" mode on otherwise turn "OffHouts mode off and
+  // set timer to next update "OffHours" mode.
   void UpdateOffHoursMode();
+
+  // Apply current "OffHours" interval. Upldate "OffHours" end time. Set timer
+  // to next update "OffHours" mode.
+  void ApplyOffHoursInterval(off_hours::OffHoursInterval interval,
+                             off_hours::WeeklyTime current_time);
 
   // Turn on and off "OffHours" mode and call "OffHoursModeIsChanged()" if
   // "OffHours" mode is changed.
   void SetOffHoursMode(bool off_hours_enabled);
 
+  // Set "OffHours" mode end time.
+  void SetOffHoursEndTime(base::TimeTicks off_hours_end_time);
+
   // Timer for update "OffHours" mode.
   void StartOffHoursTimer(base::TimeDelta delay);
   void StopOffHoursTimer();
+
+  base::ObserverList<Observer> observers_;
+
+  base::TimeTicks off_hours_end_time_;
 
   // Timer for updating device settings at the begin of next “OffHours” interval
   // or at the end of current "OffHours" interval.
