@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f609e7cd_d6d88c41",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/BaseJUnit4ClassRunner.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-09-27T06:56:55Z",
+      "side": 1,
+      "message": "I found that CommandLineInitUtilTest passes without any change at this point. But this keeps CommandLineInitUtil.initCommandLine() in CommandLineInitUtilTest.setUp() from initializing CommandLine as expected, therefore CommandLineInitUtilTest starts to fail.",
+      "revId": "1ef7ab5042d07173050cf7f9581c3627b0633852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
