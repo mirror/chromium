@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03b903fe_21e90b55",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorClient.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-27T22:33:06Z",
+      "side": 1,
+      "message": "This should be dead code too, it was specifically to get the list of mutations applied by the compositor worker but we pass that back as time values in animation worklet using a separate mechanism.",
+      "revId": "da58446fcaf726dcc24326c7bc4a893760f2c8ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
