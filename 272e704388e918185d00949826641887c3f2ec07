@@ -190,6 +190,24 @@
     },
     {
       "key": {
+        "uuid": "4d260bc9_8c886222",
+        "filename": "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_mouse_tracker.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-09-27T22:21:47Z",
+      "side": 1,
+      "message": "SGTM, done!",
+      "parentUuid": "42f34491_429674c2",
+      "revId": "272e704388e918185d00949826641887c3f2ec07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ae29fa2_baefd807",
         "filename": "ui/base/cocoa/scoped_menu_bar_lock.h",
         "patchSetId": 2
