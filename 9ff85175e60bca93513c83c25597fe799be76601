@@ -16,6 +16,24 @@
       "revId": "9ff85175e60bca93513c83c25597fe799be76601",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91c19388_b8db5990",
+        "filename": "ash/system/web_notification/inactive_user_notification_blocker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-27T16:08:08Z",
+      "side": 0,
+      "message": "This could only happen for crash-n-restore flow. But after we introduce SessionController mojo interface, ash would not get the restored primary user session synchronously during init. The session info would be pushed down later. So I agree this can be removed.",
+      "parentUuid": "6d4c32d9_c64f6243",
+      "revId": "9ff85175e60bca93513c83c25597fe799be76601",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
