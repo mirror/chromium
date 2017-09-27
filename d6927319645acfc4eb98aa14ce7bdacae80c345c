@@ -16,6 +16,24 @@
       "revId": "d6927319645acfc4eb98aa14ce7bdacae80c345c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cab4e4c6_cda805a5",
+        "filename": "components/cast_channel/cast_socket_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-27T22:11:44Z",
+      "side": 1,
+      "message": "CastSocketImpl::AddObserver() will check and ignore duplicated observers.",
+      "parentUuid": "1b08a782_4e9e8b24",
+      "revId": "d6927319645acfc4eb98aa14ce7bdacae80c345c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

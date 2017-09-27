@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "205bae0b_cf4ec541",
+        "filename": "components/cast_channel/cast_socket_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-27T22:11:44Z",
+      "side": 1,
+      "message": "Yes...sorry for the typo, should be CastMediaSinkServiceImpl* (not CastChannelMediaSinkImpl...).",
+      "parentUuid": "85409c74_0fa33160",
+      "revId": "0ed04ca56472f535ed791773560420afec6edb09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f2d2df6_e1154a57",
         "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
         "patchSetId": 5
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "I believe the browser side listeners are retained even if the event page is suspended; the extension system keeps track of them and that\u0027s how it knows which event page to wake.  You can check this with some logging (try disabling the MR extension to force its listeners to be removed).   I\u0027m not sure though.\n\nI don\u0027t feel strongly about this so fine to leave as a TODO.\n\nJust to check: in any case, RemoveObserver(this) is checked in the dtor of CastMessageHandler to ensure that a CastSocket doesn\u0027t invoke it afterwards?",
       "parentUuid": "96a1f0c2_84366fb2",
+      "revId": "0ed04ca56472f535ed791773560420afec6edb09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a10c5b06_361a6566",
+        "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-27T22:11:44Z",
+      "side": 1,
+      "message": "Will leave a TODO here and investigate a little how extension system works...\n\nYes, we call RemoveObserver(this) in ~CastMessageHandler (https://cs.chromium.org/chromium/src/extensions/browser/api/cast_channel/cast_channel_api.cc?rcl\u003d73938fbd22e8af7622897f8f504280422ccb7097\u0026l\u003d437).",
+      "parentUuid": "98f346f5_2601199e",
       "revId": "0ed04ca56472f535ed791773560420afec6edb09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
