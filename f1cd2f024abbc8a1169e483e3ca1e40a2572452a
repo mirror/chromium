@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da9d0b00_4bfb8c54",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.css",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-27T12:30:13Z",
+      "side": 1,
+      "message": "Hrm, so .alternate-logo means \"colored or image background\", which is almost but not quite the same as \"non-white\". Nothing to be done about it I guess; I can\u0027t think of names that would make this non-confusing... :-/",
+      "range": {
+        "startLine": 100,
+        "startChar": 37,
+        "endLine": 100,
+        "endChar": 0
+      },
+      "revId": "f1cd2f024abbc8a1169e483e3ca1e40a2572452a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "697c23c3_1972d443",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-27T12:30:13Z",
+      "side": 1,
+      "message": "nit: WHITE_BACKGROUND_COLORS or something? Reading the .indexOf check below, it wasn\u0027t clear to me that WHITE isn\u0027t just a string.",
+      "range": {
+        "startLine": 111,
+        "startChar": 4,
+        "endLine": 111,
+        "endChar": 9
+      },
+      "revId": "f1cd2f024abbc8a1169e483e3ca1e40a2572452a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20b4054f_461e10e4",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-27T12:30:13Z",
+      "side": 1,
+      "message": "Out of curiosity, any particular reason for using history.state instead of a \"normal\" global variable?",
+      "range": {
+        "startLine": 148,
+        "startChar": 47,
+        "endLine": 148,
+        "endChar": 0
+      },
+      "revId": "f1cd2f024abbc8a1169e483e3ca1e40a2572452a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92e47773_c55aa6da",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-27T12:30:13Z",
+      "side": 1,
+      "message": "Does .includes(background) work?",
+      "range": {
+        "startLine": 203,
+        "startChar": 50,
+        "endLine": 203,
+        "endChar": 57
+      },
+      "revId": "f1cd2f024abbc8a1169e483e3ca1e40a2572452a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a897c2be_6ce44c02",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-27T12:30:13Z",
+      "side": 1,
+      "message": "Can background ever be falsey?",
+      "range": {
+        "startLine": 203,
+        "startChar": 29,
+        "endLine": 203,
+        "endChar": 39
+      },
+      "revId": "f1cd2f024abbc8a1169e483e3ca1e40a2572452a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1ca88f7_9dbf0290",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-27T12:30:13Z",
+      "side": 1,
+      "message": "Apparently the URL parameter is optional, so I\u0027d just leave it out.\nhttps://developer.mozilla.org/en-US/docs/Web/API/History_API",
+      "range": {
+        "startLine": 643,
+        "startChar": 74,
+        "endLine": 643,
+        "endChar": 0
+      },
+      "revId": "f1cd2f024abbc8a1169e483e3ca1e40a2572452a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
