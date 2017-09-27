@@ -1795,6 +1795,8 @@ TEST(HttpCache, RangeGET_ParallelValidationCacheLockTimeout) {
     EXPECT_EQ(LOAD_STATE_READING_RESPONSE, c->trans->GetLoadState());
   }
 
+  // Cache lock timeout will lead to dooming the entry since the transaction may
+  // have already written the headers.
   cache.SimulateCacheLockTimeoutAfterHeaders();
 
   // 2nd transaction requests ranges 30-39.
@@ -1813,7 +1815,6 @@ TEST(HttpCache, RangeGET_ParallelValidationCacheLockTimeout) {
     EXPECT_EQ(LOAD_STATE_IDLE, c->trans->GetLoadState());
   }
 
-  EXPECT_TRUE(cache.IsWriterPresent(kRangeGET_TransactionOK.url));
   EXPECT_EQ(0, cache.GetCountDoneHeadersQueue(kRangeGET_TransactionOK.url));
 
   EXPECT_EQ(3, cache.network_layer()->transaction_count());
@@ -7205,12 +7206,8 @@ TEST(HttpCache, SetTruncatedFlag) {
   EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
   EXPECT_FALSE(c->callback.have_result());
 
-  MockHttpCache::SetTestMode(TEST_MODE_SYNC_ALL);
-
   // Destroy the transaction.
   c->trans.reset();
-  MockHttpCache::SetTestMode(0);
-
 
   // Make sure that we don't invoke the callback. We may have an issue if the
   // UrlRequestJob is killed directly (without cancelling the UrlRequest) so we
@@ -7218,7 +7215,6 @@ TEST(HttpCache, SetTruncatedFlag) {
   // notification from the transaction destructor (see http://crbug.com/31723).
   EXPECT_FALSE(c->callback.have_result());
 
-  // Verify that the entry is marked as incomplete.
   VerifyTruncatedFlag(&cache, kSimpleGET_Transaction.url, true, 0);
 }
 
@@ -7612,7 +7608,7 @@ TEST(HttpCache, GET_IncompleteResourceWithAuth) {
   c.reset();  // The destructor could delete the entry.
   EXPECT_EQ(2, cache.network_layer()->transaction_count());
 
-  // Verify that the entry was not deleted.
+  // Verify that the entry was deleted.
   disk_cache::Entry* entry;
   ASSERT_TRUE(cache.OpenBackendEntry(kRangeGET_TransactionOK.url, &entry));
   entry->Close();
