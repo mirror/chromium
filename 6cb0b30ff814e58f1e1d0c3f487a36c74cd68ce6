@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7c3b94c2_514861db",
+        "filename": "third_party/WebKit/LayoutTests/virtual/color_space/fast/canvas/color-space/canvas-createImageBitmap-linear-rgb.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-09-27T17:54:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0f9a1d1_73dc35f3",
+      "revId": "6cb0b30ff814e58f1e1d0c3f487a36c74cd68ce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c159fae_36a52ad7",
         "filename": "third_party/WebKit/Source/platform/graphics/CanvasColorParams.cpp",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2017-09-27T17:43:17Z",
       "side": 1,
       "message": "Would rather eliminate places in the code that are asking for kLegacy.  How is that still happening with color correction enabled?",
+      "range": {
+        "startLine": 79,
+        "startChar": 9,
+        "endLine": 79,
+        "endChar": 32
+      },
+      "revId": "6cb0b30ff814e58f1e1d0c3f487a36c74cd68ce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14947db0_fd9f7c4e",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasColorParams.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-09-27T17:54:52Z",
+      "side": 1,
+      "message": "We can do that, but there is a work in progress by ccameron@ to do this: https://chromium-review.googlesource.com/c/chromium/src/+/670003\nI think we might have to wait for the other CL as this change is breaking some webgl conformance tests.",
+      "parentUuid": "0c159fae_36a52ad7",
       "range": {
         "startLine": 79,
         "startChar": 9,
