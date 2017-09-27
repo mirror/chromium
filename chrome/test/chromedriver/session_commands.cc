@@ -833,6 +833,42 @@ Status ExecuteGetWindowSize(Session* session,
   return Status(kOk);
 }
 
+Status ExecuteSetWindowRect(Session* session,
+                            const base::DictionaryValue& params,
+                            std::unique_ptr<base::Value>* value) {
+  double width = 0;
+  double height = 0;
+  double x = 0;
+  double y = 0;
+  if (!params.GetDouble("width", &width) ||
+      !params.GetDouble("height", &height))
+    return Status(kUnknownError, "missing or invalid 'width' or 'height'");
+
+  if (!params.GetDouble("x", &x) || !params.GetDouble("y", &y))
+    return Status(kUnknownError, "missing or invalid 'x' or 'y'");
+
+  ChromeDesktopImpl* desktop = NULL;
+  Status status = session->chrome->GetAsDesktop(&desktop);
+  if (status.IsError())
+    return status;
+
+  if (desktop->GetBrowserInfo()->build_no >= kBrowserWindowDevtoolsBuildNo) {
+    return desktop->SetWindowSize(session->window, static_cast<int>(width),
+                                  static_cast<int>(height));
+    return desktop->SetWindowPosition(session->window, static_cast<int>(x),
+                                      static_cast<int>(y));
+  }
+
+  AutomationExtension* extension = NULL;
+  status = desktop->GetAutomationExtension(&extension, session->w3c_compliant);
+  if (status.IsError())
+    return status;
+
+  return extension->SetWindowRect(static_cast<int>(width),
+                                  static_cast<int>(height), static_cast<int>(x),
+                                  static_cast<int>(y));
+}
+
 Status ExecuteSetWindowSize(Session* session,
                             const base::DictionaryValue& params,
                             std::unique_ptr<base::Value>* value) {

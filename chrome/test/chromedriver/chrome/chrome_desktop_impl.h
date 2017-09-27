@@ -71,6 +71,11 @@ class ChromeDesktopImpl : public ChromeImpl {
   Status GetWindowSize(const std::string& target_id, int* width, int* height);
   Status SetWindowPosition(const std::string& target_id, int x, int y);
   Status SetWindowSize(const std::string& target_id, int width, int height);
+  Status SetWindowRect(const std::string& target_id,
+                       int width,
+                       int height,
+                       int x,
+                       int y);
   Status MaximizeWindow(const std::string& target_id);
   Status FullScreenWindow(const std::string& target_id);
 

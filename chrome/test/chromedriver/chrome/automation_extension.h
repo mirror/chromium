@@ -42,6 +42,9 @@ class AutomationExtension {
   // Sets the size of the current window.
   Status SetWindowSize(int width, int height);
 
+  // Sets the rect of the current window.
+  Status SetWindowRect(int width, int height, int x, int y);
+
   // Maximizes the current window.
   Status MaximizeWindow();
 
