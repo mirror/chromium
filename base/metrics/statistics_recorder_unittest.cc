@@ -45,7 +45,7 @@ class OddRecordHistogramChecker : public base::RecordHistogramChecker {
   ~OddRecordHistogramChecker() override {}
 
   // base::RecordHistogramChecker:
-  bool ShouldRecord(uint64_t histogram_hash) const override {
+  bool ShouldRecord(uint64_t histogram_hash) override {
     return histogram_hash % 2;
   }
 };
