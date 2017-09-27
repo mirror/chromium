@@ -175,11 +175,9 @@ void NGTextFragmentPainter::Paint(const Document& document,
 
     // Paint line-through decoration if needed.
     if (has_line_through_decoration) {
-      GraphicsContextStateSaver state_saver(context, false);
-      TextPainterBase::UpdateGraphicsContext(
-          context, text_style, fragment_.IsHorizontal(), state_saver);
       text_painter.PaintDecorationsOnlyLineThrough(
-          decoration_info, paint_info, style_to_use.AppliedTextDecorations());
+          decoration_info, paint_info, style_to_use.AppliedTextDecorations(),
+          text_style);
     }
   }
 
