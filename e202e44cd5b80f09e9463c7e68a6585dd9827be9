@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "390357aa_9c0207f3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 42
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-27T17:29:50Z",
+      "side": 1,
+      "message": "Did you mean to say consumer for both?",
+      "revId": "e202e44cd5b80f09e9463c7e68a6585dd9827be9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3610936_8c601cac",
+        "filename": "cc/resources/local_resource_provider.h",
+        "patchSetId": 42
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-27T17:29:50Z",
+      "side": 1,
+      "message": "Does this need to inherit from ResourceProvider? There\u0027s a ton of complexity in there that this is still inheriting that it doesn\u0027t need. I was hoping this can be more independent?",
+      "revId": "e202e44cd5b80f09e9463c7e68a6585dd9827be9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b11df532_3aada89b",
+        "filename": "cc/resources/local_resource_provider.h",
+        "patchSetId": 42
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-27T17:29:50Z",
+      "side": 1,
+      "message": "Where is local software?",
+      "range": {
+        "startLine": 26,
+        "startChar": 26,
+        "endLine": 26,
+        "endChar": 27
+      },
+      "revId": "e202e44cd5b80f09e9463c7e68a6585dd9827be9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e195df0c_829761eb",
+        "filename": "cc/resources/local_resource_provider.h",
+        "patchSetId": 42
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-27T17:29:50Z",
+      "side": 1,
+      "message": "The sampler stuff in ResourceProvider was cuz the provider wanted to track the filters and stuff. I don\u0027t think we care about that in the local case, so the caller can just grab the GL texture id and do its thing locally there?",
+      "revId": "e202e44cd5b80f09e9463c7e68a6585dd9827be9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ad7ba7a_37f6e8f2",
+        "filename": "cc/resources/local_resource_provider.h",
+        "patchSetId": 42
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-27T17:29:50Z",
+      "side": 1,
+      "message": "Does this class need to differentiate read vs write?",
+      "revId": "e202e44cd5b80f09e9463c7e68a6585dd9827be9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00568d0c_eb49d8e1",
+        "filename": "cc/resources/resource.h",
+        "patchSetId": 42
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-27T17:29:50Z",
+      "side": 1,
+      "message": "Please put comments in this class explaining what local means, and what it implies for using the resource id()",
+      "revId": "e202e44cd5b80f09e9463c7e68a6585dd9827be9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b828de5b_99576a19",
+        "filename": "cc/resources/resource.h",
+        "patchSetId": 42
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-27T17:29:50Z",
+      "side": 1,
+      "message": "can |local| be the first parameter so it stands out more and is paired with the id",
+      "revId": "e202e44cd5b80f09e9463c7e68a6585dd9827be9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
