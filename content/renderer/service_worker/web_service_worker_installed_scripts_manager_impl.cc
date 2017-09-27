@@ -34,8 +34,7 @@ class Receiver {
     }
     callback_ = std::move(callback);
     // base::Unretained is safe because |watcher_| is owned by |this|.
-    watcher_.Watch(handle_.get(),
-                   MOJO_HANDLE_SIGNAL_READABLE | MOJO_HANDLE_SIGNAL_PEER_CLOSED,
+    watcher_.Watch(handle_.get(), MOJO_HANDLE_SIGNAL_READABLE,
                    base::Bind(&Receiver::OnReadable, base::Unretained(this)));
     watcher_.ArmOrNotify();
   }
