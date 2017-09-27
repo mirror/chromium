@@ -7,11 +7,16 @@
 
 #import <UIKit/UIKit.h>
 
+@class CRWWebViewScrollViewProxy;
+
 // A WebContentsConsumer (typically a view controller) uses data provided by
 // this protocol to display a web view.
 @protocol WebContentsConsumer
-// Called when the content view that the receiver should display changes.
-- (void)contentViewDidChange:(UIView*)contentView;
+// Called to change the web content view that should be displayed.
+// |scrollViewProxy| exposes UIScrollView interaction events to the view
+// controller.
+- (void)contentViewDidChange:(UIView*)contentView
+             scrollViewProxy:(CRWWebViewScrollViewProxy*)scrollViewProxy;
 @end
 
 #endif  // IOS_CLEAN_CHROME_BROWSER_UI_WEB_CONTENTS_WEB_CONTENTS_CONSUMER_H_

@@ -25,6 +25,7 @@ source_set("web_contents") {
     "//ios/clean/chrome/browser/ui/dialogs/context_menu",
     "//ios/clean/chrome/browser/ui/dialogs/http_auth_dialogs",
     "//ios/clean/chrome/browser/ui/dialogs/java_script_dialogs",
+    "//ios/clean/chrome/browser/ui/main_content",
     "//ios/clean/chrome/browser/ui/overlays",
     "//ios/web",
     "//ui/base",
@@ -40,6 +41,12 @@ source_set("web_contents_ui") {
   ]
 
   configs += [ "//build/config/compiler:enable_arc" ]
+
+  deps = [
+    "//ios/chrome/browser/ui:ui_util",
+    "//ios/clean/chrome/browser/ui/main_content:main_content_ui",
+    "//ios/web",
+  ]
 }
 
 source_set("unit_tests") {

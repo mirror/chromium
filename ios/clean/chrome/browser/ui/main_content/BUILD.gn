@@ -1,0 +1,35 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+source_set("main_content") {
+  sources = [
+    "main_content_coordinator+subclassing.h",
+    "main_content_coordinator.h",
+    "main_content_coordinator.mm",
+  ]
+
+  configs += [ "//build/config/compiler:enable_arc" ]
+
+  deps = [
+    ":main_content_ui",
+    "//base",
+    "//ios/chrome/browser/ui/broadcaster",
+    "//ios/chrome/browser/ui/browser_list",
+    "//ios/chrome/browser/ui/coordinators",
+  ]
+}
+
+source_set("main_content_ui") {
+  sources = [
+    "main_content_view_controller+subclassing.h",
+    "main_content_view_controller.h",
+    "main_content_view_controller.mm",
+  ]
+
+  configs += [ "//build/config/compiler:enable_arc" ]
+
+  deps = [
+    "//base",
+  ]
+}
