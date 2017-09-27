@@ -22,6 +22,30 @@
       "revId": "100f27a3bb5677b0205106a154f26365c27e785f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97faf498_44dd71bc",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-09-27T08:40:34Z",
+      "side": 0,
+      "message": "I see. I changed to use post target handler for clients that don\u0027t support key acks. The new event flow is like below:\n\nkey acks is on:\n1. processed by Keyboard::OnKeyEvent\n2. processed by ShellSurfaceWidget::OnKeyEvent if the key is not used by clients\n\nkey acks is off:\n1. processed by ShellSurfaceWidget::OnKeyEvent if the key is registered as an accelerator\n2. processed by Keyboard::OnKeyEvent",
+      "parentUuid": "8e1f43ab_c4f7819d",
+      "range": {
+        "startLine": 177,
+        "startChar": 2,
+        "endLine": 184,
+        "endChar": 3
+      },
+      "revId": "100f27a3bb5677b0205106a154f26365c27e785f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

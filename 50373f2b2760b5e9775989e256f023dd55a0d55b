@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "297153dd_1990431f",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-09-27T08:40:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fae14546_ad61d62f",
+      "range": {
+        "startLine": 104,
+        "startChar": 6,
+        "endLine": 104,
+        "endChar": 39
+      },
+      "revId": "50373f2b2760b5e9775989e256f023dd55a0d55b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6dee9570_2e77c59e",
         "filename": "components/exo/keyboard.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c4e31399_a591405c",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-09-27T08:40:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6dee9570_2e77c59e",
+      "range": {
+        "startLine": 110,
+        "startChar": 5,
+        "endLine": 110,
+        "endChar": 23
+      },
+      "revId": "50373f2b2760b5e9775989e256f023dd55a0d55b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c5b35bc_99197ce5",
         "filename": "components/exo/shell_surface.cc",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "50373f2b2760b5e9775989e256f023dd55a0d55b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09770653_c9b88211",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-09-27T08:40:34Z",
+      "side": 1,
+      "message": "I chatted with hidehiko@ offline and confirmed that the TODO was done already.\n\nHowever, this override is still needed not to consume focus management keys for clients that don\u0027t support key acks.",
+      "parentUuid": "6c5b35bc_99197ce5",
+      "range": {
+        "startLine": 201,
+        "startChar": 2,
+        "endLine": 201,
+        "endChar": 47
+      },
+      "revId": "50373f2b2760b5e9775989e256f023dd55a0d55b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
