@@ -10,6 +10,10 @@
 Polymer({
   is: 'category-setting-exceptions',
 
+  behaviors: [
+    I18nBehavior,
+  ],
+
   properties: {
     /**
      * Some content types (like Location) do not allow the user to manually
@@ -25,5 +29,12 @@ Polymer({
   /** @override */
   ready: function() {
     this.ContentSetting = settings.ContentSetting;
+
+    // The "Block" list shows as "Muted" for the Sound setting.
+    if (this.category == settings.ContentSettingsTypes.SOUND) {
+      this.BlockHeader = this.i18n('siteSettingsBlockSound');
+    } else {
+      this.BlockHeader = this.i18n('siteSettingsBlock');
+    }
   },
 });
