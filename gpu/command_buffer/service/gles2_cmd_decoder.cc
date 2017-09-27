@@ -10114,14 +10114,6 @@ void GLES2DecoderImpl::RestoreStateForAttrib(
   glBindBuffer(
       GL_ARRAY_BUFFER, state_.bound_array_buffer.get() ?
           state_.bound_array_buffer->service_id() : 0);
-
-  // Never touch vertex attribute 0's state (in particular, never disable it)
-  // when running on desktop GL with compatibility profile because it will
-  // never be re-enabled.
-  if (attrib_index != 0 || gl_version_info().BehavesLikeGLES()) {
-    state_.vertex_attrib_manager->SetDriverVertexAttribEnabled(
-        attrib_index, attrib->enabled());
-  }
 }
 
 bool GLES2DecoderImpl::SimulateFixedAttribs(
@@ -16700,6 +16692,19 @@ void GLES2DecoderImpl::EmulateVertexArrayState() {
   // Setup the Vertex attribute state
   for (uint32_t vv = 0; vv < group_->max_vertex_attribs(); ++vv) {
     RestoreStateForAttrib(vv, true);
+
+    // Restore the vertex attrib array enable-state according to
+    // the VertexAttrib enabled_in_driver value (which really represents the
+    // state of the virtual context - not the driver - which is above this
+    // vertex array object emulation layer).
+    if (vv != 0 || gl_version_info().BehavesLikeGLES()) {
+      const auto* attrib = state_.vertex_attrib_manager->GetVertexAttrib(vv);
+      if (attrib->enabled_in_driver()) {
+        glEnableVertexAttribArray(vv);
+      } else {
+        glDisableVertexAttribArray(vv);
+      }
+    }
   }
 
   // Setup the element buffer
