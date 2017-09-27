@@ -22,6 +22,30 @@
       "revId": "80691df9c99d1f5c312cca941979e454e1e0c907",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fabae725_ed5230b9",
+        "filename": "chrome/browser/extensions/webstore_installer.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-27T23:08:38Z",
+      "side": 1,
+      "message": "Yeah - I think that a DCHECK like this would seem a bit tautological (since as you say, all the 3 ids in the code correspond to the main frame).  OTOH, maybe we can add DCHECKs to the constructor of DownloadUrlParameters (to verify that |render_process_host_id| returns a non-null pointer when paired with both |render_view_host_routing_id| and |render_frame_host_routing_id|).  Let me try to put this into a separate CL and see if the tryjobs are green - https://chromium-review.googlesource.com/#/c/chromium/src/+/688750.",
+      "parentUuid": "93718f60_a22f8df5",
+      "range": {
+        "startLine": 664,
+        "startChar": 0,
+        "endLine": 664,
+        "endChar": 73
+      },
+      "revId": "80691df9c99d1f5c312cca941979e454e1e0c907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
