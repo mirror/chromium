@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2804b861_6ed390fc",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-27T12:26:44Z",
+      "side": 1,
+      "message": "Is this still needed? AFAICT, the \"view\" property is defined in the base-class NativeContentController, so there is no need to redefine it here unless the test code depends on it being the correct type (and even then, it can just use ObjCCastStrict\u003c\u003e).",
+      "revId": "3f62fd8c346cf11238fe8117c7bc92722f749df9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
