@@ -48,7 +48,8 @@ void PlaybackImageProvider::BeginRaster() {
   DCHECK(!in_raster_);
   in_raster_ = true;
   for (auto& draw_image : at_raster_images_)
-    decoded_at_raster_.push_back(GetDecodedDrawImage(draw_image));
+    decoded_at_raster_.push_back(
+        GetDecodedDrawImageInternal(draw_image, false));
 }
 
 void PlaybackImageProvider::EndRaster() {
@@ -59,8 +60,13 @@ void PlaybackImageProvider::EndRaster() {
 
 ImageProvider::ScopedDecodedDrawImage
 PlaybackImageProvider::GetDecodedDrawImage(const DrawImage& draw_image) {
-  DCHECK(in_raster_);
+  return GetDecodedDrawImageInternal(draw_image, true);
+}
 
+ImageProvider::ScopedDecodedDrawImage
+PlaybackImageProvider::GetDecodedDrawImageInternal(const DrawImage& draw_image,
+                                                   bool image_is_predecoded) {
+  DCHECK(in_raster_);
   // Return an empty decoded images if we are skipping all images during this
   // raster.
   if (skip_all_images_)
@@ -85,11 +91,15 @@ PlaybackImageProvider::GetDecodedDrawImage(const DrawImage& draw_image) {
                            : it->second;
 
   DrawImage adjusted_image(draw_image, 1.f, frame_index, target_color_space_);
-  auto decoded_draw_image = cache_->GetDecodedImageForDraw(adjusted_image);
-
-  return ScopedDecodedDrawImage(
-      decoded_draw_image,
-      base::BindOnce(&UnrefImageFromCache, std::move(adjusted_image), cache_));
+  if (image_is_predecoded) {
+    auto decoded_draw_image = cache_->GetPredecodedImageForDraw(adjusted_image);
+    return ScopedDecodedDrawImage(decoded_draw_image);
+  } else {
+    auto decoded_draw_image = cache_->GetDecodedImageForDraw(adjusted_image);
+    return ScopedDecodedDrawImage(
+        decoded_draw_image, base::BindOnce(&UnrefImageFromCache,
+                                           std::move(adjusted_image), cache_));
+  }
 }
 
 }  // namespace cc

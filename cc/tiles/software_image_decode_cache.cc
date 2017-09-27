@@ -463,6 +463,48 @@ SoftwareImageDecodeCache::DecodeImageInternal(const ImageKey& key,
   return GetScaledImageDecode(key, paint_image);
 }
 
+DecodedDrawImage SoftwareImageDecodeCache::GetPredecodedImageForDraw(
+    const DrawImage& draw_image) {
+  ImageKey key = ImageKey::FromDrawImage(draw_image, color_type_);
+  TRACE_EVENT1(TRACE_DISABLED_BY_DEFAULT("cc.debug"),
+               "SoftwareImageDecodeCache::GetPredecodedImageForDraw", "key",
+               key.ToString());
+  // If the target size is empty, we can skip this image draw.
+  if (key.target_size().IsEmpty())
+    return DecodedDrawImage(nullptr, kNone_SkFilterQuality);
+
+  base::AutoLock lock(lock_);
+  auto decoded_images_it = decoded_images_.Get(key);
+
+  if (decoded_images_it != decoded_images_.end()) {
+    DecodedImage* decoded_image = decoded_images_it->second.get();
+    // If we get here and this is a decoded image that is not at raster,
+    // then this should have already gone through the GetDecodedImageForDraw
+    // path to get the at raster image.  Thus, any image should be locked
+    // and externally ref'd.
+    DCHECK(decoded_image->is_locked());
+    DCHECK_GT(decoded_images_ref_counts_[key], 0);
+    return DecodedDrawImage(
+        decoded_image->image(), decoded_image->src_rect_offset(),
+        GetScaleAdjustment(key), GetDecodedFilterQuality(key));
+  }
+
+  // If this image is not in the decoded images list, then it must be
+  // at raster and have already been predecoded, locked, and ref'd.
+  auto at_raster_images_it = at_raster_decoded_images_.Get(key);
+  DCHECK(at_raster_images_it != at_raster_decoded_images_.end());
+  DCHECK(at_raster_images_it->second->is_locked());
+  DCHECK_GT(at_raster_decoded_images_ref_counts_[key], 0);
+
+  DecodedImage* at_raster_decoded_image = at_raster_images_it->second.get();
+  auto decoded_draw_image =
+      DecodedDrawImage(at_raster_decoded_image->image(),
+                       at_raster_decoded_image->src_rect_offset(),
+                       GetScaleAdjustment(key), GetDecodedFilterQuality(key));
+  decoded_draw_image.set_at_raster_decode(true);
+  return decoded_draw_image;
+}
+
 DecodedDrawImage SoftwareImageDecodeCache::GetDecodedImageForDraw(
     const DrawImage& draw_image) {
   ImageKey key = ImageKey::FromDrawImage(draw_image, color_type_);

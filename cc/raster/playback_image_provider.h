@@ -42,6 +42,10 @@ class CC_EXPORT PlaybackImageProvider : public ImageProvider {
       const DrawImage& draw_image) override;
 
  private:
+  ScopedDecodedDrawImage GetDecodedDrawImageInternal(
+      const DrawImage& draw_image,
+      bool image_is_predecoded);
+
   bool skip_all_images_;
   bool in_raster_ = false;
   PaintImageIdFlatSet images_to_skip_;
