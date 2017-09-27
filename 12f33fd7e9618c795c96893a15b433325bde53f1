@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f78165b_1b253c6c",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5009,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-27T14:47:11Z",
+      "side": 0,
+      "message": "Makes sense - this used to come from\n    void RenderFrameImpl::DidCommitProvisionalLoad(\n    ...\n        current_history_item_.SetTarget(\n            blink::WebString::FromUTF8(unique_name_helper_.value()));\nand the browser should already be aware of the unique name calculated via |unique_name_helper_|.",
+      "range": {
+        "startLine": 5009,
+        "startChar": 2,
+        "endLine": 5009,
+        "endChar": 66
+      },
+      "revId": "12f33fd7e9618c795c96893a15b433325bde53f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
