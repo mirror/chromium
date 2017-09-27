@@ -307,6 +307,7 @@ namespace networkingPrivate {
   dictionary IPSecProperties {
     DOMString AuthenticationType;
     CertificatePattern? ClientCertPattern;
+    DOMString? ClientCertPKCS11Id;
     DOMString? ClientCertRef;
     DOMString? ClientCertType;
     EAPProperties? EAP;
@@ -314,6 +315,7 @@ namespace networkingPrivate {
     long? IKEVersion;
     DOMString? PSK;
     boolean? SaveCredentials;
+    DOMString[]? ServerCAPEMs;
     DOMString[]? ServerCARefs;
     XAUTHProperties? XAUTH;
   };
@@ -321,6 +323,7 @@ namespace networkingPrivate {
   dictionary ManagedIPSecProperties {
     ManagedDOMString AuthenticationType;
     ManagedCertificatePattern? ClientCertPattern;
+    ManagedDOMString? ClientCertPKCS11Id;
     ManagedDOMString? ClientCertRef;
     ManagedDOMString? ClientCertType;
     ManagedEAPProperties? EAP;
@@ -328,6 +331,7 @@ namespace networkingPrivate {
     ManagedLong? IKEVersion;
     ManagedDOMString? PSK;
     ManagedBoolean? SaveCredentials;
+    ManagedDOMStringList? ServerCAPEMs;
     ManagedDOMStringList? ServerCARefs;
     ManagedXAUTHProperties? XAUTH;
   };
