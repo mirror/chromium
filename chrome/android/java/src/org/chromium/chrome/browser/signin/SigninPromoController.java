@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.chromium.base.ContextUtils;
+import org.chromium.base.VisibleForTesting;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
@@ -43,6 +44,7 @@ public class SigninPromoController implements ImpressionTracker.Listener {
             "signin_promo_impressions_count_bookmarks";
     private static final String SIGNIN_PROMO_IMPRESSIONS_COUNT_SETTINGS =
             "signin_promo_impressions_count_settings";
+
     private static final int MAX_IMPRESSIONS_BOOKMARKS = 20;
     private static final int MAX_IMPRESSIONS_SETTINGS = 5;
 
@@ -289,5 +291,10 @@ public class SigninPromoController implements ImpressionTracker.Listener {
             int numImpressions = preferences.getInt(mImpressionCountName, 0) + 1;
             preferences.edit().putInt(mImpressionCountName, numImpressions).apply();
         }
+    }
+
+    @VisibleForTesting
+    public static int getMaxImpressionsBookmarksForTests() {
+        return MAX_IMPRESSIONS_BOOKMARKS;
     }
 }

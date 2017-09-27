@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 
 import org.chromium.base.Log;
+import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.base.library_loader.ProcessInitException;
 import org.chromium.base.metrics.RecordHistogram;
@@ -70,10 +71,8 @@ public class AccountSigninActivity extends AppCompatActivity
      */
     public static void startAccountSigninActivity(
             Context context, @AccessPoint int accessPoint, boolean isFromPersonalizedPromo) {
-        Intent intent = new Intent(context, AccountSigninActivity.class);
-        intent.putExtra(INTENT_SIGNIN_ACCESS_POINT, accessPoint);
-        intent.putExtra(INTENT_SIGNIN_FLOW_TYPE, SIGNIN_FLOW_DEFAULT);
-        intent.putExtra(INTENT_IS_FROM_PERSONALIZED_PROMO, isFromPersonalizedPromo);
+        Intent intent =
+                createIntentForDefaultSigninFlow(context, accessPoint, isFromPersonalizedPromo);
         context.startActivity(intent);
     }
 
@@ -95,6 +94,16 @@ public class AccountSigninActivity extends AppCompatActivity
         return true;
     }
 
+    @VisibleForTesting
+    public static Intent createIntentForDefaultSigninFlow(
+            Context context, @AccessPoint int accessPoint, boolean isFromPersonalizedPromo) {
+        Intent intent = new Intent(context, AccountSigninActivity.class);
+        intent.putExtra(INTENT_SIGNIN_ACCESS_POINT, accessPoint);
+        intent.putExtra(INTENT_SIGNIN_FLOW_TYPE, SIGNIN_FLOW_DEFAULT);
+        intent.putExtra(INTENT_IS_FROM_PERSONALIZED_PROMO, isFromPersonalizedPromo);
+        return intent;
+    }
+
     /**
      * Starts AccountSigninActivity from signin confirmation page.
      * @param accessPoint {@link AccessPoint} for starting signin flow. Used in metrics.
@@ -106,13 +115,22 @@ public class AccountSigninActivity extends AppCompatActivity
      */
     public static void startFromConfirmationPage(Context context, @AccessPoint int accessPoint,
             String selectAccount, boolean isDefaultAccount, boolean isFromPersonalizedPromo) {
+        Intent intent = createIntentForConfirmationOnlySigninFlow(
+                context, accessPoint, selectAccount, isDefaultAccount, isFromPersonalizedPromo);
+        context.startActivity(intent);
+    }
+
+    @VisibleForTesting
+    public static Intent createIntentForConfirmationOnlySigninFlow(Context context,
+            @AccessPoint int accessPoint, String selectAccount, boolean isDefaultAccount,
+            boolean isFromPersonalizedPromo) {
         Intent intent = new Intent(context, AccountSigninActivity.class);
         intent.putExtra(INTENT_SIGNIN_ACCESS_POINT, accessPoint);
         intent.putExtra(INTENT_SIGNIN_FLOW_TYPE, SIGNIN_FLOW_CONFIRMATION_ONLY);
         intent.putExtra(INTENT_ACCOUNT_NAME, selectAccount);
         intent.putExtra(INTENT_IS_DEFAULT_ACCOUNT, isDefaultAccount);
         intent.putExtra(INTENT_IS_FROM_PERSONALIZED_PROMO, isFromPersonalizedPromo);
-        context.startActivity(intent);
+        return intent;
     }
 
     /**
@@ -123,11 +141,19 @@ public class AccountSigninActivity extends AppCompatActivity
      */
     public static void startFromAddAccountPage(
             Context context, @AccessPoint int accessPoint, boolean isFromPersonalizedPromo) {
+        Intent intent =
+                createIntentForAddAccountSigninFlow(context, accessPoint, isFromPersonalizedPromo);
+        context.startActivity(intent);
+    }
+
+    @VisibleForTesting
+    public static Intent createIntentForAddAccountSigninFlow(
+            Context context, @AccessPoint int accessPoint, boolean isFromPersonalizedPromo) {
         Intent intent = new Intent(context, AccountSigninActivity.class);
         intent.putExtra(INTENT_SIGNIN_ACCESS_POINT, accessPoint);
         intent.putExtra(INTENT_SIGNIN_FLOW_TYPE, SIGNIN_FLOW_ADD_NEW_ACCOUNT);
         intent.putExtra(INTENT_IS_FROM_PERSONALIZED_PROMO, isFromPersonalizedPromo);
-        context.startActivity(intent);
+        return intent;
     }
 
     @Override
