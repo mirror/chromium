@@ -88,6 +88,24 @@
       "revId": "9eef8ed0bd8fa4f8de49bddbae62823ac6d46625",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a05a638_b0675839",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-27T05:50:08Z",
+      "side": 1,
+      "message": "yangguo: What I mean is, given these existing V8 GN settings:\n\nv8_use_external_startup_data \u003d v8_use_snapshot \u0026\u0026 !is_ios\nv8_use_snapshot \u003d true\n\nIs it safe to assume the build shipped to Linux users will have these two files? So I can remove the check on line 158 and always include those two files. (Disregard the pending v8_context_snapshot.bin addition.)",
+      "parentUuid": "6b916508_dbd34b57",
+      "revId": "9eef8ed0bd8fa4f8de49bddbae62823ac6d46625",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
