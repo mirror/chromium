@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ced9b172_ee671bfc",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-27T19:18:49Z",
+      "side": 1,
+      "message": "These two lines are unnecessary – I moved the required parts into setup(), but forgot to update the signin promo tests when rebasing my CL.",
+      "range": {
+        "startLine": 356,
+        "startChar": 12,
+        "endLine": 357,
+        "endChar": 43
+      },
+      "revId": "6deb39ea924f58624523d414bcbb1e8252ae4677",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
