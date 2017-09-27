@@ -111,6 +111,30 @@ gfx::Image DeepCopyImage(const gfx::Image& image) {
   return gfx::Image(*image_skia);
 }
 
+std::string EscapeForHtml(const std::string& message) {
+  std::string result;
+  for (char c : message) {
+    static const struct {
+      char key;
+      const char* replacement;
+    } kCharsToEscape[] = {
+        {'<', "&lt;"}, {'>', "&gt;"}, {'&', "&amp;"},
+    };
+    size_t k;
+    for (k = 0; k < arraysize(kCharsToEscape); ++k) {
+      if (c == kCharsToEscape[k].key) {
+        const char* p = kCharsToEscape[k].replacement;
+        while (*p)
+          result.push_back(*p++);
+        break;
+      }
+    }
+    if (k == arraysize(kCharsToEscape))
+      result.push_back(c);
+  }
+  return result;
+}
+
 int NotificationPriorityToFdoUrgency(int priority) {
   enum FdoUrgency {
     LOW = 0,
@@ -512,7 +536,7 @@ class NotificationPlatformBridgeLinuxImpl
           base::ContainsKey(capabilities_, kCapabilityBodyMarkup);
 
       if (notification->UseOriginAsContextMessage()) {
-        std::string url_display_text = net::EscapeForHTML(
+        std::string url_display_text = EscapeForHtml(
             base::UTF16ToUTF8(url_formatter::FormatUrlForSecurityDisplay(
                 notification->origin_url(),
                 url_formatter::SchemeDisplay::OMIT_HTTP_AND_HTTPS)));
@@ -527,13 +551,13 @@ class NotificationPlatformBridgeLinuxImpl
         std::string context =
             base::UTF16ToUTF8(notification->context_message());
         if (body_markup)
-          context = net::EscapeForHTML(context);
+          context = EscapeForHtml(context);
         body << context;
       }
 
       std::string message = base::UTF16ToUTF8(notification->message());
       if (body_markup)
-        message = net::EscapeForHTML(message);
+        message = EscapeForHtml(message);
       if (body.tellp())
         body << "\n";
       body << message;
