@@ -16,6 +16,24 @@
       "revId": "86678f8a7b58a9129fe7d8d4d9cf7be6ffece965",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f0b5a47_211b5e03",
+        "filename": "DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2017-09-27T07:50:18Z",
+      "side": 1,
+      "message": "That\u0027s the next thing I\u0027ll look into.\n\nI\u0027d prefer to land these changes separately, so if native python bool breaks release scripts, the nacl change won\u0027t get reverted.",
+      "parentUuid": "167e0703_a2092fc2",
+      "revId": "86678f8a7b58a9129fe7d8d4d9cf7be6ffece965",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
