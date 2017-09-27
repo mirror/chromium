@@ -26,6 +26,7 @@
 
 #include "platform/graphics/BitmapImage.h"
 
+#include "base/metrics/histogram_macros.h"
 #include "platform/Timer.h"
 #include "platform/geometry/FloatRect.h"
 #include "platform/graphics/BitmapImageMetrics.h"
@@ -548,20 +549,25 @@ void BitmapImage::StartAnimationInternal(const double time) {
 
   if (time < desired_frame_start_time_) {
     // Haven't yet reached time for next frame to start; delay until then.
+    last_num_frames_skipped_ = 0u;
     frame_timer_ = WTF::WrapUnique(new TaskRunnerTimer<BitmapImage>(
         task_runner_, this, &BitmapImage::AdvanceAnimation));
     frame_timer_->StartOneShot(std::max(desired_frame_start_time_ - time, 0.),
                                BLINK_FROM_HERE);
-  } else {
-    // We've already reached or passed the time for the next frame to start.
-    // See if we've also passed the time for frames after that to start, in
-    // case we need to skip some frames entirely.  Remember not to advance
-    // to an incomplete frame.
+    UMA_HISTOGRAM_COUNTS_100000("AnimatedImage.NumOfFramesSkipped.Main",
+                                last_num_frames_skipped_);
+    return;
+  }
 
-    // Skip the next frame by advancing the animation forward one frame.
-    if (!InternalAdvanceAnimation(kSkipFramesToCatchUp)) {
-      DCHECK(animation_finished_);
-      return;
+  // We've already reached or passed the time for the next frame to start.
+  // See if we've also passed the time for frames after that to start, in
+  // case we need to skip some frames entirely.  Remember not to advance
+  // to an incomplete frame.
+
+  // Skip the next frame by advancing the animation forward one frame.
+  if (!InternalAdvanceAnimation(kSkipFramesToCatchUp)) {
+    DCHECK(animation_finished_);
+    return;
     }
 
     // We have already realized that we need to skip the |next_frame| since
@@ -591,6 +597,9 @@ void BitmapImage::StartAnimationInternal(const double time) {
       next_frame = frame_after_next;
     }
 
+    UMA_HISTOGRAM_COUNTS_100000("AnimatedImage.NumOfFramesSkipped.Main",
+                                last_num_frames_skipped_);
+
     // Since we just advanced a bunch of frames during catch up, post a
     // notification to the observers. Note this has to be async because
     // animation can happen during painting and this invalidation is required
@@ -607,7 +616,6 @@ void BitmapImage::StartAnimationInternal(const double time) {
     // that calling StartAnimationInternal here with the same |time| will not
     // need to perform any catch up skipping.
     StartAnimationInternal(time);
-  }
 }
 
 void BitmapImage::StopAnimation() {
