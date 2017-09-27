@@ -99,6 +99,7 @@ import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.signin.SigninPromoUtil;
 import org.chromium.chrome.browser.snackbar.undo.UndoBarController;
 import org.chromium.chrome.browser.suggestions.SuggestionsEventReporterBridge;
+import org.chromium.chrome.browser.survey.SurveyController;
 import org.chromium.chrome.browser.tab.BrowserControlsVisibilityDelegate;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tab.TabDelegateFactory;
@@ -126,6 +127,7 @@ import org.chromium.chrome.browser.widget.textbubble.ViewAnchoredTextBubble;
 import org.chromium.components.feature_engagement.EventConstants;
 import org.chromium.components.feature_engagement.FeatureConstants;
 import org.chromium.components.feature_engagement.Tracker;
+import org.chromium.components.variations.VariationsAssociatedData;
 import org.chromium.content.browser.ContentVideoView;
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content.browser.crypto.CipherFactory;
@@ -174,6 +176,9 @@ public class ChromeTabbedActivity
     private static final int BACK_PRESSED_EXITED_FULLSCREEN = 7;
     private static final int BACK_PRESSED_NAVIGATED_BACK = 8;
     private static final int BACK_PRESSED_COUNT = 9;
+
+    private static final String TRIAL_NAME = "ChromeHome";
+    private static final String PARAM_NAME = "survey_id";
 
     private static final String TAG = "ChromeTabbedActivity";
 
@@ -492,7 +497,7 @@ public class ChromeTabbedActivity
             } else {
                 preferenceManager.setPromosSkippedOnFirstStart(true);
             }
-
+            initSurveyController();
             super.finishNativeInitialization();
         } finally {
             TraceEvent.end("ChromeTabbedActivity.finishNativeInitialization");
@@ -2247,5 +2252,16 @@ public class ChromeTabbedActivity
                         R.string.iph_download_page_for_offline_usage_accessibility_text);
             }
         });
+    }
+
+    private void initSurveyController() {
+        SurveyController surveyController = SurveyController.getInstance();
+        if (getActivityTab() != null && ChromePreferenceManager.userQualifiesForSurvey()) {
+            String surveyId =
+                    VariationsAssociatedData.getVariationParamValue(TRIAL_NAME, PARAM_NAME);
+            if (surveyId == null) return;
+            surveyController.initController(
+                    getApplicationContext(), getActivityTab().getWebContents(), surveyId, "");
+        }
     }
 }

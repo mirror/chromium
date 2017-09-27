@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.StrictMode;
 
 import org.chromium.base.ContextUtils;
+import org.chromium.base.StrictModeContext;
 import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.ChromeVersionInfo;
@@ -62,7 +63,9 @@ public class ChromePreferenceManager {
 
     private static final String OMNIBOX_PLACEHOLDER_GROUP = "omnibox-placeholder-group";
 
-    private static final String CHROME_HOME_SHARED_PREFERENCES_KEY = "chrome_home_enabled_date";
+    public static final String CHROME_HOME_SHARED_PREFERENCES_KEY = "chrome_home_enabled_date";
+
+    private static final long ONE_WEEK_IN_MILLIS = 604800000L;
 
     private static ChromePreferenceManager sPrefs;
 
@@ -491,7 +494,7 @@ public class ChromePreferenceManager {
      * @param isChromeHomeEnabled Whether or not Chrome Home is currently enabled.
      */
     public static void setChromeHomeEnabledDate(boolean isChromeHomeEnabled) {
-        StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskReads();
+        StrictMode.ThreadPolicy oldPolicy = StrictMode.allowDiskReads();
         try {
             SharedPreferences sharedPreferences = ContextUtils.getAppSharedPreferences();
             long earliestLoggedDate =
@@ -506,5 +509,18 @@ public class ChromePreferenceManager {
         } finally {
             StrictMode.setThreadPolicy(oldPolicy);
         }
+    }
+    /**
+     * Function to see if a user had Chrome Home enabled for over a week.
+     * @returns Whether or not Chrome Home was enabled for longer than one week.
+     */
+    public static boolean userQualifiesForSurvey() {
+        try (StrictModeContext unused = StrictModeContext.allowDiskReads()) {
+            SharedPreferences sharedPreferences = ContextUtils.getAppSharedPreferences();
+            long earliestLoggedDate = sharedPreferences.getLong(
+                    ChromePreferenceManager.CHROME_HOME_SHARED_PREFERENCES_KEY, Long.MAX_VALUE);
+            if (System.currentTimeMillis() - earliestLoggedDate > ONE_WEEK_IN_MILLIS) return true;
+        }
+        return false;
     }
 }
