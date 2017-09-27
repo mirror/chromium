@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "997bffe4_c871a251",
+        "filename": "chrome/browser/resources/settings/people_page/change_picture.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-27T20:18:48Z",
+      "side": 1,
+      "message": "this.i18n(modeMessageId);\nor just\nthis.i18n( videomode ? \u0027videoModeAccessibleText\u0027 : \u0027photoModeAccessibleText\u0027);",
+      "revId": "0e735c79fd3dea7b0085f9618d05612360144eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e32adc6_569ab2e4",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_camera.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-27T20:18:48Z",
+      "side": 1,
+      "message": "Let\u0027s move this implementation (or at least most if it) to its own method.",
+      "revId": "0e735c79fd3dea7b0085f9618d05612360144eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbd67232_81317d95",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_camera.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-27T20:18:48Z",
+      "side": 1,
+      "message": "Do we need to call this each interval, or can we use the same context each time?",
+      "revId": "0e735c79fd3dea7b0085f9618d05612360144eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fe36e3a_334a415b",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_camera.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-27T20:18:48Z",
+      "side": 1,
+      "message": "Maybe something like:\n\nvar interval \u003d setInterval(() \u003d\u003e {\n  capturedFrames.push(this.getContext(...));\n  if (allocatedFrames.length \u003d\u003d 0) {\n    clearInterval(interval);\n    this.stopCapture(...);\n  }\n}, CAPTURE_INTERVAL_MS);",
+      "revId": "0e735c79fd3dea7b0085f9618d05612360144eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
