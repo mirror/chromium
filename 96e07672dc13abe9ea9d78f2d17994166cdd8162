@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8cbb6a97_958bc1ee",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkServiceClient.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-27T18:12:53Z",
+      "side": 1,
+      "message": "why not check if notifications permission is allowed first, and if not, don\u0027t bother calling api.notifyNotification?",
+      "range": {
+        "startLine": 89,
+        "startChar": 26,
+        "endLine": 89,
+        "endChar": 60
+      },
+      "revId": "96e07672dc13abe9ea9d78f2d17994166cdd8162",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24b67eca_055acecb",
+        "filename": "chrome/android/webapk/libs/runtime_library/src/org/chromium/webapk/lib/runtime_library/OWNERS",
+        "patchSetId": 9
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-27T18:12:53Z",
+      "side": 1,
+      "message": "you shoudl get owners from there to approve this cl",
+      "range": {
+        "startLine": 2,
+        "startChar": 26,
+        "endLine": 2,
+        "endChar": 27
+      },
+      "revId": "96e07672dc13abe9ea9d78f2d17994166cdd8162",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
