@@ -177,5 +177,13 @@ Polymer({
         .showAt(
             /** @type {!Element} */ (
                 Polymer.dom(/** @type {!Event} */ (event)).localTarget));
-  }
+  },
+
+  /**
+   * Opens an activity to handle App links (preferred apps).
+   * @private
+   */
+  onManageAndroidAppsTap_: function() {
+    this.browserProxy.showAndroidManageAppLinks();
+  },
 });

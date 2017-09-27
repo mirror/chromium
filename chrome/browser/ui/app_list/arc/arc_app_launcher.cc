@@ -55,8 +55,8 @@ void ArcAppLauncher::LaunchApp() {
   DCHECK(prefs && prefs->GetApp(app_id_));
   prefs->RemoveObserver(this);
 
-  if (!arc::LaunchAppWithIntent(context_, app_id_, launch_intent_,
-                                ui::EF_NONE)) {
+  if (!arc::LaunchAppWithIntent(context_, app_id_, launch_intent_, ui::EF_NONE,
+                                "" /* package_name */, "" /* activity */)) {
     VLOG(2) << "Failed to launch app: " + app_id_ + ".";
   }
 
