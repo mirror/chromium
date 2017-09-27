@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c5a75a26_f8c0cd23",
+        "filename": "ios/chrome/browser/ui/commands/snackbar_commands.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-09-27T17:47:20Z",
+      "side": 1,
+      "message": "I agree it belongs in the public contract. Per MDC, only the last message (of the given category -- in this case default category) is shown, and all others (currently showing, or pending) are dismissed or dropped. Nothing is shown later. \nhttps://github.com/material-components/material-components-ios/blob/5498005f65b672eaca14049c74d821eab24c0eb9/components/Snackbar/src/MDCSnackbarMessage.h",
+      "parentUuid": "1b817e15_23f0608b",
+      "revId": "7f0eed2a94487bd5ff61cecf7bf3be4ad5df4859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d030cf3a_ed6772ed",
         "filename": "ios/chrome/browser/ui/snackbar/snackbar_coordinator.mm",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-27T11:26:36Z",
       "side": 1,
       "message": "This is changing from what it used to be in BVC.  Does that matter?  Is the category ever persisted across app restarts?",
+      "revId": "7f0eed2a94487bd5ff61cecf7bf3be4ad5df4859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa50fead_0da7baa7",
+        "filename": "ios/chrome/browser/ui/snackbar/snackbar_coordinator.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-09-27T17:47:20Z",
+      "side": 1,
+      "message": "There\u0027s no evidence that I could find that suggests that snackbars are persisted across app restarts. This change should be safe.",
+      "parentUuid": "d030cf3a_ed6772ed",
       "revId": "7f0eed2a94487bd5ff61cecf7bf3be4ad5df4859",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

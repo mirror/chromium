@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "137aebae_92e5bbd0",
+        "filename": "ios/chrome/browser/ui/activity_services/activity_service_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-09-27T17:47:20Z",
+      "side": 0,
+      "message": "Yes, I agree. I\u0027ve seen this kind of thing in other places too.",
+      "parentUuid": "89f94ff9_ea70b65a",
+      "revId": "e2ecbabb197137f350b81c0dfbd32ac27ffc4d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f0fd182_d38a7ee4",
         "filename": "ios/chrome/browser/ui/activity_services/activity_service_controller_unittest.mm",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-27T11:26:36Z",
       "side": 0,
       "message": "This fake could also implement the SnackbarCommands protocol and pass itself as the dispatcher.  That would let you continue to use the fake as before, instead of OCMock.  I have a preference for fakes over mocks.  If you do too, then consider changing.  If not, the new code is fine as-is.",
+      "revId": "e2ecbabb197137f350b81c0dfbd32ac27ffc4d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "033d4a7e_834c8649",
+        "filename": "ios/chrome/browser/ui/activity_services/activity_service_controller_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-09-27T17:47:20Z",
+      "side": 0,
+      "message": "Done.",
+      "parentUuid": "6f0fd182_d38a7ee4",
       "revId": "e2ecbabb197137f350b81c0dfbd32ac27ffc4d17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
