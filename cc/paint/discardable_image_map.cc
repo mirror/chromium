@@ -250,7 +250,7 @@ class DiscardableImageGenerator {
       AddImage(paint_image,
                SkRect::MakeWH(paint_image.width(), paint_image.height()),
                op_rect, matrix, flags.getFilterQuality());
-    } else if (flags.getShader()->shader_type() ==
+    } /*else if (flags.getShader()->shader_type() ==
                    PaintShader::Type::kPaintRecord &&
                flags.getShader()->paint_record()->HasDiscardableImages()) {
       SkRect scaled_tile_rect;
@@ -266,7 +266,7 @@ class DiscardableImageGenerator {
                                                 SkMatrix::kFill_ScaleToFit));
       GatherDiscardableImages(flags.getShader()->paint_record().get(), &op_rect,
                               &canvas);
-    }
+    }*/
   }
 
   void AddImage(PaintImage paint_image,
