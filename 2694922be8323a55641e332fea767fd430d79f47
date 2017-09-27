@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15799aae_7fc0128f",
+        "filename": "ui/gl/gl_implementation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-27T18:26:15Z",
+      "side": 1,
+      "message": "nit: I would suggest directly returning a gl::ExtensionSet, to avoid extraneous string manipulations - you can directly use StringPiece\u0027s on the strings returned by glGetString/glGetStringi, since they\u0027re guaranteed to be valid for the duration of the context.\n\nFYI, I have a WIP patch to convert GetGLExtensionsFromCurrentContext to do that, but it needs some more work to integrate with tests, so that\u0027s why I haven\u0027t pushed it yet.",
+      "revId": "2694922be8323a55641e332fea767fd430d79f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
