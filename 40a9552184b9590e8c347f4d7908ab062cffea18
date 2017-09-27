@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4b2f1f1_a0addd2d",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-27T12:51:18Z",
+      "side": 1,
+      "message": "What about inverting the meaning of GetTimezoneOffset()? It\u0027ll be easier to track the code, rather than having to remember that there are two opposite offsets involved. And maybe rename that function to make its meaning more obvious - e.g. GetOffsetFromTimezoneToGmt().",
+      "range": {
+        "startLine": 132,
+        "startChar": 4,
+        "endLine": 134,
+        "endChar": 12
+      },
+      "revId": "40a9552184b9590e8c347f4d7908ab062cffea18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "563ed78e_63771e56",
+        "filename": "chrome/browser/chromeos/policy/off_hours/weekly_time.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-27T12:51:18Z",
+      "side": 1,
+      "message": "nit: This only works as long as the negative number doesn\u0027t exceed one week. Therefore either document and DCHECK this is a restriction, or (which is probably better) change the code to support arbitrary values.",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 41
+      },
+      "revId": "40a9552184b9590e8c347f4d7908ab062cffea18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91f8166a_47684306",
+        "filename": "chrome/browser/chromeos/policy/off_hours/weekly_time.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-27T12:51:18Z",
+      "side": 1,
+      "message": "nit: Perhaps \"offsetted_milliseconds\" or \"shifted_milliseconds\" would fit better here.",
+      "range": {
+        "startLine": 48,
+        "startChar": 6,
+        "endLine": 48,
+        "endChar": 24
+      },
+      "revId": "40a9552184b9590e8c347f4d7908ab062cffea18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0b7d6d9_accd943b",
+        "filename": "chrome/browser/chromeos/policy/off_hours/weekly_time_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-27T12:51:18Z",
+      "side": 1,
+      "message": "nit: (Sorry, I probably missed this in the previous iterations.) I think this naming scheme \"TwoWeeklyTimeTest\"...\"FourWeeklyTimeTest\" is a bit strange. Probably I miscommunicated when was trying to explain my suggestion before. So what I think will be better here:\n\n  class SingleWeeklyTimeTest : public TestWithParam\u003ctuple\u003cint, int\u003e\u003e\n  \n  class TwoWeeklyTimesAndDurationTest : public TestWithParam\u003ctuple\u003cint, int, int, int, TimeDelta\u003e\u003e\n\n  class TwoWeeklyTimesAndOffsetTest : public TestWithParam\u003ctuple\u003cint, int, int, int, int\u003e\u003e",
+      "range": {
+        "startLine": 35,
+        "startChar": 6,
+        "endLine": 35,
+        "endChar": 23
+      },
+      "revId": "40a9552184b9590e8c347f4d7908ab062cffea18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87181f6d_0c8e25eb",
+        "filename": "chrome/browser/chromeos/policy/off_hours/weekly_time_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-27T12:51:18Z",
+      "side": 1,
+      "message": "nit: This symbol is used numerously across the file - so this looks like a legitimate case for the \"using\" directive at the top of the file:\n\n  using policy::off_hours::WeeklyTime;",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 31
+      },
+      "revId": "40a9552184b9590e8c347f4d7908ab062cffea18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb7a9327_8484f8eb",
+        "filename": "chrome/browser/chromeos/policy/off_hours/weekly_time_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-27T12:51:18Z",
+      "side": 1,
+      "message": "nit: Just:\n\n  base::DictionaryValue expected_weekly_time;",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 53,
+        "endChar": 54
+      },
+      "revId": "40a9552184b9590e8c347f4d7908ab062cffea18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
