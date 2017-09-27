@@ -7,6 +7,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/stl_util.h"
 #include "base/strings/string_util.h"
+#include "build/build_config.h"
 #include "net/base/net_errors.h"
 #include "net/http/http_auth_challenge_tokenizer.h"
 #include "net/http/http_auth_filter.h"
@@ -87,10 +88,10 @@ CreateAuthHandlerRegistryFactory(const HttpAuthPreferences& prefs,
         new HttpAuthHandlerNegotiate::Factory();
 #if defined(OS_WIN)
     negotiate_factory->set_library(std::make_unique<SSPILibraryDefault>());
-#elif defined(OS_POSIX) && !defined(OS_ANDROID)
+#elif defined(OS_POSIX) && !defined(OS_ANDROID) && !defined(OS_CHROMEOS)
     negotiate_factory->set_library(
         std::make_unique<GSSAPISharedLibrary>(prefs.GssapiLibraryName()));
-#endif  // defined(OS_POSIX) && !defined(OS_ANDROID)
+#endif  // defined(OS_POSIX) && !defined(OS_ANDROID) && !defined(OS_CHROMEOS)
     negotiate_factory->set_host_resolver(host_resolver);
     registry_factory->RegisterSchemeFactory(kNegotiateAuthScheme,
                                             negotiate_factory);
@@ -142,7 +143,7 @@ HttpAuthHandlerFactory::CreateDefault(HostResolver* host_resolver) {
   std::vector<std::string> auth_types(std::begin(kDefaultAuthSchemes),
                                       std::end(kDefaultAuthSchemes));
   HttpAuthPreferences prefs(auth_types
-#if defined(OS_POSIX) && !defined(OS_ANDROID)
+#if defined(OS_POSIX) && !defined(OS_ANDROID) && !defined(OS_CHROMEOS)
                             ,
                             std::string()
 #endif
