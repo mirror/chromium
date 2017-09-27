@@ -82,6 +82,12 @@ class CupsPrintersManager {
   virtual void AddObserver(Observer* observer) = 0;
   virtual void RemoveObserver(Observer* observer) = 0;
 
+  // Allows the PrinterDetector objects that the CupsPrinterManager is observing
+  // to begin registering callbacks. This method is meant to be called only once
+  // after CupsPrintersManager has been added as an observer to the appropriate
+  // PrinterDetector objects.
+  virtual void StartObservingPrinterDetectors() = 0;
+
   // Record that the given printers has been installed in CUPS for usage.  If
   // |printer| is not a configured or enterprise printer, this will have the
   // side effect of moving |printer| into the configured class.
