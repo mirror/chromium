@@ -34,6 +34,24 @@
       "revId": "a7a97725a51c58dfa62fd68af62058faf167f2af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eafd5c1a_2991ad8a",
+        "filename": "content/browser/appcache/appcache_histograms.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-27T21:08:34Z",
+      "side": 1,
+      "message": "couple things\n- i\u0027m suggesting maybe drop the samples that are less than\n  one milli and keeping the rest\n- the space i\u0027m trying to save is on the uma server-side\n\ni\u0027d only want to do this if it actually saves space on the server-side, would it?",
+      "parentUuid": "888dbd13_58e2764d",
+      "revId": "a7a97725a51c58dfa62fd68af62058faf167f2af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
