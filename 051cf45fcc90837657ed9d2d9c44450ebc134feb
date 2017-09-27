@@ -34,6 +34,24 @@
       "revId": "051cf45fcc90837657ed9d2d9c44450ebc134feb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5496621a_2346c1b3",
+        "filename": "ui/gfx/codec/png_codec_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1116011
+      },
+      "writtenOn": "2017-09-27T15:52:20Z",
+      "side": 1,
+      "message": "The original code assumes it can write past the last row of the bitmap, by the amount (kRowBytes - width*kBytesPerPixel). This is not always valid, since the bitmap\u0027s allocPixels() call is free to not allocate that extra memory, since it cannot be access by the bitmap.\n\nThe current implementation of allocPixels *does* allocate this extra set of bytes, but future Skia\u0027s will not, hence the need to change this and the other test code. This is why bitmap has a getSafeSize() method as well, which returns the legal amount.\n\nI will update the CL following Florin\u0027s suggestion, and you will see a more modest modification that should make this point clearer.",
+      "parentUuid": "9810f308_d5fb2798",
+      "revId": "051cf45fcc90837657ed9d2d9c44450ebc134feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
