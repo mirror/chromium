@@ -88,7 +88,7 @@ class ListItemOrdinal {
   struct NodeAndOrdinal {
     STACK_ALLOCATED();
     Persistent<const Node> node;
-    ListItemOrdinal* ordinal = nullptr;
+    ListItemOrdinal* ordinal;
     operator bool() const { return node; }
   };
   static NodeAndOrdinal NextListItem(const Node* list_node,
