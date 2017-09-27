@@ -22,6 +22,30 @@
       "revId": "9ff85175e60bca93513c83c25597fe799be76601",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50229900_dd10e2fc",
+        "filename": "chrome/browser/search/instant_service.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-09-27T06:04:19Z",
+      "side": 0,
+      "message": "Sorry I didn\u0027t notice that SuggestionsService is also invoked in MostVisitedSites::Refresh. I\u0027ve reverted all the changes in InstantService. I think the TopSites::SyncWithHistory call can be safely removed in MostVisitedSites::Refresh based on what I\u0027ve mentioned in the CL description.",
+      "parentUuid": "5cc765bf_c7af5f51",
+      "range": {
+        "startLine": 116,
+        "startChar": 35,
+        "endLine": 116,
+        "endChar": 0
+      },
+      "revId": "9ff85175e60bca93513c83c25597fe799be76601",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
