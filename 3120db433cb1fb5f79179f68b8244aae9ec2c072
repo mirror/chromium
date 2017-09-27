@@ -151,6 +151,24 @@
       "revId": "3120db433cb1fb5f79179f68b8244aae9ec2c072",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3327311_cec894f2",
+        "filename": "cc/trees/layer_tree_host_pixeltest_masks.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-27T20:57:59Z",
+      "side": 1,
+      "message": "You could just loop through combinations of (color,alpha) for color in {Red, Green, Blue} and alpha in {0, 128, 256}, each taking up 1/6 of the space? That\u0027s my first thought.",
+      "parentUuid": "84319239_93c56b34",
+      "revId": "3120db433cb1fb5f79179f68b8244aae9ec2c072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
