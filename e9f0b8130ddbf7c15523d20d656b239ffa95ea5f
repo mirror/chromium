@@ -92,6 +92,30 @@
       "revId": "e9f0b8130ddbf7c15523d20d656b239ffa95ea5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "108cabfe_2aba5b35",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-27T01:13:34Z",
+      "side": 1,
+      "message": "Done, though this kind of feels like I\u0027m just reintroducing the old PWA state variable that was outsourced to the metrics classes back into InstallableManager.....",
+      "parentUuid": "15eb8a13_2145d86f",
+      "range": {
+        "startLine": 284,
+        "startChar": 0,
+        "endLine": 289,
+        "endChar": 1
+      },
+      "revId": "e9f0b8130ddbf7c15523d20d656b239ffa95ea5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
