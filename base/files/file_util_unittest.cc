@@ -907,6 +907,70 @@ TEST_F(FileUtilTest, ExecutableExistsInPath) {
   EXPECT_FALSE(ExecutableExistsInPath(scoped_env.GetEnv(), kDneFileName));
 }
 
+TEST_F(FileUtilTest, CopyFileExecutablePermission) {
+  FilePath src = temp_dir_.GetPath().Append(FPL("src.txt"));
+  const std::wstring file_contents(L"Gooooooooooooooooooooogle");
+  CreateTextFile(src, file_contents);
+  ASSERT_TRUE(SetPosixFilePermissions(src, 0755));
+
+  int mode = 0;
+  ASSERT_TRUE(GetPosixFilePermissions(src, &mode));
+  EXPECT_EQ(0755, mode);
+
+  FilePath dst = temp_dir_.GetPath().Append(FPL("dst.txt"));
+  ASSERT_TRUE(CopyFile(src, dst));
+  EXPECT_EQ(file_contents, ReadTextFile(dst));
+
+  ASSERT_TRUE(GetPosixFilePermissions(dst, &mode));
+  int expected_mode;
+#if defined(OS_MACOSX)
+  expected_mode = 0755;
+#elif defined(OS_CHROMEOS)
+  expected_mode = 0644;
+#else
+  expected_mode = 0600;
+#endif
+  EXPECT_EQ(expected_mode, mode);
+  ASSERT_TRUE(DeleteFile(dst, false));
+
+  ASSERT_TRUE(SetPosixFilePermissions(src, 0777));
+
+  ASSERT_TRUE(GetPosixFilePermissions(src, &mode));
+  EXPECT_EQ(0777, mode);
+
+  ASSERT_TRUE(CopyFile(src, dst));
+  EXPECT_EQ(file_contents, ReadTextFile(dst));
+
+  ASSERT_TRUE(GetPosixFilePermissions(dst, &mode));
+#if defined(OS_MACOSX)
+  expected_mode = 0777;
+#elif defined(OS_CHROMEOS)
+  expected_mode = 0644;
+#else
+  expected_mode = 0600;
+#endif
+  EXPECT_EQ(expected_mode, mode);
+  ASSERT_TRUE(DeleteFile(dst, false));
+
+  ASSERT_TRUE(SetPosixFilePermissions(src, 0400));
+
+  ASSERT_TRUE(GetPosixFilePermissions(src, &mode));
+  EXPECT_EQ(0400, mode);
+
+  ASSERT_TRUE(CopyFile(src, dst));
+  EXPECT_EQ(file_contents, ReadTextFile(dst));
+
+  ASSERT_TRUE(GetPosixFilePermissions(dst, &mode));
+#if defined(OS_MACOSX)
+  expected_mode = 0400;
+#elif defined(OS_CHROMEOS)
+  expected_mode = 0644;
+#else
+  expected_mode = 0600;
+#endif
+  EXPECT_EQ(expected_mode, mode);
+}
+
 #endif  // !defined(OS_FUCHSIA) && defined(OS_POSIX)
 
 #if !defined(OS_FUCHSIA)
