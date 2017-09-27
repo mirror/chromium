@@ -1,0 +1,24 @@
+Tests object store and index entry deletion.
+
+Dumping IndexedDB tree:
+    database: database1 - http://127.0.0.1:8000
+        Object store: objectStore1
+            Index: index1
+Dumping ObjectStore data:
+    Object store: objectStore1
+            Key = testKey1, value = [object Object]
+            Key = testKey2, value = [object Object]
+            Index: index1
+                Key = testKey1, value = [object Object]
+                Key = testKey2, value = [object Object]
+Dumping ObjectStore data:
+    Object store: objectStore1
+            Key = testKey2, value = [object Object]
+            Index: index1
+                Key = testKey2, value = [object Object]
+Dumping ObjectStore data:
+    Object store: objectStore1
+            (no entries)
+            Index: index1
+                (no entries)
+
