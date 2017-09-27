@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5784247f_42fad622",
+        "filename": "components/ukm/content/source_url_recorder_web_contents_observer.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-09-27T23:36:56Z",
+      "side": 1,
+      "message": "No, because it\u0027s not part of the interface.  Code outside this file just sees this a object as a WebContentsObserver.",
+      "parentUuid": "09de6665_bbbb91e5",
+      "revId": "6880a0973f6d4bf78e79c6368b3110783ac2829c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7cabec62_74cf10c4",
         "filename": "components/ukm/content/source_url_recorder_web_contents_observer.cc",
         "patchSetId": 49
