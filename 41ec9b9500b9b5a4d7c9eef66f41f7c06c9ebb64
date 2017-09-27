@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "157da7d0_c85ec84c",
+        "filename": "ash/login/ui/login_password_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-27T16:09:29Z",
+      "side": 1,
+      "message": "One concern I have for the password textfield doing this (beyond its unprecedented basic functionality), is the possibility that the character might actually be wider than the 12dp here. You\u0027ll want to test the fonts used for other system languages, and I wonder if there\u0027s any way to override the default system font used for this?",
+      "revId": "41ec9b9500b9b5a4d7c9eef66f41f7c06c9ebb64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b57d493_1a3343c1",
+        "filename": "ui/gfx/render_text.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-27T16:09:29Z",
+      "side": 1,
+      "message": "optional one-liner nit:\n  // Sets a password replacement char to override the default value.",
+      "revId": "41ec9b9500b9b5a4d7c9eef66f41f7c06c9ebb64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "383ee5c7_ffef087e",
+        "filename": "ui/gfx/render_text.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-27T16:09:29Z",
+      "side": 1,
+      "message": "Please refine/add testing for both of these functions.",
+      "revId": "41ec9b9500b9b5a4d7c9eef66f41f7c06c9ebb64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17cdf29b_190c0287",
+        "filename": "ui/gfx/render_text.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-27T16:09:29Z",
+      "side": 1,
+      "message": "This is uncharted territory you\u0027re stepping into here, and I\u0027m a little wary of this approach in general. Most clients shouldn\u0027t be clamping the width of all rendered glyphs; that functionality is really meant to make specific tests more reliable, it was never meant to be used for user-facing textfields/labels/etc. I have no idea what side-effects this may have on obscured/password textfields, let alone what it may do if someone uses it for unobscured plain/complex/i18n text. Text rendering has so many corner cases for kerning, accents/diacritics, multi-glyph graphemes, etc. I think some fonts render separate glyphs of 0 width to be shown as part of a single grapheme, some possible examples are á/Å/Ä/נָ/कि/จำ.\n\nAt the very least, the glyph-width setters need a very stern warning to use caution in overriding the actual width of glyphs... perhaps change this whole comment to:\n  // Override the width of all rendered glyphs. WARNING: THIS IS NOT COMMON!\n  // This is mainly used for more reliable testing across different platforms.\n  // This may also be used in certain special cases, like password textfields.\n\nThis should probably also mention that it\u0027s not supported by RenderTextMac.",
+      "revId": "41ec9b9500b9b5a4d7c9eef66f41f7c06c9ebb64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb849f56_3607bb4e",
+        "filename": "ui/gfx/render_text.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-27T16:09:29Z",
+      "side": 1,
+      "message": "Ditto, please make this function const.",
+      "revId": "41ec9b9500b9b5a4d7c9eef66f41f7c06c9ebb64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd3dea83_bb294e75",
+        "filename": "ui/gfx/render_text.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 851,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-27T16:09:29Z",
+      "side": 1,
+      "message": "nit: // Fixed width of glyphs; 0 implies no fixed width is set.",
+      "revId": "41ec9b9500b9b5a4d7c9eef66f41f7c06c9ebb64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7eb7fe9_6f551670",
+        "filename": "ui/views/controls/textfield/textfield.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-27T16:09:29Z",
+      "side": 1,
+      "message": "Both of these functions should actually be defined out-of-line with CamelCase() function names, since accessing GetRenderText() implies that they\u0027re not trivial setters. It might be okay to take the opposite route and make GetRenderText() into a simple render_text() accessor defined inline... I\u0027m not sure which is better.",
+      "revId": "41ec9b9500b9b5a4d7c9eef66f41f7c06c9ebb64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f6605a6_d095c2a5",
+        "filename": "ui/views/controls/textfield/textfield.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-27T16:09:29Z",
+      "side": 1,
+      "message": "Add a comment with a warning (should match the RenderText comment, or be a simplified version, since this is just plumbing)",
+      "revId": "41ec9b9500b9b5a4d7c9eef66f41f7c06c9ebb64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "11eb4cc5_8b0e3dfb",
+        "filename": "ui/gfx/render_text.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-27T16:09:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9da61488_924cf953",
+      "revId": "ec311741b63129d992c8bd249da6ce25643f807f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1cdcd2f_f791529a",
         "filename": "ui/gfx/render_text.h",
         "patchSetId": 3
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "It results in a compile error \u0027const type qualifier on return type has no effect\u0027",
       "parentUuid": "b1cdcd2f_f791529a",
+      "revId": "ec311741b63129d992c8bd249da6ce25643f807f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1c702ed_ba1330fb",
+        "filename": "ui/gfx/render_text.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-27T16:09:29Z",
+      "side": 1,
+      "message": "The function should be made const, not the return type:\n  base::char16 password_replacement_char() const {",
+      "parentUuid": "0a455eb7_2f0bccbf",
       "revId": "ec311741b63129d992c8bd249da6ce25643f807f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
