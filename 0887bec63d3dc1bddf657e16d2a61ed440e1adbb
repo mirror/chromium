@@ -34,6 +34,24 @@
       "revId": "0887bec63d3dc1bddf657e16d2a61ed440e1adbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd905c22_8489e5b5",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-27T08:05:01Z",
+      "side": 1,
+      "message": "Oops, no my reading was just bad, the sentence looks totally legit.",
+      "parentUuid": "2d78afbb_aea7276a",
+      "revId": "0887bec63d3dc1bddf657e16d2a61ed440e1adbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
