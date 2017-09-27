@@ -97,9 +97,6 @@ void MessageListView::AddNotificationAt(MessageView* view, int index) {
   }
 
   AddChildViewAt(view, real_index);
-  if (GetContentsBounds().IsEmpty())
-    return;
-
   adding_views_.insert(view);
   DoUpdateIfPossible();
 }
@@ -121,21 +118,17 @@ void MessageListView::RemoveNotification(MessageView* view) {
     return;
   }
 
-  if (GetContentsBounds().IsEmpty()) {
-    delete view;
-  } else {
-    if (adding_views_.find(view) != adding_views_.end())
-      adding_views_.erase(view);
-    if (animator_.IsAnimating(view))
-      animator_.StopAnimatingView(view);
+  if (adding_views_.find(view) != adding_views_.end())
+    adding_views_.erase(view);
+  if (animator_.IsAnimating(view))
+    animator_.StopAnimatingView(view);
 
-    if (view->layer()) {
-      deleting_views_.insert(view);
-    } else {
-      delete view;
-    }
-    DoUpdateIfPossible();
+  if (view->layer()) {
+    deleting_views_.insert(view);
+  } else {
+    delete view;
   }
+  DoUpdateIfPossible();
 }
 
 void MessageListView::UpdateNotification(MessageView* view,
@@ -348,10 +341,6 @@ bool MessageListView::IsValidChild(const views::View* child) const {
 }
 
 void MessageListView::DoUpdateIfPossible() {
-  gfx::Rect child_area = GetContentsBounds();
-  if (child_area.IsEmpty())
-    return;
-
   if (animator_.IsAnimating()) {
     has_deferred_task_ = true;
     return;
@@ -367,6 +356,7 @@ void MessageListView::DoUpdateIfPossible() {
 
   // Should calculate and set new size after calling AnimateNotifications()
   // because fixed_height_ may be updated in it.
+  gfx::Rect child_area = GetContentsBounds();
   int new_height = GetHeightForWidth(child_area.width() + GetInsets().width());
   SetSize(gfx::Size(child_area.width() + GetInsets().width(), new_height));
 
