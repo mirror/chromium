@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b64f6274_7a7fb41b",
+        "filename": "third_party/WebKit/Source/platform/heap/MaskedObjectTracker.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-27T12:22:17Z",
+      "side": 1,
+      "message": "Add a comment about what this is doing.",
+      "revId": "bdf91c3ef386f87b6218cf7b500c1316e6919584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
