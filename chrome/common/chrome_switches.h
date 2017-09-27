@@ -19,7 +19,7 @@
 
 namespace base {
 class CommandLine;
-};
+}
 
 namespace switches {
 
