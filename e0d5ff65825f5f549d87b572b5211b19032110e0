@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c0af05e_ea9a2ebb",
+        "filename": "ui/arc/notification/arc_notification_content_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1179631
+      },
+      "writtenOn": "2017-09-27T05:50:34Z",
+      "side": 1,
+      "message": "I think this comment might need updating.",
+      "revId": "e0d5ff65825f5f549d87b572b5211b19032110e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e68b603f_b0e0d3d9",
+        "filename": "ui/arc/notification/arc_notification_content_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1179631
+      },
+      "writtenOn": "2017-09-27T05:50:34Z",
+      "side": 1,
+      "message": "Would |content_bounds|\u0027s height be different to the scaled snapshot height? IIRC it\u0027s set to be scaled based on the width in UpdatePreferredSize",
+      "revId": "e0d5ff65825f5f549d87b572b5211b19032110e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
