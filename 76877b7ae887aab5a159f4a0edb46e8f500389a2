@@ -373,6 +373,30 @@
       "revId": "76877b7ae887aab5a159f4a0edb46e8f500389a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30518ca2_2c2b89b4",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-27T06:22:59Z",
+      "side": 1,
+      "message": "Did you try both top level anonymous, and base::(anonymous)? I guess, latter case could avoid the conflicts, or how about just using different function names that do not conflict.",
+      "parentUuid": "873ad0d7_bc4e07af",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 74
+      },
+      "revId": "76877b7ae887aab5a159f4a0edb46e8f500389a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

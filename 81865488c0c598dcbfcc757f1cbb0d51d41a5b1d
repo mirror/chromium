@@ -140,6 +140,29 @@
     },
     {
       "key": {
+        "uuid": "a55e65a4_00c19b78",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-27T06:22:59Z",
+      "side": 1,
+      "message": "this could be also in anonymous namespace in the implementation file.",
+      "range": {
+        "startLine": 72,
+        "startChar": 14,
+        "endLine": 72,
+        "endChar": 28
+      },
+      "revId": "81865488c0c598dcbfcc757f1cbb0d51d41a5b1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8956ad3a_6a62fde9",
         "filename": "base/win/win_util.cc",
         "patchSetId": 21
@@ -174,6 +197,30 @@
       "writtenOn": "2017-09-27T04:14:29Z",
       "side": 1,
       "message": "Update the string and remove the GetLastError() call.",
+      "range": {
+        "startLine": 853,
+        "startChar": 4,
+        "endLine": 854,
+        "endChar": 59
+      },
+      "revId": "81865488c0c598dcbfcc757f1cbb0d51d41a5b1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58ee27c3_4e726fd3",
+        "filename": "media/midi/midi_manager_winrt.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-27T06:22:59Z",
+      "side": 1,
+      "message": "+1. Since this message haven\u0027t given me useful information, I\u0027m even fine with just removing this VLOG(1) completely.",
+      "parentUuid": "b9b0c192_6ab40ff2",
       "range": {
         "startLine": 853,
         "startChar": 4,
