@@ -16,6 +16,24 @@
       "revId": "e9ed271e93627fe9d5f58ccdd63f54a9e962423b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fecee158_aee20ab8",
+        "filename": "ui/compositor/layer_animation_element.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-09-27T23:26:02Z",
+      "side": 1,
+      "message": "Transform animation will not create render surface so it is not what we are concerning here. I\u0027d not modify the code.",
+      "parentUuid": "fefebceb_3342c48e",
+      "revId": "e9ed271e93627fe9d5f58ccdd63f54a9e962423b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
