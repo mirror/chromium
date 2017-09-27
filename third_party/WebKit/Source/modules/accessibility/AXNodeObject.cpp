@@ -2517,8 +2517,16 @@ HTMLLabelElement* AXNodeObject::LabelElementContainer() const {
 }
 
 bool AXNodeObject::OnNativeFocusAction() {
-  if (!CanSetFocusAttribute())
+  // If the object is not focusable but can be focused using accessibility,
+  // perform a native click instead. This will enable Web apps that set
+  // accessibility focus using, e.g. an active descendant, to capture and act on
+  // the click event. Otherwise, there is no other way to inform the app that an
+  // AT has requested the focus to be changed, except if the app is using AOM.
+  if (!CanSetFocusAttribute()) {
+    if (CanReceiveAccessibilityFocus())
+      return OnNativeClickAction();
     return false;
+  }
 
   Document* document = GetDocument();
   if (IsWebArea()) {
