@@ -161,6 +161,8 @@ IN_PROC_BROWSER_TEST_F(PasswordGenerationInteractiveTest,
   FocusPasswordField();
   EXPECT_TRUE(GenerationPopupShowing());
 
+  base::RunLoop().Run();
+
   SendKeyToPopup(ui::VKEY_ESCAPE);
 
   // Popup is dismissed.
