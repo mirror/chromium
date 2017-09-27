@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1f3e388_806a75ff",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-27T14:39:55Z",
+      "side": 1,
+      "message": "Why include this case?  It doesn\u0027t result in any bytes being read from the network/into cache, does it?",
+      "range": {
+        "startLine": 484,
+        "startChar": 4,
+        "endLine": 484,
+        "endChar": 30
+      },
+      "revId": "0808f972c9bd445db5df5287b13fd957db4091f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b12c8443_be6b3cd1",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-27T14:39:55Z",
+      "side": 1,
+      "message": "I think this is relying on PauseCachingResponseBody() to be called only once.  Can you put in DCHECKs \u0026 documentation for that?",
+      "range": {
+        "startLine": 541,
+        "startChar": 20,
+        "endLine": 541,
+        "endChar": 46
+      },
+      "revId": "0808f972c9bd445db5df5287b13fd957db4091f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
