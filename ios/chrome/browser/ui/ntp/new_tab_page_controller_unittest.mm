@@ -79,7 +79,8 @@ class NewTabPageControllerTest : public BlockCleanupTest {
                                   toolbarDelegate:nil
                                          tabModel:tabModel_
                              parentViewController:parentViewController_
-                                       dispatcher:nil];
+                                       dispatcher:nil
+                                         safeArea:UIEdgeInsetsZero];
 
     incognitoController_ = [[NewTabPageController alloc]
                  initWithUrl:url
@@ -92,7 +93,8 @@ class NewTabPageControllerTest : public BlockCleanupTest {
              toolbarDelegate:nil
                     tabModel:nil
         parentViewController:parentViewController_
-                  dispatcher:nil];
+                  dispatcher:nil
+                    safeArea:UIEdgeInsetsZero];
   };
 
   void TearDown() override {

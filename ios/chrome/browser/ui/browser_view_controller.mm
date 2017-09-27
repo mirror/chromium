@@ -3267,6 +3267,13 @@ bubblePresenterForFeature:(const base::Feature&)feature
   std::string url_host = url.host();
   if (url_host == kChromeUINewTabHost ||
       (IsIPadIdiom() && url_host == kChromeUIBookmarksHost)) {
+    CGFloat fakeStatusBarHeight = _fakeStatusBarView.frame.size.height;
+    UIEdgeInsets safeArea = UIEdgeInsetsZero;
+    if (@available(iOS 11.0, *)) {
+      safeArea = self.view.safeAreaInsets;
+    }
+    safeArea.top = MAX(safeArea.top - fakeStatusBarHeight, 0);
+
     NewTabPageController* pageController =
         [[NewTabPageController alloc] initWithUrl:url
                                            loader:self
@@ -3277,7 +3284,8 @@ bubblePresenterForFeature:(const base::Feature&)feature
                                   toolbarDelegate:self
                                          tabModel:_model
                              parentViewController:self
-                                       dispatcher:self.dispatcher];
+                                       dispatcher:self.dispatcher
+                                         safeArea:safeArea];
     pageController.swipeRecognizerProvider = self.sideSwipeController;
 
     // Panel is always NTP for iPhone.
