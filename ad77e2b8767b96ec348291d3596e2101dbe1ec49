@@ -16,6 +16,29 @@
       "revId": "ad77e2b8767b96ec348291d3596e2101dbe1ec49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ab956bd_835e91a0",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/ContentViewCoreSelectionTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-27T20:36:44Z",
+      "side": 1,
+      "message": "TestSelectionClient or something like that",
+      "range": {
+        "startLine": 61,
+        "startChar": 25,
+        "endLine": 61,
+        "endChar": 42
+      },
+      "revId": "ad77e2b8767b96ec348291d3596e2101dbe1ec49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
