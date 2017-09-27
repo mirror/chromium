@@ -192,19 +192,17 @@ void GetFieldsForDistinguishingProfiles(
 }
 
 // Constants for the validity bitfield.
-static const size_t validity_bits_per_type = 2;
-static const size_t number_supported_types_for_validation = 7;
+static const size_t kValidityBitsPerType = 2;
 // The order is important to ensure a consistent bitfield value. New values
 // should be added at the end NOT at the start or middle.
-static const ServerFieldType
-    supported_types_for_validation[number_supported_types_for_validation] = {
-        ADDRESS_HOME_COUNTRY,
-        ADDRESS_HOME_STATE,
-        ADDRESS_HOME_ZIP,
-        ADDRESS_HOME_CITY,
-        ADDRESS_HOME_DEPENDENT_LOCALITY,
-        EMAIL_ADDRESS,
-        PHONE_HOME_WHOLE_NUMBER};
+static const ServerFieldType kSupportedTypesForValidation[] = {
+    ADDRESS_HOME_COUNTRY,
+    ADDRESS_HOME_STATE,
+    ADDRESS_HOME_ZIP,
+    ADDRESS_HOME_CITY,
+    ADDRESS_HOME_DEPENDENT_LOCALITY,
+    EMAIL_ADDRESS,
+    PHONE_HOME_WHOLE_NUMBER};
 
 }  // namespace
 
@@ -263,6 +261,7 @@ AutofillProfile& AutofillProfile::operator=(const AutofillProfile& profile) {
 
   server_id_ = profile.server_id();
   has_converted_ = profile.has_converted();
+  SetValidityFromBitfieldValue(profile.GetValidityBitfieldValue());
 
   return *this;
 }
@@ -363,6 +362,7 @@ int AutofillProfile::Compare(const AutofillProfile& profile) const {
 bool AutofillProfile::EqualsSansOrigin(const AutofillProfile& profile) const {
   return guid() == profile.guid() &&
          language_code() == profile.language_code() &&
+         GetValidityBitfieldValue() == profile.GetValidityBitfieldValue() &&
          Compare(profile) == 0;
 }
 
@@ -717,31 +717,24 @@ void AutofillProfile::SetValidityState(ServerFieldType type,
   if (!IsValidationSupportedForType(type))
     return;
 
-  std::map<ServerFieldType, ValidityState>::iterator it =
-      validity_states_.find(type);
-
-  if (it != validity_states_.end()) {
-    it->second = validity;
-  } else {
-    validity_states_.insert(std::make_pair(type, validity));
-  }
+  validity_states_[type] = validity;
 }
 
 bool AutofillProfile::IsValidationSupportedForType(ServerFieldType type) const {
-  return std::find(supported_types_for_validation,
-                   supported_types_for_validation +
-                       number_supported_types_for_validation,
-                   type) !=
-         supported_types_for_validation + number_supported_types_for_validation;
+  for (auto supported_type : kSupportedTypesForValidation) {
+    if (type == supported_type)
+      return true;
+  }
+  return false;
 }
 
 int AutofillProfile::GetValidityBitfieldValue() const {
   int validity_value = 0;
   size_t field_type_shift = 0;
-  for (ServerFieldType supported_type : supported_types_for_validation) {
+  for (ServerFieldType supported_type : kSupportedTypesForValidation) {
     DCHECK(GetValidityState(supported_type) != UNSUPPORTED);
     validity_value |= GetValidityState(supported_type) << field_type_shift;
-    field_type_shift += validity_bits_per_type;
+    field_type_shift += kValidityBitsPerType;
   }
 
   return validity_value;
@@ -750,9 +743,9 @@ int AutofillProfile::GetValidityBitfieldValue() const {
 void AutofillProfile::SetValidityFromBitfieldValue(int bitfield_value) {
   // Compute the bitmask based on the number a bits per type. For example, this
   // could be the two least significant bits (0b11).
-  const int kBitmask = (1 << validity_bits_per_type) - 1;
+  const int kBitmask = (1 << kValidityBitsPerType) - 1;
 
-  for (ServerFieldType supported_type : supported_types_for_validation) {
+  for (ServerFieldType supported_type : kSupportedTypesForValidation) {
     // Apply the bitmask to the bitfield value to get the validity value of the
     // current |supported_type|.
     int validity_value = bitfield_value & kBitmask;
@@ -765,7 +758,7 @@ void AutofillProfile::SetValidityFromBitfieldValue(int bitfield_value) {
                      static_cast<ValidityState>(validity_value));
 
     // Shift the bitfield value to access the validity of the next field type.
-    bitfield_value = bitfield_value >> validity_bits_per_type;
+    bitfield_value = bitfield_value >> kValidityBitsPerType;
   }
 }
 
@@ -928,6 +921,7 @@ FormGroup* AutofillProfile::MutableFormGroupForType(const AutofillType& type) {
 bool AutofillProfile::EqualsSansGuid(const AutofillProfile& profile) const {
   return origin() == profile.origin() &&
          language_code() == profile.language_code() &&
+         GetValidityBitfieldValue() == profile.GetValidityBitfieldValue() &&
          Compare(profile) == 0;
 }
 
@@ -948,7 +942,8 @@ std::ostream& operator<<(std::ostream& os, const AutofillProfile& profile) {
             << UTF16ToUTF8(profile.GetRawInfo(ADDRESS_HOME_SORTING_CODE)) << " "
             << UTF16ToUTF8(profile.GetRawInfo(ADDRESS_HOME_COUNTRY)) << " "
             << profile.language_code() << " "
-            << UTF16ToUTF8(profile.GetRawInfo(PHONE_HOME_WHOLE_NUMBER));
+            << UTF16ToUTF8(profile.GetRawInfo(PHONE_HOME_WHOLE_NUMBER)) << " "
+            << profile.GetValidityBitfieldValue();
 }
 
 }  // namespace autofill
