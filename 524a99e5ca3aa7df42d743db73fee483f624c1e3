@@ -16,6 +16,24 @@
       "revId": "524a99e5ca3aa7df42d743db73fee483f624c1e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dec729ab_ae9dd6c4",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-09-27T16:36:52Z",
+      "side": 0,
+      "message": "Undo.",
+      "parentUuid": "773a3553_e56acb78",
+      "revId": "524a99e5ca3aa7df42d743db73fee483f624c1e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
