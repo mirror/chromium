@@ -30,12 +30,11 @@ class FindPaintOffsetNeedingUpdateScope {
       : object_(object),
         is_actually_needed_(is_actually_needed),
         old_paint_offset_(object.PaintOffset()) {
-    if (object.FirstFragment() && object.FirstFragment()->PaintProperties() &&
-        object.FirstFragment()->PaintProperties()->PaintOffsetTranslation()) {
-      old_paint_offset_translation_ = object.FirstFragment()
-                                          ->PaintProperties()
-                                          ->PaintOffsetTranslation()
-                                          ->Clone();
+    auto* rare_paint_data = object.FirstFragment().GetRarePaintData();
+    if (rare_paint_data && rare_paint_data->PaintProperties() &&
+        rare_paint_data->PaintProperties()->PaintOffsetTranslation()) {
+      old_paint_offset_translation_ =
+          rare_paint_data->PaintProperties()->PaintOffsetTranslation()->Clone();
     }
   }
 
@@ -44,11 +43,10 @@ class FindPaintOffsetNeedingUpdateScope {
       return;
     DCHECK_OBJECT_PROPERTY_EQ(object_, &old_paint_offset_,
                               &object_.PaintOffset());
+    auto* rare_paint_data = object_.FirstFragment().GetRarePaintData();
     const auto* paint_offset_translation =
-        (object_.FirstFragment() && object_.FirstFragment()->PaintProperties())
-            ? object_.FirstFragment()
-                  ->PaintProperties()
-                  ->PaintOffsetTranslation()
+        (rare_paint_data && rare_paint_data->PaintProperties())
+            ? rare_paint_data->PaintProperties()->PaintOffsetTranslation()
             : nullptr;
     DCHECK_OBJECT_PROPERTY_EQ(object_, old_paint_offset_translation_.Get(),
                               paint_offset_translation);

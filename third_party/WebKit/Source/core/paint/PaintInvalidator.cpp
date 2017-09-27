@@ -108,9 +108,10 @@ LayoutRect PaintInvalidator::MapLocalRectToVisualRectInBacking(
 
     auto container_contents_properties =
         context.paint_invalidation_container->FirstFragment()
+            .GetRarePaintData()
             ->ContentsProperties();
     DCHECK(
-        !context.paint_invalidation_container->FirstFragment()->NextFragment());
+        !context.paint_invalidation_container->FirstFragment().NextFragment());
     if (context.tree_builder_context_->current.transform ==
             container_contents_properties.Transform() &&
         context.tree_builder_context_->current.clip ==
@@ -189,6 +190,7 @@ LayoutPoint PaintInvalidator::ComputeLocationInBacking(
 
     const auto* container_transform =
         context.paint_invalidation_container->FirstFragment()
+            .GetRarePaintData()
             ->ContentsProperties()
             .Transform();
     if (context.tree_builder_context_->current.transform !=

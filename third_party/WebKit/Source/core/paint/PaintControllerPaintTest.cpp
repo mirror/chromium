@@ -139,7 +139,7 @@ TEST_P(PaintControllerPaintTestForSlimmingPaintV2, ChunkIdClientCacheFlag) {
   EXPECT_EQ(nullptr, transform->ScrollNode());
 
   const EffectPaintPropertyNode* effect_node =
-      div.FirstFragment()->PaintProperties()->Effect();
+      div.FirstFragment().GetRarePaintData()->PaintProperties()->Effect();
   EXPECT_EQ(0.5f, effect_node->Opacity());
 
   const PaintChunk& chunk = RootPaintController().PaintChunks()[1];
