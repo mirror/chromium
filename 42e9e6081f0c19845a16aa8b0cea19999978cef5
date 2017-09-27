@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e76675d_3ee49e46",
+        "filename": "third_party/WebKit/Source/core/css/RuleSet.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-09-27T07:56:16Z",
+      "side": 1,
+      "message": "Looks unused.",
+      "revId": "42e9e6081f0c19845a16aa8b0cea19999978cef5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
