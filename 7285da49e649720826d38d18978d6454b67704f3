@@ -16,6 +16,24 @@
       "revId": "7285da49e649720826d38d18978d6454b67704f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e145b61_6ca4df64",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-27T11:21:06Z",
+      "side": 1,
+      "message": "I\u0027m ok with either, but I think the behavior should be consistent between PrepareForCommit (which checks the PDL, which I guess doesn\u0027t work here...) and the helpers for committing a JS URL.",
+      "parentUuid": "7674dc4f_d72de768",
+      "revId": "7285da49e649720826d38d18978d6454b67704f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
