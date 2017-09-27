@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6322144_99ae3f6f",
+        "filename": "net/tools/cert_verify_tool/cert_verify_tool.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-09-27T01:43:04Z",
+      "side": 1,
+      "message": "Can you instead use:\n\nbase::TaskScheduler::CreateAndStartWithDefaultParams(\"cert_verify_tool\");\n\nThe advantage is not including \"test\" files, and it should be enough for what we need.",
+      "revId": "de87a7b6cc400e17954bd4677e0aea266305d55b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
