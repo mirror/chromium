@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5da0bf79_dfd94216",
+        "filename": "chrome/browser/devtools/protocol/DEPS",
+        "patchSetId": 8
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-27T02:19:54Z",
+      "side": 1,
+      "message": "Please deps in just the files you need, not all of ash.",
+      "revId": "55aa8fef461e69196af3204c7fe394db2200dcf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "678ea0dc_89db78cd",
+        "filename": "chrome/browser/devtools/protocol/window_manager_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-27T02:19:54Z",
+      "side": 1,
+      "message": "This is OK for now, but will need to become a mojo interface in the future.",
+      "revId": "55aa8fef461e69196af3204c7fe394db2200dcf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
