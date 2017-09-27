@@ -30,8 +30,10 @@ class AutoclickApplication : public service_manager::Service,
                              public mojom::AutoclickController,
                              public AutoclickControllerCommonDelegate {
  public:
-  AutoclickApplication();
+  explicit AutoclickApplication();
   ~AutoclickApplication() override;
+
+  void set_running_standalone(bool value) { running_standalone_ = value; }
 
  private:
   // service_manager::Service:
@@ -67,6 +69,8 @@ class AutoclickApplication : public service_manager::Service,
   std::unique_ptr<views::AuraInit> aura_init_;
   std::unique_ptr<AutoclickControllerCommon> autoclick_controller_common_;
   std::unique_ptr<views::Widget> widget_;
+
+  bool running_standalone_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(AutoclickApplication);
 };
