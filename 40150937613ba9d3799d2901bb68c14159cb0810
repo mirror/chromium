@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb27b445_80d0d796",
+        "filename": "chrome/app/md_extensions_strings.grdp",
+        "patchSetId": 8
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-27T18:04:41Z",
+      "side": 1,
+      "message": "Should we s/id/ID here? After a quick search, I only found one example where this string is used, see https://cs.chromium.org/chromium/src/chrome/app/chromeos_strings.grdp?l\u003d1548.",
+      "revId": "40150937613ba9d3799d2901bb68c14159cb0810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8f39b13_a49055fd",
+        "filename": "chrome/browser/resources/md_extensions/kiosk_dialog.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-27T18:04:41Z",
+      "side": 1,
+      "message": "Should we be using a checkbox here? It seems odd that we use a plain button that basically toggles a boolean.",
+      "revId": "40150937613ba9d3799d2901bb68c14159cb0810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8521f679_ba04b616",
+        "filename": "chrome/browser/resources/md_extensions/kiosk_dialog.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-27T18:04:41Z",
+      "side": 1,
+      "message": "Nit (optional): Can this div fit all in one line?",
+      "revId": "40150937613ba9d3799d2901bb68c14159cb0810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "897e667c_e28481c4",
+        "filename": "chrome/browser/resources/md_extensions/kiosk_dialog.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-27T18:04:41Z",
+      "side": 1,
+      "message": "Is this meant to add an element to the array, if the app is not existing in the array?\n\nIf no, how about this?\nvar index \u003d this.apps_.findIndex(a \u003d\u003e a.id \u003d\u003d app.id);\nassert(index \u003c this.apps_.length);\nthis.set(\u0027apps_.\u0027 + index, app);\n\nIf yes, how about this?\nvar index \u003d this.apps_.findIndex(a \u003d\u003e a.id \u003d\u003d app.id);\nthis.set(\u0027apps_.\u0027 + (index \u003d\u003d -1 ? this.apps_.length : index), app);",
+      "revId": "40150937613ba9d3799d2901bb68c14159cb0810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b531682_0e8efb6b",
+        "filename": "chrome/browser/resources/md_extensions/kiosk_dialog.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-27T18:04:41Z",
+      "side": 1,
+      "message": "!Event",
+      "revId": "40150937613ba9d3799d2901bb68c14159cb0810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5db827df_8444a952",
+        "filename": "chrome/browser/resources/md_extensions/manager.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-27T18:04:41Z",
+      "side": 1,
+      "message": "Need to rebase, since paper-header-panel has been removed from here.",
+      "revId": "40150937613ba9d3799d2901bb68c14159cb0810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1d06404_dbe0d309",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-27T18:04:41Z",
+      "side": 1,
+      "message": "@private",
+      "revId": "40150937613ba9d3799d2901bb68c14159cb0810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1db09aa_54ef4f8e",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-27T18:04:41Z",
+      "side": 1,
+      "message": "@override here and elsewhere in this file.",
+      "revId": "40150937613ba9d3799d2901bb68c14159cb0810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
