@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ea6b84a_20064e1e",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_screen_user_image.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-27T18:03:33Z",
+      "side": 1,
+      "message": "It\u0027s unclear from the JS what effect this has, does it hide the element or show the default image? Maybe add a comment?\n\nAlso, \u0027remove\u0027 is a little confusing here, maybe \u0027isProfilePictureAvailable\u0027 to be consistent with \u0027isCameraPresent\u0027?",
+      "revId": "bdbe04f5581e4061762a0b11ef777ef4da708539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
