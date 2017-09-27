@@ -307,6 +307,13 @@ void MessageListView::OnBoundsAnimatorDone(views::BoundsAnimator* animator) {
   bool need_update = false;
 
   if (clear_all_started_) {
+    // If the views to be cleared remain, do not complete the work, but wait the
+    // continued animations. This should not happen in normal case. This happens
+    // when the async operation of AnimateClearingOneNotification is delayed for
+    // some reason.
+    if (!clearing_all_views_.emptry())
+      return;
+
     clear_all_started_ = false;
     // TODO(yoshiki): we shouldn't touch views in OnAllNotificationsCleared().
     // Or rename it to like OnAllNotificationsClearing().
