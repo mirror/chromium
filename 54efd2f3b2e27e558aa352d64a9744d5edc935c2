@@ -70,6 +70,24 @@
       "revId": "54efd2f3b2e27e558aa352d64a9744d5edc935c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69f28bf6_75513142",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-27T01:49:40Z",
+      "side": 1,
+      "message": "ok I think what\u0027s happening is that SupportsDeclaration is just parsing as a way of testing if \u0027range\u0027 is a valid declaration (notice how parse_properties is cleared). So whether the observer gets the correct values doesn\u0027t really matter.",
+      "parentUuid": "9b518097_7d09bc5a",
+      "revId": "54efd2f3b2e27e558aa352d64a9744d5edc935c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
