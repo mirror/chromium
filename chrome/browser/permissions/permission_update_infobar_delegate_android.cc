@@ -106,17 +106,17 @@ bool PermissionUpdateInfoBarDelegate::ShouldShowPermissionInfobar(
   if (!window_android)
     return false;
 
-  for (ContentSettingsType content_settings_type : content_settings_types) {
-    std::vector<std::string> android_permissions;
-    PrefServiceBridge::GetAndroidPermissionsForContentSetting(
-        content_settings_type, &android_permissions);
-
-    for (const auto& android_permission : android_permissions) {
-      if (!window_android->HasPermission(android_permission))
-        return true;
-    }
-  }
-
+//  for (ContentSettingsType content_settings_type : content_settings_types) {
+//    std::vector<std::string> android_permissions;
+//    PrefServiceBridge::GetAndroidPermissionsForContentSetting(
+//        content_settings_type, &android_permissions);
+//
+//    for (const auto& android_permission : android_permissions) {
+//      if (!window_android->HasPermission(android_permission))
+//        return true;
+//    }
+//  }
+//
   return false;
 }
 

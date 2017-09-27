@@ -99,8 +99,8 @@ void GeolocationServiceImpl::CreateGeolocation(
 void GeolocationServiceImpl::CreateGeolocationWithPermissionStatus(
     device::mojom::GeolocationRequest request,
     blink::mojom::PermissionStatus permission_status) {
-  if (permission_status != blink::mojom::PermissionStatus::GRANTED)
-    return;
+//  if (permission_status != blink::mojom::PermissionStatus::GRANTED)
+//    return;
 
   geolocation_context_->Bind(std::move(request));
 }

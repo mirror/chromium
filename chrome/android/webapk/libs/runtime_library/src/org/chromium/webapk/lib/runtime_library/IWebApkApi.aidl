@@ -18,4 +18,10 @@ interface IWebApkApi {
 
     // Cancel a notification.
     void cancelNotification(String platformTag, int platformID);
+
+    void startLocationProvider(ILocationChangedCallback callback, boolean enableHighAccuracy);
+
+    void stopLocationProvider();
+
+    boolean isLocationProviderRunning();
 }

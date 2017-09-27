@@ -536,7 +536,6 @@ WebContentsImpl::WebContentsImpl(BrowserContext* browser_context)
       is_subframe_(false),
       force_disable_overscroll_content_(false),
       last_dialog_suppressed_(false),
-      geolocation_context_(new device::GeolocationContext()),
       accessibility_mode_(
           BrowserAccessibilityStateImpl::GetInstance()->accessibility_mode()),
       audio_stream_monitor_(this),
@@ -552,10 +551,12 @@ WebContentsImpl::WebContentsImpl(BrowserContext* browser_context)
   frame_tree_.SetFrameRemoveListener(
       base::Bind(&WebContentsImpl::OnFrameRemoved,
                  base::Unretained(this)));
+  geolocation_context_.reset(new device::GeolocationContext("")),
 #if defined(OS_ANDROID)
-  media_web_contents_observer_.reset(new MediaWebContentsObserverAndroid(this));
+      media_web_contents_observer_.reset(
+          new MediaWebContentsObserverAndroid(this));
 #else
-  media_web_contents_observer_.reset(new MediaWebContentsObserver(this));
+      media_web_contents_observer_.reset(new MediaWebContentsObserver(this));
 #endif
 #if BUILDFLAG(ENABLE_PLUGINS)
   pepper_playback_observer_.reset(new PepperPlaybackObserver(this));

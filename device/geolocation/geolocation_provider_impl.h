@@ -20,7 +20,6 @@
 
 namespace base {
 template <typename Type>
-struct DefaultSingletonTraits;
 class SingleThreadTaskRunner;
 }
 
@@ -30,6 +29,9 @@ class DEVICE_GEOLOCATION_EXPORT GeolocationProviderImpl
     : public GeolocationProvider,
       public base::Thread {
  public:
+  explicit GeolocationProviderImpl(const std::string& package_name);
+  ~GeolocationProviderImpl() override;
+
   // GeolocationProvider implementation:
   std::unique_ptr<GeolocationProvider::Subscription> AddLocationUpdateCallback(
       const LocationUpdateCallback& callback,
@@ -48,6 +50,8 @@ class DEVICE_GEOLOCATION_EXPORT GeolocationProviderImpl
   // instantiated on the same thread. Ownership is NOT returned.
   static GeolocationProviderImpl* GetInstance();
 
+  static GeolocationProvider* Get(const std::string& package_name);
+
   bool user_did_opt_into_location_services_for_testing() {
     return user_did_opt_into_location_services_;
   }
@@ -57,10 +61,6 @@ class DEVICE_GEOLOCATION_EXPORT GeolocationProviderImpl
   void SetArbitratorForTesting(std::unique_ptr<LocationProvider> arbitrator);
 
  private:
-  friend struct base::DefaultSingletonTraits<GeolocationProviderImpl>;
-  GeolocationProviderImpl();
-  ~GeolocationProviderImpl() override;
-
   bool OnGeolocationThread() const;
 
   // Start and stop providers as needed when clients are added or removed.
@@ -99,6 +99,8 @@ class DEVICE_GEOLOCATION_EXPORT GeolocationProviderImpl
 
   // Only to be used on the geolocation thread.
   std::unique_ptr<LocationProvider> arbitrator_;
+
+  std::string package_name_;
 
   DISALLOW_COPY_AND_ASSIGN(GeolocationProviderImpl);
 };
