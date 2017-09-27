@@ -12,6 +12,7 @@
 #include "base/run_loop.h"
 #include "base/stl_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/test/histogram_tester.h"
 #include "chrome/app/chrome_command_ids.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/devtools/devtools_window_testing.h"
@@ -28,12 +29,12 @@
 #include "chrome/browser/ui/cocoa/browser_window_cocoa.h"
 #import "chrome/browser/ui/cocoa/browser_window_controller_private.h"
 #import "chrome/browser/ui/cocoa/fast_resize_view.h"
+#import "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_controller.h"
 #import "chrome/browser/ui/cocoa/history_overlay_controller.h"
 #import "chrome/browser/ui/cocoa/infobars/infobar_cocoa.h"
 #import "chrome/browser/ui/cocoa/infobars/infobar_container_controller.h"
 #import "chrome/browser/ui/cocoa/infobars/infobar_controller.h"
 #import "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac.h"
-#import "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_controller.h"
 #import "chrome/browser/ui/cocoa/profiles/avatar_base_controller.h"
 #import "chrome/browser/ui/cocoa/tab_contents/overlayable_contents_controller.h"
 #import "chrome/browser/ui/cocoa/tabs/tab_strip_view.h"
@@ -50,6 +51,8 @@
 #include "chrome/test/base/testing_profile.h"
 #include "components/infobars/core/infobar_delegate.h"
 #include "components/infobars/core/simple_alert_infobar_delegate.h"
+#include "components/prefs/pref_registry_simple.h"
+#include "components/prefs/testing_pref_service.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/test_utils.h"
@@ -794,4 +797,32 @@ IN_PROC_BROWSER_TEST_F(BrowserWindowControllerTest,
   ASSERT_FALSE([[controller() toolbarController] isLocationBarFocused]);
   EXPECT_TRUE([fullscreenToolbarController isRevealingToolbar]);
   [fullscreenToolbarController resetToolbarFlag];
+}
+
+// Tests that the toolbar (tabstrip and omnibox) reveal animation is correctly
+// triggered by the changes in the tabstrip. The animation should not trigger
+// if the current tab is a NTP, since the location bar would be focused.
+IN_PROC_BROWSER_TEST_F(BrowserWindowControllerTest, FullscreenHistogram) {
+  base::HistogramTester histogram_tester;
+  PrefService* prefs = browser()->profile()->GetPrefs();
+  prefs->SetBoolean(prefs::kShowFullscreenToolbar, true);
+
+  // Enter browser fullscreen.
+  ToggleFullscreenAndWaitForNotification();
+  histogram_tester.ExpectBucketCount("OSX.Fullscreen.Enter.Source", BROWSER, 1);
+  histogram_tester.ExpectTotalCount("OSX.Fullscreen.Enter.WindowLocation", 1);
+  histogram_tester.ExpectBucketCount(
+      "OSX.Fullscreen.ToolbarStyle",
+      (int)FullscreenToolbarStyle::TOOLBAR_PRESENT, 1);
+
+  // Exit browser fullscreen
+  ToggleFullscreenAndWaitForNotification();
+
+  prefs->SetBoolean(prefs::kShowFullscreenToolbar, false);
+  ToggleFullscreenAndWaitForNotification();
+  histogram_tester.ExpectBucketCount("OSX.Fullscreen.Enter.Source", BROWSER, 2);
+  histogram_tester.ExpectTotalCount("OSX.Fullscreen.Enter.WindowLocation", 2);
+  histogram_tester.ExpectBucketCount(
+      "OSX.Fullscreen.ToolbarStyle",
+      (int)FullscreenToolbarStyle::TOOLBAR_HIDDEN, 1);
 }
