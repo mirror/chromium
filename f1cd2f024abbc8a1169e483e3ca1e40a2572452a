@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "122eea38_09e370e5",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-27T13:41:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "697c23c3_1972d443",
+      "range": {
+        "startLine": 111,
+        "startChar": 4,
+        "endLine": 111,
+        "endChar": 9
+      },
+      "revId": "f1cd2f024abbc8a1169e483e3ca1e40a2572452a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20b4054f_461e10e4",
         "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
         "patchSetId": 5
@@ -68,6 +92,30 @@
       "revId": "f1cd2f024abbc8a1169e483e3ca1e40a2572452a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9dc0694_5ccd50d8",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-27T13:41:46Z",
+      "side": 1,
+      "message": "\u003e Out of curiosity, any particular reason for using history.state instead of a \"normal\" global variable?\n\nThis preserves the behavior of the remote NTP: if you reload, or navigate forward and back, the page state remains the same.\n\nWe could have a discussion about whether that behavior actually makes sense…",
+      "parentUuid": "20b4054f_461e10e4",
+      "range": {
+        "startLine": 148,
+        "startChar": 47,
+        "endLine": 148,
+        "endChar": 0
+      },
+      "revId": "f1cd2f024abbc8a1169e483e3ca1e40a2572452a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +165,54 @@
     },
     {
       "key": {
+        "uuid": "f63b6b21_3977050f",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-27T13:41:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92e47773_c55aa6da",
+      "range": {
+        "startLine": 203,
+        "startChar": 50,
+        "endLine": 203,
+        "endChar": 57
+      },
+      "revId": "f1cd2f024abbc8a1169e483e3ca1e40a2572452a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "10285e8e_5de7eba9",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-27T13:41:46Z",
+      "side": 1,
+      "message": "\u003e Can background ever be falsey?\n\nHmm. I guess not; no matter what the value of info.backgroundColorRgba is, convertToRGBAColor() will return a non-empty string.\n\nRemoved.",
+      "parentUuid": "a897c2be_6ce44c02",
+      "range": {
+        "startLine": 203,
+        "startChar": 29,
+        "endLine": 203,
+        "endChar": 39
+      },
+      "revId": "f1cd2f024abbc8a1169e483e3ca1e40a2572452a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1ca88f7_9dbf0290",
         "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
         "patchSetId": 5
@@ -137,6 +233,30 @@
       "revId": "f1cd2f024abbc8a1169e483e3ca1e40a2572452a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db141c31_24d015c5",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-27T13:41:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1ca88f7_9dbf0290",
+      "range": {
+        "startLine": 643,
+        "startChar": 74,
+        "endLine": 643,
+        "endChar": 0
+      },
+      "revId": "f1cd2f024abbc8a1169e483e3ca1e40a2572452a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
