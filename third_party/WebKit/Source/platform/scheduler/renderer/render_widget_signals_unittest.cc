@@ -16,7 +16,9 @@ using ::testing::_;
 namespace blink {
 namespace scheduler {
 
-namespace {
+namespace render_widget_signals_unittest {  // To avoid symbol collisions in
+                                            // jumbo builds.
+
 class MockObserver : public RenderWidgetSignals::Observer {
  public:
   MockObserver() {}
@@ -29,7 +31,6 @@ class MockObserver : public RenderWidgetSignals::Observer {
  private:
   DISALLOW_COPY_AND_ASSIGN(MockObserver);
 };
-}
 
 class RenderWidgetSignalsTest : public ::testing::Test {
  public:
@@ -264,5 +265,6 @@ TEST_F(RenderWidgetSignalsTest,
   IgnoreWidgetDestructionCallbacks();
 }
 
+}  // namespace render_widget_signals_unittest
 }  // namespace scheduler
 }  // namespace blink

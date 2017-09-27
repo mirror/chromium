@@ -23,7 +23,9 @@
 
 namespace blink {
 namespace scheduler {
-namespace {
+namespace webthread_impl_for_renderer_scheduler_unittest {  // To avoid symbol
+                                                            // collisions in
+                                                            // jumbo builds.
 
 const int kWorkBatchSize = 2;
 
@@ -37,7 +39,6 @@ class MockTaskObserver : public blink::WebThread::TaskObserver {
   MOCK_METHOD0(WillProcessTask, void());
   MOCK_METHOD0(DidProcessTask, void());
 };
-}  // namespace
 
 class WebThreadImplForRendererSchedulerTest : public ::testing::Test {
  public:
@@ -203,5 +204,6 @@ TEST_F(WebThreadImplForRendererSchedulerTest, TestNestedRunLoop) {
   thread_->RemoveTaskObserver(&observer);
 }
 
+}  // namespace webthread_impl_for_renderer_scheduler_unittest
 }  // namespace scheduler
 }  // namespace blink
