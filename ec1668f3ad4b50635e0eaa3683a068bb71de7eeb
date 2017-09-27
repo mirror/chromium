@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "7acbde2c_3f3b3842",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/events_session_end.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-09-27T17:17:20Z",
+      "side": 1,
+      "message": "I don\u0027t know if it\u0027s ever a good idea to use my code as an example of readability :P I do personally prefer passing two functions to one then() call instead of then().catch() though.",
+      "parentUuid": "f46c2d08_ef873115",
+      "range": {
+        "startLine": 37,
+        "startChar": 6,
+        "endLine": 37,
+        "endChar": 22
+      },
+      "revId": "ec1668f3ad4b50635e0eaa3683a068bb71de7eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "872ad5ad_18d0e193",
         "filename": "third_party/WebKit/LayoutTests/vr/latest/vrDevice_requestSession_exclusive.html",
         "patchSetId": 2
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Refactored to try and resolve this. Take another look?",
       "parentUuid": "872ad5ad_18d0e193",
+      "range": {
+        "startLine": 36,
+        "startChar": 10,
+        "endLine": 36,
+        "endChar": 11
+      },
+      "revId": "ec1668f3ad4b50635e0eaa3683a068bb71de7eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e52a6bc0_740bce5b",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrDevice_requestSession_exclusive.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-09-27T17:17:20Z",
+      "side": 1,
+      "message": "Refactored version LGTM.",
+      "parentUuid": "7fc239a1_81a076be",
       "range": {
         "startLine": 36,
         "startChar": 10,
