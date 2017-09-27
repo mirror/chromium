@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd2a3221_ec939d2c",
+        "filename": "cc/trees/layer_tree_host_pixeltest_masks.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-27T22:32:31Z",
+      "side": 1,
+      "message": "Would love a text comment on here explaining what pattern this makes at a high level",
+      "revId": "2d29d152e0e2b9205309f7a0a359fe2d07f99cad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e77dd006_91b560bd",
+        "filename": "cc/trees/layer_tree_host_pixeltest_masks.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-27T22:32:31Z",
+      "side": 1,
+      "message": "not used",
+      "revId": "2d29d152e0e2b9205309f7a0a359fe2d07f99cad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce746536_2a9fcbe8",
+        "filename": "cc/trees/layer_tree_host_pixeltest_masks.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-27T22:32:31Z",
+      "side": 1,
+      "message": "% arraysize(test_colors)",
+      "revId": "2d29d152e0e2b9205309f7a0a359fe2d07f99cad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec444250_2f2ffb25",
+        "filename": "cc/trees/layer_tree_host_pixeltest_masks.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-27T22:32:31Z",
+      "side": 1,
+      "message": "FWIW the mode idiomatic way to do this would be to make these each a ContentLayerClient, and connect them to PictureLayers. Inside the client, they would build the PaintOpBuffer instead of making a bitmap. I think you can find many such test examples by looking for other ContentLayerClients in unit tests.",
+      "revId": "2d29d152e0e2b9205309f7a0a359fe2d07f99cad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ec74ab3_29d01ec2",
+        "filename": "cc/trees/layer_tree_host_pixeltest_masks.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-27T22:32:31Z",
+      "side": 1,
+      "message": "std:move refptrs when you pass them if you don\u0027t want to keep a ref (you don\u0027t)",
+      "revId": "2d29d152e0e2b9205309f7a0a359fe2d07f99cad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
