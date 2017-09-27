@@ -243,9 +243,12 @@ ServiceWorkerDispatcher::GetOrCreateRegistration(
     blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info,
     const ServiceWorkerVersionAttributes& attrs) {
   RegistrationObjectMap::iterator found = registrations_.find(info->handle_id);
-  if (found != registrations_.end())
+  if (found != registrations_.end()) {
+    DCHECK(!info->request.is_pending());
     return found->second;
+  }
 
+  DCHECK(info->request.is_pending());
   // WebServiceWorkerRegistrationImpl constructor calls
   // AddServiceWorkerRegistration to add itself into |registrations_|.
   auto registration =
@@ -278,9 +281,12 @@ ServiceWorkerDispatcher::GetOrAdoptRegistration(
 
   RegistrationObjectMap::iterator found =
       registrations_.find(registration_handle_id);
-  if (found != registrations_.end())
+  if (found != registrations_.end()) {
+    DCHECK(!info->request.is_pending());
     return found->second;
+  }
 
+  DCHECK(info->request.is_pending());
   // WebServiceWorkerRegistrationImpl constructor calls
   // AddServiceWorkerRegistration to add itself into |registrations_|.
   auto registration =
