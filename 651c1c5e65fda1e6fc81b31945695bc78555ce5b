@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f1e4b1fc_2b3234c8",
+        "filename": "content/browser/accessibility/browser_accessibility_manager_mac.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-27T17:03:28Z",
+      "side": 1,
+      "message": "It should! Good catch.\n\nFixed throughout.",
+      "parentUuid": "f79e24ee_f51067ea",
+      "revId": "651c1c5e65fda1e6fc81b31945695bc78555ce5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f5bbae2_d767b191",
         "filename": "content/browser/accessibility/browser_accessibility_manager_mac.mm",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-27T15:34:45Z",
       "side": 1,
       "message": "FireNativeMacNotification doesn\u0027t appear to check if mac_notification is empty/null.",
+      "revId": "651c1c5e65fda1e6fc81b31945695bc78555ce5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bc30250_8e4fdd68",
+        "filename": "content/browser/accessibility/browser_accessibility_manager_mac.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-27T17:03:28Z",
+      "side": 1,
+      "message": "Added a DCHECK. I don\u0027t see any way it should be null (we return\nif we don\u0027t want to fire a notification), but a DCHECK is always\ngood.",
+      "parentUuid": "3f5bbae2_d767b191",
       "revId": "651c1c5e65fda1e6fc81b31945695bc78555ce5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "3bd42a64_f17a1c18",
+        "filename": "content/browser/accessibility/browser_accessibility_manager_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-27T17:03:28Z",
+      "side": 1,
+      "message": "I want to include a default case here for now rather than all\nevents because I\u0027m planning to get rid of most of the Blink\nevents soon.\n\nBut I like the idea of explicitly including all generated events.",
+      "parentUuid": "de3989c8_fda27b4d",
+      "revId": "651c1c5e65fda1e6fc81b31945695bc78555ce5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c4b87c9_755b28da",
         "filename": "content/browser/accessibility/browser_accessibility_manager_win.cc",
         "patchSetId": 5
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "522fb98b_03086aea",
+        "filename": "content/browser/accessibility/browser_accessibility_manager_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-27T17:03:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c4b87c9_755b28da",
+      "revId": "651c1c5e65fda1e6fc81b31945695bc78555ce5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc15d7f4_8d1d8c0f",
         "filename": "content/browser/accessibility/browser_accessibility_manager_win.cc",
         "patchSetId": 5
@@ -99,6 +171,24 @@
       "writtenOn": "2017-09-27T15:00:23Z",
       "side": 1,
       "message": "What does it mean if this doesn\u0027t exist? Is that a real case or does it indicate an error?\n\nSide note: it looks like the delegate is always set in the BrowserAccessibilityManager constructors. Also, there is a set_delegate method that does not appear to be called. I\u0027ll upload a CL to remove that.",
+      "revId": "651c1c5e65fda1e6fc81b31945695bc78555ce5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "975d7c8f_19a9e6f4",
+        "filename": "content/browser/accessibility/browser_accessibility_manager_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-27T17:03:28Z",
+      "side": 1,
+      "message": "Added a comment. This can happen when an iframe navigates and we\nget data for the new frame before that frame has been swapped in,\nfor example.",
+      "parentUuid": "bc15d7f4_8d1d8c0f",
       "revId": "651c1c5e65fda1e6fc81b31945695bc78555ce5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -122,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "1fded654_3dba39ad",
+        "filename": "content/browser/accessibility/browser_accessibility_manager_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-27T17:03:28Z",
+      "side": 1,
+      "message": "I put it in the cross-platform code already, the problem is that\nthere are a lot of other places in the Windows code that fire\nevents now. I\u0027d like to get rid of all of those and have them all\nuse AXEventGenerator eventually.\n\nAdded the comment back, though. Good idea.",
+      "parentUuid": "aac6b7ec_d70c8830",
+      "revId": "651c1c5e65fda1e6fc81b31945695bc78555ce5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f0dcf3f_3136fa69",
         "filename": "ui/accessibility/ax_event_generator.cc",
         "patchSetId": 5
@@ -139,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "6e490b57_36779a10",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-27T17:03:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f0dcf3f_3136fa69",
+      "revId": "651c1c5e65fda1e6fc81b31945695bc78555ce5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7632daaf_b7ccae46",
         "filename": "ui/accessibility/ax_event_generator.cc",
         "patchSetId": 5
@@ -150,6 +276,24 @@
       "writtenOn": "2017-09-27T15:34:45Z",
       "side": 1,
       "message": "What\u0027s the difference between live region node changed and just live region changed? What\u0027s happening here?",
+      "revId": "651c1c5e65fda1e6fc81b31945695bc78555ce5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "736c5f5c_0d6d77af",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-27T17:03:28Z",
+      "side": 1,
+      "message": "Live region node changed \u003d fired on every node in the live region\nthat changes. Needed on Android.\n\nLive region changed \u003d fired once on the root of the live region.\nNeeded on Mac, fired on Windows but unclear if it\u0027s used.",
+      "parentUuid": "7632daaf_b7ccae46",
       "revId": "651c1c5e65fda1e6fc81b31945695bc78555ce5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -190,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "99aee222_e0435f62",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-27T17:03:28Z",
+      "side": 1,
+      "message": "Thankfully that stuff doesn\u0027t seem necessary for basic stuff,\nbut I believe we\u0027d get a better experience with JAWS/NVDA if\nwe did fire all of those.\n\nThis framework ought to make it much easier to add those in\nsafely.",
+      "parentUuid": "2d39185e_1e0853e6",
+      "revId": "651c1c5e65fda1e6fc81b31945695bc78555ce5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c4b756af_2cf98c6c",
         "filename": "ui/accessibility/ax_event_generator.cc",
         "patchSetId": 5
@@ -201,6 +363,24 @@
       "writtenOn": "2017-09-27T15:34:45Z",
       "side": 1,
       "message": "Why is this here actually? Does the menu item actually get a selected state? Shouldn\u0027t this code be in blink? Does blink already handle this case for when the author used real focus in a menu?\n\nNot to slow down this awesome refactor, but I feel like this class should be really dumb and shouldn\u0027t really know about accessibility events very much.\n\nHow do we know what kinds of event logic goes in here and what goes in blink?",
+      "revId": "651c1c5e65fda1e6fc81b31945695bc78555ce5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a30940a_dc1accfd",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-27T17:03:28Z",
+      "side": 1,
+      "message": "I\u0027d like Blink to be a lot more dumb, because:\n\n* Walking the tree is more expensive in Blink, so every\n  event that needs to walk the tree is slowing down the page\n* We get callbacks in Blink in the middle of layout\n  so sometimes we can\u0027t even walk the tree, or if we\n  accidentally access the wrong thing we can crash\n* Blink doesn\u0027t know about other frames or windows\n* We don\u0027t keep the full state of the accessibility tree in\n  Blink, so it\u0027s hard to know if a particular state actually\n  changed or not - we end up firing extra unnecessary events.\n\nInstead, my new vision is:\n\n* Blink fires events only for things that can\u0027t be inferred\n  just from the state of the tree, like \"scrolled to anchor\".\n* For everything else, Blink just marks nodes as dirty and\n  updates them. This is much more foolproof and it\u0027s 100% safe\n  to sometimes mark a node as dirty even if it didn\u0027t change.\n  It\u0027s usually faster to do that sometimes rather than to do\n  a lot of work to determine if it\u0027s necessary.\n\nFinally, another huge advantage is that we can use\nAXEventGenerator for other sources, not just Blink:\n\n* Views / native UI (we can get rid of all of the code\n  that fires events there and replace it with this)\n* PDF (currently it\u0027s pretty simple, but if we added\n  forms support, for example)\n* ARC++/Android\n\nMy goal for AXEventGenerator is for it to just handle the\njob of diffing the tree and consolidating things on different\nnodes. For example if there are lots of changes to a live region,\nit propagates to a single \"live region changed\".\n\nIt shouldn\u0027t have the platform-specific logic, as in how to\nfire events on each platform - but it does contain the superset\nof \"things that could happen to an accessibility tree that\nat least one platform might want to know about\".",
+      "parentUuid": "c4b756af_2cf98c6c",
       "revId": "651c1c5e65fda1e6fc81b31945695bc78555ce5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
