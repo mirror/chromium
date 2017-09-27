@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f46c2d08_ef873115",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/events_session_end.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-09-27T17:11:52Z",
+      "side": 1,
+      "message": "Yeah, I\u0027ve just gotten use to promising all the things. :) I changed the syntax here to match some of Brian\u0027s earlier tests better. That may make it more readable?",
+      "parentUuid": "1fc1b446_d6c18370",
+      "range": {
+        "startLine": 37,
+        "startChar": 6,
+        "endLine": 37,
+        "endChar": 22
+      },
+      "revId": "ec1668f3ad4b50635e0eaa3683a068bb71de7eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "872ad5ad_18d0e193",
         "filename": "third_party/WebKit/LayoutTests/vr/latest/vrDevice_requestSession_exclusive.html",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7fc239a1_81a076be",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrDevice_requestSession_exclusive.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-09-27T17:11:52Z",
+      "side": 1,
+      "message": "Refactored to try and resolve this. Take another look?",
+      "parentUuid": "872ad5ad_18d0e193",
+      "range": {
+        "startLine": 36,
+        "startChar": 10,
+        "endLine": 36,
+        "endChar": 11
+      },
+      "revId": "ec1668f3ad4b50635e0eaa3683a068bb71de7eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "568c77ff_499464ed",
         "filename": "third_party/WebKit/Source/modules/vr/latest/VRDevice.cpp",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "ec1668f3ad4b50635e0eaa3683a068bb71de7eeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6feadf11_ebc20f48",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRDevice.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-09-27T17:11:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "568c77ff_499464ed",
+      "range": {
+        "startLine": 111,
+        "startChar": 43,
+        "endLine": 111,
+        "endChar": 66
+      },
+      "revId": "ec1668f3ad4b50635e0eaa3683a068bb71de7eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
