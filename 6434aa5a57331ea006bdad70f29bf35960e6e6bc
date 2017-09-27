@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8dac350d_668f4839",
+        "filename": "ui/aura/window_event_dispatcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 970,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-27T20:14:04Z",
+      "side": 1,
+      "message": "Please check that the event is from a touchpad.",
+      "revId": "6434aa5a57331ea006bdad70f29bf35960e6e6bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9442f0a6_907ff4ed",
+        "filename": "ui/aura/window_event_dispatcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 975,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-27T20:14:04Z",
+      "side": 1,
+      "message": "nullptr",
+      "revId": "6434aa5a57331ea006bdad70f29bf35960e6e6bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6e01fb7_93f98039",
+        "filename": "ui/aura/window_event_dispatcher.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-27T20:14:04Z",
+      "side": 1,
+      "message": "Call this touchpad_pinch_handler_",
+      "revId": "6434aa5a57331ea006bdad70f29bf35960e6e6bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c08f07a_db26d41e",
+        "filename": "ui/aura/window_targeter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-27T20:14:04Z",
+      "side": 1,
+      "message": "Can you DCHECK() here that the event is coming from touch-pad? (because it is also possible to have pinch events from the touchscreen, and the targeting for that happens elsewhere, so the only pinch events arriving here should be from touchpad).",
+      "revId": "6434aa5a57331ea006bdad70f29bf35960e6e6bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dab246c8_ede4ca66",
+        "filename": "ui/aura/window_targeter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-27T20:14:04Z",
+      "side": 1,
+      "message": "I think the capture window should get priority. Can you move this after line ~72?",
+      "revId": "6434aa5a57331ea006bdad70f29bf35960e6e6bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
