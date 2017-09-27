@@ -40,7 +40,7 @@ class FakeBackgroundFetchDelegate : public BackgroundFetchDelegate {
       BrowserThread::PostTask(
           BrowserThread::IO, FROM_HERE,
           base::BindOnce(&BackgroundFetchDelegate::Client::OnDownloadComplete,
-                         client(), guid, std::move(result)));
+                         base::Unretained(client()), guid, std::move(result)));
     }
   }
 
@@ -84,7 +84,7 @@ class BackgroundFetchDelegateProxyTest : public BackgroundFetchTestBase {
 }  // namespace
 
 TEST_F(BackgroundFetchDelegateProxyTest, SetDelegate) {
-  EXPECT_TRUE(delegate_.client().get());
+  EXPECT_TRUE(delegate_.client());
 }
 
 TEST_F(BackgroundFetchDelegateProxyTest, StartRequest) {
