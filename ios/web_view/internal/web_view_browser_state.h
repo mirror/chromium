@@ -44,6 +44,9 @@ class WebViewBrowserState : public web::BrowserState {
   // Registers the preferences for this BrowserState.
   void RegisterPrefs(user_prefs::PrefRegistrySyncable* pref_registry);
 
+  // Starts services if necessary.
+  void InitializeServices();
+
   // The path associated with this BrowserState object.
   base::FilePath path_;
 

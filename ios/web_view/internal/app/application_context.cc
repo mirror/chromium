@@ -19,6 +19,7 @@
 #include "components/translate/core/browser/translate_download_manager.h"
 #include "ios/web/public/web_thread.h"
 #include "ios/web_view/internal/app/web_view_io_thread.h"
+#include "ios/web_view/internal/web_view_sync_initializer.h"
 #include "net/socket/client_socket_pool_manager.h"
 #include "ui/base/l10n/l10n_util_mac.h"
 
@@ -70,6 +71,7 @@ PrefService* ApplicationContext::GetLocalState() {
     flags_ui::PrefServiceFlagsStorage::RegisterPrefs(pref_registry.get());
     PrefProxyConfigTrackerImpl::RegisterPrefs(pref_registry.get());
     ssl_config::SSLConfigServiceManager::RegisterPrefs(pref_registry.get());
+    WebViewSyncInitializer::RegisterLocalPrefs(pref_registry.get());
 
     base::FilePath local_state_path;
     PathService::Get(base::DIR_APP_DATA, &local_state_path);
