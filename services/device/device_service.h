@@ -8,7 +8,6 @@
 #include "base/memory/ref_counted.h"
 #include "device/hid/public/interfaces/hid.mojom.h"
 #include "device/screen_orientation/public/interfaces/screen_orientation.mojom.h"
-#include "device/sensors/public/interfaces/orientation.mojom.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "services/device/public/interfaces/battery_monitor.mojom.h"
 #include "services/device/public/interfaces/fingerprint.mojom.h"
@@ -76,11 +75,6 @@ class DeviceService : public service_manager::Service {
   void BindFingerprintRequest(mojom::FingerprintRequest request);
 
   void BindHidManagerRequest(mojom::HidManagerRequest request);
-
-  void BindOrientationSensorRequest(mojom::OrientationSensorRequest request);
-
-  void BindOrientationAbsoluteSensorRequest(
-      mojom::OrientationAbsoluteSensorRequest request);
 
 #if !defined(OS_ANDROID)
   void BindBatteryMonitorRequest(mojom::BatteryMonitorRequest request);
