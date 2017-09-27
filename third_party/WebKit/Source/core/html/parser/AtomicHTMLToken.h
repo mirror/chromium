@@ -114,9 +114,9 @@ class CORE_EXPORT AtomicHTMLToken {
       case HTMLToken::kStartTag:
       case HTMLToken::kEndTag: {
         self_closing_ = token.SelfClosing();
-        if (StringImpl* tag_name =
+        if (const AtomicString& tag_name =
                 lookupHTMLTag(token.GetName().data(), token.GetName().size()))
-          name_ = AtomicString(tag_name);
+          name_ = tag_name;
         else
           name_ = AtomicString(token.GetName());
         InitializeAttributes(token.Attributes());
@@ -229,7 +229,8 @@ inline void AtomicHTMLToken::InitializeAttributes(
     attribute.NameRange().CheckValid();
     attribute.ValueRange().CheckValid();
 
-    AtomicString value(attribute.Value8BitIfNecessary());
+    AtomicString value(attribute.ValueAsVector(),
+                       AtomicString::kCreateEmptyInsteadOfNull);
     const QualifiedName& name = NameForAttribute(attribute);
     // FIXME: This is N^2 for the number of attributes.
     if (!FindAttributeInVector(attributes_, name))
