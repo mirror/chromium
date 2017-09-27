@@ -16,6 +16,24 @@
       "revId": "3f9ae2ad3ead54caa7ed87f91776ae029bd1e185",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5792943d_19aa3a6d",
+        "filename": "net/url_request/url_request.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1228,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-09-27T20:58:59Z",
+      "side": 1,
+      "message": "It\u0027ll turn into a GURL eventually, although it\u0027ll turn back into a string when we JSONify it. I prefer using a GURL to make the interface clearer, but I\u0027m willing to change it if it turns out to be a performance issue.",
+      "parentUuid": "956098ec_11cb3c88",
+      "revId": "3f9ae2ad3ead54caa7ed87f91776ae029bd1e185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
