@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16fd857c_2ddf429c",
+        "filename": "components/history/core/browser/top_sites_impl.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 942,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-27T15:44:43Z",
+      "side": 0,
+      "message": "I believe you need to restart the query here. After deleting urls there may be new top sites that you would only find by querying history.",
+      "range": {
+        "startLine": 942,
+        "startChar": 1,
+        "endLine": 942,
+        "endChar": 29
+      },
+      "revId": "1523ed626bf2ca96896a7d0836d5509237df8bf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
