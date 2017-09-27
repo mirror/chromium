@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c950f05_1df0fe59",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-27T00:25:58Z",
+      "side": 1,
+      "message": "Identifiers which are never reassigned can be declared with `const`, even if they\u0027re objects with properties that will change.\n\nSame applies to Report, TestResultComparator, TestResultInformation, and anything else that\u0027s not reassigned. (`const` doesn\u0027t change behavior, it just makes it so that an error is thrown when something is accidentally reassigned).",
+      "revId": "6b2e12715bf68288f4f242e8f0927fd48ca7b141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fea4c412_67ad1980",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-27T00:25:58Z",
+      "side": 1,
+      "message": "Should we delete this commented-out block?",
+      "revId": "6b2e12715bf68288f4f242e8f0927fd48ca7b141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd0331f1_1d9eee22",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 1675,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-27T00:25:58Z",
+      "side": 1,
+      "message": "Style nit: Could add space around \u003d and \u003c operators.",
+      "revId": "6b2e12715bf68288f4f242e8f0927fd48ca7b141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60941096_a6b3369a",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 1712,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-27T00:25:58Z",
+      "side": 1,
+      "message": "Style nit: In some places in this file, there\u0027s a blank line before the first member of a class, and in others not.",
+      "revId": "6b2e12715bf68288f4f242e8f0927fd48ca7b141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b7b6ba3_55986fa2",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 1803,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-27T00:25:58Z",
+      "side": 1,
+      "message": "Style nit: could add spaces around \u003d and \u003c operators.",
+      "revId": "6b2e12715bf68288f4f242e8f0927fd48ca7b141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "675b2a7c_9809580d",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 1907,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-27T00:25:58Z",
+      "side": 1,
+      "message": "Style nit: space after \"{\" but not before \"}\".",
+      "revId": "6b2e12715bf68288f4f242e8f0927fd48ca7b141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
