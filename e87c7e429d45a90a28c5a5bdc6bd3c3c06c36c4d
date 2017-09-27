@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c210bc25_a4e041e5",
+        "filename": "chrome/browser/ui/views/feature_promos/feature_promo_bubble_view.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-27T04:38:09Z",
+      "side": 1,
+      "message": "Nit: \"activation\" and propagate fix forward.",
+      "range": {
+        "startLine": 36,
+        "startChar": 21,
+        "endLine": 36,
+        "endChar": 33
+      },
+      "revId": "e87c7e429d45a90a28c5a5bdc6bd3c3c06c36c4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adbd33e0_9966e08f",
+        "filename": "chrome/browser/ui/views/feature_promos/feature_promo_bubble_view.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-27T04:38:09Z",
+      "side": 1,
+      "message": "Nit: activation",
+      "range": {
+        "startLine": 43,
+        "startChar": 42,
+        "endLine": 43,
+        "endChar": 54
+      },
+      "revId": "e87c7e429d45a90a28c5a5bdc6bd3c3c06c36c4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4d5a0c4_2cfb4446",
+        "filename": "chrome/browser/ui/views/feature_promos/feature_promo_bubble_view.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-27T04:38:09Z",
+      "side": 1,
+      "message": "Nit: Same here.",
+      "range": {
+        "startLine": 58,
+        "startChar": 42,
+        "endLine": 61,
+        "endChar": 40
+      },
+      "revId": "e87c7e429d45a90a28c5a5bdc6bd3c3c06c36c4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

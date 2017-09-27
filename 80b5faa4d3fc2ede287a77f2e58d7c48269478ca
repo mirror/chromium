@@ -375,6 +375,30 @@
       "revId": "80b5faa4d3fc2ede287a77f2e58d7c48269478ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29f77c93_eaaba6dc",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-27T04:38:09Z",
+      "side": 1,
+      "message": "Ah, looks like I misread this then. Sorry about tat!\n\nUnsetting it is fine.",
+      "parentUuid": "5f7ab263_acd8eb1e",
+      "range": {
+        "startLine": 224,
+        "startChar": 2,
+        "endLine": 224,
+        "endChar": 27
+      },
+      "revId": "80b5faa4d3fc2ede287a77f2e58d7c48269478ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
