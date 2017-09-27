@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9da32a9_f45f0e3f",
+        "filename": "ui/views/view_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 4447,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-27T17:49:45Z",
+      "side": 1,
+      "message": "I was kinda surprised but 0.6250 is printed as 0.62 on linux and 0.63 on windows.",
+      "revId": "d52516af72cfc96e7387abff78cc0fcb375f4fb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
