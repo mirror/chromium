@@ -13,7 +13,6 @@ import argparse
 import logging
 import os
 import re
-import subprocess
 import sys
 from functools import partial
 
@@ -25,6 +24,8 @@ from blinkpy.common.name_style_converter import NameStyleConverter
 from plan_blink_move import plan_blink_move
 from webkitpy.common.checkout.git import Git
 from webkitpy.common.path_finder import get_chromium_src_dir
+from webkitpy.common.path_finder import get_scripts_dir
+from webkitpy.common.system.executive import Executive
 from webkitpy.common.system.filesystem import FileSystem
 
 _log = logging.getLogger('move_blink_source')
@@ -83,6 +84,8 @@ class MoveBlinkSource(object):
         # _checked_in_header_re is used to distinguish checked-in header files
         # and generated header files.
         self._checked_in_header_re = None
+
+        self._updated_files = []
 
     def update(self):
         _log.info('Planning renaming ...')
@@ -146,6 +149,25 @@ class MoveBlinkSource(object):
         for file_path, replacement_list in file_replacement_list:
             self._update_single_file_content(file_path, replacement_list, should_write=self._options.run)
 
+        if self._options.run:
+            _log.info('Formatting updated %d files ...', len(self._updated_files))
+            git = Git(cwd=self._repo_root)
+            # |git cl format| can't handle too many files at once.
+            while len(self._updated_files) > 0:
+                end_index = 100
+                if end_index > len(self._updated_files):
+                    end_index = len(self._updated_files)
+                git.run(['cl', 'format'] + self._updated_files[:end_index])
+                self._updated_files = self._updated_files[end_index:]
+
+            _log.info('Make a local commit ...')
+            git.commit_locally_with_message("""The Great Blink mv for source files, part 1.
+
+Update file contents without moving files.
+
+Bug: 768828
+""")
+
     def move(self):
         _log.info('Planning renaming ...')
         file_pairs = plan_blink_move(self._fs, [])
@@ -170,6 +192,20 @@ class MoveBlinkSource(object):
             'build/get_landmines.py',
             [('\ndef main', '  print \'The Great Blink mv for source files (crbug.com/768828)\'\n\ndef main')])
 
+        _log.info('Run run-bindings-tests ...')
+        Executive().run_command(['python',
+                                 self._fs.join(get_scripts_dir(), 'run-bindings-tests'),
+                                 '--reset-results'],
+                                cwd=self._repo_root)
+
+        if self._options.run_git:
+            _log.info('Make a local commit ...')
+            git.commit_locally_with_message("""The Great Blink mv for source files, part 2.
+
+Move and rename files.
+
+Bug: 768828
+""")
 
     def _create_basename_maps(self, file_pairs):
         basename_map = {}
@@ -315,6 +351,7 @@ class MoveBlinkSource(object):
                 continue
             if self._options.run:
                 self._fs.write_text_file(file_path, content)
+                self._updated_files.append(file_path)
             if file_type == FileType.DEPS:
                 self._append_unless_upper_dir_exists(updated_deps_dirs, self._fs.dirname(file_path))
             _log.info('Updated %s', self._shorten_path(file_path))
@@ -338,6 +375,7 @@ class MoveBlinkSource(object):
                     continue
                 if self._options.run:
                     self._fs.write_text_file(file_path, content)
+                    self._updated_files.append(file_path)
                 _log.info('Updated %s', self._shorten_path(file_path))
 
     def _replace_include_path(self, match):
@@ -414,6 +452,7 @@ class MoveBlinkSource(object):
         if content != original_content:
             if should_write:
                 self._fs.write_text_file(full_path, content)
+                self._updated_files.append(full_path)
             _log.info('Updated %s', file_path)
         else:
             _log.warning('%s does not contain specified source strings.', file_path)
