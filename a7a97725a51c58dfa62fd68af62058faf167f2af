@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f3db782_6fbf528c",
+        "filename": "content/browser/appcache/appcache_histograms.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-27T20:25:16Z",
+      "side": 1,
+      "message": "The idea is to use less storage, will this accomplish that? Many/most of the samples are between 0 and 1 ms.",
+      "revId": "a7a97725a51c58dfa62fd68af62058faf167f2af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
