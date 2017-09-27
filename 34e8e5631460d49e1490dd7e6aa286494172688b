@@ -233,6 +233,30 @@
     },
     {
       "key": {
+        "uuid": "16104f66_5795ac7a",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/bookmarks/BookmarkPersonalizedSigninPromoTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-27T16:43:18Z",
+      "side": 1,
+      "message": "Using BitmapFactory might not work, because it\u0027s not a bitmap, but vector support in general is provided by the support library, so AppCompatResources.getDrawable would work for getting a Drawable. But yeah, passing in null is the best thing.",
+      "parentUuid": "25aba3ba_4d8c95f5",
+      "range": {
+        "startLine": 252,
+        "startChar": 0,
+        "endLine": 253,
+        "endChar": 74
+      },
+      "revId": "34e8e5631460d49e1490dd7e6aa286494172688b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2339bcb8_61985bb8",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/bookmarks/BookmarkPersonalizedSigninPromoTest.java",
         "patchSetId": 3
