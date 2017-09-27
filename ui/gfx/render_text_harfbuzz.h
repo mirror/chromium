@@ -189,13 +189,6 @@ class GFX_EXPORT RenderTextHarfBuzz : public RenderText {
   friend class test::RenderTextTestApi;
   friend class RenderTextHarfBuzzTest;
 
-  // Specify the width of a glyph for test. The width of glyphs is very
-  // platform-dependent and environment-dependent. Otherwise multiline test
-  // will become really flaky.
-  void set_glyph_width_for_test(float test_width) {
-    glyph_width_for_test_ = test_width;
-  }
-
   // Return the run index that contains the argument; or the length of the
   // |runs_| vector if argument exceeds the text length or width.
   size_t GetRunContainingCaret(const SelectionModel& caret);
