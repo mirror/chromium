@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94f4a113_0286282f",
+        "filename": "base/win/scoped_hstring_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-27T19:31:56Z",
+      "side": 1,
+      "message": "I think this can just be EXPECT_EQ if c_str() is dropped (here and elsewhere) Same comment applies to data() for the StringPiece comparison below.",
+      "revId": "c9b519d827d1ad7cc0ab22572203fed90fa269b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
