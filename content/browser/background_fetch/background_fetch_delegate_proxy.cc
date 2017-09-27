@@ -30,10 +30,15 @@ class BackgroundFetchDelegateProxy::Core
     // Some BrowserContext implementations return nullptr for their delegate
     // implementation and the feature should be disabled in that case.
     if (delegate_)
-      delegate_->SetDelegateClient(GetWeakPtrOnUI());
+      delegate_->SetDelegateClient(this);
   }
 
-  ~Core() override { DCHECK_CURRENTLY_ON(BrowserThread::UI); }
+  ~Core() override {
+    DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+    if (delegate_)
+      delegate_->SetDelegateClient(nullptr);
+  }
 
   base::WeakPtr<Core> GetWeakPtrOnUI() {
     DCHECK_CURRENTLY_ON(BrowserThread::UI);
@@ -46,8 +51,8 @@ class BackgroundFetchDelegateProxy::Core
     DCHECK_CURRENTLY_ON(BrowserThread::UI);
     DCHECK(request);
 
-    // TODO(crbug/757760): This can be nullptr, is if the delegate has shut
-    // down, in which case we need to make sure this is retried when the browser
+    // TODO(crbug/757760): This can be nullptr, if the delegate has shut down,
+    // in which case we need to make sure this is retried when the browser
     // restarts.
     if (!delegate_)
       return;
@@ -108,6 +113,8 @@ class BackgroundFetchDelegateProxy::Core
   void OnDownloadComplete(
       const std::string& guid,
       std::unique_ptr<BackgroundFetchResult> result) override;
+  void OnDownloadFailed(const std::string& guid,
+                        BackgroundFetchDelegate::FailureReason reason) override;
   void OnDownloadStarted(
       const std::string& guid,
       std::unique_ptr<content::BackgroundFetchResponse> response) override;
@@ -140,6 +147,12 @@ void BackgroundFetchDelegateProxy::Core::OnDownloadComplete(
       BrowserThread::IO, FROM_HERE,
       base::BindOnce(&BackgroundFetchDelegateProxy::OnDownloadComplete,
                      io_parent_, guid, std::move(result)));
+}
+
+void BackgroundFetchDelegateProxy::Core::OnDownloadFailed(
+    const std::string& guid,
+    BackgroundFetchDelegate::FailureReason reason) {
+  // TODO(delphick): do something with this
 }
 
 void BackgroundFetchDelegateProxy::Core::OnDownloadStarted(

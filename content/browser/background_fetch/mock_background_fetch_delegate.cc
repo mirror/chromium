@@ -88,7 +88,7 @@ void MockBackgroundFetchDelegate::DownloadUrl(
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,
       base::BindOnce(&BackgroundFetchDelegate::Client::OnDownloadStarted,
-                     client(), guid, std::move(response)));
+                     base::Unretained(client()), guid, std::move(response)));
 
   if (test_response->succeeded_) {
     base::FilePath response_path;
@@ -107,16 +107,17 @@ void MockBackgroundFetchDelegate::DownloadUrl(
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE,
         base::BindOnce(
-            &BackgroundFetchDelegate::Client::OnDownloadComplete, client(),
-            guid,
+            &BackgroundFetchDelegate::Client::OnDownloadComplete,
+            base::Unretained(client()), guid,
             std::make_unique<BackgroundFetchResult>(
                 base::Time::Now(), response_path, test_response->data.size())));
   } else {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE,
         base::BindOnce(
-            &BackgroundFetchDelegate::Client::OnDownloadComplete, client(),
-            guid, std::make_unique<BackgroundFetchResult>(base::Time::Now())));
+            &BackgroundFetchDelegate::Client::OnDownloadComplete,
+            base::Unretained(client()), guid,
+            std::make_unique<BackgroundFetchResult>(base::Time::Now())));
   }
 
   seen_guids_.insert(guid);
