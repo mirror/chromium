@@ -499,8 +499,15 @@ class WebLocalFrame : public WebFrame {
     // Keep the current handle visibility.
     kPreserveHandleVisibility,
   };
+
+  enum SelectionMenuBehavior {
+    kHideSelectionMenu,
+    kShowSelectionMenu,
+  };
+
   virtual void SelectRange(const WebRange&,
-                           HandleVisibilityBehavior = kHideSelectionHandle) = 0;
+                           HandleVisibilityBehavior,
+                           SelectionMenuBehavior) = 0;
 
   virtual WebString RangeAsText(const WebRange&) = 0;
 
