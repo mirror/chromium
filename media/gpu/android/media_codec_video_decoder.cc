@@ -161,13 +161,8 @@ void MediaCodecVideoDecoder::Initialize(const VideoDecoderConfig& config,
 
   decoder_config_ = config;
 
-  if (first_init) {
-    if (!codec_allocator_->StartThread(this)) {
-      LOG(ERROR) << "Unable to start thread";
-      bound_init_cb.Run(false);
-      return;
-    }
-  }
+  if (first_init)
+    codec_allocator_->StartThread(this);
 
 #if BUILDFLAG(USE_PROPRIETARY_CODECS)
   if (config.codec() == kCodecH264)
