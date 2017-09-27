@@ -279,6 +279,23 @@
       "revId": "1b5f85ec4006c74add8a177409e87b08f02c7533",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f1e27320_7c96b8f2",
+        "filename": "extensions/browser/guest_view/web_view/web_view_guest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-09-27T20:49:28Z",
+      "side": 1,
+      "message": "All of these places where we refer to the owner\u0027s WebContents main frame\u0027s process are wrong in theory. Same issue you filed in 769385.\n\nFixing this is not as trivial though, since it requires refactoring tracking the owner WebContents to tracking the owner frame.",
+      "revId": "1b5f85ec4006c74add8a177409e87b08f02c7533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
