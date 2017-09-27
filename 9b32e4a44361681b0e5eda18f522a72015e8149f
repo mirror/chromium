@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e09546a9_01aaff79",
+        "filename": "components/viz/service/display/overlay_strategy_fullscreen.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-09-27T01:25:45Z",
+      "side": 1,
+      "message": "I\u0027d rather have an OverlayStrategyBackgroundColor that can be composed with other strategies than a special case for the fullscreen strategy.",
+      "revId": "9b32e4a44361681b0e5eda18f522a72015e8149f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
