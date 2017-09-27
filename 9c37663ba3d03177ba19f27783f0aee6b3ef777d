@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c476adb2_94c5073d",
+        "filename": "content/common/throttling_url_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-27T17:45:55Z",
+      "side": 1,
+      "message": "Right. But this is just a testing support so I only did what is necessary for existing tests.\n\nIt won\u0027t be hard to add support for multiple requests if future tests need that.\n\n(Please note that this is not the first CL assuming that TestURLLoaderFactory can only handle one request at a time. line 75 also doesn\u0027t hold a single client pointer.)\n\nDo you think this is acceptable for now?",
+      "parentUuid": "2b880061_979aae95",
+      "range": {
+        "startLine": 74,
+        "startChar": 24,
+        "endLine": 74,
+        "endChar": 28
+      },
+      "revId": "9c37663ba3d03177ba19f27783f0aee6b3ef777d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9986e77_b3bd6aa9",
         "filename": "content/common/throttling_url_loader_unittest.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "9c37663ba3d03177ba19f27783f0aee6b3ef777d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b64def25_c9a41e9c",
+        "filename": "content/common/throttling_url_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-27T17:45:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9986e77_b3bd6aa9",
+      "range": {
+        "startLine": 818,
+        "startChar": 20,
+        "endLine": 818,
+        "endChar": 29
+      },
+      "revId": "9c37663ba3d03177ba19f27783f0aee6b3ef777d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
