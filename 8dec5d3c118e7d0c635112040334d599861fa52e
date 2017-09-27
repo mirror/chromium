@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49076755_4272db73",
+        "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-09-27T17:45:00Z",
+      "side": 1,
+      "message": "in constructor above if GetTokenInformation fails then lsa_ will be set to nullptr from class initializer and this if statement will attempt to close nullptr\n\nperhaps initialize lsa_ to INVALID_HANDLE_VALUE earlier?",
+      "range": {
+        "startLine": 119,
+        "startChar": 6,
+        "endLine": 119,
+        "endChar": 10
+      },
+      "revId": "8dec5d3c118e7d0c635112040334d599861fa52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b2af3a2_50035a12",
+        "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-09-27T17:45:00Z",
+      "side": 1,
+      "message": "should this check be above the GetTokenInformation call?",
+      "range": {
+        "startLine": 148,
+        "startChar": 2,
+        "endLine": 148,
+        "endChar": 18
+      },
+      "revId": "8dec5d3c118e7d0c635112040334d599861fa52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
