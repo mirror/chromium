@@ -306,7 +306,11 @@ void MessageListView::OnBoundsAnimatorProgressed(
 void MessageListView::OnBoundsAnimatorDone(views::BoundsAnimator* animator) {
   bool need_update = false;
 
-  if (clear_all_started_) {
+  // It's possible for the delayed task that queues the next animation for
+  // clearing all notifications to be delayed more than we want. In this case,
+  // the BoundsAnimator can finish while a clear all is still happening. So,
+  // explicitly check if |clearing_all_views_| is empty.
+  if (clear_all_started_ && clearing_all_views_.empty()) {
     clear_all_started_ = false;
     // TODO(yoshiki): we shouldn't touch views in OnAllNotificationsCleared().
     // Or rename it to like OnAllNotificationsClearing().
