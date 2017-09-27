@@ -46,6 +46,30 @@
       "revId": "12f33fd7e9618c795c96893a15b433325bde53f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d1b3d0b7_1ccc30fe",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5009,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-27T22:06:15Z",
+      "side": 0,
+      "message": "At first glance, I\u0027m worried about the calls to WebHistoryItem::Target within history_entry.cc, in addition to the uses inside PageState.  We could investigate, but I\u0027m not immediately sure.",
+      "parentUuid": "7de39dc2_a43e2230",
+      "range": {
+        "startLine": 5009,
+        "startChar": 2,
+        "endLine": 5009,
+        "endChar": 66
+      },
+      "revId": "12f33fd7e9618c795c96893a15b433325bde53f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
