@@ -69,6 +69,24 @@
       "revId": "01bd1a825a3a442c9b550e42642f207324d313f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6075f7cf_d1cdc845",
+        "filename": "ui/webui/resources/cr_elements/shared_style_css.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-27T23:37:01Z",
+      "side": 1,
+      "message": "Understood. I guess my point is that the current intermediate step is pretty confusing. It might be helpful to create a doc with what a page will eventually look like?\n\nAnyway, I don\u0027t want to hold up forward progress, this is fine.",
+      "parentUuid": "8cd504df_947fbd62",
+      "revId": "01bd1a825a3a442c9b550e42642f207324d313f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
