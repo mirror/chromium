@@ -52,6 +52,24 @@
       "revId": "9eef8ed0bd8fa4f8de49bddbae62823ac6d46625",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45c75360_7b0cc30e",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-27T04:53:58Z",
+      "side": 1,
+      "message": "Thanks, but this is the Linux package that gets installed to /opt/google/chrome, which does not include headless_shell. Though users can use headless mode with /opt/google/chrome/google-chrome --headless.",
+      "parentUuid": "4670ac22_97106003",
+      "revId": "9eef8ed0bd8fa4f8de49bddbae62823ac6d46625",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
