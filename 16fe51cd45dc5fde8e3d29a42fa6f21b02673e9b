@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e85fbe44_3b8a17d8",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ssl/CaptivePortalTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-09-27T22:30:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1899545d_59af3be7",
+      "range": {
+        "startLine": 81,
+        "startChar": 48,
+        "endLine": 82,
+        "endChar": 55
+      },
+      "revId": "16fe51cd45dc5fde8e3d29a42fa6f21b02673e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a52edd82_a7d8d449",
         "filename": "chrome/browser/ssl/ssl_error_handler.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "16fe51cd45dc5fde8e3d29a42fa6f21b02673e9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be600587_184c9864",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-09-27T22:30:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a52edd82_a7d8d449",
+      "range": {
+        "startLine": 339,
+        "startChar": 24,
+        "endLine": 339,
+        "endChar": 61
+      },
+      "revId": "16fe51cd45dc5fde8e3d29a42fa6f21b02673e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "57c3b61c_5bf28bb2",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-09-27T22:30:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51a091b4_f7aacd5f",
+      "range": {
+        "startLine": 446,
+        "startChar": 4,
+        "endLine": 446,
+        "endChar": 41
+      },
+      "revId": "16fe51cd45dc5fde8e3d29a42fa6f21b02673e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b565e41f_34b171a5",
         "filename": "chrome/browser/ssl/ssl_error_handler.cc",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2017-09-27T08:29:32Z",
       "side": 1,
       "message": "Does this API return true even after you\u0027ve signed in/gotten full connectivity, or does it specifically mean you-are-in-a-captive-portal-and-your-connectivity-is-limited-by-it?",
+      "range": {
+        "startLine": 648,
+        "startChar": 23,
+        "endLine": 648,
+        "endChar": 41
+      },
+      "revId": "16fe51cd45dc5fde8e3d29a42fa6f21b02673e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3af571f9_49d0934c",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-09-27T22:30:32Z",
+      "side": 1,
+      "message": "Ideally once you\u0027ve signed in, Android probes the portal again and this will start returning false. The API ends up checking NET_CAPABILITY_CAPTIVE_PORTAL bit on the current network.\n\nhttps://developer.android.com/reference/android/net/NetworkCapabilities.html#NET_CAPABILITY_CAPTIVE_PORTAL\n\nI\u0027m not sure whether it happens immediately though. It should, if the user used the system captive portal login app. But if they use the Chrome tab to login, it might not. There is a reportNetworkConnectivity() API that hints the system about this. We might be able to use it, but we\u0027ll need to track the login tab. Desktop Chrome already tracks login tabs, but the component that does it isn\u0027t enabled on Android.",
+      "parentUuid": "b565e41f_34b171a5",
       "range": {
         "startLine": 648,
         "startChar": 23,
@@ -128,6 +224,30 @@
       "writtenOn": "2017-09-27T08:29:32Z",
       "side": 1,
       "message": "enabled only on Android?",
+      "range": {
+        "startLine": 860,
+        "startChar": 27,
+        "endLine": 860,
+        "endChar": 44
+      },
+      "revId": "16fe51cd45dc5fde8e3d29a42fa6f21b02673e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a597878_db4649fd",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-09-27T22:30:32Z",
+      "side": 1,
+      "message": "Actually there is no reason this test should only be enabled on Android, so I enabled it for all platforms.",
+      "parentUuid": "58eef9bf_836aafcd",
       "range": {
         "startLine": 860,
         "startChar": 27,
