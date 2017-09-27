@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f19f16c5_12833f8b",
+        "filename": "chrome/browser/vr/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-27T19:50:27Z",
+      "side": 1,
+      "message": "Please make sure this doesn\u0027t break the VR unit tests on Linux.",
+      "revId": "231ca0b3a3fbb9356a0d32569e8fdae6b1567927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76d5712a_0ff36d00",
+        "filename": "chrome/browser/vr/service/vr_device_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-27T19:50:27Z",
+      "side": 1,
+      "message": "Can probably lose half or all of these newlines.",
+      "revId": "231ca0b3a3fbb9356a0d32569e8fdae6b1567927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00e65278_ece24cca",
+        "filename": "chrome/browser/vr/service/vr_service_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-27T19:50:27Z",
+      "side": 1,
+      "message": "Alternatively, as you already have a \u0027Getter for testing\u0027 below, make testable parts protected and have the test expose them through getters in a subclass?  We\u0027ve been good so far at keeping \u0027friend\u0027 out of the picture for existing tests.  Just a suggestion.",
+      "revId": "231ca0b3a3fbb9356a0d32569e8fdae6b1567927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "214d3138_90c52c78",
+        "filename": "chrome/browser/vr/test/run_all_unittests.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-27T19:50:27Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be in Initialize() above?",
+      "revId": "231ca0b3a3fbb9356a0d32569e8fdae6b1567927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

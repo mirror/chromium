@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34589c13_f9ed4325",
+        "filename": "chrome/browser/vr/service/vr_device_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-27T19:50:27Z",
+      "side": 0,
+      "message": "Was this removal intentional?",
+      "revId": "a443dc7ad6b90b585490a96d0259416552f7ac0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
