@@ -4,6 +4,8 @@
 
 #include "ui/base/test/ui_controls_internal_win.h"
 
+#include <cmath>
+
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/location.h"
@@ -309,8 +311,10 @@ bool SendMouseMoveImpl(long screen_x,
 
   int screen_width = ::GetSystemMetrics(SM_CXSCREEN) - 1;
   int screen_height  = ::GetSystemMetrics(SM_CYSCREEN) - 1;
-  LONG pixel_x  = static_cast<LONG>(screen_x * (65535.0f / screen_width));
-  LONG pixel_y = static_cast<LONG>(screen_y * (65535.0f / screen_height));
+  LONG pixel_x =
+      static_cast<LONG>(std::ceil(screen_x * (65535.0 / screen_width)));
+  LONG pixel_y =
+      static_cast<LONG>(std::ceil(screen_y * (65535.0 / screen_height)));
 
   input.type = INPUT_MOUSE;
   input.mi.dwFlags = MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_MOVE;
