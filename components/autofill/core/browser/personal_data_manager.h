@@ -99,18 +99,19 @@ class PersonalDataManager : public KeyedService,
 
   // Scans the given |form| for importable Autofill data. If the form includes
   // sufficient address data for a new profile, it is immediately imported. If
-  // the form includes sufficient credit card data for a new credit card, it is
+  // the form includes sufficient credit card data for a new credit card and
+  // |credit_card_enabled| is set to |true|, it is stored into
+  // |imported_credit_card| so that we can prompt the user whether to save this
+  // data. If the form contains credit card data already present in a local
+  // credit card entry *and* |should_return_local_card| is true, the data is
   // stored into |imported_credit_card| so that we can prompt the user whether
-  // to save this data. If the form contains credit card data already present in
-  // a local credit card entry *and* |should_return_local_card| is true, the
-  // data is stored into |imported_credit_card| so that we can prompt the user
-  // whether to upload it.
-  // |imported_credit_card_matches_masked_server_credit_card| is set to |true|
-  // if the |TypeAndLastFourDigits| in |imported_credit_card| matches the
-  // |TypeAndLastFourDigits| in a saved masked server card. Returns |true| if
-  // sufficient address or credit card data was found.
+  // to upload it. |imported_credit_card_matches_masked_server_credit_card| is
+  // set to |true| if the |TypeAndLastFourDigits| in |imported_credit_card|
+  // matches the |TypeAndLastFourDigits| in a saved masked server card. Returns
+  // |true| if sufficient address or credit card data was found.
   bool ImportFormData(
       const FormStructure& form,
+      bool credit_card_enabled,
       bool should_return_local_card,
       std::unique_ptr<CreditCard>* imported_credit_card,
       bool* imported_credit_card_matches_masked_server_credit_card);
@@ -368,6 +369,8 @@ class PersonalDataManager : public KeyedService,
   FRIEND_TEST_ALL_PREFIXES(
       PersonalDataManagerTest,
       DeleteDisusedCreditCards_OnlyDeleteExpiredDisusedLocalCards);
+  FRIEND_TEST_ALL_PREFIXES(PersonalDataManagerTest,
+                           GetCreditCardSuggestions_CreditCardAutofillDisabled);
 
   friend class autofill::AutofillInteractiveTest;
   friend class autofill::AutofillTest;
