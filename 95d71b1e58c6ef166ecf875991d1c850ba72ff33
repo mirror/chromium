@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba97320f_995d2429",
+        "filename": "chrome/android/java/res/values-v17/styles.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-27T23:47:46Z",
+      "side": 1,
+      "message": "lets extend BlackDisabledText2 here and get rid of this text color and size.  646464 isn\u0027t a gray that we want to keep using according to hannahs@",
+      "range": {
+        "startLine": 343,
+        "startChar": 17,
+        "endLine": 343,
+        "endChar": 38
+      },
+      "revId": "95d71b1e58c6ef166ecf875991d1c850ba72ff33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63329d21_4e507bd0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/ChromeHomePromoDialog.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-27T23:47:46Z",
+      "side": 1,
+      "message": "do we need this since we\u0027re not doing anything inside of the constructor?",
+      "range": {
+        "startLine": 36,
+        "startChar": 14,
+        "endLine": 36,
+        "endChar": 22
+      },
+      "revId": "95d71b1e58c6ef166ecf875991d1c850ba72ff33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
