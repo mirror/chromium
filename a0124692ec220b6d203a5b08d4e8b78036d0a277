@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "adf8a0dc_a4514803",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/ChromeHomePromoDialog.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-27T22:24:30Z",
+      "side": 1,
+      "message": "s/on/one",
+      "range": {
+        "startLine": 91,
+        "startChar": 85,
+        "endLine": 91,
+        "endChar": 86
+      },
+      "revId": "a0124692ec220b6d203a5b08d4e8b78036d0a277",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
