@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "e5846f33_0a9392b2",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_auth_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-27T16:41:27Z",
+      "side": 1,
+      "message": "Why is this unknown error? This is a success case.",
+      "range": {
+        "startLine": 290,
+        "startChar": 52,
+        "endLine": 290,
+        "endChar": 65
+      },
+      "revId": "33894763055962deea208162dbff9fc86b77ec7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6461612_dfadf1a4",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_auth_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-27T16:41:27Z",
+      "side": 1,
+      "message": "Same here.",
+      "range": {
+        "startLine": 341,
+        "startChar": 61,
+        "endLine": 341,
+        "endChar": 74
+      },
+      "revId": "33894763055962deea208162dbff9fc86b77ec7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "665e0863_1292756f",
         "filename": "components/arc/common/auth.mojom",
         "patchSetId": 1
