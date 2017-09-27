@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a87468e8_17d80277",
+        "filename": "components/viz/service/frame_sinks/surface_references_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-27T02:40:30Z",
+      "side": 1,
+      "message": "The |name| convention is used for variables, this would normally just be GetFrameSinkDebugLabel().",
+      "range": {
+        "startLine": 166,
+        "startChar": 21,
+        "endLine": 166,
+        "endChar": 45
+      },
+      "revId": "359047c867222a9d976b4baf28824e8aada1db4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc116250_d4c9643c",
+        "filename": "components/viz/service/frame_sinks/surface_references_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-27T02:40:30Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 167,
+        "startChar": 18,
+        "endLine": 167,
+        "endChar": 42
+      },
+      "revId": "359047c867222a9d976b4baf28824e8aada1db4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
