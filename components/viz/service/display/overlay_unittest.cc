@@ -491,6 +491,8 @@ class OverlayTest : public testing::Test {
     resource_provider_ =
         cc::FakeResourceProvider::Create<cc::DisplayResourceProvider>(
             provider_.get(), shared_bitmap_manager_.get());
+    local_resource_provider_ =
+        cc::FakeResourceProvider::Create(provider_.get());
 
     child_provider_ = cc::TestContextProvider::Create();
     child_provider_->BindToCurrentThread();
@@ -508,6 +510,7 @@ class OverlayTest : public testing::Test {
   cc::FakeOutputSurfaceClient client_;
   std::unique_ptr<SharedBitmapManager> shared_bitmap_manager_;
   std::unique_ptr<cc::DisplayResourceProvider> resource_provider_;
+  std::unique_ptr<cc::LocalResourceProvider> local_resource_provider_;
   scoped_refptr<cc::TestContextProvider> child_provider_;
   std::unique_ptr<cc::LayerTreeResourceProvider> child_resource_provider_;
   std::unique_ptr<OverlayProcessor> overlay_processor_;
@@ -2305,8 +2308,13 @@ class OverlayInfoRendererGL : public GLRenderer {
  public:
   OverlayInfoRendererGL(const RendererSettings* settings,
                         OutputSurface* output_surface,
-                        cc::DisplayResourceProvider* resource_provider)
-      : GLRenderer(settings, output_surface, resource_provider, NULL),
+                        cc::DisplayResourceProvider* resource_provider,
+                        cc::LocalResourceProvider* local_resource_provider)
+      : GLRenderer(settings,
+                   output_surface,
+                   resource_provider,
+                   local_resource_provider,
+                   NULL),
         expect_overlays_(false) {}
 
   MOCK_METHOD2(DoDrawQuad,
@@ -2360,6 +2368,8 @@ class GLRendererWithOverlaysTest : public testing::Test {
     resource_provider_ =
         cc::FakeResourceProvider::Create<cc::DisplayResourceProvider>(
             provider_.get(), nullptr);
+    local_resource_provider_ =
+        cc::FakeResourceProvider::Create(provider_.get());
 
     provider_->support()->SetScheduleOverlayPlaneCallback(base::Bind(
         &MockOverlayScheduler::Schedule, base::Unretained(&scheduler_)));
@@ -2376,7 +2386,8 @@ class GLRendererWithOverlaysTest : public testing::Test {
       output_surface_->SetOverlayCandidateValidator(new SingleOverlayValidator);
 
     renderer_ = std::make_unique<OverlayInfoRendererGL>(
-        &settings_, output_surface_.get(), resource_provider_.get());
+        &settings_, output_surface_.get(), resource_provider_.get(),
+        local_resource_provider_.get());
     renderer_->Initialize();
     renderer_->SetVisible(true);
   }
@@ -2407,6 +2418,7 @@ class GLRendererWithOverlaysTest : public testing::Test {
   cc::FakeOutputSurfaceClient output_surface_client_;
   std::unique_ptr<OutputSurfaceType> output_surface_;
   std::unique_ptr<cc::DisplayResourceProvider> resource_provider_;
+  std::unique_ptr<cc::LocalResourceProvider> local_resource_provider_;
   std::unique_ptr<OverlayInfoRendererGL> renderer_;
   scoped_refptr<cc::TestContextProvider> provider_;
   scoped_refptr<cc::TestContextProvider> child_provider_;
