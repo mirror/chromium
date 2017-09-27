@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7898165f_cc9a7cd7",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2783,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-09-27T22:21:13Z",
+      "side": 1,
+      "message": "kMaxJournalCleanRequests as now it\u0027s public for testing",
+      "parentUuid": "36d2b697_c954b900",
+      "revId": "dc2e0d7f2e55ee0537dfe40e86596ad072f172f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a32e736c_aea32058",
         "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-15T04:08:59Z",
       "side": 1,
       "message": "nit: kMaxRequestPendingTime / kMaxBatchWindowSize?",
+      "revId": "dc2e0d7f2e55ee0537dfe40e86596ad072f172f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05f84e27_7c17623b",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2786,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-09-27T22:21:13Z",
+      "side": 1,
+      "message": "kMaxJournalCleaningWindowTime?",
+      "parentUuid": "a32e736c_aea32058",
       "revId": "dc2e0d7f2e55ee0537dfe40e86596ad072f172f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2a62af15_6cb0681f",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2789,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-09-27T22:21:13Z",
+      "side": 1,
+      "message": "kInitialJournalCleaningWindowTime?",
+      "parentUuid": "60078514_de9a6a50",
+      "revId": "dc2e0d7f2e55ee0537dfe40e86596ad072f172f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "395b94e9_f28eda19",
         "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
         "patchSetId": 10
@@ -67,6 +121,24 @@
       "revId": "dc2e0d7f2e55ee0537dfe40e86596ad072f172f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40d55366_f4392aab",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2805,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-09-27T22:21:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "395b94e9_f28eda19",
+      "revId": "dc2e0d7f2e55ee0537dfe40e86596ad072f172f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "43ffe16c_48bca2aa",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2811,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-09-27T22:21:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7604ff1_27200843",
+      "revId": "dc2e0d7f2e55ee0537dfe40e86596ad072f172f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "533a0eb5_df597023",
         "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
         "patchSetId": 10
@@ -98,6 +188,24 @@
       "writtenOn": "2017-09-15T04:08:59Z",
       "side": 1,
       "message": "nit: WillCommitTransaction / TransactionStartedCommitting?",
+      "revId": "dc2e0d7f2e55ee0537dfe40e86596ad072f172f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f07fb5da_b63a8515",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2987,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-09-27T22:21:13Z",
+      "side": 1,
+      "message": "mmmm I\u0027d like the name to describe what is happening until we want to use it for something else.",
+      "parentUuid": "533a0eb5_df597023",
       "revId": "dc2e0d7f2e55ee0537dfe40e86596ad072f172f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "c304b8f2_dc73d89c",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2991,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-09-27T22:21:13Z",
+      "side": 1,
+      "message": "same, I\u0027d like to keep the name descriptive. If we need to make this a formal hook, then we rename it.",
+      "parentUuid": "3d74d086_95a9e783",
+      "revId": "dc2e0d7f2e55ee0537dfe40e86596ad072f172f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cedb2f2a_6b4b4f8b",
         "filename": "content/browser/indexed_db/indexed_db_backing_store.h",
         "patchSetId": 10
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "6fed1173_e31b64d3",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-09-27T22:21:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cedb2f2a_6b4b4f8b",
+      "revId": "dc2e0d7f2e55ee0537dfe40e86596ad072f172f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b5e3b38_90beb1c3",
         "filename": "content/browser/indexed_db/indexed_db_browsertest.cc",
         "patchSetId": 10
@@ -149,6 +293,24 @@
       "writtenOn": "2017-09-15T04:08:59Z",
       "side": 1,
       "message": "Hm, does the browser test run under file://?\n\nWhen I was doing manual tests, the quota reporting doesn\u0027t work for file:// -- I got 0/0. That\u0027s why I had an HTTP server in the bug repro steps. Can you check that the quota output is non-zero? (if not, we could just delete the quota logging from the test)",
+      "revId": "dc2e0d7f2e55ee0537dfe40e86596ad072f172f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8336e1a_bb162384",
+        "filename": "content/browser/indexed_db/indexed_db_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-09-27T22:21:13Z",
+      "side": 1,
+      "message": "too flaky - just modified a unittest to test.",
+      "parentUuid": "8b5e3b38_90beb1c3",
       "revId": "dc2e0d7f2e55ee0537dfe40e86596ad072f172f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +351,24 @@
     },
     {
       "key": {
+        "uuid": "8c8feecf_5d3ee097",
+        "filename": "content/browser/indexed_db/indexed_db_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-09-27T22:21:13Z",
+      "side": 1,
+      "message": "no, it would have forced a cleanup anyways. Just not working, can\u0027t wait on js / gc, etc.",
+      "parentUuid": "73df24f3_76b91c96",
+      "revId": "dc2e0d7f2e55ee0537dfe40e86596ad072f172f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c2197aaa_d1bff623",
         "filename": "content/browser/indexed_db/indexed_db_factory_impl.cc",
         "patchSetId": 10
@@ -203,6 +383,24 @@
       "revId": "dc2e0d7f2e55ee0537dfe40e86596ad072f172f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3f6a9e2_6b3fbfe3",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-09-27T22:21:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2197aaa_d1bff623",
+      "revId": "dc2e0d7f2e55ee0537dfe40e86596ad072f172f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
