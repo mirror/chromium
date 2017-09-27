@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "904fec0b_56412877",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-27T21:58:55Z",
+      "side": 1,
+      "message": "Ah, I meant to write transform_origin.OffsetFromOrigin(), which didn\u0027t exist.",
+      "parentUuid": "19e65645_341d721e",
+      "range": {
+        "startLine": 710,
+        "startChar": 58,
+        "endLine": 710,
+        "endChar": 70
+      },
+      "revId": "3b065b6aef0dbcf6db0621df33c0bee8b468a02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54d57cb3_e23a37b6",
         "filename": "cc/trees/draw_property_utils.cc",
         "patchSetId": 4
@@ -36,6 +60,24 @@
       "writtenOn": "2017-09-27T17:27:57Z",
       "side": 1,
       "message": "Do you also need to set needs_local_transform_update on the root node here?",
+      "revId": "3b065b6aef0dbcf6db0621df33c0bee8b468a02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e16a5a9_0788713c",
+        "filename": "cc/trees/draw_property_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-27T21:58:55Z",
+      "side": 1,
+      "message": "SetRootTransformsAndScales() already invokes set_needs_update(true). The root node never computes to_parent anyway, so I guess it\u0027s okay?",
+      "parentUuid": "54d57cb3_e23a37b6",
       "revId": "3b065b6aef0dbcf6db0621df33c0bee8b468a02e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "c4461757_0806482f",
+        "filename": "cc/trees/transform_node.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-27T21:58:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3dd1a50_5389ba57",
+      "revId": "3b065b6aef0dbcf6db0621df33c0bee8b468a02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d2ad017_9b77c324",
         "filename": "cc/trees/transform_node.h",
         "patchSetId": 4
@@ -70,6 +130,41 @@
       "writtenOn": "2017-09-27T17:27:57Z",
       "side": 1,
       "message": "This seems like an input too.",
+      "revId": "3b065b6aef0dbcf6db0621df33c0bee8b468a02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be0b4181_145fb48d",
+        "filename": "cc/trees/transform_node.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-27T21:58:55Z",
+      "side": 1,
+      "message": "Good catch! Done.",
+      "parentUuid": "7d2ad017_9b77c324",
+      "revId": "3b065b6aef0dbcf6db0621df33c0bee8b468a02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "226ec43a_907d2bb2",
+        "filename": "cc/trees/transform_node.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-27T21:58:55Z",
+      "side": 1,
+      "message": "Just realized although this can be mutated by impl-thread, it is not a derived value. Moved.",
       "revId": "3b065b6aef0dbcf6db0621df33c0bee8b468a02e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
