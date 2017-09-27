@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56f144e7_87736ad5",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/bookmarks/BookmarkPersonalizedSigninPromoTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-27T12:56:13Z",
+      "side": 1,
+      "message": "Could you initialize this where the member is declared, and then make it final?",
+      "range": {
+        "startLine": 79,
+        "startChar": 8,
+        "endLine": 79,
+        "endChar": 31
+      },
+      "revId": "34e8e5631460d49e1490dd7e6aa286494172688b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a60f71a1_630783d4",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/bookmarks/BookmarkPersonalizedSigninPromoTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-27T12:56:13Z",
+      "side": 1,
+      "message": "If you are verifying individual UI elements, would it be easier to just use a RenderTest?",
+      "range": {
+        "startLine": 117,
+        "startChar": 12,
+        "endLine": 122,
+        "endChar": 100
+      },
+      "revId": "34e8e5631460d49e1490dd7e6aa286494172688b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e151228_54d5ca4b",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/bookmarks/BookmarkPersonalizedSigninPromoTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-27T12:56:13Z",
+      "side": 1,
+      "message": "Can you make this class static?",
+      "range": {
+        "startLine": 260,
+        "startChar": 12,
+        "endLine": 260,
+        "endChar": 17
+      },
+      "revId": "34e8e5631460d49e1490dd7e6aa286494172688b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04129ea1_7a7110d5",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/bookmarks/BookmarkPersonalizedSigninPromoTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-27T12:56:13Z",
+      "side": 1,
+      "message": "Make the constructor public?",
+      "range": {
+        "startLine": 263,
+        "startChar": 8,
+        "endLine": 263,
+        "endChar": 28
+      },
+      "revId": "34e8e5631460d49e1490dd7e6aa286494172688b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2cec936_17ed144d",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/bookmarks/BookmarkPersonalizedSigninPromoTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-27T12:56:13Z",
+      "side": 1,
+      "message": "It\u0027s okay to leave out the throws declaration if your override never throws an exception.",
+      "range": {
+        "startLine": 273,
+        "startChar": 27,
+        "endLine": 273,
+        "endChar": 46
+      },
+      "revId": "34e8e5631460d49e1490dd7e6aa286494172688b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
