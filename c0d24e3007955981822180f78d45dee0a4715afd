@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1849dd9f_e9bf101f",
+        "filename": "content/common/input/input_handler.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-27T00:05:23Z",
+      "side": 1,
+      "message": "Nit: just call this kHide and kShow, it\u0027ll be less verbose.",
+      "range": {
+        "startLine": 152,
+        "startChar": 2,
+        "endLine": 152,
+        "endChar": 20
+      },
+      "revId": "c0d24e3007955981822180f78d45dee0a4715afd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
