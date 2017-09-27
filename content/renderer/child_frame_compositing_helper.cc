@@ -271,6 +271,7 @@ void ChildFrameCompositingHelper::SetPrimarySurfaceInfo(
 
   surface_layer_ = cc::SurfaceLayer::Create(surface_reference_factory_);
   surface_layer_->SetMasksToBounds(true);
+  surface_layer_->SetDefaultBackgroundColor(SK_ColorTRANSPARENT);
 
   viz::SurfaceInfo modified_surface_info(surface_info.id(), scale_factor,
                                          surface_info.size_in_pixels());

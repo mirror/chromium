@@ -143,20 +143,6 @@ void BrowserPlugin::OnSetChildFrameSurface(
     compositing_helper_.reset(
         ChildFrameCompositingHelper::CreateForBrowserPlugin(
             weak_ptr_factory_.GetWeakPtr()));
-    if (enable_surface_synchronization_) {
-      // We wait until there is a single CompositorFrame guaranteed to be
-      // available and ready for display in the display compositor before using
-      // surface synchronization. This guarantees that we will have something to
-      // display when the compositor goes to produce a display frame.
-      //
-      // Once there's an available fallback surface that can be employed, then
-      // the primary surface is updated as soon as the frame rect changes.
-      //
-      // The compositor will attempt to composite the primary surface within a
-      // give deadline (4 frames is the default). If the primary surface isn't
-      // available for four frames, then the fallback surface will be used.
-      compositing_helper_->SetPrimarySurfaceInfo(surface_info);
-    }
   }
 
   if (!enable_surface_synchronization_)
@@ -327,8 +313,7 @@ void BrowserPlugin::ViewRectsChanged(const gfx::Rect& view_rect) {
       !view_rect_ || view_rect_->size() != view_rect.size();
   if (rect_size_changed || !local_surface_id_.is_valid()) {
     local_surface_id_ = local_surface_id_allocator_.GenerateId();
-    if (compositing_helper_ && enable_surface_synchronization_ &&
-        frame_sink_id_.is_valid()) {
+    if (enable_surface_synchronization_ && frame_sink_id_.is_valid()) {
       RenderWidget* render_widget =
           RenderFrameImpl::FromWebFrame(Container()->GetDocument().GetFrame())
               ->GetRenderWidget();
@@ -337,6 +322,11 @@ void BrowserPlugin::ViewRectsChanged(const gfx::Rect& view_rect) {
           viz::SurfaceId(frame_sink_id_, local_surface_id_),
           device_scale_factor,
           gfx::ScaleToCeiledSize(view_rect.size(), device_scale_factor));
+      if (!compositing_helper_) {
+        compositing_helper_.reset(
+            ChildFrameCompositingHelper::CreateForBrowserPlugin(
+                weak_ptr_factory_.GetWeakPtr()));
+      }
       compositing_helper_->SetPrimarySurfaceInfo(surface_info);
     }
   }
