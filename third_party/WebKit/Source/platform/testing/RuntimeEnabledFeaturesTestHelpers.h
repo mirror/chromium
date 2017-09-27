@@ -60,6 +60,10 @@ typedef ScopedRuntimeEnabledFeatureForTest<
     RuntimeEnabledFeatures::MojoBlobsEnabled,
     RuntimeEnabledFeatures::SetMojoBlobsEnabled>
     ScopedMojoBlobsForTest;
+typedef ScopedRuntimeEnabledFeatureForTest<
+    RuntimeEnabledFeatures::TurnOff2DAndOpacityCompositorAnimationsEnabled,
+    RuntimeEnabledFeatures::SetTurnOff2DAndOpacityCompositorAnimationsEnabled>
+    ScopedTurnOff2DAndOpacityCompositorAnimationForTest;
 
 }  // namespace blink
 
