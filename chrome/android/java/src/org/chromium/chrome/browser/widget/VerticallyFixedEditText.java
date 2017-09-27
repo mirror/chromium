@@ -4,9 +4,13 @@
 
 package org.chromium.chrome.browser.widget;
 
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Build;
 import android.support.v7.widget.AppCompatEditText;
 import android.util.AttributeSet;
+import android.view.textclassifier.TextClassifier;
 import android.widget.EditText;
 
 /**
@@ -17,6 +21,8 @@ public class VerticallyFixedEditText extends AppCompatEditText {
 
     public VerticallyFixedEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
+
+        disableSmartSelectTextClassifier();
     }
 
     private boolean mBringingPointIntoView;
@@ -38,4 +44,13 @@ public class VerticallyFixedEditText extends AppCompatEditText {
         super.scrollTo(x, mBringingPointIntoView ? y : getScrollY());
     }
 
+    /**
+     * Disables the Smart Select {@link TextClassifier} for this {@link EditText} instance.
+     */
+    @SuppressLint("WrongConstant")
+    @TargetApi(Build.VERSION_CODES.O)
+    private void disableSmartSelectTextClassifier() {
+        // Disable Smart Select.
+        setTextClassifier(TextClassifier.NO_OP);
+    }
 }
