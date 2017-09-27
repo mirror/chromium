@@ -46,6 +46,23 @@
       "revId": "f9e592ef5e3c526fde21b2eb1171ec226a8accdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76f328f0_df2ae02f",
+        "filename": "chrome/browser/ssl/security_state_tab_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-09-27T00:48:42Z",
+      "side": 1,
+      "message": "Added a comment clarifying how this histogram is used.",
+      "revId": "f9e592ef5e3c526fde21b2eb1171ec226a8accdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
