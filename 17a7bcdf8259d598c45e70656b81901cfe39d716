@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00ea54b6_1ccb1c21",
+        "filename": "chrome/browser/ui/views/harmony/layout_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-27T20:09:40Z",
+      "side": 1,
+      "message": "Delete this final sentence of the old comment, since it\u0027s not really true (it\u0027s not going to pass on Windows 7 \"either way\"). Put the new comment in the same \"paragraph\" as the old one too.",
+      "range": {
+        "startLine": 43,
+        "startChar": 31,
+        "endLine": 43,
+        "endChar": 68
+      },
+      "revId": "17a7bcdf8259d598c45e70656b81901cfe39d716",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
