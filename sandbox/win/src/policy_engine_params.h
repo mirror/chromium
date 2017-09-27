@@ -173,7 +173,7 @@ ParameterSet ParamPickerMake(T& parameter) {
 };
 
 struct CountedParameterSetBase {
-  int count;
+  size_t count;
   ParameterSet parameters[1];
 };
 
