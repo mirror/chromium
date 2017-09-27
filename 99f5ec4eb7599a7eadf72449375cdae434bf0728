@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f1ccb7a_1fe5f9c8",
+        "filename": "third_party/WebKit/Source/platform/exported/WebHTTPHeaderMap.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-27T00:47:56Z",
+      "side": 0,
+      "message": "We should add |#include \u003cmemory\u003e| instead.\nThis comment is applied to all of files in this CL.",
+      "revId": "99f5ec4eb7599a7eadf72449375cdae434bf0728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
