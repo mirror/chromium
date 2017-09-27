@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "261891f6_0fb1bfab",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-27T03:05:46Z",
+      "side": 1,
+      "message": "this is not recursive. call AddDeferredPaintRequestRecursive(child) here instead?",
+      "revId": "a3f911b6b04018b1062cc2a34a40958a04ef507f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3abb8e87_062aa4ca",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-27T03:05:46Z",
+      "side": 1,
+      "message": "RemoveDeferredPaintRequestRecursive(child)?",
+      "revId": "a3f911b6b04018b1062cc2a34a40958a04ef507f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "773a3553_e56acb78",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-27T03:05:46Z",
+      "side": 0,
+      "message": "a bit surprising that this is removed as part of this patch. consider landing it as a separate change",
+      "revId": "524a99e5ca3aa7df42d743db73fee483f624c1e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
