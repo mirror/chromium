@@ -361,6 +361,24 @@
     },
     {
       "key": {
+        "uuid": "685b6281_6085af87",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-27T21:18:07Z",
+      "side": 1,
+      "message": "Okay, I am fine with doing the update only for ARTICLES.\n\nI\u0027ve spent quite some time thinking about the status checks and I believe being silent if the category status is not AVAILABLE is the best thing to do (without heavier refactoring).\n\nI do not want to return early from RefetchWhileDisplaying because I want to initiate the fetch even if the status is INITIALIZING, etc. This is anyway only a wrapper around Fetch that will delay the fetch if the provider is not ready.\n\nI would really like to land the CL before the weekend so the feature gets maximum exposure before BP. I do not feel comfortable changing the error handling at this stage.",
+      "parentUuid": "20a7ba97_82d6a5c6",
+      "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f045b0e6_177f1264",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 8
@@ -393,6 +411,24 @@
       "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c6d0f24_c434732e",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-27T21:18:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6dfae627_1c23f22b",
+      "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
