@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "81938379_40e37c32",
+        "filename": "chrome/browser/resources/settings/device_page/display.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-27T23:18:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "203bc6d3_89ea9d2b",
+      "revId": "01bd1a825a3a442c9b550e42642f207324d313f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96235ce2_024ca0fe",
         "filename": "ui/webui/resources/cr_elements/shared_style_css.html",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-27T21:40:43Z",
       "side": 1,
       "message": "FWIW, while I suggested moving this to \u003cbutton\u003e (and still think that\u0027s a good idea), it does now create the awkard situation where a \u003csettings-row\u003e defaults to having a top border (overridable with \u0027start\u0027 or \u0027continue\u0027), but \u003cbutton is\u003dcr-link-row\u003e defaults to no top border (orverridable with \u0027hr\u0027).\n\nMaybe we should have a settings specific rule for button[is\u003dcr-link-row]:not(.continue) to give it a border? (same with .start).\n\n(We can leave \u0027hr\u0027 for places where it is easier to insert a spearator div) like linke 67 of appearance_page.html).\n\nWDYT?",
+      "revId": "01bd1a825a3a442c9b550e42642f207324d313f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cd504df_947fbd62",
+        "filename": "ui/webui/resources/cr_elements/shared_style_css.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-27T23:18:34Z",
+      "side": 1,
+      "message": "Ah, I should have mentioned: I\u0027m migrating the row styling out of the controls like cr-link-row. I\u0027ve also been migrating setting-box rows to controls. The end-goal being clickable rows are controls; controls are not styled as rows by default (but can be styled by the UI holding the control).\n\nIn the interim, the border is done two different ways.\n\nI\u0027m totally open to discussing whether controls should default to row styling or not.",
+      "parentUuid": "96235ce2_024ca0fe",
       "revId": "01bd1a825a3a442c9b550e42642f207324d313f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
