@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<style>
+  div.target {
+    display: inline-block;
+    overflow: hidden;
+  }
+  div.target:after {
+    display: inline-block;
+    content: url(../css3/background/resources/circle.png);
+    will-change: transform;
+  }
+</style>
+<script src='../resources/testharness.js'></script>
+<script src='../resources/testharnessreport.js'></script>
+<script>
+  var test = async_test('Verify we do not assert when touching an image used with psuedo after');
+
+  var handlerCount = 0;
+
+  var handler = function(event) {
+    assert_equals(event.touches.length, 1);
+    handlerCount++;
+  };
+
+  var finish = function(event) {
+    assert_equals(handlerCount, 1);
+    test.done();
+  }
+
+  var runTest = function() {
+    assert_not_equals(window.eventSender, null,
+                      'This test requires window.eventSender');
+
+    eventSender.addTouchPoint(188, 150);
+    if (eventSender.setTouchPointRadius)
+      eventSender.setTouchPointRadius(20, 20);
+    eventSender.touchStart();
+    eventSender.releaseTouchPoint(0);
+    eventSender.touchEnd();
+
+    eventSender.clearTouchPoints();
+  }
+
+  test.step(function() {
+    document.addEventListener(
+        "DOMContentLoaded",
+        runTest);
+    document.addEventListener('touchstart', handler);
+    document.addEventListener('touchend', finish);
+  });
+</script>
+<body>
+<div class="target"></div>
+</body>
