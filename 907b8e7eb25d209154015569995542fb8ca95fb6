@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "43ec658c_77b33532",
+        "filename": "ui/aura/window.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-27T17:07:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f7c813b_97846dc2",
+      "revId": "907b8e7eb25d209154015569995542fb8ca95fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8751e39a_2da60ae6",
         "filename": "ui/aura/window_occlusion_tracker.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "907b8e7eb25d209154015569995542fb8ca95fb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16d87617_8586a48c",
+        "filename": "ui/aura/window_occlusion_tracker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-27T17:07:14Z",
+      "side": 1,
+      "message": "Observing all changes is still useful to determine if it is useful to recompute window occlusion states in the destructor of ScopedNoWindowOcclusionComputations.",
+      "parentUuid": "8751e39a_2da60ae6",
+      "revId": "907b8e7eb25d209154015569995542fb8ca95fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
