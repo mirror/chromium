@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67016b33_d0172b93",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-09-27T15:10:49Z",
+      "side": 1,
+      "message": "Do we need to call CanStartDataCollection here, or can we just populate the resource and then call StartCollectingThreatDetails? StartCollecting will check CanStart as a first step, so the extra call is redundant. Unless populating the UnsafeResource is heavy-enough weight to skip.",
+      "range": {
+        "startLine": 277,
+        "startChar": 24,
+        "endLine": 277,
+        "endChar": 46
+      },
+      "revId": "f921dab9cfe2975e5a22262caeb893ea71f5df23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1537c4e_55168251",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-09-27T15:10:49Z",
+      "side": 1,
+      "message": "StartCollecting may return false indicating that no collection was started. If you don\u0027t care about the result maybe add a comment. Typically you can avoid calling FinishCollecting below if StartCollecting returned false.",
+      "revId": "f921dab9cfe2975e5a22262caeb893ea71f5df23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f05dd3d_85c16549",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-09-27T15:10:49Z",
+      "side": 1,
+      "message": "Similar to above, maybe add a comment about why we don\u0027t care whether collection was started successfully",
+      "revId": "f921dab9cfe2975e5a22262caeb893ea71f5df23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "987a7ff3_3d712b7e",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-09-27T15:10:49Z",
+      "side": 1,
+      "message": "Can you use TriggerManager::GetSBErrorDisplayOptions instead of re-implementing here?",
+      "revId": "f921dab9cfe2975e5a22262caeb893ea71f5df23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6661a2e4_63cd6933",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-09-27T15:10:49Z",
+      "side": 1,
+      "message": "nit (since this will fall to me): seems like this is the same as the mock from ad_sampler_trigger_unittest, right? It should probably be refactored into its own file for sharing. Would you mind logging a bug, assigning to me, and adding a TODO here?",
+      "revId": "f921dab9cfe2975e5a22262caeb893ea71f5df23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b9b3d55_a2a9cece",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-09-27T15:10:49Z",
+      "side": 1,
+      "message": "nit: just thinking out loud - the opt-in state and incognito permutations are covered in trigger_manager_unittest. Extra coverage never hurts but I wonder if the added redundancy is worth it (especially if we get into a habit of doing it for each new trigger type). Thoughts?",
+      "revId": "f921dab9cfe2975e5a22262caeb893ea71f5df23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
