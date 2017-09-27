@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0d602b13_bf300734",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-09-27T22:41:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1226db9a_42d4fc64",
+      "range": {
+        "startLine": 340,
+        "startChar": 26,
+        "endLine": 340,
+        "endChar": 45
+      },
+      "revId": "259ffee2506023ca7b0610391d67e64b93833332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4d18b39_cc3693e9",
         "filename": "ui/app_list/views/app_list_view_unittest.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-27T21:12:42Z",
       "side": 1,
       "message": "Why do we need \"-1\" here?",
+      "range": {
+        "startLine": 483,
+        "startChar": 68,
+        "endLine": 483,
+        "endChar": 71
+      },
+      "revId": "259ffee2506023ca7b0610391d67e64b93833332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5815ebf_eb9075f3",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-09-27T22:41:57Z",
+      "side": 1,
+      "message": "Originally, test flow for forward: 1-\u003e2-\u003e3-\u003eSearch box.\nFor backward: 3-\u003e2-\u003e1-\u003esearch box.\nNow, I added search box to both front and back, so I could just reverse the list without minus 1.",
+      "parentUuid": "a4d18b39_cc3693e9",
       "range": {
         "startLine": 483,
         "startChar": 68,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5e80453e_70d8e5b6",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 974,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-09-27T22:41:57Z",
+      "side": 1,
+      "message": "Yes, that\u0027s better, done.",
+      "parentUuid": "0c594950_f9aeddb9",
+      "range": {
+        "startLine": 974,
+        "startChar": 7,
+        "endLine": 974,
+        "endChar": 29
+      },
+      "revId": "259ffee2506023ca7b0610391d67e64b93833332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f21ac11_4a357229",
         "filename": "ui/app_list/views/apps_grid_view.cc",
         "patchSetId": 4
@@ -85,6 +157,24 @@
       "revId": "259ffee2506023ca7b0610391d67e64b93833332",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bca4bb3_70f7da40",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 978,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-09-27T22:41:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f21ac11_4a357229",
+      "revId": "259ffee2506023ca7b0610391d67e64b93833332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "c60fb87f_71ea7e67",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 996,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-09-27T22:41:57Z",
+      "side": 1,
+      "message": "Yes, we always offset such value. Removed the mentioned comment.",
+      "parentUuid": "068f2996_e8fc7a43",
+      "range": {
+        "startLine": 995,
+        "startChar": 76,
+        "endLine": 996,
+        "endChar": 44
+      },
+      "revId": "259ffee2506023ca7b0610391d67e64b93833332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "697821a3_55ce8fb4",
         "filename": "ui/app_list/views/search_box_view.cc",
         "patchSetId": 4
@@ -125,6 +239,24 @@
       "revId": "259ffee2506023ca7b0610391d67e64b93833332",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0370e87c_e82a9bb3",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-09-27T22:41:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "697821a3_55ce8fb4",
+      "revId": "259ffee2506023ca7b0610391d67e64b93833332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
