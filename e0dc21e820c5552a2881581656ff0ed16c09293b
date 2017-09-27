@@ -19,6 +19,47 @@
     },
     {
       "key": {
+        "uuid": "35b50454_333f9d62",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 7
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-09-27T20:17:34Z",
+      "side": 1,
+      "message": "This is not from my CL, I had merge conflicts and so this is from another previous CL I will double check tomorrow, but the only new string I need is on line 334",
+      "parentUuid": "6b581426_61a2d537",
+      "revId": "e0dc21e820c5552a2881581656ff0ed16c09293b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f93342e_89239ee1",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 7
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-09-27T20:17:34Z",
+      "side": 1,
+      "message": "Yup this is on the designs UX team provided :)",
+      "range": {
+        "startLine": 334,
+        "startChar": 19,
+        "endLine": 334,
+        "endChar": 61
+      },
+      "revId": "e0dc21e820c5552a2881581656ff0ed16c09293b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d6331f0_fa2a1abe",
         "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
         "patchSetId": 7
@@ -33,6 +74,24 @@
       "revId": "e0dc21e820c5552a2881581656ff0ed16c09293b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "811c7b7d_a4df74f0",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-09-27T20:17:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d6331f0_fa2a1abe",
+      "revId": "e0dc21e820c5552a2881581656ff0ed16c09293b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +135,30 @@
     },
     {
       "key": {
+        "uuid": "33ff3d21_4d093a82",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-09-27T20:17:34Z",
+      "side": 1,
+      "message": "I wanted to write a more generic method but, is there a direct correspondence between |app_id| and the package + activity names? I wonder if we can have something like getAppIdFor(std::string package_name, std::string activity). WDYT?",
+      "parentUuid": "d4077716_ead7a08e",
+      "range": {
+        "startLine": 138,
+        "startChar": 4,
+        "endLine": 138,
+        "endChar": 42
+      },
+      "revId": "e0dc21e820c5552a2881581656ff0ed16c09293b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23637b2b_1e0fe11d",
         "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
         "patchSetId": 7
@@ -90,6 +173,24 @@
       "revId": "e0dc21e820c5552a2881581656ff0ed16c09293b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9093b5d_bfa08900",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-09-27T20:17:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23637b2b_1e0fe11d",
+      "revId": "e0dc21e820c5552a2881581656ff0ed16c09293b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "02b385b0_7870b7c4",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-09-27T20:17:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "629a4789_0a628509",
+      "revId": "e0dc21e820c5552a2881581656ff0ed16c09293b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cd15d84_61a69c76",
         "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
         "patchSetId": 7
@@ -121,6 +240,24 @@
       "writtenOn": "2017-09-27T02:15:36Z",
       "side": 1,
       "message": "same",
+      "revId": "e0dc21e820c5552a2881581656ff0ed16c09293b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20dcf2ab_97558a7b",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-09-27T20:17:34Z",
+      "side": 1,
+      "message": "Not sure if I should still remove this part.",
+      "parentUuid": "7cd15d84_61a69c76",
       "revId": "e0dc21e820c5552a2881581656ff0ed16c09293b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -158,6 +295,24 @@
       "revId": "e0dc21e820c5552a2881581656ff0ed16c09293b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f34745e_8ae8876a",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-09-27T20:17:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77bed05a_f1097e6a",
+      "revId": "e0dc21e820c5552a2881581656ff0ed16c09293b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
