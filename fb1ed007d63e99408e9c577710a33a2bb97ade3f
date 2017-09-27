@@ -145,6 +145,24 @@
       "revId": "fb1ed007d63e99408e9c577710a33a2bb97ade3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67704d4c_0fc42271",
+        "filename": "device/hid/public/interfaces/input_service.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-09-27T01:21:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4b2c917_b02c6999",
+      "revId": "fb1ed007d63e99408e9c577710a33a2bb97ade3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
