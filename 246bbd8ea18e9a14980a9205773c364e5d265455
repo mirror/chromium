@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1bd9e53d_7f511c69",
+        "filename": "chrome/browser/ui/views/content_setting_domain_list_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-09-27T17:31:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a5323ff_f782a1c0",
+      "range": {
+        "startLine": 30,
+        "startChar": 19,
+        "endLine": 30,
+        "endChar": 28
+      },
+      "revId": "246bbd8ea18e9a14980a9205773c364e5d265455",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47716f4d_4d435834",
         "filename": "chrome/browser/ui/views/content_setting_domain_list_view.cc",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "246bbd8ea18e9a14980a9205773c364e5d265455",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b90c5195_c7506ff1",
+        "filename": "chrome/browser/ui/views/content_setting_domain_list_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-09-27T17:31:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47716f4d_4d435834",
+      "revId": "246bbd8ea18e9a14980a9205773c364e5d265455",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "246bbd8ea18e9a14980a9205773c364e5d265455",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7968aca2_8d5e6d26",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-09-27T17:31:09Z",
+      "side": 1,
+      "message": "I just removed it altogether because it was not being supplied before.",
+      "parentUuid": "49c5467e_a4f35b62",
+      "range": {
+        "startLine": 650,
+        "startChar": 54,
+        "endLine": 650,
+        "endChar": 61
+      },
+      "revId": "246bbd8ea18e9a14980a9205773c364e5d265455",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
