@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01dbbd9a_cbf852cd",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-27T03:45:39Z",
+      "side": 1,
+      "message": "The ctor can be simplified, as |layout_text| is always |text|.",
+      "revId": "3cc770eb529bab9282a69d4f90ce2add89e8c492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
