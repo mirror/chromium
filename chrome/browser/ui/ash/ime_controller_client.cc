@@ -5,11 +5,13 @@
 #include "chrome/browser/ui/ash/ime_controller_client.h"
 
 #include <memory>
+#include <sstream>
 #include <vector>
 
 #include "ash/public/interfaces/constants.mojom.h"
 #include "base/logging.h"
 #include "base/strings/utf_string_conversions.h"
+#include "chrome/browser/profiles/profile.h"
 #include "content/public/common/service_manager_connection.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "ui/base/ime/chromeos/extension_ime_util.h"
@@ -26,6 +28,17 @@ namespace {
 
 ImeControllerClient* g_instance = nullptr;
 
+std::string toString(const std::vector<std::string>& array) {
+  std::ostringstream ss;
+  ss << "[";
+  for (size_t i = 0; i < array.size(); i++) {
+    if (i != 0)
+      ss << ",";
+    ss << array[i];
+  }
+  ss << "]";
+  return ss.str();
+}
 }  // namespace
 
 ImeControllerClient::ImeControllerClient(InputMethodManager* manager)
@@ -80,6 +93,7 @@ void ImeControllerClient::SetImesManagedByPolicy(bool managed) {
 
 // ash::mojom::ImeControllerClient:
 void ImeControllerClient::SwitchToNextIme() {
+  VLOG(1) << "@@@@@ SwitchToNextIme";
   InputMethodManager::State* state =
       input_method_manager_->GetActiveIMEState().get();
   if (state)
@@ -87,6 +101,7 @@ void ImeControllerClient::SwitchToNextIme() {
 }
 
 void ImeControllerClient::SwitchToPreviousIme() {
+  VLOG(1) << "@@@@@ SwitchToPreviousIme";
   InputMethodManager::State* state =
       input_method_manager_->GetActiveIMEState().get();
   if (state)
@@ -116,6 +131,18 @@ void ImeControllerClient::SetCapsLockFromTray(bool caps_enabled) {
 void ImeControllerClient::InputMethodChanged(InputMethodManager* manager,
                                              Profile* profile,
                                              bool show_message) {
+  VLOG(1) << "@@@@@ InputMethodChanged:"
+          << " profile=" << profile->GetProfileUserName()
+          << " show_message=" << show_message;
+  const auto state = manager->GetActiveIMEState();
+  const auto currentIme = state->GetCurrentInputMethod();
+  const auto ime_list = state->GetActiveInputMethods();
+  for (const auto& desc : *ime_list) {
+    VLOG(1) << "@@@@@   " << (desc.id() == currentIme.id() ? "*" : " ")
+            << " id=" << desc.id() << " ind=" << desc.GetIndicator()
+            << " layouts=" << toString(desc.keyboard_layouts())
+            << " languages=" << toString(desc.language_codes());
+  }
   RefreshIme();
 }
 

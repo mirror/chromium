@@ -782,12 +782,28 @@ bool InputMethodUtil::IsLoginKeyboard(const std::string& input_method_id)
 }
 
 void InputMethodUtil::AppendInputMethods(const InputMethodDescriptors& imes) {
+  VLOG(1) << "@@@@@ AppendInputMethods: size=" << imes.size();
   for (size_t i = 0; i < imes.size(); ++i) {
     const InputMethodDescriptor& input_method = imes[i];
     DCHECK(!input_method.language_codes().empty());
     const std::vector<std::string>& language_codes =
         input_method.language_codes();
     id_to_descriptor_[input_method.id()] = input_method;
+    std::string langs;
+    for (const auto& lang : input_method.language_codes()) {
+      if (!langs.empty())
+        langs += "|";
+      langs += lang;
+    }
+    std::string layouts;
+    for (const auto& layout : input_method.keyboard_layouts()) {
+      if (!layouts.empty())
+        layouts += "|";
+      layouts += layout;
+    }
+    VLOG(1) << "@@@@@     id=" << input_method.id()
+            << " name=" << input_method.name() << " langs=" << langs
+            << " layouts=" << layouts;
 
     typedef LanguageCodeToIdsMap::const_iterator It;
     for (size_t j = 0; j < language_codes.size(); ++j) {
@@ -806,6 +822,7 @@ void InputMethodUtil::AppendInputMethods(const InputMethodDescriptors& imes) {
 }
 
 void InputMethodUtil::ResetInputMethods(const InputMethodDescriptors& imes) {
+  VLOG(1) << "@@@@@ ResetInputMethods";
   // Clear the existing maps.
   language_code_to_ids_.clear();
   id_to_descriptor_.clear();

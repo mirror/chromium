@@ -343,34 +343,46 @@ void InputMethodManagerImpl::StateImpl::EnableLockScreenLayouts() {
 bool InputMethodManagerImpl::StateImpl::EnableInputMethodImpl(
     const std::string& input_method_id,
     std::vector<std::string>* new_active_input_method_ids) const {
+  VLOG(1) << "@@@@@    EnableInputMethodImpl: " << input_method_id;
   if (!IsInputMethodAllowed(input_method_id)) {
     DVLOG(1) << "EnableInputMethod: " << input_method_id << " is not allowed.";
+    VLOG(1) << "@@@@@    EnableInputMethodImpl: " << input_method_id
+            << " is not allowed.";
     return false;
   }
 
   DCHECK(new_active_input_method_ids);
   if (!manager_->util_.IsValidInputMethodId(input_method_id)) {
     DVLOG(1) << "EnableInputMethod: Invalid ID: " << input_method_id;
+    VLOG(1) << "@@@@@    EnableInputMethodImpl: Invalid ID: "
+            << input_method_id;
     return false;
   }
 
-  if (!base::ContainsValue(*new_active_input_method_ids, input_method_id))
+  if (!base::ContainsValue(*new_active_input_method_ids, input_method_id)) {
+    VLOG(1) << "@@@@@    EnableInputMethodImpl: ID: " << input_method_id
+            << " ADDED";
     new_active_input_method_ids->push_back(input_method_id);
+  }
 
   return true;
 }
 
 bool InputMethodManagerImpl::StateImpl::EnableInputMethod(
     const std::string& input_method_id) {
+  VLOG(1) << "@@@@@ EnableInputMethod: ID: " << input_method_id;
   if (!EnableInputMethodImpl(input_method_id, &active_input_method_ids))
     return false;
 
   manager_->ReconfigureIMFramework(this);
+  VLOG(1) << "@@@@@ EnableInputMethod: ID: " << input_method_id << " DONE";
   return true;
 }
 
 bool InputMethodManagerImpl::StateImpl::ReplaceEnabledInputMethods(
     const std::vector<std::string>& new_active_input_method_ids) {
+  VLOG(1) << "@@@@@ ReplaceEnabledInputMethods: size="
+          << new_active_input_method_ids.size();
   if (manager_->ui_session_ == STATE_TERMINATING)
     return false;
 
@@ -390,13 +402,17 @@ bool InputMethodManagerImpl::StateImpl::ReplaceEnabledInputMethods(
   // keep relative order of the extension input method IDs.
   for (size_t i = 0; i < active_input_method_ids.size(); ++i) {
     const std::string& input_method_id = active_input_method_ids[i];
-    if (extension_ime_util::IsExtensionIME(input_method_id))
+    if (extension_ime_util::IsExtensionIME(input_method_id)) {
       new_active_input_method_ids_filtered.push_back(input_method_id);
+      VLOG(1) << "@@@@@ ReplaceEnabledInputMethods: add extension="
+              << input_method_id;
+    }
   }
   active_input_method_ids.swap(new_active_input_method_ids_filtered);
   manager_->MigrateInputMethods(&active_input_method_ids);
 
   manager_->ReconfigureIMFramework(this);
+  VLOG(1) << "@@@@@ ReplaceEnabledInputMethods: DONE";
 
   // If |current_input_method| is no longer in |active_input_method_ids|,
   // ChangeInputMethod() picks the first one in |active_input_method_ids|.
@@ -405,7 +421,6 @@ bool InputMethodManagerImpl::StateImpl::ReplaceEnabledInputMethods(
   // Record histogram for active input method count.
   UMA_HISTOGRAM_COUNTS("InputMethod.ActiveCount",
                        active_input_method_ids.size());
-
   return true;
 }
 
@@ -518,6 +533,23 @@ void InputMethodManagerImpl::StateImpl::AddInputMethodExtension(
     const std::string& extension_id,
     const InputMethodDescriptors& descriptors,
     ui::IMEEngineHandlerInterface* engine) {
+  VLOG(1) << "@@@@@ AddInputMethodExtension: ext_id=" << extension_id;
+  for (const auto& desc : descriptors) {
+    std::string langs;
+    for (const auto& lang : desc.language_codes()) {
+      if (!langs.empty())
+        langs += "|";
+      langs += lang;
+    }
+    std::string layouts;
+    for (const auto& layout : desc.keyboard_layouts()) {
+      if (!layouts.empty())
+        layouts += "|";
+      layouts += layout;
+    }
+    VLOG(1) << "@@@@@     id=" << desc.id() << " name=" << desc.name()
+            << " langs=" << langs << " layouts=" << layouts;
+  }
   if (manager_->ui_session_ == STATE_TERMINATING)
     return;
 
@@ -560,6 +592,7 @@ void InputMethodManagerImpl::StateImpl::AddInputMethodExtension(
 
 void InputMethodManagerImpl::StateImpl::RemoveInputMethodExtension(
     const std::string& extension_id) {
+  VLOG(1) << "@@@@@ RemoveInputMethodExtension: ext_id=" << extension_id;
   // Remove the active input methods with |extension_id|.
   std::vector<std::string> new_active_input_method_ids;
   for (size_t i = 0; i < active_input_method_ids.size(); ++i) {

@@ -221,6 +221,7 @@ class InputMethodManagerImpl : public InputMethodManager,
   void CandidateWindowOpened() override;
   void CandidateWindowClosed() override;
 
+#if 0
   // Temporarily deactivates all input methods (e.g. Chinese, Japanese, Arabic)
   // since they are not necessary to input a login password. Users are still
   // able to use/switch active keyboard layouts (e.g. US qwerty, US dvorak,
@@ -234,6 +235,7 @@ class InputMethodManagerImpl : public InputMethodManager,
   // Returns true if the given input method config value is a string list
   // that only contains an input method ID of a keyboard layout.
   bool ContainsOnlyKeyboardLayout(const std::vector<std::string>& value);
+#endif
 
   // Creates and initializes |candidate_window_controller_| if it hasn't been
   // done.

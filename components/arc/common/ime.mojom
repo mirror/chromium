@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// Next MinVersion: 6
+// Next MinVersion: 7
 
 module arc.mojom;
 
@@ -105,4 +105,34 @@ interface ImeInstance {
   // Deletes current selection plus the specified number of char16 values
   // before and after selection or caret.
   [MinVersion=4] ExtendSelectionAndDelete@5(uint64 before, uint64 after);
+};
+
+[MinVersion=6]
+struct ImeSubtypeInfo {
+  string id;
+  string locale;
+  string displayName;
+};
+
+[MinVersion=6]
+struct ImeInfo {
+  string id;
+  string displayName;
+  array<ImeSubtypeInfo> subtypes;
+};
+
+// Next method ID: 2
+[MinVersion=6]
+interface ImeManagerHost {
+  [MinVersion=6] NotifyDefaultImeChanged@0(string imeId, string imeSubtypeId);
+
+  [MinVersion=6] NotifyEnabledImeInfo@1(array<ImeInfo> imeInfos);
+};
+
+// Next method ID: 2
+[MinVersion=6]
+interface ImeManagerInstance {
+  [MinVersion=6] Init@0(ImeManagerHost host_ptr);
+
+  [MinVersion=6] SwitchImeTo@1(string imeId, string imeSubtypeId);
 };

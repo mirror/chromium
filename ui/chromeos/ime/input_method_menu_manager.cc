@@ -35,6 +35,10 @@ InputMethodMenuManager::GetCurrentInputMethodMenuItemList() const {
 void InputMethodMenuManager::SetCurrentInputMethodMenuItemList(
     const InputMethodMenuItemList& menu_list) {
   menu_list_ = menu_list;
+  VLOG(1) << "@@@@@ SetCurrentInputMethodMenuItemList:";
+  for (const auto& item : menu_list) {
+    VLOG(1) << "@@@@@   " << item.ToString();
+  }
   for (InputMethodMenuManager::Observer& observer : observers_)
     observer.InputMethodMenuItemChanged(this);
 }
