@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "e1ca60a3_135d4aa2",
+        "filename": "ios/net/cookies/cookie_store_ios.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-27T15:45:44Z",
+      "side": 1,
+      "message": "typo:  callback",
+      "range": {
+        "startLine": 170,
+        "startChar": 60,
+        "endLine": 170,
+        "endChar": 61
+      },
+      "revId": "eb990e594e2a50bfa60b7a6de1038adca9f9518a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2846b3f6_89b6e73c",
+        "filename": "ios/net/cookies/cookie_store_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-27T15:45:44Z",
+      "side": 1,
+      "message": "I think these can all be moved into the anonymous namespace up top, where BuildCookieLineWithOptions is?",
+      "range": {
+        "startLine": 404,
+        "startChar": 21,
+        "endLine": 404,
+        "endChar": 57
+      },
+      "revId": "eb990e594e2a50bfa60b7a6de1038adca9f9518a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c8937ad5_a1a11511",
         "filename": "ios/net/cookies/cookie_store_ios.mm",
         "patchSetId": 8
