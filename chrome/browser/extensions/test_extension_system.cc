@@ -73,8 +73,8 @@ ExtensionService* TestExtensionSystem::CreateExtensionService(
       profile_, command_line, install_directory, ExtensionPrefs::Get(profile_),
       Blacklist::Get(profile_), autoupdate_enabled, extensions_enabled,
       &ready_));
-  extension_registrar_ = std::make_unique<ExtensionRegistrar>(profile_);
-  extension_service_->ClearProvidersForTesting();
+  extension_registrar_ =
+      std::make_unique<ExtensionRegistrar>(profile_, extension_service_.get());
   return extension_service_.get();
 }
 
