@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a027675c_96a5d315",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 1516,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2017-09-27T14:34:26Z",
+      "side": 1,
+      "message": "Since we don\u0027t have much time left for fuzzathon, lets probably change release_libfuzzer_asan, release_libfuzzer_asan_clang_tot,  release_libfuzzer_mac_asan, release_libfuzzer_msan as well ?",
+      "revId": "06e3dcd554a1b9fe419409d752462dbc2babfa3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d133996_3a7e2fcf",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 1531,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2017-09-27T14:34:26Z",
+      "side": 1,
+      "message": "I think you need to make some expectations file update, no ?",
+      "revId": "06e3dcd554a1b9fe419409d752462dbc2babfa3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
