@@ -36,6 +36,7 @@ class TraySupervisedUser;
 class TraySystemInfo;
 class TrayTiles;
 class TrayTracing;
+class TrayOffHoursSessionLimit;
 class TrayUpdate;
 class WebNotificationTray;
 
@@ -224,6 +225,7 @@ class ASH_EXPORT SystemTray : public TrayBackgroundView {
   TraySupervisedUser* tray_supervised_user_ = nullptr;
   TraySystemInfo* tray_system_info_ = nullptr;
   TrayTracing* tray_tracing_ = nullptr;
+  TrayOffHoursSessionLimit* tray_off_hours_session_limit_ = nullptr;
   TrayUpdate* tray_update_ = nullptr;
   TrayNightLight* tray_night_light_ = nullptr;
 
