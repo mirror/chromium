@@ -655,13 +655,12 @@ must be 2. This may be used with EAP-based user authentication.
 ## L2TP over IPsec VPN connections
 
 There are two major configurations L2TP over IPsec which depend on how IPsec
-is authenticated. In either case **Type** must be
-*L2TP-IPsec*. They are described below.
+is authenticated. In either case **Type** must be *L2TP-IPsec*.
+They are described below.
 
 L2TP over IPsec with pre-shared key:
 
-* The field **IPsec** must be present and have the
-    following settings:
+* The field **IPsec** must be present and have the following settings:
     * **IKEVersion** must be 1.
     * **AuthenticationType** must be PSK.
     * **XAUTH** must not be set.
@@ -847,10 +846,7 @@ L2TP over IPsec with pre-shared key:
 
 * **UserAuthenticationType**
     * (optional, defaults to *None*) - **string**
-    * `Allowed values are` *None*,
-        *Password*,
-        *PasswordAndOTP* and
-        *OTP*.
+    * `Allowed values are` *None*, *Password*, *PasswordAndOTP* and *OTP*.
     * Determines the required form of user authentication:
         * *PasswordAndOTP*: This VPN requires a password
         and an OTP (possibly empty). Both will be send to the server in the
@@ -894,8 +890,7 @@ L2TP over IPsec with pre-shared key:
       X.509 name is equal to the given name.
 
 ---
-  * At most one of **ServerCARefs** and **ServerCARef**
-    can be set.
+  * At most one of **ServerCARefs** and **ServerCARef** can be set.
 ---
 
 ### VerifyX509 type

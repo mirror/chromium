@@ -128,6 +128,22 @@ Polymer({
     security_: String,
 
     /**
+     * 'SaveCredentials' value used for VPN (OpenVPN, IPsec, and L2TP).
+     * @private
+     */
+    vpnSaveCredentials_: {
+      type: Boolean,
+      value: false,
+    },
+
+    /**
+     * VPN Type from vpnTypeItems_. Combines VPN.Type and
+     * VPN.IPsec.AuthenticationType.
+     * @private
+     */
+    vpnType_: String,
+
+    /**
      * Dictionary of boolean values determining which EAP properties to show,
      * or null to hide all EAP settings.
      * @type {?{
@@ -143,6 +159,20 @@ Polymer({
      * @private
      */
     showEap_: {
+      type: Object,
+      value: null,
+    },
+
+    /**
+     * Dictionary of boolean values determining which VPN properties to show,
+     * or null to hide all VPN settings.
+     * @type {?{
+     *   OpenVPN: (boolean|undefined),
+     *   Cert: (boolean|undefined),
+     * }}
+     * @private
+     */
+    showVpn_: {
       type: Object,
       value: null,
     },
@@ -205,6 +235,20 @@ Polymer({
       readOnly: true,
       value: ['Automatic', 'MD5', 'MSCHAP', 'MSCHAPv2', 'PAP', 'CHAP', 'GTC'],
     },
+
+    /**
+     * Array of values for the VPN Type dropdown. For L2TP-IPSec, the
+     * AuthenticationType ('PSK' or 'Cert') is incuded in the type.
+     * @type {!Array<string>}
+     * @const
+     * @private
+     */
+    vpnTypeItems_: {
+      type: Array,
+      readOnly: true,
+      value: ['L2TP_IPsec_PSK', 'L2TP_IPsec_Cert', CrOnc.VPNType.OPEN_VPN],
+    },
+
   },
 
   observers: [
@@ -213,9 +257,11 @@ Polymer({
     'updateEapOuter_(eapProperties_.Outer)',
     'updateEapCerts_(eapProperties_.*, serverCaCerts_, userCerts_)',
     'updateShowEap_(configProperties_.*, eapProperties_.*, security_)',
+    'updateVpnType_(vpnType_)',
     // Multiple updateIsConfigured observers for different configurations.
     'updateIsConfigured_(configProperties_.*, security_)',
     'updateIsConfigured_(configProperties_, eapProperties_.*)',
+    'updateIsConfigured_(configProperties_.VPN.*, vpnType_)',
   ],
 
   /** @const */
@@ -254,6 +300,9 @@ Polymer({
     this.propertiesSent_ = false;
     this.security_ = '';
     this.showEap_ = null;
+    this.showVpn_ = null;
+    this.vpnType_ = '';
+    this.vpnSaveCredentials_ = false;
 
     var queryParams = settings.getQueryParameters();
     this.guid_ = queryParams.get('guid') || '';
@@ -294,7 +343,7 @@ Polymer({
           this.i18n('networkCADoNotCheck'), 'do-not-check'));
       this.set('serverCaCerts_', caCerts);
 
-      var userCerts = certificateLists.userCertificates;
+      var userCerts = certificateLists.userCertificates.slice();
       if (userCerts.empty) {
         userCerts = [this.getDefaultCert_(
             this.i18n('networkCertificateNoneInstalled'), '')];
@@ -329,9 +378,16 @@ Polymer({
     this.networkProperties_ = properties;
 
     // Set the current shareNetwork_ value when porperties are received.
-    var source = this.networkProperties_.Source;
+    var source = properties.Source;
     this.shareNetwork_ =
         source == CrOnc.Source.DEVICE || source == CrOnc.Source.DEVICE_POLICY;
+
+    if (properties.Type == CrOnc.Type.VPN) {
+      this.vpnSaveCredentials_ =
+          !!this.get('VPN.OpenVPN.SaveCredentials)', properties) ||
+          !!this.get('VPN.IPsec.SaveCredentials)', properties) ||
+          !!this.get('VPN.L2TP.SaveCredentials)', properties);
+    }
   },
 
   /**
@@ -365,6 +421,7 @@ Polymer({
    */
   updateConfigProperties_: function() {
     var properties = this.networkProperties_;
+    var vpnType;  // Must be set after configProperties_
     var configProperties =
         /** @type {chrome.networkingPrivate.NetworkConfigProperties} */ ({
           Name: properties.Name || '',
@@ -423,11 +480,43 @@ Polymer({
         }
         this.security_ = CrOnc.Security.WPA_EAP;
         break;
+      case CrOnc.Type.VPN:
+        if (properties.VPN) {
+          var vpn = {
+            Host: properties.VPN.Host,
+            Type: properties.VPN.Type,
+          };
+          if (properties.VPN.Type == CrOnc.VPNType.L2TP_IPSEC) {
+            vpn.IPsec = {
+              AuthenticationType: 'PSK',  // required
+            };
+            Object.assign(vpn.IPsec, properties.VPN.IPsec);
+            vpn.L2TP = vpn.L2TP || {Username: ''};
+            vpnType = vpn.IPsec.AuthenticationType == 'Cert' ?
+                'L2TP_IPsec_Cert' :
+                'L2TP_IPsec_PSK';
+          } else {
+            properties.VPN.Type = CrOnc.VPNType.OPEN_VPN;
+            vpn.OpenVPN = Object.assign({}, properties.VPN.OpenVPN);
+            vpnType = CrOnc.VPNType.OPEN_VPN;
+          }
+          configProperties.VPN = vpn;
+        } else {
+          configProperties.VPN = {
+            Type: CrOnc.VPNType.L2TP_IPSEC,
+            IPsec: {AuthenticationType: 'PSK'},
+            L2TP: {Username: ''},
+          };
+          vpnType = 'L2TP_IPsec_PSK';
+        }
+        break;
     }
     this.configProperties_ = configProperties;
     this.set('eapProperties_', this.getEap_(this.configProperties_));
     if (!this.eapProperties_)
       this.showEap_ = null;
+    if (vpnType)
+      this.vpnType_ = vpnType;
   },
 
   /**
@@ -472,21 +561,10 @@ Polymer({
   /** @private */
   updateEapCerts_: function() {
     var eap = this.eapProperties_;
-
-    var pem = eap && eap.ServerCAPEMs && eap.ServerCAPEMs[0];
-    var selectedServerCa = (!!pem && this.serverCaCerts_.find(function(cert) {
-                             return cert.pem == pem;
-                           })) ||
-        this.serverCaCerts_[0];
-    this.selectedServerCaHash_ = selectedServerCa ? selectedServerCa.hash : '';
-
+    var pem = eap && eap.ServerCAPEMs ? eap.ServerCAPEMs[0] : '';
     var certId =
-        eap && eap.ClientCertType == 'PKCS11Id' && eap.ClientCertPKCS11Id;
-    var selectedUserCert = (!!certId && this.userCerts_.find(function(cert) {
-                             return cert.PKCS11Id == certId;
-                           })) ||
-        this.userCerts_[0];
-    this.selectedUserCertHash_ = selectedUserCert ? selectedUserCert.hash : '';
+        eap && eap.ClientCertType == 'PKCS11Id' ? eap.ClientCertPKCS11Id : '';
+    this.setSelectedCerts_(pem, certId);
   },
 
   /** @private */
@@ -519,7 +597,6 @@ Polymer({
         };
         break;
     }
-    this.updateIsConfigured_();
   },
 
   /**
@@ -565,6 +642,80 @@ Polymer({
     this.set('eapProperties_', eapProperties);
   },
 
+  /** @private */
+  updateVpnType_: function() {
+    var vpn = this.configProperties_.VPN;
+    switch (this.vpnType_) {
+      case 'L2TP_IPsec_PSK':
+        vpn.Type = CrOnc.VPNType.L2TP_IPSEC;
+        if (vpn.IPsec)
+          vpn.IPsec.AuthenticationType = 'PSK';
+        else
+          vpn.IPsec = {AuthenticationType: 'PSK'};
+        this.showVpn_ = {Cert: false, OpenVPN: false};
+        break;
+      case 'L2TP_IPsec_Cert':
+        vpn.Type = CrOnc.VPNType.L2TP_IPSEC;
+        if (vpn.IPsec)
+          vpn.IPsec.AuthenticationType = 'Cert';
+        else
+          vpn.IPsec = {AuthenticationType: 'Cert'};
+        this.showVpn_ = {Cert: true, OpenVPN: false};
+        break;
+      case CrOnc.VPNType.OPEN_VPN:
+        vpn.Type = CrOnc.VPNType.OPEN_VPN;
+        this.showVpn_ = {Cert: true, OpenVPN: true};
+        break;
+    }
+  },
+
+  /** @private */
+  updateVpnIPsecCerts_: function() {
+    var pem, certId;
+    var ipsec = this.vpnType_ == 'L2TP_IPsec_Cert' &&
+        this.get('VPN.IPsec', this.configProperties_);
+    if (ipsec) {
+      pem = ipsec && ipsec.ServerCAPEMs && ipsec.ServerCAPEMs[0];
+      certId = ipsec && ipsec.ClientCertType == 'PKCS11Id' ?
+          ipsec.ClientCertPKCS11Id :
+          '';
+    }
+    this.setSelectedCerts_(pem, certId);
+  },
+
+  /** @private */
+  updateOpenVPNCerts_: function() {
+    var pem, certId;
+    var openvpn = this.vpnType_ == CrOnc.VPNType.OPEN_VPN &&
+        this.get('VPN.OpenVPN', this.configProperties_);
+    if (openvpn) {
+      pem = openvpn && openvpn.ServerCAPEMs && openvpn.ServerCAPEMs[0];
+      certId = openvpn && openvpn.ClientCertType == 'PKCS11Id' ?
+          openvpn.ClientCertPKCS11Id :
+          '';
+    }
+    this.setSelectedCerts_(pem, certId);
+  },
+
+  /**
+   * @param {string|undefined} pem
+   * @param {string|undefined} certId
+   * @private
+   */
+  setSelectedCerts_: function(pem, certId) {
+    var serverCa = (!!pem && this.serverCaCerts_.find(function(cert) {
+                     return cert.pem == pem;
+                   })) ||
+        this.serverCaCerts_[0];
+    this.selectedServerCaHash_ = (serverCa && serverCa.hash) || '';
+
+    var userCert = (!!certId && this.userCerts_.find(function(cert) {
+                     return cert.PKCS11Id == certId;
+                   })) ||
+        this.userCerts_[0];
+    this.selectedUserCertHash_ = (userCert && userCert.hash) || '';
+  },
+
   /**
    * @return {boolean}
    * @private
@@ -581,6 +732,8 @@ Polymer({
     }
     if (this.security_ == CrOnc.Security.WPA_EAP)
       return this.eapIsConfigured_();
+    if (this.configProperties_.Type == CrOnc.Type.VPN)
+      return this.vpnIsConfigured_();
     return true;
   },
 
@@ -679,6 +832,27 @@ Polymer({
     return !!this.selectedUserCertHash_;
   },
 
+  /**
+   * @return {boolean}
+   * @private
+   */
+  vpnIsConfigured_: function() {
+    var vpn = this.configProperties_.VPN;
+    if (!this.configProperties_.Name || !vpn || !vpn.Host)
+      return false;
+
+    switch (this.vpnType_) {
+      case 'L2TP_IPsec_PSK':
+        return !!this.get('L2TP.Username', vpn) && !!this.get('IPsec.PSK', vpn);
+      case 'L2TP_IPsec_Cert':
+        return !!this.get('L2TP.Username', vpn) && !!this.selectedUserCertHash_;
+      case CrOnc.VPNType.OPEN_VPN:
+        return !!this.get('OpenVPN.Username', vpn) &&
+            !!this.selectedUserCertHash_;
+    }
+    return false;
+  },
+
   /** @private */
   onSaveTap_: function() {
     assert(this.guid_);
@@ -690,8 +864,42 @@ Polymer({
     var eap = this.getEap_(propertiesToSet);
     if (eap)
       this.setEapProperties_(eap);
+    if (this.configProperties_.Type == CrOnc.Type.VPN) {
+      if (this.get('VPN.Type', propertiesToSet) == CrOnc.VPNType.OPEN_VPN)
+        this.setOpenVPNProperties_(propertiesToSet);
+      else
+        this.setVpnIPsecProperties_(propertiesToSet);
+    }
     this.networkingPrivate.setProperties(
         this.guid_, propertiesToSet, this.setPropertiesCallback_.bind(this));
+  },
+
+  /**
+   * @return {!Array<string>}
+   * @private
+   */
+  getServerCaPems_: function() {
+    var caHash = this.selectedServerCaHash_ || '';
+    if (!caHash || caHash == 'do-not-check' || caHash == 'default')
+      return [];
+    var serverCa = this.serverCaCerts_.find(function(cert) {
+      return cert.hash == caHash;
+    });
+    return serverCa && serverCa.pem ? [serverCa.pem] : [];
+  },
+
+  /**
+   * @return {string}
+   * @private
+   */
+  getUserCertPkcs11Id_: function() {
+    var userHash = this.selectedUserCertHash_;
+    if (!userHash)
+      return '';
+    var userCert = this.userCerts_.find(function(cert) {
+      return cert.hash == userHash;
+    });
+    return (userCert && userCert.PKCS11Id) || '';
   },
 
   /**
@@ -699,23 +907,53 @@ Polymer({
    * @private
    */
   setEapProperties_: function(eap) {
-    var caHash = this.selectedServerCaHash_ || '';
+    eap.UseSystemCAs = this.selectedServerCaHash_ == 'do-not-check';
 
-    eap.UseSystemCAs = caHash == 'do-not-check';
+    eap.ServerCAPEMs = this.getServerCaPems_();
 
-    var serverCa = this.serverCaCerts_ && caHash && caHash != 'do-not-check' &&
-        caHash != 'default' && this.serverCaCerts_.find(function(cert) {
-          return cert.hash == caHash;
-        });
-    eap.ServerCAPEMs = serverCa ? [serverCa.pem] : [];
-
-    var userHash = this.selectedUserCertHash_;
-    var userCert = userHash && this.userCerts_.find(function(cert) {
-      return cert.hash == userHash;
-    });
-    var pkcs11Id = userCert && userCert.PKCS11Id;
+    var pkcs11Id = this.getUserCertPkcs11Id_();
     eap.ClientCertType = pkcs11Id ? 'PKCS11Id' : 'None';
     eap.ClientCertPKCS11Id = pkcs11Id || '';
+  },
+
+  /**
+   * @param {!chrome.networkingPrivate.NetworkConfigProperties} propertiesToSet
+   * @private
+   */
+  setOpenVPNProperties_: function(propertiesToSet) {
+    var openvpn = propertiesToSet.VPN.OpenVPN || {};
+
+    openvpn.ServerCAPEMs = this.getServerCaPems_();
+
+    var pkcs11Id = this.getUserCertPkcs11Id_();
+    openvpn.ClientCertType = pkcs11Id ? 'PKCS11Id' : 'None';
+    openvpn.ClientCertPKCS11Id = pkcs11Id || '';
+
+    if (openvpn.Password) {
+      openvpn.UserAuthenticationType =
+          openvpn.OTP ? 'PasswordAndOTP' : 'Password';
+    } else if (openvpn.OTP) {
+      openvpn.UserAuthenticationType = 'OTP';
+    } else {
+      openvpn.UserAuthenticationType = 'None';
+    }
+
+    openvpn.SaveCredentials = this.vpnSaveCredentials_;
+
+    propertiesToSet.VPN.OpenVPN = openvpn;
+  },
+
+  /**
+   * @param {!chrome.networkingPrivate.NetworkConfigProperties} propertiesToSet
+   * @private
+   */
+  setVpnIPsecProperties_: function(propertiesToSet) {
+    var vpn = propertiesToSet.VPN;
+    assert(vpn.IPsec);
+    if (vpn.IPsec.AuthenticationType == 'Cert')
+      vpn.IPsec.ClientCertPKCS11Id = this.getUserCertPkcs11Id_();
+    vpn.IPsec.SaveCredentials = this.vpnSaveCredentials_;
+    vpn.L2TP.SaveCredentials = this.vpnSaveCredentials_;
   },
 
   /** @private */
@@ -764,7 +1002,7 @@ Polymer({
   },
 
   /**
-   * @return boolean
+   * @return {boolean}
    * @private
    */
   configRequiresPassphrase_: function() {
