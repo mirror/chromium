@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "da9f50bb_738317bb",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-09-27T17:37:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbd13cdb_d79a5b40",
+      "range": {
+        "startLine": 49,
+        "startChar": 46,
+        "endLine": 49,
+        "endChar": 0
+      },
+      "revId": "a324b0d61fa7bcfe57ef6b1ce8455a6a1fa19574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c673873f_08f6a510",
         "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
         "patchSetId": 2
@@ -65,6 +89,30 @@
     },
     {
       "key": {
+        "uuid": "8d8c9942_4385b0a8",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-09-27T17:37:34Z",
+      "side": 1,
+      "message": "Done. Legacy, when I used to compute static 3 different ways.",
+      "parentUuid": "c673873f_08f6a510",
+      "range": {
+        "startLine": 71,
+        "startChar": 4,
+        "endLine": 71,
+        "endChar": 37
+      },
+      "revId": "a324b0d61fa7bcfe57ef6b1ce8455a6a1fa19574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb645dac_f58d8faa",
         "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
         "patchSetId": 2
@@ -79,6 +127,24 @@
       "revId": "a324b0d61fa7bcfe57ef6b1ce8455a6a1fa19574",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0b12a3e_72b1bc8a",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-09-27T17:37:34Z",
+      "side": 1,
+      "message": "No, this block might contain multiple fixed children, which will become descendants.",
+      "parentUuid": "eb645dac_f58d8faa",
+      "revId": "a324b0d61fa7bcfe57ef6b1ce8455a6a1fa19574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "d467e68f_0c99d0ea",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-09-27T17:37:34Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "b5f8b1ca_6605d386",
+      "revId": "a324b0d61fa7bcfe57ef6b1ce8455a6a1fa19574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbe6b018_9176df3b",
         "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
         "patchSetId": 2
@@ -131,6 +215,24 @@
       "revId": "a324b0d61fa7bcfe57ef6b1ce8455a6a1fa19574",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b592eef_52ff9f0c",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-09-27T17:37:34Z",
+      "side": 1,
+      "message": "Correct. In Legacy layout, OOF blocks compute and set their own position. Containing block should not query margins, because it does not need to compute OOF\u0027s position.\n\nCaveat: this is Legacy, anything can happen. If I find code that needs OOF margins, I\u0027ll fix it.",
+      "parentUuid": "dbe6b018_9176df3b",
+      "revId": "a324b0d61fa7bcfe57ef6b1ce8455a6a1fa19574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "2d572840_3b710275",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_out_of_flow_layout_part.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-09-27T17:37:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "512dd8cf_97353125",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 20
+      },
+      "revId": "a324b0d61fa7bcfe57ef6b1ce8455a6a1fa19574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ba51401_b12e3804",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_out_of_flow_layout_part.cc",
         "patchSetId": 2
@@ -177,6 +303,30 @@
       "revId": "a324b0d61fa7bcfe57ef6b1ce8455a6a1fa19574",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35cbafb0_fe021aa9",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_out_of_flow_layout_part.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-09-27T17:37:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ba51401_b12e3804",
+      "range": {
+        "startLine": 72,
+        "startChar": 28,
+        "endLine": 72,
+        "endChar": 58
+      },
+      "revId": "a324b0d61fa7bcfe57ef6b1ce8455a6a1fa19574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
