@@ -35,6 +35,7 @@
 #include "content/public/common/resource_type.h"
 #include "net/base/io_buffer.h"
 #include "net/base/load_flags.h"
+#include "net/cert/cert_status_flags.h"
 #include "net/http/http_response_headers.h"
 #include "net/nqe/effective_connection_type.h"
 #include "net/nqe/network_quality_estimator.h"
