@@ -51,6 +51,8 @@ namespace {
 constexpr const char kContextKeyIsCameraPresent[] = "isCameraPresent";
 constexpr const char kContextKeyProfilePictureDataURL[] =
     "profilePictureDataURL";
+constexpr const char kContextKeyIsProfilePictureAvailable[] =
+    "isProfilePictureAvailable";
 constexpr const char kContextKeySelectedImageIndex[] = "selectedImageIndex";
 constexpr const char kContextKeySelectedImageURL[] = "selectedImageURL";
 
@@ -221,8 +223,14 @@ void UserImageScreen::Show() {
       kContextKeySelectedImageURL,
       default_user_image::GetDefaultImageUrl(selected_image_));
 
-  // Start fetching the profile image.
-  GetUserImageManager()->DownloadProfileImage(kProfileDownloadReason);
+  const user_manager::User* user = GetUser();
+  // Do not fetch profile image for Active Directory accounts.
+  if (user && user->IsActiveDirectoryUser()) {
+    GetContextEditor().SetBoolean(kContextKeyIsProfilePictureAvailable, false);
+  } else {
+    // Start fetching the profile image.
+    GetUserImageManager()->DownloadProfileImage(kProfileDownloadReason);
+  }
 }
 
 void UserImageScreen::Hide() {
