@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12a25a03_3b09381f",
+        "filename": "components/cronet/ios/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-27T07:11:11Z",
+      "side": 0,
+      "message": "This target was a workaround for a gn bug. Sorry for not removing it when I fixed the corresponding gn bug.",
+      "revId": "bb1fe996f1b29f06ac546585c5821740337d66f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
