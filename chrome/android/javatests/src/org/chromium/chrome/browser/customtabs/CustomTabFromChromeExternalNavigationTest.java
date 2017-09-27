@@ -28,6 +28,7 @@ import org.chromium.base.test.util.Feature;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.appmenu.AppMenuHandler;
+import org.chromium.chrome.browser.browserservices.BrowserSessionDataProvider;
 import org.chromium.chrome.browser.customtabs.CustomTabDelegateFactory.CustomTabNavigationDelegate;
 import org.chromium.chrome.browser.document.ChromeLauncherActivity;
 import org.chromium.chrome.browser.externalnav.ExternalNavigationHandler.OverrideUrlLoadingResult;
@@ -98,7 +99,7 @@ public class CustomTabFromChromeExternalNavigationTest {
 
     private void startPaymentRequestUIFromChrome(String url) throws InterruptedException {
         Intent intent = getCustomTabFromChromeIntent(url);
-        CustomTabIntentDataProvider.addPaymentRequestUIExtras(intent);
+        BrowserSessionDataProvider.addPaymentRequestUIExtras(intent);
 
         mCustomTabActivityTestRule.startCustomTabActivityWithIntent(intent);
         InstrumentationRegistry.getInstrumentation().waitForIdleSync();

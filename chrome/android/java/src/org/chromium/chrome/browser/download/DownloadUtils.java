@@ -36,7 +36,7 @@ import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeTabbedActivity;
 import org.chromium.chrome.browser.IntentHandler;
 import org.chromium.chrome.browser.UrlConstants;
-import org.chromium.chrome.browser.customtabs.CustomTabIntentDataProvider;
+import org.chromium.chrome.browser.browserservices.BrowserSessionDataProvider;
 import org.chromium.chrome.browser.document.ChromeLauncherActivity;
 import org.chromium.chrome.browser.download.ui.BackendProvider;
 import org.chromium.chrome.browser.download.ui.BackendProvider.DownloadDelegate;
@@ -489,12 +489,11 @@ public class DownloadUtils {
         Intent intent = builder.build().intent;
         intent.setPackage(context.getPackageName());
         intent.setData(contentUri);
-        intent.putExtra(CustomTabIntentDataProvider.EXTRA_UI_TYPE,
-                CustomTabIntentDataProvider.CUSTOM_TABS_UI_TYPE_MEDIA_VIEWER);
-        intent.putExtra(CustomTabIntentDataProvider.EXTRA_MEDIA_VIEWER_URL, fileUri.toString());
-        intent.putExtra(CustomTabIntentDataProvider.EXTRA_ENABLE_EMBEDDED_MEDIA_EXPERIENCE, true);
-        intent.putExtra(
-                CustomTabIntentDataProvider.EXTRA_INITIAL_BACKGROUND_COLOR, mediaColor);
+        intent.putExtra(BrowserSessionDataProvider.EXTRA_UI_TYPE,
+                BrowserSessionDataProvider.CUSTOM_TABS_UI_TYPE_MEDIA_VIEWER);
+        intent.putExtra(BrowserSessionDataProvider.EXTRA_MEDIA_VIEWER_URL, fileUri.toString());
+        intent.putExtra(BrowserSessionDataProvider.EXTRA_ENABLE_EMBEDDED_MEDIA_EXPERIENCE, true);
+        intent.putExtra(BrowserSessionDataProvider.EXTRA_INITIAL_BACKGROUND_COLOR, mediaColor);
         intent.putExtra(
                 CustomTabsIntent.EXTRA_TOOLBAR_COLOR, mediaColor);
         intent.putExtra(Browser.EXTRA_APPLICATION_ID, context.getPackageName());

@@ -4,7 +4,7 @@
 
 package org.chromium.chrome.browser.webapps;
 
-import static org.chromium.chrome.browser.customtabs.CustomTabIntentDataProvider.CUSTOM_TABS_UI_TYPE_MINIMAL_UI_WEBAPP;
+import static org.chromium.chrome.browser.browserservices.BrowserSessionDataProvider.CUSTOM_TABS_UI_TYPE_MINIMAL_UI_WEBAPP;
 
 import android.content.Intent;
 import android.graphics.Bitmap;

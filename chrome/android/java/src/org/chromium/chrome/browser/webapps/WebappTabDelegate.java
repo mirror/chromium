@@ -11,7 +11,7 @@ import android.support.customtabs.CustomTabsIntent;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
 import org.chromium.chrome.browser.IntentHandler;
-import org.chromium.chrome.browser.customtabs.CustomTabIntentDataProvider;
+import org.chromium.chrome.browser.browserservices.BrowserSessionDataProvider;
 import org.chromium.chrome.browser.externalnav.ExternalNavigationDelegateImpl;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tab.TabIdManager;
@@ -47,8 +47,8 @@ public class WebappTabDelegate extends TabDelegate {
 
         Intent intent = new CustomTabsIntent.Builder().setShowTitle(true).build().intent;
         intent.setData(Uri.parse(url));
-        intent.putExtra(CustomTabIntentDataProvider.EXTRA_SEND_TO_EXTERNAL_DEFAULT_HANDLER, true);
-        intent.putExtra(CustomTabIntentDataProvider.EXTRA_IS_OPENED_BY_CHROME, true);
+        intent.putExtra(BrowserSessionDataProvider.EXTRA_SEND_TO_EXTERNAL_DEFAULT_HANDLER, true);
+        intent.putExtra(BrowserSessionDataProvider.EXTRA_IS_OPENED_BY_CHROME, true);
         addAsyncTabExtras(asyncParams, parentId, false /* isChromeUI */, assignedTabId, intent);
 
         IntentHandler.startActivityForTrustedIntent(intent);
