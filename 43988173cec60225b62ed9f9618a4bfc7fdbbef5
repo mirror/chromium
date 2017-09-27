@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f41089f9_6af9e5ea",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-27T18:24:52Z",
+      "side": 1,
+      "message": "By implication the callback won\u0027t be called if the SimpleURLLoader is destroyed before it has been invoked, but I don\u0027t see that stated explicitly.  Worthwhile calling out?",
+      "range": {
+        "startLine": 109,
+        "startChar": 5,
+        "endLine": 109,
+        "endChar": 13
+      },
+      "revId": "43988173cec60225b62ed9f9618a4bfc7fdbbef5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
