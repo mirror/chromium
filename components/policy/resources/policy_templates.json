@@ -1398,6 +1398,32 @@
 
       If you enable this setting or do not set a value, AutoFill will remain under the control of the user. This will allow them to configure AutoFill profiles and to switch AutoFill on or off at their own discretion.''',
     },
+
+    {
+      'name': 'AutofillCreditCardEnabled',
+      'type': 'main',
+      'schema': { 'type': 'boolean' },
+      'supported_on': [
+        'chrome.*:63-',
+        'chrome_os:63-',
+        'android:63-',
+      ],
+      'features': {
+        'can_be_recommended': True,
+        'dynamic_refresh': True,
+        'per_profile': True,
+      },
+      'example_value': False,
+      'id': 391,
+      'caption': '''Enable AutoFill for credit cards''',
+      'tags': [],
+      'desc': '''Enables <ph name="PRODUCT_NAME">$1<ex>Google Chrome</ex></ph>'s AutoFill feature and allows users to auto complete credit card information in web forms using previously stored information.
+
+      If you disable this setting, AutoFill will be disabled for credit card fields in web forms.
+
+      If you enable this setting or do not set a value, AutoFill for credit cards will remain under the control of the user. This will allow them to configure AutoFill profiles and to switch AutoFill on or off at their own discretion.''',
+    },
+
     {
       'name': 'DisabledPlugins',
       'type': 'list',

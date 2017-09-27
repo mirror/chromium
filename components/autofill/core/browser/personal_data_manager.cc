@@ -546,6 +546,7 @@ void PersonalDataManager::RemoveObserver(
 
 bool PersonalDataManager::ImportFormData(
     const FormStructure& form,
+    bool credit_card_enabled,
     bool should_return_local_card,
     std::unique_ptr<CreditCard>* imported_credit_card,
     bool* imported_credit_card_matches_masked_server_credit_card) {
@@ -554,9 +555,12 @@ bool PersonalDataManager::ImportFormData(
   //   |imported_credit_card| with an extracted card. See .h for details of
   //   |should_return_local_card| and
   //   |imported_credit_card_matches_masked_server_credit_card|.
-  bool cc_import =
-      ImportCreditCard(form, should_return_local_card, imported_credit_card,
-                       imported_credit_card_matches_masked_server_credit_card);
+  bool cc_import = false;
+  if (credit_card_enabled) {
+    cc_import = ImportCreditCard(
+        form, should_return_local_card, imported_credit_card,
+        imported_credit_card_matches_masked_server_credit_card);
+  }
   // - ImportAddressProfiles may eventually save or update one or more address
   //   profiles.
   bool address_import = ImportAddressProfiles(form);
@@ -917,11 +921,13 @@ std::vector<CreditCard*> PersonalDataManager::GetLocalCreditCards() const {
 
 const std::vector<CreditCard*>& PersonalDataManager::GetCreditCards() const {
   credit_cards_.clear();
-  for (const auto& card : local_credit_cards_)
-    credit_cards_.push_back(card.get());
-  if (pref_service_->GetBoolean(prefs::kAutofillWalletImportEnabled)) {
-    for (const auto& card : server_credit_cards_)
+  if (pref_service_->GetBoolean(prefs::kAutofillCreditCardEnabled)) {
+    for (const auto& card : local_credit_cards_)
       credit_cards_.push_back(card.get());
+    if (pref_service_->GetBoolean(prefs::kAutofillWalletImportEnabled)) {
+      for (const auto& card : server_credit_cards_)
+        credit_cards_.push_back(card.get());
+    }
   }
   return credit_cards_;
 }
