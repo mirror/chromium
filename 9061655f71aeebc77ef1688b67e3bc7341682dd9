@@ -33,6 +33,47 @@
       "revId": "9061655f71aeebc77ef1688b67e3bc7341682dd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08269cc0_faf6c871",
+        "filename": "extensions/browser/extension_protocols.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-27T19:36:55Z",
+      "side": 1,
+      "message": "I think this is fine (Other than the fact that I\u0027m not sure the mime type of extension files should be based on the local system configuration, which is a bit of a tangential issue).",
+      "parentUuid": "a1b3a247_7d58c0c6",
+      "revId": "9061655f71aeebc77ef1688b67e3bc7341682dd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "924635f3_d717559c",
+        "filename": "extensions/browser/extension_protocols.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-27T19:36:55Z",
+      "side": 1,
+      "message": "You can just do \"Content-Type: \" + mime_type.  Think it may be a bit more readable, and when appending just two strings, perf is hopefully about the same.",
+      "range": {
+        "startLine": 209,
+        "startChar": 37,
+        "endLine": 209,
+        "endChar": 38
+      },
+      "revId": "9061655f71aeebc77ef1688b67e3bc7341682dd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
