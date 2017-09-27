@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "048c0e64_d51261cc",
+        "filename": "chrome/browser/resources/settings/settings_resources.grd",
+        "patchSetId": 15
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-27T12:43:04Z",
+      "side": 1,
+      "message": "It took me quite a while to figure out that this was necessary as well. Not specifying this almost worked, but resulted in an \u0027Unmatched \u003cif\u003e\u0027 error. After quite some debugging I found out that this was caused by stripping trailing comments from an object initialization, which in this case was stripping the last \u0027\u003c/if\u003e\u0027. Finally, I got on the right track by reading the docs: https://codesearch.chromium.org/chromium/src/styleguide/web/web.md?l\u003d403",
+      "range": {
+        "startLine": 679,
+        "startChar": 17,
+        "endLine": 679,
+        "endChar": 34
+      },
+      "revId": "3db675c4e7fd215b3ab2a5a4c485f13ebd247fe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
