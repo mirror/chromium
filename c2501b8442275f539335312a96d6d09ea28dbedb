@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a2af40c1_070c5ae9",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-27T17:05:50Z",
+      "side": 1,
+      "message": "I\u0027m fine with this comment, but would still prefer a change in naming as discussed on the other thread.",
+      "parentUuid": "cf1e0569_6d940a4c",
+      "revId": "c2501b8442275f539335312a96d6d09ea28dbedb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "188df6fa_6f8479e5",
         "filename": "content/network/url_loader_impl.cc",
         "patchSetId": 1
@@ -65,6 +83,30 @@
       "writtenOn": "2017-09-22T23:24:35Z",
       "side": 1,
       "message": "Out of curiosity: it took some effort to implement this class so that I can delay sending back the response contents to a certain point. Is there an easy way that is already available?",
+      "range": {
+        "startLine": 562,
+        "startChar": 6,
+        "endLine": 562,
+        "endChar": 30
+      },
+      "revId": "c2501b8442275f539335312a96d6d09ea28dbedb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf50b329_b3420b99",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-27T17:05:50Z",
+      "side": 1,
+      "message": "I wasn\u0027t aware of anything, but Matt just pointed me @ https://chromium-review.googlesource.com/c/chromium/src/+/666926.  How much of a pain would it be for you to wait\u0026integrate?",
+      "parentUuid": "a00a4e09_b5cea787",
       "range": {
         "startLine": 562,
         "startChar": 6,

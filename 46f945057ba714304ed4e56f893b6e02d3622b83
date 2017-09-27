@@ -519,6 +519,30 @@
       "revId": "46f945057ba714304ed4e56f893b6e02d3622b83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63968f20_e52d25ea",
+        "filename": "content/public/common/url_loader_throttle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-27T17:05:50Z",
+      "side": 1,
+      "message": "I would by happy with any of the names you mention, Yuzhu; my concern was just with referring to caching at this level of the stack and obscuring the fact that we\u0027re actually pausing the reading, which might other have semantic effects.",
+      "parentUuid": "bbe5f75d_67bd821b",
+      "range": {
+        "startLine": 43,
+        "startChar": 17,
+        "endLine": 43,
+        "endChar": 42
+      },
+      "revId": "46f945057ba714304ed4e56f893b6e02d3622b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

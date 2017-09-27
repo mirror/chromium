@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b880061_979aae95",
+        "filename": "content/common/throttling_url_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-27T17:05:50Z",
+      "side": 1,
+      "message": "If this function is called multiple times won\u0027t there be a problem?  Doesn\u0027t binding need to be a plural structure to support multiple requests?",
+      "range": {
+        "startLine": 74,
+        "startChar": 24,
+        "endLine": 74,
+        "endChar": 28
+      },
+      "revId": "9c37663ba3d03177ba19f27783f0aee6b3ef777d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9986e77_b3bd6aa9",
+        "filename": "content/common/throttling_url_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-27T17:05:50Z",
+      "side": 1,
+      "message": "nit, suggestion: Move this comment up above the previous clause and include a note explaining why we don\u0027t expect to see resume_caching_response_body_called() set?",
+      "range": {
+        "startLine": 818,
+        "startChar": 20,
+        "endLine": 818,
+        "endChar": 29
+      },
+      "revId": "9c37663ba3d03177ba19f27783f0aee6b3ef777d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
