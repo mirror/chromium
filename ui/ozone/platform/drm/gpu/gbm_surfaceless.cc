@@ -56,7 +56,8 @@ bool GbmSurfaceless::Initialize(gl::GLSurfaceFormat format) {
   return true;
 }
 
-gfx::SwapResult GbmSurfaceless::SwapBuffers() {
+gfx::SwapResult GbmSurfaceless::SwapBuffers(
+    std::vector<ui::LatencyInfo>* latency_info) {
   NOTREACHED();
   return gfx::SwapResult::SWAP_FAILED;
 }

@@ -200,8 +200,10 @@ void* DirectCompositionChildSurfaceWin::GetHandle() {
   return real_surface_ ? real_surface_ : default_surface_;
 }
 
-gfx::SwapResult DirectCompositionChildSurfaceWin::SwapBuffers() {
+gfx::SwapResult DirectCompositionChildSurfaceWin::SwapBuffers(
+    std::vector<ui::LatencyInfo>* latency_info) {
   ReleaseDrawTexture(false);
+  ui::LatencyInfo::AddTerminatedFrameSwapComponent(latency_info);
   return gfx::SwapResult::SWAP_ACK;
 }
 

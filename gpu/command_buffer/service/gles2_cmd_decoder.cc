@@ -15875,7 +15875,8 @@ void GLES2DecoderImpl::DoSwapBuffers() {
         base::Bind(&GLES2DecoderImpl::FinishAsyncSwapBuffers,
                    weak_ptr_factory_.GetWeakPtr()));
   } else {
-    FinishSwapBuffers(surface_->SwapBuffers());
+    std::vector<ui::LatencyInfo> latency_info_dummy;
+    FinishSwapBuffers(surface_->SwapBuffers(&latency_info_dummy));
   }
 
   // This may be a slow command.  Exit command processing to allow for
