@@ -45,6 +45,7 @@
 #include "content/common/render_widget_surface_properties.h"
 #include "content/common/view_message_enums.h"
 #include "content/common/widget.mojom.h"
+#include "content/common/widget_host.mojom.h"
 #include "content/public/browser/render_widget_host.h"
 #include "content/public/common/page_zoom.h"
 #include "content/public/common/url_constants.h"
@@ -111,6 +112,7 @@ class CONTENT_EXPORT RenderWidgetHostImpl
       public SyntheticGestureController::Delegate,
       public viz::mojom::CompositorFrameSink,
       public viz::SharedBitmapAllocationObserver,
+      public mojom::WidgetHost,
       public IPC::Listener {
  public:
   // |routing_id| must not be MSG_ROUTING_NONE.
@@ -617,6 +619,9 @@ class CONTENT_EXPORT RenderWidgetHostImpl
       const std::vector<gfx::Rect>& character_bounds) override;
   void OnImeCancelComposition() override;
 
+  // mojom::WidgetHost interface.
+  void SetIsMobileOptimizedDocument(bool is_mobile) override;
+
  protected:
   // ---------------------------------------------------------------------------
   // The following method is overridden by RenderViewHost to send upwards to
@@ -1037,6 +1042,8 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   mojom::WidgetInputHandlerAssociatedPtr associated_widget_input_handler_;
   mojom::WidgetInputHandlerPtr widget_input_handler_;
   std::unique_ptr<mojom::WidgetInputHandler> legacy_widget_input_handler_;
+
+  mojo::Binding<mojom::WidgetHost> widget_host_binding_;
 
   base::WeakPtrFactory<RenderWidgetHostImpl> weak_factory_;
 

@@ -666,6 +666,7 @@ mojom("mojo_bindings") {
     "video_capture.mojom",
     "web_database.mojom",
     "widget.mojom",
+    "widget_host.mojom",
   ]
 
   import_dirs = [ "//mojo/services" ]

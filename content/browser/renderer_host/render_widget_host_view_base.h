@@ -326,6 +326,9 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
   // Returns true if the current view is in virtual reality mode.
   virtual bool IsInVR() const;
 
+  // TODO
+  void SetIsMobileOptimizedDocument(bool is_mobile) override {}
+
   //----------------------------------------------------------------------------
   // The following methods are related to IME.
   // TODO(ekaramad): Most of the IME methods should not stay virtual after IME

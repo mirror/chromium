@@ -139,6 +139,8 @@ class WebWidgetClient {
                              const WebFloatSize& velocity_in_viewport,
                              const WebScrollBoundaryBehavior& behavior) {}
 
+  virtual void IsMobileOptimizedDocumentChanged(bool) {}
+
   // Called to update if touch events should be sent.
   virtual void HasTouchEventHandlers(bool) {}
 

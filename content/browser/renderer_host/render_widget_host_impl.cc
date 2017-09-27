@@ -41,7 +41,6 @@
 #include "content/browser/fileapi/browser_file_system_helper.h"
 #include "content/browser/gpu/compositor_util.h"
 #include "content/browser/renderer_host/dip_util.h"
-#include "content/browser/renderer_host/frame_metadata_util.h"
 #include "content/browser/renderer_host/input/input_router_config_helper.h"
 #include "content/browser/renderer_host/input/input_router_impl.h"
 #include "content/browser/renderer_host/input/legacy_input_router_impl.h"
@@ -357,6 +356,7 @@ RenderWidgetHostImpl::RenderWidgetHostImpl(RenderWidgetHostDelegate* delegate,
       current_content_source_id_(0),
       monitoring_composition_info_(false),
       compositor_frame_sink_binding_(this),
+      widget_host_binding_(this),
       weak_factory_(this) {
   CHECK(delegate_);
   CHECK_NE(MSG_ROUTING_NONE, routing_id_);
@@ -2157,6 +2157,17 @@ void RenderWidgetHostImpl::OnImeCancelComposition() {
     view_->ImeCancelComposition();
 }
 
+void RenderWidgetHostImpl::SetIsMobileOptimizedDocument(bool is_mobile) {
+  if (input_router())
+    input_router()->NotifySiteIsMobileOptimized(is_mobile);
+
+  if (touch_emulator_)
+    touch_emulator_->SetDoubleTapSupportForPageEnabled(!is_mobile);
+
+  if (view_)
+    view_->SetIsMobileOptimizedDocument(is_mobile);
+}
+
 void RenderWidgetHostImpl::OnLockMouse(bool user_gesture,
                                        bool privileged) {
   if (pending_mouse_lock_request_) {
@@ -2683,11 +2694,6 @@ void RenderWidgetHostImpl::SubmitCompositorFrame(
 
   latency_tracker_.OnSwapCompositorFrame(&frame.metadata.latency_info);
 
-  bool is_mobile_optimized = IsMobileOptimizedFrame(frame.metadata);
-  input_router_->NotifySiteIsMobileOptimized(is_mobile_optimized);
-  if (touch_emulator_)
-    touch_emulator_->SetDoubleTapSupportForPageEnabled(!is_mobile_optimized);
-
   // Ignore this frame if its content has already been unloaded. Source ID
   // is always zero for an OOPIF because we are only concerned with displaying
   // stale graphics on top-level frames. We accept frames that have a source ID
@@ -2825,6 +2831,17 @@ void RenderWidgetHostImpl::SetWidget(mojom::WidgetPtr widget) {
     widget->SetupWidgetInputHandler(mojo::MakeRequest(&widget_input_handler_),
                                     std::move(host));
     input_router_->BindHost(std::move(host_request));
+  }
+
+  if (widget) {
+    mojom::WidgetHostPtr widget_host;
+    mojom::WidgetHostRequest widget_host_request =
+        mojo::MakeRequest(&widget_host);
+
+    widget_host_binding_.Close();
+    widget_host_binding_.Bind(std::move(widget_host_request));
+
+    widget->SetWidgetHost(std::move(widget_host));
   }
 }
 
