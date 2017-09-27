@@ -12,6 +12,31 @@
 
 namespace viz {
 
+namespace {
+
+bool IsOnBlackColorQuads(QuadList::ConstIterator quad_list_begin,
+                         QuadList::ConstIterator quad_list_end) {
+  for (auto it = quad_list_begin; it != quad_list_end; ++it) {
+    const DrawQuad* back_quad = *it;
+    if (back_quad->material != DrawQuad::SOLID_COLOR) {
+      return false;
+    }
+
+    // TODO(dshwang): support other background color. kms atomic modeset will
+    // support background color, which currently is not exposed and assumed to
+    // be black.
+    const SolidColorDrawQuad* color_quad =
+        SolidColorDrawQuad::MaterialCast(back_quad);
+    if (SK_ColorBLACK != color_quad->color) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+}  // namespace
+
 OverlayStrategyFullscreen::OverlayStrategyFullscreen(
     OverlayCandidateValidator* capability_checker)
     : capability_checker_(capability_checker) {
@@ -49,13 +74,12 @@ bool OverlayStrategyFullscreen::Attempt(
 
   if (!candidate.display_rect.origin().IsOrigin() ||
       gfx::ToRoundedSize(candidate.display_rect.size()) !=
-          render_pass->output_rect.size() ||
-      render_pass->output_rect.size() != candidate.resource_size_in_pixels) {
-    return false;
+          render_pass->output_rect.size()) {
+    if (!IsOnBlackColorQuads(++front, quad_list->end()))
+      return false;
   }
 
   candidate.plane_z_order = 0;
-  candidate.overlay_handled = true;
   cc::OverlayCandidateList new_candidate_list;
   new_candidate_list.push_back(candidate);
   capability_checker_->CheckOverlaySupport(&new_candidate_list);
