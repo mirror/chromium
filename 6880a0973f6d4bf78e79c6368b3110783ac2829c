@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09de6665_bbbb91e5",
+        "filename": "components/ukm/content/source_url_recorder_web_contents_observer.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-27T22:24:40Z",
+      "side": 1,
+      "message": "Shouldn\u0027t the class be declared in the header file? Why is it in the .cc file?",
+      "revId": "6880a0973f6d4bf78e79c6368b3110783ac2829c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cabec62_74cf10c4",
+        "filename": "components/ukm/content/source_url_recorder_web_contents_observer.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-27T22:24:40Z",
+      "side": 1,
+      "message": "Do we record erroneous navigations?",
+      "revId": "6880a0973f6d4bf78e79c6368b3110783ac2829c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28a72367_53cca3ee",
+        "filename": "content/browser/frame_host/navigation_handle_impl.h",
+        "patchSetId": 49
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-27T22:24:40Z",
+      "side": 1,
+      "message": "Is it only in the case of error that these will not be set? I would rather avoid optional members and return values if possible. If the only case is error, then it still matches the calling conventions in NavigationHandle, which is that in the case of error, all other stateful data should not be relied on.",
+      "revId": "6880a0973f6d4bf78e79c6368b3110783ac2829c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
