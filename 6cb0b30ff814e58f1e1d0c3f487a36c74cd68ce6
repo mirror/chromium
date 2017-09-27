@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0f9a1d1_73dc35f3",
+        "filename": "third_party/WebKit/LayoutTests/virtual/color_space/fast/canvas/color-space/canvas-createImageBitmap-linear-rgb.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-09-27T17:09:09Z",
+      "side": 1,
+      "message": "can we make this simpler?\n\nThere are two options. You can have one promise_test per type (and a loop outside) or a single promise_test with multiple promises. For the second case, you\u0027d something like:\n\npromise_test(function() {\n  return Promise.all(fileExtensions.map(el \u003d\u003e new Promise((res,rej) \u003d\u003e {\n    var im \u003d new Image() ...;\n  })));\n}",
+      "revId": "6cb0b30ff814e58f1e1d0c3f487a36c74cd68ce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
