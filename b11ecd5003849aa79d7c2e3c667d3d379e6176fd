@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "434a517d_08d8fb9f",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-27T23:56:13Z",
+      "side": 1,
+      "message": "Please DCHECK(browser-\u003eIsActive()); below.",
+      "revId": "b11ecd5003849aa79d7c2e3c667d3d379e6176fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16fabc2c_f6aba35a",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-27T23:56:13Z",
+      "side": 1,
+      "message": "nit: split these out into separate DCHECK statements.",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 8
+      },
+      "revId": "b11ecd5003849aa79d7c2e3c667d3d379e6176fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3fa2d1b_90b30486",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker_browsertest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-27T23:56:13Z",
+      "side": 1,
+      "message": "For a followup CL, it would be nice to test that the promo doesn\u0027t show if the session time is not met.",
+      "revId": "b11ecd5003849aa79d7c2e3c667d3d379e6176fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
