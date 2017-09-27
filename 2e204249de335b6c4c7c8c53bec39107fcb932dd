@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0ced9ad_d80547bd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-27T04:10:02Z",
+      "side": 1,
+      "message": "Please update description. This patch introduces ConvertToSelectionInFlatTree() in SelectionTemplate.cpp and moves ConvertToSelectionInDOMTree() to SelectionTemplate.cpp",
+      "revId": "2e204249de335b6c4c7c8c53bec39107fcb932dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
