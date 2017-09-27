@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ed75ce4_46540c9f",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-27T23:18:26Z",
+      "side": 1,
+      "message": "While you\u0027re moving comments around: \"[...]only works for Windows 7 and 8.0. Windows 8.1 and above must use[...]\"",
+      "range": {
+        "startLine": 111,
+        "startChar": 35,
+        "endLine": 111,
+        "endChar": 40
+      },
+      "revId": "701d2d33440d14ce0a07688cc0b2bcda4ebc2694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f807cd52_914b0066",
+        "filename": "base/win/win_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-27T23:18:26Z",
+      "side": 1,
+      "message": "For the \"current process,\" right?",
+      "range": {
+        "startLine": 197,
+        "startChar": 35,
+        "endLine": 197,
+        "endChar": 41
+      },
+      "revId": "701d2d33440d14ce0a07688cc0b2bcda4ebc2694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e26f1b0_d124c48c",
+        "filename": "chrome/test/base/browser_tests_main.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-27T23:18:26Z",
+      "side": 1,
+      "message": "Put OS-specific includes in their own block below the main one.",
+      "revId": "701d2d33440d14ce0a07688cc0b2bcda4ebc2694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
