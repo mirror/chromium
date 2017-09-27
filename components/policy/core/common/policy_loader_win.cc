@@ -4,6 +4,7 @@
 
 #include "components/policy/core/common/policy_loader_win.h"
 
+#include <lm.h>       // For NetGetJoinInformation
 #include <ntdsapi.h>  // For Ds[Un]Bind
 #include <rpc.h>      // For struct GUID
 #include <shlwapi.h>  // For PathIsUNC()
@@ -25,6 +26,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/path_service.h"
 #include "base/scoped_native_library.h"
 #include "base/sequenced_task_runner.h"
 #include "base/stl_util.h"
@@ -286,6 +288,48 @@ void ParsePolicy(const RegistryDict* gpo_dict,
   policy->LoadFrom(policy_dict, level, scope, POLICY_SOURCE_PLATFORM);
 }
 
+typedef NET_API_STATUS(WINAPI* NetGetJoinInformationFunction)(
+    LPCWSTR server,
+    LPWSTR* buffer,
+    PNETSETUP_JOIN_STATUS buffer_type);
+
+// Make sure to add the real NetGetJoinInformation, otherwise fallback to the
+// linked one.
+bool IsDomainJoined() {
+  LPWSTR buffer = nullptr;
+  NETSETUP_JOIN_STATUS buffer_type = NetSetupUnknownStatus;
+  // Use an absolute path to load the DLL to avoid DLL preloading attacks.
+  base::FilePath path;
+  if (PathService::Get(base::DIR_SYSTEM, &path)) {
+    HINSTANCE net_api_library =
+        ::LoadLibraryEx(path.Append(L"Netapi32.dll").value().c_str(), NULL,
+                        LOAD_WITH_ALTERED_SEARCH_PATH);
+    if (net_api_library) {
+      NetGetJoinInformationFunction NetGetJoinInformation_function =
+          reinterpret_cast<NetGetJoinInformationFunction>(
+              ::GetProcAddress(net_api_library, "NetGetJoinInformation"));
+      bool is_joined = NetGetJoinInformation_function(
+                           nullptr, &buffer, &buffer_type) == NERR_Success &&
+                       buffer_type == NetSetupDomainName;
+      if (buffer)
+        NetApiBufferFree(buffer);
+
+      UMA_HISTOGRAM_BOOLEAN("EnterpriseCheck.NetGetJoinInformationAddress",
+                            true);
+      return is_joined;
+    }
+  }
+
+  UMA_HISTOGRAM_BOOLEAN("EnterpriseCheck.NetGetJoinInformationAddress", false);
+  bool is_joined =
+      ::NetGetJoinInformation(nullptr, &buffer, &buffer_type) == NERR_Success &&
+      buffer_type == NetSetupDomainName;
+  if (buffer)
+    NetApiBufferFree(buffer);
+
+  return is_joined;
+}
+
 // Collects stats about the enterprise environment that can be used to decide
 // how to parse the existing policy information.
 void CollectEnterpriseUMAs() {
@@ -294,6 +338,7 @@ void CollectEnterpriseUMAs() {
                             base::win::OSInfo::GetInstance()->version_type(),
                             base::win::SUITE_LAST);
 
+  UMA_HISTOGRAM_BOOLEAN("EnterpriseCheck.IsDomainJoined", IsDomainJoined());
   UMA_HISTOGRAM_BOOLEAN("EnterpriseCheck.InDomain",
                         base::win::IsEnrolledToDomain());
   UMA_HISTOGRAM_BOOLEAN("EnterpriseCheck.IsManaged",
