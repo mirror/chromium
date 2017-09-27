@@ -164,7 +164,7 @@ QUIC_FLAG(bool,
 
 // If true, QUIC v40 is enabled which includes changes to RST_STREAM, ACK
 // and STREAM frames match IETF format.
-QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_enable_version_41, true)
+QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_enable_version_41, false)
 
 // If true, QUIC can take ownership of data provided in a reference counted
 // memory to avoid data copy.
