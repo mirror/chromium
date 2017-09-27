@@ -79,12 +79,12 @@ PlaybackImageProvider::GetDecodedDrawImage(const DrawImage& draw_image) {
                          SkSize::Make(1.f, 1.f), draw_image.filter_quality()));
   }
 
-  const auto& it = image_to_current_frame_index_.find(paint_image.stable_id());
+  /*const auto& it = image_to_current_frame_index_.find(paint_image.stable_id());
   size_t frame_index = it == image_to_current_frame_index_.end()
                            ? paint_image.frame_index()
-                           : it->second;
+                           : it->second;*/
 
-  DrawImage adjusted_image(draw_image, 1.f, frame_index, target_color_space_);
+  DrawImage adjusted_image(draw_image, 1.f, target_color_space_);
   auto decoded_draw_image = cache_->GetDecodedImageForDraw(adjusted_image);
 
   return ScopedDecodedDrawImage(
