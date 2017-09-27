@@ -16,6 +16,24 @@
       "revId": "73884395acaabb13b4901c8d90a0881b59325611",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c4a9ea1_685c3c4f",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-09-27T17:00:34Z",
+      "side": 1,
+      "message": "All are very good points.\n\nTo resolve the problems, we might need to have a vector of layers what we add deferred paint request. And later in dtor, we need to remove deferred paint request on those layers.\n\nWe kind ignore newly added child layer.\n\nBut one problem for this, what if a child layer is destroyed. We cannot call function on it.",
+      "parentUuid": "da475416_011dc5b0",
+      "revId": "73884395acaabb13b4901c8d90a0881b59325611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
