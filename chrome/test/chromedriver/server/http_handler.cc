@@ -703,39 +703,81 @@ HttpHandler::PrepareStandardResponse(
       response.reset(new net::HttpServerResponseInfo(net::HTTP_OK));
       break;
     case kNoSuchFrame:
+      response.reset(new net::HttpServerResponseInfo(net::HTTP_NOT_FOUND));
+      break;
     case kStaleElementReference:
+      response.reset(new net::HttpServerResponseInfo(net::HTTP_NOT_FOUND));
+      break;
     case kElementNotVisible:
     case kInvalidElementState:
+      response.reset(new net::HttpServerResponseInfo(net::HTTP_BAD_REQUEST));
+      break;
     case kNoSuchWindow:
+      response.reset(new net::HttpServerResponseInfo(net::HTTP_NOT_FOUND));
+      break;
     case kInvalidCookieDomain:
+      response.reset(new net::HttpServerResponseInfo(net::HTTP_BAD_REQUEST));
+      break;
     case kInvalidSelector:
+      response.reset(new net::HttpServerResponseInfo(net::HTTP_BAD_REQUEST));
+      break;
     case kXPathLookupError:
     case kNoAlertOpen:
+      response.reset(new net::HttpServerResponseInfo(net::HTTP_NOT_FOUND));
+      break;
     case kInvalidArgument:
+      response.reset(new net::HttpServerResponseInfo(net::HTTP_BAD_REQUEST));
+      break;
     case kElementNotInteractable:
+      response.reset(new net::HttpServerResponseInfo(net::HTTP_BAD_REQUEST));
+      break;
     case kNoSuchExecutionContext:
       response.reset(new net::HttpServerResponseInfo(net::HTTP_BAD_REQUEST));
       break;
     case kNoSuchSession:
     case kNoSuchElement:
+      response.reset(new net::HttpServerResponseInfo(net::HTTP_NOT_FOUND));
+      break;
     case kUnknownCommand:
+      response.reset(new net::HttpServerResponseInfo(net::HTTP_NOT_FOUND));
+      break;
     case kNoSuchCookie:
       response.reset(new net::HttpServerResponseInfo(net::HTTP_NOT_FOUND));
       break;
     case kTimeout:
+      response.reset(
+          new net::HttpServerResponseInfo(net::HTTP_REQUEST_TIMEOUT));
+      break;
     case kScriptTimeout:
       response.reset(
           new net::HttpServerResponseInfo(net::HTTP_REQUEST_TIMEOUT));
       break;
     case kUnknownError:
+      response.reset(
+          new net::HttpServerResponseInfo(net::HTTP_INTERNAL_SERVER_ERROR));
+      break;
     case kUnableToSetCookie:
+      response.reset(
+          new net::HttpServerResponseInfo(net::HTTP_INTERNAL_SERVER_ERROR));
+      break;
     case kJavaScriptError:
+      response.reset(new net::HttpServerResponseInfo(net::HTTP_BAD_REQUEST));
+      break;
     case kUnexpectedAlertOpen:
+      response.reset(
+          new net::HttpServerResponseInfo(net::HTTP_INTERNAL_SERVER_ERROR));
+      break;
     case kSessionNotCreatedException:
+      response.reset(
+          new net::HttpServerResponseInfo(net::HTTP_INTERNAL_SERVER_ERROR));
+      break;
     case kChromeNotReachable:
     case kDisconnected:
     case kForbidden:
     case kUnsupportedOperation:
+      response.reset(
+          new net::HttpServerResponseInfo(net::HTTP_INTERNAL_SERVER_ERROR));
+      break;
     case kTabCrashed:
       response.reset(
           new net::HttpServerResponseInfo(net::HTTP_INTERNAL_SERVER_ERROR));
