@@ -57,8 +57,6 @@ ChromeBrowserStateImplIOData::Handle::Handle(
 
 ChromeBrowserStateImplIOData::Handle::~Handle() {
   DCHECK_CURRENTLY_ON(web::WebThread::UI);
-  if (io_data_->http_server_properties_manager_)
-    io_data_->http_server_properties_manager_->ShutdownOnPrefSequence();
 
   io_data_->ShutdownOnUIThread(GetAllContextGetters());
 }
@@ -151,13 +149,6 @@ void ChromeBrowserStateImplIOData::Handle::LazyInitialize() const {
   // Set initialized_ to true at the beginning in case any of the objects
   // below try to get the ResourceContext pointer.
   initialized_ = true;
-  PrefService* pref_service = browser_state_->GetPrefs();
-  io_data_->http_server_properties_manager_ =
-      HttpServerPropertiesManagerFactory::CreateManager(
-          pref_service,
-          GetApplicationContext()->GetIOSChromeIOThread()->net_log());
-  io_data_->set_http_server_properties(
-      base::WrapUnique(io_data_->http_server_properties_manager_));
   io_data_->InitializeOnUIThread(browser_state_);
 }
 
@@ -180,7 +171,10 @@ ChromeBrowserStateImplIOData::Handle::GetAllContextGetters() {
 
 ChromeBrowserStateImplIOData::LazyParams::LazyParams() : cache_max_size(0) {}
 
-ChromeBrowserStateImplIOData::LazyParams::~LazyParams() {}
+ChromeBrowserStateImplIOData::LazyParams::~LazyParams() {
+  if (http_server_properties_manager_)
+    http_server_properties_manager_->ShutdownOnPrefSequence();
+}
 
 ChromeBrowserStateImplIOData::ChromeBrowserStateImplIOData()
     : ChromeBrowserStateIOData(
@@ -212,8 +206,13 @@ void ChromeBrowserStateImplIOData::InitializeInternal(
 
   ApplyProfileParamsToContext(main_context);
 
-  if (http_server_properties_manager_)
-    http_server_properties_manager_->InitializeOnNetworkSequence();
+  http_server_properties_manager_ =
+      HttpServerPropertiesManagerFactory::CreateManager(
+          network_json_store_,
+          GetApplicationContext()->GetIOSChromeIOThread()->net_log());
+  set_http_server_properties(
+      base::WrapUnique(io_data_->http_server_properties_manager_));
+  http_server_properties_manager_->InitializeOnNetworkSequence();
 
   main_context->set_transport_security_state(transport_security_state());
 
@@ -357,5 +356,7 @@ void ChromeBrowserStateImplIOData::ClearNetworkingHistorySinceOnIOThread(
   // Completes synchronously.
   transport_security_state()->DeleteAllDynamicDataSince(time);
   DCHECK(http_server_properties_manager_);
-  http_server_properties_manager_->Clear(completion);
+  http_server_properties_manager_->Clear(
+      base::BindOnce(base::IgnoreResult(&web::WebThread::PostTask),
+                     web::WebThread::UI, FROM_HERE, completion));
 }
