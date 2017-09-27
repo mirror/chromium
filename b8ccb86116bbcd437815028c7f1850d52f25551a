@@ -46,6 +46,30 @@
       "revId": "b8ccb86116bbcd437815028c7f1850d52f25551a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73c91fcf_bb0c6ff5",
+        "filename": "services/viz/public/interfaces/compositing/copy_output_request.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-27T11:42:24Z",
+      "side": 1,
+      "message": "My understanding (possibly incorrect) is that this is sent from a process that\u0027s generally less trusted. Given that, I don\u0027t think we should remove the sanity checks or turn them into DCHECKs.\n\nI agree that the alternatives seem worse, so this is fine. I just wanted to make sure that they were worse \u003d)",
+      "parentUuid": "c71a26ce_f51a0ee7",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 30
+      },
+      "revId": "b8ccb86116bbcd437815028c7f1850d52f25551a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
