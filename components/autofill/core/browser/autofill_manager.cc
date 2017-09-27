@@ -292,6 +292,7 @@ void AutofillManager::RegisterProfilePrefs(
       prefs::PREVIOUS_SAVE_CREDIT_CARD_PROMPT_USER_DECISION_NONE);
   registry->RegisterIntegerPref(
       prefs::kAutofillLastVersionDisusedCreditCardsDeleted, 0);
+  registry->RegisterBooleanPref(prefs::kAutofillCreditCardEnabled, true);
 }
 
 void AutofillManager::SetExternalDelegate(AutofillExternalDelegate* delegate) {
@@ -412,7 +413,8 @@ bool AutofillManager::OnWillSubmitFormImpl(const FormData& form,
   autocomplete_history_manager_->OnWillSubmitForm(form_for_autocomplete);
 
   address_form_event_logger_->OnWillSubmitForm();
-  credit_card_form_event_logger_->OnWillSubmitForm();
+  if (IsCreditCardAutofillEnabled())
+    credit_card_form_event_logger_->OnWillSubmitForm();
 
   StartUploadProcess(std::move(submitted_form), timestamp, true);
 
@@ -430,7 +432,8 @@ bool AutofillManager::OnFormSubmitted(const FormData& form) {
   }
 
   address_form_event_logger_->OnFormSubmitted();
-  credit_card_form_event_logger_->OnFormSubmitted();
+  if (IsCreditCardAutofillEnabled())
+    credit_card_form_event_logger_->OnFormSubmitted();
 
   // Update Personal Data with the form's submitted data.
   if (submitted_form->IsAutofillable())
@@ -803,7 +806,7 @@ void AutofillManager::FillOrPreviewForm(
 
   const CreditCard* credit_card = nullptr;
   const AutofillProfile* profile = nullptr;
-  if (GetCreditCard(unique_id, &credit_card))
+  if (IsCreditCardAutofillEnabled() && GetCreditCard(unique_id, &credit_card))
     FillOrPreviewCreditCardForm(action, query_id, form, field, *credit_card);
   else if (GetProfile(unique_id, &profile))
     FillOrPreviewProfileForm(action, query_id, form, field, *profile);
@@ -1198,6 +1201,10 @@ bool AutofillManager::IsCreditCardUploadEnabled() {
       client_->GetPrefs(), client_->GetSyncService(),
       GetIdentityProvider()->GetActiveUsername());
 }
+bool AutofillManager::IsCreditCardAutofillEnabled() {
+  return client_->GetPrefs()->GetBoolean(prefs::kAutofillCreditCardEnabled) &&
+         client_->IsAutofillSupported();
+}
 
 bool AutofillManager::ShouldUploadForm(const FormStructure& form) {
   return IsAutofillEnabled() && !driver()->IsIncognito() &&
@@ -1212,7 +1219,8 @@ void AutofillManager::ImportFormData(const FormStructure& submitted_form) {
   std::unique_ptr<CreditCard> imported_credit_card;
   bool imported_credit_card_matches_masked_server_credit_card;
   if (!personal_data_->ImportFormData(
-          submitted_form, IsCreditCardUploadEnabled(), &imported_credit_card,
+          submitted_form, IsCreditCardAutofillEnabled(),
+          IsCreditCardUploadEnabled(), &imported_credit_card,
           &imported_credit_card_matches_masked_server_credit_card))
     return;
 
