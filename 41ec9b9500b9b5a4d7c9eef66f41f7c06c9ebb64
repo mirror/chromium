@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "592cf2c7_bd1a832e",
+        "filename": "ash/login/ui/login_password_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-27T20:55:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "157da7d0_c85ec84c",
+      "revId": "41ec9b9500b9b5a4d7c9eef66f41f7c06c9ebb64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b57d493_1a3343c1",
         "filename": "ui/gfx/render_text.h",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f3f3aca9_254f698a",
+        "filename": "ui/gfx/render_text.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-27T20:55:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b57d493_1a3343c1",
+      "revId": "41ec9b9500b9b5a4d7c9eef66f41f7c06c9ebb64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "383ee5c7_ffef087e",
         "filename": "ui/gfx/render_text.h",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-27T16:09:29Z",
       "side": 1,
       "message": "Please refine/add testing for both of these functions.",
+      "revId": "41ec9b9500b9b5a4d7c9eef66f41f7c06c9ebb64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaa7769d_23ee9520",
+        "filename": "ui/gfx/render_text.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-27T20:55:06Z",
+      "side": 1,
+      "message": "Done. Added a test that checks SetPasswordReplacementChar() is working properly. IMO we do not need to change the other places that already assume the password placement char is default. In this way we can make it clear that as long as the password replacement char is not explicitly set, the default one is used and one shouldn\u0027t worry about setting it unless needs to.",
+      "parentUuid": "383ee5c7_ffef087e",
       "revId": "41ec9b9500b9b5a4d7c9eef66f41f7c06c9ebb64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "9d2d9c49_5895fcf8",
+        "filename": "ui/gfx/render_text.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-27T20:55:06Z",
+      "side": 1,
+      "message": "Ack. Thanks for the explanation!",
+      "parentUuid": "17cdf29b_190c0287",
+      "revId": "41ec9b9500b9b5a4d7c9eef66f41f7c06c9ebb64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb849f56_3607bb4e",
         "filename": "ui/gfx/render_text.h",
         "patchSetId": 5
@@ -84,6 +156,24 @@
       "revId": "41ec9b9500b9b5a4d7c9eef66f41f7c06c9ebb64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b36af9d_d88b70ce",
+        "filename": "ui/gfx/render_text.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-27T20:55:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "eb849f56_3607bb4e",
+      "revId": "41ec9b9500b9b5a4d7c9eef66f41f7c06c9ebb64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "e066b945_a9cdb1ec",
+        "filename": "ui/gfx/render_text.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 851,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-27T20:55:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fd3dea83_bb294e75",
+      "revId": "41ec9b9500b9b5a4d7c9eef66f41f7c06c9ebb64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7eb7fe9_6f551670",
         "filename": "ui/views/controls/textfield/textfield.h",
         "patchSetId": 5
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "f92de48c_5cb39836",
+        "filename": "ui/views/controls/textfield/textfield.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-27T20:55:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7eb7fe9_6f551670",
+      "revId": "41ec9b9500b9b5a4d7c9eef66f41f7c06c9ebb64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f6605a6_d095c2a5",
         "filename": "ui/views/controls/textfield/textfield.h",
         "patchSetId": 5
@@ -135,6 +261,24 @@
       "revId": "41ec9b9500b9b5a4d7c9eef66f41f7c06c9ebb64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a317b1d_4e0f35f9",
+        "filename": "ui/views/controls/textfield/textfield.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-27T20:55:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4f6605a6_d095c2a5",
+      "revId": "41ec9b9500b9b5a4d7c9eef66f41f7c06c9ebb64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
