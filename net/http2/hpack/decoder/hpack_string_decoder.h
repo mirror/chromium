@@ -45,31 +45,8 @@ class HTTP2_EXPORT_PRIVATE HpackStringDecoder {
     kResumeDecodingLength,
   };
 
-  // TODO(jamessynge): Get rid of all but one of the Start and Resume methods
-  // after all of the HPACK decoder is checked in and has been perf tested.
   template <class Listener>
   DecodeStatus Start(DecodeBuffer* db, Listener* cb) {
-    return StartSpecialCaseShort(db, cb);
-  }
-
-  template <class Listener>
-  DecodeStatus StartOnly(DecodeBuffer* db, Listener* cb) {
-    state_ = kStartDecodingLength;
-    return Resume(db, cb);
-  }
-
-  template <class Listener>
-  DecodeStatus StartAndDecodeLength(DecodeBuffer* db, Listener* cb) {
-    DecodeStatus status;
-    if (StartDecodingLength(db, cb, &status)) {
-      state_ = kDecodingString;
-      return DecodeString(db, cb);
-    }
-    return status;
-  }
-
-  template <class Listener>
-  DecodeStatus StartSpecialCaseShort(DecodeBuffer* db, Listener* cb) {
     // Fast decode path is used if the string is under 127 bytes and the
     // entire length of the string is in the decode buffer. More than 83% of
     // string lengths are encoded in just one byte.
