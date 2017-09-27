@@ -1352,6 +1352,7 @@ void RenderWidget::SetScreenRects(const gfx::Rect& view_screen_rect,
 // WebWidgetClient
 
 void RenderWidget::AutoResizeCompositor()  {
+  fprintf(stderr, ">>>>%s\n", __PRETTY_FUNCTION__);
   physical_backing_size_ = gfx::ScaleToCeiledSize(size_, device_scale_factor_);
   // A new LocalSurfaceId will need to be allocated by the browser for the new
   // size.
@@ -2162,8 +2163,13 @@ void RenderWidget::DidAutoResize(const gfx::Size& new_size) {
 
     AutoResizeCompositor();
 
-    if (!resizing_mode_selector_->is_synchronous_mode())
+    if (!resizing_mode_selector_->is_synchronous_mode()) {
       need_update_rect_for_auto_resize_ = true;
+      if (!size_.IsEmpty())
+      DidReceiveCompositorFrameAck();
+    }
+    fprintf(stderr, ">>>needs_udpate_for_auto_resize: %d\n",
+        need_update_rect_for_auto_resize_);
   }
 }
 

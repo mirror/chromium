@@ -11,6 +11,7 @@
 #include "base/bind.h"
 #include "base/callback_helpers.h"
 #include "base/command_line.h"
+#include "base/debug/stack_trace.h"
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
@@ -409,6 +410,7 @@ RenderWidgetHostViewAura::RenderWidgetHostViewAura(
       frame_sink_id_(IsMus() ? viz::FrameSinkId()
                              : host_->AllocateFrameSinkId(is_guest_view_hack_)),
       weak_ptr_factory_(this) {
+  fprintf(stderr, "[%p]>>>%s\n", this, __PRETTY_FUNCTION__);
   if (!is_guest_view_hack_)
     host_->SetView(this);
 
@@ -2137,6 +2139,8 @@ void RenderWidgetHostViewAura::SetSelectionControllerClientForTest(
 }
 
 void RenderWidgetHostViewAura::InternalSetBounds(const gfx::Rect& rect) {
+  //base::debug::StackTrace().Print();
+  fprintf(stderr, ">>>%s\n", __PRETTY_FUNCTION__);
   SnapToPhysicalPixelBoundary();
   // Don't recursively call SetBounds if this bounds update is the result of
   // a Window::SetBoundsInternal call.

@@ -14,6 +14,7 @@
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/containers/hash_tables.h"
+#include "base/debug/stack_trace.h"
 #include "base/i18n/rtl.h"
 #include "base/lazy_instance.h"
 #include "base/location.h"
@@ -772,6 +773,11 @@ bool RenderWidgetHostImpl::GetResizeParams(ResizeParams* resize_params) {
     viz::LocalSurfaceId local_surface_id = view_->GetLocalSurfaceId();
     if (local_surface_id.is_valid())
       resize_params->local_surface_id = local_surface_id;
+    fprintf(stderr, ">>>>ResizeParams(%s, %s)\n",
+        resize_params->physical_backing_size.ToString().c_str(),
+        resize_params->local_surface_id.has_value() ?
+        resize_params->local_surface_id->ToString().c_str() :
+        "No Surface");
   }
 
   const bool size_changed =
@@ -824,6 +830,7 @@ void RenderWidgetHostImpl::WasResized() {
     return;
   }
 
+  base::debug::StackTrace().Print();
   std::unique_ptr<ResizeParams> params(new ResizeParams);
   if (!GetResizeParams(params.get()))
     return;

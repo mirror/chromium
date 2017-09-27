@@ -68,6 +68,7 @@ gfx::NativeView ExtensionViewViews::GetNativeView() {
 void ExtensionViewViews::ResizeDueToAutoResize(
     content::WebContents* web_contents,
     const gfx::Size& new_size) {
+  fprintf(stderr, ">>>%s\n", __PRETTY_FUNCTION__);
   // Don't actually do anything with this information until we have been shown.
   // Size changes will not be honored by lower layers while we are hidden.
   if (!visible()) {

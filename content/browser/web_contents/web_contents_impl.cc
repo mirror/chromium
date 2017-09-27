@@ -2906,6 +2906,7 @@ void WebContentsImpl::UpdatePreferredSize(const gfx::Size& pref_size) {
 void WebContentsImpl::ResizeDueToAutoResize(
     RenderWidgetHostImpl* render_widget_host,
     const gfx::Size& new_size) {
+  fprintf(stderr, ">>>%s\n", __PRETTY_FUNCTION__);
   if (render_widget_host != GetRenderViewHost()->GetWidget())
     return;
 
