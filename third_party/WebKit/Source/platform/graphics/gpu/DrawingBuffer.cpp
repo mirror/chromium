@@ -396,7 +396,14 @@ bool DrawingBuffer::FinishPrepareTextureMailboxGpu(
 #if defined(OS_MACOSX)
     gl_->DescheduleUntilFinishedCHROMIUM();
 #endif
-    gl_->Flush();
+    // It's critical to order the execution of this context's work relative
+    // to other contexts, in particular the compositor. This ordering
+    // barrier used to be a flush, which caused incorrect rendering on some
+    // platforms with very complex WebGL content that wasn't always
+    // properly flushed to the driver. Assuming that ordering barriers will
+    // cause implicit flushes between contexts at the lowest level is the
+    // safest way to guarantee correct rendering.
+    gl_->OrderingBarrierCHROMIUM();
     gl_->GenSyncTokenCHROMIUM(
         fence_sync, color_buffer_for_mailbox->produce_sync_token.GetData());
   }
