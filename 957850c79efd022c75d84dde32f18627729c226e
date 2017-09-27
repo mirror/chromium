@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9defba2a_10c23fc5",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-09-27T15:06:35Z",
+      "side": 1,
+      "message": "oops! Done",
+      "parentUuid": "c9194df8_b27fadba",
+      "revId": "957850c79efd022c75d84dde32f18627729c226e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a207d9a_0992af09",
         "filename": "components/exo/surface.h",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-27T14:34:55Z",
       "side": 1,
       "message": "fyi, would be nice if we could remove this in favor of having aura always use GetHitTestShapeRects",
+      "revId": "957850c79efd022c75d84dde32f18627729c226e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bd05ed0_9b40d5a7",
+        "filename": "components/exo/surface.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-09-27T15:06:35Z",
+      "side": 1,
+      "message": "I see. Right now, GetHitTestShapeRects() is only used in mus. I don\u0027t know if they can be merged into one.",
+      "parentUuid": "3a207d9a_0992af09",
       "revId": "957850c79efd022c75d84dde32f18627729c226e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
