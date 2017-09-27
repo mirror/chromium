@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0354180_f69d9b21",
+        "filename": "third_party/WebKit/Source/core/frame/Deprecation.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-09-27T18:08:04Z",
+      "side": 1,
+      "message": "Why this change?",
+      "revId": "b82348a864c6456c2c447b685a4469404b09ffc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9138a18b_6a76f9fa",
+        "filename": "third_party/WebKit/Source/core/frame/InterventionReport.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-09-27T18:08:04Z",
+      "side": 1,
+      "message": "Why is this necessary?",
+      "revId": "b82348a864c6456c2c447b685a4469404b09ffc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
