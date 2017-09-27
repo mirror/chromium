@@ -34,6 +34,24 @@
       "revId": "73884395acaabb13b4901c8d90a0881b59325611",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c12c888_0924704a",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-27T17:16:47Z",
+      "side": 1,
+      "message": "this might be a good argument for handling recursive behavior at the ui::Layer level. then we can simply reset the flag to the parents flag when it\u0027s added to the layer tree.",
+      "parentUuid": "3c4a9ea1_685c3c4f",
+      "revId": "73884395acaabb13b4901c8d90a0881b59325611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
