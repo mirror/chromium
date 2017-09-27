@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "64738522_57df9663",
+        "filename": "android_webview/browser/net/aw_cookie_store_wrapper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-27T21:00:04Z",
+      "side": 1,
+      "message": "Actually, thinking about it, I think it is.  I thought I could replace it with\n\ntypedef net::CookieStore::CookieChangedCallbackList::Subscription AwCookieChangedSubscription;\n\nbut the problem is that that class would not then be a subclass of CookieStore::CookieChangedSubscription.  So I think I need to keep it this way.",
+      "parentUuid": "41a86107_590bbc1f",
+      "revId": "29e6985ab5ad01c688247082db36f500af2b73a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fcd41d15_7e5951d0",
         "filename": "ios/net/cookies/cookie_store_ios.mm",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-27T18:51:34Z",
       "side": 1,
       "message": "should this be in the anonymous namespace?\nper offline discussion, this class might not be necessary.",
+      "revId": "29e6985ab5ad01c688247082db36f500af2b73a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d587f91_4061f31f",
+        "filename": "ios/net/cookies/cookie_store_ios.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-27T21:00:04Z",
+      "side": 1,
+      "message": "Anonymous namespace: Done.\nClass is necessary as per other comment.",
+      "parentUuid": "fcd41d15_7e5951d0",
       "revId": "29e6985ab5ad01c688247082db36f500af2b73a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1296cf88_d3767f1d",
+        "filename": "net/cookies/cookie_monster.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-27T21:00:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "326626df_b733f050",
+      "revId": "29e6985ab5ad01c688247082db36f500af2b73a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3c527e1_d59c4954",
         "filename": "net/cookies/cookie_monster.cc",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-27T18:51:34Z",
       "side": 1,
       "message": "Can this wrap a Subscription instead of creating a new CookieChangedSubscription class?",
+      "revId": "29e6985ab5ad01c688247082db36f500af2b73a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa27b80e_c39da97b",
+        "filename": "net/cookies/cookie_monster.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-27T21:00:04Z",
+      "side": 1,
+      "message": "I don\u0027t understand the comment?  CookieStore::{AddCallbackForCookie, AddCallbackForAllChanges} return unique_ptrs to a CookieStore::CookieChangedSubscription.  Therefore anything returned from those functions must Be A CookieStore::CookieChangedSubscription.",
+      "parentUuid": "a3c527e1_d59c4954",
       "revId": "29e6985ab5ad01c688247082db36f500af2b73a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "b02d77e5_ced4b6f6",
+        "filename": "net/cookies/cookie_monster.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-27T21:00:04Z",
+      "side": 1,
+      "message": "Resolved this in the opposite way, as it turns out that CookieMonster doesn\u0027t need to be a friend class :-}.",
+      "parentUuid": "aec5bd41_e1303b03",
+      "revId": "29e6985ab5ad01c688247082db36f500af2b73a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa03a2e2_3470358f",
         "filename": "net/cookies/cookie_monster.cc",
         "patchSetId": 5
@@ -98,6 +188,24 @@
       "writtenOn": "2017-09-27T18:51:34Z",
       "side": 1,
       "message": "optional: \"Proxy\" is probably a too overloaded term. I thought of network proxy when i see it. Maybe call it WrappedCallback() instead?",
+      "revId": "29e6985ab5ad01c688247082db36f500af2b73a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6b153e5_428321e4",
+        "filename": "net/cookies/cookie_monster.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-27T21:00:04Z",
+      "side": 1,
+      "message": "I\u0027ve gone with \"WeakCallback\" since I think that will make people think of WeakPtr, which is just about the right semantics.  But if you don\u0027t like that I\u0027m happy to go with WrappedCallback; let me know.",
+      "parentUuid": "fa03a2e2_3470358f",
       "revId": "29e6985ab5ad01c688247082db36f500af2b73a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "a2f3a70d_ca50a0e7",
+        "filename": "net/cookies/cookie_monster.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-27T21:00:04Z",
+      "side": 1,
+      "message": "Thanks for the reminder; done.",
+      "parentUuid": "1426e218_1f96a347",
+      "revId": "29e6985ab5ad01c688247082db36f500af2b73a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34627ed2_9da10321",
         "filename": "net/cookies/cookie_monster_unittest.cc",
         "patchSetId": 5
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "87fbf0ea_c9bf3468",
+        "filename": "net/cookies/cookie_monster_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3219,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-27T21:00:04Z",
+      "side": 1,
+      "message": "Hmmm.  To me, in normal terms, it\u0027s a race.  Generally we won\u0027t get notifications after the subscription is destroyed--if the subscription is destroyed, the callback will be removed from the callback list, and when the CM goes looking for callbacks to call for a particular cookie, it won\u0027t find this cookie listed and hence won\u0027t call the callback.  To get the bad behavior, we have to have the following interleaving (racy) interactions:\n1 A cookie callback is requested via AddCallback*, returning a subscription.\n2 A cookie change is made that triggers a callback, which is posted to the same thread.\n\n3 The subscription is destroyed. \n\n4 The post task from (2) above is executed, executing the callback.\n\nI\u0027ve added comments explaining why it\u0027s a race inside the test.  If you\u0027re still not comfortable, let\u0027s talk it through in person.",
+      "parentUuid": "34627ed2_9da10321",
+      "revId": "29e6985ab5ad01c688247082db36f500af2b73a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e12702a5_66647d39",
         "filename": "net/cookies/cookie_store.h",
         "patchSetId": 5
@@ -149,6 +293,24 @@
       "writtenOn": "2017-09-27T18:51:34Z",
       "side": 1,
       "message": "I am not sure if this is necessary. Can we use Subscription instead?",
+      "revId": "29e6985ab5ad01c688247082db36f500af2b73a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b7e9cd1_ed20ed05",
+        "filename": "net/cookies/cookie_store.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-27T21:00:04Z",
+      "side": 1,
+      "message": "So my shoot-from-the-hip without trying it answer is that that would work.  But it would be implementation inheritance, which I\u0027d like to avoid.  CookieStore implements a subscription system where you register a callback, and it hands you back an object whose lifetime defines the period of time for which the callback may be called.  We currently return an object that in addition says that the *implementation* of that behavior is done through base::CallbackList\u003cCookieChangedCallback\u003e::Subscription, which I think is wrong--it\u0027s both providing more information than necessary about the abstraction boundary, and pushing every implementation of CookieStore to implement the subscription that same way.  \n\nI also bias against having classes where implementation is split between a base class and a derived class, because that means to understand the overall behavior of the class, you need to jump back and forth between the two definitions to figure out what\u0027s going on.  If there\u0027s a clear, clean interface defined between base and derived class, that isn\u0027t so bad, it\u0027s just less common to see classes written that way.  I bias towards using delegation because then it\u0027s very clear which class implements specific functionality.  It wouldn\u0027t be that bad in this case (all Subscription does is implement the lifetime restriction on when callbacks are called, so there isn\u0027t really an interface between the two); it\u0027s more of a general bias.\n\nI\u0027ll note that, simply by the fact that I\u0027m leaving the definition of CookieChangedCallbackList in the typedefs above, I\u0027m not completely removing interface inheritance (that typedef isn\u0027t used anywhere in the interface, and I *am* using it in the implementation of other CookieStore implementations).  So there isn\u0027t any purity here.  But I\u0027m moving away from implementation inheritance and more towards making CookieStore a pure interface.\n\nLet me know if this doesn\u0027t make sense/you feel strongly about not creating another class for abstraction.",
+      "parentUuid": "e12702a5_66647d39",
       "revId": "29e6985ab5ad01c688247082db36f500af2b73a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -178,6 +340,30 @@
     },
     {
       "key": {
+        "uuid": "5ba54124_a9fc02cc",
+        "filename": "net/cookies/cookie_store_unittest.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1838,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-27T21:00:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8f93db3_69ab6125",
+      "range": {
+        "startLine": 1838,
+        "startChar": 50,
+        "endLine": 1838,
+        "endChar": 51
+      },
+      "revId": "29e6985ab5ad01c688247082db36f500af2b73a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ffc126a_3cce8481",
         "filename": "net/cookies/cookie_store_unittest.h",
         "patchSetId": 5
@@ -189,6 +375,24 @@
       "writtenOn": "2017-09-27T18:51:34Z",
       "side": 1,
       "message": "minor nit: Again I don\u0027t see any \"race\" in this test. Notification always happens after subscription is destroyed.",
+      "revId": "29e6985ab5ad01c688247082db36f500af2b73a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8e3f94a_778411ab",
+        "filename": "net/cookies/cookie_store_unittest.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1840,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-27T21:00:04Z",
+      "side": 1,
+      "message": "Same response as above--I\u0027ve added commentary in line in the test making (hopefully) clearer why I think this is a race.",
+      "parentUuid": "2ffc126a_3cce8481",
       "revId": "29e6985ab5ad01c688247082db36f500af2b73a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
