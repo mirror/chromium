@@ -15,6 +15,7 @@
 #include "content/browser/accessibility/accessibility_tree_formatter_blink.h"
 #include "content/browser/accessibility/browser_accessibility_manager.h"
 #include "ui/accessibility/ax_enums.h"
+#include "ui/accessibility/ax_node.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/transform.h"
 
@@ -152,15 +153,13 @@ void AccessibilityTreeFormatterBlink::AddProperties(
   for (int state_index = ui::AX_STATE_NONE;
        state_index <= ui::AX_STATE_LAST;
        ++state_index) {
-    if (state_index == ui::AX_STATE_OFFSCREEN)
-      continue;
     auto state = static_cast<ui::AXState>(state_index);
     if (node.HasState(state))
       dict->SetBoolean(ui::ToString(state), true);
   }
 
   if (offscreen)
-    dict->SetBoolean(ui::ToString(ui::AX_STATE_OFFSCREEN), true);
+    dict->SetBoolean(ui::AX_STATE_OFFSCREEN_FLAG, true);
 
   for (int attr_index = ui::AX_STRING_ATTRIBUTE_NONE;
        attr_index <= ui::AX_STRING_ATTRIBUTE_LAST;
@@ -266,6 +265,15 @@ base::string16 AccessibilityTreeFormatterBlink::ToString(
 
     WriteAttribute(false, ui::ToString(state), &line);
   }
+
+  // Offscreen and Focused states are not in the state list.
+  bool value = false;
+  dict.GetBoolean(ui::AX_STATE_OFFSCREEN_FLAG, &value);
+  if (value)
+    WriteAttribute(false, ui::AX_STATE_OFFSCREEN_FLAG, &line);
+  dict.GetBoolean(ui::AX_STATE_FOCUSED_FLAG, &value);
+  if (value)
+    WriteAttribute(false, ui::AX_STATE_FOCUSED_FLAG, &line);
 
   WriteAttribute(false,
                  FormatCoordinates("location", "boundsX", "boundsY", dict),
