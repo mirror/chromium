@@ -52,6 +52,8 @@ class CORE_EXPORT LayoutNGBlockFlow final : public LayoutBlockFlow {
   void AddOverflowFromChildren() override;
 
  private:
+  void UpdateOutOfFlowBlockLayout();
+
   bool IsOfType(LayoutObjectType) const override;
 
   const NGPhysicalFragment* CurrentFragment() const;
