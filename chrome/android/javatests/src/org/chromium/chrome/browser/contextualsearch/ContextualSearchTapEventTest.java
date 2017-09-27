@@ -86,7 +86,7 @@ public class ContextualSearchTapEventTest {
             WebContents webContents = WebContentsFactory.createWebContents(false, false);
             contentView.setSelectionPopupControllerForTesting(new SelectionPopupController(
                     activity, null, webContents, null, contentView.getRenderCoordinates()));
-            contentView.setSelectionClient(this);
+            contentView.setSelectionClient(this.createSelectionClient(null));
             MockContextualSearchPolicy policy = new MockContextualSearchPolicy();
             setContextualSearchPolicy(policy);
             mTranslateController = new MockedCSTranslateController(activity, policy, null);
@@ -248,7 +248,7 @@ public class ContextualSearchTapEventTest {
             public void run() {
                 // It only makes sense to send dummy data here because we can't easily control
                 // what's in the native context.
-                mContextualSearchManager.selectWordAroundCaretAck(true, 0, 0);
+                mContextualSearchClient.selectWordAroundCaretAck(true, 0, 0);
             }
         });
     }
@@ -272,7 +272,7 @@ public class ContextualSearchTapEventTest {
                 mPanel.setManagementDelegate(mContextualSearchManager);
                 mContextualSearchManager.setContextualSearchPanel(mPanel);
 
-                mContextualSearchClient = mContextualSearchManager;
+                mContextualSearchClient = mContextualSearchManager.createSelectionClient(null);
             }
         });
     }
