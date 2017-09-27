@@ -72,7 +72,10 @@ void CreateBidiRuns(BidiRunList<BidiRun>* bidi_runs,
       if (item.Type() == NGInlineItem::kText ||
           item.Type() == NGInlineItem::kControl) {
         LayoutObject* layout_object = item.GetLayoutObject();
-        DCHECK(layout_object->IsText());
+        if (!layout_object->IsText()) {
+          DCHECK(layout_object->IsLayoutNGListItem());
+          continue;
+        }
         unsigned text_offset =
             text_offsets[physical_fragment.ItemIndexDeprecated()];
         run = new BidiRun(physical_fragment.StartOffset() - text_offset,
@@ -279,7 +282,7 @@ template <typename OffsetMappingBuilder>
 LayoutBox* CollectInlinesInternal(
     LayoutNGBlockFlow* block,
     NGInlineItemsBuilderTemplate<OffsetMappingBuilder>* builder) {
-  builder->EnterBlock(block->Style());
+  builder->EnterBlock(block);
   LayoutObject* node = GetLayoutObjectForFirstChildNode(block);
   LayoutBox* next_box = nullptr;
   while (node) {
