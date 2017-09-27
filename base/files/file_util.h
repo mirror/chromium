@@ -107,6 +107,9 @@ BASE_EXPORT bool CopyFile(const FilePath& from_path, const FilePath& to_path);
 //
 // If there are files existing under to_path, always overwrite. Returns true
 // if successful, false otherwise. Wildcards on the names are not supported.
+// The WithDestinationChecks variant ensures that overwritten files are regular
+// files so we don't write into symlinks or pipes, and is only available on
+// POSIX.
 //
 // This function has the same metadata behavior as CopyFile().
 //
@@ -114,6 +117,11 @@ BASE_EXPORT bool CopyFile(const FilePath& from_path, const FilePath& to_path);
 BASE_EXPORT bool CopyDirectory(const FilePath& from_path,
                                const FilePath& to_path,
                                bool recursive);
+#if defined(OS_POSIX)
+BASE_EXPORT bool CopyDirectoryWithDestinationChecks(const FilePath& from_path,
+                                                    const FilePath& to_path,
+                                                    bool recursive);
+#endif  // defined(OS_POSIX)
 
 // Returns true if the given path exists on the local filesystem,
 // false otherwise.
