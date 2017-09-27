@@ -87,6 +87,24 @@
       "revId": "22431348a24373232ce636043c78b09ba3c99328",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "892cd426_494df76f",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPI.h.tmpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-09-27T04:07:21Z",
+      "side": 1,
+      "message": "Yeah, we will remove them one way or another. What you\u0027re suggesting is one candidate. However we suspect that all the different APIs will overlap in a disorderly way, so a multi-layer inheritance design might not be useful. We\u0027ll might just end up with a custom API subclass for every property, with shared logic in utils.",
+      "parentUuid": "4744ea3d_76d1d14d",
+      "revId": "22431348a24373232ce636043c78b09ba3c99328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
