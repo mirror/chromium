@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b7ca7ae_4b230db7",
+        "filename": "media/gpu/android/android_video_surface_chooser_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-09-27T08:59:07Z",
+      "side": 0,
+      "message": "I got rid of this; I can\u0027t see why we\u0027d want it and none of the tests broke, so I\u0027m assuming we don\u0027t want it.",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 24
+      },
+      "revId": "d42e5c42d2dd4d5174bb953d6bf3ce1a083897e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
