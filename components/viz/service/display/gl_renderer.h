@@ -27,6 +27,7 @@
 
 namespace cc {
 class GLRendererShaderTest;
+class LocalResourceProvider;
 class OutputSurface;
 class Resource;
 class ResourcePool;
@@ -56,9 +57,9 @@ class VIZ_SERVICE_EXPORT GLRenderer : public DirectRenderer {
   GLRenderer(const RendererSettings* settings,
              OutputSurface* output_surface,
              cc::DisplayResourceProvider* resource_provider,
+             cc::LocalResourceProvider* local_resource_provider,
              TextureMailboxDeleter* texture_mailbox_deleter);
   ~GLRenderer() override;
-
   bool use_swap_with_bounds() const { return use_swap_with_bounds_; }
 
   void SwapBuffers(std::vector<ui::LatencyInfo> latency_info) override;
@@ -332,7 +333,7 @@ class VIZ_SERVICE_EXPORT GLRenderer : public DirectRenderer {
   std::vector<std::unique_ptr<PendingAsyncReadPixels>>
       pending_async_read_pixels_;
 
-  std::unique_ptr<cc::ResourceProvider::ScopedWriteLockGL>
+  std::unique_ptr<cc::LocalResourceProvider::ScopedLocalWriteGL>
       current_framebuffer_lock_;
   // This is valid when current_framebuffer_lock_ is not null.
   ResourceFormat current_framebuffer_format_;
