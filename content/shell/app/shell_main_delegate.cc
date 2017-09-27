@@ -77,14 +77,16 @@
 #include "content/shell/common/v8_breakpad_support_win.h"
 #endif
 
-#if defined(OS_POSIX) && !defined(OS_MACOSX)
+#if defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_FUCHSIA)
 #include "components/crash/content/app/breakpad_linux.h"
 #endif
 
 namespace {
 
+#if !defined(OS_FUCHSIA)
 base::LazyInstance<content::ShellCrashReporterClient>::Leaky
     g_shell_crash_client = LAZY_INSTANCE_INITIALIZER;
+#endif
 
 #if defined(OS_WIN)
 // If "Content Shell" doesn't show up in your list of trace providers in
@@ -137,7 +139,7 @@ bool ShellMainDelegate::BasicStartupComplete(int* exit_code) {
 
   v8_breakpad_support::SetUp();
 #endif
-#if defined(OS_LINUX) && !defined(OS_ANDROID)
+#if defined(OS_LINUX) && !defined(OS_ANDROID) && !defined(OS_FUCHSIA)
   breakpad::SetFirstChanceExceptionHandler(v8::V8::TryHandleSignal);
 #endif
 #if defined(OS_MACOSX)
@@ -254,6 +256,7 @@ bool ShellMainDelegate::BasicStartupComplete(int* exit_code) {
 }
 
 void ShellMainDelegate::PreSandboxStartup() {
+#if !defined(OS_FUCHSIA)
 #if defined(ARCH_CPU_ARM_FAMILY) && (defined(OS_ANDROID) || defined(OS_LINUX))
   // Create an instance of the CPU class to parse /proc/cpuinfo and cache
   // cpu_brand info.
@@ -288,6 +291,7 @@ void ShellMainDelegate::PreSandboxStartup() {
     breakpad::InitCrashReporter(process_type);
 #endif
   }
+#endif  // !defined(OS_FUCHSIA)
 
   InitializeResourceBundle();
 }
@@ -316,7 +320,8 @@ int ShellMainDelegate::RunProcess(
              : ShellBrowserMain(main_function_params, browser_runner_);
 }
 
-#if defined(OS_POSIX) && !defined(OS_ANDROID) && !defined(OS_MACOSX)
+#if defined(OS_POSIX) && !defined(OS_ANDROID) && !defined(OS_MACOSX) && \
+    !defined(OS_FUCHSIA)
 void ShellMainDelegate::ZygoteForked() {
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kEnableCrashReporter)) {
