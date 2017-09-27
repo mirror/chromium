@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c061f0a4_372fe487",
+        "filename": "ash/system/web_notification/inactive_user_notification_blocker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-27T00:17:07Z",
+      "side": 1,
+      "message": "\u003e Evan, what do you think about changing this to check if there\u0027s more than one user currently logged in?\n\nseems fine to me\n\n\u003e Or checking to see that the session is active?\n\nnot sure what this means (what is \"the session\" in this case?)",
+      "parentUuid": "d5d4bd30_7f4b0fab",
+      "revId": "63f7fb22d851fdb02263f19e0331cda873f182f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f33759ab_ffebe0f1",
         "filename": "ash/system/web_notification/inactive_user_notification_blocker.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-27T00:03:54Z",
       "side": 1,
       "message": "Evan, do you know if profile_id is guaranteed to be set? I cannot assure myself that that is true from reading the code. If it\u0027s not true, then any code that fails to set profile_id will have its notification blocked, but only if multiprofile is not available (like there\u0027s only one account on device).\n\nThere seems to be lots of code in ash that uses system_notifier::CreateSystemNotification() but doesn\u0027t set a profile_id.\n\nThis might also be fixed if we only used this class when there actually were multiple user sessions.",
+      "revId": "63f7fb22d851fdb02263f19e0331cda873f182f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "565d1550_edc16727",
+        "filename": "ash/system/web_notification/inactive_user_notification_blocker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-27T00:17:07Z",
+      "side": 1,
+      "message": "\u003e Evan, do you know if profile_id is guaranteed to be set? I cannot assure myself that that is true from reading the code. If it\u0027s not true, then any code that fails to set profile_id will have its notification blocked, but only if multiprofile is not available (like there\u0027s only one account on device).\n\u003e \n\u003e There seems to be lots of code in ash that uses system_notifier::CreateSystemNotification() but doesn\u0027t set a profile_id.\n\u003e \n\nI think you might be right, that it is not always set, but the check on L26 allows system notifications to show anyway.\n\nIf there is some notification that is a SYSTEM_COMPONENT type and isn\u0027t on that list in notifier_settings.cc, then this might behave strangely for it. Thus it might be a good idea to return false for empty profile_id.\n\n\u003e This might also be fixed if we only used this class when there actually were multiple user sessions.\n\nwouldn\u0027t it still be broken for the multi user case then?",
+      "parentUuid": "f33759ab_ffebe0f1",
       "revId": "63f7fb22d851fdb02263f19e0331cda873f182f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
