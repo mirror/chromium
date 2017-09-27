@@ -22,6 +22,30 @@
       "revId": "f9e592ef5e3c526fde21b2eb1171ec226a8accdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05df893b_e4cf613d",
+        "filename": "chrome/browser/ssl/security_state_tab_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-27T00:34:54Z",
+      "side": 1,
+      "message": "I think in this case, the `true` count is the baseline. We\u0027re adding this histogram to act as a baseline to interstitial.ssl.did_user_revoke_decision2 because we want to know how often did users re-enable warnings after visiting sites that had a warning. So interstitial.ssl.did_user_revoke_decision2 is the numerator and the true count of interstitial.ssl.visited_site_after_warning is the denominator.\n\nIf that logic is sound, then Carlos, maybe you can add a comment here explaining that this is the baseline to interstitial.ssl.did_user_revoke_decision2.",
+      "parentUuid": "71a799bf_236a6aea",
+      "range": {
+        "startLine": 150,
+        "startChar": 73,
+        "endLine": 150,
+        "endChar": 77
+      },
+      "revId": "f9e592ef5e3c526fde21b2eb1171ec226a8accdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
