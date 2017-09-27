@@ -1492,6 +1492,8 @@ source_set("browser") {
     "service_worker/service_worker_script_url_loader.h",
     "service_worker/service_worker_script_url_loader_factory.cc",
     "service_worker/service_worker_script_url_loader_factory.h",
+    "service_worker/service_worker_state_converters.cc",
+    "service_worker/service_worker_state_converters.h",
     "service_worker/service_worker_storage.cc",
     "service_worker/service_worker_storage.h",
     "service_worker/service_worker_unregister_job.cc",
