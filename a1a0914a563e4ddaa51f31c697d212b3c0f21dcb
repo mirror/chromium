@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5c5892b7_6064f56e",
+        "filename": "infra/scripts/legacy/scripts/slave/chromium/sizes.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1208920
+      },
+      "writtenOn": "2017-09-27T19:25:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8084366c_f4e55a14",
+      "range": {
+        "startLine": 193,
+        "startChar": 55,
+        "endLine": 193,
+        "endChar": 62
+      },
+      "revId": "a1a0914a563e4ddaa51f31c697d212b3c0f21dcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3333bbe7_6699df41",
         "filename": "infra/scripts/legacy/scripts/slave/chromium/sizes.py",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "a1a0914a563e4ddaa51f31c697d212b3c0f21dcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a3e418b_abb4cccb",
+        "filename": "infra/scripts/legacy/scripts/slave/chromium/sizes.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1208920
+      },
+      "writtenOn": "2017-09-27T19:25:24Z",
+      "side": 1,
+      "message": "Good point. Done.",
+      "parentUuid": "3333bbe7_6699df41",
+      "range": {
+        "startLine": 198,
+        "startChar": 15,
+        "endLine": 198,
+        "endChar": 16
+      },
+      "revId": "a1a0914a563e4ddaa51f31c697d212b3c0f21dcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
