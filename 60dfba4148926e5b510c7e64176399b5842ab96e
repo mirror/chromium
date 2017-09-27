@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "572f084b_a3cdb5a3",
+        "filename": "chrome/browser/net/predictor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-09-27T14:34:47Z",
+      "side": 1,
+      "message": "The expression is correct. Probably, a function name AreOtherPreconnectsDisabled() is confusing because it actually means that net::Predictor should be disabled. I could rename it to IsNetPredictorDisabled() if it sounds better.\n\nI\u0027ve added a test to predictor_unittests.cc and I\u0027ve added a check that the net::Predictor is disabled/enabled correspondingly to the LoadingPredictor settings in loading_predictor_config_unittest.cc",
+      "parentUuid": "5a0a38c2_6b24534c",
+      "revId": "60dfba4148926e5b510c7e64176399b5842ab96e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27fea674_bd1c090b",
         "filename": "chrome/browser/net/predictor.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "60dfba4148926e5b510c7e64176399b5842ab96e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a30daee4_87e83a62",
+        "filename": "chrome/browser/net/predictor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-09-27T14:34:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27fea674_bd1c090b",
+      "revId": "60dfba4148926e5b510c7e64176399b5842ab96e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
