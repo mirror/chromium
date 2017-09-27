@@ -31,6 +31,7 @@ class AllocationTracker : public MemlogReceiver {
                std::vector<Address>&& bt,
                std::string&& context) override;
   void OnFree(const FreePacket& free_packet) override;
+  void OnBarrier(const BarrierPacket& barrier_packet) override;
   void OnComplete() override;
 
   const AllocationEventSet& live_allocs() const { return live_allocs_; }
@@ -39,8 +40,15 @@ class AllocationTracker : public MemlogReceiver {
   // Returns the aggregated allocation counts currently live.
   AllocationCountMap GetCounts() const;
 
+  // Registers the given closure to be executed when the given barrier ID is
+  // received from the process. This will only trigger for a barrier received
+  // after registration.
+  void NotifyOnBarrier(uint32_t barrier_id, base::OnceClosure closure);
+
  private:
   CompleteCallback complete_callback_;
+
+  std::map<uint32_t, base::OnceClosure> registered_barrier_callbacks_;
 
   BacktraceStorage* backtrace_storage_;
 
