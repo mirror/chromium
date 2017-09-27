@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9977578_97d83546",
+        "filename": "sandbox/mac/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-09-27T20:10:51Z",
+      "side": 1,
+      "message": "Are we OK with using base in this or should we drop it from the final version?",
+      "revId": "a061cce4879b258e29e626179193f1113d9c2bf8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
