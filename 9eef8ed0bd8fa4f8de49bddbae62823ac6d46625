@@ -70,6 +70,24 @@
       "revId": "9eef8ed0bd8fa4f8de49bddbae62823ac6d46625",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b916508_dbd34b57",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1118373
+      },
+      "writtenOn": "2017-09-27T05:38:03Z",
+      "side": 1,
+      "message": "With external startup data, both .bin files need to be shipped.",
+      "parentUuid": "45c75360_7b0cc30e",
+      "revId": "9eef8ed0bd8fa4f8de49bddbae62823ac6d46625",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
