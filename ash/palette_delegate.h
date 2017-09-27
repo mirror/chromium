@@ -57,7 +57,7 @@ class PaletteDelegate {
 
   // Shows the metalayer. |done| is called when the metalayer session has
   // finished.
-  virtual void ShowMetalayer(base::OnceClosure done) = 0;
+  virtual void ShowMetalayer(base::OnceClosure done, bool via_button) = 0;
 
   // Hides the metalayer.
   virtual void HideMetalayer() = 0;
