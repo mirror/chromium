@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7af4cee_e43e7301",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-09-27T03:45:22Z",
+      "side": 1,
+      "message": "Nit; you might want to remove this line.",
+      "revId": "9e4bbb9c9eb8360a957f8a8cb9e914bc2258f188",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
