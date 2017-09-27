@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fefd7af0_85e283ef",
+        "filename": "chrome/browser/extensions/api/omnibox/omnibox_api_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-27T14:20:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ee6593a_8508e27c",
+      "revId": "feb1b41c299b6f63e4331e2f78dd0af0154de192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e79cc827_9bbc4698",
         "filename": "chrome/browser/extensions/api/omnibox/omnibox_api_interactive_test.cc",
         "patchSetId": 11
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "15155b42_67f8e7c0",
+        "filename": "chrome/browser/extensions/api/omnibox/omnibox_api_interactive_test.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-27T14:20:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e79cc827_9bbc4698",
+      "revId": "feb1b41c299b6f63e4331e2f78dd0af0154de192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1835df80_fc5aeacc",
         "filename": "components/omnibox/browser/autocomplete_input.h",
         "patchSetId": 11
@@ -50,6 +86,24 @@
       "revId": "feb1b41c299b6f63e4331e2f78dd0af0154de192",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d829d7b0_655b5675",
+        "filename": "components/omnibox/browser/autocomplete_input.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-27T14:20:08Z",
+      "side": 1,
+      "message": "I tried fixing 121 too. Let me know if it\u0027s wrong.",
+      "parentUuid": "1835df80_fc5aeacc",
+      "revId": "feb1b41c299b6f63e4331e2f78dd0af0154de192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "fe9c266b_d6e92728",
+        "filename": "components/omnibox/browser/autocomplete_input.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-27T14:20:08Z",
+      "side": 1,
+      "message": "It just means \u0027the easily-assignable fields that the constructor sets (vs derived ones)\u0027.",
+      "parentUuid": "72289414_63bf0880",
+      "range": {
+        "startLine": 232,
+        "startChar": 9,
+        "endLine": 232,
+        "endChar": 20
+      },
+      "revId": "feb1b41c299b6f63e4331e2f78dd0af0154de192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae2ed5e7_66c18cd0",
         "filename": "components/omnibox/browser/keyword_provider_unittest.cc",
         "patchSetId": 11
@@ -90,6 +168,24 @@
       "revId": "feb1b41c299b6f63e4331e2f78dd0af0154de192",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55a402b8_66a66266",
+        "filename": "components/omnibox/browser/keyword_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-27T14:20:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae2ed5e7_66c18cd0",
+      "revId": "feb1b41c299b6f63e4331e2f78dd0af0154de192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "561291f6_cd6e6e17",
+        "filename": "components/omnibox/browser/keyword_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-27T14:20:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6375398_c832cfed",
+      "revId": "feb1b41c299b6f63e4331e2f78dd0af0154de192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3988dfae_b52fddae",
         "filename": "components/omnibox/browser/omnibox_edit_model.cc",
         "patchSetId": 11
@@ -124,6 +238,24 @@
       "revId": "feb1b41c299b6f63e4331e2f78dd0af0154de192",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea0b39cb_0298a8c1",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-27T14:20:08Z",
+      "side": 1,
+      "message": "Good eyes.",
+      "parentUuid": "3988dfae_b52fddae",
+      "revId": "feb1b41c299b6f63e4331e2f78dd0af0154de192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -150,6 +282,30 @@
     },
     {
       "key": {
+        "uuid": "f0a85d4a_a26b077a",
+        "filename": "components/omnibox/browser/physical_web_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-27T14:20:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec68bcb0_364cf5b7",
+      "range": {
+        "startLine": 334,
+        "startChar": 46,
+        "endLine": 334,
+        "endChar": 0
+      },
+      "revId": "feb1b41c299b6f63e4331e2f78dd0af0154de192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e60ccc51_0b5be1df",
         "filename": "components/omnibox/browser/zero_suggest_provider_unittest.cc",
         "patchSetId": 11
@@ -170,6 +326,30 @@
       "revId": "feb1b41c299b6f63e4331e2f78dd0af0154de192",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "868b9516_7940897a",
+        "filename": "components/omnibox/browser/zero_suggest_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-27T14:20:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e60ccc51_0b5be1df",
+      "range": {
+        "startLine": 247,
+        "startChar": 46,
+        "endLine": 247,
+        "endChar": 0
+      },
+      "revId": "feb1b41c299b6f63e4331e2f78dd0af0154de192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
