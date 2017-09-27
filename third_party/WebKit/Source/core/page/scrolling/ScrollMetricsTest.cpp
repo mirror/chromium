@@ -61,7 +61,7 @@ class ScrollBeginEventBuilder : public WebGestureEvent {
     x = global_x = position.X();
     y = global_y = position.Y();
     data.scroll_begin.delta_y_hint = delta.Y();
-    source_device = device;
+    source_device_ = device;
     frame_scale_ = 1;
   }
 };

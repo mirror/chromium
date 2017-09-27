@@ -46,10 +46,10 @@ class TapEventBuilder : public WebGestureEvent {
   TapEventBuilder(IntPoint position, int tap_count)
       : WebGestureEvent(WebInputEvent::kGestureTap,
                         WebInputEvent::kNoModifiers,
-                        TimeTicks::Now().InSeconds()) {
+                        TimeTicks::Now().InSeconds(),
+                        kWebGestureDeviceTouchscreen) {
     x = global_x = position.X();
     y = global_y = position.Y();
-    source_device = kWebGestureDeviceTouchscreen;
     data.tap.tap_count = tap_count;
     data.tap.width = 5;
     data.tap.height = 5;
@@ -63,7 +63,7 @@ class LongPressEventBuilder : public WebGestureEvent {
     type_ = WebInputEvent::kGestureLongPress;
     x = global_x = position.X();
     y = global_y = position.Y();
-    source_device = kWebGestureDeviceTouchscreen;
+    source_device_ = kWebGestureDeviceTouchscreen;
     data.long_press.width = 5;
     data.long_press.height = 5;
     frame_scale_ = 1;

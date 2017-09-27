@@ -529,7 +529,6 @@ void RenderWidgetHostViewEventHandler::OnGestureEvent(ui::GestureEvent* event) {
     // event to stop any in-progress flings.
     blink::WebGestureEvent fling_cancel = gesture;
     fling_cancel.SetType(blink::WebInputEvent::kGestureFlingCancel);
-    fling_cancel.source_device = blink::kWebGestureDeviceTouchscreen;
     if (ShouldRouteEvent(event)) {
       host_->delegate()->GetInputEventRouter()->RouteGestureEvent(
           host_view_, &fling_cancel,

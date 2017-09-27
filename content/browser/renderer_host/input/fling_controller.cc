@@ -40,10 +40,10 @@ bool FlingController::ShouldForwardForTapSuppression(
     const GestureEventWithLatencyInfo& gesture_event) {
   switch (gesture_event.event.GetType()) {
     case WebInputEvent::kGestureFlingCancel:
-      if (gesture_event.event.source_device ==
+      if (gesture_event.event.SourceDevice() ==
           blink::kWebGestureDeviceTouchscreen)
         touchscreen_tap_suppression_controller_.GestureFlingCancel();
-      else if (gesture_event.event.source_device ==
+      else if (gesture_event.event.SourceDevice() ==
                blink::kWebGestureDeviceTouchpad)
         touchpad_tap_suppression_controller_.GestureFlingCancel();
       return true;
@@ -56,7 +56,7 @@ bool FlingController::ShouldForwardForTapSuppression(
     case WebInputEvent::kGestureLongPress:
     case WebInputEvent::kGestureLongTap:
     case WebInputEvent::kGestureTwoFingerTap:
-      if (gesture_event.event.source_device ==
+      if (gesture_event.event.SourceDevice() ==
           blink::kWebGestureDeviceTouchscreen) {
         return !touchscreen_tap_suppression_controller_.FilterTapEvent(
             gesture_event);

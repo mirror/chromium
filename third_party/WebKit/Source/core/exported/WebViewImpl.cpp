@@ -795,11 +795,11 @@ void WebViewImpl::ResolveTapDisambiguation(double timestamp_seconds,
                                            bool is_long_press) {
   WebGestureEvent event(is_long_press ? WebInputEvent::kGestureLongPress
                                       : WebInputEvent::kGestureTap,
-                        WebInputEvent::kNoModifiers, timestamp_seconds);
+                        WebInputEvent::kNoModifiers, timestamp_seconds,
+                        blink::kWebGestureDeviceTouchscreen);
 
   event.x = tap_viewport_offset.x;
   event.y = tap_viewport_offset.y;
-  event.source_device = blink::kWebGestureDeviceTouchscreen;
 
   {
     // Compute UMA stat about whether the node selected by disambiguation UI was
@@ -2072,7 +2072,7 @@ WebInputEventResult WebViewImpl::HandleInputEvent(
     // For touchpad gestures synthesize a Windows-like wheel event
     // to send to any handlers that may exist. Not necessary for touchscreen
     // as touch events would have already been sent for the gesture.
-    if (pinch_event.source_device == kWebGestureDeviceTouchpad) {
+    if (pinch_event.SourceDevice() == kWebGestureDeviceTouchpad) {
       result = HandleSyntheticWheelFromTouchpadPinchEvent(pinch_event);
       if (result != WebInputEventResult::kNotHandled)
         return result;
@@ -3566,13 +3566,12 @@ WebHitTestResult WebViewImpl::HitTestResultForTap(
   if (!page_->MainFrame()->IsLocalFrame())
     return HitTestResult();
 
-  WebGestureEvent tap_event(WebInputEvent::kGestureTap,
-                            WebInputEvent::kNoModifiers,
-                            WTF::MonotonicallyIncreasingTime());
+  WebGestureEvent tap_event(
+      WebInputEvent::kGestureTap, WebInputEvent::kNoModifiers,
+      WTF::MonotonicallyIncreasingTime(), kWebGestureDeviceTouchscreen);
   tap_event.x = tap_point_window_pos.x;
   tap_event.y = tap_point_window_pos.y;
   // GestureTap is only ever from a touchscreen.
-  tap_event.source_device = kWebGestureDeviceTouchscreen;
   tap_event.data.tap.tap_count = 1;
   tap_event.data.tap.width = tap_area.width;
   tap_event.data.tap.height = tap_area.height;

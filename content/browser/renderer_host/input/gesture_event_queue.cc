@@ -225,7 +225,7 @@ void GestureEventQueue::AckGestureEventToClient(
   if (event_with_latency.event.GetType() ==
       WebInputEvent::kGestureFlingCancel) {
     fling_controller_.GestureFlingCancelAck(
-        event_with_latency.event.source_device, processed);
+        event_with_latency.event.SourceDevice(), processed);
   }
 }
 
@@ -259,7 +259,7 @@ void GestureEventQueue::LegacyProcessGestureAck(
   const bool processed = (INPUT_EVENT_ACK_STATE_CONSUMED == ack_result);
   if (type == WebInputEvent::kGestureFlingCancel) {
     fling_controller_.GestureFlingCancelAck(
-        event_with_latency.event.source_device, processed);
+        event_with_latency.event.SourceDevice(), processed);
   }
   DCHECK_LT(event_index, coalesced_gesture_events_.size());
   coalesced_gesture_events_.erase(coalesced_gesture_events_.begin() +

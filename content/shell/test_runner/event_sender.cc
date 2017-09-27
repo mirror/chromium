@@ -246,7 +246,6 @@ void InitMouseEvent(WebMouseEvent::Button b,
 
 void InitGestureEventFromMouseWheel(const WebMouseWheelEvent& wheel_event,
                                     WebGestureEvent* gesture_event) {
-  gesture_event->source_device = blink::kWebGestureDeviceTouchpad;
   gesture_event->x = wheel_event.PositionInWidget().x;
   gesture_event->y = wheel_event.PositionInWidget().y;
   gesture_event->global_x = wheel_event.PositionInScreen().x;
@@ -1934,11 +1933,11 @@ void EventSender::DumpFilenameBeingDragged() {
 
 void EventSender::GestureFlingCancel() {
   WebGestureEvent event(WebInputEvent::kGestureFlingCancel,
-                        WebInputEvent::kNoModifiers, GetCurrentEventTimeSec());
+                        WebInputEvent::kNoModifiers, GetCurrentEventTimeSec(),
+                        blink::kWebGestureDeviceTouchpad);
   // Generally it won't matter what device we use here, and since it might
   // be cumbersome to expect all callers to specify a device, we'll just
   // choose Touchpad here.
-  event.source_device = blink::kWebGestureDeviceTouchpad;
 
   if (force_layout_on_events_)
     widget()->UpdateAllLifecyclePhases();
@@ -1951,21 +1950,23 @@ void EventSender::GestureFlingStart(float x,
                                     float velocity_x,
                                     float velocity_y,
                                     gin::Arguments* args) {
-  WebGestureEvent event(WebInputEvent::kGestureFlingStart,
-                        WebInputEvent::kNoModifiers, GetCurrentEventTimeSec());
-
   std::string device_string;
   if (!args->PeekNext().IsEmpty() && args->PeekNext()->IsString())
     args->GetNext(&device_string);
 
+  blink::WebGestureDevice source_device;
   if (device_string == kSourceDeviceStringTouchpad) {
-    event.source_device = blink::kWebGestureDeviceTouchpad;
+    source_device = blink::kWebGestureDeviceTouchpad;
   } else if (device_string == kSourceDeviceStringTouchscreen) {
-    event.source_device = blink::kWebGestureDeviceTouchscreen;
+    source_device = blink::kWebGestureDeviceTouchscreen;
   } else {
     args->ThrowError();
     return;
   }
+
+  WebGestureEvent event(WebInputEvent::kGestureFlingStart,
+                        WebInputEvent::kNoModifiers, GetCurrentEventTimeSec(),
+                        source_device);
 
   float max_start_velocity = std::max(fabs(velocity_x), fabs(velocity_y));
   if (!max_start_velocity) {
@@ -2307,13 +2308,11 @@ void EventSender::SendCurrentTouchEvent(WebInputEvent::Type type,
 }
 
 void EventSender::GestureEvent(WebInputEvent::Type type, gin::Arguments* args) {
-  WebGestureEvent event(type, WebInputEvent::kNoModifiers,
-                        GetCurrentEventTimeSec());
-
   // If the first argument is a string, it is to specify the device, otherwise
   // the device is assumed to be a touchscreen (since most tests were written
   // assuming this).
-  event.source_device = blink::kWebGestureDeviceTouchscreen;
+  blink::WebGestureDevice source_device = blink::kWebGestureDeviceTouchscreen;
+
   if (!args->PeekNext().IsEmpty() && args->PeekNext()->IsString()) {
     std::string device_string;
     if (!args->GetNext(&device_string)) {
@@ -2321,14 +2320,17 @@ void EventSender::GestureEvent(WebInputEvent::Type type, gin::Arguments* args) {
       return;
     }
     if (device_string == kSourceDeviceStringTouchpad) {
-      event.source_device = blink::kWebGestureDeviceTouchpad;
+      source_device = blink::kWebGestureDeviceTouchpad;
     } else if (device_string == kSourceDeviceStringTouchscreen) {
-      event.source_device = blink::kWebGestureDeviceTouchscreen;
+      source_device = blink::kWebGestureDeviceTouchscreen;
     } else {
       args->ThrowError();
       return;
     }
   }
+
+  WebGestureEvent event(type, WebInputEvent::kNoModifiers,
+                        GetCurrentEventTimeSec(), source_device);
 
   double x;
   double y;
@@ -2829,9 +2831,9 @@ WebInputEventResult EventSender::HandleInputEventOnViewOrPopup(
 
 void EventSender::SendGesturesForMouseWheelEvent(
     const WebMouseWheelEvent wheel_event) {
-  WebGestureEvent begin_event(WebInputEvent::kGestureScrollBegin,
-                              wheel_event.GetModifiers(),
-                              GetCurrentEventTimeSec());
+  WebGestureEvent begin_event(
+      WebInputEvent::kGestureScrollBegin, wheel_event.GetModifiers(),
+      GetCurrentEventTimeSec(), blink::kWebGestureDeviceTouchpad);
   InitGestureEventFromMouseWheel(wheel_event, &begin_event);
   begin_event.data.scroll_begin.delta_x_hint = wheel_event.delta_x;
   begin_event.data.scroll_begin.delta_y_hint = wheel_event.delta_y;
@@ -2858,9 +2860,9 @@ void EventSender::SendGesturesForMouseWheelEvent(
 
   HandleInputEventOnViewOrPopup(begin_event);
 
-  WebGestureEvent update_event(WebInputEvent::kGestureScrollUpdate,
-                               wheel_event.GetModifiers(),
-                               GetCurrentEventTimeSec());
+  WebGestureEvent update_event(
+      WebInputEvent::kGestureScrollUpdate, wheel_event.GetModifiers(),
+      GetCurrentEventTimeSec(), blink::kWebGestureDeviceTouchpad);
   InitGestureEventFromMouseWheel(wheel_event, &update_event);
   update_event.data.scroll_update.delta_x =
       begin_event.data.scroll_begin.delta_x_hint;
@@ -2873,9 +2875,9 @@ void EventSender::SendGesturesForMouseWheelEvent(
     widget()->UpdateAllLifecyclePhases();
   HandleInputEventOnViewOrPopup(update_event);
 
-  WebGestureEvent end_event(WebInputEvent::kGestureScrollEnd,
-                            wheel_event.GetModifiers(),
-                            GetCurrentEventTimeSec());
+  WebGestureEvent end_event(
+      WebInputEvent::kGestureScrollEnd, wheel_event.GetModifiers(),
+      GetCurrentEventTimeSec(), blink::kWebGestureDeviceTouchpad);
   InitGestureEventFromMouseWheel(wheel_event, &end_event);
   end_event.data.scroll_end.delta_units =
       begin_event.data.scroll_begin.delta_hint_units;

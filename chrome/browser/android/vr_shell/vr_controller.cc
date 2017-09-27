@@ -287,7 +287,8 @@ std::unique_ptr<GestureList> VrController::DetectGestures() {
     UpdateOverallVelocity();
 
   UpdateGestureFromTouchInfo(gesture.get());
-  gesture->source_device = blink::kWebGestureDeviceTouchpad;
+
+  gesture->SetSourceDevice(blink::kWebGestureDeviceTouchpad);
   gesture_list->push_back(std::move(gesture));
 
   if (gesture_list->back()->GetType() ==
@@ -297,8 +298,8 @@ std::unique_ptr<GestureList> VrController::DetectGestures() {
       std::unique_ptr<blink::WebGestureEvent> fling(
           new blink::WebGestureEvent(blink::WebInputEvent::kGestureFlingStart,
                                      blink::WebInputEvent::kNoModifiers,
-                                     gesture_list->back()->TimeStampSeconds()));
-      fling->source_device = blink::kWebGestureDeviceTouchpad;
+                                     gesture_list->back()->TimeStampSeconds(),
+                                     blink::kWebGestureDeviceTouchpad));
       if (IsHorizontalGesture()) {
         fling->data.fling_start.velocity_x =
             last_velocity_.x() * kDisplacementScaleFactor;

@@ -113,7 +113,7 @@ TEST(WebInputEventUtilTest, ScrollUpdateConversion) {
   EXPECT_EQ(gfx::ToFlooredInt(pos.y()), web_event.y);
   EXPECT_EQ(gfx::ToFlooredInt(raw_pos.x()), web_event.global_x);
   EXPECT_EQ(gfx::ToFlooredInt(raw_pos.y()), web_event.global_y);
-  EXPECT_EQ(blink::kWebGestureDeviceTouchscreen, web_event.source_device);
+  EXPECT_EQ(blink::kWebGestureDeviceTouchscreen, web_event.SourceDevice());
   EXPECT_EQ(delta.x(), web_event.data.scroll_update.delta_x);
   EXPECT_EQ(delta.y(), web_event.data.scroll_update.delta_y);
   EXPECT_TRUE(
