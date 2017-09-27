@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a738fac_af0d64c3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-27T02:02:44Z",
+      "side": 1,
+      "message": "nit: I think it\u0027s a little bit cleaner to call launchTabInBrowserActionsModel() outside of the else block since the if contains an early return",
+      "range": {
+        "startLine": 152,
+        "startChar": 9,
+        "endLine": 154,
+        "endChar": 9
+      },
+      "revId": "3beacf212249ccc0e811415848fa4d75ae74f472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc2920a5_31e2f023",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabCreatorManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-27T02:02:44Z",
+      "side": 1,
+      "message": "Comment from a previous patchset that I think got missed:\n\nDo you expect this method and #launchUrl will be needed in the future? If not, then these can have empty implementations (possibly throwing an exception) and return false to indicate they\u0027re not being used.",
+      "range": {
+        "startLine": 69,
+        "startChar": 8,
+        "endLine": 69,
+        "endChar": 48
+      },
+      "revId": "3beacf212249ccc0e811415848fa4d75ae74f472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec8a3762_6ad89609",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-27T02:02:44Z",
+      "side": 1,
+      "message": "I\u0027m concerned that this isn\u0027t going to do what it\u0027s intended to do. Based on how this method is set-up, I would expect multiple onTabCreated callbacks to be supported. Since the runnable is created the first time #openNewTab() is called, I think that only the first onTabCreated callback is going to be used.\n\nCan we side step this and use TabModelObserver#didAddTab() to finish work in BrowserActionService? If that doesn\u0027t work, maybe we could keep a parallel list of callbacks, use a hashmap, or create a simple object to store all of the data needed in a single list.",
+      "range": {
+        "startLine": 124,
+        "startChar": 20,
+        "endLine": 127,
+        "endChar": 41
+      },
+      "revId": "3beacf212249ccc0e811415848fa4d75ae74f472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
