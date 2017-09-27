@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7df2c10_4e11e8be",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerGlobalScope.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-27T15:26:57Z",
+      "side": 1,
+      "message": "These two lines are necessary to resolve ambiguity that two base classes define the same signature\u0027s function: TraceWrappers.  Without this definition, it\u0027s ambiguous what WorkerGlobalScope::TraceWrapper is.",
+      "revId": "c07e7c4ab4e61ce151f02688b7f54c6228ba58ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
