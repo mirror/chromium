@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6658ddb_51171b2d",
+        "filename": "chrome/browser/chromeos/login/screens/user_image_screen.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-27T18:49:58Z",
+      "side": 1,
+      "message": "This just states what the code does, it doesn\u0027t explain why. e.g.\n// Active Directory accounts do not use a profile image so skip the\n// download and inform the UI tha no profile image exists.",
+      "revId": "00feb52b9214dc0717acaf184f821387e0b97130",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64ee03a8_f7154ec3",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_screen_user_image.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-27T18:49:58Z",
+      "side": 1,
+      "message": "s/should hide/hides/ (unless it doesn\u0027t, then this code wouldn\u0027t work as indtended :) )",
+      "revId": "00feb52b9214dc0717acaf184f821387e0b97130",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
