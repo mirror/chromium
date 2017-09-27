@@ -11,16 +11,12 @@
 
 namespace blink {
 
-class Element;
-class CompositorMutation;
-
 class CustomCompositorAnimations final {
   DISALLOW_NEW();
   WTF_MAKE_NONCOPYABLE(CustomCompositorAnimations);
 
  public:
   CustomCompositorAnimations() {}
-  void ApplyUpdate(Element&, const CompositorMutation&);
 
   DEFINE_INLINE_TRACE() { visitor->Trace(animation_); }
 

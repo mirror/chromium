@@ -6,8 +6,8 @@
 #define CustomCompositorAnimationManager_h
 
 #include "core/CoreExport.h"
-#include "platform/graphics/CompositorMutation.h"
 #include "platform/graphics/CompositorMutationsTarget.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
@@ -18,7 +18,6 @@ class CORE_EXPORT CustomCompositorAnimationManager
  public:
   CustomCompositorAnimationManager();
   ~CustomCompositorAnimationManager() override;
-  void ApplyMutations(CompositorMutations*) override;
 };
 
 }  // namespace blink
