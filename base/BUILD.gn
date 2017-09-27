@@ -1586,6 +1586,7 @@ component("base") {
       "process/process_posix.cc",
       "sync_socket.h",
       "sync_socket_posix.cc",
+      "synchronization/waitable_event_watcher_mac.cc",
     ]
     sources += [
       "base_paths_mac.h",
@@ -2316,6 +2317,7 @@ test("base_unittests") {
       "process/process_unittest.cc",
       "process/process_util_unittest.cc",
       "sync_socket_unittest.cc",
+      "synchronization/waitable_event_watcher_unittest.cc",
     ]
 
     # Pull in specific Mac files for iOS (which have been filtered out by file
