@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "503c2094_497eb30d",
+        "filename": "content/test/fuzzer/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-09-27T14:59:05Z",
+      "side": 0,
+      "message": "is this still an issue?",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 26
+      },
+      "revId": "fc00a8a9561025c0690924d51ada21a903770ba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
