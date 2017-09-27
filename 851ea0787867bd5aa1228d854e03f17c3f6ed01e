@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1b79ac4d_0177ec9c",
+        "filename": "third_party/WebKit/Source/modules/media_controls/BUILD.gn",
+        "patchSetId": 23
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-09-27T13:35:54Z",
+      "side": 1,
+      "message": "Yes it\u0027s used in MediaControlsResourceLoader.cpp",
+      "parentUuid": "fef89e92_0e090fe8",
+      "revId": "851ea0787867bd5aa1228d854e03f17c3f6ed01e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ba6595f_c26a7001",
         "filename": "third_party/WebKit/Source/modules/media_controls/DEPS",
         "patchSetId": 23
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-27T11:45:09Z",
       "side": 1,
       "message": "Is this needed?",
+      "revId": "851ea0787867bd5aa1228d854e03f17c3f6ed01e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9d62925_96f6bc6e",
+        "filename": "third_party/WebKit/Source/modules/media_controls/DEPS",
+        "patchSetId": 23
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-09-27T13:35:54Z",
+      "side": 1,
+      "message": "Yes it\u0027s needed in MediaControlsResourceLoader.cpp. To clarify it provides the id\u0027s of the compiled resources (e.g. IDR_UASTYLE_MEDIA_CONTROLS_CSS).",
+      "parentUuid": "5ba6595f_c26a7001",
       "revId": "851ea0787867bd5aa1228d854e03f17c3f6ed01e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3f90218f_783e223e",
+        "filename": "third_party/WebKit/Source/platform/DEPS",
+        "patchSetId": 23
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-09-27T13:35:54Z",
+      "side": 1,
+      "message": "I\u0027m not sure platform/loader/ is the right place for this, but in the effort of reducing files under platform I have created a sub-component under platform/resource_bundle",
+      "parentUuid": "918a739f_39e34949",
+      "revId": "851ea0787867bd5aa1228d854e03f17c3f6ed01e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c58f080_d523321d",
         "filename": "third_party/WebKit/Source/platform/ResourceBundleHelper.cpp",
         "patchSetId": 23
@@ -67,6 +121,24 @@
       "revId": "851ea0787867bd5aa1228d854e03f17c3f6ed01e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d98bfa62_02ceb3fc",
+        "filename": "third_party/WebKit/Source/platform/ResourceBundleHelper.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-09-27T13:35:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c58f080_d523321d",
+      "revId": "851ea0787867bd5aa1228d854e03f17c3f6ed01e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "50035393_9799f3bd",
+        "filename": "third_party/WebKit/Source/platform/ResourceBundleHelper.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-09-27T13:35:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "353a5223_fca546e8",
+      "revId": "851ea0787867bd5aa1228d854e03f17c3f6ed01e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94c9d713_27bf9fdb",
         "filename": "third_party/WebKit/Source/platform/heap/BUILD.gn",
         "patchSetId": 23
@@ -98,6 +188,24 @@
       "writtenOn": "2017-09-27T11:45:09Z",
       "side": 1,
       "message": "Why is this needed?",
+      "revId": "851ea0787867bd5aa1228d854e03f17c3f6ed01e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "853404f7_5bec4be2",
+        "filename": "third_party/WebKit/Source/platform/heap/BUILD.gn",
+        "patchSetId": 23
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-09-27T13:35:54Z",
+      "side": 1,
+      "message": "This test target fails on Android because JNI fails to find \"org/chromium/ui/base/ResourceBundle\"",
+      "parentUuid": "94c9d713_27bf9fdb",
       "revId": "851ea0787867bd5aa1228d854e03f17c3f6ed01e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
