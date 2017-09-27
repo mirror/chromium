@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0775cd41_16f4de85",
+        "filename": "components/safe_browsing/proto/csd.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-27T20:17:22Z",
+      "side": 1,
+      "message": "is it not possible to drop this type? there\u0027s a bunch of generated code for it that will never be used.",
+      "revId": "a15684ceeadfae99d1352d8c3d0a83ebe2905e5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
