@@ -16,6 +16,24 @@
       "revId": "f99281374b2d00b17bce2119b419517a198fe78e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72ca9dad_4df8da23",
+        "filename": "components/viz/host/hit_test/hit_test_query.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-09-27T12:02:45Z",
+      "side": 1,
+      "message": "When you say \"the tree\", do you mean the server-window-tree that we have in WS? \nIf clients only specify the target frame-sink-id, I don\u0027t think we can start from the target region and walk *up* the tree w/o walking through the hit-test-region-tree to just find the target first? If clients specify the target server-window and we then ask WS for the server-window-tree, ServerWindow is not used in content? So I changed this function to take in the target\u0027s ancestor frame-sink-id list, assuming WS/content would provide it...",
+      "parentUuid": "66337663_478145df",
+      "revId": "f99281374b2d00b17bce2119b419517a198fe78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
