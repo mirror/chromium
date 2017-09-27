@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd8a308f_b603e56e",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1005,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-27T08:41:44Z",
+      "side": 1,
+      "message": "As mentioned in the other CL, it smells very funny that we don\u0027t use the action from the result.",
+      "revId": "6905f421e7b7e38d18260cb267fe1f0490358b00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc37ac58_76756c8b",
+        "filename": "content/browser/frame_host/navigation_request.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-27T08:41:44Z",
+      "side": 1,
+      "message": "probably could use an update to this comment to document the |error_page_content| argument",
+      "range": {
+        "startLine": 235,
+        "startChar": 77,
+        "endLine": 235,
+        "endChar": 78
+      },
+      "revId": "6905f421e7b7e38d18260cb267fe1f0490358b00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fcbecc0_8a2dffe7",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-27T08:41:44Z",
+      "side": 1,
+      "message": "should either be const ref or a pointer or a pass-by-value per https://google.github.io/styleguide/cppguide.html#Reference_Arguments",
+      "range": {
+        "startLine": 559,
+        "startChar": 52,
+        "endLine": 559,
+        "endChar": 53
+      },
+      "revId": "6905f421e7b7e38d18260cb267fe1f0490358b00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8f0bd96_7e5e6030",
+        "filename": "content/browser/loader/resource_loader.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-27T08:41:44Z",
+      "side": 1,
+      "message": "unnecessary change",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 39
+      },
+      "revId": "6905f421e7b7e38d18260cb267fe1f0490358b00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "299b95f5_0acba5a1",
+        "filename": "content/public/browser/navigation_throttle.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-27T08:41:44Z",
+      "side": 1,
+      "message": "duplicate include",
+      "range": {
+        "startLine": 12,
+        "startChar": 1,
+        "endLine": 12,
+        "endChar": 26
+      },
+      "revId": "6905f421e7b7e38d18260cb267fe1f0490358b00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
