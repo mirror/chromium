@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "837243cd_9d87f74b",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1120,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-09-27T16:58:50Z",
+      "side": 1,
+      "message": "Nit: finish with period.",
+      "range": {
+        "startLine": 1120,
+        "startChar": 46,
+        "endLine": 1120,
+        "endChar": 55
+      },
+      "revId": "7d61db946898ec98fb879ed2b3943934055a02f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
