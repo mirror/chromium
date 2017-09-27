@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b52d806d_a5e5556c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsCardViewHolder.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-09-27T12:58:20Z",
+      "side": 1,
+      "message": "no space between this and ::updateCardWidth?",
+      "range": {
+        "startLine": 53,
+        "startChar": 72,
+        "endLine": 53,
+        "endChar": 73
+      },
+      "revId": "88474f5ea4b5c6c7d5a264e5db3c65fc1b8e0a72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f8450ed_f418fe58",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-09-27T12:58:20Z",
+      "side": 1,
+      "message": "no particular reason for this to be final anymore",
+      "range": {
+        "startLine": 151,
+        "startChar": 8,
+        "endLine": 151,
+        "endChar": 13
+      },
+      "revId": "88474f5ea4b5c6c7d5a264e5db3c65fc1b8e0a72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
