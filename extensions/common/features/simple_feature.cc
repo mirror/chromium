@@ -348,7 +348,7 @@ std::string SimpleFeature::GetAvailabilityMessage(
     case MISSING_COMMAND_LINE_SWITCH:
       return base::StringPrintf(
           "'%s' requires the '%s' command line switch to be enabled.",
-          name().c_str(), command_line_switch_.c_str());
+          name().c_str(), command_line_switch_->c_str());
   }
 
   NOTREACHED();
@@ -560,8 +560,8 @@ Feature::Availability SimpleFeature::GetEnvironmentAvailability(
   if (channel_ && *channel_ < GetCurrentChannel())
     return CreateAvailability(UNSUPPORTED_CHANNEL, *channel_);
 
-  if (!command_line_switch_.empty() &&
-      !IsCommandLineSwitchEnabled(command_line, command_line_switch_)) {
+  if (command_line_switch_ &&
+      !IsCommandLineSwitchEnabled(command_line, *command_line_switch_)) {
     return CreateAvailability(MISSING_COMMAND_LINE_SWITCH);
   }
 
