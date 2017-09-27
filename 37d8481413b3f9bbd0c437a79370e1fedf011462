@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c5ded3c_6ade13de",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/SafeBrowsingTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-27T23:54:51Z",
+      "side": 1,
+      "message": "How about just return Color.valueOf(color).toString()?",
+      "revId": "37d8481413b3f9bbd0c437a79370e1fedf011462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
