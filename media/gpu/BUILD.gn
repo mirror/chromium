@@ -304,6 +304,10 @@ component("gpu") {
                  "vaapi_jpeg_decode_accelerator.h",
                  "vaapi_jpeg_decoder.cc",
                  "vaapi_jpeg_decoder.h",
+                 "vaapi_jpeg_encoder.cc",
+                 "vaapi_jpeg_encoder.h",
+                 "vaapi_jpeg_encode_accelerator.cc",
+                 "vaapi_jpeg_encode_accelerator.h",
                  "vaapi_picture.cc",
                  "vaapi_picture.h",
                  "vaapi_video_decode_accelerator.cc",
@@ -536,6 +540,36 @@ if (use_v4l2_codec || use_vaapi) {
     configs += [ "//third_party/libyuv:libyuv_config" ]
     sources = [
       "jpeg_decode_accelerator_unittest.cc",
+      "video_accelerator_unittest_helpers.h",
+    ]
+    if (use_x11) {
+      deps += [ "//ui/gfx/x" ]
+    }
+    if (use_ozone) {
+      deps += [ "//ui/ozone" ]
+    }
+  }
+}
+
+if (use_vaapi) {
+  test("jpeg_encode_accelerator_unittest") {
+    deps = [
+      "//base",
+      "//media:test_support",
+      "//media/gpu",
+      "//media/gpu/ipc/service",
+      "//testing/gtest",
+      "//third_party/libyuv",
+      "//ui/base",
+      "//ui/gfx",
+      "//ui/gfx:test_support",
+      "//ui/gfx/geometry",
+      "//ui/gl",
+      "//ui/gl:test_support",
+    ]
+    configs += [ "//third_party/libyuv:libyuv_config" ]
+    sources = [
+      "jpeg_encode_accelerator_unittest.cc",
       "video_accelerator_unittest_helpers.h",
     ]
     if (use_x11) {

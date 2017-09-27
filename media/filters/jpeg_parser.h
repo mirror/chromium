@@ -44,6 +44,7 @@ enum JpegMarker {
   JPEG_SOS = 0xDA,    // start of scan
   JPEG_DQT = 0xDB,    // define quantization table
   JPEG_DRI = 0xDD,    // define restart internal
+  JPEG_APP0 = 0xE0,   // start of application segment
   JPEG_MARKER_PREFIX = 0xFF,  // jpeg marker prefix
 };
 
@@ -52,7 +53,7 @@ const size_t kJpegMaxComponents = 4;
 const size_t kJpegMaxQuantizationTableNum = 4;
 
 // Parsing result of JPEG DHT marker.
-struct JpegHuffmanTable {
+  struct JpegHuffmanTable {
   bool valid;
   uint8_t code_length[16];
   uint8_t code_value[256];
