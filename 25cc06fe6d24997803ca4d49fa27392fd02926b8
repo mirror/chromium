@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "77b33db2_937525ce",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 871,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-27T20:11:21Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "041082ca_dae29704",
+      "revId": "25cc06fe6d24997803ca4d49fa27392fd02926b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3db8fa44_b39d3cee",
         "filename": "chrome/browser/extensions/extension_service.cc",
         "patchSetId": 12
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-27T14:25:28Z",
       "side": 1,
       "message": "Seems like a lot of this block can go in ExtensionRegistrar.  Can we instead basically do:\nif (!reloading) {\n  registrar-\u003eAddExtension(extension);\n  ...\n} else {\n  registrar-\u003eReplaceLoadedExtension(extension);\n  ...\n}\n?",
+      "revId": "25cc06fe6d24997803ca4d49fa27392fd02926b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "981c85eb_02b1a2c4",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1378,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-27T20:11:21Z",
+      "side": 1,
+      "message": "Done. I\u0027m not confident this is correct though: is it possible for |reloading| to be true but one of these other ifs should\u0027ve fired first (to add the extension as blacklisted or blocked)?\n\nI don\u0027t think so, because blacklisting or blocking an extension should remove it from reloading_extensions_, but could you double-check my logic?",
+      "parentUuid": "3db8fa44_b39d3cee",
       "revId": "25cc06fe6d24997803ca4d49fa27392fd02926b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5cd264f1_35024d23",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 2235,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-27T20:11:21Z",
+      "side": 1,
+      "message": "This is the same behavior as the old patch. Note the \u003d\u003d instead of !\u003d and remember CanDisableExtension is the opposite of what is_controlled_extension was.\n\nIt\u0027s also what the comment is trying to say, I think. \"While external components normally wouldn\u0027t be modified by the user, we can get here if the user has extension-specific prefs\". It\u0027s subtle, that\u0027s why I broke it into several steps.\n\nTests fail if we change this logic (ExtensionServiceTest.DisablingComponentExtensions, ProfileResetterTest.ResetExtensionsByReenablingExternalComponents)",
+      "parentUuid": "9b53f554_a5abdbbe",
+      "revId": "25cc06fe6d24997803ca4d49fa27392fd02926b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea6033be_0e3796b0",
         "filename": "extensions/browser/extension_registrar.cc",
         "patchSetId": 12
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-27T14:25:28Z",
       "side": 1,
       "message": "Huh.  This was wrong before, but is still wrong now.  If this is an internal disable, we check it against the internal disable reason mask, and then allow it.  But disable_reasons could include internal *and* user-facing disable reasons.  If this is a controlled extension, we should set disable_reasons \u0026\u003d internal_disable_reason_mask.  (Alternatively, it would be nice to audit calls of DisableExtension and see how many actually pass a mask, rather than a single reason, and see if we can update them - but that\u0027s a larger change).",
+      "revId": "25cc06fe6d24997803ca4d49fa27392fd02926b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf628572_64b26abb",
+        "filename": "extensions/browser/extension_registrar.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-27T20:11:21Z",
+      "side": 1,
+      "message": "Acknowledged. I\u0027ll push a change to ToT so that this refactor doesn\u0027t affect behavior.",
+      "parentUuid": "ea6033be_0e3796b0",
       "revId": "25cc06fe6d24997803ca4d49fa27392fd02926b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "fd58af21_7f262fd9",
+        "filename": "extensions/browser/extension_registrar.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-27T20:11:21Z",
+      "side": 1,
+      "message": "The name change is fine, but when is an extension added to the enabled set and this function not called?",
+      "parentUuid": "2af07dd7_310a095b",
+      "revId": "25cc06fe6d24997803ca4d49fa27392fd02926b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c2b28eb7_dc7b9bf5",
         "filename": "extensions/browser/extension_registrar.h",
         "patchSetId": 12
@@ -98,6 +188,24 @@
       "writtenOn": "2017-09-27T14:25:28Z",
       "side": 1,
       "message": "Tying in with the comment in ExtensionService, but I think it would be could to remove InitialState here and have ExtensionRegistrar determine the result.",
+      "revId": "25cc06fe6d24997803ca4d49fa27392fd02926b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3598f799_df5f675a",
+        "filename": "extensions/browser/extension_registrar.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-27T20:11:21Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "c2b28eb7_dc7b9bf5",
       "revId": "25cc06fe6d24997803ca4d49fa27392fd02926b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
