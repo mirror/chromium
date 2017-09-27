@@ -16,6 +16,24 @@
       "revId": "0887bec63d3dc1bddf657e16d2a61ed440e1adbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d78afbb_aea7276a",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-27T06:12:02Z",
+      "side": 1,
+      "message": "Did you interpret this like \"Make the server (that) serves ...\"? I mean to use \"make\" as a causative verb and the present tense would be correct in the case.\n\nAnyway, I simplified the sentence :)",
+      "parentUuid": "f1c8ae37_a4eefbad",
+      "revId": "0887bec63d3dc1bddf657e16d2a61ed440e1adbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
