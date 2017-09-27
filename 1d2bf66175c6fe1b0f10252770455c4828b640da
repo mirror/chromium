@@ -2,6 +2,144 @@
   "comments": [
     {
       "key": {
+        "uuid": "592f72ed_9a3322d8",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-27T08:36:31Z",
+      "side": 1,
+      "message": "I don\u0027t understand what this means.",
+      "range": {
+        "startLine": 29,
+        "startChar": 69,
+        "endLine": 30,
+        "endChar": 26
+      },
+      "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "308c1061_d80675b1",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-27T08:36:31Z",
+      "side": 1,
+      "message": "\"Similar to |RefetchInTheBackground| above, but observers may be notified with old suggestions if the fetch fails or does not finish before timeout.\"\n\nIt is more informative to say what will happen, instead of saying how observers should react. Also \"additional hint\" felt odd to me.",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 63
+      },
+      "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7945841_b96ab700",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-27T08:36:31Z",
+      "side": 1,
+      "message": "RefetchWhileDisplaying?\n\nI don\u0027t understand \"ForDisplay\".",
+      "range": {
+        "startLine": 37,
+        "startChar": 15,
+        "endLine": 37,
+        "endChar": 32
+      },
+      "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f38f580_35b79b61",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-27T08:36:31Z",
+      "side": 1,
+      "message": "so why not 36 * 60?",
+      "range": {
+        "startLine": 86,
+        "startChar": 67,
+        "endLine": 86,
+        "endChar": 71
+      },
+      "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57f46a1d_8d236134",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-27T08:36:31Z",
+      "side": 1,
+      "message": "What prevents calling RefetchForDisplay twice in a row?",
+      "range": {
+        "startLine": 462,
+        "startChar": 2,
+        "endLine": 462,
+        "endChar": 45
+      },
+      "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24aeb8dd_c0c26e33",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-27T08:36:31Z",
+      "side": 1,
+      "message": "but it does not fail yet. It just timeouts.",
+      "range": {
+        "startLine": 465,
+        "startChar": 70,
+        "endLine": 465,
+        "endChar": 76
+      },
+      "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97659908_a58ca78c",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 8
@@ -30,6 +168,259 @@
       "writtenOn": "2017-09-26T17:25:24Z",
       "side": 1,
       "message": "let\u0027s not bother about non-article suggestions. Simply only deal with the status-changes for article suggestions.",
+      "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62662392_95ab9e36",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 4186,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-27T08:36:31Z",
+      "side": 1,
+      "message": "this must be a named constant",
+      "range": {
+        "startLine": 4186,
+        "startChar": 45,
+        "endLine": 4186,
+        "endChar": 46
+      },
+      "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad61ec3d_206a1d65",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 4186,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-27T08:36:31Z",
+      "side": 1,
+      "message": "add a comment saying that you checking that timeout does not fire earlier that it should?",
+      "range": {
+        "startLine": 4186,
+        "startChar": 2,
+        "endLine": 4186,
+        "endChar": 4
+      },
+      "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b7b945b_fa158380",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 4273,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-27T08:36:31Z",
+      "side": 1,
+      "message": "you may FastForwardBy(base::TimeDelta::FromSeconds(5) -\n                base::TimeDelta::FromMilliseconds(1)); then check the status and then fastforward by 2 ms.",
+      "range": {
+        "startLine": 4271,
+        "startChar": 2,
+        "endLine": 4273,
+        "endChar": 0
+      },
+      "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "960054fe_7830d747",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-27T08:36:31Z",
+      "side": 1,
+      "message": "does this clear prefs?",
+      "range": {
+        "startLine": 681,
+        "startChar": 56,
+        "endLine": 681,
+        "endChar": 72
+      },
+      "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2adca66_f54b3697",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-27T08:36:31Z",
+      "side": 1,
+      "message": "You don\u0027t check the trigger here. I expected that we want to do this refetch only when the user can see it.\nIs it true that this is only run when the surface is visible?",
+      "range": {
+        "startLine": 772,
+        "startChar": 2,
+        "endLine": 777,
+        "endChar": 3
+      },
+      "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7380acf6_01d5f066",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-27T08:36:31Z",
+      "side": 1,
+      "message": "GetStalenessInterval (you do some work inside, this not an accessor)",
+      "range": {
+        "startLine": 76,
+        "startChar": 20,
+        "endLine": 76,
+        "endChar": 42
+      },
+      "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86888be6_a4e1aed8",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-27T08:36:31Z",
+      "side": 1,
+      "message": "could you leave only the used type in each comment?\nE.g. here it isFetchStatus callback.",
+      "range": {
+        "startLine": 99,
+        "startChar": 24,
+        "endLine": 100,
+        "endChar": 46
+      },
+      "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a72f483_3999145a",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1116,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-27T08:36:31Z",
+      "side": 1,
+      "message": "this must be a named constant.\n\nImagine someone changes the default, it will be painful to change these numbers in all tests.",
+      "range": {
+        "startLine": 1116,
+        "startChar": 51,
+        "endLine": 1116,
+        "endChar": 53
+      },
+      "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "945ced61_4bfa5943",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1154,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-27T08:36:31Z",
+      "side": 1,
+      "message": "u",
+      "range": {
+        "startLine": 1154,
+        "startChar": 44,
+        "endLine": 1154,
+        "endChar": 46
+      },
+      "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5a55141_00e908c7",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1155,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-27T08:36:31Z",
+      "side": 1,
+      "message": "this must be a named constant as well.\n\nCompile will be able to check for typos then.",
+      "range": {
+        "startLine": 1155,
+        "startChar": 24,
+        "endLine": 1155,
+        "endChar": 55
+      },
+      "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b7bb8ce_0fd0faf2",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1155,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-27T08:36:31Z",
+      "side": 1,
+      "message": "this must be a named constant to show relation of this number to the number below.",
+      "range": {
+        "startLine": 1155,
+        "startChar": 57,
+        "endLine": 1155,
+        "endChar": 61
+      },
       "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
