@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc84064e_ab139a3e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-27T14:11:02Z",
+      "side": 1,
+      "message": "nit: /*trackDuration\u003d*/?",
+      "range": {
+        "startLine": 263,
+        "startChar": 36,
+        "endLine": 263,
+        "endChar": 41
+      },
+      "revId": "add595a5882bcdc077a4557310330b7464e6bfdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "244de04c_9b0c74b5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-27T14:11:02Z",
+      "side": 1,
+      "message": "nit: /*trackDuration\u003d*/?",
+      "range": {
+        "startLine": 584,
+        "startChar": 36,
+        "endLine": 584,
+        "endChar": 40
+      },
+      "revId": "add595a5882bcdc077a4557310330b7464e6bfdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b5ab8e8_93802c0f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ContentSuggestionPlaceholder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-27T14:11:02Z",
+      "side": 1,
+      "message": "This is not clear to me from looking at the code here why there is \"maybe\"? Could you expand the comment a bit to explain to more?",
+      "range": {
+        "startLine": 53,
+        "startChar": 39,
+        "endLine": 53,
+        "endChar": 49
+      },
+      "revId": "add595a5882bcdc077a4557310330b7464e6bfdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
