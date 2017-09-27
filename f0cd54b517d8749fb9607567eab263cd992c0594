@@ -46,6 +46,30 @@
       "revId": "f0cd54b517d8749fb9607567eab263cd992c0594",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50fc1d50_032c9d0c",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-27T04:21:34Z",
+      "side": 1,
+      "message": "Q1: \nEven if we use only READABLE, OnReadable is invoked with MOJO_RESULT_CANCELLED according to the document of MojoWatch: https://cs.chromium.org/chromium/src/mojo/public/c/system/watcher.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d85\nActually this is the same with what mojo::common::DataPipeDrainer is doing.\n\nQ2:\nAh, yeah, I agree that we need to check the returned value, but in this case, |handle_| should be valid as you mentioned. I\u0027ve added a DCHECK just in case.",
+      "parentUuid": "80ead408_b2b84fab",
+      "range": {
+        "startLine": 37,
+        "startChar": 34,
+        "endLine": 37,
+        "endChar": 61
+      },
+      "revId": "f0cd54b517d8749fb9607567eab263cd992c0594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
