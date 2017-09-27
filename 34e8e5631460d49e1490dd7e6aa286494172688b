@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "61ec8fc8_85116aa3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-27T14:24:13Z",
+      "side": 1,
+      "message": "Nit: TBH, I don\u0027t see much value in startAccountSigninActivity/startFromConfirmationPage/startFromAddAccountPage - they are not used that often and removing them completely would add only one line in every place. OTOH, we could trim down the interface and avoid JavaDocs duplication (because we need JavaDoc for createIntentForXXX methods). WDYT?",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 50
+      },
+      "revId": "34e8e5631460d49e1490dd7e6aa286494172688b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56f144e7_87736ad5",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/bookmarks/BookmarkPersonalizedSigninPromoTest.java",
         "patchSetId": 3
@@ -41,6 +64,191 @@
         "startChar": 12,
         "endLine": 122,
         "endChar": 100
+      },
+      "revId": "34e8e5631460d49e1490dd7e6aa286494172688b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a202c00d_7c380fcf",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/bookmarks/BookmarkPersonalizedSigninPromoTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-27T14:24:13Z",
+      "side": 1,
+      "message": "I agree that we should focus on testing behavior in Espresso tests and leave the appearance to RenderTests.",
+      "parentUuid": "a60f71a1_630783d4",
+      "range": {
+        "startLine": 117,
+        "startChar": 12,
+        "endLine": 122,
+        "endChar": 100
+      },
+      "revId": "34e8e5631460d49e1490dd7e6aa286494172688b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e381870d_247b5f13",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/bookmarks/BookmarkPersonalizedSigninPromoTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-27T14:24:13Z",
+      "side": 1,
+      "message": "Nit: I\u0027d inline startedIntent: assertTrue(expectedIntent.filterEquals(startedIntents.get(0)));",
+      "range": {
+        "startLine": 195,
+        "startChar": 15,
+        "endLine": 195,
+        "endChar": 28
+      },
+      "revId": "34e8e5631460d49e1490dd7e6aa286494172688b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "702b0fa4_baf2ac22",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/bookmarks/BookmarkPersonalizedSigninPromoTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-27T14:24:13Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 216,
+        "startChar": 15,
+        "endLine": 216,
+        "endChar": 28
+      },
+      "revId": "34e8e5631460d49e1490dd7e6aa286494172688b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f660514_304a042e",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/bookmarks/BookmarkPersonalizedSigninPromoTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-27T14:24:13Z",
+      "side": 1,
+      "message": "I would check that it fires at least one intent. How many intents will AccountSigninActivity fire shouldn\u0027t concern this test, as long as the intent used to start AccountSigninActivity is correct.",
+      "range": {
+        "startLine": 232,
+        "startChar": 0,
+        "endLine": 232,
+        "endChar": 94
+      },
+      "revId": "34e8e5631460d49e1490dd7e6aa286494172688b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be301317_7a051d0a",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/bookmarks/BookmarkPersonalizedSigninPromoTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-27T14:24:13Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 237,
+        "startChar": 15,
+        "endLine": 237,
+        "endChar": 33
+      },
+      "revId": "34e8e5631460d49e1490dd7e6aa286494172688b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db61789e_1f07c287",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/bookmarks/BookmarkPersonalizedSigninPromoTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-27T14:24:13Z",
+      "side": 1,
+      "message": "You don\u0027t actually need to set password to add an account. TBH, I\u0027m still not sure why it was added in the first place, since Chrome on Android never deals with passwords directly.",
+      "range": {
+        "startLine": 249,
+        "startChar": 47,
+        "endLine": 249,
+        "endChar": 71
+      },
+      "revId": "34e8e5631460d49e1490dd7e6aa286494172688b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25aba3ba_4d8c95f5",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/bookmarks/BookmarkPersonalizedSigninPromoTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-27T14:24:13Z",
+      "side": 1,
+      "message": "I\u0027m not sure if this will work in every Android version, as logo_avatar_anonymous is a vector image. Accounts with default avatar have null in ProfileDataSource.ProfileData, so you can use null here, too.",
+      "range": {
+        "startLine": 252,
+        "startChar": 0,
+        "endLine": 253,
+        "endChar": 74
+      },
+      "revId": "34e8e5631460d49e1490dd7e6aa286494172688b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2339bcb8_61985bb8",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/bookmarks/BookmarkPersonalizedSigninPromoTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-27T14:24:13Z",
+      "side": 1,
+      "message": "I\u0027d remove this. AFAIU, it\u0027s perfectly normal for an account to have no given name. Since you\u0027re not using given name in checks, passing null here should work.",
+      "range": {
+        "startLine": 255,
+        "startChar": 69,
+        "endLine": 255,
+        "endChar": 84
       },
       "revId": "34e8e5631460d49e1490dd7e6aa286494172688b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
