@@ -165,6 +165,13 @@ Polymer({
       this.$.category.hidden =
           this.category != settings.ContentSettingsTypes.COOKIES;
     }
+
+    // Sound cannot be disabled by default, so we don't want to have an ALLOW
+    // list.
+    if (this.categorySubtype == settings.ContentSetting.ALLOW) {
+      this.$.category.hidden =
+          this.category == settings.ContentSettingsTypes.SOUND;
+    }
   },
 
   /**
@@ -282,7 +289,8 @@ Polymer({
    */
   setUpActionMenu_: function() {
     this.showAllowAction_ =
-        this.categorySubtype != settings.ContentSetting.ALLOW;
+        this.categorySubtype != settings.ContentSetting.ALLOW &&
+        this.category != settings.ContentSettingsTypes.SOUND;
     this.showBlockAction_ =
         this.categorySubtype != settings.ContentSetting.BLOCK;
     this.showSessionOnlyAction_ =
