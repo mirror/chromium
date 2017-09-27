@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "65b988b5_015c23eb",
+        "filename": "remoting/host/linux/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1144186
+      },
+      "writtenOn": "2017-09-27T06:40:25Z",
+      "side": 1,
+      "message": "I got task queue link error on this executable, via webrtc audio code, iirc.\n\nBut I\u0027ll try adding the dependency via init_webrtc instead, if that works out, we shouldn\u0027t need to add it to lots of other places.",
+      "parentUuid": "88f4b235_3d32d2d5",
+      "range": {
+        "startLine": 144,
+        "startChar": 19,
+        "endLine": 144,
+        "endChar": 51
+      },
+      "revId": "13c3ed360f9b685119d271db8350fea33715193b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40eed290_d5a29e9c",
         "filename": "remoting/host/win/BUILD.gn",
         "patchSetId": 3
