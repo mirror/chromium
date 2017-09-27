@@ -16,6 +16,24 @@
       "revId": "89679e4247254cf672d724e16155caf0a2d32028",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "478618b6_97bc5e3b",
+        "filename": "services/preferences/tracked/pref_hash_calculator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-09-27T14:11:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e753c1c5_ff32bbb4",
+      "revId": "89679e4247254cf672d724e16155caf0a2d32028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
