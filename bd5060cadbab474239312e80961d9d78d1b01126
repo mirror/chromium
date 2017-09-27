@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7270eb7_f935d5e0",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-09-27T01:32:06Z",
+      "side": 1,
+      "message": "I think eventually this will go below in FinalizeGlobalMemoryDumpIfAllManagersReplied but this is fine for now.",
+      "revId": "bd5060cadbab474239312e80961d9d78d1b01126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "669e64f2_b029001b",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-09-27T01:32:06Z",
+      "side": 1,
+      "message": "I think this has to be before the move? Otherwise we\u0027re reading from the old unique_ptr which is now null.",
+      "range": {
+        "startLine": 394,
+        "startChar": 43,
+        "endLine": 394,
+        "endChar": 67
+      },
+      "revId": "bd5060cadbab474239312e80961d9d78d1b01126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
