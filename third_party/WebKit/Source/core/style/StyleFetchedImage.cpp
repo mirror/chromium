@@ -120,7 +120,8 @@ void StyleFetchedImage::ImageNotifyFinished(ImageResourceContent*) {
 RefPtr<Image> StyleFetchedImage::GetImage(const ImageResourceObserver&,
                                           const Document&,
                                           const ComputedStyle& style,
-                                          const IntSize& container_size) const {
+                                          const IntSize& container_size,
+                                          LayoutSize* logical_tile_size) const {
   if (!image_->GetImage()->IsSVGImage())
     return image_->GetImage();
 

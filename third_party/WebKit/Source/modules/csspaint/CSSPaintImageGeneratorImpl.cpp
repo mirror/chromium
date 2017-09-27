@@ -52,8 +52,9 @@ void CSSPaintImageGeneratorImpl::NotifyGeneratorReady() {
 RefPtr<Image> CSSPaintImageGeneratorImpl::Paint(
     const ImageResourceObserver& observer,
     const IntSize& size,
-    const CSSStyleValueVector* data) {
-  return paint_worklet_->Paint(name_, observer, size, data);
+    const CSSStyleValueVector* data,
+    LayoutSize* logical_tile_size) {
+  return paint_worklet_->Paint(name_, observer, size, data, logical_tile_size);
 }
 
 bool CSSPaintImageGeneratorImpl::HasDocumentDefinition() const {
