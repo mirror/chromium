@@ -34,6 +34,24 @@
       "revId": "9eef8ed0bd8fa4f8de49bddbae62823ac6d46625",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4670ac22_97106003",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-27T04:37:59Z",
+      "side": 1,
+      "message": "For headless Chrome, it can be false.\nhttps://cs.chromium.org/chromium/src/build/args/headless.gn?q\u003dbuild/args/headless.gn\u0026l\u003d30",
+      "parentUuid": "a1c183c0_544556ec",
+      "revId": "9eef8ed0bd8fa4f8de49bddbae62823ac6d46625",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
