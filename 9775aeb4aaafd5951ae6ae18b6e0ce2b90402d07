@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "de1c24f0_4ff9981d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browserservices/BrowserSessionContentUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-09-27T20:58:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eea2470c_0d804f91",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 0
+      },
+      "revId": "9775aeb4aaafd5951ae6ae18b6e0ce2b90402d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e72508e4_bea6e572",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/browserservices/BrowserSessionContentUtils.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "9775aeb4aaafd5951ae6ae18b6e0ce2b90402d07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "807fdd7a_d8e5f484",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browserservices/BrowserSessionContentUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-09-27T20:58:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e72508e4_bea6e572",
+      "range": {
+        "startLine": 29,
+        "startChar": 4,
+        "endLine": 29,
+        "endChar": 10
+      },
+      "revId": "9775aeb4aaafd5951ae6ae18b6e0ce2b90402d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "30d59d99_d14cffab",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browserservices/BrowserSessionDataProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-09-27T20:58:12Z",
+      "side": 1,
+      "message": "split the class in two with a more general parent and custom tab specific extending class.",
+      "parentUuid": "ac681d57_6db66cc0",
+      "range": {
+        "startLine": 59,
+        "startChar": 28,
+        "endLine": 59,
+        "endChar": 55
+      },
+      "revId": "9775aeb4aaafd5951ae6ae18b6e0ce2b90402d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d13f57eb_8c3a5fc5",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-09-27T18:40:11Z",
       "side": 1,
       "message": "why public?",
+      "range": {
+        "startLine": 95,
+        "startChar": 4,
+        "endLine": 95,
+        "endChar": 10
+      },
+      "revId": "9775aeb4aaafd5951ae6ae18b6e0ce2b90402d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69a6e350_428abb90",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-09-27T20:58:12Z",
+      "side": 1,
+      "message": "lol. I don\u0027t know what to say to this other than Good catch!",
+      "parentUuid": "d13f57eb_8c3a5fc5",
       "range": {
         "startLine": 95,
         "startChar": 4,
