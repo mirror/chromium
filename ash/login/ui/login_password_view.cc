@@ -163,8 +163,6 @@ void LoginPasswordView::Backspace() {
                                   ui::DomCode::BACKSPACE, ui::EF_NONE));
 }
 
-void LoginPasswordView::Submit() {}
-
 const char* LoginPasswordView::GetClassName() const {
   return kLoginPasswordViewName;
 }
