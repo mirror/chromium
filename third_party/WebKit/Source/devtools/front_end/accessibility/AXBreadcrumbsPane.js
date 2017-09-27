@@ -73,11 +73,6 @@ Accessibility.AXBreadcrumbsPane = class extends Accessibility.AccessibilitySubPa
 
     this._setPreselectedBreadcrumb(this._inspectedNodeBreadcrumb);
 
-    /**
-     * @param {!Accessibility.AXBreadcrumb} parentBreadcrumb
-     * @param {!Accessibility.AccessibilityNode} axNode
-     * @param {number} localDepth
-     */
     function append(parentBreadcrumb, axNode, localDepth) {
       var childBreadcrumb = new Accessibility.AXBreadcrumb(axNode, localDepth, false);
       parentBreadcrumb.appendChild(childBreadcrumb);
@@ -193,9 +188,6 @@ Accessibility.AXBreadcrumbsPane = class extends Accessibility.AccessibilitySubPa
     this._setHoveredBreadcrumb(breadcrumb);
   }
 
-  /**
-   * @param {!Event} event
-   */
   _onFocusOut(event) {
     if (!this._preselectedBreadcrumb || event.target !== this._preselectedBreadcrumb.nodeElement())
       return;
