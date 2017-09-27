@@ -149,6 +149,18 @@ bool g_egl_robust_resource_init_supported = false;
 bool g_egl_display_texture_share_group_supported = false;
 bool g_egl_create_context_client_arrays_supported = false;
 
+const char kSwapEventTraceCategories[] = "gpu";
+
+struct TraceSwapEventsInitializer {
+  TraceSwapEventsInitializer()
+      : value(TRACE_EVENT_API_GET_CATEGORY_GROUP_ENABLED(
+            kSwapEventTraceCategories)) {}
+  const unsigned char* value;
+};
+
+static base::LazyInstance<TraceSwapEventsInitializer>::Leaky
+    g_trace_swap_enabled = LAZY_INSTANCE_INITIALIZER;
+
 class EGLSyncControlVSyncProvider : public SyncControlVSyncProvider {
  public:
   explicit EGLSyncControlVSyncProvider(EGLSurface surface)
@@ -936,22 +948,26 @@ bool NativeViewGLSurfaceEGL::Initialize(GLSurfaceFormat format) {
     static const struct {
       EGLint egl_name;
       ui::LatencyComponentType latency_component;
+      const char* name;
     } all_timestamps[] = {
         {EGL_REQUESTED_PRESENT_TIME_ANDROID,
-         ui::DISPLAY_EVENT_REQUESTED_PRESENT},
+         ui::DISPLAY_EVENT_REQUESTED_PRESENT, "Queue"},
         {EGL_RENDERING_COMPLETE_TIME_ANDROID,
-         ui::DISPLAY_EVENT_RENDERING_COMPLETE},
+         ui::DISPLAY_EVENT_RENDERING_COMPLETE, "WritesDone"},
         {EGL_COMPOSITION_LATCH_TIME_ANDROID,
-         ui::DISPLAY_EVENT_COMPOSITION_LATCH},
+         ui::DISPLAY_EVENT_COMPOSITION_LATCH, "LatchedForDisplay"},
         {EGL_FIRST_COMPOSITION_START_TIME_ANDROID,
-         ui::DISPLAY_EVENT_FIRST_COMPOSITION_START},
+         ui::DISPLAY_EVENT_FIRST_COMPOSITION_START, "1stCompositeCpu"},
         {EGL_LAST_COMPOSITION_START_TIME_ANDROID,
-         ui::DISPLAY_EVENT_LAST_COMPOSITION_START},
+         ui::DISPLAY_EVENT_LAST_COMPOSITION_START, "NthCompositeCpu"},
         {EGL_FIRST_COMPOSITION_GPU_FINISHED_TIME_ANDROID,
-         ui::DISPLAY_EVENT_FIRST_COMPOSITION_GPU_FINISHED},
-        {EGL_DISPLAY_PRESENT_TIME_ANDROID, ui::DISPLAY_EVENT_DISPLAY_PRESENT},
-        {EGL_DEQUEUE_READY_TIME_ANDROID, ui::DISPLAY_EVENT_DEQUEUE_READY},
-        {EGL_READS_DONE_TIME_ANDROID, ui::DISPLAY_EVENT_READS_DONE},
+         ui::DISPLAY_EVENT_FIRST_COMPOSITION_GPU_FINISHED, "GpuCompositeDone"},
+        {EGL_DISPLAY_PRESENT_TIME_ANDROID, ui::DISPLAY_EVENT_DISPLAY_PRESENT,
+         "ScanOutStart"},
+        {EGL_DEQUEUE_READY_TIME_ANDROID, ui::DISPLAY_EVENT_DEQUEUE_READY,
+         "DequeueReady"},
+        {EGL_READS_DONE_TIME_ANDROID, ui::DISPLAY_EVENT_READS_DONE,
+         "ReadsDone"},
     };
 
     for (const auto& ts : all_timestamps) {
@@ -963,6 +979,7 @@ bool NativeViewGLSurfaceEGL::Initialize(GLSurfaceFormat format) {
       // directly to the EGL functions.
       supported_egl_timestamps_.push_back(ts.egl_name);
       supported_latency_components_.push_back(ts.latency_component);
+      supported_event_names_.push_back(ts.name);
     }
   }
 
@@ -1090,7 +1107,82 @@ gfx::SwapResult NativeViewGLSurfaceEGL::SwapBuffers(
     }
   }
 
+  // TraceEvents if needed.
+  if (g_trace_swap_enabled.Get().value)
+    TraceSwapEvents(queryFrameId, egl_timestamps);
+
   return gfx::SwapResult::SWAP_ACK;
+}
+
+void NativeViewGLSurfaceEGL::TraceSwapEvents(
+    int64_t trace_id,
+    const std::vector<EGLnsecsANDROID>& egl_timestamps) {
+  // Track supported and valid time/name pairs.
+  struct TimeNamePair {
+    base::TimeTicks time;
+    const char* name;
+  };
+  std::vector<TimeNamePair> tracePairs;
+  tracePairs.reserve(egl_timestamps.size());
+  for (size_t i = 0; i < egl_timestamps.size(); i++) {
+    if (egl_timestamps[i] == EGL_TIMESTAMP_INVALID_ANDROID ||
+        egl_timestamps[i] == EGL_TIMESTAMP_PENDING_ANDROID) {
+      continue;
+    }
+    tracePairs.emplace_back(TimeNamePair(
+        {base::TimeTicks::FromInternalValue(
+             egl_timestamps[i] / base::TimeTicks::kNanosecondsPerMicrosecond),
+         supported_event_names_[i]}));
+  }
+
+  if (tracePairs.empty())
+    return;
+
+  // Sort the pairs so we can trace them in order.
+  std::sort(tracePairs.begin(), tracePairs.end(),
+            [](auto& a, auto& b) { return a.time < b.time; });
+
+  // Trace the overall range under which the sub events will be nested.
+  // Add an epsilon since the trace viewer interprets timestamp ranges
+  // as closed on the left and open on the right. i.e.: [begin, end).
+  // The last sub event isn't nested properly without the epsilon.
+  auto epsilon = base::TimeDelta::FromMicroseconds(1);
+  static const char* SwapEvents = "SwapEvents";
+  TRACE_EVENT_NESTABLE_ASYNC_BEGIN_WITH_TIMESTAMP0(
+      kSwapEventTraceCategories, SwapEvents, trace_id, tracePairs.front().time);
+  TRACE_EVENT_NESTABLE_ASYNC_END_WITH_TIMESTAMP1(
+      kSwapEventTraceCategories, SwapEvents, trace_id,
+      tracePairs.back().time + epsilon, "id", trace_id);
+
+  // Trace the first event, which does not have a range before it.
+  TRACE_EVENT_NESTABLE_ASYNC_INSTANT_WITH_TIMESTAMP0(
+      kSwapEventTraceCategories, tracePairs[0].name, trace_id,
+      tracePairs[0].time);
+
+  // Trace remaining events and their ranges.
+  // Use the first characters to represent events still pending.
+  // This helps color code the remaining events in the viewer, which makes
+  // it obvious:
+  //   1) when the order of events are different between frames and
+  //   2) if multiple events occurred very close together.
+  std::string valid_symbols;
+  valid_symbols.reserve(tracePairs.size());
+  for (auto& i : tracePairs)
+    valid_symbols += i.name[0];
+
+  const char* pending_symbols = valid_symbols.c_str();
+  for (size_t i = 1; i < tracePairs.size(); i++) {
+    pending_symbols++;
+    TRACE_EVENT_COPY_NESTABLE_ASYNC_BEGIN_WITH_TIMESTAMP0(
+        kSwapEventTraceCategories, pending_symbols, trace_id,
+        tracePairs[i - 1].time);
+    TRACE_EVENT_COPY_NESTABLE_ASYNC_END_WITH_TIMESTAMP0(
+        kSwapEventTraceCategories, pending_symbols, trace_id,
+        tracePairs[i].time);
+    TRACE_EVENT_NESTABLE_ASYNC_INSTANT_WITH_TIMESTAMP0(
+        kSwapEventTraceCategories, tracePairs[i].name, trace_id,
+        tracePairs[i].time);
+  }
 }
 
 gfx::Size NativeViewGLSurfaceEGL::GetSize() {
