@@ -41,6 +41,7 @@ int main(int argc, const char** argv) {
   // delegate types.
   return ::ContentMain(argc, argv);
 #else
+  fprintf(stderr, "HELLO WORLD\n");
   content::ShellMainDelegate delegate;
   content::ContentMainParams params(&delegate);
   params.argc = argc;
