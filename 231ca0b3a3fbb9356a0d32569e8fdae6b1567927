@@ -139,6 +139,24 @@
       "revId": "231ca0b3a3fbb9356a0d32569e8fdae6b1567927",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5c9578fb_e1eb045f",
+        "filename": "chrome/browser/vr/test/run_all_unittests.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-27T20:44:04Z",
+      "side": 1,
+      "message": "But it\u0027s also breaking the local convention as everything else is initialized above.  Presumably things work if you move this line up to around line 24?",
+      "parentUuid": "0fabea75_ea84b3e6",
+      "revId": "231ca0b3a3fbb9356a0d32569e8fdae6b1567927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
