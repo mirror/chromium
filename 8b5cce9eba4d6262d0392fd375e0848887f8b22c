@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6d9b923_32a5c4be",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-context-selector.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-09-27T23:27:15Z",
+      "side": 1,
+      "message": "Not related to this CL, but having to remember this special function is a little unfortunate.",
+      "range": {
+        "startLine": 14,
+        "startChar": 33,
+        "endLine": 14,
+        "endChar": 47
+      },
+      "revId": "8b5cce9eba4d6262d0392fd375e0848887f8b22c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f539982_4b10602c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-context-selector.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-09-27T23:27:15Z",
+      "side": 1,
+      "message": "remove parens.",
+      "revId": "8b5cce9eba4d6262d0392fd375e0848887f8b22c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

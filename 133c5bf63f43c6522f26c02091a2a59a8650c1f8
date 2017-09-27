@@ -16,6 +16,24 @@
       "revId": "133c5bf63f43c6522f26c02091a2a59a8650c1f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13acfddb_4b3ff01c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-log-media-query-warning-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-09-27T23:27:15Z",
+      "side": 1,
+      "message": "Ack.\n\nFor reference, it looks like the need for this test was removed a couple years ago here:\nhttps://codereview.chromium.org/963743002",
+      "parentUuid": "ac09f485_0e4745b4",
+      "revId": "133c5bf63f43c6522f26c02091a2a59a8650c1f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
