@@ -22,6 +22,30 @@
       "revId": "4f507cbe3282cec5b6915962aefab77aa89cd835",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12b64476_2fc1c8a5",
+        "filename": "components/history/core/browser/thumbnail_database.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-27T14:22:48Z",
+      "side": 0,
+      "message": "Correct! I\u0027ve added the former, the latter is already there.",
+      "parentUuid": "e91b739f_988f7c5a",
+      "range": {
+        "startLine": 428,
+        "startChar": 15,
+        "endLine": 428,
+        "endChar": 45
+      },
+      "revId": "4f507cbe3282cec5b6915962aefab77aa89cd835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
