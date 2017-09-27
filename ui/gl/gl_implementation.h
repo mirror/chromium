@@ -118,6 +118,8 @@ GL_EXPORT GLFunctionPointerType GetGLProcAddress(const char* name);
 // callers should cache the result.
 GL_EXPORT std::string GetGLExtensionsFromCurrentContext();
 GL_EXPORT std::string GetGLExtensionsFromCurrentContext(GLApi* api);
+GL_EXPORT std::string GetRequestableGLExtensionsFromCurrentContext();
+GL_EXPORT std::string GetRequestableGLExtensionsFromCurrentContext(GLApi* api);
 
 // Helper for the GL bindings implementation to understand whether
 // glGetString(GL_EXTENSIONS) or glGetStringi(GL_EXTENSIONS, i) will
