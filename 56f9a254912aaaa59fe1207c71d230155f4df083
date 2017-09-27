@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d7eb125_74d56758",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/SafeBrowsingTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-27T22:47:34Z",
+      "side": 1,
+      "message": "mention the bug in a comment",
+      "revId": "56f9a254912aaaa59fe1207c71d230155f4df083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
