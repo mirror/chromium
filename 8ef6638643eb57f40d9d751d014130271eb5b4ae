@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d4b576fd_1fbdcbb5",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1149089
+      },
+      "writtenOn": "2017-09-27T10:28:30Z",
+      "side": 1,
+      "message": "This entire code is not triggered when debug is not enabled, but I\u0027ll restore this condition in case it can be called from elsewhere",
+      "parentUuid": "4d31b0af_d787cd82",
+      "range": {
+        "startLine": 483,
+        "startChar": 2,
+        "endLine": 483,
+        "endChar": 7
+      },
+      "revId": "8ef6638643eb57f40d9d751d014130271eb5b4ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c76b237f_02f42eb3",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "414e10d1_1be5d59e",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1149089
+      },
+      "writtenOn": "2017-09-27T10:28:30Z",
+      "side": 1,
+      "message": "Ok",
+      "parentUuid": "c76b237f_02f42eb3",
+      "range": {
+        "startLine": 242,
+        "startChar": 61,
+        "endLine": 242,
+        "endChar": 68
+      },
+      "revId": "8ef6638643eb57f40d9d751d014130271eb5b4ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "03999255_608e6b27",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-27T04:02:54Z",
       "side": 1,
       "message": "These things are relatively lightweight, let\u0027s keep them in renderer.scheduler.verbose category for now.",
+      "range": {
+        "startLine": 1561,
+        "startChar": 6,
+        "endLine": 1561,
+        "endChar": 27
+      },
+      "revId": "8ef6638643eb57f40d9d751d014130271eb5b4ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ae2b73d_a70cb83b",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1561,
+      "author": {
+        "id": 1149089
+      },
+      "writtenOn": "2017-09-27T10:28:30Z",
+      "side": 1,
+      "message": "Actually quite heavy but not that much as TaskQueueManager so I can agree with it for now",
+      "parentUuid": "03999255_608e6b27",
       "range": {
         "startLine": 1561,
         "startChar": 6,
