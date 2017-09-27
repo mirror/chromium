@@ -10,6 +10,7 @@
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/scoped_observer.h"
+#include "base/timer/elapsed_timer.h"
 #include "build/build_config.h"
 #include "ui/app_list/app_list_constants.h"
 #include "ui/app_list/app_list_export.h"
@@ -64,6 +65,10 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
 
   // The defualt color of the app list background.
   static constexpr SkColor kDefaultBackgroundColor = SK_ColorBLACK;
+
+  // The duration the AppListView ignores scroll events which could transition
+  // its state.
+  static constexpr int kScrollIgnoreTimeMs = 500;
 
   enum AppListState {
     // Closes |app_list_main_view_| and dismisses the delegate.
@@ -246,6 +251,12 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
   // AppListView.
   void HandleClickOrTap(ui::LocatedEvent* event);
 
+  // Sets or restarts the scroll ignore timer.
+  void SetOrRestartScrollIgnoreTimer();
+
+  // Whether scroll events should be ignored.
+  bool ShouldIgnoreScrollEvents();
+
   // Initializes |initial_drag_point_|.
   void StartDrag(const gfx::Point& location);
 
@@ -374,6 +385,9 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
 
   // True if the dragging started from PEEKING state.
   bool drag_started_from_peeking_ = false;
+
+  // Timer to ignore scroll events which would close the view by accident.
+  base::ElapsedTimer scroll_ignore_timer_;
 
   // Accessibility announcement dialogue.
   base::string16 state_announcement_;

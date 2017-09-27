@@ -128,6 +128,9 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
   // Return true if the |bounds_animator_| is animating |view|.
   bool IsAnimatingView(AppListItemView* view);
 
+  // Returns true if the event was handled by the pagination controller.
+  bool HandleScroll(int offset, ui::EventType type);
+
   bool has_dragged_view() const { return drag_view_ != nullptr; }
   bool dragging() const { return drag_pointer_ != NONE; }
 
@@ -139,7 +142,6 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
   void Layout() override;
   bool OnKeyPressed(const ui::KeyEvent& event) override;
   bool OnKeyReleased(const ui::KeyEvent& event) override;
-  bool OnMouseWheel(const ui::MouseWheelEvent& event) override;
   void ViewHierarchyChanged(
       const ViewHierarchyChangedDetails& details) override;
   bool GetDropFormats(
@@ -155,7 +157,6 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
 
   // Overridden from ui::EventHandler:
   void OnGestureEvent(ui::GestureEvent* event) override;
-  void OnScrollEvent(ui::ScrollEvent* event) override;
 
   // Stops the timer that triggers a page flip during a drag.
   void StopPageFlipTimer();
@@ -210,6 +211,10 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
 
   // Starts a timer during which we ignore scroll events.
   void StartTimerToIgnoreScrollEvents();
+
+  // Passes scroll information from AppListView to the PaginationController,
+  // returns true if this scroll would change pages.
+  bool HandleInitialScrollFromAppListView(int offset, ui::EventType type);
 
   // Return the view model for test purposes.
   const views::ViewModelT<AppListItemView>* view_model_for_test() const {
