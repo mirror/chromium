@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1c8ae37_a4eefbad",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-27T04:58:09Z",
+      "side": 1,
+      "message": "nit: serve -\u003e serves",
+      "revId": "0887bec63d3dc1bddf657e16d2a61ed440e1adbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
