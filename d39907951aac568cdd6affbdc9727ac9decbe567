@@ -22,6 +22,30 @@
       "revId": "d39907951aac568cdd6affbdc9727ac9decbe567",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e778a61e_ffd6884e",
+        "filename": "gpu/config/gpu_info_collector_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1119849
+      },
+      "writtenOn": "2017-09-27T21:08:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b5fbe62_60eb0101",
+      "range": {
+        "startLine": 49,
+        "startChar": 19,
+        "endLine": 49,
+        "endChar": 33
+      },
+      "revId": "d39907951aac568cdd6affbdc9727ac9decbe567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
