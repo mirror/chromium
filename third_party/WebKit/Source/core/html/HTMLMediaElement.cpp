@@ -1258,7 +1258,9 @@ void HTMLMediaElement::StartPlayerLoad() {
   web_media_player_->RequestRemotePlaybackDisabled(
       FastHasAttribute(disableremoteplaybackAttr));
 
-  web_media_player_->Load(GetLoadType(), source, CorsMode());
+  web_media_player_->Load(
+      GetLoadType(), source, CorsMode(),
+      GetExecutionContext()->GetSecurityOrigin()->TaintsCanvas(currentSrc()));
 
   if (IsFullscreen())
     web_media_player_->EnteredFullscreen();

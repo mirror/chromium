@@ -16,7 +16,10 @@ class EmptyWebMediaPlayer : public WebMediaPlayer {
  public:
   ~EmptyWebMediaPlayer() override {}
 
-  void Load(LoadType, const WebMediaPlayerSource&, CORSMode) override {}
+  void Load(LoadType,
+            const WebMediaPlayerSource&,
+            CORSMode,
+            bool taints_canvas) override {}
   void Play() override {}
   void Pause() override {}
   bool SupportsSave() const override { return false; }
@@ -49,11 +52,14 @@ class EmptyWebMediaPlayer : public WebMediaPlayer {
   unsigned DroppedFrameCount() const override { return 0; }
   size_t AudioDecodedByteCount() const override { return 0; }
   size_t VideoDecodedByteCount() const override { return 0; }
-  void Paint(WebCanvas*,
+  bool Paint(WebCanvas*,
              const WebRect&,
              cc::PaintFlags&,
              int already_uploaded_id,
-             VideoFrameUploadMetadata*) override {}
+             bool check_cross_origin,
+             VideoFrameUploadMetadata*) override {
+    return false;
+  }
 };
 
 }  // namespace blink

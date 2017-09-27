@@ -118,7 +118,10 @@ class WebMediaPlayer {
 
   virtual ~WebMediaPlayer() {}
 
-  virtual void Load(LoadType, const WebMediaPlayerSource&, CORSMode) = 0;
+  virtual void Load(LoadType,
+                    const WebMediaPlayerSource&,
+                    CORSMode,
+                    bool taints_canvas) = 0;
 
   // Playback controls.
   virtual void Play() = 0;
@@ -196,10 +199,14 @@ class WebMediaPlayer {
   //   - If |out_metadata| is not null, |already_uploaded_id| is compared with
   //     the unique_id of the frame being uploaded. If it's the same, the
   //     upload may be skipped and considered to be successful.
-  virtual void Paint(WebCanvas*,
+  // If |check_cross_origin| is true and the WebMediaPlayer has cross-origin
+  // data, this method ignores the frame and immediately returns true.
+  // Otherwise, this method returns false.
+  virtual bool Paint(WebCanvas*,
                      const WebRect&,
                      cc::PaintFlags&,
                      int already_uploaded_id = -1,
+                     bool check_cross_origin = false,
                      VideoFrameUploadMetadata* out_metadata = nullptr) = 0;
 
   // Do a GPU-GPU texture copy of the current video frame to |texture|,

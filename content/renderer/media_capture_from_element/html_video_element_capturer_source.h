@@ -74,6 +74,8 @@ class CONTENT_EXPORT HtmlVideoElementCapturerSource final
   // Target time for the next frame.
   base::TimeTicks next_capture_time_;
 
+  bool is_tainted_ = false;
+
   // Bound to the main render thread.
   base::ThreadChecker thread_checker_;
 
