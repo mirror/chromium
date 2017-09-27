@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "7c8831a2_cbb4ae23",
+        "filename": "chrome/browser/extensions/api/virtual_keyboard_private/chrome_virtual_keyboard_delegate.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-27T00:33:33Z",
+      "side": 1,
+      "message": "better, use std::make_unique from \u003cutility\u003e! :-)",
+      "parentUuid": "def32155_23911800",
+      "revId": "c5ad9bea1e193a619fbd76789c0b250cd9b74130",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee0aea92_93b5ec88",
         "filename": "chrome/browser/extensions/api/virtual_keyboard_private/chrome_virtual_keyboard_delegate.cc",
         "patchSetId": 42
