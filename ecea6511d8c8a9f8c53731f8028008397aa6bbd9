@@ -34,6 +34,24 @@
       "revId": "ecea6511d8c8a9f8c53731f8028008397aa6bbd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "151d7f5a_19d4e78f",
+        "filename": "base/files/file_util_posix.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-27T21:06:25Z",
+      "side": 1,
+      "message": "Yes, but when there\u0027s a 100+ line implementation, sometimes it\u0027s good to have comments in the code to briefly explain / reminder readers what a particular part is doing.",
+      "parentUuid": "0b2ad816_802df901",
+      "revId": "ecea6511d8c8a9f8c53731f8028008397aa6bbd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
