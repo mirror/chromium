@@ -16,6 +16,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/synchronization/waitable_event.h"
 #include "base/threading/thread.h"
+#include "build/build_config.h"
 #include "chrome/test/chromedriver/net/url_request_context_getter.h"
 #include "net/base/ip_endpoint.h"
 #include "net/base/net_errors.h"
@@ -112,27 +113,55 @@ class FetchUrlTest : public testing::Test,
 
 }  // namespace
 
-TEST_F(FetchUrlTest, Http200) {
+#if defined(OS_LINUX)
+// https://bugs.chromium.org/p/chromedriver/issues/detail?id=2044
+#define MAYBE_AllHttp200 DISABLED_Http200
+#else
+#define MAYBE_AllHttp200 Http200
+#endif
+
+TEST_F(FetchUrlTest, MAYBE_AllHttp200) {
   std::string response("stuff");
   ASSERT_TRUE(FetchUrl(server_url_, context_getter_.get(), &response));
   ASSERT_STREQ("hello", response.c_str());
 }
 
-TEST_F(FetchUrlTest, HttpNon200) {
+#if defined(OS_LINUX)
+// https://bugs.chromium.org/p/chromedriver/issues/detail?id=2044
+#define MAYBE_AllHttpNon200 DISABLED_HttpNon200
+#else
+#define MAYBE_AllHttpNon200 HttpNon200
+#endif
+
+TEST_F(FetchUrlTest, MAYBE_AllHttpNon200) {
   response_ = kSend404;
   std::string response("stuff");
   ASSERT_FALSE(FetchUrl(server_url_, context_getter_.get(), &response));
   ASSERT_STREQ("stuff", response.c_str());
 }
 
-TEST_F(FetchUrlTest, ConnectionClose) {
+#if defined(OS_LINUX)
+// https://bugs.chromium.org/p/chromedriver/issues/detail?id=2044
+#define MAYBE_AllConnectionClose DISABLED_ConnectionClose
+#else
+#define MAYBE_AllConnectionClose ConnectionClose
+#endif
+
+TEST_F(FetchUrlTest, MAYBE_AllConnectionClose) {
   response_ = kClose;
   std::string response("stuff");
   ASSERT_FALSE(FetchUrl(server_url_, context_getter_.get(), &response));
   ASSERT_STREQ("stuff", response.c_str());
 }
 
-TEST_F(FetchUrlTest, NoServer) {
+#if defined(OS_LINUX)
+// https://bugs.chromium.org/p/chromedriver/issues/detail?id=2044
+#define MAYBE_AllNoServer DISABLED_NoServer
+#else
+#define MAYBE_AllNoServer NoServer
+#endif
+
+TEST_F(FetchUrlTest, MAYBE_AllNoServer) {
   std::string response("stuff");
   ASSERT_FALSE(
       FetchUrl("http://localhost:33333", context_getter_.get(), &response));
