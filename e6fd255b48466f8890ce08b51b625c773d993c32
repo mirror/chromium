@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d224ee3e_5b7c8cb0",
+        "filename": "third_party/WebKit/LayoutTests/imagecapture/MediaStreamTrack-applyConstraints-reject.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-27T14:09:45Z",
+      "side": 0,
+      "message": "Why was this removed?",
+      "range": {
+        "startLine": 76,
+        "startChar": 2,
+        "endLine": 76,
+        "endChar": 14
+      },
+      "revId": "e6fd255b48466f8890ce08b51b625c773d993c32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,254 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51bf1b2c_93cd1914",
+        "filename": "content/renderer/media/user_media_client_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-27T14:09:45Z",
+      "side": 1,
+      "message": "What \"type of track\" is this?",
+      "range": {
+        "startLine": 138,
+        "startChar": 27,
+        "endLine": 138,
+        "endChar": 28
+      },
+      "revId": "e987c316a2bc7b22149afdec6d4a91b04f1d702c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4168eefe_e7cf4cc3",
+        "filename": "content/shell/test_runner/mock_web_user_media_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-27T14:09:45Z",
+      "side": 1,
+      "message": "Here and elsewhere: isn\u0027t this cheating? You copy so that you can call a non-const function, but the copy obtains the same private_, so RequestFailed on the copy is equivalent to doing it on the original.\n\nmutable+const doesn\u0027t make sense because it\u0027s doing something; resolving a promise.\n\nI think the correct approach is to pass WebApplyConstraintsRequest*",
+      "revId": "e987c316a2bc7b22149afdec6d4a91b04f1d702c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3f28418_6f9a55aa",
+        "filename": "content/shell/test_runner/mock_web_user_media_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-27T14:09:45Z",
+      "side": 1,
+      "message": "This is a \"fake\", not a \"mock\", right?\n\nShould it not have any observable effect?",
+      "revId": "e987c316a2bc7b22149afdec6d4a91b04f1d702c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf556d60_d0acf0e4",
+        "filename": "third_party/WebKit/LayoutTests/fast/mediastream/MediaStreamTrack-applyConstraints.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-27T14:09:45Z",
+      "side": 1,
+      "message": "nit: Here and elsewhere, what about () \u003d\u003e { ... } instead of function() { ... }?",
+      "revId": "e987c316a2bc7b22149afdec6d4a91b04f1d702c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72df378f_b94b1ce7",
+        "filename": "third_party/WebKit/LayoutTests/fast/mediastream/MediaStreamTrack-applyConstraints.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-27T14:09:45Z",
+      "side": 1,
+      "message": "Depending on the order of arguments, a difference in prototype members may result in skip or returning false. Nitty, but constraintElementsEqual(a,b) should probably be equal to constraintElementsEqual(b,a).",
+      "revId": "e987c316a2bc7b22149afdec6d4a91b04f1d702c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71e116cb_67c7f3ba",
+        "filename": "third_party/WebKit/LayoutTests/fast/mediastream/MediaStreamTrack-applyConstraints.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-27T14:09:45Z",
+      "side": 1,
+      "message": "What happens to advanced constraints? What if they are ignored, will they not show up in getConstraints(), wouldn\u0027t the assert on the next line fail? Or will they show up regardless of if they\u0027re used or not?",
+      "revId": "e987c316a2bc7b22149afdec6d4a91b04f1d702c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fecfd1b_da7ef7bc",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaStreamTrack.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-27T14:09:45Z",
+      "side": 1,
+      "message": "Is there something, like a spec or definition files, that can be referenced saying what is and isn\u0027t image capture constraints? I\u0027m looking at this and just trusting that it\u0027s correct without any verification as a reviewer.\n\nIf this is all well-defined in MediaTrackConstraintSet, shouldn\u0027t these type of helper functions be moved there?",
+      "revId": "e987c316a2bc7b22149afdec6d4a91b04f1d702c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "436a47a9_027b100e",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaStreamTrack.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-27T14:09:45Z",
+      "side": 1,
+      "message": "What if we have image capture constraints but !image_capture_?",
+      "revId": "e987c316a2bc7b22149afdec6d4a91b04f1d702c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51d0c1ca_63494c58",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaStreamTrack.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-27T14:09:45Z",
+      "side": 1,
+      "message": "Why is this a special case? Why not resolve and return the promise? Looks like applyConstraintsImageCapture already covers this case.",
+      "revId": "e987c316a2bc7b22149afdec6d4a91b04f1d702c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1b78ffb_c9523204",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaStreamTrack.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-27T14:09:45Z",
+      "side": 1,
+      "message": "Is there an assumption about being in the non-image capture constraints case here? If not, why do we not reject the promise before in e.g. the applyConstraintsImageCapture case?\n\nWhy would we perform this check if ConstraintsAreEmpty?",
+      "revId": "e987c316a2bc7b22149afdec6d4a91b04f1d702c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1f08c50_14894f2b",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaStreamTrack.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-27T14:09:45Z",
+      "side": 1,
+      "message": "What is the mediaDevices controller and does this error message make sense to developers? Should we rephrase it?",
+      "revId": "e987c316a2bc7b22149afdec6d4a91b04f1d702c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55ec405b_70b12826",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaStreamTrack.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-27T14:09:45Z",
+      "side": 1,
+      "message": "Maybe this block should come earlier?",
+      "revId": "e987c316a2bc7b22149afdec6d4a91b04f1d702c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7a9b800_c05a4966",
+        "filename": "third_party/WebKit/Source/modules/mediastream/OverconstrainedError.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-27T14:09:45Z",
+      "side": 1,
+      "message": "Put this behind a RuntimeEnabled flag and don\u0027t expose it by default.",
+      "revId": "e987c316a2bc7b22149afdec6d4a91b04f1d702c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "322c55eb_a1dc6a55",
+        "filename": "third_party/WebKit/Source/modules/mediastream/OverconstrainedError.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-27T14:09:45Z",
+      "side": 1,
+      "message": "This argument order makes sense to me. But I noticed that DOMException has |message| before |name| though, should this have |constraint| after |message|?",
+      "range": {
+        "startLine": 10,
+        "startChar": 48,
+        "endLine": 10,
+        "endChar": 55
+      },
+      "revId": "e987c316a2bc7b22149afdec6d4a91b04f1d702c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
