@@ -302,4 +302,16 @@ void SetKeysForCrashLogging(const GPUInfo& gpu_info) {
 #endif
 }
 
+bool IsFeatureDisabled(GpuFeatureType feature) {
+  const base::CommandLine* cmd_line = base::CommandLine::ForCurrentProcess();
+  switch (feature) {
+    case GPU_FEATURE_TYPE_GPU_COMPOSITING:
+      return (cmd_line->HasSwitch(switches::kDisableGpu) ||
+              cmd_line->HasSwitch(switches::kDisableGpuCompositing));
+    default:
+      NOTREACHED();
+      return false;
+  }
+}
+
 }  // namespace gpu

@@ -16,14 +16,11 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "cc/paint/skia_paint_canvas.h"
-#include "content/browser/gpu/compositor_util.h"
-#include "content/browser/gpu/gpu_data_manager_impl.h"
 #include "content/browser/renderer_host/dip_util.h"
 #include "content/browser/renderer_host/render_widget_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_view_base.h"
 #include "content/browser/renderer_host/render_widget_host_view_frame_subscriber.h"
 #include "content/common/frame_messages.h"
-#include "content/public/browser/gpu_data_manager.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/content_paths.h"
@@ -35,6 +32,7 @@
 #include "content/public/test/test_utils.h"
 #include "content/shell/browser/shell.h"
 #include "content/test/did_commit_provisional_load_interceptor.h"
+#include "gpu/config/gpu_util.h"
 #include "media/base/video_frame.h"
 #include "media/renderers/skcanvas_video_renderer.h"
 #include "net/base/filename_util.h"
@@ -676,8 +674,7 @@ class CompositingRenderWidgetHostViewBrowserTestTabCapture
                        run_loop.QuitClosure());
         rwhv->CopyFromSurfaceToVideoFrame(copy_rect, video_frame, callback);
       } else {
-        if (!content::GpuDataManager::GetInstance()
-                 ->CanUseGpuBrowserCompositor()) {
+        if (gpu::IsFeatureDisabled(gpu::GPU_FEATURE_TYPE_GPU_COMPOSITING)) {
           // Skia rendering can cause color differences, particularly in the
           // middle two columns.
           SetAllowableError(2);
