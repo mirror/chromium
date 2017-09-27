@@ -21,6 +21,7 @@
 
 class AutocompleteProviderListener;
 class HistoryURLProvider;
+class PrefService;
 
 namespace base {
 class Value;
@@ -64,6 +65,15 @@ class ZeroSuggestProvider : public BaseSearchProvider,
 
   // Sets |field_trial_triggered_| to false.
   void ResetSession() override;
+
+  // Whether personalized suggestions are enabled.
+  static bool PersonalizedSuggestionsEnabled(PrefService* pref);
+
+  // Whether most visited suggestions are enabled.
+  static bool MostVisitedSuggestionsEnabled(PrefService* pref);
+
+  // Whether most visited without SERP suggestions are enabled.
+  static bool MostVisitedWithoutSerpSuggestionsEnabled(PrefService* pref);
 
  private:
   ZeroSuggestProvider(AutocompleteProviderClient* client,
