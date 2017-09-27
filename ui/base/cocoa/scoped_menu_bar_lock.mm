@@ -1,0 +1,26 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#import "ui/base/cocoa/scoped_menu_bar_lock.h"
+
+#import <AppKit/AppKit.h>
+
+@interface NSMenu (PrivateAPI)
+- (void)_lockMenuPosition;
+- (void)_unlockMenuPosition;
+@end
+
+namespace ui {
+
+ScopedMenuBarLock::ScopedMenuBarLock() {
+  if ([NSMenu instancesRespondToSelector:@selector(_lockMenuPosition)])
+    [[NSApp mainMenu] _lockMenuPosition];
+}
+
+ScopedMenuBarLock::~ScopedMenuBarLock() {
+  if ([NSMenu instancesRespondToSelector:@selector(_unlockMenuPosition)])
+    [[NSApp mainMenu] _unlockMenuPosition];
+}
+
+}  // namespace ui
