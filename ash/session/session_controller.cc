@@ -636,4 +636,16 @@ void SessionController::OnProfilePrefServiceInitialized(
   }
 }
 
+void SessionController::SetOffHoursEndTime(base::TimeTicks off_hours_end_time) {
+  off_hours_end_time_ = off_hours_end_time;
+  for (auto& observer : observers_)
+    observer.OnOffHoursModeOrDurationChanged();
+}
+
+void SessionController::UpdateOffHoursMode(bool off_hours_mode) {
+  off_hours_mode_ = off_hours_mode;
+  for (auto& observer : observers_)
+    observer.OnOffHoursModeOrDurationChanged();
+}
+
 }  // namespace ash

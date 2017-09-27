@@ -35,16 +35,28 @@ class ASH_EXPORT TraySessionLengthLimit : public SystemTrayItem,
   void OnSessionStateChanged(session_manager::SessionState state) override;
   void OnSessionLengthLimitChanged() override;
 
+  LimitState limit_state() { return limit_state_; }
+
+ protected:
+  virtual bool IsSessionStarted();
+
+  virtual void UpdateRemainingSessionTime();
+
+  void SetRemainingSessionTime(base::TimeDelta remaining_session_time) {
+    remaining_session_time_ = remaining_session_time;
+  }
+
+  // Update state, notification and tray bubble view. Called by the
+  // RepeatingTimer in regular intervals and also by OnSession*Changed().
+  void Update();
+
  private:
   friend class TraySessionLengthLimitTest;
 
   static const char kNotificationId[];
 
-  // Update state, notification and tray bubble view.  Called by the
-  // RepeatingTimer in regular intervals and also by OnSession*Changed().
-  void Update();
-
-  // Recalculate |limit_state_| and |remaining_session_time_|.
+  // Update or reset current state depends on parameters from session
+  // controller.
   void UpdateState();
 
   void UpdateNotification();
