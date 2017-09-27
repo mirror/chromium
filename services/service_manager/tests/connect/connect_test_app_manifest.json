@@ -1,6 +1,7 @@
 {
   "name": "connect_test_app",
   "display_name": "Connect Test App",
+  "sandbox_type": "none",
   "interface_provider_specs": {
     "service_manager:connector": {
       "provides": {
