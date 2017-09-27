@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "4f59ffc0_fac4a3b0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1045,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-27T00:19:27Z",
+      "side": 1,
+      "message": "This doesn\u0027t synchronously restore all tabs and put them in the tab list right?  What happens if tabs are restored slowly?  Does this end up adding them after the ones from the browser actions?",
+      "range": {
+        "startLine": 1045,
+        "startChar": 34,
+        "endLine": 1045,
+        "endChar": 45
+      },
+      "revId": "63e387f8416624f1621694a0daea024911168f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eacbffc_fd9d9fb9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1077,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-27T00:19:27Z",
+      "side": 1,
+      "message": "Here and below, I think we should explicitly get the non-incognito model.  We wouldn\u0027t want to start adding tabs to the wrong model.",
+      "revId": "63e387f8416624f1621694a0daea024911168f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a5fdc055_24dfcff1",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
         "patchSetId": 4
@@ -43,6 +83,23 @@
         "endLine": 1086,
         "endChar": 30
       },
+      "revId": "63e387f8416624f1621694a0daea024911168f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3c670f2_d7fae96c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1086,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-27T00:19:27Z",
+      "side": 1,
+      "message": "We should probably only do this if it was a main intent (i.e. !mIntentWithEffect from above I believe).",
       "revId": "63e387f8416624f1621694a0daea024911168f75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -96,6 +153,70 @@
     },
     {
       "key": {
+        "uuid": "2a6711db_dd8d5bad",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-27T00:19:27Z",
+      "side": 1,
+      "message": "I think it would be better to expose a boolean method for this then (isInitialized()) or something.",
+      "parentUuid": "35e81bea_5f47a935",
+      "range": {
+        "startLine": 86,
+        "startChar": 18,
+        "endLine": 86,
+        "endChar": 48
+      },
+      "revId": "63e387f8416624f1621694a0daea024911168f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0ec57a4_77d31dcf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-27T00:19:27Z",
+      "side": 1,
+      "message": "What does this do?\n\nIf we did want to stop the saving, I would think we\u0027d want to just remove the tab to the queue (removeTabFromQueues), but since the tab state is in the same directory as CTA we don\u0027t actually want to stop saving either.",
+      "range": {
+        "startLine": 107,
+        "startChar": 26,
+        "endLine": 107,
+        "endChar": 43
+      },
+      "revId": "63e387f8416624f1621694a0daea024911168f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fa93d5d_05105441",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1451,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-27T00:19:27Z",
+      "side": 1,
+      "message": "I feel we should have something like\n\nassert mIsDetached;\n\nat the top of this.",
+      "revId": "63e387f8416624f1621694a0daea024911168f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ee0becb_a62d9cd4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
         "patchSetId": 4
@@ -131,6 +252,30 @@
       "side": 1,
       "message": "Some of them in here require WebContents while others also need something from native. I manually tested every line in this class and these all could crash the app.",
       "parentUuid": "2ee0becb_a62d9cd4",
+      "range": {
+        "startLine": 1474,
+        "startChar": 37,
+        "endLine": 1474,
+        "endChar": 70
+      },
+      "revId": "63e387f8416624f1621694a0daea024911168f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20d43f41_3b4565c2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1474,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-27T00:19:27Z",
+      "side": 1,
+      "message": "native should be initialized at this point, so these all would seem to have internal dependencies on web contents?\n\nIt would be good to verify why they\u0027re breaking though and potentially making these classes more tolerant of web contents not being there.  Maybe these are all destroyed when swapping webcontents, but if not, then they\u0027re already handling webcontents switching.",
+      "parentUuid": "1ec0a73c_9ff50538",
       "range": {
         "startLine": 1474,
         "startChar": 37,
