@@ -73,6 +73,11 @@ class CONTENT_EXPORT LevelDBWrapperImpl : public mojom::LevelDBWrapper {
   bool empty() const { return bytes_used_ == 0; }
   size_t bytes_used() const { return bytes_used_; }
 
+  bool has_pending_load_tasks() const {
+    return !on_load_complete_tasks_.empty();
+  }
+  bool has_uncommitted_changes() const { return commit_batch_ != nullptr; }
+
   // Commence aggressive flushing. This should be called early during startup,
   // before any localStorage writing. Currently scheduled writes will not be
   // rescheduled and will be flushed at the scheduled time after which
