@@ -31,6 +31,7 @@
 #include "core/html/HTMLOListElement.h"
 #include "core/layout/LayoutListItem.h"
 #include "core/layout/api/LayoutLIItem.h"
+#include "core/layout/ng/layout_ng_list_item.h"
 
 namespace blink {
 
@@ -41,7 +42,8 @@ bool ListItemOrdinal::IsList(const Node& node) {
 }
 
 bool ListItemOrdinal::IsListItem(const LayoutObject* layout_object) {
-  return layout_object && layout_object->IsListItem();
+  return layout_object &&
+         (layout_object->IsListItem() || layout_object->IsLayoutNGListItem());
 }
 
 bool ListItemOrdinal::IsListItem(const Node& node) {
@@ -50,8 +52,12 @@ bool ListItemOrdinal::IsListItem(const Node& node) {
 
 ListItemOrdinal* ListItemOrdinal::Get(const Node& item_node) {
   LayoutObject* layout_object = item_node.GetLayoutObject();
-  if (layout_object && layout_object->IsListItem())
-    return &ToLayoutListItem(layout_object)->Ordinal();
+  if (layout_object) {
+    if (layout_object->IsListItem())
+      return &ToLayoutListItem(layout_object)->Ordinal();
+    if (layout_object->IsLayoutNGListItem())
+      return &ToLayoutNGListItem(layout_object)->Ordinal();
+  }
   return nullptr;
 }
 
@@ -261,7 +267,7 @@ void ListItemOrdinal::InvalidateAllItemsForOrderedList(
 }
 
 void ListItemOrdinal::ItemInsertedOrRemoved(
-    const LayoutListItem* layout_list_item) {
+    const LayoutObject* layout_list_item) {
   // If distribution recalc is needed, updateListMarkerNumber will be re-invoked
   // after distribution is calculated.
   const Node* item_node = layout_list_item->GetNode();

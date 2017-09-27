@@ -97,7 +97,7 @@ class CORE_TEMPLATE_CLASS_EXPORT NGInlineItemsBuilderTemplate {
   // Append a Bidi control character, for LTR or RTL depends on the style.
   void AppendBidiControl(const ComputedStyle*, UChar ltr, UChar rtl);
 
-  void EnterBlock(const ComputedStyle*);
+  void EnterBlock(LayoutObject*);
   void ExitBlock();
   void EnterInline(LayoutObject*);
   void ExitInline(LayoutObject*);
