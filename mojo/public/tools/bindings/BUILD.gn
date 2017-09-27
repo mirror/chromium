@@ -98,4 +98,13 @@ if (current_toolchain == default_toolchain) {
     args =
         [ rebase_path("$target_gen_dir/mojom-message-id-salt", root_build_dir) ]
   }
+
+  copy("copy_message_id_salt") {
+    sources = [
+      "$target_gen_dir/mojom-message-id-salt",
+    ]
+    outputs = [
+      "$root_gen_dir/mojom-message-id-salt",
+    ]
+  }
 }
