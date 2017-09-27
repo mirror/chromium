@@ -130,6 +130,10 @@ void WebFrameSchedulerImpl::SetFrameVisible(bool frame_visible) {
   UpdateThrottling(was_throttled);
 }
 
+bool WebFrameSchedulerImpl::IsFrameVisible() const {
+  return frame_visible_;
+}
+
 void WebFrameSchedulerImpl::SetCrossOrigin(bool cross_origin) {
   DCHECK(parent_web_view_scheduler_);
   if (cross_origin_ == cross_origin)
@@ -137,6 +141,10 @@ void WebFrameSchedulerImpl::SetCrossOrigin(bool cross_origin) {
   bool was_throttled = ShouldThrottleTimers();
   cross_origin_ = cross_origin;
   UpdateThrottling(was_throttled);
+}
+
+bool WebFrameSchedulerImpl::IsCrossOrigin() const {
+  return cross_origin_;
 }
 
 RefPtr<blink::WebTaskRunner> WebFrameSchedulerImpl::LoadingTaskRunner() {
@@ -370,6 +378,10 @@ void WebFrameSchedulerImpl::SetPageVisible(bool page_visible) {
   }
 }
 
+bool WebFrameSchedulerImpl::IsPageVisible() const {
+  return page_visible_;
+}
+
 void WebFrameSchedulerImpl::SetPaused(bool frame_paused) {
   DCHECK(parent_web_view_scheduler_);
   if (frame_paused_ == frame_paused)
@@ -420,6 +432,10 @@ void WebFrameSchedulerImpl::UpdateThrottling(bool was_throttled) {
 
 base::WeakPtr<WebFrameSchedulerImpl> WebFrameSchedulerImpl::AsWeakPtr() {
   return weak_factory_.GetWeakPtr();
+}
+
+bool WebFrameSchedulerImpl::IsExemptFromThrottling() const {
+  return has_active_connection();
 }
 
 }  // namespace scheduler

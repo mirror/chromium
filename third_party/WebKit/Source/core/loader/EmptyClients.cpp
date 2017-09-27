@@ -73,7 +73,6 @@ class EmptyFrameScheduler : public WebFrameScheduler {
   EmptyFrameScheduler() { DCHECK(IsMainThread()); }
   void AddThrottlingObserver(ObserverType, Observer*) override {}
   void RemoveThrottlingObserver(ObserverType, Observer*) override {}
-  void SetFrameVisible(bool) override {}
   RefPtr<WebTaskRunner> LoadingTaskRunner() override;
   RefPtr<WebTaskRunner> LoadingControlTaskRunner() override;
   RefPtr<WebTaskRunner> ThrottleableTaskRunner() override;

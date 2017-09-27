@@ -9,6 +9,7 @@
 #include "base/test/histogram_tester.h"
 #include "base/test/simple_test_tick_clock.h"
 #include "components/viz/test/ordered_simple_task_runner.h"
+#include "platform/WebFrameScheduler.h"
 #include "platform/scheduler/base/test_time_source.h"
 #include "platform/scheduler/child/scheduler_tqm_delegate_for_test.h"
 #include "platform/scheduler/renderer/renderer_scheduler_impl.h"
@@ -22,6 +23,49 @@ using QueueType = MainThreadTaskQueue::QueueType;
 using testing::ElementsAre;
 using testing::UnorderedElementsAre;
 using base::Bucket;
+
+namespace {
+
+class MainThreadTaskQueueForTest : public MainThreadTaskQueue {
+ public:
+  MainThreadTaskQueueForTest(QueueType queue_type)
+      : MainThreadTaskQueue(nullptr, QueueCreationParams(queue_type), nullptr) {
+  }
+  ~MainThreadTaskQueueForTest() {}
+};
+
+class FakeWebFrameScheduler : public WebFrameScheduler {
+ public:
+  FakeWebFrameScheduler(bool is_page_visible,
+                        bool is_frame_visible,
+                        bool is_cross_origin,
+                        bool is_exempt_from_throttling)
+      : is_page_visible_(is_page_visible),
+        is_frame_visible_(is_frame_visible),
+        is_cross_origin_(is_cross_origin),
+        is_exempt_from_throttling_(is_exempt_from_throttling) {}
+
+  RefPtr<WebTaskRunner> DeferrableTaskRunner() override { return nullptr; }
+  RefPtr<WebTaskRunner> LoadingControlTaskRunner() override { return nullptr; }
+  RefPtr<WebTaskRunner> LoadingTaskRunner() override { return nullptr; }
+  RefPtr<WebTaskRunner> PausableTaskRunner() override { return nullptr; }
+  RefPtr<WebTaskRunner> ThrottleableTaskRunner() override { return nullptr; }
+  RefPtr<WebTaskRunner> UnpausableTaskRunner() override { return nullptr; }
+  bool IsCrossOrigin() const override { return is_cross_origin_; }
+  bool IsExemptFromThrottling() const override {
+    return is_exempt_from_throttling_;
+  }
+  bool IsFrameVisible() const override { return is_frame_visible_; }
+  bool IsPageVisible() const override { return is_page_visible_; }
+
+ private:
+  bool is_page_visible_;
+  bool is_frame_visible_;
+  bool is_cross_origin_;
+  bool is_exempt_from_throttling_;
+};
+
+}  // namespace
 
 class RendererMetricsHelperTest : public ::testing::Test {
  public:
@@ -49,7 +93,9 @@ class RendererMetricsHelperTest : public ::testing::Test {
                base::TimeDelta duration) {
     DCHECK_LE(clock_->NowTicks(), start);
     clock_->SetNowTicks(start + duration);
-    metrics_helper_->RecordTaskMetrics(queue_type, start, start + duration);
+    scoped_refptr<MainThreadTaskQueueForTest> queue(
+        new MainThreadTaskQueueForTest(queue_type));
+    metrics_helper_->RecordTaskMetrics(queue.get(), start, start + duration);
   }
 
   base::TimeTicks Microseconds(int microseconds) {
@@ -164,6 +210,24 @@ TEST_F(RendererMetricsHelperTest, Metrics) {
           Bucket(static_cast<int>(QueueType::COMPOSITOR), 20),
           Bucket(static_cast<int>(QueueType::IDLE), 1650),
           Bucket(static_cast<int>(QueueType::FRAME_LOADING_CONTROL), 5)));
+}
+
+TEST_F(RendererMetricsHelperTest, GetFrameTypeTest) {
+  // TODO(altimin): Fix when we have WebFrameScheduler::IsMainFrame.
+  FakeWebFrameScheduler frame1(true, true, false, false);
+  EXPECT_EQ(GetFrameType(&frame1), FrameType::SAME_ORIGIN_ONSCREEN);
+
+  FakeWebFrameScheduler frame2(true, false, false, false);
+  EXPECT_EQ(GetFrameType(&frame2), FrameType::SAME_ORIGIN_OFFSCREEN);
+
+  FakeWebFrameScheduler frame3(true, false, true, false);
+  EXPECT_EQ(GetFrameType(&frame3), FrameType::CROSS_ORIGIN_OFFSCREEN);
+
+  FakeWebFrameScheduler frame4(false, false, false, false);
+  EXPECT_EQ(GetFrameType(&frame4), FrameType::SAME_ORIGIN_BACKGROUND);
+
+  FakeWebFrameScheduler frame5(false, false, true, true);
+  DCHECK_EQ(GetFrameType(&frame5), FrameType::CROSS_ORIGIN_BACKGROUND_EXEMPT);
 }
 
 // TODO(crbug.com/754656): Add tests for NthMinute and AfterNthMinute

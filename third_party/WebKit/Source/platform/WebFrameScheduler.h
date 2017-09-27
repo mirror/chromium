@@ -46,18 +46,20 @@ class WebFrameScheduler {
   // Adds an Observer instance to be notified on scheduling policy changed.
   // When an Observer is added, the initial state will be notified synchronously
   // through the Observer interface.
-  virtual void AddThrottlingObserver(ObserverType, Observer*) = 0;
+  virtual void AddThrottlingObserver(ObserverType, Observer*) {}
 
   // Removes an Observer instance.
-  virtual void RemoveThrottlingObserver(ObserverType, Observer*) = 0;
+  virtual void RemoveThrottlingObserver(ObserverType, Observer*) {}
 
   // The scheduler may throttle tasks associated with offscreen frames.
   virtual void SetFrameVisible(bool) {}
+  virtual bool IsFrameVisible() const { return false; }
 
   // Tells the scheduler that the page this frame belongs to is not visible.
   // The scheduler may throttle tasks associated with pages that are not
   // visible.
   virtual void SetPageVisible(bool) {}
+  virtual bool IsPageVisible() const { return false; }
 
   // Set whether this frame is suspended. Only unthrottledTaskRunner tasks are
   // allowed to run on a suspended frame.
@@ -67,6 +69,7 @@ class WebFrameScheduler {
   // origin frames may use a different scheduling policy from same origin
   // frames.
   virtual void SetCrossOrigin(bool) {}
+  virtual bool IsCrossOrigin() const { return false; }
 
   // The tasks runners below are listed in increasing QoS order.
   // - throttleable task queue. Designed for custom user-provided javascript
@@ -151,7 +154,7 @@ class WebFrameScheduler {
   // and the UserModel. Must be called from the main thread.
   virtual void DidCommitProvisionalLoad(bool is_web_history_inert_commit,
                                         bool is_reload,
-                                        bool is_main_frame){};
+                                        bool is_main_frame) {}
 
   // Tells the scheduler if we are parsing a document on another thread. This
   // tells the scheduler not to advance virtual time if it's using the
@@ -168,6 +171,10 @@ class WebFrameScheduler {
   virtual std::unique_ptr<ActiveConnectionHandle> OnActiveConnectionCreated() {
     return nullptr;
   };
+
+  // Returns true if this frame is should not throttled (e.g. because of audio
+  // or an active connection).
+  virtual bool IsExemptFromThrottling() const { return false; }
 };
 
 }  // namespace blink
