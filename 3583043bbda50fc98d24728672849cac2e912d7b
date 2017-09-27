@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "caac0489_1a8161bb",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-27T17:48:29Z",
+      "side": 1,
+      "message": "I think it is useful to keep the legacy metric. Since lots data have been collected for the legacy metric, we can still use the legacy metric for a certain amount of time.\n\nAnd I think Autofill.FillDuration.FromInteraction.WithoutAutofill.CreditCard and Autofill.FillDuration.FromInteraction.WithoutAutofill.Address will aggregate to Autofill.FillDuration.FromInteraction.WithAutofill",
+      "parentUuid": "9fc4e302_f3aa55a9",
+      "range": {
+        "startLine": 745,
+        "startChar": 7,
+        "endLine": 745,
+        "endChar": 57
+      },
+      "revId": "3583043bbda50fc98d24728672849cac2e912d7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13834e8c_a08d5906",
         "filename": "components/autofill/core/browser/form_structure.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-22T21:43:09Z",
       "side": 1,
       "message": "This |elapsed| is per-form, right?  Like in dump-truck case #3 where there\u0027s an address form and a credit card form on the same page, I assume it logs separately?",
+      "range": {
+        "startLine": 799,
+        "startChar": 20,
+        "endLine": 799,
+        "endChar": 27
+      },
+      "revId": "3583043bbda50fc98d24728672849cac2e912d7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c467222d_db19955a",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 799,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-27T17:48:29Z",
+      "side": 1,
+      "message": "+Roger. I\u0027m not sure about this. Roger, do you know?",
+      "parentUuid": "13834e8c_a08d5906",
       "range": {
         "startLine": 799,
         "startChar": 20,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "57826ddc_364b2e7d",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1438,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-27T17:48:29Z",
+      "side": 1,
+      "message": "Hi Roger, can you share your method to check if a form is a cc form. Shall I look for CC number field in particular?",
+      "parentUuid": "83a6db3f_37d92cab",
+      "range": {
+        "startLine": 1438,
+        "startChar": 20,
+        "endLine": 1438,
+        "endChar": 41
+      },
+      "revId": "3583043bbda50fc98d24728672849cac2e912d7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d80a984_95b2f75d",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "3583043bbda50fc98d24728672849cac2e912d7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "108f3e4c_551276e9",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 93687,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-27T17:48:29Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s a good idea to combine them.\n1) Autofill.FormEvents.Address/CreditCard are histograms logging events.\n   Autofill.FillDuration.FromInteraction.WithAutofill/WithoutAutofill are histograms logging durations.\n\n2) Logging duration in Autofill.FormEvents.Address/CreditCard will make the legacy histogram break.",
+      "parentUuid": "7d80a984_95b2f75d",
+      "range": {
+        "startLine": 93687,
+        "startChar": 26,
+        "endLine": 93687,
+        "endChar": 38
+      },
+      "revId": "3583043bbda50fc98d24728672849cac2e912d7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
