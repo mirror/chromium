@@ -40,7 +40,12 @@ class ChromeBrowserState;
                                 timePeriod:(browsing_data::TimePeriod)timePeriod
                          completionHandler:(ProceduralBlock)completionHandler;
 
-// Dismisses all modal dialogs then call |completion|.
+// Dismisses all modal dialogs, excluding the omnibox if |dismissOmnibox| is
+// NO, then call |completion|.
+- (void)dismissModalDialogsWithCompletion:(ProceduralBlock)completion
+                           dismissOmnibox:(BOOL)dismissOmnibox;
+
+// Dismisses all modal dialogs then calls |completion|.
 - (void)dismissModalDialogsWithCompletion:(ProceduralBlock)completion;
 
 @end

@@ -2267,6 +2267,11 @@ const int kExternalFilesCleanupDelaySeconds = 60;
 }
 
 - (void)dismissModalDialogsWithCompletion:(ProceduralBlock)completion {
+  [self dismissModalDialogsWithCompletion:completion dismissOmnibox:YES];
+}
+
+- (void)dismissModalDialogsWithCompletion:(ProceduralBlock)completion
+                           dismissOmnibox:(BOOL)dismissOmnibox {
   // Immediately hide modals from the provider (alert views, action sheets,
   // popovers). They will be ultimately dismissed by their owners, but at least,
   // they are not visible.
@@ -2284,7 +2289,8 @@ const int kExternalFilesCleanupDelaySeconds = 60;
   // it.
   ProceduralBlock completionWithBVC = ^{
     // This will dismiss the SSO view controller.
-    [self.currentBVC clearPresentedStateWithCompletion:completion];
+    [self.currentBVC clearPresentedStateWithCompletion:completion
+                                        dismissOmnibox:dismissOmnibox];
   };
   ProceduralBlock completionWithoutBVC = ^{
     // This will dismiss the SSO view controller.
@@ -2373,13 +2379,26 @@ const int kExternalFilesCleanupDelaySeconds = 60;
                                       withURL:(const GURL&)url
                                    transition:(ui::PageTransition)transition
                                    completion:(ProceduralBlock)completion {
+  [self dismissModalsAndOpenSelectedTabInMode:targetMode
+                                      withURL:url
+                               dismissOmnibox:YES
+                                   transition:transition
+                                   completion:completion];
+}
+
+- (void)dismissModalsAndOpenSelectedTabInMode:(ApplicationMode)targetMode
+                                      withURL:(const GURL&)url
+                               dismissOmnibox:(BOOL)dismissOmnibox
+                                   transition:(ui::PageTransition)transition
+                                   completion:(ProceduralBlock)completion {
   GURL copyOfURL = url;
   [self dismissModalDialogsWithCompletion:^{
     [self openSelectedTabInMode:targetMode
                         withURL:copyOfURL
                      transition:transition
                      completion:completion];
-  }];
+  }
+                           dismissOmnibox:dismissOmnibox];
 }
 
 - (void)openTabFromLaunchOptions:(NSDictionary*)launchOptions
