@@ -33,6 +33,24 @@
       "revId": "7be298cb0627a2a7c9ff418bd946f7004fe55f9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf9106de_9588a1ec",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1507,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-27T00:50:57Z",
+      "side": 1,
+      "message": "I think if you have both, then mask_for_background is set (if I read l.1248 and l.1259 correctly). And if so, then last_texture_unit is incremented on l.1503, so you are using different units. Worth bombing with DCHECKs though, this is very non-intuitive locally.",
+      "parentUuid": "2fd70f7b_26ddf0e6",
+      "revId": "7be298cb0627a2a7c9ff418bd946f7004fe55f9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
