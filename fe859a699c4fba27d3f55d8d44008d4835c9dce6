@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5e9facce_16b5fb05",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-09-27T00:22:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cfed1fc_f911d12d",
+      "revId": "fe859a699c4fba27d3f55d8d44008d4835c9dce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3eeb402e_c1fa452a",
         "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-26T18:18:46Z",
       "side": 1,
       "message": "Can you use a proper Map instance, instead of an Object?\n\nAlso, in JS variables should be namedLikeThis, per styleguide.",
+      "revId": "fe859a699c4fba27d3f55d8d44008d4835c9dce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddbea226_0caf61d2",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-09-27T00:22:04Z",
+      "side": 1,
+      "message": "Done. However, the object declaration below doesn\u0027t look as nice as before. And I also needed to define a new enum for the card state, which didn\u0027t exist before. Is there any way of using Map\u003c\u003e while keeping that layout, or is the way I\u0027m adding pairs to the map the standard way of doing it?",
+      "parentUuid": "3eeb402e_c1fa452a",
       "revId": "fe859a699c4fba27d3f55d8d44008d4835c9dce6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5da23f70_51434309",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-09-27T00:22:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffdfff8e_553e8d84",
+      "revId": "fe859a699c4fba27d3f55d8d44008d4835c9dce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb12f4f2_f670e1b5",
         "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "fe859a699c4fba27d3f55d8d44008d4835c9dce6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a2ed6bb_3c96f308",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-09-27T00:22:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb12f4f2_f670e1b5",
+      "revId": "fe859a699c4fba27d3f55d8d44008d4835c9dce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "1869e203_ff69c690",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-09-27T00:22:04Z",
+      "side": 1,
+      "message": "Preferred to make this non-nullable, and require settings.ChromeCleanupCardFlags.NONE be used instead of null + this check.",
+      "parentUuid": "6c3b438d_4d5427e1",
+      "revId": "fe859a699c4fba27d3f55d8d44008d4835c9dce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "359d3c8d_92ffaffc",
         "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
         "patchSetId": 7
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "1978b0b8_fefcaef1",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-09-27T00:22:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "359d3c8d_92ffaffc",
+      "revId": "fe859a699c4fba27d3f55d8d44008d4835c9dce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19443197_b23afbf5",
         "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
         "patchSetId": 7
@@ -118,6 +226,24 @@
       "revId": "fe859a699c4fba27d3f55d8d44008d4835c9dce6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86b3a27a_3726dcca",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-09-27T00:22:04Z",
+      "side": 1,
+      "message": "I like this. Now we explicitly define elements that shouldn\u0027t be rendered. Thanks.",
+      "parentUuid": "19443197_b23afbf5",
+      "revId": "fe859a699c4fba27d3f55d8d44008d4835c9dce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
