@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4812f7fc_afb2aa43",
+        "filename": "chrome/browser/vr/testapp/gl_renderer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2017-09-27T19:49:47Z",
+      "side": 1,
+      "message": "Although it\u0027s unused you might want to pass the value from SwapBuffers() for good measure.",
+      "range": {
+        "startLine": 50,
+        "startChar": 22,
+        "endLine": 50,
+        "endChar": 25
+      },
+      "revId": "39606f0a68dda3e0eccdd387f000d08b2901b734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
