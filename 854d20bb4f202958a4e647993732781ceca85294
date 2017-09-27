@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af2eadd0_181218db",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-27T08:26:02Z",
+      "side": 1,
+      "message": "optional: slightly prefer having this before if, and simply check redirect_info then.\n\nMaybe also have a short comment that this returns non-null redirect info if the given response is a redirect.",
+      "revId": "854d20bb4f202958a4e647993732781ceca85294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f25abbd7_43a169f8",
+        "filename": "content/public/common/referrer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-27T08:26:02Z",
+      "side": 1,
+      "message": "nit: this ordering\u0027s probably following that of the above method, but I think our regular style is input params first, and then output params.\n\nLooking into what this does calling this \u0027compute\u0027 feels slightly too much... but I have no better idea, so maybe it\u0027s just good.",
+      "revId": "854d20bb4f202958a4e647993732781ceca85294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
