@@ -5,6 +5,7 @@
 #include "chrome/browser/extensions/extension_system_impl.h"
 
 #include <algorithm>
+#include <utility>
 
 #include "base/base_switches.h"
 #include "base/bind.h"
