@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "651df27e_a8f2cef5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchBackgroundTask.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-27T22:09:21Z",
+      "side": 1,
+      "message": "why did you move these? Java style doesn\u0027t require all statics to be together",
+      "revId": "c8908c6a5422628827cbbe9ec3b2e5aacac3df84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de7e4654_6464f29f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchBackgroundTaskScheduler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-27T22:09:21Z",
+      "side": 1,
+      "message": "nit: sBackgroundTaskSchedulerInstance\n\nThis name is more confusing now that this class contains Scheduler in the name.",
+      "revId": "c8908c6a5422628827cbbe9ec3b2e5aacac3df84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c16439f7_2fc0c669",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchBackgroundTaskScheduler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-27T22:09:21Z",
+      "side": 1,
+      "message": "nit: setBackgroundTaskSchedulerForTesting\n\nThis name is more confusing now that this class contains Scheduler in the name.",
+      "revId": "c8908c6a5422628827cbbe9ec3b2e5aacac3df84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "055102af_bb135e3d",
+        "filename": "chrome/browser/offline_pages/android/prefetch_background_task_android.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-27T22:09:21Z",
+      "side": 1,
+      "message": "Comment should not refer to scheduling",
+      "revId": "c8908c6a5422628827cbbe9ec3b2e5aacac3df84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76fdbd62_3e809b2e",
+        "filename": "chrome/browser/offline_pages/android/prefetch_background_task_android.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-27T22:09:21Z",
+      "side": 1,
+      "message": "This should probably be removed, and moved to PrefetchBackgroundTaskScheduler",
+      "revId": "c8908c6a5422628827cbbe9ec3b2e5aacac3df84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22ceef7c_43d2f47f",
+        "filename": "chrome/browser/offline_pages/android/prefetch_background_task_android.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-27T22:09:21Z",
+      "side": 1,
+      "message": "Should be removed",
+      "revId": "c8908c6a5422628827cbbe9ec3b2e5aacac3df84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f62d8c7e_4aa8f44d",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_background_task_scheduler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-27T22:09:21Z",
+      "side": 1,
+      "message": "nit: scheduler",
+      "revId": "c8908c6a5422628827cbbe9ec3b2e5aacac3df84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69cbdbd3_915f9cbb",
+        "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-27T22:09:21Z",
+      "side": 1,
+      "message": "Is this correct?",
+      "revId": "c8908c6a5422628827cbbe9ec3b2e5aacac3df84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a38c2e4e_2057c883",
+        "filename": "components/offline_pages/core/prefetch/prefetch_background_task.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-27T22:09:21Z",
+      "side": 1,
+      "message": "I think this can be removed.",
+      "revId": "c8908c6a5422628827cbbe9ec3b2e5aacac3df84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c64b252c_74ae733e",
+        "filename": "components/offline_pages/core/prefetch/prefetch_background_task.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-27T22:09:21Z",
+      "side": 1,
+      "message": "It is potentially a bug waiting to happen that only SetReschedule is virtual.",
+      "revId": "c8908c6a5422628827cbbe9ec3b2e5aacac3df84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90a4691a_ecb6a6dc",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-27T22:09:21Z",
+      "side": 1,
+      "message": "can you remove this now?",
+      "revId": "c8908c6a5422628827cbbe9ec3b2e5aacac3df84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4e75155_cbacca5f",
+        "filename": "components/offline_pages/core/prefetch/prefetch_service_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-27T22:09:21Z",
+      "side": 1,
+      "message": "this is a scary comment that doesn\u0027t provide details.... could you reference the prefetch_background_task_hadler explicitly?",
+      "revId": "c8908c6a5422628827cbbe9ec3b2e5aacac3df84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
