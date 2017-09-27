@@ -73,6 +73,15 @@ class WTF_EXPORT AtomicString {
   explicit AtomicString(const Vector<UChar, inlineCapacity>& vector)
       : AtomicString(vector.data(), vector.size()) {}
 
+  // Constructors that create empty atom instead of null atom when input char
+  // buffer is null.
+  enum CreateEmptyInsteadOfNull { kCreateEmptyInsteadOfNull };
+  AtomicString(const UChar* chars, unsigned length, CreateEmptyInsteadOfNull);
+  template <size_t inlineCapacity>
+  AtomicString(const Vector<UChar, inlineCapacity> vector,
+               CreateEmptyInsteadOfNull)
+      : AtomicString(vector.data(), vector.size(), kCreateEmptyInsteadOfNull) {}
+
   // Constructing an AtomicString from a String / StringImpl can be expensive if
   // the StringImpl is not already atomic.
   explicit AtomicString(StringImpl* impl) : string_(Add(impl)) {}
