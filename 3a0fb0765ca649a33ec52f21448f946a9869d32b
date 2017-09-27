@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ece117b_2ee75e49",
+        "filename": "content/renderer/media/webrtc/rtc_rtp_contributing_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-27T16:47:36Z",
+      "side": 1,
+      "message": "Return *source_.audio_level()\n\nBecause of HasAudioLevel(), this function should never be called if !HasAudioLevel().\nAlternatively, make HasAudioLevel() always return true and do value_or().\n\nYou\u0027ll only need to have the \"if missing return 127\" (with TODO) in one place, either:\n- Here, always giving blink a value to work with, or\n- In blink, checking if HasAudioLevel() and doing the 127 thing.\n\nCurrently we make the same check in two places.",
+      "revId": "3a0fb0765ca649a33ec52f21448f946a9869d32b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f5dcfae_0912fed8",
+        "filename": "content/renderer/media/webrtc/rtc_rtp_contributing_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-27T16:47:36Z",
+      "side": 1,
+      "message": "In both of these, we should we DCHECK that if its an SSRC it will have a value since RTCRtpSynchronizationSource::audioLevel is non-optional according to spec (but RTCRtpContributingSource::audioLevel is optional). Make adding a DCHECK part of the TODO.",
+      "revId": "3a0fb0765ca649a33ec52f21448f946a9869d32b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9212eb2b_4fd5ec56",
+        "filename": "content/renderer/media/webrtc/rtc_rtp_contributing_source.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-27T16:47:36Z",
+      "side": 1,
+      "message": "This should be renamed RTCRtpSource.",
+      "revId": "3a0fb0765ca649a33ec52f21448f946a9869d32b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8414300f_52f1bbdb",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpSynchronizationSource.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-27T16:47:36Z",
+      "side": 1,
+      "message": "The TODO should be here too. But see other comment about only putting the \"if missing return 127\" in one of the layers.",
+      "revId": "3a0fb0765ca649a33ec52f21448f946a9869d32b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
