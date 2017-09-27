@@ -309,6 +309,30 @@
     },
     {
       "key": {
+        "uuid": "32e5e1f3_514a7c44",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1633,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-09-27T01:45:22Z",
+      "side": 1,
+      "message": "We did, but I\u0027m thinking it\u0027s simpler to go the other way -- any time the selection handles are showing activate just smart select.  Then we can have the SelectionPopupController support multiple clients and no additional mode logic is needed, beyond the change right here to suppress our UX on long-press when SS is active.  See the bug for more details.",
+      "parentUuid": "612e1196_0dcd1b0e",
+      "range": {
+        "startLine": 1632,
+        "startChar": 20,
+        "endLine": 1633,
+        "endChar": 67
+      },
+      "revId": "0e1e133b7061bc64ab6416aff4e6c989174726e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "91664a73_385d7fa3",
         "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
         "patchSetId": 3
