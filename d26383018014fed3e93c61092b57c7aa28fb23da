@@ -22,6 +22,30 @@
       "revId": "d26383018014fed3e93c61092b57c7aa28fb23da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9587112_293d417e",
+        "filename": "chrome/browser/vr/elements/textured_element.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-27T19:57:28Z",
+      "side": 1,
+      "message": "Not with only a single instance of this check.  Otherwise, absolutely.",
+      "parentUuid": "f65a7414_3ddf130d",
+      "range": {
+        "startLine": 82,
+        "startChar": 8,
+        "endLine": 82,
+        "endChar": 14
+      },
+      "revId": "d26383018014fed3e93c61092b57c7aa28fb23da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
