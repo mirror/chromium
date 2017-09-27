@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "2bede187_498afcdc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-27T16:35:07Z",
+      "side": 1,
+      "message": "Nit: Don\u0027t align to the parameter name, just indent 8 spaces.\n\n(Does Android Studio do that? Can we somehow edumacate it to Get It Right?)",
+      "range": {
+        "startLine": 423,
+        "startChar": 7,
+        "endLine": 423,
+        "endChar": 28
+      },
+      "revId": "add595a5882bcdc077a4557310330b7464e6bfdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "244de04c_9b0c74b5",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
         "patchSetId": 1
@@ -64,6 +87,53 @@
         "startChar": 39,
         "endLine": 53,
         "endChar": 49
+      },
+      "revId": "add595a5882bcdc077a4557310330b7464e6bfdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c1057b2_b6b4423f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ContentSuggestionPlaceholder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-27T16:35:07Z",
+      "side": 1,
+      "message": "Yeah, this is a bit difficult to understand.\n\nGiven that this method is only called in one place, which sets the visibility right before that, could we just pull that logic out? And maybe we could even pull the call to startTracking() out to the one callsite of updatePlaceholderVisibility() that passes true? Basically, have updatePlaceholderVisibility() return the visibility, and start tracking in setStatus() if it is visible.",
+      "parentUuid": "4b5ab8e8_93802c0f",
+      "range": {
+        "startLine": 53,
+        "startChar": 39,
+        "endLine": 53,
+        "endChar": 49
+      },
+      "revId": "add595a5882bcdc077a4557310330b7464e6bfdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7d1322d_f23f07a4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsMetrics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-27T16:35:07Z",
+      "side": 1,
+      "message": "Wow, that looks horrible. :)\n\nCan you try wrapping the body in braces, and then otherwise treating it like a block body, i.e. indent 4 spaces?",
+      "range": {
+        "startLine": 141,
+        "startChar": 16,
+        "endLine": 142,
+        "endChar": 24
       },
       "revId": "add595a5882bcdc077a4557310330b7464e6bfdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
