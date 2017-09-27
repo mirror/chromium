@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "324d89d2_d6e6b8db",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1600,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-09-27T19:12:55Z",
+      "side": 1,
+      "message": "now think about it, we will need to also handle secondary user too.  I will file another bug.",
+      "range": {
+        "startLine": 1600,
+        "startChar": 6,
+        "endLine": 1600,
+        "endChar": 29
+      },
+      "revId": "ed9bef1750171d15a4b7993797d59a31ac1ec585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce1b49d3_109e82a6",
         "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
         "patchSetId": 1
