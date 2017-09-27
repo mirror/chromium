@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "1521bec9_8e5ca176",
+        "filename": "chrome/browser/resources/md_extensions/kiosk_dialog.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-27T23:10:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6b3785ca_726c55b2",
+      "revId": "40150937613ba9d3799d2901bb68c14159cb0810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8521f679_ba04b616",
         "filename": "chrome/browser/resources/md_extensions/kiosk_dialog.html",
         "patchSetId": 8

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "289dd393_17515865",
+        "filename": "chrome/browser/resources/md_extensions/compiled_resources2.gyp",
+        "patchSetId": 10
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-27T23:10:31Z",
+      "side": 1,
+      "message": "Nit: It seems that this file tries to keep things alphabetically. Maybe move this before kiosk_dialog?",
+      "revId": "2a92610056655bf2437f422caca0993bea4bc642",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
