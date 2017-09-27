@@ -96,8 +96,7 @@ class ServiceWorkerInstalledScriptsSender::Sender {
         weak_factory_(this) {}
 
   void Start() {
-    scoped_refptr<HttpResponseInfoIOBuffer> info_buf =
-        base::MakeRefCounted<HttpResponseInfoIOBuffer>();
+    auto info_buf = base::MakeRefCounted<HttpResponseInfoIOBuffer>();
     reader_->ReadInfo(info_buf.get(), base::Bind(&Sender::OnReadInfoComplete,
                                                  AsWeakPtr(), info_buf));
   }
@@ -271,35 +270,33 @@ class ServiceWorkerInstalledScriptsSender::Sender {
 };
 
 ServiceWorkerInstalledScriptsSender::ServiceWorkerInstalledScriptsSender(
-    ServiceWorkerVersion* owner,
-    const GURL& main_script_url,
-    base::WeakPtr<ServiceWorkerContextCore> context)
+    ServiceWorkerVersion* owner)
     : owner_(owner),
-      main_script_url_(main_script_url),
-      main_script_id_(kInvalidServiceWorkerResourceId),
+      main_script_url_(owner_->script_url()),
+      main_script_id_(
+          owner_->script_cache_map()->LookupResourceId(main_script_url_)),
       state_(State::kNotStarted),
-      finished_reason_(FinishedReason::kNotFinished),
-      context_(std::move(context)) {}
+      finished_reason_(FinishedReason::kNotFinished) {}
 
 ServiceWorkerInstalledScriptsSender::~ServiceWorkerInstalledScriptsSender() {}
 
 mojom::ServiceWorkerInstalledScriptsInfoPtr
 ServiceWorkerInstalledScriptsSender::CreateInfoAndBind() {
   DCHECK_EQ(State::kNotStarted, state_);
+  if (main_script_id_ == kInvalidServiceWorkerResourceId)
+    return nullptr;
 
   std::vector<ServiceWorkerDatabase::ResourceRecord> resources;
-  std::vector<GURL> installed_urls;
   owner_->script_cache_map()->GetResources(&resources);
+  std::vector<GURL> installed_urls;
   for (const auto& resource : resources) {
     installed_urls.emplace_back(resource.url);
     if (resource.url == main_script_url_)
-      main_script_id_ = resource.resource_id;
-    else
-      imported_scripts_.emplace(resource.resource_id, resource.url);
+      continue;
+    imported_scripts_.emplace(resource.resource_id, resource.url);
   }
-
-  if (installed_urls.empty())
-    return nullptr;
+  DCHECK(!installed_urls.empty())
+      << "At least the main script should be installed.";
 
   auto info = mojom::ServiceWorkerInstalledScriptsInfo::New();
   info->manager_request = mojo::MakeRequest(&manager_);
@@ -313,11 +310,7 @@ bool ServiceWorkerInstalledScriptsSender::IsFinished() const {
 
 void ServiceWorkerInstalledScriptsSender::Start() {
   DCHECK_EQ(State::kNotStarted, state_);
-  // Return if no script has been installed.
-  if (main_script_id_ == kInvalidServiceWorkerResourceId) {
-    Finish(FinishedReason::kSuccess);
-    return;
-  }
+  DCHECK_NE(kInvalidServiceWorkerResourceId, main_script_id_);
   TRACE_EVENT_NESTABLE_ASYNC_BEGIN1("ServiceWorker",
                                     "ServiceWorkerInstalledScriptsSender", this,
                                     "main_script_url", main_script_url_.spec());
@@ -330,7 +323,7 @@ void ServiceWorkerInstalledScriptsSender::StartSendingScript(
   DCHECK(!running_sender_);
   DCHECK(state_ == State::kSendingMainScript ||
          state_ == State::kSendingImportedScript);
-  auto reader = context_->storage()->CreateResponseReader(resource_id);
+  auto reader = owner_->context()->storage()->CreateResponseReader(resource_id);
   TRACE_EVENT_NESTABLE_ASYNC_BEGIN1("ServiceWorker", "SendingScript", this,
                                     "script_url", CurrentSendingURL().spec());
   running_sender_ = base::MakeUnique<Sender>(std::move(reader), this);
@@ -420,9 +413,9 @@ void ServiceWorkerInstalledScriptsSender::OnAbortSendingScript(
       owner_->SetStartWorkerStatusCode(SERVICE_WORKER_ERROR_DISK_CACHE);
       // Abort the worker by deleting from the registration since the data was
       // corrupted.
-      if (context_) {
+      if (owner_->context()) {
         ServiceWorkerRegistration* registration =
-            context_->GetLiveRegistration(owner_->registration_id());
+            owner_->context()->GetLiveRegistration(owner_->registration_id());
         // This ends up with destructing |this|.
         registration->DeleteVersion(owner_);
       }
@@ -434,7 +427,7 @@ void ServiceWorkerInstalledScriptsSender::OnAbortSendingScript(
       // failure means the renderer gets killed, and the error handler of
       // EmbeddedWorkerInstance is invoked soon.
       manager_.reset();
-      break;
+      return;
   }
 }
 

@@ -10,7 +10,6 @@
 namespace content {
 
 struct HttpResponseInfoIOBuffer;
-class ServiceWorkerContextCore;
 class ServiceWorkerVersion;
 
 // ServiceWorkerInstalledScriptsSender serves the service worker's installed
@@ -32,18 +31,16 @@ class CONTENT_EXPORT ServiceWorkerInstalledScriptsSender {
     kMaxValue = kMetaDataSenderError,
   };
 
-  ServiceWorkerInstalledScriptsSender(
-      ServiceWorkerVersion* owner,
-      const GURL& main_script_url,
-      base::WeakPtr<ServiceWorkerContextCore> context);
+  explicit ServiceWorkerInstalledScriptsSender(ServiceWorkerVersion* owner);
   ~ServiceWorkerInstalledScriptsSender();
 
   // Creates a Mojo struct (mojom::ServiceWorkerInstalledScriptsInfo) and sets
   // it with the information to create WebServiceWorkerInstalledScriptsManager
-  // on the renderer.
+  // on the renderer. Returns nullptr if the worker hasn't been installed yet.
   mojom::ServiceWorkerInstalledScriptsInfoPtr CreateInfoAndBind();
 
-  // Starts sending installed scripts to the worker.
+  // Starts sending installed scripts to the worker. This should be called only
+  // when CreateInfoAndBind() successfully established the connection.
   void Start();
 
   bool IsFinished() const;
@@ -80,7 +77,7 @@ class CONTENT_EXPORT ServiceWorkerInstalledScriptsSender {
 
   ServiceWorkerVersion* owner_;
   const GURL main_script_url_;
-  int main_script_id_;
+  const int main_script_id_;
 
   mojom::ServiceWorkerInstalledScriptsManagerPtr manager_;
   std::unique_ptr<Sender> running_sender_;
@@ -88,7 +85,6 @@ class CONTENT_EXPORT ServiceWorkerInstalledScriptsSender {
   FinishedReason finished_reason_;
   std::map<int64_t /* resource_id */, GURL> imported_scripts_;
   std::map<int64_t /* resource_id */, GURL>::iterator imported_script_iter_;
-  base::WeakPtr<ServiceWorkerContextCore> context_;
 
   DISALLOW_COPY_AND_ASSIGN(ServiceWorkerInstalledScriptsSender);
 };

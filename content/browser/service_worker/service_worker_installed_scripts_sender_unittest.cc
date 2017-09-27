@@ -310,8 +310,8 @@ TEST_F(ServiceWorkerInstalledScriptsSenderTest, SendScripts) {
     version()->script_cache_map()->SetResources(records);
   }
 
-  auto sender = base::MakeUnique<ServiceWorkerInstalledScriptsSender>(
-      version(), kMainScriptURL, context()->AsWeakPtr());
+  auto sender =
+      base::MakeUnique<ServiceWorkerInstalledScriptsSender>(version());
 
   std::unique_ptr<MockServiceWorkerInstalledScriptsManager> renderer_manager;
   {
@@ -370,8 +370,8 @@ TEST_F(ServiceWorkerInstalledScriptsSenderTest, FailedToSendBody) {
     version()->script_cache_map()->SetResources(records);
   }
 
-  auto sender = base::MakeUnique<ServiceWorkerInstalledScriptsSender>(
-      version(), kMainScriptURL, context()->AsWeakPtr());
+  auto sender =
+      base::MakeUnique<ServiceWorkerInstalledScriptsSender>(version());
 
   std::unique_ptr<MockServiceWorkerInstalledScriptsManager> renderer_manager;
   {
@@ -432,8 +432,8 @@ TEST_F(ServiceWorkerInstalledScriptsSenderTest, FailedToSendMetaData) {
     version()->script_cache_map()->SetResources(records);
   }
 
-  auto sender = base::MakeUnique<ServiceWorkerInstalledScriptsSender>(
-      version(), kMainScriptURL, context()->AsWeakPtr());
+  auto sender =
+      base::MakeUnique<ServiceWorkerInstalledScriptsSender>(version());
 
   std::unique_ptr<MockServiceWorkerInstalledScriptsManager> renderer_manager;
   {
@@ -506,8 +506,8 @@ TEST_F(ServiceWorkerInstalledScriptsSenderTest, Histograms) {
     version()->script_cache_map()->SetResources(records);
   }
 
-  auto sender = base::MakeUnique<ServiceWorkerInstalledScriptsSender>(
-      version(), kMainScriptURL, context()->AsWeakPtr());
+  auto sender =
+      base::MakeUnique<ServiceWorkerInstalledScriptsSender>(version());
 
   std::unique_ptr<MockServiceWorkerInstalledScriptsManager> renderer_manager;
   {
@@ -553,9 +553,8 @@ TEST_F(ServiceWorkerInstalledScriptsSenderTest, Histograms) {
 
 TEST_F(ServiceWorkerInstalledScriptsSenderTest, NoInstalledScript) {
   // Create a scripts sender for a version that has no installed scripts.
-  const GURL kMainScriptURL = version()->script_url();
-  auto sender = base::MakeUnique<ServiceWorkerInstalledScriptsSender>(
-      version(), kMainScriptURL, context()->AsWeakPtr());
+  auto sender =
+      base::MakeUnique<ServiceWorkerInstalledScriptsSender>(version());
   EXPECT_FALSE(sender->CreateInfoAndBind());
   EXPECT_FALSE(sender->IsFinished());
   EXPECT_EQ(SenderFinishedReason::kNotFinished, sender->finished_reason());
