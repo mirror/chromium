@@ -823,7 +823,10 @@ void RenderWidgetHostInputEventRouter::RemoveFrameSinkIdOwner(
     const viz::FrameSinkId& id) {
   auto it_to_remove = owner_map_.find(id);
   if (it_to_remove != owner_map_.end()) {
-    it_to_remove->second->RemoveObserver(this);
+    // If we remove a view from the observer list, we need to be sure to do a
+    // cleanup of the various targets and target maps, else we will end up with
+    // stale values if the view destructs and isn't an observer anymore.
+    OnRenderWidgetHostViewBaseDestroyed(it_to_remove->second);
     owner_map_.erase(it_to_remove);
   }
 
