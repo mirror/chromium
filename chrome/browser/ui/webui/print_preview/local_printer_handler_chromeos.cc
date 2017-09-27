@@ -103,6 +103,8 @@ void LocalPrinterHandlerChromeos::StartGetPrinters(
   // thread.
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
+  printers_manager_->StartObservingPrinterDetectors();
+
   printing::PrinterList printer_list;
   AddPrintersToList(
       printers_manager_->GetPrinters(CupsPrintersManager::kConfigured),
