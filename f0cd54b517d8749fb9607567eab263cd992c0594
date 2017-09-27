@@ -70,6 +70,30 @@
       "revId": "f0cd54b517d8749fb9607567eab263cd992c0594",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1edbf928_095f5662",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-27T07:53:34Z",
+      "side": 1,
+      "message": "Thank you for the clarification.",
+      "parentUuid": "50fc1d50_032c9d0c",
+      "range": {
+        "startLine": 37,
+        "startChar": 34,
+        "endLine": 37,
+        "endChar": 61
+      },
+      "revId": "f0cd54b517d8749fb9607567eab263cd992c0594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
