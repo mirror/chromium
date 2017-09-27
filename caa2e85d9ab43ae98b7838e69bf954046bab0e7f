@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "145781f6_672658f9",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/DrawingBuffer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-27T23:44:22Z",
+      "side": 1,
+      "message": "nit: technically the problem was not that this used to be a Flush (as it\u0027s a superset of OrderingBarrier), but that we didn\u0027t Flush before InsertFenceSyncCHROMIUM, though that is now effectively replaced by a glFlush on context switches.",
+      "revId": "caa2e85d9ab43ae98b7838e69bf954046bab0e7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
