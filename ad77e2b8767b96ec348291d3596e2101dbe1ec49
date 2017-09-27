@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a401f000_942e9102",
+        "filename": "content/browser/frame_host/input/legacy_ipc_frame_input_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-27T20:11:51Z",
+      "side": 1,
+      "message": "Nit: please just write out the ternary rather than casting.",
+      "revId": "ad77e2b8767b96ec348291d3596e2101dbe1ec49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
