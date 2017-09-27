@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f79e24ee_f51067ea",
+        "filename": "content/browser/accessibility/browser_accessibility_manager_mac.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-27T15:00:23Z",
+      "side": 1,
+      "message": "Why does this one call up to the super class, but BrowserAccessibilityManagerWin doesn\u0027t?",
+      "revId": "651c1c5e65fda1e6fc81b31945695bc78555ce5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0054aaf_2b4612d1",
+        "filename": "content/browser/accessibility/browser_accessibility_manager_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-27T15:00:23Z",
+      "side": 1,
+      "message": "Need to handle all the types or have a default case.",
+      "revId": "651c1c5e65fda1e6fc81b31945695bc78555ce5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c4b87c9_755b28da",
+        "filename": "content/browser/accessibility/browser_accessibility_manager_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-27T15:00:23Z",
+      "side": 1,
+      "message": "What do you think about removing the default case so we can see all the events we\u0027re not handling, and it will help enforce that any new events get consideration? I could go either way, just a thought.",
+      "revId": "651c1c5e65fda1e6fc81b31945695bc78555ce5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc15d7f4_8d1d8c0f",
+        "filename": "content/browser/accessibility/browser_accessibility_manager_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-27T15:00:23Z",
+      "side": 1,
+      "message": "What does it mean if this doesn\u0027t exist? Is that a real case or does it indicate an error?\n\nSide note: it looks like the delegate is always set in the BrowserAccessibilityManager constructors. Also, there is a set_delegate method that does not appear to be called. I\u0027ll upload a CL to remove that.",
+      "revId": "651c1c5e65fda1e6fc81b31945695bc78555ce5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aac6b7ec_d70c8830",
+        "filename": "content/browser/accessibility/browser_accessibility_manager_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-27T15:00:23Z",
+      "side": 1,
+      "message": "Do we expose events for this role on any platform? If not, we should put this in a cross-platform layer.\n\nOtherwise, we lost this comment, but should keep it:\n\n  // Inline text boxes are an internal implementation detail, we don\u0027t\n  // expose them to Windows.",
+      "revId": "651c1c5e65fda1e6fc81b31945695bc78555ce5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
