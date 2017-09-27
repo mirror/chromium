@@ -58,6 +58,7 @@
 #endif
 
 int ManagePasswordsBubbleView::auto_signin_toast_timeout_ = 3;
+int ManagePasswordsBubbleView::password_view_button_timeout_ = 3;
 
 // Helpers --------------------------------------------------------------------
 
@@ -435,6 +436,8 @@ class ManagePasswordsBubbleView::PendingView : public views::View,
   void CreatePasswordField();
   void TogglePasswordVisibility();
   void UpdateUsernameAndPasswordInModel();
+  static base::TimeDelta GetTimeoutForPasswordView();
+  void OnRemovePasswordViewButton();
 
   ManagePasswordsBubbleView* parent_;
 
@@ -446,6 +449,9 @@ class ManagePasswordsBubbleView::PendingView : public views::View,
   std::unique_ptr<views::View> password_field_;
 
   bool password_visible_;
+
+  // Timer to disable eye icon after 90 seconds.
+  base::OneShotTimer password_view_button_timer_;
 
   DISALLOW_COPY_AND_ASSIGN(PendingView);
 };
@@ -473,6 +479,9 @@ ManagePasswordsBubbleView::PendingView::PendingView(
   if (base::FeatureList::IsEnabled(
           password_manager::features::kEnablePasswordSelection)) {
     password_view_button_ = GeneratePasswordViewButton(this).release();
+    password_view_button_timer_.Start(
+        FROM_HERE, GetTimeoutForPasswordView(), this,
+        &ManagePasswordsBubbleView::PendingView::OnRemovePasswordViewButton);
   }
 
   // Create buttons.
@@ -584,6 +593,24 @@ void ManagePasswordsBubbleView::PendingView::
                 ->selected_index());
   }
   parent_->model()->OnCredentialEdited(new_username, new_password);
+}
+
+base::TimeDelta
+ManagePasswordsBubbleView::PendingView::GetTimeoutForPasswordView() {
+  return base::TimeDelta::FromSeconds(
+      ManagePasswordsBubbleView::password_view_button_timeout_);
+}
+
+void ManagePasswordsBubbleView::PendingView::OnRemovePasswordViewButton() {
+  password_view_button_timer_.Stop();
+  if (password_visible_) {
+    TogglePasswordVisibility();
+  }
+  if (password_view_button_) {
+    this->RemoveChildView(password_view_button_);
+    password_view_button_ = nullptr;
+  }
+  CreateAndSetLayout();
 }
 
 // ManagePasswordsBubbleView::ManageView --------------------------------------
