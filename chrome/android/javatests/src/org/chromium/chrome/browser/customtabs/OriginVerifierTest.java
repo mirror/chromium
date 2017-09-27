@@ -15,7 +15,8 @@ import org.junit.runner.RunWith;
 
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.BaseJUnit4ClassRunner;
-import org.chromium.chrome.browser.customtabs.OriginVerifier.OriginVerificationListener;
+import org.chromium.chrome.browser.browserservices.OriginVerifier;
+import org.chromium.chrome.browser.browserservices.OriginVerifier.OriginVerificationListener;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.Semaphore;

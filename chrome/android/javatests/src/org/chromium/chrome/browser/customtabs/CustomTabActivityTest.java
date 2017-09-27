@@ -5,9 +5,9 @@
 package org.chromium.chrome.browser.customtabs;
 
 import static org.chromium.base.test.util.Restriction.RESTRICTION_TYPE_NON_LOW_END_DEVICE;
+import static org.chromium.chrome.browser.browserservices.BrowserSessionDataProvider.CUSTOM_TABS_UI_TYPE_MEDIA_VIEWER;
+import static org.chromium.chrome.browser.browserservices.BrowserSessionDataProvider.CUSTOM_TABS_UI_TYPE_READER_MODE;
 import static org.chromium.chrome.browser.customtabs.CustomTabActivityTestRule.LONG_TIMEOUT_MS;
-import static org.chromium.chrome.browser.customtabs.CustomTabIntentDataProvider.CUSTOM_TABS_UI_TYPE_MEDIA_VIEWER;
-import static org.chromium.chrome.browser.customtabs.CustomTabIntentDataProvider.CUSTOM_TABS_UI_TYPE_READER_MODE;
 
 import android.app.Activity;
 import android.app.Instrumentation;
@@ -76,6 +76,9 @@ import org.chromium.chrome.browser.IntentHandler;
 import org.chromium.chrome.browser.TabsOpenedFromExternalAppTest;
 import org.chromium.chrome.browser.WarmupManager;
 import org.chromium.chrome.browser.appmenu.AppMenuHandler;
+import org.chromium.chrome.browser.browserservices.BrowserSessionContentUtils;
+import org.chromium.chrome.browser.browserservices.BrowserSessionDataProvider;
+import org.chromium.chrome.browser.browserservices.OriginVerifier;
 import org.chromium.chrome.browser.document.ChromeLauncherActivity;
 import org.chromium.chrome.browser.firstrun.FirstRunStatus;
 import org.chromium.chrome.browser.history.BrowsingHistoryBridge;
@@ -564,8 +567,7 @@ public class CustomTabActivityTest {
     @RetryOnFailure
     public void testAppMenuForMediaViewer() throws InterruptedException {
         Intent intent = createMinimalCustomTabIntent();
-        intent.putExtra(
-                CustomTabIntentDataProvider.EXTRA_UI_TYPE, CUSTOM_TABS_UI_TYPE_MEDIA_VIEWER);
+        intent.putExtra(BrowserSessionDataProvider.EXTRA_UI_TYPE, CUSTOM_TABS_UI_TYPE_MEDIA_VIEWER);
         IntentHandler.addTrustedIntentExtras(intent);
         mCustomTabActivityTestRule.startCustomTabActivityWithIntent(intent);
 
@@ -587,7 +589,7 @@ public class CustomTabActivityTest {
     @RetryOnFailure
     public void testAppMenuForReaderMode() throws InterruptedException {
         Intent intent = createMinimalCustomTabIntent();
-        intent.putExtra(CustomTabIntentDataProvider.EXTRA_UI_TYPE, CUSTOM_TABS_UI_TYPE_READER_MODE);
+        intent.putExtra(BrowserSessionDataProvider.EXTRA_UI_TYPE, CUSTOM_TABS_UI_TYPE_READER_MODE);
         IntentHandler.addTrustedIntentExtras(intent);
         mCustomTabActivityTestRule.startCustomTabActivityWithIntent(intent);
 
@@ -898,7 +900,7 @@ public class CustomTabActivityTest {
         Assert.assertTrue(
                 "Action button should not be shown", View.VISIBLE != actionButton.getVisibility());
 
-        CustomTabIntentDataProvider dataProvider = getActivity().getIntentDataProvider();
+        BrowserSessionDataProvider dataProvider = getActivity().getIntentDataProvider();
         Assert.assertNull(dataProvider.getCustomButtonOnToolbar());
     }
 
@@ -963,7 +965,7 @@ public class CustomTabActivityTest {
                 ThreadUtils.runOnUiThreadBlockingNoException(new Callable<Boolean>() {
                     @Override
                     public Boolean call() throws Exception {
-                        return CustomTabActivity.handleInActiveContentIfNeeded(
+                        return BrowserSessionContentUtils.handleInActiveContentIfNeeded(
                                 CustomTabsTestUtils.createMinimalCustomTabIntent(
                                         context, mTestPage2));
                     }
@@ -979,7 +981,7 @@ public class CustomTabActivityTest {
                     @Override
                     public Boolean call() throws Exception {
                         intent.setData(Uri.parse(mTestPage2));
-                        return CustomTabActivity.handleInActiveContentIfNeeded(intent);
+                        return BrowserSessionContentUtils.handleInActiveContentIfNeeded(intent);
                     }
                 }));
         final Tab tab = getActivity().getActivityTab();
@@ -1070,7 +1072,7 @@ public class CustomTabActivityTest {
                 ThreadUtils.runOnUiThreadBlockingNoException(new Callable<Boolean>() {
                     @Override
                     public Boolean call() throws Exception {
-                        return CustomTabActivity.handleInActiveContentIfNeeded(intent);
+                        return BrowserSessionContentUtils.handleInActiveContentIfNeeded(intent);
                     }
                 }));
         try {
@@ -1122,7 +1124,7 @@ public class CustomTabActivityTest {
                 ThreadUtils.runOnUiThreadBlockingNoException(new Callable<Boolean>() {
                     @Override
                     public Boolean call() throws Exception {
-                        return CustomTabActivity.handleInActiveContentIfNeeded(intent);
+                        return BrowserSessionContentUtils.handleInActiveContentIfNeeded(intent);
                     }
                 }));
         try {

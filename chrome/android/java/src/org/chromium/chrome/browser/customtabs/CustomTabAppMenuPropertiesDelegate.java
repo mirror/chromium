@@ -4,10 +4,10 @@
 
 package org.chromium.chrome.browser.customtabs;
 
-import static org.chromium.chrome.browser.customtabs.CustomTabIntentDataProvider.CUSTOM_TABS_UI_TYPE_MEDIA_VIEWER;
-import static org.chromium.chrome.browser.customtabs.CustomTabIntentDataProvider.CUSTOM_TABS_UI_TYPE_MINIMAL_UI_WEBAPP;
-import static org.chromium.chrome.browser.customtabs.CustomTabIntentDataProvider.CUSTOM_TABS_UI_TYPE_PAYMENT_REQUEST;
-import static org.chromium.chrome.browser.customtabs.CustomTabIntentDataProvider.CUSTOM_TABS_UI_TYPE_READER_MODE;
+import static org.chromium.chrome.browser.browserservices.BrowserSessionDataProvider.CUSTOM_TABS_UI_TYPE_MEDIA_VIEWER;
+import static org.chromium.chrome.browser.browserservices.BrowserSessionDataProvider.CUSTOM_TABS_UI_TYPE_MINIMAL_UI_WEBAPP;
+import static org.chromium.chrome.browser.browserservices.BrowserSessionDataProvider.CUSTOM_TABS_UI_TYPE_PAYMENT_REQUEST;
+import static org.chromium.chrome.browser.browserservices.BrowserSessionDataProvider.CUSTOM_TABS_UI_TYPE_READER_MODE;
 
 import android.text.TextUtils;
 import android.view.Menu;
@@ -19,7 +19,8 @@ import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.DefaultBrowserInfo;
 import org.chromium.chrome.browser.UrlConstants;
 import org.chromium.chrome.browser.appmenu.AppMenuPropertiesDelegate;
-import org.chromium.chrome.browser.customtabs.CustomTabIntentDataProvider.CustomTabsUiType;
+import org.chromium.chrome.browser.browserservices.BrowserSessionDataProvider;
+import org.chromium.chrome.browser.browserservices.BrowserSessionDataProvider.CustomTabsUiType;
 import org.chromium.chrome.browser.download.DownloadUtils;
 import org.chromium.chrome.browser.firstrun.FirstRunStatus;
 import org.chromium.chrome.browser.share.ShareHelper;
@@ -170,7 +171,7 @@ public class CustomTabAppMenuPropertiesDelegate extends AppMenuPropertiesDelegat
 
     /**
      * @return The index that the given menu item should appear in the result of
-     *         {@link CustomTabIntentDataProvider#getMenuTitles()}. Returns -1 if item not found.
+     *         {@link BrowserSessionDataProvider#getMenuTitles()}. Returns -1 if item not found.
      */
     public int getIndexOfMenuItem(MenuItem menuItem) {
         if (!mItemToIndexMap.containsKey(menuItem)) {

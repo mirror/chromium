@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-package org.chromium.chrome.browser.customtabs;
+package org.chromium.chrome.browser.browserservices;
 
 import android.content.Context;
 import android.net.Uri;
@@ -15,7 +15,7 @@ import android.support.customtabs.PostMessageServiceConnection;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
-import org.chromium.chrome.browser.customtabs.OriginVerifier.OriginVerificationListener;
+import org.chromium.chrome.browser.browserservices.OriginVerifier.OriginVerificationListener;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.content.browser.AppWebMessagePort;
 import org.chromium.content_public.browser.MessagePort;

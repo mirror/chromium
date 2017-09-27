@@ -22,6 +22,8 @@ import org.chromium.base.Log;
 import org.chromium.base.metrics.CachedMetrics;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
+import org.chromium.chrome.browser.browserservices.BrowserSessionDataProvider;
+import org.chromium.chrome.browser.browserservices.CustomButtonParams;
 import org.chromium.chrome.browser.fullscreen.ChromeFullscreenManager;
 import org.chromium.chrome.browser.fullscreen.ChromeFullscreenManager.FullscreenListener;
 import org.chromium.chrome.browser.tab.Tab;
@@ -42,7 +44,7 @@ class CustomTabBottomBarDelegate implements FullscreenListener {
     private ChromeActivity mActivity;
     private ChromeFullscreenManager mFullscreenManager;
     private ViewGroup mBottomBarView;
-    private CustomTabIntentDataProvider mDataProvider;
+    private BrowserSessionDataProvider mDataProvider;
     private PendingIntent mClickPendingIntent;
     private int[] mClickableIDs;
 
@@ -57,7 +59,7 @@ class CustomTabBottomBarDelegate implements FullscreenListener {
     };
 
     public CustomTabBottomBarDelegate(ChromeActivity activity,
-            CustomTabIntentDataProvider dataProvider, ChromeFullscreenManager fullscreenManager) {
+            BrowserSessionDataProvider dataProvider, ChromeFullscreenManager fullscreenManager) {
         mActivity = activity;
         mDataProvider = dataProvider;
         mFullscreenManager = fullscreenManager;
