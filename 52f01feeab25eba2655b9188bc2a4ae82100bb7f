@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7907f02e_d522f6a5",
+        "filename": "content/common/sandbox_win.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-09-27T19:56:21Z",
+      "side": 1,
+      "message": "I don\u0027t get why \"traditional\" content processes like renderers and ppapi processes need to know about service_manager concepts here, but I spoke to tsepez and this is by design, given content/ owners are happy with this I\u0027m happy to rs lgtm the change.",
+      "range": {
+        "startLine": 809,
+        "startChar": 37,
+        "endLine": 809,
+        "endChar": 54
+      },
+      "revId": "52f01feeab25eba2655b9188bc2a4ae82100bb7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
