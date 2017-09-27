@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbd5a488_f187ab53",
+        "filename": "cc/trees/layer_tree_host_pixeltest_masks.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-27T16:05:42Z",
+      "side": 1,
+      "message": "can you write these as boolean logic instead of bitwise? (like \u003e\u003d or \u003d\u003d etc)",
+      "revId": "3120db433cb1fb5f79179f68b8244aae9ec2c072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b06ac1f5_0d8d3693",
+        "filename": "cc/trees/layer_tree_host_pixeltest_masks.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-27T16:05:42Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 392,
+        "startChar": 38,
+        "endLine": 392,
+        "endChar": 46
+      },
+      "revId": "3120db433cb1fb5f79179f68b8244aae9ec2c072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0e320ba_7478bac4",
+        "filename": "cc/trees/layer_tree_host_pixeltest_masks.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-27T16:05:42Z",
+      "side": 1,
+      "message": "leave a comment what this is doing, or write it in a way that doesn\u0027t need a comment",
+      "revId": "3120db433cb1fb5f79179f68b8244aae9ec2c072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6e8e0e3_d3745d88",
+        "filename": "cc/trees/layer_tree_host_pixeltest_masks.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-27T16:05:42Z",
+      "side": 1,
+      "message": "It\u0027s not immediately clear why these tests are using random contents.. can you drop a comment on each call to this method?",
+      "revId": "3120db433cb1fb5f79179f68b8244aae9ec2c072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
