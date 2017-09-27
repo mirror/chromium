@@ -83,13 +83,40 @@ void TraySessionLengthLimit::OnSessionLengthLimitChanged() {
 }
 
 void TraySessionLengthLimit::Update() {
-  // Don't show notification or tray item until the user is logged in.
-  if (!Shell::Get()->session_controller()->IsActiveUserSessionStarted())
+  if (!IsSessionStarted())
     return;
-
   UpdateState();
   UpdateNotification();
   UpdateTrayBubbleView();
+}
+
+bool TraySessionLengthLimit::IsSessionStarted() {
+  // Don't show notification or tray item until the user is logged in.
+  return Shell::Get()->session_controller()->IsActiveUserSessionStarted();
+}
+
+void TraySessionLengthLimit::UpdateTimer(
+    base::TimeDelta remaining_session_time) {
+  const base::TimeDelta expiring_soon_threshold(
+      base::TimeDelta::FromMinutes(kExpiringSoonThresholdInMinutes));
+  remaining_session_time_ = remaining_session_time_;
+  limit_state_ = remaining_session_time_ <= expiring_soon_threshold
+                     ? LIMIT_EXPIRING_SOON
+                     : LIMIT_SET;
+  if (!timer_)
+    timer_.reset(new base::RepeatingTimer);
+  if (!timer_->IsRunning()) {
+    timer_->Start(
+        FROM_HERE,
+        base::TimeDelta::FromMilliseconds(kTimerIntervalInMilliseconds), this,
+        &TraySessionLengthLimit::Update);
+  }
+}
+
+void TraySessionLengthLimit::ResetState() {
+  remaining_session_time_ = base::TimeDelta();
+  limit_state_ = LIMIT_NONE;
+  timer_.reset();
 }
 
 void TraySessionLengthLimit::UpdateState() {
@@ -97,25 +124,12 @@ void TraySessionLengthLimit::UpdateState() {
   base::TimeDelta time_limit = session->session_length_limit();
   base::TimeTicks session_start_time = session->session_start_time();
   if (!time_limit.is_zero() && !session_start_time.is_null()) {
-    const base::TimeDelta expiring_soon_threshold(
-        base::TimeDelta::FromMinutes(kExpiringSoonThresholdInMinutes));
-    remaining_session_time_ =
+    base::TimeDelta remaining_session_time =
         std::max(time_limit - (base::TimeTicks::Now() - session_start_time),
                  base::TimeDelta());
-    limit_state_ = remaining_session_time_ <= expiring_soon_threshold
-                       ? LIMIT_EXPIRING_SOON
-                       : LIMIT_SET;
-    if (!timer_)
-      timer_.reset(new base::RepeatingTimer);
-    if (!timer_->IsRunning()) {
-      timer_->Start(FROM_HERE, base::TimeDelta::FromMilliseconds(
-                                   kTimerIntervalInMilliseconds),
-                    this, &TraySessionLengthLimit::Update);
-    }
+    UpdateTimer(remaining_session_time);
   } else {
-    remaining_session_time_ = base::TimeDelta();
-    limit_state_ = LIMIT_NONE;
-    timer_.reset();
+    ResetState();
   }
 }
 

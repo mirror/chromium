@@ -135,6 +135,10 @@ class TestSessionController : public ash::mojom::SessionController {
     last_session_length_limit_ = length_limit;
     last_session_start_time_ = start_time;
   }
+
+  void UpdateOffHoursMode(bool off_hours_mode) override {}
+  void SetOffHoursEndTime(base::TimeTicks end_time) override {}
+
   void CanSwitchActiveUser(CanSwitchActiveUserCallback callback) override {
     std::move(callback).Run(true);
   }
