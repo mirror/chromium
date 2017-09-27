@@ -46,6 +46,75 @@
       "revId": "06feeceee4914090a434c07d9e63e259a92bb7b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b415360e_a875d079",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRSessionEvent.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-27T17:23:46Z",
+      "side": 1,
+      "message": "nit: add name \u0027type\u0027 to be consistent.",
+      "range": {
+        "startLine": 39,
+        "startChar": 17,
+        "endLine": 39,
+        "endChar": 36
+      },
+      "revId": "06feeceee4914090a434c07d9e63e259a92bb7b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16246a6e_779b5745",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRSessionEvent.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-27T17:23:46Z",
+      "side": 1,
+      "message": "WebVR2?",
+      "range": {
+        "startLine": 6,
+        "startChar": 23,
+        "endLine": 6,
+        "endChar": 28
+      },
+      "revId": "06feeceee4914090a434c07d9e63e259a92bb7b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7885ebac_a44b6442",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRSessionEventInit.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-27T17:23:46Z",
+      "side": 1,
+      "message": "WebVR2?",
+      "range": {
+        "startLine": 6,
+        "startChar": 23,
+        "endLine": 6,
+        "endChar": 28
+      },
+      "revId": "06feeceee4914090a434c07d9e63e259a92bb7b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
