@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7fdf84ba_467934ca",
+        "filename": "chrome/browser/metrics/extensions_metrics_provider.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-27T22:12:08Z",
+      "side": 1,
+      "message": "I like it!  Done with a few modifications (static-ify the map struct, use a range-based for loop, move the DCHECK_EQ outside the for loop).",
+      "parentUuid": "d1bd6d4a_6ae48d03",
+      "range": {
+        "startLine": 220,
+        "startChar": 7,
+        "endLine": 220,
+        "endChar": 13
+      },
+      "revId": "5c6c728d108f8c12d0299a345588ce1dbdbe9f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f5e2d6f_4413b4c4",
         "filename": "chrome/browser/metrics/extensions_metrics_provider.cc",
         "patchSetId": 10
@@ -39,6 +63,24 @@
       "revId": "5c6c728d108f8c12d0299a345588ce1dbdbe9f0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a319ecba_4092e3de",
+        "filename": "chrome/browser/metrics/extensions_metrics_provider.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-27T22:12:08Z",
+      "side": 1,
+      "message": "Done (by adding the ForTesting methods, we moved these to be private again and the order is correct).",
+      "parentUuid": "8f5e2d6f_4413b4c4",
+      "revId": "5c6c728d108f8c12d0299a345588ce1dbdbe9f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -113,6 +155,30 @@
     },
     {
       "key": {
+        "uuid": "ffc9f35a_cc99732e",
+        "filename": "chrome/browser/metrics/extensions_metrics_provider.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-27T22:12:08Z",
+      "side": 1,
+      "message": "What Mark said. :)",
+      "parentUuid": "a31195e1_33a1cad3",
+      "range": {
+        "startLine": 453,
+        "startChar": 7,
+        "endLine": 453,
+        "endChar": 24
+      },
+      "revId": "5c6c728d108f8c12d0299a345588ce1dbdbe9f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5975830f_6fe6f410",
         "filename": "chrome/browser/metrics/extensions_metrics_provider.cc",
         "patchSetId": 10
@@ -133,6 +199,30 @@
       "revId": "5c6c728d108f8c12d0299a345588ce1dbdbe9f0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d033055d_aef4bfe5",
+        "filename": "chrome/browser/metrics/extensions_metrics_provider.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-27T22:12:08Z",
+      "side": 1,
+      "message": "Good idea; that cleans it up quite a bit!\n\nRe \u003e\u003d vs \u003e, in practice, I doubt this will matter (since that would mean the time of the recording and the time of the extension installation match to the granularity of the clock).  Additionally, we\u0027d have no way of knowing whether or not the extension was *actually* installed in the current period (since it could have been installed instantaneously before or after).  \u003e\u003d seems a little more conservative (we\u0027ll throw out logs we\u0027re not sure about), so let\u0027s do that.",
+      "parentUuid": "5975830f_6fe6f410",
+      "range": {
+        "startLine": 458,
+        "startChar": 19,
+        "endLine": 458,
+        "endChar": 33
+      },
+      "revId": "5c6c728d108f8c12d0299a345588ce1dbdbe9f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -159,6 +249,30 @@
     },
     {
       "key": {
+        "uuid": "e18be6c9_7eb6ad37",
+        "filename": "chrome/browser/metrics/extensions_metrics_provider.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-27T22:12:08Z",
+      "side": 1,
+      "message": "Inlining this results in duplicating the call to ExtensionPrefs::Get() for each entry in the extension set.  It\u0027s cheap, but not free, so I\u0027d prefer to keep it cached here.",
+      "parentUuid": "7ee5dbe2_50fff307",
+      "range": {
+        "startLine": 469,
+        "startChar": 30,
+        "endLine": 469,
+        "endChar": 35
+      },
+      "revId": "5c6c728d108f8c12d0299a345588ce1dbdbe9f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27ba5584_61537beb",
         "filename": "chrome/browser/metrics/extensions_metrics_provider.cc",
         "patchSetId": 10
@@ -179,6 +293,30 @@
       "revId": "5c6c728d108f8c12d0299a345588ce1dbdbe9f0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30668ab7_51d9ab06",
+        "filename": "chrome/browser/metrics/extensions_metrics_provider.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-27T22:12:08Z",
+      "side": 1,
+      "message": "Sure, done.",
+      "parentUuid": "27ba5584_61537beb",
+      "range": {
+        "startLine": 470,
+        "startChar": 37,
+        "endLine": 470,
+        "endChar": 45
+      },
+      "revId": "5c6c728d108f8c12d0299a345588ce1dbdbe9f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +370,24 @@
       "revId": "5c6c728d108f8c12d0299a345588ce1dbdbe9f0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2922c6d_aa79bfd6",
+        "filename": "chrome/browser/metrics/extensions_metrics_provider.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-27T22:12:08Z",
+      "side": 1,
+      "message": "Yeah, we use a bunch of different ways of exposing methods like this for testing, including protected:\u0027ing them, friending the tests, adding ForTesting() wrappers, and others.  If the ForTesting() is your preference, I can do that. :)\n\n(Ilya: I think this still compliant with your preferences, but let me know if that\u0027s not the case.)",
+      "parentUuid": "15cc00b4_f77652d2",
+      "revId": "5c6c728d108f8c12d0299a345588ce1dbdbe9f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -294,6 +450,30 @@
       "side": 1,
       "message": "SG.",
       "parentUuid": "c47aba8d_3401c9d3",
+      "range": {
+        "startLine": 18,
+        "startChar": 7,
+        "endLine": 18,
+        "endChar": 11
+      },
+      "revId": "5c6c728d108f8c12d0299a345588ce1dbdbe9f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc3f09fc_97f31546",
+        "filename": "components/metrics/proto/extension_install.proto",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-27T22:12:08Z",
+      "side": 1,
+      "message": "I don\u0027t really trust comments to prevent badness like this, because I find that frequently comments go unread unless someone is seeking information (said differently, they are educational, but not preventative).  Instead, I vastly prefer to break the compilation (which is better than DCHECK, since DCHECK only triggers if we have a test for that code path).  Towards that end, we can put static_asserts telling people to update the values in extensions_metrics_provider.cc, similar to what we have for disable reasons, but I don\u0027t think that actually adds any benefit over the current switch statement.  If someone adds a new manifest type or location, the switch statements in extensions_metrics_provider.cc will break for skipping that case (none of them have defaults), and in order to compile, the developer will have to add a new proto entry.  Do you think that either comments or static asserts will add any more clarity or protection?  If so, I can go ahead and add some, but wanted to check that you still think they\u0027ll help in addition to the compilation failures.",
+      "parentUuid": "436e67db_e72b0eac",
       "range": {
         "startLine": 18,
         "startChar": 7,
@@ -377,6 +557,30 @@
     },
     {
       "key": {
+        "uuid": "adced174_1619d962",
+        "filename": "components/metrics/proto/extension_install.proto",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-27T22:12:08Z",
+      "side": 1,
+      "message": "(Closing)",
+      "parentUuid": "3436398e_b2eea141",
+      "range": {
+        "startLine": 32,
+        "startChar": 4,
+        "endLine": 32,
+        "endChar": 20
+      },
+      "revId": "5c6c728d108f8c12d0299a345588ce1dbdbe9f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d70766e7_3e256531",
         "filename": "components/metrics/proto/extension_install.proto",
         "patchSetId": 10
@@ -400,6 +604,30 @@
     },
     {
       "key": {
+        "uuid": "319f640c_a0199ae2",
+        "filename": "components/metrics/proto/extension_install.proto",
+        "patchSetId": 10
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-27T22:12:08Z",
+      "side": 1,
+      "message": "Good catch; thanks.  In the future, this will be caught by the static assert for matching the last disable reason, but this landed between patch sets.\n\nFYI Mark and Ilya, this will require another internal CL - I\u0027ll get that up shortly.",
+      "parentUuid": "d70766e7_3e256531",
+      "range": {
+        "startLine": 137,
+        "startChar": 4,
+        "endLine": 137,
+        "endChar": 31
+      },
+      "revId": "5c6c728d108f8c12d0299a345588ce1dbdbe9f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "600b4322_eb3464c1",
         "filename": "components/metrics/proto/extension_install.proto",
         "patchSetId": 10
@@ -411,6 +639,30 @@
       "writtenOn": "2017-09-23T00:55:40Z",
       "side": 1,
       "message": "Do we maintain the invariant that we don\u0027t have disabled extensions with just the DISABLE_NONE disabled reason?",
+      "range": {
+        "startLine": 140,
+        "startChar": 53,
+        "endLine": 141,
+        "endChar": 31
+      },
+      "revId": "5c6c728d108f8c12d0299a345588ce1dbdbe9f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a6f1928_4ce4e49f",
+        "filename": "components/metrics/proto/extension_install.proto",
+        "patchSetId": 10
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-27T22:12:08Z",
+      "side": 1,
+      "message": "Yes, DISABLE_NONE \u003d\u003d 0 and 0 is considered enabled (e.g. https://cs.chromium.org/chromium/src/chrome/browser/extensions/extension_service.cc?sq\u003dpackage:chromium\u0026l\u003d1737)",
+      "parentUuid": "600b4322_eb3464c1",
       "range": {
         "startLine": 140,
         "startChar": 53,
