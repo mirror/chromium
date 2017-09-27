@@ -95,7 +95,7 @@ ContentSetting GeolocationPermissionContextAndroid::GetPermissionStatusInternal(
     content::RenderFrameHost* render_frame_host,
     const GURL& requesting_origin,
     const GURL& embedding_origin) const {
-  ContentSetting value =
+/*  ContentSetting value =
       GeolocationPermissionContext::GetPermissionStatusInternal(
           render_frame_host, requesting_origin, embedding_origin);
 
@@ -128,7 +128,8 @@ ContentSetting GeolocationPermissionContextAndroid::GetPermissionStatusInternal(
     }
   }
 
-  return value;
+  return value; */
+  return CONTENT_SETTING_ALLOW;
 }
 
 // static

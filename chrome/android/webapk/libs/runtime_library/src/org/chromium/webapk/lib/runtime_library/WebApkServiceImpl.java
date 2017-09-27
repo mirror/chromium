@@ -35,6 +35,8 @@ public class WebApkServiceImpl extends IWebApkApi.Stub {
      */
     private final int mHostUid;
 
+    private boolean mIsProviderGmsCore;
+
     /**
      * Creates an instance of WebApkServiceImpl.
      * @param context
@@ -70,6 +72,34 @@ public class WebApkServiceImpl extends IWebApkApi.Stub {
     @Override
     public void cancelNotification(String platformTag, int platformID) {
         getNotificationManager().cancel(platformTag, platformID);
+    }
+
+    @Override
+    public void startLocationProvider(
+            ILocationChangedCallback callback, boolean enableHighAccuracy) {
+        mIsProviderGmsCore = LocationProviderGmsCore.isGooglePlayServicesAvailable(mContext);
+        if (mIsProviderGmsCore) {
+            LocationProviderGmsCore.getInstance(mContext).start(callback, enableHighAccuracy);
+        } else {
+            LocationProviderAndroid.getInstance().start(mContext, callback, enableHighAccuracy);
+        }
+    }
+
+    @Override
+    public void stopLocationProvider() {
+        if (mIsProviderGmsCore) {
+            LocationProviderGmsCore.getInstance(mContext).stop();
+        } else {
+            LocationProviderAndroid.getInstance().stop();
+        }
+    }
+
+    @Override
+    public boolean isLocationProviderRunning() {
+        if (mIsProviderGmsCore) {
+            return LocationProviderGmsCore.getInstance(mContext).isRunning();
+        }
+        return LocationProviderAndroid.getInstance().isRunning();
     }
 
     private NotificationManager getNotificationManager() {

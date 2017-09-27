@@ -348,6 +348,9 @@ test("components_unittests") {
   if (is_ios) {
     assert_no_deps += ios_assert_no_deps
   }
+  if (is_android) {
+    assert_no_deps -= [ "//chrome/*" ]
+  }
 }
 
 repack("components_tests_pak") {
@@ -531,6 +534,9 @@ if (!is_ios) {
       ]
     } else {
       assert_no_deps = [ "//chrome/*" ]
+    }
+    if (is_android) {
+      assert_no_deps -= [ "//chrome/*" ]
     }
   }
 

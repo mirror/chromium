@@ -37,6 +37,8 @@ component("geolocation") {
     "location_provider.h",
     "location_provider_android.cc",
     "location_provider_android.h",
+    "location_provider_apk_android.cc",
+    "location_provider_apk_android.h",
     "network_location_provider.cc",
     "network_location_provider.h",
     "network_location_request.cc",
@@ -118,6 +120,7 @@ if (is_android) {
   generate_jni("geolocation_jni_headers") {
     sources = [
       "android/java/src/org/chromium/device/geolocation/LocationProviderAdapter.java",
+      "android/java/src/org/chromium/device/geolocation/LocationProviderApkAndroid.java",
     ]
     jni_package = "device"
   }
@@ -126,6 +129,7 @@ if (is_android) {
     java_files = [
       "android/java/src/org/chromium/device/geolocation/LocationProviderAdapter.java",
       "android/java/src/org/chromium/device/geolocation/LocationProviderAndroid.java",
+      "android/java/src/org/chromium/device/geolocation/LocationProviderApkAndroid.java",
       "android/java/src/org/chromium/device/geolocation/LocationProviderFactory.java",
       "android/java/src/org/chromium/device/geolocation/LocationProviderGmsCore.java",
     ]
@@ -137,6 +141,8 @@ if (is_android) {
       "$google_play_services_package:google_play_services_basement_java",
       "$google_play_services_package:google_play_services_location_java",
       "//base:base_java",
+      "//chrome/android/webapk/libs/client:client_java",
+      "//chrome/android/webapk/libs/runtime_library:webapk_service_aidl_java",
     ]
   }
 

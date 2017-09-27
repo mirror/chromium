@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/android/config.gni")
 import("//build/config/android/rules.gni")
 import("//chrome/android/webapk/libs/runtime_library_version.gni")
 
@@ -17,6 +18,7 @@ android_aidl("webapk_service_aidl") {
   import_include = [ "src/org/chromium/webapk/lib/runtime_library" ]
   interface_file = "src/org/chromium/webapk/lib/runtime_library/common.aidl"
   sources = [
+    "src/org/chromium/webapk/lib/runtime_library/ILocationChangedCallback.aidl",
     "src/org/chromium/webapk/lib/runtime_library/IWebApkApi.aidl",
   ]
 }
@@ -30,17 +32,31 @@ android_library("webapk_service_aidl_java") {
 # runtime_library_from_assets_java cannot be used as a dependency of another
 # library because the dx tool expects files ending in .dex.jar
 android_library("runtime_library_for_assets_java") {
-  java_files =
-      [ "src/org/chromium/webapk/lib/runtime_library/WebApkServiceImpl.java" ]
+  java_files = [
+    "src/org/chromium/webapk/lib/runtime_library/WebApkServiceImpl.java",
+    "src/org/chromium/webapk/lib/runtime_library/LocationProviderAndroid.java",
+    "src/org/chromium/webapk/lib/runtime_library/LocationProviderGmsCore.java",
+  ]
   srcjar_deps = [ ":webapk_service_aidl" ]
+  deps = [
+    "$google_play_services_package:google_play_services_base_java",
+    "$google_play_services_package:google_play_services_basement_java",
+    "$google_play_services_package:google_play_services_location_java",
+  ]
 }
 
 # The subset of runtime_library_from_assets_java needed for tests.
 android_library("runtime_library_for_tests_java") {
-  java_files =
-      [ "src/org/chromium/webapk/lib/runtime_library/WebApkServiceImpl.java" ]
+  java_files = [
+    "src/org/chromium/webapk/lib/runtime_library/WebApkServiceImpl.java",
+    "src/org/chromium/webapk/lib/runtime_library/LocationProviderAndroid.java",
+    "src/org/chromium/webapk/lib/runtime_library/LocationProviderGmsCore.java",
+  ]
   deps = [
     ":webapk_service_aidl_java",
+    "$google_play_services_package:google_play_services_base_java",
+    "$google_play_services_package:google_play_services_basement_java",
+    "$google_play_services_package:google_play_services_location_java",
   ]
 }
 

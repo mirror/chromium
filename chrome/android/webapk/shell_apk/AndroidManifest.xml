@@ -13,6 +13,9 @@
         android:minSdkVersion="16"
         android:targetSdkVersion="23" />
 
+   <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
     <application
         android:icon="@mipmap/app_icon"
         android:label="@string/short_name"
@@ -35,6 +38,9 @@
             {{/intent_filters}}
             {{{raw_intent_filters}}}
         </activity>
+
+        <meta-data android:name="com.google.android.gms.version" android:value="11029000"/>
+
         <meta-data android:name="org.chromium.webapk.shell_apk.shellApkVersion" android:value="{{{shell_apk_version}}}" />
         {{#bound_webapk}}
         <meta-data android:name="org.chromium.webapk.shell_apk.runtimeHost" android:value="{{{runtime_host}}}" />

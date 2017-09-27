@@ -96,10 +96,11 @@ void GeolocationImpl::ResumeUpdates() {
 
 void GeolocationImpl::StartListeningForUpdates() {
   geolocation_subscription_ =
-      GeolocationProvider::GetInstance()->AddLocationUpdateCallback(
-          base::Bind(&GeolocationImpl::OnLocationUpdate,
-                     base::Unretained(this)),
-          high_accuracy_);
+      GeolocationProvider::Get(context_->getPackageName())
+          ->AddLocationUpdateCallback(
+              base::Bind(&GeolocationImpl::OnLocationUpdate,
+                         base::Unretained(this)),
+              high_accuracy_);
 }
 
 void GeolocationImpl::SetHighAccuracy(bool high_accuracy) {
