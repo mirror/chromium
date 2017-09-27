@@ -34,6 +34,24 @@
       "revId": "79cd919891958c00e8d8b87b504d478cc0eb437b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdce827c_c3508890",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-09-27T19:59:51Z",
+      "side": 1,
+      "message": "Meaning that downstream packagers do not use our packaging targets? I wouldn\u0027t really expect them to, I was just confused by the wording in this description.",
+      "parentUuid": "88375ee8_80b43615",
+      "revId": "79cd919891958c00e8d8b87b504d478cc0eb437b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
