@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0deb9b91_4a4c3a67",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-27T15:31:31Z",
+      "side": 1,
+      "message": "It will be faster to just iterate over all ticking_players_, skip non worklet players and push onto the result vector directly rather than creating an intermediate vector (ticking_worket_players_).",
+      "revId": "7ab3bcc8186606529e1a8e8d5a91db9b20e73d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d3e94d2_03164321",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-27T15:31:31Z",
+      "side": 1,
+      "message": "Remove this check, we should never get a reference to a non worklet animation player. We could add a CHECK or DCHECK that it is a worklet animation player.",
+      "range": {
+        "startLine": 628,
+        "startChar": 17,
+        "endLine": 628,
+        "endChar": 47
+      },
+      "revId": "7ab3bcc8186606529e1a8e8d5a91db9b20e73d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ec94eb5_550766d1",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-27T15:31:31Z",
+      "side": 1,
+      "message": "obsolete includes?",
+      "revId": "7ab3bcc8186606529e1a8e8d5a91db9b20e73d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "924d1691_d451a96f",
+        "filename": "cc/trees/layer_tree_mutator.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-27T15:31:31Z",
+      "side": 1,
+      "message": "Reference CompositorWorker removal bug here too?",
+      "revId": "7ab3bcc8186606529e1a8e8d5a91db9b20e73d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "181e8c47_c174c03e",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-27T15:31:31Z",
+      "side": 1,
+      "message": "It seems to me there\u0027s no benefit to pushing animation state here and it just has the cost of having to step over the array and find animators, when we can just pass the state on line 92 when we call animate. The only thing we need to do in the Mutate call is ensure we have an animator for each id.",
+      "revId": "7ab3bcc8186606529e1a8e8d5a91db9b20e73d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43cb3aa2_1882b97d",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-27T15:31:31Z",
+      "side": 1,
+      "message": "How about we add a bit which gets set when we call Animate from Mutate and then sweep (i.e. remove_if) all animators which don\u0027t have this bit set?",
+      "revId": "7ab3bcc8186606529e1a8e8d5a91db9b20e73d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
