@@ -855,7 +855,7 @@ group("gn_visibility") {
   }
 }
 
-if (!is_ios && !is_fuchsia) {
+if (!is_ios) {
   # This group includes all of the targets needed to build and test Blink,
   # including running the layout tests (see below).
   group("blink_tests") {

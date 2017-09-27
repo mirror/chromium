@@ -320,6 +320,10 @@ static_library("content_shell_lib") {
     ]
   }
 
+  if (is_fuchsia) {
+    sources += [ "app/blink_test_platform_support_fuchsia.cc" ]
+  }
+
   if (use_x11) {
     # Some tests rely on this tool at runtime. Note: it might be better if
     # the tests that needed it had this as a dep instead of adding it here.
@@ -785,6 +789,13 @@ if (is_mac) {
     outputs = [
       "{{bundle_resources_dir}}/{{source_file_part}}",
     ]
+  }
+}
+
+if (is_fuchsia) {
+  fuchsia_executable_runner("content_shell_fuchsia") {
+    testonly = true
+    exe_target = ":content_shell"
   }
 }
 
