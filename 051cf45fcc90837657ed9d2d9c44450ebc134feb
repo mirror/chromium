@@ -16,6 +16,24 @@
       "revId": "051cf45fcc90837657ed9d2d9c44450ebc134feb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9810f308_d5fb2798",
+        "filename": "ui/gfx/codec/png_codec_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-27T15:43:15Z",
+      "side": 1,
+      "message": "This is a test where the sizes are very controlled, so I am fine with the code as it was before, and I don\u0027t follow the intention of the change here.",
+      "parentUuid": "21b248e2_82a9d1b7",
+      "revId": "051cf45fcc90837657ed9d2d9c44450ebc134feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
