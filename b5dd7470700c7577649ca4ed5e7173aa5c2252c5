@@ -141,6 +141,30 @@
       "revId": "b5dd7470700c7577649ca4ed5e7173aa5c2252c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f48f40cc_5b67cf58",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1227,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-09-27T00:43:25Z",
+      "side": 1,
+      "message": "Humm... maybe I\u0027m missing something!\n\nIt seems to me that more work is needed to support add/removeSelectionClient since all we have now is setSelectionClient in the SelectionPopupController.  So some new code needs to be written to handle multiple SelectionClients.  The simple bridge I wrote seems like it\u0027s as simple as can be -- it just supports two.  Something that supports add/remove would support N?  Or maybe just one or two?  Seems like it can\u0027t be any simpler than what\u0027s being done by the new bridge, but I may be missing something.  \n\nLet me know -- it\u0027s worth trying to keep it simple!",
+      "parentUuid": "524254ec_084ef73b",
+      "range": {
+        "startLine": 1227,
+        "startChar": 23,
+        "endLine": 1227,
+        "endChar": 44
+      },
+      "revId": "b5dd7470700c7577649ca4ed5e7173aa5c2252c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
