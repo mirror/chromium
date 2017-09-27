@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7629f3e6_bb398b38",
+        "filename": "third_party/WebKit/Source/core/css/CSSImageSetValue.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-09-27T14:55:15Z",
+      "side": 1,
+      "message": "Sure, I have used CSSParserMode.",
+      "parentUuid": "05d94604_94412270",
+      "revId": "5626e4c244b8812bb8f545959ddb644253bde6a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a0af3c7_55198d42",
         "filename": "third_party/WebKit/Source/core/css/CSSImageSetValue.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "5626e4c244b8812bb8f545959ddb644253bde6a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fddaa1ca_f90c149d",
+        "filename": "third_party/WebKit/Source/core/css/CSSImageSetValue.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-09-27T14:55:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a0af3c7_55198d42",
+      "revId": "5626e4c244b8812bb8f545959ddb644253bde6a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
