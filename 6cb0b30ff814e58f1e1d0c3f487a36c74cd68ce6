@@ -16,6 +16,52 @@
       "revId": "6cb0b30ff814e58f1e1d0c3f487a36c74cd68ce6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c159fae_36a52ad7",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasColorParams.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-09-27T17:43:17Z",
+      "side": 1,
+      "message": "Would rather eliminate places in the code that are asking for kLegacy.  How is that still happening with color correction enabled?",
+      "range": {
+        "startLine": 79,
+        "startChar": 9,
+        "endLine": 79,
+        "endChar": 32
+      },
+      "revId": "6cb0b30ff814e58f1e1d0c3f487a36c74cd68ce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5490a622_a11f321c",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/ImageDecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-09-27T17:43:17Z",
+      "side": 1,
+      "message": "I agree with this, but let\u0027s check with ccameron@",
+      "range": {
+        "startLine": 547,
+        "startChar": 25,
+        "endLine": 547,
+        "endChar": 33
+      },
+      "revId": "6cb0b30ff814e58f1e1d0c3f487a36c74cd68ce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
