@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19e65645_341d721e",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1002110
+      },
+      "writtenOn": "2017-09-27T17:27:57Z",
+      "side": 1,
+      "message": "Did you mean to subtract something else here? Or not subtract at all?",
+      "range": {
+        "startLine": 710,
+        "startChar": 58,
+        "endLine": 710,
+        "endChar": 70
+      },
+      "revId": "3b065b6aef0dbcf6db0621df33c0bee8b468a02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54d57cb3_e23a37b6",
+        "filename": "cc/trees/draw_property_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1002110
+      },
+      "writtenOn": "2017-09-27T17:27:57Z",
+      "side": 1,
+      "message": "Do you also need to set needs_local_transform_update on the root node here?",
+      "revId": "3b065b6aef0dbcf6db0621df33c0bee8b468a02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3dd1a50_5389ba57",
+        "filename": "cc/trees/transform_node.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002110
+      },
+      "writtenOn": "2017-09-27T17:27:57Z",
+      "side": 1,
+      "message": "This TODO and the one above it seem obsolete now, so I think they can be deleted.",
+      "revId": "3b065b6aef0dbcf6db0621df33c0bee8b468a02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d2ad017_9b77c324",
+        "filename": "cc/trees/transform_node.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002110
+      },
+      "writtenOn": "2017-09-27T17:27:57Z",
+      "side": 1,
+      "message": "This seems like an input too.",
+      "revId": "3b065b6aef0dbcf6db0621df33c0bee8b468a02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
