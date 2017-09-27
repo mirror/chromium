@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "4c2924c9_a1c6161d",
+        "filename": "chrome/browser/resources/md_extensions/kiosk_dialog.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-27T18:08:12Z",
+      "side": 1,
+      "message": "Checkbox is not used in old UI because there could be only one auto-launched app. Using radio also looks strange. Thus a floating button that shows up on hover to set the auto-launch is chosen by UX/PM for the old UI.",
+      "parentUuid": "d8f39b13_a49055fd",
+      "revId": "40150937613ba9d3799d2901bb68c14159cb0810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8521f679_ba04b616",
         "filename": "chrome/browser/resources/md_extensions/kiosk_dialog.html",
         "patchSetId": 8
