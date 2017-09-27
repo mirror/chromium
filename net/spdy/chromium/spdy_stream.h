@@ -303,6 +303,8 @@ class NET_EXPORT_PRIVATE SpdyStream {
   // Must be used only by |session_|.
   base::WeakPtr<SpdyStream> GetWeakPtr();
 
+  void EnqueueRequestHeaders(int rv);
+
   // Interface for the delegate to use.
 
   // Only one send can be in flight at a time, except for push

@@ -60,6 +60,8 @@ class NET_EXPORT_PRIVATE HttpBasicState {
   // values of request_info_ and using_proxy_.
   std::string GenerateRequestLine() const;
 
+  bool IsSafeRequest() const;
+
  private:
   scoped_refptr<GrowableIOBuffer> read_buf_;
 

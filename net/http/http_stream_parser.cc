@@ -308,6 +308,10 @@ int HttpStreamParser::SendRequest(const std::string& request_line,
   return result > 0 ? OK : result;
 }
 
+int HttpStreamParser::FinishHandshake(const CompletionCallback& callback) {
+  return connection_->socket()->FinishHandshake(callback);
+}
+
 int HttpStreamParser::ReadResponseHeaders(const CompletionCallback& callback) {
   DCHECK(io_state_ == STATE_NONE || io_state_ == STATE_DONE);
   DCHECK(callback_.is_null());

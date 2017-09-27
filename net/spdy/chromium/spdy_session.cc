@@ -927,6 +927,10 @@ void SpdySession::EnqueueStreamWrite(
   EnqueueWrite(stream->priority(), frame_type, std::move(producer), stream);
 }
 
+int SpdySession::FinishHandshake(const CompletionCallback& callback) {
+  return connection_->socket()->FinishHandshake(callback);
+}
+
 std::unique_ptr<SpdySerializedFrame> SpdySession::CreateHeaders(
     SpdyStreamId stream_id,
     RequestPriority priority,

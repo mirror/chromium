@@ -70,4 +70,8 @@ std::string HttpBasicState::GenerateRequestLine() const {
   return request_line;
 }
 
+bool HttpBasicState::IsSafeRequest() const {
+  return HttpUtil::IsMethodSafe(request_method_);
+}
+
 }  // namespace net

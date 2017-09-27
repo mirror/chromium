@@ -133,6 +133,9 @@ int HttpNetworkTransaction::Start(const HttpRequestInfo* request_info,
     proxy_ssl_config_.rev_checking_enabled = false;
   }
 
+  server_ssl_config_.early_data_enabled = true;
+  proxy_ssl_config_.early_data_enabled = true;
+
   if (request_->load_flags & LOAD_PREFETCH)
     response_.unused_since_prefetch = true;
 
@@ -1550,6 +1553,14 @@ int HttpNetworkTransaction::HandleIOError(int error) {
         ResetConnectionAndRequestForResend();
         error = OK;
       }
+      break;
+    case ERR_EARLY_DATA_REJECTED:
+      net_log_.AddEventWithNetErrorCode(
+          NetLogEventType::HTTP_TRANSACTION_RESTART_AFTER_ERROR, error);
+      // Disable early data on the SSLConfig on a reset.
+      server_ssl_config_.early_data_enabled = false;
+      ResetConnectionAndRequestForResend();
+      error = OK;
       break;
     case ERR_SPDY_PING_FAILED:
     case ERR_SPDY_SERVER_REFUSED_STREAM:

@@ -103,4 +103,8 @@ StreamSocket::SocketMemoryStats::SocketMemoryStats()
 
 StreamSocket::SocketMemoryStats::~SocketMemoryStats() {}
 
+int StreamSocket::FinishHandshake(const CompletionCallback& callback) {
+  return OK;
+}
+
 }  // namespace net

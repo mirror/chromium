@@ -19,6 +19,7 @@
 #include "base/strings/string_util.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/values.h"
+#include "net/http/http_util.h"
 #include "net/log/net_log.h"
 #include "net/log/net_log_capture_mode.h"
 #include "net/log/net_log_event_type.h"
@@ -686,6 +687,14 @@ base::WeakPtr<SpdyStream> SpdyStream::GetWeakPtr() {
   return weak_ptr_factory_.GetWeakPtr();
 }
 
+void SpdyStream::EnqueueRequestHeaders(int rv) {
+  if (rv == OK) {
+    session_->EnqueueStreamWrite(
+        GetWeakPtr(), SpdyFrameType::HEADERS,
+        std::make_unique<HeadersBufferProducer>(GetWeakPtr()));
+  }
+}
+
 int SpdyStream::SendRequestHeaders(SpdyHeaderBlock request_headers,
                                    SpdySendStatus send_status) {
   CHECK_NE(type_, SPDY_PUSH_STREAM);
@@ -697,9 +706,14 @@ int SpdyStream::SendRequestHeaders(SpdyHeaderBlock request_headers,
   request_headers_valid_ = true;
   url_from_header_block_ = GetUrlFromHeaderBlock(request_headers_);
   pending_send_status_ = send_status;
-  session_->EnqueueStreamWrite(
-      GetWeakPtr(), SpdyFrameType::HEADERS,
-      std::make_unique<HeadersBufferProducer>(GetWeakPtr()));
+  int ret = OK;
+  if (!HttpUtil::IsMethodSafe(request_headers[":method"].as_string())) {
+    ret = session_->FinishHandshake(
+        base::Bind(&SpdyStream::EnqueueRequestHeaders, GetWeakPtr()));
+  }
+  if (ret != ERR_IO_PENDING) {
+    EnqueueRequestHeaders(ret);
+  }
   return ERR_IO_PENDING;
 }
 
