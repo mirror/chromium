@@ -1,0 +1,101 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include "components/previews/core/previews_log.h"
+
+#include <vector>
+
+#include "base/macros.h"
+#include "base/memory/ptr_util.h"
+#include "base/test/simple_test_clock.h"
+#include "testing/gtest/include/gtest/gtest.h"
+
+namespace {
+
+const char kPreviewsNavigationEventType[] = "NAVIGATION";
+
+}  // namespace
+
+namespace previews {
+
+class PreviewsLogTest : public testing::Test {
+ public:
+  PreviewsLogTest() {}
+
+  ~PreviewsLogTest() override {}
+
+  void SetUp() override {
+    test_clock_ = base::MakeUnique<base::SimpleTestClock>();
+    logger.reset(new PreviewsLog());
+  }
+
+ protected:
+  std::unique_ptr<PreviewsLog> logger;
+  std::unique_ptr<base::SimpleTestClock> test_clock_;
+};
+
+TEST_F(PreviewsLogTest, AddLogMessageToLogger) {
+  unsigned long expected_size = 0;
+  EXPECT_EQ(expected_size, logger->GetLogMessages().size());
+
+  const std::string event_type = "EVENT";
+  const std::string event_description = "Some description";
+  const base::Time time = test_clock_->Now();
+
+  const GURL url_a("http://www.url_a.com/url_a");
+  const GURL url_b("http://www.url_b.com/url_b");
+  const GURL url_c("http://www.url_c.com/url_c");
+
+  LogMessage message_a(event_type, event_description, url_a, time);
+  LogMessage message_b(event_type, event_description, url_b, time);
+  LogMessage message_c(event_type, event_description, url_c, time);
+
+  logger->AddMessage(message_a);
+  logger->AddMessage(message_b);
+  logger->AddMessage(message_c);
+
+  expected_size = 3;
+  std::vector<LogMessage> actual = logger->GetLogMessages();
+
+  EXPECT_EQ(expected_size, actual.size());
+
+  EXPECT_EQ(event_type, actual[0].event_type);
+  EXPECT_EQ(event_description, actual[0].event_description);
+  EXPECT_EQ(time, actual[0].time);
+  EXPECT_EQ(url_a, actual[0].url);
+
+  EXPECT_EQ(event_type, actual[1].event_type);
+  EXPECT_EQ(event_description, actual[1].event_description);
+  EXPECT_EQ(time, actual[1].time);
+  EXPECT_EQ(url_b, actual[1].url);
+
+  EXPECT_EQ(event_type, actual[2].event_type);
+  EXPECT_EQ(event_description, actual[2].event_description);
+  EXPECT_EQ(time, actual[2].time);
+  EXPECT_EQ(url_c, actual[2].url);
+}
+
+TEST_F(PreviewsLogTest, AddPreviewNavigationLogMessage) {
+  GURL url("http://www.url_.com/url_");
+  PreviewsType type = PreviewsType::OFFLINE;
+  bool opt_out = true;
+  base::Time time = test_clock_->Now();
+
+  PreviewNavigation navigation(url, type, opt_out, time);
+  logger->AddPreviewNavigation(navigation);
+
+  std::vector<LogMessage> actual = logger->GetLogMessages();
+
+  unsigned long expected_size = 1;
+  ASSERT_EQ(expected_size, actual.size());
+
+  std::string expected_description =
+      url.spec() + " - opted out = True";
+  EXPECT_EQ(kPreviewsNavigationEventType, actual[0].event_type);
+  EXPECT_EQ(expected_description, actual[0].event_description);
+  EXPECT_EQ(url, actual[0].url);
+  EXPECT_EQ(time, actual[0].time);
+}
+
+}  // namespace previews
