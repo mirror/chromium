@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7300d56d_60a80e97",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-27T23:25:44Z",
+      "side": 0,
+      "message": "Why is this CHECK removed?",
+      "revId": "7374d03c6ab1ed776ba9ff4852a3cc55e5a6f95d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

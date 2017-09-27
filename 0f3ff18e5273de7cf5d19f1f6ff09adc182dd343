@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc4d985b_e7ce2bcc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 38
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-27T23:25:44Z",
+      "side": 1,
+      "message": "Please keep the first line of the commit message to 80 characters.\n\nAlso, it seems to me that this CL requires a bit more explanation of why this method is needed, so future code archaeologists can be informed about it without having to read all the diffs.",
+      "revId": "0f3ff18e5273de7cf5d19f1f6ff09adc182dd343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe5a1150_56a861c9",
+        "filename": "content/browser/frame_host/navigation_handle_impl.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-27T23:25:44Z",
+      "side": 1,
+      "message": "Can it be cancelled with different error code?",
+      "revId": "0f3ff18e5273de7cf5d19f1f6ff09adc182dd343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e3a4162_cbf9a0ae",
+        "filename": "content/browser/frame_host/navigation_handle_impl_unittest.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-27T23:25:44Z",
+      "side": 1,
+      "message": "This expectation is associated with the previous state, so remove the empty line above it and leave an empty line before the next Simulate call.",
+      "revId": "0f3ff18e5273de7cf5d19f1f6ff09adc182dd343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d7950c8_0242f8f4",
+        "filename": "content/public/browser/navigation_throttle.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-27T23:25:44Z",
+      "side": 1,
+      "message": "In general, we avoid adding public API when that isn\u0027t used outside of content/.",
+      "revId": "0f3ff18e5273de7cf5d19f1f6ff09adc182dd343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a50b88f_34281eb4",
+        "filename": "content/test/navigation_simulator_unittest.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-27T23:25:44Z",
+      "side": 1,
+      "message": "Why not add this functionality to the actual CancellingNavigationThrottle? Why do we need a separate class here?",
+      "revId": "0f3ff18e5273de7cf5d19f1f6ff09adc182dd343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
