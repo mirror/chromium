@@ -33,6 +33,98 @@
       "revId": "854d20bb4f202958a4e647993732781ceca85294",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b086205c_004fe3ed",
+        "filename": "net/url_request/redirect_info.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-27T15:08:32Z",
+      "side": 1,
+      "message": "nit:  Don\u0027t use braces for single-line ifs (Or at least that\u0027s the general style in net/)",
+      "range": {
+        "startLine": 180,
+        "startChar": 5,
+        "endLine": 180,
+        "endChar": 0
+      },
+      "revId": "854d20bb4f202958a4e647993732781ceca85294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a78c1172_64e39f6e",
+        "filename": "net/url_request/redirect_info.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-27T15:08:32Z",
+      "side": 1,
+      "message": "Prefer not to use \"we\"",
+      "range": {
+        "startLine": 37,
+        "startChar": 45,
+        "endLine": 37,
+        "endChar": 0
+      },
+      "revId": "854d20bb4f202958a4e647993732781ceca85294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d63d77f8_62837a35",
+        "filename": "net/url_request/redirect_info.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-27T15:08:32Z",
+      "side": 1,
+      "message": "In general, it\u0027s best to avoid \"We\" in comments.  This case is particularly worthy of note.  This is what the function is doing, not what \"we, the Chromium authors\" or \"we, Chrome\" is doing.",
+      "range": {
+        "startLine": 45,
+        "startChar": 21,
+        "endLine": 45,
+        "endChar": 25
+      },
+      "revId": "854d20bb4f202958a4e647993732781ceca85294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aa2a84c_446b26cf",
+        "filename": "net/url_request/redirect_info.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-27T15:08:32Z",
+      "side": 1,
+      "message": "While we do have integration-y tests for this stuff (Or at least I sure hope we do!), now that this is a public API, we should probably have unit tests as well.  I don\u0027t think we need to check every case in ProcessReferrerPolicyHeaderOnRedirect (Since we check them in integration tests, and multiple tests for all that is a bit much), but in general, should cover most of the logic in the cc file.",
+      "range": {
+        "startLine": 48,
+        "startChar": 33,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "854d20bb4f202958a4e647993732781ceca85294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
