@@ -16,6 +16,24 @@
       "revId": "859a434bd8932a7a135415ef2115a0f21d54bb40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57705fb1_fe4fa183",
+        "filename": "content/renderer/media_capture_from_element/html_video_element_capturer_source.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-27T20:48:54Z",
+      "side": 1,
+      "message": "I\u0027m not familiar with that mechanism. How would that work?",
+      "parentUuid": "ac5d116a_56cd9447",
+      "revId": "859a434bd8932a7a135415ef2115a0f21d54bb40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
