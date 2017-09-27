@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0b6da44_e0ebbafb",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-09-27T00:06:27Z",
+      "side": 1,
+      "message": "I am not confident in closure\u0027s ability to know what this means. Lets instead do:\n\nvar suggestions \u003d /** @type {!Array\u003c!UI.SuggestBox.Suggestions\u003e} */ (valueCompletions.map(text \u003d\u003e ({text: text})));",
+      "revId": "d8cc93773179f209c85a5f4879e6724e70af1833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96cf9776_a755ca7c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/text_utils/TextUtils.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-09-27T00:06:27Z",
+      "side": 1,
+      "message": "Lets pass in keys -\u003e values and the second param and the sorting will be handled from the order the values are in.",
+      "revId": "d8cc93773179f209c85a5f4879e6724e70af1833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70073043_54305bcc",
+        "filename": "third_party/WebKit/Source/devtools/front_end/text_utils/TextUtils.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-09-27T00:06:27Z",
+      "side": 1,
+      "message": "Lets make this an array of arrays instead and keep the new array sorted.",
+      "revId": "d8cc93773179f209c85a5f4879e6724e70af1833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28d1c411_356b17ed",
+        "filename": "third_party/WebKit/Source/devtools/front_end/text_utils/TextUtils.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-09-27T00:06:27Z",
+      "side": 1,
+      "message": "This should be:\n\nif (matcher.test(key))",
+      "revId": "d8cc93773179f209c85a5f4879e6724e70af1833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8ecf94e_7ef4b34b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/text_utils/TextUtils.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-09-27T00:06:27Z",
+      "side": 1,
+      "message": "This also should use matcher.test(item)",
+      "revId": "d8cc93773179f209c85a5f4879e6724e70af1833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "747eca76_d6e492a7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/text_utils/TextUtils.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-09-27T00:06:27Z",
+      "side": 1,
+      "message": "Lets do the sorting in this function.",
+      "revId": "d8cc93773179f209c85a5f4879e6724e70af1833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
