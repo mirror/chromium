@@ -680,6 +680,27 @@ void CookieStoreIOS::OnSystemCookiesChanged() {
       FROM_HERE, flush_closure_.callback(), base::TimeDelta::FromSeconds(10));
 }
 
+namespace {
+
+class CookieStoreIOSCookieChangedSubscription
+    : public CookieStore::CookieChangedSubscription {
+ public:
+  CookieStoreIOSCookieChangedSubscription(
+      std::unique_ptr<CookieStore::CookieChangedCallbackList::Subscription>
+          subscription)
+      : subscription_(std::move(subscription)) {}
+  ~CookieStoreIOSCookieChangedSubscription() override {}
+
+ private:
+  friend CookieMonster;
+  std::unique_ptr<CookieStore::CookieChangedCallbackList::Subscription>
+      subscription_;
+
+  DISALLOW_COPY_AND_ASSIGN(CookieStoreIOSCookieChangedSubscription);
+};
+
+}  // namespace
+
 std::unique_ptr<net::CookieStore::CookieChangedSubscription>
 CookieStoreIOS::AddCallbackForCookie(const GURL& gurl,
                                      const std::string& name,
@@ -695,7 +716,8 @@ CookieStoreIOS::AddCallbackForCookie(const GURL& gurl,
   }
 
   DCHECK(hook_map_.find(key) != hook_map_.end());
-  return hook_map_[key]->Add(callback);
+  return base::MakeUnique<CookieStoreIOSCookieChangedSubscription>(
+      hook_map_[key]->Add(callback));
 }
 
 std::unique_ptr<net::CookieStore::CookieChangedSubscription>
