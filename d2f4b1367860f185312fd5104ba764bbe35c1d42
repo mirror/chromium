@@ -22,6 +22,30 @@
       "revId": "d2f4b1367860f185312fd5104ba764bbe35c1d42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86f72a81_d048aa8c",
+        "filename": "third_party/WebKit/Source/core/html/TextControlElement.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-27T21:56:07Z",
+      "side": 1,
+      "message": "Decided to remove the editing functionality for more security. Thanks for your example! It should now be impossible to get the info in all the cases.",
+      "parentUuid": "47e2d20e_dc043979",
+      "range": {
+        "startLine": 1026,
+        "startChar": 2,
+        "endLine": 1027,
+        "endChar": 31
+      },
+      "revId": "d2f4b1367860f185312fd5104ba764bbe35c1d42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
