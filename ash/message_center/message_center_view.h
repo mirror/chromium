@@ -74,7 +74,7 @@ class ASH_EXPORT MessageCenterView
   void OnDidChangeFocus(views::View* before, views::View* now) override;
 
   static const SkColor kBackgroundColor;
-  static const size_t kMaxVisibleNotifications;
+  static const int kMaxVisibleNotifications;
 
  protected:
   // Potentially sets the reposition target, and then returns whether or not it

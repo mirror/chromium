@@ -48,6 +48,8 @@ class ASH_EXPORT MessageListView : public views::View,
   void RemoveNotification(message_center::MessageView* view);
   void UpdateNotification(message_center::MessageView* view,
                           const message_center::Notification& notification);
+  std::pair<int, message_center::MessageView*> GetNotificationById(
+      const std::string& id);
   void SetRepositionTarget(const gfx::Rect& target_rect);
   void ResetRepositionSession();
   void ClearAllClosableNotifications(const gfx::Rect& visible_scroll_rect);
@@ -58,6 +60,9 @@ class ASH_EXPORT MessageListView : public views::View,
   void SetRepositionTargetForTest(const gfx::Rect& target_rect);
 
   void set_scroller(views::ScrollView* scroller) { scroller_ = scroller; }
+
+  const message_center::MessageView* notification_at(int index) const;
+  message_center::MessageView* notification_at(int index);
 
  protected:
   // Overridden from views::View.
