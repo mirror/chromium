@@ -172,6 +172,24 @@
     },
     {
       "key": {
+        "uuid": "42f34491_429674c2",
+        "filename": "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_mouse_tracker.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-09-27T22:05:03Z",
+      "side": 1,
+      "message": "I prefer it that we can keep the logic in MouseTracker to keep things simple. Otherwise, we might end up with the old Presentation Mode Controller class, which was super messy. \n\nFullscreenToolbarController is written so that its main purpose is to calculate the toolbar layout based on the browser state and its trackers. It\u0027s not supposed to do things like modifying the menubar or toolbar state (Ex/ locking the toolbar\u0027s visibility).",
+      "parentUuid": "dcebb554_d3ad866e",
+      "revId": "272e704388e918185d00949826641887c3f2ec07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ae29fa2_baefd807",
         "filename": "ui/base/cocoa/scoped_menu_bar_lock.h",
         "patchSetId": 2
