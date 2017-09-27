@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07347554_c1ac8ac2",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-27T17:51:37Z",
+      "side": 1,
+      "message": "nit: newline above comment",
+      "revId": "4551f6ce7dde3e8bd89b3b78b1b487d598a79594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c79b18ec_3668f27f",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-27T17:51:37Z",
+      "side": 1,
+      "message": "I\u0027d still prefer std::unique_ptr here but it seems chromium-dev disagrees with me. https://groups.google.com/a/chromium.org/forum/#!topic/chromium-dev/DA-kPfBjE6s",
+      "range": {
+        "startLine": 95,
+        "startChar": 16,
+        "endLine": 95,
+        "endChar": 31
+      },
+      "revId": "4551f6ce7dde3e8bd89b3b78b1b487d598a79594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca9558e1_4465f707",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-27T17:51:37Z",
+      "side": 1,
+      "message": "Let\u0027s move this to the cc file.",
+      "range": {
+        "startLine": 130,
+        "startChar": 0,
+        "endLine": 133,
+        "endChar": 18
+      },
+      "revId": "4551f6ce7dde3e8bd89b3b78b1b487d598a79594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "496f9cc7_38c02a44",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-27T17:51:37Z",
+      "side": 1,
+      "message": "nit: Remove extra space.",
+      "range": {
+        "startLine": 157,
+        "startChar": 19,
+        "endLine": 157,
+        "endChar": 20
+      },
+      "revId": "4551f6ce7dde3e8bd89b3b78b1b487d598a79594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9ebdc5f_096b0497",
+        "filename": "net/disk_cache/simple/simple_file_tracker_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-27T17:51:37Z",
+      "side": 1,
+      "message": "Suggest encompassing either the entire fire or at least SimpleFileTracketTest in anonymous namespace",
+      "revId": "4551f6ce7dde3e8bd89b3b78b1b487d598a79594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

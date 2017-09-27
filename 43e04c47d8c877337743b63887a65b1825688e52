@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "a286a6f0_49517410",
+        "filename": "net/disk_cache/simple/simple_entry_format.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-27T17:51:37Z",
+      "side": 1,
+      "message": "How about:\n\n// This is the maximum number of files an entry can reference (normal streams plus the sparse stream).\nstatic const int kSimpleMaxFileCount \u003d kSimpleEntryFileCount + 1;",
+      "parentUuid": "f4413e33_57ee106e",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 64
+      },
+      "revId": "43e04c47d8c877337743b63887a65b1825688e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0c55a7fc_ddc067b8",
         "filename": "net/disk_cache/simple/simple_file_tracker.h",
         "patchSetId": 22
@@ -143,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "c6f71f76_3feb1fef",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-27T17:51:37Z",
+      "side": 1,
+      "message": "sgtm!",
+      "parentUuid": "7c4f9791_01611dd3",
+      "range": {
+        "startLine": 42,
+        "startChar": 9,
+        "endLine": 42,
+        "endChar": 13
+      },
+      "revId": "43e04c47d8c877337743b63887a65b1825688e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "83b75268_1e1efb92",
         "filename": "net/disk_cache/simple/simple_file_tracker.h",
         "patchSetId": 22
@@ -154,6 +202,30 @@
       "writtenOn": "2017-09-25T19:40:23Z",
       "side": 1,
       "message": "Hmm, so what\u0027s missing here is a clear notion that, at the moment, you\u0027re only permitted to call this once until you\u0027re done, though I am strongly wondering whether I should make it robust against multiple calls.",
+      "range": {
+        "startLine": 88,
+        "startChar": 63,
+        "endLine": 88,
+        "endChar": 0
+      },
+      "revId": "43e04c47d8c877337743b63887a65b1825688e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "347a7116_6d1b8c0e",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-27T17:51:37Z",
+      "side": 1,
+      "message": "Ah, you\u0027re not allowed to have two of these in parallel? That\u0027s not obvious. Please mention that in the comment and DCHECK against it.",
+      "parentUuid": "83b75268_1e1efb92",
       "range": {
         "startLine": 88,
         "startChar": 63,
