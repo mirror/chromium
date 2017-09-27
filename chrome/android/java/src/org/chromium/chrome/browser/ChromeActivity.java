@@ -1366,6 +1366,7 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
     protected void showAppMenuForKeyboardEvent() {
         if (getAppMenuHandler() == null) return;
 
+        TextBubble.onBackPressed();
         boolean hasPermanentMenuKey = ViewConfiguration.get(this).hasPermanentMenuKey();
         getAppMenuHandler().showAppMenu(
                 hasPermanentMenuKey ? null : getToolbarManager().getMenuButton(), false);
