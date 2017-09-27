@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8441fe8d_217da5e3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/PageInfoPopup.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-27T00:01:49Z",
+      "side": 1,
+      "message": "Nit: does this and all the others work in the test if you use package visibility rather than protected (i.e. remove protected and have no access specifier)? Doesn\u0027t look like anything is subclassing this. :)",
+      "range": {
+        "startLine": 110,
+        "startChar": 4,
+        "endLine": 110,
+        "endChar": 13
+      },
+      "revId": "b2b665475e031433c741a6ae4f094385c88127a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f91b90a_8a58fb02",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/PageInfoPopup.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-27T00:01:49Z",
+      "side": 1,
+      "message": "Nit: \"updated\" should be on line 596",
+      "range": {
+        "startLine": 596,
+        "startChar": 68,
+        "endLine": 596,
+        "endChar": 71
+      },
+      "revId": "b2b665475e031433c741a6ae4f094385c88127a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
