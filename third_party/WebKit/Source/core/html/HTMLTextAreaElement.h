@@ -128,7 +128,8 @@ class CORE_EXPORT HTMLTextAreaElement final : public TextControlElement {
   bool HasCustomFocusLogic() const override;
   bool ShouldShowFocusRingOnMouseFocus() const override;
   bool IsKeyboardFocusable() const override;
-  void UpdateFocusAppearance(SelectionBehaviorOnFocus) override;
+  void UpdateFocusAppearance(SelectionBehaviorOnFocus,
+                             const FocusOptions& = FocusOptions()) override;
 
   void AccessKeyAction(bool send_mouse_events) override;
 

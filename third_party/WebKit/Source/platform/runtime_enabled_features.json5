@@ -404,6 +404,10 @@
       status: "stable",
     },
     {
+      name: "FocusOptions",
+      status: "experimental",
+    },
+    {
       name: "FontCacheScaling",
       status: "test",
     },
