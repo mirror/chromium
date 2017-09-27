@@ -16,6 +16,24 @@
       "revId": "fc965c012b7e64374a4f495701a176ddc2d368f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0d2068c_96139e63",
+        "filename": "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_most_visited_item.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-09-27T14:38:01Z",
+      "side": 1,
+      "message": "Thanks! This was missing.",
+      "parentUuid": "8954da22_f2de1c99",
+      "revId": "fc965c012b7e64374a4f495701a176ddc2d368f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
