@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71a799bf_236a6aea",
+        "filename": "chrome/browser/ssl/security_state_tab_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-09-27T00:12:35Z",
+      "side": 1,
+      "message": "It\u0027s usually recommended to record the false case as well, so that you have a baseline.",
+      "range": {
+        "startLine": 150,
+        "startChar": 73,
+        "endLine": 150,
+        "endChar": 77
+      },
+      "revId": "f9e592ef5e3c526fde21b2eb1171ec226a8accdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
