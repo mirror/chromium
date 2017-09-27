@@ -27,6 +27,54 @@ promise_test(function() {
   });
 }, 'An unknown constraint is NOT returned on getConstraints');
 
+//If a constraint is set with applyConstraints, it should come back in
+//getConstraints().
+promise_test(function() {
+  return navigator.mediaDevices.getUserMedia({video: {width: {exact: 800}}})
+   .then(function(s) {
+   var track = s.getVideoTracks()[0];
+   var constraints = track.getConstraints();
+   assert_equals(Object.keys(constraints).length, 1);
+   assert_true(constraints.hasOwnProperty('width'));
+   assert_equals(constraints.width.exact, 800);
+  
+   return track.applyConstraints({width: {exact: 640}})
+       .then(function() {
+     constraints = track.getConstraints();
+     assert_equals(Object.keys(constraints).length, 1);
+     assert_true(constraints.hasOwnProperty('width'));
+     assert_equals(constraints.width.exact, 640);
+   })
+  });
+}, 'applyConstraints() sets the value of a constraint set by getUserMedia()');
+
+//The deviceId constraint must be rejected, since the source of a track cannot
+//be changed with applyConstraints.
+promise_test(function(test) {
+  return promise_rejects(test,
+                        new OverconstrainedError('deviceId', ''),
+                        navigator.mediaDevices.getUserMedia({audio: true})
+     .then(function(s) {
+   return s.getAudioTracks()[0].applyConstraints(
+       { deviceId: {exact: 'mydevice-id'}});
+  }));
+}, 'Attempting to change the deviceId with applyConstraints() fails');
+
+// Unsupported constraints must be ignored.
+promise_test(function() {
+  return navigator.mediaDevices.getUserMedia({audio: true})
+     .then(function(s) {
+   var track = s.getAudioTracks()[0];
+   return track.applyConstraints(
+       { echoCancellation: { exact: true}, notKnownName: { exact: true }})
+   .then(function() {
+     constraints = track.getConstraints();
+     assert_equals(Object.keys(constraints).length, 1);
+     assert_false(constraints.hasOwnProperty('notKnownName'));
+   });
+  });
+}, 'An unsupported constraint is ignored by applyConstraints()');
+
 function constraintElementsEqual(a, b) {
   if (a === b)
     return true;
