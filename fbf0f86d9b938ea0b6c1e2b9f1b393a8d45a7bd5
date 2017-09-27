@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "3e4a39d1_790e3c03",
+        "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1515,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-27T17:01:45Z",
+      "side": 1,
+      "message": "The suggestion at https://bugs.chromium.org/p/chromium/issues/detail?id\u003d730593 seems to modify ReadRemoteCharacteristic\u0027s interface FYI.",
+      "parentUuid": "0584939b_056f574b",
+      "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab9fec90_00b31245",
         "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.cc",
         "patchSetId": 3
