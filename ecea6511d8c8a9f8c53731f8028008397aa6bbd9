@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fc19072_72a38691",
+        "filename": "base/files/file_util_posix.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-27T19:29:31Z",
+      "side": 1,
+      "message": "Can you add a comment to mention this is copying CopyFile() behavior?",
+      "revId": "ecea6511d8c8a9f8c53731f8028008397aa6bbd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
