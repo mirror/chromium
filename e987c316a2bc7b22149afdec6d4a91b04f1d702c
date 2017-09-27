@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "14be0fc2_1b502278",
+        "filename": "content/renderer/media/user_media_client_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-27T17:04:12Z",
+      "side": 1,
+      "message": "As of this CL, this applies to all tracks, since the error is sent for all requests :)\nThis basically pushes to content a NotSupportedException that was sent from blink before. This will be replaced soon by a CL implementing applyConstraints for video tracks.\nAdded a TODO to make it clearer that we need to implement it.",
+      "parentUuid": "51bf1b2c_93cd1914",
+      "range": {
+        "startLine": 138,
+        "startChar": 27,
+        "endLine": 138,
+        "endChar": 28
+      },
+      "revId": "e987c316a2bc7b22149afdec6d4a91b04f1d702c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4168eefe_e7cf4cc3",
         "filename": "content/shell/test_runner/mock_web_user_media_client.cc",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "e987c316a2bc7b22149afdec6d4a91b04f1d702c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d47e711_33c04805",
+        "filename": "content/shell/test_runner/mock_web_user_media_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-27T17:04:12Z",
+      "side": 1,
+      "message": "WebApplyConstraintsRequest* would not be have any practical advantage over const-ref since we need to save a copy of the actual WebApplyConstraintsRequest in the real implementation. Otherwise the pointer would become dangling.\nI\u0027m passing by const-ref for consistency with other code that does the same.\nI could also pass by value, but that would imply an extra copy in the real implementation (WebPrivatePtr does not allow moving).",
+      "parentUuid": "4168eefe_e7cf4cc3",
+      "revId": "e987c316a2bc7b22149afdec6d4a91b04f1d702c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "215768fa_07b15203",
+        "filename": "content/shell/test_runner/mock_web_user_media_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-27T17:04:12Z",
+      "side": 1,
+      "message": "This is the test_runner, which in our case is as fake as it gets.\nThis one just approximates some spec-like behavior by rejecting attempts to change the deviceId and accepting everything else.",
+      "parentUuid": "e3f28418_6f9a55aa",
+      "revId": "e987c316a2bc7b22149afdec6d4a91b04f1d702c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf556d60_d0acf0e4",
         "filename": "third_party/WebKit/LayoutTests/fast/mediastream/MediaStreamTrack-applyConstraints.html",
         "patchSetId": 2
@@ -73,6 +133,24 @@
       "revId": "e987c316a2bc7b22149afdec6d4a91b04f1d702c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50b4809d_4b94f0ac",
+        "filename": "third_party/WebKit/LayoutTests/fast/mediastream/MediaStreamTrack-applyConstraints.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-27T17:04:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf556d60_d0acf0e4",
+      "revId": "e987c316a2bc7b22149afdec6d4a91b04f1d702c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "474f86a1_9055820a",
+        "filename": "third_party/WebKit/LayoutTests/fast/mediastream/MediaStreamTrack-applyConstraints.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-27T17:04:12Z",
+      "side": 1,
+      "message": "Good point, but this is good enough for comparing constraints.\nBTW, this is copypasted from MediaStreamTrack-getConstraints.html.\nDid not find it worthwhile to have everything in the same test file just to reuse this function.\nSome other parts of this file are variations of things in MediaStreamTrack-getConstraints.html",
+      "parentUuid": "72df378f_b94b1ce7",
+      "revId": "e987c316a2bc7b22149afdec6d4a91b04f1d702c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71e116cb_67c7f3ba",
         "filename": "third_party/WebKit/LayoutTests/fast/mediastream/MediaStreamTrack-applyConstraints.html",
         "patchSetId": 2
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "cc926841_0ee2ba64",
+        "filename": "third_party/WebKit/LayoutTests/fast/mediastream/MediaStreamTrack-applyConstraints.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-27T17:04:12Z",
+      "side": 1,
+      "message": "Advanced constraints have to show up even if they\u0027re not applied.\ngetConstraints() has to return something semantically equivalent to what was passed to applyConstraints. This means that exact values can be shown as equal min/max values and unsupported constraints can be removed. However, advanced sets have to remain even if not applied because they might be applied as a result of an applyConstraints() to another track on the same source. I guess self-contradictory advanced sets (e.g., min\u003emax) can be removed, but it\u0027s not worth the effort.",
+      "parentUuid": "71e116cb_67c7f3ba",
+      "revId": "e987c316a2bc7b22149afdec6d4a91b04f1d702c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0fecfd1b_da7ef7bc",
         "filename": "third_party/WebKit/Source/modules/mediastream/MediaStreamTrack.cpp",
         "patchSetId": 2
@@ -121,6 +235,24 @@
       "writtenOn": "2017-09-27T14:09:45Z",
       "side": 1,
       "message": "Is there something, like a spec or definition files, that can be referenced saying what is and isn\u0027t image capture constraints? I\u0027m looking at this and just trusting that it\u0027s correct without any verification as a reviewer.\n\nIf this is all well-defined in MediaTrackConstraintSet, shouldn\u0027t these type of helper functions be moved there?",
+      "revId": "e987c316a2bc7b22149afdec6d4a91b04f1d702c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d476bae_e942b9cd",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaStreamTrack.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-27T17:04:12Z",
+      "side": 1,
+      "message": "Added a comment with a reference to the ImageCapture spec and a comment with more details.\nIt is currently not easy to merge both ImageCapture and non-ImageCapture  because all of image capture is implemented in Blink and non-ImageCapture is in content.\nThe only practical solution is to wait until we move UserMediaClientImpl to Blink.",
+      "parentUuid": "0fecfd1b_da7ef7bc",
       "revId": "e987c316a2bc7b22149afdec6d4a91b04f1d702c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "d283c8de_0dbe9ec5",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaStreamTrack.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-27T17:04:12Z",
+      "side": 1,
+      "message": "Updated to reject mixing constraints only when there is ImageCapture, which is more consistent with the old code.\nIf there is no ImageCapture, everything will be processed by the content algorithm and imagecapture constraints will be ignored.",
+      "parentUuid": "436a47a9_027b100e",
+      "revId": "e987c316a2bc7b22149afdec6d4a91b04f1d702c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51d0c1ca_63494c58",
         "filename": "third_party/WebKit/Source/modules/mediastream/MediaStreamTrack.cpp",
         "patchSetId": 2
@@ -158,6 +308,24 @@
       "revId": "e987c316a2bc7b22149afdec6d4a91b04f1d702c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bb35fc3_ea03b53b",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaStreamTrack.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-27T17:04:12Z",
+      "side": 1,
+      "message": "Empty constraints is a special case in that it applies to both ImageCapture and non-ImageCapture, so we have to resolve after applying the empty constraints to both.",
+      "parentUuid": "51d0c1ca_63494c58",
+      "revId": "e987c316a2bc7b22149afdec6d4a91b04f1d702c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -178,6 +346,24 @@
     },
     {
       "key": {
+        "uuid": "bc16247b_e5dc5f48",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaStreamTrack.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-27T17:04:12Z",
+      "side": 1,
+      "message": "Moved the handling of empty constraints before this, so that this check occurs only when we need to go to content.",
+      "parentUuid": "f1b78ffb_c9523204",
+      "revId": "e987c316a2bc7b22149afdec6d4a91b04f1d702c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1f08c50_14894f2b",
         "filename": "third_party/WebKit/Source/modules/mediastream/MediaStreamTrack.cpp",
         "patchSetId": 2
@@ -189,6 +375,24 @@
       "writtenOn": "2017-09-27T14:09:45Z",
       "side": 1,
       "message": "What is the mediaDevices controller and does this error message make sense to developers? Should we rephrase it?",
+      "revId": "e987c316a2bc7b22149afdec6d4a91b04f1d702c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfcd7700_3d756064",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaStreamTrack.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-27T17:04:12Z",
+      "side": 1,
+      "message": "Changed the message to something less mysterious but still not very useful. Feel free to provide an alternative.\nThis only happens when Blink is not connected to content::UserMediaClientImpl for some reason.",
+      "parentUuid": "c1f08c50_14894f2b",
       "revId": "e987c316a2bc7b22149afdec6d4a91b04f1d702c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -212,6 +416,24 @@
     },
     {
       "key": {
+        "uuid": "6321f1b4_3332f241",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaStreamTrack.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-27T17:04:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55ec405b_70b12826",
+      "revId": "e987c316a2bc7b22149afdec6d4a91b04f1d702c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7a9b800_c05a4966",
         "filename": "third_party/WebKit/Source/modules/mediastream/OverconstrainedError.idl",
         "patchSetId": 2
@@ -226,6 +448,24 @@
       "revId": "e987c316a2bc7b22149afdec6d4a91b04f1d702c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbd86805_adc29de4",
+        "filename": "third_party/WebKit/Source/modules/mediastream/OverconstrainedError.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-27T17:04:12Z",
+      "side": 1,
+      "message": "Put it behind the applyConstraints flag, but it\u0027s already exposed due to image capture.",
+      "parentUuid": "a7a9b800_c05a4966",
+      "revId": "e987c316a2bc7b22149afdec6d4a91b04f1d702c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -249,6 +489,30 @@
       "revId": "e987c316a2bc7b22149afdec6d4a91b04f1d702c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08d98e9b_c5211540",
+        "filename": "third_party/WebKit/Source/modules/mediastream/OverconstrainedError.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-27T17:04:12Z",
+      "side": 1,
+      "message": "The spec defines it this way. Note that |constraint| is not the same as |name|. For this, |name| is always \"OverconstrainedError\".",
+      "parentUuid": "322c55eb_a1dc6a55",
+      "range": {
+        "startLine": 10,
+        "startChar": 48,
+        "endLine": 10,
+        "endChar": 55
+      },
+      "revId": "e987c316a2bc7b22149afdec6d4a91b04f1d702c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

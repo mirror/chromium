@@ -22,6 +22,30 @@
       "revId": "e6fd255b48466f8890ce08b51b625c773d993c32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63910bc4_9979dbf0",
+        "filename": "third_party/WebKit/LayoutTests/imagecapture/MediaStreamTrack-applyConstraints-reject.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-27T17:04:12Z",
+      "side": 0,
+      "message": "The purpose of this ImageCapture test is to verify that constraints that cannot be satisfied result in rejection.\nThe non-spec compliant algorithm for image capture used to reject anything with non-imagecapture constraints. Now it passes non-imagecapture constraints to the lower layer. To be compliant, unsupported constraints should be ignored, not rejected.",
+      "parentUuid": "d224ee3e_5b7c8cb0",
+      "range": {
+        "startLine": 76,
+        "startChar": 2,
+        "endLine": 76,
+        "endChar": 14
+      },
+      "revId": "e6fd255b48466f8890ce08b51b625c773d993c32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
