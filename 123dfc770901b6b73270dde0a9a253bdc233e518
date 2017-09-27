@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "d4a2e0c7_877c67da",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-27T05:24:21Z",
+      "side": 1,
+      "message": "This will increase the installer size a bit. Which is probably ok if the on-disk size is 3 MB and the installer download size is \u003c 1 MB. Though ideally would only ship one. Do you have an estimate for when we can do that?",
+      "parentUuid": "9b5b2312_d0701ce5",
+      "revId": "123dfc770901b6b73270dde0a9a253bdc233e518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f00393c3_86355226",
         "filename": "chrome/installer/linux/common/installer.include",
         "patchSetId": 2
@@ -113,6 +131,24 @@
       "side": 1,
       "message": "Currently, we don\u0027t create v8_context_snapshot.bin for ChromeOS because of a technical issue, so it doesn\u0027t need to be updated.",
       "parentUuid": "07d0f54f_930b2384",
+      "revId": "123dfc770901b6b73270dde0a9a253bdc233e518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f24d3fd2_42070e71",
+        "filename": "chrome/tools/build/linux/FILES.cfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-27T05:24:21Z",
+      "side": 1,
+      "message": "OK. Please keep in mind ChromeOS needs to be updated separately, as they do not use chrome/installer/linux.",
+      "parentUuid": "a4fcf846_97403fe2",
       "revId": "123dfc770901b6b73270dde0a9a253bdc233e518",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
