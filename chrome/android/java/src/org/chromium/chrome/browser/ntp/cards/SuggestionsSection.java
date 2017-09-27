@@ -260,7 +260,7 @@ public class SuggestionsSection extends InnerNode {
         // A manual fetch can complete after the placeholder is shown, thus we can have both a
         // placeholder and some suggestions present with no status change notification. We need to
         // update its visibility here to avoid that.
-        updatePlaceholderVisibility();
+        updatePlaceholderVisibility(false);
 
         // When the ActionItem stops being dismissable, it is possible that it was being
         // interacted with. We need to reset the view's related property changes.
@@ -418,9 +418,15 @@ public class SuggestionsSection extends InnerNode {
         return suggestionIds;
     }
 
-    private void updatePlaceholderVisibility() {
+    /**
+     * @param trackDuration set to {@code true} when the caller is interested in reporting how long
+     *                      the placeholder is shown to UMA if this update resulted in making it
+     *                      visible.
+     */
+    private void updatePlaceholderVisibility(boolean trackDuration) {
         if (!FeatureUtilities.isChromeHomeEnabled()) return;
         mPlaceholder.setVisible(isLoading() && !hasSuggestions());
+        mPlaceholder.updateTracking(trackDuration);
     }
 
     /**
@@ -575,7 +581,7 @@ public class SuggestionsSection extends InnerNode {
 
         boolean isLoading = SnippetsBridge.isCategoryLoading(status);
         mMoreButton.updateState(isLoading ? ActionItem.State.LOADING : ActionItem.State.BUTTON);
-        updatePlaceholderVisibility();
+        updatePlaceholderVisibility(true);
     }
 
     /** Clears the suggestions and related data, resetting the state of the section. */

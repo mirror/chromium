@@ -13,6 +13,7 @@ import org.chromium.chrome.browser.ntp.cards.ItemViewType;
 import org.chromium.chrome.browser.ntp.cards.NewTabPageViewHolder;
 import org.chromium.chrome.browser.ntp.cards.NodeVisitor;
 import org.chromium.chrome.browser.ntp.cards.OptionalLeaf;
+import org.chromium.chrome.browser.suggestions.SuggestionsMetrics.DurationTracker;
 import org.chromium.chrome.browser.widget.displaystyle.UiConfig;
 
 /**
@@ -21,6 +22,9 @@ import org.chromium.chrome.browser.widget.displaystyle.UiConfig;
 public class ContentSuggestionPlaceholder extends OptionalLeaf {
     /** Color used to fill highlighted empty UI elements of the placeholder. */
     private static final @ColorRes int HIGHLIGHT_COLOR = R.color.black_alpha_20;
+
+    private final DurationTracker mVisibilityDurationTracker =
+            SuggestionsMetrics.getPlaceholderVisibilityReporter();
 
     public void setVisible(boolean visible) {
         setVisibilityInternal(visible);
@@ -39,6 +43,19 @@ public class ContentSuggestionPlaceholder extends OptionalLeaf {
     @Override
     protected void visitOptionalItem(NodeVisitor visitor) {
         visitor.visitPlaceholderItem();
+    }
+
+    /**
+     * Updates visibility duration tracking of this placeholder.
+     * @param maybeTrack whether this event can trigger tracking how long the placeholder is visible
+     *                   for.
+     */
+    public void updateTracking(boolean maybeTrack) {
+        if (!isVisible()) {
+            mVisibilityDurationTracker.endTracking();
+        } else if (maybeTrack) {
+            mVisibilityDurationTracker.startTracking();
+        }
     }
 
     /**
