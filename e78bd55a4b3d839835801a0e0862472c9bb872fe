@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e8388a3_04d92d7c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-27T02:10:24Z",
+      "side": 1,
+      "message": "nit: mBrowserActionsPersistencePolicy",
+      "range": {
+        "startLine": 164,
+        "startChar": 53,
+        "endLine": 164,
+        "endChar": 85
+      },
+      "revId": "e78bd55a4b3d839835801a0e0862472c9bb872fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c5cafe3_1a54ab7d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-27T02:10:24Z",
+      "side": 1,
+      "message": "Does the selector need to equal null here to ensure the browser action tab model isn\u0027t still in use?",
+      "range": {
+        "startLine": 239,
+        "startChar": 12,
+        "endLine": 239,
+        "endChar": 63
+      },
+      "revId": "e78bd55a4b3d839835801a0e0862472c9bb872fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8dfc3d2_13f1edb9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1339,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-27T02:10:24Z",
+      "side": 1,
+      "message": "Are there any places where we treat fromBrowserActions different than fromRestore?",
+      "range": {
+        "startLine": 1339,
+        "startChar": 12,
+        "endLine": 1339,
+        "endChar": 57
+      },
+      "revId": "e78bd55a4b3d839835801a0e0862472c9bb872fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b848a0a5_562e5270",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-27T02:10:24Z",
+      "side": 1,
+      "message": "We don\u0027t have many bots running this SDK level. It\u0027d be good to split out the tests that rely on API 24+ into a separate test class. Perhaps the new test could live in the tab model merging test class?",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 23
+      },
+      "revId": "e78bd55a4b3d839835801a0e0862472c9bb872fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
