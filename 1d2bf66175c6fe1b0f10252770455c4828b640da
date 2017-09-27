@@ -343,6 +343,24 @@
     },
     {
       "key": {
+        "uuid": "20a7ba97_82d6a5c6",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-09-27T16:00:18Z",
+      "side": 1,
+      "message": "It makes reasoning about the code much harder. This is a feature only for articles for you.\ncompare the current code with:\n\nauto articles_it \u003d category_contents_.find(articles_category_);\nDCHECK(articles_it !\u003d category_contents_.end());\nDCHECK(articles_it_.first.status \u003d\u003d CategoryStatus::AVAILABLE);\nUpdateCategoryStatus((articles_it_.first, CategoryStatus::AVAILABLE_LOADING);\n\nand similarly for NotifyFetchForDisplayFailed().\n\nMore importantly, we can properly handle the case if there are no articles available to start with (either test and return in RefetchWhileDisplaying(), or restore the proper status).\nThat corner case is important to get right (as we\u0027ll might run on start-up), and it should be very easy to reason about that state. Juggling multiple sections in  potentially different states makes it unneccesarily complex.",
+      "parentUuid": "97aa966e_454a8685",
+      "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f045b0e6_177f1264",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 8
