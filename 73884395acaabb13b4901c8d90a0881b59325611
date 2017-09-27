@@ -88,6 +88,24 @@
       "revId": "73884395acaabb13b4901c8d90a0881b59325611",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96b736ed_53c2c4f3",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-09-27T18:02:30Z",
+      "side": 1,
+      "message": "About the idea to handle recursive at the ui::Layer and reset flag when adding to the layer tree. It seems we need to stop all animations when we remove from the layer tree? (currently we only stop BOUNDS animation? [1]), otherwise, if the animating layer is reparent to a non-deferred-paint layer, the deferred_paint_requests_ will be set to 0. But when animation finishes, the observer will decrease the counter (to -1) and cause DCHECK error.\n\n[1] https://cs.chromium.org/chromium/src/ui/compositor/layer.cc?l\u003d281\u0026rcl\u003df37c197117dac5e465250f159e1969da26f37ed4",
+      "parentUuid": "0b18c894_14abcbc8",
+      "revId": "73884395acaabb13b4901c8d90a0881b59325611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
