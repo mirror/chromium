@@ -16,6 +16,24 @@
       "revId": "4f45c7b4789b97a9c74590fc8bb110e42837d3e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b3be26f_4e394259",
+        "filename": "third_party/WebKit/Source/core/css/invalidation/InvalidationSet.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-09-27T05:14:57Z",
+      "side": 1,
+      "message": "That\u0027s from a RefPtr (or operator delete) convention.\nSince RefPtr supports const types as its pointee types, the deletion function of RefCounted needs to be a const method. The const here is propagated from that.",
+      "parentUuid": "5196b31b_0e512787",
+      "revId": "4f45c7b4789b97a9c74590fc8bb110e42837d3e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
