@@ -65,7 +65,7 @@ public class ChromeSigninUtilsTest {
 
     @Test
     @SmallTest
-    public void testIsSignedInOnFakeOS() {
+    public void testIsSignedInOnFakeOS() throws Exception {
         mSigninUtil.addFakeAccountToOs(FAKE_ACCOUNT_USERNAME, FAKE_ACCOUNT_PASSWORD);
         Assert.assertFalse("Should not be signed in on app.", mSigninController.isSignedIn());
         Assert.assertTrue("Should be signed in on OS with fake account.",
@@ -90,7 +90,7 @@ public class ChromeSigninUtilsTest {
 
     @Test
     @SmallTest
-    public void testIsSignedInOnFakeOSandApp() {
+    public void testIsSignedInOnFakeOSandApp() throws Exception {
         mSigninUtil.addAccountToApp(FAKE_ACCOUNT_USERNAME);
         mSigninUtil.addFakeAccountToOs(FAKE_ACCOUNT_USERNAME, FAKE_ACCOUNT_PASSWORD);
         Assert.assertTrue("Should be signed in on app.", mSigninController.isSignedIn());
@@ -119,7 +119,7 @@ public class ChromeSigninUtilsTest {
     @FlakyTest(message = "https://crbug.com/517849")
     @EnormousTest
     @Restriction(Restriction.RESTRICTION_TYPE_INTERNET)
-    public void testIsSignedInOnFakeOSandGoogleOS() {
+    public void testIsSignedInOnFakeOSandGoogleOS() throws Exception {
         mSigninUtil.addFakeAccountToOs(FAKE_ACCOUNT_USERNAME, FAKE_ACCOUNT_PASSWORD);
         mSigninUtil.addGoogleAccountToOs(GOOGLE_ACCOUNT_USERNAME, GOOGLE_ACCOUNT_PASSWORD,
                 GOOGLE_ACCOUNT_TYPE);
@@ -134,7 +134,7 @@ public class ChromeSigninUtilsTest {
     @FlakyTest(message = "https://crbug.com/517849")
     @EnormousTest
     @Restriction(Restriction.RESTRICTION_TYPE_INTERNET)
-    public void testIsSignedInOnAppAndFakeOSandGoogleOS() {
+    public void testIsSignedInOnAppAndFakeOSandGoogleOS() throws Exception {
         mSigninUtil.addAccountToApp(FAKE_ACCOUNT_USERNAME);
         mSigninUtil.addFakeAccountToOs(FAKE_ACCOUNT_USERNAME, FAKE_ACCOUNT_PASSWORD);
         mSigninUtil.addGoogleAccountToOs(GOOGLE_ACCOUNT_USERNAME, GOOGLE_ACCOUNT_PASSWORD,
