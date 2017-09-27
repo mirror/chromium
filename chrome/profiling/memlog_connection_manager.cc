@@ -10,6 +10,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "base/threading/thread.h"
+#include "chrome/common/profiling/memlog_client.h"
 #include "chrome/profiling/allocation_tracker.h"
 #include "chrome/profiling/json_exporter.h"
 #include "chrome/profiling/memlog_receiver_pipe.h"
@@ -32,9 +33,11 @@ struct MemlogConnectionManager::Connection {
   Connection(AllocationTracker::CompleteCallback complete_cb,
              BacktraceStorage* backtrace_storage,
              base::ProcessId pid,
+             mojom::MemlogClientPtr client,
              scoped_refptr<MemlogReceiverPipe> p)
       : thread(base::StringPrintf("Sender %lld thread",
                                   static_cast<long long>(pid))),
+        client(std::move(client)),
         pipe(p),
         tracker(std::move(complete_cb), backtrace_storage) {}
 
@@ -46,29 +49,38 @@ struct MemlogConnectionManager::Connection {
 
   base::Thread thread;
 
+  mojom::MemlogClientPtr client;
   scoped_refptr<MemlogReceiverPipe> pipe;
   scoped_refptr<MemlogStreamParser> parser;
+
+  // Danger: This lives on the |thread| member above. The connection manager
+  // lives on the I/O thread, so accesses to the variable must be synchronized.
   AllocationTracker tracker;
 };
 
 MemlogConnectionManager::MemlogConnectionManager() : weak_factory_(this) {}
 MemlogConnectionManager::~MemlogConnectionManager() = default;
 
-void MemlogConnectionManager::OnNewConnection(base::ScopedPlatformFile file,
-                                              base::ProcessId pid) {
+void MemlogConnectionManager::OnNewConnection(
+    base::ProcessId pid,
+    mojom::MemlogClientPtr client,
+    mojo::edk::ScopedPlatformHandle handle) {
   base::AutoLock lock(connections_lock_);
   DCHECK(connections_.find(pid) == connections_.end());
 
   scoped_refptr<MemlogReceiverPipe> new_pipe =
-      new MemlogReceiverPipe(std::move(file));
-  // Task to post to clean up the connection. Don't need to retain |this| since
-  // it will be called by objects owned by the MemlogConnectionManager.
-  AllocationTracker::CompleteCallback complete_cb = base::BindOnce(
-      &MemlogConnectionManager::OnConnectionCompleteThunk,
-      base::Unretained(this), base::MessageLoop::current()->task_runner(), pid);
+      new MemlogReceiverPipe(std::move(handle));
 
-  std::unique_ptr<Connection> connection = base::MakeUnique<Connection>(
-      std::move(complete_cb), &backtrace_storage_, pid, new_pipe);
+  // The allocation tracker will call this on a background thread, so thunk
+  // back to the current thread with weak pointers.
+  AllocationTracker::CompleteCallback complete_cb =
+      base::BindOnce(&MemlogConnectionManager::OnConnectionCompleteThunk,
+                     base::MessageLoop::current()->task_runner(),
+                     weak_factory_.GetWeakPtr(), pid);
+
+  std::unique_ptr<Connection> connection =
+      base::MakeUnique<Connection>(std::move(complete_cb), &backtrace_storage_,
+                                   pid, std::move(client), new_pipe);
   connection->thread.Start();
 
   connection->parser = new MemlogStreamParser(&connection->tracker);
@@ -88,17 +100,43 @@ void MemlogConnectionManager::OnConnectionComplete(base::ProcessId pid) {
   connections_.erase(found);
 }
 
-// Posts back to the given thread the connection complete message.
+// static
 void MemlogConnectionManager::OnConnectionCompleteThunk(
     scoped_refptr<base::SequencedTaskRunner> task_runner,
+    base::WeakPtr<MemlogConnectionManager> connection_manager,
     base::ProcessId pid) {
   task_runner->PostTask(
-      FROM_HERE, base::Bind(&MemlogConnectionManager::OnConnectionComplete,
-                            weak_factory_.GetWeakPtr(), pid));
+      FROM_HERE, base::BindOnce(&MemlogConnectionManager::OnConnectionComplete,
+                                connection_manager, pid));
 }
 
-void MemlogConnectionManager::DumpProcess(DumpProcessArgs args,
-                                          bool hop_to_connection_thread) {
+void MemlogConnectionManager::DumpProcess(DumpProcessArgs args) {
+  base::AutoLock lock(connections_lock_);
+
+  auto it = connections_.find(args.pid);
+  if (it == connections_.end()) {
+    DLOG(ERROR) << "No connections found for memory dump for pid:" << args.pid;
+    std::move(args.callback).Run(false);
+    return;
+  }
+
+  int barrier_id = next_barrier_id_++;
+
+  // Register for callback before requesting the dump so we don't race for the
+  // signal. The callback will be issued on the allocation tracker thread so
+  // need to thunk back to the I/O thread.
+  Connection* connection = it->second.get();
+  connection->tracker.SnapshotOnBarrier(
+      barrier_id, base::MessageLoop::current()->task_runner(),
+      base::BindOnce(&MemlogConnectionManager::DoDumpProcess,
+                     weak_factory_.GetWeakPtr(), std::move(args)));
+  connection->client->FlushPipe(barrier_id);
+}
+
+void MemlogConnectionManager::DoDumpProcess(
+    DumpProcessArgs args,
+    AllocationCountMap counts,
+    AllocationTracker::ContextMap context) {
   base::AutoLock lock(connections_lock_);
 
   // Lock all connections to prevent deallocations of atoms from
@@ -113,26 +151,15 @@ void MemlogConnectionManager::DumpProcess(DumpProcessArgs args,
 
   auto it = connections_.find(args.pid);
   if (it == connections_.end()) {
-    DLOG(ERROR) << "No connections found for memory dump for pid:" << args.pid;
+    DLOG(WARNING) << "Connection destroyed before dump could be taken.";
     std::move(args.callback).Run(false);
-    return;
-  }
-
-  Connection* connection = it->second.get();
-
-  if (hop_to_connection_thread) {
-    connection->thread.task_runner()->PostTask(
-        FROM_HERE,
-        base::BindOnce(&MemlogConnectionManager::HopToConnectionThread,
-                       weak_factory_.GetWeakPtr(), std::move(args),
-                       base::ThreadTaskRunnerHandle::Get()));
     return;
   }
 
   std::ostringstream oss;
   ExportParams params;
-  params.allocs = connection->tracker.GetCounts();
-  params.context_map = &connection->tracker.context();
+  params.allocs = std::move(counts);
+  params.context_map = std::move(context);
   params.maps = &args.maps;
   params.min_size_threshold = kMinSizeThreshold;
   params.min_count_threshold = kMinCountThreshold;
@@ -161,15 +188,6 @@ void MemlogConnectionManager::DumpProcess(DumpProcessArgs args,
   std::move(args.callback).Run(written_bytes == reply.size());
 }
 
-void MemlogConnectionManager::HopToConnectionThread(
-    base::WeakPtr<MemlogConnectionManager> manager,
-    DumpProcessArgs args,
-    scoped_refptr<base::SequencedTaskRunner> task_runner) {
-  task_runner->PostTask(
-      FROM_HERE, base::BindOnce(&MemlogConnectionManager::DumpProcess,
-                                std::move(manager), std::move(args), false));
-}
-
 void MemlogConnectionManager::DumpProcessForTracing(
     base::ProcessId pid,
     mojom::Memlog::DumpProcessForTracingCallback callback,
@@ -193,40 +211,41 @@ void MemlogConnectionManager::DumpProcessForTracing(
     return;
   }
 
-  Connection* connection = it->second.get();
-  std::ostringstream oss;
-  ExportParams params;
-  params.allocs = connection->tracker.GetCounts();
-  params.maps = &maps;
-  params.context_map = &connection->tracker.context();
-  params.min_size_threshold = kMinSizeThreshold;
-  params.min_count_threshold = kMinCountThreshold;
-  ExportMemoryMapsAndV2StackTraceToJSON(params, oss);
-  std::string reply = oss.str();
+  /*
+    Connection* connection = it->second.get();
+    std::ostringstream oss;
+    ExportParams params;
+    params.allocs = connection->tracker.GetCounts();
+    params.maps = &maps;
+    params.context_map = connection->tracker.context();
+    params.min_size_threshold = kMinSizeThreshold;
+    params.min_count_threshold = kMinCountThreshold;
+    ExportMemoryMapsAndV2StackTraceToJSON(params, oss);
+    std::string reply = oss.str();
 
-  mojo::ScopedSharedBufferHandle buffer =
-      mojo::SharedBufferHandle::Create(reply.size());
-  if (!buffer.is_valid()) {
-    DLOG(ERROR) << "Could not create Mojo shared buffer";
-    std::move(callback).Run(std::move(buffer), 0);
-    return;
-  }
+    mojo::ScopedSharedBufferHandle buffer =
+        mojo::SharedBufferHandle::Create(reply.size());
+    if (!buffer.is_valid()) {
+      DLOG(ERROR) << "Could not create Mojo shared buffer";
+      std::move(callback).Run(std::move(buffer), 0);
+      return;
+    }
 
-  mojo::ScopedSharedBufferMapping mapping = buffer->Map(reply.size());
-  if (!mapping) {
-    DLOG(ERROR) << "Could not map Mojo shared buffer";
-    std::move(callback).Run(mojo::ScopedSharedBufferHandle(), 0);
-    return;
-  }
+    mojo::ScopedSharedBufferMapping mapping = buffer->Map(reply.size());
+    if (!mapping) {
+      DLOG(ERROR) << "Could not map Mojo shared buffer";
+      std::move(callback).Run(mojo::ScopedSharedBufferHandle(), 0);
+      return;
+    }
 
-  memcpy(mapping.get(), reply.c_str(), reply.size());
+    memcpy(mapping.get(), reply.c_str(), reply.size());
 
-  std::move(callback).Run(std::move(buffer), reply.size());
+    std::move(callback).Run(std::move(buffer), reply.size());*/
 }
 
 MemlogConnectionManager::DumpProcessArgs::DumpProcessArgs() = default;
+MemlogConnectionManager::DumpProcessArgs::DumpProcessArgs(
+    DumpProcessArgs&&) noexcept = default;
 MemlogConnectionManager::DumpProcessArgs::~DumpProcessArgs() = default;
-MemlogConnectionManager::DumpProcessArgs::DumpProcessArgs(DumpProcessArgs&&) =
-    default;
 
 }  // namespace profiling
