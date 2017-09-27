@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b54388a_323bff9c",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_items_builder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-09-27T06:58:40Z",
+      "side": 1,
+      "message": "We probably want to start thinking about a better way to delegate node-specific logic like this, adding a new if statement for each one isn\u0027t ideal.\nFor now it\u0027s fine but please add a TODO(layout-dev) comment.",
+      "revId": "0786d5a06a4bca6b32f835ecf982c5968ad9d00f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffd62926_2373609a",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_items_builder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-09-27T06:58:40Z",
+      "side": 1,
+      "message": "I really like this approach! So simple!",
+      "range": {
+        "startLine": 501,
+        "startChar": 41,
+        "endLine": 501,
+        "endChar": 53
+      },
+      "revId": "0786d5a06a4bca6b32f835ecf982c5968ad9d00f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
