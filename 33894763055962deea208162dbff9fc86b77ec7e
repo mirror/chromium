@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "665e0863_1292756f",
+        "filename": "components/arc/common/auth.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-27T07:38:58Z",
+      "side": 1,
+      "message": "How about making this optional in case of success?",
+      "revId": "33894763055962deea208162dbff9fc86b77ec7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
