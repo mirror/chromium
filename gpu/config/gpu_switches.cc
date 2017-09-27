@@ -13,6 +13,13 @@ const char kAMDSwitchable[] = "amd-switchable";
 const char kDisableGpuDriverBugWorkarounds[] =
     "disable-gpu-driver-bug-workarounds";
 
+// Disables GPU hardware acceleration.  If software renderer is not in place,
+// then the GPU process won't launch.
+const char kDisableGpu[] = "disable-gpu";
+
+// Prevent the compositor from using its GPU implementation.
+const char kDisableGpuCompositing[] = "disable-gpu-compositing";
+
 // Disable GPU rasterization, i.e. rasterize on the CPU only.
 // Overrides the kEnableGpuRasterization and kForceGpuRasterization flags.
 const char kDisableGpuRasterization[] = "disable-gpu-rasterization";

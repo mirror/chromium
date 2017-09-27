@@ -10,6 +10,8 @@
 namespace switches {
 
 GPU_EXPORT extern const char kAMDSwitchable[];
+GPU_EXPORT extern const char kDisableGpu[];
+GPU_EXPORT extern const char kDisableGpuCompositing[];
 GPU_EXPORT extern const char kDisableGpuDriverBugWorkarounds[];
 GPU_EXPORT extern const char kDisableGpuRasterization[];
 GPU_EXPORT extern const char kEnableGpuRasterization[];
