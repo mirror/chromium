@@ -16,27 +16,13 @@
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/pref_names.h"
-
-@interface NSMenu (PrivateAPI)
-- (void)_lockMenuPosition;
-- (void)_unlockMenuPosition;
-@end
+#include "ui/base/cocoa/scoped_menu_bar_lock.h"
 
 namespace {
 
 // Visibility fractions for the menubar and toolbar.
 const CGFloat kHideFraction = 0.0;
 const CGFloat kShowFraction = 1.0;
-
-void LockMenu() {
-  if ([NSMenu instancesRespondToSelector:@selector(_lockMenuPosition)])
-    [[NSApp mainMenu] _lockMenuPosition];
-}
-
-void UnlockMenu() {
-  if ([NSMenu instancesRespondToSelector:@selector(_unlockMenuPosition)])
-    [[NSApp mainMenu] _unlockMenuPosition];
-}
 
 }  // namespace
 
@@ -74,8 +60,7 @@ void UnlockMenu() {
     menubarTracker_.reset([[FullscreenMenubarTracker alloc]
         initWithFullscreenToolbarController:self]);
     mouseTracker_.reset([[FullscreenToolbarMouseTracker alloc]
-        initWithFullscreenToolbarController:self
-                        animationController:animationController_.get()]);
+        initWithFullscreenToolbarController:self]);
   }
 }
 
@@ -157,7 +142,6 @@ void UnlockMenu() {
 
   FullscreenMenubarState menubarState = [menubarTracker_ state];
   return menubarState == FullscreenMenubarState::SHOWN ||
-         [mouseTracker_ mouseInsideTrackingArea] ||
          [visibilityLockController_ isToolbarVisibilityLocked];
 }
 
@@ -184,16 +168,6 @@ void UnlockMenu() {
 }
 
 - (void)updateToolbarLayout {
-  if ([mouseTracker_ mouseInsideTrackingArea]) {
-    if (!menubarLocked_)
-      LockMenu();
-    menubarLocked_ = YES;
-  } else {
-    if (menubarLocked_)
-      UnlockMenu();
-    menubarLocked_ = NO;
-  }
-
   [browserController_ layoutSubviews];
   animationController_->ToolbarDidUpdate();
   [mouseTracker_ updateTrackingArea];
@@ -209,6 +183,14 @@ void UnlockMenu() {
 
 - (FullscreenToolbarVisibilityLockController*)visibilityLockController {
   return visibilityLockController_.get();
+}
+
+- (void)mouseEntered:(NSEvent*)event {
+  menubarLock_.reset(new ui::ScopedMenuBarLock());
+}
+
+- (void)mouseExited:(NSEvent*)event {
+  menubarLock_.reset();
 }
 
 @end
