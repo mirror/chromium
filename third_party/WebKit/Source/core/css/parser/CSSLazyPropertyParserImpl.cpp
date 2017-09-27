@@ -25,7 +25,7 @@ StylePropertySet* CSSLazyPropertyParserImpl::ParseProperties() {
       CSSParserImpl::ParseDeclarationListForLazyStyle(tokens_,
                                                       lazy_state_->Context());
   if (property_set->FindPropertyIndex(CSSPropertyContent) != -1 &&
-      lazy_state_->HasBeforeOrAfter() && lazy_state_->HasRuleSet()) {
+      HasBeforeOrAfter() && lazy_state_->HasRuleSet()) {
     lazy_state_->GetRuleSet().UpdateInvalidationSetsForContentAttribute(
         property_set);
     lazy_state_->GetStyleEngine().MarkGlobalRuleSetDirty();
