@@ -252,6 +252,9 @@ const char kPlayStorePackage[] = "com.android.vending";
 const char kPlayStoreActivity[] = "com.android.vending.AssetBrowserActivity";
 const char kSettingsAppId[] = "mconboelelhjpkbdhhiijkgcimoangdj";
 const char kInitialStartParam[] = "S.org.chromium.arc.start_type=initialStart";
+const char kSettingsAppPackage[] = "com.android.settings";
+const char kSettingsAppDomainUrlActivity[] =
+    "com.android.settings.Settings$ManageDomainUrlsActivity";
 
 bool ShouldShowInLauncher(const std::string& app_id) {
   for (auto* const id : kAppIdsHiddenInLauncher) {
@@ -280,8 +283,7 @@ bool LaunchPlayStoreWithUrl(const std::string& url) {
 bool LaunchApp(content::BrowserContext* context,
                const std::string& app_id,
                int event_flags) {
-  return LaunchAppWithIntent(context, app_id,
-                             base::nullopt /* launch_intent */,
+  return LaunchAppWithIntent(context, app_id, base::nullopt /* launch_intent */,
                              event_flags);
 }
 
@@ -362,6 +364,15 @@ bool LaunchAppWithIntent(content::BrowserContext* context,
 
   return (new AppLauncher(context, app_id, launch_intent, event_flags))
       ->LaunchAndRelease();
+}
+
+bool LaunchSettingsAppActivity(content::BrowserContext* context,
+                               const std::string& activity,
+                               int event_flags) {
+  std::string launch_intent = GetLaunchIntent(kSettingsAppPackage, activity,
+                                              std::vector<std::string>());
+  return LaunchAppWithIntent(context, kSettingsAppId, launch_intent,
+                             event_flags);
 }
 
 void SetTaskActive(int task_id) {

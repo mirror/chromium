@@ -49,6 +49,7 @@ class AndroidAppsHandler : public ::settings::SettingsPageUIHandler,
   void HandleRequestAndroidAppsInfo(const base::ListValue* args);
   void SendAndroidAppsInfo();
   void ShowAndroidAppsSettings(const base::ListValue* args);
+  void ShowAndroidManageAppLinks(const base::ListValue* args);
 
   ScopedObserver<ArcAppListPrefs, ArcAppListPrefs::Observer>
       arc_prefs_observer_;

@@ -33,6 +33,8 @@ extern const char kPlayStorePackage[];
 extern const char kPlayStoreActivity[];
 extern const char kSettingsAppId[];
 extern const char kInitialStartParam[];
+extern const char kSettingsAppPackage[];
+extern const char kSettingsAppDomainUrlActivity[];
 
 // Represents unparsed intent.
 class Intent {
@@ -99,6 +101,11 @@ bool LaunchAppWithIntent(content::BrowserContext* context,
                          const std::string& app_id,
                          const base::Optional<std::string>& launch_intent,
                          int event_flags);
+
+// Launcher a specific activity within Settings app on ARC.
+bool LaunchSettingsAppActivity(content::BrowserContext* context,
+                               const std::string& activity,
+                               int event_flags);
 
 // Sets task active.
 void SetTaskActive(int task_id);
