@@ -110,7 +110,11 @@ class SpellCheckRequester final
   void EnqueueRequest(SpellCheckRequest*);
   void DidCheckSucceed(int sequence, const Vector<TextCheckingResult>&);
   void DidCheckCancel(int sequence);
-  void DidCheck(int sequence, const Vector<TextCheckingResult>&);
+
+  enum class CompletionState { kCanceled, kFinished };
+  void DidCheck(int sequence,
+                CompletionState,
+                const Vector<TextCheckingResult>&);
 
   void ClearProcessingRequest();
 

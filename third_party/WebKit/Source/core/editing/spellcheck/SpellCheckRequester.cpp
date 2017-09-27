@@ -247,6 +247,7 @@ void SpellCheckRequester::EnqueueRequest(SpellCheckRequest* request) {
 }
 
 void SpellCheckRequester::DidCheck(int sequence,
+                                   CompletionState completion_state,
                                    const Vector<TextCheckingResult>& results) {
   DCHECK(processing_request_);
   DCHECK_EQ(processing_request_->Data().Sequence(), sequence);
@@ -255,7 +256,7 @@ void SpellCheckRequester::DidCheck(int sequence,
     return;
   }
 
-  if (results.size())
+  if (completion_state == CompletionState::kFinished)
     GetFrame().GetSpellChecker().MarkAndReplaceFor(processing_request_,
                                                    results);
 
@@ -270,25 +271,12 @@ void SpellCheckRequester::DidCheck(int sequence,
 void SpellCheckRequester::DidCheckSucceed(
     int sequence,
     const Vector<TextCheckingResult>& results) {
-  // TODO(editing-dev): The use of updateStyleAndLayoutIgnorePendingStylesheets
-  // needs to be audited.  See http://crbug.com/590369 for more details.
-  GetFrame().GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
-
-  TextCheckingRequestData request_data = processing_request_->Data();
-  if (request_data.Sequence() == sequence) {
-    DocumentMarker::MarkerTypes markers = DocumentMarker::MisspellingMarkers();
-    if (processing_request_->IsValid()) {
-      Range* checking_range = processing_request_->CheckingRange();
-      GetFrame().GetDocument()->Markers().RemoveMarkersInRange(
-          EphemeralRange(checking_range), markers);
-    }
-  }
-  DidCheck(sequence, results);
+  DidCheck(sequence, CompletionState::kFinished, results);
 }
 
 void SpellCheckRequester::DidCheckCancel(int sequence) {
   Vector<TextCheckingResult> results;
-  DidCheck(sequence, results);
+  DidCheck(sequence, CompletionState::kCanceled, results);
 }
 
 DEFINE_TRACE(SpellCheckRequester) {
