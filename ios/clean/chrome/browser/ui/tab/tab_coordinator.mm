@@ -18,6 +18,7 @@
 #import "ios/clean/chrome/browser/ui/commands/tab_commands.h"
 #import "ios/clean/chrome/browser/ui/find_in_page/find_in_page_coordinator.h"
 #import "ios/clean/chrome/browser/ui/fullscreen/fullscreen_controller.h"
+#import "ios/clean/chrome/browser/ui/fullscreen/fullscreen_ui_updater.h"
 #import "ios/clean/chrome/browser/ui/ntp/ntp_coordinator.h"
 #import "ios/clean/chrome/browser/ui/settings/settings_coordinator.h"
 #import "ios/clean/chrome/browser/ui/tab/tab_container_view_controller.h"
@@ -35,7 +36,10 @@
 
 @interface TabCoordinator ()<CRWWebStateObserver,
                              TabCommands,
-                             WebStateListObserving>
+                             WebStateListObserving> {
+  std::unique_ptr<FullscreenUIUpdater> _fullscreenUIUpdater;
+}
+
 @property(nonatomic, strong) ZoomTransitionController* transitionController;
 @property(nonatomic, strong) TabContainerViewController* viewController;
 @property(nonatomic, weak) NTPCoordinator* ntpCoordinator;
@@ -93,6 +97,13 @@
   [self.dispatcher startDispatchingToTarget:self
                                 forSelector:@selector(loadURL:)];
 
+  // Instantiate the FullscreenController and start forwarding events.
+  FullscreenController::CreateForBrowser(self.browser);
+  _fullscreenUIUpdater =
+      base::MakeUnique<FullscreenUIUpdater>(self.viewController);
+  FullscreenController::FromBrowser(self.browser)
+      ->AddObserver(_fullscreenUIUpdater.get());
+
   [self.browser->broadcaster()
       broadcastValue:@"toolbarHeight"
             ofObject:self.viewController
@@ -130,14 +141,14 @@
         self.ntpCoordinator.viewController;
   }
 
-  // Instantiate the FullscreenController.
-  FullscreenController::CreateForBrowser(self.browser);
-
   [super start];
 }
 
 - (void)stop {
   [super stop];
+  FullscreenController::FromBrowser(self.browser)
+      ->RemoveObserver(_fullscreenUIUpdater.get());
+  _fullscreenUIUpdater = nullptr;
   for (BrowserCoordinator* child in self.children)
     [self removeChildCoordinator:child];
   _scopedWebStateListObserver.reset();

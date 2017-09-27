@@ -12,6 +12,7 @@
 #import "ios/clean/chrome/browser/ui/commands/tab_grid_commands.h"
 #import "ios/clean/chrome/browser/ui/commands/tab_strip_commands.h"
 #import "ios/clean/chrome/browser/ui/commands/tools_menu_commands.h"
+#import "ios/clean/chrome/browser/ui/fullscreen/fullscreen_scroll_end_animator.h"
 #import "ios/clean/chrome/browser/ui/toolbar/toolbar_button.h"
 #import "ios/clean/chrome/browser/ui/toolbar/toolbar_button_factory.h"
 #import "ios/clean/chrome/browser/ui/toolbar/toolbar_component_options.h"
@@ -345,6 +346,24 @@
       }
     }
   }
+}
+
+#pragma mark - FullscreenUIElement
+
+- (void)updateForFullscreenProgress:(CGFloat)progress {
+  self.stackView.alpha = progress;
+}
+
+- (void)updateForFullscreenEnabled:(BOOL)enabled {
+  self.stackView.alpha = 1.0;
+}
+
+- (void)finishFullscreenScrollWithAnimator:
+    (FullscreenScrollEndAnimator*)animator {
+  CGFloat finalProgress = animator.finalProgress;
+  [animator addAnimations:^{
+    self.stackView.alpha = finalProgress;
+  }];
 }
 
 #pragma mark - ToolbarWebStateConsumer

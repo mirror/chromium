@@ -6,6 +6,7 @@
 #import "ios/clean/chrome/browser/ui/tab/tab_container_view_controller+internal.h"
 
 #import "base/logging.h"
+#import "ios/clean/chrome/browser/ui/fullscreen/fullscreen_scroll_end_animator.h"
 #import "ios/clean/chrome/browser/ui/transitions/animators/swap_from_above_animator.h"
 #import "ios/clean/chrome/browser/ui/transitions/containment_transition_context.h"
 #import "ios/clean/chrome/browser/ui/transitions/containment_transitioning_delegate.h"
@@ -29,6 +30,9 @@ const CGFloat kToolbarHeight = 56.0f;
 @property(nonatomic, strong) UIView* findBarView;
 @property(nonatomic, strong) UIView* toolbarView;
 @property(nonatomic, strong) UIView* contentView;
+
+// Returns the transform that translates the toolbar for fullscreen events.
+- (CGAffineTransform)toolbarTransformForFulscreenProgress:(CGFloat)progress;
 
 @end
 
@@ -122,6 +126,25 @@ const CGFloat kToolbarHeight = 56.0f;
 
 - (CGFloat)toolbarHeight {
   return kToolbarHeight;
+}
+
+#pragma mark - FullscreenUIElement
+
+- (void)updateForFullscreenProgress:(CGFloat)progress {
+  self.toolbarView.transform =
+      [self toolbarTransformForFulscreenProgress:progress];
+}
+
+- (void)updateForFullscreenEnabled:(BOOL)enabled {
+  self.toolbarView.transform = CGAffineTransformIdentity;
+}
+
+- (void)finishFullscreenScrollWithAnimator:
+    (FullscreenScrollEndAnimator*)animator {
+  CGFloat finalProgress = animator.finalProgress;
+  [animator addAnimations:^{
+    [self updateForFullscreenProgress:finalProgress];
+  }];
 }
 
 #pragma mark - MenuPresentationDelegate
@@ -280,6 +303,11 @@ animationControllerForAddingChildController:(UIViewController*)addedChild
         constraintEqualToAnchor:self.containerView.bottomAnchor],
     [self.toolbarView.heightAnchor constraintEqualToConstant:kToolbarHeight],
   ];
+}
+
+- (CGAffineTransform)toolbarTransformForFulscreenProgress:(CGFloat)progress {
+  CGFloat dy = (progress - 1.0) * self.toolbarHeight;
+  return CGAffineTransformMakeTranslation(0.0, dy);
 }
 
 @end
