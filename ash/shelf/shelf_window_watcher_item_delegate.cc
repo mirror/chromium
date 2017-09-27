@@ -6,6 +6,7 @@
 
 #include <utility>
 
+#include "ash/public/cpp/config.h"
 #include "ash/public/cpp/shelf_model.h"
 #include "ash/public/cpp/window_properties.h"
 #include "ash/shelf/shelf_context_menu_model.h"
@@ -14,7 +15,6 @@
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
 #include "components/strings/grit/components_strings.h"
-#include "ui/aura/client/aura_constants.h"
 #include "ui/aura/window.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/events/event_constants.h"
@@ -50,11 +50,16 @@ void ShelfWindowWatcherItemDelegate::ItemSelected(
     int64_t display_id,
     ShelfLaunchSource source,
     ItemSelectedCallback callback) {
+  const bool is_panel = GetShelfItemType(shelf_id()) == TYPE_APP_PANEL;
   // Move panels attached on another display to the current display.
-  if (GetShelfItemType(shelf_id()) == TYPE_APP_PANEL &&
-      window_->GetProperty(kPanelAttachedKey) &&
+  if (is_panel && window_->GetProperty(kPanelAttachedKey) &&
       wm::MoveWindowToDisplay(window_, display_id)) {
-    wm::ActivateWindow(window_);
+    // Workaround a defect activating minimized panel windows in Mus.
+    if (wm::GetWindowState(window_)->IsMinimized() &&
+        ash::Shell::GetAshConfig() == ash::Config::MUS) {
+      wm::GetWindowState(window_)->Unminimize();
+    }
+    wm::GetWindowState(window_)->Activate();
     std::move(callback).Run(SHELF_ACTION_WINDOW_ACTIVATED, base::nullopt);
     return;
   }
@@ -65,11 +70,17 @@ void ShelfWindowWatcherItemDelegate::ItemSelected(
       std::move(callback).Run(SHELF_ACTION_NONE, base::nullopt);
       return;
     }
-    window_->SetProperty(aura::client::kShowStateKey, ui::SHOW_STATE_MINIMIZED);
+    wm::GetWindowState(window_)->Minimize();
     std::move(callback).Run(SHELF_ACTION_WINDOW_MINIMIZED, base::nullopt);
     return;
   }
-  wm::ActivateWindow(window_);
+
+  // Workaround a defect activating minimized panel windows in Mus.
+  if (is_panel && wm::GetWindowState(window_)->IsMinimized() &&
+      ash::Shell::GetAshConfig() == ash::Config::MUS) {
+    wm::GetWindowState(window_)->Unminimize();
+  }
+  wm::GetWindowState(window_)->Activate();
   std::move(callback).Run(SHELF_ACTION_WINDOW_ACTIVATED, base::nullopt);
 }
 
