@@ -1,0 +1,129 @@
+<h1>Converting to Non-Persistent Background Scripts</h1>
+
+<p>
+Extension background scripts should have the persistent field set to false by default.
+Background scripts act as a listener and handler for events between the Chrome browser
+and your extension.
+Only under rare functionality circumstances should an extension have a persistent background,
+as they consume system resources and can cause a strain on lower-powered devices.
+<p>
+
+<p>
+Use the instructions below to convert a persistent background script to non-persistent.
+
+<h2 id="persistence">Update Persistence</h2>
+<p>
+Add  or update the "persistent" field to false, as shown below.
+  <pre data-filename="manifest.json">
+  {
+    "name": "My extension",
+    ...
+    <b>"background": {
+      "scripts": ["background.js"],
+      "persistent": false
+    }</b>,
+    ...
+  }</pre>
+
+  You will do the same thing to a background page that relies on HTML:
+  <pre data-filename="manifest.json">
+  {
+    "name": "My extension",
+    ...
+    <b>"background": {
+      "page": "background.html",
+      "persistent": false
+    }</b>,
+    ...
+  }</pre>
+</p>
+
+<h2 id="listeners">Scope Listeners</h2>
+<p>
+Listeners must be at the top level scope in order to activate the background page.
+You may need to restructure listening events to a synchronous pattern.
+Logging your listeners, as below, will not allow them to be envoked.
+    <pre data-filename="background.js">
+      chrome.storage.local.get('runtimeEvents', function (events) {
+        for (let event of events)
+          chrome.runtime[event].addListener(listener);
+      });
+    </pre>
+    Instead you will need to keeo listeners available:
+    <pre data-filename="background.js">
+      chrome.runtime.onStartup.addListener(function(){
+        // run startup function
+      })
+    </pre>
+</p>
+
+<h2 id="storage">Global Storage</h2>
+<p>
+Use the <a href="/storage">Storage API</a> to set and return global variables and states.
+  Use <code>local.set</code> to declare a global variable on the local machine:
+  <pre data-filename="background.js">
+    chrome.storage.local.set({ 'variable': variableInformation });
+  </pre>
+
+  And <code>local.get</code> to grab the value of that variable.
+  <pre data-filename="background.js">
+    chrome.storage.local.get(['variable'], function(variable){
+        let variableAwesome = variable.variableInformation
+        // do something with variableAwesome
+    });
+  </pre>
+</p>
+
+<h2 id="timers">Timers and Alarms</h2>
+<p>
+If your extension uses <code>window.setTimeout()</code> or
+  <code>window.setInterval()</code>, such as below:
+    <pre data-filename="background.js">
+      window.setInterval(function() {
+          alert("Hello, world!");
+        }, 3000);
+    </pre>
+
+  You can switch to using the <a href="alarms">alarms API</a> instead:
+    <pre data-filename="background.js">
+      chrome.alarms.create({delayInMinutes: 3.0})
+    </pre>
+    Then add a listener:
+    <pre data-filename="background.js">
+      chrome.alarms.onAlarm.addListener(function() {
+        alert("Hello, world!")
+      });
+    </pre>
+  DOM-based timers are not honored in non persistent background scripts.
+</p>
+
+<h2 id="backgroundFunctions">Background Functions</h2>
+<p>
+If you need to call a function, like the one below,
+from a background script:
+  <pre data-filename="background.js">
+    function backgroundFunction() {
+      alert("Background, reporting for duty!")
+    }
+  </pre>
+  Extensions that rely on <code>$(ref:extension.getBackgroundPage)</a></code>:
+  <pre data-filename="popup.js">
+    document.getElementById('target').addEventListener('click', function(){
+      chrome.extension.getBackgroundPage().backgroundFunction();
+    });
+  </pre>
+  Should switch to   <code>$(ref:runtime.getBackgroundPage)</code> instead:
+  <pre data-filename="popup.js">
+    document.getElementById('target').addEventListener('click', function(){
+      chrome.runtime.getBackgroundPage(function(backgroundPage){
+        backgroundPage.backgroundFunction()
+      })
+    });
+  </pre>
+  The newer method will start the non persistent page before returning it.
+</p>
+<h2 id="asynchronicity">Asynchronicity</h2>
+<p>
+Asynchronous HTML5 APIs will not complete if the non persistent background script shuts down,
+use equivalent <a href=/api_index>extension APIs</a>.
+</p>
