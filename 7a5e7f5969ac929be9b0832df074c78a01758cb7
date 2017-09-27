@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0709496_d63922d3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-27T18:16:37Z",
+      "side": 1,
+      "message": "nit: make this a static method of your anonymous subclass of AsyncTask (i.e. closer to where its used)",
+      "revId": "7a5e7f5969ac929be9b0832df074c78a01758cb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
