@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "5ea5badc_926484a5",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-27T17:58:26Z",
+      "side": 1,
+      "message": "Can we just apply the \u0027hr\u0027 class to the button below?",
+      "revId": "7a9560706ba3a60433d4fa6ba58d7640c1785547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c6df2b2_7f8cbd3b",
+        "filename": "chrome/browser/resources/settings/appearance_page/appearance_page.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-27T17:58:26Z",
+      "side": 1,
+      "message": "Can you comment why we need to this for all paper buttons in this page, or maybe make this more specific?",
+      "revId": "7a9560706ba3a60433d4fa6ba58d7640c1785547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a765c224_b812a78f",
+        "filename": "chrome/browser/resources/settings/appearance_page/appearance_page.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-27T17:58:26Z",
+      "side": 1,
+      "message": "It seems odd that we need to further customize .separator here.",
+      "revId": "7a9560706ba3a60433d4fa6ba58d7640c1785547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ce8ed33_19cc4b83",
         "filename": "chrome/browser/resources/settings/appearance_page/appearance_page.html",
         "patchSetId": 4
@@ -13,6 +64,40 @@
       "writtenOn": "2017-09-25T20:55:58Z",
       "side": 1,
       "message": "minch@ this is where the policy indicator for CL\nhttps://chromium-review.googlesource.com/c/chromium/src/+/682574\nWould be added in this new code.",
+      "revId": "7a9560706ba3a60433d4fa6ba58d7640c1785547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "398038c0_34347d38",
+        "filename": "chrome/browser/resources/settings/appearance_page/appearance_page.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-27T17:58:26Z",
+      "side": 1,
+      "message": "Again, apply this to the \u0027button\u0027 somehow?",
+      "revId": "7a9560706ba3a60433d4fa6ba58d7640c1785547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07f45422_8f7ef5c1",
+        "filename": "chrome/browser/resources/settings/settings_shared_css.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-27T17:58:26Z",
+      "side": 1,
+      "message": "Elim or restore .two-line?",
       "revId": "7a9560706ba3a60433d4fa6ba58d7640c1785547",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
