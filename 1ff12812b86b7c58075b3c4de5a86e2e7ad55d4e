@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba3ee6ba_baf2be84",
+        "filename": "components/sync/protocol/autofill_specifics.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2017-09-27T21:59:22Z",
+      "side": 1,
+      "message": "Could you also point to where those parts of the address are more specifically defined and by which bits? I file path is probably enough.",
+      "range": {
+        "startLine": 55,
+        "startChar": 5,
+        "endLine": 56,
+        "endChar": 26
+      },
+      "revId": "1ff12812b86b7c58075b3c4de5a86e2e7ad55d4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
