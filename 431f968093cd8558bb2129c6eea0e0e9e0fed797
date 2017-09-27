@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7793bdca_4f873ba9",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/signin/OAuth2TokenServiceIntegrationTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-27T15:56:55Z",
+      "side": 1,
+      "message": "Can you make these lambdas?",
+      "range": {
+        "startLine": 368,
+        "startChar": 40,
+        "endLine": 370,
+        "endChar": 29
+      },
+      "revId": "431f968093cd8558bb2129c6eea0e0e9e0fed797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2acab825_1306cd8f",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-27T15:56:55Z",
+      "side": 1,
+      "message": "Can you use a method reference here?",
+      "range": {
+        "startLine": 115,
+        "startChar": 34,
+        "endLine": 115,
+        "endChar": 56
+      },
+      "revId": "431f968093cd8558bb2129c6eea0e0e9e0fed797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9114ccb_4e7e11da",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-27T15:56:55Z",
+      "side": 1,
+      "message": "Can you add a comment about when and from where this can be called? From any thread, but in production only the UI thread, right?",
+      "range": {
+        "startLine": 128,
+        "startChar": 4,
+        "endLine": 128,
+        "endChar": 14
+      },
+      "revId": "431f968093cd8558bb2129c6eea0e0e9e0fed797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50048840_24680828",
+        "filename": "components/signin/core/browser/android/javatests/src/org/chromium/components/signin/test/util/FakeAccountManagerDelegate.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-27T15:56:55Z",
+      "side": 1,
+      "message": "I would try to avoid throwing this exception, as that means you have to handle it in all call sites, which then in turn throw an exception, and so on, and you end up with the \"everything might blow up at any time\" semantics of C++ exceptions combined with the syntactic overhead of declaring everything as \"throws Exception\".\n\nIn this particular case, an InterruptedException is only going to be thrown if someone calls Thread.interrupt on the current thread, and nothing in Chrome code ever does that, so you could just do what e.g. ThreadUtils.runOnUiThreadBlocking() does, and catch the exception and throw a RuntimeException with it.",
+      "range": {
+        "startLine": 213,
+        "startChar": 70,
+        "endLine": 213,
+        "endChar": 97
+      },
+      "revId": "431f968093cd8558bb2129c6eea0e0e9e0fed797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ca3a73e_0593f707",
+        "filename": "components/signin/core/browser/android/javatests/src/org/chromium/components/signin/test/util/FakeAccountManagerDelegate.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-27T15:56:55Z",
+      "side": 1,
+      "message": "Using a future here feels like overkill, given that we don\u0027t actually care about the value. I think the simplest thing would be just to use a plain Object lock with wait() and notifyAll() (which is what SimpleFuture uses internally). There are also things like Semaphore, which allow you to use a slightly simpler interface without the synchronized() stuff (which always confuses me).",
+      "range": {
+        "startLine": 216,
+        "startChar": 8,
+        "endLine": 216,
+        "endChar": 26
+      },
+      "revId": "431f968093cd8558bb2129c6eea0e0e9e0fed797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23ab6dd2_b7194bab",
+        "filename": "components/signin/core/browser/android/javatests/src/org/chromium/components/signin/test/util/FakeAccountManagerDelegate.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-27T15:56:55Z",
+      "side": 1,
+      "message": "Hm, if this returns false, we\u0027re never going to call the callback, which might not be the best failure behavior. Should we instead throw an exception or something?",
+      "range": {
+        "startLine": 218,
+        "startChar": 16,
+        "endLine": 218,
+        "endChar": 93
+      },
+      "revId": "431f968093cd8558bb2129c6eea0e0e9e0fed797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
