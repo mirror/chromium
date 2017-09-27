@@ -80,9 +80,9 @@ class PropertyTreePrinter {
   }
 
   void CollectPropertyNodes(const LayoutObject& object) {
+    auto* rare_paint_data = object.FirstFragment().GetRarePaintData();
     if (const ObjectPaintProperties* properties =
-            object.FirstFragment() ? object.FirstFragment()->PaintProperties()
-                                   : nullptr)
+            rare_paint_data ? rare_paint_data->PaintProperties() : nullptr)
       Traits::AddObjectPaintProperties(object, *properties, *this);
     for (LayoutObject* child = object.SlowFirstChild(); child;
          child = child->NextSibling())
@@ -373,9 +373,9 @@ class PaintPropertyTreeGraphBuilder {
   }
 
   void WriteObjectPaintPropertyNodes(const LayoutObject& object) {
+    auto* rare_paint_data = object.FirstFragment().GetRarePaintData();
     const ObjectPaintProperties* properties =
-        object.FirstFragment() ? object.FirstFragment()->PaintProperties()
-                               : nullptr;
+        rare_paint_data ? rare_paint_data->PaintProperties() : nullptr;
     if (!properties)
       return;
     const TransformPaintPropertyNode* paint_offset =

@@ -49,9 +49,9 @@ void SVGMaskPainter::FinishEffect(const LayoutObject& object,
                                          1, &visual_rect, mask_layer_filter);
     Optional<ScopedPaintChunkProperties> scoped_paint_chunk_properties;
     if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
-      DCHECK(object.FirstFragment());
+      DCHECK(object.FirstFragment().GetRarePaintData());
       const auto* object_paint_properties =
-          object.FirstFragment()->PaintProperties();
+          object.FirstFragment().GetRarePaintData()->PaintProperties();
       DCHECK(object_paint_properties && object_paint_properties->Mask());
       PaintChunkProperties properties(
           context.GetPaintController().CurrentPaintChunkProperties());
