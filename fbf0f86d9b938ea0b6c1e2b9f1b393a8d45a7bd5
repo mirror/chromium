@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "aaad30ec_68ff79e1",
+        "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1515,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-27T17:19:33Z",
+      "side": 1,
+      "message": "Ah got it. Tagged all the uses of base::AdaptCallbackForRepeating with that bug.",
+      "parentUuid": "3e4a39d1_790e3c03",
+      "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab9fec90_00b31245",
         "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.cc",
         "patchSetId": 3
