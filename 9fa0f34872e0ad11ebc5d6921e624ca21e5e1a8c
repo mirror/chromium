@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93a4b0c7_27138530",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-27T23:25:14Z",
+      "side": 1,
+      "message": "I tried adding const to AutcompleteProviderClient::GetPrefs() but the ios implementation relies on ChromeBrowserState::GetPrefs() which is not const.",
+      "range": {
+        "startLine": 521,
+        "startChar": 10,
+        "endLine": 521,
+        "endChar": 49
+      },
+      "revId": "9fa0f34872e0ad11ebc5d6921e624ca21e5e1a8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
