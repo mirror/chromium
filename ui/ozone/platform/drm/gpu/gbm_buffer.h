@@ -104,6 +104,7 @@ class GbmBuffer : public ScanoutBuffer {
   DISALLOW_COPY_AND_ASSIGN(GbmBuffer);
 };
 
+// TODO(jisorce): Inherit from gfx::NativePixmapDmaBuf
 class GbmPixmap : public gfx::NativePixmap {
  public:
   GbmPixmap(GbmSurfaceFactory* surface_manager,
@@ -130,8 +131,6 @@ class GbmPixmap : public gfx::NativePixmap {
 
  private:
   ~GbmPixmap() override;
-  scoped_refptr<ScanoutBuffer> ProcessBuffer(const gfx::Size& size,
-                                             uint32_t format);
 
   GbmSurfaceFactory* surface_manager_;
   scoped_refptr<GbmBuffer> buffer_;

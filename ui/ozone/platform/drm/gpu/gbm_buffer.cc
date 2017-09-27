@@ -301,6 +301,7 @@ GbmPixmap::GbmPixmap(GbmSurfaceFactory* surface_manager,
                      const scoped_refptr<GbmBuffer>& buffer)
     : surface_manager_(surface_manager), buffer_(buffer) {}
 
+// TODO(jisorce): Factorize with gfx::NativePixmapHandle::CloneHandleForIPC
 gfx::NativePixmapHandle GbmPixmap::ExportHandle() {
   gfx::NativePixmapHandle handle;
   gfx::BufferFormat format =
