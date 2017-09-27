@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ef7de4f_1e3254c0",
+        "filename": "media/base/video_decoder_config.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-09-27T20:42:32Z",
+      "side": 1,
+      "message": "nit) make this \"rotation:\"",
+      "range": {
+        "startLine": 167,
+        "startChar": 66,
+        "endLine": 167,
+        "endChar": 74
+      },
+      "revId": "ded9ea8e93cc37d9e897704155920cf099dd3390",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa76e1d1_29432dd6",
+        "filename": "media/formats/mp4/mp4_stream_parser.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-09-27T20:42:32Z",
+      "side": 1,
+      "message": "+wolenetz@ I hadn\u0027t realized MSE demuxers hard code to 0. I assume thats not part of MSE spec and we should probably parse this out of the init segment? \n\nNot blocking this review.",
+      "range": {
+        "startLine": 456,
+        "startChar": 30,
+        "endLine": 456,
+        "endChar": 46
+      },
+      "revId": "ded9ea8e93cc37d9e897704155920cf099dd3390",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
