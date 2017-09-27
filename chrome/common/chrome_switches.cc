@@ -211,6 +211,9 @@ const char kDisableDeviceDiscoveryNotifications[] =
 // Disables Domain Reliability Monitoring.
 const char kDisableDomainReliability[]      = "disable-domain-reliability";
 
+// Disables expiring histograms for testing.
+const char kDisableExpiringHistograms[]     = "disable-expiring-histograms";
+
 // Disable extensions.
 const char kDisableExtensions[]             = "disable-extensions";
 
