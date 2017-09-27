@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9b3054f1_fa8e720a",
+        "filename": "chrome/browser/net/predictor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-27T14:44:52Z",
+      "side": 1,
+      "message": "Ah, i see. How about renaming it to ShouldDisableOtherPreconnects()?\nIt will be clearer in the LoadingPredictorConfig\u0027s context that the \"other\" refers to non-LoadingPredictor.",
+      "parentUuid": "572f084b_a3cdb5a3",
+      "revId": "60dfba4148926e5b510c7e64176399b5842ab96e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27fea674_bd1c090b",
         "filename": "chrome/browser/net/predictor.h",
         "patchSetId": 2
