@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11aecd2a_7d55d521",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-27T18:39:47Z",
+      "side": 1,
+      "message": "It might be better to put this logic into autofill_metrics.cc.\n\nI.e., in autofill_metrics.h|cc\n\nvoid AutofillMetrics::LogTimeToSubmissionFromInitialInteraction(\n    bool is_cc_form, bool used_autofill, base::TimeDelta elapsed) {\n  static const char* const kMetricNames[4] \u003d {\n      \"...Address...WithoutAutofill\",\n      \"...Address...WithAutofill\"\n      \"...CreditCard...WithoutAutofill\",\n      \"...CreditCard...WithAutofill\",\n  };\n  int index \u003d\n     (static_cast\u003cint\u003e(is_cc_form) \u003c\u003c 1) + static_cast\u003cint\u003e(used_autofill);\n  UMA_HISTOGRAM...(kMetricNames[index],... elapsed, ...);\n}\n\nAnd here, simply\n\n  AutofillMetrics::LogTimeToSubmissionFromInitialInteraction(\n     HasCreditCardFields(), did_autofill_some_possible_fields, elapsed);",
+      "revId": "2cd9a8b5dccea26ac40c04a6bf8b586a8d4c5710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fb848c8_0a4c17dd",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-27T18:39:47Z",
+      "side": 1,
+      "message": "Without?",
+      "range": {
+        "startLine": 808,
+        "startChar": 16,
+        "endLine": 808,
+        "endChar": 72
+      },
+      "revId": "2cd9a8b5dccea26ac40c04a6bf8b586a8d4c5710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d4dd3df_f127a75e",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1441,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-27T18:39:47Z",
+      "side": 1,
+      "message": "no need for {} around return true",
+      "revId": "2cd9a8b5dccea26ac40c04a6bf8b586a8d4c5710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8b296bd_adb79e7d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 93687,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-27T18:39:47Z",
+      "side": 1,
+      "message": "AutofillFormType?",
+      "range": {
+        "startLine": 93687,
+        "startChar": 26,
+        "endLine": 93687,
+        "endChar": 38
+      },
+      "revId": "2cd9a8b5dccea26ac40c04a6bf8b586a8d4c5710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "593d87da_b9d56319",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1438,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-27T18:39:47Z",
+      "side": 1,
+      "message": "I think this should work as written. The rationalization happens at the prediction level (i.e., it changes the predictions returned by field-\u003eType()).",
+      "parentUuid": "83a6db3f_37d92cab",
+      "range": {
+        "startLine": 1438,
+        "startChar": 20,
+        "endLine": 1438,
+        "endChar": 41
+      },
+      "revId": "3583043bbda50fc98d24728672849cac2e912d7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d80a984_95b2f75d",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
