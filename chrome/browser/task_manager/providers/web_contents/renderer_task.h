@@ -44,7 +44,8 @@ class RendererTask : public Task,
   virtual void UpdateTitle() = 0;
 
   // An abstract method that will be called when the event
-  // FaviconDriverObserver::OnFaviconUpdated() occurs, so that concrete tasks
+  // FaviconDriverObserver::OnFaviconUpdated() or
+  // FaviconDriverObserver::OnFaviconDeleted() occurs, so that concrete tasks
   // can update their favicons.
   virtual void UpdateFavicon() = 0;
 
@@ -74,6 +75,8 @@ class RendererTask : public Task,
                         const GURL& icon_url,
                         bool icon_url_changed,
                         const gfx::Image& image) override;
+  void OnFaviconDeleted(favicon::FaviconDriver* driver,
+                        NotificationIconType notification_icon_type) override;
 
   void set_termination_status(base::TerminationStatus status) {
     termination_status_ = status;

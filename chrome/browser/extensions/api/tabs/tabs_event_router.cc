@@ -548,6 +548,10 @@ void TabsEventRouter::OnFaviconUpdated(
   }
 }
 
+void TabsEventRouter::OnFaviconDeleted(
+    favicon::FaviconDriver* favicon_driver,
+    NotificationIconType notification_icon_type) {}
+
 void TabsEventRouter::OnDiscardedStateChange(WebContents* contents,
                                              bool is_discarded) {
   std::set<std::string> changed_property_names;

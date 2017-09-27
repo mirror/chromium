@@ -200,6 +200,9 @@ class FaviconUpdateWatcher : public favicon::FaviconDriverObserver {
     running_ = false;
   }
 
+  void OnFaviconDeleted(favicon::FaviconDriver* favicon_driver,
+                        NotificationIconType notification_icon_type) override {}
+
   bool seen_;
   bool running_;
   ScopedObserver<favicon::FaviconDriver, FaviconUpdateWatcher> scoped_observer_;

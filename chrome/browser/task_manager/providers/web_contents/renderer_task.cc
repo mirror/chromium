@@ -187,6 +187,13 @@ void RendererTask::OnFaviconUpdated(favicon::FaviconDriver* favicon_driver,
     UpdateFavicon();
 }
 
+void RendererTask::OnFaviconDeleted(
+    favicon::FaviconDriver* favicon_driver,
+    NotificationIconType notification_icon_type) {
+  if (notification_icon_type == NON_TOUCH_16_DIP)
+    UpdateFavicon();
+}
+
 // static
 base::string16 RendererTask::GetTitleFromWebContents(
     content::WebContents* web_contents) {

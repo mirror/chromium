@@ -63,6 +63,13 @@ class FaviconDriverObserver {
                                 bool icon_url_changed,
                                 const gfx::Image& image) = 0;
 
+  // Called when a page that used to have a favicon (reported via
+  // OnFaviconUpdated() above) stopped having it (e.g. it was removed via
+  // javascript).
+  virtual void OnFaviconDeleted(
+      FaviconDriver* favicon_driver,
+      NotificationIconType notification_icon_type) = 0;
+
  private:
   DISALLOW_COPY_AND_ASSIGN(FaviconDriverObserver);
 };
