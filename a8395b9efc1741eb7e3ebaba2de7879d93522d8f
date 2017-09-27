@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3cc52432_caf205be",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/interfaces/html.idl",
+        "patchSetId": 10
+      },
+      "lineNbr": 1588,
+      "author": {
+        "id": 1150655
+      },
+      "writtenOn": "2017-09-27T07:22:00Z",
+      "side": 1,
+      "message": "As far as I remember I got failing tests around third_party/WebKit/LayoutTests/external/wpt/cssom-view/interfaces.html, but with your suggested approach to set the flag manually, I might not need to touch this file at all.",
+      "parentUuid": "513ed2d4_21d78a0f",
+      "range": {
+        "startLine": 1585,
+        "startChar": 1,
+        "endLine": 1588,
+        "endChar": 2
+      },
+      "revId": "a8395b9efc1741eb7e3ebaba2de7879d93522d8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "04c4abe3_45ab5e82",
         "filename": "third_party/WebKit/LayoutTests/navigator_webdriver/navigator_webdriver.html",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "a8395b9efc1741eb7e3ebaba2de7879d93522d8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2a0e9ca_4230e4bb",
+        "filename": "third_party/WebKit/LayoutTests/navigator_webdriver/navigator_webdriver.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1150655
+      },
+      "writtenOn": "2017-09-27T07:22:00Z",
+      "side": 1,
+      "message": "Uh, forgot to remove these after debugging:(",
+      "parentUuid": "04c4abe3_45ab5e82",
+      "range": {
+        "startLine": 15,
+        "startChar": 43,
+        "endLine": 15,
+        "endChar": 46
+      },
+      "revId": "a8395b9efc1741eb7e3ebaba2de7879d93522d8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "40cd38b6_d9f5f680",
+        "filename": "third_party/WebKit/Source/core/frame/Navigator.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1150655
+      },
+      "writtenOn": "2017-09-27T07:22:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9798059f_c4083aae",
+      "range": {
+        "startLine": 91,
+        "startChar": 2,
+        "endLine": 92,
+        "endChar": 17
+      },
+      "revId": "a8395b9efc1741eb7e3ebaba2de7879d93522d8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d884882_ddf88e31",
         "filename": "third_party/WebKit/Source/core/frame/Settings.json5",
         "patchSetId": 10
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "b6f17f12_2e0e744b",
+        "filename": "third_party/WebKit/Source/core/frame/Settings.json5",
+        "patchSetId": 10
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 1150655
+      },
+      "writtenOn": "2017-09-27T07:22:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7d884882_ddf88e31",
+      "range": {
+        "startLine": 934,
+        "startChar": 4,
+        "endLine": 938,
+        "endChar": 6
+      },
+      "revId": "a8395b9efc1741eb7e3ebaba2de7879d93522d8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f797f9f_39abd5e9",
         "filename": "third_party/WebKit/Source/platform/runtime_enabled_features.json5",
         "patchSetId": 10
@@ -114,6 +210,30 @@
       "revId": "a8395b9efc1741eb7e3ebaba2de7879d93522d8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6caeb73a_e0d702ad",
+        "filename": "third_party/WebKit/Source/platform/runtime_enabled_features.json5",
+        "patchSetId": 10
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1150655
+      },
+      "writtenOn": "2017-09-27T07:22:00Z",
+      "side": 1,
+      "message": "Looks like it works without going through unit tests.",
+      "parentUuid": "2f797f9f_39abd5e9",
+      "range": {
+        "startLine": 100,
+        "startChar": 6,
+        "endLine": 100,
+        "endChar": 21
+      },
+      "revId": "a8395b9efc1741eb7e3ebaba2de7879d93522d8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
