@@ -33,7 +33,8 @@ class CONTENT_EXPORT HtmlAudioElementCapturerSource final
   CreateFromWebMediaPlayerImpl(blink::WebMediaPlayer* player);
 
   explicit HtmlAudioElementCapturerSource(
-      media::WebAudioSourceProviderImpl* audio_source);
+      media::WebAudioSourceProviderImpl* audio_source,
+      bool is_tainted);
   ~HtmlAudioElementCapturerSource() override;
 
  private:
@@ -48,6 +49,7 @@ class CONTENT_EXPORT HtmlAudioElementCapturerSource final
 
   scoped_refptr<media::WebAudioSourceProviderImpl> audio_source_;
 
+  bool is_tainted_;
   bool is_started_;
   int last_sample_rate_;
   int last_num_channels_;
