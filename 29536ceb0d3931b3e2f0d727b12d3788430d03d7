@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "60f1a88e_71e1bcff",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-27T17:37:07Z",
+      "side": 1,
+      "message": "loc \u003d lines of code\n\nYou made me feel I\u0027m old :)",
+      "parentUuid": "2f94e56a_ddb94941",
+      "revId": "29536ceb0d3931b3e2f0d727b12d3788430d03d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1bbeb903_7aff19d5",
         "filename": "ash/wm/splitview/split_view_controller.cc",
         "patchSetId": 10
@@ -224,6 +242,24 @@
     },
     {
       "key": {
+        "uuid": "d393510b_2cd5f0f0",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-27T17:37:07Z",
+      "side": 1,
+      "message": "I\u0027m just trying to understand why you need to do 1.f - ratio here. It looks to me that whether secondary or primary shouldn\u0027t matter.",
+      "parentUuid": "1d6b025e_b52e8b8a",
+      "revId": "29536ceb0d3931b3e2f0d727b12d3788430d03d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "28501060_4cae74b1",
         "filename": "ash/wm/splitview/split_view_controller.h",
         "patchSetId": 10
@@ -288,6 +324,24 @@
       "side": 1,
       "message": "Are you talking about in overview mode, snapping two windows to the same position and the first one should reset its defer_bounds_updates_ state? Currently it\u0027s unnecessary since we don\u0027t insert the first one back to overview window grid (we probably should do), and the defer_bounds_updates_ is only used for overview windows. \nWhen overview mode starts again, it will set defer_bounds_updates_ to true for all windows first and SplitViewController will set defer_bounds_updates_ for its snapped window(s) then.",
       "parentUuid": "bb5ce14b_08dcf3a1",
+      "revId": "29536ceb0d3931b3e2f0d727b12d3788430d03d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76704ce4_9caddf21",
+        "filename": "ash/wm/tablet_mode/tablet_mode_window_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-27T17:37:07Z",
+      "side": 1,
+      "message": "yes, i was thinking if we should \"restore\". If you think we should, can you add TODO?",
+      "parentUuid": "dbcddfbd_502fd951",
       "revId": "29536ceb0d3931b3e2f0d727b12d3788430d03d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
