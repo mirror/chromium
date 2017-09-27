@@ -286,6 +286,24 @@
     },
     {
       "key": {
+        "uuid": "7a7d4652_9e3cefb8",
+        "filename": "ash/login/ui/login_password_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-27T18:44:04Z",
+      "side": 1,
+      "message": "Done. It is pixel-perfect the the mock.",
+      "parentUuid": "87846e27_436c4226",
+      "revId": "4664bb504eb508e63e450a92ed45a2af01ab7ee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ece60ce_f60b0bf0",
         "filename": "ash/login/ui/login_password_view.cc",
         "patchSetId": 2
