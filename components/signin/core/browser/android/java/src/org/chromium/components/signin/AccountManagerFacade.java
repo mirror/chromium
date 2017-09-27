@@ -47,7 +47,12 @@ public class AccountManagerFacade {
     @VisibleForTesting
     public static final String FEATURE_IS_CHILD_ACCOUNT_KEY = "service_uca";
 
-    private static final AtomicReference<AccountManagerFacade> sInstance = new AtomicReference<>();
+    private static final Object sLock = new Object();
+    private static AccountManagerFacade sInstance;
+    private static AccountManagerFacade sTestingInstance;
+
+    private static final AtomicReference<AccountManagerFacade> sAtomicInstance =
+            new AtomicReference<>();
 
     private final AccountManagerDelegate mDelegate;
 
@@ -72,6 +77,75 @@ public class AccountManagerFacade {
     }
 
     /**
+     * @param delegate the account manager to use as a backend service
+     */
+    private AccountManagerFacade(AccountManagerDelegate delegate) {
+        mDelegate = delegate;
+        mDelegate.registerObservers();
+    }
+
+    /**
+     * Initialize AccountManagerFacade with a custom AccountManagerDelegate.
+     * Ensures that the singleton AccountManagerFacade hasn't been created yet.
+     * This can be overriden in tests using the overrideAccountManagerFacadeForTests method.
+     *
+     * @param delegate the custom AccountManagerDelegate to use.
+     */
+    @AnyThread
+    public static void initializeAccountManagerFacade(AccountManagerDelegate delegate) {
+        synchronized (sLock) {
+            if (sInstance != null) {
+                throw new IllegalStateException("AccountManagerFacade is already initialized!");
+            }
+            sInstance = new AccountManagerFacade(delegate);
+            if (sTestingInstance != null) return;
+            sAtomicInstance.set(sInstance);
+        }
+    }
+
+    /**
+     * Override AccountManagerFacade with a custom AccountManagerDelegate in tests.
+     * Unlike initializeAccountManagerFacade, this will override the existing instance of
+     * AccountManagerFacade if any. Only for use in Tests.
+     *
+     * @param delegate the custom AccountManagerDelegate to use.
+     */
+    @VisibleForTesting
+    @AnyThread
+    public static void overrideAccountManagerFacadeForTests(AccountManagerDelegate delegate) {
+        synchronized (sLock) {
+            sTestingInstance = new AccountManagerFacade(delegate);
+            sAtomicInstance.set(sTestingInstance);
+        }
+    }
+
+    /**
+     * Resets custom AccountManagerFacade set with {@link #overrideAccountManagerFacadeForTests}.
+     * Only for use in Tests.
+     */
+    @VisibleForTesting
+    @AnyThread
+    public static void resetAccountManagerFacadeForTests() {
+        synchronized (sLock) {
+            sTestingInstance = null;
+            sAtomicInstance.set(sInstance);
+        }
+    }
+
+    /**
+     * Singleton instance getter. Singleton must be initialized before calling this
+     * (by initializeAccountManagerFacade or overrideAccountManagerFacadeForTests).
+     *
+     * @return a singleton instance
+     */
+    @AnyThread
+    public static AccountManagerFacade get() {
+        AccountManagerFacade instance = sAtomicInstance.get();
+        assert instance != null : "AccountManagerFacade is not initialized!";
+        return instance;
+    }
+
+    /**
      * Adds an observer to receive accounts change notifications.
      * @param observer the observer to add.
      */
@@ -89,64 +163,6 @@ public class AccountManagerFacade {
     public void removeObserver(AccountsChangeObserver observer) {
         ThreadUtils.assertOnUiThread();
         mDelegate.removeObserver(observer);
-    }
-
-    /**
-     * @param delegate the account manager to use as a backend service
-     */
-    private AccountManagerFacade(AccountManagerDelegate delegate) {
-        mDelegate = delegate;
-        mDelegate.registerObservers();
-    }
-
-    /**
-     * Initialize AccountManagerFacade with a custom AccountManagerDelegate.
-     * Ensures that the singleton AccountManagerFacade hasn't been created yet.
-     * This can be overriden in tests using the overrideAccountManagerFacadeForTests method.
-     *
-     * @param delegate the custom AccountManagerDelegate to use.
-     */
-    @AnyThread
-    public static void initializeAccountManagerFacade(AccountManagerDelegate delegate) {
-        if (!sInstance.compareAndSet(null, new AccountManagerFacade(delegate))) {
-            throw new IllegalStateException("AccountManagerFacade is already initialized!");
-        }
-    }
-
-    /**
-     * Singleton instance getter. Singleton must be initialized before calling this
-     * (by initializeAccountManagerFacade or overrideAccountManagerFacadeForTests).
-     *
-     * @return a singleton instance
-     */
-    @AnyThread
-    public static AccountManagerFacade get() {
-        AccountManagerFacade instance = sInstance.get();
-        assert instance != null : "AccountManagerFacade is not initialized!";
-        return instance;
-    }
-
-    /**
-     * Override AccountManagerFacade with a custom AccountManagerDelegate in tests.
-     * Unlike initializeAccountManagerFacade, this will override the existing instance of
-     * AccountManagerFacade if any. Only for use in Tests.
-     *
-     * @param delegate the custom AccountManagerDelegate to use.
-     */
-    @VisibleForTesting
-    @AnyThread
-    public static void overrideAccountManagerFacadeForTests(AccountManagerDelegate delegate) {
-        sInstance.set(new AccountManagerFacade(delegate));
-    }
-
-    /**
-     * Resets custom AccountManagerFacade set with {@link #overrideAccountManagerFacadeForTests}.
-     * Only for use in Tests.
-     */
-    @VisibleForTesting
-    @AnyThread
-    public static void resetAccountManagerFacadeForTests() {
-        sInstance.set(null);
     }
 
     /**
