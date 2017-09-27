@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "309805e3_c30784bb",
+        "filename": "chrome/browser/mac/dock.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-09-27T23:11:21Z",
+      "side": 1,
+      "message": "That\u0027s a good change. It looks like it will rope in some other files so I\u0027d prefer to make that change in a different cl.",
+      "parentUuid": "9199a3da_114d1a5f",
+      "revId": "840b3cc66b5008e6d4750a435d84dc200da8c581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8dec3330_aeaf9113",
         "filename": "chrome/browser/mac/dock.mm",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "840b3cc66b5008e6d4750a435d84dc200da8c581",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d97892d7_c92c9059",
+        "filename": "chrome/browser/mac/dock.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-09-27T23:11:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8dec3330_aeaf9113",
+      "revId": "840b3cc66b5008e6d4750a435d84dc200da8c581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +112,24 @@
     },
     {
       "key": {
+        "uuid": "b29dac28_dff3ccff",
+        "filename": "chrome/browser/mac/install_from_dmg.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-09-27T23:11:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "baaf1f59_015239f0",
+      "revId": "840b3cc66b5008e6d4750a435d84dc200da8c581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b8bf776_36eb9584",
         "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
         "patchSetId": 3
@@ -93,6 +147,24 @@
     },
     {
       "key": {
+        "uuid": "f999144b_3874a726",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-09-27T23:11:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b8bf776_36eb9584",
+      "revId": "840b3cc66b5008e6d4750a435d84dc200da8c581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52438b42_1576ec69",
         "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
         "patchSetId": 3
@@ -107,6 +179,24 @@
       "revId": "840b3cc66b5008e6d4750a435d84dc200da8c581",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4937e716_8cb47b46",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-09-27T23:11:21Z",
+      "side": 1,
+      "message": "Good points. I changed it to maintain the two error bits and report three possible error states.",
+      "parentUuid": "52438b42_1576ec69",
+      "revId": "840b3cc66b5008e6d4750a435d84dc200da8c581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
