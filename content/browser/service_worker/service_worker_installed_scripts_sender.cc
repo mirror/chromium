@@ -247,7 +247,7 @@ class ServiceWorkerInstalledScriptsSender::Sender {
       owner_->OnAbortSendingScript(status);
       return;
     }
-    if (!body_handle_.is_valid() && !meta_data_sender_)
+    if (!body_handle_.is_valid() && !pending_write_ && !meta_data_sender_)
       owner_->OnFinishSendingScript();
   }
 
