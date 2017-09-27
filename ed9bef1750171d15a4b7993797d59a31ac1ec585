@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce1b49d3_109e82a6",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2088,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-27T16:28:13Z",
+      "side": 1,
+      "message": "It is strange to add this without updating AddSearchStrings.",
+      "range": {
+        "startLine": 2088,
+        "startChar": 30,
+        "endLine": 2088,
+        "endChar": 39
+      },
+      "revId": "ed9bef1750171d15a4b7993797d59a31ac1ec585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
