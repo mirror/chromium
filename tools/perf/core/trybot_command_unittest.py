@@ -128,7 +128,7 @@ class TrybotCommandTest(unittest.TestCase):
         {bot: 'stuff'}, name, repo_path=repo_path, deps_revision=deps_revision)
     extra_benchmark_args = extra_benchmark_args or []
     arguments = [options.benchmark_name] + extra_benchmark_args
-    cfg = command._GetPerfConfig(platform, arguments)
+    cfg = command._GetPerfConfig(platform, arguments, None)
 
     return cfg, command
 
@@ -550,7 +550,7 @@ class TrybotCommandTest(unittest.TestCase):
           '-p', test_args,
           '-b',
           'linux_perf_bisect'], (0, '', None)),))
-    command._RunTryJob('linux', arguments, None)
+    command._RunTryJob('linux', arguments, None, None)
     self.assertEquals('Perf Try job sent to rietveld for linux platform.',
                       sys.stdout.getvalue().strip())
 

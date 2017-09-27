@@ -71,6 +71,7 @@ REPO_INFO_MAP = {
     }
 }
 
+
 _MILO_MASTER_ENDPOINT = ('https://luci-milo.appspot.com/prpc/milo.Buildbot/'
                         'GetCompressedMasterJSON')
 
@@ -365,6 +366,8 @@ E.g.,
               'repo specified in --repo_path.\nIt is applied for both with and '
               'wihout patch.'),
         metavar='<deps revision>')
+    parser.add_argument(
+        '--tot_revision', type=str, default=None)
 
   def Run(self, options, extra_args=None):
     """Sends a tryjob to a perf trybot.
@@ -379,7 +382,7 @@ E.g.,
 
     return self._AttemptTryjob(options, extra_args)
 
-  def _GetPerfConfig(self, bot_platform, arguments):
+  def _GetPerfConfig(self, bot_platform, arguments, tot_revision):
     """Generates the perf config for try job.
 
     Args:
@@ -424,6 +427,8 @@ E.g.,
         'max_time_minutes': '120',
         'truncate_percent': '0',
         'target_arch': target_arch,
+        'good_revision': tot_revision,
+        'bad_revision': tot_revision,
     }
 
   def _GetRepoAndBranchName(self, repo_path):
@@ -582,7 +587,8 @@ E.g.,
           continue
         try:
           arguments = [options.benchmark_name] + extra_args
-          self._RunTryJob(bot_platform, arguments, deps_override)
+          self._RunTryJob(
+              bot_platform, arguments, deps_override, options.tot_revision)
         # Even if git cl try throws TrybotError exception for any platform,
         # keep sending try jobs to other platforms.
         except TrybotError, err:
@@ -595,7 +601,7 @@ E.g.,
       os.chdir(original_workdir)
     return 0
 
-  def _RunTryJob(self, bot_platform, arguments, deps_override):
+  def _RunTryJob(self, bot_platform, arguments, deps_override, tot_revision):
     """Executes perf try job with benchmark test properties.
 
     Args:
@@ -606,13 +612,14 @@ E.g.,
     Raises:
       TrybotError: When trybot fails to upload CL or run git try.
     """
-    config = self._GetPerfConfig(bot_platform, arguments)
+    config = self._GetPerfConfig(bot_platform, arguments, tot_revision)
 
     # Generate git try command for available bots.
     git_try_command = ['cl', 'try', '-m', 'tryserver.chromium.perf']
 
      # Add Perf Test config to git try --properties arg.
     git_try_command.extend(['-p', 'perf_try_config=%s' % json.dumps(config)])
+    git_try_command.extend(['-p', 'parent_got_revision=%s' % tot_revision])
 
     error_msg_on_fail = 'Could not try CL for %s' % bot_platform
     # Add deps overrides to git try --properties arg.
