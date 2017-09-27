@@ -372,7 +372,6 @@ all_devtools_files = [
   "front_end/network/BlockedURLsPane.js",
   "front_end/network/eventSourceMessagesView.css",
   "front_end/network/EventSourceMessagesView.js",
-  "front_end/network/FilterSuggestionBuilder.js",
   "front_end/network/HARWriter.js",
   "front_end/network/module.json",
   "front_end/network/networkConfigView.css",

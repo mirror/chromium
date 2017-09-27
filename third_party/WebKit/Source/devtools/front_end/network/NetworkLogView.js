@@ -139,7 +139,8 @@ Network.NetworkLogView = class extends UI.VBox {
     var sortedPriorityLabels = sortedPriorities.map(priority => NetworkPriorities.uiLabelForPriority(priority));
     var defaultValueSets = /** @type {!Object<string, !Array<string>>} */ ({});
     defaultValueSets[Network.NetworkLogView.FilterType.Priority] = sortedPriorityLabels;
-    this._suggestionBuilder = new Network.FilterSuggestionBuilder(Network.NetworkLogView._searchKeys, defaultValueSets);
+    this._suggestionBuilder =
+        new UI.SuggestBox.FilterSuggestionBuilder(Network.NetworkLogView._searchKeys, defaultValueSets);
     this._resetSuggestionBuilder();
 
     this._dataGrid = this._columns.dataGrid();
