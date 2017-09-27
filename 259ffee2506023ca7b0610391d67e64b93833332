@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1226db9a_42d4fc64",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-27T21:12:42Z",
+      "side": 1,
+      "message": "nit: const unsigned long -\u003e size_t",
+      "range": {
+        "startLine": 340,
+        "startChar": 26,
+        "endLine": 340,
+        "endChar": 45
+      },
+      "revId": "259ffee2506023ca7b0610391d67e64b93833332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4d18b39_cc3693e9",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-27T21:12:42Z",
+      "side": 1,
+      "message": "Why do we need \"-1\" here?",
+      "range": {
+        "startLine": 483,
+        "startChar": 68,
+        "endLine": 483,
+        "endChar": 71
+      },
+      "revId": "259ffee2506023ca7b0610391d67e64b93833332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c594950_f9aeddb9",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 974,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-27T21:12:42Z",
+      "side": 1,
+      "message": "nit: This is confusing with 3rd app and 2nd page as an example. Think it is easier to read if we use the formula, \ni.e. \n  If the focused app is the n-th app in p-th page, the global index is\n(p - 1) * (cols_ * rows_per_page_) + (n - 1).",
+      "range": {
+        "startLine": 974,
+        "startChar": 7,
+        "endLine": 974,
+        "endChar": 29
+      },
+      "revId": "259ffee2506023ca7b0610391d67e64b93833332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f21ac11_4a357229",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 978,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-27T21:12:42Z",
+      "side": 1,
+      "message": "OnKeyPressed is too long. Can you move the up/down key handling block (from here to L1033) into its own method?",
+      "revId": "259ffee2506023ca7b0610391d67e64b93833332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "068f2996_e8fc7a43",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 996,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-27T21:12:42Z",
+      "side": 1,
+      "message": "This does match with the comment in L 974 \"no matter how many apps are in |suggestions_container_|. It seems we always offset |global_index| with the max possible number of items in suggestion container.",
+      "range": {
+        "startLine": 995,
+        "startChar": 76,
+        "endLine": 996,
+        "endChar": 44
+      },
+      "revId": "259ffee2506023ca7b0610391d67e64b93833332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "697821a3_55ce8fb4",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-27T21:12:42Z",
+      "side": 1,
+      "message": "nit: also bail if event-\u003ehandled()",
+      "revId": "259ffee2506023ca7b0610391d67e64b93833332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
