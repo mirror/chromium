@@ -36,7 +36,7 @@ import org.chromium.device.geolocation.MockLocationProvider;
  */
 @RunWith(ChromeJUnit4ClassRunner.class)
 @CommandLineFlags.Add({
-        ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE,
+        ChromeSwitches.DISABLE_EXPIRING_HISTOGRAMS, ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE,
         ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG,
 })
 @RetryOnFailure

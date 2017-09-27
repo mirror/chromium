@@ -36,7 +36,7 @@ import java.util.concurrent.TimeoutException;
  */
 @RunWith(ChromeJUnit4ClassRunner.class)
 @CommandLineFlags.Add({
-        ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE,
+        ChromeSwitches.DISABLE_EXPIRING_HISTOGRAMS, ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE,
         ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG,
 })
 public class PaymentRequestFreeShippingTest implements MainActivityStartCallback {
