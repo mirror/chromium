@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e53fa93_b2a74b54",
+        "filename": "third_party/zlib/patches/0004-adler-simd.patch",
+        "patchSetId": 51
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-27T17:57:17Z",
+      "side": 1,
+      "message": "This is odd. For some reason the .patch file doesn\u0027t have a changelog description.\n\nAre the instructions in the README incorrect?",
+      "revId": "279d2cdd9b854e0e52055a675ca68dd1739c19d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2da5178_ff8b5de1",
+        "filename": "third_party/zlib/patches/README",
+        "patchSetId": 51
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-27T17:57:17Z",
+      "side": 1,
+      "message": "The plan is from now on, we won\u0027t need to ever edit this file.\n\nCheck: https://cs.chromium.org/chromium/src/third_party/zlib/patches/README?l\u003d20\n\"As patches created in this way will feature a ChangeLog, there is no longer\nthe need to append this file with a description of what the patch does.\"",
+      "revId": "279d2cdd9b854e0e52055a675ca68dd1739c19d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
