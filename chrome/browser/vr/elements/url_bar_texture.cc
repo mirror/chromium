@@ -251,6 +251,7 @@ void UrlBarTexture::Draw(SkCanvas* canvas, const gfx::Size& texture_size) {
 
     std::unique_ptr<gfx::RenderText> render_text(
         gfx::RenderText::CreateInstance());
+    render_text->set_subpixel_rendering_suppressed(true);
     render_text->SetFontList(font_list);
     render_text->SetColor(chip_color);
     render_text->SetHorizontalAlignment(gfx::ALIGN_LEFT);
@@ -314,6 +315,7 @@ void UrlBarTexture::RenderUrl(const gfx::Size& texture_size,
 
   std::unique_ptr<gfx::RenderText> render_text(
       gfx::RenderText::CreateInstance());
+  render_text->set_subpixel_rendering_suppressed(true);
   render_text->SetFontList(font_list);
   render_text->SetColor(SK_ColorBLACK);
   render_text->SetHorizontalAlignment(gfx::ALIGN_LEFT);
@@ -321,6 +323,7 @@ void UrlBarTexture::RenderUrl(const gfx::Size& texture_size,
   render_text->SetDirectionalityMode(gfx::DIRECTIONALITY_FORCE_LTR);
   render_text->SetText(text);
   render_text->SetDisplayRect(text_bounds);
+  render_text->set_subpixel_rendering_suppressed(true);
 
   // Until we can properly elide a URL, we need to bail if the origin portion
   // cannot be displayed in its entirety.

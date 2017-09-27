@@ -141,6 +141,7 @@ std::unique_ptr<gfx::RenderText> UiTexture::CreateRenderText(
     UiTexture::TextAlignment text_alignment) {
   std::unique_ptr<gfx::RenderText> render_text(
       gfx::RenderText::CreateInstance());
+  render_text->set_subpixel_rendering_suppressed(true);
   render_text->SetText(text);
   render_text->SetFontList(font_list);
   render_text->SetColor(color);
