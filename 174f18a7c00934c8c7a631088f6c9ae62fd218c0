@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bb8cd12_81e004f7",
+        "filename": "ash/palette_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-27T23:29:56Z",
+      "side": 1,
+      "message": "nit: Document that |via_button| is the hardware button, not a UI button.",
+      "revId": "174f18a7c00934c8c7a631088f6c9ae62fd218c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb57521a_606d1f06",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-27T23:29:56Z",
+      "side": 1,
+      "message": "nit: I would put a comment here that this does not create a valid selection.",
+      "revId": "174f18a7c00934c8c7a631088f6c9ae62fd218c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b23a2a21_cca49232",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-27T23:29:56Z",
+      "side": 1,
+      "message": "nit: space before */",
+      "revId": "174f18a7c00934c8c7a631088f6c9ae62fd218c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
