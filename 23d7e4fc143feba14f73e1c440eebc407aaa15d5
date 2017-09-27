@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "be988e92_3f1bf81a",
+        "filename": "chrome/browser/ui/views/payments/payment_sheet_view_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 966,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-27T23:06:35Z",
+      "side": 1,
+      "message": "Ditto: put in a \"!IsHarmonyEnabled\" block",
+      "revId": "23d7e4fc143feba14f73e1c440eebc407aaa15d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a04bede6_9060a847",
         "filename": "ui/views/controls/styled_label.h",
         "patchSetId": 9

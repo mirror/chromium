@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f857bc3e_b49a1674",
+        "filename": "chrome/browser/ui/views/autofill/password_generation_popup_view_views.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-27T23:06:35Z",
+      "side": 1,
+      "message": "Put this in a \"!IsHarmonyEnabled\" block so it\u0027s easy to delete later.",
+      "revId": "1b13bd21b865590731caf14b8957ed2babc6a717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77a82748_38f77214",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-27T23:06:35Z",
+      "side": 1,
+      "message": "nit: one period",
+      "range": {
+        "startLine": 42,
+        "startChar": 69,
+        "endLine": 42,
+        "endChar": 70
+      },
+      "revId": "1b13bd21b865590731caf14b8957ed2babc6a717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d98e8da0_451f17f8",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-27T23:06:35Z",
+      "side": 1,
+      "message": "Say \"[...]in favor of STYLE_LINK.\"",
+      "range": {
+        "startLine": 45,
+        "startChar": 73,
+        "endLine": 45,
+        "endChar": 74
+      },
+      "revId": "1b13bd21b865590731caf14b8957ed2babc6a717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57af3aa8_b3ceb2b3",
+        "filename": "ui/views/controls/styled_label.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-27T23:06:35Z",
+      "side": 1,
+      "message": "My inclination is to just change the old UI to either always or never have underlined links. Would that be terrible?",
+      "range": {
+        "startLine": 67,
+        "startChar": 9,
+        "endLine": 67,
+        "endChar": 34
+      },
+      "revId": "1b13bd21b865590731caf14b8957ed2babc6a717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de81b516_df0f079b",
+        "filename": "ui/views/controls/styled_label.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-27T23:06:35Z",
+      "side": 1,
+      "message": "Put above fields.",
+      "range": {
+        "startLine": 69,
+        "startChar": 9,
+        "endLine": 69,
+        "endChar": 15
+      },
+      "revId": "1b13bd21b865590731caf14b8957ed2babc6a717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05379e2e_74148138",
+        "filename": "ui/views/controls/styled_label_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-27T23:06:35Z",
+      "side": 1,
+      "message": "Test for RangeStyleInfo.text_style? Maybe this test can just set it to STYLE_EMPHASIZED instead.",
+      "range": {
+        "startLine": 369,
+        "startChar": 13,
+        "endLine": 369,
+        "endChar": 24
+      },
+      "revId": "1b13bd21b865590731caf14b8957ed2babc6a717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
