@@ -25,6 +25,10 @@ namespace base {
 class Clock;
 }
 
+namespace net {
+class NetLog;
+}
+
 namespace media_router {
 
 // Keeps track of devices that have responded to discovery requests and notifies
@@ -57,6 +61,11 @@ class DialRegistry : public DialService::Observer,
   };
 
   static DialRegistry* GetInstance();
+
+  // Sets the NetLog object used for logging. Should be called right after
+  // GetInstance(). If the registry already has a NetLog, does nothing. The
+  // NetLog should live at least as long as the IO Thread.
+  void SetNetLog(net::NetLog* net_log);
 
   // Called by the DIAL API when event listeners are added or removed. The dial
   // service is started after the first listener is added and stopped after the
@@ -92,6 +101,7 @@ class DialRegistry : public DialService::Observer,
 
  protected:
   // Returns a new instance of the DIAL service.  Overridden by tests.
+  // |net_log| is used for logging network connection information.
   virtual std::unique_ptr<DialService> CreateDialService();
   virtual void ClearDialService();
 
@@ -190,6 +200,9 @@ class DialRegistry : public DialService::Observer,
   // Interface from which the DIAL API is notified of DIAL device events. the
   // DIAL API owns this DIAL registry.
   base::ObserverList<Observer> observers_;
+
+  // Set just after construction, only used on the IO thread.
+  net::NetLog* net_log_ = nullptr;
 
   std::unique_ptr<base::Clock> clock_;
 
