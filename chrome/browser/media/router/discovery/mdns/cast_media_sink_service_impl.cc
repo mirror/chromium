@@ -105,6 +105,7 @@ CastMediaSinkServiceImpl::CastMediaSinkServiceImpl(
   DCHECK(cast_socket_service_);
   DCHECK(network_monitor_);
   network_monitor_->AddObserver(this);
+  cast_socket_service_->AddObserver(this);
 
   CastMediaSinkServiceImpl::InitRetryParameters(&backoff_policy_,
                                                 &max_retry_attempts_);
@@ -264,8 +265,7 @@ void CastMediaSinkServiceImpl::OpenChannel(
   cast_socket_service_->OpenSocket(
       ip_endpoint, net_log_,
       base::BindOnce(&CastMediaSinkServiceImpl::OnChannelOpened, AsWeakPtr(),
-                     cast_sink, std::move(backoff_entry), sink_source),
-      this);
+                     cast_sink, std::move(backoff_entry), sink_source));
 }
 
 void CastMediaSinkServiceImpl::OnChannelOpened(
