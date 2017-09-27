@@ -4,6 +4,7 @@
 
 #include "content/common/feature_policy/feature_policy.h"
 
+#include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 
@@ -1002,6 +1003,17 @@ TEST_F(FeaturePolicyTest, TestCombineFrameAndHeaderPolicies) {
       policy3->IsFeatureEnabledForOrigin(kDefaultSelfFeature, origin_c_));
   EXPECT_TRUE(
       policy4->IsFeatureEnabledForOrigin(kDefaultSelfFeature, origin_c_));
+}
+
+TEST_F(FeaturePolicyTest, TestGetOriginsForFeatures) {
+  std::unique_ptr<FeaturePolicy> policy =
+      CreateFromParentPolicy(nullptr, origin_a_);
+  EXPECT_THAT(policy->GetOriginsForFeature(kDefaultSelfFeature),
+              ::testing::ElementsAre(
+                  blink::WebString::FromUTF8(origin_a_.Serialize())));
+  EXPECT_THAT(policy->GetOriginsForFeature(kDefaultOnFeature),
+              ::testing::ElementsAre(blink::WebString::FromUTF8("*")));
+  EXPECT_TRUE(policy->GetOriginsForFeature(kDefaultOffFeature).empty());
 }
 
 }  // namespace content

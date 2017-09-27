@@ -33,6 +33,11 @@ class BLINK_PLATFORM_EXPORT WebFeaturePolicy {
   // Returns whether or not the given feature is enabled for the origin of the
   // document that owns the policy.
   virtual bool IsFeatureEnabled(blink::WebFeaturePolicyFeature) const = 0;
+
+  virtual bool IsFeatureEnabledForOrigin(blink::WebFeaturePolicyFeature,
+                                         blink::WebSecurityOrigin) const = 0;
+  virtual WebVector<WebString> GetOriginsForFeature(
+      blink::WebFeaturePolicyFeature) const = 0;
 };
 
 }  // namespace blink

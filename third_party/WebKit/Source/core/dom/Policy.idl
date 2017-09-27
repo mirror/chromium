@@ -1,0 +1,7 @@
+[
+  NoInterfaceObject
+] interface Policy {
+  boolean allowsFeature(DOMString feature, optional DOMString origin);
+  sequence<DOMString> allowedFeatures();
+  sequence<DOMString> getAllowlist(DOMString feature);
+};
