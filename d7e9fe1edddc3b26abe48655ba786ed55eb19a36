@@ -71,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "bb79643a_de5e3f33",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngine.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1122,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-09-27T21:38:22Z",
+      "side": 1,
+      "message": "I\u0027m not sure why I left out @keyframes rules, but it should work now.",
+      "parentUuid": "d5889289_ac0354a3",
+      "revId": "d7e9fe1edddc3b26abe48655ba786ed55eb19a36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32460fcb_2f1c5c51",
         "filename": "third_party/WebKit/Source/core/dom/StyleEngine.cpp",
         "patchSetId": 8
@@ -103,6 +121,24 @@
       "revId": "d7e9fe1edddc3b26abe48655ba786ed55eb19a36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8709dacb_f4decd51",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngine.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1146,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-09-27T21:38:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9895f616_7e0e3898",
+      "revId": "d7e9fe1edddc3b26abe48655ba786ed55eb19a36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

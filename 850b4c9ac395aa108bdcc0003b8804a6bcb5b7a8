@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bbcc7abc_0c425c50",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngine.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-09-27T21:38:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4aaf2bc0_b173a636",
+      "revId": "850b4c9ac395aa108bdcc0003b8804a6bcb5b7a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f58d27d6_9e1fad4e",
         "filename": "third_party/WebKit/Source/core/dom/StyleEngine.cpp",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "850b4c9ac395aa108bdcc0003b8804a6bcb5b7a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e831cde_99d4a963",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngine.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-09-27T21:38:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f58d27d6_9e1fad4e",
+      "revId": "850b4c9ac395aa108bdcc0003b8804a6bcb5b7a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d95ec9a7_7f19c96d",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngine.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 943,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-09-27T21:38:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67addf20_a1ab8fb0",
+      "revId": "850b4c9ac395aa108bdcc0003b8804a6bcb5b7a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87ab035e_af9c1e03",
         "filename": "third_party/WebKit/Source/core/dom/StyleEngine.cpp",
         "patchSetId": 10
@@ -67,6 +121,24 @@
       "revId": "850b4c9ac395aa108bdcc0003b8804a6bcb5b7a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fbe7161_bc05b0f5",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngine.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1172,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-09-27T21:38:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87ab035e_af9c1e03",
+      "revId": "850b4c9ac395aa108bdcc0003b8804a6bcb5b7a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "64eaf6b0_5c521802",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngine.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1232,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-09-27T21:38:22Z",
+      "side": 1,
+      "message": "It should work for user style sheets now.",
+      "parentUuid": "1a736c09_b2925c34",
+      "revId": "850b4c9ac395aa108bdcc0003b8804a6bcb5b7a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ad2c2d2_2d835df9",
         "filename": "third_party/WebKit/Source/core/dom/StyleEngine.h",
         "patchSetId": 10
@@ -101,6 +191,24 @@
       "revId": "850b4c9ac395aa108bdcc0003b8804a6bcb5b7a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d89fd69b_e0ac69f5",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngine.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-09-27T21:38:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ad2c2d2_2d835df9",
+      "revId": "850b4c9ac395aa108bdcc0003b8804a6bcb5b7a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "8f116229_413ba36a",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngine.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-09-27T21:38:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb4f229e_dcf5b2a8",
+      "revId": "850b4c9ac395aa108bdcc0003b8804a6bcb5b7a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ffe10f0_f570747b",
         "filename": "third_party/WebKit/Source/core/dom/StyleEngine.h",
         "patchSetId": 10
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "ffa36726_fb38a519",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngine.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-09-27T21:38:22Z",
+      "side": 1,
+      "message": "Done\n\nI figure it\u0027s best to put that check last.",
+      "parentUuid": "8ffe10f0_f570747b",
+      "revId": "850b4c9ac395aa108bdcc0003b8804a6bcb5b7a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "848119b6_e184a19f",
         "filename": "third_party/WebKit/Source/core/dom/StyleEngine.h",
         "patchSetId": 10
@@ -152,6 +296,24 @@
       "revId": "850b4c9ac395aa108bdcc0003b8804a6bcb5b7a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f70e92c4_e68a37c1",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngine.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-09-27T21:38:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "848119b6_e184a19f",
+      "revId": "850b4c9ac395aa108bdcc0003b8804a6bcb5b7a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
