@@ -53,6 +53,8 @@ class DownloadNotificationManagerForProfile
 
   void OnNewDownloadReady(content::DownloadItem* item);
 
+  DownloadItemNotification* GetNotificationItemByGuid(const std::string& guid);
+
  private:
   friend class test::DownloadItemNotificationTest;
 

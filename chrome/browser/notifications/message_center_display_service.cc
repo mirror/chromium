@@ -23,8 +23,7 @@ namespace {
 // display service (and on to the appropriate handler). This is a temporary
 // class to ease the transition from NotificationDelegate to
 // NotificationHandler.
-// TODO(estade): also handle Click() and other NotificationDelegate actions as
-// needed.
+// TODO(estade): also handle other NotificationDelegate actions as needed.
 class PassThroughDelegate : public message_center::NotificationDelegate {
  public:
   PassThroughDelegate(Profile* profile,
@@ -33,6 +32,22 @@ class PassThroughDelegate : public message_center::NotificationDelegate {
       : profile_(profile),
         notification_(notification),
         notification_type_(notification_type) {}
+
+  void Close(bool by_user) override {
+    NotificationDisplayServiceFactory::GetForProfile(profile_)
+        ->ProcessNotificationOperation(
+            NotificationCommon::CLOSE, notification_type_,
+            notification_.origin_url().possibly_invalid_spec(),
+            notification_.id(), base::nullopt, base::nullopt, by_user);
+  }
+
+  void Click() override {
+    NotificationDisplayServiceFactory::GetForProfile(profile_)
+        ->ProcessNotificationOperation(
+            NotificationCommon::CLICK, notification_type_,
+            notification_.origin_url().possibly_invalid_spec(),
+            notification_.id(), base::nullopt, base::nullopt, base::nullopt);
+  }
 
   void ButtonClick(int button_index) override {
     NotificationDisplayServiceFactory::GetForProfile(profile_)

@@ -161,6 +161,7 @@ const Notification* MessageCenterNotificationManager::FindById(
 bool MessageCenterNotificationManager::CancelById(
     const std::string& delegate_id,
     ProfileID profile_id) {
+NOTIMPLEMENTED() << " A";
   // The profile pointer can be weak, the instance may have been destroyed, so
   // no profile method should be called inside this function.
 
@@ -171,6 +172,7 @@ bool MessageCenterNotificationManager::CancelById(
   auto iter = profile_notifications_.find(profile_notification_id);
   if (iter == profile_notifications_.end())
     return false;
+NOTIMPLEMENTED() << " B";
 
   RemoveProfileNotification(iter->first);
   message_center_->RemoveNotification(profile_notification_id,

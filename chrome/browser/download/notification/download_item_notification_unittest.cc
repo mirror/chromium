@@ -10,9 +10,11 @@
 #include "base/macros.h"
 #include "base/run_loop.h"
 #include "base/test/test_simple_task_runner.h"
+#include "base/guid.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/download/notification/download_notification_manager.h"
 #include "chrome/browser/notifications/notification_test_util.h"
+#include "chrome/browser/notifications/notification_display_service_tester.h"
 #include "chrome/browser/notifications/platform_notification_service_impl.h"
 #include "chrome/test/base/testing_browser_process.h"
 #include "chrome/test/base/testing_profile.h"
@@ -71,11 +73,6 @@ class DownloadItemNotificationTest : public testing::Test {
     ASSERT_TRUE(profile_manager_->SetUp());
     profile_ = profile_manager_->CreateTestingProfile("test-user");
 
-    std::unique_ptr<NotificationUIManager> ui_manager(
-        new StubNotificationUIManager);
-    TestingBrowserProcess::GetGlobal()->SetNotificationUIManager(
-        std::move(ui_manager));
-
     download_notification_manager_.reset(
         new DownloadNotificationManagerForProfile(profile_, nullptr));
 
@@ -86,6 +83,8 @@ class DownloadItemNotificationTest : public testing::Test {
     base::FilePath download_item_target_path(kDownloadItemTargetPathString);
     download_item_.reset(new NiceMock<content::MockDownloadItem>());
     ON_CALL(*download_item_, GetId()).WillByDefault(Return(12345));
+    ON_CALL(*download_item_, GetGuid())
+        .WillByDefault(ReturnRefOfCopy(base::GenerateGUID()));
     ON_CALL(*download_item_, GetState())
         .WillByDefault(Return(content::DownloadItem::IN_PROGRESS));
     ON_CALL(*download_item_, IsDangerous()).WillByDefault(Return(false));
@@ -115,34 +114,34 @@ class DownloadItemNotificationTest : public testing::Test {
     return message_center::MessageCenter::Get();
   }
 
-  NotificationUIManager* ui_manager() const {
-    return TestingBrowserProcess::GetGlobal()->notification_ui_manager();
-  }
-
   std::string notification_id() const {
     return download_item_notification_->notification_->id();
   }
 
-  const Notification* notification() const {
-    return ui_manager()->FindById(
-        download_item_notification_->GetNotificationId(),
-        NotificationUIManager::GetProfileID(profile_));
+  std::unique_ptr<Notification> LookUpNotification() const {
+    std::vector<Notification> notifications =
+        NotificationDisplayServiceTester(profile_)
+            .GetDisplayedNotificationsForType(NotificationCommon::DOWNLOAD);
+    for (const auto& notification : notifications) {
+      if (notification.id() == download_item_notification_->GetNotificationId())
+        return std::make_unique<Notification>(notification);
+    }
+    return nullptr;;
   }
 
   size_t NotificationCount() const {
-    return ui_manager()
-        ->GetAllIdsByProfileAndSourceOrigin(
-            NotificationUIManager::GetProfileID(profile_),
-            GURL("chrome://downloads"))
+    return NotificationDisplayServiceTester(profile_)
+        .GetDisplayedNotificationsForType(NotificationCommon::DOWNLOAD)
         .size();
   }
 
   void RemoveNotification() {
-    ui_manager()->CancelById(download_item_notification_->GetNotificationId(),
-                             NotificationUIManager::GetProfileID(profile_));
+    NotificationDisplayServiceTester(profile_).RemoveNotification(
+        NotificationCommon::DOWNLOAD,
+        download_item_notification_->GetNotificationId(), false);
 
     // Waits, since removing a notification may cause an async job.
-    base::RunLoop().RunUntilIdle();
+ //   base::RunLoop().RunUntilIdle();
   }
 
   // Trampoline methods to access a private method in DownloadItemNotification.
@@ -154,7 +153,7 @@ class DownloadItemNotificationTest : public testing::Test {
   }
 
   bool ShownAsPopUp() {
-    return !notification()->shown_as_popup();
+    return !LookUpNotification()->shown_as_popup();
   }
 
   void CreateDownloadItemNotification() {
@@ -282,11 +281,11 @@ TEST_F(DownloadItemNotificationTest, DisablePopup) {
   CreateDownloadItemNotification();
   download_item_->NotifyObserversDownloadOpened();
 
-  EXPECT_EQ(message_center::DEFAULT_PRIORITY, notification()->priority());
+  EXPECT_EQ(message_center::DEFAULT_PRIORITY, LookUpNotification()->priority());
 
   download_item_notification_->DisablePopup();
   // Priority is low.
-  EXPECT_EQ(message_center::LOW_PRIORITY, notification()->priority());
+  EXPECT_EQ(message_center::LOW_PRIORITY, LookUpNotification()->priority());
 
   // Downloading is completed.
   EXPECT_CALL(*download_item_, GetState())
@@ -295,7 +294,7 @@ TEST_F(DownloadItemNotificationTest, DisablePopup) {
   download_item_->NotifyObserversDownloadUpdated();
 
   // Priority is updated back to normal.
-  EXPECT_EQ(message_center::DEFAULT_PRIORITY, notification()->priority());
+  EXPECT_EQ(message_center::DEFAULT_PRIORITY, LookUpNotification()->priority());
 }
 
 }  // namespace test

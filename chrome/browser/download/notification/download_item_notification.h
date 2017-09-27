@@ -43,6 +43,11 @@ class DownloadItemNotification : public ImageDecoder::ImageRequest {
   // Disables popup by setting low priority.
   void DisablePopup();
 
+  // Called back from the NotificationHandler.
+  void OnNotificationClose();
+  void OnNotificationClick();
+  void OnNotificationButtonClick(int button_index);
+
  private:
   class DownloadItemNotificationDelegate;
   friend class test::DownloadItemNotificationTest;
@@ -55,18 +60,11 @@ class DownloadItemNotification : public ImageDecoder::ImageRequest {
     UPDATE_AND_POPUP
   };
 
-  // This block of functions implements NotificationDelegate. They're called
-  // from DownloadItemNotificationDelegate.
-  bool HasNotificationClickedListener() const;
-  void OnNotificationClose();
-  void OnNotificationClick();
-  void OnNotificationButtonClick(int button_index);
   std::string GetNotificationId() const;
 
-  void CloseNotificationByUser();
-  void CloseNotificationByNonUser();
+  void CloseNotification();
   void Update();
-  void UpdateNotificationData(NotificationUpdateType type);
+  void UpdateNotificationData(bool display);
   void UpdateNotificationIcon();
 
   // Set icon of the notification.
