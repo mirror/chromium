@@ -16,6 +16,24 @@
       "revId": "7c0f9b7a02249e3dccfb915ced995824fe448f61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b58b478_3a4dfcc0",
+        "filename": "net/tools/cert_verify_tool/cert_verify_tool.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-09-27T20:34:23Z",
+      "side": 1,
+      "message": "done. I used a base::ScopedClosureRunner to ensure it gets run regardless which return path gets used.. seem reasonable?",
+      "parentUuid": "5e41c516_b2e8abf7",
+      "revId": "7c0f9b7a02249e3dccfb915ced995824fe448f61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
