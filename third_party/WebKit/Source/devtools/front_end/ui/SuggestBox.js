@@ -388,6 +388,76 @@ UI.SuggestBox = class {
   }
 };
 
+UI.SuggestBox.FilterSuggestionBuilder = class {
+  /**
+   * @param {!Array<string>} keys
+   * @param {!Object<string, !Array<string>>=} defaultValueSets
+   */
+  constructor(keys, defaultValueSets) {
+    this._keys = keys;
+    this._valueSets = defaultValueSets || {};
+  }
+
+  /**
+   * @param {string} expression
+   * @param {string} prefix
+   * @param {boolean=} force
+   * @return {!Promise<!UI.SuggestBox.Suggestions>}
+   */
+  completions(expression, prefix, force) {
+    if (!prefix && !force)
+      return Promise.resolve([]);
+
+    var negative = prefix.startsWith('-');
+    if (negative)
+      prefix = prefix.substring(1);
+    var modifier = negative ? '-' : '';
+    var valueDelimiterIndex = prefix.indexOf(':');
+
+    var suggestions = [];
+    if (valueDelimiterIndex === -1) {
+      var matcher = new RegExp('^' + prefix.escapeForRegExp(), 'i');
+      for (var key of this._keys) {
+        if (matcher.test(key))
+          suggestions.push({text: modifier + key + ':'});
+      }
+    } else {
+      var key = prefix.substring(0, valueDelimiterIndex).toLowerCase();
+      var value = prefix.substring(valueDelimiterIndex + 1);
+      var matcher = new RegExp('^' + value.escapeForRegExp(), 'i');
+      for (var item of this._values(key)) {
+        if (matcher.test(item) && (item !== value))
+          suggestions.push({text: modifier + key + ':' + item});
+      }
+    }
+    return Promise.resolve(suggestions);
+  }
+
+  /**
+   * @param {string} key
+   * @return {!Array<string>}
+   */
+  _values(key) {
+    return this._valueSets[key] || [];
+  }
+
+  /**
+   * @param {string} key
+   * @param {?string=} value
+   */
+  addItem(key, value) {
+    if (!value)
+      return;
+
+    if (!this._valueSets[key])
+      this._valueSets[key] = /** @type {!Array<string>} */ ([]);
+    if (this._valueSets[key].indexOf(value) === -1) {
+      this._valueSets[key].push(value);
+      this._valueSets[key].sort();
+    }
+  }
+};
+
 /**
  * @typedef {!{text: string, subtitle: (string|undefined), iconType: (string|undefined), priority: (number|undefined), isSecondary: (boolean|undefined), title: (string|undefined)}}
  */
