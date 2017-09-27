@@ -16,6 +16,24 @@
       "revId": "31428728e6babc80c210317dbe9fdd47a40d94bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bf796b9_f2d0b86e",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-09-27T12:05:16Z",
+      "side": 1,
+      "message": "I gave it a try, but I can\u0027t use it.\n\n1) For the browser to send the request, I need to call TestNavigationManager::WaitForResponse(). It will resume the navigation that was deferred in NavigationThrottle::WillStartRequest.\n\n2) For TestNavigationManager::WaitForResponse() to terminate, I need to send the response\u0027s headers.\n\n3) For sending the response\u0027s headers, I need to wait for the request in ControllableHttpResponse::WaitForRequest().\n\n4) For ControllableHttpResponse::WaitForRequest() to terminate, I need to send the request.\n\nSo 1 -\u003e 2\n   ^    |\n   |    v\n   4 \u003c- 3",
+      "parentUuid": "c71fd53e_77ec2cac",
+      "revId": "31428728e6babc80c210317dbe9fdd47a40d94bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
