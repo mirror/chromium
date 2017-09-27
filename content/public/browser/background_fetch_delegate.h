@@ -32,6 +32,38 @@ struct BackgroundFetchResult;
 // TODO(delphick): Move this content/public/browser.
 class CONTENT_EXPORT BackgroundFetchDelegate {
  public:
+  // Failures that happen after the download has already started.
+  enum FailureReason {
+    // Used when the download has been aborted after reaching a threshold where
+    // it was decided it is not worth attempting to start again. This could be
+    // either due to a specific number of failed retry attempts or a specific
+    // number of wasted bytes due to the download restarting.
+    NETWORK,
+
+    // Used when the download was not completed before the timeout.
+    TIMEDOUT,
+
+    // Used when the failure reason is unknown.
+    UNKNOWN,
+  };
+
+  // Results returned immediately after attempting to start the fetch (but
+  // usually before reaching the network).
+  enum StartResult {
+    // The download is accepted and persisted.
+    ACCEPTED,
+
+    // The DownloadService has too many downloads.  Back off and retry.
+    BACKOFF,
+
+    // Failed to create the download.  The guid is already in use.
+    UNEXPECTED_GUID,
+
+    // The DownloadService was unable to accept and persist this download due to
+    // an internal error like the underlying DB store failing to write to disk.
+    INTERNAL_ERROR,
+  };
+
   // Client interface that a BackgroundFetchDelegate would use to signal the
   // progress of a background fetch.
   class Client {
@@ -55,6 +87,9 @@ class CONTENT_EXPORT BackgroundFetchDelegate {
         const std::string& guid,
         std::unique_ptr<BackgroundFetchResult> result) = 0;
 
+    virtual void OnDownloadFailed(const std::string& guid,
+                                  FailureReason reason) = 0;
+
     // Called by the delegate when it's shutting down to signal that the
     // delegate is no longer valid.
     virtual void OnDelegateShutdown() = 0;
@@ -72,12 +107,12 @@ class CONTENT_EXPORT BackgroundFetchDelegate {
       const net::HttpRequestHeaders& headers) = 0;
 
   // Set the client that the delegate should communicate changes to.
-  void SetDelegateClient(base::WeakPtr<Client> client) { client_ = client; }
+  void SetDelegateClient(Client* client) { client_ = client; }
 
-  base::WeakPtr<Client> client() { return client_; }
+  Client* client() { return client_; }
 
  private:
-  base::WeakPtr<Client> client_;
+  Client* client_;
 };
 
 }  // namespace content
