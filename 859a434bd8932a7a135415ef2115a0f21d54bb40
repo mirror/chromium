@@ -34,6 +34,24 @@
       "revId": "859a434bd8932a7a135415ef2115a0f21d54bb40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a734fa47_88705960",
+        "filename": "content/renderer/media_capture_from_element/html_video_element_capturer_source.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-27T20:58:48Z",
+      "side": 1,
+      "message": "Basically if you store and provide the unique frame id, Paint() will skip repainting the frame into your destination if it\u0027s the same as the last paint.",
+      "parentUuid": "57705fb1_fe4fa183",
+      "revId": "859a434bd8932a7a135415ef2115a0f21d54bb40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
