@@ -104,6 +104,24 @@
       "revId": "a1960e99f9d673f86a19a8575c4086cc9fb6c24f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3eb9d94_b6f4f99b",
+        "filename": "chrome/browser/resources/settings/page_visibility.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-27T18:06:24Z",
+      "side": 1,
+      "message": "Since hcarmona@ seems busy let\u0027s just go with this as-is; I will bring it up in the next Settings standup.",
+      "parentUuid": "2e8950fd_6a761e79",
+      "revId": "a1960e99f9d673f86a19a8575c4086cc9fb6c24f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
