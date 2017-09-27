@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7c5b6c56_e338c699",
+        "filename": "third_party/WebKit/Source/core/css/CSSFontFace.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-09-27T16:05:15Z",
+      "side": 1,
+      "message": "I believe that when this is called for was_cancelled \u003d\u003d true, the ExecutionContext is still valid. The bug is that, when the fallback load completes, the ExecutionContext is no longer valid. Unforutunately, though, I don\u0027t have a repro to be absolutely certain :(\n\nWould you feel better if I added a null check in FontFace::SetLoadStatus() anyway?",
+      "parentUuid": "04270ff1_6db4bf6a",
+      "range": {
+        "startLine": 66,
+        "startChar": 6,
+        "endLine": 66,
+        "endChar": 19
+      },
+      "revId": "0a6b1c2aacb96de4d706b15acb6e6f192bda64c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "76ddcb00_866e3af1",
         "filename": "third_party/WebKit/Source/core/css/CSSFontFace.h",
         "patchSetId": 3
