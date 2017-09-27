@@ -16,6 +16,24 @@
       "revId": "4e8f4d56687553b8bc02a361ddae04428e1316ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65081a2c_1b468966",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1147,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-09-27T22:52:47Z",
+      "side": 1,
+      "message": "We return RESTRICTION_PREVENT_PROCESSING_ANDPROPAGATION from three places in GetProcessingRestriction.\n\nWe only want the alert to fire for one of those cases.",
+      "parentUuid": "7ad4d764_ad982c24",
+      "revId": "4e8f4d56687553b8bc02a361ddae04428e1316ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
