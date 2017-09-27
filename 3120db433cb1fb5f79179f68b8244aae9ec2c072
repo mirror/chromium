@@ -169,6 +169,24 @@
       "revId": "3120db433cb1fb5f79179f68b8244aae9ec2c072",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e206daf7_1d1205e4",
+        "filename": "cc/trees/layer_tree_host_pixeltest_masks.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-27T22:26:08Z",
+      "side": 1,
+      "message": "Sure. I don\u0027t have any cool idea. Done.",
+      "parentUuid": "f3327311_cec894f2",
+      "revId": "3120db433cb1fb5f79179f68b8244aae9ec2c072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
