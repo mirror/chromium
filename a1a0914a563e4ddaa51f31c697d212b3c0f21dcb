@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8084366c_f4e55a14",
+        "filename": "infra/scripts/legacy/scripts/slave/chromium/sizes.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-27T18:52:08Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 193,
+        "startChar": 55,
+        "endLine": 193,
+        "endChar": 62
+      },
+      "revId": "a1a0914a563e4ddaa51f31c697d212b3c0f21dcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3333bbe7_6699df41",
+        "filename": "infra/scripts/legacy/scripts/slave/chromium/sizes.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-27T18:52:08Z",
+      "side": 1,
+      "message": "I wonder if we should make this a strict \u003d\u003d.  I want to avoid a scenario where a static initializer is removed, which frees up a space for another one to slip in.  If we enforce equality, then the count in this file would have to decrement when the # of SI\u0027s decreases",
+      "range": {
+        "startLine": 198,
+        "startChar": 15,
+        "endLine": 198,
+        "endChar": 16
+      },
+      "revId": "a1a0914a563e4ddaa51f31c697d212b3c0f21dcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
