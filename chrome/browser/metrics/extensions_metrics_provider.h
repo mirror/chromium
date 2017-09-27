@@ -9,13 +9,18 @@
 
 #include <memory>
 #include <string>
+#include <vector>
 
 #include "base/macros.h"
+#include "base/time/time.h"
 #include "components/metrics/metrics_provider.h"
+#include "components/metrics/proto/extension_install.pb.h"
 
 class Profile;
 
 namespace extensions {
+class Extension;
+class ExtensionPrefs;
 class ExtensionSet;
 }
 
@@ -38,6 +43,14 @@ class ExtensionsMetricsProvider : public metrics::MetricsProvider {
   // metrics::MetricsProvider:
   void ProvideSystemProfileMetrics(
       metrics::SystemProfileProto* system_profile) override;
+
+  static metrics::ExtensionInstallProto ConstructInstallProtoForTesting(
+      const extensions::Extension& extension,
+      extensions::ExtensionPrefs* prefs,
+      base::Time last_sample_time);
+  static std::vector<metrics::ExtensionInstallProto>
+  GetInstallsForProfileForTesting(Profile* profile,
+                                  base::Time last_sample_time);
 
  protected:
   // Exposed for the sake of mocking in test code.
@@ -68,6 +81,24 @@ class ExtensionsMetricsProvider : public metrics::MetricsProvider {
   // SystemProfileProto object.
   void ProvideOccupiedBucketMetric(metrics::SystemProfileProto* system_profile);
 
+  // Writes information about the installed extensions for all profiles into
+  // the proto.
+  void ProvideExtensionInstallsMetrics(
+      metrics::SystemProfileProto* system_profile);
+
+  // Creates the install proto for a given |extension|. |now| is the current
+  // time, and |time_since_last_sample| is the elapsed time since the previous
+  // sample was recorded. These are curried in for testing purposes.
+  static metrics::ExtensionInstallProto ConstructInstallProto(
+      const extensions::Extension& extension,
+      extensions::ExtensionPrefs* prefs,
+      base::Time last_sample_time);
+
+  // Returns all the extension installs for a given |profile|.
+  static std::vector<metrics::ExtensionInstallProto> GetInstallsForProfile(
+      Profile* profile,
+      base::Time last_sample_time);
+
   // The MetricsStateManager from which the client ID is obtained.
   metrics::MetricsStateManager* metrics_state_manager_;
 
@@ -75,6 +106,9 @@ class ExtensionsMetricsProvider : public metrics::MetricsProvider {
   // metric. Once a profile is found its value is cached here so that
   // GetMetricsProfile() can return a consistent value.
   Profile* cached_profile_;
+
+  // The time of our last recorded sample.
+  base::Time last_sample_time_;
 
   DISALLOW_COPY_AND_ASSIGN(ExtensionsMetricsProvider);
 };
