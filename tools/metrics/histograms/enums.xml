@@ -12289,7 +12289,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="411" label="WEB_VIEW_INTERNAL_ON_AUDIO_STATE_CHANGED"/>
   <int value="412" label="AUTOMATION_INTERNAL_ON_ACTION_RESULT"/>
   <int value="413" label="OMNIBOX_ON_DELETE_SUGGESTION"/>
-  <int value="414" label="PASSWORDS_PRIVATE_ON_SHOW_IMPORT_EXPORT_BUTTONS"/>
+  <int value="414" label="VIRTUAL_KEYBOARD_PRIVATE_ON_KEYBOARD_CONFIG_CHANGED"/>
 </enum>
 
 <enum name="ExtensionFileWriteResult">
