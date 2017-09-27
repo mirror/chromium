@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "95891ad1_d04b21ac",
+        "filename": "components/cast_channel/cast_socket_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-27T20:35:02Z",
+      "side": 1,
+      "message": "CastSocketImpl::CloseInternal() will clear |observers_| in CastSocketImpl. \n\nSorry for the confusion here..In this patch, we have CastSocketService::observers_, and CastSocketImpl::observers_. Both observers_ hold the same observer instances. Globally, there are only two observer instances, CastChannelAPI and CastChannelMediaSinkImpl. They are registered with CastSocketService and removed from it only in their dtors. When opening a Cast socket, CastSocketService passes registered observers to the Cast socket. It does not create new observers.",
+      "parentUuid": "180fcb54_8f38df88",
+      "revId": "0ed04ca56472f535ed791773560420afec6edb09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1f2d2df6_e1154a57",
         "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-26T17:59:39Z",
       "side": 1,
       "message": "Could keep track of the number of listeners and remove |observer_| from CastSocketService if the last listener is removed?",
+      "revId": "0ed04ca56472f535ed791773560420afec6edb09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96a1f0c2_84366fb2",
+        "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-27T20:35:02Z",
+      "side": 1,
+      "message": "Seeing that listener # is 0 when extension suspends (not sure if it is expected behavior, need a little more time to investigate). If that is the expected behavior and we remove |observer_|, extension may not getting channel message and errors when it suspends...\n\nWould like to keep it as it is and add a TODO...",
+      "parentUuid": "1f2d2df6_e1154a57",
       "revId": "0ed04ca56472f535ed791773560420afec6edb09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
