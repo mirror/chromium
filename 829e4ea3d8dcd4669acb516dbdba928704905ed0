@@ -22,6 +22,30 @@
       "revId": "829e4ea3d8dcd4669acb516dbdba928704905ed0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a79a6017_59b40128",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_header_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-27T07:04:01Z",
+      "side": 1,
+      "message": "No: the preload is done in touch down, the load on touch up.\nThe load is presenting the ViewController, so you need to make sure there is nothing presented at that point.",
+      "parentUuid": "f40136c3_95f51b47",
+      "range": {
+        "startLine": 296,
+        "startChar": 14,
+        "endLine": 296,
+        "endChar": 34
+      },
+      "revId": "829e4ea3d8dcd4669acb516dbdba928704905ed0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
