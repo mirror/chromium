@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ca56520f_36fafbfc",
+        "filename": "base/win/core_winrt_util.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-27T17:47:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32242114_0846b6d8",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 21
+      },
+      "revId": "81865488c0c598dcbfcc757f1cbb0d51d41a5b1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "061d0b82_e7044554",
         "filename": "base/win/core_winrt_util.cc",
         "patchSetId": 21
@@ -45,6 +69,30 @@
       "revId": "81865488c0c598dcbfcc757f1cbb0d51d41a5b1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56aa1a9e_1d01162a",
+        "filename": "base/win/core_winrt_util.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-27T17:47:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "061d0b82_e7044554",
+      "range": {
+        "startLine": 21,
+        "startChar": 11,
+        "endLine": 22,
+        "endChar": 51
+      },
+      "revId": "81865488c0c598dcbfcc757f1cbb0d51d41a5b1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a1c50594_96bf9f90",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-27T17:47:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9df12768_093ff17e",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 21
+      },
+      "revId": "81865488c0c598dcbfcc757f1cbb0d51d41a5b1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0dffe082_bc9300c8",
         "filename": "base/win/scoped_hstring.cc",
         "patchSetId": 21
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "e8046c87_33c2fdb9",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-27T17:47:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0dffe082_bc9300c8",
+      "range": {
+        "startLine": 22,
+        "startChar": 59,
+        "endLine": 25,
+        "endChar": 6
+      },
+      "revId": "81865488c0c598dcbfcc757f1cbb0d51d41a5b1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fcff4b50_3f08bd4b",
         "filename": "base/win/scoped_hstring.cc",
         "patchSetId": 21
@@ -105,6 +201,30 @@
       "writtenOn": "2017-09-27T04:14:29Z",
       "side": 1,
       "message": "Maybe rename this to local_load_succeeded to so it doesn\u0027t look like we aliased ScopedHString::load_succeeded.",
+      "range": {
+        "startLine": 112,
+        "startChar": 20,
+        "endLine": 112,
+        "endChar": 34
+      },
+      "revId": "81865488c0c598dcbfcc757f1cbb0d51d41a5b1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a93457c3_ca71b70b",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-27T17:47:37Z",
+      "side": 1,
+      "message": "Obsolete, I suppose (the other variable changed name).",
+      "parentUuid": "fcff4b50_3f08bd4b",
       "range": {
         "startLine": 112,
         "startChar": 20,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "7582df7e_6e76398b",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-27T17:47:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df03d1c6_411889b5",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 50
+      },
+      "revId": "81865488c0c598dcbfcc757f1cbb0d51d41a5b1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a55e65a4_00c19b78",
         "filename": "base/win/scoped_hstring.h",
         "patchSetId": 21
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "78a8fe8f_bb3af81b",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-27T17:47:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a55e65a4_00c19b78",
+      "range": {
+        "startLine": 72,
+        "startChar": 14,
+        "endLine": 72,
+        "endChar": 28
+      },
+      "revId": "81865488c0c598dcbfcc757f1cbb0d51d41a5b1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8956ad3a_6a62fde9",
         "filename": "base/win/win_util.cc",
         "patchSetId": 21
@@ -174,6 +342,30 @@
       "writtenOn": "2017-09-27T04:14:29Z",
       "side": 1,
       "message": "This is no longer needed with the preloads below.",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 17
+      },
+      "revId": "81865488c0c598dcbfcc757f1cbb0d51d41a5b1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d308129f_55ff106c",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-27T17:47:37Z",
+      "side": 1,
+      "message": "See my answer to Greg about the same thing (I\u0027m just maintaining functionality with the old code, which gracefully handles combase.dll loading failures but hard CHECKs if the functions cannot be resolved).",
+      "parentUuid": "8956ad3a_6a62fde9",
       "range": {
         "startLine": 105,
         "startChar": 0,
@@ -221,6 +413,30 @@
       "side": 1,
       "message": "+1. Since this message haven\u0027t given me useful information, I\u0027m even fine with just removing this VLOG(1) completely.",
       "parentUuid": "b9b0c192_6ab40ff2",
+      "range": {
+        "startLine": 853,
+        "startChar": 4,
+        "endLine": 854,
+        "endChar": 59
+      },
+      "revId": "81865488c0c598dcbfcc757f1cbb0d51d41a5b1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cfcfbf4_381e17d3",
+        "filename": "media/midi/midi_manager_winrt.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-27T17:47:37Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "58ee27c3_4e726fd3",
       "range": {
         "startLine": 853,
         "startChar": 4,

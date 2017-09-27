@@ -397,6 +397,30 @@
       "revId": "76877b7ae887aab5a159f4a0edb46e8f500389a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5438628_ec36eaae",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-27T17:47:37Z",
+      "side": 1,
+      "message": "Huh... Learn something every day (I didn\u0027t know you could have an anonymous namespace inside a named namespace). :)\n\nSeems to work fine!",
+      "parentUuid": "30518ca2_2c2b89b4",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 74
+      },
+      "revId": "76877b7ae887aab5a159f4a0edb46e8f500389a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
