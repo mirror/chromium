@@ -10,11 +10,11 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.IBinder;
 import android.text.TextUtils;
 
 import org.chromium.base.ApplicationStatus;
+import org.chromium.base.Callback;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
@@ -89,7 +89,7 @@ public class BrowserActionsService extends Service {
     }
 
     @VisibleForTesting
-    static int getTitleRestId() {
+    static int getTitleResId() {
         return sTitleResId;
     }
 
@@ -103,22 +103,13 @@ public class BrowserActionsService extends Service {
                     IntentUtils.safeGetStringExtra(intent, EXTRA_SOURCE_PACKAGE_NAME);
             Context context = ContextUtils.getApplicationContext();
             int tabId = openTabInBackground(linkUrl, sourcePackageName);
+            updateTabIdForNotification(tabId);
             if (tabId != Tab.INVALID_TAB_ID) {
-                updateTabIdForNotification(tabId);
-                sLoadingTabSet.add(tabId);
-                Toast.makeText(context, R.string.browser_actions_open_in_background_toast_message,
-                             Toast.LENGTH_SHORT)
-                        .show();
-            } else {
-                finishTabCreation(Tab.INVALID_TAB_ID);
-                Intent launchIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(linkUrl));
-                launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                launchIntent.setClass(context, ChromeLauncherActivity.class);
-                launchIntent.putExtra(
-                        ChromeLauncherActivity.EXTRA_IS_ALLOWED_TO_RETURN_TO_PARENT, false);
-                IntentUtils.safeStartActivity(context, launchIntent);
+                finishTabCreation(tabId);
             }
-
+            Toast.makeText(context, R.string.browser_actions_open_in_background_toast_message,
+                         Toast.LENGTH_SHORT)
+                    .show();
             NotificationUmaTracker.getInstance().onNotificationShown(
                     NotificationUmaTracker.BROWSER_ACTIONS, ChannelDefinitions.CHANNEL_ID_BROWSER);
         } else if (TextUtils.equals(intent.getAction(), ACTION_TAB_CREATION_CHROME_DISPLAYED)) {
@@ -144,10 +135,26 @@ public class BrowserActionsService extends Service {
         }
     }
 
+    @VisibleForTesting
+    static boolean isBackgroundService() {
+        return sLoadingTabSet.isEmpty();
+    }
+
     private int openTabInBackground(String linkUrl, String sourcePackageName) {
         Referrer referrer = IntentHandler.constructValidReferrerForAuthority(sourcePackageName);
         LoadUrlParams loadUrlParams = new LoadUrlParams(linkUrl);
         loadUrlParams.setReferrer(referrer);
+        Tab tab = launchTabInRunningTabbedActivity(loadUrlParams);
+        if (tab != null) {
+            int tabId = tab.getId();
+            sLoadingTabSet.add(tabId);
+            return tabId;
+        }
+        launchTabInBrowserActionsModel(loadUrlParams);
+        return Tab.INVALID_TAB_ID;
+    }
+
+    private Tab launchTabInRunningTabbedActivity(LoadUrlParams loadUrlParams) {
         for (WeakReference<Activity> ref : ApplicationStatus.getRunningActivities()) {
             if (!(ref.get() instanceof ChromeTabbedActivity)) continue;
 
@@ -166,10 +173,23 @@ public class BrowserActionsService extends Service {
                         tab.removeObserver(this);
                     }
                 });
-                return tab.getId();
+                return tab;
             }
         }
-        return Tab.INVALID_TAB_ID;
+        return null;
+    }
+
+    private void launchTabInBrowserActionsModel(LoadUrlParams loadUrlParams) {
+        BrowserActionsTabModelSelector selector = BrowserActionsTabModelSelector.getInstance();
+        Callback<Tab> onTabCreated = new Callback<Tab>() {
+            @Override
+            public void onResult(Tab tab) {
+                assert tab != null;
+                sLoadingTabSet.add(tab.getId());
+                finishTabCreation(tab.getId());
+            }
+        };
+        selector.openNewTab(loadUrlParams, onTabCreated);
     }
 
     private void sendBrowserActionsNotification(int tabId) {
