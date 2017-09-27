@@ -52,6 +52,24 @@
       "revId": "f99281374b2d00b17bce2119b419517a198fe78e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82125835_4ac48940",
+        "filename": "components/viz/host/hit_test/hit_test_query.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-09-27T23:42:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d5095f5_8726438a",
+      "revId": "f99281374b2d00b17bce2119b419517a198fe78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
