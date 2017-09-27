@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d93dec2d_dbf63b10",
+        "filename": "third_party/WebKit/LayoutTests/hittesting/touch-transformed-image-psuedo.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-09-27T16:56:11Z",
+      "side": 1,
+      "message": "This test passes for me even without the patch. Can you make it fail?",
+      "revId": "2afc2485cc1d78746e51e98246781f006f90e552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "049f6d07_fdbaafd8",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayer.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 2412,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-09-27T16:56:11Z",
+      "side": 1,
+      "message": "This comment seems useful but you removed a conditional here. Was that intended / needed for this patch?",
+      "revId": "2afc2485cc1d78746e51e98246781f006f90e552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
