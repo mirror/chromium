@@ -19,6 +19,7 @@
 #include "components/crash/content/app/breakpad_linux.h"
 #include "content/public/browser/browser_main_runner.h"
 #include "content/public/common/content_switches.h"
+#include "gpu/config/gpu_switches.h"
 #include "headless/lib/browser/headless_browser_impl.h"
 #include "headless/lib/browser/headless_content_browser_client.h"
 #include "headless/lib/headless_crash_reporter_client.h"

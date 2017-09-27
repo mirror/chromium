@@ -8,6 +8,7 @@ include_rules = [
   "+content/public/renderer",
   "+content/public/common",
   "+content/public/test",
+  "+gpu/config",
   "+mojo/public",
   "+net",
   "+printing/features",
