@@ -17,6 +17,7 @@
 #include "ios/chrome/browser/web_state_list/web_state_list_observer_bridge.h"
 #import "ios/clean/chrome/browser/ui/commands/tab_commands.h"
 #import "ios/clean/chrome/browser/ui/find_in_page/find_in_page_coordinator.h"
+#import "ios/clean/chrome/browser/ui/fullscreen/fullscreen_controller.h"
 #import "ios/clean/chrome/browser/ui/ntp/ntp_coordinator.h"
 #import "ios/clean/chrome/browser/ui/settings/settings_coordinator.h"
 #import "ios/clean/chrome/browser/ui/tab/tab_container_view_controller.h"
@@ -128,6 +129,10 @@
     self.viewController.contentViewController =
         self.ntpCoordinator.viewController;
   }
+
+  // Instantiate the FullscreenController.
+  FullscreenController::CreateForBrowser(self.browser);
+
   [super start];
 }
 

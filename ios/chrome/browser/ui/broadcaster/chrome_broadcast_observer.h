@@ -55,6 +55,16 @@
 
 - (void)broadcastToolbarHeight:(CGFloat)height;
 
+#pragma mark - Fullscreen state
+
+// Observer method for objects that care about the fullscreen progress.  The
+// broadcasted value of 1.0 means that the toolbar should be fully visible, and
+// 0.0 means the toolbar should be completely hidden.
+- (void)broadcastFullscreenProgress:(CGFloat)progress;
+
+// Observer method for objects that care about whether fullscreen is disabled.
+- (void)broadcastFullscreenDisabled:(BOOL)disabled;
+
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_BROADCASTER_CHROME_BROADCAST_OBSERVER_H_
