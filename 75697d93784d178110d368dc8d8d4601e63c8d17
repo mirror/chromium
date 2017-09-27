@@ -53,6 +53,40 @@
     },
     {
       "key": {
+        "uuid": "816c3e1b_ef1aac51",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-27T04:07:20Z",
+      "side": 1,
+      "message": "|ExtendedLayoutText|?\nWe may want to have better name...",
+      "revId": "75697d93784d178110d368dc8d8d4601e63c8d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b9a2c9b_daeeb5c4",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-27T04:07:20Z",
+      "side": 1,
+      "message": "It is better to have |Create()| function instead of tricky constructor.\n\nExpandedLayoutText Create(LayoutObject* layout_object) {\n  if (auto first_letter_part \u003d ...)\n    return ExpandedLayoutText(first_letter_part, ToLayoutTextFragment(...)\n  return ExpandedLayoutText(layout_object, nullptr);\n}",
+      "revId": "75697d93784d178110d368dc8d8d4601e63c8d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27f3932c_4fb96866",
         "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
         "patchSetId": 7

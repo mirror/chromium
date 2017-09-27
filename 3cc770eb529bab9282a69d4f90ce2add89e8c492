@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "f25e5d94_6d1d01b8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-27T04:07:20Z",
+      "side": 1,
+      "message": "nit: Please remove a trailing whitespace.",
+      "revId": "3cc770eb529bab9282a69d4f90ce2add89e8c492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b61e31b8_3cc60291",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-27T04:07:20Z",
+      "side": 1,
+      "message": "I\u0027m not a fan of name |ExpandedLayoutText|.\nHow about |AssociatedLayoutObjects|?",
+      "revId": "3cc770eb529bab9282a69d4f90ce2add89e8c492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccff8876_c1cda8c1",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-27T04:07:20Z",
+      "side": 1,
+      "message": "Do we really need to introduce this struct?\nIt is used only as arguments for ComputeLayoutObjectAndOffsetModTextFragment()\n\nIt seems this patch attempt to simplify MarkStartAndEndInTwoNodes(),\n161 lines to 111 lines.\n\nHowever, original 161 lines of code are just cases and simpler than this\npatch.\n\nCould you attempt to refactor MarkStartAndEndInTwoNodes() without\nintroducing struct\u0027s?\n\nGetting first-letter part and remaining part is simple operation, we\ndon\u0027t need to have a function.\n\nLayoutTextFragment* start_first_letter_part \u003d FirstLetterPartFor(layout_object)\nLayoutTextFragment* start_remaining_part \u003d \nstart_first_letter_part ? ToLayoutTExtFragment(layout_object) : nullptr;\n...",
+      "revId": "3cc770eb529bab9282a69d4f90ce2add89e8c492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01dbbd9a_cbf852cd",
         "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
         "patchSetId": 17
@@ -13,6 +64,23 @@
       "writtenOn": "2017-09-27T03:45:39Z",
       "side": 1,
       "message": "The ctor can be simplified, as |layout_text| is always |text|.",
+      "revId": "3cc770eb529bab9282a69d4f90ce2add89e8c492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52db72b3_30bde5f6",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-27T04:07:20Z",
+      "side": 1,
+      "message": "It is better to make ctor simpler.\nPlease introduce |Create()|.\n\nstruct ExpandedLayoutText {\n  LayoutText* layout_text \u003d nullptr;\n  LayoutTextFragment* first_letter \u003d nullptr;\n  ExpandedLayoutText() \u003d default;\n  static ExpandedLayoutText(LayoutText* ...) {\n    ...\n  }\n};",
       "revId": "3cc770eb529bab9282a69d4f90ce2add89e8c492",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
