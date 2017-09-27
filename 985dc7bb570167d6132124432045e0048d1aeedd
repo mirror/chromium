@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d50abfd0_fcbcf295",
+        "filename": "chrome/browser/chromeos/file_manager/file_tasks.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-09-27T02:43:11Z",
+      "side": 1,
+      "message": "We could choose the most appropriate icon size based on the primary display\u0027s scale factor (or the biggest scale factor among displays), but it might be an overkill for these tiny icons.\nI choose 32x32 pixel images for 16x16 dpi icons for simplicity. WDYT?",
+      "revId": "985dc7bb570167d6132124432045e0048d1aeedd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
