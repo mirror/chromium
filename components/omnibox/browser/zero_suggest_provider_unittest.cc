@@ -8,6 +8,7 @@
 #include "base/metrics/field_trial.h"
 #include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/test/scoped_feature_list.h"
 #include "base/test/scoped_task_environment.h"
 #include "components/history/core/browser/top_sites.h"
 #include "components/metrics/proto/omnibox_event.pb.h"
@@ -107,6 +108,8 @@ class FakeAutocompleteProviderClient
         top_sites_(new FakeEmptyTopSites()) {
     pref_service_.registry()->RegisterStringPref(
         omnibox::kZeroSuggestCachedResults, std::string());
+    pref_service_.registry()->RegisterBooleanPref(
+        omnibox::kZeroSuggestChromeHomePersonalized, false);
   }
 
   bool SearchSuggestEnabled() const override { return true; }
@@ -458,4 +461,31 @@ TEST_F(ZeroSuggestProviderTest, TestPsuggestZeroSuggestReceivedEmptyResults) {
   // Expect the new results have been stored.
   EXPECT_EQ(empty_response,
             prefs->GetString(omnibox::kZeroSuggestCachedResults));
+}
+
+TEST_F(ZeroSuggestProviderTest, TestPersonalizedSuggestionsEnabled) {
+  CreateMostVisitedFieldTrial();
+  ASSERT_FALSE(provider_->PersonalizedSuggestionsEnabled(client_->GetPrefs()));
+  ASSERT_TRUE(provider_->MostVisitedSuggestionsEnabled(client_->GetPrefs()));
+
+  client_->GetPrefs()->SetBoolean(omnibox::kZeroSuggestChromeHomePersonalized,
+                                  true);
+  ASSERT_FALSE(provider_->PersonalizedSuggestionsEnabled(client_->GetPrefs()));
+  ASSERT_TRUE(provider_->MostVisitedSuggestionsEnabled(client_->GetPrefs()));
+
+  base::test::ScopedFeatureList feature_list;
+  feature_list.InitAndEnableFeature(
+      omnibox::kAndroidChromeHomePersonalizedSuggestions);
+  ASSERT_TRUE(provider_->PersonalizedSuggestionsEnabled(client_->GetPrefs()));
+  ASSERT_FALSE(provider_->MostVisitedSuggestionsEnabled(client_->GetPrefs()));
+
+  client_->GetPrefs()->SetBoolean(omnibox::kZeroSuggestChromeHomePersonalized,
+                                  false);
+  ASSERT_FALSE(provider_->PersonalizedSuggestionsEnabled(client_->GetPrefs()));
+  ASSERT_TRUE(provider_->MostVisitedSuggestionsEnabled(client_->GetPrefs()));
+
+  ResetFieldTrialList();
+  CreatePersonalizedFieldTrial();
+  ASSERT_TRUE(provider_->PersonalizedSuggestionsEnabled(client_->GetPrefs()));
+  ASSERT_FALSE(provider_->MostVisitedSuggestionsEnabled(client_->GetPrefs()));
 }

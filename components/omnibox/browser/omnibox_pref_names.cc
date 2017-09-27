@@ -9,4 +9,8 @@ namespace omnibox {
 // A cache of zero suggest results using JSON serialized into a string.
 const char kZeroSuggestCachedResults[] = "zerosuggest.cachedresults";
 
+// Whether personalized omnibox suggestions for Chrome Home are enabled.
+const char kZeroSuggestChromeHomePersonalized[] =
+    "zerosuggest.chromehomepersonalized";
+
 }  // namespace omnibox
