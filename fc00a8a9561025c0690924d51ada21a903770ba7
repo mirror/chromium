@@ -70,6 +70,30 @@
       "revId": "fc00a8a9561025c0690924d51ada21a903770ba7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f544db0_44d68bb2",
+        "filename": "content/test/fuzzer/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-09-27T16:16:42Z",
+      "side": 0,
+      "message": "Yeah, you need to pass --check to gn args or gn gen to reproduce this.",
+      "parentUuid": "c3712c25_163242bb",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 26
+      },
+      "revId": "fc00a8a9561025c0690924d51ada21a903770ba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
