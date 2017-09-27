@@ -16,6 +16,24 @@
       "revId": "6a5a1cb98b8a2de58a7d9d6c0d16242a01d9e522",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13178fd9_5d0043d4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/elements/StylesSidebarPane.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1623,
+      "author": {
+        "id": 1222584
+      },
+      "writtenOn": "2017-09-27T19:21:34Z",
+      "side": 1,
+      "message": "Chrome collapsed whitespace in selector inline editor for many years (always, I guess) until https://crrev.com/1813663002 inadvertently changed it so now the problem is that 1) the selector suddenly switches appearance on click and 2) depending on the indentation in the source file, the small inline editor may become very hard to use.",
+      "parentUuid": "c1555c53_2cfc307e",
+      "revId": "6a5a1cb98b8a2de58a7d9d6c0d16242a01d9e522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
