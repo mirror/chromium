@@ -28,6 +28,7 @@
 #include "content/public/common/content_switches.h"
 #include "extensions/common/switches.h"
 #include "extensions/test/extension_test_message_listener.h"
+#include "gpu/config/gpu_switches.h"
 #include "media/base/audio_bus.h"
 #include "media/base/video_frame.h"
 #include "media/cast/test/skewed_tick_clock.h"

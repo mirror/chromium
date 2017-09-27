@@ -20,6 +20,7 @@ include_rules = [
   "+device/geolocation",
   "+gin/v8_initializer.h",
   "+gpu/command_buffer/service/gpu_switches.h",
+  "+gpu/config/gpu_switches.h",
   "+media/audio",
   "+media/base",
   "+media/mojo",

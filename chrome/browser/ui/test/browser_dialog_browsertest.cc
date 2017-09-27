@@ -9,6 +9,7 @@
 #include "base/test/test_timeouts.h"
 #include "chrome/browser/ui/test/test_browser_dialog.h"
 #include "content/public/common/content_switches.h"
+#include "gpu/config/gpu_switches.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/compositor/compositor_switches.h"
 
