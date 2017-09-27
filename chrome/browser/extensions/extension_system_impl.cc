@@ -206,8 +206,6 @@ void ExtensionSystemImpl::Shared::Init(bool extensions_enabled) {
   // ExtensionService depends on RuntimeData.
   runtime_data_.reset(new RuntimeData(ExtensionRegistry::Get(profile_)));
 
-  extension_registrar_ = std::make_unique<ExtensionRegistrar>(profile_);
-
   bool autoupdate_enabled = !profile_->IsGuestSession() &&
                             !profile_->IsSystemProfile();
 #if defined(OS_CHROMEOS)
@@ -216,6 +214,7 @@ void ExtensionSystemImpl::Shared::Init(bool extensions_enabled) {
     autoupdate_enabled = false;
   }
 #endif  // defined(OS_CHROMEOS)
+
   extension_service_.reset(new ExtensionService(
       profile_, base::CommandLine::ForCurrentProcess(),
       profile_->GetPath().AppendASCII(extensions::kInstallDirectoryName),
@@ -243,6 +242,8 @@ void ExtensionSystemImpl::Shared::Init(bool extensions_enabled) {
 #endif
     management_policy_.reset(new ManagementPolicy);
     RegisterManagementPolicyProviders();
+    extension_registrar_ = std::make_unique<ExtensionRegistrar>(
+        profile_, extension_service_.get());
   }
 
   // Extension API calls require QuotaService, so create it before loading any
