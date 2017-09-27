@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bfbce27d_0fadb0fb",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-27T23:20:07Z",
+      "side": 1,
+      "message": "Good to know, thanks!",
+      "parentUuid": "349b0a99_bdd3390d",
+      "range": {
+        "startLine": 111,
+        "startChar": 6,
+        "endLine": 111,
+        "endChar": 30
+      },
+      "revId": "a6ab266eeb45ae8217433a47a13d36a1109622c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "598c791e_6ee7fd1d",
         "filename": "content/browser/frame_host/navigation_handle_impl.h",
         "patchSetId": 37
@@ -45,6 +69,30 @@
       "revId": "a6ab266eeb45ae8217433a47a13d36a1109622c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05390cc0_c14953e8",
+        "filename": "content/browser/frame_host/navigation_handle_impl.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-27T23:20:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "598c791e_6ee7fd1d",
+      "range": {
+        "startLine": 481,
+        "startChar": 55,
+        "endLine": 481,
+        "endChar": 56
+      },
+      "revId": "a6ab266eeb45ae8217433a47a13d36a1109622c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d81db466_16642674",
+        "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-27T23:20:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "006e9179_00360bb4",
+      "range": {
+        "startLine": 500,
+        "startChar": 19,
+        "endLine": 500,
+        "endChar": 32
+      },
+      "revId": "a6ab266eeb45ae8217433a47a13d36a1109622c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3cfc4a8_59582202",
         "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
         "patchSetId": 37
@@ -91,6 +163,30 @@
       "revId": "a6ab266eeb45ae8217433a47a13d36a1109622c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a7cc08c_357532c2",
+        "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-27T23:20:07Z",
+      "side": 1,
+      "message": "Done\n\nI think at one point I intended to make that bug about allowing ContentBrowserClient::AllowCertificateError() to call SSLManager::OnAllowCertificate() with the error code from `ssl_info`, but we decided that net::ERR_CERT_COMMON_NAME_INVALID for all DENY decisions was okay for now.\n(If that were implemented, we could check for ERR_CERT_COMMON_NAME_INVALID here.)",
+      "parentUuid": "f3cfc4a8_59582202",
+      "range": {
+        "startLine": 897,
+        "startChar": 10,
+        "endLine": 897,
+        "endChar": 27
+      },
+      "revId": "a6ab266eeb45ae8217433a47a13d36a1109622c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "1b26c6a5_c96c64bc",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-27T23:20:07Z",
+      "side": 1,
+      "message": "You\u0027re right; I made an inconsistent implication with the documentation.\n\nI don\u0027t recall why I set these to true, so let\u0027s try setting them to false.",
+      "parentUuid": "6cf08082_503e0b68",
+      "range": {
+        "startLine": 431,
+        "startChar": 35,
+        "endLine": 431,
+        "endChar": 39
+      },
+      "revId": "a6ab266eeb45ae8217433a47a13d36a1109622c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9274bf8_922d7eac",
         "filename": "content/browser/frame_host/navigation_request.cc",
         "patchSetId": 37
@@ -137,6 +257,30 @@
       "revId": "a6ab266eeb45ae8217433a47a13d36a1109622c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad5053a0_c2ec3ffd",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-27T23:20:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9274bf8_922d7eac",
+      "range": {
+        "startLine": 748,
+        "startChar": 0,
+        "endLine": 748,
+        "endChar": 79
+      },
+      "revId": "a6ab266eeb45ae8217433a47a13d36a1109622c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -192,6 +336,24 @@
     },
     {
       "key": {
+        "uuid": "9ae538b2_85bedf0b",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 1001,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-27T23:20:07Z",
+      "side": 1,
+      "message": "\u003e I don\u0027t understand this comment. By \"later on\" do you mean in a follow-up CL, or literally later on in the code? If in a follow-up CL, maybe leave a TODO with the bug number.\n\nThe latter, but the custom HTML is not used until crrev.com/c/625337 lands.\n\nI think it still makes sense that we have PROCEED, because PROCEED means \"keep going through other throttles\" while \"CANCEL\" means \"stop with this one and use its `net_error_code` and `error_page_content`\". Otherwise we have to do something more awkward in the NavigationHandle, like using using the presence of `error_page_content` to infer which throttle\u0027s  `net_error_code` and `error_page_content` to use, if any.\n\nIn addition, CANCEL defaults to ERR_ABORTED [1] and the default result of PROCEED is \"keep the error code\" (which cannot be ERR_ABORTED, since NavigationRequest will not pass a request to throttles if its error code is already ERR_ABORTED). Due to the implicit conversion from ThrottleAction to ThrottleCheckResult, this has the nice ergonomic effect that just responding PROCEED from a throttle will continue with the committed error page, while CANCEL will fail without a committed error page.\n\n[1] net::ERR_ABORTED https://cs.chromium.org/chromium/src/content/public/browser/navigation_throttle.cc?l\u003d20\u0026rcl\u003d14b323009e98473053deb846c2c974e3315a45a0",
+      "parentUuid": "9839d8a1_e93a075e",
+      "revId": "a6ab266eeb45ae8217433a47a13d36a1109622c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "02b39f1d_91d601d6",
         "filename": "content/browser/frame_host/navigation_request.h",
         "patchSetId": 37
@@ -212,6 +374,30 @@
       "revId": "a6ab266eeb45ae8217433a47a13d36a1109622c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a689b6b6_3f922470",
+        "filename": "content/browser/frame_host/navigation_request.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-27T23:20:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02b39f1d_91d601d6",
+      "range": {
+        "startLine": 332,
+        "startChar": 52,
+        "endLine": 332,
+        "endChar": 68
+      },
+      "revId": "a6ab266eeb45ae8217433a47a13d36a1109622c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -238,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "f020e7c6_8e069daf",
+        "filename": "content/public/browser/navigation_throttle.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-27T23:20:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50192ce3_dc26dfb1",
+      "range": {
+        "startLine": 144,
+        "startChar": 36,
+        "endLine": 144,
+        "endChar": 0
+      },
+      "revId": "a6ab266eeb45ae8217433a47a13d36a1109622c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc417f3f_abc91045",
         "filename": "content/test/navigation_simulator_unittest.cc",
         "patchSetId": 37
@@ -261,6 +471,30 @@
     },
     {
       "key": {
+        "uuid": "a6d43fcd_5f11ad91",
+        "filename": "content/test/navigation_simulator_unittest.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-27T23:20:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc417f3f_abc91045",
+      "range": {
+        "startLine": 32,
+        "startChar": 1,
+        "endLine": 32,
+        "endChar": 0
+      },
+      "revId": "a6ab266eeb45ae8217433a47a13d36a1109622c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bed3ba62_7fb6d320",
         "filename": "content/test/navigation_simulator_unittest.cc",
         "patchSetId": 37
@@ -272,6 +506,30 @@
       "writtenOn": "2017-09-27T04:35:57Z",
       "side": 1,
       "message": "Just curious, why\u0027d you add this? Is there something different about the new WillFailRequest path for browser vs renderer initiated navigations?",
+      "range": {
+        "startLine": 38,
+        "startChar": 21,
+        "endLine": 38,
+        "endChar": 32
+      },
+      "revId": "a6ab266eeb45ae8217433a47a13d36a1109622c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9df4b612_ba75f9b9",
+        "filename": "content/test/navigation_simulator_unittest.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-27T23:20:07Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "bed3ba62_7fb6d320",
       "range": {
         "startLine": 38,
         "startChar": 21,
@@ -307,6 +565,30 @@
     },
     {
       "key": {
+        "uuid": "0ba736c5_4e7ece91",
+        "filename": "content/test/navigation_simulator_unittest.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-27T23:20:07Z",
+      "side": 1,
+      "message": "As discussed in person, I somehow associated \"browser-intitiated\" with \"browser-side\". 🙃",
+      "parentUuid": "7ce447f2_431af9af",
+      "range": {
+        "startLine": 50,
+        "startChar": 6,
+        "endLine": 50,
+        "endChar": 33
+      },
+      "revId": "a6ab266eeb45ae8217433a47a13d36a1109622c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b525e994_22783205",
         "filename": "content/test/navigation_simulator_unittest.cc",
         "patchSetId": 37
@@ -318,6 +600,30 @@
       "writtenOn": "2017-09-27T04:35:57Z",
       "side": 1,
       "message": "remove default case to force compile failure if there\u0027s a new enum value without handling it in this switch",
+      "range": {
+        "startLine": 65,
+        "startChar": 6,
+        "endLine": 66,
+        "endChar": 20
+      },
+      "revId": "a6ab266eeb45ae8217433a47a13d36a1109622c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e98ed646_f1d974c9",
+        "filename": "content/test/navigation_simulator_unittest.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-27T23:20:07Z",
+      "side": 1,
+      "message": "This has always made the Windows trybots fail for me. :-(\nhttps://crbug.com/763138\n\n... although maybe that\u0027s not the case if there is no return statement? In any case, the code is gone, so I\u0027ll have to try another time.",
+      "parentUuid": "b525e994_22783205",
       "range": {
         "startLine": 65,
         "startChar": 6,
@@ -350,6 +656,30 @@
       "revId": "a6ab266eeb45ae8217433a47a13d36a1109622c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e2e0e69_d47db200",
+        "filename": "content/test/navigation_simulator_unittest.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-27T23:20:07Z",
+      "side": 1,
+      "message": "As discussed in person, CancellingNavigationThrottle responds with CANCEL the default error code of ERR_ABORTED. [1]\nSince we\u0027re only concerned (here) that the NavigationSimulator calls the correct methods on the throttle, we don\u0027t need to check the error code.\n\n[1] https://cs.chromium.org/chromium/src/content/public/browser/navigation_throttle.cc?l\u003d20\u0026rcl\u003d0c120f945139981b476adcbb1102ebd027223a7e",
+      "parentUuid": "141c9dfd_76851c8c",
+      "range": {
+        "startLine": 148,
+        "startChar": 24,
+        "endLine": 148,
+        "endChar": 50
+      },
+      "revId": "a6ab266eeb45ae8217433a47a13d36a1109622c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
