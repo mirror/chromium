@@ -95,7 +95,7 @@ void UninitializeDWriteFontProxy() {
     g_font_collection->Unregister();
 }
 
-void SetDWriteFontProxySenderForTesting(IPC::Sender* sender) {
+void SetDWriteFontProxySender(IPC::Sender* sender) {
   g_sender_override = sender;
 }
 

@@ -20,10 +20,11 @@ CONTENT_EXPORT void UninitializeDWriteFontProxy();
 
 // Configures the dwrite font proxy to use the specified sender. This can be
 // useful in tests which use a fake render thread which is unable to process
-// font IPC messages. This should only be called when running as a test.
-CONTENT_EXPORT void SetDWriteFontProxySenderForTesting(IPC::Sender* sender);
+// font IPC messages. It's also used for PPAPI, since Flash can have a sender
+// to do font requests.
+CONTENT_EXPORT void SetDWriteFontProxySender(IPC::Sender* sender);
 
-// Allows ChildThreadImpl to register a thread saef sender to DWriteFontProxy
+// Allows ChildThreadImpl to register a thread safe sender to DWriteFontProxy
 // so we don't depend on being on the main thread to use DWriteFontProxy.
 CONTENT_EXPORT void UpdateDWriteFontProxySender(IPC::Sender*);
 

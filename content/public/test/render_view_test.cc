@@ -261,7 +261,7 @@ void RenderViewTest::SetUp() {
   // connect to their browser process which runs the real proxy host. However,
   // some tests route IPCs to MockRenderThread, which is unable to process the
   // font IPCs, causing all font loading to fail.
-  SetDWriteFontProxySenderForTesting(CreateFakeCollectionSender());
+  SetDWriteFontProxySender(CreateFakeCollectionSender());
 #endif
 
 #if defined(OS_MACOSX)

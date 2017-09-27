@@ -131,6 +131,7 @@ int PpapiPluginMain(const MainFunctionParams& parameters) {
 #if defined(OS_WIN)
   if (!base::win::IsUser32AndGdi32Available())
     gfx::win::MaybeInitializeDirectWrite();
+  SetDWriteFontProxySender(ppapi_process.main_thread());
   InitializeDWriteFontProxy();
 
   double device_scale_factor = 1.0;
