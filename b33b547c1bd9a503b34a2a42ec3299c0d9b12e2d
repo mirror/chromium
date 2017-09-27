@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd2bbbfd_e4a6ddea",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaStream.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-27T13:57:08Z",
+      "side": 1,
+      "message": "Based on offline discussion, this version should take a MediaStreamTrackVector and DCHECK that the tracks correspond to the descriptor\u0027s set of tracks (components).",
+      "revId": "b33b547c1bd9a503b34a2a42ec3299c0d9b12e2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
