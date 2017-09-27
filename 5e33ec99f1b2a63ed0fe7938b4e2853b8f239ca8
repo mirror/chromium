@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7bac81e_d8e25c72",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_auth_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-27T22:10:53Z",
+      "side": 1,
+      "message": "this was already checked in L398, so it should always be true.",
+      "range": {
+        "startLine": 400,
+        "startChar": 43,
+        "endLine": 400,
+        "endChar": 50
+      },
+      "revId": "5e33ec99f1b2a63ed0fe7938b4e2853b8f239ca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8a707f0_39fcbf26",
+        "filename": "components/arc/common/auth.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-27T22:10:53Z",
+      "side": 1,
+      "message": "nit: remove",
+      "revId": "5e33ec99f1b2a63ed0fe7938b4e2853b8f239ca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
