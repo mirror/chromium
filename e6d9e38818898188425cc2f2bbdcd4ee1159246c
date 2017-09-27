@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2da077fd_645bd16c",
+        "filename": "chrome/browser/extensions/chrome_content_verifier_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-27T23:31:19Z",
+      "side": 1,
+      "message": "This LG.\n\nI\u0027d add a comment here explaining this, sth similar to:\nWe want to keep the webstore check in parity with InstallVerifier. Looking only at UpdatesFromGallery() can be wrong, see https://crbug.com/766806 for details.",
+      "range": {
+        "startLine": 134,
+        "startChar": 0,
+        "endLine": 134,
+        "endChar": 49
+      },
+      "revId": "e6d9e38818898188425cc2f2bbdcd4ee1159246c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
