@@ -14,17 +14,18 @@
         suggested to start with 'url_unittests'.
 
   Example usages:
-  ios/tools/coverage/coverage.py url_unittests -t url/
-  # Generate code coverage report for url_unittests for directory url/.
+  ios/tools/coverage/coverage.py url_unittests -t url/ -o out/html
+  # Generate code coverage report for url_unittests for directory url/ and all
+  # generated artifacts are stored in out/html
 
-  ios/tools/coverage/coverage.py url_unittests -t url/ -i url/third_party
-  # Only include files under url/third_party.
+  ios/tools/coverage/coverage.py url_unittests -t url/ -i url/mojo -o out/html
+  # Only include files under url/mojo.
 
-  ios/tools/coverage/coverage.py url_unittests -t url/ -i url/third_party
+  ios/tools/coverage/coverage.py url_unittests -t url/ -i url/mojo -o out/html
   -r coverage.profdata
   # Skip running tests and reuse the specified profile data file.
 
-  ios/tools/coverage/coverage.py url_unittests -t url/ -i url/third_party
+  ios/tools/coverage/coverage.py url_unittests -t url/ -i url/mojo -o out/html
   -e //url/ipc:url_ipc -r coverage.profdata
   # Exclude the 'sources' of //url/ipc:url_ipc build target.
 
@@ -236,12 +237,13 @@ def _GenerateLineByLineFileCoverageInHtml(
   subprocess.check_call(cmd)
 
 
-def _CreateCoverageProfileDataForTarget(target, jobs_count=None,
+def _CreateCoverageProfileDataForTarget(target, output_dir, jobs_count=None,
                                         gtest_filter=None):
   """Builds and runs target to generate the coverage profile data.
 
   Args:
     target: A string representing the name of the target to be tested.
+    output_dir: A directory to store created coverage profile data file.
     jobs_count: Number of jobs to run in parallel for building. If None, a
                 default value is derived based on CPUs availability.
     gtest_filter: If present, only run unit tests whose full name matches the
@@ -252,7 +254,8 @@ def _CreateCoverageProfileDataForTarget(target, jobs_count=None,
   """
   _BuildTargetWithCoverageConfiguration(target, jobs_count)
   profraw_path = _GetProfileRawDataPathByRunningTarget(target, gtest_filter)
-  profdata_path = _CreateCoverageProfileDataFromProfRawData(profraw_path)
+  profdata_path = _CreateCoverageProfileDataFromProfRawData(profraw_path,
+                                                            output_dir)
 
   print 'Code coverage profile data is created as: ' + profdata_path
   return profdata_path
@@ -430,12 +433,13 @@ def _RunTestTargetWithCoverageConfiguration(target, gtest_filter=None):
   return ''.join(logs_chracters).split('\n')
 
 
-def _CreateCoverageProfileDataFromProfRawData(profraw_path):
+def _CreateCoverageProfileDataFromProfRawData(profraw_path, output_dir):
   """Returns the path to the profdata file by merging profraw data file.
 
   Args:
     profraw_path: A string representing the absolute path to the profraw data
                   file that is to be merged.
+    output_dir: A directory to store created coverage profile data file.
 
   Returns:
     A string representing the absolute path to the generated profdata file.
@@ -445,9 +449,9 @@ def _CreateCoverageProfileDataFromProfRawData(profraw_path):
   """
   print 'Creating the profile data file'
 
-  src_root = _GetSrcRootPath()
-  profdata_path = os.path.join(src_root, BUILD_DIRECTORY,
-                               PROFDATA_FILE_NAME)
+  if not os.path.exists(output_dir):
+    os.makedirs(output_dir)
+  profdata_path = os.path.join(output_dir, PROFDATA_FILE_NAME)
   try:
     cmd = ['xcrun', 'llvm-profdata', 'merge', '-o', profdata_path, profraw_path]
     subprocess.check_call(cmd)
@@ -742,7 +746,7 @@ def _ParseCommandArguments():
                                'and re-use the specified profile data file.')
 
   arg_parser.add_argument('-o', '--output-dir', type=str, required=True,
-                          help='Output directory for html report.')
+                          help='Output directory for generated artifacts.')
 
   arg_parser.add_argument('--gtest_filter', type=str,
                           help='Only run unit tests whose full name matches '
@@ -803,8 +807,8 @@ def Main():
                                            'doesn\'t exist.').format(
                                                profdata_path)
   else:
-    profdata_path = _CreateCoverageProfileDataForTarget(target, jobs,
-                                                        args.gtest_filter)
+    profdata_path = _CreateCoverageProfileDataForTarget(target, args.output_dir,
+                                                        jobs, args.gtest_filter)
 
   print 'Generating code coverge report'
   file_line_coverage_report = _GeneratePerFileLineCoverageReport(
@@ -828,6 +832,9 @@ def Main():
 
   html_index_file_path = 'file://' + os.path.abspath(
       os.path.join(args.output_dir, 'index.html'))
+  print 'index file for html report is generated as: {}'.format(
+      html_index_file_path)
+
   webbrowser.open(html_index_file_path)
 
 
