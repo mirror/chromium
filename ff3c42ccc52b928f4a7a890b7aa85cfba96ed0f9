@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b8bfff98_2c0c16f6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeFeatureList.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-27T19:06:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cffccf63_5f97630b",
+      "revId": "ff3c42ccc52b928f4a7a890b7aa85cfba96ed0f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f68355b_72c1c9d8",
         "filename": "chrome/browser/android/chrome_feature_list.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "ff3c42ccc52b928f4a7a890b7aa85cfba96ed0f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb0d2d35_40eab24d",
+        "filename": "chrome/browser/android/chrome_feature_list.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-27T19:06:08Z",
+      "side": 1,
+      "message": "I put it below offline_pages::",
+      "parentUuid": "8f68355b_72c1c9d8",
+      "revId": "ff3c42ccc52b928f4a7a890b7aa85cfba96ed0f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "87b8ff18_ed41b5f6",
+        "filename": "chrome/browser/android/omnibox/autocomplete_controller_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-27T19:06:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "846712fd_490d635c",
+      "revId": "ff3c42ccc52b928f4a7a890b7aa85cfba96ed0f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb33df32_12f7df0e",
         "filename": "chrome/browser/flag_descriptions.cc",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "ff3c42ccc52b928f4a7a890b7aa85cfba96ed0f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95d481ff_1ea1607f",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1571,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-27T19:06:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb33df32_12f7df0e",
+      "revId": "ff3c42ccc52b928f4a7a890b7aa85cfba96ed0f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "b3ee479f_571115fd",
+        "filename": "components/omnibox/browser/omnibox_field_trial.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-27T19:06:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3dc042d_a4621c7b",
+      "revId": "ff3c42ccc52b928f4a7a890b7aa85cfba96ed0f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41223150_9dcc1e25",
         "filename": "components/omnibox/browser/zero_suggest_provider.cc",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "ff3c42ccc52b928f4a7a890b7aa85cfba96ed0f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1ada714_49659ba6",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-27T19:06:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41223150_9dcc1e25",
+      "revId": "ff3c42ccc52b928f4a7a890b7aa85cfba96ed0f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "c4d14913_38e95c9f",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-27T19:06:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd960462_da76ff81",
+      "revId": "ff3c42ccc52b928f4a7a890b7aa85cfba96ed0f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d87d74d_25cb3681",
         "filename": "components/omnibox/browser/zero_suggest_provider.cc",
         "patchSetId": 4
@@ -132,6 +258,24 @@
       "writtenOn": "2017-09-26T23:23:30Z",
       "side": 1,
       "message": "Why is this cast necessary?  The base class providers both const and non-const return values.",
+      "revId": "ff3c42ccc52b928f4a7a890b7aa85cfba96ed0f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf55ccac_6d34ed32",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-27T19:06:08Z",
+      "side": 1,
+      "message": "In ::ShouldShowNonContextualZeroSuggest the cast fixes a compilation error:\n\n../../components/omnibox/browser/zero_suggest_provider.cc:500:38: error: member function \u0027GetPrefs\u0027 not viable: \u0027this\u0027 argument has type \u0027const AutocompleteProviderClient\u0027, but function is not marked const\n  if (!MostVisitedSuggestionsEnabled(client()-\u003eGetPrefs()) \u0026\u0026\n\n\nIs there another (better) way to fix the compilation error?",
+      "parentUuid": "7d87d74d_25cb3681",
       "revId": "ff3c42ccc52b928f4a7a890b7aa85cfba96ed0f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -152,6 +296,24 @@
       "revId": "ff3c42ccc52b928f4a7a890b7aa85cfba96ed0f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee376c54_b24fca40",
+        "filename": "components/omnibox/browser/zero_suggest_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-27T19:06:08Z",
+      "side": 1,
+      "message": "Since these are public methods now, I moved them to the end of the public section.",
+      "parentUuid": "94a1cd9f_af874d23",
+      "revId": "ff3c42ccc52b928f4a7a890b7aa85cfba96ed0f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
