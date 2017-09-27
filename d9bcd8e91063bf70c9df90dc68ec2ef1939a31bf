@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "deb1bb8c_8e12f96d",
+        "filename": "components/sync/protocol/autofill_specifics.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-27T21:49:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "856705f1_1f889ab9",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 33
+      },
+      "revId": "d9bcd8e91063bf70c9df90dc68ec2ef1939a31bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "327415e6_4e3a2ba4",
         "filename": "components/sync/protocol/autofill_specifics.proto",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-26T23:54:18Z",
       "side": 1,
       "message": "Could you comment what the bits represent?",
+      "range": {
+        "startLine": 54,
+        "startChar": 14,
+        "endLine": 54,
+        "endChar": 22
+      },
+      "revId": "d9bcd8e91063bf70c9df90dc68ec2ef1939a31bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7b61c2f_93f1e579",
+        "filename": "components/sync/protocol/autofill_specifics.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-27T21:49:41Z",
+      "side": 1,
+      "message": "Let me know if you think I should add more info!",
+      "parentUuid": "327415e6_4e3a2ba4",
       "range": {
         "startLine": 54,
         "startChar": 14,
