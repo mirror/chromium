@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fef89e92_0e090fe8",
+        "filename": "third_party/WebKit/Source/modules/media_controls/BUILD.gn",
+        "patchSetId": 23
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-27T11:45:09Z",
+      "side": 1,
+      "message": "Is this needed?",
+      "revId": "851ea0787867bd5aa1228d854e03f17c3f6ed01e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ba6595f_c26a7001",
+        "filename": "third_party/WebKit/Source/modules/media_controls/DEPS",
+        "patchSetId": 23
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-27T11:45:09Z",
+      "side": 1,
+      "message": "Is this needed?",
+      "revId": "851ea0787867bd5aa1228d854e03f17c3f6ed01e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "918a739f_39e34949",
+        "filename": "third_party/WebKit/Source/platform/DEPS",
+        "patchSetId": 23
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-27T11:45:09Z",
+      "side": 1,
+      "message": "Would it make sense to ResourceBundleHelper.h to platform/loader/? Then we can limit the dependency to platform/loader/.\n\nIn general, it wouldn\u0027t be a good idea to increase # of files scattered directly under platform/.",
+      "revId": "851ea0787867bd5aa1228d854e03f17c3f6ed01e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c58f080_d523321d",
+        "filename": "third_party/WebKit/Source/platform/ResourceBundleHelper.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-27T11:45:09Z",
+      "side": 1,
+      "message": "Use String::FromUTF8().",
+      "revId": "851ea0787867bd5aa1228d854e03f17c3f6ed01e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "353a5223_fca546e8",
+        "filename": "third_party/WebKit/Source/platform/ResourceBundleHelper.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-27T11:45:09Z",
+      "side": 1,
+      "message": "Use String::FromUTF8().",
+      "revId": "851ea0787867bd5aa1228d854e03f17c3f6ed01e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94c9d713_27bf9fdb",
+        "filename": "third_party/WebKit/Source/platform/heap/BUILD.gn",
+        "patchSetId": 23
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-27T11:45:09Z",
+      "side": 1,
+      "message": "Why is this needed?",
+      "revId": "851ea0787867bd5aa1228d854e03f17c3f6ed01e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
