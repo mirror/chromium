@@ -116,6 +116,30 @@
       "revId": "e9f0b8130ddbf7c15523d20d656b239ffa95ea5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "760b1304_2195cd7a",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-09-27T01:46:59Z",
+      "side": 1,
+      "message": "I don\u0027t think that the place we landed with the Metrics classes is ideal either. I think they have too much knowledge of the progress of the PWA check. I have a half-finished CL which attempts to address this, but had to de-prioritize it.",
+      "parentUuid": "108cabfe_2aba5b35",
+      "range": {
+        "startLine": 284,
+        "startChar": 0,
+        "endLine": 289,
+        "endChar": 1
+      },
+      "revId": "e9f0b8130ddbf7c15523d20d656b239ffa95ea5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

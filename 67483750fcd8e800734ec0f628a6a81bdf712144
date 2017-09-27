@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca93e9e0_fa8a34cf",
+        "filename": "chrome/browser/installable/installable_metrics.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-09-27T01:46:59Z",
+      "side": 1,
+      "message": "did you still intend to change this name here (the change in the cc is reverted)?",
+      "range": {
+        "startLine": 77,
+        "startChar": 18,
+        "endLine": 77,
+        "endChar": 44
+      },
+      "revId": "67483750fcd8e800734ec0f628a6a81bdf712144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
