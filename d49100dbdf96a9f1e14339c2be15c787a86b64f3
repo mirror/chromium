@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "efb0a8af_a46090db",
+        "filename": "chrome/browser/chromeos/policy/off_hours/weekly_time.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-27T10:32:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab31d649_86c3f65d",
+      "range": {
+        "startLine": 46,
+        "startChar": 11,
+        "endLine": 46,
+        "endChar": 22
+      },
+      "revId": "d49100dbdf96a9f1e14339c2be15c787a86b64f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f00c9933_c1a5bd64",
         "filename": "chrome/browser/chromeos/policy/off_hours/weekly_time.h",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "d49100dbdf96a9f1e14339c2be15c787a86b64f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "874edbb3_4f1a46c0",
+        "filename": "chrome/browser/chromeos/policy/off_hours/weekly_time.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-27T10:32:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f00c9933_c1a5bd64",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 16
+      },
+      "revId": "d49100dbdf96a9f1e14339c2be15c787a86b64f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
