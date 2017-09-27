@@ -142,7 +142,6 @@
         "NetworkWaterfallColumn.js",
         "RequestCookiesView.js",
         "RequestHeadersView.js",
-        "RequestHTMLView.js",
         "RequestResponseView.js",
         "RequestPreviewView.js",
         "RequestTimingView.js",

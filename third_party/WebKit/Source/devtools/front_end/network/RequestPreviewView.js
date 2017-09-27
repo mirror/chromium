@@ -61,7 +61,7 @@ Network.RequestPreviewView = class extends Network.RequestResponseView {
 
     // We can assume the status code has been set already because fetching contentData should wait for request to be
     // finished.
-    if (!this.request.hasErrorStatusCode() && this.request.resourceType() !== Common.resourceTypes.XHR)
+    if (!this.request.hasErrorStatusCode())
       return null;
 
     var whitelist = new Set(['text/html', 'text/plain', 'application/xhtml+xml']);
@@ -70,7 +70,7 @@ Network.RequestPreviewView = class extends Network.RequestResponseView {
 
     var dataURL = Common.ContentProvider.contentAsDataURL(
         contentData.content, this.request.mimeType, contentData.encoded, contentData.encoded ? 'utf-8' : null);
-    return dataURL ? new Network.RequestHTMLView(dataURL) : null;
+    return dataURL ? new SourceFrame.HTMLView(dataURL) : null;
   }
 
   /**
