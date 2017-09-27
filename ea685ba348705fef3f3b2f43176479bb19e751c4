@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca7947ec_5298d62e",
+        "filename": "content/common/leveldb_wrapper.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-27T20:30:25Z",
+      "side": 1,
+      "message": "But how does somebody calling this method know if values are cached? It\u0027s hard to follow a \"if FOO then you must do X\" requirement if there is no way to determine of FOO is true or not...",
+      "revId": "ea685ba348705fef3f3b2f43176479bb19e751c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
