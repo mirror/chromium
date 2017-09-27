@@ -23,6 +23,7 @@ namespace blink {
 template class WorkletThreadHolder<AudioWorkletThread>;
 
 WebThread* AudioWorkletThread::s_backing_thread_ = nullptr;
+unsigned AudioWorkletThread::s_ref_count_ = 0;
 
 std::unique_ptr<AudioWorkletThread> AudioWorkletThread::Create(
     ThreadableLoadingContext* loading_context,
@@ -30,6 +31,7 @@ std::unique_ptr<AudioWorkletThread> AudioWorkletThread::Create(
   TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("audio-worklet"),
                "AudioWorkletThread::create");
   DCHECK(IsMainThread());
+  s_ref_count_++;
   return WTF::WrapUnique(
       new AudioWorkletThread(loading_context, worker_reporting_proxy));
 }
@@ -43,6 +45,12 @@ AudioWorkletThread::~AudioWorkletThread() {}
 
 WorkerBackingThread& AudioWorkletThread::GetWorkerBackingThread() {
   return *WorkletThreadHolder<AudioWorkletThread>::GetInstance()->GetThread();
+}
+
+void AudioWorkletThread::ClearWorkerBackingThread() {
+  DCHECK(IsMainThread());
+  if (s_ref_count_-- == 0)
+    ClearSharedBackingThread();
 }
 
 void CollectAllGarbageOnAudioWorkletThread(WaitableEvent* done_event) {

@@ -37,6 +37,14 @@ void AudioWorklet::UnregisterContext(BaseAudioContext* context) {
   contexts_.erase(context);
 }
 
+AudioWorkletMessagingProxy* AudioWorklet::WorkletMessagingProxy() {
+  return static_cast<AudioWorkletMessagingProxy*>(FindAvailableGlobalScope());
+}
+
+bool AudioWorklet::IsWorkletMessagingProxyCreated() const {
+  return GetNumberOfGlobalScopes() > 0;
+}
+
 bool AudioWorklet::NeedsToCreateGlobalScope() {
   // TODO(hongchan): support multiple WorkletGlobalScopes, one scope per a
   // BaseAudioContext. In order to do it, FindAvailableGlobalScope() needs to
@@ -52,6 +60,12 @@ WorkletGlobalScopeProxy* AudioWorklet::CreateGlobalScope() {
   AudioWorkletMessagingProxy* proxy =
       new AudioWorkletMessagingProxy(GetExecutionContext(), worker_clients);
   proxy->Initialize();
+
+  for (BaseAudioContext* context : contexts_) {
+    if (!context->WorkletMessagingProxy())
+      context->SetWorkletMessagingProxy(proxy);
+  }
+
   return proxy;
 }
 

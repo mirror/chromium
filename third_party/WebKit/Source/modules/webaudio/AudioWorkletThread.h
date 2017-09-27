@@ -27,8 +27,10 @@ class MODULES_EXPORT AudioWorkletThread final : public WorkerThread {
 
   WorkerBackingThread& GetWorkerBackingThread() override;
 
-  // The backing thread is cleared by clearSharedBackingThread().
-  void ClearWorkerBackingThread() override {}
+  // Invoked by WorkerThread, decrements the reference count on the static
+  // backing thread. When the count reaches to 0, it clears the static backing
+  // thread.
+  void ClearWorkerBackingThread() override;
 
   // This may block the main thread.
   static void CollectAllGarbage();
@@ -55,6 +57,7 @@ class MODULES_EXPORT AudioWorkletThread final : public WorkerThread {
   // This raw pointer gets assigned in EnsureSharedBackingThread() and manually
   // released by ClearSharedBackingThread().
   static WebThread* s_backing_thread_;
+  static unsigned s_ref_count_;
 };
 
 }  // namespace blink
