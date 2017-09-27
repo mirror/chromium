@@ -2,6 +2,86 @@
   "comments": [
     {
       "key": {
+        "uuid": "41bcc402_43678b99",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-09-27T15:41:34Z",
+      "side": 1,
+      "message": "can you pull the stuff inside the if inside a separate function?\n\nif (IsOutOfFlowPositioned())\n  DoSomething();",
+      "revId": "a324b0d61fa7bcfe57ef6b1ce8455a6a1fa19574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbd13cdb_d79a5b40",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-09-27T15:41:34Z",
+      "side": 1,
+      "message": "A comment describing what this code-block is doing would be good.",
+      "range": {
+        "startLine": 49,
+        "startChar": 46,
+        "endLine": 49,
+        "endChar": 0
+      },
+      "revId": "a324b0d61fa7bcfe57ef6b1ce8455a6a1fa19574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c673873f_08f6a510",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-09-27T15:41:34Z",
+      "side": 1,
+      "message": "Any reason to declare this here, instead of where it is assigned?",
+      "range": {
+        "startLine": 71,
+        "startChar": 4,
+        "endLine": 71,
+        "endChar": 37
+      },
+      "revId": "a324b0d61fa7bcfe57ef6b1ce8455a6a1fa19574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb645dac_f58d8faa",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-09-27T15:41:34Z",
+      "side": 1,
+      "message": "will this for loop only ever be one?",
+      "revId": "a324b0d61fa7bcfe57ef6b1ce8455a6a1fa19574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f12a880_d7fb05c3",
         "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
         "patchSetId": 2
@@ -13,6 +93,87 @@
       "writtenOn": "2017-09-13T16:55:52Z",
       "side": 1,
       "message": "Now that the override_width/height are gone, I do not think anyone else uses that them for CreateFromLayoutObject. wdyt about ripping it out in this patch?",
+      "revId": "a324b0d61fa7bcfe57ef6b1ce8455a6a1fa19574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5f8b1ca_6605d386",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-09-27T15:41:34Z",
+      "side": 1,
+      "message": "sgtm",
+      "parentUuid": "0f12a880_d7fb05c3",
+      "revId": "a324b0d61fa7bcfe57ef6b1ce8455a6a1fa19574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbe6b018_9176df3b",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-09-27T15:41:34Z",
+      "side": 1,
+      "message": "If something is OOF, will anything query its margins? (probably not just want to make sure).",
+      "revId": "a324b0d61fa7bcfe57ef6b1ce8455a6a1fa19574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "512dd8cf_97353125",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_out_of_flow_layout_part.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-09-27T15:41:34Z",
+      "side": 1,
+      "message": "move to initializer list?",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 20
+      },
+      "revId": "a324b0d61fa7bcfe57ef6b1ce8455a6a1fa19574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ba51401_b12e3804",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_out_of_flow_layout_part.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-09-27T15:41:34Z",
+      "side": 1,
+      "message": "move to below LayoutDescendant for consistent ordering with header.",
+      "range": {
+        "startLine": 72,
+        "startChar": 28,
+        "endLine": 72,
+        "endChar": 58
+      },
       "revId": "a324b0d61fa7bcfe57ef6b1ce8455a6a1fa19574",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
