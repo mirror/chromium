@@ -1926,8 +1926,7 @@ void RendererSchedulerImpl::OnTaskCompleted(MainThreadTaskQueue* queue,
   task_queue_throttler()->OnTaskRunTimeReported(queue, start, end);
 
   // TODO(altimin): Per-page metrics should also be considered.
-  main_thread_only().metrics_helper.RecordTaskMetrics(queue->queue_type(),
-                                                      start, end);
+  main_thread_only().metrics_helper.RecordTaskMetrics(queue, start, end);
 }
 
 void RendererSchedulerImpl::OnBeginNestedRunLoop() {

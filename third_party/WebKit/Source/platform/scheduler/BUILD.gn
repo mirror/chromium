@@ -97,7 +97,6 @@ source_set("scheduler") {
     "renderer/renderer_web_scheduler_impl.h",
     "renderer/task_cost_estimator.cc",
     "renderer/task_cost_estimator.h",
-    "renderer/task_duration_metric_reporter.cc",
     "renderer/task_duration_metric_reporter.h",
     "renderer/task_queue_throttler.cc",
     "renderer/task_queue_throttler.h",
