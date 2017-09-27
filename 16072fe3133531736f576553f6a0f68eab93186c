@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d631257d_6e5caae7",
+        "filename": "chrome/browser/extensions/extension_system_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-27T22:31:16Z",
+      "side": 1,
+      "message": "needed?",
+      "revId": "16072fe3133531736f576553f6a0f68eab93186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "483f406d_13d28e72",
+        "filename": "extensions/browser/extension_registrar.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-27T22:31:16Z",
+      "side": 1,
+      "message": "Update",
+      "revId": "16072fe3133531736f576553f6a0f68eab93186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e343d2ee_14d7159a",
+        "filename": "extensions/browser/extension_registrar_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-27T22:31:16Z",
+      "side": 1,
+      "message": "needed?",
+      "revId": "16072fe3133531736f576553f6a0f68eab93186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fc3ed58_04745649",
+        "filename": "extensions/browser/extension_registrar_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-27T22:31:16Z",
+      "side": 1,
+      "message": "nit: any reason to do \u0026 rather than \u003d\u003d if we enforce that only one is passed?  Up to you.",
+      "revId": "16072fe3133531736f576553f6a0f68eab93186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0588c7f2_515a91fe",
+        "filename": "extensions/browser/extension_registrar_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-27T22:31:16Z",
+      "side": 1,
+      "message": "nit: DISALLOW_COPY_AND_ASSIGN()",
+      "revId": "16072fe3133531736f576553f6a0f68eab93186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
