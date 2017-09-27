@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6e21bc9a_02386cac",
+        "filename": "chrome/app/md_extensions_strings.grdp",
+        "patchSetId": 8
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-27T21:25:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb27b445_80d0d796",
+      "revId": "40150937613ba9d3799d2901bb68c14159cb0810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8f39b13_a49055fd",
         "filename": "chrome/browser/resources/md_extensions/kiosk_dialog.html",
         "patchSetId": 8
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "6b3785ca_726c55b2",
+        "filename": "chrome/browser/resources/md_extensions/kiosk_dialog.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-27T21:25:58Z",
+      "side": 1,
+      "message": "As xiyuan mentioned, this is kind of a unique situation in which neither a checkbox or a radio button would fit. Radio button would be weird because users are allowed to \"unset\" the auto-launch status, but you typically can\u0027t \"unselect\" a checked radio button.",
+      "parentUuid": "4c2924c9_a1c6161d",
+      "revId": "40150937613ba9d3799d2901bb68c14159cb0810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8521f679_ba04b616",
         "filename": "chrome/browser/resources/md_extensions/kiosk_dialog.html",
         "patchSetId": 8
@@ -68,6 +104,24 @@
       "revId": "40150937613ba9d3799d2901bb68c14159cb0810",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f423de7b_2261a276",
+        "filename": "chrome/browser/resources/md_extensions/kiosk_dialog.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-27T21:25:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8521f679_ba04b616",
+      "revId": "40150937613ba9d3799d2901bb68c14159cb0810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "7f48714d_0e247bfb",
+        "filename": "chrome/browser/resources/md_extensions/kiosk_dialog.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-27T21:25:58Z",
+      "side": 1,
+      "message": "updateApp_ would not be called with an app that\u0027s not already in this.apps_, so I went with your first approach.",
+      "parentUuid": "897e667c_e28481c4",
+      "revId": "40150937613ba9d3799d2901bb68c14159cb0810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b531682_0e8efb6b",
         "filename": "chrome/browser/resources/md_extensions/kiosk_dialog.js",
         "patchSetId": 8
@@ -102,6 +174,24 @@
       "revId": "40150937613ba9d3799d2901bb68c14159cb0810",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af6e5c62_c1ec8498",
+        "filename": "chrome/browser/resources/md_extensions/kiosk_dialog.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-27T21:25:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b531682_0e8efb6b",
+      "revId": "40150937613ba9d3799d2901bb68c14159cb0810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "a7fd9a19_b1debdb4",
+        "filename": "chrome/browser/resources/md_extensions/manager.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-27T21:25:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5db827df_8444a952",
+      "revId": "40150937613ba9d3799d2901bb68c14159cb0810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1d06404_dbe0d309",
         "filename": "chrome/browser/resources/md_extensions/manager.js",
         "patchSetId": 8
@@ -139,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "6146a949_893631c6",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-27T21:25:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1d06404_dbe0d309",
+      "revId": "40150937613ba9d3799d2901bb68c14159cb0810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1db09aa_54ef4f8e",
         "filename": "chrome/browser/resources/md_extensions/manager.js",
         "patchSetId": 8
@@ -153,6 +279,24 @@
       "revId": "40150937613ba9d3799d2901bb68c14159cb0810",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06247112_b95e90fc",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-27T21:25:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1db09aa_54ef4f8e",
+      "revId": "40150937613ba9d3799d2901bb68c14159cb0810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
