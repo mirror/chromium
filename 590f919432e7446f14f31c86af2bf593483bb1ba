@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b8f012d_867d5a16",
+        "filename": "chrome/browser/ui/views/frame/system_menu_model_builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-27T20:26:38Z",
+      "side": 0,
+      "message": "The check for logged_in_users on lines 156-159 handles this case.",
+      "revId": "590f919432e7446f14f31c86af2bf593483bb1ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
