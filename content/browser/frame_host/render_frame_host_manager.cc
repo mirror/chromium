@@ -1291,6 +1291,9 @@ RenderFrameHostManager::DetermineSiteInstanceForURL(
         frame_tree_node_->parent()->current_frame_host()->GetSiteInstance();
     if (parent_site_instance->GetSiteURL().SchemeIs(kChromeUIScheme) &&
         dest_url.SchemeIs(kChromeUIScheme)) {
+      // This exception likely isn't needed anymore.  If this CHECK passes, then
+      // it's redundant with the logic below and can be removed.
+      CHECK(IsCurrentlySameSite(render_frame_host_.get(), dest_url));
       return SiteInstanceDescriptor(parent_site_instance);
     }
   }
