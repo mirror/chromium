@@ -16,6 +16,24 @@
       "revId": "5f389b81e934d4ec10307071f1103b26554535b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c87d2952_240162b7",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-09-27T18:02:13Z",
+      "side": 0,
+      "message": "I went through Calculator (a v2 app) and made sure it did the right transitions also.",
+      "parentUuid": "e1dc78df_109aeeba",
+      "revId": "5f389b81e934d4ec10307071f1103b26554535b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
