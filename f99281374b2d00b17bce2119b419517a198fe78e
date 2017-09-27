@@ -34,6 +34,24 @@
       "revId": "f99281374b2d00b17bce2119b419517a198fe78e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d5095f5_8726438a",
+        "filename": "components/viz/host/hit_test/hit_test_query.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-27T20:18:03Z",
+      "side": 1,
+      "message": "Hm. That\u0027s a good point. OK. What you have here should be good for now.\n\nCan you please document that |target_ancestors.front()| is the target, and the |target_ancestors.back()| is the root?",
+      "parentUuid": "72ca9dad_4df8da23",
+      "revId": "f99281374b2d00b17bce2119b419517a198fe78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
