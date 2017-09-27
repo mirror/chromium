@@ -18,6 +18,7 @@
 #include "ui/views/border.h"
 #include "ui/views/controls/link.h"
 #include "ui/views/controls/styled_label_listener.h"
+#include "ui/views/style/typography.h"
 #include "ui/views/test/views_test_base.h"
 #include "ui/views/widget/widget.h"
 
@@ -339,7 +340,9 @@ TEST_F(StyledLabelTest, MAYBE_StyledRangeUnderlined) {
   const std::string underlined_text("and this should be undelined");
   InitStyledLabel(text + underlined_text);
   StyledLabel::RangeStyleInfo style_info;
-  style_info.font_style = gfx::Font::UNDERLINE;
+  style_info.tooltip = ASCIIToUTF16("tooltip");
+  style_info.custom_font =
+      styled()->GetDefaultFontList().DeriveWithStyle(gfx::Font::UNDERLINE);
   styled()->AddStyleRange(
       gfx::Range(static_cast<uint32_t>(text.size()),
                  static_cast<uint32_t>(text.size() + underlined_text.size())),
@@ -363,7 +366,8 @@ TEST_F(StyledLabelTest, StyledRangeBold) {
   InitStyledLabel(bold_text + text);
 
   StyledLabel::RangeStyleInfo style_info;
-  style_info.weight = gfx::Font::Weight::BOLD;
+  style_info.custom_font =
+      styled()->GetDefaultFontList().DeriveWithWeight(gfx::Font::Weight::BOLD);
   styled()->AddStyleRange(
       gfx::Range(0u, static_cast<uint32_t>(bold_text.size())), style_info);
 
@@ -425,7 +429,7 @@ TEST_F(StyledLabelTest, Color) {
   InitStyledLabel(text_red + text_link + text);
 
   StyledLabel::RangeStyleInfo style_info_red;
-  style_info_red.color = SK_ColorRED;
+  style_info_red.override_color = SK_ColorRED;
   styled()->AddStyleRange(
       gfx::Range(0u, static_cast<uint32_t>(text_red.size())), style_info_red);
 
@@ -540,22 +544,30 @@ TEST_P(MDStyledLabelTest, StyledRangeWithTooltip) {
   EXPECT_EQ(ASCIIToUTF16("tooltip"), tooltip);
 }
 
-TEST_F(StyledLabelTest, SetBaseFontList) {
+TEST_F(StyledLabelTest, SetTextContextAndDefaultStyle) {
   const std::string text("This is a test block of text.");
   InitStyledLabel(text);
-  std::string font_name("arial");
-  gfx::Font font(font_name, 30);
-  styled()->SetBaseFontList(gfx::FontList(font));
-  Label label(ASCIIToUTF16(text), Label::CustomFont{gfx::FontList(font)});
+  styled()->SetTextContext(style::CONTEXT_DIALOG_TITLE);
+  styled()->SetDefaultTextStyle(style::STYLE_DISABLED);
+  Label label(ASCIIToUTF16(text), style::CONTEXT_DIALOG_TITLE,
+              style::STYLE_DISABLED);
 
   styled()->SetBounds(0,
                       0,
                       label.GetPreferredSize().width(),
                       label.GetPreferredSize().height());
 
-  // Make sure we have the same sizing as a label.
+  // Make sure we have the same sizing as a label with the same style.
   EXPECT_EQ(label.GetPreferredSize().height(), styled()->height());
   EXPECT_EQ(label.GetPreferredSize().width(), styled()->width());
+
+  styled()->Layout();
+  ASSERT_EQ(1, styled()->child_count());
+  Label* sublabel = static_cast<Label*>(styled()->child_at(0));
+  EXPECT_EQ(style::CONTEXT_DIALOG_TITLE, sublabel->text_context());
+
+  EXPECT_NE(SK_ColorBLACK, label.enabled_color());  // Sanity check,
+  EXPECT_EQ(label.enabled_color(), sublabel->enabled_color());
 }
 
 TEST_F(StyledLabelTest, LineHeight) {
