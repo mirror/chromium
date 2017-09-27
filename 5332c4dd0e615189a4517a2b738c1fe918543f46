@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "90e0fe0a_ad5cc332",
+        "filename": "content/browser/utility_process_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-27T03:06:43Z",
+      "side": 1,
+      "message": "Fair enough. I was trying to make the code match what we were doing for running --mash in the chrome side, which had this logic. But I can see how that would break things.\n\nI will look into tweaking AdjustUtilityServiceProcessCommandLine (or some variant) and having it take on this responsibility only for ash and the ui service. Does something like that sound reasonable?",
+      "parentUuid": "3bc83c4c_0b8a85be",
+      "revId": "5332c4dd0e615189a4517a2b738c1fe918543f46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3bdaec24_c36810ae",
         "filename": "content/browser/utility_process_host_impl.h",
         "patchSetId": 1
@@ -64,6 +82,24 @@
       "writtenOn": "2017-09-27T00:17:57Z",
       "side": 1,
       "message": "Can we please not introduce this until it\u0027s actually overridden and needed somewhere? And that includes the corresponding API on UtilityProcessHost to override the program path. I would like to avoid UtilityProcessHost getting repurposed for launching arbitrary other executables. \n\nThe service manager is already capable of doing that and we explicitly block it in Chrome to prevent accidental use in production where its use is definitely not desirable. If it\u0027s just for test environments, we could add a testing API to content to allow a whitelist or something on the existing service manager launching code.\n\nBut stepping back for a second, I think this moves us *further* from where we want to be. I\u0027m not sure we should maintain support for launching external binaries at all. There\u0027s very little chance we\u0027re going to need or want to ship ash / ui / viz / whatever as actual separate binaries any time soon, if ever, and if we do it would look very different from all of this.\n\nI would prefer we take a different approach here and instead ensure that required services are built into whatever executable (chrome, browser_tests, views_mus_unittests, etc) is hosting them. Then we can modify our existing embedded service support if/as needed to satisfy the new use cases. This will contribute to the ongoing convergence toward a single unified service launching codepath instead of introducing yet another.",
+      "revId": "5332c4dd0e615189a4517a2b738c1fe918543f46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e72ca6c8_35913e46",
+        "filename": "content/public/test/test_launcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-27T03:06:43Z",
+      "side": 1,
+      "message": "Actually, I wanted to use all this API (see https://chromium-review.googlesource.com/c/chromium/src/+/685979 for the WIP mega-patch). The reason I introduced the functionality here is because I was getting stuck in a cycle where trying to launch the utility process would run the test again. But I think it\u0027s because of the command line copying. In particular copying the gtest_filter means running the test again. I will look into fixing command line updating, which will hopefully mean I don\u0027t need to change the program.",
+      "parentUuid": "13bf79be_3cc4de88",
       "revId": "5332c4dd0e615189a4517a2b738c1fe918543f46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
