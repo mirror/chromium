@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "636a7499_72e9ffe5",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 3272,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-09-27T13:51:54Z",
+      "side": 1,
+      "message": "FYI I\u0027m trying to land https://chromium-review.googlesource.com/c/chromium/src/+/671353/6/ios/chrome/browser/ui/uikit_ui_util.mm",
+      "range": {
+        "startLine": 3272,
+        "startChar": 3,
+        "endLine": 3272,
+        "endChar": 34
+      },
+      "revId": "1a2d357f5ca63961be892146bf3d91d000802cfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61620a05_4c99cd03",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_bar.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-09-27T13:51:54Z",
+      "side": 1,
+      "message": "Thanks for the new comments! They are very useful.\n\nHere\u0027s a small suggestion:\nChange:\n// Percentage overlay sits over tab bar buttons.\nto:\n// Percentage of the overlay that sits over the tab bar buttons.\nor\n// Percentage of the overlay sitting over the tab bar buttons.",
+      "range": {
+        "startLine": 29,
+        "startChar": 14,
+        "endLine": 29,
+        "endChar": 26
+      },
+      "revId": "1a2d357f5ca63961be892146bf3d91d000802cfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faffce29_7c01aa9b",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_bar.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-09-27T13:51:54Z",
+      "side": 1,
+      "message": "Not feeling too strongly about it, but I think that \"safeArea\" is slightly misleading as this variable actually contains information about the \"unsafe area\".",
+      "range": {
+        "startLine": 71,
+        "startChar": 12,
+        "endLine": 71,
+        "endChar": 31
+      },
+      "revId": "1a2d357f5ca63961be892146bf3d91d000802cfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acc9ac88_245d48aa",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_bar.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-09-27T13:51:54Z",
+      "side": 1,
+      "message": "can we get away with just passing CGRectZero?",
+      "range": {
+        "startLine": 95,
+        "startChar": 20,
+        "endLine": 95,
+        "endChar": 72
+      },
+      "revId": "1a2d357f5ca63961be892146bf3d91d000802cfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8302fb21_52147efb",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_bar.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-09-27T13:51:54Z",
+      "side": 1,
+      "message": "Is it possible to use UIEdgeInsetsInsetRect?\n\nself.contentView.frame \u003d UIEdgeInsetsInsetRect(self.frame, self.safeAreaFromNTPView);",
+      "range": {
+        "startLine": 135,
+        "startChar": 26,
+        "endLine": 136,
+        "endChar": 68
+      },
+      "revId": "1a2d357f5ca63961be892146bf3d91d000802cfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
