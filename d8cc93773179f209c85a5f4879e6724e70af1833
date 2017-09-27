@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "423256c0_6d4f5658",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-09-27T22:40:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0b6da44_e0ebbafb",
+      "revId": "d8cc93773179f209c85a5f4879e6724e70af1833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96cf9776_a755ca7c",
         "filename": "third_party/WebKit/Source/devtools/front_end/text_utils/TextUtils.js",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "d8cc93773179f209c85a5f4879e6724e70af1833",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea177c7e_b2d34ba0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/text_utils/TextUtils.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-09-27T22:40:44Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "96cf9776_a755ca7c",
+      "revId": "d8cc93773179f209c85a5f4879e6724e70af1833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1052d512_9f07872e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/text_utils/TextUtils.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-09-27T22:40:44Z",
+      "side": 1,
+      "message": "Done, as an object of arrays.",
+      "parentUuid": "70073043_54305bcc",
+      "revId": "d8cc93773179f209c85a5f4879e6724e70af1833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28d1c411_356b17ed",
         "filename": "third_party/WebKit/Source/devtools/front_end/text_utils/TextUtils.js",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "d8cc93773179f209c85a5f4879e6724e70af1833",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a624b32e_f159d0b8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/text_utils/TextUtils.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-09-27T22:40:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28d1c411_356b17ed",
+      "revId": "d8cc93773179f209c85a5f4879e6724e70af1833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ec302e10_e95b069d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/text_utils/TextUtils.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-09-27T22:40:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8ecf94e_7ef4b34b",
+      "revId": "d8cc93773179f209c85a5f4879e6724e70af1833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "747eca76_d6e492a7",
         "filename": "third_party/WebKit/Source/devtools/front_end/text_utils/TextUtils.js",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "d8cc93773179f209c85a5f4879e6724e70af1833",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9ef1959_86e4deff",
+        "filename": "third_party/WebKit/Source/devtools/front_end/text_utils/TextUtils.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-09-27T22:40:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "747eca76_d6e492a7",
+      "revId": "d8cc93773179f209c85a5f4879e6724e70af1833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
