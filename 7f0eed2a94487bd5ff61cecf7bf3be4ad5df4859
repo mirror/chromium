@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b817e15_23f0608b",
+        "filename": "ios/chrome/browser/ui/commands/snackbar_commands.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-27T11:26:36Z",
+      "side": 1,
+      "message": "Is it worth mentioning that only one snackbar can be visible at a time, and the others will be....silently dropped?  Shown later?\n\nDoes that info belong in the public contract?",
+      "revId": "7f0eed2a94487bd5ff61cecf7bf3be4ad5df4859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d030cf3a_ed6772ed",
+        "filename": "ios/chrome/browser/ui/snackbar/snackbar_coordinator.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-27T11:26:36Z",
+      "side": 1,
+      "message": "This is changing from what it used to be in BVC.  Does that matter?  Is the category ever persisted across app restarts?",
+      "revId": "7f0eed2a94487bd5ff61cecf7bf3be4ad5df4859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
