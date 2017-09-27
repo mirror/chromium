@@ -22,6 +22,47 @@
       "revId": "27662760aad2b5851c6b1732789cd9ad7776e739",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57114ff5_b93c18ea",
+        "filename": "content/renderer/media/user_media_client_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-27T14:17:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ea67102b_6169fdb9",
+      "range": {
+        "startLine": 152,
+        "startChar": 10,
+        "endLine": 152,
+        "endChar": 35
+      },
+      "revId": "27662760aad2b5851c6b1732789cd9ad7776e739",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0c3d3164_863422b2",
+        "filename": "content/renderer/media/user_media_client_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-27T14:17:37Z",
+      "side": 1,
+      "message": "Without the else, would it cancel current + next one queued?",
+      "revId": "27662760aad2b5851c6b1732789cd9ad7776e739",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
