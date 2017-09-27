@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2593c15c_a986da35",
+        "filename": "chrome/browser/ui/search/ntp_user_data_logger_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-09-27T08:11:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac58338b_0423bec8",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 5
+      },
+      "revId": "9c240279ad9c0440d57f28d1e7e53ebddb12accd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c5d8bb1_dcbfc85b",
         "filename": "chrome/browser/ui/search/ntp_user_data_logger_unittest.cc",
         "patchSetId": 12
@@ -142,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "adca3af4_a2d5f469",
+        "filename": "chrome/browser/ui/search/ntp_user_data_logger_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-09-27T08:11:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ded2cc0_13e7c462",
+      "range": {
+        "startLine": 87,
+        "startChar": 8,
+        "endLine": 87,
+        "endChar": 15
+      },
+      "revId": "9c240279ad9c0440d57f28d1e7e53ebddb12accd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b60916c2_e4b27984",
         "filename": "chrome/browser/ui/search/ntp_user_data_logger_unittest.cc",
         "patchSetId": 12
@@ -162,6 +210,30 @@
       "revId": "9c240279ad9c0440d57f28d1e7e53ebddb12accd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30db51ce_d7c4aa40",
+        "filename": "chrome/browser/ui/search/ntp_user_data_logger_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-09-27T08:11:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b60916c2_e4b27984",
+      "range": {
+        "startLine": 292,
+        "startChar": 53,
+        "endLine": 292,
+        "endChar": 65
+      },
+      "revId": "9c240279ad9c0440d57f28d1e7e53ebddb12accd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
