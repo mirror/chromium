@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "612663c5_3529a23b",
+        "filename": "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-09-27T21:17:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80c829cb_700cc6fb",
+      "range": {
+        "startLine": 68,
+        "startChar": 22,
+        "endLine": 68,
+        "endChar": 39
+      },
+      "revId": "272e704388e918185d00949826641887c3f2ec07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1bc708d4_71a65422",
         "filename": "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_mouse_tracker.mm",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "272e704388e918185d00949826641887c3f2ec07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5135583_88773987",
+        "filename": "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_mouse_tracker.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-09-27T21:17:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bc708d4_71a65422",
+      "revId": "272e704388e918185d00949826641887c3f2ec07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "f81bdead_8be2fc4b",
+        "filename": "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_mouse_tracker.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-09-27T21:17:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d431e569_6d5b11a1",
+      "revId": "272e704388e918185d00949826641887c3f2ec07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "496f2430_9f1d1945",
         "filename": "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_mouse_tracker.mm",
         "patchSetId": 2
@@ -70,6 +130,24 @@
       "writtenOn": "2017-09-27T20:48:46Z",
       "side": 1,
       "message": "Given that this is the MouseTracker class, shouldn\u0027t this class install the menu bar lock? It\u0027s a little odd that this forwards out tracking area messages to a different class. Did you have a reason for doing it this way?",
+      "revId": "272e704388e918185d00949826641887c3f2ec07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a555ce98_79b0a25c",
+        "filename": "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_mouse_tracker.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-09-27T21:17:43Z",
+      "side": 1,
+      "message": "I started out that way, but moved it because FullscreenToolbarMouseTracker doesn\u0027t currently have any side effects — it\u0027s essentially just a high-level tracking area. If you still think it makes more sense for it to live here, let me know and I\u0027ll move it.",
+      "parentUuid": "496f2430_9f1d1945",
       "revId": "272e704388e918185d00949826641887c3f2ec07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "7969705c_54edf68a",
+        "filename": "ui/base/cocoa/scoped_menu_bar_lock.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-09-27T21:17:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ae29fa2_baefd807",
+      "revId": "272e704388e918185d00949826641887c3f2ec07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be60b300_1baf9902",
         "filename": "ui/base/cocoa/scoped_menu_bar_lock.mm",
         "patchSetId": 2
@@ -107,6 +203,24 @@
       "revId": "272e704388e918185d00949826641887c3f2ec07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "860a2271_92ac8d3b",
+        "filename": "ui/base/cocoa/scoped_menu_bar_lock.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-09-27T21:17:43Z",
+      "side": 1,
+      "message": "There\u0027s an internal counter. Locking more than once is fine as long as they\u0027re all balanced with unlocks.",
+      "parentUuid": "be60b300_1baf9902",
+      "revId": "272e704388e918185d00949826641887c3f2ec07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
