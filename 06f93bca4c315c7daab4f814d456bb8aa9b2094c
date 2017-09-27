@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b60f1e8_91e54b94",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-27T03:28:55Z",
+      "side": 1,
+      "message": "is this necessary? (remove?) I think this is default.",
+      "revId": "06f93bca4c315c7daab4f814d456bb8aa9b2094c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20bdb3ed_1d1518e0",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-27T03:28:55Z",
+      "side": 1,
+      "message": "nit: allow -\u003e allows",
+      "range": {
+        "startLine": 24,
+        "startChar": 7,
+        "endLine": 24,
+        "endChar": 12
+      },
+      "revId": "06f93bca4c315c7daab4f814d456bb8aa9b2094c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f38d051_0513ca81",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup_unittest.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-27T03:28:55Z",
+      "side": 1,
+      "message": "kParentWidgetSize isn\u0027t important for the test or used elsewhere. I\u0027d follow what most things in widget_unittest.cc do, which would be\n\n  parent_widget_-\u003eSetBounds(gfx::Rect(100, 100, 640, 480));\n\n\n(moving it away from the screen edge means there\u0027s less chance of flakes from OS menu bars/docks moving the window)",
+      "revId": "06f93bca4c315c7daab4f814d456bb8aa9b2094c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
