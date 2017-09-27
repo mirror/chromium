@@ -305,6 +305,22 @@ IN_PROC_BROWSER_TEST_F(IndexedDBBrowserTestWithGCExposed,
   SimpleTest(GetTestUrl("indexeddb", "database_callbacks_first.html"));
 }
 
+// Returns the number of blob files that have been deleted in the backing store.
+void GetDeletedBlobFiles(IndexedDBContextImpl* context, int* blobs_removed) {
+  IndexedDBFactory* factory = context->GetIDBFactory();
+  auto range =
+      factory->GetOpenDatabasesForOrigin(url::Origin(GURL("file:///")));
+
+  *blobs_removed = 0;
+  if (range.first == range.second)  // If no open db's for this origin.
+    return;
+
+  IndexedDBDatabase* db = range.first->second;
+  IndexedDBBackingStore* backing_store = db->backing_store();
+
+  *blobs_removed = backing_store->NumBlobFilesDeletedForTesting();
+}
+
 static void CopyLevelDBToProfile(Shell* shell,
                                  scoped_refptr<IndexedDBContextImpl> context,
                                  const std::string& test_directory) {
@@ -462,7 +478,11 @@ IN_PROC_BROWSER_TEST_F(IndexedDBBrowserTestWithGCExposed, DISABLED_BlobDidAck) {
   SimpleTest(GetTestUrl("indexeddb", "blob_did_ack.html"));
   // Wait for idle so that the blob ack has time to be received/processed by
   // the browser process.
+  scoped_refptr<base::ThreadTestHelper> helper =
+      base::MakeRefCounted<base::ThreadTestHelper>(GetContext()->TaskRunner());
+  ASSERT_TRUE(helper->Run());
   base::RunLoop().RunUntilIdle();
+  ASSERT_TRUE(helper->Run());
   content::ChromeBlobStorageContext* blob_context =
       ChromeBlobStorageContext::GetFor(
           shell()->web_contents()->GetBrowserContext());
