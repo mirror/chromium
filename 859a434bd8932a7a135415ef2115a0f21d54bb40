@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac5d116a_56cd9447",
+        "filename": "content/renderer/media_capture_from_element/html_video_element_capturer_source.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-27T20:27:30Z",
+      "side": 1,
+      "message": "Might be worth tracking the uploaded id to reduce resource usage for duped frames.",
+      "revId": "859a434bd8932a7a135415ef2115a0f21d54bb40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
