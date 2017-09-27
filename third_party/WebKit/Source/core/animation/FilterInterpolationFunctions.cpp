@@ -21,7 +21,7 @@ class FilterNonInterpolableValue : public NonInterpolableValue {
   static RefPtr<FilterNonInterpolableValue> Create(
       FilterOperation::OperationType type,
       RefPtr<NonInterpolableValue> type_non_interpolable_value) {
-    return WTF::AdoptRef(new FilterNonInterpolableValue(
+    return AdoptRef(new FilterNonInterpolableValue(
         type, std::move(type_non_interpolable_value)));
   }
 

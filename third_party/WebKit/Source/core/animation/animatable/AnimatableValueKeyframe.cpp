@@ -28,7 +28,7 @@ PropertyHandleSet AnimatableValueKeyframe::Properties() const {
 }
 
 RefPtr<Keyframe> AnimatableValueKeyframe::Clone() const {
-  return WTF::AdoptRef(new AnimatableValueKeyframe(*this));
+  return AdoptRef(new AnimatableValueKeyframe(*this));
 }
 
 RefPtr<Keyframe::PropertySpecificKeyframe>

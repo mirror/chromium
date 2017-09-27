@@ -15,12 +15,12 @@ namespace blink {
 class CSSSizeNonInterpolableValue : public NonInterpolableValue {
  public:
   static RefPtr<CSSSizeNonInterpolableValue> Create(CSSValueID keyword) {
-    return WTF::AdoptRef(new CSSSizeNonInterpolableValue(keyword));
+    return AdoptRef(new CSSSizeNonInterpolableValue(keyword));
   }
 
   static RefPtr<CSSSizeNonInterpolableValue> Create(
       RefPtr<NonInterpolableValue> length_non_interpolable_value) {
-    return WTF::AdoptRef(new CSSSizeNonInterpolableValue(
+    return AdoptRef(new CSSSizeNonInterpolableValue(
         std::move(length_non_interpolable_value)));
   }
 
