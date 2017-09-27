@@ -51,6 +51,24 @@
       "revId": "7be298cb0627a2a7c9ff418bd946f7004fe55f9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1d14cb9_977d362c",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1507,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-27T16:11:39Z",
+      "side": 1,
+      "message": "mmm right, ok I added some dchecks and comments PTAL",
+      "parentUuid": "cf9106de_9588a1ec",
+      "revId": "7be298cb0627a2a7c9ff418bd946f7004fe55f9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
