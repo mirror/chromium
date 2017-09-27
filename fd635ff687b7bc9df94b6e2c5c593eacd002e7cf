@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20df2fba_74423960",
+        "filename": "components/viz/service/frame_sinks/surface_references_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-27T02:01:51Z",
+      "side": 1,
+      "message": "This should be const, so you don\u0027t accidentally mutate it, which also means it should probably be a reference. It can\u0027t be null, so you don\u0027t really need a pointer?",
+      "range": {
+        "startLine": 116,
+        "startChar": 2,
+        "endLine": 116,
+        "endChar": 43
+      },
+      "revId": "fd635ff687b7bc9df94b6e2c5c593eacd002e7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08aa69c4_bf8796f1",
+        "filename": "components/viz/service/frame_sinks/surface_references_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-27T02:01:51Z",
+      "side": 1,
+      "message": "surface_manager_-\u003e",
+      "range": {
+        "startLine": 117,
+        "startChar": 11,
+        "endLine": 117,
+        "endChar": 32
+      },
+      "revId": "fd635ff687b7bc9df94b6e2c5c593eacd002e7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7278688d_870b7e48",
+        "filename": "components/viz/service/frame_sinks/surface_references_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-27T02:01:51Z",
+      "side": 1,
+      "message": "You aren\u0027t calling GetFrameSinkDebugLabel() after invalidating. That was the concern, because invalidate removes it from the map and looking up the label was reinserting it into the map.",
+      "revId": "fd635ff687b7bc9df94b6e2c5c593eacd002e7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efa382cd_9cd5f4ab",
+        "filename": "components/viz/service/frame_sinks/surface_references_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-27T02:01:51Z",
+      "side": 1,
+      "message": "It would be more obvious if you didn\u0027t involve an iterator here, since you don\u0027t need the iterator itself, you just to confirm the value isn\u0027t in the map.\n\nEXPECT_EQ(GetFrameSinkLabels().count(kFrameSink1), 0u);\nor\nEXPECT_THAT(GetFrameSinkLabels(), Not(Contains(kFrameSink1)));",
+      "revId": "fd635ff687b7bc9df94b6e2c5c593eacd002e7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e05e7af0_48f926be",
+        "filename": "components/viz/service/surfaces/surface_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-27T02:01:51Z",
+      "side": 1,
+      "message": "This isn\u0027t necessary.",
+      "range": {
+        "startLine": 586,
+        "startChar": 0,
+        "endLine": 587,
+        "endChar": 26
+      },
+      "revId": "fd635ff687b7bc9df94b6e2c5c593eacd002e7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
