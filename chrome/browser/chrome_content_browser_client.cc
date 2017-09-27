@@ -3419,8 +3419,9 @@ ChromeContentBrowserClient::GetTaskSchedulerInitParams() {
   return task_scheduler_util::GetBrowserTaskSchedulerInitParamsFromVariations();
 }
 
-base::FilePath ChromeContentBrowserClient::GetLoggingFileName() {
-  return logging::GetLogFileName();
+base::FilePath ChromeContentBrowserClient::GetLoggingFileName(
+    const base::CommandLine& command_line) {
+  return logging::GetLogFileName(command_line);
 }
 
 std::vector<std::unique_ptr<content::URLLoaderThrottle>>
