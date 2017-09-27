@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e5a8cf1_e1756228",
+        "filename": "chrome/test/chromedriver/client/command_executor.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-09-27T21:40:18Z",
+      "side": 1,
+      "message": "Need to change this",
+      "range": {
+        "startLine": 86,
+        "startChar": 21,
+        "endLine": 86,
+        "endChar": 70
+      },
+      "revId": "9cabb994c701f8a1ef856ff72ab344f62d9089a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2514423e_309ebac6",
+        "filename": "chrome/test/chromedriver/session_commands.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-09-27T21:40:18Z",
+      "side": 1,
+      "message": "The spec allows any of the four input parameters to be missing. It doesn\u0027t even forbid all 4 parameters to be missing, in which case the command has the effect of exiting fullscreen mode without explicitly specifying size and position.",
+      "range": {
+        "startLine": 845,
+        "startChar": 34,
+        "endLine": 845,
+        "endChar": 72
+      },
+      "revId": "9cabb994c701f8a1ef856ff72ab344f62d9089a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46de2501_58a2918e",
+        "filename": "chrome/test/chromedriver/session_commands.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-09-27T21:40:18Z",
+      "side": 1,
+      "message": "I think we should call GetWindowRect at this point. Some of the values may be missing in the input, and the spec still requires us to return all four values. Even when all four parameters are specified, the final window rect can be different from what the user asks for (e.g., asking for width\u003d1 will get you a window of a minimum width).",
+      "range": {
+        "startLine": 861,
+        "startChar": 2,
+        "endLine": 861,
+        "endChar": 33
+      },
+      "revId": "9cabb994c701f8a1ef856ff72ab344f62d9089a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
