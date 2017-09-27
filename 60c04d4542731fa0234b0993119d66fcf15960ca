@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "491f3077_d2c4c3af",
+        "filename": "ash/public/interfaces/session_controller.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-27T12:50:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8270d29_1d01cacb",
+      "range": {
+        "startLine": 182,
+        "startChar": 2,
+        "endLine": 182,
+        "endChar": 19
+      },
+      "revId": "60c04d4542731fa0234b0993119d66fcf15960ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "094b09ce_9db346cd",
         "filename": "ash/system/off_hours/tray_off_hours_session_limit.h",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "60c04d4542731fa0234b0993119d66fcf15960ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "565f9ae5_846ca091",
+        "filename": "ash/system/off_hours/tray_off_hours_session_limit.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-27T12:50:18Z",
+      "side": 1,
+      "message": "It overrides virtual method from SessionObserver which is inherited by TraySessionLengthLimit.",
+      "parentUuid": "094b09ce_9db346cd",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 50
+      },
+      "revId": "60c04d4542731fa0234b0993119d66fcf15960ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "19009a1f_a0188c3d",
+        "filename": "ash/system/tray/system_tray_item.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-27T12:50:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0dc2abe1_01d0ae08",
+      "range": {
+        "startLine": 66,
+        "startChar": 4,
+        "endLine": 66,
+        "endChar": 23
+      },
+      "revId": "60c04d4542731fa0234b0993119d66fcf15960ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b28c5e9_14740e8b",
         "filename": "chrome/browser/ui/ash/session_controller_client_unittest.cc",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "60c04d4542731fa0234b0993119d66fcf15960ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b484a53a_46507f3a",
+        "filename": "chrome/browser/ui/ash/session_controller_client_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-27T12:50:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b28c5e9_14740e8b",
+      "range": {
+        "startLine": 139,
+        "startChar": 7,
+        "endLine": 139,
+        "endChar": 24
+      },
+      "revId": "60c04d4542731fa0234b0993119d66fcf15960ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
