@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "c123bed1_82ba27a5",
+        "filename": "ash/system/web_notification/inactive_user_notification_blocker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-27T04:34:15Z",
+      "side": 1,
+      "message": "So you would always show if there were no active session? What scenarios are you thinking about?",
+      "parentUuid": "085abf2b_fed54ae6",
+      "revId": "63f7fb22d851fdb02263f19e0331cda873f182f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f33759ab_ffebe0f1",
         "filename": "ash/system/web_notification/inactive_user_notification_blocker.cc",
         "patchSetId": 4
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "Re: empty profile_id, do you think it\u0027s better to err on the side of showing or on the side of hiding? I\u0027m tempted to show, since if we accidentally forget to set profile_id then it\u0027s a more visible bug.\n\nAlso, if we early-exited at the top of the function when there was only one user then I wouldn\u0027t be as worried about notifications with no profile_id.\n\nWDYT?",
       "parentUuid": "565d1550_edc16727",
+      "revId": "63f7fb22d851fdb02263f19e0331cda873f182f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27785c62_352bca36",
+        "filename": "ash/system/web_notification/inactive_user_notification_blocker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-27T04:34:15Z",
+      "side": 1,
+      "message": "\u003e Re: empty profile_id, do you think it\u0027s better to err on the side of showing or on the side of hiding? I\u0027m tempted to show, since if we accidentally forget to set profile_id then it\u0027s a more visible bug.\n\nI too would err on the side of showing. Sorry, when I said \"return false\" I was thinking this function was called ShouldBlockNotification.\n\n\u003e \n\u003e Also, if we early-exited at the top of the function when there was only one user then I wouldn\u0027t be as worried about notifications with no profile_id.\n\u003e \n\u003e WDYT?\n\nBut then the same notification would show if you had two users logged in, but not when one is logged in? Seems worse to be inconsistent like that.",
+      "parentUuid": "cbd04a6e_9134b3a3",
       "revId": "63f7fb22d851fdb02263f19e0331cda873f182f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
