@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b14d0d6_e5004612",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 2876,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-27T22:50:28Z",
+      "side": 1,
+      "message": "Document other magic numbers/values as well (ditto for the change above).",
+      "revId": "d3d0390c26be1558882359fa65ee7d85060898bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b72c4276_9c8acdaa",
+        "filename": "ash/display/touch_calibrator_controller_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-27T22:50:28Z",
+      "side": 1,
+      "message": "Add high-level comments to the tests that describe the overall flow of what you\u0027re doing.\n\nExample: https://cs.chromium.org/chromium/src/ash/system/palette/palette_tray_unittest.cc?l\u003d104\u0026rcl\u003d0c120f945139981b476adcbb1102ebd027223a7e",
+      "revId": "d3d0390c26be1558882359fa65ee7d85060898bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97c39c7d_b182b9e3",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1049,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-27T22:50:28Z",
+      "side": 1,
+      "message": "I\u0027m a bit iffy here, since 0 could theoretically be a valid touch_device_identifier value.",
+      "revId": "d3d0390c26be1558882359fa65ee7d85060898bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
