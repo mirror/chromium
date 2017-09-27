@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "419ac9c0_284c4429",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2525,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-09-27T16:06:25Z",
+      "side": 1,
+      "message": "I don\u0027t understand how this does what you want. In CanSetFocusAttribute,\nwe return true when:\n  if (!IsPresentational() \u0026\u0026 AriaRoleAttribute() !\u003d kUnknownRole \u0026\u0026\n      AncestorExposesActiveDescendant())\n\nSo, this logic evaluates to false (and we don\u0027t perform a click.",
+      "revId": "7b6931e8e0eec905d669eced4f76fefa12b50859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
