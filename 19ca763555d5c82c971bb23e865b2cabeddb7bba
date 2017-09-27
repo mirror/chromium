@@ -1,0 +1,226 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e56871f4_d0df467d",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-27T01:28:28Z",
+      "side": 1,
+      "message": "So this function just wants to sanitize |kPrinterKey. If |cdd| has keys other than |kPrinterKey|, this function doesn\u0027t care?",
+      "revId": "19ca763555d5c82c971bb23e865b2cabeddb7bba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "691810ec_063fe4bd",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-27T01:28:28Z",
+      "side": 1,
+      "message": "const base::Value* dict \u003d ...;\n/ Let Clang format clean this up.\nconst base::Value* list \u003d dict ?\n    dict-\u003eFindPathOfType(...) :\n    caps-\u003eFindPathOfType({it.first}, base::Value::Type::LIST);\n...",
+      "revId": "19ca763555d5c82c971bb23e865b2cabeddb7bba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41bf8470_5749a4e7",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-27T01:28:28Z",
+      "side": 1,
+      "message": "Just iterate through out_list-\u003eGetList(), and process it like a std::vector, which it is.",
+      "revId": "19ca763555d5c82c971bb23e865b2cabeddb7bba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f384ca0e_08ea473f",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-27T01:28:28Z",
+      "side": 1,
+      "message": "Otherwise Remove() doesn\u0027t know anything about where the item is, and ends up searching through the entire list until it finds a match.",
+      "revId": "19ca763555d5c82c971bb23e865b2cabeddb7bba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6de33b03_5e6d2ecc",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-27T01:28:28Z",
+      "side": 1,
+      "message": "Add a comment to explain what the validation is trying to do and what\u0027s being returned.",
+      "revId": "19ca763555d5c82c971bb23e865b2cabeddb7bba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d69dc71_5ee7caa6",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-27T01:28:28Z",
+      "side": 1,
+      "message": "1) Adding newlines can help make it easier to see which section is doing what.\n2) Using auto with std::make_unique can reduce some of these to 1 line, but that\u0027s probably all avoidable by...\n3) Avoiding deprecated base::Value APIs is possible, even if they feels a bit weird.\n\nCombining the above, the output is:\n\nbase::DictionaryValue printer;\n\nbase::Value::ListStorage list_media;\nlist_media.push_back(base::Value(\"Letter\"));\nlist_media.push_back(base::Value(\"A4\"));\nprinter.SetPath({\"media_sizes\"}, base::Value(list_media));\n\nbase::Value::ListStorage list_dpi;\nlist_dpi.push_back(base::Value(300));\nlist_dpi.push_back(base::Value(600));\n\nbase::Value::DictStorage options;\noptions[kOptionKey] \u003d std::make_unique\u003cbase::Value\u003e(list_dpi);\nprinter.SetPath({\"dpi\"}, base::Value(options));\n\nprinter.SetPath({\"collate\"}, base::Value(true));\n\nreturn printer;",
+      "revId": "19ca763555d5c82c971bb23e865b2cabeddb7bba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b53c177f_ed8ba91e",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-27T01:28:28Z",
+      "side": 1,
+      "message": "Just want to double check, we want the options key inside of options to have DPIs, and the on line 36, set the \"dpi\" key to options?",
+      "revId": "19ca763555d5c82c971bb23e865b2cabeddb7bba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e3c2be9_457fd7d0",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-27T01:28:28Z",
+      "side": 1,
+      "message": "Already in namespace printing. More below.",
+      "range": {
+        "startLine": 34,
+        "startChar": 19,
+        "endLine": 34,
+        "endChar": 29
+      },
+      "revId": "19ca763555d5c82c971bb23e865b2cabeddb7bba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5bd59c0_d3fe6e66",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-27T01:28:28Z",
+      "side": 1,
+      "message": "Can this be combined with the previous line?\n\ncdd.SetDictionary(printing::kPrinterKey, GetCapabilitiesFull());",
+      "revId": "19ca763555d5c82c971bb23e865b2cabeddb7bba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5e566b2_727f6fa4",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-27T01:28:28Z",
+      "side": 1,
+      "message": "Can these be const base::Value*?",
+      "revId": "19ca763555d5c82c971bb23e865b2cabeddb7bba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d44b966_19258c68",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-27T01:28:28Z",
+      "side": 1,
+      "message": "Do you want to use FindPathOfType?",
+      "range": {
+        "startLine": 131,
+        "startChar": 38,
+        "endLine": 131,
+        "endChar": 46
+      },
+      "revId": "19ca763555d5c82c971bb23e865b2cabeddb7bba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f8fc290_eea46d33",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-27T01:28:28Z",
+      "side": 1,
+      "message": "Needs to not only be empty, but be of at least size 2.",
+      "range": {
+        "startLine": 133,
+        "startChar": 49,
+        "endLine": 133,
+        "endChar": 56
+      },
+      "revId": "19ca763555d5c82c971bb23e865b2cabeddb7bba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
