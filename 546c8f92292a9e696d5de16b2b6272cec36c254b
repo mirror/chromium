@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8433998_afadcee2",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-27T20:47:27Z",
+      "side": 1,
+      "message": "Roger\u0027s comment had Address and CreditCard first.  If not doing that, can we at least put these in alphabetical order by keeping the WithAutofill and WithoutAutofill groups adjacent?",
+      "range": {
+        "startLine": 747,
+        "startChar": 45,
+        "endLine": 747,
+        "endChar": 60
+      },
+      "revId": "546c8f92292a9e696d5de16b2b6272cec36c254b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37edf0df_3ecd62fa",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-27T20:47:27Z",
+      "side": 1,
+      "message": "Just double-checking this is supposed to be FromInteraction and not FormInteraction, because they\u0027re extremely similar. :)",
+      "range": {
+        "startLine": 747,
+        "startChar": 29,
+        "endLine": 747,
+        "endChar": 33
+      },
+      "revId": "546c8f92292a9e696d5de16b2b6272cec36c254b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33a6eecc_0fe3ea75",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-27T20:47:27Z",
+      "side": 1,
+      "message": "s/form that is/form is",
+      "range": {
+        "startLine": 724,
+        "startChar": 39,
+        "endLine": 724,
+        "endChar": 43
+      },
+      "revId": "546c8f92292a9e696d5de16b2b6272cec36c254b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bcd2492_7a59970c",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-27T20:47:27Z",
+      "side": 1,
+      "message": "s/|/|.",
+      "range": {
+        "startLine": 726,
+        "startChar": 65,
+        "endLine": 726,
+        "endChar": 66
+      },
+      "revId": "546c8f92292a9e696d5de16b2b6272cec36c254b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
