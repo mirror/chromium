@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "96780feb_675fd006",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRSessionEvent.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-09-27T21:34:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b415360e_a875d079",
+      "range": {
+        "startLine": 39,
+        "startChar": 17,
+        "endLine": 39,
+        "endChar": 36
+      },
+      "revId": "06feeceee4914090a434c07d9e63e259a92bb7b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16246a6e_779b5745",
         "filename": "third_party/WebKit/Source/modules/vr/latest/VRSessionEvent.idl",
         "patchSetId": 3
@@ -95,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4fb50f3a_abbe79eb",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRSessionEvent.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-09-27T21:34:11Z",
+      "side": 1,
+      "message": "Derp, thanks for catching that. Fixed.",
+      "parentUuid": "16246a6e_779b5745",
+      "range": {
+        "startLine": 6,
+        "startChar": 23,
+        "endLine": 6,
+        "endChar": 28
+      },
+      "revId": "06feeceee4914090a434c07d9e63e259a92bb7b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7885ebac_a44b6442",
         "filename": "third_party/WebKit/Source/modules/vr/latest/VRSessionEventInit.idl",
         "patchSetId": 3
@@ -115,6 +163,30 @@
       "revId": "06feeceee4914090a434c07d9e63e259a92bb7b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ae8a13a_ee6bf547",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRSessionEventInit.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-09-27T21:34:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7885ebac_a44b6442",
+      "range": {
+        "startLine": 6,
+        "startChar": 23,
+        "endLine": 6,
+        "endChar": 28
+      },
+      "revId": "06feeceee4914090a434c07d9e63e259a92bb7b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

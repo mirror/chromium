@@ -259,6 +259,30 @@
       "revId": "ec1668f3ad4b50635e0eaa3683a068bb71de7eeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "96d53d3b_78eac05d",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRSession.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-09-27T21:34:11Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "e35aad03_c50f1895",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 40
+      },
+      "revId": "ec1668f3ad4b50635e0eaa3683a068bb71de7eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
