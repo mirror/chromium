@@ -31,4 +31,8 @@ bool FakeSystemClockClient::CanSetTime() {
   return true;
 }
 
+bool FakeSystemClockClient::IsNetworkSynchronized() {
+  return true;
+}
+
 } // namespace chromeos
