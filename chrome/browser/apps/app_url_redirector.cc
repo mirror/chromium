@@ -54,6 +54,14 @@ bool ShouldOverrideNavigation(
     return false;
   }
 
+  // If we can't go back and there is no previously committed URL then assume
+  // it's a new empty tab and close it.
+  if (!source->GetController().CanGoBack() &&
+      source->GetLastCommittedURL() == GURL()) {
+    DVLOG(1) << "Closing empty tab.";
+    source->Close();
+  }
+
   return true;
 }
 
@@ -152,7 +160,7 @@ AppUrlRedirector::MaybeCreateThrottleFor(content::NavigationHandle* handle) {
        iter != enabled_extensions.end(); ++iter) {
     const UrlHandlerInfo* handler =
         UrlHandlers::FindMatchingUrlHandler(iter->get(), handle->GetURL());
-    if (handler) {
+    if (handler && !(*iter)->from_bookmark()) {
       DVLOG(1) << "Found matching app handler for redirection: "
                << (*iter)->name() << "(" << (*iter)->id() << "):"
                << handler->id;

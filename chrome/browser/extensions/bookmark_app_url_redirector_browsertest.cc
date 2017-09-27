@@ -484,6 +484,20 @@ IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest, InScopeUrlSelf) {
                  in_scope_url, LinkTarget::SELF));
 }
 
+// Tests that clicking a link with target="_blank" to an in-scope URL opens a
+// new App window.
+IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest, InScopeUrlBlank) {
+  InstallTestBookmarkApp();
+  NavigateToLaunchingPage();
+
+  const GURL in_scope_url = embedded_test_server()->GetURL(kInScopeUrlPath);
+  TestTabActionOpensAppWindow(
+      in_scope_url,
+      base::Bind(&ClickLinkAndWait,
+                 browser()->tab_strip_model()->GetActiveWebContents(),
+                 in_scope_url, LinkTarget::BLANK));
+}
+
 // Tests that clicking a link with target="_self" to a URL out of the Web App's
 // scope but with the same origin doesn't open a new browser window.
 IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest, OutOfScopeUrlSelf) {
