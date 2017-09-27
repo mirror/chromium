@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d31b0af_d787cd82",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-09-27T04:02:54Z",
+      "side": 1,
+      "message": "QueueAsValueInto records all tasks with all metadata, including posted_from. It\u0027s too expensive, let\u0027s keep it enabled only when renderer.scheduler.debug is enabled.",
+      "range": {
+        "startLine": 483,
+        "startChar": 2,
+        "endLine": 483,
+        "endChar": 7
+      },
+      "revId": "8ef6638643eb57f40d9d751d014130271eb5b4ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c76b237f_02f42eb3",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-09-27T04:02:54Z",
+      "side": 1,
+      "message": "Let\u0027s leave trace events in disabled-by-default-renderer.scheduler category.",
+      "range": {
+        "startLine": 242,
+        "startChar": 61,
+        "endLine": 242,
+        "endChar": 68
+      },
+      "revId": "8ef6638643eb57f40d9d751d014130271eb5b4ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03999255_608e6b27",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1561,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-09-27T04:02:54Z",
+      "side": 1,
+      "message": "These things are relatively lightweight, let\u0027s keep them in renderer.scheduler.verbose category for now.",
+      "range": {
+        "startLine": 1561,
+        "startChar": 6,
+        "endLine": 1561,
+        "endChar": 27
+      },
+      "revId": "8ef6638643eb57f40d9d751d014130271eb5b4ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
