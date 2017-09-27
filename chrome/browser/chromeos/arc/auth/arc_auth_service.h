@@ -67,7 +67,9 @@ class ArcAuthService : public KeyedService,
       const GetIsAccountManagedDeprecatedCallback& callback) override;
 
  private:
-  using AccountInfoCallback = base::Callback<void(mojom::AccountInfoPtr)>;
+  using AccountInfoCallback =
+      base::Callback<void(mojom::AccountInfoPtr,
+                          mojom::ArcSignInFailureReason failure_reason)>;
   class AccountInfoNotifier;
 
   // Starts to request account info.
@@ -82,7 +84,8 @@ class ArcAuthService : public KeyedService,
   void OnAuthCodeFetched(bool success, const std::string& auth_code);
 
   // Called to let ARC container know the account info.
-  void OnAccountInfoReady(mojom::AccountInfoPtr account_info);
+  void OnAccountInfoReady(mojom::AccountInfoPtr account_info,
+                          mojom::ArcSignInFailureReason failure_reason);
 
   Profile* const profile_;
   ArcBridgeService* const arc_bridge_service_;

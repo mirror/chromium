@@ -80,6 +80,9 @@ ProvisioningResult ConvertArcSignInFailureReasonToProvisioningResult(
     MAP_PROVISIONING_RESULT(CLOUD_PROVISION_FLOW_TIMEOUT);
     MAP_PROVISIONING_RESULT(CLOUD_PROVISION_FLOW_INTERNAL_ERROR);
     MAP_PROVISIONING_RESULT(NO_NETWORK_CONNECTION);
+    MAP_PROVISIONING_RESULT(CHROME_SERVER_COMMUNICATION_ERROR);
+    MAP_PROVISIONING_RESULT(ARC_DISABLED);
+    MAP_PROVISIONING_RESULT(SUCCESS);
   }
 #undef MAP_PROVISIONING_RESULT
 
@@ -121,11 +124,31 @@ class ArcAuthService::AccountInfoNotifier {
       : callback_type_(CallbackType::ACCOUNT_INFO),
         account_info_callback_(account_info_callback) {}
 
-  void Notify(bool is_enforced,
-              const std::string& auth_info,
-              const std::string& account_name,
-              mojom::ChromeAccountType account_type,
-              bool is_managed) {
+  void NotifyFailure(mojom::ChromeAccountType account_type,
+                     mojom::ArcSignInFailureReason failure_reason) {
+    switch (callback_type_) {
+      case CallbackType::AUTH_CODE:
+        DCHECK(!auth_callback_.is_null());
+        auth_callback_.Run(std::string() /* auth_code */,
+                           true /* is_enforced */);
+        break;
+      case CallbackType::AUTH_CODE_AND_ACCOUNT:
+        DCHECK(!auth_account_callback_.is_null());
+        auth_account_callback_.Run(std::string() /* auth_code */,
+                                   true /* is_enforced */, account_type);
+        break;
+      case CallbackType::ACCOUNT_INFO:
+        DCHECK(!account_info_callback_.is_null());
+        account_info_callback_.Run(nullptr, failure_reason);
+        break;
+    }
+  }
+
+  void NotifySuccess(bool is_enforced,
+                     const std::string& auth_info,
+                     const std::string& account_name,
+                     mojom::ChromeAccountType account_type,
+                     bool is_managed) {
     switch (callback_type_) {
       case CallbackType::AUTH_CODE:
         DCHECK(!auth_callback_.is_null());
@@ -137,26 +160,36 @@ class ArcAuthService::AccountInfoNotifier {
         break;
       case CallbackType::ACCOUNT_INFO:
         DCHECK(!account_info_callback_.is_null());
-        mojom::AccountInfoPtr account_info = mojom::AccountInfo::New();
-        account_info->account_name = account_name;
-        if (account_type ==
-            mojom::ChromeAccountType::ACTIVE_DIRECTORY_ACCOUNT) {
-          account_info->enrollment_token = auth_info;
-        } else {
-          if (!is_enforced)
-            account_info->auth_code = base::nullopt;
-          else
-            account_info->auth_code = auth_info;
-        }
-        account_info->account_type = account_type;
-        account_info->is_managed = is_managed;
-        account_info_callback_.Run(std::move(account_info));
+        account_info_callback_.Run(
+            CreateAccountInfo(is_enforced, auth_info, account_name,
+                              account_type, is_managed),
+            mojom::ArcSignInFailureReason::SUCCESS);
         break;
     }
   }
 
  private:
   enum class CallbackType { AUTH_CODE, AUTH_CODE_AND_ACCOUNT, ACCOUNT_INFO };
+
+  mojom::AccountInfoPtr CreateAccountInfo(bool is_enforced,
+                                          const std::string& auth_info,
+                                          const std::string& account_name,
+                                          mojom::ChromeAccountType account_type,
+                                          bool is_managed) {
+    mojom::AccountInfoPtr account_info = mojom::AccountInfo::New();
+    account_info->account_name = account_name;
+    if (account_type == mojom::ChromeAccountType::ACTIVE_DIRECTORY_ACCOUNT) {
+      account_info->enrollment_token = auth_info;
+    } else {
+      if (!is_enforced)
+        account_info->auth_code = base::nullopt;
+      else
+        account_info->auth_code = auth_info;
+    }
+    account_info->account_type = account_type;
+    account_info->is_managed = is_managed;
+    return account_info;
+  }
 
   const CallbackType callback_type_;
   const GetAuthCodeDeprecatedCallback auth_callback_;
@@ -237,12 +270,14 @@ void ArcAuthService::ReportAccountCheckStatus(
   UpdateAuthAccountCheckStatus(status);
 }
 
-void ArcAuthService::OnAccountInfoReady(mojom::AccountInfoPtr account_info) {
+void ArcAuthService::OnAccountInfoReady(
+    mojom::AccountInfoPtr account_info,
+    mojom::ArcSignInFailureReason failure_reason) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   auto* instance = ARC_GET_INSTANCE_FOR_METHOD(arc_bridge_service_->auth(),
                                                OnAccountInfoReady);
   DCHECK(instance);
-  instance->OnAccountInfoReady(std::move(account_info));
+  instance->OnAccountInfoReady(std::move(account_info), failure_reason);
 }
 
 void ArcAuthService::GetAuthCodeDeprecated0(
@@ -280,9 +315,10 @@ void ArcAuthService::RequestAccountInfoInternal(
   DCHECK(!fetcher_);
 
   if (IsArcOptInVerificationDisabled()) {
-    notifier->Notify(false /* = is_enforced */, std::string() /* auth_info */,
-                     std::string() /* auth_name */, GetAccountType(),
-                     policy_util::IsAccountManaged(profile_));
+    notifier->NotifySuccess(false /* = is_enforced */,
+                            std::string() /* auth_info */,
+                            std::string() /* auth_name */, GetAccountType(),
+                            policy_util::IsAccountManaged(profile_));
     return;
   }
 
@@ -329,25 +365,29 @@ void ArcAuthService::OnEnrollmentTokenFetched(
       profile_->GetPrefs()->SetString(prefs::kArcActiveDirectoryPlayUserId,
                                       user_id);
 
-      // Send enrollment token to arc.
-      notifier_->Notify(true /*is_enforced*/, enrollment_token,
-                        std::string() /* account_name */,
-                        mojom::ChromeAccountType::ACTIVE_DIRECTORY_ACCOUNT,
-                        true);
-      notifier_.reset();
-      return;
+      // Send enrollment token to ARC.
+      notifier_->NotifySuccess(
+          true /*is_enforced*/, enrollment_token,
+          std::string() /* account_name */,
+          mojom::ChromeAccountType::ACTIVE_DIRECTORY_ACCOUNT, true);
+      break;
     }
     case ArcActiveDirectoryEnrollmentTokenFetcher::Status::FAILURE: {
-      ArcSessionManager::Get()->OnProvisioningFinished(
-          ProvisioningResult::CHROME_SERVER_COMMUNICATION_ERROR);
-      return;
+      // Send error to ARC.
+      notifier_->NotifyFailure(
+          mojom::ChromeAccountType::ACTIVE_DIRECTORY_ACCOUNT,
+          mojom::ArcSignInFailureReason::CHROME_SERVER_COMMUNICATION_ERROR);
+      break;
     }
     case ArcActiveDirectoryEnrollmentTokenFetcher::Status::ARC_DISABLED: {
-      ArcSessionManager::Get()->OnProvisioningFinished(
-          ProvisioningResult::ARC_DISABLED);
-      return;
+      // Send error to ARC.
+      notifier_->NotifyFailure(
+          mojom::ChromeAccountType::ACTIVE_DIRECTORY_ACCOUNT,
+          mojom::ArcSignInFailureReason::ARC_DISABLED);
+      break;
     }
   }
+  notifier_.reset();
 }
 
 void ArcAuthService::OnAuthCodeFetched(bool success,
@@ -355,15 +395,17 @@ void ArcAuthService::OnAuthCodeFetched(bool success,
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   fetcher_.reset();
 
-  if (!success) {
-    ArcSessionManager::Get()->OnProvisioningFinished(
-        ProvisioningResult::CHROME_SERVER_COMMUNICATION_ERROR);
-    return;
+  if (success) {
+    notifier_->NotifySuccess(
+        !IsArcOptInVerificationDisabled(), auth_code,
+        ArcSessionManager::Get()->auth_context()->full_account_id(),
+        GetAccountType(), policy_util::IsAccountManaged(profile_));
+  } else {
+    // Send error to ARC.
+    notifier_->NotifyFailure(
+        GetAccountType(),
+        mojom::ArcSignInFailureReason::CHROME_SERVER_COMMUNICATION_ERROR);
   }
-
-  notifier_->Notify(!IsArcOptInVerificationDisabled(), auth_code,
-                    ArcSessionManager::Get()->auth_context()->full_account_id(),
-                    GetAccountType(), policy_util::IsAccountManaged(profile_));
   notifier_.reset();
 }
 
