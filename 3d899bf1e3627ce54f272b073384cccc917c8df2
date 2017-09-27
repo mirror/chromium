@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7dd277e7_a3a1eb3b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-09-27T12:54:52Z",
+      "side": 1,
+      "message": "It should be per stylesheet, not per document right?",
+      "range": {
+        "startLine": 13,
+        "startChar": 47,
+        "endLine": 13,
+        "endChar": 55
+      },
+      "revId": "3d899bf1e3627ce54f272b073384cccc917c8df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9fe9431_c067d070",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-09-27T12:54:52Z",
+      "side": 1,
+      "message": "Can you mention what the behavior impact of this patch is?",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 36
+      },
+      "revId": "3d899bf1e3627ce54f272b073384cccc917c8df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d8fbfa4_5e21c8b5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-09-27T12:54:52Z",
+      "side": 1,
+      "message": "The drawback to this is memory use. There is a CSSLazyPropertyParser per declaration list, so that adds N bytes of memory for a stylesheet with N deferred lists. We track this in a histogram (Style.TotalLazyRules) and it seems like N will usually be small so this is likely fine.",
+      "range": {
+        "startLine": 15,
+        "startChar": 32,
+        "endLine": 15,
+        "endChar": 62
+      },
+      "revId": "3d899bf1e3627ce54f272b073384cccc917c8df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a361a8f4_9e0b479b",
+        "filename": "third_party/WebKit/Source/core/css/StylePropertySet.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-09-27T12:54:52Z",
+      "side": 1,
+      "message": "This isn\u0027t necessary to have as a virtual function is it? Let\u0027s just omit it and use the raw boolean in CSSLazyPropertyParserImpl::ParseProperties.",
+      "range": {
+        "startLine": 169,
+        "startChar": 15,
+        "endLine": 169,
+        "endChar": 31
+      },
+      "revId": "3d899bf1e3627ce54f272b073384cccc917c8df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90dbce83_13657307",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSLazyPropertyParserImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-09-27T12:54:52Z",
+      "side": 1,
+      "message": "perf nit: FindPropertyIndex doesn\u0027t look cheap and involves searching a vector. Can we move it to be the last check? E.g.\n\nif (has_before_and_after_ \u0026\u0026 lazy_state_-\u003eHasRuleSet() \u0026\u0026 property_set-\u003eFindPropertyIndex(CSSPropertyContent) !\u003d -1) {\n  ...\n}",
+      "range": {
+        "startLine": 27,
+        "startChar": 6,
+        "endLine": 27,
+        "endChar": 18
+      },
+      "revId": "3d899bf1e3627ce54f272b073384cccc917c8df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
