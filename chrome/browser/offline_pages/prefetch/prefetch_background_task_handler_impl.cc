@@ -5,7 +5,7 @@
 #include "chrome/browser/offline_pages/prefetch/prefetch_background_task_handler_impl.h"
 
 #include "base/memory/ptr_util.h"
-#include "chrome/browser/offline_pages/prefetch/prefetch_background_task.h"
+#include "chrome/browser/offline_pages/prefetch/prefetch_background_task_scheduler.h"
 #include "chrome/common/pref_names.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
@@ -30,21 +30,16 @@ PrefetchBackgroundTaskHandlerImpl::~PrefetchBackgroundTaskHandlerImpl() =
     default;
 
 void PrefetchBackgroundTaskHandlerImpl::CancelBackgroundTask() {
-  PrefetchBackgroundTask::Cancel();
+  PrefetchBackgroundTaskScheduler::Cancel();
+}
+
+void PrefetchBackgroundTaskHandlerImpl::EnsureTaskScheduled() {
+  PrefetchBackgroundTaskScheduler::Schedule(GetAdditionalBackoffSeconds());
 }
 
 int PrefetchBackgroundTaskHandlerImpl::GetAdditionalBackoffSeconds() const {
   return static_cast<int>(
       GetCurrentBackoff()->GetTimeUntilRelease().InSeconds());
-}
-
-void PrefetchBackgroundTaskHandlerImpl::EnsureTaskScheduled() {
-  int seconds_until_release = 0;
-  std::unique_ptr<net::BackoffEntry> backoff = GetCurrentBackoff();
-  if (backoff)
-    seconds_until_release = backoff->GetTimeUntilRelease().InSeconds();
-  PrefetchBackgroundTask::Schedule(seconds_until_release,
-                                   false /*update_current*/);
 }
 
 std::unique_ptr<net::BackoffEntry>
