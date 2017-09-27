@@ -88,6 +88,24 @@
       "revId": "5325965cafb2dd4380462c24f6130fa2f2861674",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c84a2a1_78a92109",
+        "filename": "chrome/browser/extensions/install_verifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-27T21:27:41Z",
+      "side": 0,
+      "message": "\u003e Q for Devlin: could sync result in the discrepancy between from_webstore() and UpdatesFromGallery?\n\nGood question!  I *think* we\u0027re okay on this, because of this line here:\nhttps://chromium.googlesource.com/chromium/src/+/8e84efbaca5b521546d346a596719d8527e1cfd8/chrome/browser/extensions/extension_service.cc#610\n\nEven if not, I think in this case using UpdatesFromGallery() would still be an accurate source of truth for \"should we verify this\".  So I think we\u0027re okay.",
+      "parentUuid": "cdeed4ed_c2934aef",
+      "revId": "5325965cafb2dd4380462c24f6130fa2f2861674",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
