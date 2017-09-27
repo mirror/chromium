@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77aae8ec_8500230d",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 1140,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-27T23:49:28Z",
+      "side": 1,
+      "message": "nit: constexpr",
+      "revId": "7c4ac8253825a5fa298fc9fbcf918fac4e984df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64135765_8a8882d6",
+        "filename": "ash/display/touch_calibrator_controller.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-27T23:49:28Z",
+      "side": 1,
+      "message": "do you need this?",
+      "revId": "7c4ac8253825a5fa298fc9fbcf918fac4e984df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34798bde_8fef0363",
+        "filename": "ash/display/touch_calibrator_controller.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-27T23:49:28Z",
+      "side": 1,
+      "message": "should this be once callback?",
+      "revId": "7c4ac8253825a5fa298fc9fbcf918fac4e984df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c97638f4_007e06f1",
+        "filename": "chrome/browser/chromeos/display/display_preferences.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-27T23:49:28Z",
+      "side": 1,
+      "message": "emplace?",
+      "revId": "7c4ac8253825a5fa298fc9fbcf918fac4e984df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e123fb8_a3f4d84c",
+        "filename": "chrome/browser/chromeos/display/display_preferences_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-27T23:49:28Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "7c4ac8253825a5fa298fc9fbcf918fac4e984df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb8442b7_ba66b3b1",
+        "filename": "ui/display/manager/managed_display_info.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-27T23:49:28Z",
+      "side": 1,
+      "message": "can you describe the scenario when this is necessary?",
+      "range": {
+        "startLine": 542,
+        "startChar": 21,
+        "endLine": 542,
+        "endChar": 22
+      },
+      "revId": "7c4ac8253825a5fa298fc9fbcf918fac4e984df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
