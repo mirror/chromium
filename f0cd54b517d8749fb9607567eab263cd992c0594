@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbdd443d_e0d27995",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-27T03:44:28Z",
+      "side": 1,
+      "message": "- What happens when the peer closes the channel? How do we abort the following sequence?\n- Should we check the returned value of Watch()?",
+      "range": {
+        "startLine": 37,
+        "startChar": 34,
+        "endLine": 37,
+        "endChar": 61
+      },
+      "revId": "f0cd54b517d8749fb9607567eab263cd992c0594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
