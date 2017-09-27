@@ -79,6 +79,9 @@ class Keyboard : public ui::EventHandler,
   // Schedule next call of ProcessExpiredPendingKeyAcks after |delay|
   void ScheduleProcessExpiredPendingKeyAcks(base::TimeDelta delay);
 
+  void AddEventHandler();
+  void RemoveEventHandler();
+
   // The delegate instance that all events except for events about device
   // configuration are dispatched to.
   KeyboardDelegate* const delegate_;
