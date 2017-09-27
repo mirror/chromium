@@ -833,6 +833,42 @@ Status ExecuteGetWindowSize(Session* session,
   return Status(kOk);
 }
 
+Status ExecuteSetWindowRect(Session* session,
+                            const base::DictionaryValue& params,
+                            std::unique_ptr<base::Value>* value) {
+  double width = 0;
+  double height = 0;
+  double x = 0;
+  double y = 0;
+  if (!params.GetDouble("width", &width) ||
+      !params.GetDouble("height", &height))
+    return Status(kUnknownError, "missing or invalid 'width' or 'height'");
+
+  if (!params.GetDouble("x", &x) || !params.GetDouble("y", &y))
+    return Status(kUnknownError, "missing or invalid 'x' or 'y'");
+
+  ChromeDesktopImpl* desktop = NULL;
+  Status status = session->chrome->GetAsDesktop(&desktop);
+  if (status.IsError())
+    return status;
+
+  status = desktop->SetWindowRect(session->window, static_cast<int>(width),
+                                  static_cast<int>(height), static_cast<int>(x),
+                                  static_cast<int>(y));
+  if (status.IsError())
+    return status;
+
+  // respond with the window rect
+  base::DictionaryValue rect;
+  rect.SetInteger("width", width);
+  rect.SetInteger("height", height);
+  rect.SetInteger("x", x);
+  rect.SetInteger("y", y);
+
+  value->reset(rect.DeepCopy());
+  return Status(kOk);
+}
+
 Status ExecuteSetWindowSize(Session* session,
                             const base::DictionaryValue& params,
                             std::unique_ptr<base::Value>* value) {
