@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "39cce006_7873fcb9",
+        "filename": "cc/trees/layer_tree_host_pixeltest_masks.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-27T20:53:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbd5a488_f187ab53",
+      "revId": "3120db433cb1fb5f79179f68b8244aae9ec2c072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b06ac1f5_0d8d3693",
         "filename": "cc/trees/layer_tree_host_pixeltest_masks.cc",
         "patchSetId": 5
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "e471a56d_2e6eb6e4",
+        "filename": "cc/trees/layer_tree_host_pixeltest_masks.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-27T20:53:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b06ac1f5_0d8d3693",
+      "range": {
+        "startLine": 392,
+        "startChar": 38,
+        "endLine": 392,
+        "endChar": 46
+      },
+      "revId": "3120db433cb1fb5f79179f68b8244aae9ec2c072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0e320ba_7478bac4",
         "filename": "cc/trees/layer_tree_host_pixeltest_masks.cc",
         "patchSetId": 5
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "d94f2e05_3c6b3c0d",
+        "filename": "cc/trees/layer_tree_host_pixeltest_masks.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-27T20:53:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0e320ba_7478bac4",
+      "revId": "3120db433cb1fb5f79179f68b8244aae9ec2c072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6e8e0e3_d3745d88",
         "filename": "cc/trees/layer_tree_host_pixeltest_masks.cc",
         "patchSetId": 5
@@ -70,6 +130,24 @@
       "writtenOn": "2017-09-27T16:05:42Z",
       "side": 1,
       "message": "It\u0027s not immediately clear why these tests are using random contents.. can you drop a comment on each call to this method?",
+      "revId": "3120db433cb1fb5f79179f68b8244aae9ec2c072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84319239_93c56b34",
+        "filename": "cc/trees/layer_tree_host_pixeltest_masks.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-27T20:53:57Z",
+      "side": 1,
+      "message": "To be honest, I just want to have a comprehensive test pattern that covers a variety of colors and opaqueness, but was too lazy to manually design one.\n\nIs there an existing pattern I can reuse? That\u0027d be totally great.",
+      "parentUuid": "a6e8e0e3_d3745d88",
       "revId": "3120db433cb1fb5f79179f68b8244aae9ec2c072",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
