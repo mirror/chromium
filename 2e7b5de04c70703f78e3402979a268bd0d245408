@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c454b9ec_2170920e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/VerticallyFixedEditText.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-27T01:45:29Z",
+      "side": 1,
+      "message": "This fixes lint (I think) but doesn\u0027t prevent the method from getting called on on pre-O. We need to wrap the new API call in an is-O block.",
+      "range": {
+        "startLine": 51,
+        "startChar": 3,
+        "endLine": 51,
+        "endChar": 37
+      },
+      "revId": "2e7b5de04c70703f78e3402979a268bd0d245408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
