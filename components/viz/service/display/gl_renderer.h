@@ -27,6 +27,7 @@
 
 namespace cc {
 class GLRendererShaderTest;
+class LocalResourceProvider;
 class OutputSurface;
 class Resource;
 class ResourcePool;
@@ -56,9 +57,9 @@ class VIZ_SERVICE_EXPORT GLRenderer : public DirectRenderer {
   GLRenderer(const RendererSettings* settings,
              OutputSurface* output_surface,
              cc::DisplayResourceProvider* resource_provider,
+             cc::LocalResourceProvider* local_resource_provider,
              TextureMailboxDeleter* texture_mailbox_deleter);
   ~GLRenderer() override;
-
   bool use_swap_with_bounds() const { return use_swap_with_bounds_; }
 
   void SwapBuffers(std::vector<ui::LatencyInfo> latency_info) override;
@@ -293,6 +294,22 @@ class VIZ_SERVICE_EXPORT GLRenderer : public DirectRenderer {
   // texture id of the resource.
   std::map<unsigned, OverlayResourceLock> swapped_and_acked_overlay_resources_;
 
+  using CAOverlayResourceLock =
+      std::unique_ptr<cc::LocalResourceProvider::ScopedLocalReadGL>;
+  using CAOverlayResourceLockList = std::vector<CAOverlayResourceLock>;
+
+  // Resources that have been sent to the GPU process, but not yet swapped.
+  CAOverlayResourceLockList ca_pending_overlay_resources_;
+
+  // Resources that should be shortly swapped by the GPU process.
+  base::circular_deque<CAOverlayResourceLockList>
+      ca_swapping_overlay_resources_;
+
+  // Resources that the GPU process has finished swapping. The key is the
+  // texture id of the resource.
+  std::map<unsigned, CAOverlayResourceLock>
+      ca_swapped_and_acked_overlay_resources_;
+
   unsigned offscreen_framebuffer_id_ = 0u;
 
   std::unique_ptr<StaticGeometryBinding> shared_geometry_;
@@ -332,7 +349,7 @@ class VIZ_SERVICE_EXPORT GLRenderer : public DirectRenderer {
   std::vector<std::unique_ptr<PendingAsyncReadPixels>>
       pending_async_read_pixels_;
 
-  std::unique_ptr<cc::ResourceProvider::ScopedWriteLockGL>
+  std::unique_ptr<cc::LocalResourceProvider::ScopedLocalWriteGL>
       current_framebuffer_lock_;
   // This is valid when current_framebuffer_lock_ is not null.
   ResourceFormat current_framebuffer_format_;
