@@ -43,6 +43,7 @@
 #include "chromeos/network/network_state_handler.h"
 #include "components/content_settings/core/common/content_settings_pattern.h"
 #include "components/password_manager/core/browser/password_manager.h"
+#include "components/session_manager/core/session_manager.h"
 #include "components/web_modal/web_contents_modal_dialog_manager.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/render_frame_host.h"
@@ -608,6 +609,12 @@ bool WebUILoginView::MoveFocusToSystemTray(bool reverse) {
   // exit early.
   if (ash_util::IsRunningInMash())
     return true;
+
+  // Login host is active and session is started means voice interaction OOBE
+  // is active. In this case, the focus should not move to the system tray.
+  if (LoginDisplayHost::default_host() &&
+      session_manager::SessionManager::Get()->IsSessionStarted())
+    return false;
 
   ash::SystemTray* tray = ash::Shell::Get()->GetPrimarySystemTray();
   if (!tray || !tray->GetWidget()->IsVisible() || !tray->visible())
