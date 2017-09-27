@@ -476,7 +476,8 @@ const FakeGaia::AccessTokenInfo* FakeGaia::FindAccessTokenInfo(
        entry != access_token_info_map_.upper_bound(auth_token);
        ++entry) {
     if (entry->second.audience == client_id &&
-        (scope_string.empty() || entry->second.scopes == scopes)) {
+        (scope_string.empty() || entry->second.scopes.empty() ||
+         entry->second.scopes == scopes)) {
       return &(entry->second);
     }
   }
