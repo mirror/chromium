@@ -442,8 +442,8 @@ bool TaskQueueManager::SelectWorkQueueToService(
     internal::WorkQueue** out_work_queue) {
   bool should_run = selector_.SelectWorkQueueToService(out_work_queue);
   TRACE_EVENT_OBJECT_SNAPSHOT_WITH_ID(
-      TRACE_DISABLED_BY_DEFAULT("renderer.scheduler"), "TaskQueueManager", this,
-      AsValueWithSelectorResult(should_run, *out_work_queue));
+      TRACE_DISABLED_BY_DEFAULT("renderer.scheduler.debug"), "TaskQueueManager",
+      this, AsValueWithSelectorResult(should_run, *out_work_queue));
   return should_run;
 }
 
@@ -612,13 +612,12 @@ TaskQueueManager::AsValueWithSelectorResult(
     bool should_run,
     internal::WorkQueue* selected_work_queue) const {
   DCHECK(main_thread_checker_.CalledOnValidThread());
+  bool verbose_snapshots_enabled = false;
+  TRACE_EVENT_CATEGORY_GROUP_ENABLED(
+      TRACE_DISABLED_BY_DEFAULT("renderer.scheduler.enable_verbose_snapshots"),
+      &verbose_snapshots_enabled);
   std::unique_ptr<base::trace_event::TracedValue> state(
       new base::trace_event::TracedValue());
-  base::TimeTicks now = real_time_domain()->CreateLazyNow().Now();
-  state->BeginArray("queues");
-  for (auto& queue : queues_)
-    queue->GetTaskQueueImpl()->AsValueInto(now, state.get());
-  state->EndArray();
   state->BeginDictionary("selector");
   selector_.AsValueInto(state.get());
   state->EndDictionary();
@@ -627,11 +626,18 @@ TaskQueueManager::AsValueWithSelectorResult(
                      selected_work_queue->task_queue()->GetName());
     state->SetString("work_queue_name", selected_work_queue->GetName());
   }
+  if (verbose_snapshots_enabled) {
+    base::TimeTicks now = real_time_domain()->CreateLazyNow().Now();
+    state->BeginArray("queues");
+    for (auto& queue : queues_)
+      queue->GetTaskQueueImpl()->AsValueInto(now, state.get());
+    state->EndArray();
+    state->BeginArray("time_domains");
+    for (auto* time_domain : time_domains_)
+      time_domain->AsValueInto(state.get());
+    state->EndArray();
+  }
 
-  state->BeginArray("time_domains");
-  for (auto* time_domain : time_domains_)
-    time_domain->AsValueInto(state.get());
-  state->EndArray();
   {
     base::AutoLock lock(any_thread_lock_);
     state->SetBoolean("is_nested", any_thread().is_nested);
@@ -639,12 +645,13 @@ TaskQueueManager::AsValueWithSelectorResult(
                       any_thread().do_work_running_count);
     state->SetInteger("immediate_do_work_posted_count",
                       any_thread().immediate_do_work_posted_count);
-
-    state->BeginArray("has_incoming_immediate_work");
-    for (const auto& pair : any_thread().has_incoming_immediate_work) {
-      state->AppendString(pair.first->GetName());
+    if (verbose_snapshots_enabled) {
+      state->BeginArray("has_incoming_immediate_work");
+      for (const auto& pair : any_thread().has_incoming_immediate_work) {
+        state->AppendString(pair.first->GetName());
+      }
+      state->EndArray();
     }
-    state->EndArray();
   }
   return std::move(state);
 }
