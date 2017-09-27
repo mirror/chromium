@@ -72,7 +72,10 @@ void CreateBidiRuns(BidiRunList<BidiRun>* bidi_runs,
       if (item.Type() == NGInlineItem::kText ||
           item.Type() == NGInlineItem::kControl) {
         LayoutObject* layout_object = item.GetLayoutObject();
-        DCHECK(layout_object->IsText());
+        if (!layout_object->IsText()) {
+          DCHECK(layout_object->IsLayoutNGListItem());
+          continue;
+        }
         unsigned text_offset =
             text_offsets[physical_fragment.ItemIndexDeprecated()];
         run = new BidiRun(physical_fragment.StartOffset() - text_offset,
@@ -279,7 +282,7 @@ template <typename OffsetMappingBuilder>
 LayoutBox* CollectInlinesInternal(
     LayoutNGBlockFlow* block,
     NGInlineItemsBuilderTemplate<OffsetMappingBuilder>* builder) {
-  builder->EnterBlock(block->Style());
+  builder->EnterBlock(block);
   LayoutObject* node = GetLayoutObjectForFirstChildNode(block);
   LayoutBox* next_box = nullptr;
   while (node) {
@@ -664,6 +667,8 @@ void NGInlineNode::CopyFragmentDataToLayoutBox(
     CreateBidiRuns(&bidi_runs, physical_line_box.Children(), constraint_space,
                    line_box.Offset(), items, text_offsets,
                    &positions_for_bidi_runs, &positions);
+    if (!bidi_runs.FirstRun())
+      continue;
     // TODO(kojii): bidi needs to find the logical last run.
     bidi_runs.SetLogicallyLastRun(bidi_runs.LastRun());
 
