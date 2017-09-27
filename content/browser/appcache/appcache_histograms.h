@@ -38,10 +38,6 @@ class AppCacheHistograms {
       int percent_complete,
       bool was_making_progress,
       bool off_origin_resource_failure);
-  static void AddTaskQueueTimeSample(const base::TimeDelta& duration);
-  static void AddTaskRunTimeSample(const base::TimeDelta& duration);
-  static void AddCompletionQueueTimeSample(const base::TimeDelta& duration);
-  static void AddCompletionRunTimeSample(const base::TimeDelta& duration);
   static void AddNetworkJobStartDelaySample(const base::TimeDelta& duration);
   static void AddErrorJobStartDelaySample(const base::TimeDelta& duration);
   static void AddAppCacheJobStartDelaySample(const base::TimeDelta& duration);

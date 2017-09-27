@@ -180,8 +180,8 @@ class AppCacheStorageImpl::DatabaseTask
   DelegateReferenceVector delegates_;
 
  private:
-  void CallRun(base::TimeTicks schedule_time);
-  void CallRunCompleted(base::TimeTicks schedule_time);
+  void CallRun();
+  void CallRunCompleted();
   void OnFatalError();
 
   scoped_refptr<base::SequencedTaskRunner> io_thread_;
@@ -194,8 +194,7 @@ void AppCacheStorageImpl::DatabaseTask::Schedule() {
     return;
 
   if (storage_->db_task_runner_->PostTask(
-          FROM_HERE, base::BindOnce(&DatabaseTask::CallRun, this,
-                                    base::TimeTicks::Now()))) {
+          FROM_HERE, base::BindOnce(&DatabaseTask::CallRun, this))) {
     storage_->scheduled_database_tasks_.push_back(this);
   } else {
     NOTREACHED() << "Thread for database tasks is not running.";
@@ -208,15 +207,9 @@ void AppCacheStorageImpl::DatabaseTask::CancelCompletion() {
   storage_ = NULL;
 }
 
-void AppCacheStorageImpl::DatabaseTask::CallRun(
-    base::TimeTicks schedule_time) {
-  AppCacheHistograms::AddTaskQueueTimeSample(
-      base::TimeTicks::Now() - schedule_time);
+void AppCacheStorageImpl::DatabaseTask::CallRun() {
   if (!database_->is_disabled()) {
-    base::TimeTicks run_time = base::TimeTicks::Now();
     Run();
-    AppCacheHistograms::AddTaskRunTimeSample(
-        base::TimeTicks::Now() - run_time);
 
     if (database_->was_corruption_detected()) {
       AppCacheHistograms::CountCorruptionDetected();
@@ -228,22 +221,15 @@ void AppCacheStorageImpl::DatabaseTask::CallRun(
     }
   }
   io_thread_->PostTask(FROM_HERE,
-                       base::BindOnce(&DatabaseTask::CallRunCompleted, this,
-                                      base::TimeTicks::Now()));
+                       base::BindOnce(&DatabaseTask::CallRunCompleted, this));
 }
 
-void AppCacheStorageImpl::DatabaseTask::CallRunCompleted(
-    base::TimeTicks schedule_time) {
-  AppCacheHistograms::AddCompletionQueueTimeSample(
-      base::TimeTicks::Now() - schedule_time);
+void AppCacheStorageImpl::DatabaseTask::CallRunCompleted() {
   if (storage_) {
     DCHECK(io_thread_->RunsTasksInCurrentSequence());
     DCHECK(storage_->scheduled_database_tasks_.front() == this);
     storage_->scheduled_database_tasks_.pop_front();
-    base::TimeTicks run_time = base::TimeTicks::Now();
     RunCompleted();
-    AppCacheHistograms::AddCompletionRunTimeSample(
-        base::TimeTicks::Now() - run_time);
     delegates_.clear();
   }
 }

@@ -1491,6 +1491,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="appcache.CompletionQueueTime" units="ms">
+  <obsolete>
+    Deprecated 09/2017 due to lack of usage.
+  </obsolete>
   <owner>michaeln@chromium.org</owner>
   <summary>
     Time elapsed between a completion task being queued and run.
@@ -1498,6 +1501,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="appcache.CompletionRunTime" units="ms">
+  <obsolete>
+    Deprecated 09/2017 due to lack of usage.
+  </obsolete>
   <owner>michaeln@chromium.org</owner>
   <summary>
     The amount of time taken to run a completion task on the IO thread.
@@ -1582,6 +1588,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="appcache.TaskQueueTime" units="ms">
+  <obsolete>
+    Deprecated 09/2017 due to lack of usage.
+  </obsolete>
   <owner>michaeln@chromium.org</owner>
   <summary>
     Time elapsed between a background task being queued and run.
@@ -1589,6 +1598,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="appcache.TaskRunTime" units="ms">
+  <obsolete>
+    Deprecated 09/2017 due to lack of usage.
+  </obsolete>
   <owner>michaeln@chromium.org</owner>
   <summary>The amount of time taken to run a background task.</summary>
 </histogram>

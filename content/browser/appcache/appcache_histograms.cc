@@ -110,38 +110,24 @@ void AppCacheHistograms::LogUpdateFailureStats(
   }
 }
 
-void AppCacheHistograms::AddTaskQueueTimeSample(
-    const base::TimeDelta& duration) {
-  UMA_HISTOGRAM_TIMES("appcache.TaskQueueTime", duration);
-}
-
-void AppCacheHistograms::AddTaskRunTimeSample(
-    const base::TimeDelta& duration) {
-  UMA_HISTOGRAM_TIMES("appcache.TaskRunTime", duration);
-}
-
-void AppCacheHistograms::AddCompletionQueueTimeSample(
-    const base::TimeDelta& duration) {
-  UMA_HISTOGRAM_TIMES("appcache.CompletionQueueTime", duration);
-}
-
-void AppCacheHistograms::AddCompletionRunTimeSample(
-    const base::TimeDelta& duration) {
-  UMA_HISTOGRAM_TIMES("appcache.CompletionRunTime", duration);
-}
-
 void AppCacheHistograms::AddNetworkJobStartDelaySample(
     const base::TimeDelta& duration) {
+  if (duration < base::TimeDelta::FromMilliseconds(1))
+    return;
   UMA_HISTOGRAM_TIMES("appcache.JobStartDelay.Network", duration);
 }
 
 void AppCacheHistograms::AddErrorJobStartDelaySample(
     const base::TimeDelta& duration) {
+  if (duration < base::TimeDelta::FromMilliseconds(1))
+    return;
   UMA_HISTOGRAM_TIMES("appcache.JobStartDelay.Error", duration);
 }
 
 void AppCacheHistograms::AddAppCacheJobStartDelaySample(
     const base::TimeDelta& duration) {
+  if (duration < base::TimeDelta::FromMilliseconds(1))
+    return;
   UMA_HISTOGRAM_TIMES("appcache.JobStartDelay.AppCache", duration);
 }
 
