@@ -296,6 +296,24 @@
       "revId": "1b5f85ec4006c74add8a177409e87b08f02c7533",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8392a46_c1248bd7",
+        "filename": "extensions/browser/guest_view/web_view/web_view_guest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-27T21:01:11Z",
+      "side": 1,
+      "message": "Thanks - I\u0027ve opened https://crbug.com/769461 to track this.",
+      "parentUuid": "f1e27320_7c96b8f2",
+      "revId": "1b5f85ec4006c74add8a177409e87b08f02c7533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
