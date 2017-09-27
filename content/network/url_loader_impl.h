@@ -76,6 +76,7 @@ class CONTENT_EXPORT URLLoaderImpl : public mojom::URLLoader,
   void SendResponseToClient();
   void CompletePendingWrite();
   void SetRawResponseHeaders(scoped_refptr<const net::HttpResponseHeaders>);
+  void ReportBodyReadBeforePaused();
 
   NetworkContext* context_;
   int32_t options_;
@@ -105,6 +106,10 @@ class CONTENT_EXPORT URLLoaderImpl : public mojom::URLLoader,
   // The response body stream is open, but transferring data is paused (which
   // also causes caching to be paused).
   bool paused_caching_response_body_ = false;
+
+  // Whether reporting BodyReadBeforePaused histogram is needed after the
+  // pending read is completed (or when the response body stream is closed).
+  bool should_report_body_read_before_paused_ = false;
 
   base::WeakPtrFactory<URLLoaderImpl> weak_ptr_factory_;
 
