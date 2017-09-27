@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "09ec940b_d6413471",
+        "filename": "content/renderer/browser_plugin/browser_plugin.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-09-27T18:30:23Z",
+      "side": 1,
+      "message": "Moved it to Initialize.",
+      "parentUuid": "1a741375_7c61557b",
+      "revId": "006b29da094cd9e4cf6610b1bfde804da3aee89c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "38879eb4_1d936ef8",
         "filename": "content/renderer/render_frame_proxy.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-27T17:38:44Z",
       "side": 1,
       "message": "nit: ditto, would it make sense to create it directly in the constructor?",
+      "revId": "006b29da094cd9e4cf6610b1bfde804da3aee89c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15d6f67f_6ad5be6b",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-09-27T18:30:23Z",
+      "side": 1,
+      "message": "Moved it to RenderFrameProxy::Init",
+      "parentUuid": "38879eb4_1d936ef8",
       "revId": "006b29da094cd9e4cf6610b1bfde804da3aee89c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
