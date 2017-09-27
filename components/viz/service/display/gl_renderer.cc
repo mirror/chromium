@@ -3363,10 +3363,6 @@ void GLRenderer::ScheduleCALayers() {
 }
 
 void GLRenderer::ScheduleDCLayers() {
-  if (overlay_resource_pool_) {
-    overlay_resource_pool_->CheckBusyResources();
-  }
-
   scoped_refptr<DCLayerOverlaySharedState> shared_state;
   size_t copied_render_pass_count = 0;
   for (DCLayerOverlay& dc_layer_overlay :
