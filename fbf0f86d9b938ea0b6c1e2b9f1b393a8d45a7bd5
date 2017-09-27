@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "92214a4d_88712fff",
+        "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-27T15:49:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "207ae8b6_a33f106e",
+      "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6256b207_33dfb42e",
         "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c185240b_27043902",
+        "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-27T15:49:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6256b207_33dfb42e",
+      "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "d5ff3ed0_76be7ec8",
+        "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1046,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-27T15:49:36Z",
+      "side": 1,
+      "message": "Done, but it\u0027s not because SetPowered() is not being switched to OnceCallback, rather because the need to std::move() the callback in both independent callbacks.",
+      "parentUuid": "0e912de2_2760af2b",
+      "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8159975_b288dfa8",
         "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.cc",
         "patchSetId": 3
@@ -85,6 +139,24 @@
       "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0584939b_056f574b",
+        "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1515,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-27T15:49:36Z",
+      "side": 1,
+      "message": "I don\u0027t see a way to get rid of the repeating callback going forward because of the double-move :(",
+      "parentUuid": "f8159975_b288dfa8",
+      "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -123,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "762cdadc_01d239be",
+        "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2169,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-27T15:49:36Z",
+      "side": 1,
+      "message": "Done, except for the TODOs. The first one we cannot get rid of because we would need to std::move() twice, so the ACFR is the only way we can get rid of it. The second one needs to happen when BluetoothAdaptor supports it, otherwise the compiler would complain, so there\u0027s no point in noting the TODO.",
+      "parentUuid": "0d705d62_cc22adbe",
+      "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b27a424_ab0b275f",
         "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.h",
         "patchSetId": 3
@@ -137,6 +227,24 @@
       "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f93a76ff_1d9b3870",
+        "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-27T15:49:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b27a424_ab0b275f",
+      "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "794837f4_396834cf",
+        "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-27T15:49:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72129b17_f23ce422",
+      "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14fe8f83_f8f30eb6",
         "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.h",
         "patchSetId": 3
@@ -171,6 +297,24 @@
       "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f51f6d85_f66a2778",
+        "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-27T15:49:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14fe8f83_f8f30eb6",
+      "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -191,6 +335,24 @@
     },
     {
       "key": {
+        "uuid": "3fdcc58e_f8f5819a",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-27T15:49:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f9a2faa_2bfb9e36",
+      "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6bd2db2_5b2afe2f",
         "filename": "chrome/browser/chromeos/arc/policy/arc_policy_bridge.cc",
         "patchSetId": 3
@@ -205,6 +367,24 @@
       "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1ae1105_f371a29d",
+        "filename": "chrome/browser/chromeos/arc/policy/arc_policy_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-27T15:49:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6bd2db2_5b2afe2f",
+      "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -225,6 +405,24 @@
     },
     {
       "key": {
+        "uuid": "efa8c549_b39c2d41",
+        "filename": "chrome/browser/chromeos/arc/policy/arc_policy_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-27T15:49:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f1cdf89_b59943d3",
+      "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "844875a7_ca9cb6ef",
         "filename": "chrome/browser/chromeos/arc/policy/arc_policy_bridge.h",
         "patchSetId": 3
@@ -242,6 +440,24 @@
     },
     {
       "key": {
+        "uuid": "95c45e4b_373c8698",
+        "filename": "chrome/browser/chromeos/arc/policy/arc_policy_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-27T15:49:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "844875a7_ca9cb6ef",
+      "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16db24c4_209af4c4",
         "filename": "chrome/gpu/gpu_arc_video_encode_accelerator.cc",
         "patchSetId": 3
@@ -256,6 +472,24 @@
       "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0af609ee_d1316bcf",
+        "filename": "chrome/gpu/gpu_arc_video_encode_accelerator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-27T15:49:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16db24c4_209af4c4",
+      "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -294,6 +528,24 @@
     },
     {
       "key": {
+        "uuid": "689a4c96_db5c4b96",
+        "filename": "chrome/gpu/gpu_arc_video_encode_accelerator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-27T15:49:36Z",
+      "side": 1,
+      "message": "Done.\n\nemplace() performs at least one fewer copy of a std::pair and at least one fewer move operations vs. operator[]+operator\u003d",
+      "parentUuid": "9acb9ed2_a1c90a99",
+      "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d867f9f6_cb8bfb4d",
         "filename": "components/arc/net/arc_net_host_impl.cc",
         "patchSetId": 3
@@ -308,6 +560,24 @@
       "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "105484bd_f034ae83",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-27T15:49:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d867f9f6_cb8bfb4d",
+      "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -328,6 +598,24 @@
     },
     {
       "key": {
+        "uuid": "f2199e26_6fa22a0d",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-27T15:49:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3048f934_b1969986",
+      "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ba63c96_c019f8cf",
         "filename": "components/arc/net/arc_net_host_impl.h",
         "patchSetId": 3
@@ -345,6 +633,24 @@
     },
     {
       "key": {
+        "uuid": "c80965fd_de6c41ed",
+        "filename": "components/arc/net/arc_net_host_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-27T15:49:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ba63c96_c019f8cf",
+      "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33837d94_87d1e648",
         "filename": "components/arc/net/arc_net_host_impl.h",
         "patchSetId": 3
@@ -359,6 +665,24 @@
       "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b96c488_938a5c87",
+        "filename": "components/arc/net/arc_net_host_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-27T15:49:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33837d94_87d1e648",
+      "revId": "fbf0f86d9b938ea0b6c1e2b9f1b393a8d45a7bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
