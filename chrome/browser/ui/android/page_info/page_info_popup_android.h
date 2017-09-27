@@ -42,6 +42,10 @@ class PageInfoPopupAndroid : public PageInfoUI {
   void RecordPageInfoAction(JNIEnv* env,
                             const base::android::JavaParamRef<jobject>& obj,
                             jint action);
+  void OnSitePermissionChanged(JNIEnv* env,
+                               const base::android::JavaParamRef<jobject>& obj,
+                               jint type,
+                               jint setting);
 
   // PageInfoUI implementations.
   void SetCookieInfo(const CookieInfoList& cookie_info_list) override;
