@@ -14,16 +14,6 @@ namespace blink {
 
 namespace {
 
-// Mapping from WebClientHintsType to the header value for enabling the
-// corresponding client hint. The ordering should match the ordering of enums in
-// WebClientHintsType.
-static constexpr const char* kHeaderMapping[] = {"device-memory", "dpr",
-                                                 "width", "viewport-width"};
-
-static_assert(static_cast<int>(mojom::WebClientHintsType::kLast) + 1 ==
-                  arraysize(kHeaderMapping),
-              "unhandled client hint type");
-
 void ParseAcceptChHeader(const String& header_value,
                          WebEnabledClientHints& enabled_hints) {
   CommaDelimitedHeaderSet accept_client_hints_header;

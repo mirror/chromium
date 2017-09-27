@@ -113,6 +113,7 @@ include_rules = [
   # header-only types, and some selected common code.
   "-third_party/WebKit",
   "+third_party/WebKit/public/platform/WebCache.h",
+  "+third_party/WebKit/public/platform/WebClientHintsType.h",
   "+third_party/WebKit/public/platform/WebDisplayMode.h",
   "+third_party/WebKit/public/platform/WebFeaturePolicyFeature.h",
   "+third_party/WebKit/public/platform/WebLoadingBehaviorFlag.h",
