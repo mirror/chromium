@@ -1,0 +1,215 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8554063e_c0e73794",
+        "filename": "extensions/browser/api/feedback_private/access_rate_limiter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-27T22:10:03Z",
+      "side": 1,
+      "message": "nit: Avoid questions in comments :)\n(I think it\u0027s ok to remove the comment all together).",
+      "revId": "125afda88d37501ce7e3b430c8611ccd20e1d1e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6c7b24b_c11dd58a",
+        "filename": "extensions/browser/api/feedback_private/access_rate_limiter.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-27T22:10:03Z",
+      "side": 1,
+      "message": "nice comments :)",
+      "revId": "125afda88d37501ce7e3b430c8611ccd20e1d1e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "355ea4e8_101f7eba",
+        "filename": "extensions/browser/api/feedback_private/access_rate_limiter.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-27T22:10:03Z",
+      "side": 1,
+      "message": "remove |default_tick_clock_| part",
+      "revId": "125afda88d37501ce7e3b430c8611ccd20e1d1e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9568f306_dae20a31",
+        "filename": "extensions/browser/api/feedback_private/access_rate_limiter_chromeos_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-27T22:10:03Z",
+      "side": 1,
+      "message": "include \"base/time/time.h\" for TimeDelta",
+      "revId": "125afda88d37501ce7e3b430c8611ccd20e1d1e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1a35be4_623d7c10",
+        "filename": "extensions/browser/api/feedback_private/access_rate_limiter_chromeos_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-27T22:10:03Z",
+      "side": 1,
+      "message": "remove this.",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 20
+      },
+      "revId": "125afda88d37501ce7e3b430c8611ccd20e1d1e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de1c3c97_51b54c88",
+        "filename": "extensions/browser/api/feedback_private/access_rate_limiter_chromeos_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-27T22:10:03Z",
+      "side": 1,
+      "message": "I don\u0027t think thi buys us much",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 15
+      },
+      "revId": "125afda88d37501ce7e3b430c8611ccd20e1d1e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dad4628a_ec15ae4e",
+        "filename": "extensions/browser/api/feedback_private/access_rate_limiter_chromeos_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-27T22:10:03Z",
+      "side": 1,
+      "message": "\u003d default;",
+      "revId": "125afda88d37501ce7e3b430c8611ccd20e1d1e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c0412a5_08c34c4e",
+        "filename": "extensions/browser/api/feedback_private/access_rate_limiter_chromeos_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-27T22:10:03Z",
+      "side": 1,
+      "message": "no need for unique_ptr here",
+      "revId": "125afda88d37501ce7e3b430c8611ccd20e1d1e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "210853b6_b108ab09",
+        "filename": "extensions/browser/api/feedback_private/access_rate_limiter_chromeos_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-27T22:10:03Z",
+      "side": 1,
+      "message": "nit:\n private:\n  DISALLOW_COPY_AND_ASSIGN(AccessRateLimiterTest);",
+      "revId": "125afda88d37501ce7e3b430c8611ccd20e1d1e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc18ac57_e9af768f",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-27T22:10:03Z",
+      "side": 1,
+      "message": "base::MakeUnique\u003cbase::DefaultTickClock\u003e()?",
+      "range": {
+        "startLine": 58,
+        "startChar": 37,
+        "endLine": 58,
+        "endChar": 44
+      },
+      "revId": "125afda88d37501ce7e3b430c8611ccd20e1d1e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94629ab2_24d2cdc4",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-27T22:10:03Z",
+      "side": 1,
+      "message": "rate_limiters_.emplace(key, base::MakeUnique\u003cAccessRatelimiter\u003e(....))",
+      "range": {
+        "startLine": 172,
+        "startChar": 4,
+        "endLine": 172,
+        "endChar": 18
+      },
+      "revId": "125afda88d37501ce7e3b430c8611ccd20e1d1e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
