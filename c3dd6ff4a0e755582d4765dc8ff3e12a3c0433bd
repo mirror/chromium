@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "992f9dd4_5373955e",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-27T04:59:59Z",
+      "side": 1,
+      "message": "Please add DCHECK(layout_object) and DCHECK_GE(offset, 0);",
+      "revId": "c3dd6ff4a0e755582d4765dc8ff3e12a3c0433bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f21be8e3_31b22afb",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-27T04:59:59Z",
+      "side": 1,
+      "message": "Could you use AssocaitedLayoutObjectOf(const Node\u0026, int offset_in_node)?\nThis function is can be\n\nLayoutObject* const associated \u003d const_cast\u003cLayoutObject*\u003e(AssociatedLayoutObjectOf(layout_text-\u003enode(), offset));\nDCHECK(associated-\u003eIsText());\nreturn {associated, offset_in_node - associated-\u003eTextStartOffset();}",
+      "revId": "c3dd6ff4a0e755582d4765dc8ff3e12a3c0433bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0ae7062_bf20c9d8",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-27T04:59:59Z",
+      "side": 1,
+      "message": "nit: %s/layout_text_start/remaining_part_start/",
+      "revId": "c3dd6ff4a0e755582d4765dc8ff3e12a3c0433bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27ce0e18_704005ba",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-27T04:59:59Z",
+      "side": 1,
+      "message": "nit: We don\u0027t need to have |ComputeAnd|. \"compute\" doesn\u0027t help to explain\nwhat this function does.\n\nJust |MarkStart()| is fine.",
+      "revId": "c3dd6ff4a0e755582d4765dc8ff3e12a3c0433bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75f1937b_06d36d3c",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-27T04:59:59Z",
+      "side": 1,
+      "message": "nit: We don\u0027t need to have this comment. L422 already says so.",
+      "revId": "c3dd6ff4a0e755582d4765dc8ff3e12a3c0433bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2fa02e3_afefe34d",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-27T04:59:59Z",
+      "side": 1,
+      "message": "nit: s/{}/0/",
+      "revId": "c3dd6ff4a0e755582d4765dc8ff3e12a3c0433bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a06b092_88795d47",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-27T04:59:59Z",
+      "side": 1,
+      "message": "nit: We don\u0027t need to have |ComputeAnd|. \"compute\" doesn\u0027t help to explain\nwhat this function does.\n\nJust |MarkEnd()| is fine.",
+      "revId": "c3dd6ff4a0e755582d4765dc8ff3e12a3c0433bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d86700a4_2f1c0b86",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-27T04:59:59Z",
+      "side": 1,
+      "message": "nit: We don\u0027t need to have this comment. L463 already says so.",
+      "revId": "c3dd6ff4a0e755582d4765dc8ff3e12a3c0433bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "004fb8c3_227e03b4",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-27T04:59:59Z",
+      "side": 1,
+      "message": "nit: s/{}/0/",
+      "revId": "c3dd6ff4a0e755582d4765dc8ff3e12a3c0433bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
