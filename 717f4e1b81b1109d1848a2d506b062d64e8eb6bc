@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "6f30a4f0_cf4a10c9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 16
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-27T22:45:54Z",
+      "side": 1,
+      "message": "Technically, it isn\u0027t saved in WebContents, but rather attached as user data to the WebContents.",
+      "revId": "717f4e1b81b1109d1848a2d506b062d64e8eb6bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb17532b_da96e5b8",
+        "filename": "chrome/browser/renderer_host/chrome_navigation_ui_data.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-27T22:45:54Z",
+      "side": 1,
+      "message": "This seems awkward. Why would we add non-extension related data to an extension related struct? Why not do it the other way around, where chrome/ defines the NavigationUIData and can include the extension specific one as a member, if extensions are enabled.\n\nIn this current form, the new extra data is not available in mobile Chrome, which does not support extensions.",
+      "revId": "717f4e1b81b1109d1848a2d506b062d64e8eb6bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "211cc47a_88621168",
         "filename": "content/public/browser/navigation_handle.h",
         "patchSetId": 16
