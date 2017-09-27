@@ -67,10 +67,6 @@
 #include "third_party/webrtc_overrides/init_webrtc.h"  // nogncheck
 #endif
 
-#if BUILDFLAG(ENABLE_CDM_HOST_VERIFICATION)
-#include "content/common/media/cdm_host_files.h"
-#endif
-
 namespace content {
 
 namespace {
@@ -360,10 +356,6 @@ static void ZygotePreSandboxInit() {
 #endif
 #if BUILDFLAG(ENABLE_WEBRTC)
   InitializeWebRtcModule();
-#endif
-
-#if BUILDFLAG(ENABLE_CDM_HOST_VERIFICATION)
-  CdmHostFiles::CreateGlobalInstance();
 #endif
 
   SkFontConfigInterface::SetGlobal(
