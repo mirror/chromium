@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac09f485_0e4745b4",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-log-media-query-warning-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-09-27T22:16:44Z",
+      "side": 1,
+      "message": "This test is not needed - the warning it was testing for got removed.",
+      "revId": "133c5bf63f43c6522f26c02091a2a59a8650c1f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
