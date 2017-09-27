@@ -307,6 +307,33 @@ Status ChromeDesktopImpl::SetWindowSize(const std::string& target_id,
   return SetWindowBounds(window.id, std::move(bounds));
 }
 
+Status ChromeDesktopImpl::SetWindowRect(const std::string& target_id,
+                                        int width,
+                                        int height,
+                                        int x,
+                                        int y) {
+  Window window;
+  Status status = GetWindow(target_id, &window);
+  if (status.IsError())
+    return status;
+
+  if (window.state != "normal") {
+    // restore window to normal first to allow size change.
+    auto bounds = base::MakeUnique<base::DictionaryValue>();
+    bounds->SetString("windowState", "normal");
+    status = SetWindowBounds(window.id, std::move(bounds));
+    if (status.IsError())
+      return status;
+  }
+
+  auto bounds = base::MakeUnique<base::DictionaryValue>();
+  bounds->SetInteger("width", width);
+  bounds->SetInteger("height", height);
+  bounds->SetInteger("left", x);
+  bounds->SetInteger("top", y);
+  return SetWindowBounds(window.id, std::move(bounds));
+}
+
 Status ChromeDesktopImpl::MaximizeWindow(const std::string& target_id) {
   Window window;
   Status status = GetWindow(target_id, &window);
