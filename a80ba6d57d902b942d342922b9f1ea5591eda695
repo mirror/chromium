@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55c1d1b7_a02d61f1",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-27T22:47:25Z",
+      "side": 1,
+      "message": "Where is this being used? Should we be listening to an iron-resize event to take advantage of it? From the docs at https://www.webcomponents.org/element/PolymerElements/iron-resizable-behavior.\n\n\"Elements that perform measurement should add the IronResizableBehavior behavior to their element definition and listen for the iron-resize event on themselves.\"",
+      "revId": "a80ba6d57d902b942d342922b9f1ea5591eda695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3592efb_5561d92d",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-27T22:47:25Z",
+      "side": 1,
+      "message": "Can we simply do e.type \u003d\u003d \u0027keydown\u0027, or e.type \u003d\u003d \u0027tap\u0027 instead?",
+      "revId": "a80ba6d57d902b942d342922b9f1ea5591eda695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7308a3d2_1ce9f66d",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-27T22:47:25Z",
+      "side": 1,
+      "message": "How about e.code instead? See example from cr-toggle at https://cs.chromium.org/chromium/src/ui/webui/resources/cr_elements/cr_toggle/cr_toggle.js?q\u003dcr_toggle.js\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d158.",
+      "revId": "a80ba6d57d902b942d342922b9f1ea5591eda695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
