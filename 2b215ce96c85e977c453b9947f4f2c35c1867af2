@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54a21f9e_c64e2465",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-27T10:07:31Z",
+      "side": 1,
+      "message": "768805",
+      "range": {
+        "startLine": 14,
+        "startChar": 5,
+        "endLine": 14,
+        "endChar": 8
+      },
+      "revId": "2b215ce96c85e977c453b9947f4f2c35c1867af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b241d39c_988dafd0",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-27T10:07:31Z",
+      "side": 1,
+      "message": "nit: make this anonymous as only used in one place. ie. this below:\n\nconst struct { ui::KeyboardCode keycode; int modifiers;} kCloseWindowAccelerators[] \u003d ...",
+      "revId": "2b215ce96c85e977c453b9947f4f2c35c1867af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f798d105_d3e9e861",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-27T10:07:31Z",
+      "side": 1,
+      "message": "nit: accelerator",
+      "range": {
+        "startLine": 117,
+        "startChar": 19,
+        "endLine": 117,
+        "endChar": 24
+      },
+      "revId": "2b215ce96c85e977c453b9947f4f2c35c1867af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72d73656_45e6d589",
+        "filename": "components/exo/keyboard.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-27T10:07:31Z",
+      "side": 1,
+      "message": "nit: short comment above this explaining that it will add a different type of handler depending on if acks are needed. it\u0027s not obvious why that is needed for someone not familiar with this change",
+      "revId": "2b215ce96c85e977c453b9947f4f2c35c1867af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ad8ace7_8fb39c14",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-27T10:07:31Z",
+      "side": 1,
+      "message": "nit: make this anonymous now that it is only used in one place",
+      "revId": "2b215ce96c85e977c453b9947f4f2c35c1867af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
