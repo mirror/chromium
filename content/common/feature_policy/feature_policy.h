@@ -14,6 +14,8 @@
 #include "base/macros.h"
 #include "content/common/content_export.h"
 #include "third_party/WebKit/public/platform/WebFeaturePolicy.h"
+#include "third_party/WebKit/public/platform/WebString.h"
+#include "third_party/WebKit/public/platform/WebVector.h"
 #include "url/origin.h"
 
 namespace content {
@@ -127,6 +129,12 @@ class CONTENT_EXPORT FeaturePolicy : public blink::WebFeaturePolicy {
     // Returns true if the given origin has been added to the whitelist.
     bool Contains(const url::Origin& origin) const;
 
+    // Returns the value of matches_all_origins_.
+    bool MatchesAllOrigins() const;
+
+    // Returns the value of origins_.
+    std::vector<url::Origin> Origins() const;
+
    private:
     bool matches_all_origins_;
     std::vector<url::Origin> origins_;
@@ -166,6 +174,10 @@ class CONTENT_EXPORT FeaturePolicy : public blink::WebFeaturePolicy {
 
   // WebFeaturePolicy implementation
   bool IsFeatureEnabled(blink::WebFeaturePolicyFeature feature) const override;
+  bool IsFeatureEnabledForOrigin(blink::WebFeaturePolicyFeature,
+                                 blink::WebSecurityOrigin) const override;
+  blink::WebVector<blink::WebString> GetOriginsForFeature(
+      blink::WebFeaturePolicyFeature feature) const override;
 
   // Returns whether or not the given feature is enabled by this policy for a
   // specific origin.
