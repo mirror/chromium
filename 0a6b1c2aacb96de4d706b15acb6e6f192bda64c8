@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76ddcb00_866e3af1",
+        "filename": "third_party/WebKit/Source/core/css/CSSFontFace.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-27T06:29:09Z",
+      "side": 1,
+      "message": "using enum rather than bool is better",
+      "range": {
+        "startLine": 71,
+        "startChar": 41,
+        "endLine": 71,
+        "endChar": 45
+      },
+      "revId": "0a6b1c2aacb96de4d706b15acb6e6f192bda64c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
