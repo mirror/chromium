@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdd55ade_20aca3cc",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-27T10:50:32Z",
+      "side": 1,
+      "message": "Is this always non-null? Can generated text be passed to it?",
+      "range": {
+        "startLine": 399,
+        "startChar": 32,
+        "endLine": 399,
+        "endChar": 54
+      },
+      "revId": "12192e0e7b08f8cc89bc63de04a20defa0aff925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
