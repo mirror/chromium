@@ -289,6 +289,24 @@ void AnimationTicker::ActivateAnimations() {
   scroll_offset_animation_was_interrupted_ = false;
 }
 
+void AnimationTicker::DeactivateAnimations() {
+  bool animation_deactivated = false;
+  for (auto& animation : animations_) {
+    if (animation->affects_active_elements()) {
+      animation->set_affects_active_elements(false);
+      animation_deactivated = true;
+    }
+  }
+
+  // TODO(wkorman): Do we really need to update client animation state?
+  if (animation_deactivated)
+    element_animations_->UpdateClientAnimationState();
+
+  // TODO(wkorman): What if there are still pending animations, and/or
+  // the element id that prompted this deactivation comes back?
+  animation_player_->RemoveFromTicking();
+}
+
 void AnimationTicker::AnimationAdded() {
   DCHECK(has_bound_element_animations());
 
@@ -582,17 +600,8 @@ void AnimationTicker::PushNewAnimationsToImplThread(
         !animation->curve()
              ->ToScrollOffsetAnimationCurve()
              ->HasSetInitialValue()) {
-      gfx::ScrollOffset current_scroll_offset;
-      if (animation_ticker_impl->HasElementInActiveList()) {
-        current_scroll_offset =
-            animation_ticker_impl->ScrollOffsetForAnimation();
-      } else {
-        // The owning layer isn't yet in the active tree, so the main thread
-        // scroll offset will be up to date.
-        current_scroll_offset = ScrollOffsetForAnimation();
-      }
       animation->curve()->ToScrollOffsetAnimationCurve()->SetInitialValue(
-          current_scroll_offset);
+          animation_ticker_impl->ScrollOffsetForAnimation());
     }
 
     // The new animation should be set to run as soon as possible.
@@ -944,6 +953,22 @@ void AnimationTicker::MarkFinishedAnimations(base::TimeTicks monotonic_time) {
   }
   if (animation_finished)
     element_animations_->UpdateClientAnimationState();
+}
+
+bool AnimationTicker::HasActiveAnimations() const {
+  for (const auto& animation : animations_) {
+    if (!animation->is_finished() && animation->affects_active_elements())
+      return true;
+  }
+  return false;
+}
+
+bool AnimationTicker::HasPendingAnimations() const {
+  for (const auto& animation : animations_) {
+    if (!animation->is_finished() && animation->affects_pending_elements())
+      return true;
+  }
+  return false;
 }
 
 bool AnimationTicker::HasElementInActiveList() const {

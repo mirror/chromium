@@ -115,6 +115,7 @@ class CC_ANIMATION_EXPORT AnimationPlayer
   // pending elements. Any animations that no longer affect any elements
   // are deleted.
   void ActivateAnimations();
+  void DeactivateAnimations();
 
   bool HasOnlyTranslationTransforms(ElementListType list_type) const;
   bool AnimationsPreserveAxisAlignment() const;
@@ -157,6 +158,9 @@ class CC_ANIMATION_EXPORT AnimationPlayer
   std::string ToString() const;
 
   void SetNeedsCommit();
+
+  bool HasActiveAnimations() const;
+  bool HasPendingAnimations() const;
 
  private:
   friend class base::RefCounted<AnimationPlayer>;

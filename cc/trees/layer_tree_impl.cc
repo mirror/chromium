@@ -583,8 +583,9 @@ void LayerTreeImpl::RemoveFromElementMap(LayerImpl* layer) {
 
 void LayerTreeImpl::SetTransformMutated(ElementId element_id,
                                         const gfx::Transform& transform) {
-  DCHECK_EQ(1u, property_trees()->element_id_to_transform_node_index.count(
-                    element_id));
+  if (property_trees()->element_id_to_transform_node_index.count(element_id) ==
+      0)
+    return;
   element_id_to_transform_animations_[element_id] = transform;
   if (property_trees()->transform_tree.OnTransformAnimated(element_id,
                                                            transform))
@@ -592,8 +593,8 @@ void LayerTreeImpl::SetTransformMutated(ElementId element_id,
 }
 
 void LayerTreeImpl::SetOpacityMutated(ElementId element_id, float opacity) {
-  DCHECK_EQ(
-      1u, property_trees()->element_id_to_effect_node_index.count(element_id));
+  if (property_trees()->element_id_to_effect_node_index.count(element_id) == 0)
+    return;
   element_id_to_opacity_animations_[element_id] = opacity;
   if (property_trees()->effect_tree.OnOpacityAnimated(element_id, opacity))
     set_needs_update_draw_properties();
@@ -601,8 +602,8 @@ void LayerTreeImpl::SetOpacityMutated(ElementId element_id, float opacity) {
 
 void LayerTreeImpl::SetFilterMutated(ElementId element_id,
                                      const FilterOperations& filters) {
-  DCHECK_EQ(
-      1u, property_trees()->element_id_to_effect_node_index.count(element_id));
+  if (property_trees()->element_id_to_effect_node_index.count(element_id) == 0)
+    return;
   element_id_to_filter_animations_[element_id] = filters;
   if (property_trees()->effect_tree.OnFilterAnimated(element_id, filters))
     set_needs_update_draw_properties();

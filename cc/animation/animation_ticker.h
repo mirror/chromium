@@ -88,6 +88,7 @@ class CC_ANIMATION_EXPORT AnimationTicker {
                        bool needs_completion);
 
   void ActivateAnimations();
+  void DeactivateAnimations();
 
   void AnimationAdded();
 
@@ -95,6 +96,8 @@ class CC_ANIMATION_EXPORT AnimationTicker {
   bool NotifyAnimationFinished(const AnimationEvent& event);
   bool NotifyAnimationAborted(const AnimationEvent& event);
 
+  bool HasActiveAnimations() const;
+  bool HasPendingAnimations() const;
   bool HasTickingAnimation() const;
   bool HasNonDeletedAnimation() const;
 

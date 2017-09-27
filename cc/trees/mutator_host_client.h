@@ -22,9 +22,6 @@ enum class ElementListType { ACTIVE, PENDING };
 
 class MutatorHostClient {
  public:
-  virtual bool IsElementInList(ElementId element_id,
-                               ElementListType list_type) const = 0;
-
   virtual void SetMutatorsNeedCommit() = 0;
   virtual void SetMutatorsNeedRebuildPropertyTrees() = 0;
 

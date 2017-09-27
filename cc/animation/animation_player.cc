@@ -328,6 +328,12 @@ void AnimationPlayer::ActivateAnimations() {
   UpdateTickingState(UpdateTickingType::NORMAL);
 }
 
+void AnimationPlayer::DeactivateAnimations() {
+  animation_ticker_->DeactivateAnimations();
+  // TODO(wkorman): Do we need to update ticking state?
+  UpdateTickingState(UpdateTickingType::NORMAL);
+}
+
 bool AnimationPlayer::HasOnlyTranslationTransforms(
     ElementListType list_type) const {
   return animation_ticker_->HasOnlyTranslationTransforms(list_type);
@@ -391,6 +397,14 @@ std::string AnimationPlayer::ToString() const {
       "AnimationPlayer{id=%d, element_id=%s, animations=[%s]}", id_,
       animation_ticker_->element_id().ToString().c_str(),
       animation_ticker_->AnimationsToString().c_str());
+}
+
+bool AnimationPlayer::HasActiveAnimations() const {
+  return animation_ticker_->HasActiveAnimations();
+}
+
+bool AnimationPlayer::HasPendingAnimations() const {
+  return animation_ticker_->HasPendingAnimations();
 }
 
 }  // namespace cc
