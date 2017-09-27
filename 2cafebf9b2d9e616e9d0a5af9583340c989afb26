@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5412fc3_c67151fb",
+        "filename": "components/omnibox/browser/break_iterator_adapter.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-27T23:40:00Z",
+      "side": 1,
+      "message": "Please revise this comment.  I don\u0027t understand: if it reaches the end, does that we have words?    Does it only apply when dealing with words that involve underscores, or can be called in other contexts as well?",
+      "revId": "2cafebf9b2d9e616e9d0a5af9583340c989afb26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3362a4a7_7408afc3",
+        "filename": "components/omnibox/browser/break_iterator_adapter.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-27T23:40:00Z",
+      "side": 1,
+      "message": "Again, please revise / expand this comment.  Move prev and pos to ...?  And does it only apply in the context of a word that contains underscores or not?  The next sentence somewhat implies that it does.  I\u0027d hope it\u0027s clearer.",
+      "revId": "2cafebf9b2d9e616e9d0a5af9583340c989afb26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3e0644d_18d7ac1e",
+        "filename": "components/omnibox/browser/break_iterator_adapter.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-27T23:40:00Z",
+      "side": 1,
+      "message": "Otherwise it is empty?  Or if those situation do not apply, is the value of underscore_word_ arbitrary and should never be examined in those cases?",
+      "revId": "2cafebf9b2d9e616e9d0a5af9583340c989afb26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c77ae59_dc5dc567",
+        "filename": "components/omnibox/browser/omnibox_field_trial.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-27T23:40:00Z",
+      "side": 1,
+      "message": "nit: no \"k\" in string value.  Also, please add \"Omnibox\" at the beginning of the string.",
+      "range": {
+        "startLine": 150,
+        "startChar": 46,
+        "endLine": 150,
+        "endChar": 47
+      },
+      "revId": "2cafebf9b2d9e616e9d0a5af9583340c989afb26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
