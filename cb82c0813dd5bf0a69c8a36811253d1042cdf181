@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f8b6bf86_47cddefc",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-27T09:07:23Z",
+      "side": 1,
+      "message": "\"git cl presubmit\" doesn\u0027t allow me to use LOG(INFO)\nchange to DVLOG(1)",
+      "parentUuid": "6ddccb1e_70671a95",
+      "range": {
+        "startLine": 183,
+        "startChar": 4,
+        "endLine": 183,
+        "endChar": 14
+      },
+      "revId": "cb82c0813dd5bf0a69c8a36811253d1042cdf181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b6e16fc_243e3923",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "cb82c0813dd5bf0a69c8a36811253d1042cdf181",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "132e0c22_bc12db59",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-27T09:07:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b6e16fc_243e3923",
+      "range": {
+        "startLine": 57,
+        "startChar": 19,
+        "endLine": 57,
+        "endChar": 32
+      },
+      "revId": "cb82c0813dd5bf0a69c8a36811253d1042cdf181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "100aa576_77b6d3ba",
+        "filename": "chromeos/dbus/system_clock_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-27T09:07:23Z",
+      "side": 1,
+      "message": "It\u0027s bug, thanks!",
+      "parentUuid": "ce590d16_453438d1",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 14
+      },
+      "revId": "cb82c0813dd5bf0a69c8a36811253d1042cdf181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18c1c0e9_5a5d3a80",
         "filename": "chromeos/dbus/system_clock_client.cc",
         "patchSetId": 8
@@ -82,6 +154,30 @@
       "writtenOn": "2017-09-26T22:36:36Z",
       "side": 1,
       "message": "Is it OK to retry DBus call every second?\nDid you ensure whether \u0027TimeUpdated\u0027 event happen as soon as it\u0027s synchronized, so that we can/can\u0027t rely on that?",
+      "range": {
+        "startLine": 183,
+        "startChar": 10,
+        "endLine": 183,
+        "endChar": 50
+      },
+      "revId": "cb82c0813dd5bf0a69c8a36811253d1042cdf181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c000f905_a8afc1a4",
+        "filename": "chromeos/dbus/system_clock_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-27T09:07:23Z",
+      "side": 1,
+      "message": "I don\u0027t find proof. Therefore I can\u0027t rely on it.",
+      "parentUuid": "18c1c0e9_5a5d3a80",
       "range": {
         "startLine": 183,
         "startChar": 10,

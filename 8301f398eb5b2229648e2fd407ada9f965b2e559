@@ -445,6 +445,30 @@
       "revId": "8301f398eb5b2229648e2fd407ada9f965b2e559",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c28ec9ea_a56b1b57",
+        "filename": "chromeos/dbus/system_clock_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-27T09:07:23Z",
+      "side": 1,
+      "message": "I asked Igor about it.\nIt\u0027s enough to check synchronization once after device reboot.",
+      "parentUuid": "2b5dba10_08f773f2",
+      "range": {
+        "startLine": 190,
+        "startChar": 0,
+        "endLine": 191,
+        "endChar": 42
+      },
+      "revId": "8301f398eb5b2229648e2fd407ada9f965b2e559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
