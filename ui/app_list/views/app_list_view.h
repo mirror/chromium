@@ -299,6 +299,8 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
   void GetWallpaperProminentColors(std::vector<SkColor>* colors);
   void SetBackgroundShieldColor();
 
+  void HandleArrowKeyFocusTraversal(ui::KeyEvent* event);
+
   AppListViewDelegate* delegate_;  // Weak. Owned by AppListService.
   AppListModel* const model_;      // Not Owned.
 
@@ -369,6 +371,8 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
 
   // Accessibility announcement dialogue.
   base::string16 state_announcement_;
+
+  const bool previous_arrow_key_traversal_enabled_;
 
   DISALLOW_COPY_AND_ASSIGN(AppListView);
 };

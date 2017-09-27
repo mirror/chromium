@@ -317,6 +317,8 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
   // Gets the index of the AppListItemView at the end of the view model.
   Index GetLastViewIndex() const;
 
+  int CalculateNextIndex(int current, bool arrow_up);
+
   void MoveSelected(int page_delta, int slot_x_delta, int slot_y_delta);
 
   // Returns true if the given moving operation should be handled by
