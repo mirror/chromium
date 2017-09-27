@@ -297,6 +297,8 @@ class MEDIA_EXPORT AUAudioInputStream
   // Callback to send statistics info.
   AudioManager::LogCallback log_callback_;
 
+  base::TimeTicks start_time_;
+
   // Used to ensure DevicePropertyChangedOnMainThread() is not called when
   // this object is destroyed.
   // Note that, all member variables should appear before the WeakPtrFactory.

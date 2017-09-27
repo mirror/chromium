@@ -80,6 +80,8 @@ class PulseAudioInputStream : public AgcAudioStream<AudioInputStream> {
 
   base::ThreadChecker thread_checker_;
 
+  int callback_count_ = 0;
+
   DISALLOW_COPY_AND_ASSIGN(PulseAudioInputStream);
 };
 

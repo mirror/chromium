@@ -518,6 +518,8 @@ void AUAudioInputStream::Start(AudioInputCallback* callback) {
     return;
   }
 
+  start_time_ = base::TimeTicks::Now();
+
   sink_ = callback;
   last_success_time_ = base::TimeTicks::Now();
   audio_unit_render_has_worked_ = false;
@@ -782,6 +784,9 @@ OSStatus AUAudioInputStream::OnDataIsAvailable(
     UInt32 bus_number,
     UInt32 number_of_frames) {
   TRACE_EVENT0("audio", "AUAudioInputStream::OnDataIsAvailable");
+
+  if (base::TimeTicks::Now() - start_time_ > base::TimeDelta::FromSeconds(10))
+    return noErr;
 
   // Indicate that input callbacks have started.
   if (!got_input_callback_) {
