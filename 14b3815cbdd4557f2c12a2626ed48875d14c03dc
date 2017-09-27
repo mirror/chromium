@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f79da00_def65121",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 972,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-27T23:45:02Z",
+      "side": 1,
+      "message": "No semicolon",
+      "revId": "14b3815cbdd4557f2c12a2626ed48875d14c03dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fd92981_1dfe988c",
+        "filename": "ui/gfx/render_text.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-27T23:45:02Z",
+      "side": 1,
+      "message": "No semicolon",
+      "revId": "14b3815cbdd4557f2c12a2626ed48875d14c03dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d9afead_80dc3815",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-27T23:45:02Z",
+      "side": 1,
+      "message": "Overloading is discouraged (even though we already do so above). Avoid adding yet another overload by combining this with the function above and giving the the new arg a default value:\n\n// Helper method to return an obscured string of the given |length|, using the\n// specified password placement char, or the default if none is specified.\nbase::string16 GetObscuredString(\n    size_t length,\n    base::char16 password_replacement_char \u003d RenderText::kPasswordReplacementChar) {\n  return base::string16(length, RenderText::kPasswordReplacementChar);\n}",
+      "revId": "14b3815cbdd4557f2c12a2626ed48875d14c03dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
