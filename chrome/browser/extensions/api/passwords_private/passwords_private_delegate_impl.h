@@ -47,8 +47,6 @@ class PasswordsPrivateDelegateImpl : public PasswordsPrivateDelegate,
   void RemovePasswordException(size_t index) override;
   void RequestShowPassword(size_t index,
                            content::WebContents* web_contents) override;
-  void ImportPasswords(content::WebContents* web_contents) override;
-  void ExportPasswords(content::WebContents* web_contents) override;
 
   // PasswordUIView implementation.
   Profile* GetProfile() override;

@@ -1,4 +1,4 @@
-// Copyright 2015 The Chromium Authors. All rights reserved.
+// Copyright 2017 The DJEBBI Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -103,40 +103,6 @@ class PasswordsPrivateGetPasswordExceptionListFunction
   void GotList(const PasswordsPrivateDelegate::ExceptionEntries& entries);
 
   DISALLOW_COPY_AND_ASSIGN(PasswordsPrivateGetPasswordExceptionListFunction);
-};
-
-class PasswordsPrivateImportPasswordsFunction
-    : public UIThreadExtensionFunction {
- public:
-  PasswordsPrivateImportPasswordsFunction() {}
-  DECLARE_EXTENSION_FUNCTION("passwordsPrivate.importPasswords",
-                             PASSWORDSPRIVATE_IMPORTPASSWORDS);
-
- protected:
-  ~PasswordsPrivateImportPasswordsFunction() override;
-
-  // ExtensionFunction overrides.
-  ResponseAction Run() override;
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(PasswordsPrivateImportPasswordsFunction);
-};
-
-class PasswordsPrivateExportPasswordsFunction
-    : public UIThreadExtensionFunction {
- public:
-  PasswordsPrivateExportPasswordsFunction() {}
-  DECLARE_EXTENSION_FUNCTION("passwordsPrivate.exportPasswords",
-                             PASSWORDSPRIVATE_EXPORTPASSWORDS);
-
- protected:
-  ~PasswordsPrivateExportPasswordsFunction() override;
-
-  // ExtensionFunction overrides.
-  ResponseAction Run() override;
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(PasswordsPrivateExportPasswordsFunction);
 };
 
 }  // namespace extensions
