@@ -274,7 +274,8 @@ class CONTENT_EXPORT RenderFrameHostImpl
                           const std::string& frame_unique_name,
                           blink::WebSandboxFlags sandbox_flags,
                           const ParsedFeaturePolicyHeader& container_policy,
-                          const FrameOwnerProperties& frame_owner_properties);
+                          const FrameOwnerProperties& frame_owner_properties,
+                          const std::string& devtools_frame_id);
 
   // Update this frame's last committed origin.
   void SetLastCommittedOrigin(const url::Origin& origin);
@@ -820,7 +821,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
   void OnFocusedNodeChanged(bool is_editable_element,
                             const gfx::Rect& bounds_in_frame_widget);
   void OnSetHasReceivedUserGesture();
-  void OnSetDevToolsFrameId(const std::string& devtools_frame_id);
 
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
   void OnShowPopup(const FrameHostMsg_ShowPopup_Params& params);

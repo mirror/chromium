@@ -268,7 +268,8 @@ bool RenderViewHostImpl::CreateRenderView(
     int opener_frame_route_id,
     int proxy_route_id,
     const FrameReplicationState& replicated_frame_state,
-    bool window_was_created_with_opener) {
+    bool window_was_created_with_opener,
+    const std::string& devtools_frame_id) {
   TRACE_EVENT0("renderer_host,navigation",
                "RenderViewHostImpl::CreateRenderView");
   DCHECK(!IsRenderViewLive()) << "Creating view twice";
@@ -325,6 +326,7 @@ bool RenderViewHostImpl::CreateRenderView(
   params->min_size = GetWidget()->min_size_for_auto_resize();
   params->max_size = GetWidget()->max_size_for_auto_resize();
   params->page_zoom_level = delegate_->GetPendingPageZoomLevel();
+  params->devtools_frame_id = devtools_frame_id;
 
   GetWidget()->GetResizeParams(&params->initial_size);
   GetWidget()->SetInitialRenderSizeParams(params->initial_size);

@@ -95,10 +95,10 @@ void TestRenderFrameHost::InitializeRenderFrameIfNeeded() {
 TestRenderFrameHost* TestRenderFrameHost::AppendChild(
     const std::string& frame_name) {
   std::string frame_unique_name = base::GenerateGUID();
-  OnCreateChildFrame(GetProcess()->GetNextRoutingID(),
-                     blink::WebTreeScopeType::kDocument, frame_name,
-                     frame_unique_name, blink::WebSandboxFlags::kNone,
-                     ParsedFeaturePolicyHeader(), FrameOwnerProperties());
+  OnCreateChildFrame(
+      GetProcess()->GetNextRoutingID(), blink::WebTreeScopeType::kDocument,
+      frame_name, frame_unique_name, blink::WebSandboxFlags::kNone,
+      ParsedFeaturePolicyHeader(), FrameOwnerProperties(), std::string());
   return static_cast<TestRenderFrameHost*>(
       child_creation_observer_.last_created_frame());
 }

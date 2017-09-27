@@ -5541,7 +5541,8 @@ bool WebContentsImpl::CreateRenderViewForRenderManager(
     RenderViewHost* render_view_host,
     int opener_frame_routing_id,
     int proxy_routing_id,
-    const FrameReplicationState& replicated_frame_state) {
+    const FrameReplicationState& replicated_frame_state,
+    const std::string& devtools_frame_id) {
   TRACE_EVENT0("browser,navigation",
                "WebContentsImpl::CreateRenderViewForRenderManager");
 
@@ -5550,7 +5551,8 @@ bool WebContentsImpl::CreateRenderViewForRenderManager(
 
   if (!static_cast<RenderViewHostImpl*>(render_view_host)
            ->CreateRenderView(opener_frame_routing_id, proxy_routing_id,
-                              replicated_frame_state, created_with_opener_)) {
+                              replicated_frame_state, created_with_opener_,
+                              devtools_frame_id)) {
     return false;
   }
 

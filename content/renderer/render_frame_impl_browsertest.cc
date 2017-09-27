@@ -77,7 +77,7 @@ class RenderFrameImplTest : public RenderViewTest {
     RenderFrameImpl::CreateFrame(
         kSubframeRouteId, MSG_ROUTING_NONE, MSG_ROUTING_NONE,
         kFrameProxyRouteId, MSG_ROUTING_NONE, frame_replication_state,
-        &compositor_deps_, widget_params, FrameOwnerProperties());
+        &compositor_deps_, widget_params, FrameOwnerProperties(), "");
 
     frame_ = RenderFrameImpl::FromRoutingID(kSubframeRouteId);
     EXPECT_FALSE(frame_->is_main_frame_);

@@ -66,7 +66,8 @@ class CONTENT_EXPORT FrameTreeNode {
                 blink::WebTreeScopeType scope,
                 const std::string& name,
                 const std::string& unique_name,
-                const FrameOwnerProperties& frame_owner_properties);
+                const FrameOwnerProperties& frame_owner_properties,
+                const std::string& devtools_target_id);
 
   ~FrameTreeNode();
 
@@ -106,6 +107,8 @@ class CONTENT_EXPORT FrameTreeNode {
   const std::string& unique_name() const {
     return replication_state_.unique_name;
   }
+
+  const std::string& devtools_target_id() const { return devtools_target_id_; }
 
   size_t child_count() const {
     return children_.size();
@@ -457,6 +460,10 @@ class CONTENT_EXPORT FrameTreeNode {
   // browser process activities to this node (when possible).  It is unrelated
   // to the core logic of FrameTreeNode.
   FrameTreeNodeBlameContext blame_context_;
+
+  // Frame target id in devtools terms, will propagate to the renderer and used
+  // as a frame id there as well.
+  std::string devtools_target_id_;
 
   DISALLOW_COPY_AND_ASSIGN(FrameTreeNode);
 };

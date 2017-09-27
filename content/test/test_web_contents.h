@@ -101,7 +101,8 @@ class TestWebContents : public WebContentsImpl, public WebContentsTester {
       RenderViewHost* render_view_host,
       int opener_frame_routing_id,
       int proxy_routing_id,
-      const FrameReplicationState& replicated_frame_state) override;
+      const FrameReplicationState& replicated_frame_state,
+      const std::string& devtools_frame_id) override;
   void UpdateRenderViewSizeForRenderManager() override {}
 
   // Returns a clone of this TestWebContents. The returned object is also a

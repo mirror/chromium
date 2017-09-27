@@ -129,7 +129,8 @@ class CONTENT_EXPORT FrameTree {
                 const std::string& frame_unique_name,
                 blink::WebSandboxFlags sandbox_flags,
                 const ParsedFeaturePolicyHeader& container_policy,
-                const FrameOwnerProperties& frame_owner_properties);
+                const FrameOwnerProperties& frame_owner_properties,
+                const std::string& devtools_frame_id);
 
   // Removes a frame from the frame tree. |child|, its children, and objects
   // owned by their RenderFrameHostManagers are immediately deleted. The root

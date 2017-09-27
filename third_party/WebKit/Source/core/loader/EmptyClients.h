@@ -373,6 +373,7 @@ class CORE_EXPORT EmptyLocalFrameClient : public LocalFrameClient {
   }
 
   void AnnotatedRegionsChanged() override {}
+  String GetDevToolsFrameID() override { return String(); };
 
  protected:
   EmptyLocalFrameClient() {}

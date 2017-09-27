@@ -124,7 +124,8 @@ class CONTENT_EXPORT RenderFrameHostManager
         RenderViewHost* render_view_host,
         int opener_frame_routing_id,
         int proxy_routing_id,
-        const FrameReplicationState& replicated_frame_state) = 0;
+        const FrameReplicationState& replicated_frame_state,
+        const std::string& devtools_frame_id) = 0;
     virtual void CreateRenderWidgetHostViewForRenderManager(
         RenderViewHost* render_view_host) = 0;
     virtual bool CreateRenderFrameForRenderManager(

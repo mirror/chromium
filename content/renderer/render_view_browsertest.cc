@@ -880,7 +880,7 @@ TEST_F(RenderViewImplTest, DetachingProxyAlsoDestroysProvisionalFrame) {
   RenderFrameImpl::CreateFrame(routing_id, kProxyRoutingId, MSG_ROUTING_NONE,
                                frame()->GetRoutingID(), MSG_ROUTING_NONE,
                                replication_state, nullptr, widget_params,
-                               FrameOwnerProperties());
+                               FrameOwnerProperties(), "");
   {
     TestRenderFrame* provisional_frame = static_cast<TestRenderFrame*>(
         RenderFrameImpl::FromRoutingID(routing_id));
