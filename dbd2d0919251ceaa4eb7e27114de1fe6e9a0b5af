@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fa126027_d711735c",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-09-27T10:31:21Z",
+      "side": 1,
+      "message": "Both are same, but comparing view is better a little for consistency. I updated.",
+      "parentUuid": "0e73df78_905fa2f3",
+      "revId": "dbd2d0919251ceaa4eb7e27114de1fe6e9a0b5af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3819185d_77998c35",
         "filename": "ash/message_center/message_center_view.h",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "235eafb7_b57cefd4",
+        "filename": "ash/message_center/message_center_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-09-27T10:31:21Z",
+      "side": 1,
+      "message": "Ah, Good catch, I forgot this in the last-minute clean-up.",
+      "parentUuid": "3819185d_77998c35",
+      "revId": "dbd2d0919251ceaa4eb7e27114de1fe6e9a0b5af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "afde93d6_11c05dd0",
         "filename": "ash/message_center/message_list_view.cc",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-27T08:30:05Z",
       "side": 1,
       "message": "Is this pattern common in the Chromium codebase? It seems simpler to me to just call child_at() for both of them.",
+      "revId": "dbd2d0919251ceaa4eb7e27114de1fe6e9a0b5af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd0484ff_d19ecd0f",
+        "filename": "ash/message_center/message_list_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-09-27T10:31:21Z",
+      "side": 1,
+      "message": "This is common pattern for const and non-const properties.",
+      "parentUuid": "afde93d6_11c05dd0",
       "revId": "dbd2d0919251ceaa4eb7e27114de1fe6e9a0b5af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
