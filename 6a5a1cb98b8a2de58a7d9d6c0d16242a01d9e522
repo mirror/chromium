@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1555c53_2cfc307e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/elements/StylesSidebarPane.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1623,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-27T16:55:54Z",
+      "side": 1,
+      "message": "This way we are affecting source file format. If the user decided to have \\n in the source, I\u0027m not sure we want to reset it upon editing...",
+      "revId": "6a5a1cb98b8a2de58a7d9d6c0d16242a01d9e522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
