@@ -578,9 +578,10 @@ GREYElementInteraction* CellWithMatcher(id<GREYMatcher> matcher) {
                     error:&error];
     return error == nil;
   };
-  GREYAssert(testing::WaitUntilConditionOrTimeout(
-                 testing::kWaitForUIElementTimeout, condition),
-             @"Collection view not visible");
+  GREYAssert(
+      testing::WaitUntilConditionOrTimeoutWithLoopDelay(
+          testing::kWaitForUIElementTimeout, condition, 0.5 /* loop_delay */),
+      @"Collection view not visible");
 
   // Check the page has been correctly opened.
   chrome_test_util::SelectTabAtIndexInCurrentMode(1);
