@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f11fd043_324e6e83",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-27T05:29:46Z",
+      "side": 1,
+      "message": "Remove comment. This restates what the code does.",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 57
+      },
+      "revId": "f6993aefadc969a02ec0bf371b4cdfdfd072bfc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "785ff3a4_52bcfc17",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-27T05:29:46Z",
+      "side": 1,
+      "message": "auto* browser",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 13
+      },
+      "revId": "f6993aefadc969a02ec0bf371b4cdfdfd072bfc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3bef487_49f225c2",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-27T05:29:46Z",
+      "side": 1,
+      "message": "auto* browser",
+      "range": {
+        "startLine": 80,
+        "startChar": 2,
+        "endLine": 80,
+        "endChar": 13
+      },
+      "revId": "f6993aefadc969a02ec0bf371b4cdfdfd072bfc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "455c3c24_249e70d6",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-27T05:29:46Z",
+      "side": 1,
+      "message": "Nit: Insert this at the top of the list to maintain the alphabetical ordering.",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 77
+      },
+      "revId": "f6993aefadc969a02ec0bf371b4cdfdfd072bfc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7e66803_f8d7af78",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-27T05:29:46Z",
+      "side": 1,
+      "message": "Nit: Inline accessors need to match the member variable name. In this case this should either be renamed to incognito_promo() or the member variable should be renamed to |incognito_window_promo_|.",
+      "range": {
+        "startLine": 59,
+        "startChar": 34,
+        "endLine": 59,
+        "endChar": 56
+      },
+      "revId": "f6993aefadc969a02ec0bf371b4cdfdfd072bfc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2adcc4e2_ec53409b",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-27T05:29:46Z",
+      "side": 1,
+      "message": "Nit: Inline initialize this to nullptr and you can remove it from the initializer list in the cpp file.",
+      "range": {
+        "startLine": 71,
+        "startChar": 34,
+        "endLine": 71,
+        "endChar": 50
+      },
+      "revId": "f6993aefadc969a02ec0bf371b4cdfdfd072bfc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4253914_c9724a75",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-27T05:29:46Z",
+      "side": 1,
+      "message": "Nit: is called back",
+      "range": {
+        "startLine": 74,
+        "startChar": 17,
+        "endLine": 74,
+        "endChar": 20
+      },
+      "revId": "f6993aefadc969a02ec0bf371b4cdfdfd072bfc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67a85544_903df178",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-27T05:29:46Z",
+      "side": 1,
+      "message": "Use\nstd::make_unique here and below.",
+      "range": {
+        "startLine": 56,
+        "startChar": 9,
+        "endLine": 56,
+        "endChar": 25
+      },
+      "revId": "f6993aefadc969a02ec0bf371b4cdfdfd072bfc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cd20757_2243af18",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-27T05:29:46Z",
+      "side": 1,
+      "message": "This appears to be unused. Remove?",
+      "range": {
+        "startLine": 81,
+        "startChar": 37,
+        "endLine": 81,
+        "endChar": 59
+      },
+      "revId": "f6993aefadc969a02ec0bf371b4cdfdfd072bfc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deda1cf9_018c7096",
+        "filename": "chrome/browser/ui/webui/settings/settings_clear_browsing_data_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-27T05:29:46Z",
+      "side": 1,
+      "message": "data_types \u003d std::make_unique\u003cbase::ListValue\u003e(); here and below.",
+      "range": {
+        "startLine": 153,
+        "startChar": 45,
+        "endLine": 153,
+        "endChar": 69
+      },
+      "revId": "f6993aefadc969a02ec0bf371b4cdfdfd072bfc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
