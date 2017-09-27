@@ -16,6 +16,40 @@
       "revId": "c07e7c4ab4e61ce151f02688b7f54c6228ba58ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b097d17_7b86f257",
+        "filename": "third_party/WebKit/Source/platform/Supplementable.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-27T23:58:24Z",
+      "side": 1,
+      "message": "Is there any case T is an incomplete type?\n\nI was thinking that we anyway need to include T.h when using Supplementable\u003cT\u003e/Supplement\u003cT\u003e -- otherwise it will break win builds.",
+      "revId": "c07e7c4ab4e61ce151f02688b7f54c6228ba58ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dcf7914_3bad907c",
+        "filename": "third_party/WebKit/Source/platform/Supplementable.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-27T23:58:24Z",
+      "side": 1,
+      "message": "Just to confirm: What happens if T inherits from TraceWrapperBase but some class that inherits from Supplement\u003cT\u003e forgets defining TRACE_WRAPPERS()? Will it hit a compile error?",
+      "revId": "c07e7c4ab4e61ce151f02688b7f54c6228ba58ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
