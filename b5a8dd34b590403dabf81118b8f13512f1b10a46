@@ -2,6 +2,171 @@
   "comments": [
     {
       "key": {
+        "uuid": "11a970b3_cedfb137",
+        "filename": "chrome/browser/media/encrypted_media_supported_types_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-27T23:07:45Z",
+      "side": 1,
+      "message": "If you want, put this in a private section, so tests can\u0027t muck around with it. I imagine this is the case with many tests, where the ctor calls a ScopedFeatureList initialization method and that\u0027s it. You already did this in some cases.",
+      "revId": "b5a8dd34b590403dabf81118b8f13512f1b10a46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08229147_887b60c7",
+        "filename": "chrome/browser/policy/policy_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 4398,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-27T23:07:45Z",
+      "side": 1,
+      "message": "I\u0027m curious why some tests does the initialization in SetUpOnMainThread() now, vs in the test ctor.",
+      "revId": "b5a8dd34b590403dabf81118b8f13512f1b10a46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e7adc44_867f1d87",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_browser_test_harness.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-27T23:07:45Z",
+      "side": 1,
+      "message": "Just want to check if this is required.",
+      "range": {
+        "startLine": 49,
+        "startChar": 6,
+        "endLine": 49,
+        "endChar": 8
+      },
+      "revId": "b5a8dd34b590403dabf81118b8f13512f1b10a46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2d51393_a3ece0fc",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_browser_test_harness.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-27T23:07:45Z",
+      "side": 1,
+      "message": "Does the destruction order matter? i.e. Is it ok for ScopedFeatureList to be destroyed before any of the other member variables here.",
+      "revId": "b5a8dd34b590403dabf81118b8f13512f1b10a46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dae1662a_5fba2fdd",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_worker_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-27T23:07:45Z",
+      "side": 1,
+      "message": "Remove",
+      "revId": "b5a8dd34b590403dabf81118b8f13512f1b10a46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bab4452f_42a7312e",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_worker_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-27T23:07:45Z",
+      "side": 1,
+      "message": "Remove",
+      "revId": "b5a8dd34b590403dabf81118b8f13512f1b10a46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5266b4d_8b2e2eb4",
+        "filename": "chrome/browser/ui/exclusive_access/fullscreen_controller_interactive_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-27T23:07:45Z",
+      "side": 1,
+      "message": "nit: leave a blank line above DISALLOW_* macros.",
+      "revId": "b5a8dd34b590403dabf81118b8f13512f1b10a46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee2e483c_32740688",
+        "filename": "chrome/common/chrome_features.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-27T23:07:45Z",
+      "side": 1,
+      "message": "Typo",
+      "range": {
+        "startLine": 17,
+        "startChar": 3,
+        "endLine": 17,
+        "endChar": 10
+      },
+      "revId": "b5a8dd34b590403dabf81118b8f13512f1b10a46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d9aa192_c6e90e76",
+        "filename": "chrome/common/chrome_features.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-27T23:07:45Z",
+      "side": 1,
+      "message": "Add a blank line above.",
+      "revId": "b5a8dd34b590403dabf81118b8f13512f1b10a46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5e9cd74_2ad95437",
         "filename": "content/browser/media/session/media_session_impl_visibility_browsertest.cc",
         "patchSetId": 8
