@@ -110,8 +110,8 @@ void AudioDestination::Render(const WebVector<float*>& destination_data,
   TRACE_EVENT1("webaudio", "AudioDestination::Render",
                "callback_buffer_size", number_of_frames);
 
-  DCHECK(
-      !(worklet_backing_thread_ && worklet_backing_thread_->IsCurrentThread()));
+  DCHECK(!(worklet_backing_thread_ &&
+           worklet_backing_thread_->IsCurrentThread()));
 
   CHECK_EQ(destination_data.size(), number_of_output_channels_);
   CHECK_EQ(number_of_frames, callback_buffer_size_);

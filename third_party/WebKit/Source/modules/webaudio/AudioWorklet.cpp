@@ -22,6 +22,7 @@ AudioWorklet::AudioWorklet(LocalFrame* frame) : Worklet(frame) {}
 
 AudioWorklet::~AudioWorklet() {
   contexts_.clear();
+  AudioWorkletThread::ClearSharedBackingThread();
 }
 
 void AudioWorklet::RegisterContext(BaseAudioContext* context) {
@@ -35,6 +36,14 @@ void AudioWorklet::UnregisterContext(BaseAudioContext* context) {
     return;
 
   contexts_.erase(context);
+}
+
+AudioWorkletMessagingProxy* AudioWorklet::WorkletMessagingProxy() {
+  return static_cast<AudioWorkletMessagingProxy*>(FindAvailableGlobalScope());
+}
+
+bool AudioWorklet::IsWorkletMessagingProxyCreated() const {
+  return GetNumberOfGlobalScopes() > 0;
 }
 
 bool AudioWorklet::NeedsToCreateGlobalScope() {
@@ -52,6 +61,14 @@ WorkletGlobalScopeProxy* AudioWorklet::CreateGlobalScope() {
   AudioWorkletMessagingProxy* proxy =
       new AudioWorkletMessagingProxy(GetExecutionContext(), worker_clients);
   proxy->Initialize();
+
+  // Any context does not have AudioWorkletMessagingProxy assigned, do it now.
+  for (BaseAudioContext* context : contexts_) {
+    if (!context->WorkletMessagingProxy()) {
+      context->SetWorkletMessagingProxy(proxy);
+    }
+  }
+
   return proxy;
 }
 
