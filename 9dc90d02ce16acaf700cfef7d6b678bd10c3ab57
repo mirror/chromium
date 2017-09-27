@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4547d96_c780070b",
+        "filename": "components/omnibox/browser/autocomplete_input.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-27T20:35:38Z",
+      "side": 1,
+      "message": "How about \"if not available\"?\n\nWhat\u0027s \"relevant\" to an omnibox input is a squishy idea.",
+      "range": {
+        "startLine": 121,
+        "startChar": 48,
+        "endLine": 121,
+        "endChar": 65
+      },
+      "revId": "9dc90d02ce16acaf700cfef7d6b678bd10c3ab57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "863a0834_b75f17bc",
+        "filename": "components/omnibox/browser/autocomplete_input.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-27T20:35:38Z",
+      "side": 1,
+      "message": "nit: OnFocus reads funny to me.  Perhaps a hyphen?  Or, better yet, as there isn\u0027t much of a thing as \"on-focus providers\" come to think of it, try \"Provider that trigger on focus ...\"\n(because some provider trigger then and at other times too)",
+      "range": {
+        "startLine": 123,
+        "startChar": 5,
+        "endLine": 123,
+        "endChar": 12
+      },
+      "revId": "9dc90d02ce16acaf700cfef7d6b678bd10c3ab57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

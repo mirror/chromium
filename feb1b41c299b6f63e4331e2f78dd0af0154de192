@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "e57aa88f_de636913",
+        "filename": "components/omnibox/browser/autocomplete_input.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-27T20:35:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d829d7b0_655b5675",
+      "revId": "feb1b41c299b6f63e4331e2f78dd0af0154de192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72289414_63bf0880",
         "filename": "components/omnibox/browser/autocomplete_input.h",
         "patchSetId": 11
@@ -151,6 +169,256 @@
       "revId": "feb1b41c299b6f63e4331e2f78dd0af0154de192",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36200eaa_968c6494",
+        "filename": "components/omnibox/browser/autocomplete_input_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-27T20:35:38Z",
+      "side": 1,
+      "message": "I don\u0027t think it does.  Remove it. :-)",
+      "revId": "feb1b41c299b6f63e4331e2f78dd0af0154de192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5181632_2f05c62d",
+        "filename": "components/omnibox/browser/autocomplete_result_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-27T20:35:38Z",
+      "side": 1,
+      "message": "Try removing?  May not be necessary.\n\nI think a few in this file might be necessary, so I\u0027ll comment explicitly on the ones that you might want to try removing.",
+      "revId": "feb1b41c299b6f63e4331e2f78dd0af0154de192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b94cd0b_e0b9b38f",
+        "filename": "components/omnibox/browser/autocomplete_result_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-27T20:35:38Z",
+      "side": 1,
+      "message": "Try removing.",
+      "revId": "feb1b41c299b6f63e4331e2f78dd0af0154de192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceb88d5f_ccd2769d",
+        "filename": "components/omnibox/browser/autocomplete_result_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-27T20:35:38Z",
+      "side": 1,
+      "message": "Try removing.",
+      "revId": "feb1b41c299b6f63e4331e2f78dd0af0154de192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86227174_cfc06450",
+        "filename": "components/omnibox/browser/autocomplete_result_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-27T20:35:38Z",
+      "side": 1,
+      "message": "Try removing.",
+      "revId": "feb1b41c299b6f63e4331e2f78dd0af0154de192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ba9ab31_e0739696",
+        "filename": "components/omnibox/browser/autocomplete_result_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-27T20:35:38Z",
+      "side": 1,
+      "message": "Try removing.",
+      "revId": "feb1b41c299b6f63e4331e2f78dd0af0154de192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eabf4192_1dddf3c0",
+        "filename": "components/omnibox/browser/autocomplete_result_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-27T20:35:38Z",
+      "side": 1,
+      "message": "Try removing.",
+      "revId": "feb1b41c299b6f63e4331e2f78dd0af0154de192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e81924a_acb55f67",
+        "filename": "components/omnibox/browser/autocomplete_result_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-27T20:35:38Z",
+      "side": 1,
+      "message": "Try removing.",
+      "revId": "feb1b41c299b6f63e4331e2f78dd0af0154de192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e198eadd_52ffa019",
+        "filename": "components/omnibox/browser/base_search_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-27T20:35:38Z",
+      "side": 1,
+      "message": "I assume changing the parameters here was intentional.  (I.e., the test doesn\u0027t require disabling want_asynchronous_matches and disallowing exact keyword matches.)",
+      "revId": "feb1b41c299b6f63e4331e2f78dd0af0154de192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0874c38c_001d1757",
+        "filename": "components/omnibox/browser/bookmark_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-27T20:35:38Z",
+      "side": 1,
+      "message": "Probably not necessary.  Try removing.\n\nditto everywhere in this file",
+      "revId": "feb1b41c299b6f63e4331e2f78dd0af0154de192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fbe56dd_b8cd2c5d",
+        "filename": "components/omnibox/browser/builtin_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-27T20:35:38Z",
+      "side": 1,
+      "message": "Not necessary.",
+      "revId": "feb1b41c299b6f63e4331e2f78dd0af0154de192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e284085d_c09dfa5f",
+        "filename": "components/omnibox/browser/clipboard_url_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-27T20:35:38Z",
+      "side": 1,
+      "message": "I noticed the parameter change and think it\u0027s good.",
+      "revId": "feb1b41c299b6f63e4331e2f78dd0af0154de192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e57f9087_a52faa42",
+        "filename": "components/omnibox/browser/history_quick_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-27T20:35:38Z",
+      "side": 1,
+      "message": "Can\u0027t you drop this from the constructor?",
+      "range": {
+        "startLine": 334,
+        "startChar": 49,
+        "endLine": 334,
+        "endChar": 63
+      },
+      "revId": "feb1b41c299b6f63e4331e2f78dd0af0154de192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04adc42f_e53a1134",
+        "filename": "components/omnibox/browser/history_url_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1072,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-27T20:35:38Z",
+      "side": 1,
+      "message": "nit: might as well change to BLANK in this case to match the set_current_url call",
+      "range": {
+        "startLine": 1072,
+        "startChar": 56,
+        "endLine": 1072,
+        "endChar": 61
+      },
+      "revId": "feb1b41c299b6f63e4331e2f78dd0af0154de192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -253,6 +521,24 @@
       "side": 1,
       "message": "Good eyes.",
       "parentUuid": "3988dfae_b52fddae",
+      "revId": "feb1b41c299b6f63e4331e2f78dd0af0154de192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "010932ee_f0259228",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-27T20:35:38Z",
+      "side": 1,
+      "message": "\u003e Good eyes.\n\nAcknowledged. :-)\n\nI was extra careful on the non-test files.  I\u0027m glad it paid off.",
+      "parentUuid": "ea0b39cb_0298a8c1",
       "revId": "feb1b41c299b6f63e4331e2f78dd0af0154de192",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
