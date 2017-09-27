@@ -81,8 +81,9 @@ id<GREYMatcher> UIAlertViewMessageForDelegateCallWithArgument(
 }
 
 // Matcher for the return key on the keyboard.
-id<GREYMatcher> KeyboardReturnKey(NSString* label) {
-  return grey_allOf(chrome_test_util::ButtonWithAccessibilityLabel(label),
+id<GREYMatcher> KeyboardReturnKey(NSString* accessibilityID) {
+  return grey_allOf(grey_accessibilityID(accessibilityID),
+                    grey_accessibilityTrait(UIAccessibilityTraitButton),
                     grey_accessibilityTrait(UIAccessibilityTraitKeyboardKey),
                     grey_sufficientlyVisible(), nil);
 }
