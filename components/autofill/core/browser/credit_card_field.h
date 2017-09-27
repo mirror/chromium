@@ -77,7 +77,7 @@ class CreditCardField : public FormField {
   AutofillField* type_;                  // Optional.
   std::vector<AutofillField*> numbers_;  // Required.
 
-  // The 3-digit card verification number; we don't currently fill this.
+  // The 3-to-4-digit card verification number.
   AutofillField* verification_;
 
   // Either |expiration_date_| or both |expiration_month_| and

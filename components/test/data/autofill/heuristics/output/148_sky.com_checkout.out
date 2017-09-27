@@ -1,0 +1,9 @@
+UNKNOWN_TYPE | amountToPay | Payment amount (£) |  | amountToPay_1-default
+CREDIT_CARD_NAME_FULL | cardHolderName | Name on card |  | amountToPay_1-cc
+CREDIT_CARD_NUMBER | cardNumber | Card number |  | amountToPay_1-cc
+CREDIT_CARD_EXP_MONTH | expiryDateMonth | Expiry date |  | amountToPay_1-cc
+CREDIT_CARD_EXP_4_DIGIT_YEAR | expiryDateYear | Expiry date The card has expired Select a valid expiry date |  | amountToPay_1-cc
+UNKNOWN_TYPE | startDateMonth | Start date | Month | amountToPay_1-default
+UNKNOWN_TYPE | startDateYear | Start date Please enter the start date The start date is invalid | Year | amountToPay_1-default
+UNKNOWN_TYPE | issueNumber | Issue number |  | amountToPay_1-default
+UNKNOWN_TYPE | securityCode | Security code |  | amountToPay_1-default

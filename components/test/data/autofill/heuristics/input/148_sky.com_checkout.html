@@ -1,0 +1,152 @@
+<html xmlns="http://www.w3.org/1999/html"><head>
+    <title>SkyPay</title>
+</head>
+<body marginwidth="0" marginheight="0">
+  <form id="paymentCardDetails" class="text-font--skypay" novalidate="">
+    <h1 class="c-text-lead">We accept
+      <span class="card_logos margin-bottom-large u-margin-left-small">
+        <img id="mastercard-card-icon" class="accept mastercard" alt="We accept Mastercard" title="" src="/assets/mastercard-icon-0fe39445b08029dd9dc9c371e9767e2f76beb2377e89585d3b551e82092b710d.png" style="">
+
+          <img id="masestro-card-icon" class="accept maestro" alt="We accept Maestro" title="" src="/assets/maestro-icon-63b3991492e249cd87b36e8bec167c5492ed05bbfb9104bc54af966d4dbcb36a.png" style="">
+
+        <img id="visa-card-icon" class="accept visa" alt="We accept Visa" title="" src="/assets/visa-icon-8e503e65c7454bd0c5595c06c1ff2f7b9a09a8dfab796afe969c6f92ef3ef725.png" style="">
+      </span>
+    </h1>
+    <p id="recurring-notice" class="u-margin-top-small u-margin-bottom-small c-text-body" style="display: none;">Use a debit or credit card to make a recurring payment. <br> <strong>Monthly payments by credit or debit card incur a 30p per month charge.</strong></p>
+    <ul class="c-form-list u-margin-top-small">
+      <li class="c-form-list__item" id="payment-amount" style="display: none;">
+        <label class="c-form-label" for="amountToPay">Payment amount (£)</label>
+        <input id="amountToPay" name="amountToPay" class="c-form-input" placeholder="e.g. 1.50" autocomplete="off" required="" title="" autofill-prediction="UNKNOWN_TYPE">
+        <p data-refers-to-id="amountToPay" id="amount-tooSmall" class="c-text-smallprint validation-error zero-bottom">The amount is too small. The minimum amount is £1.50</p>
+        <p data-refers-to-id="amountToPay" id="amount-tooLarge" class="c-text-smallprint validation-error zero-bottom">The amount is too large. The maximum amount is £5000</p>
+        <p data-refers-to-id="amountToPay" id="amount-invalid" class="c-text-smallprint validation-error zero-bottom">The amount is invalid</p>
+        <p data-refers-to-id="amountToPay" id="amount-empty" class="c-text-smallprint validation-error zero-bottom">Please enter an amount</p>
+      </li>
+
+      <li class="c-form-list__item">
+        <label class="c-form-label" for="cardHolderName">Name on card</label>
+        <input id="cardHolderName" name="cardHolderName" class="c-form-input" autocomplete="off" placeholder="e.g. Mr Smith" required="" title="" autofill-prediction="CREDIT_CARD_NAME_FULL">
+        <p id="paymentCard-name-missing" data-refers-to-id="cardHolderName" class="c-text-smallprint validation-error zero-bottom">Please enter the cardholder's name</p>
+        <p id="paymentCard-name-invalid" data-refers-to-id="cardHolderName" class="c-text-smallprint validation-error zero-bottom">Please enter a valid cardholder's name</p>
+      </li>
+      <li class="c-form-list__item">
+        <label class="c-form-label" for="cardNumber">Card number</label>
+        <input id="cardNumber" name="cardNumber" class="c-form-input" maxlength="16" autocomplete="off" placeholder="e.g. 123456789123456" required="" title="overall type: CREDIT_CARD_NUMBER
+server type: CREDIT_CARD_NUMBER
+heuristic type: CREDIT_CARD_NUMBER
+label: Card number
+parseable name: cardNumber
+field signature: 3214546026
+form signature: 16820351942010128826" autofill-prediction="CREDIT_CARD_NUMBER">
+        <p id="paymentCard-number-missing" data-refers-to-id="cardNumber" class="c-text-smallprint validation-error zero-bottom">Please enter the card number</p>
+        <p id="paymentCard-number-invalid" data-refers-to-id="cardNumber" class="c-text-smallprint validation-error zero-bottom">Please provide a valid card number</p>
+        <p id="paymentCard-recurring-invalid" data-refers-to-id="cardNumber" class="c-text-smallprint validation-error zero-bottom">Please provide a valid card number</p>
+      </li>
+
+      <li class="c-form-list__item" id="expiry-date">
+        <label class="c-form-label" for="expiryDateMonth">Expiry date</label>
+        <div class="c-form-inline">
+          <div class="c-form-select c-form-inline__field u-width-1/3 ">
+            <select class="c-form-select__dropdown" id="expiryDateMonth" name="expiryDateMonth" required="" title="overall type: CREDIT_CARD_EXP_MONTH
+server type: CREDIT_CARD_EXP_MONTH
+heuristic type: CREDIT_CARD_EXP_MONTH
+label: Expiry date
+parseable name: expiryDateMonth
+field signature: 2469527895
+form signature: 16820351942010128826" autofill-prediction="CREDIT_CARD_EXP_MONTH">
+              <option value="" disabled="" selected="" hidden="">MM</option>
+              <option value="01">01</option>
+              <option value="02">02</option>
+              <option value="03">03</option>
+              <option value="04">04</option>
+              <option value="05">05</option>
+              <option value="06">06</option>
+              <option value="07">07</option>
+              <option value="08">08</option>
+              <option value="09">09</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
+            </select>
+          </div>
+          <div class="c-form-select c-form-inline__field u-width-1/3 ">
+            <select class="c-form-select__dropdown" id="expiryDateYear" name="expiryDateYear" required="" title="" autofill-prediction="CREDIT_CARD_EXP_4_DIGIT_YEAR">
+              <option value="" selected="" disabled="" hidden="">YYYY</option>
+            <option value="2017">2017</option><option value="2018">2018</option><option value="2019">2019</option><option value="2020">2020</option><option value="2021">2021</option><option value="2022">2022</option><option value="2023">2023</option><option value="2024">2024</option><option value="2025">2025</option><option value="2026">2026</option><option value="2027">2027</option></select>
+          </div>
+        </div>
+        <p id="paymentCard-expiryDate-expired" data-refers-to-id="expiryDateMonth" class="c-text-smallprint validation-error zero-bottom">The card has expired</p>
+        <p id="paymentCard-expiryDate-invalid" data-refers-to-id="expiryDateMonth" class="c-text-smallprint validation-error zero-bottom">Select a valid expiry date</p>
+        <p id="paymentCard-expiryDate-missing" data-refers-to-id="expiryDateMonth" class="c-text-smallprint validation-error zero-bottom">Please enter the expiry date</p>
+      </li>
+
+      <li class="c-form-list__item row needed-for-maestro" id="start-date" style="display: none">
+        <label class="c-form-label" for="startDateMonth">Start date</label>
+        <div class="c-form-inline">
+          <div class="c-form-select c-form-inline__field u-width-1/3 ">
+            <select class="c-form-select__dropdown" id="startDateMonth" name="startDateMonth" title="" autofill-prediction="UNKNOWN_TYPE">
+              <option value="Month" disabled="" selected="" hidden="">MM</option>
+              <option value="01">01</option>
+              <option value="02">02</option>
+              <option value="03">03</option>
+              <option value="04">04</option>
+              <option value="05">05</option>
+              <option value="06">06</option>
+              <option value="07">07</option>
+              <option value="08">08</option>
+              <option value="09">09</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
+            </select>
+          </div>
+          <div class="c-form-select c-form-inline__field u-width-1/3 ">
+            <select class="c-form-select__dropdown" id="startDateYear" name="startDateYear" title="" autofill-prediction="UNKNOWN_TYPE">
+              <option value="Year" selected="" disabled="" hidden="">YYYY</option>
+            <option value="2007">2007</option><option value="2008">2008</option><option value="2009">2009</option><option value="2010">2010</option><option value="2011">2011</option><option value="2012">2012</option><option value="2013">2013</option><option value="2014">2014</option><option value="2015">2015</option><option value="2016">2016</option><option value="2017">2017</option></select>
+          </div>
+        </div>
+        <p data-refers-to-id="startDateMonth" id="paymentCard-startDate-missing" class="c-text-smallprint validation-error zero-bottom">Please enter the start date</p>
+        <p data-refers-to-id="startDateMonth" id="paymentCard-startDate-invalid" class="c-text-smallprint validation-error zero-bottom">The start date is invalid</p>
+      </li>
+
+      <li id="issue-number" class="row needed-for-maestro c-form-list__item" style="display: none">
+        <label class="c-form-label" for="issueNumber">Issue number</label>
+        <div class="c-form-inline">
+          <input id="issueNumber" name="issueNumber" class="c-form-input c-form-inline__field u-width-1/3" placeholder="e.g. 123" type="tel" value="" maxlength="3" autocomplete="off" required="" title="overall type: CREDIT_CARD_NUMBER
+server type: CREDIT_CARD_NUMBER
+heuristic type: UNKNOWN_TYPE
+label: Issue number
+parseable name: issueNumber
+field signature: 1434392344
+form signature: 16820351942010128826" autofill-prediction="CREDIT_CARD_NUMBER">
+        </div>
+        <p data-refers-to-id="issueNumber" id="paymentCard-issueNumber-missing" class="c-text-smallprint validation-error zero-bottom">Please enter the issue number</p>
+        <p data-refers-to-id="issueNumber" id="paymentCard-issueNumber-invalid" class="c-text-smallprint validation-error zero-bottom">The issue number is invalid</p>
+      </li>
+
+      <li class="c-form-list__item zero-bottom" id="security-code">
+        <label class="c-form-label" for="securityCode">Security code<img alt="Security Code Location" title="Your security number can be found on the rear of your card" src="/assets/cvv2-301412595a3f09cb38b53e8a9dc33010efc22ea59000fedd5e43e90c8a2fe55e.png" style="vertical-align: top; margin-left: 5px; position: relative; top: 3px;"></label>
+        <div class="c-form-inline">
+          <input id="securityCode" name="securityCode" class="c-form-input c-form-inline__field u-width-1/3" placeholder="e.g. 123" type="password" value="" maxlength="3" autocomplete="off" required="" title="" autofill-prediction="UNKNOWN_TYPE">
+        </div>
+        <p id="paymentCard-securityCode-missing" data-refers-to-id="securityCode" class="c-text-smallprint validation-error zero-bottom">Please enter the security code</p>
+        <p id="paymentCard-securityCode-invalid" data-refers-to-id="securityCode" class="c-text-smallprint validation-error zero-bottom">Please enter a valid security code</p>
+      </li>
+      </ul>
+
+      <div class="row no-label" id="make-payment-row">
+          <button id="make_payment_button" name="make_payment_button" type="submit" class="btn form-submit primary-cta hidden" value="Submit">Next</button>
+      </div>
+
+      <input type="hidden" name="cardType" value="">
+      <input type="hidden" name="currencyCode" value="GBP">
+      <input type="hidden" id="app" name="app" value="skymobile">
+      <input id="payment-type" type="hidden" name="paymentType" value="NON_RECURRING">
+    </form>
+
+
+<div id="host" data-name="sco-up-skypay-b-app-003" style="display: none"></div>
+
+
+</body></html>
