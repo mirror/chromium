@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af413698_a4685bf0",
+        "filename": "chrome/browser/chromeos/login/ui/webui_login_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-27T19:42:01Z",
+      "side": 1,
+      "message": "nit: wrap with {} since the condition takes \u003e1 line.",
+      "revId": "92daa901c82457f105300d83f29319006167187e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "33558f44_76ca12ce",
+        "filename": "chrome/browser/chromeos/login/ui/webui_login_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-27T19:42:01Z",
+      "side": 1,
+      "message": "You are right. We should keep this check then.",
+      "parentUuid": "eac3a68f_79438c4f",
+      "range": {
+        "startLine": 615,
+        "startChar": 6,
+        "endLine": 615,
+        "endChar": 38
+      },
+      "revId": "5e2f16805faec5767ef078ee3f623d7e997764a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fd0947d_dfd37e5e",
         "filename": "chrome/browser/chromeos/login/ui/webui_login_view.cc",
         "patchSetId": 1
