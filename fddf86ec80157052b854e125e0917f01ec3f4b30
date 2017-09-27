@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e5bce85_67f667e4",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css-paint-api/hidpi/geometry-with-hidip-zoom.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1236435
+      },
+      "writtenOn": "2017-09-27T04:46:21Z",
+      "side": 1,
+      "message": "This test relies on a CSS property that is not actually standardized according to https://developer.mozilla.org/en-US/docs/Web/CSS/zoom . Upstreaming it to web-platform-tests seems like the wrong choice to me.",
+      "revId": "fddf86ec80157052b854e125e0917f01ec3f4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
