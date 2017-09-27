@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a0a38c2_6b24534c",
+        "filename": "chrome/browser/net/predictor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-27T13:36:02Z",
+      "side": 1,
+      "message": "Should this be predictors::AreOtherPreconnectsDisabled() without the exclamation mark?\n\nYou mentioned in the comment that you only want one predictor enabled at once, right?\n\nCan we add a unit test?",
+      "revId": "60dfba4148926e5b510c7e64176399b5842ab96e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27fea674_bd1c090b",
+        "filename": "chrome/browser/net/predictor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-27T13:36:02Z",
+      "side": 1,
+      "message": "Could you mention that this \"alternative implementation\" refers to the loading predictor?\n\ne.g.\nThis is true if features::kNetworkPrediction is enabled and LoadingPredictor is disabled.",
+      "revId": "60dfba4148926e5b510c7e64176399b5842ab96e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
