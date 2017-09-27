@@ -129,7 +129,7 @@ void NGTextFragmentPainter::Paint(const Document& document,
       const ComputedStyle* decorating_box_style =
           decorating_box ? &decorating_box->Style() : nullptr;
 
-      // TODO(layout-dev): Implement.
+      // TODO(eae): Use correct baseline when available.
       FontBaseline baseline_type = kAlphabeticBaseline;
 
       text_painter.ComputeDecorationInfo(decoration_info, box_origin,
@@ -137,7 +137,7 @@ void NGTextFragmentPainter::Paint(const Document& document,
                                          style_to_use, decorating_box_style);
 
       NGTextDecorationOffset decoration_offset(*decoration_info.style,
-                                               text_fragment_, decorating_box);
+                                               text_fragment, decorating_box);
       text_painter.PaintDecorationsExceptLineThrough(
           decoration_offset, decoration_info, paint_info,
           style_to_use.AppliedTextDecorations(), text_style,

@@ -18,7 +18,7 @@ int NGTextDecorationOffset::ComputeUnderlineOffsetForUnder(
   LayoutUnit offset = LayoutUnit::Max();
 
   if (decorating_box_) {
-    // TODO(layout-dev): Replace with actual baseline once available.
+    // TODO(eae): Replace with actual baseline once available.
     NGBaselineRequest baseline_request = {
         NGBaselineAlgorithmType::kAtomicInline,
         FontBaseline::kIdeographicBaseline};
@@ -28,7 +28,7 @@ int NGTextDecorationOffset::ComputeUnderlineOffsetForUnder(
       offset = baseline->offset;
   }
 
-  if (offset == LayoutUnit::Max())  {
+  if (offset == LayoutUnit::Max()) {
     // TODO(layout-dev): How do we compute the baseline offset with a
     // decorating_box?
     offset = text_fragment_.Size().height;
