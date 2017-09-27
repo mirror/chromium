@@ -52,17 +52,17 @@ void RunBenchmark(RasterSource* raster_source,
     *is_solid_color =
         raster_source->PerformSolidColorAnalysis(layer_rect, &color);
 
+    PlaybackImageProvider image_provider(false, PaintImageIdFlatSet(), {},
+                                         image_decode_cache, gfx::ColorSpace(),
+                                         {});
+    RasterSource::PlaybackSettings settings;
+    settings.image_provider = &image_provider;
+
     do {
       SkBitmap bitmap;
       bitmap.allocPixels(SkImageInfo::MakeN32Premul(content_rect.width(),
                                                     content_rect.height()));
       SkCanvas canvas(bitmap);
-
-      PlaybackImageProvider image_provider(false, PaintImageIdFlatSet(), {},
-                                           image_decode_cache,
-                                           gfx::ColorSpace(), {});
-      RasterSource::PlaybackSettings settings;
-      settings.image_provider = &image_provider;
 
       raster_source->PlaybackToCanvas(
           &canvas, gfx::ColorSpace(), content_rect, content_rect,
