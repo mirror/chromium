@@ -39,7 +39,9 @@ class StyleImage;
 
 class CSSImageSetValue : public CSSValueList {
  public:
-  static CSSImageSetValue* Create() { return new CSSImageSetValue(); }
+  static CSSImageSetValue* Create(bool is_ua_css_resource) {
+    return new CSSImageSetValue(is_ua_css_resource);
+  }
   ~CSSImageSetValue();
 
   bool IsCachePending(float device_scale_factor) const;
@@ -69,7 +71,7 @@ class CSSImageSetValue : public CSSValueList {
   ImageWithScale BestImageForScaleFactor(float scale_factor);
 
  private:
-  CSSImageSetValue();
+  CSSImageSetValue(bool is_ua_css_resource);
 
   void FillImageSet();
   static inline bool CompareByScaleFactor(ImageWithScale first,
@@ -80,6 +82,7 @@ class CSSImageSetValue : public CSSValueList {
   float cached_scale_factor_;
   Member<StyleImage> cached_image_;
 
+  bool is_ua_css_resource_;
   Vector<ImageWithScale> images_in_set_;
 };
 
