@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "39f8e874_5ad57dee",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_camera.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-27T00:59:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "043bb081_32b20e48",
+      "revId": "8f0ab00381032de19171bcac6be41f02e8cc8c9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02f3a475_0afdb6eb",
         "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_camera.js",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ea48205b_a9f41cae",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_camera.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-27T00:59:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02f3a475_0afdb6eb",
+      "revId": "8f0ab00381032de19171bcac6be41f02e8cc8c9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd826034_77708d7a",
         "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_camera.js",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-13T17:17:31Z",
       "side": 1,
       "message": "nit: COLOR :)",
+      "revId": "8f0ab00381032de19171bcac6be41f02e8cc8c9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e06b07f_7ae545f3",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_camera.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-27T00:59:00Z",
+      "side": 1,
+      "message": "I\u0027m currently trying to be consistent with http://www.w3.org/TR/2003/REC-PNG-20031110/#11IHDR. I feel like it\u0027s a bit easier to follow if the name matches the spec exactly but don\u0027t feel strongly about it so if you insist then I\u0027ll change it?",
+      "parentUuid": "fd826034_77708d7a",
       "revId": "8f0ab00381032de19171bcac6be41f02e8cc8c9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "74126759_6c36a8ee",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_camera.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-27T00:59:00Z",
+      "side": 1,
+      "message": "I moved all PNG logic into a CrPngBehavior. That made sense as I need that behavior in the picture list code to convert PNGs to still images. I can add another CrCaptureBehavior if you feel like that\u0027s also needed?",
+      "parentUuid": "2c61f12a_4bf15684",
+      "revId": "8f0ab00381032de19171bcac6be41f02e8cc8c9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1567331_6ce05d9d",
         "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_camera.js",
         "patchSetId": 6
@@ -81,6 +153,24 @@
       "writtenOn": "2017-09-13T17:17:31Z",
       "side": 1,
       "message": "This really ought to be a separate method (preferably part of a behavior as suggested).",
+      "revId": "8f0ab00381032de19171bcac6be41f02e8cc8c9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b73b07aa_5aa77f72",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_camera.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-27T00:59:00Z",
+      "side": 1,
+      "message": "This is still here but now significantly less complicated as I added the CrPngBehavior. Let me know how the latest patch can be improved more.",
+      "parentUuid": "e1567331_6ce05d9d",
       "revId": "8f0ab00381032de19171bcac6be41f02e8cc8c9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "0ec70558_ac5375d5",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_camera.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-27T00:59:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fea057b4_8dde8656",
+      "revId": "8f0ab00381032de19171bcac6be41f02e8cc8c9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86c696c5_31d5030d",
         "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_camera.js",
         "patchSetId": 6
@@ -118,6 +226,24 @@
       "revId": "8f0ab00381032de19171bcac6be41f02e8cc8c9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bbd75be_9ae3a7e7",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_camera.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-27T00:59:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86c696c5_31d5030d",
+      "revId": "8f0ab00381032de19171bcac6be41f02e8cc8c9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
