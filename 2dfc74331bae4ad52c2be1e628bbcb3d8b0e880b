@@ -22,6 +22,30 @@
       "revId": "2dfc74331bae4ad52c2be1e628bbcb3d8b0e880b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa2c3965_a2ba8611",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/ContentViewCoreSelectionTest.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-09-27T21:40:08Z",
+      "side": 1,
+      "message": "Unfortunately, we can\u0027t check the real popup window for Smart Selection because such menu item got removed on below O devices, currently we have no O trybot.\n\nBTW, I have a concern that this test might be flaky, as most tests are disabled in this file due to https://crbug.com/592428. Although I run it 200 times locally and didn\u0027t see anything wrong..",
+      "parentUuid": "a7545c07_18ecb981",
+      "range": {
+        "startLine": 350,
+        "startChar": 15,
+        "endLine": 350,
+        "endChar": 25
+      },
+      "revId": "2dfc74331bae4ad52c2be1e628bbcb3d8b0e880b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
