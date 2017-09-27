@@ -1,0 +1,425 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "964e2559_e1582b5f",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-27T21:48:05Z",
+      "side": 1,
+      "message": "I wonder if it wouldn\u0027t make more sense to pass this in to the constructor, rather than hard-code this logic in here?",
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f1c383a_ab893792",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-27T21:48:05Z",
+      "side": 1,
+      "message": "do you actually need this #ifdef? Presumably SetCacheMode already deals fine with changing from false to false, as you\u0027d be calling it like that anyway on android when more than 2 bindings exist, so it seems it should be fine to always have this code?",
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13d057a0_73d0f386",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-27T21:48:05Z",
+      "side": 1,
+      "message": "why are you comparing .value() to value? What if client_old_value is nullopt? Since that presumably would be an invalid IPC you should probably ReportBadMessage if that happens, rather than potentially crashing the browser because you\u0027re trying to access a non-existing string.",
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5995fd98_8e537a0b",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-27T21:48:05Z",
+      "side": 1,
+      "message": "a DCHECK feels wrong here. You\u0027re verifying that the IPC you received was correct, so maybe bindings_.ReportBadMessage() would be better?",
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce30d384_a59b6eb8",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-27T21:48:05Z",
+      "side": 1,
+      "message": "nit: maybe DCHECK the expected load_state_? (or at least a comment explaining that this code is only reachable in a particular load_state_)",
+      "range": {
+        "startLine": 201,
+        "startChar": 9,
+        "endLine": 201,
+        "endChar": 10
+      },
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f6f1410_fd57fdcc",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-27T21:48:05Z",
+      "side": 1,
+      "message": "nit: here too probably makes more sense to BadMessage rather than DCHECK",
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "533edd81_09f2c26e",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-27T21:48:05Z",
+      "side": 1,
+      "message": "especially since here you might otherwise crash if you were expecting an old_value but got nullopt.",
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e3394f2_6209d5d4",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-27T21:48:05Z",
+      "side": 1,
+      "message": "wait, it\u0027s not allowed to call Get when there are no cached values? I guess that sort of makes sense, but that should be documented very clearly in the .mojom file, and such a precondition should be not be checked with a DCHECK but either with a BadMessage failure, or by updating the Get API to somehow be able to indicate that getting failed because there is no cache.\n\nOr Get should just be changed to set desired_load_state_ to KEYS_AND_VALUES, after which the IsMapReloadNeeded would result in just making it work, I think? It doesn\u0027t seem unreasonable to just always keep values cached if Get is actually being used...",
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3d3ac71_ba865a80",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-27T21:48:05Z",
+      "side": 1,
+      "message": "nit: DCHECK_EQ(load_state_, LOAD_STATE_UNLOADED) ?",
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab9f1911_a492537a",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-27T21:48:05Z",
+      "side": 1,
+      "message": "nit: maybe also DCHECK load_state_ (load_state_ is kind of redundant anyway, maybe load_state() should just be a getter that derives its value from the values of keys_values_map_ and keys_only_map_? That way at least it should never get out of sync)",
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e3d0f00_7934fde8",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-27T21:48:05Z",
+      "side": 1,
+      "message": "nit: keys_values_map_ \u003d base::MakeUnique\u003cValueMap\u003e() (I know, not your change, but might as well clean this up while you\u0027re changing it anyway)",
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09daf3a1_7f7aba60",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-27T21:48:05Z",
+      "side": 1,
+      "message": "not sure what this comment is trying to say? \n1) values will always be taken from keys_values_map_, and\n2) this is immediately committed, so nothing can happen before committing.",
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9544a61f_513d3fd9",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-27T21:48:05Z",
+      "side": 1,
+      "message": "do you actually care about commit_batches_in_flight_? It seems it should be safe to unload even with in-flight commits?",
+      "range": {
+        "startLine": 621,
+        "startChar": 37,
+        "endLine": 621,
+        "endChar": 62
+      },
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebf0fc8e_614598b9",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-27T21:48:05Z",
+      "side": 1,
+      "message": "nit: base::MakeUnique",
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eea7b814_5a82c856",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-27T21:48:05Z",
+      "side": 1,
+      "message": "this loop seems more complicated than it needs to be. Couldn\u0027t you just have:\nfor (auto\u0026 it: keys_values_map_) {\n  memory_used_ +\u003d it.first.size() + sizeof(size_ot);\n  keys_only_map-\u003einsert(std::make_pair(std::move(it.first), it.second.size()));\n}?\n\nYou\u0027re about to delete keys_values_map_ anyway, so it seems pretty pointless to erase every row one-by-one first...",
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bc8bd3b_ac6a0038",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-27T21:48:05Z",
+      "side": 1,
+      "message": "nit: Some comments here explaining the assumptions made and why those are correct might be helpful. It took me quite a while to figure out thatw e get here if desired_load_state_ \u003d\u003d LOAD_STATE_KEYS_AND_VALUES and that also currently load_state_ \u003d\u003d LOAD_STATE_KEYS_ONLY, because if it would be unloaded or keys_and_values we wouldn\u0027t have gotten here with the if at the beginning of the method, and there are only three load states in total.",
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6755d2a7_80e0d799",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-27T21:48:05Z",
+      "side": 1,
+      "message": "Could you add a comment explaining this expression? Why does on_load_complete_tasks being empty matter?",
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b61a2434_63ec946c",
+        "filename": "content/browser/leveldb_wrapper_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-27T21:48:05Z",
+      "side": 1,
+      "message": "nit: add some comments? It\u0027s not obvious what the difference is between storage_used and memory_used",
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36302f34_3d0255cf",
+        "filename": "content/browser/leveldb_wrapper_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-27T21:48:05Z",
+      "side": 1,
+      "message": "*of",
+      "range": {
+        "startLine": 159,
+        "startChar": 13,
+        "endLine": 159,
+        "endChar": 15
+      },
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "761d80f4_cd44fdeb",
+        "filename": "content/browser/leveldb_wrapper_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-27T21:48:05Z",
+      "side": 1,
+      "message": "nit: constraints",
+      "range": {
+        "startLine": 161,
+        "startChar": 53,
+        "endLine": 161,
+        "endChar": 63
+      },
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1848bc4b_37b23191",
+        "filename": "content/browser/leveldb_wrapper_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-27T21:48:05Z",
+      "side": 1,
+      "message": "there seem to be some words missing in this sentence?",
+      "range": {
+        "startLine": 162,
+        "startChar": 5,
+        "endLine": 163,
+        "endChar": 53
+      },
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00be118b_eafff06e",
+        "filename": "content/renderer/dom_storage/local_storage_cached_area.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-27T21:48:05Z",
+      "side": 1,
+      "message": "shouldn\u0027t there be a String16ToUint8Vector somewhere in this?",
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e21de857_1fd0954b",
+        "filename": "content/renderer/dom_storage/local_storage_cached_area.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-27T21:48:05Z",
+      "side": 1,
+      "message": "here too, String16ToUin8Vector?",
+      "revId": "19e1f34100ea7462ee667ac4df39a9287f2931e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
