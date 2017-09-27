@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa17b8c9_fe7555fc",
+        "filename": "third_party/WebKit/LayoutTests/virtual/color_space/fast/canvas/color-space/canvas-createImageBitmap-rec2020.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-09-27T18:51:27Z",
+      "side": 1,
+      "message": "you can merge those inside, if you prefer. Otherwise lgtm.\nPromise.all([\u0027bmp\u0027, \u0027gif\u0027...].map(ext \u003d\u003e new...));",
+      "range": {
+        "startLine": 258,
+        "startChar": 4,
+        "endLine": 258,
+        "endChar": 18
+      },
+      "revId": "ad1955408afa8ed9ed86440e016677b93db60c8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
