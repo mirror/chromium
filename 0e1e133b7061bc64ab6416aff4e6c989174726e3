@@ -333,6 +333,30 @@
     },
     {
       "key": {
+        "uuid": "617da114_93d225b3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1633,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-27T01:50:05Z",
+      "side": 1,
+      "message": "The rationale in the bug sgtm.",
+      "parentUuid": "32e5e1f3_514a7c44",
+      "range": {
+        "startLine": 1632,
+        "startChar": 20,
+        "endLine": 1633,
+        "endChar": 67
+      },
+      "revId": "0e1e133b7061bc64ab6416aff4e6c989174726e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91664a73_385d7fa3",
         "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
         "patchSetId": 3
