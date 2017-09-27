@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53ddb6b6_73642bd3",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-27T03:16:39Z",
+      "side": 1,
+      "message": "clamy@ suggested attaching the render_frame_host to the handle so that CommitErrorPage() can use it (similar to how CommitNavigation can).\nI presume it\u0027s okay to set this here explicitly and then immediately call CommitErrorPage().\n\n(As opposed to, say, making it a parameter to CommitErrorPage().)",
+      "revId": "a6ab266eeb45ae8217433a47a13d36a1109622c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a00c3f5a_1476a6ef",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 1001,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-27T03:16:39Z",
+      "side": 1,
+      "message": "clamy@ noted that I\u0027m not actually looking at the result action here.\n\nI believe that this is correct, because PROCEED should fail in the same way as, say CANCEL.\n(We commit an error page iff the error is not net::ERR_ABORTED.)\n\nThe difference between PROCEED and CANCEL comes later on, where CANCEL allows a throttle to attach the custom HTML for the interstitial.",
+      "revId": "a6ab266eeb45ae8217433a47a13d36a1109622c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d7f31a2_3279f3d7",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-27T03:16:39Z",
+      "side": 0,
+      "message": "We now need the to get the render frame host from the handle in order to commit an error page at any state.",
+      "revId": "d07f5cca5b1f92e473d67e77b89b087a175bc009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

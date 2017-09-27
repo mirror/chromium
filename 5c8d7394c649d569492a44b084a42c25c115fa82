@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dc63c39a_02573fc6",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-27T03:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eee03c1a_d8ccd35c",
+      "revId": "5c8d7394c649d569492a44b084a42c25c115fa82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2883fcfa_f6b12848",
         "filename": "content/browser/frame_host/navigation_request.cc",
         "patchSetId": 28
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f5c03c10_64eb3390",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 982,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-27T03:16:39Z",
+      "side": 1,
+      "message": "Done.\n\n(I had put this in NavigationHandleImpl::WillFailRequest() before, but I now think NavigationRequest makes more sense because the value has only been set from NavigationRequest so far.)",
+      "parentUuid": "2883fcfa_f6b12848",
+      "revId": "5c8d7394c649d569492a44b084a42c25c115fa82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca4d6328_0aab30f9",
         "filename": "content/browser/frame_host/navigation_request.cc",
         "patchSetId": 28
@@ -50,6 +86,24 @@
       "revId": "5c8d7394c649d569492a44b084a42c25c115fa82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68185d98_f38db96e",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 984,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-27T03:16:39Z",
+      "side": 1,
+      "message": "Thanks for pointing out the reset – that fixed one of my issues.\n\nAs far as I can tell, the result does not depend on the throttle action – PROCEED and CANCEL are the only valid results, and they both take the same path now that NavigationHandleImpl::WillFailRequest() is responsible for returning the net error using the same path in both cases.",
+      "parentUuid": "ca4d6328_0aab30f9",
+      "revId": "5c8d7394c649d569492a44b084a42c25c115fa82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

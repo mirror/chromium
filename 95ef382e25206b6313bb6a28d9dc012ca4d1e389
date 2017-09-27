@@ -195,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "83ecd69f_5b92e496",
+        "filename": "content/browser/frame_host/navigation_request.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-27T03:16:39Z",
+      "side": 1,
+      "message": "I\u0027ve attached the render frame host to the handle, but that involved removing a DCHECK from NavigationHandleImpl::GetRenderFrameHost() so that we can access it during more handle states.",
+      "parentUuid": "a4c81fe2_5479d7fc",
+      "revId": "95ef382e25206b6313bb6a28d9dc012ca4d1e389",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1317e750_c6cd48ed",
         "filename": "content/public/browser/navigation_handle.h",
         "patchSetId": 26
