@@ -74,8 +74,7 @@ CloudExternalDataPolicyObserver::PolicyServiceObserver::PolicyServiceObserver(
     const PolicyMap::Entry* entry = policy_service_->GetPolicies(
         PolicyNamespace(POLICY_DOMAIN_CHROME, std::string()))
             .Get(parent_->policy_);
-    if (entry)
-      parent_->HandleExternalDataPolicyUpdate(user_id_, entry);
+    parent_->HandleExternalDataPolicyUpdate(user_id_, entry);
   }
 }
 
