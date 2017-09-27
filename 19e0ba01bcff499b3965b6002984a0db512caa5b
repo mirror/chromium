@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81a05046_5cbedb74",
+        "filename": "chrome/browser/ui/webui/settings/settings_clear_browsing_data_handler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-27T22:23:15Z",
+      "side": 1,
+      "message": "Nit: s/ui/UI, s/id/ID",
+      "revId": "19e0ba01bcff499b3965b6002984a0db512caa5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
