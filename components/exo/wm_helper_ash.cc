@@ -8,7 +8,9 @@
 #include "ash/shell.h"
 #include "ash/system/tray/system_tray_notifier.h"
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
+#include "base/command_line.h"
 #include "base/memory/singleton.h"
+#include "base/strings/string_number_conversions.h"
 #include "ui/aura/client/focus_client.h"
 #include "ui/display/manager/display_manager.h"
 #include "ui/events/devices/input_device_manager.h"
@@ -116,6 +118,16 @@ bool WMHelperAsh::IsTabletModeWindowManagerEnabled() const {
 }
 
 double WMHelperAsh::GetDefaultDeviceScaleFactor() const {
+  const char kRemoteShellScaleSwitch[] = "remote-shell-scale";
+  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
+  if (command_line->HasSwitch(kRemoteShellScaleSwitch)) {
+    std::string value =
+        command_line->GetSwitchValueASCII(kRemoteShellScaleSwitch);
+    double scale = 1.0;
+    if (base::StringToDouble(value, &scale))
+      return scale;
+  }
+
   if (!display::Display::HasInternalDisplay())
     return 1.0;
 
