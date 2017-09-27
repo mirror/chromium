@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3d2e97a2_3e1e50f9",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_items_builder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-09-27T17:41:35Z",
+      "side": 1,
+      "message": "This way caused some problems in AX and TextIterator, so I changed to build LayoutObject tree for the marker pseudo element, and the additional logic in NGInlineNode and NGInlineItemsBuilder is gone.\n\nIdeally in future, style team supports \u0027:marker\u0027 pseudo element, and we build appropriate box tree directly from the style tree, but it\u0027s probably a bit far.",
+      "parentUuid": "1b54388a_323bff9c",
+      "revId": "0786d5a06a4bca6b32f835ecf982c5968ad9d00f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffd62926_2373609a",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_items_builder.cc",
         "patchSetId": 5
@@ -39,6 +57,30 @@
       "revId": "0786d5a06a4bca6b32f835ecf982c5968ad9d00f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "696b4791_d9c431be",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_items_builder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-09-27T17:41:35Z",
+      "side": 1,
+      "message": "Great you like it ;)",
+      "parentUuid": "ffd62926_2373609a",
+      "range": {
+        "startLine": 501,
+        "startChar": 41,
+        "endLine": 501,
+        "endChar": 53
+      },
+      "revId": "0786d5a06a4bca6b32f835ecf982c5968ad9d00f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

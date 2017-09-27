@@ -16,6 +16,24 @@
       "revId": "2e40e6d09a2b39c77837336e4a20269c2ccaeaa5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "014fc24f_53eb7993",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-09-27T17:41:35Z",
+      "side": 1,
+      "message": "Added TODO, thank you for pointing this out, I should have added a comment.\n\nThis is for when an empty line has a list marker. How to handle this needs more investigation on other browser behavior and probably need some changes, I\u0027d like to revisit this later.",
+      "parentUuid": "2e3cbcdc_0a67358f",
+      "revId": "2e40e6d09a2b39c77837336e4a20269c2ccaeaa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
