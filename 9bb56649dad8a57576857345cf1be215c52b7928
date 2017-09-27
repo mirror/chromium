@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc168fd7_1ae05a30",
+        "filename": "content/browser/shared_worker/shared_worker_service_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-27T16:03:20Z",
+      "side": 1,
+      "message": "(this line should be removed)",
+      "revId": "9bb56649dad8a57576857345cf1be215c52b7928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ccbc056_9fbfb2d5",
+        "filename": "content/browser/shared_worker/shared_worker_service_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-27T16:03:20Z",
+      "side": 1,
+      "message": "Having MockRendererProcessHost and MockRenderProcessHost\u0027s totally confusing, we can probably just remove the outer class",
+      "revId": "9bb56649dad8a57576857345cf1be215c52b7928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
