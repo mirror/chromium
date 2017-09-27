@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "334d3948_43734c8c",
+        "filename": "sandbox/win/src/internal_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-09-27T17:50:00Z",
+      "side": 0,
+      "message": "sandbox/win/src/internal_types.h(54,28):  error: extension used [-Werror,-Wlanguage-extension-token]",
+      "range": {
+        "startLine": 54,
+        "startChar": 27,
+        "endLine": 54,
+        "endChar": 34
+      },
+      "revId": "24df7839c6a83a2587cfa87c4eac64451a654e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0711ad9_ef365d32",
+        "filename": "sandbox/win/src/internal_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-09-27T17:50:00Z",
+      "side": 0,
+      "message": "sandbox/win/src/internal_types.h(59,12):  error: extension used [-Werror,-Wlanguage-extension-token]",
+      "range": {
+        "startLine": 59,
+        "startChar": 11,
+        "endLine": 59,
+        "endChar": 18
+      },
+      "revId": "24df7839c6a83a2587cfa87c4eac64451a654e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54a7e035_1384cd65",
+        "filename": "sandbox/win/src/internal_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-09-27T17:50:00Z",
+      "side": 0,
+      "message": "sandbox/win/src/internal_types.h(70,14):  error: extension used [-Werror,-Wlanguage-extension-token]",
+      "range": {
+        "startLine": 70,
+        "startChar": 13,
+        "endLine": 70,
+        "endChar": 20
+      },
+      "revId": "24df7839c6a83a2587cfa87c4eac64451a654e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e7bf9cd_9c17795e",
+        "filename": "sandbox/win/src/policy_engine_opcodes.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-09-27T17:50:00Z",
+      "side": 0,
+      "message": "sandbox/win/src/policy_engine_opcodes.h(188,4):  error: extra \u0027;\u0027 after member function definition [-Werror,-Wextra-semi]",
+      "range": {
+        "startLine": 188,
+        "startChar": 3,
+        "endLine": 188,
+        "endChar": 4
+      },
+      "revId": "24df7839c6a83a2587cfa87c4eac64451a654e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fe7992f_143f28a4",
+        "filename": "sandbox/win/src/policy_engine_opcodes.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-09-27T17:50:00Z",
+      "side": 0,
+      "message": "sandbox/win/src/policy_engine_opcodes.h(297,27):  error: implicit conversion changes signedness: \u0027int\u0027 to \u0027size_t\u0027 (aka \u0027unsigned int\u0027) [-Werror,-Wsign-conversion]",
+      "range": {
+        "startLine": 297,
+        "startChar": 11,
+        "endLine": 297,
+        "endChar": 39
+      },
+      "revId": "24df7839c6a83a2587cfa87c4eac64451a654e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85e16a4f_8de5853c",
+        "filename": "sandbox/win/src/policy_engine_params.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-09-27T17:50:00Z",
+      "side": 0,
+      "message": "sandbox/win/src/policy_target.cc(65,52):  error: implicit conversion changes signedness: \u0027int\u0027 to \u0027size_t\u0027 (aka \u0027unsigned int\u0027) [-Werror,-Wsign-conversion]",
+      "range": {
+        "startLine": 176,
+        "startChar": 2,
+        "endLine": 176,
+        "endChar": 5
+      },
+      "revId": "24df7839c6a83a2587cfa87c4eac64451a654e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "664a9252_d1b648a4",
+        "filename": "sandbox/win/src/policy_target.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-09-27T17:50:00Z",
+      "side": 0,
+      "message": "sandbox/win/src/policy_target.cc(65,52):  error: implicit conversion changes signedness: \u0027int\u0027 to \u0027size_t\u0027 (aka \u0027unsigned int\u0027) [-Werror,-Wsign-conversion]",
+      "range": {
+        "startLine": 56,
+        "startChar": 7,
+        "endLine": 56,
+        "endChar": 10
+      },
+      "revId": "24df7839c6a83a2587cfa87c4eac64451a654e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18f9f7d4_bcbcbe26",
+        "filename": "sandbox/win/src/sandbox_nt_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-09-27T17:50:00Z",
+      "side": 0,
+      "message": "sandbox/win/src/sandbox_nt_util.h(70,16):  error: implicit conversion changes signedness: \u0027long\u0027 to \u0027size_t\u0027 (aka \u0027unsigned int\u0027) [-Werror,-Wsign-conversion]",
+      "range": {
+        "startLine": 70,
+        "startChar": 2,
+        "endLine": 70,
+        "endChar": 9
+      },
+      "revId": "24df7839c6a83a2587cfa87c4eac64451a654e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9803fc0d_4965ab15",
+        "filename": "sandbox/win/src/sandbox_policy_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-09-27T17:50:00Z",
+      "side": 0,
+      "message": "sandbox/win/src/policy_target.cc(65,52):  error: implicit conversion changes signedness: \u0027int\u0027 to \u0027size_t\u0027 (aka \u0027unsigned int\u0027) [-Werror,-Wsign-conversion]",
+      "range": {
+        "startLine": 614,
+        "startChar": 9,
+        "endLine": 614,
+        "endChar": 12
+      },
+      "revId": "24df7839c6a83a2587cfa87c4eac64451a654e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22394594_4ca4ed32",
+        "filename": "sandbox/win/src/win_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-09-27T17:50:00Z",
+      "side": 0,
+      "message": "sandbox/win/src/win_utils.h(32,4):  error: extra \u0027;\u0027 after member function definition [-Werror,-Wextra-semi]",
+      "range": {
+        "startLine": 32,
+        "startChar": 3,
+        "endLine": 32,
+        "endChar": 4
+      },
+      "revId": "24df7839c6a83a2587cfa87c4eac64451a654e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9484abc0_7b6415fc",
+        "filename": "sandbox/win/src/win_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-09-27T17:50:00Z",
+      "side": 0,
+      "message": "sandbox/win/src/win_utils.h(37,4):  error: extra \u0027;\u0027 after member function definition [-Werror,-Wextra-semi]",
+      "range": {
+        "startLine": 37,
+        "startChar": 3,
+        "endLine": 37,
+        "endChar": 4
+      },
+      "revId": "24df7839c6a83a2587cfa87c4eac64451a654e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

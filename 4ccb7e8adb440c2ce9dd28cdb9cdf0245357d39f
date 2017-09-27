@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33a1792a_2850fb4e",
+        "filename": "sandbox/win/src/sandbox.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-09-27T17:50:00Z",
+      "side": 1,
+      "message": "sandbox/win/src/sandbox.h(49,7):  error: \u0027sandbox::BrokerServices\u0027 has virtual functions but non-virtual destructor [-Werror,-Wnon-virtual-dtor]",
+      "range": {
+        "startLine": 96,
+        "startChar": 3,
+        "endLine": 96,
+        "endChar": 17
+      },
+      "revId": "4ccb7e8adb440c2ce9dd28cdb9cdf0245357d39f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f06940f8_2fede8ec",
+        "filename": "sandbox/win/src/sandbox.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-09-27T17:50:00Z",
+      "side": 1,
+      "message": "sandbox/win/src/sandbox.h(119,7):  error: \u0027sandbox::TargetServices\u0027 has virtual functions but non-virtual destructor [-Werror,-Wnon-virtual-dtor]",
+      "range": {
+        "startLine": 141,
+        "startChar": 3,
+        "endLine": 141,
+        "endChar": 17
+      },
+      "revId": "4ccb7e8adb440c2ce9dd28cdb9cdf0245357d39f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89a78923_1db473b4",
+        "filename": "sandbox/win/src/sandbox_policy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-09-27T17:50:00Z",
+      "side": 1,
+      "message": "sandbox/win/src/sandbox_policy.h(17,7):  error: \u0027sandbox::TargetPolicy\u0027 has virtual functions but non-virtual destructor [-Werror,-Wnon-virtual-dtor]",
+      "range": {
+        "startLine": 257,
+        "startChar": 3,
+        "endLine": 257,
+        "endChar": 15
+      },
+      "revId": "4ccb7e8adb440c2ce9dd28cdb9cdf0245357d39f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71740859_581ddc44",
+        "filename": "sandbox/win/src/target_services.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-09-27T17:50:00Z",
+      "side": 1,
+      "message": "sandbox/win/src/target_services.h(41,7):  error: \u0027sandbox::TargetServicesBase\u0027 has virtual functions but non-virtual destructor [-Werror,-Wnon-virtual-dtor]",
+      "range": {
+        "startLine": 60,
+        "startChar": 3,
+        "endLine": 60,
+        "endChar": 21
+      },
+      "revId": "4ccb7e8adb440c2ce9dd28cdb9cdf0245357d39f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
