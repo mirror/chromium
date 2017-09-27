@@ -42,24 +42,25 @@ import java.util.List;
  * Integration tests for Contextual suggestions.
  */
 @RunWith(ChromeJUnit4ClassRunner.class)
-@CommandLineFlags.Add(ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG)
-@CommandLineFlags.Remove(ChromeHome.ENABLE_FLAGS)
-public class ContextualSuggestionsTest {
-    private static final String ENABLE_CONTEXTUAL_SUGGESTIONS = ChromeHome.ENABLE_FLAGS + ","
-            + ChromeFeatureList.CONTEXTUAL_SUGGESTIONS_CAROUSEL;
+@CommandLineFlags
+        .Add(ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG)
+        @CommandLineFlags.Remove(ChromeHome.ENABLE_FLAGS)
+        public class ContextualSuggestionsTest {
+    private static final String ENABLE_CONTEXTUAL_SUGGESTIONS =
+            ChromeHome.ENABLE_FLAGS + "," + ChromeFeatureList.CONTEXTUAL_SUGGESTIONS_CAROUSEL;
     private static final String TEST_PAGE = "/chrome/test/data/android/test.html";
 
-    private static final List<SnippetArticle> FAKE_CONTEXTUAL_SUGGESTIONS = Arrays.asList(
-            new SnippetArticle(KnownCategories.CONTEXTUAL, "suggestion0",
-                    "James Roderick to step down as conductor for Laville orchestra",
-                    "The Curious One", "summary is not used", "http://example.com", 0, 0.0f, 0L,
-                    false, null),
-            new SnippetArticle(KnownCategories.CONTEXTUAL, "suggestion1",
-                    "Boy raises orphaned goat", "Meme feed", "summary is not used",
-                    "http://example.com", 0, 0.0f, 0L, false, null),
-            new SnippetArticle(KnownCategories.CONTEXTUAL, "suggestion2", "Top gigs this week",
-                    "Hello World", "summary is not used", "http://example.com", 0, 0.0f, 0L,
-                    false, null));
+    private static final List<SnippetArticle> FAKE_CONTEXTUAL_SUGGESTIONS =
+            Arrays.asList(new SnippetArticle(KnownCategories.CONTEXTUAL, "suggestion0",
+                                  "James Roderick to step down as conductor for Laville orchestra",
+                                  "The Curious One", "summary is not used", "http://example.com", 0,
+                                  0.0f, 0L, false, null),
+                    new SnippetArticle(KnownCategories.CONTEXTUAL, "suggestion1",
+                            "Boy raises orphaned goat", "Meme feed", "summary is not used",
+                            "http://example.com", 0, 0.0f, 0L, false, null),
+                    new SnippetArticle(KnownCategories.CONTEXTUAL, "suggestion2",
+                            "Top gigs this week", "Hello World", "summary is not used",
+                            "http://example.com", 0, 0.0f, 0L, false, null));
 
     @Rule
     public SuggestionsDependenciesRule mSuggestionsDeps = new SuggestionsDependenciesRule();
@@ -109,7 +110,8 @@ public class ContextualSuggestionsTest {
                     + "enabled when this is handled properly.")
     @Feature({"ContextualSuggestions"})
     @CommandLineFlags.Add(ENABLE_CONTEXTUAL_SUGGESTIONS)
-    public void testCarouselIsNotShownWhenFlagsEnabledButNoSuggestions() throws Exception {
+    public void
+    testCarouselIsNotShownWhenFlagsEnabledButNoSuggestions() throws Exception {
         Assert.assertTrue(FeatureUtilities.isChromeHomeEnabled());
         Assert.assertTrue(
                 ChromeFeatureList.isEnabled(ChromeFeatureList.CONTEXTUAL_SUGGESTIONS_CAROUSEL));

@@ -241,7 +241,8 @@ class WebMediaPlayerImplTest : public testing::Test {
                                                   &web_frame_client_,
                                                   nullptr,
                                                   nullptr)),
-        audio_parameters_(TestAudioParameters::Normal()) {
+        audio_parameters_(TestAudioParameters::Normal()),
+        context_provider_(cc::TestContextProvider::Create()) {
     media_thread_.StartAndWaitForTesting();
   }
 
@@ -274,6 +275,8 @@ class WebMediaPlayerImplTest : public testing::Test {
             provider_.get(), base::Bind(&CreateCapabilitiesRecorder),
             base::Bind(&WebMediaPlayerImplTest::CreateMockSurfaceLayerBridge,
                        base::Unretained(this)),
+            base::Bind(&WebMediaPlayerImplTest::ContextProviderCB,
+                       base::Unretained(this)),
             cc::TestContextProvider::Create()));
 }
 
@@ -288,6 +291,12 @@ class WebMediaPlayerImplTest : public testing::Test {
     base::RunLoop().RunUntilIdle();
 
     web_view_->Close();
+  }
+
+  void ContextProviderCB(base::Callback<void(viz::ContextProvider*)> callback) {
+    media_thread_.task_runner()->PostTask(
+        FROM_HERE,
+        base::Bind(callback, base::Unretained(context_provider_.get())));
   }
 
  protected:
@@ -462,6 +471,8 @@ class WebMediaPlayerImplTest : public testing::Test {
 
   // The WebMediaPlayerImpl instance under test.
   std::unique_ptr<WebMediaPlayerImpl> wmpi_;
+
+  scoped_refptr<cc::TestContextProvider> context_provider_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(WebMediaPlayerImplTest);

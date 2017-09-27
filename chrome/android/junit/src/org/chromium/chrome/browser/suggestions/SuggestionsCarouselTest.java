@@ -40,9 +40,9 @@ import org.chromium.testing.local.LocalRobolectricTestRunner;
 @RunWith(LocalRobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
 @Features({
-        @Features.Register(ChromeFeatureList.CHROME_HOME),
-        @Features.Register(ChromeFeatureList.CONTEXTUAL_SUGGESTIONS_CAROUSEL),
-        @Features.Register(ChromeFeatureList.NTP_OFFLINE_PAGES_FEATURE_NAME)
+    @Features.Register(ChromeFeatureList.CHROME_HOME)
+    , @Features.Register(ChromeFeatureList.CONTEXTUAL_SUGGESTIONS_CAROUSEL),
+            @Features.Register(ChromeFeatureList.NTP_OFFLINE_PAGES_FEATURE_NAME)
 })
 public class SuggestionsCarouselTest {
     private static final String URL_STRING = "http://www.test.com";

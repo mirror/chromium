@@ -775,7 +775,7 @@ Expansions for tool variables
         the linker tool of "lib".
 
 )"  // String break to prevent overflowing the 16K max VC string length.
-R"(  Compiler tools have the notion of a single input and a single output, along
+    R"(  Compiler tools have the notion of a single input and a single output, along
   with a set of compiler-specific flags. The following expansions are
   available:
 
@@ -878,7 +878,7 @@ R"(  Compiler tools have the notion of a single input and a single output, along
         Example: "libfoo.so libbar.so"
 
 )"  // String break to prevent overflowing the 16K max VC string length.
-R"(  The static library ("alink") tool allows {{arflags}} plus the common tool
+    R"(  The static library ("alink") tool allows {{arflags}} plus the common tool
   substitutions.
 
   The copy tool allows the common compiler/linker substitutions, plus
