@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93718f60_a22f8df5",
+        "filename": "chrome/browser/extensions/webstore_installer.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-27T22:41:08Z",
+      "side": 1,
+      "message": "The requirement from DownloadUrlParameters comments is that both the RVH and RFH lives in the same process.\nAdd DCHECK_EQ(render_process_id, render_frame_host-\u003eGetProcess()-\u003eGetID())?\nOr would that be nuisance since render_frame_host is main frame?",
+      "range": {
+        "startLine": 664,
+        "startChar": 0,
+        "endLine": 664,
+        "endChar": 73
+      },
+      "revId": "80691df9c99d1f5c312cca941979e454e1e0c907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
