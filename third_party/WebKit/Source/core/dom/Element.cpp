@@ -148,7 +148,6 @@
 #include "platform/bindings/DOMDataStore.h"
 #include "platform/bindings/V8DOMWrapper.h"
 #include "platform/bindings/V8PerContextData.h"
-#include "platform/graphics/CompositorMutableProperties.h"
 #include "platform/graphics/CompositorMutation.h"
 #include "platform/runtime_enabled_features.h"
 #include "platform/scroll/ScrollableArea.h"
