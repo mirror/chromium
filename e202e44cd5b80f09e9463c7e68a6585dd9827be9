@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "bda736b8_6d90705d",
+        "filename": "cc/resources/local_resource_provider.h",
+        "patchSetId": 42
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-27T19:26:02Z",
+      "side": 1,
+      "message": "It should be a lot smaller than Resource, as it doesn\u0027t need to do state tracking?",
+      "parentUuid": "3c61ac28_208b8a40",
+      "revId": "e202e44cd5b80f09e9463c7e68a6585dd9827be9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b11df532_3aada89b",
         "filename": "cc/resources/local_resource_provider.h",
         "patchSetId": 42
@@ -154,6 +172,24 @@
     },
     {
       "key": {
+        "uuid": "483fc4aa_b90f8162",
+        "filename": "cc/resources/local_resource_provider.h",
+        "patchSetId": 42
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-27T19:26:02Z",
+      "side": 1,
+      "message": "My feeling is that we should prioritize making this local ResourceProvider as simple/small as possible over trying to make it look like remote resources. The only things we need in common is the ResourceId format, so that cc::Resource can be used.",
+      "parentUuid": "e74e09d2_aad4fbe4",
+      "revId": "e202e44cd5b80f09e9463c7e68a6585dd9827be9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ad7ba7a_37f6e8f2",
         "filename": "cc/resources/local_resource_provider.h",
         "patchSetId": 42
@@ -183,6 +219,24 @@
       "side": 1,
       "message": "No, how about ScopedLocalAllocatedGL?",
       "parentUuid": "7ad7ba7a_37f6e8f2",
+      "revId": "e202e44cd5b80f09e9463c7e68a6585dd9827be9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2813f05f_b45125a8",
+        "filename": "cc/resources/local_resource_provider.h",
+        "patchSetId": 42
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-27T19:26:02Z",
+      "side": 1,
+      "message": "ScopedUseGL? It\u0027s already in a class with Local in the name",
+      "parentUuid": "44db1f1a_0c78bfe2",
       "revId": "e202e44cd5b80f09e9463c7e68a6585dd9827be9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -253,6 +307,24 @@
       "side": 1,
       "message": "But maybe id is the most important thing in Resource?",
       "parentUuid": "b828de5b_99576a19",
+      "revId": "e202e44cd5b80f09e9463c7e68a6585dd9827be9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cf12336_8904177d",
+        "filename": "cc/resources/resource.h",
+        "patchSetId": 42
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-27T19:26:02Z",
+      "side": 1,
+      "message": "I think (id,local) are basically a tuple now so I\u0027d like them together. It could be second, but local changes the behaviour of all interactions with Resource, so in my mind its probably the most important.",
+      "parentUuid": "91f81d49_0f7eae07",
       "revId": "e202e44cd5b80f09e9463c7e68a6585dd9827be9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
