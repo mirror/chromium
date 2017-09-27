@@ -16,6 +16,24 @@
       "revId": "a7a97725a51c58dfa62fd68af62058faf167f2af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "888dbd13_58e2764d",
+        "filename": "content/browser/appcache/appcache_histograms.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-27T20:58:05Z",
+      "side": 1,
+      "message": "I agree, setting a cap like this for the histogram likely won\u0027t have much effect.  If you don\u0027t care about samples over 1ms, it would be better to rebucket the histogram so that no client-side memory is allocated for unused buckets.  (If you do rebucket the histogram, then please also rename it.  Actually, please also rename it if you effectively rebucket it by dropping samples over 1ms.  It\u0027s best practice to rename a histogram any time its semantics change.)",
+      "parentUuid": "2f3db782_6fbf528c",
+      "revId": "a7a97725a51c58dfa62fd68af62058faf167f2af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
