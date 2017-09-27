@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78f39fc9_f7534b7a",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-27T22:37:52Z",
+      "side": 1,
+      "message": "Why not\n\n  else if (observer_) {\n    // ...\n  }",
+      "revId": "f5775d03019aaedb595fad36f6b1e582c5c2ee30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
