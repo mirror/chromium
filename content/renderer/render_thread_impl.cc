@@ -2180,7 +2180,7 @@ void RenderThreadImpl::CreateFrame(mojom::CreateFrameParamsPtr params) {
       params->routing_id, params->proxy_routing_id, params->opener_routing_id,
       params->parent_routing_id, params->previous_sibling_routing_id,
       params->replication_state, compositor_deps, *params->widget_params,
-      params->frame_owner_properties);
+      params->frame_owner_properties, params->devtools_frame_id);
 }
 
 void RenderThreadImpl::SetUpEmbeddedWorkerChannelForServiceWorker(

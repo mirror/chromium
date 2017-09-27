@@ -138,7 +138,8 @@ class CONTENT_EXPORT RenderViewHostImpl : public RenderViewHost,
       int opener_frame_route_id,
       int proxy_route_id,
       const FrameReplicationState& replicated_frame_state,
-      bool window_was_created_with_opener);
+      bool window_was_created_with_opener,
+      const std::string& devtools_frame_id);
 
   base::TerminationStatus render_view_termination_status() const {
     return render_view_termination_status_;

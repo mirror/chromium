@@ -136,7 +136,8 @@ FrameTreeNode::FrameTreeNode(FrameTree* frame_tree,
                              blink::WebTreeScopeType scope,
                              const std::string& name,
                              const std::string& unique_name,
-                             const FrameOwnerProperties& frame_owner_properties)
+                             const FrameOwnerProperties& frame_owner_properties,
+                             const std::string& devtools_target_id)
     : frame_tree_(frame_tree),
       navigator_(navigator),
       render_manager_(this,
@@ -160,7 +161,8 @@ FrameTreeNode::FrameTreeNode(FrameTree* frame_tree,
       pending_sandbox_flags_(blink::WebSandboxFlags::kNone),
       frame_owner_properties_(frame_owner_properties),
       loading_progress_(kLoadingProgressNotStarted),
-      blame_context_(frame_tree_node_id_, parent) {
+      blame_context_(frame_tree_node_id_, parent),
+      devtools_target_id_(devtools_target_id) {
   std::pair<FrameTreeNodeIdMap::iterator, bool> result =
       g_frame_tree_node_id_map.Get().insert(
           std::make_pair(frame_tree_node_id_, this));

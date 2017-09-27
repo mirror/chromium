@@ -43,6 +43,10 @@ struct CreateViewParams {
   // cases.
   FrameReplicationState replicated_frame_state;
 
+  // Frame id in the devtools protocol terms, matches devtools target id
+  // when attaching to this frame explicitly.
+  string devtools_frame_id;
+
   // The ID of the proxy object for the main frame in this view. It is only
   // used if |swapped_out| is true.
   int32 proxy_routing_id = IPC.mojom.kRoutingIdNone;
@@ -109,6 +113,10 @@ struct CreateFrameParams {
   // properties replicated from the process rendering the parent frame, such as
   // the new frame's sandbox flags.
   FrameReplicationState replication_state;
+
+  // Frame id in the devtools protocol terms, matches devtools target id
+  // when attaching to this frame explicitly.
+  string devtools_frame_id;
 
   // When the new frame has a parent, |frame_owner_properties| holds the
   // properties of the HTMLFrameOwnerElement from the parent process.

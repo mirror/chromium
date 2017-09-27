@@ -6,6 +6,7 @@
 
 #include "base/command_line.h"
 #include "base/debug/alias.h"
+#include "base/guid.h"
 #include "base/macros.h"
 #include "base/strings/string_util.h"
 #include "build/build_config.h"
@@ -67,7 +68,8 @@ void CreateChildFrameOnUI(int process_id,
                           blink::WebSandboxFlags sandbox_flags,
                           const ParsedFeaturePolicyHeader& container_policy,
                           const FrameOwnerProperties& frame_owner_properties,
-                          int new_routing_id) {
+                          int new_routing_id,
+                          const std::string& devtools_frame_id) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   RenderFrameHostImpl* render_frame_host =
       RenderFrameHostImpl::FromID(process_id, parent_routing_id);
@@ -76,7 +78,7 @@ void CreateChildFrameOnUI(int process_id,
   if (render_frame_host) {
     render_frame_host->OnCreateChildFrame(
         new_routing_id, scope, frame_name, frame_unique_name, sandbox_flags,
-        container_policy, frame_owner_properties);
+        container_policy, frame_owner_properties, devtools_frame_id);
   }
 }
 
@@ -338,15 +340,17 @@ void RenderFrameMessageFilter::DownloadUrl(int render_view_id,
 
 void RenderFrameMessageFilter::OnCreateChildFrame(
     const FrameHostMsg_CreateChildFrame_Params& params,
-    int* new_routing_id) {
+    int* new_routing_id,
+    std::string* devtools_frame_id) {
   *new_routing_id = render_widget_helper_->GetNextRoutingID();
+  *devtools_frame_id = base::GenerateGUID();
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
       base::BindOnce(&CreateChildFrameOnUI, render_process_id_,
                      params.parent_routing_id, params.scope, params.frame_name,
                      params.frame_unique_name, params.sandbox_flags,
                      params.container_policy, params.frame_owner_properties,
-                     *new_routing_id));
+                     *new_routing_id, *devtools_frame_id));
 }
 
 void RenderFrameMessageFilter::OnCookiesEnabled(int render_frame_id,

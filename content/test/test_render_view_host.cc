@@ -262,14 +262,16 @@ bool TestRenderViewHost::CreateTestRenderView(
   FrameReplicationState replicated_state;
   replicated_state.name = base::UTF16ToUTF8(frame_name);
   return CreateRenderView(opener_frame_route_id, proxy_route_id,
-                          replicated_state, window_was_created_with_opener);
+                          replicated_state, window_was_created_with_opener,
+                          std::string());
 }
 
 bool TestRenderViewHost::CreateRenderView(
     int opener_frame_route_id,
     int proxy_route_id,
     const FrameReplicationState& replicated_frame_state,
-    bool window_was_created_with_opener) {
+    bool window_was_created_with_opener,
+    const std::string& devtools_frame_id) {
   DCHECK(!IsRenderViewLive());
   GetWidget()->set_renderer_initialized(true);
   DCHECK(IsRenderViewLive());

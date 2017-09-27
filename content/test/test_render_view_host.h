@@ -240,7 +240,8 @@ class TestRenderViewHost
   bool CreateRenderView(int opener_frame_route_id,
                         int proxy_route_id,
                         const FrameReplicationState& replicated_frame_state,
-                        bool window_was_created_with_opener) override;
+                        bool window_was_created_with_opener,
+                        const std::string& devtools_frame_id) override;
   void OnWebkitPreferencesChanged() override;
 
  private:

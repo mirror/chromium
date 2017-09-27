@@ -614,10 +614,9 @@ WebContentsView* InterstitialPageImpl::CreateWebContentsView() {
   render_view_host_->GetMainFrame()->AllowBindings(
       BINDINGS_POLICY_DOM_AUTOMATION);
 
-  render_view_host_->CreateRenderView(MSG_ROUTING_NONE,
-                                      MSG_ROUTING_NONE,
-                                      FrameReplicationState(),
-                                      false);
+  render_view_host_->CreateRenderView(
+      MSG_ROUTING_NONE, MSG_ROUTING_NONE, FrameReplicationState(), false,
+      frame_tree_->root()->devtools_target_id());
   controller_->delegate()->RenderFrameForInterstitialPageCreated(
       frame_tree_->root()->current_frame_host());
   view->SetSize(web_contents()->GetContainerBounds().size());

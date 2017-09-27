@@ -1928,7 +1928,8 @@ bool RenderFrameHostManager::InitRenderView(
   bool created = delegate_->CreateRenderViewForRenderManager(
       render_view_host, opener_frame_routing_id,
       proxy ? proxy->GetRoutingID() : MSG_ROUTING_NONE,
-      frame_tree_node_->current_replication_state());
+      frame_tree_node_->current_replication_state(),
+      frame_tree_node_->devtools_target_id());
 
   if (created && proxy)
     proxy->set_render_frame_proxy_created(true);
