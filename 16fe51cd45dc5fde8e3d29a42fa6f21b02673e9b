@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1899545d_59af3be7",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ssl/CaptivePortalTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-27T08:29:32Z",
+      "side": 1,
+      "message": "comment needs to be updated (bc it\u0027s not necessarily the cert list that triggers the capport interstitial anymore)",
+      "range": {
+        "startLine": 81,
+        "startChar": 48,
+        "endLine": 82,
+        "endChar": 55
+      },
+      "revId": "16fe51cd45dc5fde8e3d29a42fa6f21b02673e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a52edd82_a7d8d449",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-27T08:29:32Z",
+      "side": 1,
+      "message": "needs to be initialized",
+      "range": {
+        "startLine": 339,
+        "startChar": 24,
+        "endLine": 339,
+        "endChar": 61
+      },
+      "revId": "16fe51cd45dc5fde8e3d29a42fa6f21b02673e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51a091b4_f7aacd5f",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-27T08:29:32Z",
+      "side": 1,
+      "message": "optional nit: rewrite as ternary",
+      "range": {
+        "startLine": 446,
+        "startChar": 4,
+        "endLine": 446,
+        "endChar": 41
+      },
+      "revId": "16fe51cd45dc5fde8e3d29a42fa6f21b02673e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b565e41f_34b171a5",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-27T08:29:32Z",
+      "side": 1,
+      "message": "Does this API return true even after you\u0027ve signed in/gotten full connectivity, or does it specifically mean you-are-in-a-captive-portal-and-your-connectivity-is-limited-by-it?",
+      "range": {
+        "startLine": 648,
+        "startChar": 23,
+        "endLine": 648,
+        "endChar": 41
+      },
+      "revId": "16fe51cd45dc5fde8e3d29a42fa6f21b02673e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a438166b_fd1be4bd",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-27T08:29:32Z",
+      "side": 1,
+      "message": "Hrm... should this go below the |only_error_is_name_mismatch| check?\n\nOn the one hand, if the OS says you\u0027re in a captive portal, then maybe it doesn\u0027t matter what the cert error is.\n\nOn the other hand, if you\u0027re on a cert error that is not caused by the captive portal, maybe it\u0027s annoying/un-useful to show the captive portal interstitial?\n\nIn either case, can you add a comment here explaining the reasoning?",
+      "range": {
+        "startLine": 853,
+        "startChar": 0,
+        "endLine": 857,
+        "endChar": 3
+      },
+      "revId": "16fe51cd45dc5fde8e3d29a42fa6f21b02673e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58eef9bf_836aafcd",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-27T08:29:32Z",
+      "side": 1,
+      "message": "enabled only on Android?",
+      "range": {
+        "startLine": 860,
+        "startChar": 27,
+        "endLine": 860,
+        "endChar": 44
+      },
+      "revId": "16fe51cd45dc5fde8e3d29a42fa6f21b02673e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
