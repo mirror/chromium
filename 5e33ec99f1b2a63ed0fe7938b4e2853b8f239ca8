@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5b0fe1d8_deac0cf4",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_auth_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-09-27T22:36:35Z",
+      "side": 1,
+      "message": "Ops, left from prev impl. Missed this point.",
+      "parentUuid": "f7bac81e_d8e25c72",
+      "range": {
+        "startLine": 400,
+        "startChar": 43,
+        "endLine": 400,
+        "endChar": 50
+      },
+      "revId": "5e33ec99f1b2a63ed0fe7938b4e2853b8f239ca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c8a707f0_39fcbf26",
         "filename": "components/arc/common/auth.mojom",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "5e33ec99f1b2a63ed0fe7938b4e2853b8f239ca8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cb909d5_c0c048e1",
+        "filename": "components/arc/common/auth.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-09-27T22:36:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8a707f0_39fcbf26",
+      "revId": "5e33ec99f1b2a63ed0fe7938b4e2853b8f239ca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
