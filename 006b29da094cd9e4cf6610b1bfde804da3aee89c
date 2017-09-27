@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a741375_7c61557b",
+        "filename": "content/renderer/browser_plugin/browser_plugin.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-27T17:38:44Z",
+      "side": 1,
+      "message": "nit: Is there value at this point in lazy-allocating the ChildFrameCompositingHelper? The constructor seems pretty trivial, would it make sense to simply construct it in Attach() ?",
+      "revId": "006b29da094cd9e4cf6610b1bfde804da3aee89c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38879eb4_1d936ef8",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-27T17:38:44Z",
+      "side": 1,
+      "message": "nit: ditto, would it make sense to create it directly in the constructor?",
+      "revId": "006b29da094cd9e4cf6610b1bfde804da3aee89c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
