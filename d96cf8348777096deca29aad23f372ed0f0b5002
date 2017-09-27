@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e22947cc_1d75d33d",
+        "filename": "components/policy/core/common/policy_loader_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-27T21:09:30Z",
+      "side": 1,
+      "message": "you can get rid of this and use \"decltype(\u0026::NetGetJoinInformation)\" in its place below",
+      "revId": "d96cf8348777096deca29aad23f372ed0f0b5002",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2553addb_9de8faa7",
+        "filename": "components/policy/core/common/policy_loader_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-27T21:09:30Z",
+      "side": 1,
+      "message": "nit: FILE_PATH_LITERAL",
+      "range": {
+        "startLine": 305,
+        "startChar": 36,
+        "endLine": 305,
+        "endChar": 37
+      },
+      "revId": "d96cf8348777096deca29aad23f372ed0f0b5002",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78227f22_38409a91",
+        "filename": "components/policy/core/common/policy_loader_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-27T21:09:30Z",
+      "side": 1,
+      "message": "nit: NULL -\u003e nullptr",
+      "range": {
+        "startLine": 305,
+        "startChar": 70,
+        "endLine": 305,
+        "endChar": 74
+      },
+      "revId": "d96cf8348777096deca29aad23f372ed0f0b5002",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6225dbe_409b6249",
+        "filename": "components/policy/core/common/policy_loader_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-27T21:09:30Z",
+      "side": 1,
+      "message": "this should lookup the Free fn using the same strategy as above, otherwise it\u0027s freeing in a different allocation domain.",
+      "revId": "d96cf8348777096deca29aad23f372ed0f0b5002",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caf9e860_2c7ab803",
+        "filename": "components/policy/core/common/policy_loader_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-27T21:09:30Z",
+      "side": 1,
+      "message": "release net_api_library?",
+      "revId": "d96cf8348777096deca29aad23f372ed0f0b5002",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94cd1fc1_92d27431",
+        "filename": "components/policy/core/common/policy_loader_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-27T21:09:30Z",
+      "side": 1,
+      "message": "use UmaHistogramBoolean instead of the macro since each is only hit once.\n\non second thought, how about getting rid of this metric and using this bool as a suffix on .IsDomainJoined? i guess pick whichever way makes the data analysis easier.",
+      "revId": "d96cf8348777096deca29aad23f372ed0f0b5002",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4463d002_c0e27fbd",
+        "filename": "components/policy/core/common/policy_loader_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-27T21:09:30Z",
+      "side": 1,
+      "message": "seems like you could avoid the duplicated code by putting lines 324-328 in a helper that takes two function pointers. it could also be the one place where the histogram is logged (pass a bool for its value).",
+      "revId": "d96cf8348777096deca29aad23f372ed0f0b5002",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
