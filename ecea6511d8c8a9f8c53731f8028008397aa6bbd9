@@ -16,6 +16,24 @@
       "revId": "ecea6511d8c8a9f8c53731f8028008397aa6bbd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b2ad816_802df901",
+        "filename": "base/files/file_util_posix.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1117055
+      },
+      "writtenOn": "2017-09-27T20:02:15Z",
+      "side": 1,
+      "message": "This is stated in the header comment for CopyDirectory.",
+      "parentUuid": "3fc19072_72a38691",
+      "revId": "ecea6511d8c8a9f8c53731f8028008397aa6bbd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
