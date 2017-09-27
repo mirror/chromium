@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a3068931_2c115858",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1288,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-27T14:39:58Z",
+      "side": 1,
+      "message": "Interesting - ShouldFrameShareParentSiteInstanceDespiteTopDocumentIsolation only looks at the |parent_site_instance| and ignores the |url| using |IsNTPSiteInstance(parent_site_instance)|.",
+      "range": {
+        "startLine": 1288,
+        "startChar": 9,
+        "endLine": 1288,
+        "endChar": 50
+      },
+      "revId": "9c6a4326cb99719333a22b3aeae3ca3264eacf69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "12f2d0c0_133a9f27",
         "filename": "chrome/browser/chrome_content_browser_client.cc",
         "patchSetId": 2
@@ -18,6 +41,29 @@
         "startChar": 42,
         "endLine": 1290,
         "endChar": 0
+      },
+      "revId": "9c6a4326cb99719333a22b3aeae3ca3264eacf69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b27fb148_15b9e732",
+        "filename": "chrome/browser/chrome_content_browser_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-27T14:39:58Z",
+      "side": 1,
+      "message": "I was wondering whether we should reuse/repurpose ShouldFrameShareParentSiteInstanceDespiteTopDocumentIsolation which 1) also takes a |parent_site_instance| and |url|, 2) and also covers NTP.\n\nOTOH:\nA) I think it is okay to land as-is\nB) I am not sure if hosted apps should also be exempt from --site-per-process for the planned trial (and ShouldFrameShareParentSiteInstanceDespiteTopDocumentIsolation also excludes hosted apps).",
+      "range": {
+        "startLine": 120,
+        "startChar": 7,
+        "endLine": 120,
+        "endChar": 38
       },
       "revId": "9c6a4326cb99719333a22b3aeae3ca3264eacf69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
