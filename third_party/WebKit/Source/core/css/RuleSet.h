@@ -83,6 +83,7 @@ class CORE_EXPORT RuleData {
 
   unsigned GetPosition() const { return position_; }
   StyleRule* Rule() const { return rule_; }
+  StyleRule* MutableRule() { return rule_; }
   const CSSSelector& Selector() const {
     return rule_->SelectorList().SelectorAt(selector_index_);
   }
