@@ -195,6 +195,7 @@ class BASE_EXPORT StatisticsRecorder {
   // method must be called very early, before any threads have started.
   // Record checker methods can be called on any thread, so they shouldn't
   // mutate any state.
+  // If the record checker has already been set, does not change it.
   // TODO(iburak): This is not yet hooked up to histogram recording
   // infrastructure.
   static void SetRecordChecker(
@@ -204,6 +205,9 @@ class BASE_EXPORT StatisticsRecorder {
   // the ShouldRecord() method of the record checker.
   // If the record checker is not set, returns true.
   static bool ShouldRecordHistogram(uint64_t histogram_hash);
+
+  // Enables or disables the record checker.
+  static void SetRecordCheckerEnabled(bool enabled);
 
  private:
   // We keep a map of callbacks to histograms, so that as histograms are

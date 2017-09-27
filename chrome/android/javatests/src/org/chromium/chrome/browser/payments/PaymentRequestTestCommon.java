@@ -18,8 +18,10 @@ import org.junit.Assert;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.base.test.util.CallbackHelper;
+import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.UrlUtils;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.ChromeTabbedActivity;
 import org.chromium.chrome.browser.autofill.CardUnmaskPrompt;
 import org.chromium.chrome.browser.autofill.CardUnmaskPrompt.CardUnmaskObserverForTest;
@@ -50,6 +52,9 @@ import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicReference;
 
 // TODO(yolandyan): move this class to its test rule once JUnit4 migration is over
+@CommandLineFlags.Add({
+        ChromeSwitches.DISABLE_EXPIRING_HISTOGRAMS,
+})
 final class PaymentRequestTestCommon implements PaymentRequestObserverForTest,
                                                 PaymentRequestServiceObserverForTest,
                                                 CardUnmaskObserverForTest {
