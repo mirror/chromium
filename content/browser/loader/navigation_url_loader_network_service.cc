@@ -279,15 +279,17 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
 
       // TODO(davidben): This logic still needs to be replicated at the
       // consumers.
-      if (resource_request_->method == "POST") {
-        // If being switched from POST, must remove Origin header.
-        // TODO(jww): This is Origin header removal is probably layering
-        // violation and should be refactored into //content.
-        // See https://crbug.com/471397.
-        // See also: https://crbug.com/760487
-        resource_request_->headers.RemoveHeader(
-            net::HttpRequestHeaders::kOrigin);
-      }
+      //
+      // The Origin header is sent on anything that is not a GET or HEAD, which
+      // suggests all redirects that change methods (since they always change to
+      // GET) should drop the Origin header.
+      // See https://fetch.spec.whatwg.org/#origin-header
+      // TODO(jww): This is Origin header removal is probably layering
+      // violation and should be refactored into //content.
+      // See https://crbug.com/471397.
+      // See also: https://crbug.com/760487
+      resource_request_->headers.RemoveHeader(net::HttpRequestHeaders::kOrigin);
+
       // The inclusion of a multipart Content-Type header can cause problems
       // with some servers:
       // http://code.google.com/p/chromium/issues/detail?id=843
