@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "94c7aa42_dd46da12",
+        "filename": "BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 858,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-09-27T22:41:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad4d27ed_0c87ebf3",
+      "revId": "adb8aab4580db19c4a98b3d581a7908a7d25eea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8819e42_caa5dbed",
         "filename": "content/shell/app/blink_test_platform_support_fuchsia.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-27T22:07:17Z",
       "side": 1,
       "message": "https://crbug.com/...",
+      "revId": "adb8aab4580db19c4a98b3d581a7908a7d25eea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b412b50_057d9a20",
+        "filename": "content/shell/app/blink_test_platform_support_fuchsia.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-09-27T22:41:51Z",
+      "side": 1,
+      "message": "Removed it entirely. I\u0027m skeptical as to whether we\u0027ll want to load fonts here; we\u0027ll likely want to implement that logic in some sort of non-test platform code instead.",
+      "parentUuid": "d8819e42_caa5dbed",
       "revId": "adb8aab4580db19c4a98b3d581a7908a7d25eea8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
