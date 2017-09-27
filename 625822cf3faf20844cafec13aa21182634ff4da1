@@ -16,6 +16,24 @@
       "revId": "625822cf3faf20844cafec13aa21182634ff4da1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcc6515f_522534b8",
+        "filename": "ui/webui/resources/cr_elements/cr_container_shadow_behavior.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-27T01:32:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e14a189_8e0c48d5",
+      "revId": "625822cf3faf20844cafec13aa21182634ff4da1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
