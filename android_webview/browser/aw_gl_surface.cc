@@ -23,7 +23,9 @@ unsigned int AwGLSurface::GetBackingFramebufferObject() {
   return ScopedAppGLStateRestore::Current()->framebuffer_binding_ext();
 }
 
-gfx::SwapResult AwGLSurface::SwapBuffers() {
+gfx::SwapResult AwGLSurface::SwapBuffers(
+    std::vector<ui::LatencyInfo>* latency_info) {
+  ui::LatencyInfo::AddTerminatedFrameSwapComponent(latency_info);
   return gfx::SwapResult::SWAP_ACK;
 }
 

@@ -45,8 +45,9 @@ bool GLSurfaceCast::SupportsSwapBuffersWithBounds() {
   return supports_swap_buffer_with_bounds_;
 }
 
-gfx::SwapResult GLSurfaceCast::SwapBuffers() {
-  gfx::SwapResult result = NativeViewGLSurfaceEGL::SwapBuffers();
+gfx::SwapResult GLSurfaceCast::SwapBuffers(
+    std::vector<ui::LatencyInfo>* latency_info) {
+  gfx::SwapResult result = NativeViewGLSurfaceEGL::SwapBuffers(latency_info);
   if (result == gfx::SwapResult::SWAP_ACK)
     parent_->OnSwapBuffers();
 

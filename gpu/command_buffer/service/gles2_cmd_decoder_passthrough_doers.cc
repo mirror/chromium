@@ -3070,7 +3070,8 @@ error::Error GLES2DecoderPassthroughImpl::DoSwapBuffers() {
     return error::kNoError;
   }
 
-  gfx::SwapResult result = surface_->SwapBuffers();
+  std::vector<ui::LatencyInfo> latency_info_dummy;
+  gfx::SwapResult result = surface_->SwapBuffers(&latency_info_dummy);
   if (result == gfx::SwapResult::SWAP_FAILED) {
     LOG(ERROR) << "Context lost because SwapBuffers failed.";
     if (!CheckResetStatus()) {
