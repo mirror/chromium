@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "10047128_892ebd68",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/misc/webtiming-cross-origin-and-back-expected.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-27T07:16:52Z",
+      "side": 1,
+      "message": "My question is whether the original *intent* of the test is really to throw an exception or not.  The test seems not intending to throw.  It seems accidentally broken.  Then, we should fix the test rather than updaing the test expectation.\n\nEven if it\u0027s an expected exception, then we should *catch* the exception and check the exception\u0027s type, code, and/or message in the test.  The test should print something like \"PASS addEventListener threw a TypeError.\" rather than \"CONSOLE ERROR: Uncaught TypeError: ...\"",
+      "parentUuid": "6734db1c_293d3d5d",
+      "revId": "e3d2ea43b046d80960d8373e3ad45b5fca96e37f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0b565a6_d7fa3d4d",
         "filename": "third_party/WebKit/LayoutTests/images/image-document-remove-listener-expected.txt",
         "patchSetId": 4
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Since in test case second parameter is not a function object, console error should come. Also this test case is intended for invalid event listeners. Firefox also behaves same. So this is expected.",
       "parentUuid": "b0b565a6_d7fa3d4d",
+      "revId": "e3d2ea43b046d80960d8373e3ad45b5fca96e37f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec59b031_1fc7c3eb",
+        "filename": "third_party/WebKit/LayoutTests/images/image-document-remove-listener-expected.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-27T07:16:52Z",
+      "side": 1,
+      "message": "Ditto.",
+      "parentUuid": "ba878966_3e4d95c0",
       "revId": "e3d2ea43b046d80960d8373e3ad45b5fca96e37f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
