@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5350b1e3_bb7360d7",
+        "filename": "content/browser/service_worker/service_worker_registration_handle.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-27T04:59:22Z",
+      "side": 1,
+      "message": "When dispatcher_host_ is null (other than in tests) and who destroys this in the case? It looks dispatcher_hosts_ owns registration_handles_.",
+      "revId": "34a59f4d08d529f741155b1e88f0906acfb23b1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
