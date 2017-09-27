@@ -258,6 +258,30 @@
       "revId": "47ef1197cf5eea41cb3a8031d3a8d5bd6a68f2de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4386e851_e45df784",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunFlowSequencer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-27T17:31:33Z",
+      "side": 1,
+      "message": "If I\u0027m reading this CL right, we no longer cache the states required in the FRE between FRE runs right?\n\nIf someone completes the search engine screen in the first version, we\u0027ll have saved their selection and not prompt them in the second time because this check would return false.  In the old version, we\u0027d have cached this value as true and show them the screen again despite that not being the desired intent.  I think this solves that issue as far as I can tell.",
+      "parentUuid": "bc281133_b30b6709",
+      "range": {
+        "startLine": 217,
+        "startChar": 58,
+        "endLine": 217,
+        "endChar": 84
+      },
+      "revId": "47ef1197cf5eea41cb3a8031d3a8d5bd6a68f2de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
