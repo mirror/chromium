@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad4d27ed_0c87ebf3",
+        "filename": "BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 858,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-09-27T22:07:17Z",
+      "side": 1,
+      "message": "Won\u0027t need some of this to run layout tests?",
+      "revId": "adb8aab4580db19c4a98b3d581a7908a7d25eea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8819e42_caa5dbed",
+        "filename": "content/shell/app/blink_test_platform_support_fuchsia.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-09-27T22:07:17Z",
+      "side": 1,
+      "message": "https://crbug.com/...",
+      "revId": "adb8aab4580db19c4a98b3d581a7908a7d25eea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
