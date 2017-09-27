@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "851d2882_2bc649e5",
+        "filename": "tools/json_schema_compiler/cpp_bundle_generator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-27T00:06:00Z",
+      "side": 1,
+      "message": "(potentially moot with below) I *believe* that we don\u0027t currently specify any comparator between base::StringPiece and const char*, which means that this will re-construct a base::StringPiece (along with a strlen call) each iteration of the for-loop.  If we can do the below and just store schema.name as a base::StringPiece, then that\u0027s fine, or otherwise we could do something else to try and avoid the need to convert to StringPiece here.  WDYT?  Or am I missing something that means we don\u0027t have to do this?",
+      "revId": "33ddb891a3fdc5d5baa4f89be690826a0999a812",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a041333_68dbe5c7",
+        "filename": "tools/json_schema_compiler/cpp_bundle_generator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-27T00:06:00Z",
+      "side": 1,
+      "message": "This is nice - it saves us from having to recompute the size each time we return the value.  But is there a reason to not store the information as a base::StringPiece in kSchemas?  Would that violate some of our static coding style?",
+      "revId": "33ddb891a3fdc5d5baa4f89be690826a0999a812",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
