@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "905e2737_93e8fdfa",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 901,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-27T19:57:22Z",
+      "side": 1,
+      "message": "Can you add a parenthetical note to that effect?",
+      "parentUuid": "e1710a81_87f31e67",
+      "range": {
+        "startLine": 901,
+        "startChar": 15,
+        "endLine": 901,
+        "endChar": 28
+      },
+      "revId": "bef4bf6daafddf8ac7273978465daa7a907014b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fac5837b_b9c4d8ff",
         "filename": "net/http/http_cache.h",
         "patchSetId": 34
@@ -140,6 +164,30 @@
       "revId": "bef4bf6daafddf8ac7273978465daa7a907014b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6b43a0af_b504d31c",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-27T19:57:22Z",
+      "side": 1,
+      "message": "But any call to this method implies that we\u0027re done completely, because the transaction will never touch the entry again after calling it.  So \"did_finish\" is misleading.\n\nLet\u0027s talk about this in f2f.",
+      "parentUuid": "748b2518_76becff5",
+      "range": {
+        "startLine": 416,
+        "startChar": 11,
+        "endLine": 416,
+        "endChar": 23
+      },
+      "revId": "bef4bf6daafddf8ac7273978465daa7a907014b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -319,6 +367,30 @@
       "side": 1,
       "message": "I\u0027ll think deeper into why this is not a problem, but this is similar to what happens now since partial transaction\u0027s functionality is not different since only one writer is supported.",
       "parentUuid": "beb367b1_ea7f86dd",
+      "range": {
+        "startLine": 446,
+        "startChar": 5,
+        "endLine": 446,
+        "endChar": 16
+      },
+      "revId": "bef4bf6daafddf8ac7273978465daa7a907014b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4711650_d2db8971",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-27T19:57:22Z",
+      "side": 1,
+      "message": "Fair enough, and I won\u0027t worry about it too much since it\u0027s parallel to existing code, but I\u0027m curious if you have any further thoughts as to why this isn\u0027t a problem.",
+      "parentUuid": "a74e4984_fe0ffd65",
       "range": {
         "startLine": 446,
         "startChar": 5,

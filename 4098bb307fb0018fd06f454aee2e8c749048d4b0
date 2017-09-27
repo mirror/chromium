@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5a82004_ef0e2fcf",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 45
+      },
+      "lineNbr": 892,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-27T19:57:22Z",
+      "side": 1,
+      "message": "nit: I find \"(send success as false)\" a little confusing.  Maybe \", by calling ImpactQueuedTransactions with success \u003d false.\"?",
+      "range": {
+        "startLine": 892,
+        "startChar": 27,
+        "endLine": 892,
+        "endChar": 34
+      },
+      "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1ad4089_c6b1dc98",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 45
+      },
+      "lineNbr": 1064,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-27T19:57:22Z",
+      "side": 1,
+      "message": "Is there a simple way to DCHECK that the response body is already written?",
+      "range": {
+        "startLine": 1064,
+        "startChar": 12,
+        "endLine": 1064,
+        "endChar": 18
+      },
+      "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4cbd7fb_c22dccd2",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 45
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-27T19:57:22Z",
+      "side": 1,
+      "message": "Confirming: The need for that is so that the definition of TetsHttpCacheTransaction has access to a private nested class of HttpCache?",
+      "range": {
+        "startLine": 248,
+        "startChar": 15,
+        "endLine": 248,
+        "endChar": 39
+      },
+      "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf053fe4_5d4c62fb",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 45
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-27T19:57:22Z",
+      "side": 1,
+      "message": "Why is this necessary?  I don\u0027t see any accessing of private aspects of HttpCache from TestHttpCache?",
+      "range": {
+        "startLine": 249,
+        "startChar": 15,
+        "endLine": 249,
+        "endChar": 28
+      },
+      "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37c77e21_27597d89",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 45
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-27T19:57:22Z",
+      "side": 1,
+      "message": "Sorry, I\u0027m sure we\u0027ve covered this, but why isn\u0027t WritersDoneWritingToEntry() called in the keep_entry case?  I don\u0027t think there will be any more writing to entry after network_read_only_ is set to true, will there be?",
+      "range": {
+        "startLine": 162,
+        "startChar": 12,
+        "endLine": 162,
+        "endChar": 37
+      },
+      "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df4694e9_9e801bfe",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 45
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-27T19:57:22Z",
+      "side": 1,
+      "message": "This is a no-op, right?",
+      "range": {
+        "startLine": 268,
+        "startChar": 2,
+        "endLine": 268,
+        "endChar": 20
+      },
+      "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d84a4252_a93580f4",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 45
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-27T19:57:22Z",
+      "side": 1,
+      "message": "Why not set should_keep_entry_ \u003d false in this case?",
+      "range": {
+        "startLine": 282,
+        "startChar": 20,
+        "endLine": 282,
+        "endChar": 21
+      },
+      "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d03007f_51cdb755",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 45
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-27T19:57:22Z",
+      "side": 1,
+      "message": "Conceptually this function should also call AboutToBeRemovedFromWriters().  Can that be done, or would that mess up the functionality?",
+      "range": {
+        "startLine": 618,
+        "startChar": 20,
+        "endLine": 618,
+        "endChar": 52
+      },
+      "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28431abd_5d211b21",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 45
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-27T19:57:22Z",
+      "side": 1,
+      "message": "Given that the implementation DCHECKs if |is_exclusive| and there\u0027s already a transaction on the entry, this comment should explicitly say that it\u0027s illegal to call AddTransaction(... is_exclusive\u003dtrue, ...) if there\u0027s already a transaction on the entry.",
+      "range": {
+        "startLine": 83,
+        "startChar": 23,
+        "endLine": 83,
+        "endChar": 31
+      },
+      "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14c27419_e75148ef",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 45
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-27T19:57:22Z",
+      "side": 1,
+      "message": "nit, suggestion: The second sentence is made redundant by the comment at the top of this section.",
+      "range": {
+        "startLine": 95,
+        "startChar": 15,
+        "endLine": 95,
+        "endChar": 18
+      },
+      "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9ef0797_892c23e9",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 45
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-27T19:57:22Z",
+      "side": 1,
+      "message": "In this context, \"range requests\" and \"partial requests\" mean the same thing, correct?  If so, use just one of those phrases in the comment--using two will imply that they mean different things.",
+      "range": {
+        "startLine": 142,
+        "startChar": 30,
+        "endLine": 142,
+        "endChar": 37
+      },
+      "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c6a52ea_f63f6732",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 45
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-27T19:57:22Z",
+      "side": 1,
+      "message": "nit: I think this sentence is redundant with the first sentence.",
+      "range": {
+        "startLine": 243,
+        "startChar": 24,
+        "endLine": 243,
+        "endChar": 29
+      },
+      "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6affda12_76946b1c",
+        "filename": "net/http/http_cache_writers_unittest.cc",
+        "patchSetId": 45
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-27T19:57:22Z",
+      "side": 1,
+      "message": "Test for failure if there are other transactions on writers?",
+      "range": {
+        "startLine": 637,
+        "startChar": 20,
+        "endLine": 637,
+        "endChar": 38
+      },
+      "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
