@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6640cf8_971b6da7",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-27T09:03:14Z",
+      "side": 1,
+      "message": "s/Gaia calls/Operations",
+      "range": {
+        "startLine": 353,
+        "startChar": 43,
+        "endLine": 353,
+        "endChar": 48
+      },
+      "revId": "97a5b0fe24ac15bea2b88164fd7c5c5f36ccd2e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "332058a7_2200f1b1",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-27T09:03:14Z",
+      "side": 1,
+      "message": "If you decide to do the suggestion above, then you may also consider removing the \"R\" operation (it may not be necessary to make this operation visible and you do not really need it in the test).",
+      "range": {
+        "startLine": 365,
+        "startChar": 33,
+        "endLine": 365,
+        "endChar": 34
+      },
+      "revId": "97a5b0fe24ac15bea2b88164fd7c5c5f36ccd2e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6941cab9_766adde4",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-27T09:03:14Z",
+      "side": 1,
+      "message": "I think it would be good to have another column with the accounts that are left in the token service (\"Tokens after reconcile\", \"Cookies after reconcile\").\nThis would also allow us to see if Cookie and Tokens are consistent after a reconcile.",
+      "range": {
+        "startLine": 365,
+        "startChar": 39,
+        "endLine": 365,
+        "endChar": 41
+      },
+      "revId": "97a5b0fe24ac15bea2b88164fd7c5c5f36ccd2e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eafe7bfb_8e197bd9",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-27T09:03:14Z",
+      "side": 1,
+      "message": "I think I would prefer a method like VerifyTokens(const std::vector\u003cToken\u003e\u0026 expected_tokens) that would replace both these methods.\n\nBasically, you may call VerifyTokens(tokens_before_reconcile) instead of CheckNoChangeInChromeTokens and VerifyTokens(tokens_after_reconcile)",
+      "range": {
+        "startLine": 515,
+        "startChar": 7,
+        "endLine": 515,
+        "endChar": 31
+      },
+      "revId": "97a5b0fe24ac15bea2b88164fd7c5c5f36ccd2e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a1278c9_67ed87c3",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-27T09:03:14Z",
+      "side": 1,
+      "message": "Nit: I think this variable can be local to the test.",
+      "range": {
+        "startLine": 540,
+        "startChar": 21,
+        "endLine": 540,
+        "endChar": 43
+      },
+      "revId": "97a5b0fe24ac15bea2b88164fd7c5c5f36ccd2e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfebab6e_f90f1f72",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-27T09:03:14Z",
+      "side": 1,
+      "message": "Optional: I would rename initial_chrome_tokens_ to tokens_before_reconcile.",
+      "range": {
+        "startLine": 564,
+        "startChar": 4,
+        "endLine": 564,
+        "endChar": 26
+      },
+      "revId": "97a5b0fe24ac15bea2b88164fd7c5c5f36ccd2e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50a4a784_dd403dee",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-27T09:03:14Z",
+      "side": 1,
+      "message": "Based on explanation above, I think this is not needed. We just need to check at the end that the list of accounts matches the expected list of accounts.",
+      "range": {
+        "startLine": 605,
+        "startChar": 7,
+        "endLine": 605,
+        "endChar": 24
+      },
+      "revId": "97a5b0fe24ac15bea2b88164fd7c5c5f36ccd2e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

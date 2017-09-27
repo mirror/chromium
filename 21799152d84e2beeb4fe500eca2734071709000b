@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8acd29f0_12e4c7f3",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-27T09:03:14Z",
+      "side": 1,
+      "message": "Please add a column with the final set of account in the tokens (keep the marks \"X\" and \"*\" for the accounts).",
+      "range": {
+        "startLine": 410,
+        "startChar": 41,
+        "endLine": 410,
+        "endChar": 42
+      },
+      "revId": "21799152d84e2beeb4fe500eca2734071709000b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
