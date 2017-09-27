@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92e2e4cc_32a6a7ae",
+        "filename": "components/download/content/internal/download_driver_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-27T15:59:01Z",
+      "side": 1,
+      "message": "Nit: Since this can be calculates from response_headers, an alternative would be to make can_resume a method on |entry| which dynamically calculates its value using |entry.response_headers|, unless this likely to be accessed a lot? I\u0027ll let you decide what makes most sense.",
+      "range": {
+        "startLine": 88,
+        "startChar": 4,
+        "endLine": 88,
+        "endChar": 9
+      },
+      "revId": "e4aac233fea28a367a0c213cf109318df781a2b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
