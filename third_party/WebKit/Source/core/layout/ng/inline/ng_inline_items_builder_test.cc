@@ -5,6 +5,7 @@
 #include "core/layout/ng/inline/ng_inline_items_builder.h"
 
 #include "core/layout/LayoutInline.h"
+#include "core/layout/LayoutTestHelper.h"
 #include "core/layout/ng/inline/ng_offset_mapping_builder.h"
 #include "core/style/ComputedStyle.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -41,9 +42,12 @@ static String GetCollapsed(const NGOffsetMappingBuilder& builder) {
   return result.ToString();
 }
 
-class NGInlineItemsBuilderTest : public ::testing::Test {
+class NGInlineItemsBuilderTest : public RenderingTest {
  protected:
-  void SetUp() override { style_ = ComputedStyle::Create(); }
+  void SetUp() override {
+    RenderingTest::SetUp();
+    style_ = ComputedStyle::Create();
+  }
 
   void SetWhiteSpace(EWhiteSpace whitespace) {
     style_->SetWhiteSpace(whitespace);
@@ -364,8 +368,7 @@ TEST_F(NGInlineItemsBuilderTest, NewLines) {
 TEST_F(NGInlineItemsBuilderTest, Empty) {
   Vector<NGInlineItem> items;
   NGInlineItemsBuilderForOffsetMapping builder(&items);
-  RefPtr<ComputedStyle> block_style(ComputedStyle::Create());
-  builder.EnterBlock(block_style.Get());
+  builder.EnterBlock(GetDocument().body()->GetLayoutObject());
   builder.ExitBlock();
 
   EXPECT_EQ("", builder.ToString());
@@ -375,10 +378,17 @@ TEST_F(NGInlineItemsBuilderTest, Empty) {
 TEST_F(NGInlineItemsBuilderTest, BidiBlockOverride) {
   Vector<NGInlineItem> items;
   NGInlineItemsBuilderForOffsetMapping builder(&items);
-  RefPtr<ComputedStyle> block_style(ComputedStyle::Create());
-  block_style->SetUnicodeBidi(UnicodeBidi::kBidiOverride);
-  block_style->SetDirection(TextDirection::kRtl);
-  builder.EnterBlock(block_style.Get());
+  SetBodyInnerHTML(R"HTML(
+    <!DOCTYPE html>
+    <style>
+      body {
+        unicode-bidi: bidi-override;
+        direction: rtl;
+      }
+    </style>
+    <body></body>
+  )HTML");
+  builder.EnterBlock(GetDocument().body()->GetLayoutObject());
   builder.Append("Hello", style_.Get());
   builder.ExitBlock();
 

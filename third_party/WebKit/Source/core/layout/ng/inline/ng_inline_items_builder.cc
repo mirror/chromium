@@ -4,8 +4,10 @@
 
 #include "core/layout/ng/inline/ng_inline_items_builder.h"
 
+#include "core/html/ListItemOrdinal.h"
 #include "core/layout/LayoutObject.h"
 #include "core/layout/ng/inline/ng_offset_mapping_builder.h"
+#include "core/layout/ng/layout_ng_list_item.h"
 #include "core/style/ComputedStyle.h"
 
 namespace blink {
@@ -462,7 +464,9 @@ void NGInlineItemsBuilderTemplate<OffsetMappingBuilder>::AppendBidiControl(
 
 template <typename OffsetMappingBuilder>
 void NGInlineItemsBuilderTemplate<OffsetMappingBuilder>::EnterBlock(
-    const ComputedStyle* style) {
+    LayoutObject* node) {
+  const ComputedStyle* style = node->Style();
+
   // Handle bidi-override on the block itself.
   switch (style->GetUnicodeBidi()) {
     case UnicodeBidi::kNormal:
@@ -486,6 +490,31 @@ void NGInlineItemsBuilderTemplate<OffsetMappingBuilder>::EnterBlock(
       // NGBidiParagraph::SetParagraph().
       has_bidi_controls_ = true;
       break;
+  }
+
+  // TODO(layout-dev): Consider better way to delegate node-specific logic like
+  // this, rather than adding more "if" statements for each one.
+  if (node->IsLayoutNGListItem()) {
+    // Generate a :marker pseudo element for a list item.
+    // https://drafts.csswg.org/css-pseudo-4/#selectordef-marker
+    RefPtr<ComputedStyle> marker_style =
+        ComputedStyle::CreateAnonymousStyleWithDisplay(*style,
+                                                       EDisplay::kInlineBlock);
+    AppendOpaque(NGInlineItem::kOpenTag, marker_style.Get(), node);
+
+    // Append the marker text.
+    unsigned start_offset = text_.length();
+    LayoutNGListItem* list_item = ToLayoutNGListItem(node);
+    list_item->MarkerText(&text_);
+    unsigned end_offset = text_.length();
+    mapping_builder_.AppendIdentityMapping(end_offset - start_offset);
+    concatenated_mapping_builder_.AppendIdentityMapping(end_offset -
+                                                        start_offset);
+    AppendItem(items_, NGInlineItem::kText, start_offset, end_offset,
+               marker_style.Get(), node);
+
+    // Close the pseudo element.
+    AppendOpaque(NGInlineItem::kCloseTag, marker_style.Get(), node);
   }
 }
 
