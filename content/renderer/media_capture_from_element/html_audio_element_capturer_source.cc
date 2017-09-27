@@ -20,13 +20,16 @@ HtmlAudioElementCapturerSource::CreateFromWebMediaPlayerImpl(
   DCHECK(player);
   return new HtmlAudioElementCapturerSource(
       static_cast<media::WebAudioSourceProviderImpl*>(
-          player->GetAudioSourceProvider()));
+          player->GetAudioSourceProvider()),
+      !player->HasSingleSecurityOrigin() || !player->DidPassCORSAccessCheck());
 }
 
 HtmlAudioElementCapturerSource::HtmlAudioElementCapturerSource(
-    media::WebAudioSourceProviderImpl* audio_source)
+    media::WebAudioSourceProviderImpl* audio_source,
+    bool is_tainted)
     : MediaStreamAudioSource(true /* is_local_source */),
       audio_source_(audio_source),
+      is_tainted_(is_tainted),
       is_started_(false),
       last_sample_rate_(0),
       last_num_channels_(0),
@@ -41,6 +44,9 @@ HtmlAudioElementCapturerSource::~HtmlAudioElementCapturerSource() {
 
 bool HtmlAudioElementCapturerSource::EnsureSourceIsStarted() {
   DCHECK(thread_checker_.CalledOnValidThread());
+  if (is_tainted_)
+    return false;
+
   if (audio_source_ && !is_started_) {
     // base:Unretained() is safe here since EnsureSourceIsStopped() guarantees
     // no more calls to OnAudioBus().

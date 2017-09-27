@@ -84,6 +84,13 @@ void HtmlVideoElementCapturerSource::StartCapture(
     running_callback_.Run(false);
     return;
   }
+
+  if (!web_media_player_->HasSingleSecurityOrigin() ||
+      !web_media_player_->DidPassCORSAccessCheck()) {
+    running_callback_.Run(false);
+    return;
+  }
+
   const blink::WebSize resolution = web_media_player_->NaturalSize();
   if (!bitmap_.tryAllocPixels(
           SkImageInfo::MakeN32Premul(resolution.width, resolution.height))) {
