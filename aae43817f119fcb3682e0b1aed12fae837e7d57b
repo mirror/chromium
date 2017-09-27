@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca91be49_f3991e1b",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-27T12:30:13Z",
+      "side": 1,
+      "message": "Don\u0027t we use /* loop_delay \u003d */ 0.5 instead of the reverse?",
+      "range": {
+        "startLine": 583,
+        "startChar": 56,
+        "endLine": 583,
+        "endChar": 76
+      },
+      "revId": "aae43817f119fcb3682e0b1aed12fae837e7d57b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
