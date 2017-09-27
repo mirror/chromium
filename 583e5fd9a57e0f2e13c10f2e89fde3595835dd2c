@@ -46,6 +46,30 @@
       "revId": "583e5fd9a57e0f2e13c10f2e89fde3595835dd2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c11ecb1_403495a1",
+        "filename": "gpu/command_buffer/service/client_service_map.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-09-27T14:41:37Z",
+      "side": 1,
+      "message": "Instead of duplicating the code from GetServiceID, I would just implement this function as:\n\n   return GetServiceID(client_id, nullptr);",
+      "parentUuid": "9ab0c3c3_c4a40469",
+      "range": {
+        "startLine": 34,
+        "startChar": 11,
+        "endLine": 34,
+        "endChar": 15
+      },
+      "revId": "583e5fd9a57e0f2e13c10f2e89fde3595835dd2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
