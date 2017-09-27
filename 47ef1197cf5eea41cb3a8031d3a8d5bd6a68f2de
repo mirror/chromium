@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c08731ce_eebd8feb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-27T17:18:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "36620a55_3a4b94ed",
+      "range": {
+        "startLine": 14,
+        "startChar": 4,
+        "endLine": 14,
+        "endChar": 9
+      },
+      "revId": "47ef1197cf5eea41cb3a8031d3a8d5bd6a68f2de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91ade544_7334d39d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunActivity.java",
         "patchSetId": 1
@@ -140,6 +164,30 @@
       "revId": "47ef1197cf5eea41cb3a8031d3a8d5bd6a68f2de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bcf9954_d980c2f0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-27T17:18:11Z",
+      "side": 1,
+      "message": "Awesome, thanks!",
+      "parentUuid": "ea37bf8b_c890d02f",
+      "range": {
+        "startLine": 396,
+        "startChar": 30,
+        "endLine": 396,
+        "endChar": 49
+      },
+      "revId": "47ef1197cf5eea41cb3a8031d3a8d5bd6a68f2de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
