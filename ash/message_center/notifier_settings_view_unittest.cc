@@ -13,7 +13,6 @@
 #include "ui/message_center/notifier_settings.h"
 
 using message_center::Notifier;
-using message_center::NotifierGroup;
 using message_center::NotifierId;
 using message_center::NotifierSettingsObserver;
 using message_center::NotifierSettingsProvider;
@@ -37,26 +36,6 @@ class TestingNotifierSettingsProvider : public NotifierSettingsProvider {
 
   void AddObserver(NotifierSettingsObserver* observer) override {}
   void RemoveObserver(NotifierSettingsObserver* observer) override {}
-
-  size_t GetNotifierGroupCount() const override { return 1; }
-
-  const message_center::NotifierGroup& GetNotifierGroupAt(
-      size_t index) const override {
-    DCHECK_EQ(0u, index);
-    return GetActiveNotifierGroup();
-  }
-
-  bool IsNotifierGroupActiveAt(size_t index) const override {
-    return index == 0;
-  }
-
-  void SwitchToNotifierGroup(size_t index) override { NOTREACHED(); }
-
-  const NotifierGroup& GetActiveNotifierGroup() const override {
-    static NotifierGroup group{base::UTF8ToUTF16("Fake name"),
-                               base::UTF8ToUTF16("fake@email.com")};
-    return group;
-  }
 
   void GetNotifierList(
       std::vector<std::unique_ptr<Notifier>>* notifiers) override {
