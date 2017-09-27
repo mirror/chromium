@@ -78,6 +78,7 @@ ImeWindow::ImeWindow(Profile* profile,
   web_contents_->OpenURL(params);
 
   native_window_ = CreateNativeWindow(this, bounds, web_contents_.get());
+  LOG(ERROR) << __PRETTY_FUNCTION__;
 }
 
 void ImeWindow::Show() {
