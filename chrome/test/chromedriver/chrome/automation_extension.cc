@@ -58,6 +58,16 @@ Status AutomationExtension::SetWindowSize(int width, int height) {
   return UpdateWindow(update_info);
 }
 
+Status AutomationExtension::SetWindowRect(int width, int height, int x, int y) {
+  base::DictionaryValue update_info;
+  update_info.SetInteger("width", width);
+  update_info.SetInteger("height", height);
+  update_info.SetInteger("left", x);
+  update_info.SetInteger("top", y);
+  update_info.SetString("state", "normal");
+  return UpdateWindow(update_info);
+}
+
 Status AutomationExtension::MaximizeWindow() {
   base::DictionaryValue update_info;
   update_info.SetString("state", "maximized");
