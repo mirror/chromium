@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "052ddff6_db8c6b09",
+        "filename": "components/signin/core/browser/dice_header_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-27T14:46:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28fc4cf7_0e4ed0fa",
+      "range": {
+        "startLine": 175,
+        "startChar": 21,
+        "endLine": 175,
+        "endChar": 23
+      },
+      "revId": "2a015f41503a1c904f1031b1bd8b15c6bf33cdc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "530dc8e3_174d8566",
         "filename": "components/signin/core/browser/signin_header_helper.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-27T14:31:58Z",
       "side": 1,
       "message": "Why this change? Can sync_has_auth_error be true when sync_enabled is false?",
+      "range": {
+        "startLine": 157,
+        "startChar": 31,
+        "endLine": 157,
+        "endChar": 43
+      },
+      "revId": "2a015f41503a1c904f1031b1bd8b15c6bf33cdc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bac57022_4fd1d5a4",
+        "filename": "components/signin/core/browser/signin_header_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-27T14:46:32Z",
+      "side": 1,
+      "message": "I don\u0027t think it could happen in production, but some tests were actually doing this, and it seems wrong. With the new code, we can\u0027t write invalid tests.",
+      "parentUuid": "530dc8e3_174d8566",
       "range": {
         "startLine": 157,
         "startChar": 31,
