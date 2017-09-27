@@ -9,6 +9,8 @@
 #include "cc/test/fake_layer_tree_frame_sink.h"
 #include "cc/test/fake_layer_tree_host_impl.h"
 #include "cc/test/fake_picture_layer_impl.h"
+#include "cc/test/fake_raster_source.h"
+#include "cc/test/fake_recording_source.h"
 #include "cc/test/geometry_test_utils.h"
 #include "cc/test/layer_test_common.h"
 #include "cc/test/mock_occlusion_tracker.h"
@@ -71,6 +73,8 @@ class FakePictureLayerImplForRenderSurfaceTest : public FakePictureLayerImpl {
                    gfx::RectF(rect), bounds(), false, false);
     }
   }
+
+  bool IsSolidColor() const override { return false; }
 
  protected:
   FakePictureLayerImplForRenderSurfaceTest(LayerTreeImpl* tree_impl, int id)

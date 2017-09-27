@@ -580,6 +580,10 @@ ScrollbarLayerImplBase* LayerImpl::ToScrollbarLayer() {
   return nullptr;
 }
 
+bool LayerImpl::IsSolidColor() const {
+  return false;
+}
+
 void LayerImpl::SetDrawsContent(bool draws_content) {
   if (draws_content_ == draws_content)
     return;

@@ -424,22 +424,24 @@ void RenderSurfaceImpl::AppendQuads(DrawMode draw_mode,
     TRACE_EVENT1("cc", "RenderSurfaceImpl::AppendQuads",
                  "mask_layer_gpu_memory_usage",
                  mask_layer->GPUMemoryUsageInBytes());
-    if (mask_layer->mask_type() == Layer::LayerMaskType::MULTI_TEXTURE_MASK) {
-      TileMaskLayer(render_pass, shared_quad_state, visible_layer_rect);
-      return;
+    if (!mask_layer->IsSolidColor()) {
+      if (mask_layer->mask_type() == Layer::LayerMaskType::MULTI_TEXTURE_MASK) {
+        TileMaskLayer(render_pass, shared_quad_state, visible_layer_rect);
+        return;
+      }
+      gfx::SizeF mask_uv_size;
+      mask_layer->GetContentsResourceId(&mask_resource_id, &mask_texture_size,
+                                        &mask_uv_size);
+      gfx::SizeF unclipped_mask_target_size = gfx::ScaleSize(
+          gfx::SizeF(OwningEffectNode()->unscaled_mask_target_size),
+          surface_contents_scale.x(), surface_contents_scale.y());
+      // Convert content_rect from target space to normalized mask UV space.
+      // Where |unclipped_mask_target_size| maps to |mask_uv_size|.
+      mask_uv_rect = gfx::ScaleRect(
+          gfx::RectF(content_rect()),
+          mask_uv_size.width() / unclipped_mask_target_size.width(),
+          mask_uv_size.height() / unclipped_mask_target_size.height());
     }
-    gfx::SizeF mask_uv_size;
-    mask_layer->GetContentsResourceId(&mask_resource_id, &mask_texture_size,
-                                      &mask_uv_size);
-    gfx::SizeF unclipped_mask_target_size = gfx::ScaleSize(
-        gfx::SizeF(OwningEffectNode()->unscaled_mask_target_size),
-        surface_contents_scale.x(), surface_contents_scale.y());
-    // Convert content_rect from target space to normalized mask UV space.
-    // Where |unclipped_mask_target_size| maps to |mask_uv_size|.
-    mask_uv_rect = gfx::ScaleRect(
-        gfx::RectF(content_rect()),
-        mask_uv_size.width() / unclipped_mask_target_size.width(),
-        mask_uv_size.height() / unclipped_mask_target_size.height());
   }
 
   gfx::RectF tex_coord_rect(gfx::Rect(content_rect().size()));

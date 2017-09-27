@@ -69,6 +69,8 @@ class CC_EXPORT PictureLayerImpl
   // ImageAnimationController::AnimationDriver overrides.
   bool ShouldAnimate(PaintImage::Id paint_image_id) const override;
 
+  bool IsSolidColor() const override;
+
   void set_gpu_raster_max_texture_size(gfx::Size gpu_raster_max_texture_size) {
     gpu_raster_max_texture_size_ = gpu_raster_max_texture_size;
   }
