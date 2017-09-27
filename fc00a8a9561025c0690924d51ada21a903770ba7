@@ -94,6 +94,30 @@
       "revId": "fc00a8a9561025c0690924d51ada21a903770ba7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e152406_bfe65d7e",
+        "filename": "content/test/fuzzer/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-09-27T16:37:11Z",
+      "side": 0,
+      "message": "TIL! Thanks!",
+      "parentUuid": "9f544db0_44d68bb2",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 26
+      },
+      "revId": "fc00a8a9561025c0690924d51ada21a903770ba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
