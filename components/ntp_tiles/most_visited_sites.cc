@@ -180,19 +180,15 @@ void MostVisitedSites::SetMostVisitedURLsObserver(Observer* observer,
   // Immediately build the current set of tiles, getting suggestions from the
   // SuggestionsService's cache or, if that is empty, sites from TopSites.
   BuildCurrentTiles();
+
+  if (top_sites_) {
+    top_sites_->SyncWithHistory();
+  }
   // Also start a request for fresh suggestions.
   Refresh();
 }
 
 void MostVisitedSites::Refresh() {
-  if (top_sites_) {
-    // TopSites updates itself after a delay. To ensure up-to-date results,
-    // force an update now.
-    // TODO(mastiz): Is seems unnecessary to refresh TopSites if we will end up
-    // using server-side suggestions.
-    top_sites_->SyncWithHistory();
-  }
-
   suggestions_service_->FetchSuggestionsData();
 }
 
