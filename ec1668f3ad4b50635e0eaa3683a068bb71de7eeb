@@ -91,6 +91,30 @@
       "revId": "ec1668f3ad4b50635e0eaa3683a068bb71de7eeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "113e03a8_b799fbe8",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRSession.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-09-27T17:09:02Z",
+      "side": 1,
+      "message": "Unused for the moment, yes. Given that they\u0027re relatively simple I didn\u0027t feel the need to strip them out for this CL, but I can do so until there\u0027s code that actually depends on them if you\u0027d prefer.",
+      "parentUuid": "92e3790e_805e877c",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 40
+      },
+      "revId": "ec1668f3ad4b50635e0eaa3683a068bb71de7eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -22,6 +22,30 @@
       "revId": "06feeceee4914090a434c07d9e63e259a92bb7b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d0936fb_3de6a75e",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRSession.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-09-27T17:09:02Z",
+      "side": 1,
+      "message": "I don\u0027t think the style guide has anything against good comments. :) There may be a section that frowns on commenting really obvious things, but I don\u0027t think that applies here.",
+      "parentUuid": "42369e9f_c5fc7909",
+      "range": {
+        "startLine": 39,
+        "startChar": 9,
+        "endLine": 39,
+        "endChar": 30
+      },
+      "revId": "06feeceee4914090a434c07d9e63e259a92bb7b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
