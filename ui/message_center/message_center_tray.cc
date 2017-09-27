@@ -11,7 +11,6 @@
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
 #include "ui/base/l10n/l10n_util.h"
-#include "ui/base/models/simple_menu_model.h"
 #include "ui/message_center/message_center.h"
 #include "ui/message_center/message_center_tray_delegate.h"
 #include "ui/message_center/message_center_types.h"
@@ -19,83 +18,6 @@
 #include "ui/strings/grit/ui_strings.h"
 
 namespace message_center {
-
-namespace {
-
-// Menu constants
-const int kTogglePermissionCommand = 0;
-
-#if defined(OS_CHROMEOS)
-const int kShowSettingsCommand = 1;
-#endif
-
-// The model of the context menu for a notification card.
-class NotificationMenuModel : public ui::SimpleMenuModel,
-                              public ui::SimpleMenuModel::Delegate {
- public:
-  NotificationMenuModel(MessageCenterTray* tray,
-                        const NotifierId& notifier_id,
-                        const base::string16& display_source);
-  ~NotificationMenuModel() override;
-
-  // Overridden from ui::SimpleMenuModel::Delegate:
-  bool IsCommandIdChecked(int command_id) const override;
-  bool IsCommandIdEnabled(int command_id) const override;
-  void ExecuteCommand(int command_id, int event_flags) override;
-
- private:
-  MessageCenterTray* tray_;
-  NotifierId notifier_id_;
-  DISALLOW_COPY_AND_ASSIGN(NotificationMenuModel);
-};
-
-NotificationMenuModel::NotificationMenuModel(
-    MessageCenterTray* tray,
-    const NotifierId& notifier_id,
-    const base::string16& display_source)
-    : ui::SimpleMenuModel(this),
-      tray_(tray),
-      notifier_id_(notifier_id) {
-  if (!display_source.empty()) {
-    AddItem(kTogglePermissionCommand,
-            l10n_util::GetStringFUTF16(IDS_MESSAGE_CENTER_NOTIFIER_DISABLE,
-                                       display_source));
-  }
-
-#ifdef OS_CHROMEOS
-  // Add settings menu item.
-  AddItem(kShowSettingsCommand,
-          l10n_util::GetStringUTF16(IDS_MESSAGE_CENTER_SETTINGS));
-#endif
-}
-
-NotificationMenuModel::~NotificationMenuModel() {
-}
-
-bool NotificationMenuModel::IsCommandIdChecked(int command_id) const {
-  return false;
-}
-
-bool NotificationMenuModel::IsCommandIdEnabled(int command_id) const {
-  return tray_->delegate()->IsContextMenuEnabled();
-}
-
-void NotificationMenuModel::ExecuteCommand(int command_id, int event_flags) {
-  switch (command_id) {
-    case kTogglePermissionCommand:
-      tray_->message_center()->DisableNotificationsByNotifier(notifier_id_);
-      break;
-#ifdef OS_CHROMEOS
-    case kShowSettingsCommand:
-      tray_->ShowNotifierSettingsBubble();
-      break;
-#endif
-    default:
-      NOTREACHED();
-  }
-}
-
-}  // namespace
 
 MessageCenterTray::MessageCenterTray(
     MessageCenterTrayDelegate* delegate,
@@ -191,20 +113,6 @@ void MessageCenterTray::ShowNotifierSettingsBubble() {
   message_center_->SetVisibility(message_center::VISIBILITY_SETTINGS);
 
   NotifyMessageCenterTrayChanged();
-}
-
-std::unique_ptr<ui::MenuModel> MessageCenterTray::CreateNotificationMenuModel(
-    const NotifierId& notifier_id,
-    const base::string16& display_source) {
-#if !defined(OS_CHROMEOS)
-  // Only web pages are configurable on non-chromeos platforms.
-  if (notifier_id.type != NotifierId::WEB_PAGE) {
-    return nullptr;
-  }
-#endif
-
-  return std::make_unique<NotificationMenuModel>(this, notifier_id,
-                                                 display_source);
 }
 
 void MessageCenterTray::OnNotificationAdded(

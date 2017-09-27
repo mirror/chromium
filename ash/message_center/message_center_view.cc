@@ -89,7 +89,6 @@ MessageCenterView::MessageCenterView(MessageCenter* message_center,
       is_locked_(message_center_->IsLockedState()),
       mode_((!initially_settings_visible || is_locked_) ? Mode::BUTTONS_ONLY
                                                         : Mode::SETTINGS),
-      context_menu_controller_(this),
       focus_manager_(nullptr) {
   message_center_->AddObserver(this);
   set_notify_enter_exit_on_child(true);
@@ -437,12 +436,6 @@ void MessageCenterView::RemoveNotification(const std::string& notification_id,
   message_center_->RemoveNotification(notification_id, by_user);
 }
 
-std::unique_ptr<ui::MenuModel> MessageCenterView::CreateMenuModel(
-    const message_center::NotifierId& notifier_id,
-    const base::string16& display_source) {
-  return tray_->CreateNotificationMenuModel(notifier_id, display_source);
-}
-
 bool MessageCenterView::HasClickedListener(const std::string& notification_id) {
   return message_center_->HasClickedListener(notification_id);
 }
@@ -524,11 +517,6 @@ void MessageCenterView::AddNotificationAt(const Notification& notification,
                                           int index) {
   MessageView* view = message_center::MessageViewFactory::Create(
       this, notification, false);  // Not top-level.
-
-  // TODO(yoshiki): Temporary disable context menu on custom notifications.
-  // See crbug.com/750307 for detail.
-  if (notification.type() != message_center::NOTIFICATION_TYPE_CUSTOM)
-    view->set_context_menu_controller(&context_menu_controller_);
 
   notification_views_[notification.id()] = view;
   view->set_scroller(scroller_);
