@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "3f5bbae2_d767b191",
+        "filename": "content/browser/accessibility/browser_accessibility_manager_mac.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-27T15:34:45Z",
+      "side": 1,
+      "message": "FireNativeMacNotification doesn\u0027t appear to check if mac_notification is empty/null.",
+      "revId": "651c1c5e65fda1e6fc81b31945695bc78555ce5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0054aaf_2b4612d1",
         "filename": "content/browser/accessibility/browser_accessibility_manager_win.cc",
         "patchSetId": 5
@@ -30,6 +47,24 @@
       "writtenOn": "2017-09-27T15:00:23Z",
       "side": 1,
       "message": "Need to handle all the types or have a default case.",
+      "revId": "651c1c5e65fda1e6fc81b31945695bc78555ce5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de3989c8_fda27b4d",
+        "filename": "content/browser/accessibility/browser_accessibility_manager_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-27T15:34:45Z",
+      "side": 1,
+      "message": "Tempting to put blink events and generated events in separate enums, thus allowing us to take advantage of compilation errors when a switch doesn\u0027t include all cases. Feel free to ignore.",
+      "parentUuid": "b0054aaf_2b4612d1",
       "revId": "651c1c5e65fda1e6fc81b31945695bc78555ce5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -81,6 +116,91 @@
       "writtenOn": "2017-09-27T15:00:23Z",
       "side": 1,
       "message": "Do we expose events for this role on any platform? If not, we should put this in a cross-platform layer.\n\nOtherwise, we lost this comment, but should keep it:\n\n  // Inline text boxes are an internal implementation detail, we don\u0027t\n  // expose them to Windows.",
+      "revId": "651c1c5e65fda1e6fc81b31945695bc78555ce5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f0dcf3f_3136fa69",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-27T15:34:45Z",
+      "side": 1,
+      "message": "Could use a comment or a small IsLiveRegionEventValid() method to self-document.",
+      "revId": "651c1c5e65fda1e6fc81b31945695bc78555ce5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7632daaf_b7ccae46",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-27T15:34:45Z",
+      "side": 1,
+      "message": "What\u0027s the difference between live region node changed and just live region changed? What\u0027s happening here?",
+      "revId": "651c1c5e65fda1e6fc81b31945695bc78555ce5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bce31d2_3a7de4e8",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-27T15:34:45Z",
+      "side": 1,
+      "message": "Nit: I suggest putting each of these blocks in an aptly-named method, so that this reads like a story. It may get more complex over time, and it\u0027s easier for new developers to quickly see what it is supposed to do.\n\nFireLiveRegionEvents();\nFireActiveDescendantEvents();",
+      "revId": "651c1c5e65fda1e6fc81b31945695bc78555ce5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d39185e_1e0853e6",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-27T15:34:45Z",
+      "side": 1,
+      "message": "Historical info: we used to have to do backflips to fire the right menu events in a nested order for MSAA, because JAWS would get all wonky if we didn\u0027t. Is that no longer necessary?\n\nFor example: https://bugzilla.mozilla.org/show_bug.cgi?id\u003d422744\n\nIt had to go MENUSTART, MENUPOPUPSTART, focus events, MENUPOPUPEND, MENUEND, or something like that.",
+      "revId": "651c1c5e65fda1e6fc81b31945695bc78555ce5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4b756af_2cf98c6c",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-27T15:34:45Z",
+      "side": 1,
+      "message": "Why is this here actually? Does the menu item actually get a selected state? Shouldn\u0027t this code be in blink? Does blink already handle this case for when the author used real focus in a menu?\n\nNot to slow down this awesome refactor, but I feel like this class should be really dumb and shouldn\u0027t really know about accessibility events very much.\n\nHow do we know what kinds of event logic goes in here and what goes in blink?",
       "revId": "651c1c5e65fda1e6fc81b31945695bc78555ce5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
