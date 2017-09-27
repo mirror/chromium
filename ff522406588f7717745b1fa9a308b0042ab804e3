@@ -22,6 +22,30 @@
       "revId": "ff522406588f7717745b1fa9a308b0042ab804e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3177bd19_c0b5e56e",
+        "filename": "chrome/browser/io_thread.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-09-27T17:43:12Z",
+      "side": 1,
+      "message": "Okay, I moved it there. (That file isn\u0027t obvious if you don\u0027t already know it\u0027s there.)",
+      "parentUuid": "37253f8f_2bbc4f83",
+      "range": {
+        "startLine": 149,
+        "startChar": 2,
+        "endLine": 149,
+        "endChar": 0
+      },
+      "revId": "ff522406588f7717745b1fa9a308b0042ab804e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
