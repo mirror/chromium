@@ -26,7 +26,7 @@ class ChromeBrowserState;
 // ios::ChromeBrowserState.
 class CookieSettingsFactory : public RefcountedBrowserStateKeyedServiceFactory {
  public:
-  static scoped_refptr<content_settings::CookieSettings> GetForBrowserState(
+  static content_settings::CookieSettings* GetForBrowserState(
       ios::ChromeBrowserState* browser_state);
   static CookieSettingsFactory* GetInstance();
 
