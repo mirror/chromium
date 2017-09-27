@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "80b52798_341008a1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-27T16:22:40Z",
+      "side": 1,
+      "message": "Yes, this is correct. Done!",
+      "parentUuid": "91ade544_7334d39d",
+      "range": {
+        "startLine": 203,
+        "startChar": 0,
+        "endLine": 203,
+        "endChar": 38
+      },
+      "revId": "47ef1197cf5eea41cb3a8031d3a8d5bd6a68f2de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9fcd621a_250d10ca",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunActivity.java",
         "patchSetId": 1
@@ -95,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ea37bf8b_c890d02f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-27T16:22:40Z",
+      "side": 1,
+      "message": "See https://chromium-review.googlesource.com/c/chromium/src/+/685371",
+      "parentUuid": "afb037cf_d89508b1",
+      "range": {
+        "startLine": 396,
+        "startChar": 30,
+        "endLine": 396,
+        "endChar": 49
+      },
+      "revId": "47ef1197cf5eea41cb3a8031d3a8d5bd6a68f2de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "208e87b8_d008b98b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunFlowSequencer.java",
         "patchSetId": 1
@@ -129,6 +177,30 @@
       "writtenOn": "2017-09-26T21:03:09Z",
       "side": 1,
       "message": "fwiw, this is awesome.  not caching this value is nice because we don\u0027t want to show this promo more than once and if you go through it a single time, we shouldn\u0027t show it again.",
+      "range": {
+        "startLine": 217,
+        "startChar": 58,
+        "endLine": 217,
+        "endChar": 84
+      },
+      "revId": "47ef1197cf5eea41cb3a8031d3a8d5bd6a68f2de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc281133_b30b6709",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunFlowSequencer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-27T16:22:40Z",
+      "side": 1,
+      "message": "I am confused. If:\n1) A user selects a search engine in the FRE\n2) Chrome is killed prior to the user making a decision about signing into Chrome\nThe next time that the FRE is shown, the user will prompted again to select the search engine\n\nThis is the case with or without this CL",
+      "parentUuid": "4bde81d3_25d05b17",
       "range": {
         "startLine": 217,
         "startChar": 58,
