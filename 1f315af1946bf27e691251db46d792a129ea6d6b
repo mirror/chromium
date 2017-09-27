@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5ea85db_3e093e12",
+        "filename": "chrome/browser/chromeos/login/test/oobe_base_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-09-27T19:47:18Z",
+      "side": 1,
+      "message": "newline seems unnecessary?",
+      "revId": "1f315af1946bf27e691251db46d792a129ea6d6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
