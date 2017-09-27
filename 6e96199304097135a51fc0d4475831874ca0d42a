@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "2c8b11ca_424a5d2f",
+        "filename": "third_party/WebKit/Source/core/animation/Animation.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-27T19:20:44Z",
+      "side": 1,
+      "message": "Sorry, my explaination wasn\u0027t clear enough. I put some more comments here and in CompositorAnimations.cpp in the new patch.",
+      "parentUuid": "a785fd0d_19ea5d44",
+      "revId": "6e96199304097135a51fc0d4475831874ca0d42a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3e5d195_c27ef87c",
         "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
         "patchSetId": 25

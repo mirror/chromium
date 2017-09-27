@@ -22,6 +22,30 @@
       "revId": "edd72cac1e46e334695cb020710398d44b102ecc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93ffea4c_e595c42e",
+        "filename": "cc/scheduler/compositor_timing_history.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 923,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-27T19:20:44Z",
+      "side": 1,
+      "message": "Done. Go with the first option.",
+      "parentUuid": "54332cb8_286e6430",
+      "range": {
+        "startLine": 923,
+        "startChar": 41,
+        "endLine": 923,
+        "endChar": 49
+      },
+      "revId": "edd72cac1e46e334695cb020710398d44b102ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
