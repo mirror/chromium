@@ -9,6 +9,7 @@
 #include "cc/layers/append_quads_data.h"
 #include "cc/test/fake_mask_layer_impl.h"
 #include "cc/test/fake_raster_source.h"
+#include "cc/test/fake_recording_source.h"
 #include "cc/test/layer_test_common.h"
 #include "components/viz/common/quads/render_pass_draw_quad.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -70,8 +71,16 @@ static std::unique_ptr<viz::RenderPass> DoAppendQuadsWithScaledMask(
   gfx::Size layer_size(1000, 1000);
   gfx::Size viewport_size(1000, 1000);
   float scale_factor = 2;
+  std::unique_ptr<RecordingSource> recording_source =
+      FakeRecordingSource::CreateFilledRecordingSource(layer_size);
+  PaintFlags paint1, paint2;
+  static_cast<FakeRecordingSource*>(recording_source.get())
+      ->add_draw_rect_with_flags(gfx::Rect(1000, 900), paint1);
+  static_cast<FakeRecordingSource*>(recording_source.get())
+      ->add_draw_rect_with_flags(gfx::Rect(0, 900, 1000, 100), paint2);
+  static_cast<FakeRecordingSource*>(recording_source.get())->Rerecord();
   scoped_refptr<FakeRasterSource> raster_source =
-      FakeRasterSource::CreateFilledSolidColor(layer_size);
+      FakeRasterSource::CreateFromRecordingSource(recording_source.get());
 
   LayerTreeSettings settings;
   settings.layer_transforms_should_scale_layer_contents = true;

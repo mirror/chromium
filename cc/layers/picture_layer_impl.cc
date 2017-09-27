@@ -786,6 +786,10 @@ bool PictureLayerImpl::ShouldAnimate(PaintImage::Id paint_image_id) const {
              .Intersects(visible_layer_rect());
 }
 
+bool PictureLayerImpl::IsSolidColor() const {
+  return raster_source_ && raster_source_->IsSolidColor();
+}
+
 gfx::Size PictureLayerImpl::CalculateTileSize(
     const gfx::Size& content_bounds) const {
   int max_texture_size =
