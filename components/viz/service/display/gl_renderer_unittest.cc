@@ -373,16 +373,23 @@ class FakeRendererGL : public GLRenderer {
  public:
   FakeRendererGL(const RendererSettings* settings,
                  OutputSurface* output_surface,
-                 cc::DisplayResourceProvider* resource_provider)
-      : GLRenderer(settings, output_surface, resource_provider, nullptr) {}
+                 cc::DisplayResourceProvider* resource_provider,
+                 cc::LocalResourceProvider* local_resource_provider)
+      : GLRenderer(settings,
+                   output_surface,
+                   resource_provider,
+                   local_resource_provider,
+                   nullptr) {}
 
   FakeRendererGL(const RendererSettings* settings,
                  OutputSurface* output_surface,
                  cc::DisplayResourceProvider* resource_provider,
+                 cc::LocalResourceProvider* local_resource_provider,
                  TextureMailboxDeleter* texture_mailbox_deleter)
       : GLRenderer(settings,
                    output_surface,
                    resource_provider,
+                   local_resource_provider,
                    texture_mailbox_deleter) {}
 
   void SetOverlayProcessor(OverlayProcessor* processor) {
@@ -408,8 +415,12 @@ class GLRendererWithDefaultHarnessTest : public GLRendererTest {
     resource_provider_ =
         cc::FakeResourceProvider::Create<cc::DisplayResourceProvider>(
             output_surface_->context_provider(), shared_bitmap_manager_.get());
+    local_resource_provider_ =
+        cc::FakeResourceProvider::Create(output_surface_->context_provider());
+
     renderer_ = base::MakeUnique<FakeRendererGL>(
-        &settings_, output_surface_.get(), resource_provider_.get());
+        &settings_, output_surface_.get(), resource_provider_.get(),
+        local_resource_provider_.get());
     renderer_->Initialize();
     renderer_->SetVisible(true);
   }
@@ -421,6 +432,7 @@ class GLRendererWithDefaultHarnessTest : public GLRendererTest {
   std::unique_ptr<cc::FakeOutputSurface> output_surface_;
   std::unique_ptr<SharedBitmapManager> shared_bitmap_manager_;
   std::unique_ptr<cc::DisplayResourceProvider> resource_provider_;
+  std::unique_ptr<cc::LocalResourceProvider> local_resource_provider_;
   std::unique_ptr<FakeRendererGL> renderer_;
 };
 
@@ -439,8 +451,12 @@ class GLRendererShaderTest : public GLRendererTest {
     resource_provider_ =
         cc::FakeResourceProvider::Create<cc::DisplayResourceProvider>(
             output_surface_->context_provider(), shared_bitmap_manager_.get());
+    local_resource_provider_ =
+        cc::FakeResourceProvider::Create(output_surface_->context_provider());
+
     renderer_.reset(new FakeRendererGL(&settings_, output_surface_.get(),
-                                       resource_provider_.get()));
+                                       resource_provider_.get(),
+                                       local_resource_provider_.get()));
     renderer_->Initialize();
     renderer_->SetVisible(true);
   }
@@ -533,6 +549,7 @@ class GLRendererShaderTest : public GLRendererTest {
   std::unique_ptr<cc::FakeOutputSurface> output_surface_;
   std::unique_ptr<SharedBitmapManager> shared_bitmap_manager_;
   std::unique_ptr<cc::DisplayResourceProvider> resource_provider_;
+  std::unique_ptr<cc::LocalResourceProvider> local_resource_provider_;
   std::unique_ptr<FakeRendererGL> renderer_;
 };
 
@@ -666,9 +683,13 @@ TEST_F(GLRendererTest, InitializationDoesNotMakeSynchronousCalls) {
       cc::FakeResourceProvider::Create<cc::DisplayResourceProvider>(
           output_surface->context_provider(), shared_bitmap_manager.get());
 
+  auto local_resource_provider =
+      cc::FakeResourceProvider::Create(output_surface->context_provider());
+
   RendererSettings settings;
   FakeRendererGL renderer(&settings, output_surface.get(),
-                          resource_provider.get());
+                          resource_provider.get(),
+                          local_resource_provider.get());
 }
 
 class LoseContextOnFirstGetContext : public cc::TestWebGraphicsContext3D {
@@ -702,9 +723,13 @@ TEST_F(GLRendererTest, InitializationWithQuicklyLostContextDoesNotAssert) {
       cc::FakeResourceProvider::Create<cc::DisplayResourceProvider>(
           output_surface->context_provider(), shared_bitmap_manager.get());
 
+  auto local_resource_provider =
+      cc::FakeResourceProvider::Create(output_surface->context_provider());
+
   RendererSettings settings;
   FakeRendererGL renderer(&settings, output_surface.get(),
-                          resource_provider.get());
+                          resource_provider.get(),
+                          local_resource_provider.get());
 }
 
 class ClearCountingContext : public cc::TestWebGraphicsContext3D {
@@ -736,9 +761,13 @@ TEST_F(GLRendererTest, OpaqueBackground) {
       cc::FakeResourceProvider::Create<cc::DisplayResourceProvider>(
           output_surface->context_provider(), shared_bitmap_manager.get());
 
+  auto local_resource_provider =
+      cc::FakeResourceProvider::Create(output_surface->context_provider());
+
   RendererSettings settings;
   FakeRendererGL renderer(&settings, output_surface.get(),
-                          resource_provider.get());
+                          resource_provider.get(),
+                          local_resource_provider.get());
   renderer.Initialize();
   renderer.SetVisible(true);
 
@@ -780,9 +809,13 @@ TEST_F(GLRendererTest, TransparentBackground) {
       cc::FakeResourceProvider::Create<cc::DisplayResourceProvider>(
           output_surface->context_provider(), shared_bitmap_manager.get());
 
+  auto local_resource_provider =
+      cc::FakeResourceProvider::Create(output_surface->context_provider());
+
   RendererSettings settings;
   FakeRendererGL renderer(&settings, output_surface.get(),
-                          resource_provider.get());
+                          resource_provider.get(),
+                          local_resource_provider.get());
   renderer.Initialize();
   renderer.SetVisible(true);
 
@@ -816,10 +849,13 @@ TEST_F(GLRendererTest, OffscreenOutputSurface) {
   std::unique_ptr<cc::DisplayResourceProvider> resource_provider =
       cc::FakeResourceProvider::Create<cc::DisplayResourceProvider>(
           output_surface->context_provider(), shared_bitmap_manager.get());
+  auto local_resource_provider =
+      cc::FakeResourceProvider::Create(output_surface->context_provider());
 
   RendererSettings settings;
   FakeRendererGL renderer(&settings, output_surface.get(),
-                          resource_provider.get());
+                          resource_provider.get(),
+                          local_resource_provider.get());
   renderer.Initialize();
   renderer.SetVisible(true);
 
@@ -875,10 +911,13 @@ TEST_F(GLRendererTest, ActiveTextureState) {
   std::unique_ptr<cc::DisplayResourceProvider> resource_provider =
       cc::FakeResourceProvider::Create<cc::DisplayResourceProvider>(
           output_surface->context_provider(), shared_bitmap_manager.get());
+  auto local_resource_provider =
+      cc::FakeResourceProvider::Create(output_surface->context_provider());
 
   RendererSettings settings;
   FakeRendererGL renderer(&settings, output_surface.get(),
-                          resource_provider.get());
+                          resource_provider.get(),
+                          local_resource_provider.get());
   renderer.Initialize();
   renderer.SetVisible(true);
 
@@ -970,12 +1009,15 @@ TEST_F(GLRendererTest, ShouldClearRootRenderPass) {
   std::unique_ptr<cc::DisplayResourceProvider> resource_provider =
       cc::FakeResourceProvider::Create<cc::DisplayResourceProvider>(
           output_surface->context_provider(), shared_bitmap_manager.get());
+  auto local_resource_provider =
+      cc::FakeResourceProvider::Create(output_surface->context_provider());
 
   RendererSettings settings;
   settings.should_clear_root_render_pass = false;
 
   FakeRendererGL renderer(&settings, output_surface.get(),
-                          resource_provider.get());
+                          resource_provider.get(),
+                          local_resource_provider.get());
   renderer.Initialize();
   renderer.SetVisible(true);
 
@@ -1060,10 +1102,13 @@ TEST_F(GLRendererTest, ScissorTestWhenClearing) {
   std::unique_ptr<cc::DisplayResourceProvider> resource_provider =
       cc::FakeResourceProvider::Create<cc::DisplayResourceProvider>(
           output_surface->context_provider(), shared_bitmap_manager.get());
+  auto local_resource_provider =
+      cc::FakeResourceProvider::Create(output_surface->context_provider());
 
   RendererSettings settings;
   FakeRendererGL renderer(&settings, output_surface.get(),
-                          resource_provider.get());
+                          resource_provider.get(),
+                          local_resource_provider.get());
   renderer.Initialize();
   EXPECT_FALSE(renderer.use_partial_swap());
   renderer.SetVisible(true);
@@ -1135,11 +1180,14 @@ TEST_F(GLRendererTest, NoDiscardOnPartialUpdates) {
   std::unique_ptr<cc::DisplayResourceProvider> resource_provider =
       cc::FakeResourceProvider::Create<cc::DisplayResourceProvider>(
           output_surface->context_provider(), shared_bitmap_manager.get());
+  auto local_resource_provider =
+      cc::FakeResourceProvider::Create(output_surface->context_provider());
 
   RendererSettings settings;
   settings.partial_swap_enabled = true;
   FakeRendererGL renderer(&settings, output_surface.get(),
-                          resource_provider.get());
+                          resource_provider.get(),
+                          local_resource_provider.get());
   renderer.Initialize();
   EXPECT_TRUE(renderer.use_partial_swap());
   renderer.SetVisible(true);
@@ -1335,11 +1383,14 @@ TEST_F(GLRendererTest, NoResourceLeak) {
   std::unique_ptr<cc::DisplayResourceProvider> resource_provider =
       cc::FakeResourceProvider::Create<cc::DisplayResourceProvider>(
           output_surface->context_provider(), shared_bitmap_manager.get());
+  auto local_resource_provider =
+      cc::FakeResourceProvider::Create(output_surface->context_provider());
 
   {
     RendererSettings settings;
     FakeRendererGL renderer(&settings, output_surface.get(),
-                            resource_provider.get());
+                            resource_provider.get(),
+                            local_resource_provider.get());
     renderer.Initialize();
     renderer.SetVisible(true);
 
@@ -1385,9 +1436,13 @@ class GLRendererSkipTest : public GLRendererTest {
     resource_provider_ =
         cc::FakeResourceProvider::Create<cc::DisplayResourceProvider>(
             output_surface_->context_provider(), shared_bitmap_manager_.get());
+    local_resource_provider_ =
+        cc::FakeResourceProvider::Create(output_surface_->context_provider());
+
     settings_.partial_swap_enabled = true;
     renderer_ = base::MakeUnique<FakeRendererGL>(
-        &settings_, output_surface_.get(), resource_provider_.get());
+        &settings_, output_surface_.get(), resource_provider_.get(),
+        local_resource_provider_.get());
     renderer_->Initialize();
     renderer_->SetVisible(true);
   }
@@ -1398,6 +1453,7 @@ class GLRendererSkipTest : public GLRendererTest {
   std::unique_ptr<cc::FakeOutputSurface> output_surface_;
   std::unique_ptr<SharedBitmapManager> shared_bitmap_manager_;
   std::unique_ptr<cc::DisplayResourceProvider> resource_provider_;
+  std::unique_ptr<cc::LocalResourceProvider> local_resource_provider_;
   std::unique_ptr<FakeRendererGL> renderer_;
 };
 
@@ -1473,10 +1529,13 @@ TEST_F(GLRendererTest, DrawFramePreservesFramebuffer) {
   std::unique_ptr<cc::DisplayResourceProvider> resource_provider =
       cc::FakeResourceProvider::Create<cc::DisplayResourceProvider>(
           output_surface->context_provider(), shared_bitmap_manager.get());
+  auto local_resource_provider =
+      cc::FakeResourceProvider::Create(output_surface->context_provider());
 
   RendererSettings settings;
   FakeRendererGL renderer(&settings, output_surface.get(),
-                          resource_provider.get());
+                          resource_provider.get(),
+                          local_resource_provider.get());
   renderer.Initialize();
   EXPECT_FALSE(renderer.use_partial_swap());
   renderer.SetVisible(true);
@@ -1827,9 +1886,12 @@ class MockOutputSurfaceTest : public GLRendererTest {
     resource_provider_ =
         cc::FakeResourceProvider::Create<cc::DisplayResourceProvider>(
             output_surface_->context_provider(), shared_bitmap_manager_.get());
+    local_resource_provider_ =
+        cc::FakeResourceProvider::Create(output_surface_->context_provider());
 
     renderer_.reset(new FakeRendererGL(&settings_, output_surface_.get(),
-                                       resource_provider_.get()));
+                                       resource_provider_.get(),
+                                       local_resource_provider_.get()));
     EXPECT_CALL(*output_surface_, GetOverlayCandidateValidator()).Times(1);
     renderer_->Initialize();
 
@@ -1872,6 +1934,7 @@ class MockOutputSurfaceTest : public GLRendererTest {
   std::unique_ptr<StrictMock<MockOutputSurface>> output_surface_;
   std::unique_ptr<SharedBitmapManager> shared_bitmap_manager_;
   std::unique_ptr<cc::DisplayResourceProvider> resource_provider_;
+  std::unique_ptr<cc::LocalResourceProvider> local_resource_provider_;
   std::unique_ptr<FakeRendererGL> renderer_;
 };
 
@@ -1946,6 +2009,8 @@ TEST_F(GLRendererTest, DontOverlayWithCopyRequests) {
   auto parent_resource_provider =
       cc::FakeResourceProvider::Create<cc::DisplayResourceProvider>(
           output_surface->context_provider(), shared_bitmap_manager.get());
+  auto local_resource_provider =
+      cc::FakeResourceProvider::Create(output_surface->context_provider());
   std::unique_ptr<TextureMailboxDeleter> mailbox_deleter(
       new TextureMailboxDeleter(base::ThreadTaskRunnerHandle::Get()));
 
@@ -1978,7 +2043,7 @@ TEST_F(GLRendererTest, DontOverlayWithCopyRequests) {
   RendererSettings settings;
   FakeRendererGL renderer(&settings, output_surface.get(),
                           parent_resource_provider.get(),
-                          mailbox_deleter.get());
+                          local_resource_provider.get(), mailbox_deleter.get());
   renderer.Initialize();
   renderer.SetVisible(true);
 
@@ -2136,6 +2201,8 @@ TEST_F(GLRendererTest, OverlaySyncTokensAreProcessed) {
   auto parent_resource_provider =
       cc::FakeResourceProvider::Create<cc::DisplayResourceProvider>(
           output_surface->context_provider(), shared_bitmap_manager.get());
+  auto local_resource_provider =
+      cc::FakeResourceProvider::Create(output_surface->context_provider());
   std::unique_ptr<TextureMailboxDeleter> mailbox_deleter(
       new TextureMailboxDeleter(base::ThreadTaskRunnerHandle::Get()));
 
@@ -2170,7 +2237,7 @@ TEST_F(GLRendererTest, OverlaySyncTokensAreProcessed) {
   RendererSettings settings;
   FakeRendererGL renderer(&settings, output_surface.get(),
                           parent_resource_provider.get(),
-                          mailbox_deleter.get());
+                          local_resource_provider.get(), mailbox_deleter.get());
   renderer.Initialize();
   renderer.SetVisible(true);
 
@@ -2265,11 +2332,14 @@ class GLRendererPartialSwapTest : public GLRendererTest {
     std::unique_ptr<cc::DisplayResourceProvider> resource_provider =
         cc::FakeResourceProvider::Create<cc::DisplayResourceProvider>(
             output_surface->context_provider(), nullptr);
+    auto local_resource_provider =
+        cc::FakeResourceProvider::Create(output_surface->context_provider());
 
     RendererSettings settings;
     settings.partial_swap_enabled = partial_swap;
     FakeRendererGL renderer(&settings, output_surface.get(),
-                            resource_provider.get());
+                            resource_provider.get(),
+                            local_resource_provider.get());
     renderer.Initialize();
     EXPECT_EQ(partial_swap, renderer.use_partial_swap());
     renderer.SetVisible(true);
@@ -2375,6 +2445,8 @@ TEST_F(GLRendererTest, DCLayerOverlaySwitch) {
   auto parent_resource_provider =
       cc::FakeResourceProvider::Create<cc::DisplayResourceProvider>(
           output_surface->context_provider(), nullptr);
+  auto local_resource_provider =
+      cc::FakeResourceProvider::Create(output_surface->context_provider());
 
   auto child_context_provider = cc::TestContextProvider::Create();
   ASSERT_TRUE(child_context_provider->BindToCurrentThread());
@@ -2405,7 +2477,8 @@ TEST_F(GLRendererTest, DCLayerOverlaySwitch) {
   RendererSettings settings;
   settings.partial_swap_enabled = true;
   FakeRendererGL renderer(&settings, output_surface.get(),
-                          parent_resource_provider.get());
+                          parent_resource_provider.get(),
+                          local_resource_provider.get());
   renderer.Initialize();
   renderer.SetVisible(true);
   TestOverlayProcessor* processor =
@@ -2493,8 +2566,12 @@ class GLRendererWithMockContextTest : public ::testing::Test {
     resource_provider_ =
         cc::FakeResourceProvider::Create<cc::DisplayResourceProvider>(
             output_surface_->context_provider(), nullptr);
-    renderer_ = base::MakeUnique<GLRenderer>(&settings_, output_surface_.get(),
-                                             resource_provider_.get(), nullptr);
+    auto local_resource_provider_ =
+        cc::FakeResourceProvider::Create(output_surface_->context_provider());
+
+    renderer_ = base::MakeUnique<GLRenderer>(
+        &settings_, output_surface_.get(), resource_provider_.get(),
+        local_resource_provider_.get(), nullptr);
     renderer_->Initialize();
   }
 
@@ -2503,6 +2580,7 @@ class GLRendererWithMockContextTest : public ::testing::Test {
   MockContextSupport* context_support_ptr_;
   std::unique_ptr<OutputSurface> output_surface_;
   std::unique_ptr<cc::DisplayResourceProvider> resource_provider_;
+  std::unique_ptr<cc::LocalResourceProvider> local_resource_provider_;
   std::unique_ptr<GLRenderer> renderer_;
 };
 
@@ -2572,10 +2650,13 @@ class GLRendererSwapWithBoundsTest : public GLRendererTest {
     std::unique_ptr<cc::DisplayResourceProvider> resource_provider =
         cc::FakeResourceProvider::Create<cc::DisplayResourceProvider>(
             output_surface->context_provider(), nullptr);
+    auto local_resource_provider =
+        cc::FakeResourceProvider::Create(output_surface->context_provider());
 
     RendererSettings settings;
     FakeRendererGL renderer(&settings, output_surface.get(),
-                            resource_provider.get());
+                            resource_provider.get(),
+                            local_resource_provider.get());
     renderer.Initialize();
     EXPECT_EQ(true, renderer.use_swap_with_bounds());
     renderer.SetVisible(true);
