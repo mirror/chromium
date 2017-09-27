@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73d22b92_e7bcf1fb",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-27T22:01:32Z",
+      "side": 1,
+      "message": "nit while I\u0027m looking at this code: consider an early return here so you don\u0027t have to have an else and indent the next fifty-odd lines.",
+      "revId": "dcfe635135667880a80aebf4808a263023d2e548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4776567_54cc3f3e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 1421,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-27T22:01:32Z",
+      "side": 1,
+      "message": "This description should make it clear that it\u0027s not recorded when no frames are skipped.  (Note the \u003e0 test in image_animation_controller.cc.)  In other words, it\u0027s only useful for judging how bad animations are that need to skip frames, not the quality of animations overall.\n\nOr is the \u003e0 test an error?  I don\u0027t see a corresponding check in BitmapImage.cpp, unless it\u0027s the early return at line 564 in that function.\n\nIs that intentional?  I would think you\u0027d want to emit 0 for no-skip cases, so as to be able to judge smoothness of animations as the description implies the purpose is.  But if it\u0027s only recorded in cases of skip, this metric could look like it\u0027s going in the worse direction (more frames skipped) when everything is actually improving (more cases when no frames need to be skipped).  You\u0027d be able to tell the difference if you regularly look at the number of emits to the histogram, but no one ever remembers to do that.  So I\u0027m encouraging you to emit no-skips to this histogram or be very clear about what this histogram is measuring and how it can mislead.",
+      "revId": "dcfe635135667880a80aebf4808a263023d2e548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
