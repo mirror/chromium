@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4b443edc_b01f7022",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 32445,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-09-27T01:10:59Z",
+      "side": 1,
+      "message": "Done. Thanks for the catching.",
+      "parentUuid": "d33f2382_987a6324",
+      "range": {
+        "startLine": 32445,
+        "startChar": 68,
+        "endLine": 32445,
+        "endChar": 72
+      },
+      "revId": "4fa07d977c9e5cd4752d2a2cd8cf1ff7fca24175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6fc24699_b53dac2e",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "4fa07d977c9e5cd4752d2a2cd8cf1ff7fca24175",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c21c82e_796a61be",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 32454,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-09-27T01:10:59Z",
+      "side": 1,
+      "message": "Done. Thanks for the suggestion.",
+      "parentUuid": "6fc24699_b53dac2e",
+      "range": {
+        "startLine": 32454,
+        "startChar": 50,
+        "endLine": 32454,
+        "endChar": 78
+      },
+      "revId": "4fa07d977c9e5cd4752d2a2cd8cf1ff7fca24175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
