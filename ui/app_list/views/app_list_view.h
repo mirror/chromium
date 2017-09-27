@@ -370,6 +370,10 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
   // Accessibility announcement dialogue.
   base::string16 state_announcement_;
 
+  // Recording whether FocusManager can handle arrow key before this class is
+  // constructed.
+  const bool previous_arrow_key_traversal_enabled_;
+
   DISALLOW_COPY_AND_ASSIGN(AppListView);
 };
 
