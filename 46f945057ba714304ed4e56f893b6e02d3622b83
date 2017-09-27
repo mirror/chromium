@@ -471,6 +471,30 @@
       "revId": "46f945057ba714304ed4e56f893b6e02d3622b83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0a7a36d_18399a68",
+        "filename": "content/public/common/url_loader_throttle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-27T00:39:30Z",
+      "side": 1,
+      "message": "Thinking about it some more, I think I like the second option (some combination of \"read\" + \"net(work)\") more than the first now.\n\nWDYT?",
+      "parentUuid": "7b844d6b_b205691e",
+      "range": {
+        "startLine": 43,
+        "startChar": 17,
+        "endLine": 43,
+        "endChar": 42
+      },
+      "revId": "46f945057ba714304ed4e56f893b6e02d3622b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
