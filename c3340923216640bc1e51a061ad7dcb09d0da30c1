@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "510158c2_35d5997e",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/TileGridLayoutTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-27T17:07:25Z",
+      "side": 1,
+      "message": "Do we have other places that try to change the orientation? If (/ when) we do, we should make this a generally available helper method.",
+      "range": {
+        "startLine": 257,
+        "startChar": 4,
+        "endLine": 257,
+        "endChar": 31
+      },
+      "revId": "c3340923216640bc1e51a061ad7dcb09d0da30c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "490843ad_e5d7e635",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/TileGridLayoutTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-27T17:07:25Z",
+      "side": 1,
+      "message": "Are there @IntDef\u0027s for these? Could we pleease try to use those, so we have some chance of catching issues with that?",
+      "range": {
+        "startLine": 279,
+        "startChar": 68,
+        "endLine": 279,
+        "endChar": 88
+      },
+      "revId": "c3340923216640bc1e51a061ad7dcb09d0da30c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
