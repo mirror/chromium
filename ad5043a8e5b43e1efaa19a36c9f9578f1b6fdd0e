@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "169d581e_10afde55",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-27T19:10:58Z",
+      "side": 1,
+      "message": "Sorry, completely misunderstood.  I prefer keeping the API private, which means I have to define it inline (Or move all methods out of line, which I prefer not to do).  Once this goes into the network service, though, I\u0027d like to make each handler its own file, and I could do it then.",
+      "parentUuid": "ae00bf7c_04c5e9b8",
+      "range": {
+        "startLine": 317,
+        "startChar": 21,
+        "endLine": 317,
+        "endChar": 27
+      },
+      "revId": "ad5043a8e5b43e1efaa19a36c9f9578f1b6fdd0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9bc2036e_4f05f1a4",
         "filename": "content/public/common/simple_url_loader.cc",
         "patchSetId": 4

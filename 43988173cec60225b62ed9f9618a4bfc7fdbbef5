@@ -22,6 +22,30 @@
       "revId": "43988173cec60225b62ed9f9618a4bfc7fdbbef5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8333f750_442c2ae6",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-27T19:10:58Z",
+      "side": 1,
+      "message": "Done.  Also mentioned it for the DownloadToString method.",
+      "parentUuid": "f41089f9_6af9e5ea",
+      "range": {
+        "startLine": 109,
+        "startChar": 5,
+        "endLine": 109,
+        "endChar": 13
+      },
+      "revId": "43988173cec60225b62ed9f9618a4bfc7fdbbef5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
