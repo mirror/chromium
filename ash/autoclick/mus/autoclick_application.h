@@ -30,7 +30,7 @@ class AutoclickApplication : public service_manager::Service,
                              public mojom::AutoclickController,
                              public AutoclickControllerCommonDelegate {
  public:
-  AutoclickApplication();
+  explicit AutoclickApplication();
   ~AutoclickApplication() override;
 
   void set_running_standalone(bool value) { running_standalone_ = value; }

@@ -589,7 +589,7 @@ void TestLauncher::LaunchChildGTestProcess(
   // When running in parallel mode we need to redirect stdio to avoid mixed-up
   // output. We also always redirect on the bots to get the test output into
   // JSON summary.
-  bool redirect_stdio = (parallel_jobs_ > 1) || BotModeEnabled();
+  bool redirect_stdio = false;  //(parallel_jobs_ > 1) || BotModeEnabled();
 
   GetTaskRunner()->PostTask(
       FROM_HERE,
