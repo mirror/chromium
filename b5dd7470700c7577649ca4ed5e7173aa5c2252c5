@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "1e7ae6b5_797db365",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchFieldTrial.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-09-27T00:17:51Z",
+      "side": 1,
+      "message": "We still need some switch to enable/disable SS. I\u0027m just afraid that we\u0027ll end up needing two switches to control long press flow into CS / SS, which is somewhat complicated. Having a new feature SMART_SELECTION would make it easier to control all of this.",
+      "parentUuid": "7f466fdd_5d48a435",
+      "range": {
+        "startLine": 80,
+        "startChar": 32,
+        "endLine": 80,
+        "endChar": 57
+      },
+      "revId": "b5dd7470700c7577649ca4ed5e7173aa5c2252c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8d3861a_3f5cc836",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
         "patchSetId": 4
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "I\u0027m not sure that would be simpler, because we also need to remove a selection client.  CS disables itself in some circumstances where SS does not, so we need to be able to remove it (network disconnected, and maybe incognito, users that toggle the preference or have disabled CS etc).\n\nDoes it still seem simpler to switch the model?",
       "parentUuid": "c8d3861a_3f5cc836",
+      "range": {
+        "startLine": 1227,
+        "startChar": 23,
+        "endLine": 1227,
+        "endChar": 44
+      },
+      "revId": "b5dd7470700c7577649ca4ed5e7173aa5c2252c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "524254ec_084ef73b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1227,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-09-27T00:17:51Z",
+      "side": 1,
+      "message": "I might be missing something, but even when you need to remove a selection client, I think\n\naddSelectionClient(this)\nremoveSelectionClient(this)\n\nmight be simpler than\n\nsetSelectionClient(bridgeClient)\nsetSelectionClient(platformClient)",
+      "parentUuid": "21d4e5f0_889bcc3f",
       "range": {
         "startLine": 1227,
         "startChar": 23,
