@@ -595,8 +595,7 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
   settings.wait_for_all_pipeline_stages_before_draw =
       cmd.HasSwitch(cc::switches::kRunAllCompositorStagesBeforeDraw);
 
-  settings.enable_image_animations =
-      cmd.HasSwitch(switches::kEnableCompositorImageAnimations);
+  settings.enable_image_animations = false;
 
   return settings;
 }
