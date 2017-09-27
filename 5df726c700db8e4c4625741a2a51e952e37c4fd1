@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20dab059_bdf1db05",
+        "filename": "chrome/browser/ui/views/chrome_views_delegate_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-27T16:08:16Z",
+      "side": 1,
+      "message": "IsDesktopEnvironmentUnity?",
+      "range": {
+        "startLine": 16,
+        "startChar": 5,
+        "endLine": 16,
+        "endChar": 30
+      },
+      "revId": "5df726c700db8e4c4625741a2a51e952e37c4fd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
