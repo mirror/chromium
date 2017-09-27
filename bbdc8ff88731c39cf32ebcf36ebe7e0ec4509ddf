@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f17591e_9ebc2228",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-27T00:53:34Z",
+      "side": 0,
+      "message": "What does this change?",
+      "revId": "bbdc8ff88731c39cf32ebcf36ebe7e0ec4509ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f76ffc01_f63e89d3",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-27T00:53:34Z",
+      "side": 0,
+      "message": "And this?",
+      "revId": "bbdc8ff88731c39cf32ebcf36ebe7e0ec4509ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
