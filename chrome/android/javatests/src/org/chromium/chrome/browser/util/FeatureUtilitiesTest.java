@@ -141,8 +141,8 @@ public class FeatureUtilitiesTest {
         AccountManagerFacade.overrideAccountManagerFacadeForTests(mAccountManager);
     }
 
-    private void addTestAccount() {
-        mAccountManager.addAccountHolderExplicitly(
+    private void addTestAccount() throws Exception {
+        mAccountManager.addAccountHolderBlocking(
                 AccountHolder.builder(mTestAccount).alwaysAccept(true).build());
     }
 
@@ -206,7 +206,7 @@ public class FeatureUtilitiesTest {
     @Test
     @SmallTest
     @Feature({"FeatureUtilities", "GoogleAccounts"})
-    public void testHasGoogleAccountCorrectlyDetected() {
+    public void testHasGoogleAccountCorrectlyDetected() throws Exception {
         // Set up an account manager mock that returns Google account types
         // when queried.
         setUpAccountManager(AccountManagerFacade.GOOGLE_ACCOUNT_TYPE);
