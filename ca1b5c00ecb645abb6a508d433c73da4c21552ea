@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "650c2ad5_2863e143",
+        "filename": "content/renderer/dom_storage/local_storage_cached_area.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-27T20:47:50Z",
+      "side": 1,
+      "message": "nit: I\u0027d just call this memory_used(), area_memory_used doesn\u0027t really add much",
+      "revId": "ca1b5c00ecb645abb6a508d433c73da4c21552ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e9c789b_3e2188b4",
+        "filename": "content/renderer/dom_storage/local_storage_cached_area_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-27T20:47:50Z",
+      "side": 1,
+      "message": "this is really more a test for a LocalStorageCachedAreas rather than for LocalStorageCachedArea, right? So maybe move this test to a new local_storage_cached_areas_unittest.cc file?\n\nOptionally keep a simple test here to verify area_memory_used().",
+      "revId": "ca1b5c00ecb645abb6a508d433c73da4c21552ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d8f784a_1c1294db",
+        "filename": "content/renderer/dom_storage/local_storage_cached_area_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-27T20:47:50Z",
+      "side": 1,
+      "message": "nit: add a comment why you\u0027re opening another area",
+      "revId": "ca1b5c00ecb645abb6a508d433c73da4c21552ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1850379c_45df1b4a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 29650,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-27T20:47:50Z",
+      "side": 1,
+      "message": "this doesn\u0027t seem to actually match what you\u0027re recording though? What you\u0027re recording is opening of an area that exists in the cache without any other references to it (i.e. if there wouldn\u0027t have been a cache, it would have been reloaded from the browser). You\u0027re logging false both when the area doesn\u0027t exist in the cache at all, and when the area exists in the cache but also is already open.\n\nWould it make more sense to log a three-option enum to distinguish all three of those cases?",
+      "revId": "ca1b5c00ecb645abb6a508d433c73da4c21552ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
