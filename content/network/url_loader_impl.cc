@@ -6,6 +6,7 @@
 
 #include <string>
 
+#include "base/metrics/histogram_macros.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
@@ -243,6 +244,12 @@ void URLLoaderImpl::PauseCachingResponseBody() {
            << (url_request_ ? url_request_->original_url().spec()
                             : "a URL that has completed loading or failed.");
   should_pause_caching_response_body_ = true;
+
+  if (url_request_ && url_request_->status().is_io_pending()) {
+    should_report_body_read_before_paused_ = true;
+  } else {
+    ReportBodyReadBeforePaused();
+  }
 }
 
 void URLLoaderImpl::ResumeCachingResponseBody() {
@@ -332,7 +339,7 @@ void URLLoaderImpl::ReadMore() {
 
   if (!pending_write_.get()) {
     // TODO: we should use the abstractions in MojoAsyncResourceHandler.
-    pending_write_buffer_offset_ = 0;
+    DCHECK_EQ(0u, pending_write_buffer_offset_);
     MojoResult result = network::NetToMojoPendingBuffer::BeginWrite(
         &response_body_stream_, &pending_write_, &pending_write_buffer_size_);
     if (result != MOJO_RESULT_OK && result != MOJO_RESULT_SHOULD_WAIT) {
@@ -378,6 +385,11 @@ void URLLoaderImpl::ReadMore() {
 
 void URLLoaderImpl::DidRead(uint32_t num_bytes, bool completed_synchronously) {
   pending_write_buffer_offset_ += num_bytes;
+  if (should_report_body_read_before_paused_) {
+    should_report_body_read_before_paused_ = false;
+    ReportBodyReadBeforePaused();
+  }
+
   DCHECK(url_request_->status().is_success());
   bool complete_read = true;
   if (consumer_handle_.is_valid()) {
@@ -467,11 +479,17 @@ void URLLoaderImpl::OnResponseBodyStreamReady(MojoResult result) {
 }
 
 void URLLoaderImpl::CloseResponseBodyStreamProducer() {
+  if (should_report_body_read_before_paused_) {
+    should_report_body_read_before_paused_ = false;
+    ReportBodyReadBeforePaused();
+  }
+
   url_request_.reset();
   peer_closed_handle_watcher_.Cancel();
   writable_handle_watcher_.Cancel();
   response_body_stream_.reset();
   pending_write_ = nullptr;
+  pending_write_buffer_offset_ = 0;
 
   // Make sure if a ResumeCachingResponseBody() call is received later, we don't
   // try to do ReadMore().
@@ -510,13 +528,20 @@ void URLLoaderImpl::SendResponseToClient() {
 void URLLoaderImpl::CompletePendingWrite() {
   response_body_stream_ =
       pending_write_->Complete(pending_write_buffer_offset_);
-  pending_write_ = nullptr;
   total_written_bytes_ += pending_write_buffer_offset_;
+  pending_write_ = nullptr;
+  pending_write_buffer_offset_ = 0;
 }
 
 void URLLoaderImpl::SetRawResponseHeaders(
     scoped_refptr<const net::HttpResponseHeaders> headers) {
   raw_response_headers_ = headers;
+}
+
+void URLLoaderImpl::ReportBodyReadBeforePaused() {
+  DCHECK(!url_request_ || !url_request_->status().is_io_pending());
+  UMA_HISTOGRAM_COUNTS_1M("Network.URLLoader.BodyReadBeforePaused",
+                          pending_write_buffer_offset_ + total_written_bytes_);
 }
 
 }  // namespace content
