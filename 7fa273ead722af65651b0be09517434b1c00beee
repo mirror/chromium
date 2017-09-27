@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d5e7b179_d75e9024",
+        "filename": "ios/chrome/browser/passwords/credential_manager_egtest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-27T17:59:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fbd9c5b_63ca6b3f",
+      "range": {
+        "startLine": 188,
+        "startChar": 0,
+        "endLine": 188,
+        "endChar": 50
+      },
+      "revId": "7fa273ead722af65651b0be09517434b1c00beee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19b13c95_26175ec6",
         "filename": "ios/chrome/browser/passwords/credential_manager_egtest.mm",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "98d72b6c_72c919fa",
+        "filename": "ios/chrome/browser/passwords/credential_manager_egtest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-27T17:59:45Z",
+      "side": 1,
+      "message": "Done\nI didn\u0027t want to extend time of test execution, but I agree this is something worth testing.",
+      "parentUuid": "19b13c95_26175ec6",
+      "range": {
+        "startLine": 202,
+        "startChar": 0,
+        "endLine": 202,
+        "endChar": 53
+      },
+      "revId": "7fa273ead722af65651b0be09517434b1c00beee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06c232ec_cfa877c0",
         "filename": "ios/chrome/browser/passwords/credential_manager_egtest.mm",
         "patchSetId": 8
@@ -68,6 +116,30 @@
       "revId": "7fa273ead722af65651b0be09517434b1c00beee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "205ea17b_0197261f",
+        "filename": "ios/chrome/browser/passwords/credential_manager_egtest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-27T17:59:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06c232ec_cfa877c0",
+      "range": {
+        "startLine": 210,
+        "startChar": 67,
+        "endLine": 210,
+        "endChar": 78
+      },
+      "revId": "7fa273ead722af65651b0be09517434b1c00beee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
