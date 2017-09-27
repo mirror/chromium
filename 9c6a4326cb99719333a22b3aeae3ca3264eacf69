@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12f2d0c0_133a9f27",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1290,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-27T09:13:38Z",
+      "side": 1,
+      "message": "Have you tried this with a third-party NTP? E.g. choose Bing as the default search engine and see if the tiles still show up on their NTP.\n(I don\u0027t know what the parent URL will be here - something like \"https://www.bing.com/chrome/newtab\", or has it been rewritten to \"chrome-search://remote-ntp\" at this point?)",
+      "range": {
+        "startLine": 1290,
+        "startChar": 42,
+        "endLine": 1290,
+        "endChar": 0
+      },
+      "revId": "9c6a4326cb99719333a22b3aeae3ca3264eacf69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08278a40_12d054f2",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1302,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-27T09:13:38Z",
+      "side": 1,
+      "message": "nit: I\u0027d prefer using braces when the condition doesn\u0027t fit on one line",
+      "range": {
+        "startLine": 1302,
+        "startChar": 58,
+        "endLine": 1302,
+        "endChar": 0
+      },
+      "revId": "9c6a4326cb99719333a22b3aeae3ca3264eacf69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
