@@ -10,10 +10,20 @@
 
 #include "base/compiler_specific.h"
 #include "base/macros.h"
+#include "base/strings/string16.h"
 #include "chrome/browser/browsing_data/cookies_tree_model.h"
 #include "chrome/browser/ui/webui/settings/settings_page_ui_handler.h"
 
 class CookiesTreeModelUtil;
+
+class HostManagedList {
+ public:
+  HostManagedList();
+
+ private:
+  int view_begin_;
+  int view_end_;
+};
 
 namespace settings {
 
@@ -43,11 +53,16 @@ class CookiesViewHandler : public SettingsPageUIHandler,
   void TreeModelEndBatch(CookiesTreeModel* model) override;
 
  private:
-  // Creates the CookiesTreeModel if neccessary.
+  // Creates the CookiesTreeModel if necessary.
   void EnsureCookiesTreeModelCreated();
 
+  void HandleGetDisplayList(const base::ListValue* args);
+  void HandleRemoveItem(const base::ListValue* args);
+
+#if 0
   // Updates search filter for cookies tree model.
   void HandleUpdateSearchResults(const base::ListValue* args);
+#endif
 
   // Retrieve cookie details for a specific site.
   void HandleGetCookieDetails(const base::ListValue* args);
@@ -66,6 +81,8 @@ class CookiesViewHandler : public SettingsPageUIHandler,
   // update the WebUI.
   void SendChildren(const CookieTreeNode* parent);
 
+  void SendLocalDataList(const CookieTreeNode* parent);
+
   // Package and send cookie details for a site.
   void SendCookieDetails(const CookieTreeNode* parent);
 
@@ -73,11 +90,19 @@ class CookiesViewHandler : public SettingsPageUIHandler,
   // 'CookiesView.loadChildren' to update the WebUI.
   void HandleReloadCookies(const base::ListValue* args);
 
+  bool FilterMatch(const base::string16& title);
+
   // The Cookies Tree model
   std::unique_ptr<CookiesTreeModel> cookies_tree_model_;
 
   // Flag to indicate whether there is a batch update in progress.
   bool batch_update_;
+
+  //
+  bool is_local_data_request_;
+  int local_data_request_start_;
+  int local_data_request_count_;
+  base::string16 local_data_request_filter_;
 
   std::unique_ptr<CookiesTreeModelUtil> model_util_;
 

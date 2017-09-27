@@ -48,7 +48,10 @@ Polymer({
 
   /** @override */
   ready: function() {
-    this.loadCookies();
+    this.browserProxy_.getDisplayList(0, 30, this.filter).then((listInfo) => {
+      console.log('getDisplayList ', listInfo);
+      this.sites = listInfo.items;
+    });
   },
 
   /**
@@ -60,7 +63,6 @@ Polymer({
   favicon_: function(url) {
     return cr.icon.getFavicon(url);
   },
-
 
   /**
    * @param {!Map<string, string>} newConfig
@@ -96,7 +98,11 @@ Polymer({
 
   /** @private */
   onSearchChanged_: function() {
-    this.$.list.render();
+    if (!this.browserProxy_)
+      return;
+    this.browserProxy_.getDisplayList(0, 30, this.filter).then((listInfo) => {
+      this.sites = listInfo.items;
+    });
   },
 
   /**
@@ -175,6 +181,7 @@ Polymer({
    * @private
    */
   onSiteTap_: function(event) {
+    console.log('onSiteTap_ ' + event.model.item.site);
     settings.navigateTo(
         settings.routes.SITE_SETTINGS_DATA_DETAILS,
         new URLSearchParams('site=' + event.model.item.site));

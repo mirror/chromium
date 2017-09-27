@@ -4,11 +4,14 @@
 
 #include "chrome/browser/ui/webui/settings/settings_cookies_view_handler.h"
 
+#include <algorithm>
 #include <string>
 #include <utility>
+#include <vector>
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
+#include "base/i18n/number_formatting.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
@@ -27,27 +30,114 @@
 #include "chrome/browser/browsing_data/browsing_data_service_worker_helper.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/webui/cookies_tree_model_util.h"
+#include "chrome/grit/generated_resources.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/site_instance.h"
 #include "content/public/browser/storage_partition.h"
 #include "content/public/browser/web_ui.h"
+#include "ui/base/l10n/l10n_util.h"
+#include "ui/base/text/bytes_formatting.h"
+
+#wip include "../../Dave.h"
 
 namespace storage {
 class FileSystemContext;
 }
 
+namespace {
+
+int GetCategoryLabelID(CookieTreeNode::DetailedInfo::NodeType node_type) {
+  const struct {
+    CookieTreeNode::DetailedInfo::NodeType node_type;
+    int id;
+  } kCategoryLabels[] = {
+      // The values (id) in this lookup table are up to UX. They may appear to
+      // be
+      // incorrect because multiple keys have the same value.
+      {CookieTreeNode::DetailedInfo::TYPE_COOKIES,
+       IDS_SETTINGS_COOKIES_SINGLE_COOKIE},
+      {CookieTreeNode::DetailedInfo::TYPE_COOKIE,
+       IDS_SETTINGS_COOKIES_SINGLE_COOKIE},
+
+      {CookieTreeNode::DetailedInfo::TYPE_DATABASES,
+       IDS_SETTINGS_COOKIES_DATABASE_STORAGE},
+      {CookieTreeNode::DetailedInfo::TYPE_DATABASE,
+       IDS_SETTINGS_COOKIES_DATABASE_STORAGE},
+
+      {CookieTreeNode::DetailedInfo::TYPE_LOCAL_STORAGES,
+       IDS_SETTINGS_COOKIES_LOCAL_STORAGE},
+      {CookieTreeNode::DetailedInfo::TYPE_LOCAL_STORAGE,
+       IDS_SETTINGS_COOKIES_LOCAL_STORAGE},
+
+      {CookieTreeNode::DetailedInfo::TYPE_APPCACHES,
+       IDS_SETTINGS_COOKIES_APPLICATION_CACHE},
+      {CookieTreeNode::DetailedInfo::TYPE_APPCACHE,
+       IDS_SETTINGS_COOKIES_APPLICATION_CACHE},
+
+      {CookieTreeNode::DetailedInfo::TYPE_INDEXED_DBS,
+       IDS_SETTINGS_COOKIES_DATABASE_STORAGE},
+      {CookieTreeNode::DetailedInfo::TYPE_INDEXED_DB,
+       IDS_SETTINGS_COOKIES_DATABASE_STORAGE},
+
+      {CookieTreeNode::DetailedInfo::TYPE_FILE_SYSTEMS,
+       IDS_SETTINGS_COOKIES_FILE_SYSTEM},
+      {CookieTreeNode::DetailedInfo::TYPE_FILE_SYSTEM,
+       IDS_SETTINGS_COOKIES_FILE_SYSTEM},
+
+      {CookieTreeNode::DetailedInfo::TYPE_CHANNEL_IDS,
+       IDS_SETTINGS_COOKIES_CHANNEL_ID},
+      {CookieTreeNode::DetailedInfo::TYPE_CHANNEL_ID,
+       IDS_SETTINGS_COOKIES_CHANNEL_ID},
+
+      {CookieTreeNode::DetailedInfo::TYPE_SERVICE_WORKERS,
+       IDS_SETTINGS_COOKIES_SERVICE_WORKER},
+      {CookieTreeNode::DetailedInfo::TYPE_SERVICE_WORKER,
+       IDS_SETTINGS_COOKIES_SERVICE_WORKER},
+
+      {CookieTreeNode::DetailedInfo::TYPE_CACHE_STORAGES,
+       IDS_SETTINGS_COOKIES_CACHE_STORAGE},
+      {CookieTreeNode::DetailedInfo::TYPE_CACHE_STORAGE,
+       IDS_SETTINGS_COOKIES_CACHE_STORAGE},
+
+      {CookieTreeNode::DetailedInfo::TYPE_FLASH_LSO,
+       IDS_SETTINGS_COOKIES_FLASH_LSO},
+
+      {CookieTreeNode::DetailedInfo::TYPE_MEDIA_LICENSES,
+       IDS_SETTINGS_COOKIES_MEDIA_LICENSE},
+      {CookieTreeNode::DetailedInfo::TYPE_MEDIA_LICENSE,
+       IDS_SETTINGS_COOKIES_MEDIA_LICENSE},
+  };
+  // Before optimizing, consider the data size and the cost of L2 cache misses.
+  for (size_t i = 0; i < arraysize(kCategoryLabels); ++i) {
+    if (kCategoryLabels[i].node_type == node_type) {
+      return kCategoryLabels[i].id;
+    }
+  }
+  NOTREACHED();
+  return 0;
+}
+
+}  // namespace
+
 namespace settings {
 
-const char kId[] = "id";
-const char kChildren[] = "children";
-const char kStart[] = "start";
-const char kCount[] = "count";
+constexpr char kChildren[] = "children";
+constexpr char kCount[] = "count";
+// constexpr char kFilter[] = "filter";
+constexpr char kId[] = "id";
+constexpr char kItems[] = "items";
+constexpr char kOrder[] = "order";
+constexpr char kStart[] = "start";
+// constexpr char kStatus[] = "status";
+constexpr char kLocalData[] = "localData";
+constexpr char kSite[] = "site";
+constexpr char kTotal[] = "total";
 
 CookiesViewHandler::CookiesViewHandler()
-  : batch_update_(false),
-    model_util_(new CookiesTreeModelUtil) {
-}
+    : batch_update_(false),
+      is_local_data_request_(false),
+      model_util_(new CookiesTreeModelUtil) {}
 
 CookiesViewHandler::~CookiesViewHandler() {
 }
@@ -62,13 +152,23 @@ void CookiesViewHandler::RegisterMessages() {
   EnsureCookiesTreeModelCreated();
 
   web_ui()->RegisterMessageCallback(
+      "localData.getDisplayList",
+      base::Bind(&CookiesViewHandler::HandleGetDisplayList,
+                 base::Unretained(this)));
+  web_ui()->RegisterMessageCallback(
+      "localData.removeItem", base::Bind(&CookiesViewHandler::HandleRemoveItem,
+                                         base::Unretained(this)));
+
+  web_ui()->RegisterMessageCallback(
       "getCookieDetails",
       base::Bind(&CookiesViewHandler::HandleGetCookieDetails,
                  base::Unretained(this)));
+#if 0
   web_ui()->RegisterMessageCallback(
       "updateCookieSearchResults",
       base::Bind(&CookiesViewHandler::HandleUpdateSearchResults,
                  base::Unretained(this)));
+#endif
   web_ui()->RegisterMessageCallback(
       "removeAllCookies",
       base::Bind(&CookiesViewHandler::HandleRemoveAll, base::Unretained(this)));
@@ -140,12 +240,18 @@ void CookiesViewHandler::TreeModelEndBatch(CookiesTreeModel* model) {
   DCHECK(batch_update_);
   batch_update_ = false;
 
-  if (IsJavascriptAllowed())
-    SendChildren(model->GetRoot());
+  if (IsJavascriptAllowed()) {
+    if (is_local_data_request_)
+      SendLocalDataList(model->GetRoot());
+    else
+      SendChildren(model->GetRoot());
+  }
 }
 
 void CookiesViewHandler::EnsureCookiesTreeModelCreated() {
+  DAVE_LOG();
   if (!cookies_tree_model_.get()) {
+    DAVE_LOG() << "    !cookies_tree_model_.get()";
     Profile* profile = Profile::FromWebUI(web_ui());
     content::StoragePartition* storage_partition =
         content::BrowserContext::GetDefaultStoragePartition(profile);
@@ -160,7 +266,8 @@ void CookiesViewHandler::EnsureCookiesTreeModelCreated() {
     LocalDataContainer* container = new LocalDataContainer(
         new BrowsingDataCookieHelper(profile->GetRequestContext()),
         new BrowsingDataDatabaseHelper(profile),
-        new BrowsingDataLocalStorageHelper(profile), NULL,
+        new BrowsingDataLocalStorageHelper(profile),
+        /*session_storage_helper=*/nullptr,
         new BrowsingDataAppCacheHelper(profile),
         new BrowsingDataIndexedDBHelper(indexed_db_context),
         BrowsingDataFileSystemHelper::Create(file_system_context),
@@ -177,6 +284,7 @@ void CookiesViewHandler::EnsureCookiesTreeModelCreated() {
   }
 }
 
+#if 0
 void CookiesViewHandler::HandleUpdateSearchResults(
     const base::ListValue* args) {
   base::string16 query;
@@ -184,6 +292,7 @@ void CookiesViewHandler::HandleUpdateSearchResults(
 
   cookies_tree_model_->UpdateSearchResults(query);
 }
+#endif
 
 void CookiesViewHandler::HandleGetCookieDetails(const base::ListValue* args) {
   CHECK_EQ(2U, args->GetSize());
@@ -191,6 +300,7 @@ void CookiesViewHandler::HandleGetCookieDetails(const base::ListValue* args) {
   std::string site;
   CHECK(args->GetString(1, &site));
 
+  DAVE_LOG();
   AllowJavascript();
   const CookieTreeNode* node = model_util_->GetTreeNodeFromTitle(
       cookies_tree_model_->GetRoot(), base::UTF8ToUTF16(site));
@@ -204,10 +314,36 @@ void CookiesViewHandler::HandleGetCookieDetails(const base::ListValue* args) {
   SendCookieDetails(node);
 }
 
+void CookiesViewHandler::HandleGetDisplayList(const base::ListValue* args) {
+  CHECK_EQ(4U, args->GetSize());
+  CHECK(callback_id_.empty());
+  CHECK(args->GetString(0, &callback_id_));
+  int begin;
+  CHECK(args->GetInteger(1, &begin));
+  int count;
+  CHECK(args->GetInteger(2, &count));
+  base::string16 filter;
+  CHECK(args->GetString(3, &filter));
+
+  AllowJavascript();
+  is_local_data_request_ = true;
+  local_data_request_start_ = begin;
+  local_data_request_count_ = count;
+  CHECK_GE(local_data_request_start_, 0);
+  CHECK_GE(local_data_request_count_, 0);
+  local_data_request_filter_ = filter;
+  DAVE_LOG() << "'" << local_data_request_filter_ << "'";
+  cookies_tree_model_->UpdateSearchResults(local_data_request_filter_);
+  // cookies_tree_model_.reset();
+  // EnsureCookiesTreeModelCreated();
+}
+
 void CookiesViewHandler::HandleReloadCookies(const base::ListValue* args) {
   CHECK_EQ(1U, args->GetSize());
+  CHECK(callback_id_.empty());
   CHECK(args->GetString(0, &callback_id_));
 
+  DAVE_LOG();
   AllowJavascript();
   cookies_tree_model_.reset();
   EnsureCookiesTreeModelCreated();
@@ -217,6 +353,7 @@ void CookiesViewHandler::HandleRemoveAll(const base::ListValue* args) {
   CHECK_EQ(1U, args->GetSize());
   CHECK(args->GetString(0, &callback_id_));
 
+  DAVE_LOG();
   cookies_tree_model_->DeleteAllStoredObjects();
 }
 
@@ -224,8 +361,20 @@ void CookiesViewHandler::HandleRemove(const base::ListValue* args) {
   std::string node_path;
   CHECK(args->GetString(0, &node_path));
 
+  DAVE_LOG();
   const CookieTreeNode* node = model_util_->GetTreeNodeFromPath(
       cookies_tree_model_->GetRoot(), node_path);
+  if (node)
+    cookies_tree_model_->DeleteCookieNode(const_cast<CookieTreeNode*>(node));
+}
+
+void CookiesViewHandler::HandleRemoveItem(const base::ListValue* args) {
+  std::string item_id;
+  CHECK(args->GetString(0, &item_id));
+
+  DAVE_LOG();
+  const CookieTreeNode* node =
+      model_util_->GetTreeNodeFromPath(cookies_tree_model_->GetRoot(), item_id);
   if (node)
     cookies_tree_model_->DeleteCookieNode(const_cast<CookieTreeNode*>(node));
 }
@@ -234,6 +383,7 @@ void CookiesViewHandler::HandleLoadChildren(const base::ListValue* args) {
   CHECK_EQ(2U, args->GetSize());
   CHECK(args->GetString(0, &callback_id_));
 
+  DAVE_LOG();
   std::string node_path;
   CHECK(args->GetString(1, &node_path));
 
@@ -241,6 +391,92 @@ void CookiesViewHandler::HandleLoadChildren(const base::ListValue* args) {
       cookies_tree_model_->GetRoot(), node_path);
   if (node)
     SendChildren(node);
+}
+
+// bool CookiesViewHandler::FilterMatch(const base::string16& title) {
+//  return title.find(local_data_request_filter_) != base::string16::npos;
+//}
+
+void CookiesViewHandler::SendLocalDataList(const CookieTreeNode* parent) {
+  CHECK(cookies_tree_model_.get());
+  CHECK(is_local_data_request_);
+  is_local_data_request_ = false;
+  int start = local_data_request_start_;
+  int parent_child_count = parent->child_count();
+
+  DAVE_LOG() << "'" << local_data_request_filter_ << "'";
+  ///*********************** Add timing UMA.
+  // TODO(dschuyler): is it worthwhile (and practical) to avoid doing sorting
+  // repeatedly (i.e. does it change to often to make a cache useful).
+
+  // Sort the list by site.
+  typedef std::pair<base::string16, int> ListItem;
+  std::vector<ListItem> list_items;
+  list_items.reserve(parent_child_count);  // Optimization, hint vector size.
+  for (int i = 0; i < parent_child_count; ++i) {
+    const base::string16& title = parent->GetChild(i)->GetTitle();
+    // if (FilterMatch(title)) {
+    list_items.push_back(ListItem(title, i));
+    //}
+  }
+  std::sort(list_items.begin(), list_items.end());
+
+  int list_item_count = list_items.size();
+  int limit = std::min(start + local_data_request_count_, list_item_count);
+  // Check for integer wraparound/overflow. The client is not expected to know
+  // the child_count, so this wraparound is not an error.
+  if (limit < 0)
+    limit = list_item_count;
+  // The layers in the CookieTree are:
+  //   root - Top level.
+  //   site - www.google.com, example.com, etc.
+  //   category - Cookies, Channel ID, Local Storage, etc.
+  //   item - Info on the actual thing.
+  // Gather list of sites with some highlights of the categories and items.
+  std::unique_ptr<base::ListValue> site_list(new base::ListValue);
+  for (int i = start; i < limit; ++i) {
+    const CookieTreeNode* site = parent->GetChild(list_items[i].second);
+    std::string description;
+    for (int k = 0; k < site->child_count(); ++k) {
+      const CookieTreeNode* category = site->GetChild(k);
+      int ids_value = GetCategoryLabelID(category->GetDetailedInfo().node_type);
+      if (!ids_value) {
+        // If we don't have a label to call it by, don't show it. Please add
+        // a label ID if an expected category is not appearing in the UI.
+        continue;
+      }
+      if (description.size()) {
+        description += ", ";
+      }
+      int item_count = category->child_count();
+      if (category->GetDetailedInfo().node_type ==
+              CookieTreeNode::DetailedInfo::TYPE_COOKIES &&
+          item_count > 1) {
+        description +=
+            l10n_util::GetStringFUTF8(IDS_SETTINGS_COOKIES_PLURAL_COOKIES,
+                                      base::FormatNumber(item_count));
+      } else {
+        description += l10n_util::GetStringUTF8(ids_value);
+      }
+    }
+    std::unique_ptr<base::DictionaryValue> list_info(new base::DictionaryValue);
+    // list_info->Set(kId, base::MakeUnique<base::Value>(site->));
+    list_info->Set(kLocalData, base::MakeUnique<base::Value>(description));
+    std::string title = base::UTF16ToUTF8(site->GetTitle());
+    list_info->Set(kSite, base::MakeUnique<base::Value>(title));
+    site_list->Append(std::move(list_info));
+  }
+
+  base::DictionaryValue response;
+  // response.Set(kFilter,
+  // base::MakeUnique<base::Value>(local_data_request_filter_));
+  response.Set(kItems, std::move(site_list));
+  response.Set(kOrder, base::MakeUnique<base::Value>());
+  response.Set(kStart, base::MakeUnique<base::Value>(start));
+  response.Set(kTotal, base::MakeUnique<base::Value>(list_item_count));
+
+  ResolveJavascriptCallback(base::Value(callback_id_), response);
+  callback_id_.clear();
 }
 
 void CookiesViewHandler::SendChildren(const CookieTreeNode* parent) {
