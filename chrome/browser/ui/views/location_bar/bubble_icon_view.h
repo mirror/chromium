@@ -14,6 +14,7 @@
 #include "ui/views/widget/widget_observer.h"
 
 class CommandUpdater;
+class LocationBarBubbleDelegateView;
 
 namespace gfx {
 struct VectorIcon;
@@ -52,6 +53,9 @@ class BubbleIconView : public views::InkDropHostView,
 
   // Sets the tooltip text.
   void SetTooltipText(const base::string16& tooltip);
+
+  // Invoked when a bubble for this icon is created.
+  void OnBubbleCreated(LocationBarBubbleDelegateView* bubble);
 
   // Invoked prior to executing the command.
   virtual void OnExecuting(ExecuteSource execute_source) = 0;
