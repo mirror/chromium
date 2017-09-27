@@ -2125,6 +2125,7 @@ void ArcBluetoothBridge::EnqueueRemotePowerChange(
   remote_power_changes_.push(powered);
 
   bool turn_on = (powered == AdapterPowerState::TURN_ON);
+  LOG(ERROR) << "haha EnqueueRemotePowerChange " << turn_on;
   bluetooth_adapter_->SetPowered(
       turn_on,
       base::Bind(turn_on ? &ArcBluetoothBridge::OnPoweredOn

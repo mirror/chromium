@@ -95,12 +95,14 @@ void BluetoothPowerController::StopWatchingActiveUserPrefsChanges() {
 
 void BluetoothPowerController::OnBluetoothPowerActiveUserPrefChanged() {
   DCHECK(active_user_pref_service_);
+  LOG(ERROR) << "haha OnBluetoothPowerActiveUserPrefChanged";
   SetBluetoothPower(active_user_pref_service_->GetBoolean(
       prefs::kUserBluetoothAdapterEnabled));
 }
 
 void BluetoothPowerController::OnBluetoothPowerLocalStatePrefChanged() {
   DCHECK(local_state_pref_service_);
+  LOG(ERROR) << "haha OnBluetoothPowerLocalStatePrefChanged";
   SetBluetoothPower(local_state_pref_service_->GetBoolean(
       prefs::kSystemBluetoothAdapterEnabled));
 }
@@ -116,6 +118,7 @@ void BluetoothPowerController::SetPrimaryUserBluetoothPowerSetting(
 
 void BluetoothPowerController::InitializeOnAdapterReady(
     scoped_refptr<device::BluetoothAdapter> adapter) {
+  LOG(ERROR) << "haha InitializeOnAdapterReady";
   bluetooth_adapter_ = std::move(adapter);
   bluetooth_adapter_->AddObserver(this);
   if (bluetooth_adapter_->IsPresent()) {
@@ -166,6 +169,7 @@ void BluetoothPowerController::OnLocalStatePrefServiceInitialized(
 void BluetoothPowerController::AdapterPresentChanged(
     device::BluetoothAdapter* adapter,
     bool present) {
+  LOG(ERROR) << "haha AdapterPresentChanged " << present;
   if (present) {
     // If adapter->IsPresent() has just changed from false to true, this means
     // that bluez has just started but not yet finished power initialization,
@@ -197,6 +201,7 @@ void BluetoothPowerController::ApplyBluetoothPrimaryUserPref() {
 
   if (!prefs->FindPreference(prefs::kUserBluetoothAdapterEnabled)
            ->IsDefaultValue()) {
+    LOG(ERROR) << "haha ApplyBluetoothPrimaryUserPref";
     SetBluetoothPower(prefs->GetBoolean(prefs::kUserBluetoothAdapterEnabled));
     return;
   }
@@ -220,11 +225,13 @@ void BluetoothPowerController::ApplyBluetoothLocalStatePref() {
     // according to whatever the current bluetooth power is.
     SavePrefValue(prefs, prefs::kSystemBluetoothAdapterEnabled);
   } else {
+    LOG(ERROR) << "haha ApplyBluetoothLocalStatePref";
     SetBluetoothPower(prefs->GetBoolean(prefs::kSystemBluetoothAdapterEnabled));
   }
 }
 
 void BluetoothPowerController::SetBluetoothPower(bool enabled) {
+  LOG(ERROR) << "haha SetBluetoothPower " << enabled;
   RunBluetoothTaskWhenAdapterReady(
       base::BindOnce(&BluetoothPowerController::SetBluetoothPowerOnAdapterReady,
                      weak_ptr_factory_.GetWeakPtr(), enabled));
@@ -233,6 +240,7 @@ void BluetoothPowerController::SetBluetoothPower(bool enabled) {
 void BluetoothPowerController::SetBluetoothPowerOnAdapterReady(bool enabled) {
   // Always run the next pending task after SetPowered completes regardless
   // the error.
+  LOG(ERROR) << "haha SetBluetoothPowerOnAdapterReady " << enabled;
   bluetooth_adapter_->SetPowered(
       enabled,
       base::Bind(&BluetoothPowerController::RunNextPendingBluetoothTask,
