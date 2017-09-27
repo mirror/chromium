@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e0c08f0_b1f365f0",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 2254,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-09-27T10:34:39Z",
+      "side": 1,
+      "message": "the harmony mocks I\u0027ve seen use very terse strings for the title, like \"Flash blocked\"",
+      "range": {
+        "startLine": 2254,
+        "startChar": 14,
+        "endLine": 2254,
+        "endChar": 17
+      },
+      "revId": "242d4bbb6f4be5b5157fea49507a614e18f3a8d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
