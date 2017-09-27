@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d4c32d9_c64f6243",
+        "filename": "ash/system/web_notification/inactive_user_notification_blocker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-27T00:03:54Z",
+      "side": 0,
+      "message": "This never actually happens in production because this object is created before ash learns about the first user. It doesn\u0027t seem to happen in tests either. Weird.",
+      "revId": "9ff85175e60bca93513c83c25597fe799be76601",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

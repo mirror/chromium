@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5d4bd30_7f4b0fab",
+        "filename": "ash/system/web_notification/inactive_user_notification_blocker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-27T00:03:54Z",
+      "side": 1,
+      "message": "Evan, what do you think about changing this to check if there\u0027s more than one user currently logged in? Or checking to see that the session is active?\n\nIn the code before your CL https://chromium-review.googlesource.com/646373 the MultiUserNotificationBlocker was only created when there was a MultiUserManagerChromeOS, which was only created after login and only when the device had multiple accounts.\n\n(I had a lot of trouble with this CL with ash unittests failing because this class is always created in any AshTestBase test, and it often was blocking notifications.)",
+      "revId": "63f7fb22d851fdb02263f19e0331cda873f182f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f33759ab_ffebe0f1",
+        "filename": "ash/system/web_notification/inactive_user_notification_blocker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-27T00:03:54Z",
+      "side": 1,
+      "message": "Evan, do you know if profile_id is guaranteed to be set? I cannot assure myself that that is true from reading the code. If it\u0027s not true, then any code that fails to set profile_id will have its notification blocked, but only if multiprofile is not available (like there\u0027s only one account on device).\n\nThere seems to be lots of code in ash that uses system_notifier::CreateSystemNotification() but doesn\u0027t set a profile_id.\n\nThis might also be fixed if we only used this class when there actually were multiple user sessions.",
+      "revId": "63f7fb22d851fdb02263f19e0331cda873f182f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
