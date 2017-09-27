@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9dc30721_d5043c2a",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1299,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-27T17:54:26Z",
+      "side": 1,
+      "message": "maybe put the bools in the other order?\n\nif (is_for_credit_card_ \u0026\u0026 !has_logged_suggestions_filled_)",
+      "revId": "8b900225a6528be434610dfe2fbd151a880d0efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5e295c7_57036ef1",
+        "filename": "components/autofill/core/browser/personal_data_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1735,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-27T17:54:26Z",
+      "side": 1,
+      "message": "no need for braces here.",
+      "revId": "8b900225a6528be434610dfe2fbd151a880d0efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb4ed783_3b44257a",
+        "filename": "components/autofill/core/browser/personal_data_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1807,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-27T17:54:26Z",
+      "side": 1,
+      "message": "extract the invariants?\n\n  const auto stripped_pan \u003d CreditCard::StripSeparators(credit_card.number());\n  for (const auto\u0026 card : local_credit_cards) {\n    if (stripped_pan \u003d\u003d CreditCard::StripSeparators(card-\u003enumber())\n      return true;\n  }",
+      "revId": "8b900225a6528be434610dfe2fbd151a880d0efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7b39706_83b25d68",
+        "filename": "components/autofill/core/browser/personal_data_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1811,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-27T17:54:26Z",
+      "side": 1,
+      "message": "put braces around the return true when the if clause is multi-line.",
+      "revId": "8b900225a6528be434610dfe2fbd151a880d0efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b62a528f_716ec288",
+        "filename": "components/autofill/core/browser/personal_data_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1815,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-27T17:54:26Z",
+      "side": 1,
+      "message": "this might be easier to read this as separate ifs?\n\n  const auto masked_info \u003d credit_card.NetworkAndLastFourDigits();\n  for (const auto\u0026 card : server_credit_cards_) {\n    if (card-\u003erecord_type() \u003d\u003d CreditCard::FULL_SERVER_CARD {\n      if (stripped_pan \u003d\u003d CreditCard::StripSeparators(card-\u003enumber())\n         return true;\n    } else {\n      DCHECK_EQ(card-\u003erecord_type(), CreditCard::MASKED_SERVER_CARD);\n      if (masked_info \u003d\u003d card-\u003eNetworkAndLastFourDigits())\n        return true;\n    }\n  ]\n\nOr as a switch?\n\n  const auto masked_info \u003d credit_card.NetworkAndLastFourDigits();\n  for (const auto\u0026 card : server_credit_cards_) {\n    switch (card-\u003erecord_type()) {\n      case CreditCard::FULL_SERVER_CARD:\n        if (stripped_pan \u003d\u003d CreditCard::StripSeparators(card-\u003enumber())\n          return true;\n        break;\n      case CreditCard::MASKED_SERVER_CARD:\n        if (masked_info \u003d\u003d card-\u003eNetworkAndLastFourDigits())\n          return true;\n        break;\n      default:\n        NOTREACHED();\n  }",
+      "revId": "8b900225a6528be434610dfe2fbd151a880d0efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc58b17a_591b27ac",
+        "filename": "components/autofill/core/browser/personal_data_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1821,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-27T17:54:26Z",
+      "side": 1,
+      "message": "put braces around the return true when the if clause is multi-line.",
+      "revId": "8b900225a6528be434610dfe2fbd151a880d0efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
