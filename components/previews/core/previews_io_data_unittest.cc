@@ -447,6 +447,11 @@ TEST_F(PreviewsIODataTest, ClientLoFiObeysHostBlackListFromServer) {
   variations::testing::ClearAllVariationParams();
 }
 
+TEST_F(PreviewsIODataTest, LogAddPreviewNavigation) {
+  // TODO(thanhdle): Add test to test a logging function was called with correct
+  // parameters.
+}
+
 }  // namespace
 
 }  // namespace previews
