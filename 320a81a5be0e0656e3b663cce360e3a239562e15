@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "401faceb_3135b109",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_container_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-27T12:06:06Z",
+      "side": 1,
+      "message": "Two questions:\n1) I couldn\u0027t find a subsequent CL that modified this method to return anything but a constant.  If this is a constant, why broadcast it instead of just putting the constant into a public header?\n\n2) Could we accomplish what we need using a named (globally-accessibly) layout guide instead?  That moves us away from broadcasting individual values and towards autolayout.",
+      "revId": "320a81a5be0e0656e3b663cce360e3a239562e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
