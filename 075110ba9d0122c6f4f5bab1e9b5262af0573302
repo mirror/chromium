@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cdce6e9_aac7ed7b",
+        "filename": "ui/webui/resources/cr_elements/cr_toggle/cr_toggle.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-27T00:56:34Z",
+      "side": 1,
+      "message": "Can you test if 80ms is a safe assumption across all platforms?",
+      "revId": "075110ba9d0122c6f4f5bab1e9b5262af0573302",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
