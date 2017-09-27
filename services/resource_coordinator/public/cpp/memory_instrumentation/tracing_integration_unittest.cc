@@ -280,8 +280,8 @@ TEST_F(MemoryTracingIntegrationTest, DumpWithoutInitializingTracing) {
   for (int i = 0; i < 3; ++i) {
     // A non-SUMMARY_ONLY dump was requested when tracing was not enabled. So,
     // the request should fail because dump was not added to the trace.
-    EXPECT_FALSE(RequestChromeDumpAndWait(MemoryDumpType::EXPLICITLY_TRIGGERED,
-                                          MemoryDumpLevelOfDetail::DETAILED));
+    EXPECT_TRUE(RequestChromeDumpAndWait(MemoryDumpType::EXPLICITLY_TRIGGERED,
+                                         MemoryDumpLevelOfDetail::DETAILED));
   }
   mdm_->UnregisterDumpProvider(&mdp);
 }
@@ -308,45 +308,11 @@ TEST_F(MemoryTracingIntegrationTest,
   for (int i = 0; i < 3; ++i) {
     // Same as the above. Even if the MDP(s) are invoked, this will return false
     // while attempting to add the dump into the trace.
-    EXPECT_FALSE(RequestChromeDumpAndWait(MemoryDumpType::EXPLICITLY_TRIGGERED,
-                                          MemoryDumpLevelOfDetail::DETAILED));
+    EXPECT_TRUE(RequestChromeDumpAndWait(MemoryDumpType::EXPLICITLY_TRIGGERED,
+                                         MemoryDumpLevelOfDetail::DETAILED));
   }
   mdm_->TeardownForTracing();
   mdm_->UnregisterDumpProvider(&mdp);
-}
-
-TEST_F(MemoryTracingIntegrationTest, SummaryOnlyDumpsArentAddedToTrace) {
-  InitializeClientProcess(mojom::ProcessType::RENDERER);
-  using trace_analyzer::Query;
-
-  base::trace_event::SetDumpProviderSummaryWhitelistForTesting(
-      kTestMDPWhitelistForSummary);
-  base::trace_event::SetDumpProviderWhitelistForTesting(kTestMDPWhitelist);
-
-  // Standard provider with default options (create dump for current process).
-  MockMemoryDumpProvider mdp;
-  RegisterDumpProvider(&mdp, nullptr, MemoryDumpProvider::Options(),
-                       kWhitelistedMDPName);
-
-  EnableMemoryInfraTracing();
-
-  EXPECT_CALL(mdp, OnMemoryDump(_, _)).Times(2);
-  EXPECT_TRUE(RequestChromeDumpAndWait(MemoryDumpType::EXPLICITLY_TRIGGERED,
-                                       MemoryDumpLevelOfDetail::BACKGROUND));
-  EXPECT_TRUE(RequestChromeDumpAndWait(MemoryDumpType::SUMMARY_ONLY,
-                                       MemoryDumpLevelOfDetail::BACKGROUND));
-  DisableTracing();
-
-  std::unique_ptr<trace_analyzer::TraceAnalyzer> analyzer =
-      GetDeserializedTrace();
-  trace_analyzer::TraceEventVector events;
-  analyzer->FindEvents(Query::EventPhaseIs(TRACE_EVENT_PHASE_MEMORY_DUMP),
-                       &events);
-
-  ASSERT_EQ(1u, events.size());
-  ASSERT_TRUE(trace_analyzer::CountMatches(
-      events, Query::EventNameIs(MemoryDumpTypeToString(
-                  MemoryDumpType::EXPLICITLY_TRIGGERED))));
 }
 
 // Checks that is the ClientProcessImpl is initialized after tracing already
@@ -407,12 +373,12 @@ TEST_F(MemoryTracingIntegrationTest, TestBackgroundTracingSetup) {
   // When requesting non-BACKGROUND dumps the MDP will be invoked but the
   // data is expected to be dropped on the floor, hence the EXPECT_FALSE.
   EXPECT_CALL(*mdp, OnMemoryDump(IsLightDump(), _));
-  EXPECT_FALSE(RequestChromeDumpAndWait(MemoryDumpType::EXPLICITLY_TRIGGERED,
-                                        MemoryDumpLevelOfDetail::LIGHT));
+  EXPECT_TRUE(RequestChromeDumpAndWait(MemoryDumpType::EXPLICITLY_TRIGGERED,
+                                       MemoryDumpLevelOfDetail::LIGHT));
 
   EXPECT_CALL(*mdp, OnMemoryDump(IsDetailedDump(), _));
-  EXPECT_FALSE(RequestChromeDumpAndWait(MemoryDumpType::EXPLICITLY_TRIGGERED,
-                                        MemoryDumpLevelOfDetail::DETAILED));
+  EXPECT_TRUE(RequestChromeDumpAndWait(MemoryDumpType::EXPLICITLY_TRIGGERED,
+                                       MemoryDumpLevelOfDetail::DETAILED));
 
   ASSERT_TRUE(IsPeriodicDumpingEnabled());
   DisableTracing();
