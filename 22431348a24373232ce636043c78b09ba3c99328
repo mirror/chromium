@@ -69,6 +69,24 @@
       "revId": "22431348a24373232ce636043c78b09ba3c99328",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4744ea3d_76d1d14d",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPI.h.tmpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-27T03:56:59Z",
+      "side": 1,
+      "message": "Ah makes sense! Will we eventually remove shared APIs? Seems better to me if properties A1 and A2 share the same parent class A with all the common logic, than having A1 and A2 use the same class A (which I believe is what \u0027api_class\u0027 is for).",
+      "parentUuid": "6c1aeb6d_07382d4c",
+      "revId": "22431348a24373232ce636043c78b09ba3c99328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
