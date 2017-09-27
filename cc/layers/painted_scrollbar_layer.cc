@@ -268,6 +268,7 @@ UIResourceBitmap PaintedScrollbarLayer::RasterizeScrollbarPart(
     skbitmap.allocN32Pixels(content_rect.width(), content_rect.height());
   }
   SkiaPaintCanvas canvas(skbitmap);
+  canvas.clear(SK_ColorTRANSPARENT);
 
   float scale_x =
       content_rect.width() / static_cast<float>(layer_rect.width());
@@ -275,15 +276,8 @@ UIResourceBitmap PaintedScrollbarLayer::RasterizeScrollbarPart(
       content_rect.height() / static_cast<float>(layer_rect.height());
 
   canvas.scale(SkFloatToScalar(scale_x), SkFloatToScalar(scale_y));
-  canvas.translate(SkFloatToScalar(-layer_rect.x()),
-                   SkFloatToScalar(-layer_rect.y()));
-
-  SkRect layer_skrect = RectToSkRect(layer_rect);
-  PaintFlags paint;
-  paint.setAntiAlias(false);
-  paint.setBlendMode(SkBlendMode::kClear);
-  canvas.drawRect(layer_skrect, paint);
-  canvas.clipRect(layer_skrect);
+  canvas.translate(SkIntToScalar(-layer_rect.x()),
+                   SkIntToScalar(-layer_rect.y()));
 
   scrollbar_->PaintPart(&canvas, part, layer_rect);
   // Make sure that the pixels are no longer mutable to unavoid unnecessary
