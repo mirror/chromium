@@ -8,6 +8,7 @@
 
 #include "base/compiler_specific.h"
 #include "base/files/file_util.h"
+#include "base/memory/ref_counted.h"
 #include "base/path_service.h"
 #include "base/run_loop.h"
 #include "base/test/scoped_task_environment.h"
@@ -291,13 +292,10 @@ class URLLoaderImplTest : public testing::Test {
     return client_.ssl_info();
   }
 
- private:
   // Reads the response body from client()->response_body() until the channel is
   // closed. Expects client()->response_body() to already be populated, and
   // non-NULL.
   std::string ReadBody() {
-    DCHECK(ran_);
-
     std::string body;
     while (true) {
       MojoHandle consumer = client()->response_body().value();
@@ -337,6 +335,26 @@ class URLLoaderImplTest : public testing::Test {
     return body;
   }
 
+  std::string ReadAvailableBody() {
+    MojoHandle consumer = client()->response_body().value();
+
+    uint32_t num_bytes = 0;
+    MojoResult result =
+        MojoReadData(consumer, nullptr, &num_bytes, MOJO_READ_DATA_FLAG_QUERY);
+    CHECK_EQ(MOJO_RESULT_OK, result);
+    if (num_bytes == 0)
+      return std::string();
+
+    std::vector<char> buffer(num_bytes);
+    result = MojoReadData(consumer, buffer.data(), &num_bytes,
+                          MOJO_READ_DATA_FLAG_NONE);
+    CHECK_EQ(MOJO_RESULT_OK, result);
+    CHECK_EQ(num_bytes, buffer.size());
+
+    return std::string(buffer.data(), buffer.size());
+  }
+
+ private:
   base::test::ScopedTaskEnvironment scoped_task_environment_;
   net::EmbeddedTestServer test_server_;
   std::unique_ptr<NetworkContext> context_;
@@ -623,6 +641,126 @@ TEST_F(URLLoaderImplTest, CloseResponseBodyConsumerBeforeProducer) {
   client()->RunUntilConnectionError();
 
   EXPECT_FALSE(client()->has_received_completion());
+}
+
+class DelaySendingHttpResponse : public net::test_server::HttpResponse {
+ public:
+  explicit DelaySendingHttpResponse(const base::Closure& notify_callback_ready)
+      : context_(new Context) {
+    context_->notify_callback_ready = notify_callback_ready;
+  }
+  ~DelaySendingHttpResponse() override = default;
+
+  base::Closure SendResponseCallback() {
+    return base::Bind(&DelaySendingHttpResponse::ActuallySendResponse,
+                      base::ThreadTaskRunnerHandle::Get(), context_);
+  }
+
+  static const char* const kBodyContents;
+
+ private:
+  class Context : public base::RefCountedThreadSafe<Context> {
+   public:
+    base::Closure notify_callback_ready;
+    net::test_server::SendBytesCallback send;
+    net::test_server::SendCompleteCallback done;
+
+   private:
+    friend class base::RefCountedThreadSafe<Context>;
+    ~Context() = default;
+  };
+
+  // net::test_server::HttpResponse implementation.
+  void SendResponse(
+      const net::test_server::SendBytesCallback& send,
+      const net::test_server::SendCompleteCallback& done) override {
+    context_->send = send;
+    context_->done = done;
+    context_->notify_callback_ready.Run();
+  }
+
+  static void ActuallySendResponse(
+      scoped_refptr<base::SingleThreadTaskRunner> runner,
+      scoped_refptr<Context> context) {
+    if (!runner->BelongsToCurrentThread()) {
+      runner->PostTask(
+          FROM_HERE, base::Bind(&DelaySendingHttpResponse::ActuallySendResponse,
+                                runner, context));
+      return;
+    }
+
+    context->send.Run(
+        "HTTP/1.1 200 OK\r\n"
+        "Content-Type: text/plain\r\n\r\n" +
+            std::string(kBodyContents),
+        context->done);
+  }
+
+  scoped_refptr<Context> context_;
+};
+
+const char* const DelaySendingHttpResponse::kBodyContents =
+    "This is the data as you requested.";
+
+TEST_F(URLLoaderImplTest, PauseResumeReadingBodyFromNet) {
+  net::EmbeddedTestServer server;
+  base::RunLoop wait_for_callback_ready;
+  base::Closure send_response;
+  server.RegisterRequestHandler(base::Bind(
+      [](const base::Closure& notify_callback_ready,
+         base::Closure* send_response,
+         const net::test_server::HttpRequest& request) {
+        auto response =
+            std::make_unique<DelaySendingHttpResponse>(notify_callback_ready);
+        *send_response = response->SendResponseCallback();
+        return std::unique_ptr<net::test_server::HttpResponse>(
+            std::move(response));
+      },
+      wait_for_callback_ready.QuitClosure(), &send_response));
+  ASSERT_TRUE(server.Start());
+
+  ResourceRequest request = CreateResourceRequest(
+      "GET", RESOURCE_TYPE_MAIN_FRAME, server.GetURL("/hello.html"));
+
+  mojom::URLLoaderPtr loader;
+  // The loader is implicitly owned by the client and the NetworkContext.
+  new URLLoaderImpl(context(), mojo::MakeRequest(&loader), 0, request, false,
+                    client()->CreateInterfacePtr(),
+                    TRAFFIC_ANNOTATION_FOR_TESTS);
+
+  // Pausing reading response body from network stops future reads from the
+  // underlying URLRequest. So no data should be sent using the response body
+  // data pipe.
+  loader->PauseReadingBodyFromNet();
+  // In order to avoid flakiness, make sure PauseReadBodyFromNet() is handled by
+  // the loader before the test HTTP server serves the response.
+  loader.FlushForTesting();
+
+  wait_for_callback_ready.Run();
+  send_response.Run();
+
+  // We will still receive the response body data pipe, although there won't be
+  // any data available until ResumeReadBodyFromNet() is called.
+  client()->RunUntilResponseBodyArrived();
+  EXPECT_TRUE(client()->has_received_response());
+  EXPECT_FALSE(client()->has_received_completion());
+
+  // Wait for a little amount of time so that if the loader mistakenly reads
+  // response body from the underlying URLRequest, it is easier to find out.
+  base::RunLoop run_loop;
+  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      FROM_HERE, run_loop.QuitClosure(),
+      base::TimeDelta::FromMilliseconds(100));
+  run_loop.Run();
+
+  std::string available_data = ReadAvailableBody();
+  EXPECT_TRUE(available_data.empty());
+
+  loader->ResumeReadBodyFromNet();
+  client()->RunUntilComplete();
+
+  available_data = ReadBody();
+  EXPECT_EQ(DelaySendingHttpResponse::kBodyContents, available_data);
 }
 
 }  // namespace content
