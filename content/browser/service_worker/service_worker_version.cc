@@ -1532,10 +1532,10 @@ void ServiceWorkerVersion::StartWorkerInternal() {
       !pause_after_download_) {
     DCHECK(!installed_scripts_sender_);
     installed_scripts_sender_ =
-        base::MakeUnique<ServiceWorkerInstalledScriptsSender>(
-            this, script_url(), context());
+        base::MakeUnique<ServiceWorkerInstalledScriptsSender>(this);
     installed_scripts_info = installed_scripts_sender_->CreateInfoAndBind();
-    installed_scripts_sender_->Start();
+    if (installed_scripts_info)
+      installed_scripts_sender_->Start();
   }
 
   auto event_dispatcher_request = mojo::MakeRequest(&event_dispatcher_);
