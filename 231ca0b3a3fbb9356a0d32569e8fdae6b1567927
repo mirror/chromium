@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0b759762_2a02694f",
+        "filename": "chrome/browser/vr/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-27T20:06:08Z",
+      "side": 1,
+      "message": "It doesn\u0027t.",
+      "parentUuid": "f19f16c5_12833f8b",
+      "revId": "231ca0b3a3fbb9356a0d32569e8fdae6b1567927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76d5712a_0ff36d00",
         "filename": "chrome/browser/vr/service/vr_device_manager_unittest.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "231ca0b3a3fbb9356a0d32569e8fdae6b1567927",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d4ebda2_a34e50d1",
+        "filename": "chrome/browser/vr/service/vr_device_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-27T20:06:08Z",
+      "side": 1,
+      "message": "Done (I didn\u0027t write any of these tests).",
+      "parentUuid": "76d5712a_0ff36d00",
+      "revId": "231ca0b3a3fbb9356a0d32569e8fdae6b1567927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f1a1eb62_731d56d3",
+        "filename": "chrome/browser/vr/service/vr_service_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-27T20:06:08Z",
+      "side": 1,
+      "message": "This isn\u0027t new, for some reason it didn\u0027t detect the moved file here. I\u0027ll add a TODO and we can clean this up in a separate CL.",
+      "parentUuid": "00e65278_ece24cca",
+      "revId": "231ca0b3a3fbb9356a0d32569e8fdae6b1567927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "214d3138_90c52c78",
         "filename": "chrome/browser/vr/test/run_all_unittests.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "231ca0b3a3fbb9356a0d32569e8fdae6b1567927",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fabea75_ea84b3e6",
+        "filename": "chrome/browser/vr/test/run_all_unittests.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-27T20:06:08Z",
+      "side": 1,
+      "message": "Good question. Every example I can find does this in main(), rather than Initialize(). I\u0027m not sure why that is, so maybe we should just follow existing convention here.",
+      "parentUuid": "214d3138_90c52c78",
+      "revId": "231ca0b3a3fbb9356a0d32569e8fdae6b1567927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
