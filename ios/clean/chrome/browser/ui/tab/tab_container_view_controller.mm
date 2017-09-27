@@ -120,6 +120,10 @@ const CGFloat kToolbarHeight = 56.0f;
   _usesBottomToolbar = usesBottomToolbar;
 }
 
+- (CGFloat)toolbarHeight {
+  return kToolbarHeight;
+}
+
 #pragma mark - MenuPresentationDelegate
 
 - (CGRect)boundsForMenuPresentation {
