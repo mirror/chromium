@@ -111,7 +111,7 @@ bool TextureLayerImpl::WillDraw(DrawMode draw_mode,
 
     if (!texture_copy_->id()) {
       texture_copy_->Allocate(texture_mailbox_.size_in_pixels(),
-                              ResourceProvider::TEXTURE_HINT_IMMUTABLE,
+                              viz::RemotableResourceTextureHint::kImmutable,
                               resource_provider->best_texture_format(),
                               gfx::ColorSpace());
     }

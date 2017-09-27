@@ -244,7 +244,7 @@ class RasterBufferProviderTest
           size, viz::RGBA_8888, gfx::BufferUsage::GPU_READ_CPU_READ_WRITE,
           gfx::ColorSpace());
     } else {
-      resource->Allocate(size, ResourceProvider::TEXTURE_HINT_IMMUTABLE,
+      resource->Allocate(size, viz::RemotableResourceTextureHint::kImmutable,
                          viz::RGBA_8888, gfx::ColorSpace());
     }
 
@@ -269,7 +269,7 @@ class RasterBufferProviderTest
           size, viz::RGBA_8888, gfx::BufferUsage::GPU_READ_CPU_READ_WRITE,
           gfx::ColorSpace());
     } else {
-      resource->Allocate(size, ResourceProvider::TEXTURE_HINT_IMMUTABLE,
+      resource->Allocate(size, viz::RemotableResourceTextureHint::kImmutable,
                          viz::RGBA_8888, gfx::ColorSpace());
     }
 

@@ -264,8 +264,8 @@ VideoResourceUpdater::AllocateResource(const gfx::Size& plane_size,
   // ResourceProvider and stop using ResourceProvider in this class.
   const viz::ResourceId resource_id = resource_provider_->CreateResource(
       plane_size,
-      immutable_hint ? ResourceProvider::TEXTURE_HINT_IMMUTABLE
-                     : ResourceProvider::TEXTURE_HINT_DEFAULT,
+      immutable_hint ? viz::RemotableResourceTextureHint::kImmutable
+                     : viz::RemotableResourceTextureHint::kDefault,
       format, color_space);
   DCHECK_NE(resource_id, 0u);
 

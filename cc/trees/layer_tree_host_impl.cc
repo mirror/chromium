@@ -2413,7 +2413,7 @@ void LayerTreeHostImpl::CreateResourceAndRasterBufferProvider(
   if (!compositor_context_provider) {
     *resource_pool =
         ResourcePool::Create(resource_provider_.get(), GetTaskRunner(),
-                             ResourceProvider::TEXTURE_HINT_IMMUTABLE,
+                             viz::RemotableResourceTextureHint::kImmutable,
                              ResourcePool::kDefaultExpirationDelay,
                              settings_.disallow_non_exact_resource_reuse);
 
@@ -2429,7 +2429,8 @@ void LayerTreeHostImpl::CreateResourceAndRasterBufferProvider(
 
     *resource_pool = ResourcePool::Create(
         resource_provider_.get(), GetTaskRunner(),
-        ResourceProvider::TEXTURE_HINT_IMMUTABLE_FRAMEBUFFER,
+        viz::RemotableResourceTextureHint::kImmutable |
+            viz::RemotableResourceTextureHint::kFramebuffer,
         ResourcePool::kDefaultExpirationDelay,
         settings_.disallow_non_exact_resource_reuse);
 
@@ -2467,7 +2468,7 @@ void LayerTreeHostImpl::CreateResourceAndRasterBufferProvider(
 
   *resource_pool =
       ResourcePool::Create(resource_provider_.get(), GetTaskRunner(),
-                           ResourceProvider::TEXTURE_HINT_IMMUTABLE,
+                           viz::RemotableResourceTextureHint::kImmutable,
                            ResourcePool::kDefaultExpirationDelay,
                            settings_.disallow_non_exact_resource_reuse);
 
@@ -4199,7 +4200,7 @@ void LayerTreeHostImpl::CreateUIResource(UIResourceId uid,
   }
 
   id = resource_provider_->CreateResource(
-      upload_size, ResourceProvider::TEXTURE_HINT_IMMUTABLE, format,
+      upload_size, viz::RemotableResourceTextureHint::kImmutable, format,
       gfx::ColorSpace::CreateSRGB());
 
   if (!scaled) {

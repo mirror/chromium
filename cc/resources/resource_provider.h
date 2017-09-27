@@ -31,6 +31,10 @@
 #include "components/viz/common/quads/shared_bitmap.h"
 #include "components/viz/common/quads/single_release_callback.h"
 #include "components/viz/common/quads/texture_mailbox.h"
+#include "components/viz/common/resources/remotable_resource.h"
+#include "components/viz/common/resources/remotable_resource_fence.h"
+#include "components/viz/common/resources/remotable_resource_texture_hint.h"
+#include "components/viz/common/resources/remotable_resource_type.h"
 #include "components/viz/common/resources/resource_format.h"
 #include "components/viz/common/resources/resource_id.h"
 #include "components/viz/common/resources/resource_settings.h"
@@ -52,7 +56,6 @@ class GLES2Interface;
 }
 
 namespace viz {
-class SharedBitmap;
 class SharedBitmapManager;
 }  // namespace viz
 
@@ -63,27 +66,9 @@ class TextureIdAllocator;
 // created on (in practice, the impl thread).
 class CC_EXPORT ResourceProvider
     : public base::trace_event::MemoryDumpProvider {
- protected:
-  struct Resource;
-
  public:
   using ResourceIdArray = std::vector<viz::ResourceId>;
   using ResourceIdMap = std::unordered_map<viz::ResourceId, viz::ResourceId>;
-  enum TextureHint {
-    TEXTURE_HINT_DEFAULT = 0x0,
-    TEXTURE_HINT_IMMUTABLE = 0x1,
-    TEXTURE_HINT_MIPMAP = 0x2,
-    TEXTURE_HINT_FRAMEBUFFER = 0x4,
-    TEXTURE_HINT_IMMUTABLE_FRAMEBUFFER =
-        TEXTURE_HINT_IMMUTABLE | TEXTURE_HINT_FRAMEBUFFER,
-    TEXTURE_HINT_IMMUTABLE_MIPMAP_FRAMEBUFFER =
-        TEXTURE_HINT_IMMUTABLE | TEXTURE_HINT_MIPMAP | TEXTURE_HINT_FRAMEBUFFER
-  };
-  enum ResourceType {
-    RESOURCE_TYPE_GPU_MEMORY_BUFFER,
-    RESOURCE_TYPE_GL_TEXTURE,
-    RESOURCE_TYPE_BITMAP,
-  };
 
   ResourceProvider(viz::ContextProvider* compositor_context_provider,
                    viz::SharedBitmapManager* shared_bitmap_manager,
@@ -92,10 +77,6 @@ class CC_EXPORT ResourceProvider
                    bool enable_color_correct_rasterization,
                    const viz::ResourceSettings& resource_settings);
   ~ResourceProvider() override;
-
-  static bool IsGpuResourceType(ResourceProvider::ResourceType type) {
-    return type != ResourceProvider::RESOURCE_TYPE_BITMAP;
-  }
 
   void Initialize();
 
@@ -132,14 +113,14 @@ class CC_EXPORT ResourceProvider
   void EnableReadLockFencesForTesting(viz::ResourceId id);
 
   // Producer interface.
-  ResourceType GetResourceType(viz::ResourceId id);
+  viz::RemotableResourceType GetResourceType(viz::ResourceId id);
   GLenum GetResourceTextureTarget(viz::ResourceId id);
   bool IsImmutable(viz::ResourceId id);
-  TextureHint GetTextureHint(viz::ResourceId id);
+  viz::RemotableResourceTextureHint GetTextureHint(viz::ResourceId id);
 
   // Creates a resource of the default resource type.
   viz::ResourceId CreateResource(const gfx::Size& size,
-                                 TextureHint hint,
+                                 viz::RemotableResourceTextureHint hint,
                                  viz::ResourceFormat format,
                                  const gfx::ColorSpace& color_space);
 
@@ -147,7 +128,7 @@ class CC_EXPORT ResourceProvider
   // texture targets has no effect in software mode).
   viz::ResourceId CreateGpuMemoryBufferResource(
       const gfx::Size& size,
-      TextureHint hint,
+      viz::RemotableResourceTextureHint hint,
       viz::ResourceFormat format,
       gfx::BufferUsage usage,
       const gfx::ColorSpace& color_space);
@@ -236,9 +217,9 @@ class CC_EXPORT ResourceProvider
     gfx::ColorSpace color_space_;
     GLuint texture_id_;
     GLenum target_;
-    ResourceProvider::TextureHint hint_;
+    viz::RemotableResourceTextureHint hint_;
     gpu::Mailbox mailbox_;
-    bool allocated_;
+    bool allocated_ = false;
 
     // Set by the user.
     gpu::SyncToken sync_token_;
@@ -293,27 +274,11 @@ class CC_EXPORT ResourceProvider
     DISALLOW_COPY_AND_ASSIGN(ScopedWriteLockSoftware);
   };
 
-  class CC_EXPORT Fence : public base::RefCounted<Fence> {
-   public:
-    Fence() {}
-
-    virtual void Set() = 0;
-    virtual bool HasPassed() = 0;
-    virtual void Wait() = 0;
-
-   protected:
-    friend class base::RefCounted<Fence>;
-    virtual ~Fence() {}
-
-   private:
-    DISALLOW_COPY_AND_ASSIGN(Fence);
-  };
-
-  class CC_EXPORT SynchronousFence : public ResourceProvider::Fence {
+  class CC_EXPORT SynchronousFence : public viz::RemotableResourceFence {
    public:
     explicit SynchronousFence(gpu::gles2::GLES2Interface* gl);
 
-    // Overridden from Fence:
+    // viz::RemotableResourceFence implementation.
     void Set() override;
     bool HasPassed() override;
     void Wait() override;
@@ -378,148 +343,23 @@ class CC_EXPORT ResourceProvider
   int tracing_id() const { return tracing_id_; }
 
  protected:
-  struct Resource {
-    enum Origin { INTERNAL, EXTERNAL, DELEGATED };
-    enum SynchronizationState {
-      // The LOCALLY_USED state is the state each resource defaults to when
-      // constructed or modified or read. This state indicates that the
-      // resource has not been properly synchronized and it would be an error
-      // to send this resource to a parent, child, or client.
-      LOCALLY_USED,
+  using ResourceMap =
+      std::unordered_map<viz::ResourceId, viz::internal::RemotableResource>;
 
-      // The NEEDS_WAIT state is the state that indicates a resource has been
-      // modified but it also has an associated sync token assigned to it.
-      // The sync token has not been waited on with the local context. When
-      // a sync token arrives from an external resource (such as a child or
-      // parent), it is automatically initialized as NEEDS_WAIT as well
-      // since we still need to wait on it before the resource is synchronized
-      // on the current context. It is an error to use the resource locally for
-      // reading or writing if the resource is in this state.
-      NEEDS_WAIT,
+  viz::internal::RemotableResource* InsertResource(
+      viz::ResourceId id,
+      viz::internal::RemotableResource resource);
 
-      // The SYNCHRONIZED state indicates that the resource has been properly
-      // synchronized locally. This can either synchronized externally (such
-      // as the case of software rasterized bitmaps), or synchronized
-      // internally using a sync token that has been waited upon. In the
-      // former case where the resource was synchronized externally, a
-      // corresponding sync token will not exist. In the latter case which was
-      // synchronized from the NEEDS_WAIT state, a corresponding sync token will
-      // exist which is assocaited with the resource. This sync token is still
-      // valid and still associated with the resource and can be passed as an
-      // external resource for others to wait on.
-      SYNCHRONIZED,
-    };
-    enum MipmapState { INVALID, GENERATE, VALID };
+  viz::internal::RemotableResource* GetResource(viz::ResourceId id);
 
-    Resource(const gfx::Size& size,
-             Origin origin,
-             TextureHint hint,
-             ResourceType type,
-             viz::ResourceFormat format,
-             const gfx::ColorSpace& color_space);
-    Resource(Resource&& other);
-    ~Resource();
+  viz::internal::RemotableResource* LockForWrite(viz::ResourceId id);
+  void UnlockForWrite(viz::internal::RemotableResource* resource);
 
-    bool needs_sync_token() const {
-      return type != RESOURCE_TYPE_BITMAP &&
-             synchronization_state_ == LOCALLY_USED;
-    }
+  void PopulateSkBitmapWithResource(
+      SkBitmap* sk_bitmap,
+      const viz::internal::RemotableResource* resource);
 
-    const gpu::SyncToken& sync_token() const { return sync_token_; }
-
-    SynchronizationState synchronization_state() const {
-      return synchronization_state_;
-    }
-
-    void SetSharedBitmap(viz::SharedBitmap* bitmap);
-
-    void SetLocallyUsed();
-    void SetSynchronized();
-    void UpdateSyncToken(const gpu::SyncToken& sync_token);
-    void WaitSyncToken(gpu::gles2::GLES2Interface* gl);
-    int8_t* GetSyncTokenData();
-    void SetGenerateMipmap();
-
-    // Bitfield flags
-    bool locked_for_write : 1;
-    bool lost : 1;
-    bool marked_for_deletion : 1;
-    bool allocated : 1;
-    bool read_lock_fences_enabled : 1;
-    bool has_shared_bitmap_id : 1;
-    bool is_overlay_candidate : 1;
-#if defined(OS_ANDROID)
-    // Indicates whether this resource may not be overlayed on Android, since
-    // it's not backed by a SurfaceView.  This may be set in combination with
-    // |is_overlay_candidate|, to find out if switching the resource to a
-    // a SurfaceView would result in overlay promotion.  It's good to find this
-    // out in advance, since one has no fallback path for displaying a
-    // SurfaceView except via promoting it to an overlay.  Ideally, one _could_
-    // promote SurfaceTexture via the overlay path, even if one ended up just
-    // drawing a quad in the compositor.  However, for now, we use this flag to
-    // refuse to promote so that the compositor will draw the quad.
-    bool is_backed_by_surface_texture : 1;
-    // Indicates that this resource would like a promotion hint.
-    bool wants_promotion_hint : 1;
-#endif
-
-    int child_id = 0;
-    viz::ResourceId id_in_child = 0;
-    GLuint gl_id = 0;
-    gpu::Mailbox mailbox;
-    viz::ReleaseCallback release_callback;
-    uint8_t* pixels = nullptr;
-    int lock_for_read_count = 0;
-    int imported_count = 0;
-    int exported_count = 0;
-    scoped_refptr<Fence> read_lock_fence;
-    gfx::Size size;
-    Origin origin = INTERNAL;
-    GLenum target = GL_TEXTURE_2D;
-    // TODO(skyostil): Use a separate sampler object for filter state.
-    GLenum original_filter = GL_LINEAR;
-    GLenum filter = GL_LINEAR;
-    GLenum min_filter = GL_LINEAR;
-    GLuint image_id = 0;
-    TextureHint hint = TEXTURE_HINT_IMMUTABLE;
-    ResourceType type = RESOURCE_TYPE_BITMAP;
-    // GpuMemoryBuffer resource allocation needs to know how the resource will
-    // be used.
-    gfx::BufferUsage usage = gfx::BufferUsage::GPU_READ_CPU_READ_WRITE;
-    // This is the the actual format of the underlaying GpuMemoryBuffer, if any,
-    // and might not correspond to viz::ResourceFormat. This format is needed to
-    // scanout the buffer as HW overlay.
-    gfx::BufferFormat buffer_format = gfx::BufferFormat::RGBA_8888;
-    // Resource format is the format as seen from the compositor and might not
-    // correspond to buffer_format (e.g: A resouce that was created from a YUV
-    // buffer could be seen as RGB from the compositor/GL.)
-    viz::ResourceFormat format = viz::ResourceFormat::RGBA_8888;
-    viz::SharedBitmapId shared_bitmap_id;
-    viz::SharedBitmap* shared_bitmap;
-    std::unique_ptr<viz::SharedBitmap> owned_shared_bitmap;
-    std::unique_ptr<gfx::GpuMemoryBuffer> gpu_memory_buffer;
-    gfx::ColorSpace color_space;
-    MipmapState mipmap_state = INVALID;
-
-   private:
-    SynchronizationState synchronization_state_ = SYNCHRONIZED;
-    gpu::SyncToken sync_token_;
-
-    DISALLOW_COPY_AND_ASSIGN(Resource);
-  };
-  using ResourceMap = std::unordered_map<viz::ResourceId, Resource>;
-
-  Resource* InsertResource(viz::ResourceId id, Resource resource);
-
-  Resource* GetResource(viz::ResourceId id);
-
-  Resource* LockForWrite(viz::ResourceId id);
-  void UnlockForWrite(Resource* resource);
-
-  void PopulateSkBitmapWithResource(SkBitmap* sk_bitmap,
-                                    const Resource* resource);
-
-  void CreateAndBindImage(Resource* resource);
+  void CreateAndBindImage(viz::internal::RemotableResource* resource);
 
   // Binds the given GL resource to a texture target for sampling using the
   // specified filter for both minification and magnification. Returns the
@@ -531,7 +371,7 @@ class CC_EXPORT ResourceProvider
   // Will return the invalid color space unless
   // |enable_color_correct_rasterization| is true.
   gfx::ColorSpace GetResourceColorSpaceForRaster(
-      const Resource* resource) const;
+      const viz::internal::RemotableResource* resource) const;
 
   enum DeleteStyle {
     NORMAL,
@@ -540,9 +380,11 @@ class CC_EXPORT ResourceProvider
 
   void DeleteResourceInternal(ResourceMap::iterator it, DeleteStyle style);
 
-  void CreateMailbox(Resource* resource);
+  void CreateMailbox(viz::internal::RemotableResource* resource);
+  void WaitSyncTokenInternal(viz::internal::RemotableResource* resource);
 
-  bool ReadLockFenceHasPassed(const Resource* resource) {
+  bool ReadLockFenceHasPassed(
+      const viz::internal::RemotableResource* resource) {
     return !resource->read_lock_fence.get() ||
            resource->read_lock_fence->HasPassed();
   }
@@ -564,7 +406,8 @@ class CC_EXPORT ResourceProvider
     bool use_texture_npot = false;
     bool use_sync_query = false;
     bool use_texture_storage_image = false;
-    ResourceType default_resource_type = RESOURCE_TYPE_GL_TEXTURE;
+    viz::RemotableResourceType default_resource_type =
+        viz::RemotableResourceType::kTexture;
     viz::ResourceFormat yuv_resource_format = viz::LUMINANCE_8;
     viz::ResourceFormat yuv_highbit_resource_format = viz::LUMINANCE_8;
     viz::ResourceFormat best_texture_format = viz::RGBA_8888;
@@ -598,15 +441,16 @@ class CC_EXPORT ResourceProvider
 #endif
 
  private:
-  viz::ResourceId CreateGpuTextureResource(const gfx::Size& size,
-                                           TextureHint hint,
-                                           viz::ResourceFormat format,
-                                           const gfx::ColorSpace& color_space);
+  viz::ResourceId CreateGpuTextureResource(
+      const gfx::Size& size,
+      viz::RemotableResourceTextureHint hint,
+      viz::ResourceFormat format,
+      const gfx::ColorSpace& color_space);
 
   viz::ResourceId CreateBitmapResource(const gfx::Size& size,
                                        const gfx::ColorSpace& color_space);
 
-  void CreateTexture(Resource* resource);
+  void CreateTexture(viz::internal::RemotableResource* resource);
 
   bool IsGLContextLost() const;
 
