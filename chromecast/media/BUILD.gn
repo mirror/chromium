@@ -15,6 +15,26 @@ group("media") {
   ]
 }
 
+# Any component calling CastMediaShlib:: static functions should depend on this.
+# Handles the various differences between (ATV, Things, desktop, device builds).
+source_set("libcast_media") {
+  if (is_android) {
+    if (is_cast_using_cma_backend) {
+      deps = [
+        "//chromecast/media/cma/backend/android:cast_media_android",
+      ]
+    } else {
+      deps = [
+        "//chromecast/media/cma/backend:cast_media_android_dummy",
+      ]
+    }
+  } else {
+    deps = [
+      "//chromecast/media/cma/backend:libcast_media_1.0",
+    ]
+  }
+}
+
 test("cast_media_unittests") {
   sources = [
     "audio/cast_audio_manager_unittest.cc",
@@ -35,6 +55,7 @@ test("cast_media_unittests") {
     "//base/test:test_support",
     "//chromecast/base",
     "//chromecast/base/metrics:test_support",
+    "//chromecast/media:libcast_media",
     "//chromecast/media/cma:test_support",
     "//chromecast/public",
     "//media:test_support",
