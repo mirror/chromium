@@ -236,6 +236,11 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
     }
 
     @Override
+    public View getViewForPadding() {
+        return mRecyclerView;
+    }
+
+    @Override
     public View getToolbarView() {
         return null;
     }
