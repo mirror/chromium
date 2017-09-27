@@ -22,6 +22,30 @@
       "revId": "6e8aa0a3da95411587ac5484fa5464f0c3ea4968",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e1e686e_aa282db6",
+        "filename": "chrome/browser/chromeos/policy/off_hours/weekly_time.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-27T13:27:40Z",
+      "side": 1,
+      "message": "ok :(",
+      "parentUuid": "7df8a828_800a7b3e",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 7
+      },
+      "revId": "6e8aa0a3da95411587ac5484fa5464f0c3ea4968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
