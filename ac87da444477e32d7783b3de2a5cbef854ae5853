@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc645d80_c0459686",
+        "filename": "ui/gfx/font_list.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-27T15:52:16Z",
+      "side": 1,
+      "message": "I guess it continues to be unfortunate to malloc and free an object in order to return a bool, but LGTM to use a smart pointer!",
+      "revId": "ac87da444477e32d7783b3de2a5cbef854ae5853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
