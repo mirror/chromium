@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f9cfff4_ad89e61f",
+        "filename": "content/browser/service_worker/service_worker_state_converters.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-27T11:36:51Z",
+      "side": 1,
+      "message": "Please rename this file to service_worker_type_converters.h (same for cc) and add the corresponding per-file OWNERS rules.",
+      "revId": "b07ae2846c6393a22a814e5399a73c43732c7e70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
