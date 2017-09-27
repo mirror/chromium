@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "116cdee9_a6f01468",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-27T13:41:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a7177940_ea862dea",
+      "range": {
+        "startLine": 37,
+        "startChar": 15,
+        "endLine": 37,
+        "endChar": 51
+      },
+      "revId": "918a61dc3508773dccdcc471a05cb0bff6a5a8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97f9c100_63cf7b30",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 6

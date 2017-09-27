@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6faaa96b_1fe59956",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-27T13:41:37Z",
+      "side": 1,
+      "message": "This was meant to make the sentence less of a lie :)\nObviously, it just makes it less clear.\nRemoved.",
+      "parentUuid": "592f72ed_9a3322d8",
+      "range": {
+        "startLine": 29,
+        "startChar": 69,
+        "endLine": 30,
+        "endChar": 26
+      },
+      "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "308c1061_d80675b1",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider.h",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2b8d1c3_e7d8cabd",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-27T13:41:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "308c1061_d80675b1",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 63
+      },
+      "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "568cbbf9_d4388d48",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-27T13:41:37Z",
+      "side": 1,
+      "message": "I am fine with RefetchWhileDisplaying. This may be a lie but it feels slightly clearer then ForDisplay to me. I rephrased the comment based on input from both of you.",
+      "parentUuid": "690f17da_afe61e71",
+      "range": {
+        "startLine": 37,
+        "startChar": 15,
+        "endLine": 37,
+        "endChar": 32
+      },
+      "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f38f580_35b79b61",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 8
@@ -115,6 +187,30 @@
       "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b90d4b61_9105db85",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-27T13:41:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f38f580_35b79b61",
+      "range": {
+        "startLine": 86,
+        "startChar": 67,
+        "endLine": 86,
+        "endChar": 71
+      },
+      "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -141,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "b84e4a39_f119c962",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-27T13:41:37Z",
+      "side": 1,
+      "message": "Okay, there is a guarantee on another level that this does not happen. \nI agree it is better not to assume anything here.\nChanged so that it postpones the timeout (and added a test for it).",
+      "parentUuid": "57f46a1d_8d236134",
+      "range": {
+        "startLine": 462,
+        "startChar": 2,
+        "endLine": 462,
+        "endChar": 45
+      },
+      "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24aeb8dd_c0c26e33",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 8
@@ -164,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "eb743fe2_b2b661c0",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-27T13:41:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24aeb8dd_c0c26e33",
+      "range": {
+        "startLine": 465,
+        "startChar": 70,
+        "endLine": 465,
+        "endChar": 76
+      },
+      "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97659908_a58ca78c",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 8
@@ -181,6 +325,24 @@
     },
     {
       "key": {
+        "uuid": "97aa966e_454a8685",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-27T13:41:37Z",
+      "side": 1,
+      "message": "Note these all categories are provided by the Zine server. Even though we may have no plans to do any experiments with multiple server-side categories, I feel hesitant to complicate the code at the cost of potentially breaking future experiments.\n\nMaybe I missed the advantage here?",
+      "parentUuid": "97659908_a58ca78c",
+      "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f045b0e6_177f1264",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 8
@@ -192,6 +354,24 @@
       "writtenOn": "2017-09-26T17:25:24Z",
       "side": 1,
       "message": "let\u0027s not bother about non-article suggestions. Simply only deal with the status-changes for article suggestions.",
+      "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dfae627_1c23f22b",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-27T13:41:37Z",
+      "side": 1,
+      "message": "Same as above, what is the advantage?",
+      "parentUuid": "f045b0e6_177f1264",
       "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -244,6 +424,54 @@
     },
     {
       "key": {
+        "uuid": "8118cec7_561c7c28",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 4186,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-27T13:41:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62662392_95ab9e36",
+      "range": {
+        "startLine": 4186,
+        "startChar": 45,
+        "endLine": 4186,
+        "endChar": 46
+      },
+      "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1209b131_a95d8ebc",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 4186,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-27T13:41:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad61ec3d_206a1d65",
+      "range": {
+        "startLine": 4186,
+        "startChar": 2,
+        "endLine": 4186,
+        "endChar": 4
+      },
+      "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b7b945b_fa158380",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
         "patchSetId": 8
@@ -264,6 +492,30 @@
       "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33fe0020_7dddf44f",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 4273,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-27T13:41:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b7b945b_fa158380",
+      "range": {
+        "startLine": 4271,
+        "startChar": 2,
+        "endLine": 4273,
+        "endChar": 0
+      },
+      "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -290,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "ee3c3390_9f6d2852",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-27T13:41:37Z",
+      "side": 1,
+      "message": "Clarified.",
+      "parentUuid": "960054fe_7830d747",
+      "range": {
+        "startLine": 681,
+        "startChar": 56,
+        "endLine": 681,
+        "endChar": 72
+      },
+      "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2adca66_f54b3697",
         "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
         "patchSetId": 8
@@ -301,6 +577,30 @@
       "writtenOn": "2017-09-27T08:36:31Z",
       "side": 1,
       "message": "You don\u0027t check the trigger here. I expected that we want to do this refetch only when the user can see it.\nIs it true that this is only run when the surface is visible?",
+      "range": {
+        "startLine": 772,
+        "startChar": 2,
+        "endLine": 777,
+        "endChar": 3
+      },
+      "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9e86c2c_a333b84f",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-27T13:41:37Z",
+      "side": 1,
+      "message": "Ah, an interesting point.\n\nI propose to stick to this version _not_ conditioning on SURFACE_OPENED trigger. We do not know how CH behavior evolves. To me, it still makes sense to do this fetch after a startup trigger. The fetch may take a while and the user thus may have enough time to pull up the bottom sheet.",
+      "parentUuid": "f2adca66_f54b3697",
       "range": {
         "startLine": 772,
         "startChar": 2,
@@ -333,6 +633,30 @@
       "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17798b94_a3e57384",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-27T13:41:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7380acf6_01d5f066",
+      "range": {
+        "startLine": 76,
+        "startChar": 20,
+        "endLine": 76,
+        "endChar": 42
+      },
+      "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -382,6 +706,30 @@
     },
     {
       "key": {
+        "uuid": "5ff2971f_e202c2ad",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1116,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-27T13:41:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a72f483_3999145a",
+      "range": {
+        "startLine": 1116,
+        "startChar": 51,
+        "endLine": 1116,
+        "endChar": 53
+      },
+      "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "945ced61_4bfa5943",
         "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
         "patchSetId": 8
@@ -402,6 +750,30 @@
       "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35424add_c370b07c",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1154,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-27T13:41:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "945ced61_4bfa5943",
+      "range": {
+        "startLine": 1154,
+        "startChar": 44,
+        "endLine": 1154,
+        "endChar": 46
+      },
+      "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -448,6 +820,54 @@
       "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6bf50d5_0a52fe72",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1155,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-27T13:41:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5a55141_00e908c7",
+      "range": {
+        "startLine": 1155,
+        "startChar": 24,
+        "endLine": 1155,
+        "endChar": 55
+      },
+      "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c5181835_7d15c4f9",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1155,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-27T13:41:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b7bb8ce_0fd0faf2",
+      "range": {
+        "startLine": 1155,
+        "startChar": 57,
+        "endLine": 1155,
+        "endChar": 61
+      },
+      "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
