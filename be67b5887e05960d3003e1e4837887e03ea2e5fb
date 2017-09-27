@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "991193ae_05bff860",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-27T17:47:43Z",
+      "side": 1,
+      "message": "s/private/@private, otherwise this is not a valid type annotation, no?",
+      "revId": "be67b5887e05960d3003e1e4837887e03ea2e5fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aa639aa_9c789100",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-27T17:47:43Z",
+      "side": 1,
+      "message": "I suggest renaming this to buildCardStateToComponentsMap_. This makes it more obvious that this method is meant to be called once, and it does some actual work, and is not as cheap as a normal \"getter\" method.",
+      "revId": "be67b5887e05960d3003e1e4837887e03ea2e5fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d5120cb_257173e3",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-27T17:47:43Z",
+      "side": 1,
+      "message": "Answering to previous patch question: Another syntax to populate the map from the Constructor is as follows:\n\nvar myMap \u003d new Map([\n  [key1, value1],\n  [key2, value2],\n  ...\n]);\n\nUp to you whether you think that is more readable.",
+      "revId": "be67b5887e05960d3003e1e4837887e03ea2e5fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
