@@ -13,6 +13,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/time/time.h"
 #include "components/viz/common/gpu/context_provider.h"
+#include "media/base/context_provider_callback.h"
 #include "media/base/media_log.h"
 #include "media/base/media_observer.h"
 #include "media/base/routing_token_callback.h"
@@ -78,6 +79,7 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerParams {
       CreateCapabilitiesRecorderCB create_capabilities_recorder_cb,
       base::Callback<std::unique_ptr<blink::WebSurfaceLayerBridge>(
           blink::WebSurfaceLayerBridgeObserver*)> bridge_callback,
+      ContextProviderCallback context_provider_callback,
       scoped_refptr<viz::ContextProvider> context_provider);
 
   ~WebMediaPlayerParams();
@@ -148,6 +150,10 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerParams {
     return create_bridge_callback_;
   }
 
+  ContextProviderCallback context_provider_callback() const {
+    return context_provider_callback_;
+  }
+
   CreateCapabilitiesRecorderCB create_capabilities_recorder_cb() const {
     return create_capabilities_recorder_cb_;
   }
@@ -178,6 +184,7 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerParams {
   base::Callback<std::unique_ptr<blink::WebSurfaceLayerBridge>(
       blink::WebSurfaceLayerBridgeObserver*)>
       create_bridge_callback_;
+  ContextProviderCallback context_provider_callback_;
   scoped_refptr<viz::ContextProvider> context_provider_;
 
   DISALLOW_IMPLICIT_CONSTRUCTORS(WebMediaPlayerParams);
