@@ -11,6 +11,8 @@
 
 #include "core/CSSPropertyNames.h"
 #include "core/css/parser/CSSParserTokenRange.h"
+#include "platform/text/TextDirection.h"
+#include "platform/text/WritingMode.h"
 
 namespace blink {
 
@@ -33,7 +35,7 @@ class CSSPropertyAPI {
   // For backwards compatibility when passing around CSSPropertyAPI references.
   // in case we need to call a function that hasn't been converted to using APIs
   // yet.
-  CSSPropertyID PropertyID() { return id_; }
+  CSSPropertyID PropertyID() const { return id_; }
 
   // Parses and consumes a longhand property value from the token range.
   // Returns nullptr if the input is invalid.
@@ -70,6 +72,9 @@ class CSSPropertyAPI {
     NOTREACHED();
   }
   virtual bool IsAffectedByAll() const { return IsEnabled() && IsProperty(); }
+  virtual const CSSPropertyAPI& ResolveDirectionAwareProperty(
+      TextDirection direction,
+      WritingMode writing_mode) const { return *this; }
 
  private:
   const CSSPropertyID id_;
