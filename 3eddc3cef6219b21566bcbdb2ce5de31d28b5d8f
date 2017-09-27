@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4677e52b_3b54430d",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_bar_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-09-27T13:31:48Z",
+      "side": 1,
+      "message": "ObjC ivars are guaranteed to be zero-initialized, so this shouldn\u0027t be necessary, right?",
+      "revId": "3eddc3cef6219b21566bcbdb2ce5de31d28b5d8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
