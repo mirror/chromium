@@ -198,6 +198,24 @@
       "revId": "bafa62447d43e994a5c89254fa3dad21d54ff19f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "793f45fb_a5706cff",
+        "filename": "services/service_manager/tests/sandbox/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-27T18:24:58Z",
+      "side": 1,
+      "message": "I don\u0027t think you even need test.gni since you\u0027re not using the test() template.",
+      "parentUuid": "81446e34_3b16d727",
+      "revId": "bafa62447d43e994a5c89254fa3dad21d54ff19f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
