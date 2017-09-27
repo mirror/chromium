@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0adee7f8_560eac96",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 959,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-27T22:52:43Z",
+      "side": 1,
+      "message": "nit: insert an empty line above this line.",
+      "revId": "175749c3d6b8930bc09ac3c0482d9f847a93ecfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d045580_cf2cfdb9",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-27T22:52:43Z",
+      "side": 1,
+      "message": "nit: insert an empty line above",
+      "revId": "175749c3d6b8930bc09ac3c0482d9f847a93ecfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6be71ce8_306b37dc",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-27T22:52:43Z",
+      "side": 1,
+      "message": "nit: insert an empty line above",
+      "revId": "175749c3d6b8930bc09ac3c0482d9f847a93ecfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
