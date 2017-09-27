@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7ea108d_2c194392",
+        "filename": "components/metrics/expired_histograms_checker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-09-27T16:04:00Z",
+      "side": 1,
+      "message": "I don\u0027t think we should rely on the parameter values being sorted, since it\u0027s only guaranteed by human\u0027s doing code reviews. Either they should be explicitly sorted, or a different data structure should be used.",
+      "range": {
+        "startLine": 32,
+        "startChar": 16,
+        "endLine": 32,
+        "endChar": 0
+      },
+      "revId": "c84485c6fefa58cc83eab7cfcb98c6748aa4df98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbe3b87d_6dd43f48",
+        "filename": "components/metrics/expired_histograms_checker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-09-27T16:04:00Z",
+      "side": 1,
+      "message": "Maybe this logic should be optimized a bit, and it might make it clearer.\nHow bout:\n\nif ([check enabled_histograms_])\n  return true;\nif ([check disabled_histograms_] || [check array_])\n  return false;\nreturn true;\n\nThat way, we don\u0027t have to check all the things all the time (though probably will check since we don\u0027t expect to use params very often) and it\u0027s very clear that enabled_histograms takes priorityp",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 55
+      },
+      "revId": "c84485c6fefa58cc83eab7cfcb98c6748aa4df98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "209481d7_78b4789e",
+        "filename": "components/metrics/expired_histograms_checker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-09-27T16:04:00Z",
+      "side": 1,
+      "message": "Add a comment here saying that, since the feature list wasn\u0027t null, we expect variation params to be initialized, so we set this true even if none were found.",
+      "revId": "c84485c6fefa58cc83eab7cfcb98c6748aa4df98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccce8a9a_856a9be2",
+        "filename": "components/metrics/expired_histograms_checker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-09-27T16:04:00Z",
+      "side": 1,
+      "message": "If these are expected to be sorted, please mention in the comment.",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 45
+      },
+      "revId": "c84485c6fefa58cc83eab7cfcb98c6748aa4df98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
