@@ -858,8 +858,7 @@ RenderTextHarfBuzz::RenderTextHarfBuzz()
       update_layout_run_list_(false),
       update_display_run_list_(false),
       update_grapheme_iterator_(false),
-      update_display_text_(false),
-      glyph_width_for_test_(0u) {
+      update_display_text_(false) {
   set_truncate_length(kMaxTextLength);
 }
 
@@ -1633,8 +1632,8 @@ bool RenderTextHarfBuzz::ShapeRunWithFont(const base::string16& text,
     const SkScalar y_offset =
         HarfBuzzUnitsToSkiaScalar(hb_positions[i].y_offset);
     run->positions[i].set(run->width + x_offset, -y_offset);
-    run->width += (glyph_width_for_test_ > 0)
-                      ? glyph_width_for_test_
+    run->width += (glyph_width() > 0)
+                      ? glyph_width()
                       : HarfBuzzUnitsToFloat(hb_positions[i].x_advance);
     // Round run widths if subpixel positioning is off to match native behavior.
     if (!run->render_params.subpixel_positioning)

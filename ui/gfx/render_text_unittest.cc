@@ -568,10 +568,6 @@ class RenderTextHarfBuzzTest : public RenderTextTest {
   }
 
  protected:
-  void SetGlyphWidth(float test_width) {
-    GetRenderTextHarfBuzz()->set_glyph_width_for_test(test_width);
-  }
-
   bool ShapeRunWithFont(const base::string16& text,
                         const Font& font,
                         const FontRenderParams& params,
@@ -1874,10 +1870,10 @@ TEST_P(RenderTextHarfBuzzTest, FindCursorPositionMultiline) {
   const char* kTestStrings[] = {"abc def",
                                 "\u05d0\u05d1\u05d2 \u05d3\u05d4\u05d5"};
 
-  SetGlyphWidth(5);
   RenderText* render_text = GetRenderText();
   render_text->SetDisplayRect(Rect(25, 1000));
   render_text->SetMultiline(true);
+  render_text->set_glyph_width(5);
 
   for (size_t i = 0; i < arraysize(kTestStrings); i++) {
     render_text->SetText(UTF8ToUTF16(kTestStrings[i]));
@@ -3066,7 +3062,7 @@ TEST_P(RenderTextHarfBuzzTest, Multiline_NormalWidth) {
 
   // Specify the fixed width for characters to suppress the possible variations
   // of linebreak results.
-  SetGlyphWidth(5);
+  render_text->set_glyph_width(5);
   render_text->SetDisplayRect(Rect(50, 1000));
   render_text->SetMultiline(true);
   render_text->SetWordWrapBehavior(WRAP_LONG_WORDS);
@@ -3242,7 +3238,7 @@ TEST_P(RenderTextHarfBuzzTest, Multiline_HorizontalAlignment) {
   const int kGlyphSize = 5;
   RenderTextHarfBuzz* render_text = GetRenderTextHarfBuzz();
   render_text->SetHorizontalAlignment(ALIGN_TO_HEAD);
-  SetGlyphWidth(kGlyphSize);
+  render_text->set_glyph_width(kGlyphSize);
   render_text->SetDisplayRect(Rect(100, 1000));
   render_text->SetMultiline(true);
 
@@ -3297,7 +3293,7 @@ TEST_P(RenderTextHarfBuzzTest, Multiline_WordWrapBehavior) {
   RenderTextHarfBuzz* render_text = GetRenderTextHarfBuzz();
   render_text->SetMultiline(true);
   render_text->SetText(UTF8ToUTF16("foo fooooo foo"));
-  SetGlyphWidth(kGlyphSize);
+  render_text->set_glyph_width(kGlyphSize);
   render_text->SetDisplayRect(Rect(0, 0, kGlyphSize * 4, 0));
 
   for (size_t i = 0; i < arraysize(kTestScenarios); ++i) {
@@ -3355,7 +3351,7 @@ TEST_P(RenderTextHarfBuzzTest, Multiline_LineBreakerBehavior) {
 
   RenderTextHarfBuzz* render_text = GetRenderTextHarfBuzz();
   render_text->SetMultiline(true);
-  SetGlyphWidth(kGlyphSize);
+  render_text->set_glyph_width(kGlyphSize);
   render_text->SetDisplayRect(Rect(0, 0, kGlyphSize * 4, 0));
 
   for (size_t i = 0; i < arraysize(kTestScenarios); ++i) {

@@ -938,7 +938,7 @@ void Textfield::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   if (text_input_type_ == ui::TEXT_INPUT_TYPE_PASSWORD) {
     node_data->AddState(ui::AX_STATE_PROTECTED);
     node_data->SetValue(base::string16(
-        text().size(), gfx::RenderText::kPasswordReplacementChar));
+        text().size(), GetRenderText()->password_replacement_char()));
   } else {
     node_data->SetValue(text());
   }

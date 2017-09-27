@@ -489,6 +489,23 @@ class GFX_EXPORT RenderText {
 
   void set_strike_thickness_factor(SkScalar f) { strike_thickness_factor_ = f; }
 
+  // Set the password replacement char. Used when the default
+  // |kPasswordReplacementChar| is not desirable.
+  void set_password_replacement_char(base::char16 password_replacement_char) {
+    password_replacement_char_ = password_replacement_char;
+  }
+
+  base::char16 password_replacement_char() {
+    return password_replacement_char_;
+  }
+
+  // Specify the width of a glyph. Multiline test will become flaky if it's
+  // not set, because the width of glyphs is very platform-dependent and
+  // environment-dependent.
+  void set_glyph_width(float glyph_width) { glyph_width_ = glyph_width; }
+
+  float glyph_width() { return glyph_width_; }
+
  protected:
   RenderText();
 
@@ -827,6 +844,12 @@ class GFX_EXPORT RenderText {
 
   // The ratio of strike-through line thickness to text height.
   SkScalar strike_thickness_factor_;
+
+  // The character used for displaying obscured text.
+  base::char16 password_replacement_char_ = kPasswordReplacementChar;
+
+  // Fixed width of glyphs.
+  float glyph_width_ = 0u;
 
   DISALLOW_COPY_AND_ASSIGN(RenderText);
 };
