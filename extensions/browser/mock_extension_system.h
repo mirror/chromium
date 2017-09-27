@@ -29,6 +29,7 @@ class MockExtensionSystem : public ExtensionSystem {
   // ExtensionSystem overrides:
   void InitForRegularProfile(bool extensions_enabled) override;
   ExtensionService* extension_service() override;
+  ExtensionRegistrar* extension_registrar() override;
   RuntimeData* runtime_data() override;
   ManagementPolicy* management_policy() override;
   ServiceWorkerManager* service_worker_manager() override;
