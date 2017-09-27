@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f26fb2dc_b111b8dd",
+        "filename": "chrome/browser/ui/webui/print_preview/extension_printer_handler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-27T23:22:57Z",
+      "side": 1,
+      "message": "Can we assume |capability| is not a nullptr? Same for the FindPath() return value.",
+      "revId": "1964dbe5f61c5a1bedc61eb7073733a2a11a868c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
