@@ -16,6 +16,24 @@
       "revId": "43fee3aec57522625119ec640b8a9fdfb4fad6e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97674534_23664f03",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-09-27T20:36:30Z",
+      "side": 1,
+      "message": "What I mean is, we have multiple mechanisms to pass information between GPU and renderer process. Before this CL, we have Capabilities and GPUInfo, so we stuck driver bug workarounds and blacklisting decisions to these two data structures. That is wrong because such info do not belong to these two data structures.\n\nWith this CL, finally we will have the proper way to pass the information. So we should not put information to data structures they don\u0027t belong. This requires a cleanup for the current mess.\n\nOnce it\u0027s cleaned up, each piece of info will be passed to Renderer in the right place, so renderer won\u0027t have multiple choices.\n\nDoes that answer your question?",
+      "parentUuid": "28c45aa8_61a53850",
+      "revId": "43fee3aec57522625119ec640b8a9fdfb4fad6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
