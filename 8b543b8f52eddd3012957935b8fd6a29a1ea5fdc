@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27d6989c_f0793621",
+        "filename": "ash/wm/overview/window_selector_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2426,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-27T18:40:05Z",
+      "side": 1,
+      "message": "How about defining a utility function to drag a window item to given point?\nDragWindowTo(grid, window, point) ? you can use it in DragOverviewWindowToSnap.\n\noptional: I think it\u0027s ok to have simpler test api to snap window, instead of simulating drag in every test. whichever you like.",
+      "revId": "8b543b8f52eddd3012957935b8fd6a29a1ea5fdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
