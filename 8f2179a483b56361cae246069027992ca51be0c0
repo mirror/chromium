@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d81f5a32_38803fc7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetPaddingManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-27T22:14:19Z",
+      "side": 1,
+      "message": "This might be better as BottomSheetPaddingUtils that has static methods:\n\npublic applyPadding(View v, Rect padding)\nprivate applyPaddingForRecycler...\nprivate applyPaddingForGeneric...\n\nI like the organizational structure you have here, but it feels odd that the PaddingHandlers are as short-lived as they are (making me question why we need them). It would make sense if we were able to cache them like you were before, but unfortunately we can\u0027t do that. :\\",
+      "range": {
+        "startLine": 18,
+        "startChar": 13,
+        "endLine": 18,
+        "endChar": 38
+      },
+      "revId": "8f2179a483b56361cae246069027992ca51be0c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
