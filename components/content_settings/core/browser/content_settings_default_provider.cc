@@ -391,6 +391,14 @@ void DefaultProvider::DiscardObsoletePreferences() {
     prefs_->ClearPref(plugins_pref);
   }
 #endif  // !defined(OS_ANDROID)
+
+  // BLOCK-by-default is an obsolete pref value for sound. Erase that pref and
+  // fall back to the default behavior - but preserve other values.
+  const std::string& sound_pref = GetPrefName(CONTENT_SETTINGS_TYPE_SOUND);
+  if (IntToContentSetting(prefs_->GetInteger(sound_pref)) ==
+      ContentSetting::CONTENT_SETTING_BLOCK) {
+    prefs_->ClearPref(sound_pref);
+  }
 #endif  // !defined(OS_IOS)
 }
 
