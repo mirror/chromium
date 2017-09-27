@@ -762,12 +762,14 @@ void Surface::AppendContentsToFrame(const gfx::Point& origin,
   gfx::Rect output_rect(origin, content_size_);
   gfx::Rect quad_rect(0, 0, 1, 1);
 
-  // Surface uses DIP, but the |render_pass->damage_rect| uses pixels, so we
-  // need scale it beased on the |device_scale_factor|.
+  // Surface bounds are in DIPs, but |damage_rect| and |output_rect| are in
+  // pixels, so we need to scale by the |device_scale_factor|.
   gfx::Rect damage_rect = gfx::SkIRectToRect(damage_.getBounds());
   damage_rect.Offset(origin.x(), origin.y());
   render_pass->damage_rect.Union(
       gfx::ConvertRectToPixel(device_scale_factor, damage_rect));
+  render_pass->output_rect.Union(
+      gfx::ConvertRectToPixel(device_scale_factor, output_rect));
 
   // Compute the total transformation from post-transform buffer coordinates to
   // target coordinates.
@@ -791,8 +793,8 @@ void Surface::AppendContentsToFrame(const gfx::Point& origin,
   viz::SharedQuadState* quad_state =
       render_pass->CreateAndAppendSharedQuadState();
   quad_state->SetAll(
-      quad_to_target_transform, gfx::Rect(content_size_) /* quad_layer_rect */,
-      output_rect /* visible_quad_layer_rect */, gfx::Rect() /* clip_rect */,
+      quad_to_target_transform, quad_rect /* quad_layer_rect */,
+      quad_rect /* visible_quad_layer_rect */, gfx::Rect() /* clip_rect */,
       false /* is_clipped */, are_contents_opaque, state_.alpha /* opacity */,
       SkBlendMode::kSrcOver /* blend_mode */, 0 /* sorting_context_id */);
 
@@ -864,8 +866,6 @@ void Surface::UpdateContentSize() {
   if (content_size_ != content_size) {
     content_size_ = content_size;
     window_->SetBounds(gfx::Rect(window_->bounds().origin(), content_size_));
-    if (delegate_)
-      delegate_->OnSurfaceContentSizeChanged();
   }
 }
 
