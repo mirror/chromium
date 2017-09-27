@@ -99,7 +99,9 @@ void NativeWebContentsModalDialogManagerViews::Show() {
   }
 #endif
   ShowWidget(widget);
-  Focus();
+  // Don't steal focus if the parent WebContents isn't being used by the user.
+  if (widget->GetNativeWindow()->parent()->HasFocus())
+    Focus();
 
 #if defined(USE_AURA)
   // TODO(pkotwicz): Control the z-order of the constrained dialog via
