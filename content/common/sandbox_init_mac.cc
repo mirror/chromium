@@ -11,8 +11,8 @@
 #include "content/common/sandbox_mac.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/sandbox_init.h"
-#include "content/public/common/sandbox_type.h"
 #include "sandbox/mac/seatbelt.h"
+#include "services/service_manager/sandbox/sandbox_type.h"
 
 namespace content {
 
@@ -59,7 +59,7 @@ bool GetSandboxInfoFromCommandLine(SandboxType* sandbox_type,
     return false;
   }
 
-  return *sandbox_type != SANDBOX_TYPE_INVALID;
+  return *sandbox_type != service_manager::SANDBOX_TYPE_INVALID;
 }
 
 }  // namespace
@@ -69,7 +69,8 @@ bool InitializeSandbox(int sandbox_type, const base::FilePath& allowed_dir) {
 }
 
 bool InitializeSandboxWithPostWarmupHook(base::OnceClosure hook) {
-  SandboxType sandbox_type = SANDBOX_TYPE_INVALID;
+  service_manager::SandboxType sandbox_type =
+      service_manager::SANDBOX_TYPE_INVALID;
   base::FilePath allowed_dir;
   return !GetSandboxInfoFromCommandLine(&sandbox_type, &allowed_dir) ||
          InitializeSandbox(sandbox_type, allowed_dir, std::move(hook));

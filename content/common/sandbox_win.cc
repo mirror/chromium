@@ -43,6 +43,7 @@
 #include "sandbox/win/src/sandbox_nt_util.h"
 #include "sandbox/win/src/sandbox_policy_base.h"
 #include "sandbox/win/src/win_utils.h"
+#include "services/service_manager/sandbox/sandbox_type.h"
 
 #if !defined(NACL_WIN64)
 #include "ui/gfx/win/direct_write.h" // nogncheck: unused #ifdef NACL_WIN64
@@ -805,7 +806,7 @@ sandbox::ResultCode StartSandboxedProcess(
   if (type_str == switches::kRendererProcess ||
       type_str == switches::kPpapiPluginProcess ||
       (type_str == switches::kUtilityProcess &&
-       delegate->GetSandboxType() == SANDBOX_TYPE_PPAPI)) {
+       delegate->GetSandboxType() == service_manager::SANDBOX_TYPE_PPAPI)) {
     AddDirectory(base::DIR_WINDOWS_FONTS, NULL, true,
                  sandbox::TargetPolicy::FILES_ALLOW_READONLY, policy.get());
   }
