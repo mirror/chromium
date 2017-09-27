@@ -26,6 +26,7 @@
 #include "ash/wm/overview/window_selector_item.h"
 #include "ash/wm/panels/panel_layout_manager.h"
 #include "ash/wm/splitview/split_view_controller.h"
+#include "ash/wm/splitview/split_view_divider.h"
 #include "ash/wm/splitview/split_view_overview_overlay.h"
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "ash/wm/window_state.h"
@@ -1948,6 +1949,13 @@ class SplitViewWindowSelectorTest : public WindowSelectorTest {
         window, SplitViewController::RIGHT);
   }
 
+  gfx::Rect GetSplitViewDividerBounds(bool is_dragging) {
+    if (!split_view_controller()->IsSplitViewModeActive())
+      return gfx::Rect();
+    return split_view_controller()
+        ->split_view_divider_->GetDividerBoundsInScreen(is_dragging);
+  }
+
  private:
   DISALLOW_COPY_AND_ASSIGN(SplitViewWindowSelectorTest);
 };
@@ -2390,6 +2398,68 @@ TEST_F(SplitViewWindowSelectorTest, SplitViewRotationTest) {
             SplitViewController::BOTH_SNAPPED);
   EXPECT_EQ(split_view_controller()->right_window(), window2.get());
   EndSplitView();
+}
+
+// Test that when split view mode and overview mode are both active at the same
+// time, dragging the split view divider resizes the bounds of snapped window
+// and the bounds of overview window grids at the same time.
+TEST_F(SplitViewWindowSelectorTest, SplitViewOverviewBothActiveTest) {
+  UpdateDisplay("907x407");
+
+  const gfx::Rect bounds(0, 0, 400, 400);
+  std::unique_ptr<aura::Window> window1(CreateWindow(bounds));
+  std::unique_ptr<aura::Window> window2(CreateWindow(bounds));
+  std::unique_ptr<aura::Window> window3(CreateWindow(bounds));
+
+  ToggleOverview();
+
+  // Drag |window1| selector item to snap to left.
+  const int grid_index = 0;
+  WindowSelectorItem* selector_item1 =
+      GetWindowItemForWindow(grid_index, window1.get());
+  const gfx::Rect selector_item_bounds1 = selector_item1->target_bounds();
+  // Start drag in the middle of the seletor item.
+  const gfx::Point start_location1(selector_item_bounds1.CenterPoint());
+  window_selector()->InitiateDrag(selector_item1, start_location1);
+  const gfx::Point end_location1(0, 0);
+  window_selector()->Drag(selector_item1, end_location1);
+  window_selector()->CompleteDrag(selector_item1, end_location1);
+
+  EXPECT_EQ(split_view_controller()->state(),
+            SplitViewController::LEFT_SNAPPED);
+  const gfx::Rect window1_bounds = window1->GetBoundsInScreen();
+  const gfx::Rect overview_grid_bounds = GetGridBounds();
+  const gfx::Rect divider_bounds =
+      GetSplitViewDividerBounds(false /* is_dragging */);
+
+  // Test that window1, divider, overview grid are aligned horizontally.
+  EXPECT_EQ(window1_bounds.right(), divider_bounds.x());
+  EXPECT_EQ(divider_bounds.right(), overview_grid_bounds.x());
+
+  const gfx::Point resize_start_location(divider_bounds.CenterPoint());
+  split_view_controller()->StartResize(resize_start_location);
+  const gfx::Point resize_end_location(300, 0);
+  split_view_controller()->EndResize(resize_end_location);
+
+  const gfx::Rect window1_bounds_after_resize = window1->GetBoundsInScreen();
+  const gfx::Rect overview_grid_bounds_after_resize = GetGridBounds();
+  const gfx::Rect divider_bounds_after_resize =
+      GetSplitViewDividerBounds(false /* is_dragging */);
+
+  // Test that window1, divider, overview grid are still aligned horizontally
+  // after resizing.
+  EXPECT_EQ(window1_bounds.right(), divider_bounds.x());
+  EXPECT_EQ(divider_bounds.right(), overview_grid_bounds.x());
+
+  // Test that window1, divider, overview grid's bounds are changed after
+  // resizing.
+  EXPECT_NE(window1_bounds, window1_bounds_after_resize);
+  EXPECT_NE(overview_grid_bounds, overview_grid_bounds_after_resize);
+  EXPECT_NE(divider_bounds, divider_bounds_after_resize);
+
+  // TODO(crbug.com/766725): There is a memory leak if we tear down while
+  // overview and splitview mode is both active. Investigate.
+  ToggleOverview();
 }
 
 }  // namespace ash
