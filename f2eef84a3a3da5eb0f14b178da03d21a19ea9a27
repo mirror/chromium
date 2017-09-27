@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3d9a7a63_bfe89b48",
+        "filename": "DEPS",
+        "patchSetId": 11
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-09-27T02:56:52Z",
+      "side": 1,
+      "message": "Understood, as we discussed off-CL there are plusses and minuses to any approach. I will attempt to get a decision as soon as I can on which way we want to move forward with this.",
+      "parentUuid": "7d59f809_812d374b",
+      "range": {
+        "startLine": 38,
+        "startChar": 3,
+        "endLine": 38,
+        "endChar": 31
+      },
+      "revId": "f2eef84a3a3da5eb0f14b178da03d21a19ea9a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "55a300a8_2ef602cc",
         "filename": "DEPS",
         "patchSetId": 11
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-26T15:10:02Z",
       "side": 1,
       "message": "nit: it should be possible to omit this",
+      "range": {
+        "startLine": 992,
+        "startChar": 51,
+        "endLine": 992,
+        "endChar": 59
+      },
+      "revId": "f2eef84a3a3da5eb0f14b178da03d21a19ea9a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66c46e94_c5316fba",
+        "filename": "DEPS",
+        "patchSetId": 11
+      },
+      "lineNbr": 992,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-09-27T02:56:52Z",
+      "side": 1,
+      "message": "Ack, that does appear to work. I had tested something similar earlier and it didn\u0027t, but I think the variable did have a different type.",
+      "parentUuid": "55a300a8_2ef602cc",
       "range": {
         "startLine": 992,
         "startChar": 51,
