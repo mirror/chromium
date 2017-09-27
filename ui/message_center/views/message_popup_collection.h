@@ -40,7 +40,6 @@ class MessagePopupCollectionTest;
 
 class MessageCenter;
 class MessageCenterTray;
-class MessageViewContextMenuController;
 class PopupAlignmentDelegate;
 
 // Container for popup toasts. Because each toast is a frameless window rather
@@ -61,9 +60,6 @@ class MESSAGE_CENTER_EXPORT MessagePopupCollection
   void ClickOnNotification(const std::string& notification_id) override;
   void RemoveNotification(const std::string& notification_id,
                           bool by_user) override;
-  std::unique_ptr<ui::MenuModel> CreateMenuModel(
-      const NotifierId& notifier_id,
-      const base::string16& display_source) override;
   bool HasClickedListener(const std::string& notification_id) override;
   void ClickOnNotificationButton(const std::string& notification_id,
                                  int button_index) override;
@@ -176,8 +172,6 @@ class MESSAGE_CENTER_EXPORT MessagePopupCollection
 
   // Weak, only exists temporarily in tests.
   std::unique_ptr<base::RunLoop> run_loop_for_test_;
-
-  std::unique_ptr<MessageViewContextMenuController> context_menu_controller_;
 
   // Gives out weak pointers to toast contents views which have an unrelated
   // lifetime.  Must remain the last member variable.

@@ -112,9 +112,6 @@ class ASH_EXPORT NotifierSettingsView
   // Overridden from views::ComboboxListener:
   void OnPerformAction(views::Combobox* combobox) override;
 
-  // Callback for views::MenuModelAdapter.
-  void OnMenuClosed();
-
   views::ImageButton* title_arrow_;
   views::Label* title_label_;
   views::Combobox* notifier_group_combobox_;
