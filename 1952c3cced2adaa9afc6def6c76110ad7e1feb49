@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c9fe6cb_78b09d78",
+        "filename": "third_party/WebKit/Source/core/editing/spellcheck/SpellCheckRequester.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-27T02:06:06Z",
+      "side": 1,
+      "message": "Since DidCheck() is used two places, DidCheckSucceeded() and DidCheckCancel() and we can assume |processing_request_-\u003eData().Sequence() \u003d\u003d sequence| in DCHECK at L253 and handles L243-256 for just in case.\n\nHow about introduce EnsureRequestQueue(int sequence)?\n\n// Returns true if |process_request_| is for expected |sequence|\nbool SpellChecKRequester::EnsureRequestQueue(int sequence) {\n  if (processing_request_-\u003eData().Sequence() \u003d\u003d sequence)\n   return true;\n  NOTREACHED();\n  request_queue_.clear()\n  return false;\n}\n\nbool SpellChecKRequester::DidCheck(...) {\n DCHECK_EQ(processing_request_-\u003eData().Sequence(), sequence);\n ... all code of DidCheck() except for EnsureRequestQueue()\n}\n\n\nvoid SpellCheckRequester::DidCheckSucceed(...) {\n  if (!EnsureRequestQueue(sequence))\n    return;\n  GetFrame().GetSpellChecker().MarkAndReplaceFor(processing_request_,\n                                                 results);\n  DidCheck(...);\n}\n\nvoid SpellCheckRequester::DidCheckCancele(...) {\n  if (!EnsureRequestQueue(sequence))\n    return;\n  DidCheck(...);\n}",
+      "revId": "1952c3cced2adaa9afc6def6c76110ad7e1feb49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7b36968_d796eda7",
+        "filename": "third_party/WebKit/Source/core/editing/spellcheck/SpellChecker.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-27T02:06:06Z",
+      "side": 1,
+      "message": "nit: Add |const| or avoid to use |markers|.",
+      "revId": "1952c3cced2adaa9afc6def6c76110ad7e1feb49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
