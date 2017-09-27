@@ -58,13 +58,7 @@ CONTENT_EXPORT sandbox::ResultCode StartSandboxedProcess(
 // Initialize the sandbox of the given |sandbox_type|, optionally specifying a
 // directory to allow access to. Note specifying a directory needs to be
 // supported by the sandbox profile associated with the given |sandbox_type|.
-// Valid values for |sandbox_type| are defined either by the enum SandboxType,
-// or by ContentClient::GetSandboxProfileForSandboxType().
-//
-// If the |sandbox_type| isn't one of the ones defined by content then the
-// embedder is queried using ContentClient::GetSandboxPolicyForSandboxType().
-// The embedder can use values for |sandbox_type| starting from
-// sandbox::SANDBOX_PROCESS_TYPE_AFTER_LAST_TYPE.
+// Valid values for |sandbox_type| are defined by the enum SandboxType.
 //
 // Returns true if the sandbox was initialized succesfully, false if an error
 // occurred.  If process_type isn't one that needs sandboxing, no action is

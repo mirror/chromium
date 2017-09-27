@@ -64,6 +64,7 @@ SandboxTypeToResourceIDMapping kDefaultSandboxTypeToResourceIDMapping[] = {
     {service_manager::SANDBOX_TYPE_PPAPI, IDR_PPAPI_SANDBOX_PROFILE},
     {service_manager::SANDBOX_TYPE_NETWORK, -1},
     {service_manager::SANDBOX_TYPE_CDM, IDR_PPAPI_SANDBOX_PROFILE},
+    {service_manager::SANDBOX_TYPE_NACL_LOADER, IDR_NACL_SANDBOX_PROFILE},
 };
 
 static_assert(arraysize(kDefaultSandboxTypeToResourceIDMapping) ==
@@ -196,13 +197,8 @@ std::string LoadSandboxTemplate(int sandbox_type) {
       break;
     }
   }
-  if (sandbox_profile_resource_id == -1) {
-    // Check if the embedder knows about this sandbox process type.
-    bool sandbox_type_found =
-        GetContentClient()->GetSandboxProfileForSandboxType(
-            sandbox_type, &sandbox_profile_resource_id);
-    CHECK(sandbox_type_found) << "Unknown sandbox type " << sandbox_type;
-  }
+  CHECK(sandbox_profile_resource_id != -1)
+      << "Unknown sandbox type " << sandbox_type;
 
   base::StringPiece sandbox_definition =
       GetContentClient()->GetDataResource(

@@ -41,6 +41,11 @@ enum SandboxType {
   // The CDM service process.
   SANDBOX_TYPE_CDM,
 
+#if defined(OS_MACOSX)
+  // The NaCl loader process.
+  SANDBOX_TYPE_NACL_LOADER,
+#endif  // defined(OS_MACOS)
+
   SANDBOX_TYPE_AFTER_LAST_TYPE,  // Placeholder to ease iteration.
 };
 

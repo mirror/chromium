@@ -72,7 +72,6 @@
 #if BUILDFLAG(ENABLE_NACL)
 #include "components/nacl/common/nacl_constants.h"
 #include "components/nacl/common/nacl_process_type.h"
-#include "components/nacl/common/nacl_sandbox_type.h"
 #endif
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
@@ -683,21 +682,6 @@ std::string ChromeContentClient::GetProcessTypeNameInEnglish(int type) {
   NOTREACHED() << "Unknown child process type!";
   return "Unknown";
 }
-
-#if defined(OS_MACOSX)
-bool ChromeContentClient::GetSandboxProfileForSandboxType(
-    int sandbox_type,
-    int* sandbox_profile_resource_id) const {
-  DCHECK(sandbox_profile_resource_id);
-#if BUILDFLAG(ENABLE_NACL)
-  if (sandbox_type == NACL_SANDBOX_TYPE_NACL_LOADER) {
-    *sandbox_profile_resource_id = IDR_NACL_SANDBOX_PROFILE;
-    return true;
-  }
-#endif
-  return false;
-}
-#endif
 
 bool ChromeContentClient::AllowScriptExtensionForServiceWorker(
     const GURL& script_url) {
