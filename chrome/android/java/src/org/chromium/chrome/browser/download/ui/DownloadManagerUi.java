@@ -290,6 +290,13 @@ public class DownloadManagerUi implements OnMenuItemClickListener, SearchDelegat
     }
 
     /**
+     * @return The {@link RecyclerView} that contains the list of history items.
+     */
+    public RecyclerView getRecyclerView() {
+        return mRecyclerView;
+    }
+
+    /**
      * See {@link SelectableListLayout#detachToolbarView()}.
      */
     public SelectableListToolbar<DownloadHistoryItemWrapper> detachToolbarView() {

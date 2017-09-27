@@ -78,6 +78,11 @@ public class DownloadSheetContent implements BottomSheetContent {
     }
 
     @Override
+    public View getViewForPadding() {
+        return mDownloadManager.getRecyclerView();
+    }
+
+    @Override
     public View getToolbarView() {
         return mToolbarView;
     }

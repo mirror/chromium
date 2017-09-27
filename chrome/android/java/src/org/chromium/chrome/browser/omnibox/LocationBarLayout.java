@@ -2326,6 +2326,11 @@ public class LocationBarLayout extends FrameLayout
                     return mOmniboxResultsContainer;
                 }
 
+                @Override
+                public View getViewForPadding() {
+                    return null;
+                }
+
                 @Nullable
                 @Override
                 public View getToolbarView() {

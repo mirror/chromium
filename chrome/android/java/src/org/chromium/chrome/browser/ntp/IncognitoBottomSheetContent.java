@@ -142,6 +142,11 @@ public class IncognitoBottomSheetContent extends IncognitoNewTabPage implements 
     }
 
     @Override
+    public View getViewForPadding() {
+        return mScrollView;
+    }
+
+    @Override
     public View getToolbarView() {
         return null;
     }
