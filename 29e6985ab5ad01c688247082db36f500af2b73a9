@@ -1,0 +1,197 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41a86107_590bbc1f",
+        "filename": "android_webview/browser/net/aw_cookie_store_wrapper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-27T18:51:34Z",
+      "side": 1,
+      "message": "nit: per offline discussion, this class might not be necessary.",
+      "revId": "29e6985ab5ad01c688247082db36f500af2b73a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcd41d15_7e5951d0",
+        "filename": "ios/net/cookies/cookie_store_ios.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-27T18:51:34Z",
+      "side": 1,
+      "message": "should this be in the anonymous namespace?\nper offline discussion, this class might not be necessary.",
+      "revId": "29e6985ab5ad01c688247082db36f500af2b73a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "326626df_b733f050",
+        "filename": "net/cookies/cookie_monster.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-27T18:51:34Z",
+      "side": 1,
+      "message": "Should this be in a file local anonymous namespace?\nCan we add a class level comment on the purpose of this class?",
+      "revId": "29e6985ab5ad01c688247082db36f500af2b73a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3c527e1_d59c4954",
+        "filename": "net/cookies/cookie_monster.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-27T18:51:34Z",
+      "side": 1,
+      "message": "Can this wrap a Subscription instead of creating a new CookieChangedSubscription class?",
+      "revId": "29e6985ab5ad01c688247082db36f500af2b73a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aec5bd41_e1303b03",
+        "filename": "net/cookies/cookie_monster.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-27T18:51:34Z",
+      "side": 1,
+      "message": "This can be a private method since CookieMonster is already a friend class.",
+      "revId": "29e6985ab5ad01c688247082db36f500af2b73a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa03a2e2_3470358f",
+        "filename": "net/cookies/cookie_monster.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-27T18:51:34Z",
+      "side": 1,
+      "message": "optional: \"Proxy\" is probably a too overloaded term. I thought of network proxy when i see it. Maybe call it WrappedCallback() instead?",
+      "revId": "29e6985ab5ad01c688247082db36f500af2b73a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1426e218_1f96a347",
+        "filename": "net/cookies/cookie_monster.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-27T18:51:34Z",
+      "side": 1,
+      "message": "per offline discussion, if you can add a method-level comment on the method contract, it will be great.",
+      "revId": "29e6985ab5ad01c688247082db36f500af2b73a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34627ed2_9da10321",
+        "filename": "net/cookies/cookie_monster_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3219,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-27T18:51:34Z",
+      "side": 1,
+      "message": "nit: I don\u0027t see a \"race\" here. Can we rename the test to \"NotificationAfterSubscriptionDestroyed\" or something similar?",
+      "revId": "29e6985ab5ad01c688247082db36f500af2b73a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e12702a5_66647d39",
+        "filename": "net/cookies/cookie_store.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-27T18:51:34Z",
+      "side": 1,
+      "message": "I am not sure if this is necessary. Can we use Subscription instead?",
+      "revId": "29e6985ab5ad01c688247082db36f500af2b73a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8f93db3_69ab6125",
+        "filename": "net/cookies/cookie_store_unittest.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1838,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-27T18:51:34Z",
+      "side": 1,
+      "message": "\"the change bug\" ?\nDo you mean \"but\" ?",
+      "range": {
+        "startLine": 1838,
+        "startChar": 50,
+        "endLine": 1838,
+        "endChar": 51
+      },
+      "revId": "29e6985ab5ad01c688247082db36f500af2b73a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ffc126a_3cce8481",
+        "filename": "net/cookies/cookie_store_unittest.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1840,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-27T18:51:34Z",
+      "side": 1,
+      "message": "minor nit: Again I don\u0027t see any \"race\" in this test. Notification always happens after subscription is destroyed.",
+      "revId": "29e6985ab5ad01c688247082db36f500af2b73a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
