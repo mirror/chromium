@@ -5,7 +5,6 @@
 #include "core/animation/CompositorMutatorImpl.h"
 
 #include "core/animation/CompositorAnimator.h"
-#include "core/animation/CustomCompositorAnimationManager.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/WaitableEvent.h"
 #include "platform/WebTaskRunner.h"
@@ -24,7 +23,7 @@ void CreateCompositorMutatorClient(
     std::unique_ptr<CompositorMutatorClient>* ptr,
     WaitableEvent* done_event) {
   CompositorMutatorImpl* mutator = CompositorMutatorImpl::Create();
-  ptr->reset(new CompositorMutatorClient(mutator, mutator->AnimationManager()));
+  ptr->reset(new CompositorMutatorClient(mutator));
   mutator->SetClient(ptr->get());
   done_event->Signal();
 }
@@ -32,7 +31,7 @@ void CreateCompositorMutatorClient(
 }  // namespace
 
 CompositorMutatorImpl::CompositorMutatorImpl()
-    : animation_manager_(WTF::WrapUnique(new CustomCompositorAnimationManager)),
+    : animation_target_(WTF::WrapUnique(new CompositorMutationsTarget)),
       client_(nullptr) {}
 
 std::unique_ptr<CompositorMutatorClient> CompositorMutatorImpl::CreateClient() {

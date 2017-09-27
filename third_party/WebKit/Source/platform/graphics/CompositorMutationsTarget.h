@@ -6,13 +6,11 @@
 #define CompositorMutationsTarget_h
 
 #include "platform/PlatformExport.h"
-#include "platform/graphics/CompositorMutation.h"
 
 namespace blink {
 
 class PLATFORM_EXPORT CompositorMutationsTarget {
  public:
-  virtual void ApplyMutations(CompositorMutations*) = 0;
   virtual ~CompositorMutationsTarget() {}
 };
 

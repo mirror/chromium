@@ -7,7 +7,7 @@
 
 #include <memory>
 #include "core/animation/CompositorAnimator.h"
-#include "core/animation/CustomCompositorAnimationManager.h"
+#include "platform/graphics/CompositorMutationsTarget.h"
 #include "platform/graphics/CompositorMutator.h"
 #include "platform/heap/Handle.h"
 #include "platform/heap/HeapAllocator.h"
@@ -41,8 +41,8 @@ class CORE_EXPORT CompositorMutatorImpl final : public CompositorMutator {
   void SetNeedsMutate();
 
   void SetClient(CompositorMutatorClient* client) { client_ = client; }
-  CustomCompositorAnimationManager* AnimationManager() {
-    return animation_manager_.get();
+  CompositorMutationsTarget* AnimationTarget() {
+    return animation_target_.get();
   }
 
  private:
@@ -52,7 +52,7 @@ class CORE_EXPORT CompositorMutatorImpl final : public CompositorMutator {
       HashSet<CrossThreadPersistent<CompositorAnimator>>;
   CompositorAnimators animators_;
 
-  std::unique_ptr<CustomCompositorAnimationManager> animation_manager_;
+  std::unique_ptr<CompositorMutationsTarget> animation_target_;
   CompositorMutatorClient* client_;
 };
 
