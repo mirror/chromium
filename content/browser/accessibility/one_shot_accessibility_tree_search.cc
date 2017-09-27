@@ -183,8 +183,7 @@ bool OneShotAccessibilityTreeSearch::Matches(BrowserAccessibility* node) {
   }
 
   if (visible_only_) {
-    if (node->HasState(ui::AX_STATE_INVISIBLE) ||
-        node->HasState(ui::AX_STATE_OFFSCREEN)) {
+    if (node->HasState(ui::AX_STATE_INVISIBLE) || node->IsOffscreen()) {
       return false;
     }
   }

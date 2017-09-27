@@ -882,6 +882,13 @@ gfx::Rect BrowserAccessibility::RelativeToAbsoluteBounds(
   return gfx::ToEnclosingRect(bounds);
 }
 
+bool BrowserAccessibility::IsOffscreen() const {
+  bool offscreen = false;
+  this->manager()->ax_tree()->RelativeToTreeBounds(this->node(), gfx::RectF(),
+                                                   &offscreen);
+  return offscreen;
+}
+
 gfx::NativeViewAccessible BrowserAccessibility::GetNativeViewAccessible() {
   // TODO(703369) On Windows, where we have started to migrate to an
   // AXPlatformNode implementation, the BrowserAccessibilityWin subclass has
