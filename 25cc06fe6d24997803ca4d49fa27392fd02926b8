@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "041082ca_dae29704",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 871,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-27T14:25:28Z",
+      "side": 1,
+      "message": "Isn\u0027t this redundant with the check in Registrar::EnableExtension?",
+      "revId": "25cc06fe6d24997803ca4d49fa27392fd02926b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3db8fa44_b39d3cee",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1378,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-27T14:25:28Z",
+      "side": 1,
+      "message": "Seems like a lot of this block can go in ExtensionRegistrar.  Can we instead basically do:\nif (!reloading) {\n  registrar-\u003eAddExtension(extension);\n  ...\n} else {\n  registrar-\u003eReplaceLoadedExtension(extension);\n  ...\n}\n?",
+      "revId": "25cc06fe6d24997803ca4d49fa27392fd02926b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b53f554_a5abdbbe",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 2235,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-27T14:25:28Z",
+      "side": 1,
+      "message": "This seems wrong, and looks like a behavior change from where this used to be checked (line 943 of the old patch).  Shouldn\u0027t users be *unable* to disable the extension in this case?",
+      "revId": "25cc06fe6d24997803ca4d49fa27392fd02926b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea6033be_0e3796b0",
+        "filename": "extensions/browser/extension_registrar.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-27T14:25:28Z",
+      "side": 1,
+      "message": "Huh.  This was wrong before, but is still wrong now.  If this is an internal disable, we check it against the internal disable reason mask, and then allow it.  But disable_reasons could include internal *and* user-facing disable reasons.  If this is a controlled extension, we should set disable_reasons \u0026\u003d internal_disable_reason_mask.  (Alternatively, it would be nice to audit calls of DisableExtension and see how many actually pass a mask, rather than a single reason, and see if we can update them - but that\u0027s a larger change).",
+      "revId": "25cc06fe6d24997803ca4d49fa27392fd02926b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2af07dd7_310a095b",
+        "filename": "extensions/browser/extension_registrar.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-27T14:25:28Z",
+      "side": 1,
+      "message": "I think I\u0027d prefer PostActivateExtension() or maybe FinishExtensionActivation().  This is called only when the extension should be activated, and not whenever an extension\u0027s enabled state changes.",
+      "revId": "25cc06fe6d24997803ca4d49fa27392fd02926b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2b28eb7_dc7b9bf5",
+        "filename": "extensions/browser/extension_registrar.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-27T14:25:28Z",
+      "side": 1,
+      "message": "Tying in with the comment in ExtensionService, but I think it would be could to remove InitialState here and have ExtensionRegistrar determine the result.",
+      "revId": "25cc06fe6d24997803ca4d49fa27392fd02926b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
