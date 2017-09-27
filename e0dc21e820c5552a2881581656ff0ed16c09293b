@@ -53,6 +53,29 @@
     },
     {
       "key": {
+        "uuid": "d4077716_ead7a08e",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-09-27T03:56:45Z",
+      "side": 1,
+      "message": "This looks incorrect. app_id is defined by package_name and activity. Overriding it means another app_id, not one we actually pass. If you need launch specific activity, you may want expose extra method:\n\nbool LaunchActivity(content::BrowserContext* context,\n            int event_flags,\n            const gfx::Rect\u0026 bounds,\n            const std::string\u0026 package_name,\n            const std::string\u0026 activity);\n\nin this method you may manually construct launch intent and continue launching as intent. This should be correct way.\n\nHaving like this would confuse everyone.\n\nAlternatively you may implement function above not by constructing launch intent but passing \n    app_instance-\u003eLaunchApp(package_name, activity, bounds);\ndirectly.\n\nMy small preference to construct launch intent.\n\nAnd one more top level comment. You should implement listener for settings app appears in the system and show this option only on this case.",
+      "range": {
+        "startLine": 138,
+        "startChar": 4,
+        "endLine": 138,
+        "endChar": 42
+      },
+      "revId": "e0dc21e820c5552a2881581656ff0ed16c09293b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23637b2b_1e0fe11d",
         "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
         "patchSetId": 7
