@@ -18,9 +18,9 @@ class CSSParserObserverWrapper;
 // To consume a block, a BlockGuard must be created first to ensure that
 // we finish consuming a block even if there was an error.
 //
-// Methods prefixed with "Unchecked" can only be called after Peek()
-// returns a non-EOF token or after AtEnd() returns false, with no
-// subsequent modifications to the stream such as a consume.
+// Methods prefixed with "Unchecked" can only be called after calls to Peek(),
+// EnsureLookAhead(), or AtEnd() with no subsequent modifications to the stream
+// such as a consume.
 class CORE_EXPORT CSSParserTokenStream {
   DISALLOW_NEW();
   WTF_MAKE_NONCOPYABLE(CSSParserTokenStream);
@@ -43,9 +43,7 @@ class CORE_EXPORT CSSParserTokenStream {
     }
 
     ~BlockGuard() {
-      if (stream_.EnsureLookAhead() == LookAhead::kIsEOF)
-        return;
-
+      stream_.EnsureLookAhead();
       stream_.UncheckedSkipToEndOfBlock();
     }
 
@@ -54,38 +52,29 @@ class CORE_EXPORT CSSParserTokenStream {
   };
 
   explicit CSSParserTokenStream(CSSTokenizer& tokenizer)
-      : tokenizer_(tokenizer), next_index_(0) {
+      : tokenizer_(tokenizer), next_(kEOFToken), next_index_(0) {
     DCHECK_EQ(tokenizer.CurrentSize(), 0U);
   }
 
   CSSParserTokenStream(CSSParserTokenStream&&) = default;
 
-  // LookAhead::kIsEOF means the next token is EOF. Since we don't store EOF
-  // tokens, tokenizer_.tokens_[next_index_] is valid iff LookAhead::kIsValid.
-  enum class LookAhead { kIsValid, kIsEOF };
-  LookAhead EnsureLookAhead() const {
-    if (next_index_ == tokenizer_.CurrentSize()) {
-      // Reached end of token buffer, but might not be end of input.
-      if (tokenizer_.TokenizeSingle().IsEOF())
-        return LookAhead::kIsEOF;
+  void EnsureLookAhead() {
+    if (!HasLookAhead()) {
+      has_look_ahead_ = true;
+      next_ = tokenizer_.TokenizeSingle();
     }
-    DCHECK(HasLookAhead());
-    return LookAhead::kIsValid;
   }
 
-  // Whether we have peeked at the next token or not.
-  bool HasLookAhead() const {
-    return next_index_ == tokenizer_.CurrentSize() - 1;
-  }
+  bool HasLookAhead() const { return has_look_ahead_; }
 
-  const CSSParserToken& Peek() const {
+  const CSSParserToken& Peek() {
     const CSSParserToken& token = PeekInternal();
     if (token.GetBlockType() == CSSParserToken::kBlockEnd)
       return g_static_eof_token;
     return token;
   }
 
-  const CSSParserToken& UncheckedPeek() const {
+  const CSSParserToken& UncheckedPeek() {
     const CSSParserToken& token = UncheckedPeekInternal();
     if (token.GetBlockType() == CSSParserToken::kBlockEnd)
       return g_static_eof_token;
@@ -95,6 +84,7 @@ class CORE_EXPORT CSSParserTokenStream {
   const CSSParserToken& Consume() {
     const CSSParserToken& token = ConsumeInternal();
     DCHECK_NE(token.GetBlockType(), CSSParserToken::kBlockStart);
+    DCHECK(!HasLookAhead());
     return token;
   }
 
@@ -105,7 +95,7 @@ class CORE_EXPORT CSSParserTokenStream {
     return token;
   }
 
-  bool AtEnd() const { return Peek().IsEOF(); }
+  bool AtEnd() { return Peek().IsEOF(); }
 
   // Range represents all tokens that were consumed between begin and end.
   CSSParserTokenRange MakeSubRange(Iterator begin, Iterator end) {
@@ -127,7 +117,7 @@ class CORE_EXPORT CSSParserTokenStream {
 
   // Get the index of the starting character of the look-ahead token.
   size_t LookAheadOffset() const {
-    DCHECK(HasLookAhead() || AtEnd());
+    DCHECK(HasLookAhead());
     return tokenizer_.PreviousOffset();
   }
 
@@ -140,34 +130,36 @@ class CORE_EXPORT CSSParserTokenStream {
   bool ConsumeCommentOrNothing();
 
  private:
-  const CSSParserToken& PeekInternal() const {
-    if (EnsureLookAhead() == LookAhead::kIsEOF)
-      return g_static_eof_token;
+  const CSSParserToken& PeekInternal() {
+    EnsureLookAhead();
     return UncheckedPeekInternal();
   }
 
-  const CSSParserToken& UncheckedPeekInternal() const {
+  const CSSParserToken& UncheckedPeekInternal() {
     DCHECK(HasLookAhead());
-    return tokenizer_.tokens_[next_index_];
+    return next_;
   }
 
   const CSSParserToken& ConsumeInternal() {
-    if (EnsureLookAhead() == LookAhead::kIsEOF)
-      return g_static_eof_token;
+    EnsureLookAhead();
     return UncheckedConsumeInternal();
   }
 
   const CSSParserToken& UncheckedConsumeInternal() {
     DCHECK(HasLookAhead());
+    has_look_ahead_ = false;
+    next_index_++;
     offset_ = tokenizer_.Offset();
-    return tokenizer_.tokens_[next_index_++];
+    return next_;
   }
 
   void UncheckedSkipToEndOfBlock() { UncheckedConsumeComponentValue(1); }
 
   CSSTokenizer& tokenizer_;
+  CSSParserToken next_;
   size_t next_index_;  // Index of next token to be consumed.
   size_t offset_ = 0;
+  bool has_look_ahead_ = false;
 };
 
 }  // namespace blink
