@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7115799a_3f0a3257",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasResourceProvider.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-09-27T14:46:33Z",
+      "side": 1,
+      "message": "Is the context provider wrapper changing for each frame? If not, how about \n\nDCHECK(frame_resource-\u003econtext_provider_wrapper_.get() \u003d\u003d\n             image-\u003eContextProviderWrapper() ||\n         !frame_resource-\u003econtext_provider_wrapper_);\n\n  if (!frame_resource-\u003econtext_provider_wrapper_) {\n    frame_resource-\u003econtext_provider_wrapper_ \u003d context_provider_wrapper;\n  }\n\nJust like what SetTransferableResourceToSharedGPUContext did? If this code is too cumbersome, then shall we simplify the similar code in SetTransferableResourceToSharedGPUContext to a simple assignment statement as well?",
+      "range": {
+        "startLine": 168,
+        "startChar": 2,
+        "endLine": 168,
+        "endChar": 78
+      },
+      "revId": "b3c0d428f280a8acd57bd69235774e29fbf0bed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
