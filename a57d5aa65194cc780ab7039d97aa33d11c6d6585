@@ -16,6 +16,24 @@
       "revId": "a57d5aa65194cc780ab7039d97aa33d11c6d6585",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d49d624a_01faf1a4",
+        "filename": "components/viz/client/frame_eviction_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-09-27T00:36:17Z",
+      "side": 0,
+      "message": "I made it a component. Please take another look.",
+      "parentUuid": "5fbc3b59_eac27cab",
+      "revId": "a57d5aa65194cc780ab7039d97aa33d11c6d6585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
