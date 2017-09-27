@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a6d6467_3479f2bb",
+        "filename": "ios/chrome/browser/ui/infobars/infobar_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-27T12:48:45Z",
+      "side": 1,
+      "message": "Nit: These two lines can be replaced with CGRectGetMaxX([self frameOfIcon]), if you feel that\u0027s a clearer way to express the logic.",
+      "revId": "491e1dc6896e5f1eeb783edb5e4917707bce8368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8458e2e5_55ec5bb9",
+        "filename": "ios/chrome/browser/ui/infobars/infobar_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-27T12:48:45Z",
+      "side": 1,
+      "message": "Does this comment still apply, since we now use a different value for the left margin?",
+      "revId": "491e1dc6896e5f1eeb783edb5e4917707bce8368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2fc2948_8ca4d0e7",
+        "filename": "ios/chrome/browser/ui/infobars/infobar_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 875,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-27T12:48:45Z",
+      "side": 1,
+      "message": "I was expecting to see the |right| inset for the close button here and the |left| inset for the icon below.  Am I thinking about this backwards somehow?",
+      "revId": "491e1dc6896e5f1eeb783edb5e4917707bce8368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
