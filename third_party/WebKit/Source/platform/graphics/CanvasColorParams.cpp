@@ -77,7 +77,7 @@ bool CanvasColorParams::LinearPixelMath() const {
 sk_sp<SkColorSpace> CanvasColorParams::GetSkColorSpaceForSkSurfaces() const {
   switch (color_space_) {
     case kLegacyCanvasColorSpace:
-      return nullptr;
+      return SkColorSpace::MakeSRGB();
     case kSRGBCanvasColorSpace:
       if (pixel_format_ == kF16CanvasPixelFormat)
         return SkColorSpace::MakeSRGBLinear();

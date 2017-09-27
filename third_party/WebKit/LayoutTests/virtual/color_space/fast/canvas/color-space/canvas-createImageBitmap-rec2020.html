@@ -254,26 +254,51 @@ function initializeTestCanvasTransparent(canvasColorSpace, canvasPixelFormat)
 ////////////////////////////////////////////////////////////////////////////////
 
 // HTMLImageElement - Opaque SRGB
+// File formats: Bitmap, GIF, ICO, JPEG, PNG, WEBP
 promise_test(function() {
+    var fileExtensions = ['bmp', 'gif', 'ico', 'jpg', 'png', 'webp'];
+    var numImageFormats = fileExtensions.length, numLoadedImages = 0;
+    var images = [];
     return new Promise((resolve, reject) => {
-        var image = new Image();
-        image.onload = function() {
-            resolve(image);
+        for (var i = 0; i < numImageFormats; i++) {
+            images.push(new Image());
+            images[i].src = 'resources/pattern-srgb.' + fileExtensions[i];
+            images[i].onload = function() {
+                ++numLoadedImages;
+                if (numLoadedImages == numImageFormats)
+                    resolve();
+            }
         }
-        image.src = 'resources/pattern-srgb.png'
-    }).then(testImageBitmapOpaque);
-}, 'createImageBitmap in Rec2020 from an opaque SRGB HTMLImageElement with resize.');
+    }).then(() => {
+        for (var i = 0; i < numImageFormats; i++)
+            testImageBitmapOpaque(images[i]);
+    });
+}, 'createImageBitmap in Rec2020 from an opaque SRGB HTMLImageElement (BMP, \
+GIF, ICO, JPG, PNG, WEBP) with resize.');
 
 // HTMLImageElement - Transparent SRGB
+// File formats: Bitmap, GIF, ICO, PNG, WEBP
 promise_test(function() {
+    var fileExtensions = ['bmp', 'ico', 'png', 'webp'];
+    var numImageFormats = fileExtensions.length, numLoadedImages = 0;
+    var images = [];
     return new Promise((resolve, reject) => {
-        var image = new Image();
-        image.onload = function() {
-            resolve(image);
+        for (var i = 0; i < numImageFormats; i++) {
+            images.push(new Image());
+            images[i].src = 'resources/pattern-srgb-transparent.' +
+                                fileExtensions[i];
+            images[i].onload = function() {
+                ++numLoadedImages;
+                if (numLoadedImages == numImageFormats)
+                    resolve();
+            }
         }
-        image.src = 'resources/pattern-srgb-transparent.png'
-    }).then(testImageBitmapTransparent);
-}, 'createImageBitmap in Rec2020 from a transparent SRGB HTMLImageElement with resize.');
+    }).then(() => {
+        for (var i = 0; i < numImageFormats; i++)
+            testImageBitmapTransparent(images[i]);
+    });
+}, 'createImageBitmap in Rec2020 from a transparent SRGB HTMLImageElement \
+(BMP, ICO, PNG, WEBP) with resize.');
 
 // TODO(zakerinasab): crbug.com/668547
 // Add at least two more test scenarios for loading the image element from P3

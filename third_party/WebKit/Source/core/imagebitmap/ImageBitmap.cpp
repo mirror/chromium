@@ -299,6 +299,7 @@ RefPtr<StaticBitmapImage> ScaleImage(RefPtr<StaticBitmapImage>&& image,
 RefPtr<StaticBitmapImage> ApplyColorSpaceConversion(
     RefPtr<StaticBitmapImage>&& image,
     ImageBitmap::ParsedOptions& options) {
+  DCHECK(image->PaintImageForCurrentFrame().GetSkImage()->colorSpace());
   if (!RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled())
     return image;
   // Color correct the image. This code path uses SkImage::makeColorSpace(). If

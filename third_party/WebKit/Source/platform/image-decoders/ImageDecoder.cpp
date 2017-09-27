@@ -544,7 +544,7 @@ SkColorSpaceXform* ImageDecoder::ColorTransform() {
 
 sk_sp<SkColorSpace> ImageDecoder::ColorSpaceForSkImages() const {
   if (!color_behavior_.IsTag())
-    return nullptr;
+    return SkColorSpace::MakeSRGB();
 
   if (embedded_color_space_) {
     SkColorSpaceTransferFn fn;
