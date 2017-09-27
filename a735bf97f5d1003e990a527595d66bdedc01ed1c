@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9367456d_5071c5d1",
+        "filename": "media/audio/audio_input_controller.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-09-27T08:11:09Z",
+      "side": 1,
+      "message": "|params| seems not needed anymore. Remove.",
+      "range": {
+        "startLine": 198,
+        "startChar": 29,
+        "endLine": 198,
+        "endChar": 35
+      },
+      "revId": "a735bf97f5d1003e990a527595d66bdedc01ed1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
