@@ -91,6 +91,8 @@ class AURA_EXPORT InputMethodMus : public ui::InputMethodBase {
   // received (ProcessKeyEventCallback()).
   base::circular_deque<std::unique_ptr<EventResultCallback>> pending_callbacks_;
 
+  bool candidate_window_pop_up_visible_ = false;
+
   DISALLOW_COPY_AND_ASSIGN(InputMethodMus);
 };
 
