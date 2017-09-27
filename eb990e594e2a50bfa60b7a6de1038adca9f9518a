@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8937ad5_a1a11511",
+        "filename": "ios/net/cookies/cookie_store_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-27T15:39:26Z",
+      "side": 1,
+      "message": "Check that weak_system_store is not null",
+      "range": {
+        "startLine": 484,
+        "startChar": 12,
+        "endLine": 484,
+        "endChar": 29
+      },
+      "revId": "eb990e594e2a50bfa60b7a6de1038adca9f9518a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4b67aae_4d03b32c",
+        "filename": "ios/net/cookies/ns_http_system_cookie_store.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-27T15:39:26Z",
+      "side": 1,
+      "message": "s/Delete/Deletes",
+      "revId": "eb990e594e2a50bfa60b7a6de1038adca9f9518a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1274f630_cdd6915b",
+        "filename": "ios/net/cookies/ns_http_system_cookie_store.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-27T15:39:26Z",
+      "side": 1,
+      "message": "s/Set/Sets",
+      "range": {
+        "startLine": 60,
+        "startChar": 5,
+        "endLine": 60,
+        "endChar": 8
+      },
+      "revId": "eb990e594e2a50bfa60b7a6de1038adca9f9518a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eee69419_20a8677c",
+        "filename": "ios/net/cookies/ns_http_system_cookie_store.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-27T15:39:26Z",
+      "side": 1,
+      "message": "s/Clear/Clears",
+      "range": {
+        "startLine": 66,
+        "startChar": 11,
+        "endLine": 66,
+        "endChar": 14
+      },
+      "revId": "eb990e594e2a50bfa60b7a6de1038adca9f9518a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
