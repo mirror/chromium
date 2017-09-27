@@ -13,6 +13,7 @@ include_rules = [
     "+cc",
     "-cc/blink",
     "+components/viz/common",
+    "+media/base/context_provider_callback.h",
     "+mojo/public",
     "+net/http",
     "+public/platform",
