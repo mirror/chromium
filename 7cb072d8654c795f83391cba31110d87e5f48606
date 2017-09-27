@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5b0f8d5_21dd26ea",
+        "filename": "content/browser/service_worker/service_worker_registration_handle.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-27T09:54:05Z",
+      "side": 1,
+      "message": "If ServiceWorkerDispatcherHost owns |this| it\u0027s probably fine to just take a raw pointer here, and have a comment like \u0027DispatcherHost owns |this|\u0027 in the header file?",
+      "revId": "7cb072d8654c795f83391cba31110d87e5f48606",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ed9e033_a01a7fdf",
+        "filename": "content/browser/service_worker/service_worker_registration_handle.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-27T09:54:05Z",
+      "side": 1,
+      "message": "...then maybe we don\u0027t need this comment and DCHECK below",
+      "revId": "7cb072d8654c795f83391cba31110d87e5f48606",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a50b952_69c113a6",
+        "filename": "content/child/service_worker/service_worker_dispatcher.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-27T09:54:05Z",
+      "side": 1,
+      "message": "nit: can we add\n\n\"... to add itself into |registrations_|.\"",
+      "revId": "7cb072d8654c795f83391cba31110d87e5f48606",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e2024b3_4934e98d",
+        "filename": "content/child/service_worker/service_worker_dispatcher.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-27T09:54:05Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "7cb072d8654c795f83391cba31110d87e5f48606",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8f71c2a_f9a36cba",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-27T09:54:05Z",
+      "side": 1,
+      "message": "nit: interfaces -\u003e interface",
+      "revId": "7cb072d8654c795f83391cba31110d87e5f48606",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
