@@ -52,6 +52,24 @@
       "revId": "a7a97725a51c58dfa62fd68af62058faf167f2af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceeea5bd_c3f17895",
+        "filename": "content/browser/appcache/appcache_histograms.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-27T23:02:32Z",
+      "side": 1,
+      "message": "Ah, sorry for misreading this check -- you\u0027re actually trying to trim off the underflow values.  Whether this saves much space server-side depends on typical usage patterns: On a per-user basis, if it\u0027s common for them to only ever see samples in the \u003c1ms range over an entire UMA recording window (roughly 30 minutes on desktop, 5 minutes on mobile), then this will save space server-side.  Otherwise, it won\u0027t have much effect.",
+      "parentUuid": "eafd5c1a_2991ad8a",
+      "revId": "a7a97725a51c58dfa62fd68af62058faf167f2af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
