@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c6ed39f1_102133e2",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 1516,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-09-27T14:38:54Z",
+      "side": 1,
+      "message": "I think there might be some unexpected breakages, so wanted to land this first, wait a few hours, then try to switch the others.\n\nAlso, I\u0027m concerned about speed of some fuzzers. Will share more information soon.",
+      "parentUuid": "a027675c_96a5d315",
+      "revId": "06e3dcd554a1b9fe419409d752462dbc2babfa3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d133996_3a7e2fcf",
         "filename": "tools/mb/mb_config.pyl",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-27T14:34:26Z",
       "side": 1,
       "message": "I think you need to make some expectations file update, no ?",
+      "revId": "06e3dcd554a1b9fe419409d752462dbc2babfa3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bdb9142_ec22c379",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 1531,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-09-27T14:38:54Z",
+      "side": 1,
+      "message": "No, it seems to be needed only for recipes",
+      "parentUuid": "7d133996_3a7e2fcf",
       "revId": "06e3dcd554a1b9fe419409d752462dbc2babfa3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
