@@ -101,6 +101,29 @@
       "revId": "010f2d8d9a36be885deb451c01c3eb8717c8db42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60cabe02_2a3aeaa3",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 4324,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-09-27T08:40:21Z",
+      "side": 1,
+      "message": "I think this name is a little too long/unclear.\n\nWhat do you think about:\n\nExtend Flash content run permission to all content\n\nI am not totally happy with mu proposal either but it has the word \"extend\" therefore it shows that it is not self-sufficient otherwise I would have suggested only \"Run all Flash content\".\n\nAlso please put a reference to the relevant policy that has to be set for this to work in the text. More or less describing in text the second part of this label with concrete reference what has to be set and how to make this policy active.",
+      "range": {
+        "startLine": 4324,
+        "startChar": 20,
+        "endLine": 4324,
+        "endChar": 83
+      },
+      "revId": "010f2d8d9a36be885deb451c01c3eb8717c8db42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
