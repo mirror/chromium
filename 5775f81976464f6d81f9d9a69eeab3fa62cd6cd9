@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38ea4c46_b9932dcd",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-09-27T11:13:00Z",
+      "side": 1,
+      "message": "The difference between enabled and disabled verbose snapshots is the fact that we list all tasks from a task queue. That\u0027s x10 more information than anything we have here (e.g. here we just list all queues and with verbose snapshots we list all _tasks_ from all queues).\n\nSo let\u0027s keep all this information available in snapshots and use verbose_snapshots_enabled only in task queue impl.",
+      "range": {
+        "startLine": 629,
+        "startChar": 6,
+        "endLine": 629,
+        "endChar": 31
+      },
+      "revId": "5775f81976464f6d81f9d9a69eeab3fa62cd6cd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
