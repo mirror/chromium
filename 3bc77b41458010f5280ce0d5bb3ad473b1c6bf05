@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b60920a_9e96c347",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-27T20:11:19Z",
+      "side": 1,
+      "message": "nit: s/disalbe/disable, and please also put \"chromeos:\" at the beginning so it\u0027s easier for people looking at the commit history to tell what this affects:\n\n  chromeos: Disable downloading container at browser start",
+      "revId": "3bc77b41458010f5280ce0d5bb3ad473b1c6bf05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
