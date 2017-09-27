@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "035cc025_878f6615",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-09-27T16:30:56Z",
+      "side": 1,
+      "message": "Tried this out and this inserts \u0027-w\u0027 before the last element by slicing. It\u0027s nice, but it\u0027d be nicer if this was expressed clearer, like appending apk.GetPackageName() after the if condition and just appending to the list.",
+      "range": {
+        "startLine": 81,
+        "startChar": 7,
+        "endLine": 81,
+        "endChar": 16
+      },
+      "revId": "844cdd0adbde9e4825a20584e51660e0cc6ccc73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
