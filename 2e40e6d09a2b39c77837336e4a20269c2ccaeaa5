@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e3cbcdc_0a67358f",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-09-27T15:44:44Z",
+      "side": 1,
+      "message": "can you add a comment why this is needed?",
+      "revId": "2e40e6d09a2b39c77837336e4a20269c2ccaeaa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
