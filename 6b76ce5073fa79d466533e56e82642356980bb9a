@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "06f72eb1_c7c0a972",
+        "filename": "components/viz/common/resources/remotable_resource.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-27T17:12:02Z",
+      "side": 1,
+      "message": "OK, that\u0027ll align with what I want to do to this struct next I think (split up stuff that is gpu/software, texture/gmb, etc)",
+      "parentUuid": "6670c95e_37399e18",
+      "revId": "6b76ce5073fa79d466533e56e82642356980bb9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5861054_94867a1f",
         "filename": "components/viz/common/resources/remotable_resource.h",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "6b76ce5073fa79d466533e56e82642356980bb9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e17f1ebb_268b93be",
+        "filename": "components/viz/common/resources/remotable_resource.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-27T17:12:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5861054_94867a1f",
+      "revId": "6b76ce5073fa79d466533e56e82642356980bb9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2e17ac12_a1d2629b",
+        "filename": "components/viz/common/resources/remotable_resource.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-27T17:12:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "833a1bff_adab3560",
+      "revId": "6b76ce5073fa79d466533e56e82642356980bb9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a93f158_15eed241",
         "filename": "components/viz/common/resources/remotable_resource.h",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "6b76ce5073fa79d466533e56e82642356980bb9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc2167fd_413f644b",
+        "filename": "components/viz/common/resources/remotable_resource.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-27T17:12:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a93f158_15eed241",
+      "revId": "6b76ce5073fa79d466533e56e82642356980bb9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "299b1ebb_1c6283fb",
+        "filename": "components/viz/common/resources/remotable_resource.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-27T17:12:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fea23bb5_18c9e647",
+      "revId": "6b76ce5073fa79d466533e56e82642356980bb9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3b41cd7_0e152495",
         "filename": "components/viz/common/resources/remotable_resource.h",
         "patchSetId": 6
@@ -101,6 +191,24 @@
       "revId": "6b76ce5073fa79d466533e56e82642356980bb9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "684ef2d9_d0ef540f",
+        "filename": "components/viz/common/resources/remotable_resource.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-27T17:12:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3b41cd7_0e152495",
+      "revId": "6b76ce5073fa79d466533e56e82642356980bb9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
