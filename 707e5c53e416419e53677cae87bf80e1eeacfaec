@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b1c7b92_fcdd1fe9",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwContents.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-27T23:04:34Z",
+      "side": 1,
+      "message": "This definitely needs to be expanded. Explain fully why this is here",
+      "revId": "707e5c53e416419e53677cae87bf80e1eeacfaec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a06c676f_ae75ad2a",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwContents.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 1059,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-27T23:04:34Z",
+      "side": 1,
+      "message": "you can\u0027t assert that..?",
+      "revId": "707e5c53e416419e53677cae87bf80e1eeacfaec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4cb0b9b_c4ae7c17",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-27T23:04:34Z",
+      "side": 1,
+      "message": "accessors here are probably overkill. just make all the members public, since it\u0027s already a private class",
+      "revId": "707e5c53e416419e53677cae87bf80e1eeacfaec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8d30d77_413d7745",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-27T23:04:34Z",
+      "side": 1,
+      "message": "Think of Internals as an extension of WebContentsImpl. In the future, it\u0027s going to hold other objects that\u0027s used on chrome as well. Or another way to think is that, it should be ok to move the existing members like mEventForwarder and mSmartClipCallback into Internal as well.\n\nSo the Internals object needs to be tied to a specific WebContents on construction, and not lazily created from setInternalsHolder. And you will need a Holder for the case when embedder does not call setInternalHolder. That one can just hold the Internals object strongly though.",
+      "revId": "707e5c53e416419e53677cae87bf80e1eeacfaec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
