@@ -51,44 +51,54 @@ class CORE_EXPORT CSSParserTokenStream {
 
   CSSParserTokenStream(CSSParserTokenStream&&) = default;
 
-  void EnsureLookAhead() {
+  inline void EnsureLookAhead() {
     if (!HasLookAhead()) {
       has_look_ahead_ = true;
       next_ = tokenizer_.TokenizeSingle();
     }
   }
 
-  bool HasLookAhead() const { return has_look_ahead_; }
-
-  const CSSParserToken& Peek() {
-    const CSSParserToken& token = PeekInternal();
-    if (token.GetBlockType() == CSSParserToken::kBlockEnd)
-      return g_static_eof_token;
-    return token;
-  }
-
-  const CSSParserToken& UncheckedPeek() {
-    const CSSParserToken& token = UncheckedPeekInternal();
-    if (token.GetBlockType() == CSSParserToken::kBlockEnd)
-      return g_static_eof_token;
-    return token;
-  }
-
-  const CSSParserToken& Consume() {
-    const CSSParserToken& token = ConsumeInternal();
-    DCHECK_NE(token.GetBlockType(), CSSParserToken::kBlockStart);
+  // Forcibly read a lookahead token.
+  inline void LookAhead() {
     DCHECK(!HasLookAhead());
-    return token;
+    next_ = tokenizer_.TokenizeSingle();
+    has_look_ahead_ = true;
+  }
+
+  inline bool HasLookAhead() const { return has_look_ahead_; }
+
+  inline const CSSParserToken& Peek() {
+    EnsureLookAhead();
+    return next_;
+  }
+
+  inline const CSSParserToken& UncheckedPeek() const {
+    DCHECK(HasLookAhead());
+    return next_;
+  }
+
+  inline const CSSParserToken& Consume() {
+    EnsureLookAhead();
+    return UncheckedConsume();
   }
 
   const CSSParserToken& UncheckedConsume() {
-    const CSSParserToken& token = UncheckedConsumeInternal();
-    DCHECK_NE(token.GetBlockType(), CSSParserToken::kBlockStart);
-    DCHECK(!HasLookAhead());
-    return token;
+    DCHECK(HasLookAhead());
+    DCHECK_NE(next_.GetBlockType(), CSSParserToken::kBlockStart);
+    has_look_ahead_ = false;
+    offset_ = tokenizer_.Offset();
+    return next_;
   }
 
-  bool AtEnd() { return Peek().IsEOF(); }
+  inline bool AtEnd() {
+    EnsureLookAhead();
+    return UncheckedAtEnd();
+  }
+
+  inline bool UncheckedAtEnd() const {
+    DCHECK(HasLookAhead());
+    return next_.IsEOF() || next_.GetBlockType() == CSSParserToken::kBlockEnd;
+  }
 
   // Get the index of the character in the original string to be consumed next.
   size_t Offset() const { return offset_; }
@@ -101,7 +111,7 @@ class CORE_EXPORT CSSParserTokenStream {
 
   void ConsumeWhitespace();
   CSSParserToken ConsumeIncludingWhitespace();
-  void UncheckedConsumeComponentValue(unsigned nesting_level = 0);
+  void UncheckedConsumeComponentValue();
   void UncheckedConsumeComponentValue(CSSParserScopedTokenBuffer&);
   void UncheckedConsumeComponentValueWithOffsets(CSSParserObserverWrapper&,
                                                  CSSParserScopedTokenBuffer&);
@@ -117,7 +127,7 @@ class CORE_EXPORT CSSParserTokenStream {
     return UncheckedPeekInternal();
   }
 
-  const CSSParserToken& UncheckedPeekInternal() {
+  const CSSParserToken& UncheckedPeekInternal() const {
     DCHECK(HasLookAhead());
     return next_;
   }
@@ -134,7 +144,7 @@ class CORE_EXPORT CSSParserTokenStream {
     return next_;
   }
 
-  void UncheckedSkipToEndOfBlock() { UncheckedConsumeComponentValue(1); }
+  void UncheckedSkipToEndOfBlock();
 
   CSSParserTokenBuffer buffer_;
   CSSTokenizer& tokenizer_;
