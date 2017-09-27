@@ -88,7 +88,7 @@ class HTMLAudioElementCapturerSourceTest : public testing::Test {
 
     // |blink_audio_source_| takes ownership of HtmlAudioElementCapturerSource.
     blink_audio_source_.SetExtraData(
-        new HtmlAudioElementCapturerSource(audio_source_.get()));
+        new HtmlAudioElementCapturerSource(audio_source_.get(), false));
     ASSERT_TRUE(source()->ConnectToTrack(blink_audio_track_));
   }
 
