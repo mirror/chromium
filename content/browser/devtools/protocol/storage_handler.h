@@ -40,6 +40,9 @@ class StorageHandler : public DevToolsDomainHandler,
   Response TrackCacheStorageForOrigin(const std::string& origin) override;
   Response UntrackCacheStorageForOrigin(const std::string& origin) override;
 
+  Response TrackIndexedDBForOrigin(const std::string& origin) override;
+  Response UntrackIndexedDBForOrigin(const std::string& origin) override;
+
  private:
   // See definition for lifetime information.
   class CacheStorageObserver;

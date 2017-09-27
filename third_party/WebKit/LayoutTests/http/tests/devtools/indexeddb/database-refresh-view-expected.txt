@@ -18,28 +18,53 @@ Dumping IndexedDB tree:
             Index: testIndex
         Object store: testObjectStore2
             Index: testIndex
+Dumping ObjectStore data:
+    Object store: testObjectStore1
+            (no entries)
+            Index: testIndex
+                (no entries)
+    Object store: testObjectStore2
+            (no entries)
+            Index: testIndex
+                (no entries)
 Added testObjectStore1 entry.
 Dumping ObjectStore data:
     Object store: testObjectStore1
             (no entries)
+            Index: testIndex
+                (no entries)
     Object store: testObjectStore2
             (no entries)
+            Index: testIndex
+                (no entries)
 Refreshed database view.
 Dumping ObjectStore data:
     Object store: testObjectStore1
             Key = testKey, value = [object Object]
+            Index: testIndex
+                Key = testKey, value = [object Object]
     Object store: testObjectStore2
             (no entries)
+            Index: testIndex
+                (no entries)
 Added testObjectStore2 entry.
 Dumping ObjectStore data:
     Object store: testObjectStore1
             Key = testKey, value = [object Object]
+            Index: testIndex
+                Key = testKey, value = [object Object]
     Object store: testObjectStore2
             (no entries)
+            Index: testIndex
+                (no entries)
 Right-click refreshed database.
 Dumping ObjectStore data:
     Object store: testObjectStore1
             Key = testKey, value = [object Object]
+            Index: testIndex
+                Key = testKey, value = [object Object]
     Object store: testObjectStore2
             Key = testKey2, value = [object Object]
+            Index: testIndex
+                Key = testKey2, value = [object Object]
 
