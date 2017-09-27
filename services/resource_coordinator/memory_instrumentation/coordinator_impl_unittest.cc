@@ -43,9 +43,12 @@ using memory_instrumentation::mojom::GlobalMemoryDumpPtr;
 using memory_instrumentation::mojom::GlobalMemoryDump;
 using base::trace_event::MemoryDumpArgs;
 using base::trace_event::MemoryDumpLevelOfDetail;
+using base::trace_event::MemoryDumpManager;
 using base::trace_event::ProcessMemoryDump;
 using base::trace_event::MemoryAllocatorDump;
 using base::trace_event::MemoryDumpRequestArgs;
+using base::trace_event::TraceConfig;
+using base::trace_event::TraceLog;
 
 namespace memory_instrumentation {
 
@@ -93,6 +96,15 @@ class CoordinatorImplTest : public testing::Test {
       GetVmRegionsForHeapProfilerCallback callback) {
     coordinator_->GetVmRegionsForHeapProfiler(callback);
   }
+
+ protected:
+  void EnableMemoryInfraTracing() {
+    TraceLog::GetInstance()->SetEnabled(
+        TraceConfig(MemoryDumpManager::kTraceCategory, ""),
+        TraceLog::RECORDING_MODE);
+  }
+
+  void DisableTracing() { TraceLog::GetInstance()->SetDisabled(); }
 
  private:
   std::unique_ptr<NiceMock<FakeCoordinatorImpl>> coordinator_;
@@ -224,6 +236,8 @@ TEST_F(CoordinatorImplTest, SeveralClients) {
   NiceMock<MockClientProcess> client_process_1(this, 1,
                                                mojom::ProcessType::BROWSER);
   NiceMock<MockClientProcess> client_process_2(this);
+
+  EnableMemoryInfraTracing();
   EXPECT_CALL(client_process_1, RequestChromeMemoryDump(_, _)).Times(1);
   EXPECT_CALL(client_process_2, RequestChromeMemoryDump(_, _)).Times(1);
 
@@ -236,6 +250,7 @@ TEST_F(CoordinatorImplTest, SeveralClients) {
       .WillOnce(RunClosure(run_loop.QuitClosure()));
   RequestGlobalMemoryDump(args, callback.Get());
   run_loop.Run();
+  DisableTracing();
 }
 
 TEST_F(CoordinatorImplTest, MissingChromeDump) {
@@ -248,6 +263,7 @@ TEST_F(CoordinatorImplTest, MissingChromeDump) {
   NiceMock<MockClientProcess> client_process(this, 1,
                                              mojom::ProcessType::BROWSER);
 
+  EnableMemoryInfraTracing();
   EXPECT_CALL(client_process, RequestChromeMemoryDump(_, _))
       .WillOnce(
           Invoke([](const MemoryDumpRequestArgs& args,
@@ -266,6 +282,7 @@ TEST_F(CoordinatorImplTest, MissingChromeDump) {
       .WillOnce(RunClosure(run_loop.QuitClosure()));
   RequestGlobalMemoryDump(args, callback.Get());
   run_loop.Run();
+  DisableTracing();
 }
 
 TEST_F(CoordinatorImplTest, MissingOsDump) {
@@ -278,6 +295,7 @@ TEST_F(CoordinatorImplTest, MissingOsDump) {
   NiceMock<MockClientProcess> client_process(this, 1,
                                              mojom::ProcessType::BROWSER);
 
+  EnableMemoryInfraTracing();
   EXPECT_CALL(client_process, RequestOSMemoryDump(_, _, _))
       .WillOnce(Invoke(
           [](bool want_mmaps, const std::vector<base::ProcessId>& pids,
@@ -294,6 +312,7 @@ TEST_F(CoordinatorImplTest, MissingOsDump) {
       .WillOnce(RunClosure(run_loop.QuitClosure()));
   RequestGlobalMemoryDump(args, callback.Get());
   run_loop.Run();
+  DisableTracing();
 }
 
 // Tests that a global dump is completed even if a client disconnects (e.g. due
