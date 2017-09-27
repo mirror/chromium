@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "869093e7_73c13921",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-09-27T18:53:20Z",
+      "side": 1,
+      "message": "No. It\u0027s because English is not my native language:)\nBy modifying it as you suggested, LOC decreased about 6 lines:)",
+      "parentUuid": "60f1a88e_71e1bcff",
+      "revId": "29536ceb0d3931b3e2f0d727b12d3788430d03d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1bbeb903_7aff19d5",
         "filename": "ash/wm/splitview/split_view_controller.cc",
         "patchSetId": 10
@@ -260,6 +278,24 @@
     },
     {
       "key": {
+        "uuid": "d9104ef3_3b89251e",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-09-27T18:53:20Z",
+      "side": 1,
+      "message": "Oh it\u0027s because the definition of |divier_position_| is the distance between the divider and the |left_window_|. For example, in primary landscape/secondary portrait screen orientation, |left_window_| occupies the left/top side of the screen, while in secondary landscape/primary portrait screen orientation, |left_window_| occupies the right/bottom side of the window. But we compute ratio based on the gesture event location in the same way, thus here we need 1.0-ratio here to compute |divider_position_|.",
+      "parentUuid": "d393510b_2cd5f0f0",
+      "revId": "29536ceb0d3931b3e2f0d727b12d3788430d03d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "28501060_4cae74b1",
         "filename": "ash/wm/splitview/split_view_controller.h",
         "patchSetId": 10
@@ -345,6 +381,24 @@
       "revId": "29536ceb0d3931b3e2f0d727b12d3788430d03d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ef1a4ca_c3d3b5d7",
+        "filename": "ash/wm/tablet_mode/tablet_mode_window_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-09-27T18:53:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76704ce4_9caddf21",
+      "revId": "29536ceb0d3931b3e2f0d727b12d3788430d03d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
