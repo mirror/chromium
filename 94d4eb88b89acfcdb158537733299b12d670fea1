@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a68a89e_7d8157bb",
+        "filename": "chrome/browser/ui/views/ime_driver/remote_text_input_client.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-27T19:54:36Z",
+      "side": 1,
+      "message": "This seems like an indirect way to propagate the visibility state, and I\u0027m not sure it\u0027s called in all cases you care about as well as too often. How about adding a specific function for when the visibility changes?",
+      "range": {
+        "startLine": 186,
+        "startChar": 27,
+        "endLine": 186,
+        "endChar": 46
+      },
+      "revId": "94d4eb88b89acfcdb158537733299b12d670fea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7b565d7_5bcf31ec",
+        "filename": "chrome/browser/ui/views/ime_driver/remote_text_input_client.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-27T19:54:36Z",
+      "side": 1,
+      "message": "Don\u0027t inline virtual functions like this.",
+      "range": {
+        "startLine": 71,
+        "startChar": 47,
+        "endLine": 71,
+        "endChar": 50
+      },
+      "revId": "94d4eb88b89acfcdb158537733299b12d670fea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2614559_6377cf31",
+        "filename": "ui/aura/mus/text_input_client_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-27T19:54:36Z",
+      "side": 1,
+      "message": "Rename this and member to is_candidate_window_popup_visible.",
+      "range": {
+        "startLine": 26,
+        "startChar": 7,
+        "endLine": 26,
+        "endChar": 38
+      },
+      "revId": "94d4eb88b89acfcdb158537733299b12d670fea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
