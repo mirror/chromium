@@ -16,6 +16,24 @@
       "revId": "8b543b8f52eddd3012957935b8fd6a29a1ea5fdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c06b4b4_2f342b17",
+        "filename": "ash/wm/overview/window_selector_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2426,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-09-27T20:40:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27d6989c_f0793621",
+      "revId": "8b543b8f52eddd3012957935b8fd6a29a1ea5fdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
