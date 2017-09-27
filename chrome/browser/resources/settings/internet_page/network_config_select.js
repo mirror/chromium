@@ -73,6 +73,17 @@ Polymer({
 
   /**
    * @param {string|!chrome.networkingPrivate.Certificate} item
+   * @return {string}
+   * @private
+   */
+  getItemValue_: function(item) {
+    if (this.certList)
+      return /** @type {chrome.networkingPrivate.Certificate}*/ (item).hash;
+    return /** @type {string} */ (item);
+  },
+
+  /**
+   * @param {string|!chrome.networkingPrivate.Certificate} item
    * @return {boolean}
    * @private
    */
