@@ -94,6 +94,8 @@ class FreezerCgroupProcessManager::FileWorker {
       return;
     }
 
+    LOG(FATAL) << "Crash on Thaw";
+
     bool result = WriteCommandToFile(kThawCommand, to_be_frozen_state_path_);
 
     // TODO(derat): For now, lie and report success if thawing failed but
