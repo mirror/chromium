@@ -10,6 +10,7 @@
 #include "core/editing/PositionWithAffinity.h"
 #include "core/editing/VisiblePosition.h"
 #include "core/editing/testing/EditingTestBase.h"
+#include "core/editing/testing/SelectionSample.h"
 #include "core/html/TextControlElement.h"
 #include "core/layout/LayoutTextFragment.h"
 #include "core/layout/line/InlineTextBox.h"
@@ -1847,9 +1848,38 @@ TEST_F(VisibleUnitsTest,
       "</div>");
   Element* const one = GetDocument().getElementById("one");
   Element* const two = GetDocument().getElementById("two");
-  const VisiblePosition& visible_position =
-      CreateVisiblePosition(Position::LastPositionInNode(*two));
-  EXPECT_EQ(Position(one->firstChild(), 7),
+  const VisiblePositionInFlatTree& visible_position =
+      CreateVisiblePosition(PositionInFlatTree::LastPositionInNode(*two));
+  EXPECT_EQ(PositionInFlatTree(one->firstChild(), 7),
+            PreviousRootInlineBoxCandidatePosition(
+                two->lastChild(), visible_position, kContentIsEditable));
+}
+
+TEST_F(VisibleUnitsTest,
+       PreviousRootInlineBoxCandidatePositionWithSwappedLineInFlatTree){
+  SetBodyContent(
+      "<div style='width : 1px' contenteditable>"
+        "<template data-mode='open'>"
+          "<slot name=three></slot>"
+          "<slot name=two></slot>"
+          "<slot name=one></slot>"
+        "</template>"
+        "<div slot=one id=one>111</div>"
+        "<div slot=two id=two>222</div>"
+        "<div slot=three>333</div>"
+      "</div>");
+
+  Element* body = GetDocument().body();
+  SelectionSample::ConvertTemplatesToShadowRootsForTesring(
+      *(ToHTMLElement(body)));
+  UpdateAllLifecyclePhases();
+  showLineTree(body->GetLayoutObject());
+
+  Element* const one = GetDocument().getElementById("one");
+  Element* const two = GetDocument().getElementById("two");
+  const VisiblePositionInFlatTree& visible_position =
+      CreateVisiblePosition(PositionInFlatTree::LastPositionInNode(*one));
+  EXPECT_EQ(PositionInFlatTree::LastPositionInNode(*two),
             PreviousRootInlineBoxCandidatePosition(
                 two->lastChild(), visible_position, kContentIsEditable));
 }
