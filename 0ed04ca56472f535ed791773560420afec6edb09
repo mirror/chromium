@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "85409c74_0fa33160",
+        "filename": "components/cast_channel/cast_socket_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-27T21:44:23Z",
+      "side": 1,
+      "message": "Okay, that makes sense; the actual observers are only invoked by the CastSocket and it will discard its pointers when it is destroyed.\n\nBTW I think the other Observer is implemented by CastMediaSinkServiceImpl not CastChannelMediaSinkImpl correct?",
+      "parentUuid": "95891ad1_d04b21ac",
+      "revId": "0ed04ca56472f535ed791773560420afec6edb09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f2d2df6_e1154a57",
         "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
         "patchSetId": 5
@@ -69,6 +87,24 @@
       "revId": "0ed04ca56472f535ed791773560420afec6edb09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98f346f5_2601199e",
+        "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-27T21:44:23Z",
+      "side": 1,
+      "message": "I believe the browser side listeners are retained even if the event page is suspended; the extension system keeps track of them and that\u0027s how it knows which event page to wake.  You can check this with some logging (try disabling the MR extension to force its listeners to be removed).   I\u0027m not sure though.\n\nI don\u0027t feel strongly about this so fine to leave as a TODO.\n\nJust to check: in any case, RemoveObserver(this) is checked in the dtor of CastMessageHandler to ensure that a CastSocket doesn\u0027t invoke it afterwards?",
+      "parentUuid": "96a1f0c2_84366fb2",
+      "revId": "0ed04ca56472f535ed791773560420afec6edb09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

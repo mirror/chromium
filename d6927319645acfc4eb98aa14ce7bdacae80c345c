@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b08a782_4e9e8b24",
+        "filename": "components/cast_channel/cast_socket_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-27T21:44:23Z",
+      "side": 1,
+      "message": "This will only add a given observer once per socket?",
+      "revId": "d6927319645acfc4eb98aa14ce7bdacae80c345c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
