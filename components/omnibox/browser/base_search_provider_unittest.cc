@@ -180,9 +180,8 @@ TEST_F(BaseSearchProviderTest, MatchTailSuggestionProperly) {
   auto template_url = base::MakeUnique<TemplateURL>(data);
 
   AutocompleteInput autocomplete_input(
-      base::ASCIIToUTF16("weather"), 7, std::string(), GURL(), base::string16(),
-      metrics::OmniboxEventProto::BLANK, false, false, false, false, false,
-      TestSchemeClassifier());
+      base::ASCIIToUTF16("weather"), 7, std::string(),
+      metrics::OmniboxEventProto::BLANK, TestSchemeClassifier());
 
   EXPECT_CALL(*provider_, GetInput(_))
       .WillRepeatedly(Return(autocomplete_input));

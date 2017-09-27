@@ -278,10 +278,9 @@ TEST_F(BookmarkProviderTest, Positions) {
 
   for (size_t i = 0; i < arraysize(query_data); ++i) {
     AutocompleteInput input(base::ASCIIToUTF16(query_data[i].query),
-                            base::string16::npos, std::string(), GURL(),
-                            base::string16(),
-                            metrics::OmniboxEventProto::INVALID_SPEC, false,
-                            false, false, true, false, TestSchemeClassifier());
+                            metrics::OmniboxEventProto::OTHER,
+                            TestSchemeClassifier());
+    input.set_allow_exact_keyword_match(false);
     provider_->Start(input, false);
     const ACMatches& matches(provider_->matches());
     // Validate number of results is as expected.
@@ -362,10 +361,9 @@ TEST_F(BookmarkProviderTest, Rankings) {
 
   for (size_t i = 0; i < arraysize(query_data); ++i) {
     AutocompleteInput input(base::ASCIIToUTF16(query_data[i].query),
-                            base::string16::npos, std::string(), GURL(),
-                            base::string16(),
-                            metrics::OmniboxEventProto::INVALID_SPEC, false,
-                            false, false, true, false, TestSchemeClassifier());
+                            metrics::OmniboxEventProto::OTHER,
+                            TestSchemeClassifier());
+    input.set_allow_exact_keyword_match(false);
     provider_->Start(input, false);
     const ACMatches& matches(provider_->matches());
     // Validate number and content of results is as expected.
@@ -427,10 +425,9 @@ TEST_F(BookmarkProviderTest, InlineAutocompletion) {
     const std::string description = "for query=" + query_data[i].query +
         " and url=" + query_data[i].url;
     AutocompleteInput input(base::ASCIIToUTF16(query_data[i].query),
-                            base::string16::npos, std::string(), GURL(),
-                            base::string16(),
-                            metrics::OmniboxEventProto::INVALID_SPEC, false,
-                            false, false, true, false, TestSchemeClassifier());
+                            metrics::OmniboxEventProto::OTHER,
+                            TestSchemeClassifier());
+    input.set_allow_exact_keyword_match(false);
     const base::string16 fixed_up_input(
         provider_->FixupUserInput(input).second);
     BookmarkNode node(GURL(query_data[i].url));
@@ -472,10 +469,9 @@ TEST_F(BookmarkProviderTest, StripHttpAndAdjustOffsets) {
   for (size_t i = 0; i < arraysize(query_data); ++i) {
     std::string description = "for query=" + query_data[i].query;
     AutocompleteInput input(base::ASCIIToUTF16(query_data[i].query),
-                            base::string16::npos, std::string(), GURL(),
-                            base::string16(),
-                            metrics::OmniboxEventProto::INVALID_SPEC, false,
-                            false, false, true, false, TestSchemeClassifier());
+                            metrics::OmniboxEventProto::OTHER,
+                            TestSchemeClassifier());
+    input.set_allow_exact_keyword_match(false);
     provider_->Start(input, false);
     const ACMatches& matches(provider_->matches());
     ASSERT_EQ(1U, matches.size()) << description;
@@ -502,10 +498,11 @@ TEST_F(BookmarkProviderTest, StripHttpAndAdjustOffsets) {
 }
 
 TEST_F(BookmarkProviderTest, DoesNotProvideMatchesOnFocus) {
-  AutocompleteInput input(base::ASCIIToUTF16("foo"), base::string16::npos,
-                          std::string(), GURL(), base::string16(),
-                          metrics::OmniboxEventProto::INVALID_SPEC, false,
-                          false, false, true, true, TestSchemeClassifier());
+  AutocompleteInput input(base::ASCIIToUTF16("foo"),
+                          metrics::OmniboxEventProto::OTHER,
+                          TestSchemeClassifier());
+  input.set_allow_exact_keyword_match(false);
+  input.set_from_omnibox_focus(true);
   provider_->Start(input, false);
   EXPECT_TRUE(provider_->matches().empty());
 }
