@@ -154,21 +154,64 @@ const net::NetworkTrafficAnnotationTag kTrafficAnnotation =
   }
 }
 
+- (void)beginAppearanceTransition:(BOOL)isAppearing animated:(BOOL)animated {
+  [super beginAppearanceTransition:isAppearing animated:animated];
+  if (isAppearing) {
+    return;
+  }
+
+  // find bottom constraint
+  NSMutableArray *oldBottomConstraints = [[NSMutableArray alloc] init];
+  //int count = 0;
+  for (NSUInteger i = 0; i < self.view.constraints.count; i++) {
+    if (self.view.constraints[i].firstAnchor == self.view.bottomAnchor) {
+      [oldBottomConstraints addObject:self.view.constraints[i]];
+    }
+    if (self.view.constraints[i].secondAnchor == self.view.bottomAnchor) {
+      [oldBottomConstraints addObject:self.view.constraints[i]];
+    }
+  }
+  [self.view removeConstraints:oldBottomConstraints];
+
+  NSLayoutConstraint* bottomConstraint = [self.view.bottomAnchor constraintEqualToAnchor:self.view.superview.bottomAnchor constant:0];
+  bottomConstraint.active = YES;
+  [self.view layoutIfNeeded];
+
+  bottomConstraint.constant = 48;
+  [UIView animateWithDuration:0.5 animations:^{
+    [self.view.superview layoutIfNeeded];
+  } completion:^(BOOL finished) {
+    // Remove view and its controller after the animation.
+    [self willMoveToParentViewController:nil];
+    [self.view removeFromSuperview];
+    [self removeFromParentViewController];
+  }];
+}
+
 - (void)didMoveToParentViewController:(UIViewController*)parent {
   [super didMoveToParentViewController:parent];
   if (parent == nil) {
     return;
   }
 
+  // At first self.view will be hidden under the screen and then animate to appear from below.
+  NSLayoutConstraint* bottomConstraint = [self.view.bottomAnchor constraintEqualToAnchor:self.view.superview.bottomAnchor constant:48];
   // Set constraints for blue background.
   [NSLayoutConstraint activateConstraints:@[
-    [self.view.bottomAnchor
-        constraintEqualToAnchor:self.view.superview.bottomAnchor],
+    bottomConstraint,
     [self.view.leadingAnchor
         constraintEqualToAnchor:self.view.superview.leadingAnchor],
     [self.view.trailingAnchor
         constraintEqualToAnchor:self.view.superview.trailingAnchor],
   ]];
+
+  [self.view layoutIfNeeded];
+  [self.view.superview layoutIfNeeded];
+
+  bottomConstraint.constant = 0;
+  [UIView animateWithDuration:0.5 animations:^{
+    [self.view.superview layoutIfNeeded];
+  }];
 }
 
 @end
