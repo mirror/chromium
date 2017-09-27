@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8b9c16e8_c252fca7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-27T21:22:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a738fac_af0d64c3",
+      "range": {
+        "startLine": 152,
+        "startChar": 9,
+        "endLine": 154,
+        "endChar": 9
+      },
+      "revId": "3beacf212249ccc0e811415848fa4d75ae74f472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc2920a5_31e2f023",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabCreatorManager.java",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-27T02:02:44Z",
       "side": 1,
       "message": "Comment from a previous patchset that I think got missed:\n\nDo you expect this method and #launchUrl will be needed in the future? If not, then these can have empty implementations (possibly throwing an exception) and return false to indicate they\u0027re not being used.",
+      "range": {
+        "startLine": 69,
+        "startChar": 8,
+        "endLine": 69,
+        "endChar": 48
+      },
+      "revId": "3beacf212249ccc0e811415848fa4d75ae74f472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a6bdad0_66f45ced",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabCreatorManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-27T21:22:19Z",
+      "side": 1,
+      "message": "I think both of these methods might not be used in the future. I will throw a UnsupportedOperationException for these two methods.",
+      "parentUuid": "dc2920a5_31e2f023",
       "range": {
         "startLine": 69,
         "startChar": 8,
@@ -68,6 +116,30 @@
       "revId": "3beacf212249ccc0e811415848fa4d75ae74f472",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faae560b_8ca53007",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-27T21:22:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec8a3762_6ad89609",
+      "range": {
+        "startLine": 124,
+        "startChar": 20,
+        "endLine": 127,
+        "endChar": 41
+      },
+      "revId": "3beacf212249ccc0e811415848fa4d75ae74f472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
