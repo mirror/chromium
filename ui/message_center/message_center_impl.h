@@ -72,7 +72,8 @@ class MessageCenterImpl : public MessageCenter,
                               bool mark_notification_as_read) override;
   void DisplayedNotification(const std::string& id,
                              const DisplaySource source) override;
-  void SetNotifierSettingsProvider(NotifierSettingsProvider* provider) override;
+  void SetNotifierSettingsProvider(
+      std::unique_ptr<NotifierSettingsProvider> provider) override;
   NotifierSettingsProvider* GetNotifierSettingsProvider() override;
   void SetQuietMode(bool in_quiet_mode) override;
   void SetLockedState(bool locked) override;
@@ -86,9 +87,6 @@ class MessageCenterImpl : public MessageCenter,
   void OnBlockingStateChanged(NotificationBlocker* blocker) override;
 
   // message_center::NotifierSettingsObserver overrides:
-  void UpdateIconImage(const NotifierId& notifier_id,
-                       const gfx::Image& icon) override;
-  void NotifierGroupChanged() override;
   void NotifierEnabledChanged(const NotifierId& notifier_id,
                               bool enabled) override;
 
@@ -122,7 +120,8 @@ class MessageCenterImpl : public MessageCenter,
   base::ObserverList<MessageCenterObserver> observer_list_;
   std::unique_ptr<PopupTimersController> popup_timers_controller_;
   std::unique_ptr<base::OneShotTimer> quiet_mode_timer_;
-  NotifierSettingsProvider* settings_provider_;
+  // Null on !ChromeOS.
+  std::unique_ptr<NotifierSettingsProvider> settings_provider_;
   std::vector<NotificationBlocker*> blockers_;
 
   bool locked_ = false;

@@ -16,13 +16,19 @@ class ApplicationNotifierSource : public NotifierSource,
   explicit ApplicationNotifierSource(Observer* observer);
   ~ApplicationNotifierSource() override;
 
+  // NotifierSource:
   std::vector<std::unique_ptr<message_center::Notifier>> GetNotifierList(
       Profile* profile) override;
-
   void SetNotifierEnabled(Profile* profile,
                           const message_center::NotifierId& notifier_id,
                           bool enabled) override;
-
+  bool HasAdvancedSettings(
+      Profile* profile,
+      const message_center::NotifierId& notifier_id) const override;
+  void OnNotifierAdvancedSettingsRequested(
+      Profile* profile,
+      const message_center::NotifierId& notifier_id,
+      const std::string* notification_id) override;
   message_center::NotifierId::NotifierType GetNotifierType() override;
 
  private:
