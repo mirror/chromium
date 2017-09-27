@@ -72,8 +72,8 @@ class MockChromeCleanerControllerObserver
  public:
   MOCK_METHOD1(OnIdle, void(ChromeCleanerController::IdleReason));
   MOCK_METHOD0(OnScanning, void());
-  MOCK_METHOD1(OnInfected, void(const std::set<base::FilePath>&));
-  MOCK_METHOD1(OnCleaning, void(const std::set<base::FilePath>&));
+  MOCK_METHOD1(OnInfected, void(std::set<base::FilePath>));
+  MOCK_METHOD1(OnCleaning, void(std::set<base::FilePath>));
   MOCK_METHOD0(OnRebootRequired, void());
   MOCK_METHOD0(OnRebootFailed, void());
   MOCK_METHOD1(OnLogsEnabledChanged, void(bool));

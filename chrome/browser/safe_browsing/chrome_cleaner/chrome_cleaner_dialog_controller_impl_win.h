@@ -51,8 +51,8 @@ class ChromeCleanerDialogControllerImpl
   // ChromeCleanerController::Observer overrides.
   void OnIdle(ChromeCleanerController::IdleReason idle_reason) override;
   void OnScanning() override;
-  void OnInfected(const std::set<base::FilePath>& files_to_delete) override;
-  void OnCleaning(const std::set<base::FilePath>& files_to_delete) override;
+  void OnInfected(std::set<base::FilePath> files_to_delete) override;
+  void OnCleaning(std::set<base::FilePath> files_to_delete) override;
   void OnRebootRequired() override;
 
   // chrome::BrowserListObserver overrides.

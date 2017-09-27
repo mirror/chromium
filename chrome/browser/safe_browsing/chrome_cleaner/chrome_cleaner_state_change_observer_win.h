@@ -29,8 +29,8 @@ class ChromeCleanerStateChangeObserver
   // ChromeCleanerController::Observer implementation.
   void OnIdle(ChromeCleanerController::IdleReason idle_reason) override;
   void OnScanning() override;
-  void OnInfected(const std::set<base::FilePath>& files) override;
-  void OnCleaning(const std::set<base::FilePath>& files) override;
+  void OnInfected(std::set<base::FilePath> files) override;
+  void OnCleaning(std::set<base::FilePath> files) override;
   void OnRebootRequired() override;
   void OnLogsEnabledChanged(bool logs_enabled) override;
 
