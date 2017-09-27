@@ -492,7 +492,7 @@ void TrayAccessibility::OnAccessibilityStatusChanged(
     notification = message_center::Notification::CreateSystemNotification(
         message_center::NOTIFICATION_TYPE_SIMPLE, kNotificationId, title, text,
         gfx::Image(), base::string16(), GURL(),
-        message_center::NotifierId(message_center::NotifierId::APPLICATION,
+        message_center::NotifierId(message_center::NotifierId::SYSTEM_COMPONENT,
                                    system_notifier::kNotifierAccessibility),
         message_center::RichNotificationData(), nullptr,
         GetNotificationIcon(being_enabled),
@@ -503,7 +503,7 @@ void TrayAccessibility::OnAccessibilityStatusChanged(
         gfx::Image(gfx::CreateVectorIcon(GetNotificationIcon(being_enabled),
                                          kMenuIconSize, kMenuIconColor)),
         base::string16(), GURL(),
-        message_center::NotifierId(message_center::NotifierId::APPLICATION,
+        message_center::NotifierId(message_center::NotifierId::SYSTEM_COMPONENT,
                                    system_notifier::kNotifierAccessibility),
         message_center::RichNotificationData(), nullptr);
   }
