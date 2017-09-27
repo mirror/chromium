@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a726c1f_30e7f212",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-27T10:37:01Z",
+      "side": 1,
+      "message": "nit: javadoc to describe what it should be synchronising?",
+      "range": {
+        "startLine": 50,
+        "startChar": 32,
+        "endLine": 50,
+        "endChar": 37
+      },
+      "revId": "c3ee13dc2d1c2b50fac7052b472091e6a745386b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a6b0b00_a4a55d7e",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-27T10:37:01Z",
+      "side": 1,
+      "message": "nit: {@link #methodName}",
+      "range": {
+        "startLine": 137,
+        "startChar": 11,
+        "endLine": 137,
+        "endChar": 41
+      },
+      "revId": "c3ee13dc2d1c2b50fac7052b472091e6a745386b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
