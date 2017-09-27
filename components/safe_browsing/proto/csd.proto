@@ -748,7 +748,8 @@ message ClientIncidentReport {
         [deprecated = true];
     optional OmniboxInteractionIncident DEPRECATED_omnibox_interaction = 5
         [deprecated = true];
-    optional VariationsSeedSignatureIncident variations_seed_signature = 6;
+    optional VariationsSeedSignatureIncident
+        DEPRECATED_variations_seed_signature = 6 [deprecated = true];
     optional ResourceRequestIncident resource_request = 7;
     optional SuspiciousModuleIncident DEPRECATED_suspicious_module = 8
         [deprecated = true];
