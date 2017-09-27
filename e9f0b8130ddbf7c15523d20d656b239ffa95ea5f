@@ -140,6 +140,30 @@
       "revId": "e9f0b8130ddbf7c15523d20d656b239ffa95ea5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e92d7886_771654b4",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-27T02:58:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "760b1304_2195cd7a",
+      "range": {
+        "startLine": 284,
+        "startChar": 0,
+        "endLine": 289,
+        "endChar": 1
+      },
+      "revId": "e9f0b8130ddbf7c15523d20d656b239ffa95ea5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

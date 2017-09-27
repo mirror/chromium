@@ -22,6 +22,30 @@
       "revId": "67483750fcd8e800734ec0f628a6a81bdf712144",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8a8cb91_cb3d55a5",
+        "filename": "chrome/browser/installable/installable_metrics.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-27T02:58:27Z",
+      "side": 1,
+      "message": "The name is changed in the cc but due to a rebase snafu the change didn\u0027t make it here, so this is making it consistent.",
+      "parentUuid": "ca93e9e0_fa8a34cf",
+      "range": {
+        "startLine": 77,
+        "startChar": 18,
+        "endLine": 77,
+        "endChar": 44
+      },
+      "revId": "67483750fcd8e800734ec0f628a6a81bdf712144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
