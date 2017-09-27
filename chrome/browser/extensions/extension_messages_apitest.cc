@@ -1326,6 +1326,10 @@ IN_PROC_BROWSER_TEST_F(MessagingApiTest, MessagingOnUnload) {
   EXPECT_EQ(1, message_count);
 }
 
+IN_PROC_BROWSER_TEST_F(MessagingApiTest, LargeMessages) {
+  ASSERT_TRUE(RunExtensionTest("messaging/large_messages"));
+}
+
 }  // namespace
 
 };  // namespace extensions
