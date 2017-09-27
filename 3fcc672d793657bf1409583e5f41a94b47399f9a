@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c00caf86_982c7998",
+        "filename": "docs/accessibility/overview.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-27T15:59:05Z",
+      "side": 1,
+      "message": "In addition, using native tools:\n\n* Android: UIAutomatorViewer\n* macOS: Accessibility Inspector\n* Windows: Inspect, AViewer, accProbe (and many others)\n\n(Finally, Aaron is working on yet another way...)",
+      "revId": "3fcc672d793657bf1409583e5f41a94b47399f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
