@@ -112,6 +112,13 @@ MediaStream* HTMLMediaElementCapture::captureStream(
     return nullptr;
   }
 
+  if (!element.IsMediaDataCORSSameOrigin(
+          element.GetExecutionContext()->GetSecurityOrigin())) {
+    exception_state.ThrowSecurityError(
+        "Cannot capture from cross-origin element");
+    return nullptr;
+  }
+
   WebMediaStream web_stream;
   web_stream.Initialize(WebVector<WebMediaStreamTrack>(),
                         WebVector<WebMediaStreamTrack>());

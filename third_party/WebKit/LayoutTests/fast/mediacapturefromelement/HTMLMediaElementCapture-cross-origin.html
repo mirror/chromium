@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src=../../resources/testharness.js></script>
+<script src=../../resources/testharnessreport.js></script>
+</head>
+<body>
+<script>
+
+// Run captureStream() on a cross-origin video, and assert that it throws.
+var t = test(() => {
+  var video = document.createElement('video');
+  video.src = "https://webrtc.github.io/samples/src/video/chrome.mp4";
+  assert_throws({name: "SecurityError"}, () => video.captureStream());
+}, "<video>.captureStream() from cross origin element throws exception.");
+
+</script>
+</body>
+</html>
