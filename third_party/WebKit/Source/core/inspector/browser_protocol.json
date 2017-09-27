@@ -2108,6 +2108,18 @@
                 "description": "Requests data from object store or index."
             },
             {
+                "name": "deleteObjectStoreEntry",
+                "parameters": [
+                    { "name": "securityOrigin", "type": "string", "description": "Security origin." },
+                    { "name": "databaseName", "type": "string", "description": "Database name." },
+                    { "name": "objectStoreName", "type": "string", "description": "Object store name." },
+                    { "name": "keyRange", "$ref": "KeyRange", "optional": true, "description": "Entry key." }
+                ],
+                "returns": [
+                ],
+                "description": "Deletes an entry from an object store."
+            },
+            {
                 "name": "clearObjectStore",
                 "parameters": [
                     { "name": "securityOrigin", "type": "string", "description": "Security origin." },

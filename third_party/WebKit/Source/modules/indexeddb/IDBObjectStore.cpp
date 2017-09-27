@@ -587,6 +587,18 @@ IDBRequest* IDBObjectStore::deleteFunction(ScriptState* script_state,
   return request;
 }
 
+IDBRequest* IDBObjectStore::deleteFunction(
+    ScriptState* script_state,
+    IDBKeyRange* key_range,
+    IDBRequest::AsyncTraceState metrics) {
+  IDBRequest* request =
+      IDBRequest::Create(script_state, IDBAny::Create(this), transaction_.Get(),
+                         std::move(metrics));
+  BackendDB()->DeleteRange(transaction_->Id(), Id(), key_range,
+                           request->CreateWebCallbacks().release());
+  return request;
+}
+
 IDBRequest* IDBObjectStore::clear(ScriptState* script_state,
                                   ExceptionState& exception_state) {
   IDB_TRACE("IDBObjectStore::clearRequestSetup");

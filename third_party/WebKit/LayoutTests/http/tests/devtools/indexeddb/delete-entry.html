@@ -1,0 +1,94 @@
+<html>
+<head>
+<script src="../../inspector/inspector-test.js"></script>
+<script src="../../inspector/indexeddb/indexeddb-test.js"></script>
+<script>
+
+async function test() {
+  let indexedDBModel = TestRunner.mainTarget.model(Resources.IndexedDBModel);
+
+  function waitDatabaseAdded(callback) {
+    let event = indexedDBModel.addEventListener(Resources.IndexedDBModel.Events.DatabaseAdded, () => {
+      Common.EventTarget.removeEventListeners([event]);
+      callback();
+    });
+    UI.panels.resources._sidebar.indexedDBListTreeElement.refreshIndexedDB();
+  }
+
+  function dumpObjectStores() {
+    TestRunner.addResult('Dumping ObjectStore data:');
+
+    let idbDatabaseTreeElement = UI.panels.resources._sidebar.indexedDBListTreeElement._idbDatabaseTreeElements[0];
+    for (let i = 0; i < idbDatabaseTreeElement.childCount(); ++i) {
+      let objectStoreTreeElement = idbDatabaseTreeElement.childAt(i);
+      TestRunner.addResult('    Object store: ' + objectStoreTreeElement.title);
+      objectStoreTreeElement.onselect(false);
+      let entries = objectStoreTreeElement._view._entries;
+      if (!entries.length) {
+        TestRunner.addResult('            (no entries)');
+      } else {
+        for (let j = 0; j < entries.length; ++j) {
+          TestRunner.addResult('            Key = ' + entries[j].key._value + ', value = ' + entries[j].value);
+        }
+      }
+      for (let k = 0; k < objectStoreTreeElement.childCount(); ++k) {
+        let indexTreeElement = objectStoreTreeElement.childAt(k);
+        InspectorTest.addResult("            Index: " + indexTreeElement.title);
+        indexTreeElement.onselect(false);
+        let entries = indexTreeElement._view._entries;
+        if (!entries.length) {
+          TestRunner.addResult('                (no entries)');
+          continue;
+        }
+        for (let j = 0; j < entries.length; ++j) {
+          TestRunner.addResult('                Key = ' + entries[j].primaryKey._value + ', value = ' + entries[j].value);
+        }
+      }
+    }
+  }
+
+  await ApplicationTestRunner.createDatabaseAsync('database1');
+  await new Promise(waitDatabaseAdded);
+
+  let idbDatabaseTreeElement = UI.panels.resources._sidebar.indexedDBListTreeElement._idbDatabaseTreeElements[0];
+  await ApplicationTestRunner.createObjectStoreAsync('database1', 'objectStore1', 'index1');
+  idbDatabaseTreeElement._refreshIndexedDB();
+  await InspectorTest.addSnifferPromise(Resources.IDBIndexTreeElement.prototype, '_updateTooltip');
+
+  await ApplicationTestRunner.addIDBValueAsync('database1', 'objectStore1', 'testKey1', 'testValue');
+  await ApplicationTestRunner.addIDBValueAsync('database1', 'objectStore1', 'testKey2', 'testValue');
+
+  idbDatabaseTreeElement._refreshIndexedDB();
+  await InspectorTest.addSnifferPromise(Resources.IDBIndexTreeElement.prototype, '_updateTooltip');
+  ApplicationTestRunner.dumpIndexedDBTree();
+
+  let objectStoreTreeElement = idbDatabaseTreeElement.childAt(0);
+  objectStoreTreeElement.onselect(false);
+  await InspectorTest.addSnifferPromise(Resources.IDBDataView.prototype, '_updatedDataForTests');
+  let indexTreeElement = objectStoreTreeElement.childAt(0);
+  indexTreeElement.onselect(false);
+  await InspectorTest.addSnifferPromise(Resources.IDBDataView.prototype, '_updatedDataForTests');
+  dumpObjectStores();
+
+  let node = objectStoreTreeElement._view._dataGrid.rootNode().children[0];
+  objectStoreTreeElement._view._dataGrid._selectedNode = node;
+  objectStoreTreeElement._view._deleteButtonClicked(node);
+  await InspectorTest.addSnifferPromise(Resources.IDBDataView.prototype, '_updatedDataForTests');
+  await InspectorTest.addSnifferPromise(Resources.IDBDataView.prototype, '_updatedDataForTests');
+  dumpObjectStores();
+
+  node = indexTreeElement._view._dataGrid.rootNode().children[0];
+  indexTreeElement._view._dataGrid._selectedNode = node;
+  indexTreeElement._view._deleteButtonClicked(node);
+  await InspectorTest.addSnifferPromise(Resources.IDBDataView.prototype, '_updatedDataForTests');
+  await InspectorTest.addSnifferPromise(Resources.IDBDataView.prototype, '_updatedDataForTests');
+  dumpObjectStores();
+
+  InspectorTest.completeTest();
+}
+</script>
+</head>
+<body onload="runTest()">
+<p>Tests object store and index entry deletion.</p>
+</body>
+</html>
