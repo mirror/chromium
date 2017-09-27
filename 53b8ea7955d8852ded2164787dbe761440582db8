@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b72a11ef_2cceba62",
+        "filename": "components/onc/docs/onc_spec.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-27T16:03:29Z",
+      "side": 1,
+      "message": "remove space",
+      "range": {
+        "startLine": 536,
+        "startChar": 73,
+        "endLine": 536,
+        "endChar": 74
+      },
+      "revId": "53b8ea7955d8852ded2164787dbe761440582db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
