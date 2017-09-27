@@ -55,6 +55,10 @@
 #include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
 #endif  // #if defined(OS_WIN)
 
+#if defined(OS_ANDROID)
+#include "net/android/network_library.h"
+#endif  // #if defined(OS_ANDROID)
+
 namespace {
 
 const base::Feature kMITMSoftwareInterstitial{
@@ -298,6 +302,9 @@ class ConfigSingleton {
 
   bool IsEnterpriseManaged() const;
 
+  void SetOSReportsCaptivePortalForTesting(bool os_reports_captive_portal);
+  bool DoesOSReportCaptivePortalForTesting() const;
+
  private:
   base::TimeDelta interstitial_delay_;
 
@@ -323,6 +330,13 @@ class ConfigSingleton {
     ENTERPRISE_MANAGED_STATUS_FALSE
   };
   EnterpriseManaged is_enterprise_managed_for_testing_;
+
+  enum OSCaptivePortalStatus {
+    OS_CAPTIVE_PORTAL_STATUS_NOT_SET,
+    OS_CAPTIVE_PORTAL_STATUS_BEHIND_PORTAL,
+    OS_CAPTIVE_PORTAL_STATUS_NOT_BEHIND_PORTAL,
+  };
+  OSCaptivePortalStatus os_captive_portal_status_for_testing_;
 
   // SPKI hashes belonging to certs treated as captive portals. Null until the
   // first time IsKnownCaptivePortalCert() or SetErrorAssistantProto()
@@ -424,6 +438,21 @@ bool ConfigSingleton::IsEnterpriseManaged() const {
   }
 #endif  // #if defined(OS_WIN)
   return false;
+}
+
+void ConfigSingleton::SetOSReportsCaptivePortalForTesting(
+    bool os_reports_captive_portal) {
+  if (os_reports_captive_portal) {
+    os_captive_portal_status_for_testing_ =
+        OS_CAPTIVE_PORTAL_STATUS_BEHIND_PORTAL;
+  } else {
+    os_captive_portal_status_for_testing_ =
+        OS_CAPTIVE_PORTAL_STATUS_NOT_BEHIND_PORTAL;
+  }
+}
+
+bool ConfigSingleton::DoesOSReportCaptivePortalForTesting() const {
+  return os_captive_portal_status_for_testing_;
 }
 
 void ConfigSingleton::SetErrorAssistantProto(
@@ -570,6 +599,7 @@ class SSLErrorHandlerDelegateImpl : public SSLErrorHandler::Delegate {
 
   // SSLErrorHandler::Delegate methods:
   void CheckForCaptivePortal() override;
+  bool DoesOSReportCaptivePortal() override;
   bool GetSuggestedUrl(const std::vector<std::string>& dns_names,
                        GURL* suggested_url) const override;
   void CheckSuggestedUrl(
@@ -610,6 +640,15 @@ void SSLErrorHandlerDelegateImpl::CheckForCaptivePortal() {
   captive_portal_service->DetectCaptivePortal();
 #else
   NOTREACHED();
+#endif
+}
+
+bool SSLErrorHandlerDelegateImpl::DoesOSReportCaptivePortal() {
+#if defined(OS_ANDROID)
+  return net::android::GetIsCaptivePortal();
+#else
+  NOTREACHED();
+  return false;
 #endif
 }
 
@@ -762,6 +801,13 @@ int SSLErrorHandler::GetErrorAssistantProtoVersionIdForTesting() {
   return g_config.Pointer()->GetErrorAssistantProtoVersionIdForTesting();
 }
 
+// static
+void SSLErrorHandler::SetOSReportsCaptivePortalForTesting(
+    bool os_reports_captive_portal) {
+  g_config.Pointer()->SetOSReportsCaptivePortalForTesting(
+      os_reports_captive_portal);
+}
+
 bool SSLErrorHandler::IsTimerRunningForTesting() const {
   return timer_.IsRunning();
 }
@@ -802,6 +848,14 @@ void SSLErrorHandler::StartHandlingError() {
     HandleCertDateInvalidError();
     return;
   }
+
+#if defined(OS_ANDROID)
+  if (g_config.Pointer()->DoesOSReportCaptivePortalForTesting() ||
+      delegate_->DoesOSReportCaptivePortal()) {
+    ShowCaptivePortalInterstitial(GURL());
+    return;
+  }
+#endif
 
   const bool only_error_is_name_mismatch =
       IsOnlyCertError(net::CERT_STATUS_COMMON_NAME_INVALID);
