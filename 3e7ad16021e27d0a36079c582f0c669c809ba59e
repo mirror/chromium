@@ -37,6 +37,23 @@
     },
     {
       "key": {
+        "uuid": "3ea8ebf6_df4ba9ec",
+        "filename": "third_party/WebKit/LayoutTests/fast/dom/Window/property-access-on-cached-window-after-frame-removed-expected.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-27T05:55:00Z",
+      "side": 1,
+      "message": "This file does not contain \"FAIL\" line, it is safe to remove.",
+      "revId": "3e7ad16021e27d0a36079c582f0c669c809ba59e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "13deabdd_eacd5f80",
         "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.h",
         "patchSetId": 6
