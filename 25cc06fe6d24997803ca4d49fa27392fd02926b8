@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "a1221a79_7a64989e",
+        "filename": "extensions/browser/extension_registrar.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-27T20:41:48Z",
+      "side": 1,
+      "message": "Sent http://crrev.com/688454",
+      "parentUuid": "ea6033be_0e3796b0",
+      "revId": "25cc06fe6d24997803ca4d49fa27392fd02926b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2af07dd7_310a095b",
         "filename": "extensions/browser/extension_registrar.h",
         "patchSetId": 12
