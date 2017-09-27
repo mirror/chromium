@@ -50,12 +50,9 @@ class FaviconDriver {
   FaviconDriver();
   virtual ~FaviconDriver();
 
-  // Notifies FaviconDriverObservers that the favicon image has been updated.
-  void NotifyFaviconUpdatedObservers(
-    FaviconDriverObserver::NotificationIconType notification_icon_type,
-    const GURL& icon_url,
-    bool icon_url_changed,
-    const gfx::Image& image);
+  const base::ObserverList<FaviconDriverObserver>& observer_list() const {
+    return observer_list_;
+  }
 
  private:
   base::ObserverList<FaviconDriverObserver> observer_list_;

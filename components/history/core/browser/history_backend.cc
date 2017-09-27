@@ -1612,6 +1612,15 @@ void HistoryBackend::UpdateFaviconMappingsAndFetch(
                                     desired_sizes, bitmap_results);
 }
 
+void HistoryBackend::DeleteFaviconMappings(
+    const base::flat_set<GURL>& page_urls,
+    favicon_base::IconType icon_type) {
+  const std::vector<favicon_base::FaviconID> kNoIconIds;
+  for (const GURL& page_url : page_urls) {
+    SetFaviconMappingsForPageAndRedirects(page_url, icon_type, kNoIconIds);
+  }
+}
+
 void HistoryBackend::MergeFavicon(
     const GURL& page_url,
     const GURL& icon_url,

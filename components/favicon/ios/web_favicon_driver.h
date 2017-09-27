@@ -49,6 +49,9 @@ class WebFaviconDriver : public web::WebStateObserver,
       const GURL& icon_url,
       bool icon_url_changed,
       const gfx::Image& image) override;
+  void OnFaviconDeleted(const GURL& page_url,
+                        FaviconDriverObserver::NotificationIconType
+                            notification_icon_type) override;
 
  private:
   friend class web::WebStateUserData<WebFaviconDriver>;

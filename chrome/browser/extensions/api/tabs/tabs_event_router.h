@@ -92,6 +92,8 @@ class TabsEventRouter : public TabStripModelObserver,
                         const GURL& icon_url,
                         bool icon_url_changed,
                         const gfx::Image& image) override;
+  void OnFaviconDeleted(favicon::FaviconDriver* favicon_driver,
+                        NotificationIconType notification_icon_type) override;
 
   // resource_coordinator::TabManagerObserver:
   void OnDiscardedStateChange(content::WebContents* contents,

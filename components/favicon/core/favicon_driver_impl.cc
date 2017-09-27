@@ -106,4 +106,22 @@ void FaviconDriverImpl::OnUpdateCandidates(
   }
 }
 
+void FaviconDriverImpl::NotifyFaviconUpdatedObservers(
+    FaviconDriverObserver::NotificationIconType notification_icon_type,
+    const GURL& icon_url,
+    bool icon_url_changed,
+    const gfx::Image& image) {
+  for (FaviconDriverObserver& observer : observer_list()) {
+    observer.OnFaviconUpdated(this, notification_icon_type, icon_url,
+                              icon_url_changed, image);
+  }
+}
+
+void FaviconDriverImpl::NotifyFaviconDeletedObservers(
+    FaviconDriverObserver::NotificationIconType notification_icon_type) {
+  for (FaviconDriverObserver& observer : observer_list()) {
+    observer.OnFaviconDeleted(this, notification_icon_type);
+  }
+}
+
 }  // namespace favicon
