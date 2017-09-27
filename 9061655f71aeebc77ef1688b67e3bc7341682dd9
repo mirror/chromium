@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec6b51da_67dd1209",
+        "filename": "extensions/browser/extension_protocols.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-27T19:22:15Z",
+      "side": 1,
+      "message": "I\u0027d also comment here about this being a requirement for modules from extensions. It is important to document that for archaeological reasons.\n\nAlso, is the mime-type typically \"application/javascript\"?",
+      "revId": "9061655f71aeebc77ef1688b67e3bc7341682dd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1b3a247_7d58c0c6",
+        "filename": "extensions/browser/extension_protocols.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-27T19:22:15Z",
+      "side": 1,
+      "message": "Maybe check with mmenke@ about this from net/\u0027s perspective?",
+      "revId": "9061655f71aeebc77ef1688b67e3bc7341682dd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
