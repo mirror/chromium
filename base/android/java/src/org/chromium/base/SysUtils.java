@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.StrictMode;
+import android.support.annotation.IntDef;
 import android.util.Log;
 
 import org.chromium.base.annotations.CalledByNative;
@@ -16,6 +17,8 @@ import org.chromium.base.annotations.JNINamespace;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,12 +28,23 @@ import java.util.regex.Pattern;
 @JNINamespace("base::android")
 public class SysUtils {
     // A device reporting strictly more total memory in megabytes cannot be considered 'low-end'.
-    private static final int ANDROID_LOW_MEMORY_DEVICE_THRESHOLD_MB = 512;
-    private static final int ANDROID_O_LOW_MEMORY_DEVICE_THRESHOLD_MB = 1024;
+    private static final int EXTREMELY_LOW_END_MEMORY_THRESHOLD_MB = 512;
+    private static final int LOW_END_MEMORY_THRESHOLD_MB = 512;
+    private static final int ANDROID_O_LOW_END_MEMORY_THRESHOLD_MB = 1024;
 
     private static final String TAG = "SysUtils";
 
-    private static Boolean sLowEndDevice;
+    @IntDef({DeviceTier.EXTREMELY_LOW_END, DeviceTier.LOW_END, DeviceTier.UNKNOWN,
+            DeviceTier.NOT_LOW_END})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface DeviceTier {
+        int EXTREMELY_LOW_END = -2;
+        int LOW_END = -1;
+        int UNKNOWN = 0;
+        int NOT_LOW_END = 1;
+    }
+
+    private static @DeviceTier int sDeviceTier;
 
     private SysUtils() { }
 
@@ -100,10 +114,11 @@ public class SysUtils {
      */
     @CalledByNative
     public static boolean isLowEndDevice() {
-        if (sLowEndDevice == null) {
-            sLowEndDevice = detectLowEndDevice();
-        }
-        return sLowEndDevice.booleanValue();
+        return getDeviceTier() <= DeviceTier.LOW_END;
+    }
+
+    public static boolean isExtremelyLowEndDevice() {
+        return getDeviceTier() <= DeviceTier.EXTREMELY_LOW_END;
     }
 
     /**
@@ -124,7 +139,7 @@ public class SysUtils {
      */
     @VisibleForTesting
     public static void reset() {
-        sLowEndDevice = null;
+        sDeviceTier = DeviceTier.UNKNOWN;
     }
 
     public static boolean hasCamera(final Context context) {
@@ -137,22 +152,35 @@ public class SysUtils {
         return hasCamera;
     }
 
-    private static boolean detectLowEndDevice() {
+    private static @DeviceTier int getDeviceTier() {
+        if (sDeviceTier == DeviceTier.UNKNOWN) {
+            sDeviceTier = detectDeviceTier();
+        }
+        return sDeviceTier;
+    }
+
+    private static int detectDeviceTier() {
         assert CommandLine.isInitialized();
+
         if (CommandLine.getInstance().hasSwitch(BaseSwitches.ENABLE_LOW_END_DEVICE_MODE)) {
-            return true;
+            return DeviceTier.LOW_END;
         }
         if (CommandLine.getInstance().hasSwitch(BaseSwitches.DISABLE_LOW_END_DEVICE_MODE)) {
-            return false;
+            return DeviceTier.NOT_LOW_END;
         }
 
-        int ramSizeKB = amountOfPhysicalMemoryKB();
-        if (ramSizeKB <= 0) return false;
+        int ramSizeMB = amountOfPhysicalMemoryKB() / 1024;
+        if (ramSizeMB <= 0) return DeviceTier.NOT_LOW_END;
+
+        if (ramSizeMB <= EXTREMELY_LOW_END_MEMORY_THRESHOLD_MB) return DeviceTier.EXTREMELY_LOW_END;
 
         if (BuildInfo.isAtLeastO()) {
-            return ramSizeKB / 1024 <= ANDROID_O_LOW_MEMORY_DEVICE_THRESHOLD_MB;
+            if (ramSizeMB <= ANDROID_O_LOW_END_MEMORY_THRESHOLD_MB) return DeviceTier.LOW_END;
+        } else {
+            if (ramSizeMB <= LOW_END_MEMORY_THRESHOLD_MB) return DeviceTier.LOW_END;
         }
-        return ramSizeKB / 1024 <= ANDROID_LOW_MEMORY_DEVICE_THRESHOLD_MB;
+
+        return DeviceTier.NOT_LOW_END;
     }
 
     /**
