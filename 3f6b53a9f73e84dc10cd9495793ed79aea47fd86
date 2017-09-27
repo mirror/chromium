@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d1bef0f_b9458a56",
+        "filename": "net/cert/cert_verify_proc_builtin.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-09-27T01:03:51Z",
+      "side": 1,
+      "message": "This is modeled after CheckRevocationWithCRLSet() from cert_verify_proc_nss.cc",
+      "revId": "3f6b53a9f73e84dc10cd9495793ed79aea47fd86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
