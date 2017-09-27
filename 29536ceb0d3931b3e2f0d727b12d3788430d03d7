@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "548b4730_118b9589",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-09-27T00:03:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e041bd72_01cc9260",
+      "revId": "29536ceb0d3931b3e2f0d727b12d3788430d03d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a633e845_413c6605",
         "filename": "ash/wm/splitview/split_view_controller.cc",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-26T17:05:06Z",
       "side": 1,
       "message": "I think it\u0027s easier to read \u0026 maintain if you move this logic outside of the if and do\n\nif (left_window_ \u0026\u0026 right_window_)  both\n} else if (left_window_) {\n left\n} else if (right_window) {\n}\n\nand the LOC is about the same?",
+      "revId": "29536ceb0d3931b3e2f0d727b12d3788430d03d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f94e56a_ddb94941",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-09-27T00:03:11Z",
+      "side": 1,
+      "message": "You\u0027re right. It\u0027s cleaner to do it this way. Moved it out. Btw: What is LOC?",
+      "parentUuid": "a633e845_413c6605",
       "revId": "29536ceb0d3931b3e2f0d727b12d3788430d03d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4e5aa8ab_009709af",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-09-27T00:03:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bbeb903_7aff19d5",
+      "revId": "29536ceb0d3931b3e2f0d727b12d3788430d03d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8e5c099_73fb5419",
         "filename": "ash/wm/splitview/split_view_controller.cc",
         "patchSetId": 10
@@ -67,6 +121,24 @@
       "revId": "29536ceb0d3931b3e2f0d727b12d3788430d03d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "995c131e_752ac87e",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-09-27T00:03:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8e5c099_73fb5419",
+      "revId": "29536ceb0d3931b3e2f0d727b12d3788430d03d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "ab68d66c_ff7a52a1",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-09-27T00:03:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39bb7045_863fde15",
+      "range": {
+        "startLine": 242,
+        "startChar": 16,
+        "endLine": 242,
+        "endChar": 59
+      },
+      "revId": "29536ceb0d3931b3e2f0d727b12d3788430d03d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1e6fe43_4fd59389",
         "filename": "ash/wm/splitview/split_view_controller.cc",
         "patchSetId": 10
@@ -104,6 +200,24 @@
       "writtenOn": "2017-09-26T17:05:06Z",
       "side": 1,
       "message": "Looks like we flip the divider position here and then flip again when computing the bounds above? Is it necessary?",
+      "revId": "29536ceb0d3931b3e2f0d727b12d3788430d03d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d6b025e_b52e8b8a",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-09-27T00:03:11Z",
+      "side": 1,
+      "message": "Sorry I don\u0027t quite understand the concern here? |divider_positon_| is only updated during resizing (in UpdateDividerPosition() function) and after resizing (in EndResize() function).",
+      "parentUuid": "a1e6fe43_4fd59389",
       "revId": "29536ceb0d3931b3e2f0d727b12d3788430d03d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "c5b47e6d_df2bcd7a",
+        "filename": "ash/wm/splitview/split_view_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-09-27T00:03:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28501060_4cae74b1",
+      "revId": "29536ceb0d3931b3e2f0d727b12d3788430d03d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb5ce14b_08dcf3a1",
         "filename": "ash/wm/tablet_mode/tablet_mode_window_manager.cc",
         "patchSetId": 10
@@ -138,6 +270,24 @@
       "writtenOn": "2017-09-26T17:05:06Z",
       "side": 1,
       "message": "don\u0027t we have to update the previously snapped window?",
+      "revId": "29536ceb0d3931b3e2f0d727b12d3788430d03d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbcddfbd_502fd951",
+        "filename": "ash/wm/tablet_mode/tablet_mode_window_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-09-27T00:03:11Z",
+      "side": 1,
+      "message": "Are you talking about in overview mode, snapping two windows to the same position and the first one should reset its defer_bounds_updates_ state? Currently it\u0027s unnecessary since we don\u0027t insert the first one back to overview window grid (we probably should do), and the defer_bounds_updates_ is only used for overview windows. \nWhen overview mode starts again, it will set defer_bounds_updates_ to true for all windows first and SplitViewController will set defer_bounds_updates_ for its snapped window(s) then.",
+      "parentUuid": "bb5ce14b_08dcf3a1",
       "revId": "29536ceb0d3931b3e2f0d727b12d3788430d03d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
