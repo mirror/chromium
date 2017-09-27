@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea6cd2b5_b8a67fb0",
+        "filename": "ios/chrome/browser/signin/ios_chrome_signin_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-27T08:18:59Z",
+      "side": 1,
+      "message": "Missing destructor:\n~IOSChromeSigninClient() override \u003d default;",
+      "revId": "0c3e9d3e6d5eefdc0cb2a1cf0c27cedeaee6a8e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d880ef5_8341c9d4",
+        "filename": "ios/chrome/browser/signin/ios_chrome_signin_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-27T08:18:59Z",
+      "side": 1,
+      "message": "I guess this is IOSSigninClient. If so, then please change comment to:\n// IOSSigninClient implementation.",
+      "range": {
+        "startLine": 22,
+        "startChar": 5,
+        "endLine": 22,
+        "endChar": 17
+      },
+      "revId": "0c3e9d3e6d5eefdc0cb2a1cf0c27cedeaee6a8e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bfee480_62eb4d2b",
+        "filename": "ios/chrome/browser/signin/ios_chrome_signin_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-27T08:18:59Z",
+      "side": 1,
+      "message": "Move this below OnSignedOut as they are related.",
+      "range": {
+        "startLine": 23,
+        "startChar": 7,
+        "endLine": 23,
+        "endChar": 18
+      },
+      "revId": "0c3e9d3e6d5eefdc0cb2a1cf0c27cedeaee6a8e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9955b17_67330f0b",
+        "filename": "ios/chrome/browser/signin/ios_chrome_signin_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-27T08:18:59Z",
+      "side": 1,
+      "message": "Move this up below GetInstallDate as they seem somehow related.",
+      "range": {
+        "startLine": 32,
+        "startChar": 7,
+        "endLine": 32,
+        "endChar": 13
+      },
+      "revId": "0c3e9d3e6d5eefdc0cb2a1cf0c27cedeaee6a8e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
