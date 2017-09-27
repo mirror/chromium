@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77d3ef3d_a42f5127",
+        "filename": "net/cert/internal/trust_store_nss.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-09-27T01:37:52Z",
+      "side": 1,
+      "message": "Nice simplification and explanation!",
+      "revId": "34e246d046c2ab59213c42207adfd0723ea245f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
