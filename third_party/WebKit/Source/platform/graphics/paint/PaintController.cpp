@@ -607,6 +607,7 @@ void PaintController::CommitNewDisplayItems() {
 
   Vector<const DisplayItemClient*> skipped_cache_clients;
   for (const auto& item : new_display_item_list_) {
+    item.Client().ClearPartialInvalidationRect();
     if (item.IsCacheable()) {
       item.Client().SetDisplayItemsCached(current_cache_generation_);
     } else {
@@ -881,13 +882,23 @@ void PaintController::GenerateRasterInvalidation(
     return;
   }
 
-  if (client.GetPaintInvalidationReason() ==
-      PaintInvalidationReason::kIncremental) {
-    GenerateIncrementalRasterInvalidation(chunk, *old_item, *new_item);
+  if (IsFullPaintInvalidationReason(client.GetPaintInvalidationReason())) {
+    GenerateFullRasterInvalidation(chunk, *old_item, *new_item);
     return;
   }
 
-  GenerateFullRasterInvalidation(chunk, *old_item, *new_item);
+  DCHECK(client.GetPaintInvalidationReason() ==
+             PaintInvalidationReason::kRectangle ||
+         client.GetPaintInvalidationReason() ==
+             PaintInvalidationReason::kIncremental);
+
+  GenerateIncrementalRasterInvalidation(chunk, *old_item, *new_item);
+
+  auto partial_rect = client.PartialInvalidationRect();
+  if (!partial_rect.IsEmpty()) {
+    AddRasterInvalidation(client, chunk, FloatRect(partial_rect),
+                          PaintInvalidationReason::kRectangle);
+  }
 }
 
 static FloatRect ComputeRightDelta(const FloatPoint& location,
