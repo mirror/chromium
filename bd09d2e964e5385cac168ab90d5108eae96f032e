@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "339b0f05_0465d697",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-28T18:56:10Z",
+      "side": 1,
+      "message": "nit: at this point using a regular for loop may be clearer.",
+      "revId": "bd09d2e964e5385cac168ab90d5108eae96f032e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
