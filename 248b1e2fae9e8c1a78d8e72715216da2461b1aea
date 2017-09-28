@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40be833b_64b2c8a4",
+        "filename": "extensions/renderer/messaging_bindings.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-28T02:19:20Z",
+      "side": 1,
+      "message": "Would constexpr be better here to guarantee that the value is calculated during compile time? Or does it also implicitly apply for static const?",
+      "revId": "248b1e2fae9e8c1a78d8e72715216da2461b1aea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
