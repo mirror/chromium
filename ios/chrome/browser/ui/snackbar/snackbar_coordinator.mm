@@ -5,6 +5,7 @@
 #import "ios/chrome/browser/ui/snackbar/snackbar_coordinator.h"
 
 #import "ios/chrome/browser/ui/commands/command_dispatcher.h"
+#import "ios/chrome/browser/ui/commands/snackbar_action.h"
 #import "ios/chrome/browser/ui/commands/snackbar_commands.h"
 #import "ios/third_party/material_components_ios/src/components/Snackbar/src/MaterialSnackbar.h"
 
@@ -32,12 +33,42 @@ NSString* const kDefaultSnackbarCategory = @"DefaultSnackbarCategory";
 #pragma mark - SnackbarCommands
 
 - (void)showSnackbarWithMessage:(NSString*)message {
+  [self showSnackbarWithMessage:message category:kDefaultSnackbarCategory];
+}
+
+- (void)showSnackbarWithMessage:(NSString*)message
+                       category:(NSString*)category {
+  [self showSnackbarWithMessage:message category:category duration:2.0];
+}
+
+- (void)showSnackbarWithMessage:(NSString*)message
+                       category:(NSString*)category
+                       duration:(NSTimeInterval)duration {
   MDCSnackbarMessage* snackbarMessage =
       [MDCSnackbarMessage messageWithText:message];
   snackbarMessage.accessibilityLabel = message;
-  snackbarMessage.duration = 2.0;
-  snackbarMessage.category = kDefaultSnackbarCategory;
+  snackbarMessage.duration = duration;
+  snackbarMessage.category = category;
   [MDCSnackbarManager showMessage:snackbarMessage];
+}
+
+- (void)showSnackbarWithMessage:(NSString*)message
+                       category:(NSString*)category
+                         action:(SnackbarAction*)action {
+  MDCSnackbarMessageAction* actionMDC = [[MDCSnackbarMessageAction alloc] init];
+  actionMDC.handler = action.handler;
+  actionMDC.title = action.title;
+  actionMDC.accessibilityIdentifier = action.accessibilityIdentifier;
+  actionMDC.accessibilityLabel = action.accessibilityLabel;
+  MDCSnackbarMessage* snackbarMessage =
+      [MDCSnackbarMessage messageWithText:message];
+  snackbarMessage.category = category;
+  snackbarMessage.action = actionMDC;
+  [MDCSnackbarManager showMessage:snackbarMessage];
+}
+
+- (void)dismissAllSnackbarsWithCategory:(NSString*)category {
+  [MDCSnackbarManager dismissAndCallCompletionBlocksWithCategory:category];
 }
 
 @end
