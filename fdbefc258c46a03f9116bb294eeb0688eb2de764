@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86a1a696_f8a28453",
+        "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-28T19:10:52Z",
+      "side": 1,
+      "message": "There are already test helpers that can respond from the network, so you should not need to friend the class.  https://cs.chromium.org/chromium/src/components/offline_pages/core/prefetch/prefetch_request_test_base.h?rcl\u003dc91d4ca6224b4284a6ae14c08efddbb1144de67d\u0026l\u003d23",
+      "revId": "fdbefc258c46a03f9116bb294eeb0688eb2de764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e637271_039adab6",
+        "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-28T19:10:52Z",
+      "side": 1,
+      "message": "this should probably be ExpectUniqueSample since we don\u0027t expect any other buckets to have data.",
+      "revId": "fdbefc258c46a03f9116bb294eeb0688eb2de764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59c99fe3_731b2fe6",
+        "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-28T19:10:52Z",
+      "side": 1,
+      "message": "Could you please have separate histograms for GetOperation and for GeneratePageBundle?",
+      "revId": "fdbefc258c46a03f9116bb294eeb0688eb2de764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66f94055_4ee82df4",
+        "filename": "components/offline_pages/core/prefetch/prefetch_types.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-28T19:10:52Z",
+      "side": 1,
+      "message": "please use COUNT \u003d SHOULD_SUSPEND + 1, not MAX, since the histogram requires MAX + 1 as an argument. (from comments: The value in |sample| must be strictly less than |enum_max|)\n\nnit: please assign explicit numbers to the entries here, eg (success \u003d 0, should_retry_without_backoff \u003d 1, etc.",
+      "revId": "fdbefc258c46a03f9116bb294eeb0688eb2de764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
