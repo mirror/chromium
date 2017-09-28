@@ -423,6 +423,24 @@
     },
     {
       "key": {
+        "uuid": "4d70337f_997d2048",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-28T08:55:12Z",
+      "side": 1,
+      "message": "Apologies for the mis-attribution. :-) The original code didn\u0027t make sense, so may as well clean it up now. I think what you have in patch set 24 preserves the *intent* of the old code. I\u0027m not sure that we want to crash the process if combase.dll or the required functions suddenly don\u0027t exist in a future version of Windows. It\u0027d be unfortunate if MS pushed an update that caused all Chromen to crash at startup on Win10+.",
+      "parentUuid": "7cea4f93_e492bd2c",
+      "revId": "c9b519d827d1ad7cc0ab22572203fed90fa269b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "492d9b12_45fa33d5",
         "filename": "base/win/win_util.cc",
         "patchSetId": 22
