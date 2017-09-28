@@ -23,6 +23,8 @@
 namespace {
 
 constexpr int kBackgroundColor = 0x4285F4;
+constexpr int kViewHeight = 48;
+constexpr double kAnimationDuration = 0.5;  // seconds
 
 // NetworkTrafficAnnotationTag for fetching avatar.
 const net::NetworkTrafficAnnotationTag kTrafficAnnotation =
@@ -68,14 +70,25 @@ const net::NetworkTrafficAnnotationTag kTrafficAnnotation =
 @property(assign, nonatomic) GURL iconURL;
 // Image view displaying user's avatar (if fetched) or placeholder icon.
 @property(nonatomic, strong) UIImageView* avatarView;
+// Bottom anchor constraint is stored for convenience, to animate appearance and
+// disappearance.
+@property(nonatomic, strong) NSLayoutConstraint* bottomConstraint;
+// Boolean indicating whether the snackbar is currently being displayed. It is
+// used to prevent didMoveToParentViewController: being called twice when
+// animating appearance. That way, constraints are not duplicated.
+@property(nonatomic, assign, getter=isPresented) BOOL presented;
 
 @end
 
 @implementation NotifyUserAutoSigninViewController
 
 @synthesize avatarView = _avatarView;
+@synthesize bottomConstraint = _bottomConstraint;
 @synthesize iconURL = _iconURL;
 @synthesize username = _username;
+@synthesize presented = _presented;
+
+#pragma mark - Public
 
 - (instancetype)initWithUsername:(NSString*)username
                          iconURL:(GURL)iconURL
@@ -86,6 +99,7 @@ const net::NetworkTrafficAnnotationTag kTrafficAnnotation =
     _iconURL = iconURL;
     _imageFetcher = std::make_unique<image_fetcher::ImageFetcherImpl>(
         image_fetcher::CreateIOSImageDecoder(), contextGetter);
+    _presented = NO;
   }
   return self;
 }
@@ -154,21 +168,63 @@ const net::NetworkTrafficAnnotationTag kTrafficAnnotation =
   }
 }
 
+- (void)beginDisappearanceTransition {
+  self.bottomConstraint.constant = kViewHeight;
+  [UIView animateWithDuration:kAnimationDuration
+      animations:^{
+        [self.view.superview layoutIfNeeded];
+      }
+      completion:^(BOOL finished) {
+        // Remove view and its controller after the animation.
+        [self willMoveToParentViewController:nil];
+        [self.view removeFromSuperview];
+        [self removeFromParentViewController];
+      }];
+}
+
 - (void)didMoveToParentViewController:(UIViewController*)parent {
+  if (parent != nil && self.presented) {
+    // If the view is already presented, don't try to animate it second time.
+    return;
+  }
   [super didMoveToParentViewController:parent];
   if (parent == nil) {
+    self.presented = NO;
     return;
   }
 
+  self.presented = YES;
+  [self beginAppearanceTransition];
+}
+
+#pragma mark - Private
+
+// Animates the snackbar appearance.
+- (void)beginAppearanceTransition {
+  // At first self.view will be hidden under the screen and then animate to
+  // appear from below.
+  self.bottomConstraint = [self.view.bottomAnchor
+      constraintEqualToAnchor:self.view.superview.bottomAnchor
+                     constant:kViewHeight];
   // Set constraints for blue background.
   [NSLayoutConstraint activateConstraints:@[
-    [self.view.bottomAnchor
-        constraintEqualToAnchor:self.view.superview.bottomAnchor],
+    self.bottomConstraint,
     [self.view.leadingAnchor
         constraintEqualToAnchor:self.view.superview.leadingAnchor],
     [self.view.trailingAnchor
         constraintEqualToAnchor:self.view.superview.trailingAnchor],
   ]];
+
+  // Commit all pending layout changes.
+  [self.view layoutIfNeeded];
+  [self.view.superview layoutIfNeeded];
+
+  // Animate bottomAnchor offset.
+  self.bottomConstraint.constant = 0;
+  [UIView animateWithDuration:kAnimationDuration
+                   animations:^{
+                     [self.view.superview layoutIfNeeded];
+                   }];
 }
 
 @end

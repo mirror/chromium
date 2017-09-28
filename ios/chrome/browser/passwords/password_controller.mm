@@ -750,16 +750,12 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
 
 // Hides auto sign-in notification. Removes the view from superview and destroys
 // the controller.
-// TODO(crbug.com/435048): Animate disappearance.
 - (void)hideAutosigninNotification {
-  [self.notifyAutoSigninViewController willMoveToParentViewController:nil];
-  [self.notifyAutoSigninViewController.view removeFromSuperview];
-  [self.notifyAutoSigninViewController removeFromParentViewController];
+  [self.notifyAutoSigninViewController beginDisappearanceTransition];
   self.notifyAutoSigninViewController = nil;
 }
 
 // Shows auto sign-in notification and schedules hiding it after 3 seconds.
-// TODO(crbug.com/435048): Animate appearance.
 - (void)showAutosigninNotification:
     (std::unique_ptr<autofill::PasswordForm>)formSignedIn {
   if (!webStateObserverBridge_ || !webStateObserverBridge_->web_state())
