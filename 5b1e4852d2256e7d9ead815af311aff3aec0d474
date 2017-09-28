@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "2f2eb6c7_e528cad4",
+        "filename": "content/network/network_change_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-28T20:41:41Z",
+      "side": 1,
+      "message": "Ah, I think it\u0027s fine as-is.",
+      "parentUuid": "4e4bfe2d_2cc1f064",
+      "range": {
+        "startLine": 44,
+        "startChar": 23,
+        "endLine": 44,
+        "endChar": 0
+      },
+      "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80bcc011_55fe7875",
         "filename": "content/network/network_change_manager_impl.cc",
         "patchSetId": 6
@@ -472,6 +496,30 @@
     },
     {
       "key": {
+        "uuid": "1604bcf2_9fdb744a",
+        "filename": "content/network/network_service_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-28T20:41:41Z",
+      "side": 1,
+      "message": "Sorry, I had thought that NetworkService::Create() and NetworkServiceImpl::CreateForTesting() used their own constructors.",
+      "parentUuid": "482982d6_dc1eb56c",
+      "range": {
+        "startLine": 64,
+        "startChar": 36,
+        "endLine": 64,
+        "endChar": 46
+      },
+      "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc1c5a80_2faf0a58",
         "filename": "content/public/browser/network_change_manager_client_impl.cc",
         "patchSetId": 6
@@ -648,6 +696,30 @@
       "side": 1,
       "message": "Can I add tests when I hook it up in Chrome?  I was planning to do that in a separate CL.\nFor some reason, the files in content/public/browser/ do not have their _unittest.cc files. I didn\u0027t find a unit test target.",
       "parentUuid": "0ea8d53f_aced7619",
+      "range": {
+        "startLine": 25,
+        "startChar": 6,
+        "endLine": 25,
+        "endChar": 21
+      },
+      "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d633f42e_19105a40",
+        "filename": "content/public/browser/network_change_manager_client_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-28T20:41:41Z",
+      "side": 1,
+      "message": "content/tests/BUILD.gn has all the tests for files in content/.\n\nTests should generally be added with the code they\u0027re testing, so I\u0027d rather add tests in this CL, unless there\u0027s a particular reason not to.\n\nAlso, if we\u0027re not going to add integration tests, I\u0027d recommend not hooking it up to chrome/ in this CL, but instead doing that in a followup, where you either introduce the first consumer of it or add a browser_test (disclaimer: I haven\u0027t thought about whether it\u0027s reasonable or even possible to write a browser test of this class).",
+      "parentUuid": "c7f3c062_bfe11092",
       "range": {
         "startLine": 25,
         "startChar": 6,
