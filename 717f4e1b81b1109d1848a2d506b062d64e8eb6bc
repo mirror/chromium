@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2cc66ab8_12f9bba8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 16
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-28T00:51:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f30a4f0_cf4a10c9",
+      "revId": "717f4e1b81b1109d1848a2d506b062d64e8eb6bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb17532b_da96e5b8",
         "filename": "chrome/browser/renderer_host/chrome_navigation_ui_data.cc",
         "patchSetId": 16
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-27T22:45:54Z",
       "side": 1,
       "message": "This seems awkward. Why would we add non-extension related data to an extension related struct? Why not do it the other way around, where chrome/ defines the NavigationUIData and can include the extension specific one as a member, if extensions are enabled.\n\nIn this current form, the new extra data is not available in mobile Chrome, which does not support extensions.",
+      "revId": "717f4e1b81b1109d1848a2d506b062d64e8eb6bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1c1ac28_bee2f18a",
+        "filename": "chrome/browser/renderer_host/chrome_navigation_ui_data.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-28T00:51:51Z",
+      "side": 1,
+      "message": "Totally agree. I just attached it to the ExtensionNavigationUIData because it was easier to do and this is just a POC. If we decide to go with this approach, i.e. using user data, then I\u0027ll do as you said and make this new information part of ChromeNavigationUIData.\n\nfwiw: The new extra data is only needed on desktop.",
+      "parentUuid": "eb17532b_da96e5b8",
       "revId": "717f4e1b81b1109d1848a2d506b062d64e8eb6bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
