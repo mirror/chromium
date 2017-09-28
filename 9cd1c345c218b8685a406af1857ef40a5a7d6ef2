@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "238b95cd_225c367a",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-28T09:49:16Z",
+      "side": 1,
+      "message": "Done\nI keep bottom constraints array as ivar. Apparently there are two bottom constraints created: one is in self.view.constraints, other is in self.view.superview.constraints.",
+      "parentUuid": "7c728675_c75db755",
+      "range": {
+        "startLine": 166,
+        "startChar": 0,
+        "endLine": 166,
+        "endChar": 71
+      },
+      "revId": "9cd1c345c218b8685a406af1857ef40a5a7d6ef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "072e1df8_0637e4f8",
         "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "9cd1c345c218b8685a406af1857ef40a5a7d6ef2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fc6f220_0caee388",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-28T09:49:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "072e1df8_0637e4f8",
+      "range": {
+        "startLine": 189,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 29
+      },
+      "revId": "9cd1c345c218b8685a406af1857ef40a5a7d6ef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d5b1fcee_1c76de1b",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-28T09:49:16Z",
+      "side": 1,
+      "message": "\u003e Use constants for both blocks.\n\nDone\n\n\u003e And usually the animation duration is about 0.3. Is there a rational to pick 0.5?\n\n0.5 is what MDC snackbars use:\nhttps://cs.chromium.org/chromium/src/ios/third_party/material_components_ios/src/components/Snackbar/src/private/MDCSnackbarOverlayView.m?type\u003dcs\u0026q\u003dMDCSnackbarTransitionDuration\u0026sq\u003dpackage:chromium\u0026l\u003d31\n\n\u003e Maybe 0.3 is too fast for a snackbar, you probably have to test.\n\nBoth values good for me when testing, using 0.3 for now. WDYT?",
+      "parentUuid": "ff8eb0ad_3015fb89",
+      "range": {
+        "startLine": 193,
+        "startChar": 30,
+        "endLine": 193,
+        "endChar": 33
+      },
+      "revId": "9cd1c345c218b8685a406af1857ef40a5a7d6ef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c709de5b_888d41d9",
         "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
         "patchSetId": 5
@@ -82,6 +154,30 @@
       "writtenOn": "2017-09-27T13:03:40Z",
       "side": 1,
       "message": "Is this needed?",
+      "range": {
+        "startLine": 225,
+        "startChar": 0,
+        "endLine": 225,
+        "endChar": 39
+      },
+      "revId": "9cd1c345c218b8685a406af1857ef40a5a7d6ef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7877006_789fbc73",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-28T09:49:16Z",
+      "side": 1,
+      "message": "Yes, pending changes need to be done before starting animation. Here is what happens in practice:\n* remove [self.view layoutIfNeeded] \u003d\u003e background is not animated (only text \u0026 image)\n* remove [self.view.superview layoutIfNeeded] \u003d\u003e the snackbar falls from the top of the screen\n* remove both \u003d\u003e the above two, combined",
+      "parentUuid": "c709de5b_888d41d9",
       "range": {
         "startLine": 225,
         "startChar": 0,
