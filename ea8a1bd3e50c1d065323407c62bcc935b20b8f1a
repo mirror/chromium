@@ -22,6 +22,30 @@
       "revId": "ea8a1bd3e50c1d065323407c62bcc935b20b8f1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a931fda_01dcc148",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1125499
+      },
+      "writtenOn": "2017-09-28T21:41:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd530dc3_49e7b4d8",
+      "range": {
+        "startLine": 292,
+        "startChar": 8,
+        "endLine": 293,
+        "endChar": 77
+      },
+      "revId": "ea8a1bd3e50c1d065323407c62bcc935b20b8f1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
