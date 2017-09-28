@@ -535,6 +535,11 @@ void NGBlockNode::AddAtomicInlineBaselineFromOldLayout(
     const NGBaselineRequest& request,
     bool is_first_line,
     NGFragmentBuilder* builder) {
+  // Some form controls return 0 for BaselinePosition() if 'display:block'.
+  // Blocks without line boxes should not produce baselines.
+  if (box_->IsLayoutBlock() && !box_->IsInline())
+    return;
+
   LineDirectionMode line_direction =
       IsHorizontalWritingMode(builder->WritingMode())
           ? LineDirectionMode::kHorizontalLine
@@ -542,6 +547,7 @@ void NGBlockNode::AddAtomicInlineBaselineFromOldLayout(
   LayoutUnit position = LayoutUnit(box_->BaselinePosition(
       request.baseline_type, is_first_line, line_direction));
 
+#if 0
   // Some form controls return 0 for BaselinePosition() if 'display:block'.
   // Blocks without line boxes should not produce baselines.
   if (!position && !box_->IsAtomicInlineLevel() &&
@@ -549,6 +555,7 @@ void NGBlockNode::AddAtomicInlineBaselineFromOldLayout(
       box_->InlineBlockBaseline(line_direction) == -1) {
     return;
   }
+#endif
 
   // BaselinePosition() uses margin edge for atomic inlines.
   if (box_->IsAtomicInlineLevel())

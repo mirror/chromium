@@ -163,6 +163,20 @@ void LayoutNGBlockFlow::AddOverflowFromChildren() {
 LayoutUnit LayoutNGBlockFlow::FirstLineBoxBaseline() const {
   // TODO(kojii): Implement. This will stop working once we stop creating line
   // boxes.
+  if (ChildrenInline()) {
+    if (const NGPhysicalFragment* physical_fragment = CurrentFragment()) {
+      FontBaseline baseline_type = IsHorizontalWritingMode()
+                                       ? kAlphabeticBaseline
+                                       : kIdeographicBaseline;
+      if (const NGBaseline* baseline =
+              ToNGPhysicalBoxFragment(physical_fragment)
+                  ->Baseline({NGBaselineAlgorithmType::kFirstLine,
+                              baseline_type})) {
+        return baseline->offset;
+      }
+      NOTREACHED();
+    }
+  }
   return LayoutBlockFlow::FirstLineBoxBaseline();
 }
 
@@ -170,6 +184,21 @@ LayoutUnit LayoutNGBlockFlow::InlineBlockBaseline(
     LineDirectionMode line_direction) const {
   // TODO(kojii): Implement. This will stop working once we stop creating line
   // boxes.
+  if (ChildrenInline()) {
+    if (const NGPhysicalFragment* physical_fragment = CurrentFragment()) {
+      FontBaseline baseline_type = IsHorizontalWritingMode()
+                                       ? kAlphabeticBaseline
+                                       : kIdeographicBaseline;
+      // TODO(kojii): How do we know if we were on the first line?
+      if (const NGBaseline* baseline =
+              ToNGPhysicalBoxFragment(physical_fragment)
+                  ->Baseline({NGBaselineAlgorithmType::kAtomicInline,
+                              baseline_type})) {
+        return baseline->offset;
+      }
+      NOTREACHED();
+    }
+  }
   return LayoutBlockFlow::InlineBlockBaseline(line_direction);
 }
 

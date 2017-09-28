@@ -1175,8 +1175,21 @@ RefPtr<NGConstraintSpace> NGBlockLayoutAlgorithm::CreateConstraintSpaceForChild(
   space_builder.SetFragmentationType(
       ConstraintSpace().BlockFragmentationType());
 
-  return space_builder.ToConstraintSpace(
-      FromPlatformWritingMode(child_style.GetWritingMode()));
+  // We don't know which baselines will be requested from LayoutObject
+  // ancestors, so add them all.
+  NGWritingMode writing_mode =
+      FromPlatformWritingMode(child_style.GetWritingMode());
+  FontBaseline baseline_type = IsHorizontalWritingMode(writing_mode)
+                                   ? kAlphabeticBaseline
+                                   : kIdeographicBaseline;
+  space_builder
+      .AddBaselineRequest(
+          {NGBaselineAlgorithmType::kAtomicInline, baseline_type})
+      .AddBaselineRequest(
+          {NGBaselineAlgorithmType::kAtomicInlineForFirstLine, baseline_type})
+      .AddBaselineRequest({NGBaselineAlgorithmType::kFirstLine, baseline_type});
+
+  return space_builder.ToConstraintSpace(writing_mode);
 }
 
 // Add a baseline from a child box fragment.
