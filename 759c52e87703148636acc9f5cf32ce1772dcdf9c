@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16850b9d_fef97ec2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-28T22:32:12Z",
+      "side": 1,
+      "message": "Seems unrelated.",
+      "revId": "759c52e87703148636acc9f5cf32ce1772dcdf9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b11f2d7f_a800dcb7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-28T22:32:12Z",
+      "side": 1,
+      "message": "Just access private fields in tests, that\u0027s fine. No need to wrap with private getters :)",
+      "revId": "759c52e87703148636acc9f5cf32ce1772dcdf9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12982fc4_049d2398",
+        "filename": "third_party/WebKit/Source/devtools/front_end/services/ServiceManager.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-28T22:32:12Z",
+      "side": 1,
+      "message": "Mind rewriting this block? We have the same error in debugFrontend :)\nI\u0027d put all params into an array and join(\u0027\u0026\u0027).",
+      "revId": "759c52e87703148636acc9f5cf32ce1772dcdf9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

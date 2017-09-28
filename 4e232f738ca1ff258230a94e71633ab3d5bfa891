@@ -16,6 +16,24 @@
       "revId": "4e232f738ca1ff258230a94e71633ab3d5bfa891",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81adeaa8_bbe1a9bb",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2_worker/lighthouse/lighthouse-background.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-28T22:32:12Z",
+      "side": 1,
+      "message": "Yeah, fixing that would be nice :)",
+      "parentUuid": "43400571_c214f013",
+      "revId": "4e232f738ca1ff258230a94e71633ab3d5bfa891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
