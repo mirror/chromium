@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "36c045d0_0e4fc9b4",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_auth_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-09-28T17:02:27Z",
+      "side": 1,
+      "message": "Talked to Luis, he is OK to remove deprecated code. Thanks for pointing this.",
+      "parentUuid": "1a801860_1ef17afa",
+      "range": {
+        "startLine": 130,
+        "startChar": 6,
+        "endLine": 139,
+        "endChar": 14
+      },
+      "revId": "9d22cf2b34214843d6ebcffc304fb19abc480bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af54fe84_e65fbfed",
         "filename": "chrome/browser/chromeos/arc/auth/arc_auth_service.cc",
         "patchSetId": 4
@@ -36,6 +60,24 @@
       "writtenOn": "2017-09-28T05:28:03Z",
       "side": 1,
       "message": "nit: static ?",
+      "revId": "9d22cf2b34214843d6ebcffc304fb19abc480bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6d09ee4_7c4bc4f0",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_auth_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-09-28T17:02:27Z",
+      "side": 1,
+      "message": "Now it is in namespace {}",
+      "parentUuid": "af54fe84_e65fbfed",
       "revId": "9d22cf2b34214843d6ebcffc304fb19abc480bb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "e53f0b1d_cf078025",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_auth_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-09-28T17:02:27Z",
+      "side": 1,
+      "message": "Done,\n+1",
+      "parentUuid": "7ba2016f_682306cd",
+      "range": {
+        "startLine": 227,
+        "startChar": 0,
+        "endLine": 234,
+        "endChar": 1
+      },
+      "revId": "9d22cf2b34214843d6ebcffc304fb19abc480bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "14ddae1e_e33d748b",
         "filename": "components/arc/common/auth.mojom",
         "patchSetId": 4
@@ -79,6 +145,24 @@
       "revId": "9d22cf2b34214843d6ebcffc304fb19abc480bb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf640ee0_231ec476",
+        "filename": "components/arc/common/auth.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-09-28T17:02:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14ddae1e_e33d748b",
+      "revId": "9d22cf2b34214843d6ebcffc304fb19abc480bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "bb364a25_d41734a3",
+        "filename": "components/arc/common/auth.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-09-28T17:02:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a475a233_05c6f806",
+      "revId": "9d22cf2b34214843d6ebcffc304fb19abc480bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d308fe17_caff7867",
         "filename": "components/arc/common/auth.mojom",
         "patchSetId": 4
@@ -113,6 +215,24 @@
       "revId": "9d22cf2b34214843d6ebcffc304fb19abc480bb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e25b8e5_6fc6fcaf",
+        "filename": "components/arc/common/auth.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-09-28T17:02:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d308fe17_caff7867",
+      "revId": "9d22cf2b34214843d6ebcffc304fb19abc480bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
