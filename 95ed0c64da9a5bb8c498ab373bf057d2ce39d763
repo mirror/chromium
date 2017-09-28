@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63267b1b_37b7196b",
+        "filename": "chrome/browser/resources/md_extensions/error_page.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-28T18:36:38Z",
+      "side": 1,
+      "message": "Nit (optional): Since we are using the same handler for both tap and keydown, maybe rename the handler to onDeleteErrorAction_?",
+      "revId": "95ed0c64da9a5bb8c498ab373bf057d2ce39d763",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
