@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "195b74a5_a1cb2298",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 5170,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-09-28T21:18:58Z",
+      "side": 1,
+      "message": "Seems reasonable, thanks for the careful investigation.  However, I\u0027m confused about one thing -- why a problem has only been observed on Android, given that the explanation applies to all platforms.  Is it possible that Aura code sends OnDeviceScaleFactorChanged() more frequently, for example?  Could you test the similar scenario on Linux with --force-device-scale-factor\u003d2 and see what happens?  Then for example, maybe we could either fix this by adding OnDeviceScaleFactorChanged() to Android-specific code instead, or delete the line from the Aura code.\n\nFor testing, I guess this would have to be tested with like content_browsertests.  A detailed understanding of what happens on other platforms may also help to write the test.",
+      "revId": "3145f5cee5af63604771cfb9b0cf7cf025afb53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
