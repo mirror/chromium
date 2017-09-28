@@ -740,6 +740,11 @@ class ChunkDemuxerTest : public ::testing::TestWithParam<BufferingApi> {
     USE_ALTERNATE_TEXT_TRACK_ID = 1 << 5,
   };
 
+  void ExpectBufferingByPtsDtsLog() {
+    EXPECT_MEDIA_LOG(
+        BufferingByPtsDts(buffering_api_ == BufferingApi::kNewByPts));
+  }
+
   bool InitDemuxer(int stream_flags) {
     return InitDemuxerWithEncryptionInfo(stream_flags, false, false);
   }
@@ -764,6 +769,7 @@ class ChunkDemuxerTest : public ::testing::TestWithParam<BufferingApi> {
     if (expected_status == PIPELINE_OK)
       expected_duration = kDefaultDuration();
 
+    ExpectBufferingByPtsDtsLog();
     EXPECT_CALL(*this, DemuxerOpened());
 
     if (is_audio_encrypted || is_video_encrypted) {
@@ -808,6 +814,7 @@ class ChunkDemuxerTest : public ::testing::TestWithParam<BufferingApi> {
   bool InitDemuxerAudioAndVideoSourcesText(const std::string& audio_id,
                                            const std::string& video_id,
                                            bool has_text) {
+    ExpectBufferingByPtsDtsLog();
     EXPECT_CALL(*this, DemuxerOpened());
     demuxer_->Initialize(
         &host_, CreateInitDoneCB(kDefaultDuration(), PIPELINE_OK), true);
@@ -864,6 +871,7 @@ class ChunkDemuxerTest : public ::testing::TestWithParam<BufferingApi> {
     scoped_refptr<DecoderBuffer> bear1 = ReadTestDataFile("bear-320x240.webm");
     scoped_refptr<DecoderBuffer> bear2 = ReadTestDataFile("bear-640x360.webm");
 
+    ExpectBufferingByPtsDtsLog();
     EXPECT_CALL(*this, DemuxerOpened());
 
     // Adding expectation prior to CreateInitDoneCB() here because InSequence
@@ -1256,6 +1264,7 @@ class ChunkDemuxerTest : public ::testing::TestWithParam<BufferingApi> {
                      const BufferTimestamps* timestamps,
                      const base::TimeDelta& duration,
                      int stream_flags) {
+    ExpectBufferingByPtsDtsLog();
     EXPECT_CALL(*this, DemuxerOpened());
     demuxer_->Initialize(
         &host_, CreateInitDoneCB(duration, PIPELINE_OK), true);
@@ -1624,6 +1633,7 @@ TEST_P(ChunkDemuxerTest, InitSegmentSetsNeedRandomAccessPointFlag) {
 }
 
 TEST_P(ChunkDemuxerTest, Shutdown_BeforeAllInitSegmentsAppended) {
+  ExpectBufferingByPtsDtsLog();
   EXPECT_CALL(*this, DemuxerOpened());
   demuxer_->Initialize(&host_, base::Bind(&ChunkDemuxerTest::DemuxerInitialized,
                                           base::Unretained(this)),
@@ -1640,6 +1650,7 @@ TEST_P(ChunkDemuxerTest, Shutdown_BeforeAllInitSegmentsAppended) {
 }
 
 TEST_P(ChunkDemuxerTest, Shutdown_BeforeAllInitSegmentsAppendedText) {
+  ExpectBufferingByPtsDtsLog();
   EXPECT_CALL(*this, DemuxerOpened());
   demuxer_->Initialize(&host_, base::Bind(&ChunkDemuxerTest::DemuxerInitialized,
                                           base::Unretained(this)),
@@ -1899,6 +1910,7 @@ TEST_P(ChunkDemuxerTest, PerStreamMonotonicallyIncreasingTimestamps) {
 // Test the case where a cluster is passed to AppendCluster() before
 // INFO & TRACKS data.
 TEST_P(ChunkDemuxerTest, ClusterBeforeInitSegment) {
+  ExpectBufferingByPtsDtsLog();
   EXPECT_CALL(*this, DemuxerOpened());
   demuxer_->Initialize(
       &host_, NewExpectedStatusCB(CHUNK_DEMUXER_ERROR_APPEND_FAILED), true);
@@ -1912,6 +1924,7 @@ TEST_P(ChunkDemuxerTest, ClusterBeforeInitSegment) {
 
 // Test cases where we get an MarkEndOfStream() call during initialization.
 TEST_P(ChunkDemuxerTest, EOSDuringInit) {
+  ExpectBufferingByPtsDtsLog();
   EXPECT_CALL(*this, DemuxerOpened());
   demuxer_->Initialize(
       &host_, NewExpectedStatusCB(DEMUXER_ERROR_COULD_NOT_OPEN), true);
@@ -1919,6 +1932,7 @@ TEST_P(ChunkDemuxerTest, EOSDuringInit) {
 }
 
 TEST_P(ChunkDemuxerTest, EndOfStreamWithNoAppend) {
+  ExpectBufferingByPtsDtsLog();
   EXPECT_CALL(*this, DemuxerOpened());
   demuxer_->Initialize(
       &host_, NewExpectedStatusCB(DEMUXER_ERROR_COULD_NOT_OPEN), true);
@@ -2163,6 +2177,7 @@ TEST_P(ChunkDemuxerTest, EndOfStreamRangeChanges) {
 
 // Make sure AppendData() will accept elements that span multiple calls.
 TEST_P(ChunkDemuxerTest, AppendingInPieces) {
+  ExpectBufferingByPtsDtsLog();
   EXPECT_CALL(*this, DemuxerOpened());
   demuxer_->Initialize(
       &host_, CreateInitDoneCB(kDefaultDuration(), PIPELINE_OK), true);
@@ -2357,6 +2372,7 @@ TEST_P(ChunkDemuxerTest, IncrementalClusterParsing) {
 }
 
 TEST_P(ChunkDemuxerTest, ParseErrorDuringInit) {
+  ExpectBufferingByPtsDtsLog();
   EXPECT_CALL(*this, DemuxerOpened());
   demuxer_->Initialize(
       &host_, CreateInitDoneCB(kNoTimestamp, CHUNK_DEMUXER_ERROR_APPEND_FAILED),
@@ -2372,6 +2388,7 @@ TEST_P(ChunkDemuxerTest, ParseErrorDuringInit) {
 }
 
 TEST_P(ChunkDemuxerTest, AVHeadersWithAudioOnlyType) {
+  ExpectBufferingByPtsDtsLog();
   EXPECT_CALL(*this, DemuxerOpened());
   demuxer_->Initialize(
       &host_, CreateInitDoneCB(kNoTimestamp, CHUNK_DEMUXER_ERROR_APPEND_FAILED),
@@ -2386,6 +2403,7 @@ TEST_P(ChunkDemuxerTest, AVHeadersWithAudioOnlyType) {
 }
 
 TEST_P(ChunkDemuxerTest, AVHeadersWithVideoOnlyType) {
+  ExpectBufferingByPtsDtsLog();
   EXPECT_CALL(*this, DemuxerOpened());
   demuxer_->Initialize(
       &host_, CreateInitDoneCB(kNoTimestamp, CHUNK_DEMUXER_ERROR_APPEND_FAILED),
@@ -2402,6 +2420,7 @@ TEST_P(ChunkDemuxerTest, AVHeadersWithVideoOnlyType) {
 }
 
 TEST_P(ChunkDemuxerTest, AudioOnlyHeaderWithAVType) {
+  ExpectBufferingByPtsDtsLog();
   EXPECT_CALL(*this, DemuxerOpened());
   demuxer_->Initialize(
       &host_, CreateInitDoneCB(kNoTimestamp, CHUNK_DEMUXER_ERROR_APPEND_FAILED),
@@ -2418,6 +2437,7 @@ TEST_P(ChunkDemuxerTest, AudioOnlyHeaderWithAVType) {
 }
 
 TEST_P(ChunkDemuxerTest, VideoOnlyHeaderWithAVType) {
+  ExpectBufferingByPtsDtsLog();
   EXPECT_CALL(*this, DemuxerOpened());
   demuxer_->Initialize(
       &host_, CreateInitDoneCB(kNoTimestamp, CHUNK_DEMUXER_ERROR_APPEND_FAILED),
@@ -2486,6 +2506,7 @@ TEST_P(ChunkDemuxerTest, AddSeparateSourcesForAudioAndVideoText) {
 }
 
 TEST_P(ChunkDemuxerTest, AddIdFailures) {
+  ExpectBufferingByPtsDtsLog();
   EXPECT_CALL(*this, DemuxerOpened());
   demuxer_->Initialize(
       &host_, CreateInitDoneCB(kDefaultDuration(), PIPELINE_OK), true);
@@ -3176,6 +3197,7 @@ TEST_P(ChunkDemuxerTest, EndOfStreamStillSetAfterSeek) {
 }
 
 TEST_P(ChunkDemuxerTest, GetBufferedRangesBeforeInitSegment) {
+  ExpectBufferingByPtsDtsLog();
   EXPECT_CALL(*this, DemuxerOpened());
   demuxer_->Initialize(&host_, base::Bind(&ChunkDemuxerTest::DemuxerInitialized,
                                           base::Unretained(this)),
@@ -3438,6 +3460,7 @@ const char* kMp2tCodecs = "mp4a.40.2,avc1.640028";
 }
 
 TEST_P(ChunkDemuxerTest, EmitBuffersDuringAbort) {
+  ExpectBufferingByPtsDtsLog();
   EXPECT_CALL(*this, DemuxerOpened());
   EXPECT_MEDIA_LOG(FoundStream("audio"));
   EXPECT_MEDIA_LOG(CodecName("audio", "aac"));
@@ -3486,6 +3509,7 @@ TEST_P(ChunkDemuxerTest, EmitBuffersDuringAbort) {
 }
 
 TEST_P(ChunkDemuxerTest, SeekCompleteDuringAbort) {
+  ExpectBufferingByPtsDtsLog();
   EXPECT_CALL(*this, DemuxerOpened());
   EXPECT_MEDIA_LOG(FoundStream("audio"));
   EXPECT_MEDIA_LOG(CodecName("audio", "aac"));
@@ -3691,6 +3715,7 @@ TEST_P(ChunkDemuxerTest, AppendAfterEndOfStream) {
 // the pipeline has a chance to initialize the demuxer.
 TEST_P(ChunkDemuxerTest, Shutdown_BeforeInitialize) {
   demuxer_->Shutdown();
+  ExpectBufferingByPtsDtsLog();
   demuxer_->Initialize(
       &host_, CreateInitDoneCB(DEMUXER_ERROR_COULD_NOT_OPEN), true);
   base::RunLoop().RunUntilIdle();
@@ -4104,6 +4129,7 @@ TEST_P(ChunkDemuxerTest, AppendWindow_AudioOverlapStartAndEnd) {
 }
 
 TEST_P(ChunkDemuxerTest, AppendWindow_WebMFile_AudioOnly) {
+  ExpectBufferingByPtsDtsLog();
   EXPECT_CALL(*this, DemuxerOpened());
   demuxer_->Initialize(
       &host_,
@@ -4130,6 +4156,7 @@ TEST_P(ChunkDemuxerTest, AppendWindow_WebMFile_AudioOnly) {
 }
 
 TEST_P(ChunkDemuxerTest, AppendWindow_AudioConfigUpdateRemovesPreroll) {
+  ExpectBufferingByPtsDtsLog();
   EXPECT_CALL(*this, DemuxerOpened());
   demuxer_->Initialize(
       &host_,
@@ -4722,6 +4749,7 @@ TEST_P(ChunkDemuxerTest, StreamStatusNotifications) {
 
 TEST_P(ChunkDemuxerTest, MultipleIds) {
   CreateNewDemuxer();
+  ExpectBufferingByPtsDtsLog();
   EXPECT_CALL(*this, DemuxerOpened());
   EXPECT_CALL(host_, SetDuration(_)).Times(2);
   demuxer_->Initialize(&host_, CreateInitDoneCB(kNoTimestamp, PIPELINE_OK),
@@ -4749,6 +4777,7 @@ TEST_P(ChunkDemuxerTest, MultipleIds) {
 
 TEST_P(ChunkDemuxerTest, CompleteInitAfterIdRemoved) {
   CreateNewDemuxer();
+  ExpectBufferingByPtsDtsLog();
   EXPECT_CALL(*this, DemuxerOpened());
   demuxer_->Initialize(&host_,
                        CreateInitDoneCB(kDefaultDuration(), PIPELINE_OK), true);
@@ -4772,6 +4801,7 @@ TEST_P(ChunkDemuxerTest, CompleteInitAfterIdRemoved) {
 
 TEST_P(ChunkDemuxerTest, RemovingIdMustRemoveStreams) {
   CreateNewDemuxer();
+  ExpectBufferingByPtsDtsLog();
   EXPECT_CALL(*this, DemuxerOpened());
   demuxer_->Initialize(&host_,
                        CreateInitDoneCB(kDefaultDuration(), PIPELINE_OK), true);
