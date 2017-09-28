@@ -16,7 +16,8 @@
 
 namespace offline_pages {
 
-// Status for sending prefetch request to the server.
+// Status for sending prefetch request to the server. This has a matching type
+// in enums.xml which must be adjusted if we add any new values here.
 enum class PrefetchRequestStatus {
   // Request completed successfully.
   SUCCESS,
@@ -30,7 +31,9 @@ enum class PrefetchRequestStatus {
   // Request failed with error indicating that the server no longer knows how
   // to service a request. The caller will prevent network requests for the
   // period of 1 day.
-  SHOULD_SUSPEND
+  SHOULD_SUSPEND,
+  // MAX should always be the last type
+  MAX = SHOULD_SUSPEND
 };
 
 // Status indicating the page rendering status in the server.

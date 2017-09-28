@@ -5,6 +5,8 @@
 #include "components/offline_pages/core/prefetch/prefetch_network_request_factory_impl.h"
 
 #include "base/memory/ptr_util.h"
+#include "base/test/histogram_tester.h"
+#include "base/test/mock_callback.h"
 #include "base/test/test_simple_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/offline_pages/core/prefetch/generate_page_bundle_request.h"
@@ -13,6 +15,7 @@
 #include "net/url_request/test_url_fetcher_factory.h"
 #include "net/url_request/url_request_test_util.h"
 #include "testing/gmock/include/gmock/gmock-matchers.h"
+#include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 using testing::Contains;
@@ -28,6 +31,26 @@ class PrefetchNetworkRequestFactoryTest : public testing::Test {
 
   PrefetchNetworkRequestFactoryImpl* request_factory() {
     return request_factory_.get();
+  }
+
+  // Forward to the private method of our the actual class, taking advantage of
+  // our friendship with them.
+  void GeneratePageBundleRequestDone(
+      const PrefetchRequestFinishedCallback& callback,
+      uint64_t request_id,
+      PrefetchRequestStatus status,
+      const std::string& operation_name,
+      const std::vector<RenderPageInfo>& pages) {
+    request_factory_->GeneratePageBundleRequestDone(
+        callback, request_id, status, operation_name, pages);
+  }
+
+  void GetOperationRequestDone(const PrefetchRequestFinishedCallback& callback,
+                               PrefetchRequestStatus status,
+                               const std::string& operation_name,
+                               const std::vector<RenderPageInfo>& pages) {
+    request_factory_->GetOperationRequestDone(callback, status, operation_name,
+                                              pages);
   }
 
  private:
@@ -205,6 +228,52 @@ TEST_F(PrefetchNetworkRequestFactoryTest, ManyRequestsMixedType) {
   EXPECT_THAT(*operation_names, Contains(operation_name2));
   // Requests over maximum concurrent count of requests should not be made.
   EXPECT_THAT(*operation_names, Not(Contains(operation_name3)));
+}
+
+TEST_F(PrefetchNetworkRequestFactoryTest, GetOperationRequestDoneUMA) {
+  base::HistogramTester histogram_tester;
+  base::MockCallback<PrefetchRequestFinishedCallback> callback;
+  EXPECT_CALL(callback, Run(testing::_, testing::_, testing::_));
+
+  // Make a request.
+  std::string operation_name1 = "an operation 1";
+  request_factory()->MakeGetOperationRequest(operation_name1, callback.Get());
+
+  // Simulate the OfflinePageService reporting done.
+  const std::vector<RenderPageInfo> pages;
+  GetOperationRequestDone(callback.Get(),
+                          PrefetchRequestStatus::SHOULD_RETRY_WITHOUT_BACKOFF,
+                          operation_name1, pages);
+
+  // Ensure that the status was recorded in UMA.
+  histogram_tester.ExpectBucketCount(
+      "OfflinePages.Prefetching.ServerRequestStatus",
+      static_cast<int>(PrefetchRequestStatus::SHOULD_RETRY_WITHOUT_BACKOFF), 1);
+}
+
+TEST_F(PrefetchNetworkRequestFactoryTest, GeneratePageBundleRequestDoneUMA) {
+  base::HistogramTester histogram_tester;
+  base::MockCallback<PrefetchRequestFinishedCallback> callback;
+  EXPECT_CALL(callback, Run(testing::_, testing::_, testing::_));
+
+  // Make a request.
+  std::vector<std::string> urls1 = {"example.com/1"};
+  std::string reg_id = "a registration id";
+  request_factory()->MakeGeneratePageBundleRequest(urls1, reg_id,
+                                                   callback.Get());
+
+  // Simulate the OfflinePageService reporting done.
+  const std::vector<RenderPageInfo> pages;
+  uint64_t request_id = 0;
+  std::string operation_name1 = "an operation 1";
+  GeneratePageBundleRequestDone(callback.Get(), request_id,
+                                PrefetchRequestStatus::SHOULD_SUSPEND,
+                                operation_name1, pages);
+
+  // Ensure that the status was recorded in UMA.
+  histogram_tester.ExpectBucketCount(
+      "OfflinePages.Prefetching.ServerRequestStatus",
+      static_cast<int>(PrefetchRequestStatus::SHOULD_SUSPEND), 1);
 }
 
 }  // namespace offline_pages

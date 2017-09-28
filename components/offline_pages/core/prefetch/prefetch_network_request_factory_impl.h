@@ -49,6 +49,8 @@ class PrefetchNetworkRequestFactoryImpl : public PrefetchNetworkRequestFactory {
       const override;
 
  private:
+  friend class PrefetchNetworkRequestFactoryTest;
+
   void GeneratePageBundleRequestDone(
       const PrefetchRequestFinishedCallback& callback,
       uint64_t request_id,
