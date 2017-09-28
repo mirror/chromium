@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "af510855_830c33e2",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/FetchContext.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-28T09:51:02Z",
+      "side": 1,
+      "message": "Maybe clarify a bit that \u0027the returned task runner\u0027 is that one that will not work after the context detaches, as we have some code there with if (detached)",
+      "revId": "eddee85593ca7e582e63b4d8ac1359e2399d6e59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "66cfd5d8_47ebc2fb",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
         "patchSetId": 8
