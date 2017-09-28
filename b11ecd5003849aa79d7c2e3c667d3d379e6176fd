@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "94fdd4af_4d12bc8e",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-28T01:26:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "434a517d_08d8fb9f",
+      "revId": "b11ecd5003849aa79d7c2e3c667d3d379e6176fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16fabc2c_f6aba35a",
         "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.cc",
         "patchSetId": 19
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "e57c0b73_4af2f5bf",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-28T01:26:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16fabc2c_f6aba35a",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 8
+      },
+      "revId": "b11ecd5003849aa79d7c2e3c667d3d379e6176fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3fa2d1b_90b30486",
         "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker_browsertest.cc",
         "patchSetId": 19
@@ -56,6 +98,24 @@
       "revId": "b11ecd5003849aa79d7c2e3c667d3d379e6176fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a39248d0_c55e0e14",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker_browsertest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-28T01:26:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d3fa2d1b_90b30486",
+      "revId": "b11ecd5003849aa79d7c2e3c667d3d379e6176fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
