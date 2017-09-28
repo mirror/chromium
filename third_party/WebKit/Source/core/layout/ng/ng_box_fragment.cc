@@ -45,7 +45,7 @@ NGLineHeightMetrics NGBoxFragment::BaselineMetrics(
 
   // If atomic inline, use the margin box. See above.
   if (layout_box->IsAtomicInlineLevel())
-    block_size += layout_box->MarginLogicalHeight();
+    block_size += layout_box->MarginLogicalHeight(&physical_fragment_.Style());
 
   if (request.baseline_type == kAlphabeticBaseline)
     return NGLineHeightMetrics(block_size, LayoutUnit());

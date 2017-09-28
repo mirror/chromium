@@ -363,6 +363,9 @@ class CORE_EXPORT LayoutBoxModelObject : public LayoutObject {
   LayoutUnit MarginEnd(const ComputedStyle* other_style = nullptr) const {
     return PhysicalMarginToLogical(other_style).End();
   }
+  LayoutUnit MarginLogicalHeight(const ComputedStyle* other_style) const {
+    return PhysicalMarginToLogical(other_style).BlockSize();
+  }
   LayoutUnit MarginLineLeft() const {
     return PhysicalMarginToLogical(nullptr).LineLeft();
   }
