@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9be8d3a8_306d3398",
+        "filename": "testing/buildbot/gn_isolate_map.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-09-28T02:29:50Z",
+      "side": 1,
+      "message": "This is what I missed in the initial CL.",
+      "range": {
+        "startLine": 670,
+        "startChar": 33,
+        "endLine": 670,
+        "endChar": 39
+      },
+      "revId": "d746627b0a34b0c57aaae28a674c7adea568c0fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
