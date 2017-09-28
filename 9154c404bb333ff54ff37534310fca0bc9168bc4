@@ -202,6 +202,30 @@
     },
     {
       "key": {
+        "uuid": "d7aa0445_924dbc28",
+        "filename": "ios/chrome/browser/signin/ios_chrome_signin_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-28T11:16:45Z",
+      "side": 1,
+      "message": "The code as you wrote is working and as you mention there is the same dance in the factory. Mostly, I don\u0027t like code that has raw pointers to RefCounted objects and assume they are going to outlive them. IMO the code should either use non-RefCounted objects (do not pay what you do not use) or keep a scoped_refptr\u003c\u003e when the code need to ensure the object outlive it.\n\nI much prefer the code as it is now, thank you for the change.",
+      "parentUuid": "d967383b_36cc036d",
+      "range": {
+        "startLine": 18,
+        "startChar": 24,
+        "endLine": 18,
+        "endChar": 57
+      },
+      "revId": "9154c404bb333ff54ff37534310fca0bc9168bc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0891cf81_297ed6d7",
         "filename": "ios/chrome/browser/signin/ios_chrome_signin_client.h",
         "patchSetId": 4

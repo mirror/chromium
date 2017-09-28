@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e05be565_ba352dfc",
+        "filename": "ios/chrome/browser/content_settings/cookie_settings_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-28T11:16:45Z",
+      "side": 1,
+      "message": "nit, optional: I think we can use base::MakeRefCounted here\n\n  return base::MakeRefCounted\u003ccontent_settings::CookieSettings\u003e(\n      ios::HostContentSettingsMapFactory::GetForBrowserState(browser_state),\n      browser_state-\u003eGetPrefs());",
+      "revId": "1cea36b6b1c1d0e51db6d11f02d5bd6b3dbcb840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aa8f4a8_03f888ff",
+        "filename": "ios/chrome/browser/signin/ios_chrome_signin_client.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-28T11:16:45Z",
+      "side": 1,
+      "message": "If possible, we should avoid passing the ChromeBrowserState to KeyedService but instead pass the service or data that is needed by them. This make the code easier to unit test (as you do not need a real browser state nor the KeyedService factory infrastructure and instead can just inject fake objects).\n\nHere it looks like browser_state is only used to get the original browser state\u0027s state path, the preferences and the request context, so maybe just pass that:\n\n  IOSChromeSigninClient(\n    PrefService* pref_service,\n    net::URLRequestContextGetter* url_request_context,\n    SigninErrorController* signin_error_controller,\n    scoped_refptr\u003ccontent_settings::CookieSettings\u003e cookie_settings,\n    scoped_refptr\u003cHostContentSettingsMap\u003e host_content_settings_map,\n    scoped_refptr\u003cTokenWebData\u003e token_web_data,\n    const base::FilePath\u0026 browser_state_path);",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 44
+      },
+      "revId": "1cea36b6b1c1d0e51db6d11f02d5bd6b3dbcb840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25056b7a_aa63b83f",
+        "filename": "ios/chrome/browser/signin/signin_client_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-28T11:16:45Z",
+      "side": 1,
+      "message": "After changing the IOSChromeSigninClient, then you\u0027ll have to update this method of the factory to pass the ChromeBrowserState\u0027s state path. Note that since SigninClientFactory does not override GetBrowserStateToUse(), this method will only be called if ChromeBrowserState is not incognito, so chrome_browser_state-\u003eGetOriginalChromeBrowserState() will always be equal to chrome_browser_state, and thus you can just pass chrome_browser_state-\u003eGetStatePath().\n\nIf you want to avoid breaking if code is changed, you can add a DCHECK(!chrome_browser_state-\u003eIsOffTheRecord()) here.\n\n  DCHECK(!context-\u003eIsOffTheRecord());\n  ios::ChromeBrowserState* browser_state \u003d\n      ios::ChromeBrowserState::FromBrowserState(context);\n  return std::make_unique\u003cIOSChromeSigninClient(\n      browser_state-\u003eGetPrefs(),\n      browser_state-\u003eGetRequestContext(),\n      ios::SigningErrorControllerFactory::GetForBrowserState(browser_state),\n      ios::CookieSettingsFactory::GetForBrowserState(browser_state),\n      ios::HostContentSettingsMapFactory::GetForBrowserState(browser_state),\n      ios::WebDataServiceFactory::GetTokenWebDataForBrowserState(\n          browser_state, ServiceAccessType::EXPLICIT_ACCESS));",
+      "revId": "1cea36b6b1c1d0e51db6d11f02d5bd6b3dbcb840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9668ca8_3cdb1023",
+        "filename": "ios/web_view/internal/signin/ios_web_view_signin_client.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-28T11:16:45Z",
+      "side": 1,
+      "message": "Ditto, please pass PrefService and URLRequestContextGetter instead of WebViewBrowserState.",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 54
+      },
+      "revId": "1cea36b6b1c1d0e51db6d11f02d5bd6b3dbcb840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
