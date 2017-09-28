@@ -16,6 +16,24 @@
       "revId": "0a8ee48f83a4d10736ad4e8e792e935b19a842c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "361da378_25ddd6ad",
+        "filename": "chrome/browser/task_manager/task_manager_observer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-28T08:33:01Z",
+      "side": 1,
+      "message": "Ah, good point. I\u0027ll fix it.",
+      "parentUuid": "9525fe48_095e257b",
+      "revId": "0a8ee48f83a4d10736ad4e8e792e935b19a842c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
