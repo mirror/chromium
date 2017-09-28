@@ -15,6 +15,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
+#include "base/test/scoped_feature_list.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "chrome/browser/download/chrome_download_manager_delegate.h"
@@ -22,6 +23,7 @@
 #include "chrome/browser/download/download_prefs.h"
 #include "chrome/browser/download/download_target_info.h"
 #include "chrome/browser/safe_browsing/download_protection/download_protection_util.h"
+#include "chrome/common/chrome_features.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/features.h"
 #include "chrome/common/pref_names.h"
@@ -1036,6 +1038,8 @@ TEST_F(ChromeDownloadManagerDelegateTest, RequestConfirmation_Android) {
        DownloadConfirmationResult::CANCELED, WebContents::AVAILABLE,
        ExpectInfoBar::NO, ExpectPath::EMPTY},
   };
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndDisableFeature(features::kDownloadsForeground);
 
   EXPECT_CALL(*delegate(), RequestConfirmation(_, _, _, _))
       .WillRepeatedly(Invoke(
