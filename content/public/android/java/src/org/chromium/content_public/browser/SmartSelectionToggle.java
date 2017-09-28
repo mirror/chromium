@@ -4,13 +4,13 @@
 
 package org.chromium.content_public.browser;
 
-import org.chromium.content.browser.SmartSelectionClient;
+import org.chromium.content.browser.SmartSelectionClientImpl;
 
 /**
  * A public API to enable/disable smart selection. The default is disabled.
  */
 public class SmartSelectionToggle {
     public static void setEnabled(boolean enabled) {
-        SmartSelectionClient.setEnabled(enabled);
+        SmartSelectionClientImpl.setEnabled(enabled);
     }
 }

@@ -30,6 +30,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.WindowManager;
+import android.view.textclassifier.TextClassifier;
 
 import org.chromium.base.BuildInfo;
 import org.chromium.base.Log;
@@ -50,6 +51,8 @@ import org.chromium.ui.base.WindowAndroid;
 import org.chromium.ui.touch_selection.SelectionEventType;
 
 import java.util.List;
+
+import javax.annotation.Nullable;
 
 /**
  * A class that handles input-related web content selection UI like action mode
@@ -75,7 +78,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
     // hidden. This avoids flickering issues if there are trailing rect
     // invalidations after the ActionMode is shown. For example, after the user
     // stops dragging a selection handle, in turn showing the ActionMode, the
-    // selection change response will be asynchronous. 300ms should accomodate
+    // selection change response will be asynchronous. 300ms should accommodate
     // most such trailing, async delays.
     private static final int SHOW_DELAY_MS = 300;
 
@@ -93,7 +96,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
     private final RenderCoordinates mRenderCoordinates;
     private ActionMode.Callback mCallback;
 
-    private SelectionClient.ResultCallback mResultCallback;
+    private SmartSelectionClientImpl.ResultCallback mResultCallback;
 
     // Used to customize PastePopupMenu
     private ActionMode.Callback mNonSelectionCallback;
@@ -131,12 +134,17 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
     private PastePopupMenu mPastePopupMenu;
     private boolean mWasPastePopupShowingOnInsertionDragStart;
 
-    // The client that processes textual selection, or null if none exists.
-    private SelectionClient mSelectionClient;
+    // The client that processes Smart Select text selection, or {@code null} if no
+    // {@link SmartSelectionClient} instance exists.
+    private SmartSelectionClient mSmartSelectionClient;
 
-    // The classificaton result of the selected text if the selection exists and
+    // The client that process Contextual Search text selection, or {@code null} if no
+    // {@link ContextualSearchSelectionClient} instance exists.
+    private ContextualSearchSelectionClient mContextualSearchSelectionClient;
+
+    // The classification result of the selected text if the selection exists and the
     // SelectionClient was able to classify it, otherwise null.
-    private SelectionClient.Result mClassificationResult;
+    private SmartSelectionClient.Result mClassificationResult;
 
     // This variable is set to true when showActionMode() is postponed till classification result
     // arrives or till the selection is adjusted based on the classification result.
@@ -227,12 +235,38 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
         mNonSelectionCallback = callback;
     }
 
-    public SelectionClient.ResultCallback getResultCallback() {
+    public SmartSelectionClient.ResultCallback getResultCallback() {
         return mResultCallback;
     }
 
-    public SelectionClient getSelectionClient() {
-        return mSelectionClient;
+    public SmartSelectionClient getSelectionClient() {
+        return mSmartSelectionClient;
+    }
+
+    /**
+     * @return The {@link TextClassifier} that is used for the Smart Select text selection.
+     *         If the custom classifier has been set with #setTextClassifier, returns that object,
+     *         otherwise returns the system classifier.
+     */
+    public TextClassifier getTextClassifier() {
+        return mSmartSelectionClient != null ? mSmartSelectionClient.getTextClassifier() : null;
+    }
+
+    /**
+     * @return The {@link TextClassifier} which has been set with #setTextClassifier, or
+     *         {@code null} if no custom classifier has been set.
+     */
+    public TextClassifier getCustomTextClassifier() {
+        return mSmartSelectionClient != null ? mSmartSelectionClient.getCustomTextClassifier()
+                                             : null;
+    }
+
+    /**
+     * Sets the {@link TextClassifier} for the Smart Select text selection.
+     * @param textClassifier The classifier to use, or {@code null} to use the system classifier.
+     */
+    public void setTextClassifier(@Nullable TextClassifier textClassifier) {
+        if (mSmartSelectionClient != null) mSmartSelectionClient.setTextClassifier(textClassifier);
     }
 
     @Override
@@ -263,15 +297,14 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
         mCanEditRichly = canRichlyEdit;
         mUnselectAllOnDismiss = true;
         if (hasSelection()) {
-            if (mSelectionClient != null
-                    && mSelectionClient.requestSelectionPopupUpdates(shouldSuggest)) {
+            if (mSmartSelectionClient != null
+                    && mSmartSelectionClient.requestSelectionPopupUpdates(shouldSuggest)) {
                 // Rely on |mSelectionClient| sending a classification request and the request
                 // always calling onClassified() callback.
                 mPendingShowActionMode = true;
             } else {
                 showActionModeOrClearOnFailure();
             }
-
         } else {
             createAndShowPastePopup();
         }
@@ -427,7 +460,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
     }
 
     /**
-     * @see ActionMode#onWindowFocusChanged()
+     * @see ActionMode#onWindowFocusChanged
      */
     void onWindowFocusChanged(boolean hasWindowFocus) {
         if (supportsFloatingActionMode() && isActionModeValid()) {
@@ -1008,7 +1041,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
                 mHasSelection = false;
                 mUnselectAllOnDismiss = false;
                 mSelectionRect.setEmpty();
-                if (mSelectionClient != null) mSelectionClient.cancelAllRequests();
+                if (mSmartSelectionClient != null) mSmartSelectionClient.cancelAllRequests();
                 finishActionMode();
                 break;
 
@@ -1067,11 +1100,17 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
                 assert false : "Invalid selection event type.";
         }
 
-        if (mSelectionClient != null) {
+        if (mSmartSelectionClient != null || mContextualSearchSelectionClient != null) {
             final float deviceScale = mRenderCoordinates.getDeviceScaleFactor();
             int xAnchorPix = (int) (mSelectionRect.left * deviceScale);
             int yAnchorPix = (int) (mSelectionRect.bottom * deviceScale);
-            mSelectionClient.onSelectionEvent(eventType, xAnchorPix, yAnchorPix);
+            if (mSmartSelectionClient != null) {
+                mSmartSelectionClient.onSelectionEvent(eventType, xAnchorPix, yAnchorPix);
+            }
+            if (mContextualSearchSelectionClient != null) {
+                mContextualSearchSelectionClient.onSelectionEvent(
+                        eventType, xAnchorPix, yAnchorPix);
+            }
         }
     }
 
@@ -1096,14 +1135,21 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
     @CalledByNative
     private void onSelectionChanged(String text) {
         mLastSelectedText = text;
-        if (mSelectionClient != null) {
-            mSelectionClient.onSelectionChanged(text);
+        if (mSmartSelectionClient != null) {
+            mSmartSelectionClient.onSelectionChanged(text);
+        }
+        if (mContextualSearchSelectionClient != null) {
+            mContextualSearchSelectionClient.onSelectionChanged(text);
         }
     }
 
-    // The client that implements selection augmenting functionality, or null if none exists.
-    void setSelectionClient(SelectionClient selectionClient) {
-        mSelectionClient = selectionClient;
+    /**
+     * Sets the client that implements selection augmenting functionality for Smart Select, or
+     * {@code null} to not apply any Smart Select client.
+     * @param smartSelectionClient The new client to use, or {@code null}.
+     */
+    void setSmartSelectionClient(SmartSelectionClient smartSelectionClient) {
+        mSmartSelectionClient = smartSelectionClient;
 
         mClassificationResult = null;
 
@@ -1111,17 +1157,28 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
         assert !mHidden;
     }
 
+    /**
+     * Sets the client that implements selection augmenting functionality for Contextual Search, or
+     * {@code null} to not apply any Contextual Search client.
+     * @param contextualSearchSelectionClient The new client to use, or {@code null}.
+     */
+    void setContextualSearchSelectionClient(
+            @Nullable ContextualSearchSelectionClient contextualSearchSelectionClient) {
+        mContextualSearchSelectionClient = contextualSearchSelectionClient;
+    }
+
     @CalledByNative
     private void onShowUnhandledTapUIIfNeeded(int x, int y) {
-        if (mSelectionClient != null) {
-            mSelectionClient.showUnhandledTapUIIfNeeded(x, y);
+        if (mContextualSearchSelectionClient != null) {
+            mContextualSearchSelectionClient.showUnhandledTapUIIfNeeded(x, y);
         }
     }
 
     @CalledByNative
     private void onSelectWordAroundCaretAck(boolean didSelect, int startAdjust, int endAdjust) {
-        if (mSelectionClient != null) {
-            mSelectionClient.selectWordAroundCaretAck(didSelect, startAdjust, endAdjust);
+        if (mContextualSearchSelectionClient != null) {
+            mContextualSearchSelectionClient.selectWordAroundCaretAck(
+                    didSelect, startAdjust, endAdjust);
         }
     }
 
@@ -1165,9 +1222,9 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
     }
 
     // The callback class that delivers result from a SmartSelectionClient.
-    private class SmartSelectionCallback implements SelectionClient.ResultCallback {
+    private class SmartSelectionCallback implements SmartSelectionClient.ResultCallback {
         @Override
-        public void onClassified(SelectionClient.Result result) {
+        public void onClassified(SmartSelectionClient.Result result) {
             // If the selection does not exist any more, discard |result|.
             if (!hasSelection()) {
                 assert !mHidden;
@@ -1211,7 +1268,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
             // Rely on this method to clear |mHidden| and unhide the action mode.
             showActionModeOrClearOnFailure();
         }
-    };
+    }
 
     private native void nativeInit(WebContents webContents);
 }

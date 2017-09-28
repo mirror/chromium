@@ -23,6 +23,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.Locale;
 
+import javax.annotation.Nullable;
+
 /**
  * Controls Smart Text selection. Talks to the Android TextClassificationManager API.
  */
@@ -36,7 +38,7 @@ public class SmartSelectionProvider {
     private static final int CLASSIFY = 0;
     private static final int SUGGEST_AND_CLASSIFY = 1;
 
-    private SelectionClient.ResultCallback mResultCallback;
+    private SmartSelectionClient.ResultCallback mResultCallback;
     private WindowAndroid mWindowAndroid;
     private ClassificationTask mClassificationTask;
     private TextClassifier mTextClassifier;
@@ -45,14 +47,14 @@ public class SmartSelectionProvider {
     private Runnable mFailureResponseRunnable;
 
     public SmartSelectionProvider(
-            SelectionClient.ResultCallback callback, WindowAndroid windowAndroid) {
+            SmartSelectionClient.ResultCallback callback, WindowAndroid windowAndroid) {
         mResultCallback = callback;
         mWindowAndroid = windowAndroid;
         mHandler = new Handler();
         mFailureResponseRunnable = new Runnable() {
             @Override
             public void run() {
-                mResultCallback.onClassified(new SelectionClient.Result());
+                mResultCallback.onClassified(new SmartSelectionClient.Result());
             }
         };
     }
@@ -73,10 +75,19 @@ public class SmartSelectionProvider {
         }
     }
 
-    public void setTextClassifier(TextClassifier textClassifier) {
+    /**
+     * Sets the {@link TextClassifier} for the Smart Select text selection.
+     * @param textClassifier The classifier to use, or {@code null} to use the system classifier.
+     */
+    public void setTextClassifier(@Nullable TextClassifier textClassifier) {
         mTextClassifier = textClassifier;
     }
 
+    /**
+     * @return The {@link TextClassifier} that is used for the Smart Select text selection.
+     *         If the custom classifier has been set with #setTextClassifier, returns that object,
+     *         otherwise returns the system classifier.
+     */
     // TODO(wnwen): Remove this suppression once the constant is added to lint.
     @SuppressLint("WrongConstant")
     @TargetApi(Build.VERSION_CODES.O)
@@ -91,6 +102,10 @@ public class SmartSelectionProvider {
                 .getTextClassifier();
     }
 
+    /**
+     * @return The {@link TextClassifier} which has been set with #setTextClassifier, or
+     *         {@code null} if no custom classifier has been set.
+     */
     public TextClassifier getCustomTextClassifier() {
         return mTextClassifier;
     }
@@ -115,7 +130,7 @@ public class SmartSelectionProvider {
     }
 
     @TargetApi(Build.VERSION_CODES.O)
-    private class ClassificationTask extends AsyncTask<Void, Void, SelectionClient.Result> {
+    private class ClassificationTask extends AsyncTask<Void, Void, SmartSelectionClient.Result> {
         private final TextClassifier mTextClassifier;
         private final int mRequestType;
         private final CharSequence mText;
@@ -134,7 +149,7 @@ public class SmartSelectionProvider {
         }
 
         @Override
-        protected SelectionClient.Result doInBackground(Void... params) {
+        protected SmartSelectionClient.Result doInBackground(Void... params) {
             int start = mOriginalStart;
             int end = mOriginalEnd;
 
@@ -143,7 +158,7 @@ public class SmartSelectionProvider {
                         mText, start, end, makeLocaleList(mLocales));
                 start = Math.max(0, suggested.getSelectionStartIndex());
                 end = Math.min(mText.length(), suggested.getSelectionEndIndex());
-                if (isCancelled()) return new SelectionClient.Result();
+                if (isCancelled()) return new SmartSelectionClient.Result();
             }
 
             TextClassification tc =
@@ -157,8 +172,8 @@ public class SmartSelectionProvider {
             return new LocaleList(locales);
         }
 
-        private SelectionClient.Result makeResult(int start, int end, TextClassification tc) {
-            SelectionClient.Result result = new SelectionClient.Result();
+        private SmartSelectionClient.Result makeResult(int start, int end, TextClassification tc) {
+            SmartSelectionClient.Result result = new SmartSelectionClient.Result();
 
             result.startAdjust = start - mOriginalStart;
             result.endAdjust = end - mOriginalEnd;
@@ -171,7 +186,7 @@ public class SmartSelectionProvider {
         }
 
         @Override
-        protected void onPostExecute(SelectionClient.Result result) {
+        protected void onPostExecute(SmartSelectionClient.Result result) {
             mResultCallback.onClassified(result);
         }
     }
