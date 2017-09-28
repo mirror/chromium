@@ -102,8 +102,12 @@ bool InitializeStaticEGLInternal(GLImplementation implementation) {
     if (!PathService::Get(base::DIR_MODULE, &module_path))
       return false;
 
-    glesv2_path = module_path.Append(kGLESv2ANGLELibraryName);
-    egl_path = module_path.Append(kEGLANGLELibraryName);
+    const base::CommandLine* cmd = base::CommandLine::ForCurrentProcess();
+    if (cmd->GetSwitchValueASCII(switches::kUseGL) ==
+        kGLImplementationANGLEName) {
+      glesv2_path = module_path.Append(kGLESv2ANGLELibraryName);
+      egl_path = module_path.Append(kEGLANGLELibraryName);
+    }
   }
 
   base::NativeLibrary gles_library = LoadLibraryAndPrintError(glesv2_path);
