@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "daf18c3e_ef996cc7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewport.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-09-28T23:17:01Z",
+      "side": 1,
+      "message": "Suggestion: just make this an if/else instead of a ternary, since the condition is pretty complicated.",
+      "revId": "8ded7f1bc6908958f906290fcb46a30e22d4bfa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62f19c9f_98a8e272",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewport.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-09-28T23:17:01Z",
+      "side": 1,
+      "message": "Could you add a comment explaining the logic here? Why does the blur event coming from selfOrAncestor mean the selected message should be the last one?",
+      "revId": "8ded7f1bc6908958f906290fcb46a30e22d4bfa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09c907dc_4f0cf0d2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewport.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-09-28T23:17:01Z",
+      "side": 1,
+      "message": "Maybe _focusSelectedMessageIfRendered?",
+      "range": {
+        "startLine": 153,
+        "startChar": 2,
+        "endLine": 153,
+        "endChar": 32
+      },
+      "revId": "8ded7f1bc6908958f906290fcb46a30e22d4bfa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c81d4760_6e2606d6",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewport.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-09-28T23:17:01Z",
+      "side": 1,
+      "message": "Could this happen outside the loop?",
+      "revId": "8ded7f1bc6908958f906290fcb46a30e22d4bfa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc24f021_f1862b87",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewport.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-09-28T23:17:01Z",
+      "side": 1,
+      "message": "How does this return something comparable to itemCount? Looks like it\u0027d return a number of pixels?",
+      "revId": "8ded7f1bc6908958f906290fcb46a30e22d4bfa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
