@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "5e239ec2_9e4d1c55",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2082,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-28T18:46:38Z",
+      "side": 1,
+      "message": "TODO(rogerm, szhangcs): add HasAddressFields() and HasPasswordFields()",
+      "revId": "edd1c34845a78e8252d00be65cc30e4f71d7450f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d54edf60_1417dbdd",
         "filename": "components/autofill/core/browser/autofill_metrics.cc",
         "patchSetId": 3
@@ -148,6 +165,30 @@
       "side": 1,
       "message": "Ah, ignore me; I read the comments out of order and see you addressed this already.  I guess it\u0027s okay if they log twice, since that\u0027s probably what it does right now anyway...",
       "parentUuid": "ae4ef697_705cd535",
+      "range": {
+        "startLine": 2368,
+        "startChar": 50,
+        "endLine": 2368,
+        "endChar": 66
+      },
+      "revId": "edd1c34845a78e8252d00be65cc30e4f71d7450f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06d90db4_a8f4c5a0",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2368,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-28T18:46:38Z",
+      "side": 1,
+      "message": "This lets us count a compound form as two separate forms, which better matches how autofill works from the user\u0027s perspective (i.e., we\u0027ll fill CC related fields in one shot and address fields in one shot, but not both together.)",
+      "parentUuid": "91c2e808_6e71d3ea",
       "range": {
         "startLine": 2368,
         "startChar": 50,
