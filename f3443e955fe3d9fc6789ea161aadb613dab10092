@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89b7d92b_dd786cbc",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_length_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-09-28T15:47:00Z",
+      "side": 1,
+      "message": "Isn\u0027t this DCHECK still valid for the non-margin-border-padding case?\n\nE.g. if we are passing a constraint space to a child with a different writing mode, we\u0027ll be getting incorrect results?",
+      "revId": "f3443e955fe3d9fc6789ea161aadb613dab10092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
