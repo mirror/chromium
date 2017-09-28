@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "4f7cc02d_5381021a",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-09-28T18:03:31Z",
+      "side": 1,
+      "message": "Replacing this comment as it is in conflict with that we only enable it from \u003e\u003d Win10. That comment is better, this one was misleading.",
+      "range": {
+        "startLine": 92,
+        "startChar": 10,
+        "endLine": 92,
+        "endChar": 19
+      },
+      "revId": "701d2d33440d14ce0a07688cc0b2bcda4ebc2694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ed75ce4_46540c9f",
         "filename": "base/win/win_util.cc",
         "patchSetId": 4
@@ -22,6 +45,30 @@
       "revId": "701d2d33440d14ce0a07688cc0b2bcda4ebc2694",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fa2fad4_908947c8",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-09-28T18:03:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ed75ce4_46540c9f",
+      "range": {
+        "startLine": 111,
+        "startChar": 35,
+        "endLine": 111,
+        "endChar": 40
+      },
+      "revId": "701d2d33440d14ce0a07688cc0b2bcda4ebc2694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -48,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "d37b370a_75414e30",
+        "filename": "base/win/win_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-09-28T18:03:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f807cd52_914b0066",
+      "range": {
+        "startLine": 197,
+        "startChar": 35,
+        "endLine": 197,
+        "endChar": 41
+      },
+      "revId": "701d2d33440d14ce0a07688cc0b2bcda4ebc2694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e26f1b0_d124c48c",
         "filename": "chrome/test/base/browser_tests_main.cc",
         "patchSetId": 4
@@ -62,6 +133,24 @@
       "revId": "701d2d33440d14ce0a07688cc0b2bcda4ebc2694",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da74f40c_eed43ebf",
+        "filename": "chrome/test/base/browser_tests_main.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-09-28T18:03:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e26f1b0_d124c48c",
+      "revId": "701d2d33440d14ce0a07688cc0b2bcda4ebc2694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
