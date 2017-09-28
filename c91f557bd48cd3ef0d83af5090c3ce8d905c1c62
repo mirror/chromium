@@ -16,6 +16,24 @@
       "revId": "c91f557bd48cd3ef0d83af5090c3ce8d905c1c62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b43df0df_8864b03a",
+        "filename": "base/logging_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-09-28T20:20:33Z",
+      "side": 1,
+      "message": "I don\u0027t think that\u0027ll work, as LOG_DCHECK is not a compile-time constant under SYZYASAN, but a mutable variable of type LogSeverity.\nSee https://cs.chromium.org/chromium/src/base/logging.h?q\u003dlogging.h\u0026l\u003d819.\n\nAnd, yup, under that configuration:\n\n../../base/logging_unittest.cc(423): error C2131: expression did not evaluate to a constant",
+      "parentUuid": "f37b8bd9_ca7e9949",
+      "revId": "c91f557bd48cd3ef0d83af5090c3ce8d905c1c62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
