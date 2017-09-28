@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d4743d4_6ccd4286",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-format-collections-expected.txt",
+        "patchSetId": 12
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-28T22:51:45Z",
+      "side": 1,
+      "message": "Erik, why don\u0027t we have \"HTMLOptionsCollection\" in preview? I think we should fix it. It\u0027s similar to Uint8Array in this regard. Same goes for other names in this expectations file.",
+      "range": {
+        "startLine": 5,
+        "startChar": 33,
+        "endLine": 5,
+        "endChar": 71
+      },
+      "revId": "d29390acd1bb1bf52956815883884301f061cf35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd7fc459_ef8d49d8",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-links-on-messages-before-inspection-expected.txt",
+        "patchSetId": 12
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-28T22:51:45Z",
+      "side": 1,
+      "message": "Let\u0027s figure out why this has changed.",
+      "revId": "d29390acd1bb1bf52956815883884301f061cf35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acb826fb_960bd5d9",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-log-side-effects-expected.txt",
+        "patchSetId": 12
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-28T22:51:45Z",
+      "side": 1,
+      "message": "Let\u0027s dump something.",
+      "revId": "d29390acd1bb1bf52956815883884301f061cf35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
