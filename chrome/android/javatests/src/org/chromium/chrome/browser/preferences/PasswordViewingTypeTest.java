@@ -21,6 +21,7 @@ import org.junit.runner.RunWith;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.Feature;
+import org.chromium.chrome.browser.init.ProcessInitializationHandler;
 import org.chromium.chrome.browser.preferences.password.SavePasswordsPreferences;
 import org.chromium.chrome.browser.sync.ProfileSyncService;
 import org.chromium.components.signin.AccountManagerFacade;
@@ -43,7 +44,6 @@ public class PasswordViewingTypeTest {
 
     private MainPreferences mMainPreferences;
     private ChromeBasePreference mPasswordsPref;
-    private static final String DEFAULT_ACCOUNT = "test@gmail.com";
     private Context mContext;
     private MockSyncContentResolverDelegate mSyncContentResolverDelegate;
     private String mAuthority;
@@ -52,6 +52,7 @@ public class PasswordViewingTypeTest {
 
     @Before
     public void setUp() throws Exception {
+        setupTestAccount();
         mSyncContentResolverDelegate = new MockSyncContentResolverDelegate();
         mContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         mMainPreferences = (MainPreferences) startMainPreferences(
@@ -59,7 +60,6 @@ public class PasswordViewingTypeTest {
                                    .getFragmentForTest();
         mPasswordsPref = (ChromeBasePreference) mMainPreferences.findPreference(
                 MainPreferences.PREF_SAVED_PASSWORDS);
-        setupTestAccount();
         AndroidSyncSettings.overrideForTests(mContext, mSyncContentResolverDelegate, null);
         mAuthority = AndroidSyncSettings.getContractAuthority(mContext);
         AndroidSyncSettings.updateAccount(mContext, mAccount);
@@ -67,13 +67,15 @@ public class PasswordViewingTypeTest {
     }
 
     private void setupTestAccount() {
+        ThreadUtils.runOnUiThreadBlocking(
+                () -> ProcessInitializationHandler.getInstance().initializePreNative());
         mAccountManager = new FakeAccountManagerDelegate(
                 FakeAccountManagerDelegate.DISABLE_PROFILE_DATA_SOURCE);
         AccountManagerFacade.overrideAccountManagerFacadeForTests(mAccountManager);
         mAccount = AccountManagerFacade.createAccountFromName("account@example.com");
         AccountHolder.Builder accountHolder =
                 AccountHolder.builder(mAccount).password("password").alwaysAccept(true);
-        mAccountManager.addAccountHolderExplicitly(accountHolder.build());
+        mAccountManager.addAccountHolderBlocking(accountHolder.build());
     }
 
     /**
