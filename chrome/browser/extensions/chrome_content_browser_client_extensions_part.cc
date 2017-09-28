@@ -6,7 +6,10 @@
 
 #include <stddef.h>
 
+#include <memory>
 #include <set>
+#include <string>
+#include <vector>
 
 #include "base/command_line.h"
 #include "base/debug/alias.h"
@@ -18,6 +21,7 @@
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/extensions/extension_web_ui.h"
 #include "chrome/browser/extensions/extension_webkit_preferences.h"
+#include "chrome/browser/extensions/signin/gaia_auth_extension_loader.h"
 #include "chrome/browser/media_galleries/fileapi/media_file_system_backend.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_io_data.h"
@@ -373,11 +377,6 @@ bool ChromeContentBrowserClientExtensionsPart::CanCommitURL(
     content::RenderProcessHost* process_host, const GURL& url) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  // We need to let most extension URLs commit in any process, since this can
-  // be allowed due to web_accessible_resources.  Most hosted app URLs may also
-  // load in any process (e.g., in an iframe).  However, the Chrome Web Store
-  // cannot be loaded in iframes and should never be requested outside its
-  // process.
   ExtensionRegistry* registry =
       ExtensionRegistry::Get(process_host->GetBrowserContext());
   if (!registry)
@@ -385,13 +384,25 @@ bool ChromeContentBrowserClientExtensionsPart::CanCommitURL(
 
   const Extension* new_extension =
       registry->enabled_extensions().GetExtensionOrAppByURL(url);
-  if (new_extension && new_extension->is_hosted_app() &&
-      new_extension->id() == kWebStoreAppId &&
-      !ProcessMap::Get(process_host->GetBrowserContext())
-           ->Contains(new_extension->id(), process_host->GetID())) {
-    return false;
-  }
-  return true;
+  if (!new_extension)
+    return true;
+
+  // Hosted app URLs may load in any process (e.g., in an iframe).  However, the
+  // Chrome Web Store, and other extensions should never be requested outside
+  // their process.
+  if (new_extension->id() == kWebStoreAppId)
+    DCHECK(new_extension->is_hosted_app());
+  if (new_extension->is_hosted_app() && new_extension->id() != kWebStoreAppId)
+    return true;
+
+  // TODO(https://crbug.com/688565): Remove the check below once we fully
+  // deprecate the Gaia.  See also https://crbug.com/709117 for process
+  // allocation discussion related to this extension.
+  if (new_extension->id() == kGaiaAuthExtensionId)
+    return true;
+
+  return ProcessMap::Get(process_host->GetBrowserContext())
+      ->Contains(new_extension->id(), process_host->GetID());
 }
 
 // static

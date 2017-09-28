@@ -1551,7 +1551,10 @@ void RenderFrameHostImpl::DidCommitProvisionalLoad(
   // Attempts to commit certain off-limits URL should be caught more strictly
   // than our FilterURL checks below.  If a renderer violates this policy, it
   // should be killed.
-  if (!CanCommitURL(validated_params->url)) {
+  bool is_blocked_navigation =
+      navigation_handle_ &&
+      navigation_handle_->GetNetErrorCode() == net::ERR_BLOCKED_BY_CLIENT;
+  if (!is_blocked_navigation && !CanCommitURL(validated_params->url)) {
     VLOG(1) << "Blocked URL " << validated_params->url.spec();
     // Kills the process.
     bad_message::ReceivedBadMessage(process,

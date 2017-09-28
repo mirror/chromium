@@ -7,6 +7,7 @@
 #include "base/callback.h"
 #include "base/logging.h"
 #include "base/stl_util.h"
+#include "content/public/common/url_constants.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/manifest_handlers/sandboxed_page_info.h"
@@ -67,7 +68,7 @@ void ExtensionSet::Clear() {
 }
 
 std::string ExtensionSet::GetExtensionOrAppIDByURL(const GURL& url) const {
-  if (url.SchemeIs(kExtensionScheme))
+  if (url.SchemeIs(kExtensionScheme) || url.SchemeIs(content::kGuestScheme))
     return url.host();
 
   const Extension* extension = GetHostedAppByURL(url);
@@ -78,7 +79,7 @@ std::string ExtensionSet::GetExtensionOrAppIDByURL(const GURL& url) const {
 }
 
 const Extension* ExtensionSet::GetExtensionOrAppByURL(const GURL& url) const {
-  if (url.SchemeIs(kExtensionScheme))
+  if (url.SchemeIs(kExtensionScheme) || url.SchemeIs(content::kGuestScheme))
     return GetByID(url.host());
 
   return GetHostedAppByURL(url);
