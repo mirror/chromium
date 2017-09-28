@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "983413d8_36b2e898",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 901,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-28T17:26:30Z",
+      "side": 1,
+      "message": "This comment is no longer present in the latest patch",
+      "parentUuid": "905e2737_93e8fdfa",
+      "range": {
+        "startLine": 901,
+        "startChar": 15,
+        "endLine": 901,
+        "endChar": 28
+      },
+      "revId": "bef4bf6daafddf8ac7273978465daa7a907014b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fac5837b_b9c4d8ff",
         "filename": "net/http/http_cache.h",
         "patchSetId": 34

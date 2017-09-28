@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "4853bc88_46325f77",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-28T17:26:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f56b81b9_1cebc0e4",
+      "range": {
+        "startLine": 201,
+        "startChar": 14,
+        "endLine": 201,
+        "endChar": 27
+      },
+      "revId": "607fbe1d9dbf6f1f66aee1e436939c57275786bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44e74ffa_b50ba73a",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 37
@@ -238,6 +262,30 @@
     },
     {
       "key": {
+        "uuid": "5602aeaf_eb766b04",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-28T17:26:30Z",
+      "side": 1,
+      "message": "Rephrased",
+      "parentUuid": "afe8fc3a_7e17a103",
+      "range": {
+        "startLine": 412,
+        "startChar": 27,
+        "endLine": 412,
+        "endChar": 41
+      },
+      "revId": "607fbe1d9dbf6f1f66aee1e436939c57275786bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "489c4da2_0e8ecebe",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 37
@@ -306,6 +354,30 @@
       "revId": "607fbe1d9dbf6f1f66aee1e436939c57275786bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f12cce6_4a7ba36b",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 2898,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-28T17:26:30Z",
+      "side": 1,
+      "message": "Line 359 is an example where it can be true.",
+      "parentUuid": "62e89343_0e1e03be",
+      "range": {
+        "startLine": 2898,
+        "startChar": 18,
+        "endLine": 2898,
+        "endChar": 45
+      },
+      "revId": "607fbe1d9dbf6f1f66aee1e436939c57275786bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -473,6 +545,30 @@
     },
     {
       "key": {
+        "uuid": "5d6f6552_1e528fcf",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-28T17:26:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a72d098b_4ae9fa86",
+      "range": {
+        "startLine": 91,
+        "startChar": 7,
+        "endLine": 91,
+        "endChar": 31
+      },
+      "revId": "607fbe1d9dbf6f1f66aee1e436939c57275786bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8d08942_8f532d3d",
         "filename": "net/http/http_transaction.h",
         "patchSetId": 37
@@ -493,6 +589,30 @@
       "revId": "607fbe1d9dbf6f1f66aee1e436939c57275786bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbb6123f_cda7d66b",
+        "filename": "net/http/http_transaction.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-28T17:26:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8d08942_8f532d3d",
+      "range": {
+        "startLine": 127,
+        "startChar": 55,
+        "endLine": 128,
+        "endChar": 18
+      },
+      "revId": "607fbe1d9dbf6f1f66aee1e436939c57275786bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

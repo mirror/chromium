@@ -22,6 +22,30 @@
       "revId": "5da5280ecf9e10c20a265ce6ac7fd86fc663373d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "826ac18b_12e083ad",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 44
+      },
+      "lineNbr": 1895,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-28T17:26:30Z",
+      "side": 0,
+      "message": "It wasn\u0027t a bug since that was merely acting as a no-op. Changed this now to be more consistent in the calls to TransitionToReadingState",
+      "parentUuid": "e2215b1f_a50b8630",
+      "range": {
+        "startLine": 1891,
+        "startChar": 0,
+        "endLine": 1895,
+        "endChar": 5
+      },
+      "revId": "5da5280ecf9e10c20a265ce6ac7fd86fc663373d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

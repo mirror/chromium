@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "8fea6aac_9ca46cdd",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 45
+      },
+      "lineNbr": 1064,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-28T17:26:30Z",
+      "side": 1,
+      "message": "I don\u0027t think so.",
+      "parentUuid": "e1ad4089_c6b1dc98",
+      "range": {
+        "startLine": 1064,
+        "startChar": 12,
+        "endLine": 1064,
+        "endChar": 18
+      },
+      "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b4cbd7fb_c22dccd2",
         "filename": "net/http/http_cache.h",
         "patchSetId": 45
@@ -68,6 +92,30 @@
       "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef503c38_85b2a807",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 45
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-28T17:26:30Z",
+      "side": 1,
+      "message": "That\u0027s right.",
+      "parentUuid": "b4cbd7fb_c22dccd2",
+      "range": {
+        "startLine": 248,
+        "startChar": 15,
+        "endLine": 248,
+        "endChar": 39
+      },
+      "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,47 @@
     },
     {
       "key": {
+        "uuid": "5a96cf34_b6996bc5",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 45
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-28T17:26:30Z",
+      "side": 1,
+      "message": "TestHttpCache via HttpCache needs to access ActiveEntry, Transaction etc.",
+      "parentUuid": "cf053fe4_5d4c62fb",
+      "range": {
+        "startLine": 249,
+        "startChar": 15,
+        "endLine": 249,
+        "endChar": 28
+      },
+      "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "afe5d5dd_e241a73c",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 45
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-28T17:26:30Z",
+      "side": 1,
+      "message": "Just non const is sufficient",
+      "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37c77e21_27597d89",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 45
@@ -105,6 +194,30 @@
       "writtenOn": "2017-09-27T19:57:22Z",
       "side": 1,
       "message": "Sorry, I\u0027m sure we\u0027ve covered this, but why isn\u0027t WritersDoneWritingToEntry() called in the keep_entry case?  I don\u0027t think there will be any more writing to entry after network_read_only_ is set to true, will there be?",
+      "range": {
+        "startLine": 162,
+        "startChar": 12,
+        "endLine": 162,
+        "endChar": 37
+      },
+      "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bea736c7_84b39026",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 45
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-28T17:26:30Z",
+      "side": 1,
+      "message": "If we do call WritersDoneWritingToEntry and we do not want to doom the entry,it will be a no-op, since ProcessQueuedTransactions will not really move any transaction forward to the next state.",
+      "parentUuid": "37c77e21_27597d89",
       "range": {
         "startLine": 162,
         "startChar": 12,
@@ -140,6 +253,30 @@
     },
     {
       "key": {
+        "uuid": "36c7d26a_4079bd68",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 45
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-28T17:26:30Z",
+      "side": 1,
+      "message": "This is set for the following cases:\n- partial_do_not_truncate_ \u003d\u003d true, do not truncate\n- truncation can successfully proceed",
+      "parentUuid": "df4694e9_9e801bfe",
+      "range": {
+        "startLine": 268,
+        "startChar": 2,
+        "endLine": 268,
+        "endChar": 20
+      },
+      "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d84a4252_a93580f4",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 45
@@ -163,6 +300,30 @@
     },
     {
       "key": {
+        "uuid": "2270600e_9c3dd1ff",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 45
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-28T17:26:30Z",
+      "side": 1,
+      "message": "it just means that we have got more data than content length header , not necessarily a failure.",
+      "parentUuid": "d84a4252_a93580f4",
+      "range": {
+        "startLine": 282,
+        "startChar": 20,
+        "endLine": 282,
+        "endChar": 21
+      },
+      "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d03007f_51cdb755",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 45
@@ -174,6 +335,30 @@
       "writtenOn": "2017-09-27T19:57:22Z",
       "side": 1,
       "message": "Conceptually this function should also call AboutToBeRemovedFromWriters().  Can that be done, or would that mess up the functionality?",
+      "range": {
+        "startLine": 618,
+        "startChar": 20,
+        "endLine": 618,
+        "endChar": 52
+      },
+      "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4c8a3d2_a2f5908a",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 45
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-28T17:26:30Z",
+      "side": 1,
+      "message": "Will address all AboutToBeRemovedFromWriters consistency related feedback together",
+      "parentUuid": "5d03007f_51cdb755",
       "range": {
         "startLine": 618,
         "startChar": 20,
