@@ -79,7 +79,7 @@ class MessageCenterButtonBar : public views::View,
   message_center::MessageCenter* message_center_;
 
   // Sub-views of the button bar.
-  views::ToggleImageButton* title_arrow_;
+  views::ImageButton* back_arrow_;
   views::Label* notification_label_;
   views::View* button_container_;
   views::ToggleImageButton* close_all_button_;
