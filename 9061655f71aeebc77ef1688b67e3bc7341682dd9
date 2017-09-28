@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "45b897b4_b2662699",
+        "filename": "extensions/browser/extension_protocols.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-28T01:31:49Z",
+      "side": 1,
+      "message": "\u003e I\u0027d also comment here about this being a requirement for modules from extensions. It is important to document that for archaeological reasons.\n\nDone.\n\n\u003e Also, is the mime-type typically \"application/javascript\"?\n\nYep, usually.  See MimeUtil::GetMimeTypeFromFile():\n\nhttps://chromium.googlesource.com/chromium/src/+/bca21fc58cb2e2275fc00e8eb5700047749f7fce/net/base/mime_util.cc#217\n\nBut it is actually lumped into the system config, as Matt mentioned, and registry settings can change it.  But I\u0027m not sure that\u0027s an extensions issue.",
+      "parentUuid": "ec6b51da_67dd1209",
+      "revId": "9061655f71aeebc77ef1688b67e3bc7341682dd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1b3a247_7d58c0c6",
         "filename": "extensions/browser/extension_protocols.cc",
         "patchSetId": 2
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "c8e02618_bdfafd56",
+        "filename": "extensions/browser/extension_protocols.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-28T01:31:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "08269cc0_faf6c871",
+      "revId": "9061655f71aeebc77ef1688b67e3bc7341682dd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "924635f3_d717559c",
         "filename": "extensions/browser/extension_protocols.cc",
         "patchSetId": 2
@@ -74,6 +110,30 @@
       "revId": "9061655f71aeebc77ef1688b67e3bc7341682dd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15c6cc2b_9401de0e",
+        "filename": "extensions/browser/extension_protocols.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-28T01:31:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "924635f3_d717559c",
+      "range": {
+        "startLine": 209,
+        "startChar": 37,
+        "endLine": 209,
+        "endChar": 38
+      },
+      "revId": "9061655f71aeebc77ef1688b67e3bc7341682dd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
