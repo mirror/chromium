@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ddf9dc5_14cddcb8",
+        "filename": "chrome/android/java/AndroidManifest.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-28T15:20:03Z",
+      "side": 1,
+      "message": "What MAIN intents does ChromeLauncherActivity handle vs ChromeTabbedActivity?",
+      "range": {
+        "startLine": 179,
+        "startChar": 16,
+        "endLine": 179,
+        "endChar": 68
+      },
+      "revId": "964fe9439c3a29a73febc9e4e9907070ef26bd3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef52bfd8_1dbc35b6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-28T15:20:03Z",
+      "side": 1,
+      "message": "Sometimes we explicitly set the class to ChromeTabbedActivity2.class. Should that be handled specially here as well?",
+      "range": {
+        "startLine": 382,
+        "startChar": 12,
+        "endLine": 382,
+        "endChar": 57
+      },
+      "revId": "964fe9439c3a29a73febc9e4e9907070ef26bd3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa65bdf1_dfe6746c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-28T15:20:03Z",
+      "side": 1,
+      "message": "nit: s/inside the Chrome/inside of Chrome",
+      "range": {
+        "startLine": 383,
+        "startChar": 79,
+        "endLine": 383,
+        "endChar": 96
+      },
+      "revId": "964fe9439c3a29a73febc9e4e9907070ef26bd3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2b839d3_ee68dd19",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 2128,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-28T15:20:03Z",
+      "side": 1,
+      "message": "Is this true across N, NMR1, and O?",
+      "range": {
+        "startLine": 2126,
+        "startChar": 12,
+        "endLine": 2128,
+        "endChar": 52
+      },
+      "revId": "964fe9439c3a29a73febc9e4e9907070ef26bd3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e31cb7eb_1639ffd4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-28T15:20:03Z",
+      "side": 1,
+      "message": "Is there a way to make this file an Add+ (instead of just an Add) since it\u0027s mostly a fork of ChromeLauncherActivity?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 29
+      },
+      "revId": "964fe9439c3a29a73febc9e4e9907070ef26bd3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb358050_9d3c3f63",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-28T15:20:03Z",
+      "side": 1,
+      "message": "s/is no tabs/are no tabs",
+      "range": {
+        "startLine": 117,
+        "startChar": 58,
+        "endLine": 117,
+        "endChar": 68
+      },
+      "revId": "964fe9439c3a29a73febc9e4e9907070ef26bd3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "217279bd_a2a883ee",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-28T15:20:03Z",
+      "side": 1,
+      "message": "MAIN intents shouldn\u0027t be for custom tabs or herbs. I agree with Ted\u0027s previous comments that this class should be limited to MAIN intent handling and the VIEW handling should be broken out and left in ChromeLauncherActivity.",
+      "range": {
+        "startLine": 122,
+        "startChar": 8,
+        "endLine": 123,
+        "endChar": 37
+      },
+      "revId": "964fe9439c3a29a73febc9e4e9907070ef26bd3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

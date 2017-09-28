@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fbff593_afe80422",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/multiwindow/MultiWindowUtils.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-28T15:20:03Z",
+      "side": 0,
+      "message": "While these are only used in ChromeLauncherActivity currently, I think this class is still the correct place for both methods since MultiWindowUtils contains the other legacy and non-legacy multi-window related methods. It makes it easier to find the logic related to determining if we\u0027re in multi-window and how to create multi-window intents.",
+      "range": {
+        "startLine": 273,
+        "startChar": 19,
+        "endLine": 273,
+        "endChar": 53
+      },
+      "revId": "b6a01f7921e37e8e5642d087faee79f5dc17ee43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
