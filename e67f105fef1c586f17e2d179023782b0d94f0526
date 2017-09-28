@@ -22,6 +22,30 @@
       "revId": "e67f105fef1c586f17e2d179023782b0d94f0526",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a6a6b98_9cb2c034",
+        "filename": "net/cert/cert_verify_proc_builtin.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-09-28T19:36:06Z",
+      "side": 1,
+      "message": "I was also confused by the other implementations and their comments (which is why I had written it to propagate the GOOD value for use in a follow-up CL)\n\nBut after chatting with sleevi have concluded that CRLSet only affirmatively says if a certificate is revoked.\n\nAs I understand, the CRLSet may include just a subset of the revoked certificates for an issuer, so CRLSet::CheckSerial() returning GOOD doesn\u0027t necessarily mean the certificate is unrevoked.\n\nHence for mandatory revocation checking CRLSet doesn\u0027t come into play other than to exclude obviously revoked chains.",
+      "parentUuid": "3bc82a9b_b2dba4cb",
+      "range": {
+        "startLine": 112,
+        "startChar": 47,
+        "endLine": 112,
+        "endChar": 58
+      },
+      "revId": "e67f105fef1c586f17e2d179023782b0d94f0526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
