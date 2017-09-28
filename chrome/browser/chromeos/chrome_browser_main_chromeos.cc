@@ -251,6 +251,18 @@ void GetSystemSlotOnIOThread(
   }
 }
 
+// Verifies if shall signal to the platform that it can attempt owning
+// the tpm. This signal is sent on every boot after it has been initially
+// allowed by accepting EULA to make sure we are not stuck in interrupted
+// tpm initialization state.
+bool ShallAttemptTpmOwnership() {
+#if defined(GOOGLE_CHROME_BUILD)
+  return StartupUtils::IsEulaAccepted();
+#else
+  return true;
+#endif
+}
+
 }  // namespace
 
 namespace internal {
@@ -658,6 +670,16 @@ void ChromeBrowserMainPartsChromeos::PostMainMessageLoopStart() {
 
   // Need to be done after LoginState has been initialized in DBusServices().
   memory_kills_monitor_ = memory::MemoryKillsMonitor::Initialize();
+
+  if (ShallAttemptTpmOwnership()) {
+    // Signal to cryptohome that it can attempt TPM ownership, if it haven't
+    // done that yet. The previous signal from EULA dialogue could have been
+    // lost if initialization was interrupted.
+    // We don't care about the result, and don't block waiting for it.
+    VLOG(1) << "Allowing to attempt TPM ownership.";
+    DBusThreadManager::Get()->GetCryptohomeClient()->TpmCanAttemptOwnership(
+        EmptyVoidDBusMethodCallback());
+  }
 
   ChromeBrowserMainPartsLinux::PostMainMessageLoopStart();
 }
