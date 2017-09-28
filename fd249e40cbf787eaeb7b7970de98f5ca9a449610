@@ -2,6 +2,108 @@
   "comments": [
     {
       "key": {
+        "uuid": "ad60e179_e52833f5",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2090,
+      "author": {
+        "id": 1115788
+      },
+      "writtenOn": "2017-09-28T15:50:33Z",
+      "side": 1,
+      "message": "This is only used in the line below, no need for a local variable.",
+      "revId": "fd249e40cbf787eaeb7b7970de98f5ca9a449610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7975da3_50b978ea",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2110,
+      "author": {
+        "id": 1115788
+      },
+      "writtenOn": "2017-09-28T15:50:33Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "fd249e40cbf787eaeb7b7970de98f5ca9a449610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80ff48cc_c29b3554",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2114,
+      "author": {
+        "id": 1115788
+      },
+      "writtenOn": "2017-09-28T15:50:33Z",
+      "side": 1,
+      "message": "I find confusing to have a \"direction \u003d\u003d\" check inside the if block and also in the condition of the if. What do you think about\n\nif (direction \u003d\u003d kForRows)\n  return ClientLogicalHeight();\nelse if (isLTR)\n  return ClientLogicalWidth();",
+      "revId": "fd249e40cbf787eaeb7b7970de98f5ca9a449610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d184f572_23dda3fd",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2190,
+      "author": {
+        "id": 1115788
+      },
+      "writtenOn": "2017-09-28T15:50:33Z",
+      "side": 1,
+      "message": "Instead of the comment we either have an assertion or just keep the current code.",
+      "revId": "fd249e40cbf787eaeb7b7970de98f5ca9a449610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6142b4d2_237fcfb2",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2206,
+      "author": {
+        "id": 1115788
+      },
+      "writtenOn": "2017-09-28T15:50:33Z",
+      "side": 1,
+      "message": "This makes no sense to me. Let\u0027s add the tests or remove it.",
+      "revId": "fd249e40cbf787eaeb7b7970de98f5ca9a449610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d10305d4_3d651e94",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2210,
+      "author": {
+        "id": 1115788
+      },
+      "writtenOn": "2017-09-28T15:50:33Z",
+      "side": 1,
+      "message": "I think you should use the representation in the comment as it\u0027s easier to understand (also sums are faster than multiplications).",
+      "revId": "fd249e40cbf787eaeb7b7970de98f5ca9a449610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a6e0786f_aad63235",
         "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
         "patchSetId": 6
@@ -67,6 +169,40 @@
       "side": 1,
       "message": "The fact that it passed all the tests in debug without violating such assertion probes it\u0027s safe to remove it now. I verified manually that so, let\u0027s do it.",
       "parentUuid": "5affdcfc_044a3de9",
+      "revId": "fd249e40cbf787eaeb7b7970de98f5ca9a449610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faaf378b_49002acd",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2242,
+      "author": {
+        "id": 1115788
+      },
+      "writtenOn": "2017-09-28T15:50:33Z",
+      "side": 1,
+      "message": "Let\u0027s add DCHECK_NE(child.IsOutOfFlowPositioned()); for the XXXInFlowChild methods",
+      "revId": "fd249e40cbf787eaeb7b7970de98f5ca9a449610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bea894c4_13ac556b",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2246,
+      "author": {
+        "id": 1115788
+      },
+      "writtenOn": "2017-09-28T15:50:33Z",
+      "side": 1,
+      "message": "Perhaps for a follow up patch but this line is repeated over and over again. Seomthing like positions(direction) would be really useful.",
       "revId": "fd249e40cbf787eaeb7b7970de98f5ca9a449610",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
