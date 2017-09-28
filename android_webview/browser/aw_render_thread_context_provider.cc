@@ -101,7 +101,7 @@ bool AwRenderThreadContextProvider::BindToCurrentThread() {
   return true;
 }
 
-gpu::Capabilities AwRenderThreadContextProvider::ContextCapabilities() {
+const gpu::Capabilities& AwRenderThreadContextProvider::ContextCapabilities() {
   DCHECK(main_thread_checker_.CalledOnValidThread());
   return context_->GetImplementation()->capabilities();
 }

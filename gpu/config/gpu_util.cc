@@ -81,8 +81,10 @@ GpuFeatureStatus GetWebGLFeatureStatus(
     const base::CommandLine& command_line) {
   if (UseSwiftShader(command_line))
     return kGpuFeatureStatusSoftware;
-  if (blacklisted_features.count(GPU_FEATURE_TYPE_ACCELERATED_WEBGL))
+  if (blacklisted_features.count(GPU_FEATURE_TYPE_GPU_COMPOSITING) ||
+      blacklisted_features.count(GPU_FEATURE_TYPE_ACCELERATED_WEBGL)) {
     return kGpuFeatureStatusBlacklisted;
+  }
   return kGpuFeatureStatusEnabled;
 }
 
@@ -91,8 +93,22 @@ GpuFeatureStatus GetWebGL2FeatureStatus(
     const base::CommandLine& command_line) {
   if (UseSwiftShader(command_line))
     return kGpuFeatureStatusSoftware;
-  if (blacklisted_features.count(GPU_FEATURE_TYPE_ACCELERATED_WEBGL2))
+  if (blacklisted_features.count(GPU_FEATURE_TYPE_GPU_COMPOSITING) ||
+      blacklisted_features.count(GPU_FEATURE_TYPE_ACCELERATED_WEBGL2)) {
     return kGpuFeatureStatusBlacklisted;
+  }
+  return kGpuFeatureStatusEnabled;
+}
+
+GpuFeatureStatus Get2DCanvasFeatureStatus(
+    const std::set<int>& blacklisted_features,
+    const base::CommandLine& command_line) {
+  if (UseSwiftShader(command_line))
+    return kGpuFeatureStatusSoftware;
+  if (blacklisted_features.count(GPU_FEATURE_TYPE_GPU_COMPOSITING) ||
+      blacklisted_features.count(GPU_FEATURE_TYPE_ACCELERATED_2D_CANVAS)) {
+    return kGpuFeatureStatusSoftware;
+  }
   return kGpuFeatureStatusEnabled;
 }
 
@@ -230,6 +246,8 @@ GpuFeatureInfo ComputeGpuFeatureInfo(const GPUInfo& gpu_info,
       GetWebGLFeatureStatus(blacklisted_features, *command_line);
   gpu_feature_info.status_values[GPU_FEATURE_TYPE_ACCELERATED_WEBGL2] =
       GetWebGL2FeatureStatus(blacklisted_features, *command_line);
+  gpu_feature_info.status_values[GPU_FEATURE_TYPE_ACCELERATED_2D_CANVAS] =
+      Get2DCanvasFeatureStatus(blacklisted_features, *command_line);
 
   std::set<base::StringPiece> all_disabled_extensions;
   std::string disabled_gl_extensions_value =
