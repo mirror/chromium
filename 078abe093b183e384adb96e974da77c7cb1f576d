@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "145f2226_dc665efd",
+        "filename": "components/feature_engagement/public/feature_list.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-28T20:06:14Z",
+      "side": 1,
+      "message": "I updated actions.xml and histograms.xml.",
+      "parentUuid": "3e8e88f8_700f7d94",
+      "revId": "078abe093b183e384adb96e974da77c7cb1f576d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32242b83_f2e7b51f",
         "filename": "testing/variations/fieldtrial_testing_config.json",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-28T18:52:24Z",
       "side": 1,
       "message": "To be clear, this might of course impact other features, since it\u0027ll be always part of testing. But since the plan is to roll out to 100% anyway, I think this makes sense.",
+      "revId": "078abe093b183e384adb96e974da77c7cb1f576d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a753d97e_7d9e03df",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-28T20:06:14Z",
+      "side": 1,
+      "message": "How do you forsee it impacting other features?",
+      "parentUuid": "32242b83_f2e7b51f",
       "revId": "078abe093b183e384adb96e974da77c7cb1f576d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
