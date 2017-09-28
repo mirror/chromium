@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2549f5c4_721fa8ed",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-09-28T19:49:13Z",
+      "side": 0,
+      "message": "Oops! I thought I put it back, and even reflected that in the commit message.",
+      "parentUuid": "571429e2_285a588b",
+      "range": {
+        "startLine": 249,
+        "startChar": 32,
+        "endLine": 249,
+        "endChar": 33
+      },
+      "revId": "b6a01f7921e37e8e5642d087faee79f5dc17ee43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fbff593_afe80422",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/multiwindow/MultiWindowUtils.java",
         "patchSetId": 13
@@ -45,6 +69,30 @@
       "revId": "b6a01f7921e37e8e5642d087faee79f5dc17ee43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "728003fa_0865ce1b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/multiwindow/MultiWindowUtils.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-09-28T19:49:13Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "3fbff593_afe80422",
+      "range": {
+        "startLine": 273,
+        "startChar": 19,
+        "endLine": 273,
+        "endChar": 53
+      },
+      "revId": "b6a01f7921e37e8e5642d087faee79f5dc17ee43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

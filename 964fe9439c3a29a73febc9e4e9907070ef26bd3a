@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8cc9fb04_a5bb8af8",
+        "filename": "chrome/android/java/AndroidManifest.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-09-28T19:49:13Z",
+      "side": 1,
+      "message": "ChromeLauncherActivity handles all categories specified here (but not DEFAULT), while ChromeTabbedActivity (via .LauncherMain) handles only LAUNCHER and DEFAULT categories.",
+      "parentUuid": "9ddf9dc5_14cddcb8",
+      "range": {
+        "startLine": 179,
+        "startChar": 16,
+        "endLine": 179,
+        "endChar": 68
+      },
+      "revId": "964fe9439c3a29a73febc9e4e9907070ef26bd3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef52bfd8_1dbc35b6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
         "patchSetId": 13
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-28T15:20:03Z",
       "side": 1,
       "message": "Sometimes we explicitly set the class to ChromeTabbedActivity2.class. Should that be handled specially here as well?",
+      "range": {
+        "startLine": 382,
+        "startChar": 12,
+        "endLine": 382,
+        "endChar": 57
+      },
+      "revId": "964fe9439c3a29a73febc9e4e9907070ef26bd3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62353922_141cd9bc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-09-28T19:49:13Z",
+      "side": 1,
+      "message": "ChromeTabbedActivity2 is fine. This checks for CTA only because CTA is .LauncherMain\u0027s target. I.e. the only time we need to get here is when we started via .LauncherMain.\n\nPreviously this checked getComponentName() against MAIN_LAUNCHER_ACTIVITY_NAME, but on the internet I found that some phones (OnePlus) return activity\u0027s name instead of the alias name.\n\nSince dispatchToTabbedActivity() is a no-op when no multi-window is involved, I just always call it here.",
+      "parentUuid": "ef52bfd8_1dbc35b6",
       "range": {
         "startLine": 382,
         "startChar": 12,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "767f9546_0267f86b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-09-28T19:49:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa65bdf1_dfe6746c",
+      "range": {
+        "startLine": 383,
+        "startChar": 79,
+        "endLine": 383,
+        "endChar": 96
+      },
+      "revId": "964fe9439c3a29a73febc9e4e9907070ef26bd3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2b839d3_ee68dd19",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
         "patchSetId": 13
@@ -82,6 +154,30 @@
       "writtenOn": "2017-09-28T15:20:03Z",
       "side": 1,
       "message": "Is this true across N, NMR1, and O?",
+      "range": {
+        "startLine": 2126,
+        "startChar": 12,
+        "endLine": 2128,
+        "endChar": 52
+      },
+      "revId": "964fe9439c3a29a73febc9e4e9907070ef26bd3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bee1d1e4_03c6353a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 2128,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-09-28T19:49:13Z",
+      "side": 1,
+      "message": "I checked on M and O, I\u0027m pretty sure it\u0027s the same on N.",
+      "parentUuid": "e2b839d3_ee68dd19",
       "range": {
         "startLine": 2126,
         "startChar": 12,
@@ -157,6 +253,30 @@
     },
     {
       "key": {
+        "uuid": "d47f06b1_41577ff5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-09-28T19:49:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb358050_9d3c3f63",
+      "range": {
+        "startLine": 117,
+        "startChar": 58,
+        "endLine": 117,
+        "endChar": 68
+      },
+      "revId": "964fe9439c3a29a73febc9e4e9907070ef26bd3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "217279bd_a2a883ee",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java",
         "patchSetId": 13
@@ -168,6 +288,30 @@
       "writtenOn": "2017-09-28T15:20:03Z",
       "side": 1,
       "message": "MAIN intents shouldn\u0027t be for custom tabs or herbs. I agree with Ted\u0027s previous comments that this class should be limited to MAIN intent handling and the VIEW handling should be broken out and left in ChromeLauncherActivity.",
+      "range": {
+        "startLine": 122,
+        "startChar": 8,
+        "endLine": 123,
+        "endChar": 37
+      },
+      "revId": "964fe9439c3a29a73febc9e4e9907070ef26bd3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b8feeca_954fa11d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-09-28T19:49:13Z",
+      "side": 1,
+      "message": "Let\u0027s do it in a follow-up CL?\n\nI understand that we should fix things that are not correct, but this CL addresses very concrete problem: ChromeLauncherActivity slows down Chrome startup when it\u0027s started from the launcher.\n\nThe CL fixes the problem, with minimal changes to how MAIN intents are handled. I.e. we\u0027re still improperly handling MAIN intents in some cases, as we did before.\n\nI think that LaunchIntentDispatcher lays necessary groundwork for further changes, and I think that further changes need to be done, just not in the context of this CL. I\u0027ve filed crbug.com/769887 for that.",
+      "parentUuid": "217279bd_a2a883ee",
       "range": {
         "startLine": 122,
         "startChar": 8,
@@ -203,6 +347,30 @@
     },
     {
       "key": {
+        "uuid": "cb44a43f_8911d5a7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-09-28T19:49:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d33b5637_d5626efa",
+      "range": {
+        "startLine": 246,
+        "startChar": 37,
+        "endLine": 246,
+        "endChar": 38
+      },
+      "revId": "964fe9439c3a29a73febc9e4e9907070ef26bd3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "364855b0_83b041b8",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
         "patchSetId": 13
@@ -223,6 +391,30 @@
       "revId": "964fe9439c3a29a73febc9e4e9907070ef26bd3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "389fefae_c7ede114",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-09-28T19:49:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "364855b0_83b041b8",
+      "range": {
+        "startLine": 258,
+        "startChar": 33,
+        "endLine": 258,
+        "endChar": 42
+      },
+      "revId": "964fe9439c3a29a73febc9e4e9907070ef26bd3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
