@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c66cc379_6c7a62e4",
+        "filename": "tools/json_schema_compiler/cpp_bundle_generator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-28T17:17:25Z",
+      "side": 1,
+      "message": "True. The strings are in practice short (the strlen isn\u0027t that expensive), but I can just compute it ahead of time. We could be really sneaky here and pack the lengths together, but there aren\u0027t too many of these, so I\u0027ve just stored StringPiece.\n\nThe more memory-efficient thing would probably be to explicitly use strncmp (I didn\u0027t realize we didn\u0027t have an operator\u003d\u003d overload between StringPiece and const char*), but this is simpler.",
+      "parentUuid": "851d2882_2bc649e5",
+      "revId": "33ddb891a3fdc5d5baa4f89be690826a0999a812",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a041333_68dbe5c7",
         "filename": "tools/json_schema_compiler/cpp_bundle_generator.py",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-27T00:06:00Z",
       "side": 1,
       "message": "This is nice - it saves us from having to recompute the size each time we return the value.  But is there a reason to not store the information as a base::StringPiece in kSchemas?  Would that violate some of our static coding style?",
+      "revId": "33ddb891a3fdc5d5baa4f89be690826a0999a812",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79292688_0f004708",
+        "filename": "tools/json_schema_compiler/cpp_bundle_generator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-28T17:17:25Z",
+      "side": 1,
+      "message": "Technically since the StringPiece constructor isn\u0027t constexpr, we can\u0027t guarantee that the compiler will do it at compile time (instead of generating a static initializer). In practice both clang and msvc are smart enough to do the right thing, so done.",
+      "parentUuid": "8a041333_68dbe5c7",
       "revId": "33ddb891a3fdc5d5baa4f89be690826a0999a812",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
