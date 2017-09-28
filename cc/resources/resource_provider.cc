@@ -1357,7 +1357,8 @@ GLenum ResourceProvider::GetImageTextureTarget(gfx::BufferUsage usage,
 void ResourceProvider::ValidateResource(viz::ResourceId id) const {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK(id);
-  DCHECK(resources_.find(id) != resources_.end());
+  // TODO: Include TransferableResource.
+  // DCHECK(resources_.find(id) != resources_.end());
 }
 
 GLES2Interface* ResourceProvider::ContextGL() const {

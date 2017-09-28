@@ -22,14 +22,14 @@ namespace cc {
 
 TextureLayerImpl::TextureLayerImpl(LayerTreeImpl* tree_impl, int id)
     : LayerImpl(tree_impl, id),
-      external_texture_resource_(0),
       premultiplied_alpha_(true),
       blend_background_color_(false),
       flipped_(true),
       nearest_neighbor_(false),
       uv_top_left_(0.f, 0.f),
       uv_bottom_right_(1.f, 1.f),
-      own_mailbox_(false),
+      own_resource_(false),
+      resource_id_(0),
       valid_texture_copy_(false) {
   vertex_opacity_[0] = 1.0f;
   vertex_opacity_[1] = 1.0f;
@@ -37,16 +37,18 @@ TextureLayerImpl::TextureLayerImpl(LayerTreeImpl* tree_impl, int id)
   vertex_opacity_[3] = 1.0f;
 }
 
-TextureLayerImpl::~TextureLayerImpl() { FreeTextureMailbox(); }
+TextureLayerImpl::~TextureLayerImpl() {
+  FreeTransferableResource();
+}
 
-void TextureLayerImpl::SetTextureMailbox(
-    const viz::TextureMailbox& mailbox,
+void TextureLayerImpl::SetTransferableResource(
+    const viz::TransferableResource& resource,
     std::unique_ptr<viz::SingleReleaseCallback> release_callback) {
-  DCHECK_EQ(mailbox.IsValid(), !!release_callback);
-  FreeTextureMailbox();
-  texture_mailbox_ = mailbox;
+  DCHECK_EQ(resource.mailbox_holder.mailbox.IsZero(), !release_callback);
+  FreeTransferableResource();
+  transferable_resource_ = resource;
   release_callback_ = std::move(release_callback);
-  own_mailbox_ = true;
+  own_resource_ = true;
   valid_texture_copy_ = false;
   SetNeedsPushProperties();
 }
@@ -70,34 +72,40 @@ void TextureLayerImpl::PushPropertiesTo(LayerImpl* layer) {
   texture_layer->SetPremultipliedAlpha(premultiplied_alpha_);
   texture_layer->SetBlendBackgroundColor(blend_background_color_);
   texture_layer->SetNearestNeighbor(nearest_neighbor_);
-  if (own_mailbox_) {
-    texture_layer->SetTextureMailbox(texture_mailbox_,
-                                     std::move(release_callback_));
-    own_mailbox_ = false;
+  if (own_resource_) {
+    texture_layer->SetTransferableResource(transferable_resource_,
+                                           std::move(release_callback_));
+    own_resource_ = false;
   }
 }
 
 bool TextureLayerImpl::WillDraw(DrawMode draw_mode,
                                 ResourceProvider* resource_provider) {
+  // TODO(danakj): Remove this !!
+  auto* ltrp = static_cast<LayerTreeResourceProvider*>(resource_provider);
+
   if (draw_mode == DRAW_MODE_RESOURCELESS_SOFTWARE)
     return false;
 
-  if (own_mailbox_) {
-    DCHECK(!external_texture_resource_);
-    if ((draw_mode == DRAW_MODE_HARDWARE && texture_mailbox_.IsTexture()) ||
-        (draw_mode == DRAW_MODE_SOFTWARE &&
-         texture_mailbox_.IsSharedMemory())) {
-      external_texture_resource_ =
-          resource_provider->CreateResourceFromTextureMailbox(
-              texture_mailbox_, std::move(release_callback_));
-      DCHECK(external_texture_resource_);
+  if (own_resource_) {
+    DCHECK(!resource_id_);
+    if (!transferable_resource_.mailbox_holder.mailbox.IsZero() &&
+        ((draw_mode == DRAW_MODE_HARDWARE &&
+          !transferable_resource_.is_software) ||
+         (draw_mode == DRAW_MODE_SOFTWARE &&
+          transferable_resource_.is_software))) {
+      resource_id_ = ltrp->AddTransferrableResource(
+          transferable_resource_, std::move(release_callback_));
+      DCHECK(resource_id_);
       texture_copy_ = nullptr;
       valid_texture_copy_ = false;
     }
-    if (external_texture_resource_)
-      own_mailbox_ = false;
+    if (resource_id_)
+      own_resource_ = false;
   }
 
+  // TODO(danakj): Remove this.
+  /*
   if (!valid_texture_copy_ && draw_mode == DRAW_MODE_HARDWARE &&
       texture_mailbox_.IsSharedMemory()) {
     DCHECK(!external_texture_resource_);
@@ -138,13 +146,15 @@ bool TextureLayerImpl::WillDraw(DrawMode draw_mode,
       valid_texture_copy_ = true;
     }
   }
-  return (external_texture_resource_ || valid_texture_copy_) &&
+  */
+
+  return (resource_id_ || valid_texture_copy_) &&
          LayerImpl::WillDraw(draw_mode, resource_provider);
 }
 
 void TextureLayerImpl::AppendQuads(viz::RenderPass* render_pass,
                                    AppendQuadsData* append_quads_data) {
-  DCHECK(external_texture_resource_ || valid_texture_copy_);
+  DCHECK(resource_id_ || valid_texture_copy_);
 
   SkColor bg_color =
       blend_background_color_ ? background_color() : SK_ColorTRANSPARENT;
@@ -171,14 +181,14 @@ void TextureLayerImpl::AppendQuads(viz::RenderPass* render_pass,
     return;
 
   auto* quad = render_pass->CreateAndAppendDrawQuad<viz::TextureDrawQuad>();
-  viz::ResourceId id =
-      valid_texture_copy_ ? texture_copy_->id() : external_texture_resource_;
+  viz::ResourceId id = valid_texture_copy_ ? texture_copy_->id() : resource_id_;
   quad->SetNew(shared_quad_state, quad_rect, visible_quad_rect, needs_blending,
                id, premultiplied_alpha_, uv_top_left_, uv_bottom_right_,
                bg_color, vertex_opacity_, flipped_, nearest_neighbor_,
-               texture_mailbox_.secure_output_only());
+               // TODO: Make secure output a property of TextureLayer.
+               false);
   if (!valid_texture_copy_) {
-    quad->set_resource_size_in_pixels(texture_mailbox_.size_in_pixels());
+    quad->set_resource_size_in_pixels(transferable_resource_.size);
   }
   ValidateQuadResources(quad);
 }
@@ -194,9 +204,9 @@ SimpleEnclosedRegion TextureLayerImpl::VisibleOpaqueRegion() const {
 }
 
 void TextureLayerImpl::ReleaseResources() {
-  FreeTextureMailbox();
+  FreeTransferableResource();
   texture_copy_ = nullptr;
-  external_texture_resource_ = 0;
+  resource_id_ = 0;
   valid_texture_copy_ = false;
 }
 
@@ -245,19 +255,24 @@ const char* TextureLayerImpl::LayerTypeAsString() const {
   return "cc::TextureLayerImpl";
 }
 
-void TextureLayerImpl::FreeTextureMailbox() {
-  if (own_mailbox_) {
-    DCHECK(!external_texture_resource_);
-    if (release_callback_)
-      release_callback_->Run(texture_mailbox_.sync_token(), false);
-    texture_mailbox_ = viz::TextureMailbox();
+void TextureLayerImpl::FreeTransferableResource() {
+  if (own_resource_) {
+    DCHECK(!resource_id_);
+    if (release_callback_) {
+      // TODO: We didn't use the resource, so don't need to return a SyncToken.
+      release_callback_->Run(transferable_resource_.mailbox_holder.sync_token,
+                             false);
+    }
+    transferable_resource_ = viz::TransferableResource();
     release_callback_ = nullptr;
-  } else if (external_texture_resource_) {
-    DCHECK(!own_mailbox_);
+  } else if (resource_id_) {
+    DCHECK(!own_resource_);
     ResourceProvider* resource_provider =
         layer_tree_impl()->resource_provider();
-    resource_provider->DeleteResource(external_texture_resource_);
-    external_texture_resource_ = 0;
+    // TODO: Remove this.
+    auto* ltrp = static_cast<LayerTreeResourceProvider*>(resource_provider);
+    ltrp->RemoveTransferrableResource(resource_id_);
+    resource_id_ = 0;
   }
 }
 
