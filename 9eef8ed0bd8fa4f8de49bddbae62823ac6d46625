@@ -124,6 +124,24 @@
       "revId": "9eef8ed0bd8fa4f8de49bddbae62823ac6d46625",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a8cd843_dd050571",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-28T06:17:44Z",
+      "side": 1,
+      "message": "Thanks. I\u0027ve removed the if statement. If V8 ever changes this, the Chrome installer will fail and we\u0027ll know to adjust the reference to the snapshot files here.",
+      "parentUuid": "176f1247_33a7ce72",
+      "revId": "9eef8ed0bd8fa4f8de49bddbae62823ac6d46625",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
