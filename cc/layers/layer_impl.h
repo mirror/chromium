@@ -452,10 +452,12 @@ class CC_EXPORT LayerImpl {
 
   void AppendDebugBorderQuad(viz::RenderPass* render_pass,
                              const gfx::Size& bounds,
+                             const gfx::Vector2d& quad_offset,
                              const viz::SharedQuadState* shared_quad_state,
                              AppendQuadsData* append_quads_data) const;
   void AppendDebugBorderQuad(viz::RenderPass* render_pass,
                              const gfx::Size& bounds,
+                             const gfx::Vector2d& quad_offset,
                              const viz::SharedQuadState* shared_quad_state,
                              AppendQuadsData* append_quads_data,
                              SkColor color,
