@@ -22,6 +22,30 @@
       "revId": "8c998e9de1769e9ecde3fb89c7301e37638dfff4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "307951b0_a8d35de2",
+        "filename": "chrome/browser/ui/ash/multi_user/multi_user_window_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-28T18:26:04Z",
+      "side": 1,
+      "message": "I opted to keep this as-is because the comment got harder to read when I tried combining them.",
+      "parentUuid": "522a1c85_94868eeb",
+      "range": {
+        "startLine": 56,
+        "startChar": 3,
+        "endLine": 56,
+        "endChar": 18
+      },
+      "revId": "8c998e9de1769e9ecde3fb89c7301e37638dfff4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
