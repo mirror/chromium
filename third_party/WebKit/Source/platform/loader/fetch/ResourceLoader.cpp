@@ -30,6 +30,7 @@
 #include "platform/loader/fetch/ResourceLoader.h"
 
 #include "platform/SharedBuffer.h"
+#include "platform/WebTaskRunner.h"
 #include "platform/exported/WrappedResourceRequest.h"
 #include "platform/exported/WrappedResourceResponse.h"
 #include "platform/loader/fetch/FetchContext.h"
@@ -66,7 +67,10 @@ ResourceLoader::ResourceLoader(ResourceFetcher* fetcher,
       fetcher_(fetcher),
       scheduler_(scheduler),
       resource_(resource),
-      is_cache_aware_loading_activated_(false) {
+      is_cache_aware_loading_activated_(false),
+      cancel_timer_(Context().GetLoadingTaskRunner(),
+                    this,
+                    &ResourceLoader::CancelTimerFired) {
   DCHECK(resource_);
   DCHECK(fetcher_);
 
@@ -157,6 +161,16 @@ void ResourceLoader::DidChangePriority(ResourceLoadPriority load_priority,
         static_cast<WebURLRequest::Priority>(load_priority),
         intra_priority_value);
   }
+}
+
+void ResourceLoader::ScheduleCancel() {
+  if (!cancel_timer_.IsActive())
+    cancel_timer_.StartOneShot(0, BLINK_FROM_HERE);
+}
+
+void ResourceLoader::CancelTimerFired(TimerBase*) {
+  if (loader_ && !resource_->HasClientsOrObservers())
+    Cancel();
 }
 
 void ResourceLoader::Cancel() {

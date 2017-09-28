@@ -175,10 +175,10 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
   LocalFrame* GetFrame() const;
   LocalFrameClient* GetLocalFrameClient() const;
   LocalFrame* FrameOfImportsController() const;
-  RefPtr<WebTaskRunner> GetTaskRunner() const;
 
   // FetchContext overrides:
   WebFrameScheduler* GetFrameScheduler() override;
+  RefPtr<WebTaskRunner> GetLoadingTaskRunner() override;
 
   // BaseFetchContext overrides:
   KURL GetSiteForCookies() const override;
