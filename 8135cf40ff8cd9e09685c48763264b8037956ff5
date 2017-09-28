@@ -22,6 +22,30 @@
       "revId": "8135cf40ff8cd9e09685c48763264b8037956ff5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d283e658_8bc69267",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-28T16:36:38Z",
+      "side": 1,
+      "message": "I\u0027m unaware of any explicit Mojo guarantees on buffer size available to a raw pipes, and would strongly discourage people from relying on it (Of course, having said that, the mime sniffing logic in URLLoaderImpl does depend on it).  That being the case, this switch is universal.\n\nIf there are any documented buffer size guarantees, I could add a test for exactly that buffer size when reading the from the body pipe after the response is complete, but since this is a result from a remote server, I don\u0027t think anyone can reasonably use that pattern in production.  Even with a google-controlled server, 5xx errors can and do happen, and who knows how larger they are, or will be in the future.\n\nAnyhow, I\u0027ve updated my comment.",
+      "parentUuid": "b28ac9f6_7ab85e51",
+      "range": {
+        "startLine": 19,
+        "startChar": 11,
+        "endLine": 19,
+        "endChar": 12
+      },
+      "revId": "8135cf40ff8cd9e09685c48763264b8037956ff5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
