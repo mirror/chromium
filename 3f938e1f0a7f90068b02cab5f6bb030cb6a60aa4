@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd1ea9c4_ffe3a07b",
+        "filename": "chrome/browser/ui/ash/fake_tablet_mode_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-28T22:36:08Z",
+      "side": 1,
+      "message": "nit: include base/macros.h",
+      "revId": "3f938e1f0a7f90068b02cab5f6bb030cb6a60aa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bda963fd_4ce1328d",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-28T22:36:08Z",
+      "side": 1,
+      "message": "optional: I would be OK with something like this:\n\nif (TabletModeClient::Get())  // May not exist in tests\n\nif it meant you didn\u0027t have to set up the fake controller in tests that aren\u0027t explicitly testing tablet mode.\n\n(And if you elect to do this, I\u0027m still OK with pulling out FakeTabletModeController, because I suspect we\u0027ll need it soon. Up to you.)",
+      "revId": "3f938e1f0a7f90068b02cab5f6bb030cb6a60aa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dac99f2_3696baf6",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-28T22:36:08Z",
+      "side": 1,
+      "message": "optional nit: Move this above the test for the switch, since it\u0027s a bit cheaper",
+      "revId": "3f938e1f0a7f90068b02cab5f6bb030cb6a60aa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb3abd1f_3e673b3b",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-28T22:36:08Z",
+      "side": 1,
+      "message": "This seems backwards - shouldn\u0027t you be flushing TabletModeController so it pushes state to chrome? I suspect this works just because it spins the message loop.\n\nI would either add FlushForTesting to TabletModeController, or spin the message loop here with a comment why.",
+      "revId": "3f938e1f0a7f90068b02cab5f6bb030cb6a60aa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
