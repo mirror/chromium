@@ -34,6 +34,24 @@
       "revId": "31885d177b085f6f815e466cddba75c36d652f6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cb6f2b9_02e2df46",
+        "filename": "chrome/browser/browser_resources.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-28T23:17:20Z",
+      "side": 0,
+      "message": "Ah, so GRIT also inlines \u003clink\u003e tags with relative URLs I guess, like https://cs.chromium.org/chromium/src/chrome/browser/resources/extensions/extensions.html?type\u003dcs\u0026q\u003duber_shared.css\u0026sq\u003dpackage:chromium\u0026l\u003d22.\n\nI had not realized that until now.",
+      "parentUuid": "521ff865_f3ae39a0",
+      "revId": "31885d177b085f6f815e466cddba75c36d652f6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
