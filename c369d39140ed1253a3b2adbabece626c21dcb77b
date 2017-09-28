@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57135202_629adda9",
+        "filename": "components/autofill/core/browser/autofill_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1175253
+      },
+      "writtenOn": "2017-09-28T16:53:43Z",
+      "side": 1,
+      "message": "move after )",
+      "range": {
+        "startLine": 101,
+        "startChar": 16,
+        "endLine": 101,
+        "endChar": 17
+      },
+      "revId": "c369d39140ed1253a3b2adbabece626c21dcb77b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "598eba84_0fc95af4",
+        "filename": "components/autofill/core/browser/autofill_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1175253
+      },
+      "writtenOn": "2017-09-28T16:53:43Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 106,
+        "startChar": 78,
+        "endLine": 106,
+        "endChar": 79
+      },
+      "revId": "c369d39140ed1253a3b2adbabece626c21dcb77b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6af34815_3a24ac5a",
+        "filename": "components/autofill/core/browser/payments/payments_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1175253
+      },
+      "writtenOn": "2017-09-28T16:53:43Z",
+      "side": 1,
+      "message": "wrap?",
+      "range": {
+        "startLine": 382,
+        "startChar": 13,
+        "endLine": 382,
+        "endChar": 24
+      },
+      "revId": "c369d39140ed1253a3b2adbabece626c21dcb77b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
