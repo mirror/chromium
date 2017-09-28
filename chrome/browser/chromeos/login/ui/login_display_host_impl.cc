@@ -1401,6 +1401,13 @@ void ShowLoginWizard(OobeScreen first_screen) {
   }
 
   if (StartupUtils::IsEulaAccepted()) {
+    // Signal to cryptohome that it can attempt TPM ownership, if it haven't
+    // done that yet. The previous signal from EULA dialogue could have been
+    // lost if initialization was interrupted.
+    // We don't care about the result, and don't block waiting for it.
+    DBusThreadManager::Get()->GetCryptohomeClient()->TpmCanAttemptOwnership(
+        EmptyVoidDBusMethodCallback());
+
     DelayNetworkCall(
         base::TimeDelta::FromMilliseconds(kDefaultNetworkRetryDelayMS),
         ServicesCustomizationDocument::GetInstance()
