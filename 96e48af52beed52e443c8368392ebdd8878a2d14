@@ -22,6 +22,30 @@
       "revId": "96e48af52beed52e443c8368392ebdd8878a2d14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4091f049_16ed99ba",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1168,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-28T21:09:18Z",
+      "side": 0,
+      "message": "SGTM!  It\u0027s getting bigger and it\u0027s just duplicate code.  Done.",
+      "parentUuid": "1a45cbbf_e5662764",
+      "range": {
+        "startLine": 1161,
+        "startChar": 4,
+        "endLine": 1168,
+        "endChar": 50
+      },
+      "revId": "96e48af52beed52e443c8368392ebdd8878a2d14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

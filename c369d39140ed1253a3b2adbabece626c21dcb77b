@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e0a28fb7_8291c594",
+        "filename": "components/autofill/core/browser/autofill_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-28T21:09:18Z",
+      "side": 1,
+      "message": "Done; thanks for keeping me consistent!",
+      "parentUuid": "57135202_629adda9",
+      "range": {
+        "startLine": 101,
+        "startChar": 16,
+        "endLine": 101,
+        "endChar": 17
+      },
+      "revId": "c369d39140ed1253a3b2adbabece626c21dcb77b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "598eba84_0fc95af4",
         "filename": "components/autofill/core/browser/autofill_manager.h",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "15185259_9a2d74a5",
+        "filename": "components/autofill/core/browser/autofill_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-28T21:09:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "598eba84_0fc95af4",
+      "range": {
+        "startLine": 106,
+        "startChar": 78,
+        "endLine": 106,
+        "endChar": 79
+      },
+      "revId": "c369d39140ed1253a3b2adbabece626c21dcb77b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6af34815_3a24ac5a",
         "filename": "components/autofill/core/browser/payments/payments_client.cc",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "c369d39140ed1253a3b2adbabece626c21dcb77b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "560df6c8_47e0c75f",
+        "filename": "components/autofill/core/browser/payments/payments_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-28T21:09:18Z",
+      "side": 1,
+      "message": "This was the result of git cl format; it doesn\u0027t seem to like wrapping this.  Kind of makes sense I guess, as it would probably be similar to\n\nMyProto.toBuilder()\n  .addAThing().build()",
+      "parentUuid": "6af34815_3a24ac5a",
+      "range": {
+        "startLine": 382,
+        "startChar": 13,
+        "endLine": 382,
+        "endChar": 24
+      },
+      "revId": "c369d39140ed1253a3b2adbabece626c21dcb77b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

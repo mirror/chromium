@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8d3a4412_e31adc7b",
+        "filename": "components/autofill/core/browser/autofill_experiments.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-28T21:09:18Z",
+      "side": 1,
+      "message": "That\u0027s correct, thanks for double-checking!  The server-side work for this is actually already done (requires CVC, name, and postal code) and it\u0027s enabled in sandbox.  I haven\u0027t enabled it in prod yet, but I\u0027ll need to do so before can we start turning this on in Chrome.",
+      "parentUuid": "b6f12555_8a752d03",
+      "range": {
+        "startLine": 140,
+        "startChar": 5,
+        "endLine": 140,
+        "endChar": 61
+      },
+      "revId": "eadb20ad92c242a33288e324365a0f7642025b23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8288dc9b_ab9ba83f",
         "filename": "components/autofill/core/browser/autofill_manager.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "eadb20ad92c242a33288e324365a0f7642025b23",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8e534c1_86715bc0",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1104,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-28T21:09:18Z",
+      "side": 1,
+      "message": "Hmm, I don\u0027t think so.  They\u0027re not mutually exclusive--we can turn on the \"CVC fix flow\" and the \"send detected values\" experiments at the same time.  In that situation, detected values will always say CVC was found because the CVC fix flow will always ask for it.",
+      "parentUuid": "8288dc9b_ab9ba83f",
+      "range": {
+        "startLine": 1104,
+        "startChar": 11,
+        "endLine": 1104,
+        "endChar": 58
+      },
+      "revId": "eadb20ad92c242a33288e324365a0f7642025b23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b959cc55_ee9bd4bf",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1164,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-28T21:09:18Z",
+      "side": 1,
+      "message": "It worked because previously, the only way for upload_request_.cvc to be empty was if we were in the CVC fix flow.  Otherwise, Upstream wouldn\u0027t have even offered to save if CVC was not found.  With this change, there\u0027s a chance Payments can say \"yeah go ahead and offer to save anyway\", so we\u0027re creating the situation where CVC is empty and we\u0027re NOT in the CVC fix flow, so there was no CVC entered by the user to use.",
+      "parentUuid": "3013da4a_2af7a75f",
+      "range": {
+        "startLine": 1163,
+        "startChar": 36,
+        "endLine": 1164,
+        "endChar": 64
+      },
+      "revId": "eadb20ad92c242a33288e324365a0f7642025b23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9accc419_4eea45ff",
         "filename": "components/autofill/core/browser/autofill_manager.cc",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "eadb20ad92c242a33288e324365a0f7642025b23",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a827d7b_a09a93c8",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1359,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-28T21:09:18Z",
+      "side": 1,
+      "message": "I thought about that too...I think this should be fine.  It\u0027s one less place we\u0027re experiment-branching, and I don\u0027t think GetFormImportDetectedValues() poses any threats.  Plus since this isn\u0027t a merge or anything, all the Canary/Beta bake time should prove its stability.",
+      "parentUuid": "9accc419_4eea45ff",
+      "range": {
+        "startLine": 1359,
+        "startChar": 4,
+        "endLine": 1359,
+        "endChar": 56
+      },
+      "revId": "eadb20ad92c242a33288e324365a0f7642025b23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "baca44e8_62aa8f03",
+        "filename": "components/autofill/core/browser/autofill_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-28T21:09:18Z",
+      "side": 1,
+      "message": "I figured the same thing.  I plan to have the Payments code link to the Chrome code, but since Chromium is open-source, probably not the other way around for now.",
+      "parentUuid": "71fd028c_8bb63b0a",
+      "range": {
+        "startLine": 85,
+        "startChar": 5,
+        "endLine": 85,
+        "endChar": 19
+      },
+      "revId": "eadb20ad92c242a33288e324365a0f7642025b23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e0ef6c6_e179231a",
         "filename": "components/autofill/core/browser/autofill_manager.h",
         "patchSetId": 4
@@ -137,6 +257,30 @@
       "revId": "eadb20ad92c242a33288e324365a0f7642025b23",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e953bccc_4ebb5945",
+        "filename": "components/autofill/core/browser/autofill_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-28T21:09:18Z",
+      "side": 1,
+      "message": "Good call; done.",
+      "parentUuid": "5e0ef6c6_e179231a",
+      "range": {
+        "startLine": 602,
+        "startChar": 2,
+        "endLine": 602,
+        "endChar": 31
+      },
+      "revId": "eadb20ad92c242a33288e324365a0f7642025b23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
