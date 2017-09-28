@@ -46,6 +46,12 @@ class PreviewsUIService {
   // Clears the history of the black list between |begin_time| and |end_time|.
   void ClearBlackList(base::Time begin_time, base::Time end_time);
 
+  // Log the navigation to PreviewsLog. Virutalized in testing.
+  virtual void LogPreviewNavigation(const GURL& url,
+                                    PreviewsType type,
+                                    bool opt_out,
+                                    base::Time time);
+
  private:
   // The IO thread portion of the inter-thread communication for previews/.
   base::WeakPtr<previews::PreviewsIOData> io_data_;
@@ -55,6 +61,7 @@ class PreviewsUIService {
   // The IO thread task runner. Used to post tasks to |io_data_|.
   scoped_refptr<base::SingleThreadTaskRunner> io_task_runner_;
 
+  std::unique_ptr<PreviewsLog> logger;
   base::WeakPtrFactory<PreviewsUIService> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(PreviewsUIService);
