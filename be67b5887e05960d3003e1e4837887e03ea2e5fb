@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f32e1af1_76c141fa",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-09-28T02:05:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "991193ae_05bff860",
+      "revId": "be67b5887e05960d3003e1e4837887e03ea2e5fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0aa639aa_9c789100",
         "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f6ac4951_4c120f33",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-09-28T02:05:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0aa639aa_9c789100",
+      "revId": "be67b5887e05960d3003e1e4837887e03ea2e5fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d5120cb_257173e3",
         "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
         "patchSetId": 9
@@ -50,6 +86,24 @@
       "revId": "be67b5887e05960d3003e1e4837887e03ea2e5fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2123a950_6105cc5d",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-09-28T02:05:44Z",
+      "side": 1,
+      "message": "It\u0027s much better. Now at least the code is well aligned. Thanks for the tip.",
+      "parentUuid": "3d5120cb_257173e3",
+      "revId": "be67b5887e05960d3003e1e4837887e03ea2e5fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
