@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fcbded8f_2946ee53",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_selector_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-09-28T16:35:19Z",
+      "side": 1,
+      "message": "ultra-nit — could we place this comment on the line above?",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 80
+      },
+      "revId": "a8a249fad7b2162b8a141fb1e7e262c337c5116b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
