@@ -394,10 +394,18 @@ void ContentSettingBubbleContents::Init() {
   }
 
   if (!bubble_content.message.empty()) {
-    views::Label* message_label = new views::Label(bubble_content.message);
+    int text_style = bubble_content.title.empty() ? views::style::STYLE_PRIMARY
+                                                  : STYLE_SECONDARY;
+    int text_context = bubble_content.title.empty()
+                           ? views::style::CONTEXT_DIALOG_TITLE
+                           : views::style::CONTEXT_LABEL;
+    views::Label* message_label =
+        new views::Label(bubble_content.message, text_context, text_style);
     // For bubble's without titles there is no need for padding.
-    if (!bubble_content.title.empty())
-      layout->AddPaddingRow(0, unrelated_control_vertical_spacing);
+    if (!bubble_content.title.empty()) {
+      if (provider->UseExtraDialogPadding())
+        layout->AddPaddingRow(0, unrelated_control_vertical_spacing);
+    }
     message_label->SetMultiLine(true);
     message_label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
     layout->StartRow(0, kSingleColumnSetId);
