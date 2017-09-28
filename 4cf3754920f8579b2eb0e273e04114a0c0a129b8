@@ -88,6 +88,24 @@
       "revId": "4cf3754920f8579b2eb0e273e04114a0c0a129b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c8fb087_07120257",
+        "filename": "gpu/command_buffer/service/create_gr_gl_interface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-28T21:44:14Z",
+      "side": 1,
+      "message": "Oh... gl-\u003eglGetStringFn, gl-\u003eglGetStringiFn and gl-\u003eglGetIntegervFn are the real driver functions, and will not filter the extensions, as opposed to RealGLApi::glGetStringFn/RealGLApi::glGetStringiFn/ RealGLApi::glGetIntegervFn\n\nWhat we should do is create wrappers for those 3 (should be possible inside of GrGLFunction which is like std::function), i.e. going through g_current_gl_context instead of g_current_gl_driver.",
+      "parentUuid": "28a6d504_70418a28",
+      "revId": "4cf3754920f8579b2eb0e273e04114a0c0a129b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
