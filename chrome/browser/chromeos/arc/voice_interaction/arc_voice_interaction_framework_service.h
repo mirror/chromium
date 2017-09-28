@@ -7,7 +7,9 @@
 
 #include <memory>
 
+#include "base/callback_forward.h"
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "base/time/time.h"
 #include "chrome/browser/chromeos/arc/arc_session_manager.h"
 #include "components/arc/arc_service.h"
@@ -90,10 +92,13 @@ class ArcVoiceInteractionFrameworkService
   // seesion if it is already running.
   void ToggleSessionFromUserInteraction();
 
-  // Turn on / off voice interaction in ARC.
-  // TODO(muyuanli): We should also check on Chrome side once CrOS side settings
-  // are ready (tracked separately at crbug.com/727873).
-  void SetVoiceInteractionEnabled(bool enable);
+  using VoiceInteractionSettingCompleteCallback =
+      base::OnceCallback<void(bool)>;
+  // Turn on / off voice interaction in ARC. |callback| will be called with
+  // |true| if setting is applied to Android side.
+  void SetVoiceInteractionEnabled(
+      bool enable,
+      VoiceInteractionSettingCompleteCallback callback);
 
   // Turn on / off voice interaction context (screenshot and structural data)
   // in ARC.
@@ -125,6 +130,8 @@ class ArcVoiceInteractionFrameworkService
 
   void SetVoiceInteractionSetupCompletedInternal(bool completed);
 
+  void StartVoiceInteractionSetupWizardActivity();
+
   content::BrowserContext* context_;
   ArcBridgeService* const arc_bridge_service_;  // Owned by ArcServiceManager
   mojo::Binding<mojom::VoiceInteractionFrameworkHost> binding_;
@@ -150,6 +157,8 @@ class ArcVoiceInteractionFrameworkService
   // quota is 0, but we still get requests from the container side, we assume
   // something malicious is going on.
   int32_t context_request_remaining_count_ = 0;
+
+  base::WeakPtrFactory<ArcVoiceInteractionFrameworkService> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ArcVoiceInteractionFrameworkService);
 };
