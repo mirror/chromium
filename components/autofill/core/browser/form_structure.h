@@ -246,6 +246,9 @@ class FormStructure {
   bool operator==(const FormData& form) const;
   bool operator!=(const FormData& form) const;
 
+  // Returns true if this form contains credit card fields.
+  bool HasCreditCardFields() const;
+
  private:
   friend class AutofillMergeTest;
   friend class FormStructureTest;
