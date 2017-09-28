@@ -22,14 +22,15 @@ namespace {
 const char kDescription[] = "description";
 const char kInstanceId[] = "instance123";
 const char kMessage[] = "message";
+const char kOrigin[] = "http://origin/";
+const char kPresentationId[] = "presentationId";
 const char kRouteId[] = "routeId";
 const char kSource[] = "source1";
 const char kSinkId[] = "sink";
 const char kSinkId2[] = "sink2";
 const char kSinkName[] = "sinkName";
+const char kTestProviderName[] = "test_provider";
 const int kInvalidTabId = -1;
-const char kOrigin[] = "http://origin/";
-const char kPresentationId[] = "presentationId";
 const int kTimeoutMillis = 5 * 1000;
 const uint8_t kBinaryMessage[] = {0x01, 0x02, 0x03, 0x04};
 
@@ -180,7 +181,10 @@ void MediaRouterMojoTest::ConnectProviderManagerService() {
   mojom::MediaRouteProviderPtr mojo_provider;
   binding_ = base::MakeUnique<mojo::Binding<mojom::MediaRouteProvider>>(
       &mock_media_route_provider_, mojo::MakeRequest(&mojo_provider));
-  media_router_->set_media_route_provider_for_test(std::move(mojo_provider));
+  media_router_->RegisterMediaRouteProvider(
+      kTestProviderName, std::move(mojo_provider),
+      base::BindOnce([](const std::string& instance_id,
+                        mojom::MediaRouteProviderConfigPtr config) {}));
 }
 
 void MediaRouterMojoTest::SetUp() {
@@ -244,7 +248,8 @@ void MediaRouterMojoTest::TestJoinRoute() {
   // is a route to join.
   std::vector<MediaRoute> routes;
   routes.push_back(route);
-  router()->OnRoutesUpdated(routes, std::string(), std::vector<std::string>());
+  router()->OnRoutesUpdated(kTestProviderName, routes, std::string(),
+                            std::vector<std::string>());
   EXPECT_TRUE(router()->HasJoinableRoute());
 
   // Use a lambda function as an invocation target here to work around
@@ -421,8 +426,8 @@ void MediaRouterMojoTest::TestCreateMediaRouteController() {
   MediaStatus media_status;
   media_status.title = "test title";
 
-  router()->OnRoutesUpdated({CreateMediaRoute()}, std::string(),
-                            std::vector<std::string>());
+  router()->OnRoutesUpdated(kTestProviderName, {CreateMediaRoute()},
+                            std::string(), std::vector<std::string>());
 
   EXPECT_CALL(mock_media_route_provider_,
               CreateMediaRouteControllerInternal(kRouteId, _, _, _))

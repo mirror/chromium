@@ -20,11 +20,14 @@ class Extension;
 namespace media_router {
 class CastMediaSinkService;
 class DialMediaSinkServiceProxy;
+class LocalMediaRouteProvider;
 
 // MediaRouter implementation that uses the MediaRouteProvider implemented in
 // the component extension.
 class MediaRouterDesktop : public MediaRouterMojoImpl {
  public:
+  static const char kExtensionProviderName[];
+
   ~MediaRouterDesktop() override;
 
   // Sets up the MediaRouter instance owned by |context| to handle
@@ -45,9 +48,6 @@ class MediaRouterDesktop : public MediaRouterMojoImpl {
   void OnUserGesture() override;
 
  protected:
-  // Error handler callback for |binding_|.
-  void OnConnectionError() override;
-
   // Issues 0+ calls to |media_route_provider_| to ensure its state is in sync
   // with MediaRouter on a best-effort basis.
   // The extension might have become out of sync with MediaRouter due to one
@@ -57,6 +57,12 @@ class MediaRouterDesktop : public MediaRouterMojoImpl {
   // (3) The extension has an unforseen bug which causes temporary data to be
   //     persisted incorrectly on suspension.
   void SyncStateToMediaRouteProvider() override;
+
+  // MediaRouterMojoImpl:
+  ProviderName GetProviderForPresentation(
+      const std::string& presentation_id) const override;
+  ProviderName GetCanonicalProvider(
+      const ProviderName& provider_name) const override;
 
  private:
   friend class MediaRouterDesktopTest;
@@ -75,9 +81,8 @@ class MediaRouterDesktop : public MediaRouterMojoImpl {
                      FirewallCheck check_firewall = FirewallCheck::RUN);
 
   // mojom::MediaRouter implementation.
-  // Notifies |request_manager_| that the Mojo connection to MediaRouteProvider
-  // is valid.
   void RegisterMediaRouteProvider(
+      const std::string& provider_name,
       mojom::MediaRouteProviderPtr media_route_provider_ptr,
       mojom::MediaRouter::RegisterMediaRouteProviderCallback callback) override;
 
@@ -89,6 +94,9 @@ class MediaRouterDesktop : public MediaRouterMojoImpl {
 
   // Starts browser side sink discovery.
   void StartDiscovery();
+
+  // Initializes MRPs and adds them to |media_route_providers_|.
+  void InitializeMediaRouteProviders();
 
 #if defined(OS_WIN)
   // Ensures that mDNS discovery is enabled in the MRPM extension. This can be
@@ -104,7 +112,9 @@ class MediaRouterDesktop : public MediaRouterMojoImpl {
 
   // MediaRouteProvider proxy that forwards calls to the MRPM in the component
   // extension.
-  ExtensionMediaRouteProviderProxy extension_provider_;
+  std::unique_ptr<ExtensionMediaRouteProviderProxy> extension_provider_;
+
+  std::unique_ptr<LocalMediaRouteProvider> local_provider_;
 
   // Media sink service for DIAL devices.
   scoped_refptr<DialMediaSinkServiceProxy> dial_media_sink_service_proxy_;
