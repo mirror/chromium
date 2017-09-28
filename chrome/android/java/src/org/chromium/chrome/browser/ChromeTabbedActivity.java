@@ -391,6 +391,11 @@ public class ChromeTabbedActivity
                 @Override
                 public void didCloseTab(int tabId, boolean incognito) {
                     closeIfNoTabsAndHomepageEnabled(false);
+                    if (FeatureUtilities.isChromeHomeEnabled()
+                            && getTabModelSelector().getTotalTabCount() == 0) {
+                        getBottomSheet().displayNewTabUi(incognito);
+                        getBottomSheet().setSheetState(BottomSheet.SHEET_STATE_HALF, true);
+                    }
                 }
 
                 @Override
@@ -872,7 +877,7 @@ public class ChromeTabbedActivity
             BottomSheet bottomSheet = getBottomSheet();
             assert bottomSheet != null;
             if (mLayoutManager != null && mLayoutManager.overviewVisible()) {
-                if (reuseOrCreateNewNtp()) {
+                if (reuseOrCreateNewNtp() != null) {
                     // Since reusing/creating a new NTP when using Chrome Home brings up the bottom
                     // sheet, we need to record it in our metrics.
                     bottomSheet.getBottomSheetMetrics().recordSheetOpenReason(
@@ -913,7 +918,7 @@ public class ChromeTabbedActivity
             mLayoutManager.hideOverview(false);
         }
 
-        if (!reuseOrCreateNewNtp()) return false;
+        if (reuseOrCreateNewNtp() == null) return false;
         RecordUserAction.record("MobileStartup.MainIntent.NTPCreatedDueToInactivity");
         return true;
     }
@@ -934,7 +939,7 @@ public class ChromeTabbedActivity
      * @return Whether an NTP was reused/created. This returns false if the currently selected
      * tab is an NTP, and no action is taken.
      */
-    private boolean reuseOrCreateNewNtp() {
+    private Tab reuseOrCreateNewNtp() {
         // In cases where the tab model is initialized, attempt to reuse an existing NTP if
         // available before attempting to create a new one.
         TabModel normalTabModel = getTabModelSelector().getModel(false);
@@ -944,7 +949,7 @@ public class ChromeTabbedActivity
 
             if (NewTabPage.isNTPUrl(tab.getUrl()) && !tab.canGoBack() && !tab.canGoForward()) {
                 // If the currently selected tab is an NTP, then take no action.
-                if (getActivityTab().equals(tab)) return false;
+                if (getActivityTab().equals(tab)) return null;
                 ntpToRefocus = tab;
                 break;
             }
@@ -955,10 +960,11 @@ public class ChromeTabbedActivity
             normalTabModel.setIndex(
                     TabModelUtils.getTabIndexById(normalTabModel, ntpToRefocus.getId()),
                     TabSelectionType.FROM_USER);
+            return ntpToRefocus;
         } else {
-            getTabCreator(false).launchUrl(UrlConstants.NTP_URL, TabLaunchType.FROM_EXTERNAL_APP);
+            return getTabCreator(false).launchUrl(
+                    UrlConstants.NTP_URL, TabLaunchType.FROM_EXTERNAL_APP);
         }
-        return true;
     }
 
     /**
