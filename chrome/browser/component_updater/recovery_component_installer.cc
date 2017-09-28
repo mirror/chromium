@@ -259,9 +259,9 @@ class RecoveryComponentInstaller : public update_client::CrxInstaller {
   // ComponentInstaller implementation:
   void OnUpdateError(int error) override;
 
-  update_client::CrxInstaller::Result Install(
-      std::unique_ptr<base::DictionaryValue> manifest,
-      const base::FilePath& unpack_path) override;
+  void Install(std::unique_ptr<base::DictionaryValue> manifest,
+               const base::FilePath& unpack_path,
+               const Callback& callback) override;
 
   bool GetInstalledFile(const std::string& file,
                         base::FilePath* installed_file) override;
@@ -396,12 +396,15 @@ bool SetPosixExecutablePermission(const base::FilePath& path) {
 }
 #endif  // defined(OS_POSIX)
 
-update_client::CrxInstaller::Result RecoveryComponentInstaller::Install(
+void RecoveryComponentInstaller::Install(
     std::unique_ptr<base::DictionaryValue> manifest,
-    const base::FilePath& unpack_path) {
+    const base::FilePath& unpack_path,
+    const update_client::CrxInstaller::Callback& callback) {
+  /*
   return update_client::InstallFunctionWrapper(base::Bind(
       &RecoveryComponentInstaller::DoInstall, base::Unretained(this),
       base::ConstRef(*manifest), base::ConstRef(unpack_path)));
+*/
 }
 
 bool RecoveryComponentInstaller::DoInstall(

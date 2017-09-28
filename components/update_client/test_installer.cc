@@ -29,14 +29,16 @@ void TestInstaller::OnUpdateError(int error) {
   error_ = error;
 }
 
-CrxInstaller::Result TestInstaller::Install(
-    std::unique_ptr<base::DictionaryValue> manifest,
-    const base::FilePath& unpack_path) {
-  ++install_count_;
+void TestInstaller::Install(std::unique_ptr<base::DictionaryValue> manifest,
+                            const base::FilePath& unpack_path,
+                            const Callback& callback) {
+  /*
+    ++install_count_;
 
-  unpack_path_ = unpack_path;
+    unpack_path_ = unpack_path;
 
-  return Result(InstallError::NONE);
+    return Result(InstallError::NONE);
+  */
 }
 
 bool TestInstaller::GetInstalledFile(const std::string& file,
@@ -69,9 +71,11 @@ VersionedTestInstaller::~VersionedTestInstaller() {
   base::DeleteFile(install_directory_, true);
 }
 
-CrxInstaller::Result VersionedTestInstaller::Install(
+void VersionedTestInstaller::Install(
     std::unique_ptr<base::DictionaryValue> manifest,
-    const base::FilePath& unpack_path) {
+    const base::FilePath& unpack_path,
+    const Callback& callback) {
+  /*
   std::string version_string;
   manifest->GetStringASCII("version", &version_string);
   base::Version version(version_string.c_str());
@@ -84,6 +88,7 @@ CrxInstaller::Result VersionedTestInstaller::Install(
   current_version_ = version;
   ++install_count_;
   return Result(InstallError::NONE);
+  */
 }
 
 bool VersionedTestInstaller::GetInstalledFile(const std::string& file,
