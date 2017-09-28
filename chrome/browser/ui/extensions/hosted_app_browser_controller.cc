@@ -14,6 +14,7 @@
 #include "chrome/browser/web_applications/web_app.h"
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/extensions/manifest_handlers/app_launch_info.h"
+#include "chrome/common/extensions/manifest_handlers/app_theme_color_info.h"
 #include "components/security_state/core/security_state.h"
 #include "content/public/browser/web_contents.h"
 #include "extensions/browser/extension_registry.h"
@@ -127,6 +128,14 @@ gfx::ImageSkia HostedAppBrowserController::GetWindowIcon() const {
     return GetWindowAppIcon();
 
   return browser_->GetCurrentPageIcon().AsImageSkia();
+}
+
+SkColor HostedAppBrowserController::GetThemeColor() const {
+  extensions::ExtensionRegistry* registry =
+      extensions::ExtensionRegistry::Get(browser_->profile());
+  const extensions::Extension* extension = registry->GetExtensionById(
+      extension_id_, extensions::ExtensionRegistry::EVERYTHING);
+  return extensions::AppThemeColorInfo::GetThemeColor(extension);
 }
 
 }  // namespace extensions
