@@ -44,6 +44,12 @@ class PolicyToolUITest : public InProcessBrowserTest {
 
   std::unique_ptr<base::DictionaryValue> ExtractPolicyValues(bool need_status);
 
+  // Check if the 'logging disabled' error is shown correctly. Returns 1 if
+  // logging is disabled, -1 if logging is enabled and 0 if the displaying is
+  // incorrect (e.g. both error message and the section are shown).
+  int ElementDisabledState(const std::string& element_id,
+                           const std::string& error_message_id);
+
  private:
   base::test::ScopedFeatureList scoped_feature_list_;
   DISALLOW_COPY_AND_ASSIGN(PolicyToolUITest);
@@ -133,6 +139,24 @@ void PolicyToolUITest::LoadSessionAndWaitForAlert(
   LoadSession(session_name);
   dialog_wait.Run();
   EXPECT_TRUE(js_helper->IsShowingDialogForTesting());
+}
+
+int PolicyToolUITest::ElementDisabledState(
+    const std::string& element_id,
+    const std::string& error_message_id) {
+  const std::string javascript =
+      "var element = $('" + element_id +
+      "');"
+      "var errorMessage = $('" +
+      error_message_id +
+      "');"
+      "domAutomationController.send((element.offsetWidth == 0) -"
+      "                             (errorMessage.offsetWidth == 0));";
+  content::WebContents* contents =
+      browser()->tab_strip_model()->GetActiveWebContents();
+  int result;
+  EXPECT_TRUE(ExecuteScriptAndExtractInt(contents, javascript, &result));
+  return result;
 }
 
 IN_PROC_BROWSER_TEST_F(PolicyToolUITest, CreatingSessionFiles) {
@@ -246,14 +270,16 @@ IN_PROC_BROWSER_TEST_F(PolicyToolUITest, InvalidJson) {
   LoadSessionAndWaitForAlert("test_session");
 }
 
-IN_PROC_BROWSER_TEST_F(PolicyToolUITest, UnableToCreateDirectoryOrFile) {
+IN_PROC_BROWSER_TEST_F(PolicyToolUITest, SavingToDiskError) {
   ui_test_utils::NavigateToURL(browser(), GURL("chrome://policy-tool"));
+  EXPECT_EQ(ElementDisabledState("session-choice", "logging"), -1);
   base::ScopedAllowBlockingForTesting allow_blocking;
   base::DeleteFile(GetSessionsDir(), true);
   base::File not_directory(GetSessionsDir(), base::File::Flags::FLAG_CREATE |
                                                  base::File::Flags::FLAG_WRITE);
   not_directory.Close();
-  LoadSessionAndWaitForAlert("test_session");
+  LoadSession("policy");
+  EXPECT_EQ(ElementDisabledState("session-choice", "logging"), 1);
 }
 
 IN_PROC_BROWSER_TEST_F(PolicyToolUITest, DefaultSession) {
