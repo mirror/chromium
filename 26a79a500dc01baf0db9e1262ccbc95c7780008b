@@ -70,6 +70,24 @@
     },
     {
       "key": {
+        "uuid": "d2e6624f_b918e4f5",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-28T07:20:50Z",
+      "side": 1,
+      "message": "AXPosition::BeforeObjet() should return normalized position.\nThus, we could write:\nAXPosition AXPosition::BeforeObject(AXObject* anchor_object) {\n  if (anchor_object-\u003eIsText()) {\n   // For \u003cp\u003e|foo\u003c/p\u003e, we should have \"foo\"@0 instead for before(\"foo\")\n    return AXPosition(ToText(anchor_object), 0);\n  }\n  return AXPosition(*anchor_object-\u003eParent(), \n                    anchor_object-\u003ePreviousSibling());\n}",
+      "parentUuid": "cef6b68a_3b96b550",
+      "revId": "26a79a500dc01baf0db9e1262ccbc95c7780008b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "99c1d9e5_20ed6198",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.h",
         "patchSetId": 4
