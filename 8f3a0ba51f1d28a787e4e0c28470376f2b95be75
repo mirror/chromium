@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "295c1c92_a95cf194",
+        "filename": "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-28T19:24:43Z",
+      "side": 1,
+      "message": "Comment needs update?",
+      "revId": "8f3a0ba51f1d28a787e4e0c28470376f2b95be75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89e60342_38003153",
+        "filename": "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-28T19:24:43Z",
+      "side": 1,
+      "message": "I think this method needs a better name or a different argument. -invalidate* usually doesn\u0027t take an argument, or if it did, it would be \"YES, invalidate; or NO, do not invalidate.\"",
+      "revId": "8f3a0ba51f1d28a787e4e0c28470376f2b95be75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3022620d_d9566e96",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 29006,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-28T19:24:43Z",
+      "side": 1,
+      "message": "I don\u0027t know if it\u0027s safe to repurpose an enum like this.",
+      "revId": "8f3a0ba51f1d28a787e4e0c28470376f2b95be75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
