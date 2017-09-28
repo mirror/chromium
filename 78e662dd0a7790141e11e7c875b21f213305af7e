@@ -16,6 +16,24 @@
       "revId": "78e662dd0a7790141e11e7c875b21f213305af7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7acf5f43_404f0133",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1729,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-09-28T21:44:50Z",
+      "side": 1,
+      "message": "Pulling in your comment from there:\n\n\u003e According to the WTF::Vector::Insert() documentation, |position| (the index) must be within bounds, so it does indeed look like this could be necessary, unless we can tell for sure that pos+1 is within bounds.\n\nThe new index doesn\u0027t have to be within bounds, exclusive of end, it can be the same as size():\n\n\"|position| must be no more than size()\"\n\nDigging in to the insert() implementation, the 3 lines at https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/wtf/Vector.h?sq\u003dpackage:chromium\u0026l\u003d1790, (MoveOverlapping, new, and size++) indicate that the Vector impl will expand capacity to hold the new element.\n\nI think Suchit was confused about this when adding the +2, thinking that space for the insert()\u0027d element had to already exist before insert() was called.\n\nWe need the +1, though, for cases like the attached test when there are not yet cells in the row; the first cell to be added is what\u0027s causing the split.",
+      "parentUuid": "45d4f06e_93ac78b9",
+      "revId": "78e662dd0a7790141e11e7c875b21f213305af7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
