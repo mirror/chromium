@@ -491,7 +491,9 @@
     <!-- Bottom sheet dimensions -->
     <dimen name="bottom_sheet_help_bubble_inset">10dp</dimen>
     <dimen name="bottom_nav_height">40dp</dimen>
-    <dimen name="bottom_nav_space_from_toolbar">96dp</dimen>
+    <dimen name="bottom_nav_height_tall">48dp</dimen>
+    <!-- The extra space is determined by the height of 2 rows of most visited tiles. -->
+    <dimen name="bottom_nav_extra_space_from_toolbar">176dp</dimen>
     <!-- The following two dimensions override defaults in Android's BottomNavigationView -->
 
     <!-- Chrome Home dimensions -->
