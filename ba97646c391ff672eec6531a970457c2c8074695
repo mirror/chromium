@@ -16,6 +16,24 @@
       "revId": "ba97646c391ff672eec6531a970457c2c8074695",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f14d5b1_5745fac9",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/workers/resources/terminate-during-sync-operation.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-09-28T14:04:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bfdad85_2b80f2f1",
+      "revId": "ba97646c391ff672eec6531a970457c2c8074695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
