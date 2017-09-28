@@ -18,6 +18,7 @@ namespace blink {
 
 class PLATFORM_EXPORT OffscreenCanvasFrameDispatcherImpl final
     : public OffscreenCanvasFrameDispatcher,
+      public OffscreenCanvasResourceObserver,
       public viz::mojom::blink::CompositorFrameSinkClient {
  public:
   OffscreenCanvasFrameDispatcherImpl(OffscreenCanvasFrameDispatcherClient*,
@@ -48,6 +49,9 @@ class PLATFORM_EXPORT OffscreenCanvasFrameDispatcherImpl final
   void ReclaimResources(
       const WTF::Vector<viz::ReturnedResource>& resources) final;
 
+  // OffscreenCanvasResourceObserver implementation.
+  void OnPlaceholderResourceLocksFreed();
+
   // This enum is used in histogram, so it should be append-only.
   enum OffscreenCanvasCommitType {
     kCommitGPUCanvasGPUCompositing = 0,
@@ -76,12 +80,17 @@ class PLATFORM_EXPORT OffscreenCanvasFrameDispatcherImpl final
       offscreen_canvas_resource_provider_;
 
   bool VerifyImageSize(const IntSize);
-  void PostImageToPlaceholder(RefPtr<StaticBitmapImage>);
+  void PostLatestImageToPlaceholder();
 
   viz::mojom::blink::CompositorFrameSinkPtr sink_;
   mojo::Binding<viz::mojom::blink::CompositorFrameSinkClient> binding_;
 
   int placeholder_canvas_id_;
+
+  // The latest image that we have not posted to placeholder. When the frame
+  // resource locks have been used up, this image may be reset by newer frame
+  // images without being used.
+  RefPtr<StaticBitmapImage> latest_unposted_image_;
 
   viz::BeginFrameAck current_begin_frame_ack_;
 };

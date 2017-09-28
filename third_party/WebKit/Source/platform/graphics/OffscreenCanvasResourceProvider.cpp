@@ -18,19 +18,45 @@
 
 namespace blink {
 
-OffscreenCanvasResourceProvider::OffscreenCanvasResourceProvider(int width,
-                                                                 int height)
-    : width_(width), height_(height), next_resource_id_(1u) {}
+enum {
+  kMaxNumPlaceholderResourceLocks = 3,
+};
+
+OffscreenCanvasResourceProvider::OffscreenCanvasResourceProvider(
+    int width,
+    int height,
+    OffscreenCanvasResourceObserver* observer)
+    : width_(width),
+      height_(height),
+      observer_(observer),
+      next_resource_id_(1u),
+      num_placeholder_resource_locks(0) {}
 
 OffscreenCanvasResourceProvider::~OffscreenCanvasResourceProvider() {}
 
 std::unique_ptr<OffscreenCanvasResourceProvider::FrameResource>
 OffscreenCanvasResourceProvider::CreateOrRecycleFrameResource() {
+  std::unique_ptr<FrameResource> frame_resource;
   if (recycleable_resource_) {
-    recycleable_resource_->spare_lock_ = true;
-    return std::move(recycleable_resource_);
+    frame_resource = std::move(recycleable_resource_);
+  } else {
+    frame_resource.reset(new FrameResource());
   }
-  return std::unique_ptr<FrameResource>(new FrameResource());
+
+  frame_resource->gpu_compositor_lock_ = true;
+  if (IsPlaceholderResourceLocksUsedUp()) {
+    frame_resource->placeholder_lock_ = false;
+  } else {
+    frame_resource->placeholder_lock_ = true;
+    num_placeholder_resource_locks++;
+  }
+
+  return frame_resource;
+}
+
+bool OffscreenCanvasResourceProvider::IsPlaceholderResourceLocksUsedUp() {
+  DCHECK(num_placeholder_resource_locks <= kMaxNumPlaceholderResourceLocks);
+  return num_placeholder_resource_locks == kMaxNumPlaceholderResourceLocks;
 }
 
 void OffscreenCanvasResourceProvider::TransferResource(
@@ -194,23 +220,33 @@ void OffscreenCanvasResourceProvider::ReclaimResources(
           ->ContextGL()
           ->WaitSyncTokenCHROMIUM(resource.sync_token.GetConstData());
     }
-    ReclaimResourceInternal(it);
+    ReclaimResourceInternal(it, true /* is_reclaimed_by_compositor */);
   }
 }
 
 void OffscreenCanvasResourceProvider::ReclaimResource(unsigned resource_id) {
   auto it = resources_.find(resource_id);
   if (it != resources_.end()) {
-    ReclaimResourceInternal(it);
+    ReclaimResourceInternal(it, false /* is_reclaimed_by_compositor */);
   }
 }
 
 void OffscreenCanvasResourceProvider::ReclaimResourceInternal(
-    const ResourceMap::iterator& it) {
-  if (it->value->spare_lock_) {
-    it->value->spare_lock_ = false;
+    const ResourceMap::iterator& it,
+    bool is_reclaimed_by_compositor) {
+  if (is_reclaimed_by_compositor) {
+    it->value->gpu_compositor_lock_ = false;
   } else {
-    // Really reclaim the resources
+    DCHECK(it->value->placeholder_lock_);
+    it->value->placeholder_lock_ = false;
+    if (observer_ && IsPlaceholderResourceLocksUsedUp()) {
+      observer_->OnPlaceholderResourceLocksFreed();
+    }
+    num_placeholder_resource_locks--;
+  }
+
+  // Really reclaim the resources when no more locks
+  if (!it->value->gpu_compositor_lock_ && !it->value->placeholder_lock_) {
     recycleable_resource_ = std::move(it->value);
     // release SkImage immediately since it is not recycleable
     recycleable_resource_->image_ = nullptr;
