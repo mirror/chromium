@@ -9,6 +9,7 @@ import("//build/config/crypto.gni")
 import("//build/config/features.gni")
 import("//build/config/ui.gni")
 import("//media/media_options.gni")
+import("//net/features.gni")
 import("//mojo/public/tools/bindings/mojom.gni")
 import("//ppapi/features/features.gni")
 import("//services/catalog/public/tools/catalog.gni")
@@ -1583,7 +1584,6 @@ test("content_unittests") {
     "//content/browser/speech/proto",
     "//content/child:for_content_tests",
     "//content/gpu",
-    "//content/network",
     "//content/public/browser",
     "//content/public/child",
     "//content/public/common",
@@ -1615,6 +1615,7 @@ test("content_unittests") {
     "//mojo/edk/system",
     "//mojo/public/cpp/bindings",
     "//net:extras",
+    "//net:net_browser_services",
     "//net:test_support",
     "//ppapi/c",
     "//ppapi/features",
@@ -1625,6 +1626,8 @@ test("content_unittests") {
     "//services/file/public/interfaces",
     "//services/metrics/public/interfaces",
     "//services/network/public/interfaces:interfaces",
+    "//services/proxy_resolver/public/cpp",
+    "//services/proxy_resolver/public/cpp:mojo_proxy_factory_impl",
     "//services/service_manager/public/cpp:service_test_support",
     "//services/video_capture/public/interfaces",
     "//skia",
@@ -1664,6 +1667,12 @@ test("content_unittests") {
 
   if (is_posix && !is_fuchsia) {
     sources += [ "../browser/posix_file_descriptor_info_impl_unittest.cc" ]
+  }
+
+  if (enable_net_mojo) {
+    sources += [ "../public/test/url_request_context_builder_mojo_unittest.cc" ]
+
+    deps += [ "//net:net_utility_services" ]
   }
 
   if (enable_plugins) {

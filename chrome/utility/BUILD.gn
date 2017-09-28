@@ -53,6 +53,8 @@ static_library("utility") {
     "//media",
     "//net:net_with_v8",
     "//printing/features",
+    "//services/proxy_resolver/public/cpp",
+    "//services/proxy_resolver/public/cpp:mojo_proxy_factory_impl",
     "//services/service_manager/public/cpp",
     "//skia",
     "//sql",
