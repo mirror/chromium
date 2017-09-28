@@ -218,6 +218,8 @@
 #include "ui/base/page_transition_types.h"
 #include "url/gurl.h"
 
+#include "ios/chrome/browser/ui/toolbar/toolbar_coordinator.h"
+
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
@@ -548,6 +550,9 @@ bool IsURLAllowedInIncognito(const GURL& url) {
 
   // Coordinator for displaying Repost Form dialog.
   RepostFormCoordinator* _repostFormCoordinator;
+
+  // Coordinator for the toolbar.
+  TToolbarCoordinator* _toolbarCoordinator;
 
   // Fake status bar view used to blend the toolbar into the status bar.
   UIView* _fakeStatusBarView;
@@ -1227,7 +1232,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 #pragma mark - IBActions
 
 - (void)shieldWasTapped:(id)sender {
-  [_toolbarController cancelOmniboxEdit];
+  [_toolbarCoordinator cancelOmniboxEdit];
 }
 
 - (void)userEnteredTabSwitcher {
@@ -1381,7 +1386,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
       _voiceSearchController->SetDelegate(nil);
     _readingListCoordinator = nil;
     self.recentTabsCoordinator = nil;
-    _toolbarController = nil;
+    _toolbarCoordinator = nil;
     _toolbarModelDelegate = nil;
     _toolbarModelIOS = nil;
     [self.tabStripCoordinator stop];
@@ -1399,7 +1404,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   // view controller).
   [self.presentedViewController
       traitCollectionDidChange:previousTraitCollection];
-  [_toolbarController traitCollectionDidChange:previousTraitCollection];
+  [_toolbarCoordinator updateButtonVisibility];
   // Update voice search bar visibility.
   [self updateVoiceSearchBarVisibilityAnimated:NO];
 }
@@ -1559,7 +1564,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   DCHECK(tab);
   if (tab == [_model currentTab]) {
     if (![self isTabNativePage:tab]) {
-      [_toolbarController currentPageLoadStarted];
+      [_toolbarCoordinator currentPageLoadStarted];
     }
     [self updateVoiceSearchBarVisibilityAnimated:NO];
   }
@@ -1779,7 +1784,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   [self setToolbarBackgroundAlpha:1.0];
   [_paymentRequestManager close];
   _paymentRequestManager = nil;
-  [_toolbarController browserStateDestroyed];
+  [_toolbarCoordinator browserStateDestroyed];
   [_model browserStateDestroyed];
 
   // Disconnect child coordinators.
@@ -1831,13 +1836,15 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
       new ToolbarModelDelegateIOS([_model webStateList]));
   _toolbarModelIOS.reset([_dependencyFactory
       newToolbarModelIOSWithDelegate:_toolbarModelDelegate.get()]);
+  _toolbarCoordinator =
+      [[TToolbarCoordinator alloc] initWithBaseViewController:self];
+  _toolbarCoordinator.tabModel = _model;
   _toolbarController =
       [_dependencyFactory newWebToolbarControllerWithDelegate:self
                                                     urlLoader:self
                                                    dispatcher:self.dispatcher];
-  [_dispatcher startDispatchingToTarget:_toolbarController
+  [_dispatcher startDispatchingToTarget:_toolbarCoordinator
                             forProtocol:@protocol(OmniboxFocuser)];
-  [_toolbarController setTabCount:[_model count]];
   if (_voiceSearchController)
     _voiceSearchController->SetDelegate(_toolbarController);
 
@@ -1998,7 +2005,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   [self updateToolbar];
 
   if (newSelection)
-    [_toolbarController selectedTabChanged];
+    [_toolbarCoordinator selectedTabChanged];
 
   // Notify the Tab that it was displayed.
   [tab wasShown];
@@ -2025,15 +2032,15 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   Tab* tab = [_model currentTab];
   if (![tab navigationManager])
     return;
-  [_toolbarController updateToolbarState];
-  [_toolbarController setShareButtonEnabled:self.canShowShareMenu];
+  [_toolbarCoordinator updateToolbarState];
+  [_toolbarCoordinator setShareButtonEnabled:self.canShowShareMenu];
 
   PrerenderService* prerenderService =
       PrerenderServiceFactory::GetForBrowserState(self.browserState);
   BOOL isPrerenderTab =
       prerenderService && prerenderService->IsWebStatePrerendered(tab.webState);
   if (isPrerenderTab && !_toolbarModelIOS->IsLoading())
-    [_toolbarController showPrerenderingAnimation];
+    [_toolbarCoordinator showPrerenderingAnimation];
 
   // Also update the loading state for the tools menu (that is really an
   // extension of the toolbar on the iPhone).
@@ -2056,10 +2063,10 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
       GURL url = item->GetURL();
       BOOL isNTP = url.GetOrigin() == GURL(kChromeUINewTabURL);
       hideToolbar = isNTP && !_isOffTheRecord &&
-                    ![_toolbarController isOmniboxFirstResponder] &&
-                    ![_toolbarController showingOmniboxPopup];
+                    ![_toolbarCoordinator isOmniboxFirstResponder] &&
+                    ![_toolbarCoordinator showingOmniboxPopup];
     }
-    [[_toolbarController view] setHidden:hideToolbar];
+    [[_toolbarCoordinator view] setHidden:hideToolbar];
   }
 }
 
@@ -2136,9 +2143,9 @@ bubblePresenterForFeature:(const base::Feature&)feature
     tabSwitcherAnchor = [self.tabStripCoordinator
         anchorPointForTabSwitcherButton:BubbleArrowDirectionUp];
   } else {
-    DCHECK([self.toolbarController
+    DCHECK([_toolbarController
         respondsToSelector:@selector(anchorPointForTabSwitcherButton:)]);
-    tabSwitcherAnchor = [self.toolbarController
+    tabSwitcherAnchor = [_toolbarController
         anchorPointForTabSwitcherButton:BubbleArrowDirectionUp];
   }
   // If the feature engagement tracker does not consider it valid to display
@@ -2172,11 +2179,11 @@ bubblePresenterForFeature:(const base::Feature&)feature
 }
 
 - (void)presentNewIncognitoTabTipBubble {
-  DCHECK([self.toolbarController
+  DCHECK([_toolbarController
       respondsToSelector:@selector(anchorPointForToolsMenuButton:)]);
   NSString* text = l10n_util::GetNSStringWithFixup(
       IDS_IOS_NEW_INCOGNITO_TAB_IPH_PROMOTION_TEXT);
-  CGPoint toolsButtonAnchor = [self.toolbarController
+  CGPoint toolsButtonAnchor = [_toolbarController
       anchorPointForToolsMenuButton:BubbleArrowDirectionUp];
   self.incognitoTabTipBubblePresenter =
       [self bubblePresenterForFeature:feature_engagement::
@@ -2190,7 +2197,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
                   anchorPoint:toolsButtonAnchor];
   // Only trigger the tools menu button animation if the bubble is shown.
   if (self.incognitoTabTipBubblePresenter) {
-    [self.toolbarController triggerToolsMenuButtonAnimation];
+    [_toolbarController triggerToolsMenuButtonAnimation];
   }
 }
 
@@ -2938,9 +2945,9 @@ bubblePresenterForFeature:(const base::Feature&)feature
     return results;
 
   if (!IsIPadIdiom()) {
-    if ([_toolbarController view]) {
+    if ([_toolbarCoordinator view]) {
       [results addObject:[HeaderDefinition
-                             definitionWithView:[_toolbarController view]
+                             definitionWithView:[_toolbarCoordinator view]
                                 headerBehaviour:Hideable
                                heightAdjustment:[ToolbarController
                                                     toolbarDropShadowHeight]
@@ -2953,9 +2960,9 @@ bubblePresenterForFeature:(const base::Feature&)feature
                                              heightAdjustment:0.0
                                                         inset:0.0]];
     }
-    if ([_toolbarController view]) {
+    if ([_toolbarCoordinator view]) {
       [results addObject:[HeaderDefinition
-                             definitionWithView:[_toolbarController view]
+                             definitionWithView:[_toolbarCoordinator view]
                                 headerBehaviour:Hideable
                                heightAdjustment:[ToolbarController
                                                     toolbarDropShadowHeight]
@@ -3188,11 +3195,11 @@ bubblePresenterForFeature:(const base::Feature&)feature
 }
 
 - (UIView*)headerView {
-  return [_toolbarController view];
+  return [_toolbarCoordinator view];
 }
 
 - (UIView*)toolbarSnapshotView {
-  return [[_toolbarController view] snapshotViewAfterScreenUpdates:NO];
+  return [[_toolbarCoordinator view] snapshotViewAfterScreenUpdates:NO];
 }
 
 - (CGFloat)overscrollActionsControllerHeaderInset:
@@ -3967,7 +3974,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
         // on the omnibox again during this animation. If the animation is
         // interrupted and the toolbar controller is first responder, it's safe
         // to assume the |_typingShield| shouldn't be hidden here.
-        if (!finished && [_toolbarController isOmniboxFirstResponder])
+        if (!finished && [_toolbarCoordinator isOmniboxFirstResponder])
           return;
         [_typingShield setHidden:YES];
       }];
@@ -4572,7 +4579,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
     return nil;
 
   ToolbarController* relinquishedToolbarController = nil;
-  if ([_toolbarController view].hidden) {
+  if ([_toolbarCoordinator view].hidden) {
     Tab* currentTab = [_model currentTab];
     if (currentTab && UrlHasChromeScheme(currentTab.lastCommittedURL)) {
       // Use the native content controller's toolbar when the BVC's is hidden.
@@ -4703,7 +4710,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
 - (void)tabModel:(TabModel*)model willRemoveTab:(Tab*)tab {
   if (tab == [model currentTab]) {
     [_contentArea displayContentView:nil];
-    [_toolbarController selectedTabChanged];
+    [_toolbarCoordinator selectedTabChanged];
   }
 
   [_paymentRequestManager stopTrackingWebState:tab.webState];
