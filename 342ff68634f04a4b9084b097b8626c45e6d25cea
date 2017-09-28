@@ -115,6 +115,23 @@
       "revId": "342ff68634f04a4b9084b097b8626c45e6d25cea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edb1f621_4d038eb9",
+        "filename": "third_party/WebKit/Source/core/editing/EditorKeyBindings.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-09-28T03:14:58Z",
+      "side": 1,
+      "message": "Can this cause a JavaScript onselectionhandler event to run? Is there any funny business we have to watch out for?",
+      "revId": "342ff68634f04a4b9084b097b8626c45e6d25cea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
