@@ -100,6 +100,7 @@
 #include "content/public/common/result_codes.h"
 #include "content/public/common/service_names.mojom.h"
 #include "device/gamepad/gamepad_service.h"
+#include "gpu/config/gpu_util.h"
 #include "gpu/vulkan/features.h"
 #include "media/audio/audio_manager.h"
 #include "media/audio/audio_system.h"
@@ -1391,7 +1392,7 @@ int BrowserMainLoop::BrowserThreadsStarted() {
   BrowserGpuChannelHostFactory::Initialize(established_gpu_channel);
 #elif defined(USE_AURA) || defined(OS_MACOSX)
   established_gpu_channel = true;
-  if (!GpuDataManagerImpl::GetInstance()->CanUseGpuBrowserCompositor() ||
+  if (gpu::IsFeatureDisabled(gpu::GPU_FEATURE_TYPE_GPU_COMPOSITING) ||
       parsed_command_line_.HasSwitch(switches::kDisableGpuEarlyInit) ||
       is_mus) {
     established_gpu_channel = always_uses_gpu = false;

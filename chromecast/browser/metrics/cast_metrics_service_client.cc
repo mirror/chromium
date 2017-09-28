@@ -37,6 +37,7 @@
 #include "components/prefs/pref_service.h"
 #include "content/public/browser/histogram_fetcher.h"
 #include "content/public/common/content_switches.h"
+#include "gpu/config/gpu_switches.h"
 
 #if defined(OS_LINUX)
 #include "chromecast/browser/metrics/external_metrics.h"

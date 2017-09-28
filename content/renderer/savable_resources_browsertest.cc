@@ -14,6 +14,7 @@
 #include "content/public/test/content_browser_test_utils.h"
 #include "content/renderer/savable_resources.h"
 #include "content/shell/browser/shell.h"
+#include "gpu/config/gpu_switches.h"
 #include "net/base/filename_util.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
