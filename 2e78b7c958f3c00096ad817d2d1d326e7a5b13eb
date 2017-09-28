@@ -243,6 +243,24 @@
     },
     {
       "key": {
+        "uuid": "fa2ff980_f0174ffc",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1424,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-28T20:16:31Z",
+      "side": 1,
+      "message": "I looked at this, and it looks a little unfortunate:\n\n- We already have a TestInterstitialJavaScriptProceeds, but it\u0027s flaky. I could write one to check that non-overridable errors can\u0027t proceed, but I worry it will also be flaky.\n\n- I tried using ExecuteScriptAndExtractBool() to extract a value like `loadTimeData.getBoolean(\"overridable\") \u0026\u0026 !loadTimeData.getBoolean(\"hide_primary_button\")` or checking for the proceed button\u0027s presense. However, this doesn\u0027t work, because you have to pass the value to domAutomationController.send(), which is simultaneously sent to https://cs.chromium.org/chromium/src/chrome/browser/ssl/ssl_blocking_page.cc?l\u003d258\u0026rcl\u003d99dada2121f657bf1846130f1006beadc91d51bc , where an int is expected. I could convert the boolean to an int, but then `ssl_blocking_page.cc` will also receive a bogus int. InterstitialPageImpl::Disable() would prevent it from processing the int/bool, but that\u0027s a private method.\n\nI presume we don\u0027t want to add a (potentially) flaky test?\n\n[1] https://cs.chromium.org/chromium/src/content/public/test/browser_test_utils.h?l\u003d297\u0026rcl\u003d90d05e08a3f97289971e1d54f488287a42e3942b\n[2] https://cs.chromium.org/chromium/src/chrome/browser/ssl/ssl_blocking_page.cc?l\u003d258\u0026rcl\u003d99dada2121f657bf1846130f1006beadc91d51bc\n[3] https://cs.chromium.org/chromium/src/content/browser/frame_host/interstitial_page_impl.cc?l\u003d821\u0026rcl\u003d99dada2121f657bf1846130f1006beadc91d51bc",
+      "parentUuid": "a5d8152a_f03fe0ec",
+      "revId": "2e78b7c958f3c00096ad817d2d1d326e7a5b13eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d633fe68_1e2065ab",
         "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
         "patchSetId": 6
@@ -311,6 +329,30 @@
       "revId": "2e78b7c958f3c00096ad817d2d1d326e7a5b13eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bee51d91_52603a7a",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1428,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-28T20:16:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b003fe8c_2480345f",
+      "range": {
+        "startLine": 1425,
+        "startChar": 0,
+        "endLine": 1428,
+        "endChar": 32
+      },
+      "revId": "2e78b7c958f3c00096ad817d2d1d326e7a5b13eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
