@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a1a396b6_14858f3f",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngineTest.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-09-28T20:53:40Z",
+      "side": 1,
+      "message": "It\u0027s because the blink code is in a different library than the test code. Classes/methods used  in unit tests need to have CORE_EXPORT.\n\nIf you change CSSDefaultStyleSheets class declaration to (possibly need to include \"core/CoreExport.h\"):\n\nclass CORE_EXPORT CSSDefaultStyleSheets ...\n\nit should work. But, I think that if you do DefaultStyleSheet()-\u003eParseString() and add the rules it means the UA sheet will be broken for subsequent tests. You could possibly utilize the rules already present in html.css, but I won\u0027t mind if you just skip that.",
+      "parentUuid": "3bd34437_1d8f570b",
+      "revId": "6af117551df83de3da17a530dfb52eb7ce84ec6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35d8ee22_0906bb08",
         "filename": "third_party/WebKit/Source/core/dom/StyleEngineTest.cpp",
         "patchSetId": 14
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-28T12:10:45Z",
       "side": 1,
       "message": "Important user rules override both regular and important author rules.",
+      "revId": "6af117551df83de3da17a530dfb52eb7ce84ec6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bf38027_ca040245",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngineTest.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-09-28T20:53:40Z",
+      "side": 1,
+      "message": "If you can put this comment into the file it would be great.",
+      "parentUuid": "35d8ee22_0906bb08",
       "revId": "6af117551df83de3da17a530dfb52eb7ce84ec6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "94f5441b_6b87dc56",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngineTest.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-09-28T20:53:40Z",
+      "side": 1,
+      "message": "If you can put this comment into the file it would be great.",
+      "parentUuid": "50bfae5d_db8b5e5e",
+      "revId": "6af117551df83de3da17a530dfb52eb7ce84ec6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6de6e005_0e4a5d8e",
         "filename": "third_party/WebKit/Source/core/dom/StyleEngineTest.cpp",
         "patchSetId": 14
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-28T12:10:45Z",
       "side": 1,
       "message": "Regular user rules do not override author rules.",
+      "revId": "6af117551df83de3da17a530dfb52eb7ce84ec6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecbd8378_81c346bf",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngineTest.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-09-28T20:53:40Z",
+      "side": 1,
+      "message": "If you can put this comment into the file it would be great.",
+      "parentUuid": "6de6e005_0e4a5d8e",
       "revId": "6af117551df83de3da17a530dfb52eb7ce84ec6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
