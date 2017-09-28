@@ -16,6 +16,24 @@
       "revId": "0628c79023ccc2b494f447944ce50ae66bf0640c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ad9e808_d7882f0c",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-09-28T22:46:13Z",
+      "side": 1,
+      "message": "+ajuma@\n\nNot sure what is the original design, but ScopedLayerAnimationSettings will be out of scope and destroyed and set the ImplicitAnimationObserver active to start the animation.\n\nIt takes a while to know that all the observers are passed to animation sequence [1].\nI have written tests to verify that the child layer OnImplicitAnimationsCompleted is called [2].\n\n[1] https://cs.chromium.org/chromium/src/ui/compositor/layer_animator.cc?l\u003d875\u0026rcl\u003d1e608a56dad5dc35a4372a4179d5a82a4fdb0355\n[2] https://chromium-review.googlesource.com/c/chromium/src/+/685493/4/ui/compositor/layer_animator_unittest.cc#1900",
+      "parentUuid": "65b53ab1_08bc9e7c",
+      "revId": "0628c79023ccc2b494f447944ce50ae66bf0640c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
