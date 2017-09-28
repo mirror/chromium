@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a41161b4_be214ede",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-09-28T16:41:29Z",
+      "side": 1,
+      "message": "Bleh, I saw this yesterday, but I just thought of a reason why this isn\u0027t good while doing another review.\n\nMost RenderFrameProxy objects don\u0027t need a ChildFrameCompositingHelper. They are more often proxies for frames that are not direct children of local frame, and therefore aren\u0027t directly embedded. Furthermore, you can\u0027t know in this method if you will need one or not because the RenderFrameProxy hasn\u0027t been added to the frame tree yet (although the caller of Init does know who the parent will be, and so could pass it in).",
+      "revId": "9950019f573b4fd9ee758f4402cd41e4edb899c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
