@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd9af6bd_64a797c8",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-28T09:34:30Z",
+      "side": 1,
+      "message": "WorkletMessagingProxy() sounds like a simple getter function and it always returns the same proxy. How about FindAvailableMessagingProxy() etc?",
+      "range": {
+        "startLine": 40,
+        "startChar": 42,
+        "endLine": 40,
+        "endChar": 63
+      },
+      "revId": "d0fd2759b40c0c9c9f8f2e08826dac73acde28a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e633c403_e5dc81bd",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletThread.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-28T09:34:30Z",
+      "side": 1,
+      "message": "Can you add a comment about the refcount?",
+      "revId": "d0fd2759b40c0c9c9f8f2e08826dac73acde28a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a742c9e7_72634ea5",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletThread.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-28T09:34:30Z",
+      "side": 1,
+      "message": "uint32_t?",
+      "range": {
+        "startLine": 60,
+        "startChar": 9,
+        "endLine": 60,
+        "endChar": 17
+      },
+      "revId": "d0fd2759b40c0c9c9f8f2e08826dac73acde28a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83ff1c46_091727dd",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-28T09:34:30Z",
+      "side": 1,
+      "message": "For code simplicity, I\u0027d prefer that only AudioWorklet can associate AWMessagingProxy(AWThread) with BaseAudioContext. How about doing this in AudioWorklet::RegisterContext() like this?\n\nvoid AudioWorklet::RegisterContext(BaseAudioContext* context) {\n  DCHECK(!contexts_.Contains(context));\n  contexts_.insert(context);\n  if (IsWorkletMessagingProxyCreated())\n    context-\u003eSetWorkletMessagingProxy(WorkletMessagingProxy());\n}\n\n... and then we could make WorkletMessagingProxy() and IsWorkletMessagingProxyCreated() \u0027private\u0027.",
+      "revId": "d0fd2759b40c0c9c9f8f2e08826dac73acde28a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98ab6379_aef5b847",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1040,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-28T09:34:30Z",
+      "side": 1,
+      "message": "DCHECK(!worklet_messaging_proxy_);",
+      "revId": "d0fd2759b40c0c9c9f8f2e08826dac73acde28a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
