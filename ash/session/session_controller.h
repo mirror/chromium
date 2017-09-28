@@ -89,6 +89,9 @@ class ASH_EXPORT SessionController : public mojom::SessionController {
   // Returns true if the notification tray should appear.
   bool ShouldShowNotificationTray() const;
 
+  // Returns whether the user is allowed to open incognito windows.
+  bool IsIncognitoAllowed() const;
+
   // Gets the ash session state.
   session_manager::SessionState GetSessionState() const;
 

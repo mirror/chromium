@@ -94,6 +94,12 @@ void TestSessionControllerClient::SetSessionState(
   controller_->SetSessionInfo(session_info_->Clone());
 }
 
+void TestSessionControllerClient::SetIncognitoAllowed(bool allowed) {
+  mojom::UserSessionPtr session = controller_->GetUserSession(0)->Clone();
+  session->is_incognito_allowed = allowed;
+  controller_->UpdateUserSession(std::move(session));
+}
+
 void TestSessionControllerClient::CreatePredefinedUserSessions(int count) {
   DCHECK_GT(count, 0);
 
@@ -130,6 +136,7 @@ void TestSessionControllerClient::AddUserSession(
   session->user_info->is_new_profile = is_new_profile;
   session->should_enable_settings = enable_settings;
   session->should_show_notification_tray = true;
+  session->is_incognito_allowed = true;
   controller_->UpdateUserSession(std::move(session));
 
   if (provide_pref_service &&

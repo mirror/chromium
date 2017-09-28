@@ -14,6 +14,7 @@
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/public/interfaces/ime_info.mojom.h"
 #include "ash/session/session_controller.h"
+#include "ash/session/test_session_controller_client.h"
 #include "ash/shell.h"
 #include "ash/shell_port.h"
 #include "ash/system/brightness_control_delegate.h"
@@ -795,8 +796,12 @@ TEST_F(AcceleratorControllerTest, GlobalAccelerators) {
       ProcessInController(ui::Accelerator(ui::VKEY_T, ui::EF_CONTROL_DOWN)));
 
   // New incognito window
-  EXPECT_TRUE(ProcessInController(
-      ui::Accelerator(ui::VKEY_N, ui::EF_SHIFT_DOWN | ui::EF_CONTROL_DOWN)));
+  const ui::Accelerator ctrl_shift_n(ui::VKEY_N,
+                                     ui::EF_SHIFT_DOWN | ui::EF_CONTROL_DOWN);
+  GetSessionControllerClient()->SetIncognitoAllowed(false);
+  EXPECT_FALSE(ProcessInController(ctrl_shift_n));
+  GetSessionControllerClient()->SetIncognitoAllowed(true);
+  EXPECT_TRUE(ProcessInController(ctrl_shift_n));
 
   // New window
   EXPECT_TRUE(

@@ -19,6 +19,7 @@
 #include "chrome/browser/chromeos/policy/policy_cert_service_factory.h"
 #include "chrome/browser/chromeos/policy/policy_cert_verifier.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
+#include "chrome/browser/prefs/incognito_mode_prefs.h"
 #include "chrome/browser/supervised_user/supervised_user_service.h"
 #include "chrome/browser/supervised_user/supervised_user_service_factory.h"
 #include "chrome/common/pref_names.h"
@@ -554,6 +555,7 @@ TEST_F(SessionControllerClientTest, UserPrefsChange) {
   SessionControllerClient::FlushForTesting();
   EXPECT_FALSE(session_controller.last_session_info()->can_lock_screen);
 
+  LOG(ERROR) << "JAMES screen lock";
   user_prefs->SetBoolean(prefs::kEnableAutoScreenLock, true);
   SessionControllerClient::FlushForTesting();
   EXPECT_TRUE(
@@ -562,6 +564,18 @@ TEST_F(SessionControllerClientTest, UserPrefsChange) {
   SessionControllerClient::FlushForTesting();
   EXPECT_FALSE(
       session_controller.last_session_info()->should_lock_screen_automatically);
+
+  LOG(ERROR) << "JAMES disabling";
+  user_prefs->SetInteger(prefs::kIncognitoModeAvailability,
+                         IncognitoModePrefs::DISABLED);
+  base::RunLoop().RunUntilIdle();
+  SessionControllerClient::FlushForTesting();
+  EXPECT_FALSE(session_controller.last_user_session()->is_incognito_allowed);
+  LOG(ERROR) << "JAMES enabling";
+  user_prefs->SetInteger(prefs::kIncognitoModeAvailability,
+                         IncognitoModePrefs::ENABLED);
+  SessionControllerClient::FlushForTesting();
+  EXPECT_TRUE(session_controller.last_user_session()->is_incognito_allowed);
 }
 
 TEST_F(SessionControllerClientTest, SessionLengthLimit) {

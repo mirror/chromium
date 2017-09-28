@@ -261,7 +261,10 @@ void HandleToggleMirrorMode() {
 }
 
 bool CanHandleNewIncognitoWindow() {
-  return Shell::Get()->shell_delegate()->IsIncognitoAllowed();
+  // The browser might not allow incognito windows, for example in guest mode or
+  // via enterprise policy. A web page or v1 app might want to use Ctrl-Shift-N
+  // so only consume the key if the browser will open a window.
+  return Shell::Get()->session_controller()->IsIncognitoAllowed();
 }
 
 void HandleNewIncognitoWindow() {

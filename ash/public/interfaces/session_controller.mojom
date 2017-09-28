@@ -72,6 +72,9 @@ struct UserSession {
 
   // Similar to |should_show_settings| but for the notification tray.
   bool should_show_notification_tray;
+
+  // Whether the user is allowed to open incognito windows.
+  bool is_incognito_allowed;
 };
 
 // Matches ash::AddUserSessionPolicy.

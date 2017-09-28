@@ -22,6 +22,7 @@
 #include "chrome/browser/chromeos/login/users/chrome_user_manager.h"
 #include "chrome/browser/chromeos/login/users/multi_profile_user_controller.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
+#include "chrome/browser/prefs/incognito_mode_prefs.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/profiles/profiles_state.h"
@@ -73,6 +74,18 @@ uint32_t GetSessionId(const User& user) {
   return 0u;
 }
 
+// Returns whether the user is allowed to open incognito windows.
+bool IsIncognitoAllowed(Profile* profile) {
+  if (profile) {
+    LOG(ERROR) << "JAMES profile type " << profile->GetProfileType()
+      << " available " << int(IncognitoModePrefs::GetAvailability(profile->GetPrefs()));
+  }
+
+  return profile && profile->GetProfileType() != Profile::GUEST_PROFILE &&
+         IncognitoModePrefs::GetAvailability(profile->GetPrefs()) !=
+             IncognitoModePrefs::DISABLED;
+}
+
 // Creates a mojom::UserSession for the given user. Returns nullptr if there is
 // no user session started for the given user.
 ash::mojom::UserSessionPtr UserToUserSession(const User& user) {
@@ -113,6 +126,9 @@ ash::mojom::UserSessionPtr UserToUserSession(const User& user) {
   session->should_enable_settings = user_flow->ShouldEnableSettings();
   session->should_show_notification_tray =
       user_flow->ShouldShowNotificationTray();
+  session->is_incognito_allowed = IsIncognitoAllowed(profile);
+  LOG(ERROR) << "JAMES profile " << profile << " IsIncognitoAllowed "
+    << IsIncognitoAllowed(profile);
 
   return session;
 }
@@ -497,6 +513,11 @@ void SessionControllerClient::OnLoginUserProfilePrepared(Profile* profile) {
                              session_info_changed_closure);
   pref_change_registrar->Add(prefs::kEnableAutoScreenLock,
                              session_info_changed_closure);
+  LOG(ERROR) << "JAMES observing incognito";
+  pref_change_registrar->Add(
+      prefs::kIncognitoModeAvailability,
+      base::Bind(&SessionControllerClient::SendUserSessionForProfile,
+                 weak_ptr_factory_.GetWeakPtr(), profile));
   pref_change_registrars_.push_back(std::move(pref_change_registrar));
 
   // Needed because the user-to-profile mapping isn't available until later,
@@ -508,6 +529,7 @@ void SessionControllerClient::OnLoginUserProfilePrepared(Profile* profile) {
 }
 
 void SessionControllerClient::SendUserSessionForProfile(Profile* profile) {
+  LOG(ERROR) << "JAMES SendUserSessionForProfile";
   DCHECK(profile);
   const User* user = chromeos::ProfileHelper::Get()->GetUserByProfile(profile);
   DCHECK(user);
@@ -535,6 +557,7 @@ void SessionControllerClient::SendSessionInfoIfChanged() {
   info->state = session_manager->session_state();
 
   if (info != last_sent_session_info_) {
+    LOG(ERROR) << "JAMES send session info";
     last_sent_session_info_ = info->Clone();
     session_controller_->SetSessionInfo(std::move(info));
   }
@@ -551,6 +574,7 @@ void SessionControllerClient::SendUserSession(const User& user) {
     return;
 
   if (user_session != last_sent_user_session_) {
+    LOG(ERROR) << "JAMES session was different";
     last_sent_user_session_ = user_session->Clone();
     session_controller_->UpdateUserSession(std::move(user_session));
   }

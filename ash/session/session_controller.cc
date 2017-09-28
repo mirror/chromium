@@ -141,6 +141,14 @@ bool SessionController::ShouldShowNotificationTray() const {
   return user_sessions_[0]->should_show_notification_tray;
 }
 
+bool SessionController::IsIncognitoAllowed() const {
+  if (!IsActiveUserSessionStarted())
+    return false;
+
+  LOG(ERROR) << "JAMES IsIncognitoAllowed " << user_sessions_[0]->is_incognito_allowed;
+  return user_sessions_[0]->is_incognito_allowed;
+}
+
 const std::vector<mojom::UserSessionPtr>& SessionController::GetUserSessions()
     const {
   return user_sessions_;

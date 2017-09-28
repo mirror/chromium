@@ -44,6 +44,7 @@ class TestSessionControllerClient : public ash::mojom::SessionControllerClient {
   void SetShouldLockScreenAutomatically(bool should_lock);
   void SetAddUserSessionPolicy(AddUserSessionPolicy policy);
   void SetSessionState(session_manager::SessionState state);
+  void SetIncognitoAllowed(bool allowed);
 
   // Creates the |count| pre-defined user sessions. The users are named by
   // numbers using "user%d@tray" template. The first user is set as active user
