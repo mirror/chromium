@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "428a5e44_0d71aefa",
+        "filename": "chrome/browser/ui/webui/print_preview/extension_printer_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-28T22:38:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a310d5d_ecf9b685",
+      "revId": "4d5b2c21527454617e38aec023c1fb95af899f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bd01b78_68bbf427",
         "filename": "chrome/browser/ui/webui/print_preview/extension_printer_handler_unittest.cc",
         "patchSetId": 7
@@ -68,6 +86,24 @@
       "revId": "4d5b2c21527454617e38aec023c1fb95af899f94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a7e531b_681e9c27",
+        "filename": "chrome/browser/ui/webui/print_preview/extension_printer_handler_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-28T22:38:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bd01b78_68bbf427",
+      "revId": "4d5b2c21527454617e38aec023c1fb95af899f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -91,6 +127,30 @@
       "revId": "4d5b2c21527454617e38aec023c1fb95af899f94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "463dcfc4_1fe20700",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-28T22:38:32Z",
+      "side": 1,
+      "message": "No key implies failure. An empty dictionary shouldn\u0027t cause any issues in JS, just gives the printer empty capabilities - see e.g. the DPI ticket item here, which checks dest.capabilities \u0026\u0026 dest.capabilities.printer: https://cs.chromium.org/chromium/src/chrome/browser/resources/print_preview/data/ticket_items/dpi.js?l\u003d54\n\nIt does seem odd to report a successful fetch with an empty dictionary but the existing behavior has always allowed that for local printers. I changed the DCHECK that kSettingsCapability exists to be part of the if statement that determines the callback result.",
+      "parentUuid": "fd01e753_94b6fe08",
+      "range": {
+        "startLine": 48,
+        "startChar": 18,
+        "endLine": 48,
+        "endChar": 24
+      },
+      "revId": "4d5b2c21527454617e38aec023c1fb95af899f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
