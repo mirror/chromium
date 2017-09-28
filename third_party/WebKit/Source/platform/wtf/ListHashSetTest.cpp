@@ -28,7 +28,6 @@
 #include <memory>
 #include <type_traits>
 #include "platform/wtf/LinkedHashSet.h"
-#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/RefCounted.h"
 #include "platform/wtf/RefPtr.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -586,8 +585,8 @@ TEST(ListHashSetTest, WithOwnPtr) {
   deleted2 = false;
   {
     OwnPtrSet set;
-    set.insert(WTF::MakeUnique<Dummy>(deleted1));
-    set.insert(WTF::MakeUnique<Dummy>(deleted2));
+    set.insert(std::make_unique<Dummy>(deleted1));
+    set.insert(std::make_unique<Dummy>(deleted2));
   }
   EXPECT_TRUE(deleted1);
   EXPECT_TRUE(deleted2);

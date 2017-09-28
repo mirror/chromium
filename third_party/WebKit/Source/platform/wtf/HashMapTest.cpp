@@ -26,7 +26,6 @@
 #include "platform/wtf/HashMap.h"
 
 #include <memory>
-#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/RefCounted.h"
 #include "platform/wtf/RefPtr.h"
 #include "platform/wtf/Vector.h"
@@ -251,7 +250,7 @@ TEST(HashMapTest, AddResult) {
   EXPECT_EQ(simple1, map.at(1));
 
   IntSimpleMap::AddResult result2 =
-      map.insert(1, WTF::MakeUnique<SimpleClass>(2));
+      map.insert(1, std::make_unique<SimpleClass>(2));
   EXPECT_FALSE(result2.is_new_entry);
   EXPECT_EQ(1, result.stored_value->key);
   EXPECT_EQ(1, result.stored_value->value->V());
