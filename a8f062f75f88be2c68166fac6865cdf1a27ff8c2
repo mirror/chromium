@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cae7bac_8906d1fc",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-28T21:29:43Z",
+      "side": 1,
+      "message": "Can we reset() unique_ptrs?",
+      "revId": "a8f062f75f88be2c68166fac6865cdf1a27ff8c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "015e467e_ed478fb1",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-28T21:29:43Z",
+      "side": 1,
+      "message": "If this method is getting called, don\u0027t we want to always call product_logo_file_watcher_.reset() first, since whatever it\u0027s watching is obsolete anyway?",
+      "revId": "a8f062f75f88be2c68166fac6865cdf1a27ff8c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e865a985_97746d12",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 902,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-28T21:29:43Z",
+      "side": 1,
+      "message": "Then you can return early if the write failed.",
+      "revId": "a8f062f75f88be2c68166fac6865cdf1a27ff8c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8f97bf6_867361fb",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-28T21:29:43Z",
+      "side": 1,
+      "message": "may periodically - not everyone use tmpreaper.",
+      "range": {
+        "startLine": 903,
+        "startChar": 25,
+        "endLine": 903,
+        "endChar": 37
+      },
+      "revId": "a8f062f75f88be2c68166fac6865cdf1a27ff8c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
