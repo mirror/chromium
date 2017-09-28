@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d9548f4a_5a6fce48",
+        "filename": "net/http/http_auth_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-28T16:04:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6ce983e_dbca8cbf",
+      "range": {
+        "startLine": 44,
+        "startChar": 44,
+        "endLine": 44,
+        "endChar": 58
+      },
+      "revId": "3a56ad2e27ef6e8d71ca2dd2a2a7b92565b0cb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d51d991_15dd2e06",
         "filename": "net/http/http_auth_handler.h",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "3a56ad2e27ef6e8d71ca2dd2a2a7b92565b0cb16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a866308_571688b0",
+        "filename": "net/http/http_auth_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-28T16:04:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d51d991_15dd2e06",
+      "revId": "3a56ad2e27ef6e8d71ca2dd2a2a7b92565b0cb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
