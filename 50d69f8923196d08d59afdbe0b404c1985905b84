@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f37567b0_85ae9175",
+        "filename": "extensions/renderer/gin_port.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-28T21:46:08Z",
+      "side": 1,
+      "message": "Sorry, I don\u0027t follow.  There\u0027s not a GinPort::ClosePort() method, and invalidate is (correctly) called from both native code disconnecting the port and JS code disconnecting port.",
+      "parentUuid": "7006f0e4_1224b1f6",
+      "range": {
+        "startLine": 229,
+        "startChar": 0,
+        "endLine": 229,
+        "endChar": 20
+      },
+      "revId": "50d69f8923196d08d59afdbe0b404c1985905b84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42d93c7d_7188cd30",
         "filename": "extensions/renderer/gin_port.h",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "363d3425_1d0ced61",
+        "filename": "extensions/renderer/gin_port.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-28T21:46:08Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "42d93c7d_7188cd30",
+      "range": {
+        "startLine": 27,
+        "startChar": 28,
+        "endLine": 29,
+        "endChar": 29
+      },
+      "revId": "50d69f8923196d08d59afdbe0b404c1985905b84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cceff69a_3aa964b8",
         "filename": "extensions/renderer/gin_port.h",
         "patchSetId": 8
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "b91edea9_41fa8ca4",
+        "filename": "extensions/renderer/gin_port.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-28T21:46:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cceff69a_3aa964b8",
+      "revId": "50d69f8923196d08d59afdbe0b404c1985905b84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95654fc6_dd2484c9",
         "filename": "extensions/renderer/native_renderer_messaging_service.cc",
         "patchSetId": 8
@@ -76,6 +142,30 @@
       "writtenOn": "2017-09-28T17:39:45Z",
       "side": 1,
       "message": "ExtensionId",
+      "range": {
+        "startLine": 170,
+        "startChar": 10,
+        "endLine": 170,
+        "endChar": 21
+      },
+      "revId": "50d69f8923196d08d59afdbe0b404c1985905b84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df6ef48a_60151adf",
+        "filename": "extensions/renderer/native_renderer_messaging_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-28T21:46:08Z",
+      "side": 1,
+      "message": "Mind if I do it in a follow-up?  I\u0027d want to change the base class and JS impl version to match, as well as potentially the extension message structs.",
+      "parentUuid": "95654fc6_dd2484c9",
       "range": {
         "startLine": 170,
         "startChar": 10,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "083351b3_d7e05adb",
+        "filename": "extensions/renderer/native_renderer_messaging_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-28T21:46:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f9dbd7d_365de7da",
+      "range": {
+        "startLine": 221,
+        "startChar": 18,
+        "endLine": 221,
+        "endChar": 25
+      },
+      "revId": "50d69f8923196d08d59afdbe0b404c1985905b84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "714e662a_79ee7b3b",
         "filename": "extensions/renderer/native_renderer_messaging_service_unittest.cc",
         "patchSetId": 8
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "15ea2b66_55effdaa",
+        "filename": "extensions/renderer/native_renderer_messaging_service_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-28T21:46:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "714e662a_79ee7b3b",
+      "range": {
+        "startLine": 144,
+        "startChar": 55,
+        "endLine": 144,
+        "endChar": 57
+      },
+      "revId": "50d69f8923196d08d59afdbe0b404c1985905b84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79b2a957_50fc46ec",
         "filename": "extensions/renderer/native_renderer_messaging_service_unittest.cc",
         "patchSetId": 8
@@ -148,6 +286,24 @@
       "revId": "50d69f8923196d08d59afdbe0b404c1985905b84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a4653a4_354aa5e4",
+        "filename": "extensions/renderer/native_renderer_messaging_service_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-28T21:46:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79b2a957_50fc46ec",
+      "revId": "50d69f8923196d08d59afdbe0b404c1985905b84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
