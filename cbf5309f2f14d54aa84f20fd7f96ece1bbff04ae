@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7cf24452_0c0869d2",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 3096,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-28T06:42:13Z",
+      "side": 1,
+      "message": "since it\u0027s moving anyway... \"views/try_chrome_dialog.*\" probably belongs in this block (the lines below suggest assert(toolkit_views) might be appropriate here too",
+      "revId": "cbf5309f2f14d54aa84f20fd7f96ece1bbff04ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
