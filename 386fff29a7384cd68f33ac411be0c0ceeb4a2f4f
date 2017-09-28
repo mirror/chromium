@@ -33,6 +33,24 @@
       "revId": "386fff29a7384cd68f33ac411be0c0ceeb4a2f4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2162c48_a74e7e57",
+        "filename": "media/audio/cras/audio_manager_cras.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1001841
+      },
+      "writtenOn": "2017-09-28T08:37:40Z",
+      "side": 1,
+      "message": "\"default\" and \"\" are the same.\n\nhttps://cs.chromium.org/chromium/src/media/audio/audio_device_description.cc?l\u003d17",
+      "parentUuid": "78a1e689_c74c1c25",
+      "revId": "386fff29a7384cd68f33ac411be0c0ceeb4a2f4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
