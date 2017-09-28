@@ -33,6 +33,23 @@
       "revId": "a0ebd3659018df739da3eb701d928d7f2dec3493",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edc9ab42_dc3feedf",
+        "filename": "cc/scheduler/compositor_timing_history_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-28T17:22:29Z",
+      "side": 1,
+      "message": "Getting the timing calculation right has been tricky, I think you should add tests for some of the exact values from various edge cases.",
+      "revId": "a0ebd3659018df739da3eb701d928d7f2dec3493",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
