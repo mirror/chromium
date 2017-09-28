@@ -16,6 +16,24 @@
       "revId": "d48e4e6f540260c86aa49d908c8333e2f8d0b842",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "592ded0b_421474a4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/accessibility/AXBreadcrumbsPane.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-09-28T23:22:17Z",
+      "side": 1,
+      "message": ":) Sort of. Only in cases where the direct child is ignored.",
+      "parentUuid": "92f03511_516f6bbc",
+      "revId": "d48e4e6f540260c86aa49d908c8333e2f8d0b842",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
