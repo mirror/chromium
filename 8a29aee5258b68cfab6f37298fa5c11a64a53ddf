@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "9f734069_1d6f9678",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1275,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-09-28T05:53:20Z",
+      "side": 1,
+      "message": "Not really right? This only checks the tiles in the raster queue, not the tiles that have completed tasks but are not yet ready to draw (waiting on sync token). Seems OK given that you\u0027re passing in the RasterTilePriorityQueue type, so the fact that there\u0027s a raster queue isn\u0027t that hidden?",
+      "parentUuid": "b1aabacb_feed3a95",
+      "range": {
+        "startLine": 1275,
+        "startChar": 19,
+        "endLine": 1275,
+        "endChar": 32
+      },
+      "revId": "8a29aee5258b68cfab6f37298fa5c11a64a53ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18bd19bc_9d7b3f46",
         "filename": "cc/tiles/tile_manager.cc",
         "patchSetId": 2
@@ -111,6 +135,24 @@
     },
     {
       "key": {
+        "uuid": "b408ba84_62bc0891",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1576,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-09-28T05:53:20Z",
+      "side": 1,
+      "message": "This path is only reached from CheckAndIssueSignals, before issuing so I think we\u0027re OK. I do wonder if \"issue_signals\" is the right name for the var though, as we don\u0027t issue anything here? Maybe \"update_signals\"?",
+      "parentUuid": "10d3c6a5_1d2f37ba",
+      "revId": "8a29aee5258b68cfab6f37298fa5c11a64a53ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60c641ab_dd6ddfe2",
         "filename": "cc/tiles/tile_manager.cc",
         "patchSetId": 2
@@ -145,6 +187,23 @@
     },
     {
       "key": {
+        "uuid": "952468b3_49919eff",
+        "filename": "cc/tiles/tile_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-09-28T05:53:20Z",
+      "side": 1,
+      "message": "nit: remove the line breaks and group similar functions?",
+      "revId": "8a29aee5258b68cfab6f37298fa5c11a64a53ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "495e1874_2aaab225",
         "filename": "cc/tiles/tile_manager.h",
         "patchSetId": 2
@@ -156,6 +215,24 @@
       "writtenOn": "2017-09-25T22:06:10Z",
       "side": 1,
       "message": "The variable names are getting pretty long, but I\u0027m not sure what a shorter version would be. If you can think of something that would be great.",
+      "revId": "8a29aee5258b68cfab6f37298fa5c11a64a53ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39acb336_6edca734",
+        "filename": "cc/tiles/tile_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-09-28T05:53:20Z",
+      "side": 1,
+      "message": "just a thought (there may be good reasons not to do this :D) - From what I recall from our discussion, we currently wait for the previous callback to complete before issuing another. This seemed fine/good because even if either the draw or activation set is superseded, tile work is on the same GPU channel, so it would be *very* rare for a later set of required for activation tiles to finish before the ones being currently waited on.\n\nAlong the same lines, I wonder if it\u0027s ever useful to queue a new required for activation/draw callback when the other is pending? could we just always have a single pending callback at most, and make sure it\u0027s the earlier of req\u0027d for activation and req\u0027d for draw? Might simplify things a *little*?",
+      "parentUuid": "495e1874_2aaab225",
       "revId": "8a29aee5258b68cfab6f37298fa5c11a64a53ddf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
