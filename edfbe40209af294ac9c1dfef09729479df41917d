@@ -16,6 +16,24 @@
       "revId": "edfbe40209af294ac9c1dfef09729479df41917d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8200979_27a12945",
+        "filename": "ash/shelf/shelf_window_watcher_item_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-28T20:48:31Z",
+      "side": 1,
+      "message": "Good call, I\u0027ve changed approaches to fix the underlying defect.",
+      "parentUuid": "0eec4e3f_fb1c406d",
+      "revId": "edfbe40209af294ac9c1dfef09729479df41917d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
