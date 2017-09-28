@@ -137,6 +137,7 @@ class CONTENT_EXPORT RenderViewHostImpl : public RenderViewHost,
   virtual bool CreateRenderView(
       int opener_frame_route_id,
       int proxy_route_id,
+      const std::string& devtools_frame_guid,
       const FrameReplicationState& replicated_frame_state,
       bool window_was_created_with_opener);
 

@@ -73,7 +73,7 @@ namespace blink {
 
 namespace {
 
-int FrameId(LocalFrame& frame) {
+int GroupId(LocalFrame& frame) {
   return WeakIdentifierMap<LocalFrame>::Identifier(&frame);
 }
 
@@ -214,7 +214,7 @@ void MainThreadDebugger::ExceptionThrown(ExecutionContext* context,
 
 int MainThreadDebugger::ContextGroupId(LocalFrame* frame) {
   LocalFrame& local_frame_root = frame->LocalFrameRoot();
-  return FrameId(local_frame_root);
+  return GroupId(local_frame_root);
 }
 
 MainThreadDebugger* MainThreadDebugger::Instance() {
