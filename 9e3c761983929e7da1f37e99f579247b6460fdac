@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47621de7_f668bfb6",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContextualSearchSelectionClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-28T23:23:33Z",
+      "side": 1,
+      "message": "year",
+      "revId": "9e3c761983929e7da1f37e99f579247b6460fdac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "544ce1c7_2233acd5",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContextualSearchSelectionClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-28T23:23:33Z",
+      "side": 1,
+      "message": "now is a pretty good time to put this in org.chromium.content_public.browser instead",
+      "revId": "9e3c761983929e7da1f37e99f579247b6460fdac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e7bf40e_0024c9f7",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-28T23:23:33Z",
+      "side": 1,
+      "message": "TextClassifier class is not supposed to cross SelectionPopupController, so that SelectionPopupController can be unit tested with robolectric which still does not support O",
+      "revId": "9e3c761983929e7da1f37e99f579247b6460fdac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "581ac1af_297ed75d",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1105,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-28T23:23:33Z",
+      "side": 1,
+      "message": "how are conflicts resolved here? what if both things tries to start doing things in response to the selections?",
+      "revId": "9e3c761983929e7da1f37e99f579247b6460fdac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f13a20cd_e5787680",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1161,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-28T23:23:33Z",
+      "side": 1,
+      "message": "group all these setters/getters together",
+      "revId": "9e3c761983929e7da1f37e99f579247b6460fdac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4d03935_111181d2",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-28T23:23:33Z",
+      "side": 1,
+      "message": "there isn\u0027t much point in having this interface at all, if the only real implementation is in content",
+      "revId": "9e3c761983929e7da1f37e99f579247b6460fdac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a939a37c_13e9cf37",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-28T23:23:33Z",
+      "side": 1,
+      "message": "did clang-format do this and below? can you manually undo it and turn clang-format off for these?",
+      "revId": "9e3c761983929e7da1f37e99f579247b6460fdac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
