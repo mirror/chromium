@@ -420,6 +420,10 @@ public class AwAutofillTest {
             return mAutofillValues;
         }
 
+        public CallbackHelper getVirtualValueChangedCallback() {
+            return mVirtualValueChanged;
+        }
+
         public void setAwContents(AwContents awContents) {
             mAwContents = awContents;
         }
@@ -442,6 +446,18 @@ public class AwAutofillTest {
         public void notifyVirtualValueChanged(View parent, int childId, AutofillValue value) {
             if (mAutofillValues != null) mAutofillValues.append(childId, value);
             mVirtualValueChanged.notifyCalled();
+        }
+
+        public void clearAutofillValue() {
+            if (mAutofillValues == null) {
+                mAutofillValues = new SparseArray<AutofillValue>();
+            } else {
+                mAutofillValues.clear();
+            }
+        }
+
+        public SparseArray<AutofillValue> getAutofillValues() {
+            return mAutofillValues;
         }
     }
 
@@ -561,6 +577,42 @@ public class AwAutofillTest {
                     mTestContainerView.getAwContents(), mContentsClient,
                     "document.getElementById('select1').value;");
             assertEquals("\"2\"", value2);
+        } finally {
+            webServer.shutdown();
+        }
+    }
+
+    @Test
+    @SmallTest
+    @Feature({"AndroidWebView"})
+    public void testNotifyVirtualValueChanged() throws Throwable {
+        TestWebServer webServer = TestWebServer.start();
+        mActivityTestRule.enableJavaScriptOnUiThread(mTestContainerView.getAwContents());
+        final String data = "<html><head></head><body><form action='a.html' name='formname'>"
+                + "<input type='text' id='text1' name='username'"
+                + " placeholder='placeholder@placeholder.com' autocomplete='username name'>"
+                + "<input type='submit'>"
+                + "</form></body></html>";
+        final String file = "/login.html";
+        try {
+            final String url = webServer.setResponse(file, data, null);
+            mActivityTestRule.loadUrlSync(mTestContainerView.getAwContents(),
+                    mContentsClient.getOnPageFinishedHelper(), url);
+            mActivityTestRule.executeJavaScriptAndWaitForResult(mTestContainerView.getAwContents(),
+                    mContentsClient, "document.getElementById('text1').select();");
+            dispatchDownAndUpKeyEvents(KeyEvent.KEYCODE_A);
+            mHelper.waitForNotifyVirtualViewEnteredCalled();
+            mHelper.invokeOnProvideAutoFillVirtualStructure();
+
+            CallbackHelper callbackHelper = mHelper.getVirtualValueChangedCallback();
+            // User input 'b', verify NotifyVirtualValueChanged() is called.
+            mHelper.clearAutofillValue();
+            int count = callbackHelper.getCallCount();
+            dispatchDownAndUpKeyEvents(KeyEvent.KEYCODE_B);
+            callbackHelper.waitForCallback(count, 1);
+            SparseArray<AutofillValue> values = mHelper.getAutofillValues();
+            assertEquals(1, values.size());
+            assertEquals("ab", values.valueAt(0).getTextValue());
         } finally {
             webServer.shutdown();
         }
