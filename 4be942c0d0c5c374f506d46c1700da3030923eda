@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "506a3f19_1a762c77",
+        "filename": "net/http/http_network_session.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-09-28T22:34:39Z",
+      "side": 1,
+      "message": "\"sockets\"",
+      "range": {
+        "startLine": 152,
+        "startChar": 55,
+        "endLine": 152,
+        "endChar": 62
+      },
+      "revId": "4be942c0d0c5c374f506d46c1700da3030923eda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
