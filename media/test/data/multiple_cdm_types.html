@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<title>Test running different types of CDM in the system</title>
+<div id="console"></div>
+<script src='eme_player_js/app_loader.js' type='text/javascript'></script>
+<script type='text/javascript'>
+
+  function log(message) {
+    let consoleElement = document.getElementById('console');
+    let entry = document.createElement('div');
+    entry.appendChild(document.createTextNode(message));
+    consoleElement.appendChild(entry);
+    console.log(message);
+  }
+
+  const EXTERNAL_CLEARKEY_DIFFERENTGUID
+      = 'org.chromium.externalclearkey.differentguid';
+  const keyId = stringToUint8Array('0123456789012345');
+  const crash = stringToUint8Array('crash');
+  const key = new Uint8Array([0xeb, 0xdd, 0x62, 0xf1, 0x68, 0x14, 0xd2, 0x7b,
+                              0x68, 0xef, 0x12, 0x2a, 0xfc, 0xe4, 0xae, 0x3c]);
+  const normalJwkSet = stringToUint8Array(createJWKSet(createJWK(keyId, key)));
+  const crashJwkSet = stringToUint8Array(createJWKSet(createJWK(crash, key)));
+
+  function createJWK(keyId, key) {
+    var jwk = '{"kty":"oct","alg":"A128KW","kid":"';
+    jwk += Utils.base64urlEncode(keyId);
+    jwk += '","k":"';
+    jwk += Utils.base64urlEncode(key);
+    jwk += '"}';
+    return jwk;
+  }
+
+  // Creates a JWK Set from multiple JWKs.
+  function createJWKSet() {
+    var jwkSet = '{"keys":[';
+    for (var i = 0; i < arguments.length; i++) {
+      if (i != 0)
+        jwkSet += ',';
+      jwkSet += arguments[i];
+    }
+    jwkSet += ']}';
+    return jwkSet;
+  }
+
+  function stringToUint8Array(str) {
+    var result = new Uint8Array(str.length);
+    for(var i = 0; i < str.length; i++) {
+      result[i] = str.charCodeAt(i);
+    }
+    return result;
+  }
+
+  function createKeyIDs() {
+    var keyIds = '{"kids":["';
+    for (var i = 0; i < arguments.length; i++) {
+      if (i != 0) keyIds += '","';
+      keyIds += Utils.base64urlEncode(arguments[i]);
+    }
+    keyIds += '"]}';
+    return keyIds;
+  }
+
+  function getInitData() {
+    var keyId = new Uint8Array([
+      0x00, 0x00, 0x00, 0x00, 0x03, 0xd2, 0xfc, 0x41,
+      0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+    ]);
+    return stringToUint8Array(createKeyIDs(keyId));
+  }
+
+  var config = {
+    initDataTypes : [ 'keyids' ],
+    videoCapabilities: [{contentType: 'video/webm; codecs="vp8"'}],
+    persistentState: 'optional',
+    sessionTypes: ['temporary'],
+  };
+
+  function createMediaKeySession(key_system) {
+    var mediaKeySession;
+    return navigator.requestMediaKeySystemAccess(key_system, [config])
+        .then(function(access) {
+      initDataType = access.getConfiguration().initDataTypes[0];
+      initData = getInitData();
+      return access.createMediaKeys();
+    }).then(function(result) {
+      log('CDM created');
+      mediaKeys = result;
+      mediaKeySession = mediaKeys.createSession();
+      return mediaKeySession.generateRequest(initDataType, initData);
+    }).then(function() {
+      mediaKeySession.update(normalJwkSet);
+    }).then(function() {
+      return mediaKeySession;
+    });
+  }
+
+  log('Start test');
+
+  // Using EXTERNAL_CLEARKEY
+  var session1;
+
+  // Both using EXTERNAL_CLEARKEY_DIFFERENTGUID and running in the same process.
+  var session2;
+  var session3;
+
+  // The following creates 3 MediaKeys instances each with a MediaKeySession.
+  // MediaKeys using different CDM GUID will run in different processes, i.e.
+  // session1 will run in it's own process, and session2 and session3 will run
+  // in the same process. Then we send a special response 'crashJwkSet' to
+  // session2 which will cause the CDM to crash. This will close both session2
+  // and session3 since they run in the same process. But session1 should not be
+  // affected. Then we try to create another MediaKeySesison using the
+  // EXTERNAL_CLEARKEY_DIFFERENTGUID, and the creation should still wrok (a new
+  // process will be started).
+
+  createMediaKeySession(EXTERNAL_CLEARKEY).then(function(session) {
+    log('Session1 created');
+    session1 = session;
+  }).then(function() {
+    return createMediaKeySession(EXTERNAL_CLEARKEY_DIFFERENTGUID);
+  }).then(function(session) {
+    log('Session2 created');
+    session2 = session;
+    return createMediaKeySession(EXTERNAL_CLEARKEY_DIFFERENTGUID);
+  }).then(function(session) {
+    log('Session3 created');
+    session3 = session;
+    log('Crash session2');
+    return session.update(crashJwkSet);
+  }).then(function() {
+    log('Session2 crashed');
+    return session2.closed;
+  }).then(function() {
+    log('Session2 closed');
+    return session3.closed;
+  }).then(function() {
+    log('Session3 also closed');
+    return session1.update(normalJwkSet);
+  }).then(function() {
+    log('Session1 still works');
+    return createMediaKeySession(EXTERNAL_CLEARKEY_DIFFERENTGUID);
+  }).then(function(session) {
+    log('Can still create a session after crash');
+    Utils.setResultInTitle('ENDED');
+  }).catch(function(error) {
+    log('Error: ' + error);
+    Utils.failTest('Test failed: ' + error);
+  });
+
+</script>
+</html>
