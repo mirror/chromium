@@ -3800,13 +3800,13 @@ void LayerTreeHostImpl::PinchGestureUpdate(float magnify_delta,
   UpdateRootLayerStateForSynchronousInputHandler();
 }
 
-void LayerTreeHostImpl::PinchGestureEnd() {
+void LayerTreeHostImpl::PinchGestureEnd(const gfx::Point& anchor) {
   pinch_gesture_active_ = false;
   if (pinch_gesture_end_should_clear_scrolling_node_) {
     pinch_gesture_end_should_clear_scrolling_node_ = false;
     ClearCurrentlyScrollingNode();
   }
-  viewport()->PinchEnd();
+  viewport()->PinchEnd(anchor);
   browser_controls_offset_manager_->PinchEnd();
   client_->SetNeedsCommitOnImplThread();
   // When a pinch ends, we may be displaying content cached at incorrect scales,
