@@ -34,6 +34,24 @@
       "revId": "7285da49e649720826d38d18978d6454b67704f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ef28b9e_d262a069",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-09-28T21:00:56Z",
+      "side": 1,
+      "message": "I think the equivalent here is making sure the Document didn\u0027t change during DetachChildren(). Done.",
+      "parentUuid": "7e145b61_6ca4df64",
+      "revId": "7285da49e649720826d38d18978d6454b67704f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
