@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c4130ad8_976968be",
+        "filename": "ios/chrome/browser/ui/commands/snackbar_commands.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-09-28T21:58:21Z",
+      "side": 1,
+      "message": "Per our offline discussion, we decided to allow dependency on MDC by the various users, and let them construct the MDCSnackbar objects as they do now. Then they simply call the dispatcher with the MDC object. Now there is only one variant of this call.",
+      "parentUuid": "44f68ba8_5033940d",
+      "revId": "6b4e633ad3a0aa7dcfcb7e4b48d9dcc9dae9a42e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "05a3d0e2_de6ca469",
         "filename": "ios/chrome/browser/ui/snackbar/snackbar_coordinator.mm",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-28T17:31:23Z",
       "side": 1,
       "message": "This is sort of what I\u0027d like to avoid, having parallel implementations for the various versions of this call.  It would be nice if all of the convenience methods ended up in one single implementation.",
+      "revId": "6b4e633ad3a0aa7dcfcb7e4b48d9dcc9dae9a42e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbec1b94_787b9f53",
+        "filename": "ios/chrome/browser/ui/snackbar/snackbar_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-09-28T21:58:21Z",
+      "side": 1,
+      "message": "Per our discussion, we were able to simplify this class.",
+      "parentUuid": "05a3d0e2_de6ca469",
       "revId": "6b4e633ad3a0aa7dcfcb7e4b48d9dcc9dae9a42e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
