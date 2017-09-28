@@ -36,8 +36,11 @@ import java.util.concurrent.ExecutionException;
  */
 @RunWith(ChromeJUnit4ClassRunner.class)
 @RetryOnFailure
-@CommandLineFlags.Add({ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE,
-        ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG})
+@CommandLineFlags.Add({
+        ChromeSwitches.DISABLE_EXPIRING_HISTOGRAMS,
+        ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE,
+        ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG
+})
 public class TabUmaTest {
     @Rule
     public ChromeActivityTestRule<ChromeActivity> mActivityTestRule =

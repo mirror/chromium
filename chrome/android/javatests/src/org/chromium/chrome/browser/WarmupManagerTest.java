@@ -23,6 +23,7 @@ import org.junit.runner.RunWith;
 
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.BaseJUnit4ClassRunner;
+import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.MetricsUtils;
 import org.chromium.base.test.util.Restriction;
 import org.chromium.chrome.R;
@@ -41,6 +42,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 /** Tests for {@link WarmupManager} */
+@CommandLineFlags.Add({
+        ChromeSwitches.DISABLE_EXPIRING_HISTOGRAMS,
+})
 @RunWith(BaseJUnit4ClassRunner.class)
 public class WarmupManagerTest {
     @Rule
