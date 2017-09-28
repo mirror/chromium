@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c77a6e4_cc01679b",
+        "filename": "net/url_request/url_request_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 7342,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-09-28T18:55:57Z",
+      "side": 1,
+      "message": "Why is this -1? http://wicg.github.io/network-error-logging/#report-status-code says 0, and also I can\u0027t find what sets it.",
+      "range": {
+        "startLine": 7342,
+        "startChar": 12,
+        "endLine": 7342,
+        "endChar": 14
+      },
+      "revId": "944e9636cd6360329da654cf3b8f229e304e6fd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
