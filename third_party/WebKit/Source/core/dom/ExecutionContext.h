@@ -35,6 +35,7 @@
 #include "core/dom/ContextLifecycleObserver.h"
 #include "core/dom/SecurityContext.h"
 #include "platform/Supplementable.h"
+#include "platform/bindings/TraceWrapperMember.h"
 #include "platform/heap/Handle.h"
 #include "platform/loader/fetch/AccessControlStatus.h"
 #include "platform/weborigin/KURL.h"
@@ -45,6 +46,8 @@
 
 namespace blink {
 
+class CallbackInterfaceBase;
+class CallbackInterfaceCollection;
 class ConsoleMessage;
 class CoreProbeSink;
 class DOMTimerCoordinator;
@@ -52,10 +55,10 @@ class ErrorEvent;
 class EventQueue;
 class EventTarget;
 class LocalDOMWindow;
-class SuspendableObject;
 class PublicURLManager;
-class SecurityOrigin;
 class ScriptState;
+class SecurityOrigin;
+class SuspendableObject;
 enum class TaskType : unsigned;
 
 enum ReasonForCallingCanExecuteScripts {
@@ -69,6 +72,7 @@ class CORE_EXPORT ExecutionContext : public ContextLifecycleNotifier,
 
  public:
   DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
   static ExecutionContext* From(const ScriptState*);
 
@@ -186,9 +190,24 @@ class CORE_EXPORT ExecutionContext : public ContextLifecycleNotifier,
 
   virtual CoreProbeSink* GetProbeSink() { return nullptr; }
 
+  // 
+  CallbackInterfaceCollection& KeepAliveHostFor(const CallbackInterfaceBase*) {
+    return *keep_alive_host_for_callback_interfaces_;
+  }
+
+  // 
+  void SetKeepAlive(const CallbackInterfaceBase& callback) {
+    keep_alive_host_for_callback_interfaces_->RegisterCallbackInterface(
+        callback);
+  }
+  void UnsetKeepAlive(const CallbackInterfaceBase& callback) {
+    keep_alive_host_for_callback_interfaces_->UnregisterCallbackInterface(
+        callback);
+  }
+
  protected:
   ExecutionContext();
-  virtual ~ExecutionContext();
+  virtual ~ExecutionContext() = default;
 
   virtual const KURL& VirtualURL() const = 0;
   virtual KURL VirtualCompleteURL(const String&) const = 0;
@@ -213,6 +232,10 @@ class CORE_EXPORT ExecutionContext : public ContextLifecycleNotifier,
   int window_interaction_tokens_;
 
   ReferrerPolicy referrer_policy_;
+
+  // 
+  TraceWrapperMember<CallbackInterfaceCollection>
+      keep_alive_host_for_callback_interfaces_;
 };
 
 }  // namespace blink

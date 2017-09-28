@@ -34,6 +34,7 @@
 #include "bindings/core/v8/ExceptionMessages.h"
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/ScriptController.h"
+#include "bindings/core/v8/V8BlobCallback.h"
 #include "build/build_config.h"
 #include "core/HTMLNames.h"
 #include "core/InputTypeNames.h"
@@ -764,7 +765,7 @@ String HTMLCanvasElement::toDataURL(const String& mime_type,
   return ToDataURLInternal(mime_type, quality, kBackBuffer);
 }
 
-void HTMLCanvasElement::toBlob(BlobCallback* callback,
+void HTMLCanvasElement::toBlob(V8BlobCallback* callback,
                                const String& mime_type,
                                const ScriptValue& quality_argument,
                                ExceptionState& exception_state) {
@@ -777,8 +778,13 @@ void HTMLCanvasElement::toBlob(BlobCallback* callback,
     // If the canvas element's bitmap has no pixels
     TaskRunnerHelper::Get(TaskType::kCanvasBlobSerialization, &GetDocument())
         ->PostTask(BLINK_FROM_HERE,
-                   WTF::Bind(&BlobCallback::handleEvent,
-                             WrapPersistent(callback), nullptr));
+                   WTF::Bind(
+                       &V8BlobCallback::handleEvent,
+                       WrapPersistent(
+                           callback,
+                           GetExecutionContext()->KeepAliveHostFor(callback)),
+                       nullptr,
+                       nullptr));
     return;
   }
 
@@ -800,8 +806,13 @@ void HTMLCanvasElement::toBlob(BlobCallback* callback,
     // ImageData allocation faillure
     TaskRunnerHelper::Get(TaskType::kCanvasBlobSerialization, &GetDocument())
         ->PostTask(BLINK_FROM_HERE,
-                   WTF::Bind(&BlobCallback::handleEvent,
-                             WrapPersistent(callback), nullptr));
+                   WTF::Bind(
+                       &V8BlobCallback::handleEvent,
+                       WrapPersistent(
+                           callback,
+                           GetExecutionContext()->KeepAliveHostFor(callback)),
+                       nullptr,
+                       nullptr));
     return;
   }
 

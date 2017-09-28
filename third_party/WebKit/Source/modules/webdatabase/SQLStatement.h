@@ -30,6 +30,7 @@
 
 #include "modules/webdatabase/SQLResultSet.h"
 #include "modules/webdatabase/sqlite/SQLValue.h"
+#include "platform/bindings/TraceWrapperMember.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/text/WTFString.h"
 
@@ -37,16 +38,18 @@ namespace blink {
 
 class Database;
 class SQLStatementBackend;
-class SQLStatementCallback;
-class SQLStatementErrorCallback;
 class SQLTransaction;
+class V8SQLStatementCallback;
+class V8SQLStatementErrorCallback;
 
-class SQLStatement final : public GarbageCollected<SQLStatement> {
+class SQLStatement final : public GarbageCollected<SQLStatement>,
+                           public TraceWrapperBase {
  public:
   static SQLStatement* Create(Database*,
-                              SQLStatementCallback*,
-                              SQLStatementErrorCallback*);
+                              V8SQLStatementCallback*,
+                              V8SQLStatementErrorCallback*);
   DECLARE_TRACE();
+  DECLARE_TRACE_WRAPPERS();
 
   bool PerformCallback(SQLTransaction*);
 
@@ -56,15 +59,15 @@ class SQLStatement final : public GarbageCollected<SQLStatement> {
   bool HasErrorCallback();
 
  private:
-  SQLStatement(Database*, SQLStatementCallback*, SQLStatementErrorCallback*);
+  SQLStatement(Database*, V8SQLStatementCallback*, V8SQLStatementErrorCallback*);
 
   // The SQLStatementBackend owns the SQLStatement. Hence, the backend is
   // guaranteed to be outlive the SQLStatement, and it is safe for us to refer
   // to the backend using a raw pointer here.
   Member<SQLStatementBackend> backend_;
 
-  Member<SQLStatementCallback> statement_callback_;
-  Member<SQLStatementErrorCallback> statement_error_callback_;
+  TraceWrapperMember<V8SQLStatementCallback> statement_callback_;
+  TraceWrapperMember<V8SQLStatementErrorCallback> statement_error_callback_;
 };
 
 }  // namespace blink

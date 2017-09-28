@@ -46,16 +46,16 @@ class WebFileSystem;
 namespace blink {
 
 class DirectoryReaderBase;
-class EntriesCallback;
 class EntryBase;
-class EntryCallback;
 class ErrorCallbackBase;
+class ExecutionContext;
 class File;
 class FileMetadata;
-class MetadataCallback;
-class ExecutionContext;
 class SecurityOrigin;
-class VoidCallback;
+class V8EntriesCallback;
+class V8EntryCallback;
+class V8MetadataCallback;
+class V8VoidCallback;
 
 // A common base class for DOMFileSystem and DOMFileSystemSync.
 class MODULES_EXPORT DOMFileSystemBase
@@ -115,45 +115,45 @@ class MODULES_EXPORT DOMFileSystemBase
   // Actual FileSystem API implementations. All the validity checks on virtual
   // paths are done at this level.
   void GetMetadata(const EntryBase*,
-                   MetadataCallback*,
+                   V8MetadataCallback*,
                    ErrorCallbackBase*,
                    SynchronousType = kAsynchronous);
   void Move(const EntryBase* source,
             EntryBase* parent,
             const String& name,
-            EntryCallback*,
+            V8EntryCallback*,
             ErrorCallbackBase*,
             SynchronousType = kAsynchronous);
   void Copy(const EntryBase* source,
             EntryBase* parent,
             const String& name,
-            EntryCallback*,
+            V8EntryCallback*,
             ErrorCallbackBase*,
             SynchronousType = kAsynchronous);
   void Remove(const EntryBase*,
-              VoidCallback*,
+              V8VoidCallback*,
               ErrorCallbackBase*,
               SynchronousType = kAsynchronous);
   void RemoveRecursively(const EntryBase*,
-                         VoidCallback*,
+                         V8VoidCallback*,
                          ErrorCallbackBase*,
                          SynchronousType = kAsynchronous);
-  void GetParent(const EntryBase*, EntryCallback*, ErrorCallbackBase*);
+  void GetParent(const EntryBase*, V8EntryCallback*, ErrorCallbackBase*);
   void GetFile(const EntryBase*,
                const String& path,
                const FileSystemFlags&,
-               EntryCallback*,
+               V8EntryCallback*,
                ErrorCallbackBase*,
                SynchronousType = kAsynchronous);
   void GetDirectory(const EntryBase*,
                     const String& path,
                     const FileSystemFlags&,
-                    EntryCallback*,
+                    V8EntryCallback*,
                     ErrorCallbackBase*,
                     SynchronousType = kAsynchronous);
   int ReadDirectory(DirectoryReaderBase*,
                     const String& path,
-                    EntriesCallback*,
+                    V8EntriesCallback*,
                     ErrorCallbackBase*,
                     SynchronousType = kAsynchronous);
   bool WaitForAdditionalResult(int callbacks_id);

@@ -33,7 +33,6 @@
 #include "core/CoreExport.h"
 #include "core/dom/ContextLifecycleObserver.h"
 #include "core/dom/Document.h"
-#include "core/fileapi/BlobCallback.h"
 #include "core/html/HTMLElement.h"
 #include "core/html/canvas/CanvasDrawListener.h"
 #include "core/html/canvas/CanvasImageSource.h"
@@ -61,14 +60,15 @@ class CanvasContextCreationAttributes;
 class CanvasRenderingContext;
 class CanvasRenderingContextFactory;
 class GraphicsContext;
-class HitTestCanvasResult;
 class HTMLCanvasElement;
+class HitTestCanvasResult;
 class Image;
 class ImageBitmapOptions;
 class ImageBuffer;
 class ImageBufferSurface;
 class ImageData;
 class IntSize;
+class V8BlobCallback;
 
 class
     CanvasRenderingContext2DOrWebGLRenderingContextOrWebGL2RenderingContextOrImageBitmapRenderingContext;
@@ -121,11 +121,11 @@ class CORE_EXPORT HTMLCanvasElement final
     return toDataURL(mime_type, ScriptValue(), exception_state);
   }
 
-  void toBlob(BlobCallback*,
+  void toBlob(V8BlobCallback*,
               const String& mime_type,
               const ScriptValue& quality_argument,
               ExceptionState&);
-  void toBlob(BlobCallback* callback,
+  void toBlob(V8BlobCallback* callback,
               const String& mime_type,
               ExceptionState& exception_state) {
     return toBlob(callback, mime_type, ScriptValue(), exception_state);

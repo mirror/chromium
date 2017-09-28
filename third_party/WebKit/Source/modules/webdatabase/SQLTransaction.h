@@ -42,13 +42,13 @@ namespace blink {
 class Database;
 class ExceptionState;
 class SQLErrorData;
-class SQLStatementCallback;
-class SQLStatementErrorCallback;
 class SQLTransactionBackend;
 class SQLTransactionCallback;
 class SQLTransactionErrorCallback;
 class SQLValue;
 class ScriptValue;
+class V8SQLStatementCallback;
+class V8SQLStatementErrorCallback;
 class VoidCallback;
 
 class SQLTransaction final : public GarbageCollectedFinalized<SQLTransaction>,
@@ -69,15 +69,15 @@ class SQLTransaction final : public GarbageCollectedFinalized<SQLTransaction>,
 
   void ExecuteSQL(const String& sql_statement,
                   const Vector<SQLValue>& arguments,
-                  SQLStatementCallback*,
-                  SQLStatementErrorCallback*,
+                  V8SQLStatementCallback*,
+                  V8SQLStatementErrorCallback*,
                   ExceptionState&);
   void executeSql(ScriptState*, const String& sql_statement, ExceptionState&);
   void executeSql(ScriptState*,
                   const String& sql_statement,
                   const Nullable<Vector<ScriptValue>>& arguments,
-                  SQLStatementCallback*,
-                  SQLStatementErrorCallback*,
+                  V8SQLStatementCallback*,
+                  V8SQLStatementErrorCallback*,
                   ExceptionState&);
 
   Database* GetDatabase() { return database_.Get(); }
