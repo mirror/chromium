@@ -144,6 +144,24 @@
     },
     {
       "key": {
+        "uuid": "fdc6edda_99cac249",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-28T12:54:05Z",
+      "side": 1,
+      "message": "There is another possibility, which also have other advantages; we can store all the positioned items, with WTF::nullopt as associated line for the ones with \u0027auto\u0027 position. With that approach we wouldn\u0027t have to clear the map, just updating the map value whenever there is a style change. \n\nHowever, we may need to add some additional assertions to detect out of flow items not being\nhandled by the map, since the empty value is WTF::nullopt.",
+      "parentUuid": "60e964be_cc0fa131",
+      "revId": "fd249e40cbf787eaeb7b7970de98f5ca9a449610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "225faf48_80dfdd2a",
         "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.h",
         "patchSetId": 6
