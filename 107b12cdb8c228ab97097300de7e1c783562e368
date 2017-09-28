@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0f124317_359c8038",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-28T17:19:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "989d0c10_8a209703",
+      "range": {
+        "startLine": 852,
+        "startChar": 10,
+        "endLine": 852,
+        "endChar": 14
+      },
+      "revId": "107b12cdb8c228ab97097300de7e1c783562e368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc5123d4_ab59d602",
         "filename": "components/autofill/core/browser/autofill_manager.cc",
         "patchSetId": 2
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "ef0b41ab_7145ded8",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2096,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-28T17:19:25Z",
+      "side": 1,
+      "message": "1) Yeah, I should keep the original logic. They have the same effect. \n\n2) Since the name of this metric is form[s] loaded. I think it\u0027s OK to log address forms loaded if multiple address form on the page.",
+      "parentUuid": "bc5123d4_ab59d602",
+      "revId": "107b12cdb8c228ab97097300de7e1c783562e368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e3c98fe_05142f17",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
@@ -56,6 +98,24 @@
       "revId": "107b12cdb8c228ab97097300de7e1c783562e368",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "885c122a_0b40aa1a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 93583,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-28T17:19:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e3c98fe_05142f17",
+      "revId": "107b12cdb8c228ab97097300de7e1c783562e368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
