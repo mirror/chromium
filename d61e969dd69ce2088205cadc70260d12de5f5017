@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1602fcec_8f8e10b6",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-28T18:26:50Z",
+      "side": 1,
+      "message": "If the metric is emitted on each frame draw, I don\u0027t see why you\u0027re emitting here.  (\"// Haven\u0027t yet reached time for next frame to start;\")",
+      "revId": "d61e969dd69ce2088205cadc70260d12de5f5017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4205483f_2e89875c",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-28T18:26:50Z",
+      "side": 1,
+      "message": "This means the animation is over, right?  \u003d\u003e no need to emit",
+      "revId": "d61e969dd69ce2088205cadc70260d12de5f5017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c907f7cd_01bbf851",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 1419,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-28T18:26:50Z",
+      "side": 1,
+      "message": "This metric needs to state clearly when it is emitted.  On each frame draw?",
+      "revId": "d61e969dd69ce2088205cadc70260d12de5f5017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
