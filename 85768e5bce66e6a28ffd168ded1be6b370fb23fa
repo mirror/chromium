@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "1d244008_f6ec5a64",
+        "filename": "content/browser/renderer_host/render_widget_host_view_base.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-09-28T17:45:33Z",
+      "side": 1,
+      "message": "I don\u0027t know if this comment is important, but is it actually true? RenderWidgetHostViews are supposed to be tied to renderer process lifetimes.",
+      "revId": "85768e5bce66e6a28ffd168ded1be6b370fb23fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82e9d6fb_c4dc3ac8",
+        "filename": "content/browser/renderer_host/render_widget_host_view_child_frame.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-09-28T17:45:33Z",
+      "side": 1,
+      "message": "nit: The ternary operator seems redundant since you just tested frame_connector_ 3 lines above.",
+      "revId": "85768e5bce66e6a28ffd168ded1be6b370fb23fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a519a46c_9e029020",
         "filename": "content/common/render_widget_window_tree_client_factory.mojom",
         "patchSetId": 11
@@ -42,6 +76,46 @@
         "startChar": 0,
         "endLine": 12,
         "endChar": 1
+      },
+      "revId": "85768e5bce66e6a28ffd168ded1be6b370fb23fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f32bf05_54d15441",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-09-28T17:45:33Z",
+      "side": 1,
+      "message": "I don\u0027t think this should happen for all RenderFrameProxies, because most will not embed a frame directly -- they are used to reference every frame in the frame tree that is in a different process, but I believe you only want to create a mus_embedded_frame_ in the case where this is a RenderFrameProxy that is an immediate child of a local (RenderFrameImpl) parent.\n\nA twist is that you probably don\u0027t know that right now, because (IIUC) Init is called before this frame is added to the frame tree. I think that means you need to lazily create the mus_embedded_frame_ when it is required. An alternative would be to plumb a notification to let us know when this RemoteFrameProxy\u0027s WebRemoteFrame is added to the frame tree in Blink.",
+      "revId": "85768e5bce66e6a28ffd168ded1be6b370fb23fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb703c5d_085aa9d3",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-09-28T17:45:33Z",
+      "side": 1,
+      "message": "Is this okay because IsRunningInMash() implies that we don\u0027t use surface synchronization? If so, a comment to that effect would be helpful.",
+      "range": {
+        "startLine": 309,
+        "startChar": 41,
+        "endLine": 309,
+        "endChar": 63
       },
       "revId": "85768e5bce66e6a28ffd168ded1be6b370fb23fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
