@@ -16,6 +16,24 @@
       "revId": "3b5522a65e1523cc276368bb9d2f81c57fa3e71a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e36fbe4e_05141c78",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-28T18:39:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ce26061_714354e1",
+      "revId": "3b5522a65e1523cc276368bb9d2f81c57fa3e71a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
