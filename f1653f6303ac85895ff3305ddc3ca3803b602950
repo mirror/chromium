@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d6fa353_2e80fe38",
+        "filename": "net/url_request/redirect_info_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-28T15:47:20Z",
+      "side": 1,
+      "message": "nit:  I think we generally use kConstNaming for thinks like these in tests.",
+      "range": {
+        "startLine": 31,
+        "startChar": 13,
+        "endLine": 31,
+        "endChar": 26
+      },
+      "revId": "f1653f6303ac85895ff3305ddc3ca3803b602950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f0bdf69_90c53238",
+        "filename": "net/url_request/redirect_info_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-28T15:47:20Z",
+      "side": 1,
+      "message": "Should we have another no-referrer-when-downgrade request where the location is also https (Which should update the policy, but keep the referrer?)",
+      "range": {
+        "startLine": 190,
+        "startChar": 26,
+        "endLine": 190,
+        "endChar": 35
+      },
+      "revId": "f1653f6303ac85895ff3305ddc3ca3803b602950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6084b8e0_ed478c3d",
+        "filename": "net/url_request/redirect_info_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-28T15:47:20Z",
+      "side": 1,
+      "message": "Should this be http?  The comment suggests this should be a downgrade.",
+      "range": {
+        "startLine": 331,
+        "startChar": 8,
+        "endLine": 331,
+        "endChar": 16
+      },
+      "revId": "f1653f6303ac85895ff3305ddc3ca3803b602950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "951f8ecc_b90afd10",
+        "filename": "net/url_request/redirect_info_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-28T15:47:20Z",
+      "side": 1,
+      "message": "I think this should also be http, though I\u0027m not positive.",
+      "range": {
+        "startLine": 341,
+        "startChar": 26,
+        "endLine": 341,
+        "endChar": 29
+      },
+      "revId": "f1653f6303ac85895ff3305ddc3ca3803b602950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d3eb75b_7853cbcc",
+        "filename": "net/url_request/redirect_info_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-28T15:47:20Z",
+      "side": 1,
+      "message": "Maybe also a test without any Referrer-Policy header?",
+      "range": {
+        "startLine": 391,
+        "startChar": 29,
+        "endLine": 391,
+        "endChar": 0
+      },
+      "revId": "f1653f6303ac85895ff3305ddc3ca3803b602950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed861e34_5d970406",
+        "filename": "net/url_request/redirect_info_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-28T15:47:20Z",
+      "side": 1,
+      "message": "New location should have a different host in this one.",
+      "range": {
+        "startLine": 463,
+        "startChar": 45,
+        "endLine": 463,
+        "endChar": 46
+      },
+      "revId": "f1653f6303ac85895ff3305ddc3ca3803b602950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

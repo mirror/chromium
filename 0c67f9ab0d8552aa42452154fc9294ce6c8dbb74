@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ccdda92a_56c0d3a7",
+        "filename": "net/url_request/url_request_job_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-28T15:47:20Z",
+      "side": 0,
+      "message": "Is there any other test that at least makes sure the referrer policy magic is hooked up?  Not suggesting the whole thing.  Just a request with Referrer-Policy: no-referrer and one without it (I\u0027m sure we already have the latter) would be enough.",
+      "range": {
+        "startLine": 374,
+        "startChar": 20,
+        "endLine": 374,
+        "endChar": 63
+      },
+      "revId": "0c67f9ab0d8552aa42452154fc9294ce6c8dbb74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
