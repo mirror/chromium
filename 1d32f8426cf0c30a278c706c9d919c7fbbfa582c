@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "9133f031_53adb70f",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 939,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-09-28T19:42:29Z",
+      "side": 1,
+      "message": "ok, that sounds fine.\n\nThe tradeoff is in the accuracy. the 100 and 1000 macros both use the same number of buckets, so you have to stretch those buckets over a larger range. For these histograms we use exponential bucket sizes so we always get higher accuracy at the lower end of the value range though.\n\nIt can also be wasteful if you don\u0027t expect to have many values in that higher range since it still allocates space for those higher buckets.",
+      "parentUuid": "e6914a45_4097de66",
+      "range": {
+        "startLine": 939,
+        "startChar": 23,
+        "endLine": 939,
+        "endChar": 27
+      },
+      "revId": "1d32f8426cf0c30a278c706c9d919c7fbbfa582c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "25825270_23096ae7",
         "filename": "components/autofill/core/browser/personal_data_manager.cc",
         "patchSetId": 6
