@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d37ce3b9_6bcc0bd6",
+        "filename": "chrome/test/chromedriver/server/http_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-09-28T00:02:50Z",
+      "side": 1,
+      "message": "The ordering of the statuses in the original code has no significance, other than putting statuses with same HTTP status codes together, so the code can be shared. Since we\u0027re now explicitly giving the HTTP code for each internal status code, it\u0027s probably best to re-order the status codes as well, to make them the same order as https://w3c.github.io/webdriver/webdriver-spec.html#handling-errors. This will make it much easily to verify that we are returned the correct HTTP status, especially if the spec ever changes. For any status codes not in the spec, put them in a separate section, with a TODO to review their usages.",
+      "range": {
+        "startLine": 705,
+        "startChar": 0,
+        "endLine": 705,
+        "endChar": 22
+      },
+      "revId": "2d12b12fb1bcc1d4e1d2a9a75b5079a563dc4b81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
