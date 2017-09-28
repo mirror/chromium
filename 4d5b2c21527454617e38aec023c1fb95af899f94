@@ -34,6 +34,63 @@
       "revId": "4d5b2c21527454617e38aec023c1fb95af899f94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a310d5d_ecf9b685",
+        "filename": "chrome/browser/ui/webui/print_preview/extension_printer_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-28T21:13:05Z",
+      "side": 1,
+      "message": "If you use SetPath(), then you can skip calling base::DictionaryValue::From().",
+      "revId": "4d5b2c21527454617e38aec023c1fb95af899f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bd01b78_68bbf427",
+        "filename": "chrome/browser/ui/webui/print_preview/extension_printer_handler_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-28T21:13:05Z",
+      "side": 1,
+      "message": "Should this be FindPathOfType() ? Then if it\u0027s the wrong type, we just set the out value to nullptr. As is, line 223 will Clone it, and then fail the check in DictionaryValue::From().",
+      "revId": "4d5b2c21527454617e38aec023c1fb95af899f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd01e753_94b6fe08",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-28T21:13:05Z",
+      "side": 1,
+      "message": "So no kSettingCapabilties key implies failure? Can there be a kSettingCapabilties key, but the dictionary value is empty?",
+      "range": {
+        "startLine": 48,
+        "startChar": 18,
+        "endLine": 48,
+        "endChar": 24
+      },
+      "revId": "4d5b2c21527454617e38aec023c1fb95af899f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
