@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "2640a526_077bb19c",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-28T16:04:57Z",
+      "side": 1,
+      "message": "So I agree with waiting for and reporting that pending read, because that\u0027s data that\u0027s going to be pulled in and cached despite the pause.  I\u0027m less certain about this case, because in this case the effect of the pause is likely to be a no-op; no data is actually going to be read because of the pause, so we\u0027re over-counting bytes (IMO).\n\nHaving said that, I could imagine that there\u0027s some races between this being called and the information that the read has completed bubbling up asynchronously from the network stack, so it wouldn\u0027t be completely accurate to not record them either.  My opinion is that we\u0027re still over-recording bytes by including this case, but I\u0027m fine with leaving it up to you.",
+      "parentUuid": "656acb44_20e41a69",
+      "range": {
+        "startLine": 484,
+        "startChar": 4,
+        "endLine": 484,
+        "endChar": 30
+      },
+      "revId": "0808f972c9bd445db5df5287b13fd957db4091f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b12c8443_be6b3cd1",
         "filename": "content/network/url_loader_impl.cc",
         "patchSetId": 2
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "It should work correctly even if Pause is called multiple times (although it doesn\u0027t guarantee it reports as many times as Pause).\n\nOne scenario that this could happen:\norigina_URL is suspicious -\u003e Pause\nit turns out to be okay -\u003e Resume\nfollow redirect, but redirect is suspicious again -\u003e Pause again",
       "parentUuid": "b12c8443_be6b3cd1",
+      "range": {
+        "startLine": 541,
+        "startChar": 20,
+        "endLine": 541,
+        "endChar": 46
+      },
+      "revId": "0808f972c9bd445db5df5287b13fd957db4091f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8229b67_a2c9fbde",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-28T16:04:57Z",
+      "side": 1,
+      "message": "Ah, good point; missed the multiple calls possibility. \n\nSo in my opinion we should guarantee reporting this stat exactly once per request that ReportBodyReadBeforePaused() is called on; does that match your understanding?  Specifically, I think if we can call it multiple times on one request, that\u0027ll mess up our statistics--I think we\u0027ll bias towards too many cases in which the pause happened before any bytes were read.  I could imagine an argument that we want to report once per pause, even if it\u0027s called multiple times per request, but I\u0027d like to see that argument written out.  Naively, we\u0027re only racing reading from the network with the last SB check on a redirect chain, so that\u0027s the only one I care about whether we got bytes despite pausing for.  WDYT?",
+      "parentUuid": "d62332a4_dc82414d",
       "range": {
         "startLine": 541,
         "startChar": 20,
