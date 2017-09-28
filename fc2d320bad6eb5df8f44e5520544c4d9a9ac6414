@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "500e4532_042e643a",
+        "filename": "cc/layers/layer_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-28T19:54:21Z",
+      "side": 1,
+      "message": "This starts as a rect -\u003e vector2d + size -\u003e rect.  Maybe just keep as rect all the way through?",
+      "revId": "fc2d320bad6eb5df8f44e5520544c4d9a9ac6414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65405d05_c822660d",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-28T19:54:21Z",
+      "side": 1,
+      "message": "This is a lot to digest.  I\u0027d also be more comfortable with something that always adjusted, so that we don\u0027t have to find pages that scroll past 4k before any bugs in this path show up.\n\nOne suggestion: always adjust by visible_rect.x() - maximum tile size width. You could ask the PictureLayerTilingSet for the tile size of its smallest sized tiling is, and then that\u0027d guarantee you that everything was positive.  (Do we need to dcheck that somewhere?)",
+      "revId": "fc2d320bad6eb5df8f44e5520544c4d9a9ac6414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6811859b_5d00b92f",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-28T19:54:21Z",
+      "side": 1,
+      "message": "Can you change these things earlier, up with changing the shared quad state transform? If you did that, then maybe you wouldn\u0027t need offset_visible_geometry_rect and such and could pass quad_layer_rect direction to append debug quads \u0026c \u0026c",
+      "revId": "fc2d320bad6eb5df8f44e5520544c4d9a9ac6414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
