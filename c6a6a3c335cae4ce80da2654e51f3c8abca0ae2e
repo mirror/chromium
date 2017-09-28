@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a1a22579_2c515da6",
+        "filename": "ui/gl/gl_surface_egl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 931,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-09-28T22:43:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f9aeda0_5b96c419",
+      "revId": "c6a6a3c335cae4ce80da2654e51f3c8abca0ae2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cac6c359_dbdfa368",
         "filename": "ui/gl/gl_surface_egl.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-28T18:32:07Z",
       "side": 1,
       "message": "I\u0027m not an expert on move constructors and assignment operators so trust that you\u0027ve thought through the implications of defining these, and that uses of PendingLatencyInfo and the vector of ui::LatencyInfo are valid. (Noticed a comment below about keeping track of whether these vectors were std::move\u0027d from, and ensuring that the \"undefined but valid\" C++ semantics were made consistent.)",
+      "revId": "c6a6a3c335cae4ce80da2654e51f3c8abca0ae2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbaf55e6_9dee3966",
+        "filename": "ui/gl/gl_surface_egl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1005,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-09-28T22:43:08Z",
+      "side": 1,
+      "message": "Explicitly defining the moves implicitly deletes the copy methods so the compiler will complain if any code accidentally copies PendingLatencyInfo.\n\nAlso, updated the comment to say \"known empty\" rather than \"valid\" to be pedantic.",
+      "parentUuid": "cac6c359_dbdfa368",
       "revId": "c6a6a3c335cae4ce80da2654e51f3c8abca0ae2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
