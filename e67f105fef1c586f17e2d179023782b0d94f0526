@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bc82a9b_b2dba4cb",
+        "filename": "net/cert/cert_verify_proc_builtin.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-09-28T18:32:29Z",
+      "side": 1,
+      "message": "hm, the other verifiers seem to be treating it that way (in the EV checking implementations, we don\u0027t do full revocation checking if the CRLSet checking passed and the leaf was covered by the CRLSet)",
+      "range": {
+        "startLine": 112,
+        "startChar": 47,
+        "endLine": 112,
+        "endChar": 58
+      },
+      "revId": "e67f105fef1c586f17e2d179023782b0d94f0526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
