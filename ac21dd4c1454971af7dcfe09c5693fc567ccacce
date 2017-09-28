@@ -22,6 +22,30 @@
       "revId": "ac21dd4c1454971af7dcfe09c5693fc567ccacce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8710ad7_9c85a67e",
+        "filename": "content/renderer/media_capture_from_element/html_video_element_capturer_source.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-28T20:34:21Z",
+      "side": 1,
+      "message": "Done. Missed that when I originally wrote it. Thanks for catching it.",
+      "parentUuid": "f57ca31d_c0ff8d8b",
+      "range": {
+        "startLine": 122,
+        "startChar": 31,
+        "endLine": 122,
+        "endChar": 32
+      },
+      "revId": "ac21dd4c1454971af7dcfe09c5693fc567ccacce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
