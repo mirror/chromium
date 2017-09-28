@@ -9,7 +9,7 @@ visibility = [
   "//third_party/android_tools:*",
 ]
 
-lib_version = "25.0.1"
+lib_version = "25.1.0"
 lib_path = "//third_party/android_tools/sdk/extras/android/m2repository/com/android/support"
 build_file_dir = "//build/secondary/third_party/android_tools/support"
 
