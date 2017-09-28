@@ -1,0 +1,619 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63d7698d_cd8462f4",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-28T23:27:32Z",
+      "side": 1,
+      "message": "Any reason why these logic couldn\u0027t be applied to non-extension MRPs? Maybe something like:\n\n1) Run callback with config and sync state for all MRPs\n2a) If non-extension MRP, then set up connection error handler and put in media_route_providers_map_\n2b) Otherwise, run the logic below specifically for the extension MRP\n\nThat way we have the option to plumb configs to new MRPs and state sync would continue to work.",
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35515eaa_321183e9",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-28T23:27:32Z",
+      "side": 1,
+      "message": "We only want to do this for routes owned by the extension, right?",
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "568b4a37_e25d641d",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-28T23:27:32Z",
+      "side": 1,
+      "message": "Can you please document all behaviors that are specific to the extension MRP? Such as the MediaRouteController reconnection. Is the plan to also initialize / register local screens MRP here?",
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ccbc7e1_d31efd7f",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-28T23:27:32Z",
+      "side": 1,
+      "message": "There seems to be some bit rot this code -- is_mdns_enabled_ is never set to true. It seems this should be checking !should_enable_mdns_discovery_ || is_mdns_enabled, and L208 should be setting is_mdns_enabled_ to true. L67 should be calling this method instead.\n\nAlso, the current code won\u0027t compile on Windows since it\u0027s still referring to media_route_provider_.",
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03d79850_42a6600e",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-28T23:27:32Z",
+      "side": 1,
+      "message": "What happens if there is already a MediaRouteProviderPtr with the same provider_name?",
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3186fec5_1711eef2",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-28T23:27:32Z",
+      "side": 1,
+      "message": "Can GetProviderForSink return the mojom::MediaRouteProvider* to use?",
+      "range": {
+        "startLine": 201,
+        "startChar": 74,
+        "endLine": 201,
+        "endChar": 0
+      },
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59829fc5_56bf1326",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-28T23:27:32Z",
+      "side": 1,
+      "message": "Ditto on returning mojom::MediaRouteProvider*",
+      "range": {
+        "startLine": 229,
+        "startChar": 34,
+        "endLine": 229,
+        "endChar": 60
+      },
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea122465_22b76dec",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-28T23:27:32Z",
+      "side": 1,
+      "message": "As I said in the email thread I think the join case can be supported by adding having the MediaRoute carrying presentation_id and maintaining a mapping here. We still need a special case for autojoin, however.",
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17a2cecf_abf5faa1",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-28T23:27:32Z",
+      "side": 1,
+      "message": "Ditto on returning mojom::MediaRouteProvider*",
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e5e4eb0_3675471d",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-28T23:27:32Z",
+      "side": 1,
+      "message": "Have you test if manually entering a meeting id for Castouts still works? The pseudo-sink business has always been a special case. We may need a workaround here. Longer term, I would like to rework SearchSinks to not rely on a pseudo-sink.",
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeb9f65c_63dd338a",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-28T23:27:32Z",
+      "side": 1,
+      "message": "GetCanoncialProviderName?",
+      "range": {
+        "startLine": 405,
+        "startChar": 34,
+        "endLine": 405,
+        "endChar": 54
+      },
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2471cbc4_c14c6ea7",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-28T23:27:32Z",
+      "side": 1,
+      "message": "Can you add a note here that this assumes there are no duplicate sinks between providers?",
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f6dad11_5a6681d9",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-28T23:27:32Z",
+      "side": 1,
+      "message": "Is this used?",
+      "range": {
+        "startLine": 453,
+        "startChar": 65,
+        "endLine": 453,
+        "endChar": 0
+      },
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c034225_7ece7d85",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-28T23:27:32Z",
+      "side": 1,
+      "message": "Maybe just combine these 3 statements into a Reset() method?",
+      "range": {
+        "startLine": 719,
+        "startChar": 31,
+        "endLine": 719,
+        "endChar": 0
+      },
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a0a950e_162a5d82",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-28T23:27:32Z",
+      "side": 1,
+      "message": "Is it possible to make this sync to a given provider?",
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59c72811_fe16ba36",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-28T23:27:32Z",
+      "side": 1,
+      "message": "This is fine, but this leads me to think whether we should just merge what we are currently doing with MediaRouterBase::internal_routes_observer_ and the bookkeeping of route to providers. It might be easier if we drop internal_routes_observer_ and just hook directly to MediaRouterMojoImpl::OnRoutesUpdated. The downside is that you will need to make it work on Android also.",
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4a4008a_409515ef",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-28T23:27:32Z",
+      "side": 1,
+      "message": "Why do you need source_id here? Is it because the same sink_id can be returned by \u003e1 MRPs?",
+      "range": {
+        "startLine": 126,
+        "startChar": 57,
+        "endLine": 126,
+        "endChar": 66
+      },
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32dd5352_a196892f",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-28T23:27:32Z",
+      "side": 1,
+      "message": "Let\u0027s use a base::small_map here since it\u0027s most likely to be more efficient in our case.",
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ee4e949_c28eb231",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-28T23:27:32Z",
+      "side": 1,
+      "message": "Seems like we should make this a class, now that we are introducing methods.",
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "decdbf2e_4438811f",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-28T23:27:32Z",
+      "side": 1,
+      "message": "const ref?",
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34bc078f_405a6ceb",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-28T23:27:32Z",
+      "side": 1,
+      "message": "Did you mean for this to return a const ref?",
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5fb2075_adaeb617",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-28T23:27:32Z",
+      "side": 1,
+      "message": "Note that it is not entirely correct to have a single origin list for the combined sink query result. Some background context: each MRP can optionally send back a list of Origins for which a given sink query result is valid (empty list means the result is valid for all origins). This is to prevent DIAL device fingerprinting by potentially malicious sites. Can you add a TODO here to rework how origins are used in sink queries? Two potential solutions are:\n1) each sink returned in the sink query result is associated with its own origin list, which MR is responsible for merging from results from multiple MRPs\n2) rework sink query to take an origin in addition to a media source",
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "491065dd_ee92b694",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-28T23:27:32Z",
+      "side": 1,
+      "message": "Ditto on unordered_map - replace with small_map",
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24a7f1cd_c8750441",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-28T23:27:32Z",
+      "side": 1,
+      "message": "ditto on class",
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9b1ec92_6bdfc476",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-28T23:27:32Z",
+      "side": 1,
+      "message": "const ref here and below",
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "151ff238_e8b69ef1",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-28T23:27:32Z",
+      "side": 1,
+      "message": "base::small_map",
+      "range": {
+        "startLine": 264,
+        "startChar": 9,
+        "endLine": 264,
+        "endChar": 22
+      },
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb575d1d_b595ebc9",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-28T23:27:32Z",
+      "side": 1,
+      "message": "not used?",
+      "range": {
+        "startLine": 266,
+        "startChar": 65,
+        "endLine": 266,
+        "endChar": 0
+      },
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6037623_151439cc",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-28T23:27:32Z",
+      "side": 1,
+      "message": "Please document the return value.",
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39d4237e_9ea119d2",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-28T23:27:32Z",
+      "side": 1,
+      "message": "nit: Prefer consistent names for similar methods with SinkQuery / RouteQuery. (SetXXXForProvider)",
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02ed7aff_2b5f9e4f",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-28T23:27:32Z",
+      "side": 1,
+      "message": "base::small_map",
+      "range": {
+        "startLine": 288,
+        "startChar": 9,
+        "endLine": 288,
+        "endChar": 22
+      },
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7ef79eb_ecd68f12",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-28T23:27:32Z",
+      "side": 1,
+      "message": "Let\u0027s try to replace unordered_map with a more efficient container, such as base::small_map. See https://cs.chromium.org/chromium/src/base/containers/README.md?type\u003dcs\u0026q\u003df:base/containers/readme.md\u0026sq\u003dpackage:chromium\u0026l\u003d1 for explanation.",
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5d578b7_d35fe1ef",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-28T23:27:32Z",
+      "side": 1,
+      "message": "Can you use a mojo::BindingSet here?",
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "191c90cf_ecc45cd6",
+        "filename": "chrome/renderer/resources/extensions/media_router_bindings.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-28T23:27:32Z",
+      "side": 1,
+      "message": "define a string const for this?",
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
