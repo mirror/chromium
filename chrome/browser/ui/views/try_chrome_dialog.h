@@ -23,6 +23,7 @@ class SingletonHwndObserver;
 }
 
 namespace views {
+class View;
 class Widget;
 }
 
@@ -90,6 +91,7 @@ class TryChromeDialog : public views::ButtonListener,
   class ModalShowDelegate;
 
   friend class TryChromeDialogBrowserTestBase;
+  friend class TryChromeDialogWidget;
 
   // Creates a Try Chrome toast dialog. |group| signifies an experiment group
   // which dictactes messaging text and presence of ui elements. |delegate|,
@@ -127,6 +129,10 @@ class TryChromeDialog : public views::ButtonListener,
   // singleton. Triggers completion of the interaction by closing the dialog.
   void OnProcessNotification();
 
+  // Handles for events sent by the dialog's Widget.
+  void GainedMouseHover();
+  void LostMouseHover();
+
   // views::ButtonListener:
   // Updates the result_ and state_ based on which button was pressed and
   // closes the dialog.
@@ -163,6 +169,9 @@ class TryChromeDialog : public views::ButtonListener,
 
   // Unowned; |popup_| owns itself.
   views::Widget* popup_ = nullptr;
+
+  // The close button; owned by |popup_|.
+  views::View* close_button_ = nullptr;
 
   SEQUENCE_CHECKER(my_sequence_checker_);
 
