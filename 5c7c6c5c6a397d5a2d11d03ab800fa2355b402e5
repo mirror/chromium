@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "df94dce7_e55add4c",
+        "filename": "ui/wm/core/focus_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-28T22:05:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36cd3e72_99c76623",
+      "range": {
+        "startLine": 298,
+        "startChar": 2,
+        "endLine": 299,
+        "endChar": 64
+      },
+      "revId": "5c7c6c5c6a397d5a2d11d03ab800fa2355b402e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d69ea54b_f7f8cccf",
         "filename": "ui/wm/public/activation_change_observer.h",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "5c7c6c5c6a397d5a2d11d03ab800fa2355b402e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9a294ed_6b5ed798",
+        "filename": "ui/wm/public/activation_change_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-28T22:05:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d69ea54b_f7f8cccf",
+      "range": {
+        "startLine": 29,
+        "startChar": 44,
+        "endLine": 29,
+        "endChar": 49
+      },
+      "revId": "5c7c6c5c6a397d5a2d11d03ab800fa2355b402e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
