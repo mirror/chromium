@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94fa9894_fd453859",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1203,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-09-28T08:23:17Z",
+      "side": 1,
+      "message": "nit: newline here.",
+      "range": {
+        "startLine": 1203,
+        "startChar": 1,
+        "endLine": 1203,
+        "endChar": 0
+      },
+      "revId": "6043daeca4627cba59eebc9bceefd231b9014f74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f559625a_cf6afefb",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 1424,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-09-28T08:23:17Z",
+      "side": 1,
+      "message": "Looking at the way you used the managed pref I don\u0027t think this is entirely true. If the policy is set to enabled this will force the value of the pref to true no matter what the user sets (btw how is the user even capable of setting this pref - is there ui?) manually. Unless what you mean is that the user will be prompted as usual on each autofill event if he wants to save CC data or not. Maybe this deserves clarification?",
+      "range": {
+        "startLine": 1424,
+        "startChar": 82,
+        "endLine": 1424,
+        "endChar": 123
+      },
+      "revId": "6043daeca4627cba59eebc9bceefd231b9014f74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
