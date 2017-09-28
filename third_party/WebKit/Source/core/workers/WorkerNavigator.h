@@ -32,6 +32,7 @@
 #include "core/frame/NavigatorOnLine.h"
 #include "platform/Supplementable.h"
 #include "platform/bindings/ScriptWrappable.h"
+#include "platform/bindings/TraceWrapperMember.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/text/WTFString.h"
 
