@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "17ea3f66_2eaf79e9",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/FetchContext.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-09-28T21:57:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af510855_830c33e2",
+      "revId": "eddee85593ca7e582e63b4d8ac1359e2399d6e59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a6980e3e_768f2276",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/FetchContext.h",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-28T10:10:27Z",
       "side": 1,
       "message": "Sorry, I\u0027m a bit confused. \"keepalive requests need a different timer\", but this CL uses the same task runner, right?",
+      "revId": "eddee85593ca7e582e63b4d8ac1359e2399d6e59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca1f52be_f4c96694",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/FetchContext.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-09-28T21:57:30Z",
+      "side": 1,
+      "message": "Attempted to clarify.",
+      "parentUuid": "a6980e3e_768f2276",
       "revId": "eddee85593ca7e582e63b4d8ac1359e2399d6e59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -64,6 +100,24 @@
       "writtenOn": "2017-09-28T10:10:27Z",
       "side": 1,
       "message": "This is problematic because this function can be called in a prefinalizer. Calling WrapPersistent in such a situation is dangerous (TaskRunnerTime takes care of the issue).",
+      "revId": "eddee85593ca7e582e63b4d8ac1359e2399d6e59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a58685fa_5f32489e",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-09-28T21:57:30Z",
+      "side": 1,
+      "message": "Switched to TaskRunnerTimer, thanks for catching that.",
+      "parentUuid": "d746cbd8_e0e927b6",
       "revId": "eddee85593ca7e582e63b4d8ac1359e2399d6e59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
