@@ -27,6 +27,7 @@ static remoting::GestureInterpreter::GestureState toGestureState(
 @interface ClientGestures ()<UIGestureRecognizerDelegate> {
  @private
   UILongPressGestureRecognizer* _longPressRecognizer;
+
   UIPanGestureRecognizer* _panRecognizer;
   UIPanGestureRecognizer* _flingRecognizer;
   UIPanGestureRecognizer* _scrollRecognizer;
@@ -39,6 +40,7 @@ static remoting::GestureInterpreter::GestureState toGestureState(
   UITapGestureRecognizer* _singleTapRecognizer;
   UITapGestureRecognizer* _twoFingerTapRecognizer;
   UITapGestureRecognizer* _threeFingerTapRecognizer;
+  UITapGestureRecognizer* _fourFingerTapRecognizer;
 
   __weak UIView* _view;
   __weak RemotingClient* _client;
@@ -116,6 +118,13 @@ static remoting::GestureInterpreter::GestureState toGestureState(
   _threeFingerTapRecognizer.numberOfTouchesRequired = 3;
   _threeFingerTapRecognizer.delegate = self;
   [view addGestureRecognizer:_threeFingerTapRecognizer];
+
+  _fourFingerTapRecognizer = [[UITapGestureRecognizer alloc]
+      initWithTarget:self
+              action:@selector(fourFingerTapGestureTriggered:)];
+  _fourFingerTapRecognizer.numberOfTouchesRequired = 4;
+  _fourFingerTapRecognizer.delegate = self;
+  [view addGestureRecognizer:_fourFingerTapRecognizer];
 
   [_singleTapRecognizer requireGestureRecognizerToFail:_twoFingerTapRecognizer];
   [_twoFingerTapRecognizer
@@ -214,6 +223,12 @@ static remoting::GestureInterpreter::GestureState toGestureState(
     // Swiped up - show keyboard
     [_delegate keyboardShouldShow];
   }
+}
+
+// To trigger the menu.
+- (IBAction)fourFingerTapGestureTriggered:
+    (UILongPressGestureRecognizer*)sender {
+  [_delegate menuShouldShow];
 }
 
 #pragma mark - UIGestureRecognizerDelegate
