@@ -7,5 +7,6 @@ include_rules = [
   "+ash/wallpaper/wallpaper_controller.h",
   "+components/google/core/browser",
   "+ui/base",
+  "+ui/display",
   "+ui/gfx",
 ]
