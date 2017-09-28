@@ -125,6 +125,7 @@ class CORE_EXPORT StyleRule : public StyleRuleBase {
   // Helper methods to avoid parsing lazy properties when not needed.
   bool PropertiesHaveFailedOrCanceledSubresources() const;
   bool ShouldConsiderForMatchingRules(bool include_empty_rules) const;
+  void ClearLazyPropertyParser() { lazy_property_parser_ = nullptr; }
 
   DECLARE_TRACE_AFTER_DISPATCH();
 
