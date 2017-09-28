@@ -16,6 +16,24 @@
       "revId": "bcbc45d02ba04af457874abcb3d5b7c19c48d3d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b817eb0_69920b2a",
+        "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-28T13:24:13Z",
+      "side": 1,
+      "message": "Either is probably fine, but a separate handler keeps things a bit more isolated.",
+      "parentUuid": "76cd4f11_02b1d38e",
+      "revId": "bcbc45d02ba04af457874abcb3d5b7c19c48d3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

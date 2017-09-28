@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "719cd050_0a103bff",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browser_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-28T13:24:13Z",
+      "side": 1,
+      "message": "No need for extensions:: prefix",
+      "revId": "133c159cb2fdce618b25a132337f2a99f6995da8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dbb78fa_8f610b6f",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browser_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-28T13:24:13Z",
+      "side": 1,
+      "message": "hmm... I know that other code in this file also uses ExtensionRegistry::EVERYTHING, but I wouldn\u0027t think we\u0027d care about anything but enabled extensions.  Looks like Ben wrote most of this file; Ben, was this intentional?",
+      "revId": "133c159cb2fdce618b25a132337f2a99f6995da8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a924aed_91659c2d",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-28T13:24:13Z",
+      "side": 1,
+      "message": "We\u0027re using SK_ColorTRANSPARENT for an unspecified color, but does it not make sense for a web app to specify \u0027transparent\u0027 as the theme color?",
+      "revId": "133c159cb2fdce618b25a132337f2a99f6995da8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2898c6b_e2e28ad9",
+        "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-28T13:24:13Z",
+      "side": 1,
+      "message": "prefer std::make_unique",
+      "revId": "133c159cb2fdce618b25a132337f2a99f6995da8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a31d42d4_b5f4eaaa",
+        "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-28T13:24:13Z",
+      "side": 1,
+      "message": "prefer nullptr",
+      "revId": "133c159cb2fdce618b25a132337f2a99f6995da8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a62e5729_c7f075fc",
+        "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-28T13:24:13Z",
+      "side": 1,
+      "message": "Prefer GetString",
+      "revId": "133c159cb2fdce618b25a132337f2a99f6995da8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13e8dd9e_b7b75419",
+        "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-28T13:24:13Z",
+      "side": 1,
+      "message": "no trailing _",
+      "range": {
+        "startLine": 24,
+        "startChar": 21,
+        "endLine": 24,
+        "endChar": 22
+      },
+      "revId": "133c159cb2fdce618b25a132337f2a99f6995da8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a4b9bc0_1f93d2bc",
+        "filename": "components/sync/protocol/app_specifics.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-28T13:24:13Z",
+      "side": 1,
+      "message": "Nit: remove double \u0027.\u0027\nAlso, what type of string? Hex? RGB(A)? HSL? (document)",
+      "revId": "133c159cb2fdce618b25a132337f2a99f6995da8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
