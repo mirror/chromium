@@ -87,6 +87,9 @@ namespace languageSettingsPrivate {
     // Disables a language, removing it from the Accept-Language list.
     static void disableLanguage(DOMString languageCode);
 
+    // Enables or disables translation for a given language.
+    static void setTranslateForLanguage(DOMString languageCode, boolean value);
+
     // Gets the current status of the chosen spell check dictionaries.
     static void getSpellcheckDictionaryStatuses(
         GetSpellcheckDictionaryStatusesCallback callback);
