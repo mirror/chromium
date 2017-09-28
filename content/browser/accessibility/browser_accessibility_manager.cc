@@ -817,13 +817,25 @@ BrowserAccessibility* BrowserAccessibilityManager::PreviousInTreeOrder(
   if (!object)
     return nullptr;
 
+  // If the object from where HTML navigation needs to start is a web view and
+  // has children, return its deepest child, as the web view should not be
+  // focused.
+  if (object->GetRole() == ui::AX_ROLE_ROOT_WEB_AREA &&
+      object->PlatformChildCount() != 0)
+    return object->PlatformDeepestLastChild();
+
   BrowserAccessibility* sibling = object->GetPreviousSibling();
-  if (!sibling)
+  if (!sibling) {
+    // Return the parent only if it is not a web view as web view should not be
+    // focused.
+    if (object->PlatformGetParent() &&
+        object->PlatformGetParent()->GetRole() == ui::AX_ROLE_ROOT_WEB_AREA)
+      return nullptr;
     return object->PlatformGetParent();
+  }
 
   if (sibling->PlatformChildCount())
     return sibling->PlatformDeepestLastChild();
-
   return sibling;
 }
 
