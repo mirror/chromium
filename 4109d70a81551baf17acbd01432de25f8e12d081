@@ -16,6 +16,24 @@
       "revId": "4109d70a81551baf17acbd01432de25f8e12d081",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bda653b3_d13a22d6",
+        "filename": "components/omnibox/browser/omnibox_field_trial.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-28T22:45:41Z",
+      "side": 1,
+      "message": "I agree that we should treat these flags independent, not with one overriding the other at times.  Please make the revision.\n\n(FWIW, your code fragment doesn\u0027t make sense (returning a bool for an enum); that\u0027s not the correct revision.)",
+      "parentUuid": "aa015d59_0ba45eb3",
+      "revId": "4109d70a81551baf17acbd01432de25f8e12d081",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
