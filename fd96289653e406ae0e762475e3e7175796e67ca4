@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "560f994a_b66edbfc",
+        "filename": "content/shell/test_runner/event_sender.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2285,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-09-28T14:00:37Z",
+      "side": 1,
+      "message": "I think this DCHECK really should be the other way around DCHECK_LE(touch_points_.size(), kTouchesLengthCap) to make the most logical sense.",
+      "revId": "fd96289653e406ae0e762475e3e7175796e67ca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
