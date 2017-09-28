@@ -81741,7 +81741,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 <histogram name="Sync.SessionTabs" units="tabs">
   <owner>zea@chromium.org</owner>
   <summary>
-    For each Chrome window, records the number of tabs present at the time Sync
+    For each Chrome window, records the number of unused tabs at the time Sync
     associates the SESSIONS datatype.
   </summary>
 </histogram>
@@ -83834,6 +83834,11 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     Counts how often tab stats daily interval events were fired.
   </summary>
+</histogram>
+
+<histogram name="Tabs.UnusedInInterval.Count" units="Tabs">
+  <owner>sebmarchand@chromium.org</owner>
+  <summary>TODO</summary>
 </histogram>
 
 <histogram name="TabsApi.RequestedWindowState" enum="RequestedWindowState">
@@ -102691,25 +102696,25 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram_suffixes name="SessionRestoreTabCounts" separator="_">
   <suffix name="1" label="1 tab present"/>
-  <suffix name="2" label="2 tabs present"/>
-  <suffix name="3" label="3 tabs present"/>
-  <suffix name="4" label="4 tabs present"/>
-  <suffix name="5" label="5 tabs present"/>
-  <suffix name="6" label="6 tabs present"/>
-  <suffix name="7" label="7 tabs present"/>
-  <suffix name="8" label="8 tabs present"/>
-  <suffix name="9" label="9 tabs present"/>
-  <suffix name="10" label="10 tabs present"/>
+  <suffix name="2" label="2 unused tabs"/>
+  <suffix name="3" label="3 unused tabs"/>
+  <suffix name="4" label="4 unused tabs"/>
+  <suffix name="5" label="5 unused tabs"/>
+  <suffix name="6" label="6 unused tabs"/>
+  <suffix name="7" label="7 unused tabs"/>
+  <suffix name="8" label="8 unused tabs"/>
+  <suffix name="9" label="9 unused tabs"/>
+  <suffix name="10" label="10 unused tabs"/>
   <suffix name="11" label="11 tab present"/>
-  <suffix name="12" label="12 tabs present"/>
-  <suffix name="13" label="13 tabs present"/>
-  <suffix name="14" label="14 tabs present"/>
-  <suffix name="15" label="15 tabs present"/>
-  <suffix name="16" label="16 tabs present"/>
-  <suffix name="17" label="17 tabs present"/>
-  <suffix name="18" label="18 tabs present"/>
-  <suffix name="19" label="19 tabs present"/>
-  <suffix name="20" label="20 tabs present"/>
+  <suffix name="12" label="12 unused tabs"/>
+  <suffix name="13" label="13 unused tabs"/>
+  <suffix name="14" label="14 unused tabs"/>
+  <suffix name="15" label="15 unused tabs"/>
+  <suffix name="16" label="16 unused tabs"/>
+  <suffix name="17" label="17 unused tabs"/>
+  <suffix name="18" label="18 unused tabs"/>
+  <suffix name="19" label="19 unused tabs"/>
+  <suffix name="20" label="20 unused tabs"/>
   <affected-histogram name="SessionRestore.AllTabsLoaded"/>
   <affected-histogram name="SessionRestore.FirstTabPainted"/>
   <affected-histogram name="SessionRestore.ForegroundTabFirstLoaded"/>
@@ -103298,6 +103303,32 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram name="Tabs.SwitchFromExitLatency"/>
   <affected-histogram name="Tabs.SwitchFromNewLatency"/>
   <affected-histogram name="Tabs.SwitchFromUserLatency"/>
+</histogram_suffixes>
+
+<histogram_suffixes name="Tabs.UnusedInIntervalCount" separator="_">
+  <suffix name="10" label="10 seconds"/>
+  <suffix name="30" label="30 seconds"/>
+  <suffix name="60" label="1 minute"/>
+  <suffix name="600" label="10 minutes"/>
+  <suffix name="3600" label="1 hour"/>
+  <suffix name="18000" label="5 hours"/>
+  <suffix name="5" label="5 unused tabs"/>
+  <suffix name="6" label="6 unused tabs"/>
+  <suffix name="7" label="7 unused tabs"/>
+  <suffix name="8" label="8 unused tabs"/>
+  <suffix name="9" label="9 unused tabs"/>
+  <suffix name="10" label="10 unused tabs"/>
+  <suffix name="11" label="11 unused tabs"/>
+  <suffix name="12" label="12 unused tabs"/>
+  <suffix name="13" label="13 unused tabs"/>
+  <suffix name="14" label="14 unused tabs"/>
+  <suffix name="15" label="15 unused tabs"/>
+  <suffix name="16" label="16 unused tabs"/>
+  <suffix name="17" label="17 unused tabs"/>
+  <suffix name="18" label="18 unused tabs"/>
+  <suffix name="19" label="19 unused tabs"/>
+  <suffix name="20" label="20 unused tabs"/>
+  <affected-histogram name="Tabs.UnusedInInterval.Count"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="TaskSchedulerMayBlock" separator=".">

@@ -5,9 +5,12 @@
 #include "chrome/browser/metrics/tab_stats_tracker.h"
 
 #include <algorithm>
+#include <utility>
 
+#include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/power_monitor/power_monitor.h"
+#include "base/strings/stringprintf.h"
 #include "chrome/browser/background/background_mode_manager.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/ui/browser.h"
@@ -28,6 +31,9 @@ constexpr base::TimeDelta kDailyEventIntervalTimeDelta =
 // The global TabStatsTracker instance.
 TabStatsTracker* g_instance = nullptr;
 
+const size_t kIntervalsInSec[] = {30,      60,          60 * 10,
+                                  60 * 60, 60 * 60 * 5, 60 * 60 * 10};
+
 }  // namespace
 
 // static
@@ -42,6 +48,8 @@ const char TabStatsTracker::UmaStatsReportingDelegate::
     kMaxTabsPerWindowInADayHistogramName[] = "Tabs.MaxTabsPerWindowInADay";
 const char TabStatsTracker::UmaStatsReportingDelegate::
     kMaxWindowsInADayHistogramName[] = "Tabs.MaxWindowsInADay";
+const char TabStatsTracker::UmaStatsReportingDelegate::
+    kUnusedTabsInIntervalHistogramName[] = "Tabs.UnusedInInterval.Count";
 
 const TabStatsDataStore::TabsStats& TabStatsTracker::tab_stats() const {
   return tab_stats_data_store_->tab_stats();
@@ -65,6 +73,9 @@ TabStatsTracker::TabStatsTracker(PrefService* pref_service)
     tab_stats_data_store_->OnTabsAdded(browser->tab_strip_model()->count());
     tab_stats_data_store_->UpdateMaxTabsPerWindowIfNeeded(
         static_cast<size_t>(browser->tab_strip_model()->count()));
+    for (int i = 0; i < browser->tab_strip_model()->count(); ++i)
+      existing_tabs_.insert(browser->tab_strip_model()->GetWebContentsAt(i));
+    active_tabs_.insert(browser->tab_strip_model()->GetActiveWebContents());
   }
 
   browser_list->AddObserver(this);
@@ -79,6 +90,18 @@ TabStatsTracker::TabStatsTracker(PrefService* pref_service)
   daily_event_->CheckInterval();
   timer_.Start(FROM_HERE, kDailyEventIntervalTimeDelta, daily_event_.get(),
                &DailyEvent::CheckInterval);
+  for (size_t i = 0; i < arraysize(kIntervalsInSec); ++i) {
+    auto res = interval_maps_.insert(
+        std::make_pair(kIntervalsInSec[i], TabsStateDuringIntervalMap()));
+    DCHECK(res.second);
+    ResetIntervalData(&(res.first->second));
+    std::unique_ptr<base::RepeatingTimer> timer =
+        base::MakeUnique<base::RepeatingTimer>();
+    timer->Start(FROM_HERE, base::TimeDelta::FromSeconds(kIntervalsInSec[i]),
+                 Bind(&TabStatsTracker::OnInterval, base::Unretained(this),
+                      &(res.first->second), kIntervalsInSec[i], "interval"));
+    usage_interval_timers_.push_back(std::move(timer));
+  }
 }
 
 TabStatsTracker::~TabStatsTracker() {
@@ -127,6 +150,7 @@ void TabStatsTracker::TabInsertedAt(TabStripModel* model,
                                     bool foreground) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   tab_stats_data_store_->OnTabsAdded(1);
+  existing_tabs_.insert(web_contents);
 
   tab_stats_data_store_->UpdateMaxTabsPerWindowIfNeeded(
       static_cast<size_t>(model->count()));
@@ -137,11 +161,75 @@ void TabStatsTracker::TabClosingAt(TabStripModel* model,
                                    int index) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   tab_stats_data_store_->OnTabsRemoved(1);
+  existing_tabs_.erase(web_contents);
+}
+
+void TabStatsTracker::ActiveTabChanged(content::WebContents* old_contents,
+                                       content::WebContents* new_contents,
+                                       int index,
+                                       int reason) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  if (old_contents != nullptr) {
+    DCHECK(active_tabs_.find(old_contents) != active_tabs_.end());
+    active_tabs_.erase(old_contents);
+  }
+  active_tabs_.insert(new_contents);
+
+  for (auto& interval_map : interval_maps_) {
+    auto iter = interval_map.second.find(new_contents);
+    if (iter != interval_map.second.end()) {
+      iter->second.interacted_during_interval = true;
+      iter->second.visible_during_interval = true;
+      // TODO: Update IsVisible!
+    }
+  }
 }
 
 void TabStatsTracker::OnResume() {
   reporting_delegate_->ReportTabCountOnResume(
       tab_stats_data_store_->tab_stats().total_tab_count);
+}
+
+void TabStatsTracker::OnInterval(TabsStateDuringIntervalMap* interval_map,
+                                 size_t interval,
+                                 const char* interval_histogram_suffix) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
+  size_t unused_tabs = 0;
+
+  for (const auto& iter : *interval_map) {
+    bool exists_after_interval =
+        existing_tabs_.find(iter.first) != existing_tabs_.end();
+
+    if (exists_after_interval && !iter.second.visible_during_interval &&
+        !iter.second.interacted_during_interval) {
+      ++unused_tabs;
+    }
+  }
+
+  std::string histogram_name = base::StringPrintf(
+      "%s_%zu", UmaStatsReportingDelegate::kUnusedTabsInIntervalHistogramName,
+      interval);
+
+  base::UmaHistogramCounts1000(histogram_name, unused_tabs);
+
+  ResetIntervalData(interval_map);
+}
+
+void TabStatsTracker::ResetIntervalData(
+    TabsStateDuringIntervalMap* interval_map) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(interval_map != nullptr);
+  interval_map->clear();
+  for (const content::WebContents* web_contents : existing_tabs_) {
+    bool interacted_during_interval =
+        active_tabs_.find(web_contents) != active_tabs_.end();
+    (*interval_map)[web_contents] = {
+        true,                       // existed_before_interval
+        true,                       // exists_after_interval
+        web_contents->IsVisible(),  // visible_during_interval
+        interacted_during_interval};
+  }
 }
 
 void TabStatsTracker::UmaStatsReportingDelegate::ReportTabCountOnResume(
