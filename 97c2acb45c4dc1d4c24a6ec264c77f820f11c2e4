@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13ac4dd5_0d8ffad5",
+        "filename": "content/renderer/media_capture_from_element/html_video_element_capturer_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-28T18:33:47Z",
+      "side": 1,
+      "message": "Multiline if should have {}",
+      "revId": "97c2acb45c4dc1d4c24a6ec264c77f820f11c2e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5f35eb6_31f4b1cf",
+        "filename": "third_party/WebKit/Source/modules/mediacapturefromelement/HTMLMediaElementCapture.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-28T18:33:47Z",
+      "side": 1,
+      "message": "How are old sources removed from this?",
+      "revId": "97c2acb45c4dc1d4c24a6ec264c77f820f11c2e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
