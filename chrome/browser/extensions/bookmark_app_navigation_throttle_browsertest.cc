@@ -146,7 +146,7 @@ const char kInScopeUrlPath[] =
 const char kOutOfScopeUrlPath[] =
     "/extensions/bookmark_apps/url_handlers/out_of_scope/index.html";
 
-class BookmarkAppUrlRedirectorBrowserTest : public ExtensionBrowserTest {
+class BookmarkAppNavigationThrottleBrowserTest : public ExtensionBrowserTest {
  public:
   void SetUp() override {
     scoped_feature_list_ = base::MakeUnique<base::test::ScopedFeatureList>();
@@ -328,7 +328,7 @@ class BookmarkAppUrlRedirectorBrowserTest : public ExtensionBrowserTest {
 
 // Tests that navigating to the Web App's app_url doesn't open a new window
 // if features::kDesktopPWAWindowing is disabled before installing the app.
-IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest,
+IN_PROC_BROWSER_TEST_F(BookmarkAppNavigationThrottleBrowserTest,
                        FeatureDisable_BeforeInstall) {
   ResetFeatureList();
   InstallTestBookmarkApp();
@@ -343,7 +343,7 @@ IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest,
 
 // Tests that navigating to the Web App's app_url doesn't open a new window
 // if features::kDesktopPWAWindowing is disabled after installing the app.
-IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest,
+IN_PROC_BROWSER_TEST_F(BookmarkAppNavigationThrottleBrowserTest,
                        FeatureDisable_AfterInstall) {
   InstallTestBookmarkApp();
   ResetFeatureList();
@@ -358,19 +358,19 @@ IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest,
 
 // Tests that most transition types for navigations to in-scope or
 // out-of-scope URLs do not result in new app windows.
-class BookmarkAppUrlRedirectorNavigationBrowserTest
-    : public BookmarkAppUrlRedirectorBrowserTest,
+class BookmarkAppNavigationThrottleTransitionBrowserTest
+    : public BookmarkAppNavigationThrottleBrowserTest,
       public ::testing::WithParamInterface<
           std::tuple<std::string, ui::PageTransition>> {};
 
 INSTANTIATE_TEST_CASE_P(
     /* no prefix */,
-    BookmarkAppUrlRedirectorNavigationBrowserTest,
+    BookmarkAppNavigationThrottleTransitionBrowserTest,
     testing::Combine(testing::Values(kInScopeUrlPath, kOutOfScopeUrlPath),
                      testing::Range(ui::PAGE_TRANSITION_FIRST,
                                     ui::PAGE_TRANSITION_LAST_CORE)));
 
-IN_PROC_BROWSER_TEST_P(BookmarkAppUrlRedirectorNavigationBrowserTest,
+IN_PROC_BROWSER_TEST_P(BookmarkAppNavigationThrottleTransitionBrowserTest,
                        MainFrameNavigations) {
   InstallTestBookmarkApp();
 
@@ -380,7 +380,7 @@ IN_PROC_BROWSER_TEST_P(BookmarkAppUrlRedirectorNavigationBrowserTest,
 
   if (!ui::PageTransitionIsMainFrame(transition)) {
     // Subframe navigations require a different setup. See
-    // BookmarkAppUrlRedirectorBrowserTest.SubframeNavigation.
+    // BookmarkAppNavigationThrottleBrowserTest.SubframeNavigation.
     return;
   }
 
@@ -397,12 +397,12 @@ IN_PROC_BROWSER_TEST_P(BookmarkAppUrlRedirectorNavigationBrowserTest,
 // Tests that navigations in subframes don't open new app windows.
 //
 // The transition type for subframe navigations is not set until
-// after NavigationThrottles run. Because of this, our AppUrlRedirector
-// NavigationThrottle will not see the transition type as
+// after NavigationThrottles run. Because of this, our
+// BookmarkAppNavigationThrottle will not see the transition type as
 // PAGE_TRANSITION_AUTO_SUBFRAME/PAGE_TRANSITION_MANUAL_SUBFRAME, even though,
 // by the end of the navigation, the transition type is
 // PAGE_TRANSITION_AUTO_SUBFRAME/PAGE_TRANSITON_MANUAL_SUBFRAME.
-IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest,
+IN_PROC_BROWSER_TEST_F(BookmarkAppNavigationThrottleBrowserTest,
                        AutoSubframeNavigation) {
   InstallTestBookmarkApp();
   NavigateToLaunchingPage();
@@ -424,7 +424,7 @@ IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest,
                                            ui::PAGE_TRANSITION_AUTO_SUBFRAME));
 }
 
-IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest,
+IN_PROC_BROWSER_TEST_F(BookmarkAppNavigationThrottleBrowserTest,
                        ManualSubframeNavigation) {
   InstallTestBookmarkApp();
   NavigateToLaunchingPage();
@@ -459,7 +459,7 @@ IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest,
 
 // Tests that clicking a link with target="_self" to the app's app_url opens the
 // Bookmark App.
-IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest, AppUrlSelf) {
+IN_PROC_BROWSER_TEST_F(BookmarkAppNavigationThrottleBrowserTest, AppUrlSelf) {
   InstallTestBookmarkApp();
   NavigateToLaunchingPage();
 
@@ -472,7 +472,8 @@ IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest, AppUrlSelf) {
 
 // Tests that clicking a link with target="_self" to a URL in the Web App's
 // scope opens a new browser window.
-IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest, InScopeUrlSelf) {
+IN_PROC_BROWSER_TEST_F(BookmarkAppNavigationThrottleBrowserTest,
+                       InScopeUrlSelf) {
   InstallTestBookmarkApp();
   NavigateToLaunchingPage();
 
@@ -486,7 +487,8 @@ IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest, InScopeUrlSelf) {
 
 // Tests that clicking a link with target="_self" to a URL out of the Web App's
 // scope but with the same origin doesn't open a new browser window.
-IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest, OutOfScopeUrlSelf) {
+IN_PROC_BROWSER_TEST_F(BookmarkAppNavigationThrottleBrowserTest,
+                       OutOfScopeUrlSelf) {
   InstallTestBookmarkApp();
   NavigateToLaunchingPage();
 
@@ -500,7 +502,7 @@ IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest, OutOfScopeUrlSelf) {
 }
 
 // Tests that submitting a form using POST does not open a new app window.
-IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest,
+IN_PROC_BROWSER_TEST_F(BookmarkAppNavigationThrottleBrowserTest,
                        PostFormSubmission) {
   InstallTestBookmarkApp();
   NavigateToLaunchingPage();
@@ -514,7 +516,8 @@ IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest,
 }
 
 // Tests that submitting a form using GET does not open a new app window.
-IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest, GetFormSubmission) {
+IN_PROC_BROWSER_TEST_F(BookmarkAppNavigationThrottleBrowserTest,
+                       GetFormSubmission) {
   InstallTestBookmarkApp();
   NavigateToLaunchingPage();
 
@@ -531,7 +534,8 @@ IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest, GetFormSubmission) {
 }
 
 // Tests that prerender links don't open the app.
-IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest, PrerenderLinks) {
+IN_PROC_BROWSER_TEST_F(BookmarkAppNavigationThrottleBrowserTest,
+                       PrerenderLinks) {
   InstallTestBookmarkApp();
   NavigateToLaunchingPage();
 
@@ -557,7 +561,7 @@ IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest, PrerenderLinks) {
 }
 
 // Tests fetch calls don't open a new App window.
-IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest, Fetch) {
+IN_PROC_BROWSER_TEST_F(BookmarkAppNavigationThrottleBrowserTest, Fetch) {
   InstallTestBookmarkApp();
   NavigateToLaunchingPage();
 
@@ -581,7 +585,8 @@ IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest, Fetch) {
 
 // Tests that clicking "Open link in incognito window" to an in-scope URL opens
 // an incognito window and not an app window.
-IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest, OpenInIncognito) {
+IN_PROC_BROWSER_TEST_F(BookmarkAppNavigationThrottleBrowserTest,
+                       OpenInIncognito) {
   InstallTestBookmarkApp();
   NavigateToLaunchingPage();
 
@@ -618,7 +623,7 @@ IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest, OpenInIncognito) {
 
 // Tests that clicking a link to an in-scope URL when in incognito does not open
 // an App window.
-IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest,
+IN_PROC_BROWSER_TEST_F(BookmarkAppNavigationThrottleBrowserTest,
                        InScopeUrlIncognito) {
   InstallTestBookmarkApp();
   Browser* incognito_browser = CreateIncognitoBrowser();
@@ -634,7 +639,7 @@ IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest,
 
 // Tests that clicking links inside a website for an installed app doesn't open
 // a new browser window.
-IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest,
+IN_PROC_BROWSER_TEST_F(BookmarkAppNavigationThrottleBrowserTest,
                        InWebsiteNavigation) {
   InstallTestBookmarkApp();
 
@@ -653,7 +658,8 @@ IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest,
 }
 
 // Tests that clicking links inside the app doesn't open new browser windows.
-IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest, InAppNavigation) {
+IN_PROC_BROWSER_TEST_F(BookmarkAppNavigationThrottleBrowserTest,
+                       InAppNavigation) {
   InstallTestBookmarkApp();
   Browser* app_browser = OpenTestBookmarkApp();
   content::WebContents* app_web_contents =

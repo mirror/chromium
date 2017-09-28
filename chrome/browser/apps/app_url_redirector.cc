@@ -34,41 +34,12 @@ using extensions::UrlHandlerInfo;
 
 namespace {
 
-bool ShouldOverrideNavigation(
-    const Extension* app,
-    content::WebContents* source,
-    const navigation_interception::NavigationParams& params) {
-  DVLOG(1) << "ShouldOverrideNavigation called for: " << params.url();
-
-  ui::PageTransition transition_type = params.transition_type();
-  if (!(PageTransitionCoreTypeIs(transition_type, ui::PAGE_TRANSITION_LINK))) {
-    DVLOG(1) << "Don't override: Transition type is "
-             << PageTransitionGetCoreTransitionString(transition_type);
-    return false;
-  }
-
-  // Don't redirect same origin navigations. This matches what is done on
-  // Android.
-  if (source->GetLastCommittedURL().GetOrigin() == params.url().GetOrigin()) {
-    DVLOG(1) << "Don't override: Same origin navigation.";
-    return false;
-  }
-
-  return true;
-}
-
 bool LaunchAppWithUrl(
     const scoped_refptr<const Extension> app,
     const std::string& handler_id,
     content::WebContents* source,
     const navigation_interception::NavigationParams& params) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-
-  // Redirecting for Bookmark Apps is hidden behind a feature flag.
-  if (app->from_bookmark() &&
-      !base::FeatureList::IsEnabled(features::kDesktopPWAWindowing)) {
-    return false;
-  }
 
   // Redirect top-level navigations only. This excludes iframes and webviews
   // in particular.
@@ -91,18 +62,6 @@ bool LaunchAppWithUrl(
 
   Profile* profile =
       Profile::FromBrowserContext(source->GetBrowserContext());
-
-  if (app->from_bookmark()) {
-    if (!ShouldOverrideNavigation(app.get(), source, params))
-      return false;
-
-    AppLaunchParams launch_params(
-        profile, app.get(), extensions::LAUNCH_CONTAINER_WINDOW,
-        WindowOpenDisposition::CURRENT_TAB, extensions::SOURCE_URL_HANDLER);
-    launch_params.override_url = params.url();
-    OpenApplication(launch_params);
-    return true;
-  }
 
   DVLOG(1) << "Launching app handler with URL: "
            << params.url().spec() << " -> "
@@ -150,6 +109,12 @@ AppUrlRedirector::MaybeCreateThrottleFor(content::NavigationHandle* handle) {
   for (extensions::ExtensionSet::const_iterator iter =
            enabled_extensions.begin();
        iter != enabled_extensions.end(); ++iter) {
+    // BookmarkAppNavigationThrottle handles intercepting links to Hosted Apps
+    // that are Bookmark Apps. Regular Hosted Apps don't intercept links.
+    if ((*iter)->is_hosted_app()) {
+      continue;
+    }
+
     const UrlHandlerInfo* handler =
         UrlHandlers::FindMatchingUrlHandler(iter->get(), handle->GetURL());
     if (handler) {

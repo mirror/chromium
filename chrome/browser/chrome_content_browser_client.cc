@@ -341,6 +341,7 @@
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
 #include "chrome/browser/accessibility/animation_policy_prefs.h"
+#include "chrome/browser/extensions/bookmark_app_navigation_throttle.h"
 #include "chrome/browser/extensions/chrome_content_browser_client_extensions_part.h"
 #include "chrome/browser/speech/extension_api/tts_engine_extension_api.h"
 #include "components/guest_view/browser/guest_view_base.h"
@@ -3183,6 +3184,17 @@ ChromeContentBrowserClient::CreateThrottlesForNavigation(
     if (url_to_app_throttle)
       throttles.push_back(std::move(url_to_app_throttle));
   }
+
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  if (base::FeatureList::IsEnabled(features::kDesktopPWAWindowing)) {
+    auto bookmark_app_throttle =
+        extensions::BookmarkAppNavigationThrottle::MaybeCreateThrottleFor(
+            handle);
+    if (bookmark_app_throttle)
+      throttles.push_back(std::move(bookmark_app_throttle));
+  }
+#endif
+
 #endif
 
 #if defined(OS_CHROMEOS)
