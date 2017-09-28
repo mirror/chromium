@@ -38,6 +38,16 @@ using testing::StartsWith;
 
 const char kTestEmail[] = "foo@bar.com";
 const char kValidURL[] = "http://valid-url.test";
+const char kValidResponseData[] =
+    "{\"categories\" : [{"
+    "  \"id\": 0,"
+    "  \"suggestions\" : [{"
+    "    \"title\" : \"Title\","
+    "    \"summary\" : \"...\","
+    "    \"url\" : \"http://localhost/foobar\","
+    "    \"imageUrl\" : \"http://localhost/foobar.jpg\""
+    "  }]"
+    "}]}";
 
 MATCHER(IsEmptySuggestionsList, "is an empty list of suggestions") {
   ContextualSuggestionsFetcher::OptionalSuggestions& optional_suggestions =
@@ -178,16 +188,6 @@ TEST_F(ContextualSuggestionsFetcherTest, ShouldCreateFetcher) {
 
 TEST_F(ContextualSuggestionsFetcherTest, ShouldFetchSuggestion) {
   InitializeFakeCredentials();
-  const std::string kValidResponseData =
-      "{\"categories\" : [{"
-      "  \"id\": 0,"
-      "  \"suggestions\" : [{"
-      "    \"title\" : \"Title\","
-      "    \"summary\" : \"...\","
-      "    \"url\" : \"http://localhost/foobar\","
-      "    \"imageUrl\" : \"http://localhost/foobar.jpg\""
-      "  }]"
-      "}]}";
   SetFakeResponse(/*response_data=*/kValidResponseData, net::HTTP_OK,
                   net::URLRequestStatus::SUCCESS);
   EXPECT_CALL(mock_suggestions_available_callback(),
