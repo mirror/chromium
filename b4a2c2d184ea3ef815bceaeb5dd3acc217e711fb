@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "007ba8eb_61fc0461",
+        "filename": "base/win/win_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-09-28T21:26:37Z",
+      "side": 1,
+      "message": "FWIW I thought this was in the same class of things as IsProcessPerMonitorDpiAware().",
+      "parentUuid": "6e66ac22_89e3debc",
+      "range": {
+        "startLine": 198,
+        "startChar": 17,
+        "endLine": 198,
+        "endChar": 37
+      },
+      "revId": "b4a2c2d184ea3ef815bceaeb5dd3acc217e711fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cdad7288_a990a3ca",
         "filename": "chrome/test/base/browser_tests_main.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-28T21:11:59Z",
       "side": 1,
       "message": "Won\u0027t this have other subtle effects if an engineer actually runs the tests on a high dpi machine? Seems that this should be enabled only with a switch.",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 35
+      },
+      "revId": "b4a2c2d184ea3ef815bceaeb5dd3acc217e711fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29c63748_958046e0",
+        "filename": "chrome/test/base/browser_tests_main.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-09-28T21:26:37Z",
+      "side": 1,
+      "message": "Possibly, we need it specifically for --interactive invocations where you\u0027d manually verify results rather. Would that be reasonable instead of adding a new --use-highdpi flag?",
+      "parentUuid": "cdad7288_a990a3ca",
       "range": {
         "startLine": 25,
         "startChar": 2,
