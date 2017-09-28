@@ -7,6 +7,7 @@
 #include "base/run_loop.h"
 #include "base/test/mock_callback.h"
 #include "base/test/scoped_task_environment.h"
+#include "gpu/command_buffer/service/gpu_preferences.h"
 #include "media/base/android/media_codec_util.h"
 #include "media/base/android/mock_android_overlay.h"
 #include "media/base/decoder_buffer.h"
@@ -108,8 +109,8 @@ class MediaCodecVideoDecoderTest : public testing::Test {
         .WillByDefault(RunCallback<0>(surface_texture));
 
     auto* observable_mcvd = new DestructionObservableMCVD(
-        base::Bind(&OutputWithReleaseMailboxCb), device_info_.get(),
-        codec_allocator_.get(), std::move(surface_chooser),
+        gpu::GpuPreferences(), base::Bind(&OutputWithReleaseMailboxCb),
+        device_info_.get(), codec_allocator_.get(), std::move(surface_chooser),
         base::Bind(&CreateAndroidOverlayCb), base::Bind(&RequestOverlayInfoCb),
         std::move(video_frame_factory),
         base::MakeUnique<MockServiceContextRef>());
