@@ -1261,7 +1261,7 @@
     'debug_bot_x86_minimal_symbols': [ 'debug_bot', 'x86', 'minimal_symbols' ],
 
     'debug_libfuzzer_asan': [
-      'debug', 'libfuzzer', 'asan', 'chromeos_codecs', 'pdf_xfa', 'disable_nacl',
+      'debug', 'libfuzzer', 'asan', 'chromeos_codecs', 'pdf_xfa', 'disable_nacl', 'shared',
     ],
 
     'debug_trybot': [
@@ -1517,19 +1517,19 @@
     'release_bot_x86_minimal_symbols': [ 'release_bot', 'x86', 'minimal_symbols' ],
 
     'release_libfuzzer_asan': [
-      'release', 'libfuzzer', 'asan', 'chromeos_codecs', 'pdf_xfa', 'disable_nacl', 'optimize_for_fuzzing',
+      'release', 'libfuzzer', 'asan', 'chromeos_codecs', 'pdf_xfa', 'disable_nacl', 'optimize_for_fuzzing', 'shared',
     ],
 
     'release_libfuzzer_asan_clang_tot': [
-      'clang_tot', 'release', 'libfuzzer', 'asan', 'chromeos_codecs', 'pdf_xfa', 'disable_nacl',
+      'clang_tot', 'release', 'libfuzzer', 'asan', 'chromeos_codecs', 'pdf_xfa', 'disable_nacl', 'shared',
     ],
 
     'release_libfuzzer_mac_asan': [
-      'release', 'libfuzzer', 'asan', 'chrome_with_codecs', 'pdf_xfa', 'disable_nacl', 'optimize_for_fuzzing',
+      'release', 'libfuzzer', 'asan', 'chrome_with_codecs', 'pdf_xfa', 'disable_nacl', 'optimize_for_fuzzing', 'shared',
     ],
 
     'release_libfuzzer_msan': [
-      'release', 'libfuzzer', 'msan', 'chromeos_codecs', 'pdf_xfa', 'disable_nacl', 'optimize_for_fuzzing',
+      'release', 'libfuzzer', 'msan', 'chromeos_codecs', 'pdf_xfa', 'disable_nacl', 'optimize_for_fuzzing', 'shared',
     ],
 
     'release_libfuzzer_ubsan': [
