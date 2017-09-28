@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "base/macros.h"
+#include "base/time/clock.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
 #include "base/values.h"
@@ -57,6 +58,7 @@ class DeviceOffHoursController : public chromeos::PowerManagerClient::Observer {
  public:
   // Creates a device off hours controller instance.
   DeviceOffHoursController();
+  DeviceOffHoursController(base::Clock* clock, base::TickClock* timer_clock);
   ~DeviceOffHoursController() override;
 
   // Return current "OffHours" mode status.
@@ -90,7 +92,10 @@ class DeviceOffHoursController : public chromeos::PowerManagerClient::Observer {
 
   // Timer for updating device settings at the begin of next “OffHours” interval
   // or at the end of current "OffHours" interval.
-  base::OneShotTimer timer_;
+  std::unique_ptr<base::OneShotTimer> timer_;
+
+  // TODO(yakovleva): description
+  std::unique_ptr<base::Clock> clock_;
 
   bool off_hours_mode_ = false;
 

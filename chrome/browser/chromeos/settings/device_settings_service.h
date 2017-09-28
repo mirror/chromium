@@ -136,9 +136,12 @@ class DeviceSettingsService : public SessionManagerClient::Observer {
 
   // Returns the currently device off hours controller. The returned pointer is
   // guaranteed to be non-null.
-  const policy::DeviceOffHoursController* device_off_hours_controller() const {
+  policy::DeviceOffHoursController* device_off_hours_controller() const {
     return device_off_hours_controller_.get();
   }
+
+  void SetDeviceOffHoursControllerForTesting(
+      policy::DeviceOffHoursController* controller);
 
   // Triggers an attempt to pull the public half of the owner key from disk and
   // load the device settings.

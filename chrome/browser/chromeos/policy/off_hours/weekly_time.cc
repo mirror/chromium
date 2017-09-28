@@ -25,19 +25,6 @@ WeeklyTime::WeeklyTime(int day_of_week, int milliseconds)
   DCHECK_LT(milliseconds, kDay.InMilliseconds());
 }
 
-WeeklyTime WeeklyTime::GetCurrentWeeklyTime() {
-  base::Time::Exploded exploded;
-  base::Time::Now().UTCExplode(&exploded);
-  int day_of_week = exploded.day_of_week;
-  // Exploded contains 0-based day of week (0 = Sunday, etc.)
-  if (day_of_week == 0)
-    day_of_week = 7;
-  return WeeklyTime(day_of_week,
-                    exploded.hour * kHour.InMilliseconds() +
-                        exploded.minute * kMinute.InMilliseconds() +
-                        exploded.second * 1000);
-}
-
 std::unique_ptr<base::DictionaryValue> WeeklyTime::ToValue() const {
   auto weekly_time = base::MakeUnique<base::DictionaryValue>();
   weekly_time->SetInteger("day_of_week", day_of_week_);
@@ -51,6 +38,20 @@ base::TimeDelta WeeklyTime::GetDurationTo(const WeeklyTime& other) const {
   if (duration < 0)
     duration += kWeek.InMilliseconds();
   return base::TimeDelta::FromMilliseconds(duration);
+}
+
+// static
+WeeklyTime WeeklyTime::GetCurrentWeeklyTime(base::Clock* clock) {
+  base::Time::Exploded exploded;
+  clock->Now().UTCExplode(&exploded);
+  int day_of_week = exploded.day_of_week;
+  // Exploded contains 0-based day of week (0 = Sunday, etc.)
+  if (day_of_week == 0)
+    day_of_week = 7;
+  return WeeklyTime(day_of_week,
+                    exploded.hour * kHour.InMilliseconds() +
+                        exploded.minute * kMinute.InMilliseconds() +
+                        exploded.second * 1000);
 }
 
 }  // namespace off_hours
