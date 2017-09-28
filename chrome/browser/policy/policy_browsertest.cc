@@ -3566,7 +3566,7 @@ IN_PROC_BROWSER_TEST_F(PolicyTest, SafeBrowsingExtendedReportingOptInAllowed) {
       "}",
       security_interstitials::CMD_TEXT_FOUND,
       security_interstitials::CMD_TEXT_NOT_FOUND,
-      security_interstitials::CMD_ERROR);
+      security_interstitials::CMD_TEST_FAILURE);
   EXPECT_TRUE(content::ExecuteScriptAndExtractInt(rvh, command, &result));
   EXPECT_EQ(security_interstitials::CMD_TEXT_NOT_FOUND, result);
 }
