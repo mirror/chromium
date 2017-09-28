@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97f87b9e_27500ec5",
+        "filename": "components/omnibox/browser/autocomplete_result.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-09-28T15:55:49Z",
+      "side": 1,
+      "message": "Instead of referring to a private member in a comment on a public method, how about something like:\n\nWill overwrite |old_matches| if empty() is true.",
+      "revId": "974d705bf749cfe232e6bf7bd92f86330bca135d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
