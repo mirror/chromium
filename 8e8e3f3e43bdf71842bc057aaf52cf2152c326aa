@@ -46,6 +46,30 @@
       "revId": "8e8e3f3e43bdf71842bc057aaf52cf2152c326aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f9af9a5_ad08009b",
+        "filename": "ash/message_center/message_list_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-09-28T04:32:10Z",
+      "side": 1,
+      "message": "Ah, sorry, I meant the case of \"clear_all_started_ \u0026\u0026 !clearing_all_views_.empty()\"",
+      "parentUuid": "797484d4_5748e5a7",
+      "range": {
+        "startLine": 313,
+        "startChar": 6,
+        "endLine": 313,
+        "endChar": 55
+      },
+      "revId": "8e8e3f3e43bdf71842bc057aaf52cf2152c326aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
