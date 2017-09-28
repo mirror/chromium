@@ -25,7 +25,6 @@ class CC_EXPORT PlaybackImageProvider : public ImageProvider {
   PlaybackImageProvider(
       bool skip_all_images,
       PaintImageIdFlatSet images_to_skip,
-      std::vector<DrawImage> at_raster_images,
       ImageDecodeCache* cache,
       const gfx::ColorSpace& taget_color_space,
       base::flat_map<PaintImage::Id, size_t> image_to_current_frame_index);
