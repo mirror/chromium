@@ -29,7 +29,6 @@
 #import "core/fileapi/FileList.h"
 #import "core/layout/LayoutProgress.h"
 #import "core/layout/LayoutView.h"
-#import "core/paint/MediaControlsPainter.h"
 #import "core/style/ShadowList.h"
 #import "platform/DataResourceHelper.h"
 #import "platform/LayoutTestSupport.h"
@@ -1080,10 +1079,6 @@ void LayoutThemeMac::UpdateActiveState(NSCell* cell, const LayoutObject& o) {
 
   if (tint != old_tint)
     [cell setControlTint:tint];
-}
-
-void LayoutThemeMac::AdjustMediaSliderThumbSize(ComputedStyle& style) const {
-  MediaControlsPainter::AdjustMediaSliderThumbSize(style);
 }
 
 String LayoutThemeMac::ExtraFullscreenStyleSheet() {
