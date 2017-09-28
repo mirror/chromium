@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d7adcc05_ce4dcc80",
+        "filename": "chrome/browser/chromeos/printing/printer_configurer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-09-28T20:47:24Z",
+      "side": 1,
+      "message": "StartConfiguration works.  Naming is hard!",
+      "parentUuid": "4fee33c0_6ee81c4a",
+      "revId": "990915672f0ca66fd5a26f0b189ab35c92fe4944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e726b552_84b21fc1",
         "filename": "chrome/browser/chromeos/printing/printer_configurer.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "4717e70a_917b5061",
+        "filename": "chrome/browser/chromeos/printing/printer_configurer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-09-28T20:47:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e726b552_84b21fc1",
+      "revId": "990915672f0ca66fd5a26f0b189ab35c92fe4944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60d7526f_ee994b1b",
         "filename": "chromeos/printing/printer_configuration.cc",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-28T18:32:35Z",
       "side": 1,
       "message": "Use strlen(kStandardSchemeSeparator) instead of defining a constant that could theoretically get out of sync with a constant in a different file?",
+      "revId": "990915672f0ca66fd5a26f0b189ab35c92fe4944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e3c8d34_b7ee94a8",
+        "filename": "chromeos/printing/printer_configuration.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-09-28T20:47:24Z",
+      "side": 1,
+      "message": "strlen isn\u0027t a constexpr so it\u0027s a function now.  Hopefully, the compiler is smart enough to inline it.",
+      "parentUuid": "60d7526f_ee994b1b",
       "revId": "990915672f0ca66fd5a26f0b189ab35c92fe4944",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "4a67fe9e_439100c9",
+        "filename": "chromeos/printing/printer_configuration.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-09-28T20:47:24Z",
+      "side": 1,
+      "message": "Yeah.  This is really easy in GURL but GURL doesn\u0027t recognize ipp://",
+      "parentUuid": "791dcf43_4c1d4647",
+      "revId": "990915672f0ca66fd5a26f0b189ab35c92fe4944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99756fc4_3afa602c",
         "filename": "chromeos/printing/printer_configuration.cc",
         "patchSetId": 2
@@ -81,6 +153,24 @@
       "writtenOn": "2017-09-28T18:32:35Z",
       "side": 1,
       "message": "I think there may be a simpler (internal) API to be had here that parses the URI into a few pieces in a struct, like\n\nstruct PrinterUriComponents {\n  StringPiece scheme;  // Everything up to and including the ://\n  StringPiece host_and_port;  Everything after :// up to but not including the next \u0027/\u0027\n  StringPiece rest;  Everything else\n};\n\nbool ParsePrinterUri(const string\u0026 uri, PrinterUriComponents* components) { ... }\n\nand then you could use some of the stuff in //base/strings/string_split.h to implement this in a pretty quick and obviously correct way.\n\nHowever, this is very subjective, and what you\u0027re doing is OK, so feel free to ignore.",
+      "revId": "990915672f0ca66fd5a26f0b189ab35c92fe4944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "327af486_b46eca64",
+        "filename": "chromeos/printing/printer_configuration.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-09-28T20:47:24Z",
+      "side": 1,
+      "message": "I agree.  Just not in *this* CL.  crbug.com/769893",
+      "parentUuid": "99756fc4_3afa602c",
       "revId": "990915672f0ca66fd5a26f0b189ab35c92fe4944",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "2560ab74_ac12414f",
+        "filename": "chromeos/printing/printer_configuration.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-09-28T20:47:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "001616a8_f87efb4a",
+      "revId": "990915672f0ca66fd5a26f0b189ab35c92fe4944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5192a05c_05de0bc3",
         "filename": "chromeos/printing/printer_configuration.cc",
         "patchSetId": 2
@@ -118,6 +226,24 @@
       "revId": "990915672f0ca66fd5a26f0b189ab35c92fe4944",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18946ee7_a599c4ef",
+        "filename": "chromeos/printing/printer_configuration.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-09-28T20:47:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5192a05c_05de0bc3",
+      "revId": "990915672f0ca66fd5a26f0b189ab35c92fe4944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "ab4c11f3_8688e830",
+        "filename": "chromeos/printing/printer_configuration.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-09-28T20:47:24Z",
+      "side": 1,
+      "message": "Hmm.  I don\u0027t need that.  Thanks!",
+      "parentUuid": "353c5592_f626d39a",
+      "revId": "990915672f0ca66fd5a26f0b189ab35c92fe4944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3670b453_a4399e54",
         "filename": "chromeos/printing/printer_configuration.cc",
         "patchSetId": 2
@@ -149,6 +293,24 @@
       "writtenOn": "2017-09-28T18:32:35Z",
       "side": 1,
       "message": "Consider\n\nreturn JoinString({uri_piece.substr(0, hostname_start),\n                   ip,\n                   uri_piece.substr(...)});\n\n(Again, subjective, feel free to ignore.)",
+      "revId": "990915672f0ca66fd5a26f0b189ab35c92fe4944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ce28e5bd_668df5e7",
+        "filename": "chromeos/printing/printer_configuration.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-09-28T20:47:24Z",
+      "side": 1,
+      "message": "Done.\n\nI think JoinString is more efficient as well.",
+      "parentUuid": "3670b453_a4399e54",
       "revId": "990915672f0ca66fd5a26f0b189ab35c92fe4944",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -175,6 +337,30 @@
       "revId": "990915672f0ca66fd5a26f0b189ab35c92fe4944",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa0eb71e_08b96300",
+        "filename": "chromeos/printing/printer_configuration.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-09-28T20:47:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edd02f09_4cbd4248",
+      "range": {
+        "startLine": 139,
+        "startChar": 5,
+        "endLine": 139,
+        "endChar": 15
+      },
+      "revId": "990915672f0ca66fd5a26f0b189ab35c92fe4944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
