@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9f7c94a_7a48603d",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-28T04:09:03Z",
+      "side": 1,
+      "message": "I\u0027d like to revise this TODO and code. Seems bad that every subclass of URLLoader has to do this logic and know about --ignore-certificate -errors. This is kind of a hack in SWWriteToCacheJob that I hope we don\u0027t need to repeat in S13nSW.\n\nIdeally the default/network URLLoader could handle these SSL errors for us somehow and would return INSECURE_RESPONSE so we don\u0027t need to worry about it?",
+      "revId": "a20756de39297b6b98ba99e2941c9108dac93395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
