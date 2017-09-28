@@ -16,6 +16,24 @@
       "revId": "b06af54d645c8c4b59a9cd15874c8c99ab2a40b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c953358e_d0c433c8",
+        "filename": "tools/grit/grit/tool/build.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-09-28T18:29:35Z",
+      "side": 0,
+      "message": "Done, just need to write empty file with no newline if node.info is empty since otherwise concatenated file has blank lines.",
+      "parentUuid": "8ee77d7c_7326e763",
+      "revId": "b06af54d645c8c4b59a9cd15874c8c99ab2a40b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
