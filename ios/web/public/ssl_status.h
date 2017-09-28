@@ -33,6 +33,9 @@ struct SSLStatus {
     // HTTP page containing a credit card input, used to adjust UI on nonsecure
     // pages that collect sensitive data.
     DISPLAYED_CREDIT_CARD_FIELD_ON_HTTP = 1 << 5,
+
+    // HTTP page where the user edited a form field.
+    EDITED_FIELD_ON_HTTP = 1 << 7,
   };
 
   SSLStatus();
