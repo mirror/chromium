@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2dce6096_a1ce34c3",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-09-28T20:32:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd9af6bd_64a797c8",
+      "range": {
+        "startLine": 40,
+        "startChar": 42,
+        "endLine": 40,
+        "endChar": 63
+      },
+      "revId": "d0fd2759b40c0c9c9f8f2e08826dac73acde28a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "413bd20d_3e18b775",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletThread.cpp",
         "patchSetId": 4
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "e0e32acb_4eeb764b",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletThread.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-09-28T20:32:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "413bd20d_3e18b775",
+      "revId": "d0fd2759b40c0c9c9f8f2e08826dac73acde28a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfe60506_a6abb81a",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletThread.cpp",
         "patchSetId": 4
@@ -53,6 +95,24 @@
       "writtenOn": "2017-09-28T13:14:20Z",
       "side": 1,
       "message": "Shouldn\u0027t this be:\n\n  if (--s_ref_count \u003d\u003d 0)\n\n?",
+      "revId": "d0fd2759b40c0c9c9f8f2e08826dac73acde28a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55a0fe40_60c2a971",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletThread.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-09-28T20:32:24Z",
+      "side": 1,
+      "message": "Oops. Done.",
+      "parentUuid": "bfe60506_a6abb81a",
       "revId": "d0fd2759b40c0c9c9f8f2e08826dac73acde28a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +153,24 @@
     },
     {
       "key": {
+        "uuid": "4bad67f9_d990b309",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletThread.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-09-28T20:32:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e633c403_e5dc81bd",
+      "revId": "d0fd2759b40c0c9c9f8f2e08826dac73acde28a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a742c9e7_72634ea5",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletThread.h",
         "patchSetId": 4
@@ -104,6 +182,30 @@
       "writtenOn": "2017-09-28T09:34:30Z",
       "side": 1,
       "message": "uint32_t?",
+      "range": {
+        "startLine": 60,
+        "startChar": 9,
+        "endLine": 60,
+        "endChar": 17
+      },
+      "revId": "d0fd2759b40c0c9c9f8f2e08826dac73acde28a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87ab7fd4_309fd123",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletThread.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-09-28T20:32:24Z",
+      "side": 1,
+      "message": "Can you explain why unit32_t is better?\n\nAlso this is only accessed by the main thread, I don\u0027t think an atomic counter is necessary. I\u0027ll add a comment.",
+      "parentUuid": "a742c9e7_72634ea5",
       "range": {
         "startLine": 60,
         "startChar": 9,
@@ -133,6 +235,24 @@
     },
     {
       "key": {
+        "uuid": "1df77bb4_185adc06",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-09-28T20:32:24Z",
+      "side": 1,
+      "message": "Yeap. This is much cleaner. Thanks!",
+      "parentUuid": "83ff1c46_091727dd",
+      "revId": "d0fd2759b40c0c9c9f8f2e08826dac73acde28a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98ab6379_aef5b847",
         "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
         "patchSetId": 4
@@ -150,6 +270,24 @@
     },
     {
       "key": {
+        "uuid": "22be6c3d_74d0c694",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1040,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-09-28T20:32:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98ab6379_aef5b847",
+      "revId": "d0fd2759b40c0c9c9f8f2e08826dac73acde28a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0eaeaff2_50e8ab81",
         "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
         "patchSetId": 4
@@ -164,6 +302,24 @@
       "revId": "d0fd2759b40c0c9c9f8f2e08826dac73acde28a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b77efa47_a62751ee",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1045,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-09-28T20:32:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0eaeaff2_50e8ab81",
+      "revId": "d0fd2759b40c0c9c9f8f2e08826dac73acde28a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
