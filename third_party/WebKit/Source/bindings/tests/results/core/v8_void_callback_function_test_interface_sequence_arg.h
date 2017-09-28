@@ -14,6 +14,7 @@
 #define V8VoidCallbackFunctionTestInterfaceSequenceArg_h
 
 #include "bindings/core/v8/NativeValueTraits.h"
+#include "bindings/core/v8/ScriptValue.h"
 #include "core/CoreExport.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/bindings/TraceWrapperV8Reference.h"

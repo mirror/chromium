@@ -14,6 +14,7 @@
 #define V8VoidCallbackFunctionModules_h
 
 #include "bindings/core/v8/NativeValueTraits.h"
+#include "bindings/core/v8/ScriptValue.h"
 #include "modules/ModulesExport.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/bindings/TraceWrapperV8Reference.h"

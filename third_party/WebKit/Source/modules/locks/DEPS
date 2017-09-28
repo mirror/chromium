@@ -1,0 +1,7 @@
+include_rules = [
+    "-modules",
+    "+modules/LocksNames.h",
+    "+modules/ModulesExport.h",
+    "+modules/locks",
+    "+mojo/public/cpp/bindings/binding.h",
+]
