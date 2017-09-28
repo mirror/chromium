@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "a6980e3e_768f2276",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/FetchContext.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-09-28T10:10:27Z",
+      "side": 1,
+      "message": "Sorry, I\u0027m a bit confused. \"keepalive requests need a different timer\", but this CL uses the same task runner, right?",
+      "revId": "eddee85593ca7e582e63b4d8ac1359e2399d6e59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "66cfd5d8_47ebc2fb",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
         "patchSetId": 8
@@ -30,6 +47,23 @@
       "writtenOn": "2017-09-25T17:27:42Z",
       "side": 1,
       "message": "IIUC, by using a Persistent here, the queued task will keep the ResourceFetcher alive until the timer fires or get cancelled, thus removing the need for the manual self_keep_alive_. Is that right?",
+      "revId": "eddee85593ca7e582e63b4d8ac1359e2399d6e59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d746cbd8_e0e927b6",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-09-28T10:10:27Z",
+      "side": 1,
+      "message": "This is problematic because this function can be called in a prefinalizer. Calling WrapPersistent in such a situation is dangerous (TaskRunnerTime takes care of the issue).",
       "revId": "eddee85593ca7e582e63b4d8ac1359e2399d6e59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
