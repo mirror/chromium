@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cc83fed9_5935e798",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1678,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-28T20:58:42Z",
+      "side": 1,
+      "message": "If the help bubble is being shown via the app menu, we don\u0027t want to ask the IPH backend if we should show the cold start help bubble. I could inline the tracker.shouldTriggerHelpUI call in the early return on line 1680, but I think having a separate variable makes it more clear what we\u0027re checking for.",
+      "parentUuid": "46b77d0a_4303df3b",
+      "range": {
+        "startLine": 1678,
+        "startChar": 35,
+        "endLine": 1678,
+        "endChar": 44
+      },
+      "revId": "940555c029eac591dcfd87f1c83157517a014990",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6bbf2b8_3a0aaf50",
         "filename": "tools/metrics/actions/actions.xml",
         "patchSetId": 4
