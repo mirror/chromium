@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "08411851_7898203e",
+        "filename": "third_party/WebKit/Source/core/css/CSSImageGeneratorValue.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-28T16:02:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39000166_da1308e8",
+      "revId": "fddf86ec80157052b854e125e0917f01ec3f4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3517c52_303afc63",
         "filename": "third_party/WebKit/Source/core/css/CSSPaintImageGenerator.h",
         "patchSetId": 8
@@ -74,6 +92,30 @@
       "revId": "fddf86ec80157052b854e125e0917f01ec3f4b30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8aee6d3_033902ee",
+        "filename": "third_party/WebKit/Source/core/css/CSSPaintImageGenerator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-28T16:02:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3517c52_303afc63",
+      "range": {
+        "startLine": 51,
+        "startChar": 9,
+        "endLine": 51,
+        "endChar": 25
+      },
+      "revId": "fddf86ec80157052b854e125e0917f01ec3f4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
