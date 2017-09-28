@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a2d9e08_65f87cd5",
+        "filename": "third_party/closure_compiler/compiled_resources2.gyp",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-28T23:42:34Z",
+      "side": 1,
+      "message": "fukino: Original CL forgot to add this.",
+      "revId": "801a9f1f73817b19b5316250a880d5ed6cc62480",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
