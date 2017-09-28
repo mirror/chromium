@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "06345fb1_5031ef71",
+        "filename": "content/renderer/media/media_stream_center.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-09-28T17:37:37Z",
+      "side": 1,
+      "message": "MediaStreamSource* const source\nDCHECK(source);",
+      "range": {
+        "startLine": 206,
+        "startChar": 2,
+        "endLine": 206,
+        "endChar": 27
+      },
+      "revId": "f1cd657b86af0605f090138155fea1e99a12a68b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92ecc7b5_139f2438",
         "filename": "third_party/WebKit/Source/modules/mediacapturefromelement/HTMLMediaElementCapture.cpp",
         "patchSetId": 1
@@ -13,6 +36,24 @@
       "writtenOn": "2017-09-28T16:43:34Z",
       "side": 1,
       "message": "This approach lgtm for the eventually bad case, but why not also throw a clearer exception here in the immediately bad case for clarity?",
+      "revId": "f1cd657b86af0605f090138155fea1e99a12a68b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "000c02b4_a7b29e15",
+        "filename": "third_party/WebKit/Source/modules/mediacapturefromelement/HTMLMediaElementCapture.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-09-28T17:37:37Z",
+      "side": 1,
+      "message": "+1 you can merge changes from your earlier CL https://chromium-review.googlesource.com/c/chromium/src/+/687054",
+      "parentUuid": "92ecc7b5_139f2438",
       "revId": "f1cd657b86af0605f090138155fea1e99a12a68b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
