@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "869a6b03_4b18db2b",
+        "filename": "gpu/ipc/service/gpu_vsync_provider_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1117489
+      },
+      "writtenOn": "2017-09-28T22:48:42Z",
+      "side": 1,
+      "message": "number *of* intervals",
+      "revId": "c361ec83334248dd51f1f6e8bc16cf02f70f3dd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9485f847_50e0337d",
+        "filename": "gpu/ipc/service/gpu_vsync_provider_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1117489
+      },
+      "writtenOn": "2017-09-28T22:48:42Z",
+      "side": 1,
+      "message": "I am going to do a few more experiments to double check if this is a good threshold.",
+      "range": {
+        "startLine": 34,
+        "startChar": 43,
+        "endLine": 34,
+        "endChar": 44
+      },
+      "revId": "c361ec83334248dd51f1f6e8bc16cf02f70f3dd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
