@@ -20,16 +20,12 @@ void UnrefImageFromCache(DrawImage draw_image,
 PlaybackImageProvider::PlaybackImageProvider(
     bool skip_all_images,
     PaintImageIdFlatSet images_to_skip,
-    std::vector<DrawImage> at_raster_images,
     ImageDecodeCache* cache,
-    const gfx::ColorSpace& target_color_space,
-    base::flat_map<PaintImage::Id, size_t> image_to_current_frame_index)
+    const gfx::ColorSpace& target_color_space)
     : skip_all_images_(skip_all_images),
       images_to_skip_(std::move(images_to_skip)),
-      at_raster_images_(std::move(at_raster_images)),
       cache_(cache),
-      target_color_space_(target_color_space),
-      image_to_current_frame_index_(std::move(image_to_current_frame_index)) {
+      target_color_space_(target_color_space) {
   DCHECK(cache_);
 }
 

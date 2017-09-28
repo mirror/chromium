@@ -55,7 +55,7 @@ class MockDecodeCache : public StubDecodeCache {
 
 TEST(PlaybackImageProviderTest, SkipsAllImages) {
   MockDecodeCache cache;
-  PlaybackImageProvider provider(true, {}, {}, &cache, gfx::ColorSpace(), {});
+  PlaybackImageProvider provider(true, {}, &cache, gfx::ColorSpace());
   provider.BeginRaster();
 
   SkIRect rect = SkIRect::MakeWH(10, 10);
@@ -79,8 +79,8 @@ TEST(PlaybackImageProviderTest, SkipsAllImages) {
 TEST(PlaybackImageProviderTest, SkipsSomeImages) {
   MockDecodeCache cache;
   PaintImage skip_image = CreateDiscardablePaintImage(gfx::Size(10, 10));
-  PlaybackImageProvider provider(false, {skip_image.stable_id()}, {}, &cache,
-                                 gfx::ColorSpace(), {});
+  PlaybackImageProvider provider(false, {skip_image.stable_id()}, &cache,
+                                 gfx::ColorSpace());
   provider.BeginRaster();
 
   SkIRect rect = SkIRect::MakeWH(10, 10);
@@ -93,7 +93,7 @@ TEST(PlaybackImageProviderTest, SkipsSomeImages) {
 
 TEST(PlaybackImageProviderTest, RefAndUnrefDecode) {
   MockDecodeCache cache;
-  PlaybackImageProvider provider(false, {}, {}, &cache, gfx::ColorSpace(), {});
+  PlaybackImageProvider provider(false, {}, &cache, gfx::ColorSpace());
   provider.BeginRaster();
 
   {
@@ -107,54 +107,6 @@ TEST(PlaybackImageProviderTest, RefAndUnrefDecode) {
 
   // Destroying the decode unrefs the image from the cache.
   EXPECT_EQ(cache.refed_image_count(), 0);
-
-  provider.EndRaster();
-}
-
-TEST(PlaybackImageProviderTest, AtRasterImages) {
-  MockDecodeCache cache;
-
-  SkRect rect = SkRect::MakeWH(10, 10);
-  gfx::Size size(10, 10);
-  SkMatrix matrix = SkMatrix::I();
-  auto draw_image1 = CreateDiscardableDrawImage(
-      size, nullptr, rect, kMedium_SkFilterQuality, matrix);
-  auto draw_image2 = CreateDiscardableDrawImage(
-      size, nullptr, rect, kMedium_SkFilterQuality, matrix);
-
-  PlaybackImageProvider provider(false, {}, {draw_image1, draw_image2}, &cache,
-                                 gfx::ColorSpace(), {});
-
-  EXPECT_EQ(cache.refed_image_count(), 0);
-  provider.BeginRaster();
-  EXPECT_EQ(cache.refed_image_count(), 2);
-  EXPECT_EQ(cache.images_decoded(), 2);
-
-  provider.EndRaster();
-  EXPECT_EQ(cache.refed_image_count(), 0);
-  EXPECT_EQ(cache.images_decoded(), 2);
-}
-
-TEST(PlaybackImageProviderTest, SwapsGivenFrames) {
-  MockDecodeCache cache;
-  std::vector<FrameMetadata> frames = {
-      FrameMetadata(true, base::TimeDelta::FromMilliseconds(2)),
-      FrameMetadata(true, base::TimeDelta::FromMilliseconds(3))};
-  PaintImage image = CreateAnimatedImage(gfx::Size(10, 10), frames);
-
-  base::flat_map<PaintImage::Id, size_t> image_to_frame;
-  image_to_frame[image.stable_id()] = 1u;
-  PlaybackImageProvider provider(false, {}, {}, &cache, gfx::ColorSpace(),
-                                 image_to_frame);
-  provider.BeginRaster();
-
-  SkIRect rect = SkIRect::MakeWH(10, 10);
-  SkMatrix matrix = SkMatrix::I();
-  DrawImage draw_image(image, rect, kMedium_SkFilterQuality, matrix);
-  provider.GetDecodedDrawImage(draw_image);
-  ASSERT_TRUE(cache.last_image().paint_image());
-  ASSERT_EQ(cache.last_image().paint_image(), image);
-  ASSERT_EQ(cache.last_image().frame_index(), 1u);
 
   provider.EndRaster();
 }
