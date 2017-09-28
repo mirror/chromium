@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09250e07_2d855f71",
+        "filename": "third_party/WebKit/public/platform/WebClientHintsType.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-28T01:18:30Z",
+      "side": 1,
+      "message": "Having a static_assert defined at top-level in header file feels unfortunate, is there any chance to have this in .cc / .cpp?",
+      "revId": "f5a66d09c2e9286e0d0c5371c396bae823740340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
