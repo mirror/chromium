@@ -21,6 +21,7 @@
           "blink::mojom::BackgroundFetchService",
           "blink::mojom::BackgroundSyncService",
           "blink::mojom::BroadcastChannelProvider",
+          "blink::mojom::CookieStore",
           "blink::mojom::Hyphenation",
           "blink::mojom::MimeRegistry",
           "blink::mojom::NotificationService",
@@ -122,6 +123,7 @@
           // impossible this week. Remove once sky/ken fix this.
           "autofill::mojom::AutofillDriver",
           "autofill::mojom::PasswordManagerDriver",
+          "blink::mojom::CookieStore",
           "blink::mojom::InsecureInputService",
           "blink::mojom::KeyboardLockService",
           "blink::mojom::MediaSessionService",

@@ -132,8 +132,14 @@ void NetworkContext::HandleViewCacheRequest(const GURL& url,
   StartCacheURLLoader(url, url_request_context_, std::move(client));
 }
 
-void NetworkContext::GetCookieManager(mojom::CookieManagerRequest request) {
+void NetworkContext::GetCookieManager(
+    network::mojom::CookieManagerRequest request) {
   cookie_manager_->AddRequest(std::move(request));
+}
+
+void NetworkContext::GetCheckedCookieManager(
+    network::mojom::CheckedCookieManagerRequest request) {
+  checked_cookie_manager_->AddRequest(std::move(request));
 }
 
 void NetworkContext::DisableQuic() {

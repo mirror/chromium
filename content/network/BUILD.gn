@@ -35,6 +35,8 @@ source_set("network_sources") {
   sources = [
     "cache_url_loader.cc",
     "cache_url_loader.h",
+    "checked_cookie_manager_impl.cc",
+    "checked_cookie_manager_impl.h",
     "cookie_manager_impl.cc",
     "cookie_manager_impl.h",
     "http_server_properties_pref_delegate.cc",

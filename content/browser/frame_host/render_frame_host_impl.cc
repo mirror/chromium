@@ -25,6 +25,7 @@
 #include "content/browser/bluetooth/web_bluetooth_service_impl.h"
 #include "content/browser/browser_main_loop.h"
 #include "content/browser/child_process_security_policy_impl.h"
+#include "content/network/checked_cookie_manager_impl.h"
 #include "content/browser/devtools/render_frame_devtools_agent_host.h"
 #include "content/browser/dom_storage/dom_storage_context_wrapper.h"
 #include "content/browser/download/mhtml_generation_manager.h"
@@ -3090,6 +3091,17 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
   }
 
   registry_->AddInterface(base::Bind(&media::VideoDecodeStatsRecorder::Create));
+
+  registry_->AddInterface(
+      base::BindRepeating(
+          &CheckedCookieManagerImpl::CreateMojoService,
+          GetProcess()->GetBrowserContext(),
+          scoped_refptr<net::URLRequestContextGetter>(
+              BrowserContext::GetStoragePartition(
+                  GetProcess()->GetBrowserContext(), GetSiteInstance())
+                  ->GetURLRequestContext()),
+          GetProcess()->GetID(), GetRoutingID()),
+      BrowserThread::GetTaskRunnerForThread(BrowserThread::IO));
 }
 
 void RenderFrameHostImpl::ResetWaitingState() {

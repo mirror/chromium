@@ -4,12 +4,13 @@
 
 module content.mojom;
 
-import "cookie_manager.mojom";
 import "mojo/common/file_path.mojom";
 import "mojo/common/time.mojom";
+import "services/network/public/interfaces/checked_cookie_manager.mojom";
 import "url_loader.mojom";
 import "url_loader_factory.mojom";
 import "url/mojo/url.mojom";
+import "services/network/public/interfaces/cookie_manager.mojom";
 
 // Parameters for constructing a network context.
 struct NetworkContextParams {
@@ -70,8 +71,11 @@ interface NetworkContext {
   HandleViewCacheRequest(url.mojom.Url url,
                          URLLoaderClient client);
 
+  // Get the CheckedCookieManager associated with this network context.
+  GetCheckedCookieManager(network.mojom.CheckedCookieManager& cookie_manager);
+
   // Get the CookieManager associated with this network context.
-  GetCookieManager(CookieManager& cookie_manager);
+  GetCookieManager(network.mojom.CookieManager& cookie_manager);
 
   // Clears network objects with implicit URL history information. Data related
   // to events that happened prior to |start_time| may be retained. Only applies
