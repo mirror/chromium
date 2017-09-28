@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee3fc11f_847cd37c",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwAutofillTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-09-28T23:06:12Z",
+      "side": 1,
+      "message": "This actually does not wait for the autofill to change values because of L504.",
+      "range": {
+        "startLine": 559,
+        "startChar": 20,
+        "endLine": 559,
+        "endChar": 52
+      },
+      "revId": "23a7b0f7d7a695724fb55520be756965d9377c2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49f127ba_e5c6752c",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwAutofillTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-09-28T23:06:12Z",
+      "side": 1,
+      "message": "1) Could you try to check if most of the code here can go to setUp()?\n2) Tests in other files seem to simply call mTestServer.shutdown() and set it to null. Is there any reason why this should be different?",
+      "range": {
+        "startLine": 583,
+        "startChar": 0,
+        "endLine": 583,
+        "endChar": 56
+      },
+      "revId": "23a7b0f7d7a695724fb55520be756965d9377c2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bae811e_db203817",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwAutofillTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-09-28T23:06:12Z",
+      "side": 1,
+      "message": "could you explicitly assert each values?",
+      "range": {
+        "startLine": 613,
+        "startChar": 25,
+        "endLine": 613,
+        "endChar": 44
+      },
+      "revId": "23a7b0f7d7a695724fb55520be756965d9377c2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc0f36b2_dadeb784",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwAutofillTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-09-28T23:06:12Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 655,
+        "startChar": 12,
+        "endLine": 655,
+        "endChar": 24
+      },
+      "revId": "23a7b0f7d7a695724fb55520be756965d9377c2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
