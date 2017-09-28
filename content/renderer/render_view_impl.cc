@@ -182,7 +182,6 @@
 #include <cpu-features.h>
 
 #include "base/android/build_info.h"
-#include "content/renderer/android/disambiguation_popup_helper.h"
 #include "ui/gfx/geometry/rect_f.h"
 
 #elif defined(OS_MACOSX)
@@ -675,11 +674,6 @@ void RenderViewImpl::Initialize(
 RenderViewImpl::~RenderViewImpl() {
   DCHECK(!frame_widget_);
 
-  for (BitmapMap::iterator it = disambiguation_bitmaps_.begin();
-       it != disambiguation_bitmaps_.end();
-       ++it)
-    delete it->second;
-
 #if defined(OS_ANDROID)
   // The date/time picker client is both a std::unique_ptr member of this class
   // and a RenderViewObserver. Reset it to prevent double deletion.
@@ -1162,10 +1156,6 @@ bool RenderViewImpl::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(ViewMsg_MediaPlayerActionAt, OnMediaPlayerActionAt)
     IPC_MESSAGE_HANDLER(ViewMsg_PluginActionAt, OnPluginActionAt)
     IPC_MESSAGE_HANDLER(ViewMsg_SetActive, OnSetActive)
-    IPC_MESSAGE_HANDLER(ViewMsg_ReleaseDisambiguationPopupBitmap,
-                        OnReleaseDisambiguationPopupBitmap)
-    IPC_MESSAGE_HANDLER(ViewMsg_ResolveTapDisambiguation,
-                        OnResolveTapDisambiguation)
     IPC_MESSAGE_HANDLER(ViewMsg_ForceRedraw, OnForceRedraw)
     IPC_MESSAGE_HANDLER(ViewMsg_SelectWordAroundCaret, OnSelectWordAroundCaret)
 
@@ -2309,83 +2299,6 @@ void RenderViewImpl::DismissDateTimeDialog() {
   date_time_picker_client_.reset(NULL);
 }
 
-bool RenderViewImpl::DidTapMultipleTargets(
-    const WebSize& inner_viewport_offset,
-    const WebRect& touch_rect,
-    const WebVector<WebRect>& target_rects) {
-  // Never show a disambiguation popup when accessibility is enabled,
-  // as this interferes with "touch exploration".
-  ui::AXMode accessibility_mode = GetMainRenderFrame()->accessibility_mode();
-  if (accessibility_mode == ui::kAXModeComplete)
-    return false;
-
-  // The touch_rect, target_rects and zoom_rect are in the outer viewport
-  // reference frame.
-  gfx::Rect zoom_rect;
-  float new_total_scale =
-      DisambiguationPopupHelper::ComputeZoomAreaAndScaleFactor(
-          touch_rect, target_rects, GetSize(),
-          gfx::Rect(webview()->MainFrame()->VisibleContentRect()).size(),
-          device_scale_factor_ * webview()->PageScaleFactor(), &zoom_rect);
-  if (!new_total_scale || zoom_rect.IsEmpty())
-    return false;
-
-  bool handled = false;
-  switch (renderer_preferences_.tap_multiple_targets_strategy) {
-    case TAP_MULTIPLE_TARGETS_STRATEGY_ZOOM:
-      handled = webview()->ZoomToMultipleTargetsRect(zoom_rect);
-      break;
-    case TAP_MULTIPLE_TARGETS_STRATEGY_POPUP: {
-      gfx::Size canvas_size =
-          gfx::ScaleToCeiledSize(zoom_rect.size(), new_total_scale);
-      viz::SharedBitmapManager* manager =
-          RenderThreadImpl::current()->shared_bitmap_manager();
-      std::unique_ptr<viz::SharedBitmap> shared_bitmap =
-          manager->AllocateSharedBitmap(canvas_size);
-      CHECK(!!shared_bitmap);
-      {
-        SkBitmap bitmap;
-        SkImageInfo info = SkImageInfo::MakeN32Premul(canvas_size.width(),
-                                                      canvas_size.height());
-        bitmap.installPixels(info, shared_bitmap->pixels(), info.minRowBytes());
-        cc::SkiaPaintCanvas canvas(bitmap);
-
-        // TODO(trchen): Cleanup the device scale factor mess.
-        // device scale will be applied in WebKit
-        // --> zoom_rect doesn't include device scale,
-        //     but WebKit will still draw on zoom_rect * device_scale_factor_
-        canvas.scale(new_total_scale / device_scale_factor_,
-                     new_total_scale / device_scale_factor_);
-        canvas.translate(-zoom_rect.x() * device_scale_factor_,
-                         -zoom_rect.y() * device_scale_factor_);
-
-        DCHECK(webview_->IsAcceleratedCompositingActive());
-        webview_->PaintIgnoringCompositing(&canvas, zoom_rect);
-      }
-
-      gfx::Rect zoom_rect_in_screen =
-          zoom_rect - gfx::Vector2d(inner_viewport_offset.width,
-                                    inner_viewport_offset.height);
-
-      gfx::Rect physical_window_zoom_rect = gfx::ToEnclosingRect(
-          ClientRectToPhysicalWindowRect(gfx::RectF(zoom_rect_in_screen)));
-
-      Send(new ViewHostMsg_ShowDisambiguationPopup(
-          GetRoutingID(), physical_window_zoom_rect, canvas_size,
-          shared_bitmap->id()));
-      viz::SharedBitmapId id = shared_bitmap->id();
-      disambiguation_bitmaps_[id] = shared_bitmap.release();
-      handled = true;
-      break;
-    }
-    case TAP_MULTIPLE_TARGETS_STRATEGY_NONE:
-      // No-op.
-      break;
-  }
-
-  return handled;
-}
-
 void RenderViewImpl::SuspendVideoCaptureDevices(bool suspend) {
 #if BUILDFLAG(ENABLE_WEBRTC)
   if (!main_render_frame_)
@@ -2468,21 +2381,6 @@ void RenderViewImpl::EnableAutoResizeForTesting(const gfx::Size& min_size,
 
 void RenderViewImpl::DisableAutoResizeForTesting(const gfx::Size& new_size) {
   OnDisableAutoResize(new_size);
-}
-
-void RenderViewImpl::OnReleaseDisambiguationPopupBitmap(
-    const viz::SharedBitmapId& id) {
-  BitmapMap::iterator it = disambiguation_bitmaps_.find(id);
-  DCHECK(it != disambiguation_bitmaps_.end());
-  delete it->second;
-  disambiguation_bitmaps_.erase(it);
-}
-
-void RenderViewImpl::OnResolveTapDisambiguation(double timestamp_seconds,
-                                                gfx::Point tap_viewport_offset,
-                                                bool is_long_press) {
-  webview()->ResolveTapDisambiguation(timestamp_seconds, tap_viewport_offset,
-                                      is_long_press);
 }
 
 void RenderViewImpl::DidCommitCompositorFrame() {

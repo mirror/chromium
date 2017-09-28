@@ -305,12 +305,6 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
   void FocusedNodeChanged(const blink::WebNode& fromNode,
                           const blink::WebNode& toNode) override;
   void DidUpdateLayout() override;
-#if defined(OS_ANDROID)
-  bool DidTapMultipleTargets(
-      const blink::WebSize& inner_viewport_offset,
-      const blink::WebRect& touch_rect,
-      const blink::WebVector<blink::WebRect>& target_rects) override;
-#endif
   blink::WebString AcceptLanguages() override;
   void NavigateBackForwardSoon(int offset) override;
   int HistoryBackListCount() override;
@@ -516,10 +510,6 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
   void OnPluginActionAt(const gfx::Point& location,
                         const blink::WebPluginAction& action);
   void OnMoveOrResizeStarted();
-  void OnReleaseDisambiguationPopupBitmap(const viz::SharedBitmapId& id);
-  void OnResolveTapDisambiguation(double timestamp_seconds,
-                                  gfx::Point tap_viewport_offset,
-                                  bool is_long_press);
   void OnSetActive(bool active);
   void OnSetBackgroundOpaque(bool opaque);
   void OnExitFullscreen();
@@ -793,7 +783,6 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
   std::unique_ptr<StatsCollectionObserver> stats_collection_observer_;
 
   typedef std::map<viz::SharedBitmapId, viz::SharedBitmap*> BitmapMap;
-  BitmapMap disambiguation_bitmaps_;
 
   std::unique_ptr<IdleUserDetector> idle_user_detector_;
 

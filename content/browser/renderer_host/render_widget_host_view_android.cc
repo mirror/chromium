@@ -40,7 +40,6 @@
 #include "content/browser/android/content_view_core.h"
 #include "content/browser/android/ime_adapter_android.h"
 #include "content/browser/android/overscroll_controller_android.h"
-#include "content/browser/android/popup_zoomer.h"
 #include "content/browser/android/selection_popup_controller.h"
 #include "content/browser/android/synchronous_compositor_host.h"
 #include "content/browser/android/text_suggestion_host_android.h"
@@ -454,7 +453,6 @@ RenderWidgetHostViewAndroid::RenderWidgetHostViewAndroid(
       is_in_vr_(false),
       content_view_core_(nullptr),
       ime_adapter_android_(nullptr),
-      popup_zoomer_(nullptr),
       selection_popup_controller_(nullptr),
       text_suggestion_host_(nullptr),
       background_color_(SK_ColorWHITE),
@@ -1160,14 +1158,6 @@ void RenderWidgetHostViewAndroid::CopyFromSurface(
       compositor, src_subrect_in_pixel,
       base::Bind(&PrepareTextureCopyOutputResult, dst_size_in_pixel,
                  preferred_color_type, start_time, callback, readback_lock));
-}
-
-void RenderWidgetHostViewAndroid::ShowDisambiguationPopup(
-    const gfx::Rect& rect_pixels, const SkBitmap& zoomed_bitmap) {
-  if (!popup_zoomer_)
-    return;
-
-  popup_zoomer_->ShowPopup(rect_pixels, zoomed_bitmap);
 }
 
 std::unique_ptr<SyntheticGestureTarget>
@@ -2006,16 +1996,6 @@ bool RenderWidgetHostViewAndroid::ShowSelectionMenu(
 
   return selection_popup_controller_->ShowSelectionMenu(params,
                                                         GetTouchHandleHeight());
-}
-
-void RenderWidgetHostViewAndroid::ResolveTapDisambiguation(
-    double timestamp_seconds,
-    gfx::Point tap_viewport_offset,
-    bool is_long_press) {
-  DCHECK(host_);
-  host_->Send(new ViewMsg_ResolveTapDisambiguation(
-      host_->GetRoutingID(), timestamp_seconds, tap_viewport_offset,
-      is_long_press));
 }
 
 void RenderWidgetHostViewAndroid::MoveCaret(const gfx::Point& point) {

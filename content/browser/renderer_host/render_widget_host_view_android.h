@@ -51,7 +51,6 @@ namespace content {
 class ContentViewCore;
 class ImeAdapterAndroid;
 class OverscrollControllerAndroid;
-class PopupZoomer;
 class RenderWidgetHost;
 class RenderWidgetHostImpl;
 class SelectionPopupController;
@@ -163,8 +162,6 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   bool IsInVR() const override;
   void DidOverscroll(const ui::DidOverscrollParams& params) override;
   void DidStopFlinging() override;
-  void ShowDisambiguationPopup(const gfx::Rect& rect_pixels,
-                               const SkBitmap& zoomed_bitmap) override;
   std::unique_ptr<SyntheticGestureTarget> CreateSyntheticGestureTarget()
       override;
   void OnDidNavigateMainFrameToNewPage() override;
@@ -252,14 +249,8 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   void SendMouseWheelEvent(const blink::WebMouseWheelEvent& event);
   void SendGestureEvent(const blink::WebGestureEvent& event);
   bool ShowSelectionMenu(const ContextMenuParams& params);
-  void ResolveTapDisambiguation(double timestamp_seconds,
-                                gfx::Point tap_viewport_offset,
-                                bool is_long_press);
   void set_ime_adapter(ImeAdapterAndroid* ime_adapter) {
     ime_adapter_android_ = ime_adapter;
-  }
-  void set_popup_zoomer(PopupZoomer* popup_zoomer) {
-    popup_zoomer_ = popup_zoomer;
   }
   void set_selection_popup_controller(SelectionPopupController* controller) {
     selection_popup_controller_ = controller;
@@ -412,7 +403,6 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   ContentViewCore* content_view_core_;
 
   ImeAdapterAndroid* ime_adapter_android_;
-  PopupZoomer* popup_zoomer_;
   SelectionPopupController* selection_popup_controller_;
   TextSuggestionHostAndroid* text_suggestion_host_;
 

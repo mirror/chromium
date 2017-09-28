@@ -3243,13 +3243,6 @@ void SimulatePageScale(WebViewImpl* web_view_impl, float& scale) {
   scale = web_view_impl->PageScaleFactor();
 }
 
-void SimulateMultiTargetZoom(WebViewImpl* web_view_impl,
-                             const WebRect& rect,
-                             float& scale) {
-  if (web_view_impl->ZoomToMultipleTargetsRect(rect))
-    SimulatePageScale(web_view_impl, scale);
-}
-
 void SimulateDoubleTap(WebViewImpl* web_view_impl,
                        WebPoint& point,
                        float& scale) {
@@ -3789,46 +3782,6 @@ TEST_P(ParameterizedWebFrameTest, BlockBoundTest) {
   block_bound = IntRect(
       web_view_helper.WebView()->ComputeBlockBound(WebPoint(110, 110), true));
   EXPECT_RECT_EQ(rect_right_bottom, block_bound);
-}
-
-TEST_P(ParameterizedWebFrameTest, DivMultipleTargetZoomMultipleDivsTest) {
-  RegisterMockedHttpURLLoad("get_multiple_divs_for_auto_zoom_test.html");
-
-  const float kDeviceScaleFactor = 2.0f;
-  int viewport_width = 640 / kDeviceScaleFactor;
-  int viewport_height = 1280 / kDeviceScaleFactor;
-  float double_tap_zoom_already_legible_ratio = 1.2f;
-  FrameTestHelpers::WebViewHelper web_view_helper;
-  web_view_helper.InitializeAndLoad(
-      base_url_ + "get_multiple_divs_for_auto_zoom_test.html");
-  web_view_helper.Resize(WebSize(viewport_width, viewport_height));
-  web_view_helper.WebView()->SetDefaultPageScaleLimits(0.5f, 4);
-  web_view_helper.WebView()->SetDeviceScaleFactor(kDeviceScaleFactor);
-  web_view_helper.WebView()->SetPageScaleFactor(0.5f);
-  web_view_helper.WebView()->SetMaximumLegibleScale(1.f);
-  web_view_helper.WebView()->UpdateAllLifecyclePhases();
-
-  web_view_helper.WebView()->EnableFakePageScaleAnimationForTesting(true);
-
-  WebRect viewport_rect(0, 0, viewport_width, viewport_height);
-  WebRect top_div(200, 100, 200, 150);
-  WebRect bottom_div(200, 300, 200, 150);
-  float scale;
-  SetScaleAndScrollAndLayout(
-      web_view_helper.WebView(), WebPoint(0, 0),
-      (web_view_helper.WebView()->MinimumPageScaleFactor()) *
-          (1 + double_tap_zoom_already_legible_ratio) / 2);
-
-  SimulateMultiTargetZoom(web_view_helper.WebView(), top_div, scale);
-  EXPECT_FLOAT_EQ(1, scale);
-  SimulateMultiTargetZoom(web_view_helper.WebView(), bottom_div, scale);
-  EXPECT_FLOAT_EQ(1, scale);
-  SimulateMultiTargetZoom(web_view_helper.WebView(), viewport_rect, scale);
-  EXPECT_FLOAT_EQ(1, scale);
-  web_view_helper.WebView()->SetPageScaleFactor(
-      web_view_helper.WebView()->MinimumPageScaleFactor());
-  SimulateMultiTargetZoom(web_view_helper.WebView(), top_div, scale);
-  EXPECT_FLOAT_EQ(1, scale);
 }
 
 TEST_P(ParameterizedWebFrameTest, DontZoomInOnFocusedInTouchAction) {
@@ -6185,11 +6138,11 @@ TEST_P(CompositedSelectionBoundsTest, InputScrolled) {
 #endif
 #endif
 
-class DisambiguationPopupTestWebViewClient
+class DisambiguationRectTestWebViewClient
     : public FrameTestHelpers::TestWebViewClient {
  public:
-  DisambiguationPopupTestWebViewClient() {}
-  ~DisambiguationPopupTestWebViewClient() override {}
+  DisambiguationRectTestWebViewClient() {}
+  ~DisambiguationRectTestWebViewClient() override {}
 
   // FrameTestHelpers::TestWebViewClient:
   bool DidTapMultipleTargets(const WebSize&,
@@ -6216,69 +6169,10 @@ static WebCoalescedInputEvent FatTap(int x, int y, int diameter) {
   return WebCoalescedInputEvent(event);
 }
 
-TEST_P(ParameterizedWebFrameTest, DisambiguationPopup) {
-  const std::string html_file = "disambiguation_popup.html";
-  RegisterMockedHttpURLLoad(html_file);
-
-  DisambiguationPopupTestWebViewClient client;
-  const int kTapDiameter = 100;
-
-  // Make sure we initialize to minimum scale, even if the window size
-  // only becomes available after the load begins.
-  FrameTestHelpers::WebViewHelper web_view_helper;
-  web_view_helper.InitializeAndLoad(base_url_ + html_file, nullptr, &client);
-  web_view_helper.Resize(WebSize(1000, 1000));
-
-  client.ResetTriggered();
-  web_view_helper.WebView()->HandleInputEvent(FatTap(0, 0, kTapDiameter));
-  EXPECT_FALSE(client.Triggered());
-
-  client.ResetTriggered();
-  web_view_helper.WebView()->HandleInputEvent(FatTap(200, 115, kTapDiameter));
-  EXPECT_FALSE(client.Triggered());
-
-  for (int i = 0; i <= 46; i++) {
-    client.ResetTriggered();
-    web_view_helper.WebView()->HandleInputEvent(
-        FatTap(120, 230 + i * 5, kTapDiameter));
-
-    int j = i % 10;
-    if (j >= 7 && j <= 9)
-      EXPECT_TRUE(client.Triggered());
-    else
-      EXPECT_FALSE(client.Triggered());
-  }
-
-  for (int i = 0; i <= 46; i++) {
-    client.ResetTriggered();
-    web_view_helper.WebView()->HandleInputEvent(
-        FatTap(10 + i * 5, 590, kTapDiameter));
-
-    int j = i % 10;
-    if (j >= 7 && j <= 9)
-      EXPECT_TRUE(client.Triggered());
-    else
-      EXPECT_FALSE(client.Triggered());
-  }
-
-  // The same taps shouldn't trigger didTapMultipleTargets() after disabling the
-  // notification for multi-target-tap.
-  web_view_helper.WebView()
-      ->GetSettings()
-      ->SetMultiTargetTapNotificationEnabled(false);
-
-  for (int i = 0; i <= 46; i++) {
-    client.ResetTriggered();
-    web_view_helper.WebView()->HandleInputEvent(
-        FatTap(10 + i * 5, 590, kTapDiameter));
-    EXPECT_FALSE(client.Triggered());
-  }
-}
-
-TEST_P(ParameterizedWebFrameTest, DisambiguationPopupNoContainer) {
+TEST_P(ParameterizedWebFrameTest, DisambiguationRectNoContainer) {
   RegisterMockedHttpURLLoad("disambiguation_popup_no_container.html");
 
-  DisambiguationPopupTestWebViewClient client;
+  DisambiguationRectTestWebViewClient client;
   const int kTapDiameter = 100;
 
   // Make sure we initialize to minimum scale, even if the window size
@@ -6293,11 +6187,11 @@ TEST_P(ParameterizedWebFrameTest, DisambiguationPopupNoContainer) {
   EXPECT_FALSE(client.Triggered());
 }
 
-TEST_P(ParameterizedWebFrameTest, DisambiguationPopupMobileSite) {
+TEST_P(ParameterizedWebFrameTest, DisambiguationRectMobileSite) {
   const std::string html_file = "disambiguation_popup_mobile_site.html";
   RegisterMockedHttpURLLoad(html_file);
 
-  DisambiguationPopupTestWebViewClient client;
+  DisambiguationRectTestWebViewClient client;
   const int kTapDiameter = 100;
 
   // Make sure we initialize to minimum scale, even if the window size
@@ -6330,11 +6224,11 @@ TEST_P(ParameterizedWebFrameTest, DisambiguationPopupMobileSite) {
   }
 }
 
-TEST_P(ParameterizedWebFrameTest, DisambiguationPopupViewportSite) {
+TEST_P(ParameterizedWebFrameTest, DisambiguationRectViewportSite) {
   const std::string html_file = "disambiguation_popup_viewport_site.html";
   RegisterMockedHttpURLLoad(html_file);
 
-  DisambiguationPopupTestWebViewClient client;
+  DisambiguationRectTestWebViewClient client;
   const int kTapDiameter = 100;
 
   // Make sure we initialize to minimum scale, even if the window size
@@ -6367,69 +6261,14 @@ TEST_P(ParameterizedWebFrameTest, DisambiguationPopupViewportSite) {
   }
 }
 
-TEST_P(ParameterizedWebFrameTest, DisambiguationPopupVisualViewport) {
-  const std::string html_file = "disambiguation_popup_200_by_800.html";
-  RegisterMockedHttpURLLoad(html_file);
-
-  DisambiguationPopupTestWebViewClient client;
-  const int kTapDiameter = 100;
-
-  FrameTestHelpers::WebViewHelper web_view_helper;
-  web_view_helper.InitializeAndLoad(base_url_ + html_file, nullptr, &client,
-                                    nullptr, ConfigureAndroid);
-
-  WebViewImpl* web_view_impl = web_view_helper.WebView();
-  ASSERT_TRUE(web_view_impl);
-  LocalFrame* frame = web_view_impl->MainFrameImpl()->GetFrame();
-  ASSERT_TRUE(frame);
-
-  web_view_helper.Resize(WebSize(100, 200));
-
-  // Scroll main frame to the bottom of the document
-  web_view_impl->MainFrameImpl()->SetScrollOffset(WebSize(0, 400));
-  EXPECT_SIZE_EQ(
-      ScrollOffset(0, 400),
-      frame->View()->LayoutViewportScrollableArea()->GetScrollOffset());
-
-  web_view_impl->SetPageScaleFactor(2.0);
-
-  // Scroll visual viewport to the top of the main frame.
-  VisualViewport& visual_viewport = frame->GetPage()->GetVisualViewport();
-  visual_viewport.SetLocation(FloatPoint(0, 0));
-  EXPECT_SIZE_EQ(ScrollOffset(0, 0), visual_viewport.GetScrollOffset());
-
-  // Tap at the top: there is nothing there.
-  client.ResetTriggered();
-  web_view_helper.WebView()->HandleInputEvent(FatTap(10, 60, kTapDiameter));
-  EXPECT_FALSE(client.Triggered());
-
-  // Scroll visual viewport to the bottom of the main frame.
-  visual_viewport.SetLocation(FloatPoint(0, 200));
-  EXPECT_SIZE_EQ(ScrollOffset(0, 200), visual_viewport.GetScrollOffset());
-
-  // Now the tap with the same coordinates should hit two elements.
-  client.ResetTriggered();
-  web_view_helper.WebView()->HandleInputEvent(FatTap(10, 60, kTapDiameter));
-  EXPECT_TRUE(client.Triggered());
-
-  // The same tap shouldn't trigger didTapMultipleTargets() after disabling the
-  // notification for multi-target-tap.
-  web_view_helper.WebView()
-      ->GetSettings()
-      ->SetMultiTargetTapNotificationEnabled(false);
-  client.ResetTriggered();
-  web_view_helper.WebView()->HandleInputEvent(FatTap(10, 60, kTapDiameter));
-  EXPECT_FALSE(client.Triggered());
-}
-
-TEST_P(ParameterizedWebFrameTest, DisambiguationPopupBlacklist) {
+TEST_P(ParameterizedWebFrameTest, DisambiguationRectBlacklist) {
   const unsigned kViewportWidth = 500;
   const unsigned kViewportHeight = 1000;
   const unsigned kDivHeight = 100;
   const std::string html_file = "disambiguation_popup_blacklist.html";
   RegisterMockedHttpURLLoad(html_file);
 
-  DisambiguationPopupTestWebViewClient client;
+  DisambiguationRectTestWebViewClient client;
   const int kTapDiameter = 100;
 
   // Make sure we initialize to minimum scale, even if the window size
@@ -6459,10 +6298,10 @@ TEST_P(ParameterizedWebFrameTest, DisambiguationPopupBlacklist) {
   EXPECT_FALSE(client.Triggered());
 }
 
-TEST_P(ParameterizedWebFrameTest, DisambiguationPopupPageScale) {
+TEST_P(ParameterizedWebFrameTest, DisambiguationRectPageScale) {
   RegisterMockedHttpURLLoad("disambiguation_popup_page_scale.html");
 
-  DisambiguationPopupTestWebViewClient client;
+  DisambiguationRectTestWebViewClient client;
   const int kTapDiameter = 50;
 
   // Make sure we initialize to minimum scale, even if the window size

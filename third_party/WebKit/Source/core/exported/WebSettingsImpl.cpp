@@ -595,14 +595,6 @@ void WebSettingsImpl::SetEnableTouchAdjustment(bool enabled) {
   settings_->SetTouchAdjustmentEnabled(enabled);
 }
 
-bool WebSettingsImpl::MultiTargetTapNotificationEnabled() {
-  return settings_->GetMultiTargetTapNotificationEnabled();
-}
-
-void WebSettingsImpl::SetMultiTargetTapNotificationEnabled(bool enabled) {
-  settings_->SetMultiTargetTapNotificationEnabled(enabled);
-}
-
 bool WebSettingsImpl::ViewportEnabled() const {
   return settings_->GetViewportEnabled();
 }

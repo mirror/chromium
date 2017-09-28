@@ -201,11 +201,6 @@ class WebView : protected WebWidget {
                                         WebRemoteFrame* from,
                                         WebLocalFrame* to) {}
 
-  // Animate a scale into the specified rect where multiple targets were
-  // found from previous tap gesture.
-  // Returns false if it doesn't do any zooming.
-  virtual bool ZoomToMultipleTargetsRect(const WebRect&) = 0;
-
   // Zoom ----------------------------------------------------------------
 
   // Returns the current zoom level.  0 is "original size", and each increment
@@ -370,12 +365,6 @@ class WebView : protected WebWidget {
 
   // Hides any popup (suggestions, selects...) that might be showing.
   virtual void HidePopups() = 0;
-
-  // Generate a synthetic touch event applying the result of a tap
-  // disambiguation popup.
-  virtual void ResolveTapDisambiguation(double timestamp_seconds,
-                                        WebPoint tap_viewport_offset,
-                                        bool is_long_press) = 0;
 
   // Visited link state --------------------------------------------------
 
