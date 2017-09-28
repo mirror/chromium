@@ -137,6 +137,22 @@ class GL_EXPORT NativeViewGLSurfaceEGL : public GLSurfaceEGL {
   gfx::SwapResult SwapBuffersWithDamage(const std::vector<int>& rects);
 
  private:
+  struct PendingLatencyInfo {
+    PendingLatencyInfo(bool frame_id_is_valid,
+                       EGLuint64KHR frame_id,
+                       std::vector<ui::LatencyInfo> info);
+    PendingLatencyInfo(PendingLatencyInfo&& src);
+    PendingLatencyInfo& operator=(PendingLatencyInfo&& src);
+
+    ~PendingLatencyInfo();
+
+    bool frame_id_is_valid;
+    EGLuint64KHR frame_id;
+    std::vector<ui::LatencyInfo> latency_info;
+
+    DISALLOW_COPY_AND_ASSIGN(PendingLatencyInfo);
+  };
+
   // Commit the |pending_overlays_| and clear the vector. Returns false if any
   // fail to be committed.
   bool CommitAndClearPendingOverlays();
@@ -150,6 +166,10 @@ class GL_EXPORT NativeViewGLSurfaceEGL : public GLSurfaceEGL {
   std::unique_ptr<gfx::VSyncProvider> vsync_provider_internal_;
 
   std::vector<GLSurfaceOverlay> pending_overlays_;
+
+  std::vector<EGLint> supported_egl_timestamps_;
+  std::vector<ui::LatencyComponentType> supported_latency_components_;
+  std::vector<PendingLatencyInfo> pending_latency_infos_;
 
   DISALLOW_COPY_AND_ASSIGN(NativeViewGLSurfaceEGL);
 };

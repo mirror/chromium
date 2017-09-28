@@ -925,6 +925,47 @@ bool NativeViewGLSurfaceEGL::Initialize(GLSurfaceFormat format) {
     vsync_provider_internal_ =
         base::MakeUnique<EGLSyncControlVSyncProvider>(surface_);
   }
+
+  // If frame timestamps are supported, set the proper attribute to enable the
+  // feature and then cache the timestamps supported by the underlying
+  // implementation. EGL_DISPLAY_PRESENT_TIME_ANDROID support, in particular,
+  // is spotty.
+  if (g_driver_egl.ext.b_EGL_ANDROID_get_frame_timestamps) {
+    eglSurfaceAttrib(GetDisplay(), surface_, EGL_TIMESTAMPS_ANDROID, EGL_TRUE);
+
+    static const struct {
+      EGLint egl_name;
+      ui::LatencyComponentType latency_component;
+    } all_timestamps[] = {
+        {EGL_REQUESTED_PRESENT_TIME_ANDROID,
+         ui::DISPLAY_EVENT_REQUESTED_PRESENT},
+        {EGL_RENDERING_COMPLETE_TIME_ANDROID,
+         ui::DISPLAY_EVENT_RENDERING_COMPLETE},
+        {EGL_COMPOSITION_LATCH_TIME_ANDROID,
+         ui::DISPLAY_EVENT_COMPOSITION_LATCH},
+        {EGL_FIRST_COMPOSITION_START_TIME_ANDROID,
+         ui::DISPLAY_EVENT_FIRST_COMPOSITION_START},
+        {EGL_LAST_COMPOSITION_START_TIME_ANDROID,
+         ui::DISPLAY_EVENT_LAST_COMPOSITION_START},
+        {EGL_FIRST_COMPOSITION_GPU_FINISHED_TIME_ANDROID,
+         ui::DISPLAY_EVENT_FIRST_COMPOSITION_GPU_FINISHED},
+        {EGL_DISPLAY_PRESENT_TIME_ANDROID, ui::DISPLAY_EVENT_DISPLAY_PRESENT},
+        {EGL_DEQUEUE_READY_TIME_ANDROID, ui::DISPLAY_EVENT_DEQUEUE_READY},
+        {EGL_READS_DONE_TIME_ANDROID, ui::DISPLAY_EVENT_READS_DONE},
+    };
+
+    for (const auto& ts : all_timestamps) {
+      if (eglGetFrameTimestampSupportedANDROID(GetDisplay(), surface_,
+                                               ts.egl_name) == 0)
+        continue;
+
+      // Stored in separate vectors so we can pass the egl timestamps
+      // directly to the EGL functions.
+      supported_egl_timestamps_.push_back(ts.egl_name);
+      supported_latency_components_.push_back(ts.latency_component);
+    }
+  }
+
   return true;
 }
 
@@ -948,6 +989,23 @@ bool NativeViewGLSurfaceEGL::IsOffscreen() {
   return false;
 }
 
+NativeViewGLSurfaceEGL::PendingLatencyInfo::PendingLatencyInfo(
+    bool frame_id_is_valid,
+    EGLuint64KHR frame_id,
+    std::vector<ui::LatencyInfo> info)
+    : frame_id_is_valid(frame_id_is_valid),
+      frame_id(frame_id),
+      latency_info(std::move(info)) {}
+
+NativeViewGLSurfaceEGL::PendingLatencyInfo::PendingLatencyInfo(
+    NativeViewGLSurfaceEGL::PendingLatencyInfo&& src) = default;
+
+NativeViewGLSurfaceEGL::PendingLatencyInfo&
+NativeViewGLSurfaceEGL::PendingLatencyInfo::operator=(
+    NativeViewGLSurfaceEGL::PendingLatencyInfo&& src) = default;
+
+NativeViewGLSurfaceEGL::PendingLatencyInfo::~PendingLatencyInfo() = default;
+
 gfx::SwapResult NativeViewGLSurfaceEGL::SwapBuffers(
     std::vector<ui::LatencyInfo>* latency_info) {
   TRACE_EVENT2("gpu", "NativeViewGLSurfaceEGL:RealSwapBuffers",
@@ -960,6 +1018,14 @@ gfx::SwapResult NativeViewGLSurfaceEGL::SwapBuffers(
     return gfx::SwapResult::SWAP_FAILED;
   }
 
+  EGLuint64KHR nextFrameId = 0;
+  bool nextFrameIdIsValid = true;
+  if (g_driver_egl.ext.b_EGL_ANDROID_get_frame_timestamps) {
+    if (!eglGetNextFrameIdANDROID(GetDisplay(), surface_, &nextFrameId)) {
+      nextFrameIdIsValid = false;
+    }
+  }
+
   if (!eglSwapBuffers(GetDisplay(), surface_)) {
     DVLOG(1) << "eglSwapBuffers failed with error "
              << GetLastEGLErrorString();
@@ -967,7 +1033,63 @@ gfx::SwapResult NativeViewGLSurfaceEGL::SwapBuffers(
     return gfx::SwapResult::SWAP_FAILED;
   }
 
+  // TODO(brianderson): Defer termination if we expect more timestamps.
   ui::LatencyInfo::AddTerminatedFrameSwapComponent(latency_info);
+
+  if (!g_driver_egl.ext.b_EGL_ANDROID_get_frame_timestamps) {
+    return gfx::SwapResult::SWAP_ACK;
+  }
+
+  // Queue the incomplete latency info, so we can complete it in subsequent
+  // calls to this method.
+  pending_latency_infos_.emplace_back(nextFrameIdIsValid, nextFrameId,
+                                      std::move(*latency_info));
+
+  constexpr int kFramesAgoToGetServerTimestamps = 4;
+  if (pending_latency_infos_.size() <= kFramesAgoToGetServerTimestamps) {
+    // |latency_info| was just std::move'd from. Make sure to put it in a
+    // known empty state before returning it to the caller.
+    latency_info->clear();
+    return gfx::SwapResult::SWAP_ACK;
+  }
+
+  // Dequeue the latency info that we are about to complete.
+  bool queryFrameIdIsValid = pending_latency_infos_.front().frame_id_is_valid;
+  EGLuint64KHR queryFrameId = pending_latency_infos_.front().frame_id;
+  *latency_info = std::move(pending_latency_infos_.front().latency_info);
+  pending_latency_infos_.erase(pending_latency_infos_.begin());
+
+  if (!queryFrameIdIsValid) {
+    // We weren't able to get a valid frame id before the swap, so we can't get
+    // its timestamps now.
+    return gfx::SwapResult::SWAP_ACK;
+  }
+
+  std::vector<EGLnsecsANDROID> egl_timestamps(supported_egl_timestamps_.size(),
+                                              EGL_TIMESTAMP_INVALID_ANDROID);
+  if (!eglGetFrameTimestampsANDROID(
+          GetDisplay(), surface_, queryFrameId,
+          static_cast<EGLint>(supported_egl_timestamps_.size()),
+          &supported_egl_timestamps_[0], &egl_timestamps[0])) {
+    TRACE_EVENT0("gpu", "eglGetFrameTimestamps failed");
+    return gfx::SwapResult::SWAP_ACK;
+  }
+
+  // Update LatencyInfo
+  for (size_t i = 0; i < egl_timestamps.size(); i++) {
+    if (egl_timestamps[i] == EGL_TIMESTAMP_INVALID_ANDROID ||
+        egl_timestamps[i] == EGL_TIMESTAMP_PENDING_ANDROID) {
+      continue;
+    }
+    for (auto& latency : *latency_info) {
+      latency.AddLatencyNumberWithTimestamp(
+          supported_latency_components_[i], 0, 0,
+          base::TimeTicks::FromInternalValue(
+              egl_timestamps[i] / base::TimeTicks::kNanosecondsPerMicrosecond),
+          1);
+    }
+  }
+
   return gfx::SwapResult::SWAP_ACK;
 }
 
