@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76cd4f11_02b1d38e",
+        "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-28T06:25:54Z",
+      "side": 1,
+      "message": "Not sure if this should be a separate manifest handler or if it should just get lumped in with AppIconColorInfo under a new name like AppColorInfo.",
+      "revId": "bcbc45d02ba04af457874abcb3d5b7c19c48d3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
