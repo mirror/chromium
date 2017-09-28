@@ -20,6 +20,10 @@ TextInputClientImpl::TextInputClientImpl(
 
 TextInputClientImpl::~TextInputClientImpl() {}
 
+bool TextInputClientImpl::is_candidate_window_pop_up_visible() const {
+  return is_candidate_window_pop_up_visible_;
+}
+
 ui::mojom::TextInputClientPtr TextInputClientImpl::CreateInterfacePtrAndBind() {
   ui::mojom::TextInputClientPtr ptr;
   binding_.Bind(mojo::MakeRequest(&ptr));
@@ -56,6 +60,10 @@ void TextInputClientImpl::DispatchKeyEventPostIME(
     if (callback && !callback.is_null())
       std::move(callback).Run(event->stopped_propagation());
   }
+}
+
+void TextInputClientImpl::SetCandidateWindowVisible(bool visible) {
+  is_candidate_window_pop_up_visible_ = visible;
 }
 
 }  // namespace aura
