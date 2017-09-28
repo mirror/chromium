@@ -1922,6 +1922,10 @@ willAnimateFromState:(BookmarkBar::State)oldState
   return static_cast<BrowserWindowCocoa*>([self browserWindow])->alert_state();
 }
 
+- (void)setBrowserWindowTouchBar:(BrowserWindowTouchBar*)touchBar {
+  touchBar_.reset(touchBar);
+}
+
 - (BrowserWindowTouchBar*)browserWindowTouchBar {
   if (!touchBar_) {
     touchBar_.reset([[BrowserWindowTouchBar alloc]
