@@ -11,12 +11,15 @@
 
 #include "base/callback.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "base/single_thread_task_runner.h"
+#include "base/time/clock.h"
 #include "base/time/time.h"
 #include "components/previews/core/previews_decider.h"
 #include "components/previews/core/previews_experiments.h"
+#include "components/previews/core/previews_log.h"
 #include "net/nqe/effective_connection_type.h"
 
 class GURL;
@@ -48,6 +51,11 @@ class PreviewsIOData : public PreviewsDecider {
       base::WeakPtr<PreviewsUIService> previews_ui_service,
       std::unique_ptr<PreviewsOptOutStore> previews_opt_out_store,
       const PreviewsIsEnabledCallback& is_enabled_callback);
+
+  void LogPreviewNavigation(const GURL& url,
+                            bool opt_out,
+                            PreviewsType type,
+                            base::Time time);
 
   // Adds a navigation to |url| to the black list with result |opt_out|.
   void AddPreviewNavigation(const GURL& url, bool opt_out, PreviewsType type);
@@ -90,6 +98,9 @@ class PreviewsIOData : public PreviewsDecider {
 
   // Whether the preview is enabled. Valid after Initialize() is called.
   PreviewsIsEnabledCallback is_enabled_callback_;
+
+  // Clock to post time on PreviewsLog.
+  std::unique_ptr<base::Clock> clock_;
 
   base::WeakPtrFactory<PreviewsIOData> weak_factory_;
 
