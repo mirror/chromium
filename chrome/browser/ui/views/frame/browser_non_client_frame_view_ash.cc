@@ -29,7 +29,10 @@
 #include "chrome/browser/ui/views/tabs/tab_strip.h"
 #include "chrome/browser/ui/views/toolbar/toolbar_view.h"
 #include "chrome/browser/web_applications/web_app.h"
+#include "chrome/common/extensions/manifest_handlers/app_theme_color_info.h"
 #include "content/public/browser/web_contents.h"
+#include "extensions/browser/extension_registry.h"
+#include "extensions/common/extension.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/aura/client/aura_constants.h"
@@ -83,13 +86,15 @@ void BrowserNonClientFrameViewAsh::Init() {
   caption_button_container_->UpdateSizeButtonVisibility();
   AddChildView(caption_button_container_);
 
+  Browser* browser = browser_view()->browser();
+
   // Initializing the TabIconView is expensive, so only do it if we need to.
   if (browser_view()->ShouldShowWindowIcon()) {
     window_icon_ = new TabIconView(this, nullptr);
     window_icon_->set_is_light(true);
     window_icon_->set_show_default_favicon(
         !extensions::HostedAppBrowserController::
-            IsForExperimentalHostedAppBrowser(browser_view()->browser()));
+            IsForExperimentalHostedAppBrowser(browser));
     AddChildView(window_icon_);
     window_icon_->Update();
   }
@@ -100,8 +105,22 @@ void BrowserNonClientFrameViewAsh::Init() {
     header_painter->Init(frame(), this, caption_button_container_);
     if (window_icon_)
       header_painter->UpdateLeftHeaderView(window_icon_);
+    if (extensions::HostedAppBrowserController::
+            IsForExperimentalHostedAppBrowser(browser)) {
+      std::string id =
+          web_app::GetExtensionIdFromApplicationName(browser->app_name());
+      extensions::ExtensionRegistry* registry =
+          extensions::ExtensionRegistry::Get(browser->profile());
+      const extensions::Extension* extension = registry->GetExtensionById(
+          id, extensions::ExtensionRegistry::ENABLED);
+      SkColor theme_color =
+          extensions::AppThemeColorInfo::GetThemeColor(extension);
+
+      if (theme_color != SK_ColorTRANSPARENT)
+        header_painter->SetFrameColors(theme_color, theme_color);
+    }
     // For non app (i.e. WebUI) windows (e.g. Settings) use MD frame color.
-    if (!browser_view()->browser()->is_app())
+    if (!browser->is_app())
       header_painter->SetFrameColors(kMdWebUIFrameColor, kMdWebUIFrameColor);
   } else {
     BrowserHeaderPainterAsh* header_painter = new BrowserHeaderPainterAsh;
@@ -110,7 +129,7 @@ void BrowserNonClientFrameViewAsh::Init() {
                          caption_button_container_);
   }
 
-  if (browser_view()->browser()->is_app()) {
+  if (browser->is_app()) {
     frame()->GetNativeWindow()->SetProperty(
         aura::client::kAppType, static_cast<int>(ash::AppType::CHROME_APP));
   } else {

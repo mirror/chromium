@@ -588,6 +588,11 @@ void ExtensionSyncService::ApplyBookmarkAppSyncData(
         extension_sync_data.bookmark_app_icon_color(),
         &web_app_info.generated_icon_color);
   }
+  if (!extension_sync_data.bookmark_app_theme_color().empty()) {
+    extensions::image_util::ParseHexColorString(
+        extension_sync_data.bookmark_app_theme_color(),
+        &web_app_info.theme_color);
+  }
   for (const auto& icon : extension_sync_data.linked_icons()) {
     WebApplicationInfo::IconInfo icon_info;
     icon_info.url = icon.url;
