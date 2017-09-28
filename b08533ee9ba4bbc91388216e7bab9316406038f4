@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b6ed618d_c48d31c3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-28T21:34:20Z",
+      "side": 1,
+      "message": "The mSelector.isTabStateInitialized() is true when tab model is fully restored. But when the model loads and restores the state, the restored tabs will also call didAddTab at which the mSelector.isTabStateInitialized() is false. For this case, assert mSelector.isTabStateInitialized() will crash.",
+      "parentUuid": "b49541b8_7a52b6c4",
+      "range": {
+        "startLine": 88,
+        "startChar": 16,
+        "endLine": 88,
+        "endChar": 49
+      },
+      "revId": "b08533ee9ba4bbc91388216e7bab9316406038f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6af7c831_3eb0b276",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "b08533ee9ba4bbc91388216e7bab9316406038f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "265df515_d6377e08",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-28T21:34:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6af7c831_3eb0b276",
+      "range": {
+        "startLine": 84,
+        "startChar": 41,
+        "endLine": 94,
+        "endChar": 6
+      },
+      "revId": "b08533ee9ba4bbc91388216e7bab9316406038f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
