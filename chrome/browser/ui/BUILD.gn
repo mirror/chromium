@@ -653,19 +653,6 @@ split_static_library("ui") {
   ]
   allow_circular_includes_from = []
 
-  if (enable_extensions) {
-    deps += [
-      "//components/drive",
-      "//components/guest_view/browser",
-      "//extensions/browser",
-      "//extensions/strings",
-    ]
-  }
-
-  if (is_chromeos && use_cras) {
-    defines += [ "USE_CRAS" ]
-  }
-
   if (is_android || is_linux) {
     sources += [
       "webui/sandbox_internals_ui.cc",
@@ -1315,35 +1302,6 @@ split_static_library("ui") {
       "//third_party/libaddressinput",
       "//third_party/libaddressinput:strings",
     ]
-
-    if (enable_extensions) {
-      deps += [
-        "//apps",
-        "//extensions/common:mojo",
-      ]
-
-      if (!is_mac) {
-        deps += [ "//apps/ui/views" ]
-      }
-    }
-
-    if (is_mac && !mac_views_browser) {
-      sources -= [
-        # This file is compiled on GYP but never referenced on Mac. Since it's
-        # in a static library, it never gets pulled in and we never try to link
-        # it (it doesn't link). In GN, source sets force us to get this rule
-        # correct.
-        "views/toolbar/media_router_action_platform_delegate_views.cc",
-        "views/toolbar/media_router_action_platform_delegate_views.h",
-      ]
-    }
-
-    if (is_chromeos || is_mac || is_win) {
-      sources += [
-        "webui/cast/cast_ui.cc",
-        "webui/cast/cast_ui.h",
-      ]
-    }
   }
 
   if (enable_basic_printing || enable_print_preview) {
@@ -1371,15 +1329,6 @@ split_static_library("ui") {
       "//chrome/browser/safe_browsing:chunk_proto",
       "//chrome/common/safe_browsing:proto",
       "//components/safe_browsing:csd_proto",
-    ]
-  }
-
-  if (is_chromeos && !is_official_build) {
-    sources += [
-      "webui/chromeos/emulator/device_emulator_message_handler.cc",
-      "webui/chromeos/emulator/device_emulator_message_handler.h",
-      "webui/chromeos/emulator/device_emulator_ui.cc",
-      "webui/chromeos/emulator/device_emulator_ui.h",
     ]
   }
 
@@ -1441,11 +1390,26 @@ split_static_library("ui") {
       "//ui/chromeos",
       "//ui/chromeos/events",
     ]
+    allow_circular_includes_from = [ "//chrome/browser/chromeos" ]
+
     if (enable_rlz) {
       deps += [ "//chrome/browser:rlz" ]
     }
-    allow_circular_includes_from = [ "//chrome/browser/chromeos" ]
+
+    if (!is_official_build) {
+      sources += [
+        "webui/chromeos/emulator/device_emulator_message_handler.cc",
+        "webui/chromeos/emulator/device_emulator_message_handler.h",
+        "webui/chromeos/emulator/device_emulator_ui.cc",
+        "webui/chromeos/emulator/device_emulator_ui.h",
+      ]
+    }
+
+    if (use_cras) {
+      defines += [ "USE_CRAS" ]
+    }
   }
+
   if (use_cups) {
     configs += [ "//printing:cups" ]
   }
@@ -1795,10 +1759,6 @@ split_static_library("ui") {
 
     allow_circular_includes_from += [ "//chrome/browser/ui/views" ]
 
-    if (enable_extensions) {
-      deps += [ "//extensions/components/native_app_window" ]
-    }
-
     if (is_chromeos) {
       sources += [
         "views/apps/app_info_dialog/arc_app_info_links_panel.cc",
@@ -1838,39 +1798,7 @@ split_static_library("ui") {
         "views/chrome_browser_main_extra_parts_views_linux.h",
       ]
     }
-    if (enable_extensions && (!is_mac || mac_views_browser)) {
-      sources += [
-        "views/extensions/browser_action_drag_data.cc",
-        "views/extensions/browser_action_drag_data.h",
-        "views/extensions/extension_action_platform_delegate_views.cc",
-        "views/extensions/extension_action_platform_delegate_views.h",
-        "views/extensions/extension_dialog.cc",
-        "views/extensions/extension_dialog.h",
-        "views/extensions/extension_dialog_observer.cc",
-        "views/extensions/extension_dialog_observer.h",
-        "views/extensions/extension_popup.cc",
-        "views/extensions/extension_popup.h",
-        "views/extensions/extension_view_views.cc",
-        "views/extensions/extension_view_views.h",
-        "views/extensions/media_galleries_dialog_views.cc",
-        "views/extensions/media_galleries_dialog_views.h",
-        "views/extensions/media_gallery_checkbox_view.cc",
-        "views/extensions/media_gallery_checkbox_view.h",
-      ]
-      if (use_aura) {
-        sources += [
-          "views/extensions/extension_popup_aura.cc",
-          "views/extensions/extension_popup_aura.h",
-        ]
-        deps += [ "//ui/wm/public" ]
-      }
-      if (is_chromeos) {
-        sources += [
-          "views/extensions/request_file_system_dialog_view.cc",
-          "views/extensions/request_file_system_dialog_view.h",
-        ]
-      }
-    }
+
     if (!is_mac || mac_views_browser) {
       sources += [
         "javascript_dialogs/javascript_dialog.cc",
@@ -2367,6 +2295,12 @@ split_static_library("ui") {
       "webui/certificate_manager_localized_strings_provider.h",
       "webui/certificates_handler.cc",
       "webui/certificates_handler.h",
+    ]
+  }
+  if (is_chromeos || is_mac || is_win) {
+    sources += [
+      "webui/cast/cast_ui.cc",
+      "webui/cast/cast_ui.h",
     ]
   }
   if (is_mac || is_win) {
@@ -3149,6 +3083,14 @@ split_static_library("ui") {
         "javascript_dialogs/javascript_dialog_mac.cc",
         "proximity_auth/proximity_auth_error_bubble_stub.cc",
       ]
+      sources -= [
+        # This file is compiled on GYP but never referenced on Mac. Since it's
+        # in a static library, it never gets pulled in and we never try to link
+        # it (it doesn't link). In GN, source sets force us to get this rule
+        # correct.
+        "views/toolbar/media_router_action_platform_delegate_views.cc",
+        "views/toolbar/media_router_action_platform_delegate_views.h",
+      ]
     }
     include_dirs = [ "$target_gen_dir" ]
     libs += [
@@ -3502,12 +3444,20 @@ split_static_library("ui") {
       "app_list/app_list_service_disabled_mac.mm",
     ]
   }
+
   if (enable_extensions) {
     deps += [
+      "//apps",
       "//chrome/browser/apps",
       "//chrome/browser/extensions",
       "//chrome/common/extensions/api",
       "//chrome/common/extensions/api:api_registration",
+      "//components/drive",
+      "//components/guest_view/browser",
+      "//extensions/browser",
+      "//extensions/common:mojo",
+      "//extensions/components/native_app_window",
+      "//extensions/strings",
     ]
     allow_circular_includes_from += [
       "//chrome/browser/apps",
@@ -3551,7 +3501,46 @@ split_static_library("ui") {
       "webui/extensions/extension_icon_source.cc",
       "webui/extensions/extension_icon_source.h",
     ]
+
+    if (!is_mac) {
+      deps += [ "//apps/ui/views" ]
+    }
+    if (!is_mac || mac_views_browser) {
+      sources += [
+        "views/extensions/browser_action_drag_data.cc",
+        "views/extensions/browser_action_drag_data.h",
+        "views/extensions/extension_action_platform_delegate_views.cc",
+        "views/extensions/extension_action_platform_delegate_views.h",
+        "views/extensions/extension_dialog.cc",
+        "views/extensions/extension_dialog.h",
+        "views/extensions/extension_dialog_observer.cc",
+        "views/extensions/extension_dialog_observer.h",
+        "views/extensions/extension_popup.cc",
+        "views/extensions/extension_popup.h",
+        "views/extensions/extension_view_views.cc",
+        "views/extensions/extension_view_views.h",
+        "views/extensions/media_galleries_dialog_views.cc",
+        "views/extensions/media_galleries_dialog_views.h",
+        "views/extensions/media_gallery_checkbox_view.cc",
+        "views/extensions/media_gallery_checkbox_view.h",
+      ]
+      if (use_aura) {
+        sources += [
+          "views/extensions/extension_popup_aura.cc",
+          "views/extensions/extension_popup_aura.h",
+        ]
+        deps += [ "//ui/wm/public" ]
+      }
+    }
+
+    if (is_chromeos) {
+      sources += [
+        "views/extensions/request_file_system_dialog_view.cc",
+        "views/extensions/request_file_system_dialog_view.h",
+      ]
+    }
   }
+
   if (enable_webrtc) {
     sources += [
       "webui/media/webrtc_logs_ui.cc",
