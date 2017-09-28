@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5c70fb28_f5a71a74",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-09-28T00:29:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dd277e7_a3a1eb3b",
+      "range": {
+        "startLine": 13,
+        "startChar": 47,
+        "endLine": 13,
+        "endChar": 55
+      },
+      "revId": "3d899bf1e3627ce54f272b073384cccc917c8df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9fe9431_c067d070",
         "filename": "/COMMIT_MSG",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "3d899bf1e3627ce54f272b073384cccc917c8df2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa293072_dcc7549e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-09-28T00:29:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9fe9431_c067d070",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 36
+      },
+      "revId": "3d899bf1e3627ce54f272b073384cccc917c8df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c0dd43e4_13d07de7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-09-28T00:29:21Z",
+      "side": 1,
+      "message": "Added this caveat inline. Thank you for the pointer!",
+      "parentUuid": "2d8fbfa4_5e21c8b5",
+      "range": {
+        "startLine": 15,
+        "startChar": 32,
+        "endLine": 15,
+        "endChar": 62
+      },
+      "revId": "3d899bf1e3627ce54f272b073384cccc917c8df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a361a8f4_9e0b479b",
         "filename": "third_party/WebKit/Source/core/css/StylePropertySet.h",
         "patchSetId": 5
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "f7f58c70_c87fa8c2",
+        "filename": "third_party/WebKit/Source/core/css/StylePropertySet.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-09-28T00:29:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a361a8f4_9e0b479b",
+      "range": {
+        "startLine": 169,
+        "startChar": 15,
+        "endLine": 169,
+        "endChar": 31
+      },
+      "revId": "3d899bf1e3627ce54f272b073384cccc917c8df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90dbce83_13657307",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSLazyPropertyParserImpl.cpp",
         "patchSetId": 5
@@ -114,6 +210,30 @@
       "revId": "3d899bf1e3627ce54f272b073384cccc917c8df2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30dc38e5_0cb0932c",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSLazyPropertyParserImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-09-28T00:29:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90dbce83_13657307",
+      "range": {
+        "startLine": 27,
+        "startChar": 6,
+        "endLine": 27,
+        "endChar": 18
+      },
+      "revId": "3d899bf1e3627ce54f272b073384cccc917c8df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
