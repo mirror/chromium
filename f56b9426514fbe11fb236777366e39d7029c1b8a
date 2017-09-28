@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea49bf0d_18698706",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 97797,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-28T01:25:20Z",
+      "side": 1,
+      "message": "Optional nit: As long as you\u0027re renaming the histograms, how about using a dot for the separator?  That\u0027s more typical these days.",
+      "range": {
+        "startLine": 97797,
+        "startChar": 46,
+        "endLine": 97797,
+        "endChar": 59
+      },
+      "revId": "f56b9426514fbe11fb236777366e39d7029c1b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8777792_1c0cc2d0",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 97803,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-28T01:25:20Z",
+      "side": 1,
+      "message": "nit: This label shows up in the histogram description, so maybe something like \"The highest observed value, over [X time period]\"?  You might want to similarly expand/clarify the other labels.",
+      "range": {
+        "startLine": 97803,
+        "startChar": 32,
+        "endLine": 97803,
+        "endChar": 39
+      },
+      "revId": "f56b9426514fbe11fb236777366e39d7029c1b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44f103d6_d38f960c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 97809,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-28T01:25:20Z",
+      "side": 1,
+      "message": "nit: Perhaps something like \"Restricted to speculative fetches.\" (or whatever label is accurate and appropriate \u003d])",
+      "range": {
+        "startLine": 97809,
+        "startChar": 36,
+        "endLine": 97809,
+        "endChar": 47
+      },
+      "revId": "f56b9426514fbe11fb236777366e39d7029c1b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26fffdb8_49593d73",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 97809,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-28T01:25:20Z",
+      "side": 1,
+      "message": "Optional nit: As long as you\u0027re renaming histograms, how about upcasing the \u0027s\u0027 of speculative, and using \u0027.\u0027 as a separator?  That\u0027s the typical spelling for histograms these days.",
+      "range": {
+        "startLine": 97809,
+        "startChar": 16,
+        "endLine": 97809,
+        "endChar": 27
+      },
+      "revId": "f56b9426514fbe11fb236777366e39d7029c1b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
