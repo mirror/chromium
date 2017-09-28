@@ -282,9 +282,7 @@ TEST_F(HarfBuzzShaperTest, ShapeLatinSegment) {
 
 // Represents the case where a part of a cluster has a different color.
 // <div>0x647<span style="color: red;">0x64A</span></div>
-// This test requires context-aware shaping which hasn't been implemented yet.
-// See crbug.com/689155
-TEST_F(HarfBuzzShaperTest, DISABLED_ShapeArabicWithContext) {
+TEST_F(HarfBuzzShaperTest, ShapeArabicWithContext) {
   UChar arabic_string[] = {0x647, 0x64A};
   HarfBuzzShaper shaper(arabic_string, 2);
 
@@ -296,6 +294,34 @@ TEST_F(HarfBuzzShaperTest, DISABLED_ShapeArabicWithContext) {
   // Combined width should be the same when shaping the two characters
   // separately as when shaping them combined.
   ASSERT_NEAR(combined->Width(), first->Width() + second->Width(), 0.1);
+
+  // Shape with explicit context options
+  first = shaper.Shape(&font, TextDirection::kRtl, 0, 1,
+                       HarfBuzzShaper::kPostContext);
+  second = shaper.Shape(&font, TextDirection::kRtl, 1, 2,
+                        HarfBuzzShaper::kPreContext);
+
+  // Combined width should be the same when shaping the two characters
+  // separately as when shaping them combined.
+  ASSERT_NEAR(combined->Width(), first->Width() + second->Width(), 0.1);
+}
+
+// Same as ShapeArabicWithContext but in this case we explicitly *disable*
+// context shaping.
+TEST_F(HarfBuzzShaperTest, ShapeArabicWithoutContext) {
+  UChar arabic_string[] = {0x647, 0x64A};
+  HarfBuzzShaper shaper(arabic_string, 2);
+
+  RefPtr<ShapeResult> combined = shaper.Shape(&font, TextDirection::kRtl);
+
+  RefPtr<ShapeResult> first = shaper.Shape(&font, TextDirection::kRtl, 0, 1,
+                                           HarfBuzzShaper::kNoContext);
+  RefPtr<ShapeResult> second = shaper.Shape(&font, TextDirection::kRtl, 1, 2,
+                                            HarfBuzzShaper::kNoContext);
+
+  // Combined width should be the same when shaping the two characters
+  // separately as when shaping them combined.
+  ASSERT_NE(combined->Width(), first->Width() + second->Width(), 0.1);
 }
 
 TEST_F(HarfBuzzShaperTest, ShapeVerticalUpright) {

@@ -152,6 +152,7 @@ struct RangeData {
   TextDirection text_direction;
   unsigned start;
   unsigned end;
+  unsigned shape_options : 2;
   FeaturesVector font_features;
   Deque<ReshapeQueueItem> reshape_queue;
 
@@ -824,9 +825,20 @@ void HarfBuzzShaper::ShapeSegment(RangeData* range_data,
         std::min(range_data->end, current_queue_item.start_index_ +
                                       current_queue_item.num_characters_);
 
+    // Modify text content provided and start/end offsets if pre- and/or post-
+    // context is not desired.
+    const UChar* text = text_;
+    unsigned text_length = text_length_;
+    if (!(range_data->shape_options & kPreContext)) {
+      text += shape_start;
+      shape_start = 0;
+    }
+    if (!(range_data->shape_options & kPostContext))
+      text_length = shape_end - shape_start;
+
     CaseMappingHarfBuzzBufferFiller(
         case_map_intend, font_description.LocaleOrDefault(), range_data->buffer,
-        text_, text_length_, shape_start, shape_end - shape_start);
+        text, text_length, shape_start, shape_end - shape_start);
 
     CapsFeatureSettingsScopedOverlay caps_overlay(
         &range_data->font_features,
@@ -855,7 +867,8 @@ void HarfBuzzShaper::ShapeSegment(RangeData* range_data,
 RefPtr<ShapeResult> HarfBuzzShaper::Shape(const Font* font,
                                           TextDirection direction,
                                           unsigned start,
-                                          unsigned end) const {
+                                          unsigned end,
+                                          unsigned shape_options) const {
   DCHECK(end >= start);
   DCHECK(end <= text_length_);
 
@@ -875,6 +888,7 @@ RefPtr<ShapeResult> HarfBuzzShaper::Shape(const Font* font,
   range_data.text_direction = direction;
   range_data.start = start;
   range_data.end = end;
+  range_data.shape_options = shape_options;
   SetFontFeatures(font, &range_data.font_features);
 
   while (run_segmenter.Consume(&segment_range)) {
