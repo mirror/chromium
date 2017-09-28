@@ -33,6 +33,8 @@ component("services") {
     "mojo_audio_output_stream.h",
     "mojo_audio_output_stream_provider.cc",
     "mojo_audio_output_stream_provider.h",
+    "mojo_cdm_helper.cc",
+    "mojo_cdm_helper.h",
     "mojo_cdm_promise.cc",
     "mojo_cdm_promise.h",
     "mojo_cdm_service.cc",
