@@ -66,6 +66,7 @@ class CONTENT_EXPORT FrameTreeNode {
                 blink::WebTreeScopeType scope,
                 const std::string& name,
                 const std::string& unique_name,
+                const std::string& devtools_frame_guid,
                 const FrameOwnerProperties& frame_owner_properties);
 
   ~FrameTreeNode();
@@ -105,6 +106,10 @@ class CONTENT_EXPORT FrameTreeNode {
 
   const std::string& unique_name() const {
     return replication_state_.unique_name;
+  }
+
+  const std::string& devtools_frame_guid() const {
+    return devtools_frame_guid_;
   }
 
   size_t child_count() const {
@@ -431,6 +436,10 @@ class CONTENT_EXPORT FrameTreeNode {
   // the updated policy for the frame is stored here, and transferred into
   // replication_state_.container_policy on the next frame navigation.
   ParsedFeaturePolicyHeader pending_container_policy_;
+
+  // Frame id in the devtools protocol terms, will be used across the system
+  // layers.
+  std::string devtools_frame_guid_;
 
   // Tracks the scrolling and margin properties for this frame.  These
   // properties affect the child renderer but are stored on its parent's
