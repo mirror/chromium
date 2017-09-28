@@ -22,6 +22,30 @@
       "revId": "9bd5f58e98508b03eb5e522e1aafb25c7d4b0677",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac81da33_aea6ddb5",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-28T00:54:40Z",
+      "side": 1,
+      "message": "As I as writing the comment I realized that we need the frame index here to cache the SkImage. BitmapImage relies on this since its keeps the PaintImage in order to cache the SkImage...",
+      "parentUuid": "47598839_fdd422be",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 52
+      },
+      "revId": "9bd5f58e98508b03eb5e522e1aafb25c7d4b0677",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
