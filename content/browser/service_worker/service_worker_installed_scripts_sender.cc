@@ -92,7 +92,7 @@ class ServiceWorkerInstalledScriptsSender::Sender {
          ServiceWorkerInstalledScriptsSender* owner)
       : reader_(std::move(reader)),
         owner_(owner),
-        watcher_(FROM_HERE, mojo::SimpleWatcher::ArmingPolicy::MANUAL),
+        body_watcher_(FROM_HERE, mojo::SimpleWatcher::ArmingPolicy::MANUAL),
         weak_factory_(this) {}
 
   void Start() {
@@ -142,9 +142,9 @@ class ServiceWorkerInstalledScriptsSender::Sender {
     }
 
     // Start sending body.
-    watcher_.Watch(body_handle_.get(), MOJO_HANDLE_SIGNAL_WRITABLE,
-                   base::Bind(&Sender::OnWritableBody, AsWeakPtr()));
-    watcher_.ArmOrNotify();
+    body_watcher_.Watch(body_handle_.get(), MOJO_HANDLE_SIGNAL_WRITABLE,
+                        base::Bind(&Sender::OnWritableBody, AsWeakPtr()));
+    body_watcher_.ArmOrNotify();
 
     scoped_refptr<net::HttpResponseHeaders> headers =
         http_info->http_info->headers;
@@ -190,7 +190,7 @@ class ServiceWorkerInstalledScriptsSender::Sender {
         CompleteSendIfNeeded(FinishedReason::kConnectionError);
         return;
       case MOJO_RESULT_SHOULD_WAIT:
-        watcher_.ArmOrNotify();
+        body_watcher_.ArmOrNotify();
         return;
       case MOJO_RESULT_OK:
         // |body_handle_| must have been taken by |pending_write_|.
@@ -209,7 +209,7 @@ class ServiceWorkerInstalledScriptsSender::Sender {
     if (read_bytes < 0) {
       ServiceWorkerMetrics::CountReadResponseResult(
           ServiceWorkerMetrics::READ_DATA_ERROR);
-      watcher_.Cancel();
+      body_watcher_.Cancel();
       body_handle_.reset();
       CompleteSendIfNeeded(FinishedReason::kResponseReaderError);
       return;
@@ -221,18 +221,18 @@ class ServiceWorkerInstalledScriptsSender::Sender {
         ServiceWorkerMetrics::READ_OK);
     if (read_bytes == 0) {
       // All data has been read.
-      watcher_.Cancel();
+      body_watcher_.Cancel();
       body_handle_.reset();
       CompleteSendIfNeeded(FinishedReason::kSuccess);
       return;
     }
-    watcher_.ArmOrNotify();
+    body_watcher_.ArmOrNotify();
   }
 
   void OnMetaDataSent(MetaDataSender::Status status) {
     meta_data_sender_.reset();
     if (status != MetaDataSender::Status::kSuccess) {
-      watcher_.Cancel();
+      body_watcher_.Cancel();
       body_handle_.reset();
       CompleteSendIfNeeded(FinishedReason::kMetaDataSenderError);
       return;
@@ -269,12 +269,11 @@ class ServiceWorkerInstalledScriptsSender::Sender {
   std::unique_ptr<MetaDataSender> meta_data_sender_;
 
   // For body.
-  scoped_refptr<network::NetToMojoPendingBuffer> pending_write_;
-  mojo::SimpleWatcher watcher_;
-
-  // Pipes.
-  mojo::ScopedDataPipeProducerHandle meta_data_handle_;
+  // Either |body_handle_| or |pending_write_| is valid during body is
+  // streamed.
   mojo::ScopedDataPipeProducerHandle body_handle_;
+  scoped_refptr<network::NetToMojoPendingBuffer> pending_write_;
+  mojo::SimpleWatcher body_watcher_;
 
   base::WeakPtrFactory<Sender> weak_factory_;
 };
