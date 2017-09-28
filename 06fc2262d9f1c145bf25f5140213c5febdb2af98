@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e693710_22a4e3d2",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/indexeddb/database-refresh-view.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-28T20:52:35Z",
+      "side": 1,
+      "message": "Why 3 calls?",
+      "revId": "06fc2262d9f1c145bf25f5140213c5febdb2af98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "796f6b95_7be6df24",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ApplicationPanelSidebar.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1108,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-28T20:52:35Z",
+      "side": 1,
+      "message": "Instead of two methods, pass a flag to update.",
+      "range": {
+        "startLine": 1108,
+        "startChar": 29,
+        "endLine": 1108,
+        "endChar": 39
+      },
+      "revId": "06fc2262d9f1c145bf25f5140213c5febdb2af98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b727a01_c47c230e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ApplicationPanelSidebar.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1151,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-28T20:52:35Z",
+      "side": 1,
+      "message": "You should listen for this once, and route to an appropriate IDBDatabaseTreeElement instead.",
+      "revId": "06fc2262d9f1c145bf25f5140213c5febdb2af98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a49fd8f0_e16600d3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ApplicationPanelSidebar.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1186,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-28T20:52:35Z",
+      "side": 1,
+      "message": "if (this._idbObjectStoreTreeElements[objectStoreName])\n  this._idbObjectStoreTreeElements[objectStoreName].markNeedsRefresh();",
+      "revId": "06fc2262d9f1c145bf25f5140213c5febdb2af98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "551aeb42_37132a50",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/IndexedDBModel.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-28T20:52:35Z",
+      "side": 1,
+      "message": "This will return Promise\u003cnull\u003e, not null. You should change the type annotation, I think.",
+      "range": {
+        "startLine": 313,
+        "startChar": 13,
+        "endLine": 313,
+        "endChar": 17
+      },
+      "revId": "06fc2262d9f1c145bf25f5140213c5febdb2af98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d35c2ea_4855348a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/IndexedDBModel.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-28T20:52:35Z",
+      "side": 1,
+      "message": "I don\u0027t get what this means. Stale data?",
+      "revId": "06fc2262d9f1c145bf25f5140213c5febdb2af98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "971a8655_16eedb2e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/IndexedDBModel.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-28T20:52:35Z",
+      "side": 1,
+      "message": "You can just return an empty array.",
+      "revId": "06fc2262d9f1c145bf25f5140213c5febdb2af98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
