@@ -469,7 +469,7 @@ input[pseudo="-webkit-media-controls-volume-slider" i]::-webkit-slider-thumb {
     width: 36px;
     margin: 0;
     padding: 0;
-    top: -24px;
+    top: -18px;
     position: absolute;
 }
 
