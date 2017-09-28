@@ -819,7 +819,7 @@ void ArcBluetoothBridge::EnableAdapter(const EnableAdapterCallback& callback) {
     }
   }
 
-  OnPoweredOn(callback);
+  OnPoweredOn(callback, false /* save_user_pref */);
 }
 
 void ArcBluetoothBridge::DisableAdapter(
@@ -834,7 +834,7 @@ void ArcBluetoothBridge::DisableAdapter(
     }
   }
 
-  OnPoweredOff(callback);
+  OnPoweredOff(callback, false /* save_user_pref */);
 }
 
 void ArcBluetoothBridge::GetAdapterProperty(mojom::BluetoothPropertyType type) {
@@ -1038,18 +1038,24 @@ void ArcBluetoothBridge::CancelDiscovery() {
 }
 
 void ArcBluetoothBridge::OnPoweredOn(
-    const base::Callback<void(mojom::BluetoothAdapterState)>& callback) const {
-  // Saves the power state to user preference.
-  SetPrimaryUserBluetoothPowerSetting(true);
+    const base::Callback<void(mojom::BluetoothAdapterState)>& callback,
+    bool save_user_pref) const {
+  if (save_user_pref) {
+    // Saves the power state to user preference.
+    SetPrimaryUserBluetoothPowerSetting(true);
+  }
 
   callback.Run(mojom::BluetoothAdapterState::ON);
   SendCachedPairedDevices();
 }
 
 void ArcBluetoothBridge::OnPoweredOff(
-    const base::Callback<void(mojom::BluetoothAdapterState)>& callback) const {
-  // Saves the power state to user preference.
-  SetPrimaryUserBluetoothPowerSetting(false);
+    const base::Callback<void(mojom::BluetoothAdapterState)>& callback,
+    bool save_user_pref) const {
+  if (save_user_pref) {
+    // Saves the power state to user preference.
+    SetPrimaryUserBluetoothPowerSetting(false);
+  }
 
   callback.Run(mojom::BluetoothAdapterState::OFF);
 }
@@ -2129,7 +2135,8 @@ void ArcBluetoothBridge::EnqueueRemotePowerChange(
       turn_on,
       base::Bind(turn_on ? &ArcBluetoothBridge::OnPoweredOn
                          : &ArcBluetoothBridge::OnPoweredOff,
-                 weak_factory_.GetWeakPtr(), callback),
+                 weak_factory_.GetWeakPtr(), callback,
+                 true /* save_user_pref */),
       base::Bind(&ArcBluetoothBridge::OnPoweredError,
                  weak_factory_.GetWeakPtr(), callback));
 }
