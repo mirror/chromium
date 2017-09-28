@@ -68,8 +68,15 @@ Polymer({
    */
   show: function() {
     var focusedElements = this.getElementsByClassName('focus-on-show');
-    if (focusedElements.length > 0)
-      focusedElements[0].focus();
+    var focused = false;
+    for (var i = 0; i < focusedElements.length; ++i) {
+      if (focusedElements[i].hidden)
+        continue;
+
+      focused = true;
+      focusedElements[i].focus();
+      break;
+    }
 
     this.fire('show-dialog');
   },
