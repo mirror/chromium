@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70622663_5dbb69c7",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-09-28T10:40:42Z",
+      "side": 0,
+      "message": "This is explained in the class level comment instead, because I feel it\u0027s pretty fundamental to the design of MCVD.",
+      "range": {
+        "startLine": 185,
+        "startChar": 0,
+        "endLine": 185,
+        "endChar": 70
+      },
+      "revId": "f42b91e8e60cb987b484910a6e26a11358c7342e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
