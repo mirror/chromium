@@ -256,12 +256,14 @@ public class LayoutManager
         if (!mUpdateRequested) return false;
         mUpdateRequested = false;
 
-        mAnimationHandler.pushUpdate(dtMs);
+        boolean areAnimatorsComplete = mAnimationHandler.pushUpdate(dtMs);
 
         final Layout layout = getActiveLayout();
-        if (layout != null && layout.onUpdate(timeMs, dtMs) && layout.isHiding()) {
+        if (layout != null && layout.onUpdate(timeMs, dtMs) && layout.isHiding()
+                && areAnimatorsComplete) {
             layout.doneHiding();
         }
+
         return mUpdateRequested;
     }
 
@@ -361,6 +363,7 @@ public class LayoutManager
 
         getViewportPixel(mCachedVisibleViewport);
         mHost.getWindowViewport(mCachedWindowViewport);
+
         return mActiveLayout.getUpdatedSceneLayer(mCachedWindowViewport, mCachedVisibleViewport,
                 layerTitleCache, tabContentManager, resourceManager, fullscreenManager);
     }
