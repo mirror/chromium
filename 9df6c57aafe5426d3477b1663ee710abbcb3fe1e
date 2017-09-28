@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "18807be0_5b9bc762",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-09-28T20:56:48Z",
+      "side": 1,
+      "message": "OK - can you point me at the boilerplate?",
+      "parentUuid": "991c93e6_d0202825",
+      "range": {
+        "startLine": 101,
+        "startChar": 5,
+        "endLine": 101,
+        "endChar": 15
+      },
+      "revId": "9df6c57aafe5426d3477b1663ee710abbcb3fe1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9fcc43dc_60c5b886",
         "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
         "patchSetId": 5
