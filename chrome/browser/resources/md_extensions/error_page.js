@@ -64,6 +64,8 @@ cr.define('extensions', function() {
      * @private
      */
     calculateShownItems_: function() {
+      // Render iron-list correctly after data changes.
+      setTimeout(() => this.$['errors-list'].fire('iron-resize'));
       return this.data.manifestErrors.concat(this.data.runtimeErrors);
     },
 
@@ -102,10 +104,13 @@ cr.define('extensions', function() {
      * @private
      */
     onDeleteErrorTap_: function(event) {
-      // TODO(devlin): It would be cleaner if we could cast this to a
-      // PolymerDomRepeatEvent-type thing, but that doesn't exist yet.
       const e = /** @type {!{model:Object}} */ (event);
+
+      if (e.type == 'keydown' && !((e.code == 'Space' || e.code == 'Enter')))
+        return;
+
       this.delegate.deleteErrors(this.data.id, [e.model.item.id]);
+      e.stopPropagation();
     },
 
     /**
@@ -146,7 +151,7 @@ cr.define('extensions', function() {
      * @private
      */
     computeErrorClass_: function(selectedError, error) {
-      return selectedError == error ? 'error-item selected' : 'error-item';
+      return selectedError == error ? 'selected' : '';
     },
 
     /**
@@ -163,16 +168,10 @@ cr.define('extensions', function() {
      * @private
      */
     onErrorItemTap_: function(e) {
-      this.selectError_(e.model.item);
-    },
+      if (e.type == 'keydown' && !((e.code == 'Space' || e.code == 'Enter')))
+        return;
 
-    /**
-     * @param {!{model: !{item: (!RuntimeError|!ManifestError)}}} e
-     * @private
-     */
-    onErrorItemKeydown_: function(e) {
-      if (e.key == ' ' || e.key == 'Enter')
-        this.selectError_(e.model.item);
+      this.selectError_(e.model.item);
     },
   });
 
