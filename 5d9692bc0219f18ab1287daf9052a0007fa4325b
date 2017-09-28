@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d59784ef_53ada28d",
+        "filename": "third_party/WebKit/LayoutTests/fast/mediastream/MediaStreamTrack-applyConstraints.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-28T15:08:56Z",
+      "side": 1,
+      "message": "The main reason is that this test would consider incorrect many spec-compliant implementations.\n\nFor example, the spec allows getConstraints() to return constraints that may look different from the constraints passed to applyConstraints() but have the same effect.\n\nTo support all possible implementations, the constraintsElementsAreEqual() function in this test would need to be replaced by a constraintsHaveTheSameEffect() function, which is the spec requirement.\nFor example, an implementation is free to translate {width: {exact: 30}} to {width: {min: 30, max:30}}, or {advanced: [{width: {min: 2, max:1}}] to {advanced: []} or even {}.\n\nSince implementing that would be overkill, I thought it was more prudent to make this test a Chromium layout test.\n\nAs I mentioned in the I2S, one of the challenges for testing constraints in WPT is that implementations are allowed to behave quite differently for the same inputs.",
+      "parentUuid": "d166c89a_e1222039",
+      "range": {
+        "startLine": 13,
+        "startChar": 19,
+        "endLine": 13,
+        "endChar": 31
+      },
+      "revId": "5d9692bc0219f18ab1287daf9052a0007fa4325b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e9d162e_4b2975c1",
         "filename": "third_party/WebKit/Source/modules/mediastream/OverconstrainedError.idl",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-28T11:09:28Z",
       "side": 1,
       "message": "Indeed. Per http://web-confluence.appspot.com Safari 11 has added OverconstrainedError, and it looks like WebKit have done it per spec, \nhttps://trac.webkit.org/browser/webkit/trunk/Source/WebCore/Modules/mediastream/OverconstrainedError.idl, although the IDL syntax isn\u0027t part of Web IDL. (Doesn\u0027t matter if it\u0027s not observable.)\n\nCan you talk to the bindings team about what it would take to do this correctly? I don\u0027t think we should ship something different than Safari if they\u0027re already matching the spec.",
+      "range": {
+        "startLine": 7,
+        "startChar": 14,
+        "endLine": 7,
+        "endChar": 15
+      },
+      "revId": "5d9692bc0219f18ab1287daf9052a0007fa4325b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c213bd30_f476318e",
+        "filename": "third_party/WebKit/Source/modules/mediastream/OverconstrainedError.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-28T15:08:56Z",
+      "side": 1,
+      "message": "filed http://crbug.com/769726 and referenced it in the TODO.",
+      "parentUuid": "1e9d162e_4b2975c1",
       "range": {
         "startLine": 7,
         "startChar": 14,

@@ -469,6 +469,24 @@
     },
     {
       "key": {
+        "uuid": "d1e3a062_18a85e1e",
+        "filename": "third_party/WebKit/Source/modules/mediastream/OverconstrainedError.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-28T15:08:56Z",
+      "side": 1,
+      "message": "Had to remove the flag since it stopped compiling after rebase.\nSomeone removed the flag since applyConstraints is already shipping.",
+      "parentUuid": "fbd86805_adc29de4",
+      "revId": "e987c316a2bc7b22149afdec6d4a91b04f1d702c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "322c55eb_a1dc6a55",
         "filename": "third_party/WebKit/Source/modules/mediastream/OverconstrainedError.idl",
         "patchSetId": 2
