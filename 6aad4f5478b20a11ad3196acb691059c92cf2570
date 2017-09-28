@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80268e3b_c31654d4",
+        "filename": "content/renderer/gpu/gpu_benchmarking_extension.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-09-28T05:56:59Z",
+      "side": 1,
+      "message": "Thanks for adding all these comments! makes it much easier to figure out what\u0027s going on.",
+      "range": {
+        "startLine": 61,
+        "startChar": 25,
+        "endLine": 61,
+        "endChar": 29
+      },
+      "revId": "6aad4f5478b20a11ad3196acb691059c92cf2570",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
