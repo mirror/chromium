@@ -22,6 +22,30 @@
       "revId": "cb2106e0503df4c9c1f4b43ffd31375e10adae53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d737f322_f124b666",
+        "filename": "chrome/browser/ui/blocked_content/popup_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-09-28T18:03:36Z",
+      "side": 1,
+      "message": "Sorry about that, I\u0027m on top of it and will amend the patch in a few minutes.",
+      "parentUuid": "627d30d3_43594346",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 17
+      },
+      "revId": "cb2106e0503df4c9c1f4b43ffd31375e10adae53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
