@@ -789,7 +789,7 @@ TEST_F(ExtensionPrinterHandlerTest, Print_Pwg) {
   EXPECT_FALSE(pwg_raster_converter_->bitmap_settings().rotate_all_pages);
   EXPECT_FALSE(pwg_raster_converter_->bitmap_settings().reverse_page_order);
 
-  EXPECT_EQ(printing::kDefaultPdfDpi,
+  EXPECT_EQ(gfx::Size(printing::kDefaultPdfDpi, printing::kDefaultPdfDpi),
             pwg_raster_converter_->conversion_settings().dpi);
   EXPECT_TRUE(pwg_raster_converter_->conversion_settings().autorotate);
   EXPECT_EQ("0,0 208x416",  // vertically_oriented_size  * dpi / points_per_inch
@@ -843,7 +843,9 @@ TEST_F(ExtensionPrinterHandlerTest, Print_Pwg_NonDefaultSettings) {
   EXPECT_TRUE(pwg_raster_converter_->bitmap_settings().reverse_page_order);
 
   EXPECT_EQ(200,  // max(vertical_dpi, horizontal_dpi)
-            pwg_raster_converter_->conversion_settings().dpi);
+            pwg_raster_converter_->conversion_settings().dpi.height());
+  EXPECT_EQ(200,  // max(vertical_dpi, horizontal_dpi)
+            pwg_raster_converter_->conversion_settings().dpi.width());
   EXPECT_TRUE(pwg_raster_converter_->conversion_settings().autorotate);
   EXPECT_EQ("0,0 138x277",  // vertically_oriented_size  * dpi / points_per_inch
             pwg_raster_converter_->conversion_settings().area.ToString());
