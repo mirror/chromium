@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4cde53c0_19e7306c",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-28T08:35:56Z",
+      "side": 1,
+      "message": "i see this file #included by install_from_dmg.mm and #imported by web_app_mac.mm. is one more correct than the other?",
+      "revId": "0358fd22e23cb723dd5f0e34fb1061bd9b632388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46c6d9a7_4002690d",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-28T08:35:56Z",
+      "side": 1,
+      "message": "nit: no \"else\" when the \"if\" clause returns",
+      "revId": "0358fd22e23cb723dd5f0e34fb1061bd9b632388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40a1e80c_6bba2ce2",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-28T08:35:56Z",
+      "side": 1,
+      "message": "here, too",
+      "revId": "0358fd22e23cb723dd5f0e34fb1061bd9b632388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
