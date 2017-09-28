@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffd9bae1_c29d5a08",
+        "filename": "chrome/browser/resources/md_extensions/item_list.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-28T19:39:59Z",
+      "side": 1,
+      "message": "I made the #container be the scroll-target and that seems to fix scrolling weirdness. But looking at MD History, which also displays one big iron-list, they don\u0027t seem to follow that approach, see https://cs.chromium.org/chromium/src/chrome/browser/resources/md_history/history_list.html?l\u003d38.",
+      "revId": "ee38331f944db5110e8f1c2e0d2e04233c4fccf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
