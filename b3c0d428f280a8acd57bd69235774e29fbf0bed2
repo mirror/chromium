@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4595302c_982b62ea",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasResourceProvider.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-09-28T18:03:48Z",
+      "side": 1,
+      "message": "No this is correct. The context provider wrapper being null means that the frame_resource is not a recycled resource or it is a recycled resource with a dead context provider in which case everything needs to be reset and recreated.",
+      "parentUuid": "1d025c24_1c7c2f3a",
+      "revId": "b3c0d428f280a8acd57bd69235774e29fbf0bed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7115799a_3f0a3257",
         "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasResourceProvider.cpp",
         "patchSetId": 2
