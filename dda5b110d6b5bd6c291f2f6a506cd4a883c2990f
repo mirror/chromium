@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "457a9aef_135e7bdb",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerMessagingProxy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-28T09:23:12Z",
+      "side": 1,
+      "message": "Should we try to see if some of these can be removed? E.g. I\u0027m not quite sure where we\u0027re referring DocumentLoadTiming and DocumentLoader (I might well be just overlooking though)",
+      "revId": "dda5b110d6b5bd6c291f2f6a506cd4a883c2990f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1785a550_3d1a3ad4",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerMessagingProxy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-28T09:23:12Z",
+      "side": 1,
+      "message": "I know this hasn\u0027t had a good comment ever, but can we add a brief class-level comment while we\u0027re here?",
+      "revId": "dda5b110d6b5bd6c291f2f6a506cd4a883c2990f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
