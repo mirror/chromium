@@ -22,6 +22,30 @@
       "revId": "b3c0d428f280a8acd57bd69235774e29fbf0bed2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6776bd9f_d3f8f8d5",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasResourceProvider.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-09-28T16:44:35Z",
+      "side": 1,
+      "message": "The context_provider_wrapper can change at anytime due to a gpu channel reset.  So there is no guarantee that a frame resource will belong to the same context as the previous frame from the same canvas.",
+      "parentUuid": "7115799a_3f0a3257",
+      "range": {
+        "startLine": 168,
+        "startChar": 2,
+        "endLine": 168,
+        "endChar": 78
+      },
+      "revId": "b3c0d428f280a8acd57bd69235774e29fbf0bed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
