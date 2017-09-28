@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "55c5c92d_4b303cc6",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-28T23:19:32Z",
+      "side": 1,
+      "message": "I think it\u0027s a bug that we don\u0027t support negative offset quads tbh, although the real assert would be that the quad rect is inside the shared quad state layer rect.\n\nMaybe GLRenderer needs the DCHECK with a TODO? Or maybe this is fine enough for now? At the very least, I think it would be better to say GLRenderer assumes quads are not positioned in a negative quadrant rather than just \"math in the great beyond\".",
+      "parentUuid": "86b43380_35c45fd7",
+      "revId": "fc2d320bad6eb5df8f44e5520544c4d9a9ac6414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6811859b_5d00b92f",
         "filename": "cc/layers/picture_layer_impl.cc",
         "patchSetId": 3
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "We use the visible_quad_layer_rect in the PLTS::CoverageIterator in the above loop. This does need to be in the non-offset space, since it\u0027s pulling specific tiles. I think this is the earliest time when I can update it. (I mean, technically I can updated quad_layer_rect earlier, but I just kept it together with the visible one)",
       "parentUuid": "6811859b_5d00b92f",
+      "revId": "fc2d320bad6eb5df8f44e5520544c4d9a9ac6414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49b8061c_7efa6666",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-28T23:19:32Z",
+      "side": 1,
+      "message": "Can you move the shared quad state transform adjustment down here then? I just don\u0027t like that we have an inconsistent shared quad state in terms of transform vs (visible) quad rect throughout this function.  It could trip somebody else up later.",
+      "parentUuid": "9b05cdda_c87f8a70",
       "revId": "fc2d320bad6eb5df8f44e5520544c4d9a9ac6414",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
