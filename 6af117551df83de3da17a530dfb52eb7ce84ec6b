@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bd34437_1d8f570b",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngineTest.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-09-28T12:10:45Z",
+      "side": 1,
+      "message": "I\u0027d really like for there to be a \"t3\" here that is influenced by important UA rules.\n\nUnfortunately I couldn\u0027t figure out how to add a UA sheet here. I added the following code (along with the header file include):\n\n  CSSDefaultStyleSheets\u0026 default_style_sheets \u003d\n      CSSDefaultStyleSheets::Instance();\n  default_style_sheets.DefaultStyleSheet()-\u003eParseString(\"#t1 { color: white }\");\n\nBut I got a linker error:\n\n  Undefined symbols for architecture x86_64:\n    \"blink::CSSDefaultStyleSheets::Instance()\", referenced from:\n        blink::StyleEngineTest_AnalyzedInject_Test::TestBody() in StyleEngineTest.o\n\nAnyway, this change really shouldn\u0027t change anything with respect to UA rules, at least that\u0027s not the intention.",
+      "revId": "6af117551df83de3da17a530dfb52eb7ce84ec6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35d8ee22_0906bb08",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngineTest.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-09-28T12:10:45Z",
+      "side": 1,
+      "message": "Important user rules override both regular and important author rules.",
+      "revId": "6af117551df83de3da17a530dfb52eb7ce84ec6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50bfae5d_db8b5e5e",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngineTest.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-09-28T12:10:45Z",
+      "side": 1,
+      "message": "Only important user rules override previously set important user rules.",
+      "revId": "6af117551df83de3da17a530dfb52eb7ce84ec6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6de6e005_0e4a5d8e",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngineTest.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-09-28T12:10:45Z",
+      "side": 1,
+      "message": "Regular user rules do not override author rules.",
+      "revId": "6af117551df83de3da17a530dfb52eb7ce84ec6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
