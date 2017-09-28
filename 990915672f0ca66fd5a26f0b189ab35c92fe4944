@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "726c6b0f_5bc4724c",
+        "filename": "chromeos/printing/printer_configuration.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-28T21:07:23Z",
+      "side": 1,
+      "message": "I wasn\u0027t clear.  I wasn\u0027t saying write\n\nconstexpr size_t kSeperatorLen \u003d strlen(...);\n\nI was saying just use strlen(...) below in the one place you were using kSeparatorLen.",
+      "parentUuid": "6e3c8d34_b7ee94a8",
+      "revId": "990915672f0ca66fd5a26f0b189ab35c92fe4944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "791dcf43_4c1d4647",
         "filename": "chromeos/printing/printer_configuration.cc",
         "patchSetId": 2
