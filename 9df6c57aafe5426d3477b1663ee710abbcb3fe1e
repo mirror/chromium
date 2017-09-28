@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "c03025b3_ca423169",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-09-28T21:40:55Z",
+      "side": 1,
+      "message": "Thank you!\n\nI\u0027ve restored the old catch-all bucket and renamed it as such. Please let me know if I should have done any of this differently.",
+      "parentUuid": "97826a05_69580a5f",
+      "range": {
+        "startLine": 101,
+        "startChar": 5,
+        "endLine": 101,
+        "endChar": 15
+      },
+      "revId": "9df6c57aafe5426d3477b1663ee710abbcb3fe1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fcc43dc_60c5b886",
         "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
         "patchSetId": 5
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "f3e06205_7803cc67",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-09-28T21:40:55Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9fcc43dc_60c5b886",
+      "range": {
+        "startLine": 155,
+        "startChar": 2,
+        "endLine": 155,
+        "endChar": 11
+      },
+      "revId": "9df6c57aafe5426d3477b1663ee710abbcb3fe1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44d69b10_76c6b6c2",
         "filename": "chrome/installer/setup/user_experiment.cc",
         "patchSetId": 5
@@ -116,6 +164,30 @@
       "revId": "9df6c57aafe5426d3477b1663ee710abbcb3fe1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82444f40_0edb7679",
+        "filename": "chrome/installer/setup/user_experiment.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-09-28T21:40:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44d69b10_76c6b6c2",
+      "range": {
+        "startLine": 530,
+        "startChar": 46,
+        "endLine": 530,
+        "endChar": 61
+      },
+      "revId": "9df6c57aafe5426d3477b1663ee710abbcb3fe1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
