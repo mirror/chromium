@@ -56,6 +56,10 @@ class ShelfController : public mojom::ShelfController,
   void ShelfItemDelegateChanged(const ShelfID& id,
                                 ShelfItemDelegate* delegate) override;
 
+  bool should_synchronize_shelf_models() const {
+    return should_synchronize_shelf_models_;
+  }
+
  private:
   // SessionObserver:
   void OnActiveUserPrefServiceChanged(PrefService* pref_service) override;

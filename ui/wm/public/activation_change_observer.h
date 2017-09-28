@@ -26,6 +26,14 @@ class WM_PUBLIC_EXPORT ActivationChangeObserver {
     WINDOW_DISPOSITION_CHANGED,
   };
 
+  // Called when |gaining_active| will gain focus, or there is no active window
+  // (|gaining_active| is NULL in this case.) |losing_active| refers to the
+  // previous active window or NULL if there was no previously active
+  // window. |reason| specifies the cause of the activation change.
+  virtual void OnWindowActivating(ActivationReason reason,
+                                  aura::Window* gaining_active,
+                                  aura::Window* losing_active) {}
+
   // Called when |gained_active| gains focus, or there is no active window
   // (|gained_active| is NULL in this case.) |lost_active| refers to the
   // previous active window or NULL if there was no previously active

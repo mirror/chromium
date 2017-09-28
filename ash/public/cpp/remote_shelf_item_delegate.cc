@@ -17,6 +17,7 @@ void RemoteShelfItemDelegate::ItemSelected(std::unique_ptr<ui::Event> event,
                                            int64_t display_id,
                                            ShelfLaunchSource source,
                                            ItemSelectedCallback callback) {
+  LOG(ERROR) << "MSW RemoteShelfItemDelegate::ItemSelected A";
   // Mojo requires conversion of mouse and touch events to pointer events.
   if (event && ui::PointerEvent::CanConvertFrom(*event.get())) {
     if (event->IsMouseEvent())
@@ -28,6 +29,7 @@ void RemoteShelfItemDelegate::ItemSelected(std::unique_ptr<ui::Event> event,
   }
   delegate_->ItemSelected(std::move(event), display_id, source,
                           std::move(callback));
+  LOG(ERROR) << "MSW RemoteShelfItemDelegate::ItemSelected B";
 }
 
 void RemoteShelfItemDelegate::GetContextMenuItems(
