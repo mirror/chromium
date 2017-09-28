@@ -106,8 +106,8 @@ js2gtest("browser_tests_js_webui") {
 
   if (is_chromeos) {
     sources += [
+      "chromeos/sys_internals/sys_internals_browsertest.js",
       "settings/easy_unlock_browsertest_chromeos.js",
-      "sys_internals/sys_internals_browsertest.js",
     ]
   }
 
