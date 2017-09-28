@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ea25ff2c_4e7878f2",
+        "filename": "components/arc/intent_helper/activity_icon_loader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-09-28T09:48:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df594175_47da9dea",
+      "revId": "6913a63ff3b01e949dcb2b1dbc9e454bafa89165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c572e5b9_c91c7229",
         "filename": "components/arc/intent_helper/activity_icon_loader.cc",
         "patchSetId": 1
@@ -71,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c4020336_48cca7e4",
+        "filename": "components/arc/intent_helper/activity_icon_loader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-09-28T09:48:19Z",
+      "side": 1,
+      "message": "That\u0027s a good point.\nI changed my mind. Instead of using primary display\u0027s scale factor, I think we should pick the\nhighest scale among supported scale factors on the platform.\nIt is 2.0f on Chrome OS according to https://codesearch.chromium.org/chromium/src/ui/base/resource/resource_bundle.cc?type\u003dcs\u0026l\u003d768\nIt should be safer, and it is consistent with the scale we use to request icon to Android system. (where calling RequestActivityIcons() around line #216)\n\nI updated this CL to use the highest scale among supported ones.",
+      "parentUuid": "eedd4bf9_9d361e94",
+      "revId": "6913a63ff3b01e949dcb2b1dbc9e454bafa89165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13a0894b_bc9a148e",
         "filename": "components/arc/intent_helper/activity_icon_loader.cc",
         "patchSetId": 1
@@ -91,6 +127,30 @@
       "revId": "6913a63ff3b01e949dcb2b1dbc9e454bafa89165",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c230e8d8_a1c9abe7",
+        "filename": "components/arc/intent_helper/activity_icon_loader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-09-28T09:48:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13a0894b_bc9a148e",
+      "range": {
+        "startLine": 124,
+        "startChar": 57,
+        "endLine": 124,
+        "endChar": 63
+      },
+      "revId": "6913a63ff3b01e949dcb2b1dbc9e454bafa89165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -143,6 +203,24 @@
       "revId": "6913a63ff3b01e949dcb2b1dbc9e454bafa89165",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "852bbe71_d5a78201",
+        "filename": "components/arc/intent_helper/activity_icon_loader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-09-28T09:48:19Z",
+      "side": 1,
+      "message": "Done. It worked, thanks!",
+      "parentUuid": "01f5334d_16e03279",
+      "revId": "6913a63ff3b01e949dcb2b1dbc9e454bafa89165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
