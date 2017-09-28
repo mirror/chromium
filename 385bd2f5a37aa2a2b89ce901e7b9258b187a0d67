@@ -16,6 +16,24 @@
       "revId": "385bd2f5a37aa2a2b89ce901e7b9258b187a0d67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd7ed140_36018aaf",
+        "filename": "chrome/browser/ui/webui/settings/change_password_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-28T22:49:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "016ba39f_66b14100",
+      "revId": "385bd2f5a37aa2a2b89ce901e7b9258b187a0d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
