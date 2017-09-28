@@ -58,7 +58,8 @@ class LockDebugView::DebugDataDispatcherTransformer
     : public LoginDataDispatcher::Observer {
  public:
   explicit DebugDataDispatcherTransformer(LoginDataDispatcher* dispatcher)
-      : root_dispatcher_(dispatcher) {
+      : root_dispatcher_(dispatcher),
+        debug_dispatcher_(dispatcher->lock_screen_note_state()) {
     root_dispatcher_->AddObserver(this);
   }
   ~DebugDataDispatcherTransformer() override {
@@ -112,6 +113,17 @@ class LockDebugView::DebugDataDispatcherTransformer
                                            debug_user->enable_pin);
   }
 
+  void ToggleLockScreenNoteButton() {
+    if (debug_dispatcher_.lock_screen_note_state() ==
+        mojom::TrayActionState::kAvailable) {
+      debug_dispatcher_.SetLockScreenNoteState(
+          mojom::TrayActionState::kNotAvailable);
+    } else {
+      debug_dispatcher_.SetLockScreenNoteState(
+          mojom::TrayActionState::kAvailable);
+    }
+  }
+
   // LoginDataDispatcher::Observer:
   void OnUsersChanged(const std::vector<mojom::UserInfoPtr>& users) override {
     // Update root_users_ to new source data.
@@ -132,6 +144,9 @@ class LockDebugView::DebugDataDispatcherTransformer
         break;
       }
     }
+  }
+  void OnLockScreenNoteStateChanged(mojom::TrayActionState state) override {
+    debug_dispatcher_.SetLockScreenNoteState(state);
   }
 
  private:
@@ -164,6 +179,10 @@ LockDebugView::LockDebugView(LoginDataDispatcher* data_dispatcher)
 
   toggle_blur_ = CreateButton(this, "Blur");
   debug_->AddChildView(WrapViewForPreferredSize(toggle_blur_));
+
+  change_lock_screen_note_state_ = CreateButton(this, "Toggle note action");
+  debug_->AddChildView(
+      WrapViewForPreferredSize(change_lock_screen_note_state_));
 
   add_user_ = CreateButton(this, "Add");
   debug_->AddChildView(WrapViewForPreferredSize(add_user_));
@@ -215,6 +234,9 @@ void LockDebugView::ButtonPressed(views::Button* sender,
     if (user_column_entries_toggle_pin_[i] == sender)
       debug_data_dispatcher_->TogglePinStateForUserIndex(i);
   }
+
+  if (sender == change_lock_screen_note_state_)
+    debug_data_dispatcher_->ToggleLockScreenNoteButton();
 }
 
 void LockDebugView::RebuildDebugUserColumn() {

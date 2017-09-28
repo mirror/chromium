@@ -41,6 +41,7 @@ class LockDebugView : public views::View, public views::ButtonListener {
 
   views::View* debug_;
   views::View* toggle_blur_;
+  views::View* change_lock_screen_note_state_;
   views::View* add_user_;
   views::View* remove_user_;
 

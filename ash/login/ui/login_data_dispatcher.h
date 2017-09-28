@@ -6,6 +6,7 @@
 #define ASH_LOGIN_UI_LOGIN_DATA_DISPATCHER_H_
 
 #include "ash/ash_export.h"
+#include "ash/public/interfaces/tray_action.mojom.h"
 #include "ash/public/interfaces/user_info.mojom.h"
 #include "base/macros.h"
 #include "base/observer_list.h"
@@ -41,9 +42,12 @@ class ASH_EXPORT LoginDataDispatcher {
     // should be disabled.
     virtual void OnPinEnabledForUserChanged(const AccountId& user,
                                             bool enabled);
+
+    // Called when the lock screen note state changes.
+    virtual void OnLockScreenNoteStateChanged(mojom::TrayActionState state);
   };
 
-  LoginDataDispatcher();
+  explicit LoginDataDispatcher(mojom::TrayActionState lock_screen_note_state);
   ~LoginDataDispatcher();
 
   void AddObserver(Observer* observer);
@@ -53,7 +57,15 @@ class ASH_EXPORT LoginDataDispatcher {
 
   void SetPinEnabledForUser(const AccountId& user, bool enabled);
 
+  void SetLockScreenNoteState(mojom::TrayActionState state);
+
+  mojom::TrayActionState lock_screen_note_state() const {
+    return lock_screen_note_state_;
+  }
+
  private:
+  mojom::TrayActionState lock_screen_note_state_;
+
   base::ObserverList<Observer> observers_;
 
   DISALLOW_COPY_AND_ASSIGN(LoginDataDispatcher);

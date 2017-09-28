@@ -15,7 +15,12 @@ void LoginDataDispatcher::Observer::OnPinEnabledForUserChanged(
     const AccountId& user,
     bool enabled) {}
 
-LoginDataDispatcher::LoginDataDispatcher() = default;
+void LoginDataDispatcher::Observer::OnLockScreenNoteStateChanged(
+    mojom::TrayActionState state) {}
+
+LoginDataDispatcher::LoginDataDispatcher(
+    mojom::TrayActionState lock_screen_note_state)
+    : lock_screen_note_state_(lock_screen_note_state) {}
 
 LoginDataDispatcher::~LoginDataDispatcher() = default;
 
@@ -37,6 +42,16 @@ void LoginDataDispatcher::SetPinEnabledForUser(const AccountId& user,
                                                bool enabled) {
   for (auto& observer : observers_)
     observer.OnPinEnabledForUserChanged(user, enabled);
+}
+
+void LoginDataDispatcher::SetLockScreenNoteState(mojom::TrayActionState state) {
+  if (state == lock_screen_note_state_)
+    return;
+
+  lock_screen_note_state_ = state;
+
+  for (auto& observer : observers_)
+    observer.OnLockScreenNoteStateChanged(state);
 }
 
 }  // namespace ash
