@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5a8fb18_40d66081",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-28T20:14:04Z",
+      "side": 1,
+      "message": "This should be GetIndexedDBObserver() to ensure it\u0027s initialized. I don\u0027t think C++ guarantees left side to be called before this.",
+      "range": {
+        "startLine": 380,
+        "startChar": 49,
+        "endLine": 380,
+        "endChar": 75
+      },
+      "revId": "4ac3f0514bac03727425f4636e32b64f1a2be3c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3976268d_a5d7c563",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-28T20:14:04Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 395,
+        "startChar": 49,
+        "endLine": 395,
+        "endChar": 75
+      },
+      "revId": "4ac3f0514bac03727425f4636e32b64f1a2be3c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
