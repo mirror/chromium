@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11a5b2c2_7b9eaa21",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_auth_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-28T17:10:47Z",
+      "side": 1,
+      "message": "Can you remove all these methods in another change?",
+      "range": {
+        "startLine": 217,
+        "startChar": 21,
+        "endLine": 217,
+        "endChar": 56
+      },
+      "revId": "acb4d90bc618432cb6bc0c63e73003d6e6c5bd72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3502acf_71028fd8",
+        "filename": "components/arc/common/auth.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-28T17:10:47Z",
+      "side": 1,
+      "message": "nit: This is not a FailureReason anymore due to the Success entry. How about you rename it to ArcSignInStatus? Renames in Mojo are safe.",
+      "range": {
+        "startLine": 11,
+        "startChar": 5,
+        "endLine": 11,
+        "endChar": 27
+      },
+      "revId": "acb4d90bc618432cb6bc0c63e73003d6e6c5bd72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
