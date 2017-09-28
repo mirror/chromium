@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f4f2c998_0ab81a12",
+        "filename": "chrome/test/chromedriver/client/command_executor.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1225899
+      },
+      "writtenOn": "2017-09-28T14:18:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e5a8cf1_e1756228",
+      "range": {
+        "startLine": 86,
+        "startChar": 21,
+        "endLine": 86,
+        "endChar": 70
+      },
+      "revId": "9cabb994c701f8a1ef856ff72ab344f62d9089a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2514423e_309ebac6",
         "filename": "chrome/test/chromedriver/session_commands.cc",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c9759c35_8503dd03",
+        "filename": "chrome/test/chromedriver/session_commands.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1225899
+      },
+      "writtenOn": "2017-09-28T14:18:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2514423e_309ebac6",
+      "range": {
+        "startLine": 845,
+        "startChar": 34,
+        "endLine": 845,
+        "endChar": 72
+      },
+      "revId": "9cabb994c701f8a1ef856ff72ab344f62d9089a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46de2501_58a2918e",
         "filename": "chrome/test/chromedriver/session_commands.cc",
         "patchSetId": 5
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-27T21:40:18Z",
       "side": 1,
       "message": "I think we should call GetWindowRect at this point. Some of the values may be missing in the input, and the spec still requires us to return all four values. Even when all four parameters are specified, the final window rect can be different from what the user asks for (e.g., asking for width\u003d1 will get you a window of a minimum width).",
+      "range": {
+        "startLine": 861,
+        "startChar": 2,
+        "endLine": 861,
+        "endChar": 33
+      },
+      "revId": "9cabb994c701f8a1ef856ff72ab344f62d9089a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f950ddd4_5850e702",
+        "filename": "chrome/test/chromedriver/session_commands.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 1225899
+      },
+      "writtenOn": "2017-09-28T14:18:08Z",
+      "side": 1,
+      "message": "+1 good point, going to change this when Get Window Rect is merged.",
+      "parentUuid": "46de2501_58a2918e",
       "range": {
         "startLine": 861,
         "startChar": 2,
