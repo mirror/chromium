@@ -77,19 +77,27 @@ class CustomWindowTargeter : public aura::WindowTargeter {
 // SurfaceTreeHost, public:
 
 SurfaceTreeHost::SurfaceTreeHost(const std::string& window_name,
-                                 aura::WindowDelegate* window_delegate) {
-  host_window_ = std::make_unique<aura::Window>(window_delegate);
+                                 aura::WindowDelegate* window_delegate)
+    : host_window_(new aura::Window(window_delegate)),
+      surface_host_(new aura::Window(nullptr)) {
   host_window_->SetType(aura::client::WINDOW_TYPE_CONTROL);
   host_window_->SetName(window_name);
-  host_window_->Init(ui::LAYER_SOLID_COLOR);
+  host_window_->Init(ui::LAYER_NOT_DRAWN);
   host_window_->set_owned_by_parent(false);
   // The host window is a container of surface tree. It doesn't handle pointer
   // events.
   host_window_->SetEventTargetingPolicy(
       ui::mojom::EventTargetingPolicy::DESCENDANTS_ONLY);
   host_window_->SetEventTargeter(std::make_unique<CustomWindowTargeter>(this));
-  layer_tree_frame_sink_holder_ = std::make_unique<LayerTreeFrameSinkHolder>(
-      this, host_window_->CreateLayerTreeFrameSink());
+
+  surface_host_->SetName("ExoSurfaceHost");
+  surface_host_->Init(ui::LAYER_SOLID_COLOR);
+  layer_tree_frame_sink_holder_ = base::MakeUnique<LayerTreeFrameSinkHolder>(
+      this, surface_host_->CreateLayerTreeFrameSink());
+
+  host_window_->AddChild(surface_host_);
+  surface_host_->Show();
+
   aura::Env::GetInstance()->context_factory()->AddObserver(this);
 }
 
@@ -280,7 +288,7 @@ void SurfaceTreeHost::OnUpdateVSyncParameters(base::TimeTicks timebase,
 // ui::ContextFactoryObserver overrides:
 
 void SurfaceTreeHost::OnLostResources() {
-  if (!host_window_->GetSurfaceId().is_valid() || !root_surface_)
+  if (!surface_host_->GetSurfaceId().is_valid() || !root_surface_)
     return;
   root_surface_->SurfaceHierarchyResourcesLost();
   SubmitCompositorFrame();
@@ -304,16 +312,30 @@ void SurfaceTreeHost::SubmitCompositorFrame() {
   const int kRenderPassId = 1;
   render_pass->SetNew(kRenderPassId, gfx::Rect(), gfx::Rect(),
                       gfx::Transform());
-  float device_scale_factor = host_window()->layer()->device_scale_factor();
+  float device_scale_factor = surface_host_->layer()->device_scale_factor();
   root_surface_->AppendSurfaceHierarchyContentsToFrame(
       gfx::Point(), device_scale_factor, layer_tree_frame_sink_holder_.get(),
       &frame);
 
-  host_window_->SetBounds(
-      gfx::Rect(host_window_->bounds().origin(),
+  gfx::Point origin = render_pass->output_rect.origin();
+  origin.SetToMin(gfx::Point());
+
+  render_pass->output_rect -= origin.OffsetFromOrigin();
+  render_pass->damage_rect -= origin.OffsetFromOrigin();
+
+  gfx::Transform translation;
+  translation.Translate(-origin.x(), -origin.y());
+
+  for (auto* quad_state : render_pass->shared_quad_state_list)
+    quad_state->quad_to_target_transform.ConcatTransform(translation);
+
+  surface_host_->SetBounds(
+      gfx::Rect(gfx::ConvertPointToDIP(device_scale_factor, origin),
                 gfx::ConvertSizeToDIP(device_scale_factor,
                                       render_pass->output_rect.size())));
-  host_window_->layer()->SetFillsBoundsOpaquely(
+  host_window_->SetBounds(gfx::Rect(host_window_->bounds().origin(),
+                                    surface_host_->bounds().size()));
+  surface_host_->layer()->SetFillsBoundsOpaquely(
       root_surface_->FillsBoundsOpaquely());
   frame.metadata.device_scale_factor = device_scale_factor;
   layer_tree_frame_sink_holder_->frame_sink()->SubmitCompositorFrame(
