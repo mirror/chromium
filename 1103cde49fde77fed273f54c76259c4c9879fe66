@@ -137,6 +137,52 @@
       "revId": "1103cde49fde77fed273f54c76259c4c9879fe66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baab099b_a8ceeccd",
+        "filename": "ui/app_list/views/app_list_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-09-28T15:21:50Z",
+      "side": 1,
+      "message": "nit: It seems not needed. You may use forward declaration instead:\n\nnamespace base {\nclass ElapsedTimer;\n}",
+      "range": {
+        "startLine": 13,
+        "startChar": 21,
+        "endLine": 13,
+        "endChar": 34
+      },
+      "revId": "1103cde49fde77fed273f54c76259c4c9879fe66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "823d2c75_c2012411",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1170,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-09-28T15:21:50Z",
+      "side": 1,
+      "message": "nit: const ...\nor make it inline",
+      "range": {
+        "startLine": 1170,
+        "startChar": 1,
+        "endLine": 1170,
+        "endChar": 17
+      },
+      "revId": "1103cde49fde77fed273f54c76259c4c9879fe66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
