@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "901824d7_697740ef",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1656,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-28T21:14:48Z",
+      "side": 1,
+      "message": "Should we check supervised user here too? If so, maybe should combine the check into one place.\n\ni.e.\nAdd a |allow_voice_interaction| after |is_user_primary|.\n  const bool allow_voice_interaction \u003d !profile-\u003eIsSupervised() \u0026\u0026\n      is_user_primary \u0026\u0026\n      chromeos::switches::IsVoiceInteractionEnabled();\nAnd use it in relevant places.",
+      "revId": "e7dc625cd377cf4d782fdba6510fe3af731d1a12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
