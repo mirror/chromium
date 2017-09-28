@@ -487,34 +487,33 @@ base::string16 KioskExternalUpdater::GetUpdateReportMessage() const {
       if (updated_apps.empty())
         updated_apps = app_name;
       else
-        updated_apps = updated_apps + base::ASCIIToUTF16(", ") + app_name;
+        updated_apps += base::ASCIIToUTF16(", ") + app_name;
     } else {  // FAILED
       ++failed;
       if (failed_apps.empty()) {
         failed_apps = app_name + base::ASCIIToUTF16(": ") + update.error;
       } else {
-        failed_apps = failed_apps + base::ASCIIToUTF16("\n") + app_name +
-                      base::ASCIIToUTF16(": ") + update.error;
+        failed_apps += base::ASCIIToUTF16("\n") + app_name +
+                       base::ASCIIToUTF16(": ") + update.error;
       }
     }
   }
 
-  base::string16 message;
-  message = ui::ResourceBundle::GetSharedInstance().GetLocalizedString(
-      IDS_KIOSK_EXTERNAL_UPDATE_COMPLETE);
-  base::string16 success_app_msg;
+  base::string16 message =
+      ui::ResourceBundle::GetSharedInstance().GetLocalizedString(
+          IDS_KIOSK_EXTERNAL_UPDATE_COMPLETE);
   if (updated) {
-    success_app_msg = l10n_util::GetStringFUTF16(
+    base::string16 success_app_msg = l10n_util::GetStringFUTF16(
         IDS_KIOSK_EXTERNAL_UPDATE_SUCCESSFUL_UPDATED_APPS, updated_apps);
-    message = message + base::ASCIIToUTF16("\n") + success_app_msg;
+    message += base::ASCIIToUTF16("\n") + success_app_msg;
   }
 
-  base::string16 failed_app_msg;
   if (failed) {
-    failed_app_msg = ui::ResourceBundle::GetSharedInstance().GetLocalizedString(
-                         IDS_KIOSK_EXTERNAL_UPDATE_FAILED_UPDATED_APPS) +
-                     base::ASCIIToUTF16("\n") + failed_apps;
-    message = message + base::ASCIIToUTF16("\n") + failed_app_msg;
+    base::string16 failed_app_msg =
+        ui::ResourceBundle::GetSharedInstance().GetLocalizedString(
+            IDS_KIOSK_EXTERNAL_UPDATE_FAILED_UPDATED_APPS) +
+        base::ASCIIToUTF16("\n") + failed_apps;
+    message += base::ASCIIToUTF16("\n") + failed_app_msg;
   }
   return message;
 }
