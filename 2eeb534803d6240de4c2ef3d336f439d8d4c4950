@@ -34,6 +34,24 @@
       "revId": "2eeb534803d6240de4c2ef3d336f439d8d4c4950",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "636efab3_a54996a7",
+        "filename": "chrome/browser/chromeos/system/timezone_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-28T20:52:10Z",
+      "side": 1,
+      "message": "Please help me to understand the code. UpdateSystemTimezone applies the user time zone from prefs::kUserTimezone. The pref could be changed either from auto timezone resolver or from user. How is it supposed to work?\n\nThat is, if auto timezone resolve is allowed, it should run. And if auto timezone resolve is disallowed, it should also run to allow user to modify it from settings ui, right?",
+      "parentUuid": "501565a3_23ff7f3b",
+      "revId": "2eeb534803d6240de4c2ef3d336f439d8d4c4950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
