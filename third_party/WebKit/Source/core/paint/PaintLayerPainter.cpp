@@ -81,8 +81,10 @@ bool PaintLayerPainter::PaintedOutputInvisible(
     if (layout_object.StyleRef().Opacity())
       return false;
 
-    const EffectPaintPropertyNode* effect =
-        layout_object.FirstFragment()->PaintProperties()->Effect();
+    const EffectPaintPropertyNode* effect = layout_object.FirstFragment()
+                                                .GetRarePaintData()
+                                                ->PaintProperties()
+                                                ->Effect();
     if (effect && effect->RequiresCompositingForAnimation()) {
       return false;
     }
@@ -261,16 +263,19 @@ bool PaintLayerPainter::AdjustForPaintOffsetTranslation(
   // Paint offset translation for transforms is already taken care of.
   if (paint_layer_.PaintsWithTransform(painting_info.GetGlobalPaintFlags()))
     return false;
-  if (const auto* properties =
-          paint_layer_.GetLayoutObject().FirstFragment()->PaintProperties()) {
+  if (const auto* properties = paint_layer_.GetLayoutObject()
+                                   .FirstFragment()
+                                   .GetRarePaintData()
+                                   ->PaintProperties()) {
     if (properties->PaintOffsetTranslation()) {
       painting_info.root_layer = &paint_layer_;
       painting_info.paint_dirty_rect =
           properties->PaintOffsetTranslation()->Matrix().Inverse().MapRect(
               painting_info.paint_dirty_rect);
 
-      painting_info.sub_pixel_accumulation =
-          ToLayoutSize(paint_layer_.GetLayoutObject().PaintOffset());
+      // TODO(chrishtr): is this correct for fragmentation?
+      painting_info.sub_pixel_accumulation = ToLayoutSize(
+          paint_layer_.GetLayoutObject().FirstFragment().PaintOffset());
       return true;
     }
   }
@@ -293,6 +298,7 @@ PaintResult PaintLayerPainter::PaintLayerContents(
       paint_layer_.GetLayoutObject().IsLayoutView()) {
     const auto* local_border_box_properties = paint_layer_.GetLayoutObject()
                                                   .FirstFragment()
+                                                  .GetRarePaintData()
                                                   ->LocalBorderBoxProperties();
     DCHECK(local_border_box_properties);
     PaintChunkProperties properties(
@@ -557,6 +563,7 @@ PaintResult PaintLayerPainter::PaintLayerContents(
              paint_layer_.GetLayoutObject().IsLayoutView()));
     const auto* local_border_box_properties = paint_layer_.GetLayoutObject()
                                                   .FirstFragment()
+                                                  .GetRarePaintData()
                                                   ->LocalBorderBoxProperties();
     DCHECK(local_border_box_properties);
     PaintChunkProperties properties(
@@ -1048,7 +1055,7 @@ void PaintLayerPainter::PaintFragmentWithPhase(
   Optional<ScrollRecorder> scroll_recorder;
   LayoutPoint paint_offset = -paint_layer_.LayoutBoxLocation();
   if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
-    paint_offset += paint_layer_.GetLayoutObject().PaintOffset();
+    paint_offset += fragment.fragment_data->PaintOffset();
     new_cull_rect.Move(painting_info.scroll_offset_accumulation);
   } else {
     paint_offset += ToSize(fragment.layer_bounds.Location());
@@ -1220,8 +1227,10 @@ void PaintLayerPainter::PaintMaskForFragments(
 
   Optional<ScopedPaintChunkProperties> scoped_paint_chunk_properties;
   if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
-    const auto* object_paint_properties =
-        paint_layer_.GetLayoutObject().FirstFragment()->PaintProperties();
+    const auto* object_paint_properties = paint_layer_.GetLayoutObject()
+                                              .FirstFragment()
+                                              .GetRarePaintData()
+                                              ->PaintProperties();
     DCHECK(object_paint_properties && object_paint_properties->Mask());
     PaintChunkProperties properties(
         context.GetPaintController().CurrentPaintChunkProperties());

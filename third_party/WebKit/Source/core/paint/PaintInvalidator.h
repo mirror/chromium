@@ -132,14 +132,18 @@ class PaintInvalidator {
   template <typename Rect, typename Point>
   static LayoutRect MapLocalRectToVisualRectInBacking(
       const LayoutObject&,
+      const FragmentData&,
       const Rect&,
       const PaintInvalidatorContext&);
 
   ALWAYS_INLINE LayoutRect
   ComputeVisualRectInBacking(const LayoutObject&,
+                             const FragmentData&,
                              const PaintInvalidatorContext&);
   ALWAYS_INLINE LayoutPoint
-  ComputeLocationInBacking(const LayoutObject&, const PaintInvalidatorContext&);
+  ComputeLocationInBacking(const LayoutObject&,
+                           const FragmentData&,
+                           const PaintInvalidatorContext&);
   ALWAYS_INLINE void UpdatePaintingLayer(const LayoutObject&,
                                          PaintInvalidatorContext&);
   ALWAYS_INLINE void UpdatePaintInvalidationContainer(const LayoutObject&,
@@ -151,6 +155,7 @@ class PaintInvalidator {
       const PaintPropertyTreeBuilderContext*,
       PaintInvalidatorContext&);
   ALWAYS_INLINE void UpdateVisualRect(const LayoutObject&,
+                                      FragmentData&,
                                       PaintInvalidatorContext&);
 
   Vector<const LayoutObject*> pending_delayed_paint_invalidations_;

@@ -26,29 +26,29 @@ namespace blink {
 class FindPaintOffsetNeedingUpdateScope {
  public:
   FindPaintOffsetNeedingUpdateScope(const LayoutObject& object,
+                                    const FragmentData& fragment_data,
                                     bool& is_actually_needed)
       : object_(object),
+        fragment_data_(fragment_data),
         is_actually_needed_(is_actually_needed),
-        old_paint_offset_(object.PaintOffset()) {
-    if (object.FirstFragment() && object.FirstFragment()->PaintProperties() &&
-        object.FirstFragment()->PaintProperties()->PaintOffsetTranslation()) {
-      old_paint_offset_translation_ = object.FirstFragment()
-                                          ->PaintProperties()
-                                          ->PaintOffsetTranslation()
-                                          ->Clone();
+        old_paint_offset_(fragment_data.PaintOffset()) {
+    auto* rare_paint_data = fragment_data.GetRarePaintData();
+    if (rare_paint_data && rare_paint_data->PaintProperties() &&
+        rare_paint_data->PaintProperties()->PaintOffsetTranslation()) {
+      old_paint_offset_translation_ =
+          rare_paint_data->PaintProperties()->PaintOffsetTranslation()->Clone();
     }
   }
 
   ~FindPaintOffsetNeedingUpdateScope() {
     if (is_actually_needed_)
       return;
-    DCHECK_OBJECT_PROPERTY_EQ(object_, &old_paint_offset_,
-                              &object_.PaintOffset());
+    LayoutPoint paint_offset = fragment_data_.PaintOffset();
+    DCHECK_OBJECT_PROPERTY_EQ(object_, &old_paint_offset_, &paint_offset);
+    auto* rare_paint_data = fragment_data_.GetRarePaintData();
     const auto* paint_offset_translation =
-        (object_.FirstFragment() && object_.FirstFragment()->PaintProperties())
-            ? object_.FirstFragment()
-                  ->PaintProperties()
-                  ->PaintOffsetTranslation()
+        (rare_paint_data && rare_paint_data->PaintProperties())
+            ? rare_paint_data->PaintProperties()->PaintOffsetTranslation()
             : nullptr;
     DCHECK_OBJECT_PROPERTY_EQ(object_, old_paint_offset_translation_.Get(),
                               paint_offset_translation);
@@ -56,6 +56,7 @@ class FindPaintOffsetNeedingUpdateScope {
 
  private:
   const LayoutObject& object_;
+  const FragmentData& fragment_data_;
   const bool& is_actually_needed_;
   LayoutPoint old_paint_offset_;
   RefPtr<const TransformPaintPropertyNode> old_paint_offset_translation_;

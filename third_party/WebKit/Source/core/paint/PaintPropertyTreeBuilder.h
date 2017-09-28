@@ -25,7 +25,7 @@ class ObjectPaintProperties;
 struct FragmentClipContext {
   LayoutRect fragment_clip;
   // A paint offset that includes fragmentation effects.
-  LayoutPoint paint_offset;
+  // LayoutPoint paint_offset;
 };
 
 // The context for PaintPropertyTreeBuilder.
@@ -155,11 +155,12 @@ class PaintPropertyTreeBuilder {
       const LayoutObject&,
       PaintPropertyTreeBuilderContext& full_context,
       PaintPropertyTreeBuilderFragmentContext&,
-      FragmentData*);
+      FragmentData&);
 
   ALWAYS_INLINE static void UpdatePaintOffset(
       const LayoutBoxModelObject&,
       const LayoutObject* container_for_absolute_position,
+      const FragmentData&,
       PaintPropertyTreeBuilderFragmentContext&);
   ALWAYS_INLINE static void GetPaintOffsetTranslation(
       const LayoutBoxModelObject&,
@@ -180,7 +181,7 @@ class PaintPropertyTreeBuilder {
   ALWAYS_INLINE static void UpdateForObjectLocationAndSize(
       const LayoutObject&,
       const LayoutObject* container_for_absolute_position,
-      FragmentData*,
+      FragmentData&,
       bool& is_actually_needed,
       PaintPropertyTreeBuilderFragmentContext&,
       bool& force_subtree_update,
@@ -221,7 +222,7 @@ class PaintPropertyTreeBuilder {
   ALWAYS_INLINE static void UpdateLocalBorderBoxContext(
       const LayoutObject&,
       PaintPropertyTreeBuilderFragmentContext&,
-      FragmentData*,
+      FragmentData&,
       bool& force_subtree_update);
   ALWAYS_INLINE static void UpdateCompositedLayerStates(
       const LayoutObject&,
