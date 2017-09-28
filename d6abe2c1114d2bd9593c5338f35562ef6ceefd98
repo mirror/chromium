@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14d5a231_17502270",
+        "filename": "chrome/browser/resources/settings/site_settings/site_list.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-28T00:26:11Z",
+      "side": 1,
+      "message": "Please explain more how this benefits users.\nMy first impression is to say not lgtm, but I may be misunderstanding (or maybe there\u0027s a larger picture I\u0027m not seeing yet). I did try looking at the slides mentioned in the bug mentioned in this CL, but I still came away seeing this as not beneficial to users (again, I may have missed something and may have the wrong impression). I\u0027m open to hearing more about this.\n\nHere\u0027s an answer that would work for me (I\u0027m trying to help):\n\n    The equivalent for \"Blocked\" by default is to \n    mute the OS sound; which will be respected in \n    Chrome. So there\u0027s no need to have \"two levels \n    of mute\" (the OS and the browser).\n\nIs that the idea?",
+      "revId": "d6abe2c1114d2bd9593c5338f35562ef6ceefd98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3f176b6_81df6421",
+        "filename": "chrome/browser/resources/settings/site_settings_page/site_settings_page.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-28T00:26:11Z",
+      "side": 1,
+      "message": "Please add static secondary text describing how sound works. I.e. it doesn\u0027t need to change labels anymore, but it can still explain what the default is.\nOr:\nThis can alternatively be moved below the \"MIDI devices\" row (where the rows without descriptive text are kept).\nOr:\nGet an okay from bettes@ to keep it as-is (though please consider the above options first).",
+      "revId": "d6abe2c1114d2bd9593c5338f35562ef6ceefd98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
