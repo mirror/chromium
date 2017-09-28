@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7006f0e4_1224b1f6",
+        "filename": "extensions/renderer/gin_port.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-28T17:39:45Z",
+      "side": 1,
+      "message": "Should we move this to GinPort::ClosePort()?",
+      "range": {
+        "startLine": 229,
+        "startChar": 0,
+        "endLine": 229,
+        "endChar": 20
+      },
+      "revId": "50d69f8923196d08d59afdbe0b404c1985905b84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42d93c7d_7188cd30",
+        "filename": "extensions/renderer/gin_port.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-28T17:39:45Z",
+      "side": 1,
+      "message": "Update?",
+      "range": {
+        "startLine": 27,
+        "startChar": 28,
+        "endLine": 29,
+        "endChar": 29
+      },
+      "revId": "50d69f8923196d08d59afdbe0b404c1985905b84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cceff69a_3aa964b8",
+        "filename": "extensions/renderer/gin_port.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-28T17:39:45Z",
+      "side": 1,
+      "message": "Is this always a RenderFrame\u0027s routing id? Add a note if that is so.",
+      "revId": "50d69f8923196d08d59afdbe0b404c1985905b84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95654fc6_dd2484c9",
+        "filename": "extensions/renderer/native_renderer_messaging_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-28T17:39:45Z",
+      "side": 1,
+      "message": "ExtensionId",
+      "range": {
+        "startLine": 170,
+        "startChar": 10,
+        "endLine": 170,
+        "endChar": 21
+      },
+      "revId": "50d69f8923196d08d59afdbe0b404c1985905b84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f9dbd7d_365de7da",
+        "filename": "extensions/renderer/native_renderer_messaging_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-28T17:39:45Z",
+      "side": 1,
+      "message": "nitty nit: v8_context for v8 contexts, easier to read and differentiate from ScriptContexts.",
+      "range": {
+        "startLine": 221,
+        "startChar": 18,
+        "endLine": 221,
+        "endChar": 25
+      },
+      "revId": "50d69f8923196d08d59afdbe0b404c1985905b84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "714e662a_79ee7b3b",
+        "filename": "extensions/renderer/native_renderer_messaging_service_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-28T17:39:45Z",
+      "side": 1,
+      "message": "s/10/tab_id",
+      "range": {
+        "startLine": 144,
+        "startChar": 55,
+        "endLine": 144,
+        "endChar": 57
+      },
+      "revId": "50d69f8923196d08d59afdbe0b404c1985905b84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79b2a957_50fc46ec",
+        "filename": "extensions/renderer/native_renderer_messaging_service_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-28T17:39:45Z",
+      "side": 1,
+      "message": "nits:\nComment that we shouldn\u0027t have seen any message yet.\nAlso on line 199: only port1 ...",
+      "revId": "50d69f8923196d08d59afdbe0b404c1985905b84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
