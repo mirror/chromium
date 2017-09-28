@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e777c353_aed9e80b",
+        "filename": "third_party/WebKit/Source/core/frame/Deprecation.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-09-28T10:45:39Z",
+      "side": 1,
+      "message": "Call it \"Speech recognition\", the interface is called SpeechRecognition in the spec, but it\u0027s still prefixed only in Blink, so that might be confusing.",
+      "range": {
+        "startLine": 569,
+        "startChar": 14,
+        "endLine": 569,
+        "endChar": 31
+      },
+      "revId": "3e51bfd84062c1022751947af567080473e28ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9ba557a_3aa9c61a",
+        "filename": "third_party/WebKit/Source/modules/speech/SpeechRecognition.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-09-28T10:45:39Z",
+      "side": 1,
+      "message": "If you want to fold https://chromium-review.googlesource.com/c/chromium/src/+/670844 into this CL that\u0027s fine, would have made it easier to check that the exception type is correctly tested, and it is.\n\n(It basically doesn\u0027t matter that the commit descriptions won\u0027t make as much sense when transplanted into the upstream wpt repo, everyone accepts it.)",
+      "range": {
+        "startLine": 48,
+        "startChar": 4,
+        "endLine": 48,
+        "endChar": 19
+      },
+      "revId": "3e51bfd84062c1022751947af567080473e28ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05122345_546eb69e",
+        "filename": "third_party/WebKit/public/platform/web_feature.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 1684,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-09-28T10:45:39Z",
+      "side": 1,
+      "message": "Since we\u0027ve already decided to disable it for all non-secure contexts, I don\u0027t think there\u0027s any reason to measure usage in iframes also. So just two use counters.",
+      "range": {
+        "startLine": 1684,
+        "startChar": 2,
+        "endLine": 1684,
+        "endChar": 38
+      },
+      "revId": "3e51bfd84062c1022751947af567080473e28ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
