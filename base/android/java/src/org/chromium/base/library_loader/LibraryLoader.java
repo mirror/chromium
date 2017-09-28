@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.os.SystemClock;
 
+import org.chromium.base.BuildInfo;
 import org.chromium.base.CommandLine;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
@@ -215,9 +216,10 @@ public class LibraryLoader {
     }
 
     /**
-     * @return whether not to prefetch libraries (see setDontPrefetchLibrariesOnNextRun()).
+     * @return whether "DontPrefetchLibraries" finch experiment is enabled
+     *         (see setDontPrefetchLibrariesOnNextRun()).
      */
-    private static boolean isNotPrefetchingLibraries() {
+    private static boolean getDontPrefetchLibaries() {
         // This might be the first time getAppSharedPreferences() is used, so relax strict mode
         // to allow disk reads.
         StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskReads();
@@ -227,6 +229,13 @@ public class LibraryLoader {
         } finally {
             StrictMode.setThreadPolicy(oldPolicy);
         }
+    }
+
+    /**
+     * @return whether to skip library prefetching.
+     */
+    private static boolean isNotPrefetchingLibraries() {
+        return (BuildInfo.isAtLeastO() && SysUtils.is512MBDevice()) || getDontPrefetchLibaries();
     }
 
     /** Prefetches the native libraries in a background thread.

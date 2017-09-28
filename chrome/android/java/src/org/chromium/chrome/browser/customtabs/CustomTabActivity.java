@@ -37,8 +37,10 @@ import android.view.Window;
 import android.widget.RemoteViews;
 
 import org.chromium.base.ApiCompatibilityUtils;
+import org.chromium.base.BuildInfo;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
+import org.chromium.base.SysUtils;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.metrics.RecordHistogram;
@@ -428,8 +430,8 @@ public class CustomTabActivity extends ChromeActivity {
 
     @Override
     public boolean shouldAllocateChildConnection() {
-        return !mHasCreatedTabEarly && !mHasSpeculated
-                && !WarmupManager.getInstance().hasSpareWebContents();
+        return !(BuildInfo.isAtLeastO() && SysUtils.is512MBDevice()) && !mHasCreatedTabEarly
+                && !mHasSpeculated && !WarmupManager.getInstance().hasSpareWebContents();
     }
 
     @Override

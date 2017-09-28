@@ -31,6 +31,7 @@ public class SysUtils {
     private static final String TAG = "SysUtils";
 
     private static Boolean sLowEndDevice;
+    private static Integer sRamSizeKB;
 
     private SysUtils() { }
 
@@ -107,6 +108,14 @@ public class SysUtils {
     }
 
     /**
+     * @return whether this is a low end device with 512MiB of RAM.
+     */
+    public static boolean is512MBDevice() {
+        // isLowEndDevice() check is here to support DISABLE_LOW_END_DEVICE_MODE case.
+        return isLowEndDevice() && getRamSizeKB() / 1024 > 512;
+    }
+
+    /**
      * @return Whether or not the system has low available memory.
      */
     @CalledByNative
@@ -137,6 +146,13 @@ public class SysUtils {
         return hasCamera;
     }
 
+    private static int getRamSizeKB() {
+        if (sRamSizeKB == null) {
+            sRamSizeKB = amountOfPhysicalMemoryKB();
+        }
+        return sRamSizeKB;
+    }
+
     private static boolean detectLowEndDevice() {
         assert CommandLine.isInitialized();
         if (CommandLine.getInstance().hasSwitch(BaseSwitches.ENABLE_LOW_END_DEVICE_MODE)) {
@@ -146,7 +162,7 @@ public class SysUtils {
             return false;
         }
 
-        int ramSizeKB = amountOfPhysicalMemoryKB();
+        int ramSizeKB = getRamSizeKB();
         if (ramSizeKB <= 0) return false;
 
         if (BuildInfo.isAtLeastO()) {
