@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9c1591e2_7b39bbc6",
+        "filename": "net/disk_cache/entry_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4384,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-09-28T13:57:37Z",
+      "side": 1,
+      "message": "Indeed it was. Just replaced my mouse because it was triggering those when scrolling w/the wheel.",
+      "parentUuid": "1484acdc_0bbb4f2e",
+      "range": {
+        "startLine": 4384,
+        "startChar": 44,
+        "endLine": 4384,
+        "endChar": 58
+      },
+      "revId": "8c2a806772aadcb8f58b067ef84813ba4af79304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9505fcf_cd548658",
         "filename": "net/disk_cache/entry_unittest.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e3c1e9d5_6b954e3e",
+        "filename": "net/disk_cache/entry_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4420,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-09-28T13:57:37Z",
+      "side": 1,
+      "message": "No, because the entry1 is Doom()ed --- and that generally has unlink() semantics, so you can\u0027t access it by name, but can still keep reading/writing to it.",
+      "parentUuid": "c9505fcf_cd548658",
+      "range": {
+        "startLine": 4420,
+        "startChar": 25,
+        "endLine": 4420,
+        "endChar": 26
+      },
+      "revId": "8c2a806772aadcb8f58b067ef84813ba4af79304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8305374f_73881f72",
         "filename": "net/disk_cache/simple/simple_backend_impl.h",
         "patchSetId": 3
@@ -59,6 +107,24 @@
       "writtenOn": "2017-09-27T17:31:51Z",
       "side": 1,
       "message": "It\u0027s unclear to me what the caller is supposed to do with |post_doom| here. More context in the comment would be nice.\n\nHaving looked at the .cc: it might be clearer (if less efficient) to pass a callback unconditionally and discard it if the entry isn\u0027t doomed. This is reasonably similar to how we do things like Read on sockets -- if the return value indicates synchronous success/failure, the callback isn\u0027t used.",
+      "revId": "8c2a806772aadcb8f58b067ef84813ba4af79304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c9d2692_9c6b49bb",
+        "filename": "net/disk_cache/simple/simple_backend_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-09-28T13:57:37Z",
+      "side": 1,
+      "message": "I am not a fan of creating heavy things for no good reason, that\u0027s how one bleeds performance bit by bit in a way that\u0027s basically unfixable, and this is an op that\u0027s used a non-trivial number of times. (Also having the callback created inside the relevant if is kinda nice, too), so tried to elaborate in the comment.\n\n(a sum type return would have been perfect here, but we don\u0027t have those in the C++ version we have...)",
+      "parentUuid": "8305374f_73881f72",
       "revId": "8c2a806772aadcb8f58b067ef84813ba4af79304",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
