@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "2279cf16_d624ff01",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-09-28T13:48:20Z",
+      "side": 1,
+      "message": "Should this mention 769189 as well?",
+      "revId": "168bfe2096e2a028bc12d7c2d79b2ce636591dd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f096aef_3fe09a24",
         "filename": "third_party/WebKit/LayoutTests/http/tests/resources/feature-policy-permissions-test.js",
         "patchSetId": 2
