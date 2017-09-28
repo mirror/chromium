@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c537cd02_dff64a61",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerFilter.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-09-28T00:05:06Z",
+      "side": 1,
+      "message": "Or can you perhaps just match against :focus pseudoclass instead?",
+      "parentUuid": "b3757d3e_5cd038bb",
+      "revId": "a8c3030d4684567fe5596053b6205fbee8daa855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f9884ca_927d5110",
         "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkersView.js",
         "patchSetId": 2
