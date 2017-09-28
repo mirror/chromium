@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "269c992a_4cf31c4a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/FilterSuggestionBuilder.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-09-28T18:57:03Z",
+      "side": 1,
+      "message": "I think you mean _valuesMap?",
+      "revId": "82c8511a725214846350bddd9f315ce4bcd73ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b711d713_e4cd1c2f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/FilterSuggestionBuilder.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-09-28T18:57:03Z",
+      "side": 1,
+      "message": "What do you think about making this a map of Sets and pass/use the set? Since Sets are ordered it should maintain ordering. This would make this if check constant and only if it goes into it do the sorting/restructuring.",
+      "revId": "82c8511a725214846350bddd9f315ce4bcd73ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e80f017c_8557cea7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/FilterSuggestionBuilder.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-09-28T18:57:03Z",
+      "side": 1,
+      "message": "Lets lazy sort this. After looking over the code, I realized that we will be calling this quite frequently on almost every network event. This is probably why it was in the _values() before. Instead, lets just sort it in _values() when needed.",
+      "revId": "82c8511a725214846350bddd9f315ce4bcd73ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "608b6426_1be4bfbf",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-09-28T18:57:03Z",
+      "side": 1,
+      "message": "This should already be sorted.",
+      "revId": "82c8511a725214846350bddd9f315ce4bcd73ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

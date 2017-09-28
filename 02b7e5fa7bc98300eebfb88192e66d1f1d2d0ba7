@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a5b9fb3_5c09de5b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-09-28T18:57:03Z",
+      "side": 0,
+      "message": "This logic is being changed. Before it\u0027d only show priority suggestions for requests that have a given priority, now it will show all priorities always. Lets not change the logic.",
+      "revId": "02b7e5fa7bc98300eebfb88192e66d1f1d2d0ba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
