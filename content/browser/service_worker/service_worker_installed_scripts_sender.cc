@@ -269,12 +269,11 @@ class ServiceWorkerInstalledScriptsSender::Sender {
   std::unique_ptr<MetaDataSender> meta_data_sender_;
 
   // For body.
+  // Either |body_handle_| or |pending_write_| is valid during body is
+  // streamed.
+  mojo::ScopedDataPipeProducerHandle body_handle_;
   scoped_refptr<network::NetToMojoPendingBuffer> pending_write_;
   mojo::SimpleWatcher watcher_;
-
-  // Pipes.
-  mojo::ScopedDataPipeProducerHandle meta_data_handle_;
-  mojo::ScopedDataPipeProducerHandle body_handle_;
 
   base::WeakPtrFactory<Sender> weak_factory_;
 };
