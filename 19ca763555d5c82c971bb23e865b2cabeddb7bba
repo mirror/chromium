@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6c68ce56_d84c2f32",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-28T04:46:20Z",
+      "side": 1,
+      "message": "Correct, because other keys won\u0027t cause JS errors. \"printer\" is the key that is looked at to obtain all the capabilities and set the different settings sections/ticket items.",
+      "parentUuid": "e56871f4_d0df467d",
+      "revId": "19ca763555d5c82c971bb23e865b2cabeddb7bba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "691810ec_063fe4bd",
         "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "19ca763555d5c82c971bb23e865b2cabeddb7bba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff978cc0_4034d60c",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-28T04:46:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "691810ec_063fe4bd",
+      "revId": "19ca763555d5c82c971bb23e865b2cabeddb7bba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "92ecefdc_c11c64bd",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-28T04:46:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41bf8470_5749a4e7",
+      "revId": "19ca763555d5c82c971bb23e865b2cabeddb7bba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f384ca0e_08ea473f",
         "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "19ca763555d5c82c971bb23e865b2cabeddb7bba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77a8d1f1_902a18d7",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-28T04:46:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f384ca0e_08ea473f",
+      "revId": "19ca763555d5c82c971bb23e865b2cabeddb7bba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "e0a8c6d7_96656998",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-28T04:46:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6de33b03_5e6d2ecc",
+      "revId": "19ca763555d5c82c971bb23e865b2cabeddb7bba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d69dc71_5ee7caa6",
         "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
         "patchSetId": 6
@@ -101,6 +191,24 @@
       "revId": "19ca763555d5c82c971bb23e865b2cabeddb7bba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc695125_73b7a37b",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-28T04:46:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d69dc71_5ee7caa6",
+      "revId": "19ca763555d5c82c971bb23e865b2cabeddb7bba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -144,6 +252,48 @@
     },
     {
       "key": {
+        "uuid": "b18c0a03_be6125f5",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-28T04:46:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e3c2be9_457fd7d0",
+      "range": {
+        "startLine": 34,
+        "startChar": 19,
+        "endLine": 34,
+        "endChar": 29
+      },
+      "revId": "19ca763555d5c82c971bb23e865b2cabeddb7bba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ecbee6c1_98690bb4",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-28T04:46:20Z",
+      "side": 1,
+      "message": "Yes. The actual format is:\n\"some_field_name\" : { \"option\": [{dictionary}, {dictionary}, ...] }\nSee some fake Cdds we create in the print preview tests here: https://cs.chromium.org/chromium/src/chrome/test/data/webui/print_preview/print_preview_tests.js?l\u003d104 (this function is looking at the \"capabilities\" key).\nBut to make it simple I just made them ints instead of dictionaries.",
+      "parentUuid": "b53c177f_ed8ba91e",
+      "revId": "19ca763555d5c82c971bb23e865b2cabeddb7bba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a5bd59c0_d3fe6e66",
         "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
         "patchSetId": 6
@@ -158,6 +308,24 @@
       "revId": "19ca763555d5c82c971bb23e865b2cabeddb7bba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a1bfb85_9155792d",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-28T04:46:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5bd59c0_d3fe6e66",
+      "revId": "19ca763555d5c82c971bb23e865b2cabeddb7bba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -221,6 +389,30 @@
       "revId": "19ca763555d5c82c971bb23e865b2cabeddb7bba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76feeb34_ff78ae67",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-28T04:46:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f8fc290_eea46d33",
+      "range": {
+        "startLine": 133,
+        "startChar": 49,
+        "endLine": 133,
+        "endChar": 56
+      },
+      "revId": "19ca763555d5c82c971bb23e865b2cabeddb7bba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
