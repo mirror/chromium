@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e920e327_de1395b6",
+        "filename": "content/browser/tracing/tracing_controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-09-28T20:50:15Z",
+      "side": 1,
+      "message": "Can we rather have DCHECK_CURRENTLY_ON() on here and do the thread hopping on the call site instead? Returning true when tracing hasn\u0027t yet started and perhaps won\u0027t event start doesn\u0027t look good. Basically, you\u0027re quietly turning a synchronous method into asynchronous without providing a way to know when it completes and whether it succeeds.",
+      "revId": "9aacd7bbc87468961c1e841ba7c018352f19eb34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
