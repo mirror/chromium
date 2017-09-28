@@ -13,6 +13,7 @@
 #include "net/quic/chromium/quic_chromium_client_session.h"
 #include "net/quic/chromium/quic_chromium_client_stream.h"
 #include "net/spdy/chromium/spdy_read_queue.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -66,7 +67,8 @@ class NET_EXPORT_PRIVATE QuicProxyClientSocket : public ProxyClientSocket {
   int Read(IOBuffer* buf,
            int buf_len,
            const CompletionCallback& callback) override;
-  int Write(IOBuffer* buf,
+  int Write(const net::NetworkTrafficAnnotationTag& traffic_annotation,
+            IOBuffer* buf,
             int buf_len,
             const CompletionCallback& callback) override;
   int SetReceiveBufferSize(int32_t size) override;

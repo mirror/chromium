@@ -234,6 +234,7 @@ SerializedPacket::SerializedPacket(SerializedPacket&& other)
       largest_acked(other.largest_acked) {
   retransmittable_frames.swap(other.retransmittable_frames);
   listeners.swap(other.listeners);
+  traffic_annotation.swap(other.traffic_annotation);
 }
 
 SerializedPacket::~SerializedPacket() {}
@@ -245,6 +246,7 @@ void ClearSerializedPacket(SerializedPacket* serialized_packet) {
   serialized_packet->encrypted_buffer = nullptr;
   serialized_packet->encrypted_length = 0;
   serialized_packet->largest_acked = 0;
+  serialized_packet->traffic_annotation.clear();
 }
 
 char* CopyBuffer(const SerializedPacket& packet) {

@@ -5,6 +5,7 @@
 #include "net/quic/quartc/quartc_stream.h"
 
 #include "net/quic/platform/api/quic_string_piece.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -65,15 +66,20 @@ int QuartcStream::connection_error() {
   return QuicStream::connection_error();
 }
 
-void QuartcStream::Write(const char* data,
-                         size_t size,
-                         const WriteParameters& param) {
+void QuartcStream::Write(
+    const net::NetworkTrafficAnnotationTag& traffic_annotation,
+    const char* data,
+    size_t size,
+    const WriteParameters& param) {
   struct iovec iov = {const_cast<char*>(data), size};
-  WritevData(&iov, 1, param.fin, nullptr);
+  WritevData(traffic_annotation, &iov, 1, param.fin, nullptr);
 }
 
 void QuartcStream::FinishWriting() {
-  WriteOrBufferData(QuicStringPiece(nullptr, 0), true, nullptr);
+  // TODO(rhalavati): Is it OK to avoid running next line when there is no
+  // previous write? In that case we can store and send last traffic annotation.
+  WriteOrBufferData(NO_TRAFFIC_ANNOTATION_YET, QuicStringPiece(nullptr, 0),
+                    true, nullptr);
 }
 
 void QuartcStream::FinishReading() {

@@ -15,6 +15,7 @@
 #include "net/base/load_timing_info.h"
 #include "net/base/net_export.h"
 #include "net/socket/next_proto.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace base {
 class Timer;
@@ -129,9 +130,11 @@ class NET_EXPORT_PRIVATE BidirectionalStreamImpl {
   // Delegate::OnHeadersSent is invoked, and should not be called again until
   // Delegate::OnDataSent is invoked. If |end_stream| is true, the DATA frame
   // will have an END_STREAM flag.
-  virtual void SendvData(const std::vector<scoped_refptr<IOBuffer>>& buffers,
-                         const std::vector<int>& lengths,
-                         bool end_stream) = 0;
+  virtual void SendvData(
+      const net::NetworkTrafficAnnotationTag& traffic_annotation,
+      const std::vector<scoped_refptr<IOBuffer>>& buffers,
+      const std::vector<int>& lengths,
+      bool end_stream) = 0;
 
   // Returns the protocol used by this stream. If stream has not been
   // established, return kProtoUnknown.

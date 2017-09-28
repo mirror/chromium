@@ -8,6 +8,7 @@
 #include "net/quic/core/quic_packet_writer.h"
 #include "net/quic/platform/api/quic_export.h"
 #include "net/quic/quartc/quartc_session_interface.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -22,11 +23,13 @@ class QUIC_EXPORT_PRIVATE QuartcPacketWriter : public QuicPacketWriter {
 
   // The QuicConnection calls WritePacket and the QuicPacketWriter writes them
   // to the QuartcSessionInterface::PacketTransport.
-  WriteResult WritePacket(const char* buffer,
-                          size_t buf_len,
-                          const QuicIpAddress& self_address,
-                          const QuicSocketAddress& peer_address,
-                          PerPacketOptions* options) override;
+  WriteResult WritePacket(
+      const char* buffer,
+      size_t buf_len,
+      const QuicIpAddress& self_address,
+      const QuicSocketAddress& peer_address,
+      const net::NetworkTrafficAnnotationTag& traffic_annotation,
+      PerPacketOptions* options) override;
 
   // This is always set to false so that QuicConnection buffers unsent packets.
   bool IsWriteBlockedDataBuffered() const override;

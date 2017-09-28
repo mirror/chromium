@@ -257,9 +257,11 @@ const NetLogWithSource& HttpCache::Transaction::net_log() const {
   return net_log_;
 }
 
-int HttpCache::Transaction::Start(const HttpRequestInfo* request,
-                                  const CompletionCallback& callback,
-                                  const NetLogWithSource& net_log) {
+int HttpCache::Transaction::Start(
+    const HttpRequestInfo* request,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation,
+    const CompletionCallback& callback,
+    const NetLogWithSource& net_log) {
   DCHECK(request);
   DCHECK(!callback.is_null());
 
@@ -273,6 +275,8 @@ int HttpCache::Transaction::Start(const HttpRequestInfo* request,
   if (!cache_.get())
     return ERR_UNEXPECTED;
 
+  traffic_annotation_ =
+      net::MutableNetworkTrafficAnnotationTag(traffic_annotation);
   initial_request_ = request;
   SetRequest(net_log);
 
@@ -1518,7 +1522,9 @@ int HttpCache::Transaction::DoSendRequest() {
         websocket_handshake_stream_base_create_helper_);
 
   TransitionToState(STATE_SEND_REQUEST_COMPLETE);
-  rv = network_trans_->Start(request_, io_callback_, net_log_);
+  rv = network_trans_->Start(
+      request_, net::NetworkTrafficAnnotationTag(traffic_annotation_),
+      io_callback_, net_log_);
   return rv;
 }
 

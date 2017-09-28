@@ -16,6 +16,7 @@
 #include "net/base/net_error_details.h"
 #include "net/http/http_response_info.h"
 #include "net/socket/connection_attempts.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -38,6 +39,7 @@ class FailingHttpTransaction : public HttpTransaction {
 
   // HttpTransaction
   int Start(const HttpRequestInfo* request_info,
+            const net::NetworkTrafficAnnotationTag& traffic_annotation,
             const CompletionCallback& callback,
             const NetLogWithSource& net_log) override;
   int RestartIgnoringLastError(const CompletionCallback& callback) override;
@@ -84,9 +86,11 @@ FailingHttpTransaction::FailingHttpTransaction(Error error) : error_(error) {
 
 FailingHttpTransaction::~FailingHttpTransaction() {}
 
-int FailingHttpTransaction::Start(const HttpRequestInfo* request_info,
-                                  const CompletionCallback& callback,
-                                  const NetLogWithSource& net_log) {
+int FailingHttpTransaction::Start(
+    const HttpRequestInfo* request_info,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation,
+    const CompletionCallback& callback,
+    const NetLogWithSource& net_log) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
                                                 base::Bind(callback, error_));
   return ERR_IO_PENDING;
