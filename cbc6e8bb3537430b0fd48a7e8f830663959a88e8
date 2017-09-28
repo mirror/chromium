@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7737634c_0cc43975",
+        "filename": "net/tools/print_certificates.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-09-28T22:50:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da144f60_5c077128",
+      "range": {
+        "startLine": 45,
+        "startChar": 12,
+        "endLine": 45,
+        "endChar": 26
+      },
+      "revId": "cbc6e8bb3537430b0fd48a7e8f830663959a88e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d863b34d_65317209",
         "filename": "net/tools/print_certificates.py",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2017-09-28T21:40:37Z",
       "side": 1,
       "message": "How does this fail when the command is now found?",
+      "revId": "cbc6e8bb3537430b0fd48a7e8f830663959a88e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "036eafdf_6686ce0d",
+        "filename": "net/tools/print_certificates.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-09-28T22:50:25Z",
+      "side": 1,
+      "message": "It would fail with a python exception.. changed that to print a better error.",
+      "parentUuid": "d863b34d_65317209",
       "revId": "cbc6e8bb3537430b0fd48a7e8f830663959a88e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "50644d88_4ffffa95",
+        "filename": "net/tools/print_certificates.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-09-28T22:50:25Z",
+      "side": 1,
+      "message": "sounds useful. I\u0027ll do that separately.",
+      "parentUuid": "4bc23966_8e13be8d",
+      "revId": "cbc6e8bb3537430b0fd48a7e8f830663959a88e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "748dbdf2_7ee3e345",
         "filename": "net/tools/print_certificates.py",
         "patchSetId": 1
@@ -70,6 +130,24 @@
       "writtenOn": "2017-09-28T21:40:37Z",
       "side": 1,
       "message": "This seems useful enough to make the default (i.e. if der2ascii is found dump using it too).",
+      "revId": "cbc6e8bb3537430b0fd48a7e8f830663959a88e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "399e0556_8b14038d",
+        "filename": "net/tools/print_certificates.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-09-28T22:50:25Z",
+      "side": 1,
+      "message": "Done.\nI removed the --der2ascii option and added --output instead, with the default being \"der2ascii,openssl\". If one of them isn\u0027t found, it\u0027ll print an error to stderr but still continue, so if der2ascii isn\u0027t installed it\u0027ll be mostly harmless.\n\n(Other suggestions on the flag naming welcome.)",
+      "parentUuid": "748dbdf2_7ee3e345",
       "revId": "cbc6e8bb3537430b0fd48a7e8f830663959a88e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
