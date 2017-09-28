@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c4fdd65_a09abaf2",
+        "filename": "ui/gl/DEPS",
+        "patchSetId": 11
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-09-28T21:33:43Z",
+      "side": 1,
+      "message": "Question: Is adding this dependency okay?",
+      "revId": "80c23428f7a89ef3176bd7647a5a18bd6b5949cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b6171ec_d6431df5",
+        "filename": "ui/gl/gl_surface.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-09-28T21:33:43Z",
+      "side": 1,
+      "message": "Forcing all SwapBuffers implementations to update LatencyInfo is a bit invasive, but is straightforward and makes it obvious when LatencyInfos are discarded by implementations and when they aren\u0027t available at call sites.\n\nAlternatively, this patch could add a separate method to add LatencyInfo before a swap and a way to get completed LatencyInfo (either through a callback or check), but it becomes less explicit where LatencyInfo is discarded or not available.\n\nA followup patch will add latency_info support to other flavors of swap buffers as needed, including Async, WithBounds, SubBuffer, etc.",
+      "revId": "80c23428f7a89ef3176bd7647a5a18bd6b5949cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f427f8c8_49189c18",
+        "filename": "ui/latency/latency_info.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-09-28T21:33:43Z",
+      "side": 1,
+      "message": "@tdresser: Is this a good place to add a helper function like this, which is used by many implementations of SwapBuffers?",
+      "revId": "80c23428f7a89ef3176bd7647a5a18bd6b5949cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
