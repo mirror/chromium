@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9be1f99_0e031dab",
+        "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
+        "patchSetId": 51
+      },
+      "lineNbr": 1738,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-28T17:28:50Z",
+      "side": 1,
+      "message": "Do we want to ensure that IsDownload behaves correctly after redirect to a download? What about failures on redirect or even response like 404/500?",
+      "revId": "3f1d165ffd4b2a459dc867419ec0f6c7b51f7b96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "72337577_3a2abbf4",
+        "filename": "components/ukm/content/source_url_recorder_web_contents_observer.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-28T17:28:50Z",
+      "side": 1,
+      "message": "\u003e No, because it\u0027s not part of the interface.  Code outside this file\n\u003e just sees this a object as a WebContentsObserver.\n\nHow does code outside this file see this object as WebContentsObserver, as it isn\u0027t even declared in the header file?\n\nIt is really puzzling to me to have file named \"source_url_recorder_web_contents_observer.h\", yet there is no observer code to be found there at all. If this WCO is implementation detail, then rename the header to be source_url_recorder.h?",
+      "parentUuid": "1d9148e4_1a44ca5d",
+      "revId": "6880a0973f6d4bf78e79c6368b3110783ac2829c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7cabec62_74cf10c4",
         "filename": "components/ukm/content/source_url_recorder_web_contents_observer.cc",
         "patchSetId": 49
@@ -90,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "d9aaf154_258835d5",
+        "filename": "components/ukm/content/source_url_recorder_web_contents_observer.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-28T17:28:50Z",
+      "side": 1,
+      "message": "Sorry, suboptimal wording. I meant navigations that result in network error, so yeah, failed ones :).",
+      "parentUuid": "df610b8d_19756c97",
+      "revId": "6880a0973f6d4bf78e79c6368b3110783ac2829c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "28a72367_53cca3ee",
         "filename": "content/browser/frame_host/navigation_handle_impl.h",
         "patchSetId": 49
@@ -119,6 +155,24 @@
       "side": 1,
       "message": "All current consumers do want to treat \"unset\" and \"false\" the same, but if that changes in the future I worry that a bool is not expressive enough to capture this and can be misleading (callers may assume the navigation knows its download state at the time of navhandle construction, when in fact the state is unknown initially). Camille and I iterated on this for a few rounds before converging on base::Optional\u003cbool\u003e. See comments earlier in reviews for details.\n\nFor now I reverted this back to just \u0027bool\u0027. We should be aware that if callers want to handle \u0027unknown\u0027 differently from \u0027false\u0027, we will need to refine the API to support that at that time.",
       "parentUuid": "28a72367_53cca3ee",
+      "revId": "6880a0973f6d4bf78e79c6368b3110783ac2829c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2696a2cf_d6b198c0",
+        "filename": "content/browser/frame_host/navigation_handle_impl.h",
+        "patchSetId": 49
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-28T17:28:50Z",
+      "side": 1,
+      "message": "Thanks for outlining your concerns! I\u0027m wondering what is the meaningful difference between \"this is not a download\" vs \"I don\u0027t know\"? The latter case will be only in the case of an error, right? If it is an error, can we conclusively say \"yes, it was supposed to be a download\" or \"no, this wasn\u0027t supposed to be a download\"? If we can, then it will make sense to have base::Optional. I just don\u0027t know how we could distinguish the two cases, so please do share if you know of ways we can classify them.\n\nAlso, if we leave the API as a boolean, then we can give a good description in the public API outlining that false and unknown are currently the same, so whoever calls the API is at least aware of the limitation.",
+      "parentUuid": "8b81bf93_5ad2243f",
       "revId": "6880a0973f6d4bf78e79c6368b3110783ac2829c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
