@@ -1,0 +1,180 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fee33c0_6ee81c4a",
+        "filename": "chrome/browser/chromeos/printing/printer_configurer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-28T18:32:35Z",
+      "side": 1,
+      "message": "Not a big fan of \"PerformSetUp\" vs \"SetUpPrinter\" names.  Maybe \"StartConfiguration\" is better?  ugh, naming is hard.",
+      "revId": "990915672f0ca66fd5a26f0b189ab35c92fe4944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e726b552_84b21fc1",
+        "filename": "chrome/browser/chromeos/printing/printer_configurer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-28T18:32:35Z",
+      "side": 1,
+      "message": "\"Callback for the endpoint resolver\" -- better to say when this is called, not who calls it, e.g. \"Callback for when IP resolution is complete.\"",
+      "revId": "990915672f0ca66fd5a26f0b189ab35c92fe4944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60d7526f_ee994b1b",
+        "filename": "chromeos/printing/printer_configuration.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-28T18:32:35Z",
+      "side": 1,
+      "message": "Use strlen(kStandardSchemeSeparator) instead of defining a constant that could theoretically get out of sync with a constant in a different file?",
+      "revId": "990915672f0ca66fd5a26f0b189ab35c92fe4944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "791dcf43_4c1d4647",
+        "filename": "chromeos/printing/printer_configuration.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-28T18:32:35Z",
+      "side": 1,
+      "message": "I have a really hard time believing that we don\u0027t have more standard libraries for doing this in the code base already, but I spent a while looking for them and came up with nothing.  :P\n\nShould probably add a comment before these functions along the lines of \"We can\u0027t use the standard URL parsing code because it only supports \"Standard\" URL schemes, which we don\u0027t have\".",
+      "revId": "990915672f0ca66fd5a26f0b189ab35c92fe4944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99756fc4_3afa602c",
+        "filename": "chromeos/printing/printer_configuration.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-28T18:32:35Z",
+      "side": 1,
+      "message": "I think there may be a simpler (internal) API to be had here that parses the URI into a few pieces in a struct, like\n\nstruct PrinterUriComponents {\n  StringPiece scheme;  // Everything up to and including the ://\n  StringPiece host_and_port;  Everything after :// up to but not including the next \u0027/\u0027\n  StringPiece rest;  Everything else\n};\n\nbool ParsePrinterUri(const string\u0026 uri, PrinterUriComponents* components) { ... }\n\nand then you could use some of the stuff in //base/strings/string_split.h to implement this in a pretty quick and obviously correct way.\n\nHowever, this is very subjective, and what you\u0027re doing is OK, so feel free to ignore.",
+      "revId": "990915672f0ca66fd5a26f0b189ab35c92fe4944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "001616a8_f87efb4a",
+        "filename": "chromeos/printing/printer_configuration.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-28T18:32:35Z",
+      "side": 1,
+      "message": "Given that you\u0027re returning potentially invalid memory below if this check fails, I think this should be a CHECK, not a DCHECK.",
+      "revId": "990915672f0ca66fd5a26f0b189ab35c92fe4944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5192a05c_05de0bc3",
+        "filename": "chromeos/printing/printer_configuration.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-28T18:32:35Z",
+      "side": 1,
+      "message": "Nit:  These terms should probably be reversed.  (Do the cheaper check first)",
+      "revId": "990915672f0ca66fd5a26f0b189ab35c92fe4944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "353c5592_f626d39a",
+        "filename": "chromeos/printing/printer_configuration.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-28T18:32:35Z",
+      "side": 1,
+      "message": "I don\u0027t think you need this?  Can\u0027t you just use uri_ everywhere you\u0027re using uri_piece?",
+      "revId": "990915672f0ca66fd5a26f0b189ab35c92fe4944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3670b453_a4399e54",
+        "filename": "chromeos/printing/printer_configuration.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-28T18:32:35Z",
+      "side": 1,
+      "message": "Consider\n\nreturn JoinString({uri_piece.substr(0, hostname_start),\n                   ip,\n                   uri_piece.substr(...)});\n\n(Again, subjective, feel free to ignore.)",
+      "revId": "990915672f0ca66fd5a26f0b189ab35c92fe4944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "edd02f09_4cbd4248",
+        "filename": "chromeos/printing/printer_configuration.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-28T18:32:35Z",
+      "side": 1,
+      "message": "well formed",
+      "range": {
+        "startLine": 139,
+        "startChar": 5,
+        "endLine": 139,
+        "endChar": 15
+      },
+      "revId": "990915672f0ca66fd5a26f0b189ab35c92fe4944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
