@@ -146,18 +146,16 @@ void ExternalProviderImpl::SetPrefs(
   prefs_ = std::move(prefs);
   ready_ = true;  // Queries for extensions are allowed from this point.
 
-  std::vector<std::unique_ptr<ExternalInstallInfoUpdateUrl>>
-      external_update_url_extensions;
-  std::vector<std::unique_ptr<ExternalInstallInfoFile>>
-      external_file_extensions;
+  std::vector<ExternalInstallInfoUpdateUrl> external_update_url_extensions;
+  std::vector<ExternalInstallInfoFile> external_file_extensions;
 
   RetrieveExtensionsFromPrefs(&external_update_url_extensions,
                               &external_file_extensions);
   for (const auto& extension : external_update_url_extensions)
-    service_->OnExternalExtensionUpdateUrlFound(*extension, true);
+    service_->OnExternalExtensionUpdateUrlFound(extension, true);
 
   for (const auto& extension : external_file_extensions)
-    service_->OnExternalExtensionFileFound(*extension);
+    service_->OnExternalExtensionFileFound(extension);
 
   service_->OnExternalProviderReady(this);
 }
@@ -187,10 +185,8 @@ void ExternalProviderImpl::UpdatePrefs(
 
   prefs_ = std::move(prefs);
 
-  std::vector<std::unique_ptr<ExternalInstallInfoUpdateUrl>>
-      external_update_url_extensions;
-  std::vector<std::unique_ptr<ExternalInstallInfoFile>>
-      external_file_extensions;
+  std::vector<ExternalInstallInfoUpdateUrl> external_update_url_extensions;
+  std::vector<ExternalInstallInfoFile> external_file_extensions;
   RetrieveExtensionsFromPrefs(&external_update_url_extensions,
                               &external_file_extensions);
 
@@ -203,10 +199,8 @@ void ExternalProviderImpl::UpdatePrefs(
 }
 
 void ExternalProviderImpl::RetrieveExtensionsFromPrefs(
-    std::vector<std::unique_ptr<ExternalInstallInfoUpdateUrl>>*
-        external_update_url_extensions,
-    std::vector<std::unique_ptr<ExternalInstallInfoFile>>*
-        external_file_extensions) {
+    std::vector<ExternalInstallInfoUpdateUrl>* external_update_url_extensions,
+    std::vector<ExternalInstallInfoFile>* external_file_extensions) {
   // Set of unsupported extensions that need to be deleted from prefs_.
   std::set<std::string> unsupported_extensions;
 
@@ -384,18 +378,16 @@ void ExternalProviderImpl::RetrieveExtensionsFromPrefs(
         path = base_path.Append(external_crx);
       }
 
-      std::unique_ptr<base::Version> version(
-          new base::Version(external_version));
-      if (!version->IsValid()) {
+      base::Version version(external_version);
+      if (!version.IsValid()) {
         LOG(WARNING) << "Malformed extension dictionary for extension: "
                      << extension_id.c_str() << ".  Invalid version string \""
                      << external_version << "\".";
         continue;
       }
-      external_file_extensions->push_back(
-          base::MakeUnique<ExternalInstallInfoFile>(
-              extension_id, std::move(version), path, crx_location_,
-              creation_flags, auto_acknowledge_, install_immediately_));
+      external_file_extensions->emplace_back(ExternalInstallInfoFile(
+          extension_id, version, path, crx_location_, creation_flags,
+          auto_acknowledge_, install_immediately_));
     } else {  // if (has_external_update_url)
       CHECK(has_external_update_url);  // Checking of keys above ensures this.
       if (download_location_ == Manifest::INVALID_LOCATION) {
@@ -403,18 +395,17 @@ void ExternalProviderImpl::RetrieveExtensionsFromPrefs(
                      << "extensions from update URLs.";
         continue;
       }
-      std::unique_ptr<GURL> update_url(new GURL(external_update_url));
-      if (!update_url->is_valid()) {
+      GURL update_url(external_update_url);
+      if (!update_url.is_valid()) {
         LOG(WARNING) << "Malformed extension dictionary for extension: "
                      << extension_id.c_str() << ".  Key " << kExternalUpdateUrl
                      << " has value \"" << external_update_url
                      << "\", which is not a valid URL.";
         continue;
       }
-      external_update_url_extensions->push_back(
-          base::MakeUnique<ExternalInstallInfoUpdateUrl>(
-              extension_id, install_parameter, std::move(update_url),
-              download_location_, creation_flags, auto_acknowledge_));
+      external_update_url_extensions->emplace_back(ExternalInstallInfoUpdateUrl(
+          extension_id, install_parameter, std::move(update_url),
+          download_location_, creation_flags, auto_acknowledge_));
     }
   }
 
