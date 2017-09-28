@@ -51,6 +51,24 @@
       "revId": "d6abe2c1114d2bd9593c5338f35562ef6ceefd98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c12acad8_2debf85d",
+        "filename": "chrome/browser/resources/settings/site_settings_page/site_settings_page.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-28T01:19:27Z",
+      "side": 1,
+      "message": "I\u0027ve -1\u0027nd this and mentioned that I\u0027d lg this with an explanation on how it benefits users, but I misspoke :), please make this change too (to any of the options above).",
+      "parentUuid": "b3f176b6_81df6421",
+      "revId": "d6abe2c1114d2bd9593c5338f35562ef6ceefd98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
