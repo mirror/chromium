@@ -16,6 +16,24 @@
       "revId": "4ce82fe89030a6803a803251ec405f929bff36df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "734855d8_37f04101",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-28T22:01:24Z",
+      "side": 0,
+      "message": "I think the passed app_icon takes precendence over the one from the desktop file.  Changed to 256",
+      "parentUuid": "70fdfbe9_c20d9363",
+      "revId": "4ce82fe89030a6803a803251ec405f929bff36df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
