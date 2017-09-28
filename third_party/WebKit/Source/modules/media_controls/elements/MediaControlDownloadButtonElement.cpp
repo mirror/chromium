@@ -41,12 +41,11 @@ bool MediaControlDownloadButtonElement::ShouldDisplayDownloadButton() {
 
   // If we have no source, we can't download.
   if (MediaElement().getNetworkState() == HTMLMediaElement::kNetworkEmpty ||
-      MediaElement().getNetworkState() == HTMLMediaElement::kNetworkNoSource) {
+      MediaElement().getNetworkState() == HTMLMediaElement::kNetworkNoSource)
     return false;
-  }
 
   // Local files and blobs (including MSE) should not have a download button.
-  if (url.IsLocalFile() || url.ProtocolIs("blob"))
+  if (url.IsLocalFile())
     return false;
 
   // MediaStream can't be downloaded.
@@ -54,7 +53,7 @@ bool MediaControlDownloadButtonElement::ShouldDisplayDownloadButton() {
     return false;
 
   // MediaSource can't be downloaded.
-  if (HTMLMediaSource::Lookup(url))
+  if (MediaElement().HasMediaSource())
     return false;
 
   // HLS stream shouldn't have a download button.
