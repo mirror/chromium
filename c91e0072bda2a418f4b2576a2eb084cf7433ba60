@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c523832_fcc56442",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_box_fragment.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-09-28T07:11:59Z",
+      "side": 1,
+      "message": "Could you add a comment or name this to make it clear that it\u0027s the containers writing mode, not the fragments?",
+      "range": {
+        "startLine": 34,
+        "startChar": 38,
+        "endLine": 34,
+        "endChar": 51
+      },
+      "revId": "c91e0072bda2a418f4b2576a2eb084cf7433ba60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
