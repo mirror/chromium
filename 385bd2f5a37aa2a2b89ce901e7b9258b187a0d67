@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "016ba39f_66b14100",
+        "filename": "chrome/browser/ui/webui/settings/change_password_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-28T22:30:00Z",
+      "side": 1,
+      "message": "Can you also change this file to call FireWebUIListener() instead of this, see [1] and [2].\n\n[1] https://cs.chromium.org/chromium/src/content/public/browser/web_ui_message_handler.h?type\u003dcs\u0026q\u003dFireWebUI\u0026sq\u003dpackage:chromium\u0026l\u003d106\n[2] https://cs.chromium.org/search/?q\u003dFireWebUIListener+file:%5Esrc/chrome/browser/ui/webui/+package:%5Echromium$\u0026type\u003dcs",
+      "revId": "385bd2f5a37aa2a2b89ce901e7b9258b187a0d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
