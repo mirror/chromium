@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "844a1e9c_241278e6",
+        "filename": "chrome/browser/chromeos/app_mode/kiosk_external_updater.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-28T16:47:05Z",
+      "side": 1,
+      "message": "nit: constexpr for this and the one below too",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 5
+      },
+      "revId": "7f2a3977fc92afccbe5087c5855b155fd698a2b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
