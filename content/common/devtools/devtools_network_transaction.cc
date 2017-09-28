@@ -112,9 +112,11 @@ bool DevToolsNetworkTransaction::CheckFailed() {
   return false;
 }
 
-int DevToolsNetworkTransaction::Start(const net::HttpRequestInfo* request,
-                                      const net::CompletionCallback& callback,
-                                      const net::NetLogWithSource& net_log) {
+int DevToolsNetworkTransaction::Start(
+    const net::HttpRequestInfo* request,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation,
+    const net::CompletionCallback& callback,
+    const net::NetLogWithSource& net_log) {
   DCHECK(request);
   request_ = request;
 
@@ -149,10 +151,11 @@ int DevToolsNetworkTransaction::Start(const net::HttpRequestInfo* request,
     return net::ERR_INTERNET_DISCONNECTED;
 
   if (!interceptor_)
-    return network_transaction_->Start(request_, callback, net_log);
+    return network_transaction_->Start(request_, traffic_annotation, callback,
+                                       net_log);
 
   int result = network_transaction_->Start(
-      request_,
+      request_, traffic_annotation,
       base::Bind(&DevToolsNetworkTransaction::IOCallback,
                  base::Unretained(this), callback, true),
       net_log);

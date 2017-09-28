@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "net/quic/quartc/quartc_packet_writer.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -16,7 +17,9 @@ WriteResult QuartcPacketWriter::WritePacket(
     size_t buf_len,
     const QuicIpAddress& self_address,
     const QuicSocketAddress& peer_address,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation,
     PerPacketOptions* options) {
+  // TODO(rhalavati): Unused annotation.
   DCHECK(packet_transport_);
   int bytes_written = packet_transport_->Write(buffer, buf_len);
   if (bytes_written <= 0) {

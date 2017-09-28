@@ -24,6 +24,7 @@
 #include "net/base/request_priority.h"
 #include "net/http/http_raw_request_headers.h"
 #include "net/ssl/token_binding.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace crypto {
 class ECPrivateKey;
@@ -71,9 +72,11 @@ class NET_EXPORT_PRIVATE HttpStream {
   // |response| must remain valid until all sets of headers has been read, or
   // the HttpStream is destroyed. There's typically only one set of
   // headers, except in the case of 1xx responses (See ReadResponseHeaders).
-  virtual int SendRequest(const HttpRequestHeaders& request_headers,
-                          HttpResponseInfo* response,
-                          const CompletionCallback& callback) = 0;
+  virtual int SendRequest(
+      const HttpRequestHeaders& request_headers,
+      const net::NetworkTrafficAnnotationTag& traffic_annotation,
+      HttpResponseInfo* response,
+      const CompletionCallback& callback) = 0;
 
   // Reads from the underlying socket until the next set of response headers
   // have been completely received.  This may only be called on 1xx responses

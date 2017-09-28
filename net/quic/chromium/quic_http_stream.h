@@ -25,6 +25,7 @@
 #include "net/quic/core/quic_client_push_promise_index.h"
 #include "net/quic/core/quic_packets.h"
 #include "net/spdy/chromium/multiplexed_http_stream.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -48,6 +49,7 @@ class NET_EXPORT_PRIVATE QuicHttpStream : public MultiplexedHttpStream {
                        const NetLogWithSource& net_log,
                        const CompletionCallback& callback) override;
   int SendRequest(const HttpRequestHeaders& request_headers,
+                  const net::NetworkTrafficAnnotationTag& traffic_annotation,
                   HttpResponseInfo* response,
                   const CompletionCallback& callback) override;
   int ReadResponseHeaders(const CompletionCallback& callback) override;

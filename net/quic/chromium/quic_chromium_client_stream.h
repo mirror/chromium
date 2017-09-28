@@ -23,6 +23,7 @@
 #include "net/log/net_log_with_source.h"
 #include "net/quic/core/quic_spdy_stream.h"
 #include "net/quic/platform/api/quic_string_piece.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -80,16 +81,20 @@ class NET_EXPORT_PRIVATE QuicChromiumClientStream : public QuicSpdyStream {
     // Writes |data| to the peer. Closes the write side if |fin| is true.
     // If the data could not be written immediately, returns ERR_IO_PENDING
     // and invokes |callback| asynchronously when the write completes.
-    int WriteStreamData(base::StringPiece data,
-                        bool fin,
-                        const CompletionCallback& callback);
+    int WriteStreamData(
+        const net::NetworkTrafficAnnotationTag& traffic_annotation,
+        base::StringPiece data,
+        bool fin,
+        const CompletionCallback& callback);
 
     // Same as WriteStreamData except it writes data from a vector of IOBuffers,
     // with the length of each buffer at the corresponding index in |lengths|.
-    int WritevStreamData(const std::vector<scoped_refptr<IOBuffer>>& buffers,
-                         const std::vector<int>& lengths,
-                         bool fin,
-                         const CompletionCallback& callback);
+    int WritevStreamData(
+        const net::NetworkTrafficAnnotationTag& traffic_annotation,
+        const std::vector<scoped_refptr<IOBuffer>>& buffers,
+        const std::vector<int>& lengths,
+        bool fin,
+        const CompletionCallback& callback);
 
     // Reads at most |buf_len| bytes into |buf|. Returns the number of bytes
     // read.
@@ -226,12 +231,17 @@ class NET_EXPORT_PRIVATE QuicChromiumClientStream : public QuicSpdyStream {
   // Writes |data| to the peer and closes the write side if |fin| is true.
   // Returns true if the data have been fully written. If the data was not fully
   // written, returns false and OnCanWrite() will be invoked later.
-  bool WriteStreamData(QuicStringPiece data, bool fin);
+  bool WriteStreamData(
+      const net::NetworkTrafficAnnotationTag& traffic_annotation,
+      QuicStringPiece data,
+      bool fin);
   // Same as WriteStreamData except it writes data from a vector of IOBuffers,
   // with the length of each buffer at the corresponding index in |lengths|.
-  bool WritevStreamData(const std::vector<scoped_refptr<IOBuffer>>& buffers,
-                        const std::vector<int>& lengths,
-                        bool fin);
+  bool WritevStreamData(
+      const net::NetworkTrafficAnnotationTag& traffic_annotation,
+      const std::vector<scoped_refptr<IOBuffer>>& buffers,
+      const std::vector<int>& lengths,
+      bool fin);
 
   // Creates a new Handle for this stream. Must only be called once.
   std::unique_ptr<QuicChromiumClientStream::Handle> CreateHandle();
