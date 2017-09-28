@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e23ade9_d12ca2f2",
+        "filename": "ui/gl/gl_implementation.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002745
+      },
+      "writtenOn": "2017-09-28T12:04:00Z",
+      "side": 1,
+      "message": "Having the same value twice would break GetGLImplementationName()",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 58
+      },
+      "revId": "070d645bb45b114f355f1e75c06ac869ddbfb9a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10c0c5e3_f0f2fdbd",
+        "filename": "ui/gl/init/gl_initializer_x11.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002745
+      },
+      "writtenOn": "2017-09-28T12:04:00Z",
+      "side": 1,
+      "message": "If this is false, then we would proceed with library names that have no path appended. How does this work?",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 37
+      },
+      "revId": "070d645bb45b114f355f1e75c06ac869ddbfb9a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
