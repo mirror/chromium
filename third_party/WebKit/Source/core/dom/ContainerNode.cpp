@@ -961,7 +961,7 @@ void ContainerNode::DetachLayoutTree(const AttachContext& context) {
 void ContainerNode::ChildrenChanged(const ChildrenChange& change) {
   GetDocument().IncDOMTreeVersion();
   GetDocument().NotifyChangeChildren(*this);
-  InvalidateNodeListCachesInAncestors();
+  InvalidateNodeListCachesInAncestors(nullptr, nullptr, &change);
   if (change.IsChildInsertion()) {
     if (!ChildNeedsStyleRecalc()) {
       SetChildNeedsStyleRecalc();
@@ -1617,11 +1617,17 @@ void ContainerNode::CheckForSiblingStyleChanges(SiblingCheckType change_type,
 
 void ContainerNode::InvalidateNodeListCachesInAncestors(
     const QualifiedName* attr_name,
-    Element* attribute_owner_element) {
+    Element* attribute_owner_element,
+    const ChildrenChange* change) {
   if (HasRareData() && (!attr_name || IsAttributeNode())) {
     if (NodeListsNodeData* lists = RareData()->NodeLists()) {
-      if (ChildNodeList* child_node_list = lists->GetChildNodeList(*this))
-        child_node_list->InvalidateCache();
+      if (ChildNodeList* child_node_list = lists->GetChildNodeList(*this)) {
+        if (change) {
+          child_node_list->ChildrenChanged(*change);
+        } else {
+          child_node_list->InvalidateCache();
+        }
+      }
     }
   }
 
