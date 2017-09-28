@@ -161,7 +161,7 @@ bool CSSDefaultStyleSheets::EnsureDefaultStyleSheetsForElement(
   // FIXME: We should assert that this sheet only contains rules for <video> and
   // <audio>.
   if (!media_controls_style_sheet_ &&
-      (isHTMLVideoElement(element) || isHTMLAudioElement(element))) {
+      (IsHTMLVideoElement(element) || IsHTMLAudioElement(element))) {
     String media_rules = GetDataResourceAsASCIIString("mediaControls.css") +
                          LayoutTheme::GetTheme().ExtraMediaControlsStyleSheet();
     media_controls_style_sheet_ = ParseUASheet(media_rules);

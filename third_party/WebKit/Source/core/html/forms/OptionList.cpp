@@ -23,11 +23,11 @@ void OptionListIterator::Advance(HTMLOptionElement* previous) {
     current = ElementTraversal::FirstChild(*select_);
   }
   while (current) {
-    if (isHTMLOptionElement(current)) {
-      current_ = toHTMLOptionElement(current);
+    if (auto* option = ToHTMLOptionElementOrNull(current)) {
+      current_ = option;
       return;
     }
-    if (isHTMLOptGroupElement(current) &&
+    if (IsHTMLOptGroupElement(current) &&
         current->parentNode() == select_.Get()) {
       if ((current_ = Traversal<HTMLOptionElement>::FirstChild(*current)))
         return;

@@ -190,13 +190,13 @@ static bool PlanCounter(LayoutObject& object,
         is_reset = false;
         return true;
       }
-      if (isHTMLOListElement(*e)) {
-        value = toHTMLOListElement(e)->StartConsideringItemCount();
+      if (auto* olist = ToHTMLOListElementOrNull(*e)) {
+        value = olist->StartConsideringItemCount();
         is_reset = true;
         return true;
       }
-      if (isHTMLUListElement(*e) || isHTMLMenuElement(*e) ||
-          isHTMLDirectoryElement(*e)) {
+      if (IsHTMLUListElement(*e) || IsHTMLMenuElement(*e) ||
+          IsHTMLDirectoryElement(*e)) {
         value = 0;
         is_reset = true;
         return true;

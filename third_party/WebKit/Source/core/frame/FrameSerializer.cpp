@@ -157,11 +157,11 @@ bool SerializerMarkupAccumulator::ShouldIgnoreAttribute(
 
 bool SerializerMarkupAccumulator::ShouldIgnoreElement(
     const Element& element) const {
-  if (isHTMLScriptElement(element))
+  if (IsHTMLScriptElement(element))
     return true;
-  if (isHTMLNoScriptElement(element))
+  if (IsHTMLNoScriptElement(element))
     return true;
-  if (isHTMLMetaElement(element) &&
+  if (IsHTMLMetaElement(element) &&
       toHTMLMetaElement(element).ComputeEncoding().IsValid()) {
     return true;
   }
@@ -175,7 +175,7 @@ void SerializerMarkupAccumulator::AppendElement(StringBuilder& result,
 
   // TODO(tiger): Refactor MarkupAccumulator so it is easier to append an
   // element like this, without special cases for XHTML
-  if (isHTMLHeadElement(element)) {
+  if (IsHTMLHeadElement(element)) {
     result.Append("<meta http-equiv=\"Content-Type\" content=\"");
     AppendAttributeValue(result, document_->SuggestedMIMEType());
     result.Append("; charset=");
@@ -328,31 +328,24 @@ void FrameSerializer::SerializeFrame(const LocalFrame& frame) {
                                      document);
     }
 
-    if (isHTMLImageElement(element)) {
-      HTMLImageElement& image_element = toHTMLImageElement(element);
-      KURL url =
-          document.CompleteURL(image_element.getAttribute(HTMLNames::srcAttr));
-      ImageResourceContent* cached_image = image_element.CachedImage();
+    if (auto* image = ToHTMLImageElementOrNull(element)) {
+      KURL url = document.CompleteURL(image->getAttribute(HTMLNames::srcAttr));
+      ImageResourceContent* cached_image = image->CachedImage();
       AddImageToResources(cached_image, url);
-    } else if (isHTMLInputElement(element)) {
-      HTMLInputElement& input_element = toHTMLInputElement(element);
-      if (input_element.type() == InputTypeNames::image &&
-          input_element.ImageLoader()) {
-        KURL url = input_element.Src();
-        ImageResourceContent* cached_image =
-            input_element.ImageLoader()->GetImage();
+    } else if (auto* input = ToHTMLInputElementOrNull(element)) {
+      if (input->type() == InputTypeNames::image && input->ImageLoader()) {
+        KURL url = input->Src();
+        ImageResourceContent* cached_image = input->ImageLoader()->GetImage();
         AddImageToResources(cached_image, url);
       }
-    } else if (isHTMLLinkElement(element)) {
-      HTMLLinkElement& link_element = toHTMLLinkElement(element);
-      if (CSSStyleSheet* sheet = link_element.sheet()) {
-        KURL url = document.CompleteURL(
-            link_element.getAttribute(HTMLNames::hrefAttr));
+    } else if (auto* link = ToHTMLLinkElementOrNull(element)) {
+      if (CSSStyleSheet* sheet = link->sheet()) {
+        KURL url =
+            document.CompleteURL(link->getAttribute(HTMLNames::hrefAttr));
         SerializeCSSStyleSheet(*sheet, url);
       }
-    } else if (isHTMLStyleElement(element)) {
-      HTMLStyleElement& style_element = toHTMLStyleElement(element);
-      if (CSSStyleSheet* sheet = style_element.sheet())
+    } else if (auto* style = ToHTMLStyleElementOrNull(element)) {
+      if (CSSStyleSheet* sheet = style->sheet())
         SerializeCSSStyleSheet(*sheet, NullURL());
     }
   }
