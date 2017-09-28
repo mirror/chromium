@@ -117,6 +117,23 @@
     },
     {
       "key": {
+        "uuid": "cd140923_e8d78304",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-28T18:41:23Z",
+      "side": 1,
+      "message": "I\u0027d put this above the constructor.",
+      "revId": "964fe9439c3a29a73febc9e4e9907070ef26bd3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb358050_9d3c3f63",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java",
         "patchSetId": 13
@@ -156,6 +173,52 @@
         "startChar": 8,
         "endLine": 123,
         "endChar": 37
+      },
+      "revId": "964fe9439c3a29a73febc9e4e9907070ef26bd3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d33b5637_d5626efa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-28T18:41:23Z",
+      "side": 1,
+      "message": "javadoc :-)",
+      "range": {
+        "startLine": 246,
+        "startChar": 37,
+        "endLine": 246,
+        "endChar": 38
+      },
+      "revId": "964fe9439c3a29a73febc9e4e9907070ef26bd3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "364855b0_83b041b8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-28T18:41:23Z",
+      "side": 1,
+      "message": "I would call this before the above.  It could end up doing the same, but ensures we won\u0027t crash though.",
+      "range": {
+        "startLine": 258,
+        "startChar": 33,
+        "endLine": 258,
+        "endChar": 42
       },
       "revId": "964fe9439c3a29a73febc9e4e9907070ef26bd3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",

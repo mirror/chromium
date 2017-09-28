@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "571429e2_285a588b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-28T18:41:23Z",
+      "side": 0,
+      "message": "This patch removed this handling.  Anything that remained in recents might be relaunched w/o going through the Launcher itself.  So I think this logic needs to remain.",
+      "range": {
+        "startLine": 249,
+        "startChar": 32,
+        "endLine": 249,
+        "endChar": 33
+      },
+      "revId": "b6a01f7921e37e8e5642d087faee79f5dc17ee43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3fbff593_afe80422",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/multiwindow/MultiWindowUtils.java",
         "patchSetId": 13
