@@ -27,6 +27,13 @@ NET_EXPORT std::unique_ptr<base::Value> QuicRequestNetLogCallback(
     SpdyPriority priority,
     NetLogCaptureMode capture_mode);
 
+// Returns the list of supported QUIC versions in the Alt-Svc advertisment
+// specified by |quic_protocol_id| and |alt_svc_versions|.
+NET_EXPORT_PRIVATE QuicVersionVector
+FilterSupportedAltSvcVersions(const std::string& quic_protocol_id,
+                              const std::vector<uint32_t>& alt_svc_versions,
+                              const QuicVersionVector& supported_versions);
+
 }  // namespace net
 
 #endif  // NET_QUIC_CHROMIUM_QUIC_HTTP_UTILS_H_

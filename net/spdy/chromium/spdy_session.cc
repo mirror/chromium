@@ -42,6 +42,7 @@
 #include "net/log/net_log_source_type.h"
 #include "net/log/net_log_with_source.h"
 #include "net/proxy/proxy_server.h"
+#include "net/quic/chromium/quic_http_utils.h"
 #include "net/socket/socket.h"
 #include "net/socket/ssl_client_socket.h"
 #include "net/spdy/chromium/header_coalescer.h"
@@ -2991,25 +2992,13 @@ void SpdySession::OnAltSvc(
     if (protocol == kProtoUnknown)
       continue;
 
-    // TODO(zhongyi): refactor the QUIC version filtering to a single function
-    // so that SpdySession::OnAltSvc and
-    // HttpStreamFactory::ProcessAlternativeServices
-    // could use the the same function.
     // Check if QUIC version is supported. Filter supported QUIC versions.
     QuicVersionVector advertised_versions;
     if (protocol == kProtoQUIC && !altsvc.version.empty()) {
-      bool match_found = false;
-      for (const QuicVersion& supported : quic_supported_versions_) {
-        for (const uint16_t& advertised : altsvc.version) {
-          if (supported == advertised) {
-            match_found = true;
-            advertised_versions.push_back(supported);
-          }
-        }
-      }
-      if (!match_found) {
+      advertised_versions = FilterSupportedAltSvcVersions(
+          altsvc.protocol_id, altsvc.version, quic_supported_versions_);
+      if (advertised_versions.empty())
         continue;
-      }
     }
 
     const AlternativeService alternative_service(protocol, altsvc.host,
