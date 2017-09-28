@@ -113,6 +113,13 @@ class CORE_EXPORT EditingBehavior {
     return type_ != kEditingWindowsBehavior && type_ != kEditingMacBehavior;
   }
 
+  // On Android, we combine dead keys (diacritics waiting for a letter to be
+  // joined with) in Blink by setting a selection on the dead key and then
+  // attempting to join it with the next key press.
+  bool ShouldUseAndroidDeadKeyHandling() const {
+    return type_ == kEditingAndroidBehavior;
+  }
+
   // Convert a KeyboardEvent to a command name like "Copy", "Undo" and so on.
   // If nothing, return empty string.
   const char* InterpretKeyEvent(const KeyboardEvent&) const;

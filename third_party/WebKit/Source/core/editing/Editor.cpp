@@ -1833,6 +1833,7 @@ DEFINE_TRACE(Editor) {
   visitor->Trace(undo_stack_);
   visitor->Trace(mark_);
   visitor->Trace(typing_style_);
+  visitor->Trace(active_dead_key_range_);
 }
 
 }  // namespace blink

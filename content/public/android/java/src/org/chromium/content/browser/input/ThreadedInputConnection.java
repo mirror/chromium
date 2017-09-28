@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
-import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.BaseInputConnection;
@@ -86,7 +85,6 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
     // TODO(changwan): check if we can keep a pool of TextInputState to avoid creating
     // a bunch of new objects for each key stroke.
     private final BlockingQueue<TextInputState> mQueue = new LinkedBlockingQueue<>();
-    private int mPendingAccent;
     private TextInputState mCachedTextInputState;
     private int mCurrentExtractedTextRequestToken;
     private boolean mShouldUpdateExtractedText;
@@ -106,7 +104,6 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
             @Override
             public void run() {
                 mNumNestedBatchEdits = 0;
-                mPendingAccent = 0;
                 mCurrentExtractedTextRequestToken = 0;
                 mShouldUpdateExtractedText = false;
             }
@@ -289,31 +286,26 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
     public boolean setComposingText(final CharSequence text, final int newCursorPosition) {
         if (DEBUG_LOGS) Log.i(TAG, "setComposingText [%s] [%d]", text, newCursorPosition);
         if (text == null) return false;
-        return updateComposingText(text, newCursorPosition, false);
+        return updateComposingText(text, newCursorPosition);
     }
 
     /**
      * Sends composing update to the InputMethodManager.
      */
     @VisibleForTesting
-    public boolean updateComposingText(
-            final CharSequence text, final int newCursorPosition, final boolean isPendingAccent) {
+    public boolean updateComposingText(final CharSequence text, final int newCursorPosition) {
         ThreadUtils.postOnUiThread(new Runnable() {
             @Override
             public void run() {
-                updateComposingTextOnUiThread(text, newCursorPosition, isPendingAccent);
+                updateComposingTextOnUiThread(text, newCursorPosition);
             }
         });
         notifyUserAction();
         return true;
     }
 
-    private void updateComposingTextOnUiThread(
-            CharSequence text, int newCursorPosition, boolean isPendingAccent) {
-        int accentToSend =
-                isPendingAccent ? (mPendingAccent | KeyCharacterMap.COMBINING_ACCENT) : 0;
-        cancelCombiningAccentOnUiThread();
-        mImeAdapter.sendCompositionToNative(text, newCursorPosition, false, accentToSend);
+    private void updateComposingTextOnUiThread(CharSequence text, int newCursorPosition) {
+        mImeAdapter.sendCompositionToNative(text, newCursorPosition, false);
     }
 
     /**
@@ -334,8 +326,7 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
     }
 
     private void commitTextOnUiThread(final CharSequence text, final int newCursorPosition) {
-        cancelCombiningAccentOnUiThread();
-        mImeAdapter.sendCompositionToNative(text, newCursorPosition, true, 0);
+        mImeAdapter.sendCompositionToNative(text, newCursorPosition, true);
     }
 
     /**
@@ -433,9 +424,6 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
         ThreadUtils.postOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (mPendingAccent != 0) {
-                    finishComposingTextOnUiThread();
-                }
                 mImeAdapter.deleteSurroundingText(beforeLength, afterLength);
             }
         });
@@ -454,9 +442,6 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
         ThreadUtils.postOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (mPendingAccent != 0) {
-                    finishComposingTextOnUiThread();
-                }
                 mImeAdapter.deleteSurroundingTextInCodePoints(beforeLength, afterLength);
             }
         });
@@ -472,51 +457,11 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
         ThreadUtils.postOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (handleCombiningAccentOnUiThread(event)) return;
                 mImeAdapter.sendKeyEvent(event);
             }
         });
         notifyUserAction();
         return true;
-    }
-
-    private boolean handleCombiningAccentOnUiThread(final KeyEvent event) {
-        // TODO(changwan): this will break the current composition. check if we can
-        // implement it in the renderer instead.
-        int action = event.getAction();
-        int unicodeChar = event.getUnicodeChar();
-
-        if (action != KeyEvent.ACTION_DOWN) return false;
-        if ((unicodeChar & KeyCharacterMap.COMBINING_ACCENT) != 0) {
-            int pendingAccent = unicodeChar & KeyCharacterMap.COMBINING_ACCENT_MASK;
-            StringBuilder builder = new StringBuilder();
-            builder.appendCodePoint(pendingAccent);
-            updateComposingTextOnUiThread(builder.toString(), 1, true);
-            setCombiningAccentOnUiThread(pendingAccent);
-            return true;
-        } else if (mPendingAccent != 0 && unicodeChar != 0) {
-            int combined = KeyEvent.getDeadChar(mPendingAccent, unicodeChar);
-            if (combined != 0) {
-                StringBuilder builder = new StringBuilder();
-                builder.appendCodePoint(combined);
-                String text = builder.toString();
-                commitTextOnUiThread(text, 1);
-                return true;
-            }
-            // Noncombinable character; commit the accent character and fall through to sending
-            // the key event for the character afterwards.
-            finishComposingTextOnUiThread();
-        }
-        return false;
-    }
-
-    @VisibleForTesting
-    public void setCombiningAccentOnUiThread(int pendingAccent) {
-        mPendingAccent = pendingAccent;
-    }
-
-    private void cancelCombiningAccentOnUiThread() {
-        mPendingAccent = 0;
     }
 
     /**
@@ -532,7 +477,6 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
     }
 
     private void finishComposingTextOnUiThread() {
-        cancelCombiningAccentOnUiThread();
         mImeAdapter.finishComposingText();
     }
 

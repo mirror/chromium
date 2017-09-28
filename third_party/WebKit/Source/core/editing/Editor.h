@@ -187,6 +187,8 @@ class CORE_EXPORT Editor final : public GarbageCollectedFinalized<Editor> {
       bool select_inserted_text,
       TextEvent* triggering_event,
       InputEvent::InputType = InputEvent::InputType::kInsertText);
+  bool InsertTextHandlingAndroidDeadKeys(const String&,
+                                         KeyboardEvent* triggering_event);
   bool InsertLineBreak();
   bool InsertParagraphSeparator();
 
@@ -327,6 +329,7 @@ class CORE_EXPORT Editor final : public GarbageCollectedFinalized<Editor> {
   EditorParagraphSeparator default_paragraph_separator_;
   bool overwrite_mode_enabled_;
   Member<EditingStyle> typing_style_;
+  Member<Range> active_dead_key_range_;
 
   explicit Editor(LocalFrame&);
 
