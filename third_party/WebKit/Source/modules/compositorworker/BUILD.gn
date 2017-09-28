@@ -32,6 +32,7 @@ blink_modules_sources("compositorworker") {
     "CompositorWorkerProxyClientImpl.h",
     "CompositorWorkerThread.cpp",
     "CompositorWorkerThread.h",
+    "EffectProxy.h",
     "WindowAnimationWorklet.cpp",
     "WindowAnimationWorklet.h",
     "WorkletAnimation.cpp",
