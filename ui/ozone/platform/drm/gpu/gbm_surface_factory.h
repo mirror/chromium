@@ -49,6 +49,7 @@ class GbmSurfaceFactory : public SurfaceFactoryOzone {
       gfx::AcceleratedWidget widget,
       gfx::Size size,
       gfx::BufferFormat format,
+      gfx::BufferUsage usage,
       const gfx::NativePixmapHandle& handle) override;
 
  private:

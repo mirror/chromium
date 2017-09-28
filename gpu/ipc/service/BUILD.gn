@@ -53,6 +53,7 @@ target(link_target_type, "ipc_service_sources") {
     "image_transport_surface_delegate.h",
     "pass_through_image_transport_surface.cc",
     "pass_through_image_transport_surface.h",
+    "protected_gpu_memory_buffer_manager.h",
     "switches.cc",
     "switches.h",
   ]
