@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a1a248c5_2d9e9b5b",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 3294,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-28T14:46:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79927d91_e3e8e4ce",
+      "revId": "6b0e45799bdcbb4a44c0dc24a7a511ecdef8bf29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c284496_c12e6161",
         "filename": "ios/chrome/browser/ui/ntp/new_tab_page_bar.h",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3be6de7f_a77beb2b",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_bar.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-28T14:46:56Z",
+      "side": 1,
+      "message": "No, as we don\u0027t really know when we are added to the view hierarchy, this one truly replace the safeAreaInset. The safeAreaInset is not used at all. It is not great but it is working as the toolbar is taking all the bottom of its super view.",
+      "parentUuid": "6c284496_c12e6161",
+      "revId": "6b0e45799bdcbb4a44c0dc24a7a511ecdef8bf29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40060fc4_6793afff",
         "filename": "ios/chrome/browser/ui/ntp/new_tab_page_view.mm",
         "patchSetId": 9
@@ -50,6 +86,24 @@
       "revId": "6b0e45799bdcbb4a44c0dc24a7a511ecdef8bf29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "554bb786_ab1620a9",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_view.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-28T14:46:56Z",
+      "side": 1,
+      "message": "I can move it to setSafeAreaInsetForToolbar: instead.",
+      "parentUuid": "40060fc4_6793afff",
+      "revId": "6b0e45799bdcbb4a44c0dc24a7a511ecdef8bf29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
