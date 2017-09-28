@@ -52,7 +52,7 @@ class VIZ_SERVICE_EXPORT ColorLUTCache {
   };
 
   base::MRUCache<CacheKey, CacheVal> lut_cache_;
-  uint32_t current_frame_;
+  uint32_t current_frame_ = 0;
   gpu::gles2::GLES2Interface* gl_;
   bool texture_half_float_linear_;
   DISALLOW_COPY_AND_ASSIGN(ColorLUTCache);
