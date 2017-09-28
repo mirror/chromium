@@ -9,6 +9,7 @@
 // EXPERIMENTAL: DO NOT USE IN PRODUCTION CODE YET!
 // *****************************************************************************
 
+#include <cstring>
 #include <type_traits>
 #include <utility>
 
@@ -176,14 +177,158 @@ struct GenericContainerTypeOperations {
 };
 
 //
+// PodContainerTypeOperations
+//
+
+// This class template controls whether WTF containers regard the type T as
+// "POD-like". WTF containers assume POD-like types don't need an explicit
+// constructor/destructor call, and it's safe to use memset, memcpy, memmove or
+// memcmp functions over an array of POD-like types.
+//
+// You can specialize this traits to specify your own type that isn't POD as
+// a POD-like type.
+template <typename T>
+struct IsPodlike : public std::is_pod<T> {};
+
+// This predicate returns true if it's safe to memcpy an array of |From|s to an
+// array of |To|.
+template <typename From, typename To>
+struct SafelyMemcpyable
+    : public std::integral_constant<
+          bool,
+          (IsPodlike<From>::value && IsPodlike<To>::value &&
+           std::is_same<From, To>::value) ||
+              (std::is_scalar<From>::value && std::is_scalar<To>::value &&
+               sizeof(From) == sizeof(To))> {};
+
+// This predicate returns true if it's safe to memset a value of type |From|
+// to an array of |To|.
+//
+// Currently we only support filling a one-byte data.
+template <typename From, typename To>
+struct SafelyMemsettable
+    : public std::integral_constant<bool,
+                                    IsPodlike<From>::value &&
+                                        IsPodlike<To>::value &&
+                                        sizeof(From) == 1 && sizeof(To) == 1> {
+};
+
+// This predicate returns true if it's safe to memcmp two ranges of values of
+// types T and U, respectively.
+//
+// For now, we think it's safe to compare T and U if T and U are the same type.
+template <typename T, typename U>
+struct SafelyMemcmpable
+    : public std::integral_constant<bool,
+                                    IsPodlike<T>::value &&
+                                        IsPodlike<U>::value &&
+                                        std::is_same<T, U>::value> {};
+
+// This class templates deals with a POD type.
+template <typename T>
+struct PodContainerTypeOperations {
+  static_assert(IsPodlike<T>::value, "|T| must be a POD-like type.");
+
+  // The range is zero-initialized.
+  static void DefaultInitializeRange(T* uninitialized_begin,
+                                     T* uninitialized_end);
+
+  static void DestructRange(T* storage_begin, T* storage_end);
+
+  template <typename InT>
+  static void Assign(T& storage, InT&& value);
+
+  // We have two versions: memcpy-safe overload and memcpy-unsafe overload.
+  template <typename InT,
+            typename = std::enable_if_t<SafelyMemcpyable<InT, T>::value>>
+  static void CopyRange(const InT* value_begin,
+                        const InT* value_end,
+                        T* storage_begin);
+  // |dummy| template argument is necessary to disambiguate the overloads.
+  template <typename InT,
+            int dummy = 0,
+            typename = std::enable_if_t<!SafelyMemcpyable<InT, T>::value>>
+  static void CopyRange(const InT* value_begin,
+                        const InT* value_end,
+                        T* storage_begin);
+
+  // For PODs, copying and moving are the same. MoveRange() is just an alias of
+  // CopyRange() (of either overload).
+  template <typename InT>
+  static void MoveRange(InT* value_begin, InT* value_end, T* storage_begin);
+
+  template <typename InT,
+            typename = std::enable_if_t<SafelyMemcpyable<InT, T>::value>>
+  static void CopyOverlappingRange(const InT* value_begin,
+                                   const InT* value_end,
+                                   T* storage_begin);
+  template <typename InT,
+            int dummy = 0,
+            typename = std::enable_if_t<!SafelyMemcpyable<InT, T>::value>>
+  static void CopyOverlappingRange(const InT* value_begin,
+                                   const InT* value_end,
+                                   T* storage_begin);
+
+  template <typename InT>
+  static void MoveOverlappingRange(InT* value_begin,
+                                   InT* value_end,
+                                   T* storage_begin);
+
+  // For PODs, UninitializedCopy and CopyRange are the same.
+  template <typename InT>
+  static void UninitializedCopy(const InT* value_begin,
+                                const InT* value_end,
+                                T* uninitialized_begin);
+
+  // UninitializedFill uses memset if T and InT are both one-byte types.
+  template <typename InT,
+            typename = std::enable_if_t<SafelyMemsettable<InT, T>::value>>
+  static void UninitializedFill(InT value,
+                                T* uninitialized_begin,
+                                T* uninitialized_end);
+  template <typename InT,
+            int dummy = 0,
+            typename = std::enable_if_t<!SafelyMemsettable<InT, T>::value>>
+  static void UninitializedFill(const InT& value,
+                                T* uninitialized_begin,
+                                T* uninitialized_end);
+
+  template <typename InT,
+            typename = std::enable_if_t<SafelyMemcmpable<T, InT>::value>>
+  static bool EqualRange(const T* storage_begin,
+                         const T* storage_end,
+                         const InT* other_begin);
+  template <typename InT,
+            int dummy = 0,
+            typename = std::enable_if_t<!SafelyMemcmpable<T, InT>::value>>
+  static bool EqualRange(const T* storage_begin,
+                         const T* storage_end,
+                         const InT* other_begin);
+};
+
+//
 // ContainerTypeOperations
 //
 
+template <typename T, bool is_podlike = IsPodlike<T>::value>
+struct ContainerTypeOperationsImpl;
+
+template <typename T>
+struct ContainerTypeOperationsImpl<T, true> : PodContainerTypeOperations<T> {};
+
+template <typename T>
+struct ContainerTypeOperationsImpl<T, false>
+    : GenericContainerTypeOperations<T> {};
+
 // The global definition of ContainerTypeOperations.
 template <typename T>
-struct ContainerTypeOperations : GenericContainerTypeOperations<T> {};
+struct ContainerTypeOperations : ContainerTypeOperationsImpl<T> {
+  static_assert(!std::is_reference<T>::value, "|T| must not be a reference.");
+  static_assert(std::is_same<T, std::remove_cv_t<T>>::value,
+                "|T| must not be cv-qualified.");
+};
 
-// TODO(yutak): More specializations for POD types and smart pointers.
+// TODO(yutak): More specializations for smart pointers.
 
 //
 // CompleteContainerTypeOperations
@@ -194,7 +339,8 @@ struct ContainerTypeOperations : GenericContainerTypeOperations<T> {};
 
 namespace internal {
 // This internal block contains all the implementation detail needed to
-// supplement the missing functions in ContainerTypeOperations<T>.
+// supplement the missing functions in ContainerTypeOperations<T>. You can skip
+// this whole block if you are not interested in details.
 
 // Define a predicate struct named Has##FunctionName##Function that tests the
 // existence of a static member function |FunctionName| in TypeOperation taking
@@ -612,6 +758,131 @@ template <typename InT>
 bool GenericContainerTypeOperations<T>::Equal(const T& stored_value,
                                               const InT& other_value) {
   return stored_value == other_value;
+}
+
+//
+// PodContainerTypeOperations<T> definitions
+//
+
+template <typename T>
+void PodContainerTypeOperations<T>::DefaultInitializeRange(
+    T* uninitialized_begin,
+    T* uninitialized_end) {
+  std::memset(uninitialized_begin, 0,
+              (uninitialized_end - uninitialized_begin) * sizeof(T));
+}
+
+template <typename T>
+void PodContainerTypeOperations<T>::DestructRange(T* storage_begin,
+                                                  T* storage_end) {
+  // Nothing to do.
+}
+
+template <typename T>
+template <typename InT>
+void PodContainerTypeOperations<T>::Assign(T& storage, InT&& value) {
+  GenericContainerTypeOperations<T>::Assign(storage, std::forward<InT>(value));
+}
+
+template <typename T>
+template <typename InT, typename>
+void PodContainerTypeOperations<T>::CopyRange(const InT* value_begin,
+                                              const InT* value_end,
+                                              T* storage_begin) {
+  static_assert(sizeof(T) == sizeof(InT),
+                "SafelyMemcpyable<> should make sure the sizes are same.");
+  std::memcpy(storage_begin, value_begin,
+              (value_end - value_begin) * sizeof(InT));
+}
+
+template <typename T>
+template <typename InT, int, typename>
+void PodContainerTypeOperations<T>::CopyRange(const InT* value_begin,
+                                              const InT* value_end,
+                                              T* storage_begin) {
+  CompleteContainerTypeOperations<GenericContainerTypeOperations<T>,
+                                  T>::CopyRange(value_begin, value_end,
+                                                storage_begin);
+}
+
+template <typename T>
+template <typename InT>
+void PodContainerTypeOperations<T>::MoveRange(InT* value_begin,
+                                              InT* value_end,
+                                              T* storage_begin) {
+  CopyRange(value_begin, value_end, storage_begin);
+}
+
+template <typename T>
+template <typename InT, typename>
+void PodContainerTypeOperations<T>::CopyOverlappingRange(const InT* value_begin,
+                                                         const InT* value_end,
+                                                         T* storage_begin) {
+  static_assert(sizeof(T) == sizeof(InT),
+                "SafelyMemcpyable<> should make sure the sizes are same.");
+  std::memmove(storage_begin, value_begin,
+               (value_end - value_begin) * sizeof(InT));
+}
+
+template <typename T>
+template <typename InT, int, typename>
+void PodContainerTypeOperations<T>::CopyOverlappingRange(const InT* value_begin,
+                                                         const InT* value_end,
+                                                         T* storage_begin) {
+  CompleteContainerTypeOperations<GenericContainerTypeOperations<T>,
+                                  T>::CopyOverlappingRange(value_begin,
+                                                           value_end,
+                                                           storage_begin);
+}
+
+template <typename T>
+template <typename InT>
+void PodContainerTypeOperations<T>::MoveOverlappingRange(InT* value_begin,
+                                                         InT* value_end,
+                                                         T* storage_begin) {
+  CopyOverlappingRange(value_begin, value_end, storage_begin);
+}
+
+template <typename T>
+template <typename InT>
+void PodContainerTypeOperations<T>::UninitializedCopy(const InT* value_begin,
+                                                      const InT* value_end,
+                                                      T* uninitialized_begin) {
+  // An uninitialized range and an initialized range won't overlap.
+  CopyRange(value_begin, value_end, uninitialized_begin);
+}
+
+template <typename T>
+template <typename InT, typename>
+void PodContainerTypeOperations<T>::UninitializedFill(InT value,
+                                                      T* uninitialized_begin,
+                                                      T* uninitialized_end) {
+  static_assert(sizeof(T) == 1, "sizeof(T) must be 1 for this overload.");
+  static_assert(sizeof(InT) == 1, "sizeof(InT) must be 1 for this overload.");
+  std::memset(uninitialized_begin, static_cast<int>(value),
+              uninitialized_end - uninitialized_begin);
+}
+
+template <typename T>
+template <typename InT, int, typename>
+void PodContainerTypeOperations<T>::UninitializedFill(const InT& value,
+                                                      T* uninitialized_begin,
+                                                      T* uninitialized_end) {
+  CompleteContainerTypeOperations<GenericContainerTypeOperations<T>,
+                                  T>::UninitializedFill(value,
+                                                        uninitialized_begin,
+                                                        uninitialized_end);
+}
+
+template <typename T>
+template <typename InT, typename>
+bool PodContainerTypeOperations<T>::EqualRange(const T* storage_begin,
+                                               const T* storage_end,
+                                               const InT* other_begin) {
+  static_assert(sizeof(T) == sizeof(InT),
+                "Sizes of T and InT must match to use memcmp.");
+  return std::memcmp(storage_begin, other_begin,
+                     (storage_end - storage_begin) * sizeof(T)) == 0;
 }
 
 }  // namespace experimental

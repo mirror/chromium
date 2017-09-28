@@ -17,9 +17,12 @@ struct Pod {
   char c[7];
 };
 
-bool operator==(const Pod& left, const Pod& right) {
-  return left.a == right.a && left.b == right.b &&
-         std::memcmp(left.c, right.c, sizeof(left.c)) == 0;
+struct NonPod : Pod {
+  NonPod() {}
+};
+
+bool operator==(const NonPod& x, const NonPod& y) {
+  return x.a == y.a && x.b == y.b && memcmp(x.c, y.c, 7) == 0;
 }
 
 }  // namespace
@@ -74,8 +77,29 @@ TYPED_TEST_P(ContainerTypeOperationsTest, Completeness) {
 REGISTER_TYPED_TEST_CASE_P(ContainerTypeOperationsTest, Completeness);
 
 using PodTestTypes = ::testing::Types<int, char, int*, Pod>;
+static_assert(std::is_base_of<PodContainerTypeOperations<int>,
+                              ContainerTypeOperations<int>>::value,
+              "int must be handled by PodContainerTypeOperations.");
+static_assert(std::is_base_of<PodContainerTypeOperations<char>,
+                              ContainerTypeOperations<char>>::value,
+              "char must be handled by PodContainerTypeOperations.");
+static_assert(std::is_base_of<PodContainerTypeOperations<int*>,
+                              ContainerTypeOperations<int*>>::value,
+              "int* must be handled by PodContainerTypeOperations.");
+static_assert(std::is_base_of<PodContainerTypeOperations<Pod>,
+                              ContainerTypeOperations<Pod>>::value,
+              "Pod must be handled by PodContainerTypeOperations.");
+
+using NonPodTestTypes = ::testing::Types<NonPod>;
+static_assert(std::is_base_of<GenericContainerTypeOperations<NonPod>,
+                              ContainerTypeOperations<NonPod>>::value,
+              "Pod must be handled by GenericContainerTypeOperations.");
 
 INSTANTIATE_TYPED_TEST_CASE_P(Pod, ContainerTypeOperationsTest, PodTestTypes);
+
+INSTANTIATE_TYPED_TEST_CASE_P(NonPod,
+                              ContainerTypeOperationsTest,
+                              NonPodTestTypes);
 
 }  // namespace experimental
 }  // namespace WTF
