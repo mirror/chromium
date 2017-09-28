@@ -26,7 +26,17 @@ gfx::GpuMemoryBufferType GetNativeGpuMemoryBufferType() {
 bool IsNativeGpuMemoryBufferConfigurationSupported(gfx::BufferFormat format,
                                                    gfx::BufferUsage usage) {
   DCHECK_NE(gfx::SHARED_MEMORY_BUFFER, GetNativeGpuMemoryBufferType());
+
+#if defined(OS_FUCHSIA)
+  // Fuchsia uses a no-op GL implementation for now, so EMPTY_BUFFER is
+  // acceptable under that platform.
+  if (GetNativeGpuMemoryBufferType() == gfx::EMPTY_BUFFER) {
+    return false;
+  }
+#else
   DCHECK_NE(gfx::EMPTY_BUFFER, GetNativeGpuMemoryBufferType());
+#endif  // defined(OS_FUCHSIA)
+
 #if defined(OS_MACOSX)
   switch (usage) {
     case gfx::BufferUsage::GPU_READ:

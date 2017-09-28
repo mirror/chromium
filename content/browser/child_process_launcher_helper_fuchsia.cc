@@ -5,8 +5,11 @@
 #include "content/browser/child_process_launcher_helper.h"
 
 #include "base/command_line.h"
+#include "base/path_service.h"
+#include "base/posix/global_descriptors.h"
 #include "base/process/launch.h"
 #include "content/browser/child_process_launcher.h"
+#include "content/browser/child_process_launcher_helper_posix.h"
 #include "content/common/sandbox_policy_fuchsia.h"
 #include "content/public/common/sandboxed_process_launcher_delegate.h"
 #include "mojo/edk/embedder/platform_channel_pair.h"
@@ -40,8 +43,7 @@ bool ChildProcessLauncherHelper::TerminateProcess(const base::Process& process,
 void ChildProcessLauncherHelper::SetRegisteredFilesForService(
     const std::string& service_name,
     catalog::RequiredFileMap required_files) {
-  // TODO(fuchsia): Implement this. (crbug.com/707031)
-  NOTIMPLEMENTED();
+  SetFilesToShareForServicePosix(service_name, std::move(required_files));
 }
 
 // static
@@ -66,7 +68,9 @@ ChildProcessLauncherHelper::PrepareMojoPipeHandlesOnClientThread() {
 std::unique_ptr<FileMappedForLaunch>
 ChildProcessLauncherHelper::GetFilesToMap() {
   DCHECK_CURRENTLY_ON(BrowserThread::PROCESS_LAUNCHER);
-  return std::unique_ptr<FileMappedForLaunch>();
+
+  return CreateDefaultPosixFilesToMap(child_process_id(), mojo_client_handle(),
+                                      true, GetProcessType(), command_line());
 }
 
 void ChildProcessLauncherHelper::BeforeLaunchOnLauncherThread(
@@ -76,6 +80,8 @@ void ChildProcessLauncherHelper::BeforeLaunchOnLauncherThread(
 
   mojo::edk::PlatformChannelPair::PrepareToPassHandleToChildProcess(
       mojo_client_handle(), command_line(), &options->handles_to_transfer);
+
+  options->fds_to_remap = files_to_register.GetMapping();
 
   UpdateLaunchOptionsForSandbox(delegate_->GetSandboxType(), options);
 }
@@ -113,6 +119,18 @@ void ChildProcessLauncherHelper::ForceNormalProcessTerminationSync(
     ChildProcessLauncherHelper::Process process) {
   DCHECK_CURRENTLY_ON(BrowserThread::PROCESS_LAUNCHER);
   process.process.Terminate(RESULT_CODE_NORMAL_EXIT, true);
+}
+
+// static
+base::File OpenFileToShare(const base::FilePath& path,
+                           base::MemoryMappedFile::Region* region) {
+  base::FilePath exe_dir;
+  bool result = base::PathService::Get(base::BasePathKey::DIR_EXE, &exe_dir);
+  DCHECK(result);
+  base::File file(exe_dir.Append(path),
+                  base::File::FLAG_OPEN | base::File::FLAG_READ);
+  *region = base::MemoryMappedFile::Region::kWholeFile;
+  return file;
 }
 
 }  // namespace internal

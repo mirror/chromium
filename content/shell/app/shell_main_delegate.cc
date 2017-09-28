@@ -77,14 +77,20 @@
 #include "content/shell/common/v8_breakpad_support_win.h"
 #endif
 
-#if defined(OS_POSIX) && !defined(OS_MACOSX)
+#if defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_FUCHSIA)
 #include "components/crash/content/app/breakpad_linux.h"
+#endif
+
+#if defined(OS_FUCHSIA)
+#include "base/file_descriptor_store.h"
 #endif
 
 namespace {
 
+#if !defined(OS_FUCHSIA)
 base::LazyInstance<content::ShellCrashReporterClient>::Leaky
     g_shell_crash_client = LAZY_INSTANCE_INITIALIZER;
+#endif
 
 #if defined(OS_WIN)
 // If "Content Shell" doesn't show up in your list of trace providers in
@@ -137,7 +143,7 @@ bool ShellMainDelegate::BasicStartupComplete(int* exit_code) {
 
   v8_breakpad_support::SetUp();
 #endif
-#if defined(OS_LINUX) && !defined(OS_ANDROID)
+#if defined(OS_LINUX) && !defined(OS_ANDROID) && !defined(OS_FUCHSIA)
   breakpad::SetFirstChanceExceptionHandler(v8::V8::TryHandleSignal);
 #endif
 #if defined(OS_MACOSX)
@@ -254,6 +260,7 @@ bool ShellMainDelegate::BasicStartupComplete(int* exit_code) {
 }
 
 void ShellMainDelegate::PreSandboxStartup() {
+#if !defined(OS_FUCHSIA)
 #if defined(ARCH_CPU_ARM_FAMILY) && (defined(OS_ANDROID) || defined(OS_LINUX))
   // Create an instance of the CPU class to parse /proc/cpuinfo and cache
   // cpu_brand info.
@@ -288,6 +295,7 @@ void ShellMainDelegate::PreSandboxStartup() {
     breakpad::InitCrashReporter(process_type);
 #endif
   }
+#endif  // !defined(OS_FUCHSIA)
 
   InitializeResourceBundle();
 }
@@ -316,7 +324,8 @@ int ShellMainDelegate::RunProcess(
              : ShellBrowserMain(main_function_params, browser_runner_);
 }
 
-#if defined(OS_POSIX) && !defined(OS_ANDROID) && !defined(OS_MACOSX)
+#if defined(OS_POSIX) && !defined(OS_ANDROID) && !defined(OS_MACOSX) && \
+    !defined(OS_FUCHSIA)
 void ShellMainDelegate::ZygoteForked() {
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kEnableCrashReporter)) {
@@ -359,7 +368,22 @@ void ShellMainDelegate::InitializeResourceBundle() {
                                                           pak_region);
   ui::ResourceBundle::GetSharedInstance().AddDataPackFromFileRegion(
       base::File(pak_fd), pak_region, ui::SCALE_FACTOR_100P);
-#else  // defined(OS_ANDROID)
+  return;
+#elif defined(OS_FUCHSIA)
+  // See if the resource file is available to us using ServiceManager's shared
+  // files mechanism.
+  base::MemoryMappedFile::Region pak_region;
+  base::ScopedFD fd = base::FileDescriptorStore::GetInstance().MaybeTakeFD(
+      "content_pak", &pak_region);
+  if (fd.is_valid()) {
+    LOG(ERROR) << "Using FD " << fd.get() << " for the resource.";
+    base::File pak_file = base::File(fd.release());
+    ui::ResourceBundle::InitSharedInstanceWithPakFileRegion(std::move(pak_file),
+                                                            pak_region);
+    return;
+  }
+#endif
+
 #if defined(OS_MACOSX)
   base::FilePath pak_file = GetResourcesPakFilePath();
 #else
@@ -369,7 +393,6 @@ void ShellMainDelegate::InitializeResourceBundle() {
   pak_file = pak_file.Append(FILE_PATH_LITERAL("content_shell.pak"));
 #endif  // defined(OS_MACOSX)
   ui::ResourceBundle::InitSharedInstanceWithPakPath(pak_file);
-#endif  // defined(OS_ANDROID)
 }
 
 ContentBrowserClient* ShellMainDelegate::CreateContentBrowserClient() {
