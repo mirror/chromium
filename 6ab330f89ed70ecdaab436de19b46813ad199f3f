@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aea2eb31_90cc618f",
+        "filename": "content/browser/frame_host/interstitial_page_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-28T17:32:44Z",
+      "side": 1,
+      "message": "This change is so that this file is now clean wrt |git cl lint|.  The linter pointed out that std::map is being depended on below - on line 106:\n\n    // We keep a map of the various blocking pages shown as the UI tests need to\n    // be able to retrieve them.\n    typedef std::map\u003cWebContents*, InterstitialPageImpl*\u003e InterstitialPageMap;\n    static InterstitialPageMap* g_web_contents_to_interstitial_page;",
+      "parentUuid": "24ce6dde_237a35f5",
+      "revId": "6ab330f89ed70ecdaab436de19b46813ad199f3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f01bb214_25e78eb5",
         "filename": "content/browser/web_contents/web_contents_impl.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "6ab330f89ed70ecdaab436de19b46813ad199f3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6551e9c_695bebd4",
+        "filename": "content/browser/web_contents/web_contents_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-28T17:32:44Z",
+      "side": 1,
+      "message": "You\u0027re right - this wouldn\u0027t compile.  My apologies for sending out a CR request for a CL that doesn\u0027t even compile :-(.  I didn\u0027t expect |git cl split| to loop in reviewers until later (as it happened via Rietveld a few months ago - back then I had to manually send CR requests which was an extra burden but it did let me verify tryjob results before asking for a review).\n\nThe most recent patchset should be fixed (at least gn_all builds fine on my local machine).",
+      "parentUuid": "f01bb214_25e78eb5",
+      "revId": "6ab330f89ed70ecdaab436de19b46813ad199f3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
