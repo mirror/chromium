@@ -370,6 +370,7 @@ mojom("interfaces") {
 
   public_deps = [
     "//mojo/common:common_custom_types",
+    "//net/interfaces",
     "//url/mojo:url_mojom_gurl",
     "//url/mojo:url_mojom_origin",
   ]
