@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf5ae035_60bb9bd2",
+        "filename": "net/tools/print_certificates.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-09-28T23:25:27Z",
+      "side": 1,
+      "message": "optional: Maybe print the command too?",
+      "revId": "4233d33d0dae3c6974c8702047fdc0781f92bb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54061ab7_04dc238c",
+        "filename": "net/tools/print_certificates.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-09-28T23:25:27Z",
+      "side": 1,
+      "message": "Totally optional: How about calling this either \"pem\" or \"openssl_pem\"?\n\nFor full generality you could even extract things further, such that the default becomes:\n  --output\u003dheader,der2ascii,openssl_text,pem\n\nThe \"header\" thing would control the adding of:\n   \\n\\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003dCertificate%d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\n\n\"openssl_text\" would be the text annotations, and pem would be the actual CERTIFICATE block.\n\nThen outputting DER would make sense as\n  --output\u003dder",
+      "range": {
+        "startLine": 144,
+        "startChar": 17,
+        "endLine": 144,
+        "endChar": 24
+      },
+      "revId": "4233d33d0dae3c6974c8702047fdc0781f92bb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76a7da36_cd713f54",
+        "filename": "net/tools/print_certificates.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-09-28T23:25:27Z",
+      "side": 1,
+      "message": "Print an error?",
+      "revId": "4233d33d0dae3c6974c8702047fdc0781f92bb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
