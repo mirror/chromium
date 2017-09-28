@@ -1,0 +1,6 @@
+include_rules = [
+  "+ash/public/cpp/shell_window_ids.h",
+  "+mojo/public/cpp/bindings",
+  "+services/ui/public/cpp",
+  "+services/ui/public/interfaces",
+]
