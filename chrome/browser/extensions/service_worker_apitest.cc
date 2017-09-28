@@ -4,6 +4,10 @@
 
 #include <stdint.h>
 
+#include "chrome/browser/extensions/lazy_background_page_test_util.h"
+#include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/ui/browser_commands.h"
+#include "chrome/common/chrome_switches.cc"
 #include "base/bind_helpers.h"
 #include "base/macros.h"
 #include "base/run_loop.h"
@@ -115,6 +119,18 @@ class ServiceWorkerTest : public ExtensionApiTest,
     ExtensionApiTest::SetUpCommandLine(command_line);
     command_line->AppendSwitchASCII(switches::kNativeCrxBindings,
                                     GetParam() == NATIVE_BINDINGS ? "1" : "0");
+    // TODO(lazyboy): Move this to another test class?
+    // Disable background network activity as it can suddenly bring the Lazy
+    // Background Page alive.
+    command_line->AppendSwitch(::switches::kDisableBackgroundNetworking);
+    command_line->AppendSwitch(::switches::kNoProxyServer);
+  }
+
+  void SetUpInProcessBrowserTestFixture() override {
+    ExtensionApiTest::SetUpInProcessBrowserTestFixture();
+    // Set shorter delays to prevent test timeouts.
+    ProcessManager::SetEventPageIdleTimeForTesting(1);
+    ProcessManager::SetEventPageSuspendingTimeForTesting(1);
   }
 
  protected:
@@ -728,6 +744,45 @@ IN_PROC_BROWSER_TEST_P(ServiceWorkerTest, EventsToStoppedWorker) {
   ASSERT_TRUE(content::ExecuteScriptAndExtractString(
       web_contents, "window.createTabThenUpdate()", &result));
   ASSERT_EQ("chrome.tabs.onUpdated callback", result);
+}
+
+IN_PROC_BROWSER_TEST_P(ServiceWorkerTest, EventsToStoppedExtension) {
+  // Extensions APIs from SW are only enabled on trunk.
+  ScopedCurrentChannel current_channel_override(version_info::Channel::UNKNOWN);
+  LazyBackgroundObserver lazy_observer;
+  const Extension* extension = LoadExtensionWithFlags(
+      test_data_dir_.AppendASCII("service_worker/events_to_stopped_extension"),
+      kFlagNone);
+  ASSERT_TRUE(extension);
+  // Wait for the event page extension to shut down.
+  lazy_observer.Wait();
+
+  ui_test_utils::NavigateToURL(browser(),
+                               extension->GetResourceURL("page.html"));
+  content::WebContents* web_contents =
+      browser()->tab_strip_model()->GetActiveWebContents();
+  {
+    std::string result;
+    ASSERT_TRUE(content::ExecuteScriptAndExtractString(
+        web_contents, "window.runServiceWorker()", &result));
+    ASSERT_EQ("ready", result);
+
+    base::RunLoop run_loop;
+    content::StoragePartition* storage_partition =
+        content::BrowserContext::GetDefaultStoragePartition(
+            browser()->profile());
+    content::StopServiceWorkerForPattern(
+        storage_partition->GetServiceWorkerContext(),
+        // The service worker is registered at the top level scope.
+        extension->url(), run_loop.QuitClosure());
+    run_loop.Run();
+  }
+  // At this point both the extension worker and extension event page is not
+  // running. Since the worker registered a listener for tabs.onCreated, it
+  // will be started to dispatch the event.
+  ExtensionTestMessageListener newtab_listener("hello-newtab", false);
+  chrome::NewTab(browser());
+  EXPECT_TRUE(newtab_listener.WaitUntilSatisfied());
 }
 
 // Tests that worker ref count increments while extension API function is

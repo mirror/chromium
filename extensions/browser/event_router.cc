@@ -392,10 +392,9 @@ bool EventRouter::ExtensionHasEventListener(
   return listeners_.HasListenerForExtension(extension_id, event_name);
 }
 
-std::set<std::string> EventRouter::GetRegisteredEvents(
-    const std::string& extension_id,
-    RegisteredEventType type) const {
-  std::set<std::string> events;
+void EventRouter::GetRegisteredEvents(const std::string& extension_id,
+                                      RegisteredEventType type,
+                                      std::set<std::string>* events) const {
   const ListValue* events_value = NULL;
 
   const char* pref_key = type == RegisteredEventType::kLazy
@@ -403,15 +402,14 @@ std::set<std::string> EventRouter::GetRegisteredEvents(
                              : kRegisteredServiceWorkerEvents;
   if (!extension_prefs_ || !extension_prefs_->ReadPrefAsList(
                                extension_id, pref_key, &events_value)) {
-    return events;
+    return;
   }
 
   for (size_t i = 0; i < events_value->GetSize(); ++i) {
     std::string event;
     if (events_value->GetString(i, &event))
-      events.insert(event);
+      events->insert(event);
   }
-  return events;
 }
 
 void EventRouter::ClearRegisteredEventsForTest(
@@ -681,6 +679,17 @@ void EventRouter::OnEventAck(BrowserContext* context,
     pm->DecrementLazyKeepaliveCount(host->extension());
 }
 
+bool EventRouter::HasRegisteredEvents(const ExtensionId& extension_id) const {
+  std::set<std::string> registered_events;
+  GetRegisteredEvents(extension_id, RegisteredEventType::kLazy,
+                      &registered_events);
+  if (!registered_events.empty())
+    return true;
+  GetRegisteredEvents(extension_id, RegisteredEventType::kServiceWorker,
+                      &registered_events);
+  return !registered_events.empty();
+}
+
 void EventRouter::ReportEvent(events::HistogramValue histogram_value,
                               const Extension* extension,
                               bool did_enqueue) {
@@ -783,9 +792,11 @@ void EventRouter::AddFilterToEvent(const std::string& event_name,
 void EventRouter::OnExtensionLoaded(content::BrowserContext* browser_context,
                                     const Extension* extension) {
   // Add all registered lazy listeners to our cache.
-  // TODO(lazyboy): Load extension SW lazy events.
-  std::set<std::string> registered_events =
-      GetRegisteredEvents(extension->id(), RegisteredEventType::kLazy);
+  std::set<std::string> registered_events;
+  GetRegisteredEvents(extension->id(), RegisteredEventType::kLazy,
+                      &registered_events);
+  GetRegisteredEvents(extension->id(), RegisteredEventType::kServiceWorker,
+                      &registered_events);
   listeners_.LoadUnfilteredLazyListeners(extension->id(), registered_events);
   const DictionaryValue* filtered_events = GetFilteredEvents(extension->id());
   if (filtered_events)
@@ -804,10 +815,16 @@ void EventRouter::AddLazyEventListenerImpl(
     RegisteredEventType type) {
   const ExtensionId extension_id = listener->extension_id();
   const std::string event_name = listener->event_name();
+  printf("AddLazyEventListenerImpl: type = %d, event_name = %s, extension = %s\n",
+         type, listener->event_name().c_str(),
+         extension_id.c_str());
   bool is_new = listeners_.AddListener(std::move(listener));
+  printf("is_new: %d\n", is_new);
   if (is_new) {
-    std::set<std::string> events = GetRegisteredEvents(extension_id, type);
+    std::set<std::string> events;
+    GetRegisteredEvents(extension_id, type, &events);
     bool prefs_is_new = events.insert(event_name).second;
+    printf("prefs_is_new: %d\n", prefs_is_new);
     if (prefs_is_new)
       SetRegisteredEvents(extension_id, events, type);
   }
@@ -820,7 +837,8 @@ void EventRouter::RemoveLazyEventListenerImpl(
   const std::string event_name = listener->event_name();
   bool did_exist = listeners_.RemoveListener(listener.get());
   if (did_exist) {
-    std::set<std::string> events = GetRegisteredEvents(extension_id, type);
+    std::set<std::string> events;
+    GetRegisteredEvents(extension_id, type, &events);
     bool prefs_did_exist = events.erase(event_name) > 0;
     DCHECK(prefs_did_exist);
     SetRegisteredEvents(extension_id, events, type);

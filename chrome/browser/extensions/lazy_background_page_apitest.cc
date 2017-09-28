@@ -139,6 +139,20 @@ class LazyBackgroundPageApiTest : public ExtensionApiTest {
   DISALLOW_COPY_AND_ASSIGN(LazyBackgroundPageApiTest);
 };
 
+IN_PROC_BROWSER_TEST_F(LazyBackgroundPageApiTest, Foo) {
+  ASSERT_TRUE(LoadExtensionAndWait("events"));
+  EXPECT_FALSE(IsBackgroundPageAlive(last_loaded_extension_id()));
+
+  // Observe background page being created and closed after a new
+  // tab.
+  LazyBackgroundObserver page_complete;
+  ui_test_utils::NavigateToURLWithDisposition(
+      browser(), GURL("about:blank"),
+      WindowOpenDisposition::NEW_FOREGROUND_TAB,
+      ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
+  page_complete.Wait();
+}
+
 IN_PROC_BROWSER_TEST_F(LazyBackgroundPageApiTest, BrowserActionCreateTab) {
   ASSERT_TRUE(LoadExtensionAndWait("browser_action_create_tab"));
 
