@@ -160,17 +160,24 @@ TestRunner.loadHTML = function(html) {
 
 /**
  * @param {string} path
- * @return {!Promise<!SDK.RemoteObject>}
+ * @return {!Promise<!SDK.RemoteObject|undefined>}
  */
 TestRunner.addScriptTag = function(path) {
   var testScriptURL = /** @type {string} */ (Runtime.queryParam('test'));
   var resolvedPath = testScriptURL + '/../' + path;
 
-  return TestRunner.evaluateInPagePromise(`
+  return TestRunner.evaluateInPageAsync(`
     (function(){
       var script = document.createElement('script');
       script.src = '${resolvedPath}';
+      script.onload = onload;
       document.head.append(script);
+      var resolve;
+      var promise = new Promise(r => resolve = r);
+      function onload() {
+        resolve();
+      }
+      return promise;
     })();
   `);
 };
