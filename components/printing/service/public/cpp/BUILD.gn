@@ -24,6 +24,7 @@ source_set("factory") {
 
   deps = [
     "//components/printing/service/",
+    "//content/public/child",
     "//content/public/common",
     "//content/public/utility",
   ]
