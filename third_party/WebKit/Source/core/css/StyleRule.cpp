@@ -326,6 +326,8 @@ StyleRuleGroup::StyleRuleGroup(const StyleRuleGroup& group_rule)
 }
 
 void StyleRuleGroup::WrapperInsertRule(unsigned index, StyleRuleBase* rule) {
+  if (IsStyleRule())
+    static_cast<StyleRule*>(rule)->ClearLazyPropertyParser();
   child_rules_.insert(index, rule);
 }
 
