@@ -527,6 +527,7 @@ source_set("common") {
     ":generate_aw_resources",
     ":generate_aw_strings",
     ":generate_components_strings",
+    ":android_webview_pac_processor_service",
     "//android_webview/common:version",
     "//android_webview/native:native",
     "//cc/surfaces",
@@ -666,6 +667,7 @@ android_library("android_webview_java") {
   ]
   deps = [
     ":android_webview_crash_services_java",
+    ":android_webview_pac_processor_service_java",
     ":android_webview_platform_services_java",
     ":resources",
     ":strings_grd",
@@ -780,6 +782,50 @@ android_aidl("crash_receiver_aidl") {
     "java/src/org/chromium/android_webview/crash/ICrashReceiverService.aidl",
   ]
 }
+
+android_library("android_webview_pac_processor_service_java") {
+  java_files = [
+    "java/src/org/chromium/android_webview/pacservice/PacProcessor.java",
+    "java/src/org/chromium/android_webview/pacservice/PacProcessorBackend.java",
+    "java/src/org/chromium/android_webview/pacservice/PacProcessorService.java",
+  ]
+  deps = [
+    "//base:base_java",
+  ]
+
+#  srcjar_deps = [ ":pac_processor_aidl"]
+}
+
+generate_jni("android_webview_pac_processor_service_jni") {
+  sources = [
+    "java/src/org/chromium/android_webview/pacservice/PacProcessor.java",
+  ]
+  jni_package = "android_webview_pac_service"
+}
+
+source_set("android_webview_pac_processor_service") {
+  sources = [
+    "native/pac_processor.cc",
+    "native/pac_processor.h",
+#    "lib/pacservice/pac_service_entry_point.cc",
+#    "lib/pacservice/pac_service_jni_onload.cc",
+#    "lib/pacservice/pac_service_jni_onload.h",
+  ]
+  deps = [
+    ":android_webview_pac_processor_service_jni",
+    "//base",
+    "//net:net_with_v8",
+  ]
+  configs += [ "//v8:external_startup_data" ]
+}
+
+
+#android_aidl("pac_processor_aidl") {
+#  import_include = "java/src"
+#  sources = [
+#    "java/src/org/chromium/android_webview/pacservice/IPacProcessorService.aidl",
+#  ]
+#}
 
 if (!use_webview_internal_framework) {
   system_webview_apk_tmpl("system_webview_apk") {

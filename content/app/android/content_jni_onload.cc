@@ -12,6 +12,8 @@
 #include "content/app/android/library_loader_hooks.h"
 #include "content/public/app/content_main.h"
 
+#include "base/logging.h"
+
 namespace content {
 namespace android {
 
@@ -38,6 +40,7 @@ bool OnJNIOnLoadRegisterJNI(
 
 bool OnJNIOnLoadInit(
     std::vector<base::android::InitCallback> callbacks) {
+  LOG(ERROR) << "COntent OnJNIOnLoadInit";
   callbacks.push_back(base::Bind(&Init));
   return base::android::OnJNIOnLoadInit(callbacks);
 }

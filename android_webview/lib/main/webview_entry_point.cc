@@ -6,9 +6,12 @@
 #include "base/android/jni_android.h"
 #include "base/android/library_loader/library_loader_hooks.h"
 
+#include "base/logging.h"
+
 // This is called by the VM when the shared library is first loaded.
 // Most of the initialization is done in LibraryLoadedOnMainThread(), not here.
 JNI_EXPORT jint JNI_OnLoad(JavaVM* vm, void* reserved) {
+  LOG(ERROR) << "Webview JNI_OnLoad";
   // WebView uses native JNI exports; disable manual JNI registration because
   // we don't have a good way to detect the JNI registrations which is called,
   // outside of OnJNIOnLoadRegisterJNI code path.

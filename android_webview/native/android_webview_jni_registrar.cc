@@ -22,6 +22,7 @@
 #include "android_webview/native/aw_web_contents_delegate.h"
 #include "android_webview/native/cookie_manager.h"
 #include "android_webview/native/permission/aw_permission_request.h"
+#include "android_webview/native/pac_processor.h"
 #include "base/android/jni_android.h"
 #include "base/android/jni_registrar.h"
 #include "base/trace_event/trace_event.h"
@@ -53,6 +54,7 @@ static base::android::RegistrationMethod kWebViewRegisteredMethods[] = {
   { "AwWebContentsDelegate", RegisterAwWebContentsDelegate },
   { "CookieManager", RegisterCookieManager },
   { "AwGLFunctor", RegisterAwGLFunctor },
+  { "PacProcessor", pac_service::RegisterPacProcessor },
 #if BUILDFLAG(ENABLE_SPELLCHECK)
   {"SpellCheckerSessionBridge", spellcheck::android::RegisterSpellcheckJni},
 #endif

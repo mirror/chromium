@@ -58,6 +58,10 @@
                  tools:ignore="ExportedService" />
         {% endfor %}
         <meta-data android:name="org.chromium.content.browser.NUM_PRIVILEGED_SERVICES"
-                   android:value="0"/>
+          android:value="0"/>
+
+        <service android:name="org.chromium.android_webview.pacservice.PacProcessorService"
+                 android:exported="true"
+                 android:process=":wv_pac_service" />
     </application>
 </manifest>

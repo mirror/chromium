@@ -19,6 +19,8 @@
 #include "net/log/net_log_with_source.h"
 #include "net/proxy/proxy_resolver_error_observer.h"
 
+#include "base/logging.h"
+
 namespace net {
 
 namespace {
@@ -170,6 +172,7 @@ int ProxyResolverFactoryV8TracingWrapper::CreateProxyResolver(
                  base::Unretained(this), base::Passed(&v8_resolver), resolver,
                  callback, base::Passed(&error_observer)),
       request);
+  LOG(ERROR) << "scheduled create";
   return ERR_IO_PENDING;
 }
 
@@ -183,7 +186,9 @@ void ProxyResolverFactoryV8TracingWrapper::OnProxyResolverCreated(
     resolver->reset(new ProxyResolverV8TracingWrapper(
         std::move(*v8_resolver), net_log_, host_resolver_,
         std::move(error_observer)));
+    LOG(ERROR) << "Done!";
   }
+  LOG (ERROR) << "error: " << error;
   callback.Run(error);
 }
 

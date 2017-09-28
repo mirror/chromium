@@ -16,6 +16,8 @@
 #include "content/public/app/content_main.h"
 #include "url/url_util.h"
 
+#include "base/logging.h"
+
 namespace android_webview {
 
 namespace {
@@ -58,6 +60,7 @@ bool OnJNIOnLoadRegisterJNI(JavaVM* vm) {
 }
 
 bool OnJNIOnLoadInit() {
+  LOG(ERROR) << "Webview onJNILoadInit";
   std::vector<base::android::InitCallback> init_callbacks;
   init_callbacks.push_back(base::Bind(&Init));
   return content::android::OnJNIOnLoadInit(init_callbacks);

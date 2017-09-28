@@ -8,6 +8,7 @@
 #include "base/android/jni_utils.h"
 #include "base/android/library_loader/library_loader_hooks.h"
 #include "base/bind.h"
+#include "base/logging.h"
 
 namespace base {
 namespace android {
@@ -19,6 +20,7 @@ bool RegisterJNI(JNIEnv* env) {
 }
 
 bool Init() {
+  LOG(ERROR) << "base Init";
   InitAtExitManager();
   JNIEnv* env = base::android::AttachCurrentThread();
   base::android::InitReplacementClassLoader(env,
@@ -44,6 +46,7 @@ bool OnJNIOnLoadRegisterJNI(JavaVM* vm,
 }
 
 bool OnJNIOnLoadInit(std::vector<InitCallback> callbacks) {
+  LOG(ERROR) << "base OnJNIOnLoadInit";
   callbacks.push_back(base::Bind(&Init));
   for (std::vector<InitCallback>::reverse_iterator i =
            callbacks.rbegin(); i != callbacks.rend(); ++i) {

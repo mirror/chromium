@@ -85,6 +85,7 @@ bool IsVMInitialized() {
 
 void InitReplacementClassLoader(JNIEnv* env,
                                 const JavaRef<jobject>& class_loader) {
+  LOG(ERROR) << "InitReplacementClassLoader";
   DCHECK(g_class_loader.Get().is_null());
   DCHECK(!class_loader.is_null());
 
