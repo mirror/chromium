@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa16cedf_556b951a",
+        "filename": "components/exo/surface_tree_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-28T13:26:50Z",
+      "side": 1,
+      "message": "This is now wrong. Setting it to true when that\u0027s trivial to determine might be good enough:\n\nhost_window_-\u003esize() \u003d\u003d root_surface_-\u003econtent_size() \u0026\u0026 root_surface_-\u003eFillsBoundsOpaquely()",
+      "range": {
+        "startLine": 317,
+        "startChar": 6,
+        "endLine": 317,
+        "endChar": 42
+      },
+      "revId": "12caad8d14c895b1b9a9dc0f3b7f91d68c6d6cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
