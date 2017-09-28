@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5bf26d35_5385f5ae",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-09-28T13:34:33Z",
+      "side": 1,
+      "message": "Done. (Actually, RemoteSuggestion is only movable when in a unique_ptr.)",
+      "parentUuid": "b5547260_5b23ebd2",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 35
+      },
+      "revId": "0eed55e245198e97626f3cdb84dee0e1e5c2320f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1dba553_e1ee82a5",
         "filename": "components/ntp_snippets/contextual/contextual_suggestion.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "0eed55e245198e97626f3cdb84dee0e1e5c2320f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a93c15bb_4246c754",
+        "filename": "components/ntp_snippets/contextual/contextual_suggestion.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-09-28T13:34:33Z",
+      "side": 1,
+      "message": "Right. I added a TODO for this.",
+      "parentUuid": "e1dba553_e1ee82a5",
+      "range": {
+        "startLine": 21,
+        "startChar": 14,
+        "endLine": 21,
+        "endChar": 23
+      },
+      "revId": "0eed55e245198e97626f3cdb84dee0e1e5c2320f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,54 @@
     },
     {
       "key": {
+        "uuid": "1cef36fb_33bc2986",
+        "filename": "components/ntp_snippets/contextual/contextual_suggestion.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-09-28T13:34:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52c778f8_eb52a76b",
+      "range": {
+        "startLine": 36,
+        "startChar": 6,
+        "endLine": 36,
+        "endChar": 8
+      },
+      "revId": "0eed55e245198e97626f3cdb84dee0e1e5c2320f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3dcf7458_dacb1766",
+        "filename": "components/ntp_snippets/contextual/contextual_suggestion.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-09-28T13:34:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3045b465_888212be",
+      "range": {
+        "startLine": 36,
+        "startChar": 46,
+        "endLine": 36,
+        "endChar": 47
+      },
+      "revId": "0eed55e245198e97626f3cdb84dee0e1e5c2320f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa946507_8ef29d72",
         "filename": "components/ntp_snippets/contextual/contextual_suggestion.h",
         "patchSetId": 1
@@ -114,6 +210,30 @@
       "revId": "0eed55e245198e97626f3cdb84dee0e1e5c2320f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a8aaa7e_bbf0df62",
+        "filename": "components/ntp_snippets/contextual/contextual_suggestion.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-09-28T13:34:33Z",
+      "side": 1,
+      "message": "Neither the server nor the frontend has multiple ids for a contextual suggestion, so I changed this.",
+      "parentUuid": "fa946507_8ef29d72",
+      "range": {
+        "startLine": 39,
+        "startChar": 17,
+        "endLine": 39,
+        "endChar": 24
+      },
+      "revId": "0eed55e245198e97626f3cdb84dee0e1e5c2320f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "b45bc45d_b021e536",
+        "filename": "components/ntp_snippets/contextual/contextual_suggestion.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-09-28T13:34:33Z",
+      "side": 1,
+      "message": "This is copied from RemoteSuggestion which should be well tested for different character sets.",
+      "parentUuid": "fa42fe27_74768e35",
+      "range": {
+        "startLine": 43,
+        "startChar": 8,
+        "endLine": 43,
+        "endChar": 19
+      },
+      "revId": "0eed55e245198e97626f3cdb84dee0e1e5c2320f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f1ee3e0_bd4f7445",
         "filename": "components/ntp_snippets/contextual/contextual_suggestion.h",
         "patchSetId": 1
@@ -160,6 +304,30 @@
       "revId": "0eed55e245198e97626f3cdb84dee0e1e5c2320f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be21858f_0a9debee",
+        "filename": "components/ntp_snippets/contextual/contextual_suggestion.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-09-28T13:34:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f1ee3e0_bd4f7445",
+      "range": {
+        "startLine": 54,
+        "startChar": 53,
+        "endLine": 55,
+        "endChar": 14
+      },
+      "revId": "0eed55e245198e97626f3cdb84dee0e1e5c2320f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "72885274_c7dc3b4f",
+        "filename": "components/ntp_snippets/contextual/contextual_suggestion.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-09-28T13:34:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e03e24e_79783c8e",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 69,
+        "endChar": 50
+      },
+      "revId": "0eed55e245198e97626f3cdb84dee0e1e5c2320f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c664daf2_3f49fc7c",
         "filename": "components/ntp_snippets/contextual/contextual_suggestions_fetcher_impl.cc",
         "patchSetId": 1
@@ -206,6 +398,30 @@
       "revId": "0eed55e245198e97626f3cdb84dee0e1e5c2320f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37f200eb_f2636116",
+        "filename": "components/ntp_snippets/contextual/contextual_suggestions_fetcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-09-28T13:34:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c664daf2_3f49fc7c",
+      "range": {
+        "startLine": 99,
+        "startChar": 4,
+        "endLine": 100,
+        "endChar": 26
+      },
+      "revId": "0eed55e245198e97626f3cdb84dee0e1e5c2320f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "89a29efe_210e7b60",
+        "filename": "components/ntp_snippets/contextual/contextual_suggestions_fetcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-09-28T13:34:33Z",
+      "side": 1,
+      "message": "Yes, the server currently sends two categories.",
+      "parentUuid": "defba6a0_926bd731",
+      "range": {
+        "startLine": 281,
+        "startChar": 1,
+        "endLine": 284,
+        "endChar": 3
+      },
+      "revId": "0eed55e245198e97626f3cdb84dee0e1e5c2320f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3f1c03c_fc41d8c6",
         "filename": "components/ntp_snippets/contextual/contextual_suggestions_fetcher_impl_unittest.cc",
         "patchSetId": 1
@@ -252,6 +492,30 @@
       "revId": "0eed55e245198e97626f3cdb84dee0e1e5c2320f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d20eae0_5cb4d96c",
+        "filename": "components/ntp_snippets/contextual/contextual_suggestions_fetcher_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-09-28T13:34:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3f1c03c_fc41d8c6",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 10
+      },
+      "revId": "0eed55e245198e97626f3cdb84dee0e1e5c2320f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

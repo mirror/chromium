@@ -22,6 +22,30 @@
       "revId": "7f85c5535b180c2042af8d41cbef3cdf16e88e4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f0640cf_544723f6",
+        "filename": "components/ntp_snippets/contextual/contextual_content_suggestions_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-09-28T13:34:33Z",
+      "side": 0,
+      "message": "The category is added in inside the method ToContentSuggestion, so the behavior is not changed.",
+      "parentUuid": "492d1cf6_1dd094b2",
+      "range": {
+        "startLine": 72,
+        "startChar": 55,
+        "endLine": 72,
+        "endChar": 65
+      },
+      "revId": "7f85c5535b180c2042af8d41cbef3cdf16e88e4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
