@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "5d0fd7f3_c3157b3c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/indexeddb/delete-entry.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-09-28T23:27:22Z",
+      "side": 1,
+      "message": "This test will have to be modified after the idb live update goes through, but right now refreshing idb triggers the DatabaseAdded event and adds a new database tree element.\n\nMoved and just created a single promise since it\u0027s only called once.",
+      "parentUuid": "8b6138cb_ab5bc527",
+      "revId": "420dd692cadb9da1083b4107e39603a9ea113442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0499db4b_79877870",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/indexeddb/delete-entry.html",
         "patchSetId": 1
@@ -56,6 +74,24 @@
       "revId": "420dd692cadb9da1083b4107e39603a9ea113442",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40bd8db4_fdda1c68",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/indexeddb/delete-entry.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-09-28T23:27:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0499db4b_79877870",
+      "revId": "420dd692cadb9da1083b4107e39603a9ea113442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +112,24 @@
     },
     {
       "key": {
+        "uuid": "b1dfb299_941047a2",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/indexeddb/delete-entry.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-09-28T23:27:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3d3fe3a_6bc13798",
+      "revId": "420dd692cadb9da1083b4107e39603a9ea113442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67bb6df3_d0599e2c",
         "filename": "third_party/WebKit/Source/modules/indexeddb/IDBObjectStore.cpp",
         "patchSetId": 1
@@ -93,6 +147,24 @@
     },
     {
       "key": {
+        "uuid": "f046df39_4292297d",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBObjectStore.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-09-28T23:27:22Z",
+      "side": 1,
+      "message": "This IDBObjectStore is created right before the deleteFunction call, so I don\u0027t think it can be be nullptr.",
+      "parentUuid": "67bb6df3_d0599e2c",
+      "revId": "420dd692cadb9da1083b4107e39603a9ea113442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f2fe727_4a8d4b3b",
         "filename": "third_party/WebKit/Source/modules/indexeddb/IDBObjectStore.cpp",
         "patchSetId": 1
@@ -107,6 +179,24 @@
       "revId": "420dd692cadb9da1083b4107e39603a9ea113442",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fb380fd_9fa15af2",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBObjectStore.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 937,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-09-28T23:27:22Z",
+      "side": 1,
+      "message": "Kept method below deleteFunction and have deleteFunction call it.",
+      "parentUuid": "6f2fe727_4a8d4b3b",
+      "revId": "420dd692cadb9da1083b4107e39603a9ea113442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
