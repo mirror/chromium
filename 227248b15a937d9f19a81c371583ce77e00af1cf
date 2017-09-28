@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3150c815_2a40f526",
+        "filename": "testing/buildbot/gn_isolate_map.pyl",
+        "patchSetId": 43
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-09-28T22:41:15Z",
+      "side": 1,
+      "message": "Do we need a new bug number to track this?",
+      "range": {
+        "startLine": 566,
+        "startChar": 11,
+        "endLine": 566,
+        "endChar": 27
+      },
+      "revId": "227248b15a937d9f19a81c371583ce77e00af1cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ad5124d_c79030e6",
+        "filename": "testing/buildbot/gn_isolate_map.pyl",
+        "patchSetId": 43
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-09-28T22:41:15Z",
+      "side": 1,
+      "message": "I\u0027m going to ask some questions that I think we answered, just to clarify in the code review.\n\n1. I\u0027d just like to make 100% sure that this will have no adverse side-effects to other tests in ios_chrome_integration_egtests. \n\n2. We have to add the flag at this point, so it goes to the app? Adding it in our test.json files won\u0027t work because that is loaded in the XCTest, after the target is loaded?",
+      "revId": "227248b15a937d9f19a81c371583ce77e00af1cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
