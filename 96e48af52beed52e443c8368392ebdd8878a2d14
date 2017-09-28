@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a45cbbf_e5662764",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1168,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-28T18:09:32Z",
+      "side": 0,
+      "message": "Shall we extract this block to a function and reuse with OnDidGetUploadRiskData?",
+      "range": {
+        "startLine": 1161,
+        "startChar": 4,
+        "endLine": 1168,
+        "endChar": 50
+      },
+      "revId": "96e48af52beed52e443c8368392ebdd8878a2d14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

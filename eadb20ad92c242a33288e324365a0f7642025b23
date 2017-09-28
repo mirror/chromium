@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6f12555_8a752d03",
+        "filename": "components/autofill/core/browser/autofill_experiments.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-28T18:09:32Z",
+      "side": 1,
+      "message": "This experiment will be turn on after the server side work is done, right?\nOtherwise, we will ask to save data very aggressively and after users say yes. We won\u0027t be able to save.",
+      "range": {
+        "startLine": 140,
+        "startChar": 5,
+        "endLine": 140,
+        "endChar": 61
+      },
+      "revId": "eadb20ad92c242a33288e324365a0f7642025b23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8288dc9b_ab9ba83f",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1104,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-28T18:09:32Z",
+      "side": 1,
+      "message": "+ DCHECK(!IsAutofillUpstreamSendDetectedValuesExperimentEnabled()) ?",
+      "range": {
+        "startLine": 1104,
+        "startChar": 11,
+        "endLine": 1104,
+        "endChar": 58
+      },
+      "revId": "eadb20ad92c242a33288e324365a0f7642025b23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3013da4a_2af7a75f",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1164,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-28T18:09:32Z",
+      "side": 1,
+      "message": "I\u0027m wondering how did this work before this change. Try to get cvc from CVC fix flow bubble, and will get empty if cvc fix flow is not enabled?",
+      "range": {
+        "startLine": 1163,
+        "startChar": 36,
+        "endLine": 1164,
+        "endChar": 64
+      },
+      "revId": "eadb20ad92c242a33288e324365a0f7642025b23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9accc419_4eea45ff",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1359,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-28T18:09:32Z",
+      "side": 1,
+      "message": "Please be noted that this is not behind the flag. Though it should be fine if we are confident about the change in GetFormImportDetectedValues.",
+      "range": {
+        "startLine": 1359,
+        "startChar": 4,
+        "endLine": 1359,
+        "endChar": 56
+      },
+      "revId": "eadb20ad92c242a33288e324365a0f7642025b23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71fd028c_8bb63b0a",
+        "filename": "components/autofill/core/browser/autofill_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-28T18:09:32Z",
+      "side": 1,
+      "message": "It would be better if we put the payment code path here. But not sure if we should do this since this is open source.",
+      "range": {
+        "startLine": 85,
+        "startChar": 5,
+        "endLine": 85,
+        "endChar": 19
+      },
+      "revId": "eadb20ad92c242a33288e324365a0f7642025b23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e0ef6c6_e179231a",
+        "filename": "components/autofill/core/browser/autofill_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-28T18:09:32Z",
+      "side": 1,
+      "message": "Can you add a comment about what is this?",
+      "range": {
+        "startLine": 602,
+        "startChar": 2,
+        "endLine": 602,
+        "endChar": 31
+      },
+      "revId": "eadb20ad92c242a33288e324365a0f7642025b23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
