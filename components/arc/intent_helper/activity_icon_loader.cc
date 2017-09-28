@@ -18,6 +18,9 @@
 #include "components/arc/arc_service_manager.h"
 #include "components/arc/arc_util.h"
 #include "ui/base/layout.h"
+#include "ui/display/display.h"
+#include "ui/display/screen.h"
+#include "ui/gfx/codec/png_codec.h"
 #include "ui/gfx/image/image_skia.h"
 #include "ui/gfx/image/image_skia_operations.h"
 
@@ -110,13 +113,16 @@ std::unique_ptr<ActivityIconLoader::ActivityToIconsMap> ResizeAndEncodeIcons(
     gfx::Image icon16(icon_small);
     gfx::Image icon20(icon_large);
 
-    // Encode the icon as PNG data, and then as data: URL.
-    scoped_refptr<base::RefCountedMemory> img = icon16.As1xPNGBytes();
-    if (!img)
-      continue;
-    std::string encoded;
-    base::Base64Encode(base::StringPiece(img->front_as<char>(), img->size()),
-                       &encoded);
+    // Encode the icon as PNG data considering the device scale factor, and then
+    // as data: URL.
+    display::Screen* screen = display::Screen::GetScreen();
+    float scale =
+        screen ? screen->GetPrimaryDisplay().device_scale_factor() : 1.0f;
+    std::vector<unsigned char> output;
+    gfx::PNGCodec::EncodeBGRASkBitmap(
+        icon_small.GetRepresentation(scale).sk_bitmap(), false, &output);
+    std::string encoded(output.begin(), output.end());
+    base::Base64Encode(encoded, &encoded);
     scoped_refptr<base::RefCountedData<GURL>> dataurl(
         new base::RefCountedData<GURL>(GURL(kPngDataUrlPrefix + encoded)));
 
