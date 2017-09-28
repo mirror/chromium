@@ -701,6 +701,30 @@
       "revId": "14957e2576dfa1669050d88a4ba6abfa4124eeb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "636c7a60_61d2a0b8",
+        "filename": "components/history/core/browser/typed_url_sync_bridge.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1142151
+      },
+      "writtenOn": "2017-09-28T05:17:48Z",
+      "side": 1,
+      "message": "Yes, TypedURLSyncBridgeTest covered this.\nbefore this CL, TypedURLSyncBridgeTest did not fail because I did not connect HistoryBackend with TypedURLSyncBridge yet. After this CL, HistoryBackend and TypedURLSyncBridge connected,TypedURLSyncBridge become observer in HistoryBackend. All the tests in TypedURLSyncBridgeTest about propagating data from TypedURLSyncBridge to HistoryBackend will fail, because data will come back to TypedURLSyncBridge from HistoryBackend.\nActually this is how I found that I need to add this variable.",
+      "parentUuid": "517aa37d_95e979ad",
+      "range": {
+        "startLine": 222,
+        "startChar": 7,
+        "endLine": 222,
+        "endChar": 33
+      },
+      "revId": "14957e2576dfa1669050d88a4ba6abfa4124eeb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

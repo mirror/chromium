@@ -65,6 +65,24 @@
     },
     {
       "key": {
+        "uuid": "ce403dd9_435f7739",
+        "filename": "components/history/core/browser/typed_url_sync_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1142151
+      },
+      "writtenOn": "2017-09-28T05:17:48Z",
+      "side": 1,
+      "message": "UpdateStorageKey() do not return anything, so we just keep going.\nshould we add a return value for UpdateStorageKey()?",
+      "parentUuid": "2569bc09_73638591",
+      "revId": "d96b89b0ad241d42f24dc7d6c261d9517fb278fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a621abd_df33302a",
         "filename": "components/sync/driver/model_type_controller.h",
         "patchSetId": 7
