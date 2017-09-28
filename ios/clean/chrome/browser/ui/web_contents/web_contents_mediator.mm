@@ -11,6 +11,7 @@
 #import "ios/clean/chrome/browser/ui/web_contents/web_contents_consumer.h"
 #import "ios/web/public/navigation_manager.h"
 #import "ios/web/public/web_state/ui/crw_generic_content_view.h"
+#import "ios/web/public/web_state/ui/crw_web_view_proxy.h"
 #include "ios/web/public/web_state/web_state.h"
 #include "ui/base/page_transition_types.h"
 #include "url/gurl.h"
@@ -55,14 +56,17 @@
 // Updates the consumer's contentView.
 - (void)updateConsumerWithWebState:(web::WebState*)webState {
   UIView* updatedView = nil;
+  CRWWebViewScrollViewProxy* scrollViewProxy = nil;
   if (webState) {
     updatedView = webState->GetView();
+    scrollViewProxy = webState->GetWebViewProxy().scrollViewProxy;
     // PLACEHOLDER: This navigates the page since the omnibox is not yet
     // hooked up.
     [self navigateToDefaultPage:webState];
   }
   if (self.consumer) {
-    [self.consumer contentViewDidChange:updatedView];
+    [self.consumer contentViewDidChange:updatedView
+                        scrollViewProxy:scrollViewProxy];
   }
 }
 
