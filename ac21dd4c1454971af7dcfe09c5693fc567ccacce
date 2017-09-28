@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f57ca31d_c0ff8d8b",
+        "filename": "content/renderer/media_capture_from_element/html_video_element_capturer_source.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-09-28T19:16:43Z",
+      "side": 1,
+      "message": "Is the new check necessary? It will hit |new_frame_callback_| after StopCapture() already. Tbh, I don\u0027t see why |running_callback_| is reset in StopCapture() either.",
+      "range": {
+        "startLine": 122,
+        "startChar": 31,
+        "endLine": 122,
+        "endChar": 32
+      },
+      "revId": "ac21dd4c1454971af7dcfe09c5693fc567ccacce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
