@@ -4,8 +4,39 @@
  * found in the LICENSE file.
  */
 
+.tabbed-pane-header {
+    padding-right: 20px;
+}
+
+.network-config-overrides label {
+    padding: 2px;
+}
+
+.network-config label[is="dt-checkbox"], .network-config-ua-custom, .network-config-throttling, .mappings-list {
+    padding-top: 8px;
+}
+
+.file-system-mapping-list-item, .mappings-list-empty {
+    user-select: text;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.mappings-list-empty {
+    flex: auto;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.file-system-mapping-system-value, .file-system-mapping-value {
+    flex: 1;
+}
+
 .network-config {
-    padding: 12px;
     display: block;
 }
 
@@ -90,4 +121,51 @@
 
 .network-config-ua-auto.checked, .network-config-ua-custom.checked {
     opacity: 1;
+}
+
+.file-system-mapping-list-empty {
+    flex: auto;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.file-system-mapping-list-item {
+    padding: 3px 5px 3px 5px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    flex: auto 1 1;
+}
+
+.file-system-mapping-separator {
+    flex: 0 0 1px;
+    background-color: rgb(231, 231, 231);
+    height: 30px;
+    margin: 0 4px;
+}
+
+.file-system-mapping-separator-invisible {
+    visibility: hidden;
+    height: 100% !important;
+}
+
+.file-system-mapping-edit-row {
+    flex: none;
+    display: flex;
+    flex-direction: row;
+    margin: 6px 5px;
+    align-items: center;
+}
+
+.file-system-mapping-edit-row input {
+    width: 100%;
+    text-align: inherit;
+}
+
+.add-button {
+    width: 100px;
+    margin-left: auto;
 }

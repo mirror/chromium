@@ -307,7 +307,16 @@ Workspace.UISourceCode = class extends Common.Object {
     if (this._project.canSetFileContent()) {
       this._project.setFileContent(this, content, function() {});
     } else if (this._url && Workspace.fileManager.isURLSaved(this._url)) {
-      Workspace.fileManager.save(this._url, content, false);
+      Workspace.fileManager.save(this._url, content, false).then(saveResponse => {
+        if (!saveResponse.success)
+          return;
+
+        var interceptionFilesMapSetting =
+            Common.settings.createSetting('network_file_server.interception-files-map', {});
+        var interceptionFilesMap = interceptionFilesMapSetting.get();
+        interceptionFilesMap[this._url] = saveResponse.fileSystemPath;
+        interceptionFilesMapSetting.set(interceptionFilesMap);
+      });
       Workspace.fileManager.close(this._url);
     }
     this._contentCommitted(content, true);
@@ -349,6 +358,11 @@ Workspace.UISourceCode = class extends Common.Object {
       if (!saveResponse.success)
         return;
       this._contentCommitted(this.workingCopy(), true);
+
+      var interceptionFilesMapSetting = Common.settings.createSetting('network_file_server.interception-files-map', {});
+      var interceptionFilesMap = interceptionFilesMapSetting.get();
+      interceptionFilesMap[this._url] = saveResponse.fileSystemPath;
+      interceptionFilesMapSetting.set(interceptionFilesMap);
     });
     Workspace.fileManager.close(this._url);
   }

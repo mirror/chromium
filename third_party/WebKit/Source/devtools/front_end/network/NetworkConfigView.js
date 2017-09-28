@@ -1,8 +1,9 @@
 // Copyright (c) 2015 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
+
 /**
- * @unrestricted
+ * @implements {UI.ListWidget.Delegate}
  */
 Network.NetworkConfigView = class extends UI.VBox {
   constructor() {
@@ -14,15 +15,26 @@ Network.NetworkConfigView = class extends UI.VBox {
     this.registerRequiredCSS('network/networkConfigView.css');
     this.contentElement.classList.add('network-config');
 
-    this._createCacheSection();
-    this.contentElement.createChild('div').classList.add('panel-section-separator');
-    this._createNetworkThrottlingSection();
-    this.contentElement.createChild('div').classList.add('panel-section-separator');
-    this._createUserAgentSection();
+    /** @type {!Set<string>} */
+    this._renderedTabs = new Set();
+    var tabbedPane = new UI.TabbedPane();
+    tabbedPane.registerRequiredCSS('network/networkConfigView.css');
+    tabbedPane.setVerticalTabLayout(true);
+    var viewModes = Network.NetworkConfigView.ViewModes;
+    tabbedPane.appendTab(viewModes.Overrides, Common.UIString('Network Overrides'), new UI.VBox());
+    tabbedPane.appendTab(viewModes.Throttling, Common.UIString('Throttling'), new UI.VBox());
+    tabbedPane.appendTab(viewModes.FilePersistence, Common.UIString('File Persistence'), new UI.VBox());
+    tabbedPane.addEventListener(UI.TabbedPane.Events.TabSelected, this._onTabSelected.bind(this));
+    tabbedPane.show(this.contentElement);
+
+    this._mappingsList = new UI.ListWidget(this);
+    this._interceptionFilesMapSetting = Common.settings.createSetting('network_file_server.interception-files-map', {});
+    this._interceptionFilesMapSetting.addChangeListener(this._refreshMappingsList, this);
+    this._mappingEditor = this._createMappingEditor();
   }
 
   /**
-   * @return {{select: !Element, input: !Element}}
+   * @return {!{select: !Element, input: !Element}}
    */
   static createUserAgentSelectAndInput() {
     var userAgentSetting = Common.settings.createSetting('customUserAgent', '');
@@ -92,65 +104,199 @@ Network.NetworkConfigView = class extends UI.VBox {
   }
 
   /**
-   * @param {string} title
-   * @param {string=} className
+   * @param {!Common.Event} event
+   */
+  _onTabSelected(event) {
+    var tabId = /** @type {string} */ (event.data.tabId);
+    if (this._renderedTabs.has(tabId))
+      return;
+    this._renderedTabs.add(tabId);
+    var tabView = /** @type {!UI.Widget} */ (event.data.view);
+    switch (tabId) {
+      case Network.NetworkConfigView.ViewModes.Overrides:
+        this._renderOverridesTab(tabView);
+        break;
+      case Network.NetworkConfigView.ViewModes.Throttling:
+        this._renderThrottlingView(tabView);
+        break;
+      case Network.NetworkConfigView.ViewModes.FilePersistence:
+        this._renderFilePersistenceView(tabView);
+        break;
+    }
+  }
+
+  /**
+   * @param {!UI.Widget} view
+   */
+  _renderOverridesTab(view) {
+    view.element.classList.add('network-config-overrides');
+    view.element.appendChild(UI.SettingsUI.createSettingCheckbox(
+        Common.UIString('Disable cache'), Common.moduleSetting('cacheDisabled'), true));
+
+    var checkboxLabel = UI.CheckboxLabel.create(Common.UIString('Select automatically User-Agent'), true);
+    view.element.appendChild(checkboxLabel);
+    var autoCheckbox = checkboxLabel.checkboxElement;
+    autoCheckbox.addEventListener('change', userAgentTypeChanged);
+
+    var customUserAgentSetting = Common.settings.createSetting('customUserAgent', '');
+    customUserAgentSetting.addChangeListener(() => {
+      if (autoCheckbox.checked)
+        return;
+      SDK.multitargetNetworkManager.setCustomUserAgentOverride(customUserAgentSetting.get());
+    }, this);
+
+    var customUserAgent = view.element.createChild('div', 'network-config-ua-custom');
+    var customSelectAndInput = Network.NetworkConfigView.createUserAgentSelectAndInput();
+    customSelectAndInput.select.classList.add('chrome-select');
+    customUserAgent.appendChild(customSelectAndInput.select);
+    customUserAgent.appendChild(customSelectAndInput.input);
+    userAgentTypeChanged();
+
+    function userAgentTypeChanged() {
+      var useCustomUA = !autoCheckbox.checked;
+      customUserAgent.classList.toggle('checked', useCustomUA);
+      customSelectAndInput.select.disabled = !useCustomUA;
+      customSelectAndInput.input.disabled = !useCustomUA;
+      var customUA = useCustomUA ? customUserAgentSetting.get() : '';
+      SDK.multitargetNetworkManager.setCustomUserAgentOverride(customUA);
+    }
+  }
+
+  /**
+   * @param {!UI.Widget} view
+   */
+  _renderThrottlingView(view) {
+    view.element.classList.add('network-config-throttling');
+    MobileThrottling.throttlingManager().decorateSelectWithNetworkThrottling(
+        /** @type {!HTMLSelectElement} */ (view.element.createChild('select', 'chrome-select')));
+  }
+
+  /**
+   * @param {!UI.Widget} view
+   */
+  _renderFilePersistenceView(view) {
+    view.element.classList.add('network-config-file-persistence');
+    this._mappingsList.element.classList.add('mappings-list');
+    this._mappingsList.registerRequiredCSS('network/networkConfigView.css');
+
+    var enableInterceptionCheckbox = new UI.ToolbarSettingCheckbox(
+        Common.moduleSetting('network_file_server.interception-enabled'),
+        Common.UIString('Enable serving files from disk'), Common.UIString('Enable serving files from disk'));
+    view.element.appendChild(enableInterceptionCheckbox.element);
+
+    var mappingsPlaceholder = createElementWithClass('div', 'mappings-list-empty');
+    mappingsPlaceholder.textContent = Common.UIString('None');
+    this._mappingsList.setEmptyPlaceholder(mappingsPlaceholder);
+
+    this._refreshMappingsList();
+    this._mappingsList.show(view.element);
+
+    view.element.appendChild(UI.createTextButton(
+        Common.UIString('Add Mapping'),
+        () => this._mappingsList.addNewItem(
+            Object.values(this._interceptionFilesMapSetting.get()).length, {url: '', file: ''}),
+        'add-button'));
+  }
+
+  _refreshMappingsList() {
+    this._mappingsList.clear();
+    var interceptionFilesMap = this._interceptionFilesMapSetting.get();
+    var urls = Object.keys(interceptionFilesMap).sort();
+    for (var url of urls)
+      this._mappingsList.appendItem({url: url, file: interceptionFilesMap[url]}, true);
+  }
+
+  /**
+   * @override
+   * @param {!{url: string, file: string}} item
+   * @param {boolean} editable
    * @return {!Element}
    */
-  _createSection(title, className) {
-    var section = this.contentElement.createChild('section', 'network-config-group');
-    if (className)
-      section.classList.add(className);
-    section.createChild('div', 'network-config-title').textContent = title;
-    return section.createChild('div', 'network-config-fields');
+  renderItem(item, editable) {
+    var element = createElementWithClass('div', 'file-system-mapping-list-item');
+
+    var entry = /** @type {!{url: string, file: string}} */ (item);
+    var urlElement = element.createChild('div', 'file-system-mapping-url');
+    urlElement.textContent = entry.url;
+    urlElement.title = entry.url;
+    element.createChild('div', 'file-system-mapping-separator');
+    var fileElement = element.createChild('div', 'file-system-mapping-file');
+    fileElement.textContent = entry.file;
+    fileElement.title = entry.file;
+
+    return element;
   }
 
-  _createCacheSection() {
-    var section = this._createSection(Common.UIString('Caching'), 'network-config-disable-cache');
-    section.appendChild(UI.SettingsUI.createSettingCheckbox(
-        Common.UIString('Disable cache'), Common.moduleSetting('cacheDisabled'), true));
+  /**
+   * @override
+   * @param {*} item
+   * @param {number} index
+   */
+  removeItemRequested(item, index) {
+    var mappings = this._interceptionFilesMapSetting.get();
+    delete mappings[item.url];
+    this._interceptionFilesMapSetting.set(mappings);
   }
 
-  _createNetworkThrottlingSection() {
-    var section = this._createSection(Common.UIString('Network throttling'), 'network-config-throttling');
-    this._networkThrottlingSelect =
-        /** @type {!HTMLSelectElement} */ (section.createChild('select', 'chrome-select'));
-    MobileThrottling.throttlingManager().decorateSelectWithNetworkThrottling(this._networkThrottlingSelect);
+  /**
+   * @override
+   * @param {*} item
+   * @param {!UI.ListWidget.Editor} editor
+   * @param {boolean} isNew
+   */
+  commitEdit(item, editor, isNew) {
+    var entry = /** @type {!{url: string, file: string}} */ (item);
+    var mappings = this._interceptionFilesMapSetting.get();
+    var url = editor.control('url').value;
+    if (!isNew)
+      delete mappings[entry.url];
+    mappings[url] = editor.control('file').value;
+    this._interceptionFilesMapSetting.set(mappings);
   }
 
-  _createUserAgentSection() {
-    var section = this._createSection(Common.UIString('User agent'), 'network-config-ua');
-    var checkboxLabel = UI.CheckboxLabel.create(Common.UIString('Select automatically'), true);
-    section.appendChild(checkboxLabel);
-    this._autoCheckbox = checkboxLabel.checkboxElement;
-    this._autoCheckbox.addEventListener('change', this._userAgentTypeChanged.bind(this));
-
-    this._customUserAgentSetting = Common.settings.createSetting('customUserAgent', '');
-    this._customUserAgentSetting.addChangeListener(this._customUserAgentChanged, this);
-
-    this._customUserAgent = section.createChild('div', 'network-config-ua-custom');
-    this._customSelectAndInput = Network.NetworkConfigView.createUserAgentSelectAndInput();
-    this._customSelectAndInput.select.classList.add('chrome-select');
-    this._customUserAgent.appendChild(this._customSelectAndInput.select);
-    this._customUserAgent.appendChild(this._customSelectAndInput.input);
-    this._userAgentTypeChanged();
+  /**
+   * @override
+   * @param {*} item
+   * @return {!UI.ListWidget.Editor}
+   */
+  beginEdit(item) {
+    var entry = /** @type {!{url: string, file: string}} */ (item);
+    this._mappingEditor.control('url').value = entry.url;
+    this._mappingEditor.control('file').value = entry.file;
+    return this._mappingEditor;
   }
 
-  _customUserAgentChanged() {
-    if (this._autoCheckbox.checked)
-      return;
-    SDK.multitargetNetworkManager.setCustomUserAgentOverride(this._customUserAgentSetting.get());
-  }
+  /**
+   * @return {!UI.ListWidget.Editor}
+   */
+  _createMappingEditor() {
+    var editor = new UI.ListWidget.Editor();
+    var content = editor.contentElement();
 
-  _userAgentTypeChanged() {
-    var useCustomUA = !this._autoCheckbox.checked;
-    this._customUserAgent.classList.toggle('checked', useCustomUA);
-    this._customSelectAndInput.select.disabled = !useCustomUA;
-    this._customSelectAndInput.input.disabled = !useCustomUA;
-    var customUA = useCustomUA ? this._customUserAgentSetting.get() : '';
-    SDK.multitargetNetworkManager.setCustomUserAgentOverride(customUA);
+    var titles = content.createChild('div', 'file-system-mapping-edit-row');
+    titles.createChild('div', 'file-system-mapping-system-value').textContent = Common.UIString('URL prefix');
+    titles.createChild('div', 'file-system-mapping-separator file-system-mapping-separator-invisible');
+    titles.createChild('div', 'file-system-mapping-value').textContent = Common.UIString('URL');
+
+    var fields = content.createChild('div', 'file-system-mapping-edit-row');
+    fields.createChild('div', 'file-system-mapping-value')
+        .appendChild(editor.createInput('url', 'text', 'http://localhost:8000/url', (item, index, input) => {
+          return item.url === input.value || !(input.value in this._interceptionFilesMapSetting.get());
+        }));
+    fields.createChild('div', 'file-system-mapping-separator file-system-mapping-separator-invisible');
+    fields.createChild('div', 'file-system-mapping-value')
+        .appendChild(editor.createInput('file', 'text', '/path/to/folder/', (item, index, input) => !!input.value));
+
+    return editor;
   }
 };
 
+/** @enum {string} */
+Network.NetworkConfigView.ViewModes = {
+  Overrides: 'Overrides',
+  Throttling: 'Throttling',
+  FilePersistence: 'FilePersistence',
+};
 
 /** @type {!Array.<{title: string, values: !Array.<{title: string, value: string}>}>} */
 Network.NetworkConfigView._userAgentGroups = [

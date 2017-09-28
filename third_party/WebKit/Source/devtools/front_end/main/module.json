@@ -451,7 +451,8 @@
         "help",
         "console_model",
         "network_log",
-        "console_counters"
+        "console_counters",
+        "network_file_server"
     ],
     "scripts": [
         "RenderingOptions.js",
