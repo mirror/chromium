@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "a5cf96fa_e0edb202",
+        "filename": "components/history/content/browser/web_contents_top_sites_observer.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-09-28T22:34:14Z",
+      "side": 1,
+      "message": "Hi Scott, the code is a bit complex. I\u0027d like to provide as much detail as possible below.\n\n1) When TopSites queries history db via HistoryBackend::QueryMostVisitedURLs, it actually queries the VisitSegmentDatabase in the history db. HistoryDatabase consists of a few DBs. Please refer to line 71 in history_backend.cc\n\n2) VisitSegmentDatabase is updated via HistoryBackend::UpdateSegments, which is only called in HistoryBackend::AddPage. The latter is only called from HistoryService::AddPage(const HistoryAddPageArgs\u0026 add_page_args). Note that there are a number of AddPage variants.  \n\n3) Although HistoryService::AddPage is called in a few places, I believe the most important one is HistoryTabHelper::UpdateHistoryForNavigation().\n\nAdditionally, if you refresh chrome://history/ each time you visit a website (type in url in a new tab or the current one, or via bookmark, or via jumplist in Windows, or go to a previous page via navigation), I think you can easily guess what the code is like.\n\n[New] I had another think after syncing with Marc. Now I have a much better understanding of Instant service and MostVistedSites. I think it\u0027s better to keep that code untouched, so I\u0027ve reverted those changes in the new patch set. This may reduce the concern of the changes here in NavigationEntryCommitted(). For TopSites, I still think we should remove polling and only refresh it when there are (relevant) navigation events observed. \n\nPTAL the new patch set. Thanks!",
+      "parentUuid": "e333ac15_7b783a53",
+      "range": {
+        "startLine": 42,
+        "startChar": 5,
+        "endLine": 43,
+        "endChar": 36
+      },
+      "revId": "842b89bc8dc02098b20d1dcf7de0dba366bec38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dca6f857_071702e5",
         "filename": "components/history/content/browser/web_contents_top_sites_observer.cc",
         "patchSetId": 34
@@ -165,6 +189,30 @@
       "revId": "842b89bc8dc02098b20d1dcf7de0dba366bec38f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "676db865_59a1dd8a",
+        "filename": "components/history/content/browser/web_contents_top_sites_observer.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-09-28T22:34:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d5abe2e_ea562897",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 48,
+        "endChar": 3
+      },
+      "revId": "842b89bc8dc02098b20d1dcf7de0dba366bec38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
