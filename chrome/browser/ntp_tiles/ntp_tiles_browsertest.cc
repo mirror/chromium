@@ -153,7 +153,7 @@ IN_PROC_BROWSER_TEST_F(NTPTilesTest, NavigateAfterSettingObserver) {
       browser(), page_url, WindowOpenDisposition::CURRENT_TAB,
       ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
 
-  most_visited_sites_->Refresh();
+  most_visited_sites_->top_sites()->SyncWithHistory();
   NTPTilesVector tiles = waiter.WaitForTiles();
   EXPECT_THAT(tiles, Contains(MatchesTile("OK", page_url.spec().c_str(),
                                           TileSource::TOP_SITES)));
