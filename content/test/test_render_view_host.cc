@@ -261,13 +261,14 @@ bool TestRenderViewHost::CreateTestRenderView(
     bool window_was_created_with_opener) {
   FrameReplicationState replicated_state;
   replicated_state.name = base::UTF16ToUTF8(frame_name);
-  return CreateRenderView(opener_frame_route_id, proxy_route_id,
+  return CreateRenderView(opener_frame_route_id, proxy_route_id, std::string(),
                           replicated_state, window_was_created_with_opener);
 }
 
 bool TestRenderViewHost::CreateRenderView(
     int opener_frame_route_id,
     int proxy_route_id,
+    const std::string& devtools_frame_guid,
     const FrameReplicationState& replicated_frame_state,
     bool window_was_created_with_opener) {
   DCHECK(!IsRenderViewLive());

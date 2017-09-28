@@ -89,7 +89,8 @@ class CONTENT_EXPORT RenderFrameMessageFilter
   void InitializeOnIO(mojom::CookieManagerPtrInfo cookie_manager);
 
   void OnCreateChildFrame(const FrameHostMsg_CreateChildFrame_Params& params,
-                          int* new_render_frame_id);
+                          int* new_render_frame_id,
+                          std::string* devtools_frame_id);
   void OnCookiesEnabled(int render_frame_id,
                         const GURL& url,
                         const GURL& site_for_cookies,
