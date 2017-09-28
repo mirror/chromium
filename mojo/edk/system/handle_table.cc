@@ -49,6 +49,7 @@ base::Lock& HandleTable::GetLock() {
 }
 
 MojoHandle HandleTable::AddDispatcher(scoped_refptr<Dispatcher> dispatcher) {
+  lock_.AssertAcquired();
   // Oops, we're out of handles.
   if (next_available_handle_ == MOJO_HANDLE_INVALID)
     return MOJO_HANDLE_INVALID;
@@ -64,6 +65,7 @@ MojoHandle HandleTable::AddDispatcher(scoped_refptr<Dispatcher> dispatcher) {
 bool HandleTable::AddDispatchersFromTransit(
     const std::vector<Dispatcher::DispatcherInTransit>& dispatchers,
     MojoHandle* handles) {
+  lock_.AssertAcquired();
   // Oops, we're out of handles.
   if (next_available_handle_ == MOJO_HANDLE_INVALID)
     return false;
@@ -88,6 +90,7 @@ bool HandleTable::AddDispatchersFromTransit(
 }
 
 scoped_refptr<Dispatcher> HandleTable::GetDispatcher(MojoHandle handle) const {
+  lock_.AssertAcquired();
   auto it = handles_.find(handle);
   if (it == handles_.end())
     return nullptr;
@@ -97,6 +100,7 @@ scoped_refptr<Dispatcher> HandleTable::GetDispatcher(MojoHandle handle) const {
 MojoResult HandleTable::GetAndRemoveDispatcher(
     MojoHandle handle,
     scoped_refptr<Dispatcher>* dispatcher) {
+  lock_.AssertAcquired();
   auto it = handles_.find(handle);
   if (it == handles_.end())
     return MOJO_RESULT_INVALID_ARGUMENT;
@@ -112,6 +116,7 @@ MojoResult HandleTable::BeginTransit(
     const MojoHandle* handles,
     size_t num_handles,
     std::vector<Dispatcher::DispatcherInTransit>* dispatchers) {
+  lock_.AssertAcquired();
   dispatchers->reserve(dispatchers->size() + num_handles);
   for (size_t i = 0; i < num_handles; ++i) {
     auto it = handles_.find(handles[i]);
@@ -133,6 +138,7 @@ MojoResult HandleTable::BeginTransit(
 
 void HandleTable::CompleteTransitAndClose(
     const std::vector<Dispatcher::DispatcherInTransit>& dispatchers) {
+  lock_.AssertAcquired();
   for (const auto& dispatcher : dispatchers) {
     auto it = handles_.find(dispatcher.local_handle);
     DCHECK(it != handles_.end() && it->second.busy);
@@ -143,6 +149,7 @@ void HandleTable::CompleteTransitAndClose(
 
 void HandleTable::CancelTransit(
     const std::vector<Dispatcher::DispatcherInTransit>& dispatchers) {
+  lock_.AssertAcquired();
   for (const auto& dispatcher : dispatchers) {
     auto it = handles_.find(dispatcher.local_handle);
     DCHECK(it != handles_.end() && it->second.busy);
@@ -152,6 +159,7 @@ void HandleTable::CancelTransit(
 }
 
 void HandleTable::GetActiveHandlesForTest(std::vector<MojoHandle>* handles) {
+  lock_.AssertAcquired();
   handles->clear();
   for (const auto& entry : handles_)
     handles->push_back(entry.first);
@@ -160,6 +168,7 @@ void HandleTable::GetActiveHandlesForTest(std::vector<MojoHandle>* handles) {
 // MemoryDumpProvider implementation.
 bool HandleTable::OnMemoryDump(const base::trace_event::MemoryDumpArgs& args,
                                base::trace_event::ProcessMemoryDump* pmd) {
+  lock_.AssertAcquired();
   // Create entries for all relevant dispatcher types to ensure they are present
   // in the final dump.
   std::map<Dispatcher::Type, int> handle_count;
