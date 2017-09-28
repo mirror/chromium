@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f05ace9_b9581ae1",
+        "filename": "ui/gl/init/gl_initializer_x11.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002745
+      },
+      "writtenOn": "2017-09-28T13:48:26Z",
+      "side": 1,
+      "message": "Nit: I think this code should be within the if you added below.",
+      "range": {
+        "startLine": 101,
+        "startChar": 4,
+        "endLine": 103,
+        "endChar": 19
+      },
+      "revId": "f660c39efe12203b1fc0937fc606182ba1892b3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
