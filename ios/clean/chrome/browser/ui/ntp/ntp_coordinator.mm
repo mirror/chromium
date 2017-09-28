@@ -14,6 +14,7 @@
 #include "ios/chrome/browser/ui/ui_util.h"
 #import "ios/clean/chrome/browser/ui/bookmarks/bookmarks_coordinator.h"
 #import "ios/clean/chrome/browser/ui/commands/ntp_commands.h"
+#import "ios/clean/chrome/browser/ui/main_content/main_content_coordinator+subclassing.h"
 #import "ios/clean/chrome/browser/ui/ntp/ntp_home_coordinator.h"
 #import "ios/clean/chrome/browser/ui/ntp/ntp_incognito_coordinator.h"
 #import "ios/clean/chrome/browser/ui/ntp/ntp_mediator.h"
@@ -28,8 +29,8 @@ class PrefService;
 #endif
 
 @interface NTPCoordinator ()<NTPCommands>
+@property(nonatomic, strong, readwrite) NTPViewController* viewController;
 @property(nonatomic, strong) NTPMediator* mediator;
-@property(nonatomic, strong) NTPViewController* viewController;
 @property(nonatomic, strong) NTPHomeCoordinator* homeCoordinator;
 @property(nonatomic, strong) BookmarksCoordinator* bookmarksCoordinator;
 @property(nonatomic, strong) RecentTabsCoordinator* recentTabsCoordinator;
@@ -38,8 +39,8 @@ class PrefService;
 @end
 
 @implementation NTPCoordinator
-@synthesize mediator = _mediator;
 @synthesize viewController = _viewController;
+@synthesize mediator = _mediator;
 @synthesize homeCoordinator = _homeCoordinator;
 @synthesize bookmarksCoordinator = _bookmarksCoordinator;
 @synthesize recentTabsCoordinator = _recentTabsCoordinator;

@@ -16,7 +16,6 @@
 #import "ios/clean/chrome/browser/ui/dialogs/http_auth_dialogs/http_auth_dialog_coordinator.h"
 #import "ios/clean/chrome/browser/ui/dialogs/http_auth_dialogs/http_auth_dialog_request.h"
 #import "ios/clean/chrome/browser/ui/dialogs/java_script_dialogs/java_script_dialog_overlay_presenter.h"
-#import "ios/clean/chrome/browser/ui/main_content/main_content_coordinator+subclassing.h"
 #import "ios/clean/chrome/browser/ui/overlays/overlay_service.h"
 #import "ios/clean/chrome/browser/ui/overlays/overlay_service_factory.h"
 #import "ios/clean/chrome/browser/ui/web_contents/web_contents_mediator.h"
@@ -31,10 +30,9 @@
 
 @interface WebCoordinator ()<ContextMenuCommands, CRWWebStateDelegate> {
   std::unique_ptr<web::WebStateDelegateBridge> _webStateDelegate;
-  // Backing object for property of same name (see MainContentSubclassing
-  // category).
-  WebContentsViewController* _contentViewController;
 }
+@property(nonatomic, strong, readwrite)
+    WebContentsViewController* viewController;
 @property(nonatomic, strong) WebContentsMediator* mediator;
 
 // Tells the OverlayService that this coordinator is presenting |webState|.
@@ -47,6 +45,7 @@
 
 @implementation WebCoordinator
 @synthesize webState = _webState;
+@synthesize viewController = _viewController;
 @synthesize mediator = _mediator;
 
 - (instancetype)init {
@@ -74,8 +73,8 @@
 
 - (void)start {
   // Create the view controller and start it.
-  _contentViewController = [[WebContentsViewController alloc] init];
-  self.mediator.consumer = _contentViewController;
+  self.viewController = [[WebContentsViewController alloc] init];
+  self.mediator.consumer = self.viewController;
   self.mediator.webState = self.webState;
   [super start];
   [self setWebStateOverlayParent];
@@ -183,14 +182,6 @@
         ->GetForBrowserState(self.browser->browser_state())
         ->SetWebStateParentCoordinator(nil, self.webState);
   }
-}
-
-@end
-
-@implementation WebCoordinator (MainContentSubclassing)
-
-- (MainContentViewController*)contentViewController {
-  return _contentViewController;
 }
 
 @end

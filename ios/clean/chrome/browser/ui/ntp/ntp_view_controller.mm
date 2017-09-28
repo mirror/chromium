@@ -14,8 +14,10 @@
 #import "ios/chrome/browser/ui/ntp/new_tab_page_view.h"
 #import "ios/chrome/browser/ui/rtl_geometry.h"
 #include "ios/chrome/browser/ui/ui_util.h"
+#import "ios/chrome/browser/ui/uikit_ui_util.h"
 #include "ios/chrome/grit/ios_strings.h"
 #import "ios/clean/chrome/browser/ui/commands/ntp_commands.h"
+#import "ios/clean/chrome/browser/ui/main_content/main_content_view_controller+subclassing.h"
 #include "ui/base/l10n/l10n_util.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -176,6 +178,8 @@
 
 // TODO(crbug.com/709086) Move UIScrollViewDelegate to shared object.
 - (void)scrollViewDidScroll:(UIScrollView*)scrollView {
+  self.contentOffset = scrollView.contentOffset;
+
   // Position is used to track the exact X position of the scroll view, whereas
   // index is rounded to the panel that is most visible.
   CGFloat panelWidth =
@@ -215,6 +219,22 @@
 
   self.NTPView.tabBar.overlayPercentage =
       scrollView.contentOffset.x / scrollView.contentSize.width;
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView*)scrollView {
+  self.dragging = YES;
+}
+
+- (void)scrollViewWillEndDragging:(UIScrollView*)scrollView
+                     withVelocity:(CGPoint)velocity
+              targetContentOffset:(inout CGPoint*)targetContentOffset {
+  if (!CGFloatEquals(velocity.y, 0.0))
+    self.decelerating = YES;
+  self.dragging = NO;
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView*)scrollView {
+  self.decelerating = NO;
 }
 
 #pragma mark - NewTabPageBarDelegate

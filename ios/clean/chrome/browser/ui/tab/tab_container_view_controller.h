@@ -12,6 +12,7 @@
 #import "ios/clean/chrome/browser/ui/transitions/presenters/menu_presentation_delegate.h"
 
 @protocol ContainmentTransitioningDelegate;
+@class MainContentViewController;
 
 // Abstract base class for a view controller that contains several views,
 // each managed by their own view controllers.
@@ -24,7 +25,7 @@
 // View controller showing the main content for the tab. If there is no
 // toolbar view controller set, the contents of this view controller will
 // fill all of the tab container's view.
-@property(nonatomic, strong) UIViewController* contentViewController;
+@property(nonatomic, strong) MainContentViewController* contentViewController;
 
 // View controller showing the toolbar for the tab. It will be of a fixed
 // height (determined internally by the tab container), but will span the

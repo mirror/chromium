@@ -6,6 +6,7 @@
 
 #include <memory>
 
+#include "base/mac/foundation_util.h"
 #include "base/memory/ptr_util.h"
 #include "base/scoped_observer.h"
 #include "ios/chrome/browser/chrome_url_constants.h"
@@ -19,6 +20,8 @@
 #import "ios/clean/chrome/browser/ui/find_in_page/find_in_page_coordinator.h"
 #import "ios/clean/chrome/browser/ui/fullscreen/fullscreen_controller.h"
 #import "ios/clean/chrome/browser/ui/fullscreen/fullscreen_ui_updater.h"
+#import "ios/clean/chrome/browser/ui/main_content/main_content_coordinator.h"
+#import "ios/clean/chrome/browser/ui/main_content/main_content_view_controller.h"
 #import "ios/clean/chrome/browser/ui/ntp/ntp_coordinator.h"
 #import "ios/clean/chrome/browser/ui/settings/settings_coordinator.h"
 #import "ios/clean/chrome/browser/ui/tab/tab_container_view_controller.h"
@@ -42,6 +45,7 @@
 
 @property(nonatomic, strong) ZoomTransitionController* transitionController;
 @property(nonatomic, strong) TabContainerViewController* viewController;
+@property(nonatomic, weak) MainContentCoordinator* mainContentCoordinator;
 @property(nonatomic, weak) NTPCoordinator* ntpCoordinator;
 @property(nonatomic, weak) WebCoordinator* webCoordinator;
 @property(nonatomic, weak) ToolbarCoordinator* toolbarCoordinator;
@@ -50,6 +54,10 @@
 // Creates and returns a new view controller for use as a tab container.
 // Subclasses may override this method with a custom layout view controller.
 - (TabContainerViewController*)newTabContainer;
+
+// Called when the main content coordinator starts or stops.
+- (void)mainContentCoordinatorDidStart;
+- (void)mainContentCoordinatorDidStop;
 
 @end
 
@@ -64,6 +72,7 @@
 @synthesize presentationKey = _presentationKey;
 @synthesize viewController = _viewController;
 @synthesize webState = _webState;
+@synthesize mainContentCoordinator = _mainContentCoordinator;
 @synthesize webCoordinator = _webCoordinator;
 @synthesize ntpCoordinator = _ntpCoordinator;
 @synthesize toolbarCoordinator = _toolbarCoordinator;
@@ -117,8 +126,8 @@
   WebCoordinator* webCoordinator = [[WebCoordinator alloc] init];
   webCoordinator.webState = self.webState;
   [self addChildCoordinator:webCoordinator];
-  [webCoordinator start];
   self.webCoordinator = webCoordinator;
+  self.mainContentCoordinator = self.webCoordinator;
 
   ToolbarCoordinator* toolbarCoordinator = [[ToolbarCoordinator alloc] init];
   self.toolbarCoordinator = toolbarCoordinator;
@@ -136,10 +145,8 @@
   // created above when |webCoordinator.webState = self.webState;| triggers
   // a load event, but then the webCoordinator stomps on the
   // contentViewController when it starts afterwards.
-  if (self.webState->GetLastCommittedURL() == GURL(kChromeUINewTabURL)) {
-    self.viewController.contentViewController =
-        self.ntpCoordinator.viewController;
-  }
+  self.mainContentCoordinator =
+      self.ntpCoordinator ? self.ntpCoordinator : self.webCoordinator;
 
   [super start];
 }
@@ -161,11 +168,10 @@
 }
 
 - (void)childCoordinatorDidStart:(BrowserCoordinator*)childCoordinator {
-  if ([childCoordinator isKindOfClass:[ToolbarCoordinator class]]) {
+  if (childCoordinator == self.mainContentCoordinator) {
+    [self mainContentCoordinatorDidStart];
+  } else if ([childCoordinator isKindOfClass:[ToolbarCoordinator class]]) {
     self.viewController.toolbarViewController = childCoordinator.viewController;
-  } else if ([childCoordinator isKindOfClass:[WebCoordinator class]] ||
-             [childCoordinator isKindOfClass:[NTPCoordinator class]]) {
-    self.viewController.contentViewController = childCoordinator.viewController;
   } else if ([childCoordinator isKindOfClass:[FindInPageCoordinator class]]) {
     self.viewController.findBarViewController = childCoordinator.viewController;
   } else if ([childCoordinator isKindOfClass:[SettingsCoordinator class]]) {
@@ -176,11 +182,10 @@
 }
 
 - (void)childCoordinatorWillStop:(BrowserCoordinator*)childCoordinator {
-  if ([childCoordinator isKindOfClass:[FindInPageCoordinator class]]) {
+  if (childCoordinator == self.mainContentCoordinator) {
+    [self mainContentCoordinatorDidStop];
+  } else if ([childCoordinator isKindOfClass:[FindInPageCoordinator class]]) {
     self.viewController.findBarViewController = nil;
-  } else if ([childCoordinator isKindOfClass:[WebCoordinator class]] ||
-             [childCoordinator isKindOfClass:[NTPCoordinator class]]) {
-    self.viewController.contentViewController = nil;
   } else if ([childCoordinator isKindOfClass:[SettingsCoordinator class]]) {
     [childCoordinator.viewController.presentingViewController
         dismissViewControllerAnimated:YES
@@ -197,6 +202,15 @@
         base::FeatureList::IsEnabled(kTabFeaturesBottomToolbar);
   }
   return _viewController;
+}
+
+- (void)setMainContentCoordinator:
+    (MainContentCoordinator*)mainContentCoordinator {
+  if (_mainContentCoordinator == mainContentCoordinator)
+    return;
+  [_mainContentCoordinator stop];
+  _mainContentCoordinator = mainContentCoordinator;
+  [_mainContentCoordinator start];
 }
 
 #pragma mark - Methods for subclasses to override
@@ -251,8 +265,8 @@
   } else {
     NTPCoordinator* ntpCoordinator = [[NTPCoordinator alloc] init];
     [self addChildCoordinator:ntpCoordinator];
-    [ntpCoordinator start];
     self.ntpCoordinator = ntpCoordinator;
+    self.mainContentCoordinator = ntpCoordinator;
   }
 }
 
@@ -260,9 +274,35 @@
   if (self.ntpCoordinator) {
     [self.ntpCoordinator stop];
     [self removeChildCoordinator:self.ntpCoordinator];
-    self.viewController.contentViewController =
-        self.webCoordinator.viewController;
+    self.mainContentCoordinator = self.webCoordinator;
   }
+}
+
+- (void)mainContentCoordinatorDidStart {
+  [self.browser->broadcaster()
+      broadcastValue:@"yContentOffset"
+            ofObject:_mainContentCoordinator.viewController
+            selector:@selector(broadcastContentScrollOffset:)];
+  [self.browser->broadcaster()
+      broadcastValue:@"scrolling"
+            ofObject:_mainContentCoordinator.viewController
+            selector:@selector(broadcastScrollViewIsScrolling:)];
+  [self.browser->broadcaster()
+      broadcastValue:@"dragging"
+            ofObject:_mainContentCoordinator.viewController
+            selector:@selector(broadcastScrollViewIsDragging:)];
+  self.viewController.contentViewController =
+      self.mainContentCoordinator.viewController;
+}
+
+- (void)mainContentCoordinatorDidStop {
+  self.viewController.contentViewController = nil;
+  [self.browser->broadcaster()
+      stopBroadcastingForSelector:@selector(broadcastContentScrollOffset:)];
+  [self.browser->broadcaster()
+      stopBroadcastingForSelector:@selector(broadcastScrollViewIsScrolling:)];
+  [self.browser->broadcaster()
+      stopBroadcastingForSelector:@selector(broadcastScrollViewIsDragging:)];
 }
 
 #pragma mark - TabCommands

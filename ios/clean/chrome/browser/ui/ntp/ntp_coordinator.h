@@ -6,11 +6,11 @@
 #define IOS_CLEAN_CHROME_BROWSER_UI_NTP_NTP_COORDINATOR_H_
 
 #import <UIKit/UIKit.h>
-#import "ios/chrome/browser/ui/coordinators/browser_coordinator.h"
+#import "ios/clean/chrome/browser/ui/main_content/main_content_coordinator.h"
 
 // Coordinator that runs a "New Tab Page" : The UI displayed instead of a web
 // page when a new tab is created.
-@interface NTPCoordinator : BrowserCoordinator
+@interface NTPCoordinator : MainContentCoordinator
 @end
 
 #endif  // IOS_CLEAN_CHROME_BROWSER_UI_NTP_NTP_COORDINATOR_H_

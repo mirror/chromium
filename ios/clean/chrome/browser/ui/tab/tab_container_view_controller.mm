@@ -7,6 +7,7 @@
 
 #import "base/logging.h"
 #import "ios/clean/chrome/browser/ui/fullscreen/fullscreen_scroll_end_animator.h"
+#import "ios/clean/chrome/browser/ui/main_content/main_content_view_controller.h"
 #import "ios/clean/chrome/browser/ui/transitions/animators/swap_from_above_animator.h"
 #import "ios/clean/chrome/browser/ui/transitions/containment_transition_context.h"
 #import "ios/clean/chrome/browser/ui/transitions/containment_transitioning_delegate.h"
@@ -78,7 +79,8 @@ const CGFloat kToolbarHeight = 56.0f;
 
 #pragma mark - Public properties
 
-- (void)setContentViewController:(UIViewController*)contentViewController {
+- (void)setContentViewController:
+    (MainContentViewController*)contentViewController {
   if (self.contentViewController == contentViewController)
     return;
   if ([self isViewLoaded]) {

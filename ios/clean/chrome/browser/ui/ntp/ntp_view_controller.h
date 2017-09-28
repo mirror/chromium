@@ -8,12 +8,13 @@
 #import <UIKit/UIKit.h>
 
 #import "ios/chrome/browser/ui/content_suggestions/ntp_home_constant.h"
+#import "ios/clean/chrome/browser/ui/main_content/main_content_view_controller.h"
 #import "ios/clean/chrome/browser/ui/ntp/ntp_consumer.h"
 
 @protocol NTPCommands;
 
 // View controller that displays a new tab page.
-@interface NTPViewController : UIViewController<NTPConsumer>
+@interface NTPViewController : MainContentViewController<NTPConsumer>
 
 // The dispatcher for this view controller
 @property(nonatomic, weak) id<NTPCommands> dispatcher;
