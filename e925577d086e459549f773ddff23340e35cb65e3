@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9479b9e_7571989d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 39509,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-28T01:31:56Z",
+      "side": 1,
+      "message": "nit: Perhaps \"DnsTask.Errors\"?",
+      "range": {
+        "startLine": 39509,
+        "startChar": 25,
+        "endLine": 39509,
+        "endChar": 37
+      },
+      "revId": "e925577d086e459549f773ddff23340e35cb65e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9951e474_5ac9c893",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 39517,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-28T01:31:56Z",
+      "side": 1,
+      "message": "nit: Perhaps \"DnsTask.Fail\"? Ditto for other similar histograms.",
+      "range": {
+        "startLine": 39517,
+        "startChar": 25,
+        "endLine": 39517,
+        "endChar": 36
+      },
+      "revId": "e925577d086e459549f773ddff23340e35cb65e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa11ca1e_b16b92d1",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 97916,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-28T01:31:56Z",
+      "side": 1,
+      "message": "Optional nit: As in the other CL, you might want to update the separators to be dots, as those are more commonly used.",
+      "range": {
+        "startLine": 97916,
+        "startChar": 49,
+        "endLine": 97916,
+        "endChar": 62
+      },
+      "revId": "e925577d086e459549f773ddff23340e35cb65e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71c3887e_2986c911",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 97917,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-28T01:31:56Z",
+      "side": 1,
+      "message": "nit: Perhaps something like \"Restricted to IPV4 requests.\"?  (And similar changes for the other labels.)",
+      "range": {
+        "startLine": 97917,
+        "startChar": 29,
+        "endLine": 97917,
+        "endChar": 33
+      },
+      "revId": "e925577d086e459549f773ddff23340e35cb65e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
