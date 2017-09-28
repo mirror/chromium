@@ -264,6 +264,35 @@ IN_PROC_BROWSER_TEST_F(
                             static_cast<int>(ActivationList::NONE), 1);
 }
 
+IN_PROC_BROWSER_TEST_F(SubresourceFilterListInsertingBrowserTest,
+                       ActivationWarning_LogsToConsole) {
+  content::ConsoleObserverDelegate console_observer(
+      web_contents(), kActivationWarningConsoleMessage);
+  web_contents()->SetDelegate(&console_observer);
+
+  Configuration config(subresource_filter::ActivationLevel::ENABLED,
+                       subresource_filter::ActivationScope::ACTIVATION_LIST,
+                       subresource_filter::ActivationList::SUBRESOURCE_FILTER);
+  ResetConfiguration(std::move(config));
+
+  const GURL url(
+      GetTestUrl("subresource_filter/frame_with_delayed_script.html"));
+  safe_browsing::ThreatMetadata threat_metadata;
+  threat_metadata.warning = true;
+  database_helper()->MarkUrlAsMatchingListIdWithMetadata(
+      url, safe_browsing::GetUrlSubresourceFilterId(), threat_metadata);
+
+  ASSERT_NO_FATAL_FAILURE(
+      SetRulesetToDisallowURLsWithPathSuffix("included_script.js"));
+  ui_test_utils::NavigateToURL(browser(), url);
+  EXPECT_EQ(console_observer.message(), kActivationWarningConsoleMessage);
+
+  EXPECT_TRUE(IsDynamicScriptElementLoaded(web_contents()->GetMainFrame()));
+
+  // Console message for subframe blocking should not be displayed.
+  EXPECT_EQ(console_observer.message(), kActivationWarningConsoleMessage);
+}
+
 // Normally, the subresource filter list is only sync'd in chrome branded
 // builds.
 IN_PROC_BROWSER_TEST_F(SubresourceFilterBrowserTest,
