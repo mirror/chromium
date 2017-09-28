@@ -39,6 +39,7 @@
 #include "platform/graphics/ImageOrientation.h"
 #include "platform/image-decoders/ImageAnimation.h"
 #include "platform/wtf/Forward.h"
+#include "platform/wtf/Optional.h"
 #include "platform/wtf/Time.h"
 #include "third_party/skia/include/core/SkRefCnt.h"
 
@@ -162,7 +163,12 @@ class PLATFORM_EXPORT BitmapImage final : public Image {
 
   bool ShouldAnimate();
   void StartAnimation() override;
-  void StartAnimationInternal(const double time);
+  // Starts the animation by scheduling a task to advance to the next desired
+  // frame, if possible, and catching up any frames if the time to display them
+  // is in the past.
+  // Returns the number of frames skipped to catch up, if a task could be
+  // scheduled to advance the animation.
+  Optional<size_t> StartAnimationInternal(const double time);
   void StopAnimation();
   void AdvanceAnimation(TimerBase*);
 

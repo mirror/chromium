@@ -487,6 +487,7 @@ TEST_F(BitmapImageTestWithMockDecoder, FrameSkipTracking) {
   // to 1u.
   task_runner->AdvanceTimeAndRun(5);
   EXPECT_EQ(image_->PaintImageForCurrentFrame().frame_index(), 1u);
+  EXPECT_EQ(image_->last_num_frames_skipped_for_testing(), 0u);
 
   // Set now_ to 41 seconds. Since the animation started at 10s, and each frame
   // has a duration of 10s, we should see the fourth frame at 41 seconds.
