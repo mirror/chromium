@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "2a2a1145_fda5d762",
+        "filename": "net/disk_cache/simple/simple_entry_format.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-09-28T14:41:36Z",
+      "side": 1,
+      "message": "Hmm, I like the + 1 formulation, but not the name. Went ahead and renamed SimpleEntryFileCount --- might make sense to split that out into a separate CL, to keep the size of this one from getting catastrophic, and would be easier to review that way. WDYT?",
+      "parentUuid": "a286a6f0_49517410",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 64
+      },
+      "revId": "43e04c47d8c877337743b63887a65b1825688e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0c55a7fc_ddc067b8",
         "filename": "net/disk_cache/simple/simple_file_tracker.h",
         "patchSetId": 22
@@ -274,6 +298,30 @@
       "side": 1,
       "message": "If there is no need to support it, let\u0027s not support it. Since you already have the DCHECK, please just add the comment.",
       "parentUuid": "b2b97ee6_b81b3c9e",
+      "range": {
+        "startLine": 88,
+        "startChar": 63,
+        "endLine": 88,
+        "endChar": 0
+      },
+      "revId": "43e04c47d8c877337743b63887a65b1825688e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce59c6d7_53755522",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-09-28T14:41:36Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "925e0c63_d31a9425",
       "range": {
         "startLine": 88,
         "startChar": 63,
