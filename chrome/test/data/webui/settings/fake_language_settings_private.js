@@ -183,6 +183,30 @@ cr.define('settings', function() {
     }
 
     /**
+     * Enables/Disables translation for the given language.
+     * This respectively removes/adds the language to the blocked set in the
+     * preferences.
+     * @param {string} languageCode
+     * @param {boolean} value
+     */
+    setTranslateForLanguage(languageCode, value) {
+      var blockedList =
+          this.settingsPrefs_.prefs.translate_blocked_languages.value;
+      var index = blockedList.indexOf(languageCode);
+      if (value) {
+        if (index == -1)
+          return;
+        blockedList.splice(index, 1);
+      } else {
+        if (index != -1)
+          return;
+        blockedList.push(languageCode);
+      }
+      this.settingsPrefs_.set(
+          'prefs.translate_blocked_languages.value', blockedList);
+    }
+
+    /**
      * Gets the current status of the chosen spell check dictionaries.
      * @param {function(!Array<
      *     !chrome.languageSettingsPrivate.SpellcheckDictionaryStatus>):void}
