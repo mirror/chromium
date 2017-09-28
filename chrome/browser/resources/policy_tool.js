@@ -2,6 +2,17 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+policy.Page.setSessionsList = function(sessions) {
+  var list = $('session-list');
+  list.innerHTML = '';
+  for (var i = 0; i < sessions.length; ++i) {
+    var option = document.createElement('OPTION');
+    option.value = sessions[i];
+    option.textContent = sessions[i];
+    list.appendChild(option);
+  }
+};
+
 // Override some methods of policy.Page.
 
 /** @override */
