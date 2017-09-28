@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1dccd25_186c21c5",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-28T00:42:25Z",
+      "side": 1,
+      "message": "this can be BindOnce",
+      "range": {
+        "startLine": 417,
+        "startChar": 18,
+        "endLine": 417,
+        "endChar": 22
+      },
+      "revId": "2b6eca917c5d4685a01e5755c313c9dc21bdda3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c27fe98_75793f42",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-28T00:42:25Z",
+      "side": 1,
+      "message": "This is unneded because base::BindOnce() is not an lvalue.",
+      "range": {
+        "startLine": 423,
+        "startChar": 22,
+        "endLine": 423,
+        "endChar": 28
+      },
+      "revId": "2b6eca917c5d4685a01e5755c313c9dc21bdda3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3f81f86_8b2ba295",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-28T00:42:25Z",
+      "side": 1,
+      "message": "This is the only place where you actually need a normal, repeatable callback. Please rewrite this as\n\n  base::Bind(base::AdaptCallbackForRepeating(base::move(callback)), true);\n\nall the other ones should be OnceCallbacks.",
+      "range": {
+        "startLine": 474,
+        "startChar": 60,
+        "endLine": 474,
+        "endChar": 68
+      },
+      "revId": "2b6eca917c5d4685a01e5755c313c9dc21bdda3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d1f1221_57c33ffa",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-28T00:42:25Z",
+      "side": 1,
+      "message": "This can be a OnceCallback. All Callbacks can be implicitly converted to OnceCallbacks.",
+      "range": {
+        "startLine": 99,
+        "startChar": 56,
+        "endLine": 99,
+        "endChar": 64
+      },
+      "revId": "2b6eca917c5d4685a01e5755c313c9dc21bdda3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
