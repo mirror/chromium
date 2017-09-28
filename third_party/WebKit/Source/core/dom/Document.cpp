@@ -6319,11 +6319,12 @@ ResizeObserverController& Document::EnsureResizeObserverController() {
 static void RunAddConsoleMessageTask(MessageSource source,
                                      MessageLevel level,
                                      const String& message,
+                                     LocalFrame* frame,
                                      Vector<DOMNodeId> nodes,
                                      ExecutionContext* context) {
   ConsoleMessage* console_message =
       ConsoleMessage::Create(source, level, message);
-  console_message->SetNodes(std::move(nodes));
+  console_message->SetNodes(frame, std::move(nodes));
   context->AddConsoleMessage(console_message);
 }
 
@@ -6335,6 +6336,7 @@ void Document::AddConsoleMessage(ConsoleMessage* console_message) {
             CrossThreadBind(
                 &RunAddConsoleMessageTask, console_message->Source(),
                 console_message->Level(), console_message->Message(),
+                WrapCrossThreadWeakPersistent(console_message->Frame()),
                 console_message->Nodes(), WrapCrossThreadPersistent(this)));
     return;
   }
@@ -6355,7 +6357,7 @@ void Document::AddConsoleMessage(ConsoleMessage* console_message) {
         console_message->Source(), console_message->Level(),
         console_message->Message(),
         SourceLocation::Create(Url().GetString(), line_number, 0, nullptr));
-    console_message->SetNodes(std::move(nodes));
+    console_message->SetNodes(frame_, std::move(nodes));
   }
   frame_->Console().AddMessage(console_message);
 }

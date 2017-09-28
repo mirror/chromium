@@ -58,7 +58,7 @@ class ConsoleLogger {
       for (Entry& entry : node_buffer_[level]) {
         std::string parameter_string;
         for (unsigned i = 0; i < entry.nodes.size(); ++i)
-          parameter_string += "%o";
+          parameter_string += " %o";
         frame_->AddMessageToConsole(blink::WebConsoleMessage(
             level,
             blink::WebString::FromUTF8("[DOM] " + entry.message +
