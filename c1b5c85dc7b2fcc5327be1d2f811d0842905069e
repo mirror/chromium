@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ef7304d_7656aa07",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-28T22:11:37Z",
+      "side": 1,
+      "message": "filter",
+      "range": {
+        "startLine": 58,
+        "startChar": 10,
+        "endLine": 58,
+        "endChar": 14
+      },
+      "revId": "c1b5c85dc7b2fcc5327be1d2f811d0842905069e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3c4dd96_334a174a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-28T22:11:37Z",
+      "side": 1,
+      "message": "JSDoc the parameter.",
+      "range": {
+        "startLine": 81,
+        "startChar": 15,
+        "endLine": 81,
+        "endChar": 26
+      },
+      "revId": "c1b5c85dc7b2fcc5327be1d2f811d0842905069e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee6a60b7_0c516948",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-28T22:11:37Z",
+      "side": 1,
+      "message": "filter",
+      "range": {
+        "startLine": 83,
+        "startChar": 13,
+        "endLine": 83,
+        "endChar": 17
+      },
+      "revId": "c1b5c85dc7b2fcc5327be1d2f811d0842905069e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "219b28d9_2fc7489f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-28T22:11:37Z",
+      "side": 1,
+      "message": "filter",
+      "range": {
+        "startLine": 94,
+        "startChar": 13,
+        "endLine": 94,
+        "endChar": 17
+      },
+      "revId": "c1b5c85dc7b2fcc5327be1d2f811d0842905069e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5df22f1e_d3bb6586",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 1005,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-28T22:11:37Z",
+      "side": 1,
+      "message": "We\u0027ll have to inverse this dependency in the future. Sidebar owns filters, while this view is just an editor for a single filter. Let\u0027s follow up.",
+      "revId": "c1b5c85dc7b2fcc5327be1d2f811d0842905069e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af4b8567_7ebef100",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 1028,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-28T22:11:37Z",
+      "side": 1,
+      "message": "Why all? Should we restore from the setting instead?",
+      "range": {
+        "startLine": 1028,
+        "startChar": 82,
+        "endLine": 1028,
+        "endChar": 102
+      },
+      "revId": "c1b5c85dc7b2fcc5327be1d2f811d0842905069e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
