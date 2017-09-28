@@ -22,6 +22,30 @@
       "revId": "1523ed626bf2ca96896a7d0836d5509237df8bf0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd9b90a7_2ce5f94e",
+        "filename": "components/history/core/browser/top_sites_impl.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 942,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-09-28T06:06:44Z",
+      "side": 0,
+      "message": "Yes, you are right. Thanks! But I think SyncWithHistory is better here, as it not only calls StartQueryForMostVisited(), but also stops the timer.",
+      "parentUuid": "16fd857c_2ddf429c",
+      "range": {
+        "startLine": 942,
+        "startChar": 1,
+        "endLine": 942,
+        "endChar": 29
+      },
+      "revId": "1523ed626bf2ca96896a7d0836d5509237df8bf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

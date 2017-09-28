@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "11ad4f84_092617b2",
+        "filename": "components/history/content/browser/web_contents_top_sites_observer.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-09-28T06:06:44Z",
+      "side": 1,
+      "message": "The browsing history (chrome://history/) is updated only when an user navigates to a new page (either in a new tab or in the same tab), or navigates to an existing navigation entry. So I think the early return here is safe.\n\nIn the old implementation, top sites refreshes immediately when an user navigates to a new page in a new tab via searching. This is enabled by making TopSites \"observe\" Instant Service. However, new pages can open in other ways, like JumpList, bookmark, etc. These navigation events as well as history navigation events are throttled, or even ignored (e.g., when non-forced url list is full which is implemented in the original TopSitesImpl::OnNavigationCommitted). I think this is incorrect.",
+      "parentUuid": "28e96bed_0da42692",
+      "range": {
+        "startLine": 42,
+        "startChar": 5,
+        "endLine": 43,
+        "endChar": 36
+      },
+      "revId": "842b89bc8dc02098b20d1dcf7de0dba366bec38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dca6f857_071702e5",
         "filename": "components/history/content/browser/web_contents_top_sites_observer.cc",
         "patchSetId": 34
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c6a24502_a28f8289",
+        "filename": "components/history/content/browser/web_contents_top_sites_observer.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-09-28T06:06:44Z",
+      "side": 1,
+      "message": "I actually thought the same way. However, if I make TopSites::OnNavigationCommitted take a LoadCommittedDetails, I have to include content/public/browser/navigation_details.h and another similar one in topsites.h. This unfortunately violates checkdeps rules when running \"fit cl upload\". \n\nHere is the message: \u003cBecause of \"-content\" from components/history/core\u0027s include_rules\u003e",
+      "parentUuid": "dca6f857_071702e5",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 48,
+        "endChar": 3
+      },
+      "revId": "842b89bc8dc02098b20d1dcf7de0dba366bec38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c31320d7_b258c359",
         "filename": "components/history/core/browser/top_sites_impl.cc",
         "patchSetId": 34
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-27T15:44:43Z",
       "side": 1,
       "message": "Initialize makes it sound like this should only be called once. Maybe MaybeRestartUpdateTimer, EnsureUpdateTimerRunning, ScheduleUpdateTimer?",
+      "range": {
+        "startLine": 844,
+        "startChar": 19,
+        "endLine": 844,
+        "endChar": 29
+      },
+      "revId": "842b89bc8dc02098b20d1dcf7de0dba366bec38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a985f1b_bf03170c",
+        "filename": "components/history/core/browser/top_sites_impl.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 844,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-09-28T06:06:44Z",
+      "side": 1,
+      "message": "Thanks for the suggestion. I\u0027ll go with ScheduleUpdateTimer.",
+      "parentUuid": "c31320d7_b258c359",
       "range": {
         "startLine": 844,
         "startChar": 19,
