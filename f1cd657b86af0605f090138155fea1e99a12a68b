@@ -117,6 +117,24 @@
       "revId": "f1cd657b86af0605f090138155fea1e99a12a68b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a8ddd087_f47a7c18",
+        "filename": "third_party/WebKit/Source/modules/mediacapturefromelement/HTMLMediaElementCapture.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-28T19:02:54Z",
+      "side": 1,
+      "message": "It does not help with the problem of the cross-origin check failing when src is null. That happens both before and after that patch.\n\nThe patch does fix other bugs, though. I had even filed crbug.com/769649 for one of them, which I closed after I rebased to ToT :)",
+      "parentUuid": "dd61813a_02f2e48b",
+      "revId": "f1cd657b86af0605f090138155fea1e99a12a68b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
