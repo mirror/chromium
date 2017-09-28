@@ -391,6 +391,24 @@
     },
     {
       "key": {
+        "uuid": "de395d2b_78a655e3",
+        "filename": "chrome/browser/metrics/extensions_metrics_provider.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-28T01:38:03Z",
+      "side": 1,
+      "message": "Yeah, I\u0027m fine with ForTesting() methods as well.  Thanks!",
+      "parentUuid": "a2922c6d_aa79bfd6",
+      "revId": "5c6c728d108f8c12d0299a345588ce1dbdbe9f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8afe4491_0585bcdb",
         "filename": "components/metrics/proto/extension_install.proto",
         "patchSetId": 10
