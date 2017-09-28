@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92329f5b_a373a37d",
+        "filename": "chromecast/media/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-09-28T03:36:44Z",
+      "side": 1,
+      "message": "group?",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 10
+      },
+      "revId": "741e1dd2d3ecb787a22b0703c5b930e2db3a5957",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abf8e8fb_157d08c1",
+        "filename": "chromecast/media/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-09-28T03:36:44Z",
+      "side": 1,
+      "message": ":libcast_media?",
+      "range": {
+        "startLine": 58,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 38
+      },
+      "revId": "741e1dd2d3ecb787a22b0703c5b930e2db3a5957",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
