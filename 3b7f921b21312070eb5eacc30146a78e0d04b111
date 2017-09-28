@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b6f112c_9b35b100",
+        "filename": "tools/grit/grit/tool/build.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-28T18:46:18Z",
+      "side": 1,
+      "message": "infofile.writelines([\u0027\\n\u0027.join(node.info), \u0027\\n\u0027])\n\nOtherwise, this will have to create a potentially long string from the join(), and then create another slightly longer string from the concatenation.",
+      "revId": "3b7f921b21312070eb5eacc30146a78e0d04b111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
