@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "10b3e406_709ce658",
+        "filename": "extensions/browser/extension_registrar_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-28T19:05:49Z",
+      "side": 1,
+      "message": "Huh, TIL.",
+      "parentUuid": "74e4ee76_39461e37",
+      "revId": "16072fe3133531736f576553f6a0f68eab93186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fc3ed58_04745649",
         "filename": "extensions/browser/extension_registrar_unittest.cc",
         "patchSetId": 19
