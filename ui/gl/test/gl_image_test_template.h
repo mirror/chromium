@@ -155,6 +155,11 @@ void DrawTextureQuad(GLenum target, const gfx::Size& size) {
   glDeleteBuffersARB(1, &vertex_buffer);
 }
 
+template <typename Delegate>
+bool ShouldRunTest(Delegate*) {
+  return true;
+}
+
 }  // namespace
 
 template <typename GLImageTestDelegate>
@@ -184,6 +189,9 @@ class GLImageTest : public testing::Test {
 TYPED_TEST_CASE_P(GLImageTest);
 
 TYPED_TEST_P(GLImageTest, Create) {
+  if (ShouldRunTest(&this->delegate_))
+    return;
+
   // NOTE: On some drm devices (mediatek) the mininum width/height to add an fb
   // for a bo must be 64.
   const gfx::Size small_image_size(64, 64);
@@ -243,6 +251,9 @@ class GLImageZeroInitializeTest : public GLImageTest<GLImageTestDelegate> {};
 TYPED_TEST_CASE_P(GLImageZeroInitializeTest);
 
 TYPED_TEST_P(GLImageZeroInitializeTest, ZeroInitialize) {
+  if (ShouldRunTest(&this->delegate_))
+    return;
+
 #if defined(OS_MACOSX)
   // This functionality is disabled on Mavericks because it breaks PDF
   // rendering. https://crbug.com/594343.
@@ -299,6 +310,9 @@ class GLImageBindTest : public GLImageTest<GLImageTestDelegate> {};
 TYPED_TEST_CASE_P(GLImageBindTest);
 
 TYPED_TEST_P(GLImageBindTest, BindTexImage) {
+  if (ShouldRunTest(&this->delegate_))
+    return;
+
   const gfx::Size image_size(256, 256);
   const uint8_t* image_color = this->delegate_.GetImageColor();
 
@@ -345,6 +359,9 @@ class GLImageCopyTest : public GLImageTest<GLImageTestDelegate> {};
 TYPED_TEST_CASE_P(GLImageCopyTest);
 
 TYPED_TEST_P(GLImageCopyTest, CopyTexImage) {
+  if (ShouldRunTest(&this->delegate_))
+    return;
+
   const gfx::Size image_size(256, 256);
   const uint8_t* image_color = this->delegate_.GetImageColor();
   const uint8_t texture_color[] = {0, 0, 0xff, 0xff};
