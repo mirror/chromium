@@ -20,8 +20,9 @@ namespace extensions {
 
 namespace {
 
-namespace feedback_private = api::feedback_private;
-
+using LogSource = api::feedback_private::LogSource;
+using ReadLogSourceParams = api::feedback_private::ReadLogSourceParams;
+using ReadLogSourceResult = api::feedback_private::ReadLogSourceResult;
 using SystemLogsResponse = system_logs::SystemLogsResponse;
 
 const int kMaxReadersPerSource = 10;
@@ -69,30 +70,31 @@ void LogSourceAccessManager::SetRateLimitingTimeoutForTesting(
 }
 
 bool LogSourceAccessManager::FetchFromSource(
-    const feedback_private::ReadLogSourceParams& params,
+    const ReadLogSourceParams& params,
     const std::string& extension_id,
     const ReadLogSourceCallback& callback) {
-  SourceAndExtension key = SourceAndExtension(params.source, extension_id);
   int requested_resource_id = params.reader_id ? *params.reader_id : 0;
-  int resource_id =
-      requested_resource_id > 0 ? requested_resource_id : CreateResource(key);
+  ApiResourceManager<LogSourceResource>* resource_manager =
+      ApiResourceManager<LogSourceResource>::Get(context_);
+
+  int resource_id = requested_resource_id > 0
+                        ? requested_resource_id
+                        : CreateResource(params.source, extension_id);
   if (resource_id <= 0)
     return false;
 
-  ApiResourceManager<LogSourceResource>* resource_manager =
-      ApiResourceManager<LogSourceResource>::Get(context_);
   LogSourceResource* resource =
       resource_manager->Get(extension_id, resource_id);
   if (!resource)
     return false;
 
-  // Enforce the rules: rate-limit access to the source from the current
-  // extension. If not enough time has elapsed since the last access, do not
-  // read from the source, but instead return an empty response. From the
-  // caller's perspective, there is no new data. There is no need for the caller
-  // to keep track of the time since last access.
-  if (!UpdateSourceAccessTime(key)) {
-    feedback_private::ReadLogSourceResult empty_result;
+  // Enforce the rules: rate-limit access to the source from the current reader
+  // handle. If not enough time has elapsed since the last access, do not read
+  // from the source, but instead return an empty response. From the caller's
+  // perspective, there is no new data. There is no need for the caller to keep
+  // track of the time since last access.
+  if (!UpdateSourceAccessTime(resource_id)) {
+    ReadLogSourceResult empty_result;
     callback.Run(empty_result);
     return true;
   }
@@ -104,73 +106,76 @@ bool LogSourceAccessManager::FetchFromSource(
   bool delete_resource_when_done = !params.incremental;
 
   resource->GetLogSource()->Fetch(base::Bind(
-      &LogSourceAccessManager::OnFetchComplete, weak_factory_.GetWeakPtr(), key,
-      delete_resource_when_done, callback));
+      &LogSourceAccessManager::OnFetchComplete, weak_factory_.GetWeakPtr(),
+      extension_id, resource_id, delete_resource_when_done, callback));
   return true;
 }
 
 void LogSourceAccessManager::OnFetchComplete(
-    const SourceAndExtension& key,
+    const std::string& extension_id,
+    int resource_id,
     bool delete_resource,
     const ReadLogSourceCallback& callback,
     SystemLogsResponse* response) {
-  int resource_id = 0;
-  const auto iter = sources_.find(key);
-  if (iter != sources_.end())
-    resource_id = iter->second;
-
-  feedback_private::ReadLogSourceResult result;
+  ReadLogSourceResult result;
   // Always return reader_id=0 if there is a cleanup.
   result.reader_id = delete_resource ? 0 : resource_id;
 
   GetLogLinesFromSystemLogsResponse(*response, &result.log_lines);
   if (delete_resource) {
     // This should also remove the entry from |sources_|.
-    ApiResourceManager<LogSourceResource>::Get(context_)->Remove(
-        key.extension_id, resource_id);
+    ApiResourceManager<LogSourceResource>::Get(context_)->Remove(extension_id,
+                                                                 resource_id);
   }
 
   callback.Run(result);
 }
 
-void LogSourceAccessManager::RemoveSource(const SourceAndExtension& key) {
-  sources_.erase(key);
+void LogSourceAccessManager::RemoveHandle(int id) {
+  open_handles_.erase(id);
 }
 
 LogSourceAccessManager::SourceAndExtension::SourceAndExtension(
-    feedback_private::LogSource source,
+    LogSource source,
     const std::string& extension_id)
     : source(source), extension_id(extension_id) {}
 
-int LogSourceAccessManager::CreateResource(const SourceAndExtension& key) {
-  // Enforce the rules: Do not create a new SingleLogSource if there was already
-  // one created for |key|.
-  if (sources_.find(key) != sources_.end())
-    return 0;
-
+int LogSourceAccessManager::CreateResource(LogSource source,
+                                           const std::string& extension_id) {
   // Enforce the rules: Do not create too many SingleLogSource objects to read
   // from a source, even if they are from different extensions.
-  if (GetNumActiveResourcesForSource(key.source) >= kMaxReadersPerSource)
+  if (GetNumActiveResourcesForSource(source) >= kMaxReadersPerSource)
     return 0;
 
   std::unique_ptr<LogSourceResource> new_resource =
       std::make_unique<LogSourceResource>(
-          key.extension_id,
+          extension_id,
           ExtensionsAPIClient::Get()
               ->GetFeedbackPrivateDelegate()
-              ->CreateSingleLogSource(key.source),
-          base::Bind(&LogSourceAccessManager::RemoveSource,
-                     weak_factory_.GetWeakPtr(), key));
+              ->CreateSingleLogSource(source),
+          base::Bind(&LogSourceAccessManager::RemoveHandle,
+                     weak_factory_.GetWeakPtr()));
 
-  int id = ApiResourceManager<LogSourceResource>::Get(context_)->Add(
+  int resource_id = ApiResourceManager<LogSourceResource>::Get(context_)->Add(
       new_resource.release());
-  sources_[key] = id;
+  // The resource ID isn't known until |new_resource| is added to the API
+  // Resource Manager, but it needs to be passed into the resource afterward, so
+  // that the resource can unregister itself from LogSourceAccessManager.
+  ApiResourceManager<LogSourceResource>::Get(context_)
+      ->Get(extension_id, resource_id)
+      ->set_resource_id(resource_id);
+  open_handles_[resource_id].reset(
+      new SourceAndExtension(source, extension_id));
 
-  return id;
+  return resource_id;
 }
 
-bool LogSourceAccessManager::UpdateSourceAccessTime(
-    const SourceAndExtension& key) {
+bool LogSourceAccessManager::UpdateSourceAccessTime(int id) {
+  auto iter = open_handles_.find(id);
+  if (iter == open_handles_.end())
+    return false;
+
+  const SourceAndExtension& key = *iter->second;
   if (rate_limiters_.find(key) == rate_limiters_.end()) {
     rate_limiters_.emplace(
         key, std::make_unique<AccessRateLimiter>(1, GetMinTimeBetweenReads(),
@@ -180,15 +185,11 @@ bool LogSourceAccessManager::UpdateSourceAccessTime(
 }
 
 size_t LogSourceAccessManager::GetNumActiveResourcesForSource(
-    feedback_private::LogSource source) const {
+    LogSource source) const {
   size_t count = 0;
-  // The stored entries are sorted first by source type, then by extension ID.
-  // We can take advantage of this fact to avoid iterating over all elements.
-  // Instead start from the first element that matches |source|, and end at the
-  // first element that does not match |source| anymore.
-  for (auto iter = sources_.lower_bound(SourceAndExtension(source, ""));
-       iter != sources_.end() && iter->first.source == source; ++iter) {
-    ++count;
+  for (auto iter = open_handles_.begin(); iter != open_handles_.end(); ++iter) {
+    if (iter->second->source == source)
+      ++count;
   }
   return count;
 }
