@@ -26,6 +26,8 @@
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/extensions/test_extension_system.h"
 #include "chrome/browser/ui/apps/chrome_app_delegate.h"
+#include "chrome/browser/ui/ash/fake_tablet_mode_controller.h"
+#include "chrome/browser/ui/ash/tablet_mode_client.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/test/base/browser_with_test_window_test.h"
 #include "chrome/test/base/testing_browser_process.h"
@@ -407,6 +409,12 @@ class LockScreenAppStateTest : public BrowserWithTestWindowTest {
     session_manager_->SetSessionState(
         session_manager::SessionState::LOGIN_PRIMARY);
 
+    fake_tablet_mode_controller_ = std::make_unique<FakeTabletModeController>();
+    tablet_mode_client_ = std::make_unique<TabletModeClient>();
+    tablet_mode_client_->InitForTesting(
+        fake_tablet_mode_controller_->CreateInterfacePtr());
+    tablet_mode_client_->FlushForTesting();
+
     // Initialize arc session manager - NoteTakingHelper expects it to be set.
     arc_session_manager_ = base::MakeUnique<arc::ArcSessionManager>(
         base::MakeUnique<arc::ArcSessionRunner>(
@@ -645,6 +653,9 @@ class LockScreenAppStateTest : public BrowserWithTestWindowTest {
   std::unique_ptr<arc::ArcSessionManager> arc_session_manager_;
 
   std::unique_ptr<session_manager::SessionManager> session_manager_;
+
+  std::unique_ptr<FakeTabletModeController> fake_tablet_mode_controller_;
+  std::unique_ptr<TabletModeClient> tablet_mode_client_;
 
   std::unique_ptr<lock_screen_apps::StateController> state_controller_;
 
