@@ -1,0 +1,248 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d22f581_9b856cca",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwContents.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 1059,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-28T20:54:52Z",
+      "side": 1,
+      "message": "move class to somewhere up top, not in the middle of random methods",
+      "revId": "a19e1600e7024fd94adcd8d6c9eec53cfdb7a566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "136cc3f9_cbd79dc5",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwContents.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 1082,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-28T20:54:52Z",
+      "side": 1,
+      "message": "just leave out the accessors",
+      "revId": "a19e1600e7024fd94adcd8d6c9eec53cfdb7a566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "935f3f85_7875c5b3",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AndroidScrollIntegrationTest.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-28T20:54:52Z",
+      "side": 1,
+      "message": "yuck, turn clang-format off for lambdas, and manually restyle this back..",
+      "revId": "a19e1600e7024fd94adcd8d6c9eec53cfdb7a566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55c32636_8bfc635f",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwJavaBridgeTest.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-28T20:54:52Z",
+      "side": 1,
+      "message": "move this to AwContentsGarbageCollectionTest. a bunch of things can then be shared as well",
+      "revId": "a19e1600e7024fd94adcd8d6c9eec53cfdb7a566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99355491_9ad26504",
+        "filename": "content/browser/web_contents/web_contents_android.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-28T20:54:52Z",
+      "side": 1,
+      "message": "use MakeUnique",
+      "revId": "a19e1600e7024fd94adcd8d6c9eec53cfdb7a566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "159a6f2b_f169183e",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-28T20:54:52Z",
+      "side": 1,
+      "message": "move this near top of class. somewhere near the constructor probably",
+      "revId": "a19e1600e7024fd94adcd8d6c9eec53cfdb7a566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19a65830_c7cd16d5",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-28T20:54:52Z",
+      "side": 1,
+      "message": "add a comment explaining why this can\u0027t be null",
+      "revId": "a19e1600e7024fd94adcd8d6c9eec53cfdb7a566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7895d883_e0df482b",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContents.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-28T20:54:52Z",
+      "side": 1,
+      "message": "top of class",
+      "revId": "a19e1600e7024fd94adcd8d6c9eec53cfdb7a566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab6ad994_e9e0e728",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContents.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-28T20:54:52Z",
+      "side": 1,
+      "message": "move to near top of class",
+      "revId": "a19e1600e7024fd94adcd8d6c9eec53cfdb7a566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eb66254_5318030d",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContents.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-28T20:54:52Z",
+      "side": 1,
+      "message": "does this need to be public?",
+      "revId": "a19e1600e7024fd94adcd8d6c9eec53cfdb7a566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8db54171_2eb05f84",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContents.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-28T20:54:52Z",
+      "side": 1,
+      "message": "update comment",
+      "range": {
+        "startLine": 538,
+        "startChar": 46,
+        "endLine": 538,
+        "endChar": 61
+      },
+      "revId": "a19e1600e7024fd94adcd8d6c9eec53cfdb7a566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6fa6ad5_8f824e5b",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/JavaBridgeActivityTestRule.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-28T20:54:52Z",
+      "side": 1,
+      "message": "this should no longer be necessary in tests?",
+      "revId": "a19e1600e7024fd94adcd8d6c9eec53cfdb7a566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3635a9d4_43bbb9c2",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/JavaBridgeBasicsTest.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-28T20:54:52Z",
+      "side": 1,
+      "message": "this should not be needed. if it is needed, then something is actually broken",
+      "revId": "a19e1600e7024fd94adcd8d6c9eec53cfdb7a566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac25b29f_47bca1b0",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/JavaBridgeTestCommon.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-28T20:54:52Z",
+      "side": 1,
+      "message": "ditto, this part should not need to exist at all in tests?",
+      "revId": "a19e1600e7024fd94adcd8d6c9eec53cfdb7a566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
