@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47a16e87_96aefea2",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-28T02:41:57Z",
+      "side": 1,
+      "message": "nit: DCHECK_EQ(std::string::npos, subpath.find(\u0027/\u0027)); it print the right error message on failure.",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 11
+      },
+      "revId": "9f9a0f381d0c6125e2d8973ed135a2d46324ca10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ede36f5e_9b99d25d",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-28T02:41:57Z",
+      "side": 1,
+      "message": "nit: \"subpath\" of \"A/B/C\" could be \"B/C\". Subpath is also commonly used to specify subset of path in graphs. Maybe just name. InsertChild as well.",
+      "range": {
+        "startLine": 85,
+        "startChar": 37,
+        "endLine": 85,
+        "endChar": 44
+      },
+      "revId": "9f9a0f381d0c6125e2d8973ed135a2d46324ca10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3182748e_5e52d729",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-28T02:41:57Z",
+      "side": 1,
+      "message": "sorry just realized. |all_nodes_| is never used. can we make GuidNodeMap as std::map\u003cbase::trace_event::MemoryAllocatorDumpGuid, Node\u003e ?",
+      "range": {
+        "startLine": 132,
+        "startChar": 26,
+        "endLine": 132,
+        "endChar": 36
+      },
+      "revId": "9f9a0f381d0c6125e2d8973ed135a2d46324ca10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ac4a882_af9843a7",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-28T02:41:57Z",
+      "side": 1,
+      "message": "nit remove comment here and above. If you want to specify more context then DCHECK(is_global) \u003c\u003c \"2 MADs ahve the same guid.\";",
+      "revId": "9f9a0f381d0c6125e2d8973ed135a2d46324ca10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
