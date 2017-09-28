@@ -16,13 +16,17 @@ class LoadingMobileStorySet(story.StorySet):
   Design doc: https://docs.google.com/document/d/1QKlZIoURAxZk-brrXsKYZl9O8ieqXht3ogeF9yLNFCI/edit
   """
 
-  def __init__(self, cache_temperatures=None, traffic_settings=None):
+  def __init__(self, cache_temperatures=None, cache_temperatures_for_pwa=None,
+               traffic_settings=None):
     super(LoadingMobileStorySet, self).__init__(
         archive_data_file='data/loading_mobile.json',
         cloud_storage_bucket=story.PARTNER_BUCKET)
 
     if cache_temperatures is None:
       cache_temperatures = [cache_temperature_module.ANY]
+
+    if cache_temperatures_for_pwa is None:
+      cache_temperatures_for_pwa = [cache_temperature_module.ANY]
 
     if traffic_settings is None:
       traffic_settings = [traffic_setting_module.NONE]
@@ -103,7 +107,7 @@ class LoadingMobileStorySet(story.StorySet):
       #  'WikiOffline'),
       # ('https://busrouter.sg', 'BusRouter'),
       # ('https://airhorner.com', 'AirHorner'),
-    ], cache_temperatures, traffic_settings)
+    ], cache_temperatures_for_pwa, traffic_settings)
 
     self.AddStories(['tough_ttfmp'], [
       ('http://www.localmoxie.com', 'LocalMoxie'),
