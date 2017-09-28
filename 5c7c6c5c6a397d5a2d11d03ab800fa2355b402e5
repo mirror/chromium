@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36cd3e72_99c76623",
+        "filename": "ui/wm/core/focus_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-28T21:16:42Z",
+      "side": 1,
+      "message": "Can you move this directly above 311? Less likelihood of things getting out of sync with the notification closer to where the member is changed.",
+      "range": {
+        "startLine": 298,
+        "startChar": 2,
+        "endLine": 299,
+        "endChar": 64
+      },
+      "revId": "5c7c6c5c6a397d5a2d11d03ab800fa2355b402e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d69ea54b_f7f8cccf",
+        "filename": "ui/wm/public/activation_change_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-28T21:16:42Z",
+      "side": 1,
+      "message": "focus-\u003eactive",
+      "range": {
+        "startLine": 29,
+        "startChar": 44,
+        "endLine": 29,
+        "endChar": 49
+      },
+      "revId": "5c7c6c5c6a397d5a2d11d03ab800fa2355b402e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
