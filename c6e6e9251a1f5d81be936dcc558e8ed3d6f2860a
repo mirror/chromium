@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "163218c8_ec4027c0",
+        "filename": "ios/chrome/app/application_delegate/tab_opening.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-28T11:52:46Z",
+      "side": 1,
+      "message": "Nit: I would prefer to add this argument to the method below and update all callers.  Convenience methods tend to diverge into separate implementations over time.",
+      "revId": "c6e6e9251a1f5d81be936dcc558e8ed3d6f2860a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "629ff403_f5eb44c5",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 2269,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-28T11:52:46Z",
+      "side": 1,
+      "message": "Here as well, I would just update all callers to pass the dismissOmnibox argument.",
+      "revId": "c6e6e9251a1f5d81be936dcc558e8ed3d6f2860a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25edb800_79f0842e",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 2378,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-28T11:52:46Z",
+      "side": 1,
+      "message": "And here.",
+      "revId": "c6e6e9251a1f5d81be936dcc558e8ed3d6f2860a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
