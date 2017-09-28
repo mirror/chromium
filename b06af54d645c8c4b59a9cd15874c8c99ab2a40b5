@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ee77d7c_7326e763",
+        "filename": "tools/grit/grit/tool/build.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-28T16:51:47Z",
+      "side": 0,
+      "message": "Can\u0027t you leave this the same and just add: infofile.write(\u0027\\n\u0027) below?",
+      "revId": "b06af54d645c8c4b59a9cd15874c8c99ab2a40b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
