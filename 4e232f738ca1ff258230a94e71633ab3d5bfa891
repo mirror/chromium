@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43400571_c214f013",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2_worker/lighthouse/lighthouse-background.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-09-28T17:58:00Z",
+      "side": 1,
+      "message": "Not psyched about this, but Lighthouse overrides Runtime with a mock object that nukes the original functionality. We can try to adjust this in the next roll so we don\u0027t have to do this manual change.",
+      "revId": "4e232f738ca1ff258230a94e71633ab3d5bfa891",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
