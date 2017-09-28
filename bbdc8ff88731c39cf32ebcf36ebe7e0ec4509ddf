@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "80fba635_96ed4ead",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-28T23:04:11Z",
+      "side": 0,
+      "message": "This removes the label in the content that was acting as the title. The real title is set from bubble_content.title already, so this was redundant.",
+      "parentUuid": "0f17591e_9ebc2228",
+      "revId": "bbdc8ff88731c39cf32ebcf36ebe7e0ec4509ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f76ffc01_f63e89d3",
         "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "bbdc8ff88731c39cf32ebcf36ebe7e0ec4509ddf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff5523d5_086ff297",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-28T23:04:11Z",
+      "side": 0,
+      "message": "This removes the horizontal separator between the content and the buttons pre-Harmony. After some general changes there\u0027s plenty of space between the two, so the separator looks out of place.",
+      "parentUuid": "f76ffc01_f63e89d3",
+      "revId": "bbdc8ff88731c39cf32ebcf36ebe7e0ec4509ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

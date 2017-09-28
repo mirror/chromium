@@ -22,6 +22,30 @@
       "revId": "242d4bbb6f4be5b5157fea49507a614e18f3a8d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3076689c_a36253cb",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 2254,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-28T23:04:11Z",
+      "side": 1,
+      "message": "I had two conflicting mocks I was working off, one was terse and the other had the existing language. I liked the slightly more verbose version; if we change our minds it\u0027s a quick edit.",
+      "parentUuid": "2e0c08f0_b1f365f0",
+      "range": {
+        "startLine": 2254,
+        "startChar": 14,
+        "endLine": 2254,
+        "endChar": 17
+      },
+      "revId": "242d4bbb6f4be5b5157fea49507a614e18f3a8d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
