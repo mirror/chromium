@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34df91b1_ff8ba888",
+        "filename": "chrome/test/data/extensions/api_test/modules/background.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-28T23:00:51Z",
+      "side": 1,
+      "message": "You could probably use the \u003cscript\u003e tag\u0027s error and load handlers? Something like:\n\n\u003cscript src\u003d\"bootstrap.js\"\u003e\u003c/script\u003e\n\nwhich contains\n\nvar moduleScript \u003d document.createElement(\u0027script\u0027);\nmoduleScript.type \u003d \u0027module\u0027;\nmoduleScript.src \u003d \u0027background.js\u0027;\nmoduleScript.onload \u003d /* ... */;\nmoduleScript.onerror \u003d /* ... */;\ndocument.head.appendChild(moduleScript);",
+      "revId": "6449de840aec46116c234a5865c4ba120a0e38d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
