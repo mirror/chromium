@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81b48cff_672e9db3",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 88612,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-09-28T19:37:30Z",
+      "side": 1,
+      "message": "This UMA is used to prove we log the available space correctly. By looking at the UMA, all data are \u003e\u003d0. which I think we don\u0027t need to log it any more.",
+      "range": {
+        "startLine": 88612,
+        "startChar": 3,
+        "endLine": 88612,
+        "endChar": 11
+      },
+      "revId": "d2425f3462f9ef2725b6053cbc3a2c854e971cb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
