@@ -102,8 +102,6 @@ IPC_ENUM_TRAITS_MAX_VALUE(gfx::FontRenderParams::SubpixelRendering,
                           gfx::FontRenderParams::SUBPIXEL_RENDERING_MAX)
 IPC_ENUM_TRAITS_MAX_VALUE(content::ScreenOrientationValues,
                           content::SCREEN_ORIENTATION_VALUES_LAST)
-IPC_ENUM_TRAITS_MAX_VALUE(content::TapMultipleTargetsStrategy,
-                          content::TAP_MULTIPLE_TARGETS_STRATEGY_MAX)
 IPC_ENUM_TRAITS_MAX_VALUE(content::ThreeDAPIType,
                           content::THREE_D_API_TYPE_LAST)
 IPC_ENUM_TRAITS_MAX_VALUE(ui::TextInputMode, ui::TEXT_INPUT_MODE_MAX)
@@ -228,7 +226,6 @@ IPC_STRUCT_TRAITS_BEGIN(content::RendererPreferences)
   IPC_STRUCT_TRAITS_MEMBER(webrtc_udp_max_port)
   IPC_STRUCT_TRAITS_MEMBER(user_agent_override)
   IPC_STRUCT_TRAITS_MEMBER(accept_languages)
-  IPC_STRUCT_TRAITS_MEMBER(tap_multiple_targets_strategy)
   IPC_STRUCT_TRAITS_MEMBER(disable_client_blocked_error_page)
   IPC_STRUCT_TRAITS_MEMBER(plugin_fullscreen_allowed)
   IPC_STRUCT_TRAITS_MEMBER(network_contry_iso)
@@ -508,19 +505,6 @@ IPC_MESSAGE_ROUTED1(ViewMsg_PpapiBrokerPermissionResult,
                     bool /* result */)
 #endif
 
-// An acknowledgement to ViewHostMsg_ShowDisambiguationPopup to notify the
-// renderer process to release the magnified image.
-IPC_MESSAGE_ROUTED1(ViewMsg_ReleaseDisambiguationPopupBitmap,
-                    viz::SharedBitmapId /* id */)
-
-// If the ViewHostMsg_ShowDisambiguationPopup resulted in the user tapping
-// inside the popup, instruct the renderer to generate a synthetic tap at that
-// offset.
-IPC_MESSAGE_ROUTED3(ViewMsg_ResolveTapDisambiguation,
-                    double /* timestamp_seconds */,
-                    gfx::Point /* tap_viewport_offset */,
-                    bool /* is_long_press */)
-
 // Fetches complete rendered content of a web page as plain text.
 IPC_MESSAGE_ROUTED0(ViewMsg_GetRenderedText)
 
@@ -750,13 +734,6 @@ IPC_MESSAGE_ROUTED2(ViewHostMsg_LockMouse,
 // whenever the mouse is unlocked (which may or may not be caused by
 // ViewHostMsg_UnlockMouse).
 IPC_MESSAGE_ROUTED0(ViewHostMsg_UnlockMouse)
-
-// Notifies that multiple touch targets may have been pressed, and to show
-// the disambiguation popup.
-IPC_MESSAGE_ROUTED3(ViewHostMsg_ShowDisambiguationPopup,
-                    gfx::Rect, /* Border of touched targets */
-                    gfx::Size, /* Size of zoomed image */
-                    viz::SharedBitmapId /* id */)
 
 // Message sent from renderer to the browser when the element that is focused
 // has been touched. A bool is passed in this message which indicates if the

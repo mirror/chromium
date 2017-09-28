@@ -165,12 +165,10 @@ function sendEvents(targetX, targetY, documents, multiTapNotification)
 function runTestForDocuments(targetX, targetY, documents)
 {
     sendEvents(targetX, targetY, documents, false);
-    window.internals.settings.setMultiTargetTapNotificationEnabled(true);
     for(var i = 0; i < documents.length; i++) {
         internals.clearHitTestCache(documents[i]);
     }
     sendEvents(targetX, targetY, documents, true);
-    window.internals.settings.setMultiTargetTapNotificationEnabled(false);
 }
 
 function centerOf(element) {
@@ -183,8 +181,6 @@ function centerOf(element) {
 
 eventCounts = {};
 onload = function() {
-    window.internals.settings.setMultiTargetTapNotificationEnabled(false);
-
     debug('Event on a simple div');
     debug('---------------------');
     var point = centerOf(document.getElementById('target'));

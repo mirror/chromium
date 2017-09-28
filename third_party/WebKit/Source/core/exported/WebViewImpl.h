@@ -196,7 +196,6 @@ class CORE_EXPORT WebViewImpl final
                          double maximum_zoom_level) override;
   float TextZoomFactor() override;
   float SetTextZoomFactor(float) override;
-  bool ZoomToMultipleTargetsRect(const WebRect&) override;
   float PageScaleFactor() const override;
   void SetDefaultPageScaleLimits(float min_scale, float max_scale) override;
   void SetInitialPageScaleOverride(float) override;
@@ -387,10 +386,6 @@ class CORE_EXPORT WebViewImpl final
                                            bool& need_animation);
 
   void AnimateDoubleTapZoom(const IntPoint&);
-
-  void ResolveTapDisambiguation(double timestamp_seconds,
-                                WebPoint tap_viewport_offset,
-                                bool is_long_press) override;
 
   void EnableFakePageScaleAnimationForTesting(bool);
   bool FakeDoubleTapAnimationPendingForTesting() const {
@@ -656,8 +651,6 @@ class CORE_EXPORT WebViewImpl final
   Vector<std::unique_ptr<LinkHighlightImpl>> link_highlights_;
   std::unique_ptr<CompositorAnimationTimeline> link_highlights_timeline_;
   std::unique_ptr<FullscreenController> fullscreen_controller_;
-
-  WebPoint last_tap_disambiguation_best_candidate_position_;
 
   WebColor base_background_color_;
   bool base_background_color_override_enabled_;

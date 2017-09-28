@@ -100,7 +100,6 @@
 #include "core/page/PageOverlay.h"
 #include "core/page/PagePopupClient.h"
 #include "core/page/PointerLockController.h"
-#include "core/page/TouchDisambiguation.h"
 #include "core/page/ValidationMessageClientImpl.h"
 #include "core/page/scrolling/TopDocumentRootScrollerController.h"
 #include "core/paint/FirstMeaningfulPaintDetector.h"
@@ -188,7 +187,6 @@ static const float doubleTapZoomContentMinimumMargin = 2;
 static const double doubleTapZoomAnimationDurationInSeconds = 0.25;
 static const float doubleTapZoomAlreadyLegibleRatio = 1.2f;
 
-static const double multipleTargetsZoomAnimationDurationInSeconds = 0.25;
 static const double findInPageAnimationDurationInSeconds = 0;
 
 // Constants for viewport anchoring on resize.
@@ -649,55 +647,6 @@ WebInputEventResult WebViewImpl::HandleGestureEvent(
 
   switch (event.GetType()) {
     case WebInputEvent::kGestureTap: {
-      // Don't trigger a disambiguation popup on sites designed for mobile
-      // devices.  Instead, assume that the page has been designed with big
-      // enough buttons and links.  Don't trigger a disambiguation popup when
-      // screencasting, since it's implemented outside of compositor pipeline
-      // and is not being screencasted itself. This leads to bad user
-      // experience.
-      WebDevToolsAgentImpl* dev_tools = MainFrameDevToolsAgentImpl();
-      VisualViewport& visual_viewport = GetPage()->GetVisualViewport();
-      bool screencast_enabled = dev_tools && dev_tools->ScreencastEnabled();
-      if (event.data.tap.width > 0 &&
-          !visual_viewport.ShouldDisableDesktopWorkarounds() &&
-          !screencast_enabled) {
-        IntRect bounding_box(visual_viewport.ViewportToRootFrame(
-            IntRect(event.x - event.data.tap.width / 2,
-                    event.y - event.data.tap.height / 2, event.data.tap.width,
-                    event.data.tap.height)));
-
-        // TODO(bokan): We shouldn't pass details of the VisualViewport offset
-        // to render_view_impl.  crbug.com/459591
-        WebSize visual_viewport_offset =
-            FlooredIntSize(visual_viewport.GetScrollOffset());
-
-        if (web_settings_->MultiTargetTapNotificationEnabled()) {
-          Vector<IntRect> good_targets;
-          HeapVector<Member<Node>> highlight_nodes;
-          FindGoodTouchTargets(bounding_box, MainFrameImpl()->GetFrame(),
-                               good_targets, highlight_nodes);
-          // FIXME: replace touch adjustment code when numberOfGoodTargets == 1?
-          // Single candidate case is currently handled by:
-          // https://bugs.webkit.org/show_bug.cgi?id=85101
-          if (good_targets.size() >= 2 && client_ &&
-              client_->DidTapMultipleTargets(visual_viewport_offset,
-                                             bounding_box, good_targets)) {
-            // Stash the position of the node that would've been used absent
-            // disambiguation, for UMA purposes.
-            last_tap_disambiguation_best_candidate_position_ =
-                targeted_event.GetHitTestResult().RoundedPointInMainFrame() -
-                RoundedIntSize(targeted_event.GetHitTestResult().LocalPoint());
-
-            EnableTapHighlights(highlight_nodes);
-            for (size_t i = 0; i < link_highlights_.size(); ++i)
-              link_highlights_[i]->StartHighlightAnimationIfNeeded();
-            event_result = WebInputEventResult::kHandledSystem;
-            event_cancelled = true;
-            break;
-          }
-        }
-      }
-
       {
         ContextMenuAllowedScope scope;
         event_result =
@@ -768,59 +717,6 @@ WebInputEventResult WebViewImpl::HandleGestureEvent(
   }
   client_->DidHandleGestureEvent(event, event_cancelled);
   return event_result;
-}
-
-namespace {
-// This enum is used to back a histogram, and should therefore be treated as
-// append-only.
-enum TapDisambiguationResult {
-  kUmaTapDisambiguationOther = 0,
-  kUmaTapDisambiguationBackButton = 1,
-  kUmaTapDisambiguationTappedOutside = 2,
-  kUmaTapDisambiguationTappedInsideDeprecated = 3,
-  kUmaTapDisambiguationTappedInsideSameNode = 4,
-  kUmaTapDisambiguationTappedInsideDifferentNode = 5,
-  kUmaTapDisambiguationCount = 6,
-};
-
-void RecordTapDisambiguation(TapDisambiguationResult result) {
-  UMA_HISTOGRAM_ENUMERATION("Touchscreen.TapDisambiguation", result,
-                            kUmaTapDisambiguationCount);
-}
-
-}  // namespace
-
-void WebViewImpl::ResolveTapDisambiguation(double timestamp_seconds,
-                                           WebPoint tap_viewport_offset,
-                                           bool is_long_press) {
-  WebGestureEvent event(is_long_press ? WebInputEvent::kGestureLongPress
-                                      : WebInputEvent::kGestureTap,
-                        WebInputEvent::kNoModifiers, timestamp_seconds);
-
-  event.x = tap_viewport_offset.x;
-  event.y = tap_viewport_offset.y;
-  event.source_device = blink::kWebGestureDeviceTouchscreen;
-
-  {
-    // Compute UMA stat about whether the node selected by disambiguation UI was
-    // different from the one preferred by the regular hit-testing + adjustment
-    // logic.
-    WebGestureEvent scaled_event =
-        TransformWebGestureEvent(MainFrameImpl()->GetFrameView(), event);
-    GestureEventWithHitTestResults targeted_event =
-        page_->DeprecatedLocalMainFrame()->GetEventHandler().TargetGestureEvent(
-            scaled_event);
-    WebPoint node_position =
-        targeted_event.GetHitTestResult().RoundedPointInMainFrame() -
-        RoundedIntSize(targeted_event.GetHitTestResult().LocalPoint());
-    TapDisambiguationResult result =
-        (node_position == last_tap_disambiguation_best_candidate_position_)
-            ? kUmaTapDisambiguationTappedInsideSameNode
-            : kUmaTapDisambiguationTappedInsideDifferentNode;
-    RecordTapDisambiguation(result);
-  }
-
-  HandleGestureEvent(event);
 }
 
 WebInputEventResult WebViewImpl::HandleSyntheticWheelFromTouchpadPinchEvent(
@@ -1430,26 +1326,6 @@ void WebViewImpl::ZoomToFindInPageRect(const WebRect& rect_in_root_frame) {
 
   StartPageScaleAnimation(scroll, false, scale,
                           findInPageAnimationDurationInSeconds);
-}
-
-bool WebViewImpl::ZoomToMultipleTargetsRect(const WebRect& rect_in_root_frame) {
-  // TODO(lukasza): https://crbug.com/734209: Add OOPIF support.
-  if (!MainFrameImpl())
-    return false;
-
-  float scale;
-  WebPoint scroll;
-
-  ComputeScaleAndScrollForBlockRect(
-      WebPoint(rect_in_root_frame.x, rect_in_root_frame.y), rect_in_root_frame,
-      nonUserInitiatedPointPadding, MinimumPageScaleFactor(), scale, scroll);
-
-  if (scale <= PageScaleFactor())
-    return false;
-
-  StartPageScaleAnimation(scroll, false, scale,
-                          multipleTargetsZoomAnimationDurationInSeconds);
-  return true;
 }
 
 bool WebViewImpl::HasTouchEventHandlersAt(const WebPoint& point) {

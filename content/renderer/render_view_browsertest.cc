@@ -2347,19 +2347,8 @@ TEST_F(RenderViewImplBlinkSettingsTest, Default) {
 
 TEST_F(RenderViewImplBlinkSettingsTest, CommandLine) {
   base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
-      switches::kBlinkSettings,
-      "multiTargetTapNotificationEnabled=true,viewportEnabled=true");
+      switches::kBlinkSettings, "viewportEnabled=true");
   DoSetUp();
-  EXPECT_TRUE(settings()->MultiTargetTapNotificationEnabled());
-  EXPECT_TRUE(settings()->ViewportEnabled());
-}
-
-TEST_F(RenderViewImplBlinkSettingsTest, Negative) {
-  base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
-      switches::kBlinkSettings,
-      "multiTargetTapNotificationEnabled=false,viewportEnabled=true");
-  DoSetUp();
-  EXPECT_FALSE(settings()->MultiTargetTapNotificationEnabled());
   EXPECT_TRUE(settings()->ViewportEnabled());
 }
 
