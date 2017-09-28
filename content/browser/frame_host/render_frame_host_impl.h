@@ -272,6 +272,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
                           blink::WebTreeScopeType scope,
                           const std::string& frame_name,
                           const std::string& frame_unique_name,
+                          const std::string& devtools_frame_guid,
                           blink::WebSandboxFlags sandbox_flags,
                           const ParsedFeaturePolicyHeader& container_policy,
                           const FrameOwnerProperties& frame_owner_properties);
@@ -631,13 +632,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
     return has_focused_editable_element_;
   }
 
-  // This value is sent from the renderer and shouldn't be trusted.
-  // TODO(alexclarke): Remove once there is a solution for stable frame IDs. See
-  // crbug.com/715541
-  const std::string& untrusted_devtools_frame_id() const {
-    return untrusted_devtools_frame_id_;
-  }
-
   // Cancels any blocked request for the frame and its subframes.
   void CancelBlockedRequestsForFrame();
 
@@ -820,7 +814,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
   void OnFocusedNodeChanged(bool is_editable_element,
                             const gfx::Rect& bounds_in_frame_widget);
   void OnSetHasReceivedUserGesture();
-  void OnSetDevToolsFrameId(const std::string& devtools_frame_id);
 
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
   void OnShowPopup(const FrameHostMsg_ShowPopup_Params& params);
@@ -1304,11 +1297,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // IPC-friendly token that represents this host for AndroidOverlays, if we
   // have created one yet.
   base::Optional<base::UnguessableToken> overlay_routing_token_;
-
-  // This value is sent from the renderer and shouldn't be trusted.
-  // TODO(alexclarke): Remove once there is a solution for stable frame IDs. See
-  // crbug.com/715541
-  std::string untrusted_devtools_frame_id_;
 
   mojom::FrameInputHandlerPtr frame_input_handler_;
   std::unique_ptr<LegacyIPCFrameInputHandler> legacy_frame_input_handler_;

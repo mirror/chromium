@@ -193,6 +193,7 @@ class CONTENT_EXPORT RenderFrameImpl
       const ScreenInfo& screen_info,
       CompositorDependencies* compositor_deps,
       blink::WebFrame* opener,
+      const std::string& devtools_frame_guid,
       const FrameReplicationState& replicated_state);
 
   // Creates a new RenderFrame with |routing_id|.  If |proxy_routing_id| is
@@ -212,6 +213,7 @@ class CONTENT_EXPORT RenderFrameImpl
                           int opener_routing_id,
                           int parent_routing_id,
                           int previous_sibling_routing_id,
+                          const std::string& devtools_frame_guid,
                           const FrameReplicationState& replicated_state,
                           CompositorDependencies* compositor_deps,
                           const mojom::CreateFrameWidgetParams& params,
@@ -226,12 +228,17 @@ class CONTENT_EXPORT RenderFrameImpl
   // Used by content_layouttest_support to hook into the creation of
   // RenderFrameImpls.
   struct CreateParams {
-    CreateParams(RenderViewImpl* render_view, int32_t routing_id)
-        : render_view(render_view), routing_id(routing_id) {}
+    CreateParams(RenderViewImpl* render_view,
+                 int32_t routing_id,
+                 std::string devtools_frame_guid)
+        : render_view(render_view),
+          routing_id(routing_id),
+          devtools_frame_guid(devtools_frame_guid) {}
     ~CreateParams() {}
 
     RenderViewImpl* render_view;
     int32_t routing_id;
+    std::string devtools_frame_guid;
   };
 
   using CreateRenderFrameImplFunction =
@@ -555,7 +562,6 @@ class CONTENT_EXPORT RenderFrameImpl
       const blink::WebVector<blink::WebString>& stopped_matching_selectors)
       override;
   void SetHasReceivedUserGesture() override;
-  void SetDevToolsFrameId(const blink::WebString& devtools_frame_id) override;
   bool ShouldReportDetailedMessageForSource(
       const blink::WebString& source) override;
   void DidAddMessageToConsole(const blink::WebConsoleMessage& message,
@@ -603,6 +609,7 @@ class CONTENT_EXPORT RenderFrameImpl
   bool IsClientLoFiActiveForFrame() override;
   bool ShouldUseClientLoFiForRequest(const blink::WebURLRequest&) override;
   void DidBlockFramebust(const blink::WebURL& url) override;
+  blink::WebString GetDevToolsFrameGUID() override;
   void AbortClientNavigation() override;
   void DidChangeSelection(bool is_empty_selection) override;
   bool HandleCurrentKeyboardEvent() override;
@@ -871,7 +878,8 @@ class CONTENT_EXPORT RenderFrameImpl
   // Creates a new RenderFrame. |render_view| is the RenderView object that this
   // frame belongs to.
   static RenderFrameImpl* Create(RenderViewImpl* render_view,
-                                 int32_t routing_id);
+                                 int32_t routing_id,
+                                 const std::string& devtools_frame_guid);
 
   // Functions to add and remove observers for this object.
   void AddObserver(RenderFrameObserver* observer);
@@ -1500,6 +1508,8 @@ class CONTENT_EXPORT RenderFrameImpl
   std::vector<media::RoutingTokenCallback> pending_routing_token_callbacks_;
 
   RenderThreadImpl::RendererMemoryMetrics peak_memory_metrics_;
+
+  std::string devtools_frame_guid_;
 
   base::WeakPtrFactory<RenderFrameImpl> weak_factory_;
 

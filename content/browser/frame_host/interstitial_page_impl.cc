@@ -9,6 +9,7 @@
 
 #include "base/bind.h"
 #include "base/compiler_specific.h"
+#include "base/guid.h"
 #include "base/location.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
@@ -614,10 +615,9 @@ WebContentsView* InterstitialPageImpl::CreateWebContentsView() {
   render_view_host_->GetMainFrame()->AllowBindings(
       BINDINGS_POLICY_DOM_AUTOMATION);
 
-  render_view_host_->CreateRenderView(MSG_ROUTING_NONE,
-                                      MSG_ROUTING_NONE,
-                                      FrameReplicationState(),
-                                      false);
+  render_view_host_->CreateRenderView(MSG_ROUTING_NONE, MSG_ROUTING_NONE,
+                                      base::GenerateGUID(),
+                                      FrameReplicationState(), false);
   controller_->delegate()->RenderFrameForInterstitialPageCreated(
       frame_tree_->root()->current_frame_host());
   view->SetSize(web_contents()->GetContainerBounds().size());
