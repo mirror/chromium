@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da144f60_5c077128",
+        "filename": "net/tools/print_certificates.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-09-28T21:40:37Z",
+      "side": 1,
+      "message": "optional: fix this spelling",
+      "range": {
+        "startLine": 45,
+        "startChar": 12,
+        "endLine": 45,
+        "endChar": 26
+      },
+      "revId": "cbc6e8bb3537430b0fd48a7e8f830663959a88e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d863b34d_65317209",
+        "filename": "net/tools/print_certificates.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-09-28T21:40:37Z",
+      "side": 1,
+      "message": "How does this fail when the command is now found?",
+      "revId": "cbc6e8bb3537430b0fd48a7e8f830663959a88e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bc23966_8e13be8d",
+        "filename": "net/tools/print_certificates.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-09-28T21:40:37Z",
+      "side": 1,
+      "message": "Would it be useful to accept ascii-der too?",
+      "revId": "cbc6e8bb3537430b0fd48a7e8f830663959a88e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "748dbdf2_7ee3e345",
+        "filename": "net/tools/print_certificates.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-09-28T21:40:37Z",
+      "side": 1,
+      "message": "This seems useful enough to make the default (i.e. if der2ascii is found dump using it too).",
+      "revId": "cbc6e8bb3537430b0fd48a7e8f830663959a88e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
