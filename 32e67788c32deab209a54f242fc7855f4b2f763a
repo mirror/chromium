@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d7a833b_f19a74cd",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-28T19:42:54Z",
+      "side": 1,
+      "message": "Is this only for testing? If so, put this in TestingAPI below?",
+      "revId": "32e67788c32deab209a54f242fc7855f4b2f763a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f42bf1b9_66fb8122",
+        "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-28T19:42:54Z",
+      "side": 1,
+      "message": "Put this in the category below?",
+      "revId": "32e67788c32deab209a54f242fc7855f4b2f763a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00a305d3_08b472da",
+        "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar_browsertest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-28T19:42:54Z",
+      "side": 1,
+      "message": "Comment that ownership is passed in -setBrowserWindowTouchBar:",
+      "revId": "32e67788c32deab209a54f242fc7855f4b2f763a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "226342f5_dfa1505e",
+        "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar_browsertest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-28T19:42:54Z",
+      "side": 1,
+      "message": "naming: touch_bar",
+      "range": {
+        "startLine": 109,
+        "startChar": 16,
+        "endLine": 109,
+        "endChar": 24
+      },
+      "revId": "32e67788c32deab209a54f242fc7855f4b2f763a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a63ad61d_92331691",
+        "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar_browsertest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-28T19:42:54Z",
+      "side": 1,
+      "message": "touch_bar",
+      "range": {
+        "startLine": 123,
+        "startChar": 16,
+        "endLine": 123,
+        "endChar": 24
+      },
+      "revId": "32e67788c32deab209a54f242fc7855f4b2f763a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
