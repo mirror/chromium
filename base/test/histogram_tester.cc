@@ -27,6 +27,9 @@ HistogramTester::HistogramTester() {
     histograms_snapshot_[histogram->histogram_name()] =
         histogram->SnapshotSamples();
   }
+
+  // Record all histograms in tests.
+  // StatisticsRecorder::SetRecordCheckerEnabled(false);
 }
 
 HistogramTester::~HistogramTester() {
