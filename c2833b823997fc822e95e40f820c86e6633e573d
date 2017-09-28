@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ef611ec_4df565b6",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-09-28T04:37:53Z",
+      "side": 1,
+      "message": "nit: Maybe we should make kMaxVisibleNotifications an int or GetNotificationCount() returns size_t to avoid cast here? Up to you.",
+      "revId": "c2833b823997fc822e95e40f820c86e6633e573d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1d9d042_c561bd0e",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-09-28T04:37:53Z",
+      "side": 1,
+      "message": "remove this line.",
+      "revId": "c2833b823997fc822e95e40f820c86e6633e573d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
