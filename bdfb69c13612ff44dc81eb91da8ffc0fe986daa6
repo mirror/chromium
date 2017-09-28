@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a45cbd7_2a31fc4e",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_registry.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-28T17:42:36Z",
+      "side": 1,
+      "message": "nit: rm this line?",
+      "revId": "bdfb69c13612ff44dc81eb91da8ffc0fe986daa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
