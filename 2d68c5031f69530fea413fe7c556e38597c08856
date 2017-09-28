@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d3c37b6_a73bd7ee",
+        "filename": "third_party/WebKit/Source/platform/wtf/experimental/ContainerTypeOperations.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-09-28T12:22:42Z",
+      "side": 1,
+      "message": "# Just asking.\nDo we want different types for |From| and |To|?",
+      "range": {
+        "startLine": 195,
+        "startChar": 19,
+        "endLine": 195,
+        "endChar": 23
+      },
+      "revId": "2d68c5031f69530fea413fe7c556e38597c08856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d247fd6_d6caf79a",
+        "filename": "third_party/WebKit/Source/platform/wtf/experimental/ContainerTypeOperations.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-09-28T12:22:42Z",
+      "side": 1,
+      "message": "As we chatted offline. POD types may have padding between their members, and the difference in the padding should be ignored on the comparison.\nWe should probably restrict it to scalar types.",
+      "range": {
+        "startLine": 223,
+        "startChar": 36,
+        "endLine": 223,
+        "endChar": 45
+      },
+      "revId": "2d68c5031f69530fea413fe7c556e38597c08856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f40a7325_47fba687",
+        "filename": "third_party/WebKit/Source/platform/wtf/experimental/ContainerTypeOperations.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-09-28T12:22:42Z",
+      "side": 1,
+      "message": "Can we use `std::enable_if_t\u003cSafelyMemcpyable\u003cInT, T\u003e::value\u003e\u003e` instead of `void` here? So that we can probably remove |dummy| below.",
+      "range": {
+        "startLine": 244,
+        "startChar": 9,
+        "endLine": 244,
+        "endChar": 13
+      },
+      "revId": "2d68c5031f69530fea413fe7c556e38597c08856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8faa1c2f_b4adce79",
+        "filename": "third_party/WebKit/Source/platform/wtf/experimental/ContainerTypeOperations.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-09-28T12:22:42Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 268,
+        "startChar": 9,
+        "endLine": 268,
+        "endChar": 13
+      },
+      "revId": "2d68c5031f69530fea413fe7c556e38597c08856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27d654f6_6a8cb001",
+        "filename": "third_party/WebKit/Source/platform/wtf/experimental/ContainerTypeOperations.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-09-28T12:22:42Z",
+      "side": 1,
+      "message": "Can this be `decay_t\u003cT\u003e` to ban array types and function types (not function pointer types)?",
+      "range": {
+        "startLine": 327,
+        "startChar": 37,
+        "endLine": 327,
+        "endChar": 48
+      },
+      "revId": "2d68c5031f69530fea413fe7c556e38597c08856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
