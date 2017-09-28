@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ee902c81_518198f6",
+        "filename": "chrome/browser/ui/views/autofill/password_generation_popup_view_views.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-28T06:47:16Z",
+      "side": 1,
+      "message": "Done. (it\u0027s also tempting just to delete this and suffer the regression since this hasn\u0027t launched to stable, and it\u0027s the only thing using SetLineHeight.....)",
+      "parentUuid": "f857bc3e_b49a1674",
+      "revId": "1b13bd21b865590731caf14b8957ed2babc6a717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77a82748_38f77214",
         "filename": "ui/views/controls/styled_label.cc",
         "patchSetId": 11
@@ -39,6 +57,30 @@
       "revId": "1b13bd21b865590731caf14b8957ed2babc6a717",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd47c7ad_44c76e15",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-28T06:47:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77a82748_38f77214",
+      "range": {
+        "startLine": 42,
+        "startChar": 69,
+        "endLine": 42,
+        "endChar": 70
+      },
+      "revId": "1b13bd21b865590731caf14b8957ed2babc6a717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "81d5ab1d_134e0757",
+        "filename": "ui/views/controls/styled_label.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-28T06:47:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d98e8da0_451f17f8",
+      "range": {
+        "startLine": 45,
+        "startChar": 73,
+        "endLine": 45,
+        "endChar": 74
+      },
+      "revId": "1b13bd21b865590731caf14b8957ed2babc6a717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57af3aa8_b3ceb2b3",
         "filename": "ui/views/controls/styled_label.h",
         "patchSetId": 11
@@ -85,6 +151,30 @@
       "revId": "1b13bd21b865590731caf14b8957ed2babc6a717",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dae91e57_858ca04f",
+        "filename": "ui/views/controls/styled_label.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-28T06:47:16Z",
+      "side": 1,
+      "message": "Done. I\u0027ve updated the views::Links (i.e. those not in a StyledLabel) in the PageInfo bubble to not have links either so the dialog is consistent. (apparently the last screenshot that went out for review for that had someone asking \"why are there underlines on all these links?\")",
+      "parentUuid": "57af3aa8_b3ceb2b3",
+      "range": {
+        "startLine": 67,
+        "startChar": 9,
+        "endLine": 67,
+        "endChar": 34
+      },
+      "revId": "1b13bd21b865590731caf14b8957ed2babc6a717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "6ad992d1_4f2c410a",
+        "filename": "ui/views/controls/styled_label.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-28T06:47:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de81b516_df0f079b",
+      "range": {
+        "startLine": 69,
+        "startChar": 9,
+        "endLine": 69,
+        "endChar": 15
+      },
+      "revId": "1b13bd21b865590731caf14b8957ed2babc6a717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05379e2e_74148138",
         "filename": "ui/views/controls/styled_label_unittest.cc",
         "patchSetId": 11
@@ -122,6 +236,30 @@
       "writtenOn": "2017-09-27T23:06:35Z",
       "side": 1,
       "message": "Test for RangeStyleInfo.text_style? Maybe this test can just set it to STYLE_EMPHASIZED instead.",
+      "range": {
+        "startLine": 369,
+        "startChar": 13,
+        "endLine": 369,
+        "endChar": 24
+      },
+      "revId": "1b13bd21b865590731caf14b8957ed2babc6a717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37f2ef59_6dd57b9a",
+        "filename": "ui/views/controls/styled_label_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-28T06:47:16Z",
+      "side": 1,
+      "message": "except.. there\u0027s no STYLE_EMPHASIZED in views/typography.h. :). It\u0027s used a lot in client code though and the stuff below is interesting. I\u0027ve added a test typography provider. Also enabled the MAYBE_StyledRangeUnderlined test above on Linux - seems to work fine, and it keeps coverage of |custom_font|.",
+      "parentUuid": "05379e2e_74148138",
       "range": {
         "startLine": 369,
         "startChar": 13,
