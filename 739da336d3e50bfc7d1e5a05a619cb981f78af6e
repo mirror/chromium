@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a823dbc_f48ce60b",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1851,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-09-28T16:09:48Z",
+      "side": 1,
+      "message": "The need for this (or \"single_process\") is surprising to me. What happens if they\u0027re left alone?",
+      "revId": "739da336d3e50bfc7d1e5a05a619cb981f78af6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
