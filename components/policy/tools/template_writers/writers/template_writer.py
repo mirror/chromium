@@ -74,12 +74,19 @@ class TemplateWriter(object):
         not self.IsFuturePolicySupported(policy)):
       return False
 
+    major_version = self._GetChromiumMajorVersion()
+
     if '*' in self.platforms:
       # Currently chrome_os is only catched here.
-      return True
+      for supported_on in policy['supported_on']:
+        if self._IsVersionSupported(supported_on, major_version):
+          return True
+      return False
+
     for supported_on in policy['supported_on']:
       for supported_on_platform in supported_on['platforms']:
-        if supported_on_platform in self.platforms:
+        if (supported_on_platform in self.platforms and
+            self._IsVersionSupported(supported_on, major_version)):
           return True
     return False
 
@@ -110,11 +117,12 @@ class TemplateWriter(object):
     if management and not self.IsCrOSManagementSupported(policy, management):
       return False
 
+    major_version = self._GetChromiumMajorVersion()
     for supported_on in policy['supported_on']:
-      if platform in supported_on['platforms'] and \
-          (not product or product in supported_on['product']):
+      if (platform in supported_on['platforms'] and
+          (not product or product in supported_on['product']) and
+          (self._IsVersionSupported(supported_on, major_version))):
         return True
-
     return False
 
   def IsCrOSManagementSupported(self, policy, management):
@@ -138,6 +146,21 @@ class TemplateWriter(object):
 
     if 'version' in self.config:
       return self.config['version']
+
+  def _GetChromiumMajorVersion(self):
+    ''' Returns A integer represents the major version of Chromium if it exists
+    in config.
+    '''
+    return self.config.get('major_version', None)
+
+  def _IsVersionSupported(self, supported_on, major_version):
+    '''Checks whether the policy is supoorted on current version'''
+    if not major_version:
+      return True
+    since_version = int(supported_on.get('since_version', '-1') or '-1')
+    until_version = int(supported_on.get('until_version', '-1') or '-1')
+    return ((since_version == -1 or since_version <= major_version) and
+            (until_version == -1 or until_version >= major_version))
 
   def _GetPoliciesForWriter(self, group):
     '''Filters the list of policies in the passed group that are supported by
