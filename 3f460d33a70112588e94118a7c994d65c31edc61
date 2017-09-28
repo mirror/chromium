@@ -16,6 +16,24 @@
       "revId": "3f460d33a70112588e94118a7c994d65c31edc61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "654172e3_cbfaab10",
+        "filename": "net/http/http_auth_preferences.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-09-28T00:29:47Z",
+      "side": 1,
+      "message": "Hah, both me and a colleague were puzzled why clang format moved this line up. Now it all makes sense:-)",
+      "parentUuid": "c72f95e8_209cda1f",
+      "revId": "3f460d33a70112588e94118a7c994d65c31edc61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
