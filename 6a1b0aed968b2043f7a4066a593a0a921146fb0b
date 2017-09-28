@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28faa773_78a2c110",
+        "filename": "chrome/test/data/webui/extensions/extension_item_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-28T17:12:59Z",
+      "side": 1,
+      "message": "It looks like the same thing is tested twice (here and line 120). Did you mean to test .TERMINATED with one of them?",
+      "revId": "6a1b0aed968b2043f7a4066a593a0a921146fb0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
