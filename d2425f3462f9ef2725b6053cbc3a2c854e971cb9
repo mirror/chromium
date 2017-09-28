@@ -2,6 +2,69 @@
   "comments": [
     {
       "key": {
+        "uuid": "30bdefed_cf6ec3cf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-09-28T20:33:56Z",
+      "side": 1,
+      "message": "Is this empty function still necessary? I feel the downstream code will only call |logSpaceUsageUMAWhenInstallationFails|.",
+      "range": {
+        "startLine": 159,
+        "startChar": 23,
+        "endLine": 159,
+        "endChar": 63
+      },
+      "revId": "d2425f3462f9ef2725b6053cbc3a2c854e971cb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b88edfc7_c7ba3453",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-09-28T20:33:56Z",
+      "side": 1,
+      "message": "I feel the cache size UMA isn\u0027t as important as the other two. Maybe logging the other two is enough. Thoughts?\n\nI am ok to remove it in a follow up CL, since we already record it now:)",
+      "range": {
+        "startLine": 181,
+        "startChar": 16,
+        "endLine": 181,
+        "endChar": 33
+      },
+      "revId": "d2425f3462f9ef2725b6053cbc3a2c854e971cb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "523838eb_4b103a74",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-09-28T20:33:56Z",
+      "side": 1,
+      "message": "Long -\u003e long?",
+      "revId": "d2425f3462f9ef2725b6053cbc3a2c854e971cb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81b48cff_672e9db3",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 6
