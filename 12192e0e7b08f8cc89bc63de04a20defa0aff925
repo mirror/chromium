@@ -146,6 +146,24 @@
       "revId": "12192e0e7b08f8cc89bc63de04a20defa0aff925",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6aec9ea_2c6e4c77",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-09-28T08:02:58Z",
+      "side": 1,
+      "message": "Done.\nConsidering performance, I leave MarkStartAndEndInOneNode mostly as-is.",
+      "parentUuid": "bcb1d9d0_3925ffdf",
+      "revId": "12192e0e7b08f8cc89bc63de04a20defa0aff925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
