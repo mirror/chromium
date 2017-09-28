@@ -12,6 +12,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/sequence_checker.h"
 #include "chrome/browser/media/router/discovery/discovery_network_monitor.h"
+#include "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_params.h"
 #include "chrome/browser/media/router/discovery/media_sink_discovery_metrics.h"
 #include "chrome/browser/media/router/discovery/media_sink_service_base.h"
 #include "components/cast_channel/cast_channel_enum.h"
@@ -112,6 +113,8 @@ class CastMediaSinkServiceImpl
                            TestInitRetryParameters);
   FRIEND_TEST_ALL_PREFIXES(CastMediaSinkServiceImplTest,
                            TestInitRetryParametersWithDefaultValue);
+  FRIEND_TEST_ALL_PREFIXES(CastMediaSinkServiceImplTest,
+                           TestCreateCastSocketOpenParams);
 
   // CastSocket::Observer implementation.
   void OnError(const cast_channel::CastSocket& socket,
@@ -121,6 +124,13 @@ class CastMediaSinkServiceImpl
 
   // DiscoveryNetworkMonitor::Observer implementation
   void OnNetworksChanged(const std::string& network_id) override;
+
+  // Returns cast socket open parameters. Parameters are read from Finch.
+  // Connect / liveness timeout value are dynamically calculated
+  // based on the channel's last error status.
+  // |ip_endpoint|: ip endpoint of cast channel to be connected to.
+  cast_channel::CastSocketOpenParams CreateCastSocketOpenParams(
+      const net::IPEndPoint& ip_endpoint);
 
   // Opens cast channel.
   // |ip_endpoint|: cast channel's target IP endpoint.
@@ -177,13 +187,6 @@ class CastMediaSinkServiceImpl
   // RecordDeviceCounts().
   std::set<net::IPEndPoint> known_ip_endpoints_;
 
-  // Initializes |backoff_policy| and |max_retry_attempts| according to feature
-  // parameters. Sets |max_retry_attempts| to 0 if cast channel retry feature is
-  // not enabled; Sets |backoff_policy| and |max_retry_attempts| to default
-  // value if parsing parameter fails.
-  static void InitRetryParameters(net::BackoffEntry::Policy* backoff_policy,
-                                  int* max_retry_attempts);
-
   using MediaSinkInternalMap = std::map<net::IPAddress, MediaSinkInternal>;
 
   // Map of sinks with opened cast channels keyed by IP address.
@@ -204,22 +207,16 @@ class CastMediaSinkServiceImpl
 
   CastDeviceCountMetrics metrics_;
 
-  // Default backoff policy to reopen Cast Socket when channel error occurs.
-  static const net::BackoffEntry::Policy kDefaultBackoffPolicy;
+  CastChannelRetryParams retry_params_;
 
-  // TODO(zhaobin): Remove this when we switch to use max delay instead of max
-  // number of retry attempts to decide when to stop retry.
-  static constexpr int kDefaultMaxRetryAttempts = 3;
-
-  // Parameter name const for kEnableCastChannelRetry feature.
-  static constexpr char const kParamNameInitialDelayMS[] = "initial_delay_ms";
-  static constexpr char const kParamNameMaxRetryAttempts[] =
-      "max_retry_attempts";
-  static constexpr char const kParamNameExponential[] = "exponential";
+  CastChannelOpenParams open_params_;
 
   net::BackoffEntry::Policy backoff_policy_;
 
-  int max_retry_attempts_;
+  // Map of consecutive failure count keyed by IP endpoint. Keeps track of
+  // failure counts for each IP endpoint. Used to dynamically adjust timeout
+  // values. If a Cast channel opens successfully, it is removed from the map.
+  std::map<net::IPEndPoint, int> failure_count_map_;
 
   scoped_refptr<base::SequencedTaskRunner> task_runner_;
 

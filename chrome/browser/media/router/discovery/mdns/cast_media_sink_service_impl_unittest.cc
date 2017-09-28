@@ -288,9 +288,9 @@ TEST_F(CastMediaSinkServiceImplTest, TestOpenChannelRetryOnce) {
 
   media_sink_service_impl_.SetTaskRunnerForTest(mock_time_task_runner_);
   std::unique_ptr<net::BackoffEntry> backoff_entry(
-      new net::BackoffEntry(&CastMediaSinkServiceImpl::kDefaultBackoffPolicy));
+      new net::BackoffEntry(&media_sink_service_impl_.backoff_policy_));
+  media_sink_service_impl_.retry_params_.max_retry_attempts = 3;
   ExpectOpenSocketInternal(&socket);
-  media_sink_service_impl_.max_retry_attempts_ = 3;
   media_sink_service_impl_.OpenChannel(
       ip_endpoint, cast_sink, std::move(backoff_entry),
       CastMediaSinkServiceImpl::SinkSource::kMdns);
@@ -312,12 +312,10 @@ TEST_F(CastMediaSinkServiceImplTest, TestOpenChannelFails) {
   media_sink_service_impl_.SetTaskRunnerForTest(mock_time_task_runner_);
 
   ExpectOpenSocketInternal(&socket);
-  net::BackoffEntry::Policy policy =
-      CastMediaSinkServiceImpl::kDefaultBackoffPolicy;
   std::unique_ptr<net::BackoffEntry> backoff_entry(
-      new net::BackoffEntry(&policy));
+      new net::BackoffEntry(&media_sink_service_impl_.backoff_policy_));
+  media_sink_service_impl_.retry_params_.max_retry_attempts = 3;
   auto* backoff_entry_ptr = backoff_entry.get();
-  media_sink_service_impl_.max_retry_attempts_ = 3;
   media_sink_service_impl_.OpenChannel(
       ip_endpoint, cast_sink, std::move(backoff_entry),
       CastMediaSinkServiceImpl::SinkSource::kMdns);
@@ -422,10 +420,15 @@ TEST_F(CastMediaSinkServiceImplTest, TestOnChannelOpenFailed) {
       cast_sink, &socket, CastMediaSinkServiceImpl::SinkSource::kMdns);
 
   EXPECT_EQ(1u, media_sink_service_impl_.current_sinks_map_.size());
+  EXPECT_TRUE(media_sink_service_impl_.failure_count_map_.empty());
 
   socket.SetIPEndpoint(ip_endpoint1);
   media_sink_service_impl_.OnChannelOpenFailed(ip_endpoint1);
   EXPECT_TRUE(media_sink_service_impl_.current_sinks_map_.empty());
+  EXPECT_EQ(1, media_sink_service_impl_.failure_count_map_[ip_endpoint1]);
+
+  media_sink_service_impl_.OnChannelOpenFailed(ip_endpoint1);
+  EXPECT_EQ(2, media_sink_service_impl_.failure_count_map_[ip_endpoint1]);
 }
 
 TEST_F(CastMediaSinkServiceImplTest,
@@ -1074,51 +1077,56 @@ TEST_F(CastMediaSinkServiceImplTest, DualDiscoveryDoesntDuplicateCacheItems) {
   content::RunAllTasksUntilIdle();
 }
 
-TEST_F(CastMediaSinkServiceImplTest,
-       TestInitRetryParametersWithFeatureDisabled) {
-  // Feature not enabled.
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndDisableFeature(kEnableCastChannelRetry);
+TEST_F(CastMediaSinkServiceImplTest, TestCreateCastSocketOpenParams) {
+  net::IPEndPoint ip_endpoint = CreateIPEndPoint(1);
+  int connect_timeout_in_seconds =
+      media_sink_service_impl_.open_params_.connect_timeout_in_seconds;
+  int liveness_timeout_in_seconds =
+      media_sink_service_impl_.open_params_.liveness_timeout_in_seconds;
+  int delta_in_seconds = 5;
+  media_sink_service_impl_.open_params_.dynamic_timeout_delta_in_seconds =
+      delta_in_seconds;
 
-  net::BackoffEntry::Policy backoff_policy;
-  int max_retry_attempts;
-  CastMediaSinkServiceImpl::InitRetryParameters(&backoff_policy,
-                                                &max_retry_attempts);
-  EXPECT_EQ(0, max_retry_attempts);
-}
+  // No error
+  auto open_params =
+      media_sink_service_impl_.CreateCastSocketOpenParams(ip_endpoint);
+  EXPECT_EQ(connect_timeout_in_seconds,
+            open_params.connect_timeout.InSeconds());
+  EXPECT_EQ(liveness_timeout_in_seconds,
+            open_params.liveness_timeout.InSeconds());
 
-TEST_F(CastMediaSinkServiceImplTest, TestInitRetryParameters) {
-  base::test::ScopedFeatureList scoped_feature_list;
-  std::map<std::string, std::string> params;
-  params[CastMediaSinkServiceImpl::kParamNameMaxRetryAttempts] = "20";
-  params[CastMediaSinkServiceImpl::kParamNameInitialDelayMS] = "2000";
-  params[CastMediaSinkServiceImpl::kParamNameExponential] = "2.0";
-  scoped_feature_list.InitAndEnableFeatureWithParameters(
-      kEnableCastChannelRetry, params);
+  // One error
+  connect_timeout_in_seconds += delta_in_seconds;
+  liveness_timeout_in_seconds += delta_in_seconds;
+  media_sink_service_impl_.failure_count_map_[ip_endpoint] = 1;
+  open_params =
+      media_sink_service_impl_.CreateCastSocketOpenParams(ip_endpoint);
+  EXPECT_EQ(connect_timeout_in_seconds,
+            open_params.connect_timeout.InSeconds());
+  EXPECT_EQ(liveness_timeout_in_seconds,
+            open_params.liveness_timeout.InSeconds());
 
-  net::BackoffEntry::Policy backoff_policy;
-  int max_retry_attempts;
-  CastMediaSinkServiceImpl::InitRetryParameters(&backoff_policy,
-                                                &max_retry_attempts);
-  EXPECT_EQ(20, max_retry_attempts);
-  EXPECT_EQ(2000, backoff_policy.initial_delay_ms);
-  EXPECT_EQ(2.0, backoff_policy.multiply_factor);
-}
+  // Two errors
+  connect_timeout_in_seconds += delta_in_seconds;
+  liveness_timeout_in_seconds += delta_in_seconds;
+  media_sink_service_impl_.failure_count_map_[ip_endpoint] = 2;
+  open_params =
+      media_sink_service_impl_.CreateCastSocketOpenParams(ip_endpoint);
+  EXPECT_EQ(connect_timeout_in_seconds,
+            open_params.connect_timeout.InSeconds());
+  EXPECT_EQ(liveness_timeout_in_seconds,
+            open_params.liveness_timeout.InSeconds());
 
-TEST_F(CastMediaSinkServiceImplTest, TestInitRetryParametersWithDefaultValue) {
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndEnableFeature(kEnableCastChannelRetry);
-
-  net::BackoffEntry::Policy backoff_policy;
-  int max_retry_attempts;
-  CastMediaSinkServiceImpl::InitRetryParameters(&backoff_policy,
-                                                &max_retry_attempts);
-  EXPECT_EQ(CastMediaSinkServiceImpl::kDefaultMaxRetryAttempts,
-            max_retry_attempts);
-  EXPECT_EQ(CastMediaSinkServiceImpl::kDefaultBackoffPolicy.initial_delay_ms,
-            backoff_policy.initial_delay_ms);
-  EXPECT_EQ(CastMediaSinkServiceImpl::kDefaultBackoffPolicy.multiply_factor,
-            backoff_policy.multiply_factor);
+  // Ten errors
+  connect_timeout_in_seconds = 30;
+  liveness_timeout_in_seconds = 60;
+  media_sink_service_impl_.failure_count_map_[ip_endpoint] = 10;
+  open_params =
+      media_sink_service_impl_.CreateCastSocketOpenParams(ip_endpoint);
+  EXPECT_EQ(connect_timeout_in_seconds,
+            open_params.connect_timeout.InSeconds());
+  EXPECT_EQ(liveness_timeout_in_seconds,
+            open_params.liveness_timeout.InSeconds());
 }
 
 }  // namespace media_router
