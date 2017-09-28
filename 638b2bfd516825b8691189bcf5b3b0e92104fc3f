@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "96ba8cae_767db915",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-09-28T23:26:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a4dc9eb_eaada165",
+      "revId": "638b2bfd516825b8691189bcf5b3b0e92104fc3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0285b1bb_af60b66e",
         "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
         "patchSetId": 6
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "29cc1cf5_563b443c",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-09-28T23:26:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0285b1bb_af60b66e",
+      "range": {
+        "startLine": 116,
+        "startChar": 2,
+        "endLine": 116,
+        "endChar": 13
+      },
+      "revId": "638b2bfd516825b8691189bcf5b3b0e92104fc3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1cd34c1_0086fd4d",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 6
@@ -53,6 +95,30 @@
       "writtenOn": "2017-09-28T22:30:22Z",
       "side": 1,
       "message": "Don\u0027t you need to include 10 in here?",
+      "range": {
+        "startLine": 22604,
+        "startChar": 2,
+        "endLine": 22606,
+        "endChar": 8
+      },
+      "revId": "638b2bfd516825b8691189bcf5b3b0e92104fc3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47ad7877_83c42eeb",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 22606,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-09-28T23:26:42Z",
+      "side": 1,
+      "message": "It wasn\u0027t here before my changes so I wasn\u0027t sure if that was the convention with these kinds of buckets. I haven\u0027t had much experience with UMA code. Perhaps mpearson@ can advise (or I can just add it if you\u0027re saying that\u0027s what I should be doing).",
+      "parentUuid": "d1cd34c1_0086fd4d",
       "range": {
         "startLine": 22604,
         "startChar": 2,
