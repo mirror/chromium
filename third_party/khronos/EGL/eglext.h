@@ -512,6 +512,37 @@ EGLAPI EGLBoolean EGLAPIENTRY eglPresentationTimeANDROID (EGLDisplay dpy, EGLSur
 #endif
 #endif /* EGL_ANDROID_presentation_time */
 
+#ifndef EGL_ANDROID_get_frame_timestamps
+#define EGL_ANDROID_get_frame_timestamps 1
+#define EGL_TIMESTAMPS_ANDROID 0x3430
+#define EGL_COMPOSITE_DEADLINE_ANDROID 0x3431
+#define EGL_COMPOSITE_INTERVAL_ANDROID 0x3432
+#define EGL_COMPOSITE_TO_PRESENT_LATENCY_ANDROID 0x3433
+#define EGL_REQUESTED_PRESENT_TIME_ANDROID 0x3434
+#define EGL_RENDERING_COMPLETE_TIME_ANDROID 0x3435
+#define EGL_COMPOSITION_LATCH_TIME_ANDROID 0x3436
+#define EGL_FIRST_COMPOSITION_START_TIME_ANDROID 0x3437
+#define EGL_LAST_COMPOSITION_START_TIME_ANDROID 0x3438
+#define EGL_FIRST_COMPOSITION_GPU_FINISHED_TIME_ANDROID 0x3439
+#define EGL_DISPLAY_PRESENT_TIME_ANDROID 0x343A
+#define EGL_DEQUEUE_READY_TIME_ANDROID 0x343B
+#define EGL_READS_DONE_TIME_ANDROID 0x343C
+#define EGL_TIMESTAMP_PENDING_ANDROID EGL_CAST(EGLnsecsANDROID, -2)
+#define EGL_TIMESTAMP_INVALID_ANDROID EGL_CAST(EGLnsecsANDROID, -1)
+typedef EGLBoolean (EGLAPIENTRYP PFNEGLGETNEXTFRAMEIDANDROID) (EGLDisplay dpy, EGLSurface surface, EGLuint64KHR *frameId);
+typedef EGLBoolean (EGLAPIENTRYP PFNEGLGETCOMPOSITORTIMINGANDROID) (EGLDisplay dpy, EGLSurface surface, EGLint numTimestamps, const EGLint *names, EGLnsecsANDROID *values);
+typedef EGLBoolean (EGLAPIENTRYP PFNEGLGETCOMPOSITORTIMINGSUPPORTEDANDROID) (EGLDisplay dpy, EGLSurface surface, EGLint name);
+typedef EGLBoolean (EGLAPIENTRYP PFNEGLGETFRAMETIMESTAMPSANDROID) (EGLDisplay dpy, EGLSurface surface, EGLuint64KHR frameId, EGLint numTimestamps, const EGLint *timestamps, EGLnsecsANDROID *values);
+typedef EGLBoolean (EGLAPIENTRYP PFNEGLGETFRAMETIMESTAMPSUPPORTEDANDROID) (EGLDisplay dpy, EGLSurface surface, EGLint timestamp);
+#ifdef EGL_EGLEXT_PROTOTYPES
+EGLAPI EGLBoolean eglGetNextFrameIdANDROID(EGLDisplay dpy, EGLSurface surface, EGLuint64KHR *frameId);
+EGLAPI EGLBoolean eglGetCompositorTimingANDROID(EGLDisplay dpy, EGLSurface surface, EGLint numTimestamps, const EGLint *names, EGLnsecsANDROID *values);
+EGLAPI EGLBoolean eglGetCompositorTimingSupportedANDROID(EGLDisplay dpy, EGLSurface surface, EGLint name);
+EGLAPI EGLBoolean eglGetFrameTimestampsANDROID(EGLDisplay dpy, EGLSurface surface, EGLuint64KHR frameId, EGLint numTimestamps, const EGLint *timestamps, EGLnsecsANDROID *values);
+EGLAPI EGLBoolean eglGetFrameTimestampSupportedANDROID(EGLDisplay dpy, EGLSurface surface, EGLint timestamp);
+#endif
+#endif /* EGL_ANDROID_get_frame_timestamps */
+
 #ifndef EGL_ANDROID_recordable
 #define EGL_ANDROID_recordable 1
 #define EGL_RECORDABLE_ANDROID            0x3142
