@@ -2,6 +2,11 @@
 <script src="resources/text-based-repaint.js"></script>
 <video id="video" controls></video>
 <script>
+// Disable under-invalidation checking because we allow short period of
+// under-invalidation of buffered ranges.
+if (window.internals)
+    internals.runtimeFlags.paintUnderInvalidationCheckingEnabled = false;
+
 if (window.testRunner)
     testRunner.waitUntilDone();
 
