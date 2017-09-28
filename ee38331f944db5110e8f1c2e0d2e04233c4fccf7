@@ -34,6 +34,24 @@
       "revId": "ee38331f944db5110e8f1c2e0d2e04233c4fccf7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a3f2f54_24d6c118",
+        "filename": "chrome/browser/resources/md_extensions/item_list.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-28T22:40:15Z",
+      "side": 1,
+      "message": "I have not seen the experimental CL yet, but I like the proposed approach. A view should not affect other view\u0027s scroll position. But also, if we want the scrollbars to appear at the edge of the window, each view needs to fill 100% the viewport too.",
+      "parentUuid": "6767d4dd_5d093c7f",
+      "revId": "ee38331f944db5110e8f1c2e0d2e04233c4fccf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
