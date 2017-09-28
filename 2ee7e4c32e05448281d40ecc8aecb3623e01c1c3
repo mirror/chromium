@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "687cbc4d_9ff59f09",
+        "filename": "ash/system/tray/tray_background_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-28T21:12:51Z",
+      "side": 1,
+      "message": "scoped_canvas?",
+      "range": {
+        "startLine": 120,
+        "startChar": 22,
+        "endLine": 120,
+        "endChar": 28
+      },
+      "revId": "2ee7e4c32e05448281d40ecc8aecb3623e01c1c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
