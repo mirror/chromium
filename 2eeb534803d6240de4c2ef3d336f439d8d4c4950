@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a70e6cbf_4693e69b",
+        "filename": "chrome/browser/chromeos/system/timezone_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-28T19:54:27Z",
+      "side": 1,
+      "message": "I am a bit lost.\n\nWhat is the difference between this and IsTimezonePrefsManaged(prefs::kUserTimezone)?\n\nAnd why SystemTimezoneProto::DISABLED returns false and disallows user time zone change. And IP_ONLY etc returns true to allow user timezone change.",
+      "revId": "2eeb534803d6240de4c2ef3d336f439d8d4c4950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
