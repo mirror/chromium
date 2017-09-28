@@ -52,7 +52,7 @@ class AXTreeSourceArc
 
   void NotifyActionResult(const ui::AXActionData& data, bool result);
 
-  void Focus(aura::Window* window);
+  void SetFocusToActiveWindow();
 
   int32_t window_id() const { return window_id_; }
 

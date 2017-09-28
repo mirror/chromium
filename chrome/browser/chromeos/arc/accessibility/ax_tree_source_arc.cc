@@ -396,8 +396,19 @@ void AXTreeSourceArc::NotifyActionResult(const ui::AXActionData& data,
       data, result);
 }
 
-void AXTreeSourceArc::Focus(aura::Window* window) {
-  views::Widget* widget = views::Widget::GetWidgetForNativeView(window);
+void AXTreeSourceArc::SetFocusToActiveWindow() {
+  exo::WMHelper* wm_helper = exo::WMHelper::GetInstance();
+  if (!wm_helper)
+    return;
+
+  aura::Window* active_window = wm_helper->GetActiveWindow();
+  if (!active_window)
+    return;
+
+  if (focus_stealer_->HasFocus())
+    return;
+
+  views::Widget* widget = views::Widget::GetWidgetForNativeView(active_window);
   if (!widget || !widget->GetContentsView())
     return;
 

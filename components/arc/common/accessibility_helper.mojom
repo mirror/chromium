@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// Next MinVersion: 7
+// Next MinVersion: 8
 
 module arc.mojom;
 
@@ -259,6 +259,10 @@ struct AccessibilityEventData {
   // with AccessibilityNodeInfo.getWindowId now, do not expect that it always
   // matches with it.
   [MinVersion=6]int32 window_id;
+
+  // Task associated with this event (usually the front task when this event
+  // gets dispatched).
+  [MinVersion=7]int32 task_id;
 };
 
 // AccessibilityActionData is a struct to contain info of AccessibilityAction in
