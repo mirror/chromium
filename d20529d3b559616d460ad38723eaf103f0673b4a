@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f0dfa8f_ff8b3fb0",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_migration.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-09-28T18:34:25Z",
+      "side": 1,
+      "message": "General comment-- you should make this more instruction based. The current headers are nouns, but instructions imply steps, verbs. Also, if there is a clear set of steps, do they happen in a set order? Maybe it\u0027s more tasks that need to be completed, not necessarily in order? Regardless, start by making each header a call to action for the developer.",
+      "revId": "d20529d3b559616d460ad38723eaf103f0673b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1a29b95_b4709fe1",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_pages.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-09-28T18:34:25Z",
+      "side": 1,
+      "message": "I\u0027d make this a call to action, something like:\n\n\"Create background scripts that stay dormant until these events are fired and that unload after they\u0027ve responded to the events.\"",
+      "revId": "d20529d3b559616d460ad38723eaf103f0673b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e050b64a_8d4757db",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_pages.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-09-28T18:34:25Z",
+      "side": 1,
+      "message": "A sample would make sense here, building upon the previous sample.",
+      "revId": "d20529d3b559616d460ad38723eaf103f0673b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1830ba7_eb263606",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_pages.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-09-28T18:34:25Z",
+      "side": 1,
+      "message": "Recommendation to remove the heading here and just have a paragraph.",
+      "revId": "d20529d3b559616d460ad38723eaf103f0673b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd6f72b0_ae9a7bd3",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_pages.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-09-28T18:34:25Z",
+      "side": 1,
+      "message": "This sentence reads a bit funny and could be better as a call to action. There\u0027s a typo too. Something like:\n\nStructure your event listeners synchronously so that the background scripts lays dormant until a top-level event is invoked. This frees up memory and other system resources, providing considerable performance advantages.",
+      "revId": "d20529d3b559616d460ad38723eaf103f0673b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d10c424_9b2e20ca",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_pages.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-09-28T18:34:25Z",
+      "side": 1,
+      "message": "Typo here, but also, general advice to avoid may in sentences. Something like this is better:\n\nAn effective background script includes something like this:",
+      "revId": "d20529d3b559616d460ad38723eaf103f0673b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0459476_7df5a682",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_pages.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-09-28T18:34:25Z",
+      "side": 1,
+      "message": "Replace \u0027are able to respond\u0027 to just \u0027respond\u0027.",
+      "revId": "d20529d3b559616d460ad38723eaf103f0673b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eca6b43_5de0c9ee",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_pages.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-09-28T18:34:25Z",
+      "side": 1,
+      "message": "api should be API.",
+      "revId": "d20529d3b559616d460ad38723eaf103f0673b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f1511fb_e9030884",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_pages.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-09-28T18:34:25Z",
+      "side": 1,
+      "message": "Remove future tense. Background scripts unload...",
+      "revId": "d20529d3b559616d460ad38723eaf103f0673b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9edc9fa_c5d4a0c9",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_pages.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-09-28T18:34:25Z",
+      "side": 1,
+      "message": "Avoid use of third person plural we. \n\nTry something like:\n\nYou should persist important data periodically so that if your extension crashes without receiving onSuspend event, the data isn\u0027t lost.",
+      "revId": "d20529d3b559616d460ad38723eaf103f0673b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87425db4_0a6ea4c0",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_pages.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-09-28T18:34:25Z",
+      "side": 1,
+      "message": "I think a screenshot could help with this. Also explain how to open it, just in case people aren\u0027t aware.",
+      "revId": "d20529d3b559616d460ad38723eaf103f0673b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
