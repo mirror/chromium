@@ -166,6 +166,16 @@ void PolicyToolUIHandler::OnFileRead(const std::string& contents) {
   // TODO(urusant): convert the policy values so that the types are consistent
   // with actual policy types.
   CallJavascriptFunction("policy.Page.setPolicyValues", *value);
+  base::PostTaskWithTraitsAndReplyWithResult(
+      FROM_HERE, {base::MayBlock(), base::TaskPriority::USER_VISIBLE},
+      base::BindOnce(&PolicyToolUIHandler::GetSessionsList,
+                     base::Unretained(this)),
+      base::BindOnce(&PolicyToolUIHandler::OnSessionsListReceived,
+                     callback_weak_ptr_factory_.GetWeakPtr()));
+}
+
+void PolicyToolUIHandler::OnSessionsListReceived(base::ListValue list) {
+  CallJavascriptFunction("policy.Page.setSessionsList", list);
 }
 
 void PolicyToolUIHandler::ImportFile() {
