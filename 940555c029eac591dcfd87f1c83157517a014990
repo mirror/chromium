@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6bbf2b8_3a0aaf50",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 5307,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-09-28T20:42:27Z",
+      "side": 1,
+      "message": "My bad for being unclear. I think we need a few more of these actions. Specifically 5 per feature:\nhttps://chromium.googlesource.com/chromium/src/+/master/components/feature_engagement/README.md#configuring-uma\n\nSadly actions do not support automagic expansion like histograms do (well, they do, kind of, but not in a way we want).\n\nSo I guess in this file we\u0027d have 10 things? They will help us track sequences of things and in particular the used and trigger ones will make it possible to see how often this happens, etc.",
+      "revId": "940555c029eac591dcfd87f1c83157517a014990",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

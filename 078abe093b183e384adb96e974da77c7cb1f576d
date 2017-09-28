@@ -69,6 +69,24 @@
       "revId": "078abe093b183e384adb96e974da77c7cb1f576d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "978d3395_c92eb2fb",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-09-28T20:42:27Z",
+      "side": 1,
+      "message": "Not in a bad way, but the top element will now always be the IPH, which is also what the users will see, which is nice. But if there are tests written in a way such that they do not expect the helpful bar at the top, they might start to fail. Without the config you\u0027re adding here, no tests would see the bar. With this config; all tests will see the bar (if all the other requirements for showing it are true).",
+      "parentUuid": "a753d97e_7d9e03df",
+      "revId": "078abe093b183e384adb96e974da77c7cb1f576d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
