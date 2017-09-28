@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5affdcfc_044a3de9",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2229,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-09-28T09:15:04Z",
+      "side": 1,
+      "message": "I guess we need to verify this or we\u0027re going to get some crashes in debug.",
+      "parentUuid": "5e83aa84_8fe9b09f",
+      "revId": "fd249e40cbf787eaeb7b7970de98f5ca9a449610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bf6a467_7f255e2d",
         "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.h",
         "patchSetId": 6
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Too long for my taste :) \nwhat about row_of_positioned_item ?",
       "parentUuid": "5bf6a467_7f255e2d",
+      "revId": "fd249e40cbf787eaeb7b7970de98f5ca9a449610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "358e99a6_53a3de77",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-09-28T09:15:04Z",
+      "side": 1,
+      "message": "But you only store the ones that have a non auto start line,\nthat\u0027s impossible to infer from \"row_of_positioned_item\".",
+      "parentUuid": "9aa9ca82_96bdfb82",
       "revId": "fd249e40cbf787eaeb7b7970de98f5ca9a449610",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
