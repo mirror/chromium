@@ -5304,6 +5304,18 @@ should be able to be added at any place in this file.
   <description>The user triggered an event in in-product help.</description>
 </action>
 
+<action name="InProductHelp.NotifyEvent.IPH_ChromeHomeExpand">
+  <owner>twellington@chromium.org</owner>
+  <owner>mdjones@chromium.org</owner>
+  <description>The user triggered an event in in-product help.</description>
+</action>
+
+<action name="InProductHelp.NotifyEvent.IPH_ChromeHomeMenuHeader">
+  <owner>twellington@chromium.org</owner>
+  <owner>mdjones@chromium.org</owner>
+  <description>The user triggered an event in in-product help.</description>
+</action>
+
 <action name="InProductHelp.NotifyEvent.IPH_DataSaverDetail">
   <owner>nyquist@chromium.org</owner>
   <owner>xingliu@chromium.org</owner>
