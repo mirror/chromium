@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e6970467_467b35ed",
+        "filename": "chrome/browser/printing/print_job.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-28T19:43:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93c39162_fefb10c5",
+      "revId": "ede31f84687e9b22cdaf7752f9a5866723d79718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "347a1c0d_9c6e048e",
         "filename": "chrome/browser/printing/pwg_raster_converter.cc",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "ede31f84687e9b22cdaf7752f9a5866723d79718",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9f1e185_6eb083f1",
+        "filename": "chrome/browser/printing/pwg_raster_converter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-28T19:43:15Z",
+      "side": 1,
+      "message": "Done. Still trying to figure out a way to test this.",
+      "parentUuid": "347a1c0d_9c6e048e",
+      "revId": "ede31f84687e9b22cdaf7752f9a5866723d79718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0852613f_f53f7369",
+        "filename": "chrome/utility/printing/pdf_to_pwg_raster_converter_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-28T19:43:15Z",
+      "side": 1,
+      "message": "Done, See https://chromium-review.googlesource.com/c/chromium/src/+/689959",
+      "parentUuid": "4d8c4b61_67743311",
+      "revId": "ede31f84687e9b22cdaf7752f9a5866723d79718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c108acf_60dd5332",
         "filename": "components/printing/renderer/print_render_frame_helper_pdf_win.cc",
         "patchSetId": 12
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-26T00:23:01Z",
       "side": 1,
       "message": "So would some Blink-side changes help make this simpler?",
+      "revId": "ede31f84687e9b22cdaf7752f9a5866723d79718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "063860f5_c5f22b1c",
+        "filename": "components/printing/renderer/print_render_frame_helper_pdf_win.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-28T19:43:15Z",
+      "side": 1,
+      "message": "If Blink supported rectangular DPI we could skip the scaling back and forth, and just send the printer DPI all the way through. It would also remove the issue with having to \"fake\" the paper size for print preview.\n\nHowever, not sure how complicated it would be for Blink to support rectangular DPI, or whether rectangular DPI printers are a big enough use case for the Blink team to consider it worthwhile.",
+      "parentUuid": "3c108acf_60dd5332",
       "revId": "ede31f84687e9b22cdaf7752f9a5866723d79718",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "e88908d8_7a718299",
+        "filename": "components/printing/test/mock_printer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-28T19:43:15Z",
+      "side": 1,
+      "message": "Reverted most of the changes. We still need a few since it interacts with PrintMsg_Print_Params.",
+      "parentUuid": "9cc49c61_f0a68ba1",
+      "revId": "ede31f84687e9b22cdaf7752f9a5866723d79718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc599f9b_052ba2ec",
         "filename": "pdf/pdf.h",
         "patchSetId": 12
@@ -101,6 +191,24 @@
       "revId": "ede31f84687e9b22cdaf7752f9a5866723d79718",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16140021_81facba9",
+        "filename": "pdf/pdf.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-28T19:43:15Z",
+      "side": 1,
+      "message": "Yes, this was revived from https://codereview.chromium.org/2798083006/",
+      "parentUuid": "fc599f9b_052ba2ec",
+      "revId": "ede31f84687e9b22cdaf7752f9a5866723d79718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "6ad5c72c_639e2067",
+        "filename": "pdf/pdf.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-28T19:43:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43d8c930_edc9c026",
+      "revId": "ede31f84687e9b22cdaf7752f9a5866723d79718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c24fe32_d2416a68",
         "filename": "pdf/pdfium/pdfium_engine.cc",
         "patchSetId": 12
@@ -132,6 +258,24 @@
       "writtenOn": "2017-09-26T00:23:01Z",
       "side": 1,
       "message": "Just to be clear, this is compensating for the all the changes above?",
+      "revId": "ede31f84687e9b22cdaf7752f9a5866723d79718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dbd4579_d4595707",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 4353,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-28T19:43:15Z",
+      "side": 1,
+      "message": "Yes. Above, we convert everything to square DPI so we can compute scaling/autorotation based on the physical page size - e.g. an 8.5x11 page on a printer with dpi of 400x200 will look landscape to the printer but portrait to the user, so the autorotation should work as if it is a portrait paper size. Then, we need to convert to printer DPI when we set the final size that goes to the printer.",
+      "parentUuid": "8c24fe32_d2416a68",
       "revId": "ede31f84687e9b22cdaf7752f9a5866723d79718",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -158,6 +302,30 @@
       "revId": "ede31f84687e9b22cdaf7752f9a5866723d79718",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "839012bc_70a02bd7",
+        "filename": "printing/pdf_render_settings.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-28T19:43:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25335b93_d002802e",
+      "range": {
+        "startLine": 30,
+        "startChar": 24,
+        "endLine": 30,
+        "endChar": 35
+      },
+      "revId": "ede31f84687e9b22cdaf7752f9a5866723d79718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -195,6 +363,24 @@
     },
     {
       "key": {
+        "uuid": "719d1c68_a13b56c9",
+        "filename": "printing/print_settings.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-28T19:43:15Z",
+      "side": 1,
+      "message": "Yes. I looked for ways to keep this the same, but it seems that if the max DPI is used the paper size looks like it is too big in one dimension, so even though everything is scaled correctly the printer outputs the result in the middle of an imaginary page that is bigger than the real page size. This cuts off the print out.\n\nBy actually compensating for rectangular DPI, we should now be outputting the fonts at the correct size and without distortion, where before we could output them too big or too small (and always distorted).",
+      "parentUuid": "f5ab3597_32d621ff",
+      "revId": "ede31f84687e9b22cdaf7752f9a5866723d79718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "77d3cd72_a1de2a14",
         "filename": "printing/printing_context_win.cc",
         "patchSetId": 12
@@ -209,6 +395,24 @@
       "revId": "ede31f84687e9b22cdaf7752f9a5866723d79718",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ad6ef16_e4e264ba",
+        "filename": "printing/printing_context_win.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-28T19:43:15Z",
+      "side": 1,
+      "message": "Done, see https://chromium-review.googlesource.com/c/chromium/src/+/690698",
+      "parentUuid": "77d3cd72_a1de2a14",
+      "revId": "ede31f84687e9b22cdaf7752f9a5866723d79718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

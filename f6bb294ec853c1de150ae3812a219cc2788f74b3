@@ -16,6 +16,24 @@
       "revId": "f6bb294ec853c1de150ae3812a219cc2788f74b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10acadd0_9768ae22",
+        "filename": "chrome/common/cloud_print/cloud_print_cdd_conversion.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-28T19:43:15Z",
+      "side": 0,
+      "message": "It seems confusing to me that we switch all paper sizes except for the default media. Either this should be removed or the default media should be switched too. I noticed this while testing this CL on label printers where there is only 1 paper size that is landscape oriented. In this case print preview shows two possible paper sizes, the default and the default flipped to portrait orientation, because it detects them as separate sizes since the paper size gets flipped but the default size is recorded as is...\n\nI made the change here because I needed to test landscape paper sizes, since they are still supported via the default media and it was less annoying if I could just select them from print preview instead of changing the default paper size in the OS control panel.\n\nI can\n(1) Leave it alone, if the behavior described above is intentional, and possibly add a comment to inform anyone else who might come across the same thing.\n(2) Do this in a different CL\n(3) Not make the change and instead change the default media to also be flipped.\nWDYT?",
+      "parentUuid": "9baf38c9_c295d9c4",
+      "revId": "f6bb294ec853c1de150ae3812a219cc2788f74b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
