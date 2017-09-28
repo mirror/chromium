@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e6914a45_4097de66",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 939,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-28T19:11:05Z",
+      "side": 1,
+      "message": "100 would probably suffice post the initial cleanup.\n\nAfter in initial cleanup, I would expect this number to be 0 or 1 for the vast majority of samples.\n\nAt present, about 12% of addresses haven\u0027t been used in over a year.\n\nUMA currently logs (7 day agg, unique users) about 1.7K users having \u003e 1000 disused addresses. The various buckets between 100 and 1000 each drift down from about 8K to 400 in a pretty linear fashion.\n\nThe peers of this metrics are generally ...COUNTS_1000.\n\nSee Autofill.StoredProfileDisusedCount\n\njwd@, I don\u0027t grok the details of the trade off the different max values. My initial inclination is to use 1000 like the others, but I defer to your wisdom, given the above.",
+      "parentUuid": "3253255e_3ce9e1c9",
+      "range": {
+        "startLine": 939,
+        "startChar": 23,
+        "endLine": 939,
+        "endChar": 27
+      },
+      "revId": "1d32f8426cf0c30a278c706c9d919c7fbbfa582c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "25825270_23096ae7",
         "filename": "components/autofill/core/browser/personal_data_manager.cc",
         "patchSetId": 6
