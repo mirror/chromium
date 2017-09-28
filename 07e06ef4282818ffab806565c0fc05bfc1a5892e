@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fb02c65_574099fc",
+        "filename": "third_party/WebKit/LayoutTests/platform/linux/paint/invalidation/video-paint-invalidation-expected.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-28T20:56:26Z",
+      "side": 0,
+      "message": "These expectation files were out-dated. Removing them fixes the previous expected failures.",
+      "revId": "07e06ef4282818ffab806565c0fc05bfc1a5892e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
