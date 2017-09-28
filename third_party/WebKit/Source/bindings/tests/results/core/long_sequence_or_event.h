@@ -27,17 +27,17 @@ class CORE_EXPORT LongSequenceOrEvent final {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
  public:
   LongSequenceOrEvent();
-  bool isNull() const { return type_ == SpecificTypeNone; }
+  bool IsNull() const { return type_ == SpecificTypes::kNone; }
 
-  bool isEvent() const { return type_ == SpecificTypeEvent; }
-  Event* getAsEvent() const;
-  void setEvent(Event*);
-  static LongSequenceOrEvent fromEvent(Event*);
+  bool IsEvent() const { return type_ == SpecificTypes::kEvent; }
+  Event* GetAsEvent() const;
+  void SetEvent(Event*);
+  static LongSequenceOrEvent FromEvent(Event*);
 
-  bool isLongSequence() const { return type_ == SpecificTypeLongSequence; }
-  const Vector<int32_t>& getAsLongSequence() const;
-  void setLongSequence(const Vector<int32_t>&);
-  static LongSequenceOrEvent fromLongSequence(const Vector<int32_t>&);
+  bool IsLongSequence() const { return type_ == SpecificTypes::kLongSequence; }
+  const Vector<int32_t>& GetAsLongSequence() const;
+  void SetLongSequence(const Vector<int32_t>&);
+  static LongSequenceOrEvent FromLongSequence(const Vector<int32_t>&);
 
   LongSequenceOrEvent(const LongSequenceOrEvent&);
   ~LongSequenceOrEvent();
@@ -45,10 +45,10 @@ class CORE_EXPORT LongSequenceOrEvent final {
   DECLARE_TRACE();
 
  private:
-  enum SpecificTypes {
-    SpecificTypeNone,
-    SpecificTypeEvent,
-    SpecificTypeLongSequence,
+  enum class SpecificTypes {
+    kNone,
+    kEvent,
+    kLongSequence,
   };
   SpecificTypes type_;
 

@@ -30,37 +30,37 @@ class CORE_EXPORT NodeOrLongSequenceOrEventOrXMLHttpRequestOrStringOrStringByteS
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
  public:
   NodeOrLongSequenceOrEventOrXMLHttpRequestOrStringOrStringByteStringOrNodeListRecord();
-  bool isNull() const { return type_ == SpecificTypeNone; }
+  bool IsNull() const { return type_ == SpecificTypes::kNone; }
 
-  bool isEvent() const { return type_ == SpecificTypeEvent; }
-  Event* getAsEvent() const;
-  void setEvent(Event*);
-  static NodeOrLongSequenceOrEventOrXMLHttpRequestOrStringOrStringByteStringOrNodeListRecord fromEvent(Event*);
+  bool IsEvent() const { return type_ == SpecificTypes::kEvent; }
+  Event* GetAsEvent() const;
+  void SetEvent(Event*);
+  static NodeOrLongSequenceOrEventOrXMLHttpRequestOrStringOrStringByteStringOrNodeListRecord FromEvent(Event*);
 
-  bool isLongSequence() const { return type_ == SpecificTypeLongSequence; }
-  const Vector<int32_t>& getAsLongSequence() const;
-  void setLongSequence(const Vector<int32_t>&);
-  static NodeOrLongSequenceOrEventOrXMLHttpRequestOrStringOrStringByteStringOrNodeListRecord fromLongSequence(const Vector<int32_t>&);
+  bool IsLongSequence() const { return type_ == SpecificTypes::kLongSequence; }
+  const Vector<int32_t>& GetAsLongSequence() const;
+  void SetLongSequence(const Vector<int32_t>&);
+  static NodeOrLongSequenceOrEventOrXMLHttpRequestOrStringOrStringByteStringOrNodeListRecord FromLongSequence(const Vector<int32_t>&);
 
-  bool isNode() const { return type_ == SpecificTypeNode; }
-  Node* getAsNode() const;
-  void setNode(Node*);
-  static NodeOrLongSequenceOrEventOrXMLHttpRequestOrStringOrStringByteStringOrNodeListRecord fromNode(Node*);
+  bool IsNode() const { return type_ == SpecificTypes::kNode; }
+  Node* GetAsNode() const;
+  void SetNode(Node*);
+  static NodeOrLongSequenceOrEventOrXMLHttpRequestOrStringOrStringByteStringOrNodeListRecord FromNode(Node*);
 
-  bool isString() const { return type_ == SpecificTypeString; }
-  const String& getAsString() const;
-  void setString(const String&);
-  static NodeOrLongSequenceOrEventOrXMLHttpRequestOrStringOrStringByteStringOrNodeListRecord fromString(const String&);
+  bool IsString() const { return type_ == SpecificTypes::kString; }
+  const String& GetAsString() const;
+  void SetString(const String&);
+  static NodeOrLongSequenceOrEventOrXMLHttpRequestOrStringOrStringByteStringOrNodeListRecord FromString(const String&);
 
-  bool isStringByteStringOrNodeListRecord() const { return type_ == SpecificTypeStringByteStringOrNodeListRecord; }
-  const HeapVector<std::pair<String, ByteStringOrNodeList>>& getAsStringByteStringOrNodeListRecord() const;
-  void setStringByteStringOrNodeListRecord(const HeapVector<std::pair<String, ByteStringOrNodeList>>&);
-  static NodeOrLongSequenceOrEventOrXMLHttpRequestOrStringOrStringByteStringOrNodeListRecord fromStringByteStringOrNodeListRecord(const HeapVector<std::pair<String, ByteStringOrNodeList>>&);
+  bool IsStringByteStringOrNodeListRecord() const { return type_ == SpecificTypes::kStringByteStringOrNodeListRecord; }
+  const HeapVector<std::pair<String, ByteStringOrNodeList>>& GetAsStringByteStringOrNodeListRecord() const;
+  void SetStringByteStringOrNodeListRecord(const HeapVector<std::pair<String, ByteStringOrNodeList>>&);
+  static NodeOrLongSequenceOrEventOrXMLHttpRequestOrStringOrStringByteStringOrNodeListRecord FromStringByteStringOrNodeListRecord(const HeapVector<std::pair<String, ByteStringOrNodeList>>&);
 
-  bool isXMLHttpRequest() const { return type_ == SpecificTypeXMLHttpRequest; }
-  XMLHttpRequest* getAsXMLHttpRequest() const;
-  void setXMLHttpRequest(XMLHttpRequest*);
-  static NodeOrLongSequenceOrEventOrXMLHttpRequestOrStringOrStringByteStringOrNodeListRecord fromXMLHttpRequest(XMLHttpRequest*);
+  bool IsXMLHttpRequest() const { return type_ == SpecificTypes::kXMLHttpRequest; }
+  XMLHttpRequest* GetAsXMLHttpRequest() const;
+  void SetXMLHttpRequest(XMLHttpRequest*);
+  static NodeOrLongSequenceOrEventOrXMLHttpRequestOrStringOrStringByteStringOrNodeListRecord FromXMLHttpRequest(XMLHttpRequest*);
 
   NodeOrLongSequenceOrEventOrXMLHttpRequestOrStringOrStringByteStringOrNodeListRecord(const NodeOrLongSequenceOrEventOrXMLHttpRequestOrStringOrStringByteStringOrNodeListRecord&);
   ~NodeOrLongSequenceOrEventOrXMLHttpRequestOrStringOrStringByteStringOrNodeListRecord();
@@ -68,14 +68,14 @@ class CORE_EXPORT NodeOrLongSequenceOrEventOrXMLHttpRequestOrStringOrStringByteS
   DECLARE_TRACE();
 
  private:
-  enum SpecificTypes {
-    SpecificTypeNone,
-    SpecificTypeEvent,
-    SpecificTypeLongSequence,
-    SpecificTypeNode,
-    SpecificTypeString,
-    SpecificTypeStringByteStringOrNodeListRecord,
-    SpecificTypeXMLHttpRequest,
+  enum class SpecificTypes {
+    kNone,
+    kEvent,
+    kLongSequence,
+    kNode,
+    kString,
+    kStringByteStringOrNodeListRecord,
+    kXMLHttpRequest,
   };
   SpecificTypes type_;
 

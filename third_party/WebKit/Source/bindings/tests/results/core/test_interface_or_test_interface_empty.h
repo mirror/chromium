@@ -28,17 +28,17 @@ class CORE_EXPORT TestInterfaceOrTestInterfaceEmpty final {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
  public:
   TestInterfaceOrTestInterfaceEmpty();
-  bool isNull() const { return type_ == SpecificTypeNone; }
+  bool IsNull() const { return type_ == SpecificTypes::kNone; }
 
-  bool isTestInterface() const { return type_ == SpecificTypeTestInterface; }
-  TestInterfaceImplementation* getAsTestInterface() const;
-  void setTestInterface(TestInterfaceImplementation*);
-  static TestInterfaceOrTestInterfaceEmpty fromTestInterface(TestInterfaceImplementation*);
+  bool IsTestInterface() const { return type_ == SpecificTypes::kTestInterface; }
+  TestInterfaceImplementation* GetAsTestInterface() const;
+  void SetTestInterface(TestInterfaceImplementation*);
+  static TestInterfaceOrTestInterfaceEmpty FromTestInterface(TestInterfaceImplementation*);
 
-  bool isTestInterfaceEmpty() const { return type_ == SpecificTypeTestInterfaceEmpty; }
-  TestInterfaceEmpty* getAsTestInterfaceEmpty() const;
-  void setTestInterfaceEmpty(TestInterfaceEmpty*);
-  static TestInterfaceOrTestInterfaceEmpty fromTestInterfaceEmpty(TestInterfaceEmpty*);
+  bool IsTestInterfaceEmpty() const { return type_ == SpecificTypes::kTestInterfaceEmpty; }
+  TestInterfaceEmpty* GetAsTestInterfaceEmpty() const;
+  void SetTestInterfaceEmpty(TestInterfaceEmpty*);
+  static TestInterfaceOrTestInterfaceEmpty FromTestInterfaceEmpty(TestInterfaceEmpty*);
 
   TestInterfaceOrTestInterfaceEmpty(const TestInterfaceOrTestInterfaceEmpty&);
   ~TestInterfaceOrTestInterfaceEmpty();
@@ -46,10 +46,10 @@ class CORE_EXPORT TestInterfaceOrTestInterfaceEmpty final {
   DECLARE_TRACE();
 
  private:
-  enum SpecificTypes {
-    SpecificTypeNone,
-    SpecificTypeTestInterface,
-    SpecificTypeTestInterfaceEmpty,
+  enum class SpecificTypes {
+    kNone,
+    kTestInterface,
+    kTestInterfaceEmpty,
   };
   SpecificTypes type_;
 
