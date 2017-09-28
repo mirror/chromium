@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38c90db3_ec411f40",
+        "filename": "ui/views/controls/progress_bar.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-28T23:44:44Z",
+      "side": 1,
+      "message": "the result of GetNativeTheme() can change and result in a different color. Currently this is handled by the native theme being queried whenever OnPaint() is called. Your change will lock in the color at construction time, which may be incorrect by the time OnPaint() is called. See, e.g., Label::OnNativeThemeChanged() for ways to handle this. But this may all be more complex that what you really need.\n\nCan you add a BUG\u003d so I have more context? The right solution may be to modify ui::NativeTheme in some way for Chromecast.\n\nAlso you\u0027ll need to add tests.",
+      "range": {
+        "startLine": 51,
+        "startChar": 21,
+        "endLine": 51,
+        "endChar": 37
+      },
+      "revId": "2bf2eb00ed910bb82e5a8d250ce6416df3a870d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
