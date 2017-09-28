@@ -216,7 +216,8 @@ class Node {
                                   Port::State expected_port_state,
                                   bool ignore_closed_peer,
                                   UserMessageEvent* message,
-                                  NodeName* forward_to_node);
+                                  NodeName* forward_to_node,
+                                  std::vector<PortRef>* new_proxies);
   int BeginProxying(const PortRef& port_ref);
   int ForwardUserMessagesFromProxy(const PortRef& port_ref);
   void InitiateProxyRemoval(const PortRef& port_ref);
