@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9ff2934_32a14dd4",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-28T18:17:13Z",
+      "side": 1,
+      "message": "note_action_ is never null, remove if.",
+      "revId": "0d58b9d2bcadf16a60dd3503a1053de7f46ad6b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bd15390_7857f14a",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-28T18:17:13Z",
+      "side": 1,
+      "message": "Make sure you test with --show-login-dev-overlay",
+      "revId": "0d58b9d2bcadf16a60dd3503a1053de7f46ad6b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b739aae2_1683c243",
+        "filename": "ash/login/ui/lock_contents_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-28T18:17:13Z",
+      "side": 1,
+      "message": "Add\n\n  // This is placed on the top right of the screen without affecting layout \n  // of other views.",
+      "revId": "0d58b9d2bcadf16a60dd3503a1053de7f46ad6b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2340f7d5_2018ed48",
+        "filename": "ash/login/ui/lock_contents_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-28T18:17:13Z",
+      "side": 1,
+      "message": "// Contains authentication user and the additional user views.",
+      "revId": "0d58b9d2bcadf16a60dd3503a1053de7f46ad6b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "558a9e2d_cb6cbfc7",
+        "filename": "ash/login/ui/note_action_bubble_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-28T18:17:13Z",
+      "side": 1,
+      "message": "Append \"Dp\" to all of these constants so the units used is clear.",
+      "revId": "0d58b9d2bcadf16a60dd3503a1053de7f46ad6b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9c49528_342a374b",
+        "filename": "ash/login/ui/note_action_bubble_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-28T18:17:13Z",
+      "side": 1,
+      "message": "How about something like this?\n\n  constexpr SkColor kBubbleColor \u003d\n      SkColorSetARGBMacro(0x9E, 0x9E, 0x9E, 0xFF);",
+      "revId": "0d58b9d2bcadf16a60dd3503a1053de7f46ad6b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8af22794_17beb292",
+        "filename": "ash/login/ui/note_action_bubble_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-28T18:17:13Z",
+      "side": 1,
+      "message": "animatest? \u003d\u003e animates?",
+      "revId": "0d58b9d2bcadf16a60dd3503a1053de7f46ad6b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ab9ee2f_66318494",
+        "filename": "ash/login/ui/note_action_bubble_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-28T18:17:13Z",
+      "side": 1,
+      "message": "Do you need this call?",
+      "revId": "0d58b9d2bcadf16a60dd3503a1053de7f46ad6b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "638d028e_2885ede8",
+        "filename": "ash/login/ui/note_action_bubble_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-28T18:17:13Z",
+      "side": 1,
+      "message": "nit: keep ordering relative to class derivation ordering (ButtonListener goes after ImageButton overrides)",
+      "revId": "0d58b9d2bcadf16a60dd3503a1053de7f46ad6b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d0409ba_f48f0991",
+        "filename": "ash/login/ui/note_action_bubble_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-28T18:17:13Z",
+      "side": 1,
+      "message": "Remove duplicate // views::ImageButton: comments, remove newlines between overridden methods, ie,\n\n  // views::ImageButton\n  void StateChanged() {\n\n  }\n  void OnFocus() {}\n  void OnBlur() {}",
+      "revId": "0d58b9d2bcadf16a60dd3503a1053de7f46ad6b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15cd6a2e_bf52788b",
+        "filename": "ash/login/ui/note_action_bubble_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-28T18:17:13Z",
+      "side": 1,
+      "message": "This isn\u0027t really a bubble view, what about NoteActionLaunchButton?",
+      "revId": "0d58b9d2bcadf16a60dd3503a1053de7f46ad6b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d6df18d_d013b5a5",
+        "filename": "ash/login/ui/note_action_bubble_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-28T18:17:13Z",
+      "side": 1,
+      "message": "Please add a test.",
+      "revId": "0d58b9d2bcadf16a60dd3503a1053de7f46ad6b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5912592a_e70bce7e",
+        "filename": "ash/login/ui/note_action_bubble_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-28T18:17:13Z",
+      "side": 1,
+      "message": "Please plumb this using LoginDataDispatcher so the dev overlay can enable/disable this view. Also add a button to LockDebugView to toggle/change states.\n\nexample: https://cs.chromium.org/chromium/src/ash/login/ui/login_data_dispatcher.h?l\u003d42\u0026rcl\u003ddb050e233846fe8dcc1fa1d2a56728e16b473aa1",
+      "revId": "0d58b9d2bcadf16a60dd3503a1053de7f46ad6b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
