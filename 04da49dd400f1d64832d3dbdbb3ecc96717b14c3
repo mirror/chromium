@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96bd1946_31a6e0de",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-28T08:43:38Z",
+      "side": 1,
+      "message": "No, I don\u0027t think this is right to do.\nOn Android, MostVisitedSites is created per NTP, so this will actually do the same thing as before. But on desktop, MostVisitedSites is long-lived, so now the explicit refresh would only happen once at startup, which is a bit arbitrary and not very useful.",
+      "range": {
+        "startLine": 173,
+        "startChar": 34,
+        "endLine": 173,
+        "endChar": 0
+      },
+      "revId": "04da49dd400f1d64832d3dbdbb3ecc96717b14c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
