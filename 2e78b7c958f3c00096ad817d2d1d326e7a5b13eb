@@ -261,6 +261,24 @@
     },
     {
       "key": {
+        "uuid": "56893957_9dab5f1e",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1424,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-28T20:32:00Z",
+      "side": 1,
+      "message": "What would you think of adding something like the following to SSLBlockingPage::CommandReceived()?\n\n// In the header\nUNIT_TEST_COMMAND_TRUE \u003d \"unit_test_command_true\"\nUNIT_TEST_COMMAND_FALSE \u003d \"unit_test_command_false\"\n\n// in SSLBlockingPage::CommandReceived()\n#ifdef(UNIT_TESTS)\n  if (command \u003d\u003d UNIT_TEST_COMMAND_TRUE || UNIT_TEST_COMMAND_FALSE) {\n    return;\n  }\n#end\n\nThen we can use these strings to send back (effectively) boolean calculations.",
+      "parentUuid": "fa2ff980_f0174ffc",
+      "revId": "2e78b7c958f3c00096ad817d2d1d326e7a5b13eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d633fe68_1e2065ab",
         "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
         "patchSetId": 6
