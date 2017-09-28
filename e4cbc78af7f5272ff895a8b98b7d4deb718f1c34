@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "717eed6f_9f2a57d9",
+        "filename": "chrome/browser/media/cdm_storage_id.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-28T19:45:03Z",
+      "side": 1,
+      "message": "DLOG? here and below, unless there\u0027s a good reason to do otherwise?",
+      "revId": "e4cbc78af7f5272ff895a8b98b7d4deb718f1c34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c976aa91_bd2b5bec",
+        "filename": "chrome/browser/media/cdm_storage_id.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-28T19:45:03Z",
+      "side": 1,
+      "message": "Minor nit to check origin before serializing to a string.",
+      "revId": "e4cbc78af7f5272ff895a8b98b7d4deb718f1c34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5d5e352_68b4c9b6",
+        "filename": "chrome/browser/media/cdm_storage_id.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-28T19:45:03Z",
+      "side": 1,
+      "message": "FWIW, I would talk to a crypto person: I\u0027m not quite sure what the requirements for the storage ID are, but it does seem a bit unusual to nest a hash in a hash like this (and I\u0027m not sure it buys a whole lot).",
+      "revId": "e4cbc78af7f5272ff895a8b98b7d4deb718f1c34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
