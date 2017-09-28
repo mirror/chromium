@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90dbdba2_53b6a76b",
+        "filename": "base/defer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-09-28T13:33:02Z",
+      "side": 1,
+      "message": "__COUNTER__ would be better. A mix of __LINE__ and __COUNTER__ would be best.",
+      "revId": "3a92d284b5379136282820763871d2f56844edf8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
