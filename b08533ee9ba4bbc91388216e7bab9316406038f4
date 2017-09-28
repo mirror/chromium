@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "845661b5_6cb6dbd9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-28T23:53:31Z",
+      "side": 1,
+      "message": "Let\u0027s do an early return then if !isTabStateInitialized()",
+      "parentUuid": "b6ed618d_c48d31c3",
+      "range": {
+        "startLine": 88,
+        "startChar": 16,
+        "endLine": 88,
+        "endChar": 49
+      },
+      "revId": "b08533ee9ba4bbc91388216e7bab9316406038f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6af7c831_3eb0b276",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
         "patchSetId": 10
