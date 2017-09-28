@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8b4be63f_e076d5f1",
+        "filename": "components/arc/intent_helper/activity_icon_loader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-09-28T07:49:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c572e5b9_c91c7229",
+      "revId": "6913a63ff3b01e949dcb2b1dbc9e454bafa89165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4fd211f4_79362652",
         "filename": "components/arc/intent_helper/activity_icon_loader.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "6913a63ff3b01e949dcb2b1dbc9e454bafa89165",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6d0a509_cfb57865",
+        "filename": "components/arc/intent_helper/activity_icon_loader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-09-28T07:49:52Z",
+      "side": 1,
+      "message": "Done (took the former)",
+      "parentUuid": "4fd211f4_79362652",
+      "revId": "6913a63ff3b01e949dcb2b1dbc9e454bafa89165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
