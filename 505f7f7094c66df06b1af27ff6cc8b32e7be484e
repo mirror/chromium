@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80db3b31_45f9c41e",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 4155,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-28T13:57:19Z",
+      "side": 1,
+      "message": "one category",
+      "range": {
+        "startLine": 4155,
+        "startChar": 34,
+        "endLine": 4155,
+        "endChar": 48
+      },
+      "revId": "505f7f7094c66df06b1af27ff6cc8b32e7be484e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44894441_e4492ef5",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 4177,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-28T13:57:19Z",
+      "side": 1,
+      "message": "\"than\"",
+      "range": {
+        "startLine": 4177,
+        "startChar": 39,
+        "endLine": 4177,
+        "endChar": 44
+      },
+      "revId": "505f7f7094c66df06b1af27ff6cc8b32e7be484e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9e9ffb1_429a8141",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 4197,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-28T13:57:19Z",
+      "side": 1,
+      "message": "same here and below.",
+      "range": {
+        "startLine": 4197,
+        "startChar": 33,
+        "endLine": 4197,
+        "endChar": 48
+      },
+      "revId": "505f7f7094c66df06b1af27ff6cc8b32e7be484e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5093be04_4e447443",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 4296,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-28T13:57:19Z",
+      "side": 1,
+      "message": "first_response_callback",
+      "range": {
+        "startLine": 4296,
+        "startChar": 7,
+        "endLine": 4296,
+        "endChar": 25
+      },
+      "revId": "505f7f7094c66df06b1af27ff6cc8b32e7be484e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d01b2b9c_3b31dfc8",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 4297,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-28T13:57:19Z",
+      "side": 1,
+      "message": "can you ignore the returned callback?\n\nIf no, can you destroy it (e.g. by putting this into { })?",
+      "range": {
+        "startLine": 4297,
+        "startChar": 6,
+        "endLine": 4297,
+        "endChar": 7
+      },
+      "revId": "505f7f7094c66df06b1af27ff6cc8b32e7be484e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99d71362_bd0e6939",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-28T13:57:19Z",
+      "side": 1,
+      "message": "Hours?",
+      "range": {
+        "startLine": 68,
+        "startChar": 32,
+        "endLine": 68,
+        "endChar": 33
+      },
+      "revId": "505f7f7094c66df06b1af27ff6cc8b32e7be484e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d349f432_bfdfb15f",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-28T13:57:19Z",
+      "side": 1,
+      "message": "Sorry, I meant here. Could you leave only relevant callback in each comment?",
+      "range": {
+        "startLine": 91,
+        "startChar": 24,
+        "endLine": 92,
+        "endChar": 46
+      },
+      "revId": "505f7f7094c66df06b1af27ff6cc8b32e7be484e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d70d81f2_afe6078c",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1117,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-28T13:57:19Z",
+      "side": 1,
+      "message": "In my view, \"coincides\" means \"it was not intended\", why not \"is equal to\"?",
+      "range": {
+        "startLine": 1117,
+        "startChar": 40,
+        "endLine": 1117,
+        "endChar": 49
+      },
+      "revId": "505f7f7094c66df06b1af27ff6cc8b32e7be484e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be572ba2_477e3e51",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1213,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-28T13:57:19Z",
+      "side": 1,
+      "message": "u",
+      "range": {
+        "startLine": 1213,
+        "startChar": 57,
+        "endLine": 1213,
+        "endChar": 59
+      },
+      "revId": "505f7f7094c66df06b1af27ff6cc8b32e7be484e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

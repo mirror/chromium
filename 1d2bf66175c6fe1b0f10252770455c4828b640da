@@ -685,6 +685,30 @@
     },
     {
       "key": {
+        "uuid": "a0a56638_1f1bda83",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-28T13:57:19Z",
+      "side": 1,
+      "message": "Then I cannot be sure that this does not (back)fire unexpectedly.\n\nI can imagine the following:\n0) User is browsing the web (but not looking at Chrome Home).\n1) Background fetch is due. This function is called.\n2) The last successful fetch was long time ago (e.g. due to connectivity problem). So RefetchForDisplay is being called.\n3) |timeout| - 1 second passes.\n4) User pull ups Chrome Home, observes progressive loading disappearing (flickering?) due to timeout.\n\nProbably, you could claim that step 4 would postpone the deadline, but I am not sure whether it would always trigger a fetch.",
+      "parentUuid": "e9e86c2c_a333b84f",
+      "range": {
+        "startLine": 772,
+        "startChar": 2,
+        "endLine": 777,
+        "endChar": 3
+      },
+      "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7380acf6_01d5f066",
         "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.h",
         "patchSetId": 8
