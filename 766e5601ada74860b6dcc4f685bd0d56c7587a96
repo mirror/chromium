@@ -46,6 +46,30 @@
       "revId": "766e5601ada74860b6dcc4f685bd0d56c7587a96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cdee35c_4de8b21d",
+        "filename": "chromeos/printing/printer_configuration.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-28T23:29:24Z",
+      "side": 1,
+      "message": "No, but it does have string() -\u003e StringPiece coersion, and JoinString() should be happy to take a vector\u003cStringPiece\u003e.\n\nI guess it may not be able to deduce the required container type without writing vector\u003cStringPiece\u003e {...}, though.\n\nAnyways, this isn\u0027t important other than as a matter of curiosity.  :)",
+      "parentUuid": "37ea6f83_b1170795",
+      "range": {
+        "startLine": 97,
+        "startChar": 62,
+        "endLine": 97,
+        "endChar": 70
+      },
+      "revId": "766e5601ada74860b6dcc4f685bd0d56c7587a96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
