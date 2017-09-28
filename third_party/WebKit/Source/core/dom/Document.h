@@ -255,6 +255,7 @@ enum class WouldLoadReason {
 
 using DocumentClassFlags = unsigned char;
 
+// FOOBAR - Added to run layout tests. Delete it!
 class CORE_EXPORT Document : public ContainerNode,
                              public TreeScope,
                              public SecurityContext,
