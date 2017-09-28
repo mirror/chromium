@@ -22,6 +22,30 @@
       "revId": "766e5601ada74860b6dcc4f685bd0d56c7587a96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37ea6f83_b1170795",
+        "filename": "chromeos/printing/printer_configuration.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-09-28T22:04:06Z",
+      "side": 1,
+      "message": "No....  C++ doesn\u0027t have string coercion ...",
+      "parentUuid": "67e293ff_880e6393",
+      "range": {
+        "startLine": 97,
+        "startChar": 62,
+        "endLine": 97,
+        "endChar": 70
+      },
+      "revId": "766e5601ada74860b6dcc4f685bd0d56c7587a96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

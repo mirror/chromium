@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "93f32fc3_6fed7c61",
+        "filename": "chromeos/printing/printer_configuration.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-09-28T22:04:06Z",
+      "side": 1,
+      "message": "You were pretty clear.  *I* want a constexpr version of strlen.",
+      "parentUuid": "726c6b0f_5bc4724c",
+      "revId": "990915672f0ca66fd5a26f0b189ab35c92fe4944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "791dcf43_4c1d4647",
         "filename": "chromeos/printing/printer_configuration.cc",
         "patchSetId": 2
