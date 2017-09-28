@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "339a78c7_f730eae8",
+        "filename": "components/metrics/file_metrics_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-28T07:59:51Z",
+      "side": 1,
+      "message": "Is it intentional that this is skipped on success?  Probably worth a comment if so.",
+      "range": {
+        "startLine": 306,
+        "startChar": 31,
+        "endLine": 306,
+        "endChar": 0
+      },
+      "revId": "f60896e04e69785c3edcc6bc7ef6f07bbb1ecf67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "638242df_9d6b44f4",
+        "filename": "components/metrics/file_metrics_provider_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-28T07:59:51Z",
+      "side": 1,
+      "message": "nit: Could you please add parens to make the order of operations clearer?",
+      "range": {
+        "startLine": 225,
+        "startChar": 30,
+        "endLine": 225,
+        "endChar": 0
+      },
+      "revId": "f60896e04e69785c3edcc6bc7ef6f07bbb1ecf67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "279ed910_37dba1a8",
+        "filename": "components/metrics/file_metrics_provider_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-28T07:59:51Z",
+      "side": 1,
+      "message": "It looks like you\u0027ve only added test coverage for the atomic case.  If that\u0027s accurate, could you please also add coverage for the non-atomic case?",
+      "range": {
+        "startLine": 337,
+        "startChar": 50,
+        "endLine": 337,
+        "endChar": 0
+      },
+      "revId": "f60896e04e69785c3edcc6bc7ef6f07bbb1ecf67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
