@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ce2a71d_aab2bc25",
+        "filename": "headless/lib/frame_id_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-09-28T08:11:33Z",
+      "side": 1,
+      "message": "This CL looks great! The one piece we\u0027re missing to make this work end to end for headless is being able to get the guid from ResourceRequestInfo on the IO thread.   I suspect that means ResourceRequestInfoImpl needs a new std::string because the FTNID -\u003e FrameTreeNode lookup code is UI thread only.\n\nOnce we can do that, this test can make sense again because TestInMemoryProtocolHandler will track guids not frame tree node ids.",
+      "range": {
+        "startLine": 133,
+        "startChar": 43,
+        "endLine": 133,
+        "endChar": 68
+      },
+      "revId": "006558dd5696ae03acd19102ba656e7139af6d4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
