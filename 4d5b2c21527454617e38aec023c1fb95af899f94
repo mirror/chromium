@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c258dd56_6fbd77dd",
+        "filename": "chrome/browser/resources/print_preview/native_layer.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-28T18:47:34Z",
+      "side": 1,
+      "message": "Is there anyway that the C++ could infer the |type| from the |destinationId| such that we only have to pass destination ID here? Or would that make things more complicated?",
+      "revId": "4d5b2c21527454617e38aec023c1fb95af899f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
