@@ -16,6 +16,24 @@
       "revId": "c67b30051af3687010b12a2bb58d027fe3b61d09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e451f62c_7dc46a40",
+        "filename": "content/test/fuzzer/clear_site_data_fuzzer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-09-28T02:54:39Z",
+      "side": 1,
+      "message": "To remove the following restriction: https://chromium-review.googlesource.com/c/chromium/src/+/687235/1/content/test/fuzzer/BUILD.gn#15\n\nOtherwise, GN complains as it is a \"private dependency\". It\u0027s a nice catch by GN, but for in-process fuzzing it\u0027s not relevant.\n\nERROR at //content/test/fuzzer/clear_site_data_fuzzer.cc:9:11: Can\u0027t include this header from here.\n#include \"content/browser/browsing_data/clear_site_data_throttle.h\"\n          ^-------------------------------------------------------\nThe target:\n  //content/test/fuzzer:clear_site_data_fuzzer\nis including a file from the target:\n  //content/browser:browser\nIt\u0027s usually best to depend directly on the destination target.\nIn some cases, the destination target is considered a subcomponent\nof an intermediate target. In this case, the intermediate target\nshould depend publicly on the destination to forward the ability\nto include headers.\nDependency chain (there may also be others):\n  //content/test/fuzzer:clear_site_data_fuzzer --\u003e\n  //content/test/fuzzer:fuzzer_support --\u003e\n  //content/shell:content_shell_lib --\u003e\n  //content/public/app:both --\u003e\n  //content:content --\u003e\n  //content/public/browser:browser_sources --[private]--\u003e\n  //content/browser:browser",
+      "parentUuid": "14be881b_dae30080",
+      "revId": "c67b30051af3687010b12a2bb58d027fe3b61d09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
