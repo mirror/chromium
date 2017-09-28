@@ -712,7 +712,7 @@ const char kTestName[]                      = "test-name";
 const char kTrustedDownloadSources[] = "trusted-download-sources";
 
 // Experimental. Shows a dialog asking the user to try chrome. This flag is to
-// be used only by the upgrade process.
+// be used only by the upgrade process, and only on Windows.
 const char kTryChromeAgain[]                = "try-chrome-again";
 
 // Overrides per-origin quota settings to unlimited storage for any

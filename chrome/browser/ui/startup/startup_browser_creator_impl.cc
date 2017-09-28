@@ -69,6 +69,8 @@
 
 #if defined(OS_MACOSX)
 #include "base/mac/mac_util.h"
+#import "chrome/browser/mac/dock.h"
+#include "chrome/browser/mac/install_from_dmg.h"
 #include "chrome/browser/ui/cocoa/keystone_infobar_delegate.h"
 #endif
 
@@ -96,6 +98,10 @@ namespace {
 
 // Utility functions ----------------------------------------------------------
 
+// This enum is used to define the buckets for an enumerated UMA histogram.
+// Hence,
+//   (a) existing enumerated constants should never be deleted or reordered, and
+//   (b) new constants should only be appended at the end of the enumeration.
 enum LaunchMode {
   LM_TO_BE_DECIDED = 0,     // Possibly direct launch or via a shortcut.
   LM_AS_WEBAPP,             // Launched as a installed web application.
@@ -107,14 +113,21 @@ enum LaunchMode {
   LM_SHORTCUT_DESKTOP,      // Launched from a desktop shortcut.
   LM_SHORTCUT_TASKBAR,      // Launched from the taskbar.
   LM_USER_EXPERIMENT,       // Launched after acceptance of a user experiment.
-  LM_LINUX_MAC_BEOS         // Other OS buckets start here.
+  LM_CATCHALL,              // Catch-all for OSes with no coverage here.
+  LM_MAC_UNDOCKED_DISK_LAUNCH,   // Undocked launch from disk.
+  LM_MAC_DOCKED_DISK_LAUNCH,     // Docked launch from disk.
+  LM_MAC_UNDOCKED_DMG_LAUNCH,    // Undocked launch from a dmg.
+  LM_MAC_DOCKED_DMG_LAUNCH,      // Docked launch from a dmg.
+  LM_MAC_DOCK_STATUS_ERROR,      // Error determining dock status.
+  LM_MAC_DMG_STATUS_ERROR,       // Error determining dmg status.
+  LM_MAC_DOCK_DMG_STATUS_ERROR,  // Error determining dock and dmg status.
 };
 
 #if defined(OS_WIN)
 // Undocumented flag in the startup info structure tells us what shortcut was
 // used to launch the browser. See http://www.catch22.net/tuts/undoc01 for
 // more information. Confirmed to work on XP, Vista and Win7.
-LaunchMode GetLaunchShortcutKind() {
+LaunchMode GetLaunchMode() {
   STARTUPINFOW si = { sizeof(si) };
   GetStartupInfoW(&si);
   if (si.dwFlags & 0x800) {
@@ -134,17 +147,47 @@ LaunchMode GetLaunchShortcutKind() {
   }
   return LM_OTHER;
 }
+#elif defined(OS_MACOSX)
+LaunchMode GetLaunchMode() {
+  DiskImageStatus dmg_launch_status =
+      IsAppRunningFromReadOnlyDiskImage(nullptr);
+  dock::ChromeInDockStatus dock_launch_status = dock::ChromeIsInTheDock();
+
+  if (dock_launch_status == dock::ChromeInDockFailure &&
+      dmg_launch_status == DiskImageStatusFailure)
+    return LM_MAC_DOCK_DMG_STATUS_ERROR;
+
+  if (dock_launch_status == dock::ChromeInDockFailure)
+    return LM_MAC_DOCK_STATUS_ERROR;
+
+  if (dmg_launch_status == DiskImageStatusFailure)
+    return LM_MAC_DMG_STATUS_ERROR;
+
+  bool dmg_launch = dmg_launch_status == DiskImageStatusTrue;
+  bool dock_launch = dock_launch_status == dock::ChromeInDockTrue;
+
+  if (dmg_launch && dock_launch)
+    return LM_MAC_DOCKED_DMG_LAUNCH;
+
+  if (dmg_launch)
+    return LM_MAC_UNDOCKED_DMG_LAUNCH;
+
+  if (dock_launch)
+    return LM_MAC_DOCKED_DISK_LAUNCH;
+
+  return LM_MAC_UNDOCKED_DISK_LAUNCH;
+}
 #else
 // TODO(cpu): Port to other platforms.
-LaunchMode GetLaunchShortcutKind() {
-  return LM_LINUX_MAC_BEOS;
+LaunchMode GetLaunchMode() {
+  return LM_CATCHALL;
 }
 #endif
 
 // Log in a histogram the frequency of launching by the different methods. See
 // LaunchMode enum for the actual values of the buckets.
 void RecordLaunchModeHistogram(LaunchMode mode) {
-  int bucket = (mode == LM_TO_BE_DECIDED) ? GetLaunchShortcutKind() : mode;
+  int bucket = (mode == LM_TO_BE_DECIDED) ? GetLaunchMode() : mode;
   UMA_HISTOGRAM_COUNTS_100("Launch.Modes", bucket);
 }
 
