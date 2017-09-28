@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c19ff832_081355e3",
+        "filename": "net/http/transport_security_state.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1499,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-28T23:50:17Z",
+      "side": 1,
+      "message": "I was thinking we\u0027d use one of the URLRequestHttpJob histograms (e.g. the count of Net.HttpTimeToFirstByte) as the baseline, do you think that makes sense?",
+      "parentUuid": "6bdfe66e_9b9f5447",
+      "revId": "ead25ad8217348ff5ae8e66b216ddb2fc3c9c0bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a236880_708d9779",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
@@ -62,6 +80,54 @@
       "revId": "ead25ad8217348ff5ae8e66b216ddb2fc3c9c0bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9e96274_ee3c2b03",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 41084,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-28T23:50:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d5f7bfe_00161a85",
+      "range": {
+        "startLine": 41084,
+        "startChar": 48,
+        "endLine": 41084,
+        "endChar": 55
+      },
+      "revId": "ead25ad8217348ff5ae8e66b216ddb2fc3c9c0bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9480ea1e_3c30f842",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 41084,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-28T23:50:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a236880_708d9779",
+      "range": {
+        "startLine": 41084,
+        "startChar": 21,
+        "endLine": 41084,
+        "endChar": 40
+      },
+      "revId": "ead25ad8217348ff5ae8e66b216ddb2fc3c9c0bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
