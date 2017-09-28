@@ -39,6 +39,24 @@
       "revId": "505badd9a0759b56a13670199326505f95e742f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8da426a_872299a5",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-28T20:53:13Z",
+      "side": 1,
+      "message": "I believe that, as written, this could move to the constructor.\n\nHowever, I think the longer term intent is that we *will* invoke JS callbacks from this class to update the list of available printers based on changes in policy/network detections/usb events. So perhaps the right place for this is in OnJavascriptAllowed()?  I\u0027m not entirely familiar with the event semantics of webui classes.",
+      "parentUuid": "c222f652_3b7e0bf3",
+      "revId": "505badd9a0759b56a13670199326505f95e742f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
