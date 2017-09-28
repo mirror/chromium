@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "66d4f5fc_371e2336",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 878,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-09-28T20:54:03Z",
+      "side": 1,
+      "message": "Seems messier, no? We\u0027ll now have to handle the CHROME_NATIVE_SCHEME as well and just duplicate the isNTPUrl logic. If we\u0027re looking to handle chrome-native:// as well in the below block, I can see it being rolled together.",
+      "parentUuid": "dd8c458c_264f6da5",
+      "range": {
+        "startLine": 874,
+        "startChar": 8,
+        "endLine": 878,
+        "endChar": 0
+      },
+      "revId": "431bd0123be8b9047534a294379b9e4cd3d95d8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b9c045d_a0a14657",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "431bd0123be8b9047534a294379b9e4cd3d95d8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2763663_8b1c4edc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-09-28T20:54:03Z",
+      "side": 1,
+      "message": "parse doesn\u0027t throw a URISyntaxException, looks like pretty much only the constructors do.",
+      "parentUuid": "1b9c045d_a0a14657",
+      "range": {
+        "startLine": 880,
+        "startChar": 8,
+        "endLine": 880,
+        "endChar": 45
+      },
+      "revId": "431bd0123be8b9047534a294379b9e4cd3d95d8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0a4ad2eb_2ee46036",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-09-28T20:54:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1326acaa_d8b648de",
+      "range": {
+        "startLine": 897,
+        "startChar": 16,
+        "endLine": 897,
+        "endChar": 55
+      },
+      "revId": "431bd0123be8b9047534a294379b9e4cd3d95d8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93c2c5e2_d0fe4d32",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "431bd0123be8b9047534a294379b9e4cd3d95d8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "535918d4_b9f85009",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 902,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-09-28T20:54:03Z",
+      "side": 1,
+      "message": "So do we want the URL in the omnibox to change if we\u0027re loading these things in the sheet? As is, this won\u0027t be called because we\u0027ll exit early upon loading a native page in the sheet.",
+      "parentUuid": "93c2c5e2_d0fe4d32",
+      "range": {
+        "startLine": 902,
+        "startChar": 8,
+        "endLine": 902,
+        "endChar": 78
+      },
+      "revId": "431bd0123be8b9047534a294379b9e4cd3d95d8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
