@@ -52,6 +52,24 @@
       "revId": "7ee2d017190f7fcc9ba78268f14dae92a159bef5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ace72fb1_e44d0ef1",
+        "filename": "third_party/WebKit/Source/core/css/CSSImageGeneratorValue.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-28T11:10:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0bc1c958_5d95eb08",
+      "revId": "7ee2d017190f7fcc9ba78268f14dae92a159bef5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
