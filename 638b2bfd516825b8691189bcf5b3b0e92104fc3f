@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "40e18273_7c1124a8",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-28T23:38:24Z",
+      "side": 1,
+      "message": "\u003e Done\n\nRemember to upload the latest patch set before you submit.  (I don\u0027t see the changes.)",
+      "parentUuid": "96ba8cae_767db915",
+      "revId": "638b2bfd516825b8691189bcf5b3b0e92104fc3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0285b1bb_af60b66e",
         "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
         "patchSetId": 6
@@ -84,6 +102,23 @@
     },
     {
       "key": {
+        "uuid": "ec86436c_cf991e85",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-28T23:38:24Z",
+      "side": 1,
+      "message": "Oh jeez.  This should not be using a UMA_HISTOGRAM_COUNTS_100 histogram.  That does exponential bucket sizing (50 buckets spread over 100 possible values).  I think that\u0027s only worked because previously you\u0027ve only emitted 1-10 to the buckets, and with exponential sizing I guess those correspond with individual numbers.\n\nI think UMA_HISTOGRAM_SPARSE_SLOWLY is probably the right way to go here.  Please read the description and caveat about it to confirm.\nhttps://cs.chromium.org/chromium/src/base/metrics/histogram_macros.h?l\u003d242-264",
+      "revId": "638b2bfd516825b8691189bcf5b3b0e92104fc3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1cd34c1_0086fd4d",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 6
@@ -119,6 +154,30 @@
       "side": 1,
       "message": "It wasn\u0027t here before my changes so I wasn\u0027t sure if that was the convention with these kinds of buckets. I haven\u0027t had much experience with UMA code. Perhaps mpearson@ can advise (or I can just add it if you\u0027re saying that\u0027s what I should be doing).",
       "parentUuid": "d1cd34c1_0086fd4d",
+      "range": {
+        "startLine": 22604,
+        "startChar": 2,
+        "endLine": 22606,
+        "endChar": 8
+      },
+      "revId": "638b2bfd516825b8691189bcf5b3b0e92104fc3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee6e9953_85381f89",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 22606,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-28T23:38:24Z",
+      "side": 1,
+      "message": "\u003e It wasn\u0027t here before my changes so I wasn\u0027t sure if that was the convention with these kinds of buckets. I haven\u0027t had much experience with UMA code. Perhaps mpearson@ can advise (or I can just add it if you\u0027re saying that\u0027s what I should be doing).\n\nI think it probably ought to be there, else the dashboard will display \"10\", which is meaningless to pretty much everyone.",
+      "parentUuid": "47ad7877_83c42eeb",
       "range": {
         "startLine": 22604,
         "startChar": 2,
