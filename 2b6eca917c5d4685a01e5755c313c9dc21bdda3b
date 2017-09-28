@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "ccdf4aaa_69594480",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-09-28T01:21:49Z",
+      "side": 1,
+      "message": "Looks like https://chromium-review.googlesource.com/c/chromium/src/+/683225 is checked in..changed to BindOnce.",
+      "parentUuid": "dcc2f3a0_14c5af02",
+      "range": {
+        "startLine": 474,
+        "startChar": 60,
+        "endLine": 474,
+        "endChar": 68
+      },
+      "revId": "2b6eca917c5d4685a01e5755c313c9dc21bdda3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d1f1221_57c33ffa",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.h",
         "patchSetId": 14
