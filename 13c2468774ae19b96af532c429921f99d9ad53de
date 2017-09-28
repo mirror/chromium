@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29727076_383a0209",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002882
+      },
+      "writtenOn": "2017-09-28T07:37:55Z",
+      "side": 1,
+      "message": "remove?",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 40
+      },
+      "revId": "13c2468774ae19b96af532c429921f99d9ad53de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03aceb74_a42e730f",
+        "filename": "chrome/test/chromedriver/chrome/adb_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1002882
+      },
+      "writtenOn": "2017-09-28T07:37:55Z",
+      "side": 1,
+      "message": "nit: comment ends with a dot like this.",
+      "range": {
+        "startLine": 202,
+        "startChar": 74,
+        "endLine": 202,
+        "endChar": 78
+      },
+      "revId": "13c2468774ae19b96af532c429921f99d9ad53de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e18ddc0b_eae7f8e3",
+        "filename": "chrome/test/chromedriver/chrome/adb_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1002882
+      },
+      "writtenOn": "2017-09-28T07:37:55Z",
+      "side": 1,
+      "message": "\u003e80 chars",
+      "range": {
+        "startLine": 203,
+        "startChar": 80,
+        "endLine": 203,
+        "endChar": 81
+      },
+      "revId": "13c2468774ae19b96af532c429921f99d9ad53de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
