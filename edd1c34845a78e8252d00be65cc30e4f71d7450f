@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "d54edf60_1417dbdd",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-28T17:48:10Z",
+      "side": 1,
+      "message": "Add the new metrics without removing the old.\n\n  void ...(...metric, ... form_type) {\n    const bool is_credit_card_form \u003d form_type \u003d\u003d CREDIT_CARD;\n    UMA_HISTOGRAM_ENUMERATION(\"Autofill.UserHappiness\", metric,\n                              NUM_USER_HAPPINESS_METRICS);                          \n    UMA_HISTOGRAM_ENUMERATION((is_credit_card_form\n                                 ? \"...CreditCard\"\n                                 : \"...Address),\n                              metric, NUM_USER_...);\n  }",
+      "revId": "edd1c34845a78e8252d00be65cc30e4f71d7450f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "539a88a8_b324f3d1",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-28T17:48:10Z",
+      "side": 1,
+      "message": "instead of a bool, pass the form type?",
+      "range": {
+        "startLine": 688,
+        "startChar": 37,
+        "endLine": 688,
+        "endChar": 41
+      },
+      "revId": "edd1c34845a78e8252d00be65cc30e4f71d7450f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aac42ea3_7a8f49e9",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 3
@@ -41,6 +81,30 @@
         "startChar": 16,
         "endLine": 2368,
         "endChar": 25
+      },
+      "revId": "edd1c34845a78e8252d00be65cc30e4f71d7450f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e50ae46b_72698665",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2368,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-28T17:48:10Z",
+      "side": 1,
+      "message": "continue to log the old metric and add logging for the sub-metrics.",
+      "parentUuid": "aac42ea3_7a8f49e9",
+      "range": {
+        "startLine": 2368,
+        "startChar": 50,
+        "endLine": 2368,
+        "endChar": 66
       },
       "revId": "edd1c34845a78e8252d00be65cc30e4f71d7450f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
