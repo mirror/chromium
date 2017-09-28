@@ -16,6 +16,24 @@
       "revId": "9aacd7bbc87468961c1e841ba7c018352f19eb34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c073fd62_f81149d6",
+        "filename": "content/browser/tracing/tracing_controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-09-28T22:29:19Z",
+      "side": 1,
+      "message": "You are correct. I\u0027ve moved the PostTask so it\u0027s explicitly async only on Android.",
+      "parentUuid": "e920e327_de1395b6",
+      "revId": "9aacd7bbc87468961c1e841ba7c018352f19eb34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
