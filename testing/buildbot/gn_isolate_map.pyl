@@ -679,7 +679,7 @@
     "type": "additional_compile_target",
   },
   "mash_browser_tests": {
-    "label": "//chrome/test:mash_browser_tests",
+    "label": "//chrome/test:browser_tests",
     "label_type": "group",
     "type": "windowed_test_launcher",
     "executable": "browser_tests",
@@ -764,7 +764,7 @@
     "type": "additional_compile_target",
   },
   "mus_browser_tests": {
-    "label": "//chrome/test:mus_browser_tests",
+    "label": "//chrome/test:browser_tests",
     "label_type": "group",
     "type": "windowed_test_launcher",
     "executable": "browser_tests",

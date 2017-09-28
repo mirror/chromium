@@ -19,7 +19,7 @@
 
 namespace base {
 class CommandLine;
-};
+}
 
 namespace switches {
 
@@ -88,6 +88,7 @@ extern const char kDisablePopupBlocking[];
 extern const char kDisablePrintPreview[];
 extern const char kDisablePromptOnRepost[];
 extern const char kDisablePushApiBackgroundMode[];
+extern const char kDisableServiceProcessResourceLoading[];
 extern const char kDisableSearchGeolocationDisclosure[];
 extern const char kDisableWebNotificationCustomLayouts[];
 extern const char kDisableZeroBrowsersOpenForTests[];
