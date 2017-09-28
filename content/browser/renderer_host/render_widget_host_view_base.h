@@ -40,8 +40,6 @@
 #include "ui/gfx/range/range.h"
 #include "ui/surface/transport_dib.h"
 
-class SkBitmap;
-
 struct ViewHostMsg_SelectionBounds_Params;
 
 namespace cc {
@@ -407,11 +405,6 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
 
   // Gets the bounds of the window, in screen coordinates.
   virtual gfx::Rect GetBoundsInRootWindow() = 0;
-
-  // Called by the RenderWidgetHost when an ambiguous gesture is detected to
-  // show the disambiguation popup bubble.
-  virtual void ShowDisambiguationPopup(const gfx::Rect& rect_pixels,
-                                       const SkBitmap& zoomed_bitmap);
 
   // Called by the WebContentsImpl when a user tries to navigate a new page on
   // main frame.

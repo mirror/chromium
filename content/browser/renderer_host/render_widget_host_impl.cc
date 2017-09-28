@@ -622,8 +622,6 @@ bool RenderWidgetHostImpl::OnMessageReceived(const IPC::Message &msg) {
                         OnTextInputStateChanged)
     IPC_MESSAGE_HANDLER(ViewHostMsg_LockMouse, OnLockMouse)
     IPC_MESSAGE_HANDLER(ViewHostMsg_UnlockMouse, OnUnlockMouse)
-    IPC_MESSAGE_HANDLER(ViewHostMsg_ShowDisambiguationPopup,
-                        OnShowDisambiguationPopup)
     IPC_MESSAGE_HANDLER(ViewHostMsg_SelectionBoundsChanged,
                         OnSelectionBoundsChanged)
     IPC_MESSAGE_HANDLER(InputHostMsg_ImeCompositionRangeChanged,
@@ -2191,39 +2189,6 @@ void RenderWidgetHostImpl::OnUnlockMouse() {
   RejectMouseLockOrUnlockIfNecessary();
   if (was_mouse_locked)
     is_last_unlocked_by_target_ = true;
-}
-
-void RenderWidgetHostImpl::OnShowDisambiguationPopup(
-    const gfx::Rect& rect_pixels,
-    const gfx::Size& size,
-    const viz::SharedBitmapId& id) {
-  DCHECK(!rect_pixels.IsEmpty());
-  DCHECK(!size.IsEmpty());
-
-  std::unique_ptr<viz::SharedBitmap> bitmap =
-      viz::ServerSharedBitmapManager::current()->GetSharedBitmapFromId(size,
-                                                                       id);
-  if (!bitmap) {
-    bad_message::ReceivedBadMessage(GetProcess(),
-                                    bad_message::RWH_SHARED_BITMAP);
-    return;
-  }
-
-  DCHECK(bitmap->pixels());
-
-  SkImageInfo info = SkImageInfo::MakeN32Premul(size.width(), size.height());
-  SkBitmap zoomed_bitmap;
-  zoomed_bitmap.installPixels(info, bitmap->pixels(), info.minRowBytes());
-
-  // Note that |rect| is in coordinates of pixels relative to the window origin.
-  // Aura-based systems will want to convert this to DIPs.
-  if (view_)
-    view_->ShowDisambiguationPopup(rect_pixels, zoomed_bitmap);
-
-  // It is assumed that the disambiguation popup will make a copy of the
-  // provided zoomed image, so we delete this one.
-  zoomed_bitmap.setPixels(0);
-  Send(new ViewMsg_ReleaseDisambiguationPopupBitmap(GetRoutingID(), id));
 }
 
 void RenderWidgetHostImpl::SetIgnoreInputEvents(bool ignore_input_events) {
