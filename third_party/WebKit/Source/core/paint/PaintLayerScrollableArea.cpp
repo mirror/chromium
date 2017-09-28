@@ -900,8 +900,8 @@ void PaintLayerScrollableArea::UpdateAfterLayout() {
   PositionOverflowControls();
 
   Node* node = Box().GetNode();
-  if (isHTMLSelectElement(node))
-    toHTMLSelectElement(node)->ScrollToOptionAfterLayout(*this);
+  if (auto* select = ToHTMLSelectElementOrNull(node))
+    select->ScrollToOptionAfterLayout(*this);
 }
 
 void PaintLayerScrollableArea::ClampScrollOffsetAfterOverflowChange() {
