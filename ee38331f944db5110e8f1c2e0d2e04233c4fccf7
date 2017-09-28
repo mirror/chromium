@@ -16,6 +16,24 @@
       "revId": "ee38331f944db5110e8f1c2e0d2e04233c4fccf7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6767d4dd_5d093c7f",
+        "filename": "chrome/browser/resources/md_extensions/item_list.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-28T20:31:36Z",
+      "side": 1,
+      "message": "This causes the whole #viewManager to be moving left/right as #container scrolls. \n\nIt\u0027s a bit weird for a single view to cause the outer #container to scroll the entire #viewManager, and might cause weirdness when switching to another view.\n\nIt might be easier to reason about if we declare the following:\n1) container 100% fills viewport at all times and will not move/scroll\n2) view manager will not move/scroll\n3) each view will not *move via parent scroll*, but will allow its content to be scrolled if necessary.\n\nThis way we know nothing\u0027s moving except for the view content themselves, and the scrollability is managed by and contained within each view.\n\nSee experimental CL: https://chromium-review.googlesource.com/c/chromium/src/+/690628",
+      "parentUuid": "ffd9bae1_c29d5a08",
+      "revId": "ee38331f944db5110e8f1c2e0d2e04233c4fccf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
