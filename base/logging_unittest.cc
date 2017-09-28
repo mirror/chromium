@@ -418,13 +418,16 @@ TEST_F(LoggingTest, Dcheck) {
   EXPECT_TRUE(DLOG_IS_ON(DCHECK));
 #endif
 
+  // DCHECKs are fatal iff they're compiled in DCHECK_IS_ON() and the DCHECK
+  // log level is set to fatal.
+  const bool kDChecksAreFatal = DCHECK_IS_ON() && LOG_DCHECK == LOG_FATAL;
   EXPECT_EQ(0, g_log_sink_call_count);
   DCHECK(false);
-  EXPECT_EQ(LOG_DCHECK == LOG_FATAL ? 1 : 0, g_log_sink_call_count);
+  EXPECT_EQ(kDChecksAreFatal ? 1 : 0, g_log_sink_call_count);
   DPCHECK(false);
-  EXPECT_EQ(LOG_DCHECK == LOG_FATAL ? 2 : 0, g_log_sink_call_count);
+  EXPECT_EQ(kDChecksAreFatal ? 2 : 0, g_log_sink_call_count);
   DCHECK_EQ(0, 1);
-  EXPECT_EQ(LOG_DCHECK == LOG_FATAL ? 3 : 0, g_log_sink_call_count);
+  EXPECT_EQ(kDChecksAreFatal ? 3 : 0, g_log_sink_call_count);
 
   // Test DCHECK on std::nullptr_t
   g_log_sink_call_count = 0;
@@ -441,7 +444,7 @@ TEST_F(LoggingTest, Dcheck) {
   DCHECK_EQ(Animal::DOG, Animal::DOG);
   EXPECT_EQ(0, g_log_sink_call_count);
   DCHECK_EQ(Animal::DOG, Animal::CAT);
-  EXPECT_EQ(LOG_DCHECK == LOG_FATAL ? 1 : 0, g_log_sink_call_count);
+  EXPECT_EQ(kDChecksAreFatal ? 1 : 0, g_log_sink_call_count);
 
   // Test DCHECK on functions and function pointers.
   g_log_sink_call_count = 0;
@@ -464,9 +467,9 @@ TEST_F(LoggingTest, Dcheck) {
   DCHECK_EQ(mp2, &MemberFunctions::MemberFunction2);
   EXPECT_EQ(0, g_log_sink_call_count);
   DCHECK_EQ(fp1, fp2);
-  EXPECT_EQ(LOG_DCHECK == LOG_FATAL ? 1 : 0, g_log_sink_call_count);
+  EXPECT_EQ(kDChecksAreFatal ? 1 : 0, g_log_sink_call_count);
   DCHECK_EQ(mp2, &MemberFunctions::MemberFunction1);
-  EXPECT_EQ(LOG_DCHECK == LOG_FATAL ? 2 : 0, g_log_sink_call_count);
+  EXPECT_EQ(kDChecksAreFatal ? 2 : 0, g_log_sink_call_count);
 }
 
 TEST_F(LoggingTest, DcheckReleaseBehavior) {
