@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a95dcdf6_94110d0b",
+        "filename": "tools/perf/benchmarks/loading.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-09-28T02:06:22Z",
+      "side": 1,
+      "message": "Ned: Is this acceptable in terms of bot capacity?",
+      "revId": "68ae4162a7f44d5572cac8ef7c9eb32364908392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
