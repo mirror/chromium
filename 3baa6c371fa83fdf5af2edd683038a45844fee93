@@ -2,6 +2,365 @@
   "comments": [
     {
       "key": {
+        "uuid": "723bf240_ffd0f23e",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-28T07:34:19Z",
+      "side": 1,
+      "message": "previous?\n\nThen we don\u0027t need to update after we deprecate pepper CDM.",
+      "range": {
+        "startLine": 31,
+        "startChar": 53,
+        "endLine": 31,
+        "endChar": 65
+      },
+      "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3281378_68f68c1b",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-28T07:34:19Z",
+      "side": 1,
+      "message": "OnceClosure?",
+      "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47e944f2_a70e81af",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-28T07:34:19Z",
+      "side": 1,
+      "message": "GetFileMapLock?",
+      "range": {
+        "startLine": 77,
+        "startChar": 12,
+        "endLine": 77,
+        "endChar": 23
+      },
+      "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2ff49a1_3f2c6ed4",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-28T07:34:19Z",
+      "side": 1,
+      "message": "All CdmStorageImpl instances should run on the same thread. In that case, do we still need this lock? I think we can keep it here just in case, but want to understand more why we need it.",
+      "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "328d3fa0_c84f981f",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-28T07:34:19Z",
+      "side": 1,
+      "message": "|plugin_id|",
+      "range": {
+        "startLine": 83,
+        "startChar": 8,
+        "endLine": 83,
+        "endChar": 19
+      },
+      "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0cba23f_85b87e02",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-28T07:34:19Z",
+      "side": 1,
+      "message": "This works (I guess) because we have the prior knowledge that the |plugin_id| and |file_name| doesn\u0027t contain slashes. We still could have slashes in the serialized |origin|, but that might be okay (again I guess). But this would be hard to read or understand, and is error prone in the future.\n\nHow about just using a tuple as the key to the map?\n\nusing FileLockKey \u003d std::tuple\u003cstd::string, url::Origin, std::string\u003e;\nusing FileLockMap \u003d std::map\u003cFileLockKey, std::string\u003e;\n\nIf you do this, the following functions can just take a const FileLockKey\u0026 key as the input parameter.",
+      "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f043437f_b8c37a72",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-28T07:34:19Z",
+      "side": 1,
+      "message": "Add documentation.",
+      "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7207b9e3_2e4594b2",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-28T07:34:19Z",
+      "side": 1,
+      "message": "Can we DCHECK here? Returning false means \"IN_USE\", which looks odd for empty file name...",
+      "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "378dcf4e_e414fbcd",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-28T07:34:19Z",
+      "side": 1,
+      "message": "You can use \n\nif (GetFileMap()-\u003ecount(entry_name))",
+      "range": {
+        "startLine": 101,
+        "startChar": 2,
+        "endLine": 101,
+        "endChar": 60
+      },
+      "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94c2f693_64222658",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-28T07:34:19Z",
+      "side": 1,
+      "message": "\"Update\" is a bit hard to understand. How about SetOnCloseCallback() and provide a comment on what an on_close_callback is.",
+      "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bdfe766_72891ef8",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-28T07:34:19Z",
+      "side": 1,
+      "message": "This is outside the lock...",
+      "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8df5ddb8_e4403817",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-28T07:34:19Z",
+      "side": 1,
+      "message": "This should never happen? NOTREACHED?",
+      "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62dbf26a_b7e326c5",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-28T07:34:19Z",
+      "side": 1,
+      "message": "erase(entry) would be more efficient",
+      "range": {
+        "startLine": 137,
+        "startChar": 22,
+        "endLine": 137,
+        "endChar": 32
+      },
+      "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9d5d49a_fcf4377a",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-28T07:34:19Z",
+      "side": 1,
+      "message": "::Open()",
+      "range": {
+        "startLine": 140,
+        "startChar": 20,
+        "endLine": 140,
+        "endChar": 21
+      },
+      "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddd816e0_70a6352f",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-28T07:34:19Z",
+      "side": 1,
+      "message": "Again, you can use the tuple here.",
+      "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cccb52a9_46bc2bd5",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-28T07:34:19Z",
+      "side": 1,
+      "message": "discussion: It seems we have this pattern in a few places now that we just want to make sure a function or callback is called when the connection is lost. We should be able to create a new helper function to do this, then we can simply do something like:\n\nBindToCallback(\n      base::BindOnce(\u0026ReleaseFileLock, plugin_id_, origin_, file_name),\n      mojo::MakeRequest(\u0026releaser));\n\nThis is just some thoughts. You don\u0027t need to anything here :)",
+      "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3989615f_8bbc13b9",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-28T07:34:19Z",
+      "side": 1,
+      "message": "This is not accurate since |this| can also be deleted on navigation... I hope I can land my FrameServiceBase CL so you don\u0027t have to go through all of these.",
+      "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb8c7356_d35de291",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-28T07:34:19Z",
+      "side": 1,
+      "message": "Not necessary in ctor...",
+      "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9f92f7e_282f01e7",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-28T07:34:19Z",
+      "side": 1,
+      "message": "CdmStorageImpl is a WebContentsObserver, and you need to call Observe explicitly.\n\nSee https://chromium-review.googlesource.com/c/chromium/src/+/678438/3/content/public/browser/frame_service_base.h#41",
+      "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "39fc5874_6d4948c5",
         "filename": "chrome/browser/media/cdm_storage_impl.cc",
         "patchSetId": 2
@@ -22,6 +381,366 @@
       "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a573ca2c_0251e7cc",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-28T07:34:19Z",
+      "side": 1,
+      "message": "s/renderer/child, e.g. in our case, it\u0027s the utility process.",
+      "range": {
+        "startLine": 269,
+        "startChar": 49,
+        "endLine": 269,
+        "endChar": 57
+      },
+      "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd34e8d9_30005355",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-28T07:34:19Z",
+      "side": 1,
+      "message": "Just to double check. We can make this call on UI thread (no I/O allowed), right?",
+      "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38d395e2_d675584d",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-28T07:34:19Z",
+      "side": 1,
+      "message": "origin_.GetURL()\n\nSee https://cs.chromium.org/chromium/src/url/origin.h?rcl\u003d7dc115f5f84ce2ea43c8c7b0f26e3b896dc19582\u0026l\u003d151",
+      "range": {
+        "startLine": 275,
+        "startChar": 6,
+        "endLine": 275,
+        "endChar": 31
+      },
+      "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18afa980_28eb97e2",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-28T07:34:19Z",
+      "side": 1,
+      "message": "This is a potential file locking issue here. Say, after this call, but before OnFileSystemOpened() gets a chance to run, connection error happened. Then |this| will be destroyed, which is fine. However, nobody will release the lock acquired on line 252.\n\nSo it seems we need to keep track of locked files, until we \"transfer the ownership of the file lock\" to the releaser.",
+      "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86c910f8_1f96a470",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-28T07:34:19Z",
+      "side": 1,
+      "message": "use std::make_unique would be much simpler",
+      "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9240f537_4f63315a",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-28T07:34:19Z",
+      "side": 1,
+      "message": "file lock released and",
+      "range": {
+        "startLine": 335,
+        "startChar": 20,
+        "endLine": 335,
+        "endChar": 21
+      },
+      "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b17518fa_4554f1aa",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-28T07:34:19Z",
+      "side": 1,
+      "message": "This is not right. The child process ID will never change. Please just copy the code in MediaDrmStorageImpl.",
+      "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a3b2c40_e6e37166",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-28T07:34:19Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b4b4489_72d1de31",
+        "filename": "chrome/browser/media/cdm_storage_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-28T07:34:19Z",
+      "side": 1,
+      "message": "This is also called when navigation happens. So the name is not accurate.\n\nHow about just Close()?\n\nAlso, the comment is not accurate now.",
+      "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e069778_75b851de",
+        "filename": "chrome/browser/media/cdm_storage_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-28T07:34:19Z",
+      "side": 1,
+      "message": "It\u0027s a bit hard to understand what this is and why we need it. Maybe add a comment and refer to OpenPluginPrivateFileSystem() where the |plugin_id| is required.",
+      "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3566abd5_ad0e8b47",
+        "filename": "chrome/browser/media/cdm_storage_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-28T07:34:19Z",
+      "side": 1,
+      "message": "child",
+      "range": {
+        "startLine": 28,
+        "startChar": 69,
+        "endLine": 28,
+        "endChar": 77
+      },
+      "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad951a85_5539c848",
+        "filename": "chrome/browser/media/cdm_storage_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-28T07:34:19Z",
+      "side": 1,
+      "message": "Child",
+      "range": {
+        "startLine": 30,
+        "startChar": 11,
+        "endLine": 30,
+        "endChar": 19
+      },
+      "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7188e0d2_84ebf091",
+        "filename": "chrome/browser/media/cdm_storage_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-28T07:34:19Z",
+      "side": 1,
+      "message": "This is not accurate now since we do test read/write.",
+      "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53b75081_c691c98f",
+        "filename": "chrome/browser/media/cdm_storage_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-28T07:34:19Z",
+      "side": 1,
+      "message": "releaser",
+      "range": {
+        "startLine": 78,
+        "startChar": 46,
+        "endLine": 78,
+        "endChar": 53
+      },
+      "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1452466b_e725a196",
+        "filename": "chrome/browser/media/cdm_storage_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-28T07:34:19Z",
+      "side": 1,
+      "message": "key_system? But I guess this test will be deleted when we remove the Initialize() call.",
+      "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91df829d_9b1551ab",
+        "filename": "media/mojo/interfaces/cdm_storage.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-28T07:34:19Z",
+      "side": 1,
+      "message": "s/cdm_file/file? CDM file can be interpreted as the CDM binary in some context.",
+      "range": {
+        "startLine": 38,
+        "startChar": 32,
+        "endLine": 38,
+        "endChar": 40
+      },
+      "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4807731_5f067abb",
+        "filename": "media/mojo/interfaces/cdm_storage.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-28T07:34:19Z",
+      "side": 1,
+      "message": "Maybe we should use \"associated\" here. Otherwise, e.g. the client side may call:\n\nreleaser.reset();\ncdm_storage-\u003eOpen(file);  // open the same file again\n\nand found that the file is still locked. This could happen because the releaser and the cdm_storage are on two different pipes, and the order of message delivery is not determined. The \"associated\" key work will make then live on the same pipe, so that the message delivery order is guaranteed.\n\nSee: https://www.chromium.org/developers/design-documents/mojo/associated-interfaces",
+      "range": {
+        "startLine": 39,
+        "startChar": 7,
+        "endLine": 39,
+        "endChar": 8
+      },
+      "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27609cf6_441a9993",
+        "filename": "media/mojo/interfaces/cdm_storage.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-28T07:34:19Z",
+      "side": 1,
+      "message": "This is a bit hard to read. How about:\n\n... keep track of the file opened. When the ...",
+      "range": {
+        "startLine": 42,
+        "startChar": 71,
+        "endLine": 43,
+        "endChar": 33
+      },
+      "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

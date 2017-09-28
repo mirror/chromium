@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "130d34ca_db5f04c2",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-28T07:34:19Z",
+      "side": 1,
+      "message": "I suppose you\u0027ll move to content/ in the next PS.\n\nThen we can also move the registration code, then we should be able to eliminate the Initialize() call.",
+      "parentUuid": "0074bb8a_f5b19859",
+      "revId": "d8d4a270d48a25096bb5968c37ab2cf4b23dbe6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae9fce6d_5c4e9003",
         "filename": "chrome/browser/media/cdm_storage_impl.cc",
         "patchSetId": 1
