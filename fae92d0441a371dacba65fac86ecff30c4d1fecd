@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f5f7f1e_938461c8",
+        "filename": "cc/test/cc_test_suite.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-28T15:35:34Z",
+      "side": 1,
+      "message": "remove extra whitespace",
+      "revId": "fae92d0441a371dacba65fac86ecff30c4d1fecd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
