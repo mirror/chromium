@@ -397,11 +397,13 @@
 #include "components/printing/service/public/interfaces/pdf_compositor.mojom.h"
 #endif
 
-#if BUILDFLAG(ENABLE_MOJO_MEDIA)
+#if BUILDFLAG(ENABLE_LIBRARY_CDMS)
+#include "chrome/browser/media/cdm_storage_impl.h"
 #include "chrome/browser/media/output_protection_impl.h"
+#endif
+
 #if BUILDFLAG(ENABLE_MOJO_CDM) && defined(OS_ANDROID)
 #include "chrome/browser/media/android/cdm/media_drm_storage_factory.h"
-#endif
 #endif
 
 #if BUILDFLAG(ENABLE_MOJO_MEDIA_IN_BROWSER_PROCESS)
@@ -2921,21 +2923,22 @@ void ChromeContentBrowserClient::ExposeInterfacesToRenderer(
 void ChromeContentBrowserClient::ExposeInterfacesToMediaService(
     service_manager::BinderRegistry* registry,
     content::RenderFrameHost* render_frame_host) {
-// TODO(xhwang): Only register this when ENABLE_MOJO_MEDIA.
+#if BUILDFLAG(ENABLE_LIBRARY_CDMS)
+  registry->AddInterface(
+      base::Bind(&CdmStorageImpl::Create, render_frame_host));
+  registry->AddInterface(
+      base::Bind(&OutputProtectionImpl::Create, render_frame_host));
 #if defined(OS_CHROMEOS)
   registry->AddInterface(
       base::Bind(&chromeos::attestation::PlatformVerificationImpl::Create,
                  render_frame_host));
 #endif  // defined(OS_CHROMEOS)
+#endif  // BUILDFLAG(ENABLE_LIBRARY_CDMS)
 
-#if BUILDFLAG(ENABLE_MOJO_MEDIA)
-  registry->AddInterface(
-      base::Bind(&OutputProtectionImpl::Create, render_frame_host));
 #if BUILDFLAG(ENABLE_MOJO_CDM) && defined(OS_ANDROID)
   registry->AddInterface(
       base::Bind(&chrome::CreateMediaDrmStorage, render_frame_host));
 #endif
-#endif  // BUILDFLAG(ENABLE_MOJO_MEDIA)
 }
 
 void ChromeContentBrowserClient::BindInterfaceRequestFromFrame(

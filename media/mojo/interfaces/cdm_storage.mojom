@@ -1,0 +1,47 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module media.mojom;
+
+import "mojo/common/file.mojom";
+
+// Provides a way to organize persistent per-origin/per-cdm-type data
+// in the browser's file system.
+interface CdmStorage {
+  enum Status {
+    SUCCESS,  // File was successfully opened.
+    IN_USE,   // File is already open by another client.
+    FAILURE   // Unable to open file.
+  };
+
+  // Initializes the CdmStorage.
+  // TODO(jrummell): CdmType should be bound at the browser side, and then this
+  // method is not needed.
+  Initialize(string key_system);
+
+  // Opens the file specified by |file_name| for read or write. Can be called
+  // multiple times for different files, or for the same file if the first one
+  // has been closed. If successful, SUCCESS will be returned, |cdm_file| can
+  // be used to access the contents, and |releaser| should be closed when
+  // access to the file is no longer needed (i.e. file closed). On failure,
+  // |status| <> SUCCESS and |cdm_file| and |releaser| are null.
+  // - If the file is already opened by another CDM instance, IN_USE will
+  //   be returned in |status|.
+  // - |file_name| must not contain forward slash ('/') or backslash ('\'),
+  //   and must not start with an underscore ('_'). If this happens,
+  //   |status| == FAILURE is returned.
+  // - if |key_system| passed to Initialize() is not recognized, FAILURE
+  //   will be returned.
+  Open(string file_name)
+    => (Status status,
+        mojo.common.mojom.File? cdm_file,
+        CdmFileReleaser? releaser);
+};
+
+// Provides a way to keep track of the file (returned by Open() above) being
+// open to read from/write to it. When the connection to this object is broken,
+// it is assumed that the file has been closed and that no more operations will
+// be performed on it.
+interface CdmFileReleaser {
+};
