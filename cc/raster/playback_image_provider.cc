@@ -20,16 +20,12 @@ void UnrefImageFromCache(DrawImage draw_image,
 PlaybackImageProvider::PlaybackImageProvider(
     bool skip_all_images,
     PaintImageIdFlatSet images_to_skip,
-    std::vector<DrawImage> at_raster_images,
     ImageDecodeCache* cache,
-    const gfx::ColorSpace& target_color_space,
-    base::flat_map<PaintImage::Id, size_t> image_to_current_frame_index)
+    const gfx::ColorSpace& target_color_space)
     : skip_all_images_(skip_all_images),
       images_to_skip_(std::move(images_to_skip)),
-      at_raster_images_(std::move(at_raster_images)),
       cache_(cache),
-      target_color_space_(target_color_space),
-      image_to_current_frame_index_(std::move(image_to_current_frame_index)) {
+      target_color_space_(target_color_space) {
   DCHECK(cache_);
 }
 
@@ -44,11 +40,8 @@ PlaybackImageProvider& PlaybackImageProvider::operator=(
     PlaybackImageProvider&& other) = default;
 
 void PlaybackImageProvider::BeginRaster() {
-  DCHECK(decoded_at_raster_.empty());
   DCHECK(!in_raster_);
   in_raster_ = true;
-  for (auto& draw_image : at_raster_images_)
-    decoded_at_raster_.push_back(GetDecodedDrawImage(draw_image));
 }
 
 void PlaybackImageProvider::EndRaster() {
@@ -79,11 +72,7 @@ PlaybackImageProvider::GetDecodedDrawImage(const DrawImage& draw_image) {
                          SkSize::Make(1.f, 1.f), draw_image.filter_quality()));
   }
 
-  const auto& it = image_to_current_frame_index_.find(paint_image.stable_id());
-  size_t frame_index = it == image_to_current_frame_index_.end()
-                           ? paint_image.frame_index()
-                           : it->second;
-
+  size_t frame_index = 0;
   DrawImage adjusted_image(draw_image, 1.f, frame_index, target_color_space_);
   auto decoded_draw_image = cache_->GetDecodedImageForDraw(adjusted_image);
 
