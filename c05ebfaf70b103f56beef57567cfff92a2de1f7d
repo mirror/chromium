@@ -16,6 +16,24 @@
       "revId": "c05ebfaf70b103f56beef57567cfff92a2de1f7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "975db1da_2d7547fc",
+        "filename": "third_party/WebKit/public/platform/WebVector.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-28T18:14:46Z",
+      "side": 1,
+      "message": "I don\u0027t feel particularly strongly either, although I like being able to more or less pretend WebVector isn\u0027t a thing, and just being able to treat it as if it\u0027s a std::vector... Happy to change if you really want me to, although it seems nicely symmetrical with the constructor to be able to implicitly move-assign/construct in both directions between std::vector/WebVector (but then I believe I\u0027m to blame for those constructors/assignment operators as well, so that\u0027s probably not a particularly strong argument)",
+      "parentUuid": "b8f41011_18c44d17",
+      "revId": "c05ebfaf70b103f56beef57567cfff92a2de1f7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
