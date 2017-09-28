@@ -87,7 +87,6 @@ class CORE_EXPORT SVGElement : public Element {
     kAncestorScope  // Used by SVGSVGElement::get{Enclosure|Intersection}List()
   };
   virtual AffineTransform LocalCoordinateSpaceTransform(CTMScope) const;
-  virtual bool NeedsPendingResourceHandling() const { return true; }
 
   bool InstanceUpdatesBlocked() const;
   void SetInstanceUpdatesBlocked(bool);
@@ -270,8 +269,6 @@ class CORE_EXPORT SVGElement : public Element {
     return EnsureComputedStyle(pseudo_element_specifier);
   }
   void WillRecalcStyle(StyleRecalcChange) override;
-
-  void BuildPendingResourcesIfNeeded();
 
   HeapHashSet<WeakMember<SVGElement>> elements_with_relative_lengths_;
 

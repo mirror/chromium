@@ -30,7 +30,6 @@ namespace blink {
 
 class LayoutObject;
 class ComputedStyle;
-class LayoutSVGResourceContainer;
 class SVGResources;
 
 class SVGResourcesCache {
@@ -61,6 +60,10 @@ class SVGResourcesCache {
   static void ClientStyleChanged(LayoutObject*,
                                  StyleDifference,
                                  const ComputedStyle& new_style);
+
+  // Called when the target element of a resource referenced by the
+  // LayoutObject may have changed.
+  static void ResourceReferenceChanged(LayoutObject&);
 
   class TemporaryStyleScope {
     WTF_MAKE_NONCOPYABLE(TemporaryStyleScope);
