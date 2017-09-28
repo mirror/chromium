@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "3f7b9b61_b775dd13",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-28T00:55:16Z",
+      "side": 1,
+      "message": "Can we rely on the logic inside InfoBarLayout.java rather than creating our own NoUnderlineClickableSpan?",
+      "parentUuid": "53ea4419_3416abd5",
+      "revId": "a4585b6f9dba1e0c30520449fee366555e461742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e79e8f2a_0c5ad290",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
         "patchSetId": 3
@@ -119,6 +137,30 @@
       "side": 1,
       "message": "i replaced it with a style but gravity had to be set outside.",
       "parentUuid": "e79e8f2a_0c5ad290",
+      "range": {
+        "startLine": 71,
+        "startChar": 8,
+        "endLine": 79,
+        "endChar": 67
+      },
+      "revId": "a4585b6f9dba1e0c30520449fee366555e461742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67faa9c1_ccb78021",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-28T00:55:16Z",
+      "side": 1,
+      "message": "Why doesn\u0027t the default one-line infobar style work?",
+      "parentUuid": "701a7a0a_02a73af5",
       "range": {
         "startLine": 71,
         "startChar": 8,

@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5287c25b_bd999e22",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2265,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-28T00:55:16Z",
+      "side": 1,
+      "message": "I think we should have a ChromeHomeSurveyController class that\u0027s responsible for deciding if/when to show the survey. In a follow-up CL we\u0027ll need to add metrics logging, so this small chunk of code may grow.",
+      "range": {
+        "startLine": 2263,
+        "startChar": 12,
+        "endLine": 2265,
+        "endChar": 49
+      },
+      "revId": "61934bcb61212569bd62e3b55a7e9a73a5712fd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3450252e_6a94ab4f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/SurveyController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-28T00:55:16Z",
+      "side": 1,
+      "message": "\"Controls retrieving and displaying surveys.\"?",
+      "range": {
+        "startLine": 15,
+        "startChar": 22,
+        "endLine": 15,
+        "endChar": 91
+      },
+      "revId": "61934bcb61212569bd62e3b55a7e9a73a5712fd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8caff34_510dfc64",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/SurveyController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-28T00:55:16Z",
+      "side": 1,
+      "message": "The {@link WebContents} used to display the survey InfoBar.",
+      "revId": "61934bcb61212569bd62e3b55a7e9a73a5712fd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92cd81f6_32e4dca1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/SurveyController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-28T00:55:16Z",
+      "side": 1,
+      "message": "nit: Remove extra \"get\" at the end of this line",
+      "range": {
+        "startLine": 52,
+        "startChar": 78,
+        "endLine": 52,
+        "endChar": 81
+      },
+      "revId": "61934bcb61212569bd62e3b55a7e9a73a5712fd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddd70b52_7585f695",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/SurveyController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-28T00:55:16Z",
+      "side": 1,
+      "message": "nit: s/res id/resource id",
+      "range": {
+        "startLine": 54,
+        "startChar": 26,
+        "endLine": 54,
+        "endChar": 40
+      },
+      "revId": "61934bcb61212569bd62e3b55a7e9a73a5712fd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
