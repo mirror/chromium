@@ -22,6 +22,30 @@
       "revId": "42eea5d2c71c4c9c8466594af3260056578d9f3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c725ee3e_644ffaf7",
+        "filename": "content/public/browser/background_fetch_delegate.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-09-28T15:32:15Z",
+      "side": 1,
+      "message": "OnDownloadComplete captures most failures (since a 404 could still return a body). This is for failures that are more specific to the DownloadService, like downloads are only allowed when connected to WiFi, but we didn\u0027t connect to WiFi for so long that the whole download timed out.",
+      "parentUuid": "d95629ca_7839b0c6",
+      "range": {
+        "startLine": 73,
+        "startChar": 17,
+        "endLine": 73,
+        "endChar": 33
+      },
+      "revId": "42eea5d2c71c4c9c8466594af3260056578d9f3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
