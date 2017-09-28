@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1665bdb3_c12a05a0",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-28T14:45:13Z",
+      "side": 1,
+      "message": "Don\u0027t we use \u0027Process\u0027 elsewhere in this file for this sort of thing? Indeed, there is in fact a ProcessQueuedTransactions. It\u0027s pretty confusing to have a ProcessQueuedTransactions and an ImpactQueuedTransactions. \n\nIt looks like ImpactQueuedTransactions calls ProcessQueuedTransactions, but will instead call ProcessEntryFailure on failure. \n\nI vote for removing this helper function and calling ProcessEntryFailure or ProcessQueuedTransactions in the two places that call this.",
+      "range": {
+        "startLine": 426,
+        "startChar": 7,
+        "endLine": 426,
+        "endChar": 13
+      },
+      "revId": "dd9da7ed53b12900600f3d1ca952cb6cacb948bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "927c502b_081c9278",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-28T14:45:13Z",
+      "side": 1,
+      "message": "This is likely a naive question as I\u0027m just starting to look at this file, but why is this function necessary?\n\nWhen Read() completes the HC::T will get the response. HC::T can then do the right thing, yes?\n\nE.g., in HC::T::DoNetworkReadCacheWriteComplete():\n\nIf error, call DoneWithEntry(false) and return result.\n\nIf all done reading (0), call DoneWithEntry(true) and return result. We won\u0027t be moving the remaining writers into HC\u0027s readers anymore, but is that necessary anyway?\n\nIf more bytes to read, just return the result.\n\nFor idle state writers, just wait until they call Read() again, and do the same thing with the shared_writing_error_.\n\n\nNow, I believe the only thing remaining is that HC needs to RestartHeadersPhaseTransactions after calling writers-\u003eRemoveTransaction if writers is now empty.",
+      "range": {
+        "startLine": 440,
+        "startChar": 15,
+        "endLine": 440,
+        "endChar": 40
+      },
+      "revId": "dd9da7ed53b12900600f3d1ca952cb6cacb948bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0225ba9_a0126043",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-28T14:45:13Z",
+      "side": 1,
+      "message": "The name should_truncate makes me think that RemoveTransaction is going to truncate, which is obviously the wrong thing to do if there are other writers around. So whether or not we truncate is up to Writers. I\u0027d prefer \u0027success\u0027 to should_truncate.",
+      "range": {
+        "startLine": 167,
+        "startChar": 48,
+        "endLine": 167,
+        "endChar": 63
+      },
+      "revId": "dd9da7ed53b12900600f3d1ca952cb6cacb948bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14a3ea12_0c9b8c2e",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-28T14:45:13Z",
+      "side": 1,
+      "message": "This is an implementation detail of HC. Let\u0027s just leave it that it\u0027s the HC::W\u0027s job to tell the HC when it\u0027s done with the entry and remove this comment.",
+      "range": {
+        "startLine": 179,
+        "startChar": 0,
+        "endLine": 180,
+        "endChar": 18
+      },
+      "revId": "dd9da7ed53b12900600f3d1ca952cb6cacb948bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
