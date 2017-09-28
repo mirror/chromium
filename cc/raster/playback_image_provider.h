@@ -22,13 +22,10 @@ class ImageDecodeCache;
 //    only be used for lazy generated images.
 class CC_EXPORT PlaybackImageProvider : public ImageProvider {
  public:
-  PlaybackImageProvider(
-      bool skip_all_images,
-      PaintImageIdFlatSet images_to_skip,
-      std::vector<DrawImage> at_raster_images,
-      ImageDecodeCache* cache,
-      const gfx::ColorSpace& taget_color_space,
-      base::flat_map<PaintImage::Id, size_t> image_to_current_frame_index);
+  PlaybackImageProvider(bool skip_all_images,
+                        PaintImageIdFlatSet images_to_skip,
+                        ImageDecodeCache* cache,
+                        const gfx::ColorSpace& taget_color_space);
   ~PlaybackImageProvider() override;
 
   void BeginRaster() override;
