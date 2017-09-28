@@ -24,7 +24,7 @@ bool InitializeGLOneOffHelper(bool init_extensions) {
   std::vector<GLImplementation> allowed_impls = GetAllowedGLImplementations();
   DCHECK(!allowed_impls.empty());
 
-  base::CommandLine* cmd = base::CommandLine::ForCurrentProcess();
+  const base::CommandLine* cmd = base::CommandLine::ForCurrentProcess();
 
   // The default implementation is always the first one in list.
   GLImplementation impl = allowed_impls[0];
@@ -41,8 +41,6 @@ bool InitializeGLOneOffHelper(bool init_extensions) {
                (requested_implementation_name ==
                 kGLImplementationSwiftShaderForWebGLName)) {
       impl = kGLImplementationSwiftShaderGL;
-    } else if (requested_implementation_name == kGLImplementationANGLEName) {
-      impl = kGLImplementationEGLGLES2;
     } else {
       impl = GetNamedGLImplementation(requested_implementation_name);
       if (!base::ContainsValue(allowed_impls, impl)) {
