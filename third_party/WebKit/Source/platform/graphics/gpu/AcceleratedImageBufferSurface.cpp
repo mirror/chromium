@@ -30,6 +30,7 @@
 
 #include "platform/graphics/gpu/AcceleratedImageBufferSurface.h"
 
+#include "gpu/config/gpu_feature_info.h"
 #include "platform/graphics/AcceleratedStaticBitmapImage.h"
 #include "platform/graphics/gpu/SharedGpuContext.h"
 #include "platform/graphics/skia/SkiaUtils.h"
@@ -49,6 +50,14 @@ AcceleratedImageBufferSurface::AcceleratedImageBufferSurface(
   context_provider_wrapper_ = SharedGpuContext::ContextProviderWrapper();
   if (!context_provider_wrapper_)
     return;
+  const gpu::GpuFeatureInfo& gpu_feature_info =
+      context_provider_wrapper_->ContextProvider()->GetGpuFeatureInfo();
+  if (gpu::kGpuFeatureStatusEnabled !=
+      gpu_feature_info
+          .status_values[gpu::GPU_FEATURE_TYPE_ACCELERATED_2D_CANVAS]) {
+    // Accelerated 2D canvas is blacklisted.
+    return;
+  }
   GrContext* gr_context =
       context_provider_wrapper_->ContextProvider()->GetGrContext();
 
