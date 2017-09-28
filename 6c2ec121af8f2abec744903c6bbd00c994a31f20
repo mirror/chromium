@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2decfbb_8cc9bd8f",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 10124,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-28T21:24:36Z",
+      "side": 0,
+      "message": "What restores this now in the paths that call RestoreStateForAttrib but not EmulateVertexArrayState? E.g. RestoreVertexAttribArray?",
+      "revId": "6c2ec121af8f2abec744903c6bbd00c994a31f20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
