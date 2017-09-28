@@ -9,6 +9,7 @@
 #include "core/editing/SelectionAdjuster.h"
 #include "core/editing/SelectionTemplate.h"
 #include "core/editing/testing/EditingTestBase.h"
+#include "core/editing/testing/SelectionSample.h"
 
 #define LOREM_IPSUM                                                            \
   "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod "  \
@@ -647,6 +648,108 @@ TEST_F(VisibleSelectionTest, updateIfNeededWithShadowHost) {
   // Simulates to restore selection from undo stack.
   selection = CreateVisibleSelection(selection.AsSelection());
   EXPECT_EQ(Position(sample->firstChild(), 0), selection.Start());
+}
+
+TEST_F(VisibleSelectionTest, FirstEphemeralRangeOfInFlatTree) {
+  Element* body = GetDocument().body();
+  const std::string content =
+      "<div>"
+        "<template data-mode='open'>"
+          "<slot name=two></slot>"
+          "foo"
+          "<slot name=one></slot>"
+        "</template>"
+        "<span slot=one id=one>a|</span>"
+        "<span>b</span>"
+        "<span slot=two id=two>^c</span>"
+      "</div>";
+  const SelectionInDOMTree& selection =
+      EditingTestBase::SetSelectionText(ToHTMLElement(body), content);
+  VisibleSelectionInFlatTree visible_selection =
+      CreateVisibleSelection(ConvertToSelectionInFlatTree(selection));
+
+  Element* one = body->QuerySelector("#one");
+  Element* two = body->QuerySelector("#two");
+  const EphemeralRangeInFlatTree& range =
+      FirstEphemeralRangeOf(visible_selection);
+  EXPECT_EQ(PositionInFlatTree(two->firstChild(), 0), range.StartPosition());
+  EXPECT_EQ(PositionInFlatTree(one->firstChild(), 1), range.EndPosition());
+}
+
+TEST_F(VisibleSelectionTest,
+       FirstEphemeralRangeOfInFlatTreeOverDifferentShadows) {
+  Element* body = GetDocument().body();
+  const std::string content =
+      "<div>"
+        "<template data-mode='open'>"
+          "<slot name=two></slot>"
+          "foo"
+          "<slot name=one></slot>"
+        "</template>"
+        "<span slot=one id=one>a</span>"
+        "<span>b</span>"
+        "<span slot=two id=two>^c</span>"
+      "</div>"
+      "<div>"
+        "<template data-mode='open'>"
+          "<slot name=four></slot>"
+          "bar"
+          "<slot name=three></slot>"
+        "</template>"
+        "<span slot=three id=three>d|</span>"
+        "<span>e</span>"
+        "<span slot=four id=four>f</span>"
+      "</span>";
+
+  const SelectionInDOMTree& selection =
+      EditingTestBase::SetSelectionText(ToHTMLElement(body), content);
+  VisibleSelectionInFlatTree visible_selection =
+      CreateVisibleSelection(ConvertToSelectionInFlatTree(selection));
+
+  Element* two = body->QuerySelector("#two");
+  Element* three = body->QuerySelector("#three");
+  const EphemeralRangeInFlatTree& range =
+      FirstEphemeralRangeOf(visible_selection);
+  EXPECT_EQ(PositionInFlatTree(two->firstChild(), 0), range.StartPosition());
+  EXPECT_EQ(PositionInFlatTree(three->firstChild(), 1), range.EndPosition());
+}
+
+TEST_F(VisibleSelectionTest, FirstEphemeralRangeOfInFlatTreeiHoge) {
+  Element* body = GetDocument().body();
+  const std::string content =
+      "<div>"
+        "<template data-mode='open'>"
+          "<slot name=two></slot>"
+          "foo"
+          "<slot name=one></slot>"
+        "</template>"
+        "<span slot=one id=one>a</span>"
+        "<span>b</span>"
+        "<span slot=two id=two>^c</span>"
+      "</div>"
+      "<div>"
+        "<template data-mode='open'>"
+          "<slot name=four></slot>"
+          "bar"
+          "<slot name=three></slot>"
+        "</template>"
+        "<span slot=three id=three>d|</span>"
+        "<span>e</span>"
+        "<span slot=four id=four>f</span>"
+      "</span>";
+
+  const SelectionInDOMTree& selection =
+      SelectionSample::SetSelectionText(ToHTMLElement(body), content);
+  UpdateAllLifecyclePhases();
+  VisibleSelectionInFlatTree visible_selection =
+      CreateVisibleSelection(ConvertToSelectionInFlatTree(selection));
+
+  Element* two = body->QuerySelector("#two");
+  Element* three = body->QuerySelector("#three");
+  const EphemeralRangeInFlatTree& range =
+      FirstEphemeralRangeOf(visible_selection);
+  EXPECT_EQ(PositionInFlatTree(two->firstChild(), 0), range.StartPosition());
+  EXPECT_EQ(PositionInFlatTree(three->firstChild(), 1), range.EndPosition());
 }
 
 }  // namespace blink
