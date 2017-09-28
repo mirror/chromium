@@ -63,6 +63,9 @@ class OnScreenKeyboardDetector {
   void AddObserver(OnScreenKeyboardObserver* observer);
   void RemoveObserver(OnScreenKeyboardObserver* observer);
 
+  // Removes all observers from the list.
+  void ClearObservers();
+
   // Returns true if the osk is visible. Sets osk bounding rect if non-null
   static bool IsKeyboardVisible(gfx::Rect* osk_bounding_rect);
 
@@ -84,9 +87,6 @@ class OnScreenKeyboardDetector {
   // Notifies observers that the keyboard was hidden.
   // The observer list is cleared out after this notification.
   void HandleKeyboardHidden();
-
-  // Removes all observers from the list.
-  void ClearObservers();
 
   // The main window which displays the on screen keyboard.
   HWND main_window_ = nullptr;
@@ -284,6 +284,8 @@ bool OnScreenKeyboardDisplayManager::DisplayVirtualKeyboard(
   if (success) {
     // If multiple calls to DisplayVirtualKeyboard occur one after the other,
     // the last observer would be the one to get notifications.
+    if (keyboard_detector_)
+      keyboard_detector_->ClearObservers();
     keyboard_detector_.reset(new OnScreenKeyboardDetector);
     if (observer)
       keyboard_detector_->AddObserver(observer);
