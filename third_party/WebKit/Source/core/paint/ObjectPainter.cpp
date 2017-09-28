@@ -11,6 +11,7 @@
 #include "core/paint/BoxBorderPainter.h"
 #include "core/paint/LayoutObjectDrawingRecorder.h"
 #include "core/paint/PaintInfo.h"
+#include "core/paint/PaintLayer.h"
 #include "core/style/BorderEdge.h"
 #include "core/style/ComputedStyle.h"
 #include "platform/geometry/LayoutPoint.h"
@@ -714,11 +715,17 @@ void ObjectPainter::DoCheckPaintOffset(const PaintInfo& paint_info,
   LayoutPoint adjusted_paint_offset = paint_offset;
   if (layout_object_.IsBox())
     adjusted_paint_offset += ToLayoutBox(layout_object_).Location();
-  DCHECK(layout_object_.PaintOffset() == adjusted_paint_offset)
-      << " Paint offset mismatch: " << layout_object_.DebugName()
-      << " from PaintPropertyTreeBuilder: "
-      << layout_object_.PaintOffset().ToString()
-      << " from painter: " << adjusted_paint_offset.ToString();
+
+  // Painting code doesn't currently plumb which fragment is being painted,
+  // so disable this DCHECK for pagination.
+  if (!layout_object_.PaintingLayer()->EnclosingPaginationLayer()) {
+    DCHECK(layout_object_.FirstFragment().PaintOffset() ==
+           adjusted_paint_offset)
+        << " Paint offset mismatch: " << layout_object_.DebugName()
+        << " from PaintPropertyTreeBuilder: "
+        << layout_object_.FirstFragment().PaintOffset().ToString()
+        << " from painter: " << adjusted_paint_offset.ToString();
+  }
 }
 #endif
 
