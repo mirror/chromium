@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0eb070d3_1bbcfc6f",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-09-28T16:01:25Z",
+      "side": 1,
+      "message": "is this coming from an untrusted/less privileged source? if so, we should probably check to make sure that it \u003d\u003d package_name_to_tree_.end() in this case.",
+      "range": {
+        "startLine": 185,
+        "startChar": 6,
+        "endLine": 185,
+        "endChar": 13
+      },
+      "revId": "c8e126f3ba3a53259ad86a018ecf994e9406d341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
