@@ -531,19 +531,23 @@ void AutofillManager::OnTextFieldDidChangeImpl(const FormData& form,
 
   if (!user_did_type_) {
     user_did_type_ = true;
-    AutofillMetrics::LogUserHappinessMetric(AutofillMetrics::USER_DID_TYPE);
+    AutofillMetrics::LogUserHappinessMetric(
+        AutofillMetrics::USER_DID_TYPE,
+        autofill_field->Type().group() == CREDIT_CARD);
   }
 
   if (autofill_field->is_autofilled) {
     autofill_field->is_autofilled = false;
     autofill_field->set_previously_autofilled(true);
     AutofillMetrics::LogUserHappinessMetric(
-        AutofillMetrics::USER_DID_EDIT_AUTOFILLED_FIELD);
+        AutofillMetrics::USER_DID_EDIT_AUTOFILLED_FIELD,
+        autofill_field->Type().group() == CREDIT_CARD);
 
     if (!user_did_edit_autofilled_field_) {
       user_did_edit_autofilled_field_ = true;
       AutofillMetrics::LogUserHappinessMetric(
-          AutofillMetrics::USER_DID_EDIT_AUTOFILLED_FIELD_ONCE);
+          AutofillMetrics::USER_DID_EDIT_AUTOFILLED_FIELD_ONCE,
+          autofill_field->Type().group() == CREDIT_CARD);
     }
   }
 
@@ -842,11 +846,19 @@ void AutofillManager::OnDidFillAutofillFormData(const FormData& form,
 
   UpdatePendingForm(form);
 
-  AutofillMetrics::LogUserHappinessMetric(AutofillMetrics::USER_DID_AUTOFILL);
+  FormStructure* form_structure = NULL;
+  bool is_credit_card_form = false;  // Default to false.
+  // Find the FormStructure that corresponds to |form|. Use default form type if
+  // form is not present in our cache, which will happen rarely.
+  if (FindCachedForm(form, &form_structure)) {
+    is_credit_card_form = form_structure->HasCreditCardFields();
+  }
+  AutofillMetrics::LogUserHappinessMetric(AutofillMetrics::USER_DID_AUTOFILL,
+                                          is_credit_card_form);
   if (!user_did_autofill_) {
     user_did_autofill_ = true;
     AutofillMetrics::LogUserHappinessMetric(
-        AutofillMetrics::USER_DID_AUTOFILL_ONCE);
+        AutofillMetrics::USER_DID_AUTOFILL_ONCE, is_credit_card_form);
   }
 
   UpdateInitialInteractionTimestamp(timestamp);
@@ -863,12 +875,15 @@ void AutofillManager::DidShowSuggestions(bool is_new_popup,
     return;
 
   if (is_new_popup) {
-    AutofillMetrics::LogUserHappinessMetric(AutofillMetrics::SUGGESTIONS_SHOWN);
+    AutofillMetrics::LogUserHappinessMetric(
+        AutofillMetrics::SUGGESTIONS_SHOWN,
+        autofill_field->Type().group() == CREDIT_CARD);
 
     if (!did_show_suggestions_) {
       did_show_suggestions_ = true;
       AutofillMetrics::LogUserHappinessMetric(
-          AutofillMetrics::SUGGESTIONS_SHOWN_ONCE);
+          AutofillMetrics::SUGGESTIONS_SHOWN_ONCE,
+          autofill_field->Type().group() == CREDIT_CARD);
     }
 
     if (autofill_field->Type().group() == CREDIT_CARD) {
@@ -2052,6 +2067,8 @@ void AutofillManager::ParseForms(const std::vector<FormData>& forms) {
 
   std::vector<FormStructure*> non_queryable_forms;
   std::vector<FormStructure*> queryable_forms;
+  bool has_credit_card_form = false;
+  bool has_address_form = false;
   for (const FormData& form : forms) {
     const auto parse_form_start_time = TimeTicks::Now();
 
@@ -2059,6 +2076,12 @@ void AutofillManager::ParseForms(const std::vector<FormData>& forms) {
     if (!ParseForm(form, &form_structure))
       continue;
     DCHECK(form_structure);
+
+    if (form_structure->HasCreditCardFields()) {
+      has_credit_card_form = true;
+    } else {
+      has_address_form = true;
+    }
 
     // Set aside forms with method GET or author-specified types, so that they
     // are not included in the query to the server.
@@ -2072,7 +2095,14 @@ void AutofillManager::ParseForms(const std::vector<FormData>& forms) {
   }
 
   if (!queryable_forms.empty() || !non_queryable_forms.empty()) {
-    AutofillMetrics::LogUserHappinessMetric(AutofillMetrics::FORMS_LOADED);
+    if (has_credit_card_form) {
+      AutofillMetrics::LogUserHappinessMetric(AutofillMetrics::FORMS_LOADED,
+                                              true /* is_credit_card_form */);
+    }
+    if (has_address_form) {
+      AutofillMetrics::LogUserHappinessMetric(AutofillMetrics::FORMS_LOADED,
+                                              false /* is_credit_card_form */);
+    }
 
 #if defined(OS_IOS)
     // Log this from same location as AutofillMetrics::FORMS_LOADED to ensure
