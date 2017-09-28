@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fff64100_5c38ecd1",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 9558,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-28T17:25:14Z",
+      "side": 1,
+      "message": "nit: While you\u0027re here, could you please mark the untranslatable strings (like \"AllowAll\") here with the \u003cph\u003e tags, as described in the beginning of the file?",
+      "range": {
+        "startLine": 9548,
+        "startChar": 17,
+        "endLine": 9558,
+        "endChar": 65
+      },
+      "revId": "336159a763a8d2fc13f8d0f763d090bde1f49aac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
