@@ -36,6 +36,7 @@ const struct {
 #if defined(OS_MACOSX)
     {kGLImplementationAppleName, kGLImplementationAppleGL},
 #endif
+    {kGLImplementationANGLEName, kGLImplementationEGLGLES2},
     {kGLImplementationEGLName, kGLImplementationEGLGLES2},
     {kGLImplementationMockName, kGLImplementationMockGL}};
 
