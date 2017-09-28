@@ -45,6 +45,9 @@ class PrinterHandler {
   using AddedPrintersCallback =
       base::Callback<void(const base::ListValue& printers)>;
   using GetPrintersDoneCallback = base::Closure;
+  // |capability| should contain a CDD with key printing::kSettingCapabilities.
+  // It may also contain other information about the printer in a dictionary
+  // with key printing::kPrinter.
   using GetCapabilityCallback =
       base::Callback<void(std::unique_ptr<base::DictionaryValue> capability)>;
   using PrintCallback =
