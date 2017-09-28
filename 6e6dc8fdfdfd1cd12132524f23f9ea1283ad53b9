@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1657fcc7_3cb71e8c",
+        "filename": "content/browser/accessibility/browser_accessibility_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1039,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-28T23:16:45Z",
+      "side": 1,
+      "message": "Can you add this? Is this correct now?\n\nEXPECT_EQ(node5_accessible, manager-\u003ePreviousInTreeOrder(root_accessible));",
+      "revId": "6e6dc8fdfdfd1cd12132524f23f9ea1283ad53b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7ed85df_1ab0089b",
+        "filename": "content/browser/accessibility/one_shot_accessibility_tree_search_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-28T23:16:45Z",
+      "side": 1,
+      "message": "I think this will change behavior on Mac in an undesired way.\n\nWe need some way to be able to search and have the root node\none of the possible nodes returned.",
+      "revId": "6e6dc8fdfdfd1cd12132524f23f9ea1283ad53b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
