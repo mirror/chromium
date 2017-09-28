@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28361ffb_9c9487f4",
+        "filename": "content/browser/renderer_host/web_database_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-28T03:34:11Z",
+      "side": 1,
+      "message": "Add a db tacker DCHECK here, since, according to local mojo knowledge folklore, its stone tablet\u0027s had this rule on \n\n   4/ \"the sequence you are created on, is the sequence you are destroyed on\".",
+      "revId": "6c98c57d2ce6ec27ea095b68ee98d6433456ff85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

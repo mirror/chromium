@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "174e88e7_e265e051",
+        "filename": "content/browser/renderer_host/web_database_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-28T03:34:11Z",
+      "side": 1,
+      "message": "Here and elsewhere in mojo::ReportBadMessage(), the title-casing looks odd.  Can we use \"Database not opened on close\" instead?",
+      "revId": "2422d443fe04ab1dd5342a15f033a6f9717e8cec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab98f283_d62eb9e4",
+        "filename": "content/browser/renderer_host/web_database_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-28T03:34:11Z",
+      "side": 1,
+      "message": "Nit: space before this line.",
+      "revId": "2422d443fe04ab1dd5342a15f033a6f9717e8cec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63200692_5aab83f4",
+        "filename": "content/browser/renderer_host/web_database_host_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-28T03:34:11Z",
+      "side": 1,
+      "message": "// content::mojom::WebDatabaseHost:",
+      "revId": "2422d443fe04ab1dd5342a15f033a6f9717e8cec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
