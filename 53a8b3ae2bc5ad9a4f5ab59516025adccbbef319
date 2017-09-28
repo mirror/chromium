@@ -34,6 +34,24 @@
       "revId": "53a8b3ae2bc5ad9a4f5ab59516025adccbbef319",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c7f0675_25a411b6",
+        "filename": "third_party/WebKit/Source/platform/wtf/RefPtr.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-09-28T05:58:09Z",
+      "side": 1,
+      "message": "I\u0027m OK with landing this as is for now, but would like to ask some base folks about the possibility of adding base::RefCounted::LeakRef(), because we (Blink) do care about performance seriously and it should be strictly better to have an implementation with no ref churn, in that we don\u0027t have to rely on compiler\u0027s optimization (i.e. does optimization work for 100% of cases? I don\u0027t know).",
+      "parentUuid": "d82e5b20_1b92eb8f",
+      "revId": "53a8b3ae2bc5ad9a4f5ab59516025adccbbef319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
