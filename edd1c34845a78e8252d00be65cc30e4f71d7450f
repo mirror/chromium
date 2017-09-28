@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b62a5fe2_62028144",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2082,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-28T20:13:59Z",
+      "side": 1,
+      "message": "Done. Didn\u0027t realize this can be password form as well. If this is the case, should we name the sub-metrics as CreditCard, and Other?",
+      "parentUuid": "5e239ec2_9e4d1c55",
+      "revId": "edd1c34845a78e8252d00be65cc30e4f71d7450f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d54edf60_1417dbdd",
         "filename": "components/autofill/core/browser/autofill_metrics.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "edd1c34845a78e8252d00be65cc30e4f71d7450f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "898c19b3_d511e897",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-28T20:13:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d54edf60_1417dbdd",
+      "revId": "edd1c34845a78e8252d00be65cc30e4f71d7450f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "edd1c34845a78e8252d00be65cc30e4f71d7450f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfaf8342_a994d703",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-28T20:13:59Z",
+      "side": 1,
+      "message": "Prefer to use a bool. Reason:\nIf use form type, we need to extract form type from a FormStructure. It is hard because a form can have several FieldTypeGroup.",
+      "parentUuid": "539a88a8_b324f3d1",
+      "range": {
+        "startLine": 688,
+        "startChar": 37,
+        "endLine": 688,
+        "endChar": 41
+      },
+      "revId": "edd1c34845a78e8252d00be65cc30e4f71d7450f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -198,6 +258,78 @@
       "revId": "edd1c34845a78e8252d00be65cc30e4f71d7450f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea1bdab7_17789db9",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2368,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-28T20:13:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06d90db4_a8f4c5a0",
+      "range": {
+        "startLine": 2368,
+        "startChar": 50,
+        "endLine": 2368,
+        "endChar": 66
+      },
+      "revId": "edd1c34845a78e8252d00be65cc30e4f71d7450f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aef0d0d5_6a268eda",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2368,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-28T20:13:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91c2e808_6e71d3ea",
+      "range": {
+        "startLine": 2368,
+        "startChar": 50,
+        "endLine": 2368,
+        "endChar": 66
+      },
+      "revId": "edd1c34845a78e8252d00be65cc30e4f71d7450f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a12fdd7_69a12f02",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2368,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-28T20:13:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b1f61da_c401c007",
+      "range": {
+        "startLine": 2368,
+        "startChar": 16,
+        "endLine": 2368,
+        "endChar": 25
+      },
+      "revId": "edd1c34845a78e8252d00be65cc30e4f71d7450f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
