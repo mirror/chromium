@@ -35,6 +35,7 @@ public class JavaBridgeActivityTestRule
      */
     public void setUpContentView() {
         mTestCommon.setUpContentView();
+        mTestCommon.createJavaBridgeHost(getWebContents());
     }
 
     public TestCallbackHelperContainer getTestCallBackHelperContainer() {
@@ -79,5 +80,9 @@ public class JavaBridgeActivityTestRule
     @Override
     public void setUp() {
         setUpContentView();
+    }
+
+    public void cleanUpForGc() {
+        mTestCommon.cleanUpForGc();
     }
 }
