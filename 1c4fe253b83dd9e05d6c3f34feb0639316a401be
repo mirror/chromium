@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd7d75e8_b0feae04",
+        "filename": "chrome/browser/signin/signin_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-09-28T05:05:43Z",
+      "side": 1,
+      "message": "Reset ... for testing.",
+      "revId": "1c4fe253b83dd9e05d6c3f34feb0639316a401be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
