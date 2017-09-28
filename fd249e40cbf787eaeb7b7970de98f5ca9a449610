@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6e0786f_aad63235",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2229,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-09-28T07:30:51Z",
+      "side": 1,
+      "message": "Do we need this DCHECK if we\u0027ve just done the \".at()\" before?",
+      "revId": "fd249e40cbf787eaeb7b7970de98f5ca9a449610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bf6a467_7f255e2d",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-09-28T07:30:51Z",
+      "side": 1,
+      "message": "This name is really confusing, you\u0027re not storing a position (LayoutUnit) like in row_positions_,\nbut a line number (size_t).\nOn top of that we\u0027re only storing the info for the positioned items when start is not auto.\nWhat about renaming it to: positioned_item_non_auto_start_row_lines_ ?",
+      "revId": "fd249e40cbf787eaeb7b7970de98f5ca9a449610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "225faf48_80dfdd2a",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-09-28T07:30:51Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "fd249e40cbf787eaeb7b7970de98f5ca9a449610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
