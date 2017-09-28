@@ -1196,6 +1196,11 @@ void PasswordAutofillAgent::SendPasswordForms(bool only_visible) {
 
   blink::WebLocalFrame* frame = render_frame()->GetWebFrame();
 
+#if !defined(OS_ANDROID) && !defined(OS_IOS)
+  // Provide warnings about the accessibility of password forms on the page.
+  page_passwords_analyser_.AnalyseDocumentDOM(frame);
+#endif
+
   // Make sure that this security origin is allowed to use password manager.
   blink::WebSecurityOrigin origin = frame->GetDocument().GetSecurityOrigin();
   if (logger) {
@@ -1814,6 +1819,9 @@ void PasswordAutofillAgent::FrameClosing() {
   sent_request_to_store_ = false;
   checked_safe_browsing_reputation_ = false;
   blacklisted_form_found_ = false;
+#if !defined(OS_ANDROID) && !defined(OS_IOS)
+  page_passwords_analyser_.Reset();
+#endif
 }
 
 void PasswordAutofillAgent::ClearPreview(
