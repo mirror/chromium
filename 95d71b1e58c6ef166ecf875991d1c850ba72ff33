@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "48b47502_d43588ac",
+        "filename": "chrome/android/java/res/values-v17/styles.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-28T00:24:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba97320f_995d2429",
+      "range": {
+        "startLine": 343,
+        "startChar": 17,
+        "endLine": 343,
+        "endChar": 38
+      },
+      "revId": "95d71b1e58c6ef166ecf875991d1c850ba72ff33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63329d21_4e507bd0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/ChromeHomePromoDialog.java",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-27T23:47:46Z",
       "side": 1,
       "message": "do we need this since we\u0027re not doing anything inside of the constructor?",
+      "range": {
+        "startLine": 36,
+        "startChar": 14,
+        "endLine": 36,
+        "endChar": 22
+      },
+      "revId": "95d71b1e58c6ef166ecf875991d1c850ba72ff33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18d95505_ca7ef4ed",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/ChromeHomePromoDialog.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-28T00:24:01Z",
+      "side": 1,
+      "message": "Yeah, otherwise java tries to make a default constructor with no params, which PromoDialog doesn\u0027t have. The language isn\u0027t very smart.",
+      "parentUuid": "63329d21_4e507bd0",
       "range": {
         "startLine": 36,
         "startChar": 14,
