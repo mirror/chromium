@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baf4ea63_94cecece",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_linux.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-28T22:09:23Z",
+      "side": 1,
+      "message": "nit: move aboive line 524.",
+      "revId": "2d5aebd9c983b91c242d912b6167a927b8d8ddfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cd19b28_1e8737b6",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_linux.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 905,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-28T22:09:23Z",
+      "side": 1,
+      "message": "OK, so now if we hand over a 256x256 icon, could that be too big for some servers? :)",
+      "revId": "2d5aebd9c983b91c242d912b6167a927b8d8ddfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
