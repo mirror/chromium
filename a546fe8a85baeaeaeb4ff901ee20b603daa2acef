@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7d745e4_40cb288d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-09-28T00:54:07Z",
+      "side": 1,
+      "message": "nit: Let\u0027s avoid using internal and super long links in the description. You can just reference the histogram name.",
+      "revId": "a546fe8a85baeaeaeb4ff901ee20b603daa2acef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
