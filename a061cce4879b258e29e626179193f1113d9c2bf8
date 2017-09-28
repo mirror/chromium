@@ -16,6 +16,24 @@
       "revId": "a061cce4879b258e29e626179193f1113d9c2bf8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65821313_3d9d7f3e",
+        "filename": "sandbox/mac/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-28T19:09:10Z",
+      "side": 1,
+      "message": "I deliberately created a separate target so that this can use base. There\u0027s no reason for it to not.",
+      "parentUuid": "a9977578_97d83546",
+      "revId": "a061cce4879b258e29e626179193f1113d9c2bf8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
