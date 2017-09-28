@@ -105,7 +105,6 @@
 #include "content/browser/push_messaging/push_messaging_manager.h"
 #include "content/browser/quota_dispatcher_host.h"
 #include "content/browser/renderer_host/clipboard_message_filter.h"
-#include "content/browser/renderer_host/database_message_filter.h"
 #include "content/browser/renderer_host/file_utilities_host_impl.h"
 #include "content/browser/renderer_host/media/audio_input_renderer_host.h"
 #include "content/browser/renderer_host/media/audio_renderer_host.h"
@@ -1724,8 +1723,6 @@ void RenderProcessHostImpl::CreateMessageFilters() {
   AddFilter(new BlobDispatcherHost(
       GetID(), blob_storage_context,
       make_scoped_refptr(storage_partition_impl_->GetFileSystemContext())));
-  AddFilter(new DatabaseMessageFilter(
-      GetID(), storage_partition_impl_->GetDatabaseTracker()));
 #if defined(OS_MACOSX)
   AddFilter(new TextInputClientMessageFilter());
 #elif defined(OS_WIN)
@@ -1886,7 +1883,7 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
 
   registry->AddInterface(
       base::Bind(
-          &WebDatabaseHostImpl::Create,
+          &WebDatabaseHostImpl::Create, GetID(),
           make_scoped_refptr(storage_partition_impl_->GetDatabaseTracker())),
       storage_partition_impl_->GetDatabaseTracker()->task_runner());
 
