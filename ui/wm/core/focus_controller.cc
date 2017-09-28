@@ -295,6 +295,9 @@ void FocusController::SetActiveWindow(
     DCHECK_EQ(window, rules_->GetActivatableWindow(window));
 
   base::AutoReset<bool> updating_activation(&updating_activation_, true);
+  for (auto& observer : activation_observers_)
+    observer.OnWindowActivating(reason, window, active_window_);
+
   aura::Window* lost_activation = active_window_;
   // Allow for the window losing activation to be deleted during dispatch. If
   // it is deleted pass NULL to observers instead of a deleted window.
