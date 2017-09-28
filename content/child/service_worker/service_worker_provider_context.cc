@@ -17,6 +17,7 @@
 #include "content/child/service_worker/service_worker_handle_reference.h"
 #include "content/child/service_worker/service_worker_registration_handle_reference.h"
 #include "content/child/service_worker/service_worker_subresource_loader.h"
+#include "content/child/service_worker/web_service_worker_impl.h"
 #include "content/child/thread_safe_sender.h"
 #include "content/child/worker_thread_registry.h"
 #include "content/common/service_worker/service_worker_utils.h"
@@ -35,8 +36,8 @@ namespace content {
 struct ServiceWorkerProviderContext::ControlleeState {
   explicit ControlleeState(
       scoped_refptr<ChildURLLoaderFactoryGetter> default_loader_factory_getter)
-      : default_loader_factory_getter(
-            std::move(default_loader_factory_getter)) {}
+      : default_loader_factory_getter(std::move(default_loader_factory_getter)),
+        web_service_worker_provider(nullptr) {}
   ~ControlleeState() = default;
 
   std::unique_ptr<ServiceWorkerHandleReference> controller;
@@ -53,6 +54,8 @@ struct ServiceWorkerProviderContext::ControlleeState {
 
   // Tracks feature usage for UseCounter.
   std::set<uint32_t> used_features;
+
+  base::WeakPtr<WebServiceWorkerProviderImpl> web_service_worker_provider;
 
   // Keeps ServiceWorkerWorkerClient pointers of dedicated or shared workers
   // which are associated with the ServiceWorkerProviderContext.
@@ -146,42 +149,6 @@ void ServiceWorkerProviderContext::GetRegistration(
     attrs->active = state->active->info();
 }
 
-void ServiceWorkerProviderContext::SetController(
-    std::unique_ptr<ServiceWorkerHandleReference> controller,
-    const std::set<uint32_t>& used_features) {
-  DCHECK(main_thread_task_runner_->RunsTasksInCurrentSequence());
-  ControlleeState* state = controllee_state_.get();
-  DCHECK(state);
-  DCHECK(!state->controller ||
-         state->controller->handle_id() != kInvalidServiceWorkerHandleId);
-
-  if (controller) {
-    for (const auto& worker : state->worker_clients) {
-      // This is a Mojo interface call to the (dedicated or shared) worker
-      // thread.
-      worker->SetControllerServiceWorker(controller->version_id());
-    }
-  }
-  state->controller = std::move(controller);
-  state->used_features = used_features;
-  if (ServiceWorkerUtils::IsServicificationEnabled()) {
-    storage::mojom::BlobRegistryPtr blob_registry_ptr;
-    ChildThreadImpl::current()->GetConnector()->BindInterface(
-        mojom::kBrowserServiceName, mojo::MakeRequest(&blob_registry_ptr));
-    auto blob_registry = base::MakeRefCounted<
-        base::RefCountedData<storage::mojom::BlobRegistryPtr>>(
-        std::move(blob_registry_ptr));
-    state->controller_connector =
-        base::MakeRefCounted<ControllerServiceWorkerConnector>(
-            container_host_.get());
-    mojo::MakeStrongBinding(
-        base::MakeUnique<ServiceWorkerSubresourceLoaderFactory>(
-            state->controller_connector, state->default_loader_factory_getter,
-            state->controller->url().GetOrigin(), std::move(blob_registry)),
-        mojo::MakeRequest(&state->subresource_loader_factory));
-  }
-}
-
 ServiceWorkerHandleReference* ServiceWorkerProviderContext::controller() {
   DCHECK(main_thread_task_runner_->RunsTasksInCurrentSequence());
   DCHECK(controllee_state_);
@@ -213,6 +180,12 @@ const std::set<uint32_t>& ServiceWorkerProviderContext::used_features() const {
   return controllee_state_->used_features;
 }
 
+void ServiceWorkerProviderContext::SetServiceWorkerContainer(
+    base::WeakPtr<WebServiceWorkerProviderImpl> provider) {
+  DCHECK(controllee_state_);
+  controllee_state_->web_service_worker_provider = provider;
+}
+
 mojom::ServiceWorkerWorkerClientRequest
 ServiceWorkerProviderContext::CreateWorkerClientRequest() {
   DCHECK(main_thread_task_runner_->RunsTasksInCurrentSequence());
@@ -235,6 +208,59 @@ void ServiceWorkerProviderContext::UnregisterWorkerFetchContext(
       [client](const mojom::ServiceWorkerWorkerClientPtr& client_ptr) {
         return client_ptr.get() == client;
       });
+}
+
+void ServiceWorkerProviderContext::SetController(
+    const ServiceWorkerObjectInfo& controller,
+    const std::vector<blink::mojom::WebFeature>& used_features,
+    bool should_notify_controllerchange) {
+  DCHECK(main_thread_task_runner_->RunsTasksInCurrentSequence());
+  ControlleeState* state = controllee_state_.get();
+  DCHECK(state);
+  DCHECK(!state->controller ||
+         state->controller->handle_id() != kInvalidServiceWorkerHandleId);
+  ServiceWorkerDispatcher* dispatcher =
+      ServiceWorkerDispatcher::GetThreadSpecificInstance();
+
+  // Adopt the reference sent from the browser.
+  std::unique_ptr<ServiceWorkerHandleReference> handle_ref =
+      dispatcher->Adopt(controller);
+  if (handle_ref) {
+    for (const auto& worker : state->worker_clients) {
+      // This is a Mojo interface call to the (dedicated or shared) worker
+      // thread.
+      worker->SetControllerServiceWorker(handle_ref->version_id());
+    }
+  }
+  state->controller = std::move(handle_ref);
+  for (blink::mojom::WebFeature feature : used_features)
+    state->used_features.insert(static_cast<uint32_t>(feature));
+  if (ServiceWorkerUtils::IsServicificationEnabled()) {
+    storage::mojom::BlobRegistryPtr blob_registry_ptr;
+    ChildThreadImpl::current()->GetConnector()->BindInterface(
+        mojom::kBrowserServiceName, mojo::MakeRequest(&blob_registry_ptr));
+    auto blob_registry = base::MakeRefCounted<
+        base::RefCountedData<storage::mojom::BlobRegistryPtr>>();
+    blob_registry->data = std::move(blob_registry_ptr);
+    state->controller_connector =
+        base::MakeRefCounted<ControllerServiceWorkerConnector>(
+            container_host_.get());
+    mojo::MakeStrongBinding(
+        base::MakeUnique<ServiceWorkerSubresourceLoaderFactory>(
+            state->controller_connector, state->default_loader_factory_getter,
+            state->controller->url().GetOrigin(), std::move(blob_registry)),
+        mojo::MakeRequest(&state->subresource_loader_factory));
+  }
+
+  // SetController() can be called before the ServiceWorkerContainer exists,
+  // i.e., the document has not yet been created. In that case, the
+  // controllee_state->|provider| is set when WebServiceWorkerProviderImpl is
+  // created, and then SetController() is called when its SetClient() is called
+  // right after that.
+  if (state->web_service_worker_provider) {
+    state->web_service_worker_provider->SetController(
+        controller, state->used_features, should_notify_controllerchange);
+  }
 }
 
 void ServiceWorkerProviderContext::OnNetworkProviderDestroyed() {
