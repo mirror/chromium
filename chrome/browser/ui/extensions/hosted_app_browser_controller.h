@@ -11,13 +11,20 @@
 
 class Browser;
 
+namespace gfx {
+class ImageSkia;
+}
+
 namespace extensions {
 
 // Class to encapsulate logic to control the browser UI for hosted apps.
 class HostedAppBrowserController {
  public:
   // Indicates whether |browser| is a hosted app browser.
-  static bool IsForHostedApp(Browser* browser);
+  static bool IsForHostedApp(const Browser* browser);
+
+  // Returns whether |browser| uses the experimental hosted app experience.
+  static bool IsForExperimentalHostedAppBrowser(const Browser* browser);
 
   explicit HostedAppBrowserController(Browser* browser);
   ~HostedAppBrowserController();
@@ -30,6 +37,9 @@ class HostedAppBrowserController {
   // currently visible or not. If |animate| is set, the change will be
   // animated.
   void UpdateLocationBarVisibility(bool animate) const;
+
+  // Returns the extension app icon for the browser if one exists.
+  gfx::ImageSkia GetExtensionAppIcon() const;
 
  private:
   Browser* browser_;

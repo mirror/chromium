@@ -52,6 +52,7 @@
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/browser_window_state.h"
+#include "chrome/browser/ui/extensions/hosted_app_browser_controller.h"
 #include "chrome/browser/ui/sync/bubble_sync_promo_delegate.h"
 #include "chrome/browser/ui/tabs/tab_menu_model.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
@@ -92,10 +93,8 @@
 #include "chrome/browser/ui/views/translate/translate_bubble_view.h"
 #include "chrome/browser/ui/views/update_recommended_message_box.h"
 #include "chrome/browser/ui/window_sizer/window_sizer.h"
-#include "chrome/common/chrome_features.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/extensions/command.h"
-#include "chrome/common/features.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/generated_resources.h"
@@ -1607,12 +1606,16 @@ views::View* BrowserView::GetInitiallyFocusedView() {
 
 bool BrowserView::ShouldShowWindowTitle() const {
 #if defined(OS_CHROMEOS)
+  // Hosted apps on ChromeOS should always show their window icon.
+  if (extensions::HostedAppBrowserController::IsForExperimentalHostedAppBrowser(
+          browser())) {
+    DCHECK(browser_->SupportsWindowFeature(Browser::FEATURE_TITLEBAR));
+    return true;
+  }
+
   // For Chrome OS only, trusted windows (apps and settings) do not show a
   // title, crbug.com/119411. Child windows (i.e. popups) do show a title.
-  // PWAs on ChromeOS should always show their title.
-  if ((!base::FeatureList::IsEnabled(features::kDesktopPWAWindowing) ||
-       !browser_->is_app()) &&
-      browser_->is_trusted_source()) {
+  if (browser_->is_trusted_source()) {
     return false;
   }
 #endif  // OS_CHROMEOS
@@ -1621,16 +1624,13 @@ bool BrowserView::ShouldShowWindowTitle() const {
 }
 
 gfx::ImageSkia BrowserView::GetWindowAppIcon() {
-  if (browser_->is_app()) {
-    WebContents* contents = browser_->tab_strip_model()->GetActiveWebContents();
-    extensions::TabHelper* extensions_tab_helper =
-        contents ? extensions::TabHelper::FromWebContents(contents) : nullptr;
-    if (extensions_tab_helper && extensions_tab_helper->GetExtensionAppIcon())
-      return gfx::ImageSkia::CreateFrom1xBitmap(
-          *extensions_tab_helper->GetExtensionAppIcon());
-  }
-
-  return GetWindowIcon();
+  extensions::HostedAppBrowserController* hosted_app_browser_controller =
+      browser()->hosted_app_controller();
+  gfx::ImageSkia extension_app_icon =
+      hosted_app_browser_controller
+          ? hosted_app_browser_controller->GetExtensionAppIcon()
+          : gfx::ImageSkia();
+  return extension_app_icon.isNull() ? GetWindowIcon() : extension_app_icon;
 }
 
 gfx::ImageSkia BrowserView::GetWindowIcon() {
@@ -1638,20 +1638,28 @@ gfx::ImageSkia BrowserView::GetWindowIcon() {
   if (browser_->is_devtools())
     return gfx::ImageSkia();
 
+  // Hosted apps always show their app icon.
+  if (extensions::HostedAppBrowserController::IsForExperimentalHostedAppBrowser(
+          browser())) {
+    extensions::HostedAppBrowserController* hosted_app_browser_controller =
+        browser()->hosted_app_controller();
+    gfx::ImageSkia extension_app_icon =
+        hosted_app_browser_controller
+            ? hosted_app_browser_controller->GetExtensionAppIcon()
+            : gfx::ImageSkia();
+    if (!extension_app_icon.isNull())
+      return extension_app_icon;
+  }
+
   if (browser_->is_app() || browser_->is_type_popup())
     return browser_->GetCurrentPageIcon().AsImageSkia();
+
   return gfx::ImageSkia();
 }
 
 bool BrowserView::ShouldShowWindowIcon() const {
-#if defined(OS_CHROMEOS)
-  // For Chrome OS only, trusted windows (apps and settings) do not show an
-  // icon, crbug.com/119411. Child windows (i.e. popups) do show an icon.
-  if (browser_->is_trusted_source())
-    return false;
-#endif  // OS_CHROMEOS
-
-  return browser_->SupportsWindowFeature(Browser::FEATURE_TITLEBAR);
+  // Currently the icon and title are always shown together.
+  return ShouldShowWindowTitle();
 }
 
 bool BrowserView::ExecuteWindowsCommand(int command_id) {

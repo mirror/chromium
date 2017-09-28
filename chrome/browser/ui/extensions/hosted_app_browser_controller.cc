@@ -4,6 +4,7 @@
 
 #include "chrome/browser/ui/extensions/hosted_app_browser_controller.h"
 
+#include "chrome/browser/extensions/tab_helper.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ssl/security_state_tab_helper.h"
 #include "chrome/browser/ui/browser.h"
@@ -11,11 +12,13 @@
 #include "chrome/browser/ui/location_bar/location_bar.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/web_applications/web_app.h"
+#include "chrome/common/chrome_features.h"
 #include "chrome/common/extensions/manifest_handlers/app_launch_info.h"
 #include "components/security_state/core/security_state.h"
 #include "content/public/browser/web_contents.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/common/extension.h"
+#include "ui/gfx/image/image_skia.h"
 #include "url/gurl.h"
 
 namespace extensions {
@@ -30,16 +33,24 @@ bool IsSameOriginOrMoreSecure(const GURL& app_url, const GURL& page_url) {
           www + app_url.host() == page_url.host_piece()) &&
          app_url.port() == page_url.port();
 }
+
 }  // namespace
 
 // static
-bool HostedAppBrowserController::IsForHostedApp(Browser* browser) {
+bool HostedAppBrowserController::IsForHostedApp(const Browser* browser) {
   const std::string extension_id =
       web_app::GetExtensionIdFromApplicationName(browser->app_name());
   const Extension* extension =
       ExtensionRegistry::Get(browser->profile())->GetExtensionById(
           extension_id, ExtensionRegistry::EVERYTHING);
   return extension && extension->is_hosted_app();
+}
+
+// static
+bool HostedAppBrowserController::IsForExperimentalHostedAppBrowser(
+    const Browser* browser) {
+  return base::FeatureList::IsEnabled(features::kDesktopPWAWindowing) &&
+         IsForHostedApp(browser);
 }
 
 HostedAppBrowserController::HostedAppBrowserController(Browser* browser)
@@ -89,6 +100,27 @@ void HostedAppBrowserController::UpdateLocationBarVisibility(
     bool animate) const {
   browser_->window()->GetLocationBar()->UpdateLocationBarVisibility(
       ShouldShowLocationBar(), animate);
+}
+
+// Returns the extension app icon for an app browser if one exists.
+gfx::ImageSkia HostedAppBrowserController::GetExtensionAppIcon() const {
+  // TODO(calamity): Use the app name to retrieve the app icon without using the
+  // extensions tab helper to make icon load more immediate.
+  content::WebContents* contents =
+      browser_->tab_strip_model()->GetActiveWebContents();
+  if (!contents)
+    return gfx::ImageSkia();
+
+  extensions::TabHelper* extensions_tab_helper =
+      extensions::TabHelper::FromWebContents(contents);
+  if (!extensions_tab_helper)
+    return gfx::ImageSkia();
+
+  const SkBitmap* icon_bitmap = extensions_tab_helper->GetExtensionAppIcon();
+  if (!icon_bitmap)
+    return gfx::ImageSkia();
+
+  return gfx::ImageSkia::CreateFrom1xBitmap(*icon_bitmap);
 }
 
 }  // namespace extensions
