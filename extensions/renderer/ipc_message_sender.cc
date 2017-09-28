@@ -108,6 +108,45 @@ class MainThreadIPCMessageSender : public IPCMessageSender {
         context->GetExtensionID(), event_name, filter, remove_lazy_listener));
   }
 
+  void SendOpenChannelToExtension(ScriptContext* script_context,
+                                  const PortId& port_id,
+                                  const std::string& target_id,
+                                  const std::string& channel_name,
+                                  bool include_tls_channel_id) override {
+    content::RenderFrame* render_frame = script_context->GetRenderFrame();
+    DCHECK(render_frame);
+
+    ExtensionMsg_ExternalConnectionInfo info;
+    const Extension* extension = script_context->extension();
+    if (extension && !extension->is_hosted_app())
+      info.source_id = extension->id();
+    info.target_id = target_id;
+    info.source_url = script_context->url();
+
+    render_thread_->Send(new ExtensionHostMsg_OpenChannelToExtension(
+        render_frame->GetRoutingID(), info, channel_name,
+        include_tls_channel_id, port_id));
+  }
+
+  void SendOpenMessagePort(int routing_id, const PortId& port_id) override {
+    render_thread_->Send(
+        new ExtensionHostMsg_OpenMessagePort(routing_id, port_id));
+  }
+
+  void SendCloseMessagePort(int routing_id,
+                            const PortId& port_id,
+                            bool close_channel) override {
+    render_thread_->Send(new ExtensionHostMsg_CloseMessagePort(
+        routing_id, port_id, close_channel));
+  }
+
+  void SendPostMessageToPort(int routing_id,
+                             const PortId& port_id,
+                             const Message& message) override {
+    render_thread_->Send(
+        new ExtensionHostMsg_PostMessage(routing_id, port_id, message));
+  }
+
  private:
   content::RenderThread* const render_thread_;
 
@@ -213,6 +252,30 @@ class WorkerThreadIPCMessageSender : public IPCMessageSender {
                                           bool remove_lazy_listener) override {
     DCHECK_EQ(Feature::SERVICE_WORKER_CONTEXT, context->context_type());
     DCHECK_NE(kMainThreadId, content::WorkerThread::GetCurrentId());
+    NOTIMPLEMENTED();
+  }
+
+  void SendOpenChannelToExtension(ScriptContext* script_context,
+                                  const PortId& port_id,
+                                  const std::string& target_id,
+                                  const std::string& channel_name,
+                                  bool include_tls_channel_id) override {
+    NOTIMPLEMENTED();
+  }
+
+  void SendOpenMessagePort(int routing_id, const PortId& port_id) override {
+    NOTIMPLEMENTED();
+  }
+
+  void SendCloseMessagePort(int routing_id,
+                            const PortId& port_id,
+                            bool close_channel) override {
+    NOTIMPLEMENTED();
+  }
+
+  void SendPostMessageToPort(int routing_id,
+                             const PortId& port_id,
+                             const Message& message) override {
     NOTIMPLEMENTED();
   }
 
