@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b76befdc_49827690",
+        "filename": "content/browser/renderer_host/render_widget_host_view_base.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-28T21:46:03Z",
+      "side": 1,
+      "message": "Updated comment.",
+      "parentUuid": "1d244008_f6ec5a64",
+      "revId": "85768e5bce66e6a28ffd168ded1be6b370fb23fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82e9d6fb_c4dc3ac8",
         "filename": "content/browser/renderer_host/render_widget_host_view_child_frame.cc",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "85768e5bce66e6a28ffd168ded1be6b370fb23fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eafb0b6e_6503176e",
+        "filename": "content/browser/renderer_host/render_widget_host_view_child_frame.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-28T21:46:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82e9d6fb_c4dc3ac8",
+      "revId": "85768e5bce66e6a28ffd168ded1be6b370fb23fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -100,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "ca099325_84e67e30",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-28T21:46:03Z",
+      "side": 1,
+      "message": "renderer_window_tree_client-\u003eOnRenderFrameProxyCreated is intended for the case where RendererWindowTreeClient::Embed() was processed before we get here (in which case we know we want a MusEmbeddeFrame). If Embed() wasn\u0027t called, OnRenderFrameProxyCreated() returns null. I added a comment.",
+      "parentUuid": "4f32bf05_54d15441",
+      "revId": "85768e5bce66e6a28ffd168ded1be6b370fb23fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb703c5d_085aa9d3",
         "filename": "content/renderer/render_frame_proxy.cc",
         "patchSetId": 11
@@ -111,6 +165,30 @@
       "writtenOn": "2017-09-28T17:45:33Z",
       "side": 1,
       "message": "Is this okay because IsRunningInMash() implies that we don\u0027t use surface synchronization? If so, a comment to that effect would be helpful.",
+      "range": {
+        "startLine": 309,
+        "startChar": 41,
+        "endLine": 309,
+        "endChar": 63
+      },
+      "revId": "85768e5bce66e6a28ffd168ded1be6b370fb23fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76bd1aaa_d0601a3c",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-28T21:46:03Z",
+      "side": 1,
+      "message": "Now that compositing_helper_ is already created I removed this line. My understanding is SurfaceSequence is going away.",
+      "parentUuid": "cb703c5d_085aa9d3",
       "range": {
         "startLine": 309,
         "startChar": 41,
