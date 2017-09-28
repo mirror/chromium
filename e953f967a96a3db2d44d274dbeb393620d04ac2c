@@ -22,6 +22,30 @@
       "revId": "e953f967a96a3db2d44d274dbeb393620d04ac2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c79e8629_0a06d07b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-28T03:40:25Z",
+      "side": 1,
+      "message": "Does it means every time users try to open a tab, BrowserActionsService will register an observer and then inside didAddTab, it unregisters itself. Then the only concern I have is if users try to open two tabs and there is a chance the second creation comes before tab model is fully loaded, then there will be two observers and when the first tab is added, both observers will execute didAddTab and unregister themselves, so when the second tab is added, no didAddTab will be executed?",
+      "parentUuid": "f045e262_02a1544a",
+      "range": {
+        "startLine": 106,
+        "startChar": 20,
+        "endLine": 108,
+        "endChar": 47
+      },
+      "revId": "e953f967a96a3db2d44d274dbeb393620d04ac2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
