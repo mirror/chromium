@@ -23,6 +23,8 @@
 namespace {
 
 constexpr int kBackgroundColor = 0x4285F4;
+constexpr int kViewHeight = 48;
+constexpr double kAnimationDuration = 0.3;  // seconds
 
 // NetworkTrafficAnnotationTag for fetching avatar.
 const net::NetworkTrafficAnnotationTag kTrafficAnnotation =
@@ -60,6 +62,9 @@ const net::NetworkTrafficAnnotationTag kTrafficAnnotation =
 
 @interface NotifyUserAutoSigninViewController () {
   std::unique_ptr<image_fetcher::ImageFetcher> _imageFetcher;
+  // Bottom anchor constraint is stored for convenience, to animate appearance
+  // and disappearance.
+  NSLayoutConstraint* _bottomConstraint;
 }
 
 // Username, corresponding to Credential.id field in JS.
@@ -68,6 +73,8 @@ const net::NetworkTrafficAnnotationTag kTrafficAnnotation =
 @property(assign, nonatomic) GURL iconURL;
 // Image view displaying user's avatar (if fetched) or placeholder icon.
 @property(nonatomic, strong) UIImageView* avatarView;
+// Boolean indicating whether the snackbar is currently being displayed.
+@property(nonatomic) BOOL isPresented;
 
 @end
 
@@ -76,6 +83,7 @@ const net::NetworkTrafficAnnotationTag kTrafficAnnotation =
 @synthesize avatarView = _avatarView;
 @synthesize iconURL = _iconURL;
 @synthesize username = _username;
+@synthesize isPresented = _isPresented;
 
 - (instancetype)initWithUsername:(NSString*)username
                          iconURL:(GURL)iconURL
@@ -86,6 +94,7 @@ const net::NetworkTrafficAnnotationTag kTrafficAnnotation =
     _iconURL = iconURL;
     _imageFetcher = std::make_unique<image_fetcher::ImageFetcherImpl>(
         image_fetcher::CreateIOSImageDecoder(), contextGetter);
+    _isPresented = NO;
   }
   return self;
 }
@@ -154,21 +163,61 @@ const net::NetworkTrafficAnnotationTag kTrafficAnnotation =
   }
 }
 
+- (void)beginAppearanceTransition:(BOOL)isAppearing animated:(BOOL)animated {
+  [super beginAppearanceTransition:isAppearing animated:animated];
+  if (isAppearing) {
+    // At first self.view will be hidden under the screen and then animate to
+    // appear from below.
+    _bottomConstraint = [self.view.bottomAnchor
+        constraintEqualToAnchor:self.view.superview.bottomAnchor
+                       constant:kViewHeight];
+    // Set constraints for blue background.
+    [NSLayoutConstraint activateConstraints:@[
+      _bottomConstraint,
+      [self.view.leadingAnchor
+          constraintEqualToAnchor:self.view.superview.leadingAnchor],
+      [self.view.trailingAnchor
+          constraintEqualToAnchor:self.view.superview.trailingAnchor],
+    ]];
+
+    // Commit all pending layout changes.
+    [self.view layoutIfNeeded];
+    [self.view.superview layoutIfNeeded];
+
+    // Animate bottomAnchor offset.
+    _bottomConstraint.constant = 0;
+    [UIView animateWithDuration:kAnimationDuration
+                     animations:^{
+                       [self.view.superview layoutIfNeeded];
+                     }];
+  } else {
+    // Animate sliding the view out of the screen.
+    _bottomConstraint.constant = kViewHeight;
+    [UIView animateWithDuration:kAnimationDuration
+        animations:^{
+          [self.view.superview layoutIfNeeded];
+        }
+        completion:^(BOOL finished) {
+          // Remove view and its controller after the animation.
+          [self.view removeFromSuperview];
+          [self removeFromParentViewController];
+        }];
+  }
+}
+
 - (void)didMoveToParentViewController:(UIViewController*)parent {
+  if (parent != nil && self.isPresented) {
+    // If the view is already presented, don't try to animate it second time.
+    return;
+  }
   [super didMoveToParentViewController:parent];
   if (parent == nil) {
+    self.isPresented = NO;
     return;
   }
 
-  // Set constraints for blue background.
-  [NSLayoutConstraint activateConstraints:@[
-    [self.view.bottomAnchor
-        constraintEqualToAnchor:self.view.superview.bottomAnchor],
-    [self.view.leadingAnchor
-        constraintEqualToAnchor:self.view.superview.leadingAnchor],
-    [self.view.trailingAnchor
-        constraintEqualToAnchor:self.view.superview.trailingAnchor],
-  ]];
+  self.isPresented = YES;
+  [self beginAppearanceTransition:YES animated:YES];
 }
 
 @end
