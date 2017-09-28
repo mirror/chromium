@@ -50,6 +50,10 @@ void SourceBufferRangeByDts::AppendRangeToEnd(
   AppendBuffersToEnd(range.buffers_, kNoDecodeTimestamp());
 }
 
+void SourceBufferRangeByDts::DeleteAll(BufferQueue* deleted_buffers) {
+  TruncateAt(buffers_.begin(), deleted_buffers);
+}
+
 bool SourceBufferRangeByDts::CanAppendRangeToEnd(
     const SourceBufferRangeByDts& range) const {
   return CanAppendBuffersToEnd(range.buffers_, kNoDecodeTimestamp());
@@ -204,12 +208,12 @@ std::unique_ptr<SourceBufferRangeByDts> SourceBufferRangeByDts::SplitRange(
 }
 
 bool SourceBufferRangeByDts::TruncateAt(DecodeTimestamp timestamp,
-                                        BufferQueue* removed_buffers,
+                                        BufferQueue* deleted_buffers,
                                         bool is_exclusive) {
   // Find the place in |buffers_| where we will begin deleting data.
   BufferQueue::iterator starting_point =
       GetBufferItrAt(timestamp, is_exclusive);
-  return TruncateAt(starting_point, removed_buffers);
+  return TruncateAt(starting_point, deleted_buffers);
 }
 
 size_t SourceBufferRangeByDts::DeleteGOPFromFront(
@@ -518,8 +522,8 @@ SourceBufferRangeByDts::GetFirstKeyframeAtOrBefore(DecodeTimestamp timestamp) {
 
 bool SourceBufferRangeByDts::TruncateAt(
     const BufferQueue::iterator& starting_point,
-    BufferQueue* removed_buffers) {
-  DCHECK(!removed_buffers || removed_buffers->empty());
+    BufferQueue* deleted_buffers) {
+  DCHECK(!deleted_buffers || deleted_buffers->empty());
 
   // Return if we're not deleting anything.
   if (starting_point == buffers_.end())
@@ -531,12 +535,12 @@ bool SourceBufferRangeByDts::TruncateAt(
     DecodeTimestamp next_buffer_timestamp = GetNextTimestamp();
     if (next_buffer_timestamp == kNoDecodeTimestamp() ||
         next_buffer_timestamp >= (*starting_point)->GetDecodeTimestamp()) {
-      if (HasNextBuffer() && removed_buffers) {
+      if (HasNextBuffer() && deleted_buffers) {
         int starting_offset = starting_point - buffers_.begin();
         int next_buffer_offset = next_buffer_index_ - starting_offset;
         DCHECK_GE(next_buffer_offset, 0);
         BufferQueue saved(starting_point + next_buffer_offset, buffers_.end());
-        removed_buffers->swap(saved);
+        deleted_buffers->swap(saved);
       }
       ResetNextBufferPosition();
     }
