@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39fc5874_6d4948c5",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-28T00:28:27Z",
+      "side": 1,
+      "message": "Not needed, so I\u0027ll remove this in the next CL.",
+      "range": {
+        "startLine": 207,
+        "startChar": 5,
+        "endLine": 207,
+        "endChar": 9
+      },
+      "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

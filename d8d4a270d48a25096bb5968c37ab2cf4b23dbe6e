@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6412434c_5e5391fd",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2931,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-28T00:28:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0a05c26_e246cddf",
+      "revId": "d8d4a270d48a25096bb5968c37ab2cf4b23dbe6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0074bb8a_f5b19859",
         "filename": "chrome/browser/media/cdm_storage_impl.cc",
         "patchSetId": 1
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "6faa1472_b6ec6971",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-28T00:28:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae9fce6d_5c4e9003",
+      "revId": "d8d4a270d48a25096bb5968c37ab2cf4b23dbe6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1bed63d7_b704908e",
         "filename": "chrome/browser/media/cdm_storage_impl.cc",
         "patchSetId": 1
@@ -67,6 +103,24 @@
       "revId": "d8d4a270d48a25096bb5968c37ab2cf4b23dbe6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08f27f68_d265ba22",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-28T00:28:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bed63d7_b704908e",
+      "revId": "d8d4a270d48a25096bb5968c37ab2cf4b23dbe6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "462fe8a6_d4066117",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-28T00:28:27Z",
+      "side": 1,
+      "message": "That would be a great idea. This code shouldn\u0027t care at all.",
+      "parentUuid": "1f8595e6_6ac93d39",
+      "revId": "d8d4a270d48a25096bb5968c37ab2cf4b23dbe6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4963b206_ef9e69e0",
         "filename": "chrome/browser/media/cdm_storage_impl.cc",
         "patchSetId": 1
@@ -101,6 +173,24 @@
       "revId": "d8d4a270d48a25096bb5968c37ab2cf4b23dbe6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0781446_94952283",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-28T00:28:27Z",
+      "side": 1,
+      "message": "|file_name_| removed, so it supports multiple calls to Open(), and there is a test for it.",
+      "parentUuid": "4963b206_ef9e69e0",
+      "revId": "d8d4a270d48a25096bb5968c37ab2cf4b23dbe6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +217,30 @@
     },
     {
       "key": {
+        "uuid": "6ce8f785_ed28ac56",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-28T00:28:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d2f67ee_49350d9d",
+      "range": {
+        "startLine": 267,
+        "startChar": 34,
+        "endLine": 267,
+        "endChar": 72
+      },
+      "revId": "d8d4a270d48a25096bb5968c37ab2cf4b23dbe6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca463392_f47b445c",
         "filename": "chrome/browser/media/cdm_storage_impl.h",
         "patchSetId": 1
@@ -141,6 +255,24 @@
       "revId": "d8d4a270d48a25096bb5968c37ab2cf4b23dbe6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2fae4a2_e6257806",
+        "filename": "chrome/browser/media/cdm_storage_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-28T00:28:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca463392_f47b445c",
+      "revId": "d8d4a270d48a25096bb5968c37ab2cf4b23dbe6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -167,6 +299,30 @@
     },
     {
       "key": {
+        "uuid": "57956c87_2ec8cfb1",
+        "filename": "chrome/browser/media/cdm_storage_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-28T00:28:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "493feb6e_abb0e7c5",
+      "range": {
+        "startLine": 33,
+        "startChar": 12,
+        "endLine": 33,
+        "endChar": 23
+      },
+      "revId": "d8d4a270d48a25096bb5968c37ab2cf4b23dbe6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f852bb7_9844de52",
         "filename": "chrome/browser/media/cdm_storage_unittest.cc",
         "patchSetId": 1
@@ -190,6 +346,30 @@
     },
     {
       "key": {
+        "uuid": "28205768_de9b4557",
+        "filename": "chrome/browser/media/cdm_storage_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-28T00:28:27Z",
+      "side": 1,
+      "message": "Modified to be returned with the Open() call, so not needed here.",
+      "parentUuid": "4f852bb7_9844de52",
+      "range": {
+        "startLine": 35,
+        "startChar": 6,
+        "endLine": 35,
+        "endChar": 22
+      },
+      "revId": "d8d4a270d48a25096bb5968c37ab2cf4b23dbe6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53fef53f_82120f24",
         "filename": "chrome/browser/media/cdm_storage_unittest.cc",
         "patchSetId": 1
@@ -204,6 +384,24 @@
       "revId": "d8d4a270d48a25096bb5968c37ab2cf4b23dbe6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c51a253_3533355f",
+        "filename": "chrome/browser/media/cdm_storage_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-28T00:28:27Z",
+      "side": 1,
+      "message": "1. New test added.\n2. Test OpenFileLocked already does this.",
+      "parentUuid": "53fef53f_82120f24",
+      "revId": "d8d4a270d48a25096bb5968c37ab2cf4b23dbe6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -224,6 +422,24 @@
     },
     {
       "key": {
+        "uuid": "ae38314f_6dd833ac",
+        "filename": "media/mojo/interfaces/cdm_storage.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-28T00:28:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ff61d10_c9e87db1",
+      "revId": "d8d4a270d48a25096bb5968c37ab2cf4b23dbe6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca83355a_541c147c",
         "filename": "media/mojo/interfaces/cdm_storage.mojom",
         "patchSetId": 1
@@ -238,6 +454,24 @@
       "revId": "d8d4a270d48a25096bb5968c37ab2cf4b23dbe6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57876a63_5cda4c9e",
+        "filename": "media/mojo/interfaces/cdm_storage.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-28T00:28:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca83355a_541c147c",
+      "revId": "d8d4a270d48a25096bb5968c37ab2cf4b23dbe6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -258,6 +492,24 @@
     },
     {
       "key": {
+        "uuid": "ee8e584b_b5190131",
+        "filename": "media/mojo/interfaces/cdm_storage.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-28T00:28:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7436f110_1d1cfd72",
+      "revId": "d8d4a270d48a25096bb5968c37ab2cf4b23dbe6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4777c351_c31c30ba",
         "filename": "media/mojo/interfaces/cdm_storage.mojom",
         "patchSetId": 1
@@ -272,6 +524,24 @@
       "revId": "d8d4a270d48a25096bb5968c37ab2cf4b23dbe6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46592c41_a8fd3f9d",
+        "filename": "media/mojo/interfaces/cdm_storage.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-28T00:28:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4777c351_c31c30ba",
+      "revId": "d8d4a270d48a25096bb5968c37ab2cf4b23dbe6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -298,6 +568,30 @@
     },
     {
       "key": {
+        "uuid": "08843636_58264f58",
+        "filename": "media/mojo/interfaces/cdm_storage.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-28T00:28:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6d954aa_a7218895",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 6
+      },
+      "revId": "d8d4a270d48a25096bb5968c37ab2cf4b23dbe6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "262c1668_930cae70",
         "filename": "media/mojo/interfaces/cdm_storage.mojom",
         "patchSetId": 1
@@ -312,6 +606,24 @@
       "revId": "d8d4a270d48a25096bb5968c37ab2cf4b23dbe6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e7b12ea_3f903bc8",
+        "filename": "media/mojo/interfaces/cdm_storage.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-28T00:28:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "262c1668_930cae70",
+      "revId": "d8d4a270d48a25096bb5968c37ab2cf4b23dbe6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -335,6 +647,30 @@
       "revId": "d8d4a270d48a25096bb5968c37ab2cf4b23dbe6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78107eff_234d9f7e",
+        "filename": "media/mojo/interfaces/cdm_storage.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-28T00:28:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd444993_0f4e7f3b",
+      "range": {
+        "startLine": 37,
+        "startChar": 3,
+        "endLine": 37,
+        "endChar": 13
+      },
+      "revId": "d8d4a270d48a25096bb5968c37ab2cf4b23dbe6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
