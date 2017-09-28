@@ -512,25 +512,22 @@ static void UpdatePageScaleFactorInternal(PropertyTrees* property_trees,
   DCHECK(page_scale_layer);
   DCHECK_GE(page_scale_layer->transform_tree_index(),
             TransformTree::kRootNodeId);
-  TransformNode* node = property_trees->transform_tree.Node(
-      page_scale_layer->transform_tree_index());
+
+  if (IsRootLayer(page_scale_layer)) {
+    property_trees->transform_tree.SetRootTransformsAndScales(
+        device_scale_factor, page_scale_factor, device_transform);
+    return;
+  }
+
 // TODO(enne): property trees can't ask the layer these things, but
 // the page scale layer should *just* be the page scale.
 #if DCHECK_IS_ON()
   ValidatePageScaleLayer(page_scale_layer);
 #endif
 
-  if (IsRootLayer(page_scale_layer)) {
-    // When the page scale layer is also the root layer, the node should also
-    // store the combined scale factor and not just the page scale factor.
-    float post_local_scale_factor = page_scale_factor * device_scale_factor;
-    node->post_local_scale_factor = post_local_scale_factor;
-    node->post_local = device_transform;
-    node->post_local.Scale(post_local_scale_factor, post_local_scale_factor);
-  } else {
-    node->post_local_scale_factor = page_scale_factor;
-    node->update_post_local_transform(gfx::PointF(), gfx::Point3F());
-  }
+  TransformNode* node = property_trees->transform_tree.Node(
+      page_scale_layer->transform_tree_index());
+  node->post_local_scale_factor = page_scale_factor;
   node->needs_local_transform_update = true;
   property_trees->transform_tree.set_needs_update(true);
 }
