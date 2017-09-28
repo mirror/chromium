@@ -157,8 +157,12 @@ void DynamicModuleResolver::ResolveDynamically(
 
   // Step 2.1. "Let url be the result of resolving a module specifier
   // given referencing script and specifier." [spec text]
-  KURL referrer_url = KURL(NullURL(), referrer_url_str);
+  KURL referrer_url =
+      referrer_url_str
+          ? KURL(NullURL(), referrer_url_str)
+          : ExecutionContext::From(modulator_->GetScriptState())->Url();
   DCHECK(referrer_url.IsValid());
+
   KURL url = Modulator::ResolveModuleSpecifier(specifier, referrer_url);
   if (!url.IsValid()) {
     // Step 2.2.1. "If the result is failure, then:" [spec text]
