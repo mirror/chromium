@@ -28,8 +28,7 @@ extern const char kPrivacyLinkHtml[];
 // See components/security_interstitials/core/browser/resources/
 enum SecurityInterstitialCommands {
   // Used by tests
-  CMD_TEST_SUCCESS = -4,
-  CMD_TEST_FAILURE = -3,
+  CMD_ERROR = -3,
   CMD_TEXT_FOUND = -2,
   CMD_TEXT_NOT_FOUND = -1,
   // Decisions

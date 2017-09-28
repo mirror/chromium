@@ -215,8 +215,7 @@ void SafeBrowsingLoudErrorUI::HandleCommand(
     }
     case CMD_OPEN_DATE_SETTINGS:
     case CMD_OPEN_LOGIN:
-    case CMD_TEST_SUCCESS:
-    case CMD_TEST_FAILURE:
+    case CMD_ERROR:
     case CMD_TEXT_FOUND:
     case CMD_TEXT_NOT_FOUND:
       break;

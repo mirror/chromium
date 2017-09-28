@@ -160,6 +160,8 @@ const base::FilePath::CharType kDocRoot[] =
 
 const uint32_t kLargeVersionId = 0xFFFFFFu;
 
+const char kHstsTestHostName[] = "example.test";
+
 namespace {
 
 enum ProceedDecision {
@@ -391,6 +393,18 @@ bool ComparePreAndPostInterstitialSSLStatuses(const content::SSLStatus& one,
          one.pkp_bypassed == two.pkp_bypassed;
 }
 
+// Set HSTS for the test host name, so that all errors thrown on this domain
+// will be nonoverridable.
+void SetHSTSForHostName(
+    scoped_refptr<net::URLRequestContextGetter> context_getter) {
+  net::TransportSecurityState* state =
+      context_getter->GetURLRequestContext()->transport_security_state();
+  const base::Time expiry = base::Time::Now() + base::TimeDelta::FromDays(1000);
+  EXPECT_FALSE(state->ShouldUpgradeToSSL(kHstsTestHostName));
+  state->AddHSTS(kHstsTestHostName, expiry, false);
+  EXPECT_TRUE(state->ShouldUpgradeToSSL(kHstsTestHostName));
+}
+
 }  // namespace
 
 class SSLUITest : public InProcessBrowserTest {
@@ -462,6 +476,11 @@ class SSLUITest : public InProcessBrowserTest {
 
   void SetUpOnMainThread() override {
     host_resolver()->AddRule("*", "127.0.0.1");
+    content::BrowserThread::PostTask(
+        content::BrowserThread::IO, FROM_HERE,
+        base::BindOnce(
+            &SetHSTSForHostName,
+            base::RetainedRef(browser()->profile()->GetRequestContext())));
   }
 
   void CheckAuthenticatedState(WebContents* tab,
@@ -3492,6 +3511,72 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestInterstitialJavaScriptGoesBack) {
   EXPECT_EQ("about:blank", tab->GetVisibleURL().spec());
 }
 
+// Verifies that an overridable interstitial receives the proper boolean data
+// for `overridable` and `hide_primary_button`.
+IN_PROC_BROWSER_TEST_F(SSLUITest, TestInterstitialOptionsOverridable) {
+  ASSERT_TRUE(https_server_expired_.Start());
+  WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
+  ui_test_utils::NavigateToURL(
+      browser(), https_server_expired_.GetURL("/ssl/google.html"));
+  content::WaitForInterstitialAttach(tab);
+  CheckAuthenticationBrokenState(tab, net::CERT_STATUS_DATE_INVALID,
+                                 AuthState::SHOWING_INTERSTITIAL);
+
+  InterstitialPage* interstitial_page = tab->GetInterstitialPage();
+  ASSERT_EQ(SSLBlockingPage::kTypeForTesting,
+            interstitial_page->GetDelegateForTesting()->GetTypeForTesting());
+  content::RenderViewHost* interstitial_rvh =
+      interstitial_page->GetMainFrame()->GetRenderViewHost();
+
+  int result = -1;
+  const std::string javascript = base::StringPrintf(
+      "domAutomationController.send("
+      "(document.querySelector(\"#proceed-link\") === null) "
+      "? (%d) : (%d))",
+      security_interstitials::CMD_TEXT_NOT_FOUND,
+      security_interstitials::CMD_TEXT_FOUND);
+  ASSERT_TRUE(content::ExecuteScriptAndExtractInt(interstitial_rvh, javascript,
+                                                  &result));
+  EXPECT_EQ(security_interstitials::CMD_TEXT_FOUND, result);
+}
+
+// Verifies that a non-overridable interstitial receives the proper boolean data
+// for `overridable` and `hide_primary_button`.
+IN_PROC_BROWSER_TEST_F(SSLUITest, TestInterstitialOptionsNonOverridable) {
+  ASSERT_TRUE(https_server_expired_.Start());
+  WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
+
+  GURL::Replacements replacements;
+  replacements.SetHostStr(kHstsTestHostName);
+  GURL url = https_server_expired_.GetURL("/ssl/google.html").ReplaceComponents(replacements);
+
+  ui_test_utils::NavigateToURL(
+      browser(), url);
+  content::WaitForInterstitialAttach(tab);
+  // Since we are connecting to a different domain than the test server default,
+  // we also expect CERT_STATUS_COMMON_NAME_INVALID.
+  CheckAuthenticationBrokenState(
+      tab, net::CERT_STATUS_DATE_INVALID | net::CERT_STATUS_COMMON_NAME_INVALID,
+      AuthState::SHOWING_INTERSTITIAL);
+
+  InterstitialPage* interstitial_page = tab->GetInterstitialPage();
+  ASSERT_EQ(SSLBlockingPage::kTypeForTesting,
+            interstitial_page->GetDelegateForTesting()->GetTypeForTesting());
+  content::RenderViewHost* interstitial_rvh =
+      interstitial_page->GetMainFrame()->GetRenderViewHost();
+
+  int result = -1;
+  const std::string javascript = base::StringPrintf(
+      "domAutomationController.send("
+      "(document.querySelector(\"#proceed-link\") === null) "
+      "? (%d) : (%d))",
+      security_interstitials::CMD_TEXT_NOT_FOUND,
+      security_interstitials::CMD_TEXT_FOUND);
+  ASSERT_TRUE(content::ExecuteScriptAndExtractInt(interstitial_rvh, javascript,
+                                                  &result));
+  EXPECT_EQ(security_interstitials::CMD_TEXT_NOT_FOUND, result);
+}
+
 // Verifies that links in the interstitial open in a new tab.
 // https://crbug.com/717616
 IN_PROC_BROWSER_TEST_F(SSLUITest, TestInterstitialLinksOpenInNewTab) {
@@ -5379,20 +5464,7 @@ IN_PROC_BROWSER_TEST_F(SSLUICaptivePortalListTest, PortalChecksDisabled) {
 
 namespace {
 
-char kTestHostName[] = "example.test";
 char kTestMITMSoftwareName[] = "Misconfigured Firewall";
-
-// Set HSTS for the test host name, so that all errors thrown on this domain
-// will be nonoverridable.
-void SetHSTSForHostName(
-    scoped_refptr<net::URLRequestContextGetter> context_getter) {
-  net::TransportSecurityState* state =
-      context_getter->GetURLRequestContext()->transport_security_state();
-  const base::Time expiry = base::Time::Now() + base::TimeDelta::FromDays(1000);
-  EXPECT_FALSE(state->ShouldUpgradeToSSL(kTestHostName));
-  state->AddHSTS(kTestHostName, expiry, false);
-  EXPECT_TRUE(state->ShouldUpgradeToSSL(kTestHostName));
-}
 
 class SSLUIMITMSoftwareTest : public CertVerifierBrowserTest {
  public:
@@ -5448,7 +5520,7 @@ class SSLUIMITMSoftwareTest : public CertVerifierBrowserTest {
   // HSTS set.
   GURL GetHSTSTestURL() const {
     GURL::Replacements replacements;
-    replacements.SetHostStr(kTestHostName);
+    replacements.SetHostStr(kHstsTestHostName);
     return https_server()
         ->GetURL("/ssl/blank_page.html")
         .ReplaceComponents(replacements);

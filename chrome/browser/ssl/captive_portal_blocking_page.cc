@@ -263,8 +263,7 @@ void CaptivePortalBlockingPage::CommandReceived(const std::string& command) {
     case security_interstitials::CMD_OPEN_WHITEPAPER:
       controller()->OpenExtendedReportingWhitepaper(true);
       break;
-    case security_interstitials::CMD_TEST_SUCCESS:
-    case security_interstitials::CMD_TEST_FAILURE:
+    case security_interstitials::CMD_ERROR:
     case security_interstitials::CMD_TEXT_FOUND:
     case security_interstitials::CMD_TEXT_NOT_FOUND:
       // Commands are for testing.
