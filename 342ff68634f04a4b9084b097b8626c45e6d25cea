@@ -95,6 +95,23 @@
     },
     {
       "key": {
+        "uuid": "d55a7095_da0055fd",
+        "filename": "third_party/WebKit/Source/core/editing/EditorKeyBindings.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-28T03:20:18Z",
+      "side": 1,
+      "message": "Wow, we forgot to add event handler guarding here.",
+      "revId": "342ff68634f04a4b9084b097b8626c45e6d25cea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be12b672_44e6cfa6",
         "filename": "third_party/WebKit/Source/core/editing/EditorKeyBindings.cpp",
         "patchSetId": 2
@@ -129,6 +146,41 @@
       "writtenOn": "2017-09-28T03:14:58Z",
       "side": 1,
       "message": "Can this cause a JavaScript onselectionhandler event to run? Is there any funny business we have to watch out for?",
+      "revId": "342ff68634f04a4b9084b097b8626c45e6d25cea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c35cc53a_ab04e07a",
+        "filename": "third_party/WebKit/Source/core/editing/EditorKeyBindings.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-28T03:20:18Z",
+      "side": 1,
+      "message": "Unfortunately, yes.",
+      "parentUuid": "edb1f621_4d038eb9",
+      "revId": "342ff68634f04a4b9084b097b8626c45e6d25cea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d66add8d_1b73349a",
+        "filename": "third_party/WebKit/Source/core/editing/EditorKeyBindings.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-28T03:20:18Z",
+      "side": 1,
+      "message": "Ditto.",
       "revId": "342ff68634f04a4b9084b097b8626c45e6d25cea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
