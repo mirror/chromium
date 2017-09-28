@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f096aef_3fe09a24",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/resources/feature-policy-permissions-test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-09-28T13:47:25Z",
+      "side": 1,
+      "message": "This ends up being something like https://localhost:8080/geolocation-api/geolocation-default-feature-policy.https.sub.html#iframe#hack, right? I *think*, reading https://url.spec.whatwg.org/, that \u0027#\u0027 isn\u0027t allowed inside the fragment string. I\u0027m sure that Chrome has no problem with it, but if this needs to be upstreamed to wpt tests, then maybe it should be a \u0027;\u0027 or something else.",
+      "revId": "168bfe2096e2a028bc12d7c2d79b2ce636591dd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cde75e91_b8f34c89",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/resources/feature-policy-permissions-test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-09-28T13:47:25Z",
+      "side": 1,
+      "message": "This can still use \u003d\u003e syntax, fwiw",
+      "revId": "168bfe2096e2a028bc12d7c2d79b2ce636591dd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b462389_6a81ce2b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/resources/feature-policy-permissions-test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-09-28T13:47:25Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "168bfe2096e2a028bc12d7c2d79b2ce636591dd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
