@@ -12,6 +12,8 @@ import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.base.test.util.UrlUtils;
 import org.chromium.content.browser.test.util.TestCallbackHelperContainer;
 import org.chromium.content_public.browser.LoadUrlParams;
+import org.chromium.content_public.browser.WebContents;
+import org.chromium.content_public.browser.WebContentsInternals;
 import org.chromium.content_shell_apk.ContentShellActivity;
 import org.chromium.content_shell_apk.ContentShellTestCommon.TestCommonCallback;
 
@@ -24,6 +26,7 @@ public final class JavaBridgeTestCommon {
     protected TestCallbackHelperContainer mTestCallbackHelperContainer;
 
     private final TestCommonCallback<ContentShellActivity> mCallback;
+    private WebContentsInternals mInternals;
 
     public JavaBridgeTestCommon(TestCommonCallback<ContentShellActivity> callback) {
         mCallback = callback;
@@ -79,6 +82,24 @@ public final class JavaBridgeTestCommon {
         }
     }
 
+    public void createJavaBridgeHost(WebContents webContents) {
+        webContents.setInternalsHolder(new WebContents.InternalsHolder() {
+            @Override
+            public void set(WebContentsInternals internals) {
+                mInternals = internals;
+            }
+
+            @Override
+            public WebContentsInternals get() {
+                return mInternals;
+            }
+        });
+    }
+
+    public void cleanUpForGc() {
+        mInternals = null;
+    }
+
     void executeJavaScript(final String script) throws Throwable {
         mCallback.runOnUiThreadForTestCommon(new Runnable() {
             @Override
@@ -88,11 +109,8 @@ public final class JavaBridgeTestCommon {
                 // converted to a string and used as the new document for the
                 // frame. We don't want this behaviour, so wrap the script in
                 // an anonymous function.
-                mCallback.getActivityForTestCommon()
-                        .getActiveShell()
-                        .getWebContents()
-                        .getNavigationController()
-                        .loadUrl(new LoadUrlParams("javascript:(function() { " + script + " })()"));
+                mCallback.getWebContentsForTestCommon().getNavigationController().loadUrl(
+                        new LoadUrlParams("javascript:(function() { " + script + " })()"));
             }
         });
     }
@@ -107,18 +125,14 @@ public final class JavaBridgeTestCommon {
             mCallback.runOnUiThreadForTestCommon(new Runnable() {
                 @Override
                 public void run() {
-                    mCallback.getContentViewCoreForTestCommon()
-                            .addPossiblyUnsafeJavascriptInterface(
-                                    object1, name1, requiredAnnotation);
+                    WebContents webContents = mCallback.getWebContentsForTestCommon();
+                    webContents.addPossiblyUnsafeJavascriptInterface(
+                            object1, name1, requiredAnnotation);
                     if (object2 != null && name2 != null) {
-                        mCallback.getContentViewCoreForTestCommon()
-                                .addPossiblyUnsafeJavascriptInterface(
-                                        object2, name2, requiredAnnotation);
+                        webContents.addPossiblyUnsafeJavascriptInterface(
+                                object2, name2, requiredAnnotation);
                     }
-                    mCallback.getContentViewCoreForTestCommon()
-                            .getWebContents()
-                            .getNavigationController()
-                            .reload(true);
+                    webContents.getNavigationController().reload(true);
                 }
             });
             onPageFinishedHelper.waitForCallback(currentCallCount);
@@ -135,10 +149,7 @@ public final class JavaBridgeTestCommon {
         mCallback.runOnUiThreadForTestCommon(new Runnable() {
             @Override
             public void run() {
-                mCallback.getContentViewCoreForTestCommon()
-                        .getWebContents()
-                        .getNavigationController()
-                        .reload(true);
+                mCallback.getWebContentsForTestCommon().getNavigationController().reload(true);
             }
         });
         onPageFinishedHelper.waitForCallback(currentCallCount);
