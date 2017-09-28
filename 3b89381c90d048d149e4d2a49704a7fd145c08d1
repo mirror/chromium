@@ -1,0 +1,471 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3b87f44_5574ff34",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-28T20:34:37Z",
+      "side": 1,
+      "message": "The UX doc says \"If the user closes the bubble or taps out more than 2x, we should stop auto-opening the bubble for that URL type\" but there seems to be no code for this. Is the doc obsolete?\n\nAlso, have you implemented the incognito mode stuff? if not, add TODO?",
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b59cd11f_f89d1b3e",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_external_protocol_dialog.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-28T20:34:37Z",
+      "side": 1,
+      "message": "LOG(ERROR) and fallthrough?",
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1aaed9c_0b3897e6",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-28T20:34:37Z",
+      "side": 1,
+      "message": "What does this mean now?\n\nAccording to the UX doc, clicking [x], clicking outside the bubble, and clicking [Stay in Chrome] yield the same result. The first two are mapped to DIALOG_DEACTIVATED but the 3rd one is mapped to CHROME_PRESSED??",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 27
+      },
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2736668_b9f9113f",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-28T20:34:37Z",
+      "side": 1,
+      "message": "We no longer use them but have to keep them to not confuse UMA, right? How about prefix them with OBSOLETE_ or something?",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 26
+      },
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecb0b35c_80e0c771",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-28T20:34:37Z",
+      "side": 1,
+      "message": "Can you add brief document (code comment) for them?",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 34
+      },
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "297db518_67fb41bd",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-28T20:34:37Z",
+      "side": 1,
+      "message": "Can you remove this function? I\u0027d like you to modify the apk instead.",
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b239d721_f9eb1071",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-28T20:34:37Z",
+      "side": 1,
+      "message": "IWYU: #include \u003curl/gurl.h\u003e",
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01fb100b_531743d7",
+        "filename": "chrome/browser/ui/browser_commands.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-28T20:34:37Z",
+      "side": 1,
+      "message": "const GURL\u0026\n\n?",
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c88a7d2_d66ef777",
+        "filename": "chrome/browser/ui/browser_dialogs.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-28T20:34:37Z",
+      "side": 1,
+      "message": "I forgot why you preferred a raw function pointer over base::Callback in the original intent picker CL, but can we switch to the latter?\n\nSince base::Callback is being deprecated, please use base::RepeatableCallback if you do so.",
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "652ff9eb_e578b09f",
+        "filename": "chrome/browser/ui/views/intent_picker_bubble_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-28T20:34:37Z",
+      "side": 1,
+      "message": "Can you remove this #include _and_ |kArcIntentHelperPackageName| definition in the header? (if you agree with my suggestion below.)",
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "816c8497_9752a5be",
+        "filename": "chrome/browser/ui/views/intent_picker_bubble_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-28T20:34:37Z",
+      "side": 1,
+      "message": "Can you elaborate which part is incorrect? (or can you just fix it now unless it takes time?)",
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d58d561c_d67eeb75",
+        "filename": "chrome/browser/ui/views/intent_picker_bubble_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-28T20:34:37Z",
+      "side": 1,
+      "message": "nit: Instead",
+      "range": {
+        "startLine": 119,
+        "startChar": 20,
+        "endLine": 119,
+        "endChar": 26
+      },
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cc50624_918635af",
+        "filename": "chrome/browser/ui/views/intent_picker_bubble_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-28T20:34:37Z",
+      "side": 1,
+      "message": "Since this won\u0027t actually launch the package, passing the package name seems like a hack. Can we instead define a constant for Chrome browser in arc::ArcNavigationThrottle and pass it instead?",
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65cfe067_8c0e950f",
+        "filename": "chrome/browser/ui/views/intent_picker_bubble_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-28T20:34:37Z",
+      "side": 1,
+      "message": "Can we do this in the container side? We can erase the code if the apk never sends the \"Chrome\" package name to Chrome in the first place.\n\nYou can do it safely with the following steps:\n\n1. Modify\n\n  [MinVersion\u003d2] RequestUrlHandlerList@3(string url)\n      \u003d\u003e (array\u003cIntentHandlerInfo\u003e handlers);\n\nto\n\n  [MinVersion\u003d2] RequestUrlHandlerListDeperecated@3(string url)\n      \u003d\u003e (array\u003cIntentHandlerInfo\u003e handlers);\n\n2. Add\n\n  [MinVersion\u003d17] RequestUrlHandlerList@13(string url)\n      \u003d\u003e (array\u003cIntentHandlerInfo\u003e handlers);\n\n3. Change the apk code so that it returns Chrome for RequestUrlHandlerListDeperecated() but doesn\u0027t for RequestUrlHandlerList().",
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "907030d9_6ddd9030",
+        "filename": "chrome/browser/ui/views/intent_picker_bubble_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-28T20:34:37Z",
+      "side": 1,
+      "message": "nit: constexpr int kCsId \u003d 0; ?\n\nkColumnSetId might be even better (since we avoid abbreviation in code in general.)",
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f82348e_bbd8b667",
+        "filename": "chrome/browser/ui/views/intent_picker_bubble_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-28T20:34:37Z",
+      "side": 1,
+      "message": "same",
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63f5ed6a_1cf6f39b",
+        "filename": "chrome/browser/ui/views/intent_picker_bubble_view_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-28T20:34:37Z",
+      "side": 1,
+      "message": "same, please remove",
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b2844bc_688e27e8",
+        "filename": "chrome/browser/ui/views/intent_picker_bubble_view_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-28T20:34:37Z",
+      "side": 1,
+      "message": "nit: The explicit construction seems redundant. With emplace, I think you can do:\n\n    app_info_.emplace_back(gfx::Image(), \"package_1\", \"dank app 1\");\n\n(here and elsewhere)",
+      "range": {
+        "startLine": 44,
+        "startChar": 27,
+        "endLine": 44,
+        "endChar": 35
+      },
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b39d50a2_4e0282c7",
+        "filename": "chrome/browser/ui/views/location_bar/intent_picker_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-28T20:34:37Z",
+      "side": 1,
+      "message": "what is this for? looks unused to me.",
+      "range": {
+        "startLine": 14,
+        "startChar": 35,
+        "endLine": 14,
+        "endChar": 66
+      },
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3de8d8b0_6a0c112f",
+        "filename": "chrome/browser/ui/views/location_bar/intent_picker_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-28T20:34:37Z",
+      "side": 1,
+      "message": "remove. I think you\u0027re using the older header.\n\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#File-headers",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f73e6acb_cc3ea21b",
+        "filename": "chrome/browser/ui/views/location_bar/intent_picker_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-28T20:34:37Z",
+      "side": 1,
+      "message": "nit: since this is initialized only in the constructor, how about changing this to\n\n Browser* const browser_;\n\n?",
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3221c57d_e9525d9a",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-28T20:34:37Z",
+      "side": 1,
+      "message": "you could move this to L99, I think.",
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84d91868_24e6b53d",
+        "filename": "chrome/browser/ui/views/toolbar/toolbar_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-28T20:34:37Z",
+      "side": 1,
+      "message": "I guess we don\u0027t want to have very ARC specific code here. Also, the code below is very similar to the one in c/b/c/arc/intent_helper/arc_navigation_throttle.cc. Can\u0027t we just let ArcNavigationThrottle() do the job? I haven\u0027t taken a closer look at this yet, but the constructor seems to take a callback to show UI at least.",
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb63148b_445fa8d9",
+        "filename": "chrome/browser/ui/views/toolbar/toolbar_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-28T20:34:37Z",
+      "side": 1,
+      "message": "remove? see my comment in .cc.",
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e211003_4ab9d1b4",
+        "filename": "chrome/browser/ui/views/toolbar/toolbar_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-28T20:34:37Z",
+      "side": 1,
+      "message": "same, remove?",
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43211568_38eb58d0",
+        "filename": "chrome/browser/ui/views/intent_picker_bubble_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-28T20:34:37Z",
+      "side": 0,
+      "message": "Please make sure to delete these two string resources.",
+      "range": {
+        "startLine": 48,
+        "startChar": 17,
+        "endLine": 48,
+        "endChar": 37
+      },
+      "revId": "0103c7b9176ed2c0ab1733f290a56649a3ca3774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
