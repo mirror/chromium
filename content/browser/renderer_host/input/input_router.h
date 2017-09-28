@@ -59,7 +59,7 @@ class InputRouter : public IPC::Listener {
   virtual void SetFrameTreeNodeId(int frameTreeNodeId) = 0;
 
   // Return the currently allowed touch-action.
-  virtual cc::TouchAction AllowedTouchAction() = 0;
+  virtual base::Optional<cc::TouchAction> AllowedTouchAction() = 0;
 
   virtual void SetForceEnableZoom(bool enabled) = 0;
 
