@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "f1d2fc04_f44a470c",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnitsTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1860,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-28T05:57:28Z",
+      "side": 1,
+      "message": "Please use EditingTestBase::SetCaretTextToBody()",
+      "revId": "8083a9d9730a319b34234719d6ea0b21241ac950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f83366c2_8be6a011",
         "filename": "third_party/WebKit/Source/core/editing/VisibleUnitsTest.cpp",
         "patchSetId": 5
@@ -42,6 +59,63 @@
         "endLine": 1861,
         "endChar": 31
       },
+      "revId": "8083a9d9730a319b34234719d6ea0b21241ac950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "438399dd_91a9bc02",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnitsTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1861,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-28T05:57:28Z",
+      "side": 1,
+      "message": "We don\u0027t need to have \"contenteditable\"",
+      "range": {
+        "startLine": 1861,
+        "startChar": 32,
+        "endLine": 1861,
+        "endChar": 47
+      },
+      "revId": "8083a9d9730a319b34234719d6ea0b21241ac950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e632e886_8c36a148",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnitsTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1867,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-28T05:57:28Z",
+      "side": 1,
+      "message": "nit: s/id\u003done//",
+      "revId": "8083a9d9730a319b34234719d6ea0b21241ac950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76f09cc4_c25fd277",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnitsTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1878,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-28T05:57:28Z",
+      "side": 1,
+      "message": "Please introduce flat tree version of GetSelectionTextFromBody() then\n\nconst Position position \u003d SetCaretTextToBody(\n  \"...\u003cdiv slot\u003done\u003e111|\u003c/div\u003e...\");\n\nconst VisiblePositionInFlatTree visible_pos \u003d\n  CreateVisiblePosition(ToPositionInFlatTree(position);\n\n\nEXPECT_EQ(\n  \"...\u003cdiv slot\u003d\"two\"\u003e222|\u003c/div\u003e...\",\n  GetSelectionTextFromBody(\n    SelectionInFlatTree::Builder()\n     .Collapse(\n        PreviousRootInlineBoxCandidatePosition(\n          GetDocument().GetElementById(\"two\")-\u003elastChild(),\n          visible_position,\n          kContentIsEditable).DeepEquivalent());",
       "revId": "8083a9d9730a319b34234719d6ea0b21241ac950",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
