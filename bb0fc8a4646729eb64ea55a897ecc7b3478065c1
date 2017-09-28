@@ -22,6 +22,30 @@
       "revId": "bb0fc8a4646729eb64ea55a897ecc7b3478065c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3906280_997cea28",
+        "filename": "chrome/browser/chromeos/input_method/candidate_window_controller_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-09-28T17:00:20Z",
+      "side": 1,
+      "message": "Thanks Scott, I uploaded a new patch. I use |mus_properties| instead so that |candidate_window_view| can auto-look for current active window as the parent. As for tracking the widget, it may look cleaner to leave it as it is since |widget| needs to observe |CandidateWindowControllerImpl|, which if we move tracking to CandidateWindowView contructor, we need to pass |CandidateWindowControllerImpl| a constructor argument (i can\u0027t pass super class |CandidateWindowController| as an argument because widget needs to observe |CandidateWindowControllerImpl|).",
+      "parentUuid": "c792cc4e_c236a4e7",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 52,
+        "endChar": 18
+      },
+      "revId": "bb0fc8a4646729eb64ea55a897ecc7b3478065c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
