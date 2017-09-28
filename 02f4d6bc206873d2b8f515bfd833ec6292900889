@@ -16,6 +16,24 @@
       "revId": "02f4d6bc206873d2b8f515bfd833ec6292900889",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbe29dc2_f69db49c",
+        "filename": "third_party/crc32c/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-28T19:11:37Z",
+      "side": 1,
+      "message": "It can be zero, if you prefer.\n\nI set it to 1 because that\u0027s what the CMake-generated config would look like on these platform. (there\u0027s support for both strong binding and weak binding, in which case the implementation will use the more typesafe strong binding)",
+      "parentUuid": "5383a4d0_19938709",
+      "revId": "02f4d6bc206873d2b8f515bfd833ec6292900889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
