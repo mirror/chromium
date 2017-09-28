@@ -273,6 +273,30 @@
     },
     {
       "key": {
+        "uuid": "7c84a7ea_cfd868de",
+        "filename": "chrome/browser/metrics/extensions_metrics_provider.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-28T04:01:31Z",
+      "side": 1,
+      "message": "Oh I missed the loop.",
+      "parentUuid": "e18be6c9_7eb6ad37",
+      "range": {
+        "startLine": 469,
+        "startChar": 30,
+        "endLine": 469,
+        "endChar": 35
+      },
+      "revId": "5c6c728d108f8c12d0299a345588ce1dbdbe9f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27ba5584_61537beb",
         "filename": "chrome/browser/metrics/extensions_metrics_provider.cc",
         "patchSetId": 10
@@ -504,6 +528,30 @@
     },
     {
       "key": {
+        "uuid": "1fc027c0_4f3a26d4",
+        "filename": "components/metrics/proto/extension_install.proto",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-28T04:01:31Z",
+      "side": 1,
+      "message": "If each of the introduced enums are covered by a static assert (like Disable reason) or by a switch statement, then not adding comments sgtm.",
+      "parentUuid": "bc3f09fc_97f31546",
+      "range": {
+        "startLine": 18,
+        "startChar": 7,
+        "endLine": 18,
+        "endChar": 11
+      },
+      "revId": "5c6c728d108f8c12d0299a345588ce1dbdbe9f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48353e82_ba01f4d4",
         "filename": "components/metrics/proto/extension_install.proto",
         "patchSetId": 10
@@ -690,6 +738,30 @@
       "revId": "5c6c728d108f8c12d0299a345588ce1dbdbe9f0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "906296ff_252529ca",
+        "filename": "components/metrics/proto/extension_install.proto",
+        "patchSetId": 10
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-28T04:01:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9a6f1928_4ce4e49f",
+      "range": {
+        "startLine": 140,
+        "startChar": 53,
+        "endLine": 141,
+        "endChar": 31
+      },
+      "revId": "5c6c728d108f8c12d0299a345588ce1dbdbe9f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

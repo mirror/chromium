@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd30b259_fd06f363",
+        "filename": "chrome/browser/metrics/extensions_metrics_provider.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-28T04:01:31Z",
+      "side": 1,
+      "message": "nit: These should be in an anonymous namespace in the cc file.",
+      "range": {
+        "startLine": 92,
+        "startChar": 40,
+        "endLine": 92,
+        "endChar": 61
+      },
+      "revId": "f308b525590d2d4eec85d5cec086cf0f732a8315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
