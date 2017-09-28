@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3cf244aa_3de33f9e",
+        "filename": "chrome/browser/extensions/extension_system_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-28T00:40:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d631257d_6e5caae7",
+      "revId": "16072fe3133531736f576553f6a0f68eab93186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "483f406d_13d28e72",
         "filename": "extensions/browser/extension_registrar.h",
         "patchSetId": 19
@@ -33,6 +51,24 @@
       "revId": "16072fe3133531736f576553f6a0f68eab93186c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c01b85e_5f3567a9",
+        "filename": "extensions/browser/extension_registrar.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-28T00:40:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "483f406d_13d28e72",
+      "revId": "16072fe3133531736f576553f6a0f68eab93186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "516f182f_e3e68eb4",
+        "filename": "extensions/browser/extension_registrar_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-28T00:40:12Z",
+      "side": 1,
+      "message": "Yes (L48)",
+      "parentUuid": "e343d2ee_14d7159a",
+      "revId": "16072fe3133531736f576553f6a0f68eab93186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fc3ed58_04745649",
         "filename": "extensions/browser/extension_registrar_unittest.cc",
         "patchSetId": 19
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "11b2aa79_a99f2402",
+        "filename": "extensions/browser/extension_registrar_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-28T00:40:12Z",
+      "side": 1,
+      "message": "Totally can, thanks!",
+      "parentUuid": "2fc3ed58_04745649",
+      "revId": "16072fe3133531736f576553f6a0f68eab93186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0588c7f2_515a91fe",
         "filename": "extensions/browser/extension_registrar_unittest.cc",
         "patchSetId": 19
@@ -84,6 +156,24 @@
       "revId": "16072fe3133531736f576553f6a0f68eab93186c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d964abd3_8333dd3d",
+        "filename": "extensions/browser/extension_registrar_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-28T00:40:12Z",
+      "side": 1,
+      "message": "Done. I often don\u0027t see that in test classes but I\u0027ll try to include it more often (for concrete classes).",
+      "parentUuid": "0588c7f2_515a91fe",
+      "revId": "16072fe3133531736f576553f6a0f68eab93186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
