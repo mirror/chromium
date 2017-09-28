@@ -464,8 +464,11 @@ void GLManager::SetGpuControlClient(GpuControlClient*) {
   // The client is not currently called, so don't store it.
 }
 
-Capabilities GLManager::GetCapabilities() {
-  return decoder_->GetCapabilities();
+const Capabilities& GLManager::GetCapabilities() {
+  // Client side Capabilities queries return reference, service side return
+  // value. Here two sides are joined together.
+  capabilities_ = decoder_->GetCapabilities();
+  return capabilities_;
 }
 
 int32_t GLManager::CreateImage(ClientBuffer buffer,
