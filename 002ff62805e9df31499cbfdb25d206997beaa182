@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a8a9737_d8acbb01",
+        "filename": "content/browser/loader/origin_manifest_resource_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-28T20:57:06Z",
+      "side": 1,
+      "message": "ResourceHandler (And all of content/browser/loader) is going to go away, in favor of using the network service.  We should avoid implementing features in a way that depends on this class.  I\u0027m not sufficiently familiar with what the point of this class is to suggest a better approach, but don\u0027t think we want to go with this approach.",
+      "range": {
+        "startLine": 25,
+        "startChar": 30,
+        "endLine": 25,
+        "endChar": 31
+      },
+      "revId": "002ff62805e9df31499cbfdb25d206997beaa182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44d6b3af_8500dc2a",
+        "filename": "content/browser/loader/origin_manifest_resource_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-28T20:57:06Z",
+      "side": 1,
+      "message": "I don\u0027t think we should be issuing requests initiated by an App using a user\u0027s main URLRequestContext.  We also have access to the current storage partition\u0027s URLRequestContext on the IO thread already.",
+      "range": {
+        "startLine": 44,
+        "startChar": 39,
+        "endLine": 44,
+        "endChar": 40
+      },
+      "revId": "002ff62805e9df31499cbfdb25d206997beaa182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69251512_766f2342",
+        "filename": "content/browser/loader/origin_manifest_resource_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-28T20:57:06Z",
+      "side": 1,
+      "message": "We shouldn\u0027t be dereferencing the BrowserContext, or anything it directly owns, on the IO thread.",
+      "range": {
+        "startLine": 76,
+        "startChar": 19,
+        "endLine": 76,
+        "endChar": 41
+      },
+      "revId": "002ff62805e9df31499cbfdb25d206997beaa182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6408888b_e448d430",
+        "filename": "content/browser/loader/origin_manifest_resource_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-28T20:57:06Z",
+      "side": 1,
+      "message": "This seems to be mixing caching of responses issued using Isolated App URLRequestContexts and the Main URLRequestContext, which seems problematic.",
+      "range": {
+        "startLine": 77,
+        "startChar": 40,
+        "endLine": 77,
+        "endChar": 41
+      },
+      "revId": "002ff62805e9df31499cbfdb25d206997beaa182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
