@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f42d9bae_ba6c0a24",
+        "filename": "tools/perf/page_sets/loading_mobile.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-09-28T01:46:24Z",
+      "side": 0,
+      "message": "As discussed offline, please don\u0027t remove the cache_temperatures param.",
+      "range": {
+        "startLine": 19,
+        "startChar": 21,
+        "endLine": 19,
+        "endChar": 39
+      },
+      "revId": "d61aa8912c2599020e88188d1ac28f08ee10848e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
