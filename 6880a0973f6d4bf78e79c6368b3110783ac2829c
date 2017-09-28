@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "1d9148e4_1a44ca5d",
+        "filename": "components/ukm/content/source_url_recorder_web_contents_observer.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-09-28T13:23:09Z",
+      "side": 1,
+      "message": "Yeah, my sense is that we could promote it to the header if/when we need to access its API. As long as we only need the WebContentsObserver API I prefer keeping he header as \"thin\" as possible.",
+      "parentUuid": "5784247f_42fad622",
+      "revId": "6880a0973f6d4bf78e79c6368b3110783ac2829c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7cabec62_74cf10c4",
         "filename": "components/ukm/content/source_url_recorder_web_contents_observer.cc",
         "patchSetId": 49
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "df610b8d_19756c97",
+        "filename": "components/ukm/content/source_url_recorder_web_contents_observer.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-09-28T13:23:09Z",
+      "side": 1,
+      "message": "What do you mean by erroneous? Failed navigations? We do want to record for failed navs (aborts, main resource network errors, etc).",
+      "parentUuid": "7cabec62_74cf10c4",
+      "revId": "6880a0973f6d4bf78e79c6368b3110783ac2829c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "28a72367_53cca3ee",
         "filename": "content/browser/frame_host/navigation_handle_impl.h",
         "patchSetId": 49
@@ -65,6 +101,24 @@
       "writtenOn": "2017-09-27T22:24:40Z",
       "side": 1,
       "message": "Is it only in the case of error that these will not be set? I would rather avoid optional members and return values if possible. If the only case is error, then it still matches the calling conventions in NavigationHandle, which is that in the case of error, all other stateful data should not be relied on.",
+      "revId": "6880a0973f6d4bf78e79c6368b3110783ac2829c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b81bf93_5ad2243f",
+        "filename": "content/browser/frame_host/navigation_handle_impl.h",
+        "patchSetId": 49
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-09-28T13:23:09Z",
+      "side": 1,
+      "message": "All current consumers do want to treat \"unset\" and \"false\" the same, but if that changes in the future I worry that a bool is not expressive enough to capture this and can be misleading (callers may assume the navigation knows its download state at the time of navhandle construction, when in fact the state is unknown initially). Camille and I iterated on this for a few rounds before converging on base::Optional\u003cbool\u003e. See comments earlier in reviews for details.\n\nFor now I reverted this back to just \u0027bool\u0027. We should be aware that if callers want to handle \u0027unknown\u0027 differently from \u0027false\u0027, we will need to refine the API to support that at that time.",
+      "parentUuid": "28a72367_53cca3ee",
       "revId": "6880a0973f6d4bf78e79c6368b3110783ac2829c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
