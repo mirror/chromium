@@ -22,6 +22,40 @@
       "revId": "4be942c0d0c5c374f506d46c1700da3030923eda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c0bae9d_819ebed8",
+        "filename": "net/http/http_network_session.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1118144
+      },
+      "writtenOn": "2017-09-28T22:39:35Z",
+      "side": 1,
+      "message": "typo: \"socekts\"",
+      "revId": "4be942c0d0c5c374f506d46c1700da3030923eda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff16e328_d78c4949",
+        "filename": "net/http/http_network_session.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1118144
+      },
+      "writtenOn": "2017-09-28T22:39:35Z",
+      "side": 1,
+      "message": "I would also not talk about NetworkHAndles since that\u0027s not really useful for this boolean\u0027s value. How about \"If true, QUIC will attempt to explicitly use default network for sockets.\"",
+      "revId": "4be942c0d0c5c374f506d46c1700da3030923eda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
