@@ -379,6 +379,24 @@
     },
     {
       "key": {
+        "uuid": "2d2f1b0f_90ce7e6f",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-09-28T09:48:56Z",
+      "side": 1,
+      "message": "My point is that we have an explicit method that supports updating suggestions while they are displayed -- and that\u0027s what RefreshWhileDisplaying() is doing.\nThe scheduler knows about both modes and can decide.\n\nYou can make RefreshWhileDisplaying return \u0027false\u0027 in case where the status is not AVAILABLE and then the scheduler simply falls back to schedule the regular fetch. Makes it much simpler to reason about what\u0027s going on. In fact, that was my initial motivation to call it TryRefresh...\n\nOn a side note, if the status is Initializing, the UI would update the view once it flips to AVAILABLE, right?",
+      "parentUuid": "685b6281_6085af87",
+      "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f045b0e6_177f1264",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 8
