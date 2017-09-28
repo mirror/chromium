@@ -347,6 +347,10 @@ IPC_MESSAGE_ROUTED0(ViewMsg_Close)
 // we don't have to fetch it every time WebKit asks for it.
 IPC_MESSAGE_ROUTED1(ViewMsg_Resize, content::ResizeParams /* params */)
 
+IPC_MESSAGE_ROUTED2(ViewMsg_SetLocalSurfaceIdForAutoResize,
+                    gfx::Size /* physical_backing_size */,
+                    viz::LocalSurfaceId /* local_surface_id */)
+
 // Enables device emulation. See WebDeviceEmulationParams for description.
 IPC_MESSAGE_ROUTED1(ViewMsg_EnableDeviceEmulation,
                     blink::WebDeviceEmulationParams /* params */)
