@@ -16,6 +16,24 @@
       "revId": "68ae4162a7f44d5572cac8ef7c9eb32364908392",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f7d688f_3e18e351",
+        "filename": "tools/perf/benchmarks/loading.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-09-28T07:10:25Z",
+      "side": 1,
+      "message": "Not at all. We are not ready increase the number of stories by 3X here",
+      "parentUuid": "a95dcdf6_94110d0b",
+      "revId": "68ae4162a7f44d5572cac8ef7c9eb32364908392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
