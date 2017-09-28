@@ -9,6 +9,7 @@
 #include "base/command_line.h"
 #include "base/logging.h"
 #include "base/trace_event/trace_event.h"
+#include "build/build_config.h"
 #include "ui/base/ui_base_switches.h"
 
 #if defined(OS_CHROMEOS)
@@ -24,6 +25,10 @@
 #endif  // defined(USE_OZONE)
 
 #endif  // defined(OS_CHROMEOS)
+
+#if defined(OS_WIN)
+#include "base/win/win_util.h"
+#endif
 
 namespace ui {
 
@@ -104,6 +109,10 @@ MaterialDesignController::Mode MaterialDesignController::DefaultMode() {
 #endif  // defined(USE_OZONE)
 #endif  // defined(OS_CHROMEOS)
 
+#if defined(OS_WIN)
+  if (base::win::IsTabletDevice(nullptr))
+    return MATERIAL_HYBRID;
+#endif
   return MATERIAL_NORMAL;
 }
 
