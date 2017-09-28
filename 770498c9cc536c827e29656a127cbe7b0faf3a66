@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28aff753_6a85a9cc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 965,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-28T17:50:19Z",
+      "side": 1,
+      "message": "The page transition should likely be PageTransition.AUTO_BOOKMARK based on how we load other UI like recent tabs.",
+      "range": {
+        "startLine": 965,
+        "startChar": 30,
+        "endLine": 965,
+        "endChar": 31
+      },
+      "revId": "770498c9cc536c827e29656a127cbe7b0faf3a66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4362a772_74924faa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarTabController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-28T17:50:19Z",
+      "side": 1,
+      "message": "I think we shouldn\u0027t allow arbitrary URL loading for now.  I think this should be openMemexUi() and internally it handles the specific of that.  That also allows the URL to be defined in a single place.",
+      "range": {
+        "startLine": 39,
+        "startChar": 9,
+        "endLine": 39,
+        "endChar": 16
+      },
+      "revId": "770498c9cc536c827e29656a127cbe7b0faf3a66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c69014da_3f9eed0a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarTablet.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-28T17:50:19Z",
+      "side": 1,
+      "message": "I think you\u0027ll want the same check in onAccessibilityStatusChanged in case that is called later.  Otherwise, your button could get hidden unexpectedly.",
+      "range": {
+        "startLine": 264,
+        "startChar": 12,
+        "endLine": 264,
+        "endChar": 40
+      },
+      "revId": "770498c9cc536c827e29656a127cbe7b0faf3a66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70aa7372_c46b89fd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarTablet.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-28T17:50:19Z",
+      "side": 1,
+      "message": "do you want the same behavior in onLongClick as on phones (or are you thinking the tab strip is sufficient)?",
+      "revId": "770498c9cc536c827e29656a127cbe7b0faf3a66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "313ecd3f_55ad8ea6",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1583,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-28T17:50:19Z",
+      "side": 1,
+      "message": "Should we say (Restricted to Googler\u0027s) since it is a corp URL?",
+      "range": {
+        "startLine": 1583,
+        "startChar": 45,
+        "endLine": 1583,
+        "endChar": 46
+      },
+      "revId": "770498c9cc536c827e29656a127cbe7b0faf3a66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
