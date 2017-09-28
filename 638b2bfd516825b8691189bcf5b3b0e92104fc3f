@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "0a4dc9eb_eaada165",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-28T22:58:59Z",
+      "side": 1,
+      "message": "Please add \u003d ___ to each of these entries following best practices.\nhttps://chromium.googlesource.com/chromium/src.git/+/HEAD/tools/metrics/histograms/README.md#Enum-Histograms",
+      "revId": "638b2bfd516825b8691189bcf5b3b0e92104fc3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0285b1bb_af60b66e",
         "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
         "patchSetId": 6
