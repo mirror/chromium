@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5d2d98a_92eeb6e4",
+        "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-09-28T12:58:06Z",
+      "side": 1,
+      "message": "Can you add a comment here that clarifies that this returns true when activation for media autoplay is delegated from the parent frame to this frame? (And not, for instance whether this frame delegates activation any further down)",
+      "revId": "402f60a5b5ebefad4f8212af6c804aeeb0557d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d419cc7e_9db74aa7",
+        "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-09-28T12:58:06Z",
+      "side": 1,
+      "message": "If the runtime flag for activation delegation is switched off, should this fall back to the old behaviour? (Or does it do that already in a non-obvious way?)",
+      "revId": "402f60a5b5ebefad4f8212af6c804aeeb0557d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
