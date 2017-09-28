@@ -540,7 +540,10 @@ void NGBlockNode::AddAtomicInlineBaselineFromOldLayout(
           ? LineDirectionMode::kHorizontalLine
           : LineDirectionMode::kVerticalLine;
   LayoutUnit position = LayoutUnit(box_->BaselinePosition(
-      request.baseline_type, is_first_line, line_direction));
+      request.baseline_type, is_first_line, line_direction,
+      box_->IsInline() || !box_->IsLayoutBlock()
+          ? kPositionOnContainingLine
+          : kPositionOfInteriorLineBoxes));
 
   // Some form controls return 0 for BaselinePosition() if 'display:block'.
   // Blocks without line boxes should not produce baselines.
