@@ -20,6 +20,10 @@ struct PrinterBasicInfo;
 // Printer capability setting keys.
 extern const char kPrinterId[];
 extern const char kPrinterCapabilities[];
+extern const char kPrinterKey[];
+extern const char kOptionKey[];
+extern const char kTypeKey[];
+extern const char kSelectCapKey[];
 
 // Extracts the printer display name and description from the
 // appropriate fields in |printer| for the platform.
@@ -39,6 +43,12 @@ void ConvertPrinterListForCallback(
     const PrinterHandler::AddedPrintersCallback& callback,
     const PrinterHandler::GetPrintersDoneCallback& done_callback,
     const printing::PrinterList& printer_list);
+
+// Returns a unique_ptr to a sanitized version of |cdd| to prevent possible JS
+// errors in Print Preview. Will remove null items from lists or options lists
+// and remove any lists/options that are empty or only contain null values.
+std::unique_ptr<base::DictionaryValue> ValidateCddForPrintPreview(
+    const base::DictionaryValue& cdd);
 }  // namespace printing
 
 #endif  // CHROME_BROWSER_UI_WEBUI_PRINT_PREVIEW_PRINTER_CAPABILITIES_H_

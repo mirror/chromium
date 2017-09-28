@@ -33,6 +33,10 @@ namespace printing {
 
 const char kPrinterId[] = "printerId";
 const char kPrinterCapabilities[] = "capabilities";
+const char kPrinterKey[] = "printer";
+const char kOptionKey[] = "option";
+const char kTypeKey[] = "type";
+const char kSelectCapKey[] = "select_cap";
 
 namespace {
 
@@ -119,6 +123,43 @@ void PrintersToValues(const printing::PrinterList& printer_list,
   }
 }
 
+bool ValueIsNull(const base::Value& val) {
+  return val.type() == base::Value::Type::NONE;
+}
+
+std::unique_ptr<base::ListValue> GetFilteredList(
+    const base::Value* list,
+    bool (*f)(const base::Value& val)) {
+  auto out_list =
+      base::ListValue::From(std::make_unique<base::Value>(list->Clone()));
+  auto last_valid = std::remove_if(out_list->GetList().begin(),
+                                   out_list->GetList().end(), *f);
+  out_list->GetList().erase(last_valid, out_list->GetList().end());
+  return out_list;
+}
+
+bool VendorCapabilityInvalid(const base::Value& val) {
+  if (ValueIsNull(val))
+    return true;
+  const base::Value* option_type =
+      val.FindPathOfType({kTypeKey}, base::Value::Type::STRING);
+  if (!option_type)
+    return true;
+  if (option_type->GetString() != "SELECT")
+    return false;
+  const base::Value* select_cap =
+      val.FindPathOfType({kSelectCapKey}, base::Value::Type::DICTIONARY);
+  if (!select_cap)
+    return true;
+  const base::Value* options_list =
+      select_cap->FindPathOfType({kOptionKey}, base::Value::Type::LIST);
+  if (!options_list || options_list->GetList().size() == 0 ||
+      GetFilteredList(options_list, ValueIsNull)->GetSize() == 0) {
+    return true;
+  }
+  return false;
+}
+
 }  // namespace
 
 std::pair<std::string, std::string> GetPrinterNameAndDescription(
@@ -179,4 +220,56 @@ void ConvertPrinterListForCallback(
     callback.Run(printers);
   done_callback.Run();
 }
+
+std::unique_ptr<base::DictionaryValue> ValidateCddForPrintPreview(
+    const base::DictionaryValue& cdd) {
+  auto out_final =
+      base::DictionaryValue::From(std::make_unique<base::Value>(cdd.Clone()));
+  const base::Value* caps = cdd.FindPath({kPrinterKey});
+  if (!caps)
+    return out_final;
+  out_final->RemovePath({kPrinterKey});
+  auto out_caps = std::make_unique<base::DictionaryValue>();
+  for (const auto it : caps->DictItems()) {
+    const base::Value* dict =
+        caps->FindPathOfType({it.first}, base::Value::Type::DICTIONARY);
+    const base::Value* list =
+        dict ? dict->FindPathOfType({kOptionKey}, base::Value::Type::LIST)
+             : caps->FindPathOfType({it.first}, base::Value::Type::LIST);
+    if (list) {
+      bool is_vendor_caps = it.first == "vendor_capability";
+      auto out_list = GetFilteredList(
+          list, is_vendor_caps ? VendorCapabilityInvalid : ValueIsNull);
+      if (out_list->GetSize() > 0) {
+        if (is_vendor_caps) {
+          for (auto vendor_it = out_list->GetList().begin();
+               vendor_it != out_list->GetList().end(); ++vendor_it) {
+            if (vendor_it->FindPathOfType({kTypeKey}, base::Value::Type::STRING)
+                    ->GetString() != "SELECT")
+              continue;
+            base::Value* options_dict = vendor_it->FindPathOfType(
+                {kSelectCapKey}, base::Value::Type::DICTIONARY);
+            base::Value* options_list = options_dict->FindPathOfType(
+                {kOptionKey}, base::Value::Type::LIST);
+            options_dict->SetPath(
+                {kOptionKey},
+                GetFilteredList(options_list, ValueIsNull)->Clone());
+          }
+        }
+        if (dict) {
+          auto option_dict = std::make_unique<base::DictionaryValue>();
+          option_dict->SetList(kOptionKey, std::move(out_list));
+          out_caps->SetDictionary(it.first, std::move(option_dict));
+        } else {
+          out_caps->SetList(it.first, std::move(out_list));
+        }
+      }
+    } else {
+      out_caps->SetPath({it.first}, it.second.Clone());
+    }
+  }
+  out_final->SetDictionary(kPrinterKey, std::move(out_caps));
+  return out_final;
+}
+
 }  // namespace printing
