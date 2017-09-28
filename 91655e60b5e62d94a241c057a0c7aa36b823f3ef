@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a27fc7c_10e9a4f7",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-28T13:37:43Z",
+      "side": 1,
+      "message": "forgot to remove this? please remove it in a follow up change. you can just TBR me on it.",
+      "revId": "91655e60b5e62d94a241c057a0c7aa36b823f3ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
