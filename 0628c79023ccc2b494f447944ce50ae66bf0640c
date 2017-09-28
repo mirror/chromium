@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65b53ab1_08bc9e7c",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-28T22:29:51Z",
+      "side": 1,
+      "message": "Is OnImplicitAnimationsCompleted guaranteed to be called? That\u0027s absolutely not obvious from the code. Otherwise it would leak the DeferredPaintObserver.\n\nIn particular, it looks to me that ~ScopedLayerAnimationSettings will remove it from animator_-\u003eobservers_, and so I don\u0027t think anything else will destroy it at that point.\n\nThe same is true of CacheRenderSurfaceObserver... I\u0027m super uncomfortable with the pattern, I would prefer if ScopedLayerAnimationSettings kept explicit ownership (unique_ptr) of the observers.",
+      "revId": "0628c79023ccc2b494f447944ce50ae66bf0640c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
