@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8cdc7ba4_6d436f1e",
+        "filename": "chrome/browser/extensions/api/developer_private/inspectable_views_finder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-28T13:59:05Z",
+      "side": 1,
+      "message": "Maybe cache MainFrame?\n\ncontent::RenderFrameHost* main_frame \u003d web_contents-\u003eGetMainFrame();\nresult-\u003epush_back(ConstructView(\n    url, main_frame-\u003eGetProcess()-\u003eGetID(), main_frame-\u003eGetRoutingID(),\n    false, false, GetViewType(web_contents)));",
+      "revId": "164451004ecf8dad4ff1575adefe2fe6d16ea14a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
