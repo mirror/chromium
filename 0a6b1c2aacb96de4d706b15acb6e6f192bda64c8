@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "42d396b3_acb22953",
+        "filename": "third_party/WebKit/Source/core/css/CSSFontFace.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-09-28T01:47:24Z",
+      "side": 1,
+      "message": "I see, then let\u0027s see if this will fix the crash.\n\nlgtm.",
+      "parentUuid": "7c5b6c56_e338c699",
+      "range": {
+        "startLine": 66,
+        "startChar": 6,
+        "endLine": 66,
+        "endChar": 19
+      },
+      "revId": "0a6b1c2aacb96de4d706b15acb6e6f192bda64c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "76ddcb00_866e3af1",
         "filename": "third_party/WebKit/Source/core/css/CSSFontFace.h",
         "patchSetId": 3
