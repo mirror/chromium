@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ce669b7_6c1afb97",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 1347,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-28T21:16:00Z",
+      "side": 1,
+      "message": "Could be put on one line.",
+      "range": {
+        "startLine": 1346,
+        "startChar": 0,
+        "endLine": 1347,
+        "endChar": 7
+      },
+      "revId": "1a9408b1194de4c66c9d56ce5f81b7eab79079fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2985d28a_bb6c3507",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 1545,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-28T21:16:00Z",
+      "side": 1,
+      "message": "Nit: Here this is written as \"viewer Element API\" and below there is a comment that says \"Toolbar element API\" (different capitalization). I\u0027m not sure whether these comments are helpful.",
+      "revId": "1a9408b1194de4c66c9d56ce5f81b7eab79079fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9b9011a_5778f7b1",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 1558,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-28T21:16:00Z",
+      "side": 1,
+      "message": "There are a couple places left in this file where it looks like there\u0027s an extra space before \")\" or after \"(\".",
+      "revId": "1a9408b1194de4c66c9d56ce5f81b7eab79079fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a279a810_fdeb71bc",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 1585,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-28T21:16:00Z",
+      "side": 1,
+      "message": "This could also be changed to use .includes()",
+      "revId": "1a9408b1194de4c66c9d56ce5f81b7eab79079fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
