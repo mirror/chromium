@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "1bb90047_b56513bc",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1773,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-28T06:14:03Z",
+      "side": 1,
+      "message": "Close, but there\u0027s another \"if (!is_mac || mac_views_browser)\" list at line 1788. I\u0027ve shuffled things more to fix the silliness here.",
+      "parentUuid": "77dde0c8_e9daa6d6",
+      "revId": "3d3a6f993fd1de0b2f3b89ae1dc9491267f54e9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5a61e60_84f1cf0f",
         "filename": "chrome/browser/ui/BUILD.gn",
         "patchSetId": 1
