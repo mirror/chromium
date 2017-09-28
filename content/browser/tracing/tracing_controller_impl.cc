@@ -186,6 +186,16 @@ void TracingControllerImpl::SetDisabledOnBackgroundThread(
 bool TracingControllerImpl::StartTracing(
     const TraceConfig& trace_config,
     const StartTracingDoneCallback& callback) {
+  if (!BrowserThread::CurrentlyOn(BrowserThread::UI)) {
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::BindOnce(&TracingControllerImpl::StartTracing,
+                       base::Unretained(this), trace_config, callback));
+    // Assume it will start.
+    // TODO: Avoid deadlock on Android when waiting for the response.
+    return true;
+  }
+
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK(additional_tracing_agents_.empty());
 
@@ -285,6 +295,16 @@ void TracingControllerImpl::AddMetadata(const base::DictionaryValue& data) {
 
 bool TracingControllerImpl::StopTracing(
     const scoped_refptr<TraceDataSink>& trace_data_sink) {
+  if (!BrowserThread::CurrentlyOn(BrowserThread::UI)) {
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::BindOnce(&TracingControllerImpl::StopTracing,
+                       base::Unretained(this), trace_data_sink));
+    // Assume it will stop.
+    // TODO: Avoid deadlock on Android when waiting for the response.
+    return true;
+  }
+
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   if (!can_stop_tracing())
