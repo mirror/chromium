@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "c3a7567d_ef3d326d",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2229,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-28T11:29:18Z",
+      "side": 1,
+      "message": "The fact that it passed all the tests in debug without violating such assertion probes it\u0027s safe to remove it now. I verified manually that so, let\u0027s do it.",
+      "parentUuid": "5affdcfc_044a3de9",
+      "revId": "fd249e40cbf787eaeb7b7970de98f5ca9a449610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bf6a467_7f255e2d",
         "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.h",
         "patchSetId": 6
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "But you only store the ones that have a non auto start line,\nthat\u0027s impossible to infer from \"row_of_positioned_item\".",
       "parentUuid": "9aa9ca82_96bdfb82",
+      "revId": "fd249e40cbf787eaeb7b7970de98f5ca9a449610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60e964be_cc0fa131",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-28T11:29:18Z",
+      "side": 1,
+      "message": "Only those have an actual grid line associated. As far as I understood, positioned items with \u0027auto\u0027 GridPosition will use the container padding box for location. There may be cases where this padding box edge may coincide with the first grid line, but conceptually, those items are not using grid lines as reference for location.",
+      "parentUuid": "358e99a6_53a3de77",
       "revId": "fd249e40cbf787eaeb7b7970de98f5ca9a449610",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
