@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa8d7116_00ff2760",
+        "filename": "chrome/browser/chromeos/power/freezer_cgroup_process_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002983
+      },
+      "writtenOn": "2017-09-28T00:15:42Z",
+      "side": 1,
+      "message": "Has base::Bind always had the ability to bind lambdas or is this a new feature?",
+      "revId": "8ecac00cb23005c37a64c0aafcbc749d4dba64b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
