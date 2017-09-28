@@ -1,0 +1,302 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "703a71ef_e5d81c6d",
+        "filename": "ios/web_view/internal/signin/cwv_authentication_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-28T17:01:40Z",
+      "side": 1,
+      "message": "s/authenticatedAccountId/authenticatedAccountID\n\nSame comment for other places where Id is used.",
+      "range": {
+        "startLine": 56,
+        "startChar": 14,
+        "endLine": 56,
+        "endChar": 36
+      },
+      "revId": "cbbbf20c7e331317c55b36f24b1dfc4199d518ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "418d91ef_95d831c8",
+        "filename": "ios/web_view/internal/signin/cwv_authentication_controller_internal.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-28T17:01:40Z",
+      "side": 1,
+      "message": "s/will out live/must outlive ?",
+      "range": {
+        "startLine": 16,
+        "startChar": 26,
+        "endLine": 16,
+        "endChar": 27
+      },
+      "revId": "cbbbf20c7e331317c55b36f24b1dfc4199d518ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2309539e_5d7590cb",
+        "filename": "ios/web_view/internal/web_view_web_main_parts.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-28T17:01:40Z",
+      "side": 1,
+      "message": "Please add comments",
+      "range": {
+        "startLine": 30,
+        "startChar": 11,
+        "endLine": 30,
+        "endChar": 32
+      },
+      "revId": "cbbbf20c7e331317c55b36f24b1dfc4199d518ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40964403_3bba9f57",
+        "filename": "ios/web_view/public/cwv_authentication_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-28T17:01:40Z",
+      "side": 1,
+      "message": "Do you want to add nullability annotations?",
+      "revId": "cbbbf20c7e331317c55b36f24b1dfc4199d518ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3ebfd3b_82d6248a",
+        "filename": "ios/web_view/public/cwv_authentication_controller_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-28T17:01:40Z",
+      "side": 1,
+      "message": "Is there any online documentation for these arguments? Someone who is not familiar with SignIn concepts will not be able to figure our what gaiaID is, where to get clientID and clientSecret and which scopes are valid for this method.",
+      "revId": "cbbbf20c7e331317c55b36f24b1dfc4199d518ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edd6366f_862b6e15",
+        "filename": "ios/web_view/public/cwv_authentication_controller_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-28T17:01:40Z",
+      "side": 1,
+      "message": "s/callback/completionHandler",
+      "range": {
+        "startLine": 31,
+        "startChar": 24,
+        "endLine": 31,
+        "endChar": 32
+      },
+      "revId": "cbbbf20c7e331317c55b36f24b1dfc4199d518ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68f4ef63_50a89c1f",
+        "filename": "ios/web_view/public/cwv_authentication_controller_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-28T17:01:40Z",
+      "side": 1,
+      "message": "nit: Avoid pronouns (\"you\") in the comments (go/avoudwe)",
+      "range": {
+        "startLine": 35,
+        "startChar": 18,
+        "endLine": 35,
+        "endChar": 21
+      },
+      "revId": "cbbbf20c7e331317c55b36f24b1dfc4199d518ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aefc0fc5_bee86e21",
+        "filename": "ios/web_view/public/cwv_authentication_controller_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-28T17:01:40Z",
+      "side": 1,
+      "message": "What if the used is not signed in? Should this method return an empty array?",
+      "range": {
+        "startLine": 36,
+        "startChar": 23,
+        "endLine": 36,
+        "endChar": 29
+      },
+      "revId": "cbbbf20c7e331317c55b36f24b1dfc4199d518ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7fe46a6_0a9682a1",
+        "filename": "ios/web_view/public/cwv_authentication_controller_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-28T17:01:40Z",
+      "side": 1,
+      "message": "Maybe allIdentitiesForAuthenticationController: ?",
+      "range": {
+        "startLine": 37,
+        "startChar": 26,
+        "endLine": 37,
+        "endChar": 66
+      },
+      "revId": "cbbbf20c7e331317c55b36f24b1dfc4199d518ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ba35923_bb5bec29",
+        "filename": "ios/web_view/public/cwv_identity.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-28T17:01:40Z",
+      "side": 1,
+      "message": "Do you want to use nullability annotations?",
+      "revId": "cbbbf20c7e331317c55b36f24b1dfc4199d518ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b776dd3f_15852a04",
+        "filename": "ios/web_view/public/cwv_identity.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-28T17:01:40Z",
+      "side": 1,
+      "message": "Is there an online doc for GAIA ID? F.e. how do I know gaia id for my eugenebut@chromium.org email?",
+      "range": {
+        "startLine": 19,
+        "startChar": 18,
+        "endLine": 19,
+        "endChar": 19
+      },
+      "revId": "cbbbf20c7e331317c55b36f24b1dfc4199d518ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9b3ff28_4e0c31b0",
+        "filename": "ios/web_view/public/cwv_identity.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-28T17:01:40Z",
+      "side": 1,
+      "message": "nit: Avoid pronouns in the comments",
+      "range": {
+        "startLine": 20,
+        "startChar": 7,
+        "endLine": 20,
+        "endChar": 10
+      },
+      "revId": "cbbbf20c7e331317c55b36f24b1dfc4199d518ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0803a5b2_6acdc629",
+        "filename": "ios/web_view/public/cwv_identity.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-28T17:01:40Z",
+      "side": 1,
+      "message": "nullable?",
+      "range": {
+        "startLine": 25,
+        "startChar": 18,
+        "endLine": 25,
+        "endChar": 27
+      },
+      "revId": "cbbbf20c7e331317c55b36f24b1dfc4199d518ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbbf0d48_350c6caa",
+        "filename": "ios/web_view/public/cwv_web_view_configuration+sync.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-28T17:01:40Z",
+      "side": 1,
+      "message": "Do you want to use nullability annotations?",
+      "revId": "cbbbf20c7e331317c55b36f24b1dfc4199d518ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
