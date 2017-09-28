@@ -60,7 +60,8 @@ void BackgroundFetchJobController::StartRequest(
     return;
   }
 
-  delegate_proxy_->StartRequest(weak_ptr_factory_.GetWeakPtr(),
+  delegate_proxy_->StartRequest(registration_id_.id(),
+                                weak_ptr_factory_.GetWeakPtr(),
                                 registration_id_.origin(), request);
 }
 
