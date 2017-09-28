@@ -4,6 +4,10 @@
 
 @import 'policy_common.css';
 
+.disabled {
+  display: none;
+}
+
 .edit-button {
   float: right;
   margin: 0;
@@ -22,4 +26,12 @@ tbody.value-editing-on .save-button {
 tbody.value-editing-on .edit-button,
 tbody.value-editing-on .value {
   display: none;
+}
+
+#invalid-filename-error {
+  color: red;
+}
+
+#invalid-filename-error:not(.disabled) {
+  display: block;
 }

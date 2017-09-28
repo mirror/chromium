@@ -4,6 +4,13 @@
 
 // Override some methods of policy.Page.
 
+/**
+ * Shows error message when the session name is invalid.
+ */
+policy.Page.showInvalidNameError = function() {
+  $('invalid-filename-error').classList.remove('disabled');
+};
+
 /** @override */
 policy.Page.setPolicyValues = function(values) {
   var page = this.getInstance();
@@ -44,6 +51,7 @@ policy.Page.prototype.initialize = function() {
   };
 
   $('session-choice').onsubmit = () => {
+    $('invalid-filename-error').classList.add('disabled');
     var session = $('session-name-field').value;
     chrome.send('loadSession', [session]);
     $('session-name-field').value = '';
