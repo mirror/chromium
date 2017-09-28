@@ -310,3 +310,7 @@ IN_PROC_BROWSER_TEST_F(PolicyToolUITest, MultipleSessionsChoice) {
       ExtractPolicyValues(false);
   EXPECT_EQ(contents, *page_contents);
 }
+
+IN_PROC_BROWSER_TEST_F(PolicyToolUITest, SessionsList) {
+  base::ThreadRestrictions
+}
