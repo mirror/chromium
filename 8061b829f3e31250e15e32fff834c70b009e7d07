@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9a5a643_7420718c",
+        "filename": "net/disk_cache/entry_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-28T13:47:19Z",
+      "side": 1,
+      "message": "How about an explicit test of synchronous behavior when prefetching is enabled?",
+      "range": {
+        "startLine": 581,
+        "startChar": 24,
+        "endLine": 581,
+        "endChar": 0
+      },
+      "revId": "8061b829f3e31250e15e32fff834c70b009e7d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
