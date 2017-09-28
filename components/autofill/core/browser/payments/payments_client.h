@@ -120,6 +120,7 @@ class PaymentsClient : public net::URLFetcherDelegate,
   // track requests that were triggered by enabled features.
   virtual void GetUploadDetails(
       const std::vector<AutofillProfile>& addresses,
+      const int detected_values,
       const std::vector<const char*>& active_experiments,
       const std::string& app_locale);
 
