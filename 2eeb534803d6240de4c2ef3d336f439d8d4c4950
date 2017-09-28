@@ -16,6 +16,24 @@
       "revId": "2eeb534803d6240de4c2ef3d336f439d8d4c4950",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "501565a3_23ff7f3b",
+        "filename": "chrome/browser/chromeos/system/timezone_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-09-28T20:08:05Z",
+      "side": 1,
+      "message": "This is not about user time zone change. This is about automatic time zone resolve. \"DISABLED\" means that automatic time zone resolve is disabled (i.e. policy prohibits time zone resolve).\n\nIP_ONLY / SEND_WIFI_ACCESS_POINTS / SEND_ALL_LOCATION_INFO - this are different levels of location resolve precision, allowing to send either no (IP_ONLY), WiFi of all environment information to Google Geolocation API. So these three actually allow automatic time zone resolve.\n\nBut TimezonePrefsManaged(prefs::kUserTimezone) is designed to enable/disable user time zone UI controls. This way policy may prevent user from modifying time zone manually, at the same time either turning on of off automatic time zone detection.",
+      "parentUuid": "a70e6cbf_4693e69b",
+      "revId": "2eeb534803d6240de4c2ef3d336f439d8d4c4950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
