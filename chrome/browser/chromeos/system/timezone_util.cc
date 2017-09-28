@@ -149,6 +149,40 @@ base::string16 GetTimezoneName(const icu::TimeZone& timezone) {
   return result;
 }
 
+// Returns true if policy allows automatic time zone resolve.
+// Note, that this must be kept in sync with IsTimezonePrefsManaged() below.
+bool DoesPolicyAllowTimeZoneResolve() {
+  std::string policy_timezone;
+  if (chromeos::CrosSettings::Get()->GetString(chromeos::kSystemTimezonePolicy,
+                                               &policy_timezone) &&
+      !policy_timezone.empty()) {
+    return false;
+  }
+
+  const PrefService* local_state = g_browser_process->local_state();
+  if (!local_state->IsManagedPreference(
+          prefs::kSystemTimezoneAutomaticDetectionPolicy)) {
+    return true;
+  }
+
+  int resolve_policy_value =
+      local_state->GetInteger(prefs::kSystemTimezoneAutomaticDetectionPolicy);
+
+  switch (resolve_policy_value) {
+    case enterprise_management::SystemTimezoneProto::USERS_DECIDE:
+      return true;
+    case enterprise_management::SystemTimezoneProto::DISABLED:
+      return false;
+    case enterprise_management::SystemTimezoneProto::IP_ONLY:
+    case enterprise_management::SystemTimezoneProto::SEND_WIFI_ACCESS_POINTS:
+    case enterprise_management::SystemTimezoneProto::SEND_ALL_LOCATION_INFO:
+      return true;
+  }
+  // Default for unknown policy value.
+  NOTREACHED() << "Unrecognized policy value: " << resolve_policy_value;
+  return false;
+}
+
 }  // namespace
 
 namespace chromeos {
@@ -187,6 +221,8 @@ bool HasSystemTimezonePolicy() {
   return false;
 }
 
+// Note, that this must be kept in sync with DoesPolicyAllowTimeZoneResolve()
+// above.
 bool IsTimezonePrefsManaged(const std::string& pref_name) {
   DCHECK(pref_name == prefs::kUserTimezone ||
          pref_name == prefs::kResolveTimezoneByGeolocation);
@@ -262,7 +298,7 @@ void ApplyTimeZone(const TimeZoneResponseData* timezone) {
 }
 
 void UpdateSystemTimezone(Profile* profile) {
-  if (IsTimezonePrefsManaged(prefs::kUserTimezone)) {
+  if (!DoesPolicyAllowTimeZoneResolve()) {
     VLOG(1) << "Ignoring user timezone change, because timezone is enterprise "
                "managed.";
     return;
