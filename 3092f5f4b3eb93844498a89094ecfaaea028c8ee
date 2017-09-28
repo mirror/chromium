@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bea2ee30_d54b6255",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1606,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-28T20:54:31Z",
+      "side": 1,
+      "message": "This needs to be under #if defined(OS_CHROMEOS) since it is chromeos only.",
+      "revId": "3092f5f4b3eb93844498a89094ecfaaea028c8ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
