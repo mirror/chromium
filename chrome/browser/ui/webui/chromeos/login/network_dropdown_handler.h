@@ -52,9 +52,11 @@ class NetworkDropdownHandler : public BaseWebUIHandler,
   // Handles network drop-down refresh.
   void HandleNetworkDropdownRefresh();
 
-  void HandleLaunchProxySettingsDialog();
+  void HandleLaunchInternetDetailDialog();
   void HandleLaunchAddWiFiNetworkDialog();
   void HandleShowNetworkDetails(const base::ListValue* args);
+
+  void OpenInternetDetailDialog(const std::string& network_id);
 
   std::unique_ptr<NetworkDropdown> dropdown_;
 

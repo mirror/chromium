@@ -110,8 +110,7 @@ void NetworkStateInformer::Init() {
 
   network_portal_detector::GetInstance()->AddAndFireObserver(this);
 
-  registrar_.Add(this,
-                 chrome::NOTIFICATION_LOGIN_PROXY_CHANGED,
+  registrar_.Add(this, chrome::NOTIFICATION_LOGIN_NETWORK_CHANGED,
                  content::NotificationService::AllSources());
   registrar_.Add(this,
                  chrome::NOTIFICATION_SESSION_STARTED,
@@ -144,7 +143,7 @@ void NetworkStateInformer::Observe(
     const content::NotificationDetails& details) {
   if (type == chrome::NOTIFICATION_SESSION_STARTED)
     registrar_.RemoveAll();
-  else if (type == chrome::NOTIFICATION_LOGIN_PROXY_CHANGED)
+  else if (type == chrome::NOTIFICATION_LOGIN_NETWORK_CHANGED)
     SendStateToObservers(NetworkError::ERROR_REASON_PROXY_CONFIG_CHANGED);
   else
     NOTREACHED() << "Unknown notification: " << type;
