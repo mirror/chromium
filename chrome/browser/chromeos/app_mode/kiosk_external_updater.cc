@@ -477,44 +477,42 @@ base::string16 KioskExternalUpdater::GetUpdateReportMessage() const {
   DCHECK(!IsExternalUpdatePending());
   int updated = 0;
   int failed = 0;
-  base::string16 updated_apps;
-  base::string16 failed_apps;
+  std::string updated_apps;
+  std::string failed_apps;
   for (const auto& it : external_updates_) {
     const ExternalUpdate& update = it.second;
-    base::string16 app_name = base::UTF8ToUTF16(update.app_name);
+    const std::string& app_name = update.app_name;
     if (update.update_status == SUCCESS) {
       ++updated;
       if (updated_apps.empty())
         updated_apps = app_name;
       else
-        updated_apps = updated_apps + base::ASCIIToUTF16(", ") + app_name;
+        updated_apps += ", " + app_name;
     } else {  // FAILED
       ++failed;
-      if (failed_apps.empty()) {
-        failed_apps = app_name + base::ASCIIToUTF16(": ") + update.error;
-      } else {
-        failed_apps = failed_apps + base::ASCIIToUTF16("\n") + app_name +
-                      base::ASCIIToUTF16(": ") + update.error;
-      }
+      if (failed_apps.empty())
+        failed_apps = app_name + ": " + update.error;
+      else
+        failed_apps += "\n" + app_name + ": " + update.error;
     }
   }
 
-  base::string16 message;
-  message = ui::ResourceBundle::GetSharedInstance().GetLocalizedString(
-      IDS_KIOSK_EXTERNAL_UPDATE_COMPLETE);
-  base::string16 success_app_msg;
+  base::string16 message =
+      ui::ResourceBundle::GetSharedInstance().GetLocalizedString(
+          IDS_KIOSK_EXTERNAL_UPDATE_COMPLETE);
   if (updated) {
-    success_app_msg = l10n_util::GetStringFUTF16(
-        IDS_KIOSK_EXTERNAL_UPDATE_SUCCESSFUL_UPDATED_APPS, updated_apps);
-    message = message + base::ASCIIToUTF16("\n") + success_app_msg;
+    base::string16 success_app_msg = l10n_util::GetStringFUTF16(
+        IDS_KIOSK_EXTERNAL_UPDATE_SUCCESSFUL_UPDATED_APPS,
+        base::UTF8ToUTF16(updated_apps));
+    message += base::ASCIIToUTF16("\n") + success_app_msg;
   }
 
-  base::string16 failed_app_msg;
   if (failed) {
-    failed_app_msg = ui::ResourceBundle::GetSharedInstance().GetLocalizedString(
-                         IDS_KIOSK_EXTERNAL_UPDATE_FAILED_UPDATED_APPS) +
-                     base::ASCIIToUTF16("\n") + failed_apps;
-    message = message + base::ASCIIToUTF16("\n") + failed_app_msg;
+    base::string16 failed_app_msg =
+        ui::ResourceBundle::GetSharedInstance().GetLocalizedString(
+            IDS_KIOSK_EXTERNAL_UPDATE_FAILED_UPDATED_APPS) +
+        base::ASCIIToUTF16("\n") + base::UTF8ToUTF16(failed_apps);
+    message += base::ASCIIToUTF16("\n") + failed_app_msg;
   }
   return message;
 }
