@@ -1033,6 +1033,13 @@ void PaintController::CheckUnderInvalidation() {
     return;
 
   const DisplayItem& new_item = new_display_item_list_.Last();
+  if (new_item.SkippedCache()) {
+    // We allow cache skipping and temporary under-invalidation in cached
+    // subsequences. See the usage of DisplayItemCacheSkipper in BoxPainter.
+    under_invalidation_checking_begin_ = under_invalidation_checking_end_;
+    return;
+  }
+
   size_t old_item_index = under_invalidation_checking_begin_ +
                           skipped_probable_under_invalidation_count_;
   DisplayItem* old_item =
