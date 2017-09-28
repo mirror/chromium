@@ -22,6 +22,30 @@
       "revId": "a5ad88fbd234f8b7647d16f4b4504bfcdf72cebe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "544f96a1_6d6ded61",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-28T20:24:52Z",
+      "side": 1,
+      "message": "A unit test that could have caught this would be nice too :D",
+      "parentUuid": "39ca98b6_8d67c157",
+      "range": {
+        "startLine": 725,
+        "startChar": 58,
+        "endLine": 725,
+        "endChar": 65
+      },
+      "revId": "a5ad88fbd234f8b7647d16f4b4504bfcdf72cebe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
