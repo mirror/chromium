@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c2e03d7_f8084f2f",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-28T15:39:10Z",
+      "side": 1,
+      "message": "Did your testing/experimentation find this change to necessary? I would have expected that since suggestions were suppressed, there would be no way to generate a fall to fill-or-preview a form with a given card\u0027s unique_id?\n\nNote: I\u0027m not saying remove this check. I\u0027m more curious as to whether I need to better grok the flow to get here.",
+      "revId": "a723d037b07f9f38508083a99527120a8a9c0c50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
