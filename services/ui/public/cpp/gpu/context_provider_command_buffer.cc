@@ -412,11 +412,16 @@ base::Lock* ContextProviderCommandBuffer::GetLock() {
   return &context_lock_;
 }
 
-gpu::Capabilities ContextProviderCommandBuffer::ContextCapabilities() {
+const gpu::Capabilities& ContextProviderCommandBuffer::ContextCapabilities() {
   DCHECK(bind_succeeded_);
   DCHECK(context_thread_checker_.CalledOnValidThread());
   // Skips past the trace_impl_ as it doesn't have capabilities.
   return gles2_impl_->capabilities();
+}
+
+const gpu::GpuFeatureInfo& ContextProviderCommandBuffer::GetGpuFeatureInfo() {
+  DCHECK(channel_);
+  return channel_->gpu_feature_info();
 }
 
 void ContextProviderCommandBuffer::OnLostContext() {
