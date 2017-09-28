@@ -70,6 +70,7 @@
     <div id="container">
       <extensions-view-manager id="viewManager">
         <extensions-item-list id="items-list"
+            scroll-target="[[$$('#container')]]"
             items="[[itemsList_]]"
             delegate="[[delegate]]" in-dev-mode="[[inDevMode]]"
             filter="[[filter]]" hidden$="[[!didInitPage_]]" slot="view">

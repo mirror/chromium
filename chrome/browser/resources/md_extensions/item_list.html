@@ -40,7 +40,7 @@
     </div>
 
     <iron-list id="list" items="[[shownItems_]]"
-        as="item" grid>
+        scroll-target="[[scrollTarget]]" as="item" grid>
       <template>
         <div class="wrapper">
           <extensions-item data="[[item]]" delegate="[[delegate]]"
