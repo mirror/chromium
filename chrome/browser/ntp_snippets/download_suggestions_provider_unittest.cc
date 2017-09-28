@@ -1092,15 +1092,23 @@ TEST_F(DownloadSuggestionsProviderTest,
   IgnoreOnCategoryStatusChangedToAvailable();
   IgnoreOnSuggestionInvalidated();
 
-  std::vector<OfflinePageItem> offline_pages = CreateDummyOfflinePages({0, 1});
+  std::vector<OfflinePageItem> offline_pages =
+      CreateDummyOfflinePages({0, 1, 2});
 
   offline_pages[0].url = GURL("http://dummy.com/0");
   offline_pages[0].creation_time = kOutdatedTime;
   offline_pages[0].last_access_time = kNotOutdatedTime;
 
+  // Outdated page should be ignored.
   offline_pages[1].url = GURL("http://dummy.com/1");
   offline_pages[1].creation_time = kOutdatedTime;
   offline_pages[1].last_access_time = offline_pages[1].creation_time;
+
+  // Suggested page should be ignored.
+  offline_pages[2].client_id.name_space = "suggested_articles";
+  offline_pages[2].url = GURL("http://dummy.com/2");
+  offline_pages[2].creation_time = kNotOutdatedTime;
+  offline_pages[2].last_access_time = offline_pages[2].creation_time;
 
   *(offline_pages_model()->mutable_items()) = offline_pages;
 

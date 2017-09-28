@@ -138,7 +138,10 @@ bool CompareDownloadsMostRecentlyPublishedFirst(const DownloadItem* left,
 bool IsClientIdForOfflinePageDownload(
     offline_pages::ClientPolicyController* policy_controller,
     const offline_pages::ClientId& client_id) {
-  return policy_controller->IsSupportedByDownload(client_id.name_space);
+  // TODO(dewittj): Alter the OPM API to provide no suggestions to the
+  // DownloadSuggestionsProvider.
+  return policy_controller->IsSupportedByDownload(client_id.name_space) &&
+         !policy_controller->IsSuggested(client_id.name_space);
 }
 
 }  // namespace
@@ -484,6 +487,8 @@ void DownloadSuggestionsProvider::AsynchronouslyFetchOfflinePagesDownloads(
 
   // If Offline Page model is not loaded yet, it will process our query once it
   // has finished loading.
+  // TODO(dewittj): Alter the OPM API to provide no suggestions to the
+  // DownloadSuggestionsProvider.
   offline_page_model_->GetPagesSupportedByDownloads(
       base::Bind(&DownloadSuggestionsProvider::UpdateOfflinePagesCache,
                  weak_ptr_factory_.GetWeakPtr(), notify));
@@ -735,7 +740,9 @@ void DownloadSuggestionsProvider::UpdateOfflinePagesCache(
       retained_dismissed_ids.insert(id_within_category);
     } else {
       if (!IsDownloadOutdated(GetOfflinePagePublishedTime(item),
-                              item.last_access_time)) {
+                              item.last_access_time) &&
+          IsClientIdForOfflinePageDownload(
+              offline_page_model_->GetPolicyController(), item.client_id)) {
         items.push_back(&item);
       }
     }
