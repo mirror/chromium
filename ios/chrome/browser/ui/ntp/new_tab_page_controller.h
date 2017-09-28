@@ -36,6 +36,7 @@ std::string FragmentFromIdentifier(ntp_home::PanelIdentifier panel);
 @protocol IncognitoViewControllerDelegate;
 @protocol NewTabPagePanelProtocol;
 @protocol OmniboxFocuser;
+@protocol SnackbarCommands;
 @class TabModel;
 @protocol UrlLoader;
 
@@ -89,6 +90,7 @@ std::string FragmentFromIdentifier(ntp_home::PanelIdentifier panel);
               dispatcher:(id<ApplicationCommands,
                              BrowserCommands,
                              OmniboxFocuser,
+                             SnackbarCommands,
                              UrlLoader>)dispatcher;
 
 // Select a panel based on the given |panelType|.
