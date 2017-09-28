@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86131e5b_8429f6b6",
+        "filename": "DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-09-28T21:09:12Z",
+      "side": 1,
+      "message": "Were you planning to leave them grouped like this, or re-sort them?\n\nIn one sense, I\u0027m tempted to say that if we don\u0027t sort all of the dependencies by name, then switching from deps_os to the main block isn\u0027t actually much of an improvement.\n\nOn the other hand, I can see an argument for sorting by \"condition\" and then name, where the unconditional deps show up first, and I think that\u0027s closer to what you\u0027ve done here.\n\nThough, I still think I prefer sorting by name.",
+      "revId": "e50a6a6abeef9f7eb5d0ed54950d95d660f809f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
