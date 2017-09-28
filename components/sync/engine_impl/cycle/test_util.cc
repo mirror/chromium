@@ -113,16 +113,6 @@ void SimulatePollIntervalUpdateImpl(ModelTypeSet requested_types,
   cycle->delegate()->OnReceivedLongPollIntervalUpdate(new_poll);
 }
 
-void SimulateSessionsCommitDelayUpdateImpl(ModelTypeSet requested_types,
-                                           NudgeTracker* nudge_tracker,
-                                           SyncCycle* cycle,
-                                           const base::TimeDelta& new_delay) {
-  SimulateNormalSuccess(requested_types, nudge_tracker, cycle);
-  std::map<ModelType, base::TimeDelta> delay_map;
-  delay_map[SESSIONS] = new_delay;
-  cycle->delegate()->OnReceivedCustomNudgeDelays(delay_map);
-}
-
 void SimulateGuRetryDelayCommandImpl(SyncCycle* cycle, base::TimeDelta delay) {
   cycle->mutable_status_controller()->set_last_download_updates_result(
       SYNCER_OK);
