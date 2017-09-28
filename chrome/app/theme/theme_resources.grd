@@ -199,7 +199,6 @@
       </if>
       <structure type="chrome_scaled_image" name="IDR_HELP_MENU" file="common/help_16.png" />
       <structure type="chrome_scaled_image" name="IDR_HIDE_PASSWORD" file="common/hide_password.png" />
-      <structure type="chrome_scaled_image" name="IDR_HIDE_PASSWORD_HOVER" file="common/hide_password_hover.png" />
       <structure type="chrome_scaled_image" name="IDR_HOTWORD_NOTIFICATION_ICON" file="common/notification_hotword_icon.png" />
       <if expr="is_macosx">
         <structure type="chrome_scaled_image" name="IDR_ICON_PROFILES_ACCOUNT_BUTTON_ERROR" file="legacy/avatar_menu_auth_error.png" />
@@ -431,7 +430,6 @@
       </if>
       <structure type="chrome_scaled_image" name="IDR_SETTINGS_FAVICON" file="common/favicon_settings.png" />
       <structure type="chrome_scaled_image" name="IDR_SHOW_PASSWORD" file="common/show_password.png" />
-      <structure type="chrome_scaled_image" name="IDR_SHOW_PASSWORD_HOVER" file="common/show_password_hover.png" />
       <if expr="chromeos">
         <structure type="chrome_scaled_image" name="IDR_SUPERVISED_ILLUSTRATION_START" file="cros/supervised_illustration_start.png" />
         <structure type="chrome_scaled_image" name="IDR_SUPERVISED_ILLUSTRATION_DONE" file="cros/supervised_illsutration_done.png" />
