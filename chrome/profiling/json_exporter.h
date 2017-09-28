@@ -33,7 +33,7 @@ struct ExportParams {
 
   // Map from context string to context ID. A reverse-mapping will tell you
   // what the context_id in the allocation mean.
-  const std::map<std::string, int>* context_map = nullptr;
+  std::map<std::string, int> context_map;
 
   // Only allocations exceeding this size or count will be exported.
   size_t min_size_threshold = 0;
