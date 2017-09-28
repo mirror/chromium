@@ -52,8 +52,12 @@ class SurfaceTest : public test::ExoTestBase,
 
   float device_scale_factor() const { return GetParam(); }
 
-  gfx::Rect ToPixel(const gfx::Rect rect) {
+  gfx::Rect ToPixel(const gfx::Rect& rect) {
     return gfx::ConvertRectToPixel(device_scale_factor(), rect);
+  }
+
+  gfx::Size ToPixel(const gfx::Size& size) {
+    return gfx::ConvertSizeToPixel(device_scale_factor(), size);
   }
 
  private:
@@ -101,7 +105,7 @@ TEST_P(SurfaceTest, Attach) {
 }
 
 const viz::CompositorFrame& GetFrameFromSurface(ShellSurface* shell_surface) {
-  viz::SurfaceId surface_id = shell_surface->host_window()->GetSurfaceId();
+  viz::SurfaceId surface_id = shell_surface->surface_host()->GetSurfaceId();
   viz::SurfaceManager* surface_manager = aura::Env::GetInstance()
                                              ->context_factory_private()
                                              ->GetFrameSinkManager()
@@ -420,14 +424,20 @@ TEST_P(SurfaceTest, MirrorLayers) {
   surface->Attach(buffer.get());
   surface->Commit();
 
-  EXPECT_EQ(buffer_size, surface->window()->bounds().size());
-  EXPECT_EQ(buffer_size, surface->window()->layer()->bounds().size());
-  std::unique_ptr<ui::LayerTreeOwner> old_layer_owner =
-      ::wm::MirrorLayers(shell_surface->host_window(), false /* sync_bounds */);
-  EXPECT_EQ(buffer_size, surface->window()->bounds().size());
-  EXPECT_EQ(buffer_size, surface->window()->layer()->bounds().size());
-  EXPECT_EQ(buffer_size, old_layer_owner->root()->bounds().size());
-  EXPECT_TRUE(shell_surface->host_window()->layer()->has_external_content());
+  auto* layer_owner = shell_surface->surface_host();
+  gfx::Size pixel_size = ToPixel(buffer_size);
+
+  EXPECT_EQ(pixel_size, layer_owner->bounds().size());
+  EXPECT_EQ(pixel_size, layer_owner->layer()->bounds().size());
+
+  std::unique_ptr<ui::LayerTreeOwner> old_layer_owner = ::wm::MirrorLayers(
+      shell_surface->surface_host(), false /* sync_bounds */);
+
+  EXPECT_EQ(pixel_size, layer_owner->bounds().size());
+  EXPECT_EQ(pixel_size, layer_owner->layer()->bounds().size());
+  EXPECT_EQ(pixel_size, old_layer_owner->root()->bounds().size());
+
+  EXPECT_TRUE(layer_owner->layer()->has_external_content());
   EXPECT_TRUE(old_layer_owner->root()->has_external_content());
 }
 
