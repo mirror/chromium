@@ -397,7 +397,7 @@ public class AwAutofillTest {
         private CallbackHelper mVirtualValueChanged = new CallbackHelper();
         private AwContents mAwContents;
         private TestViewStructure mTestViewStructure;
-        private SparseArray<AutofillValue> mAutofillValues;
+        private ArrayList<Pair<Integer, AutofillValue>> mChangedValues;
 
         public AwAutofillManagerHelper(Context context) {
             super(context);
@@ -413,11 +413,15 @@ public class AwAutofillTest {
             mVirtualViewEntered.waitForCallback(count);
         }
 
-        public SparseArray<AutofillValue> waitForNotifyVirtualValueChanged(int times)
+        public ArrayList<Pair<Integer, AutofillValue>> waitForNotifyVirtualValueChanged(int times)
                 throws Throwable {
             int count = mVirtualValueChanged.getCallCount();
             mVirtualValueChanged.waitForCallback(count, times);
-            return mAutofillValues;
+            return mChangedValues;
+        }
+
+        public CallbackHelper getVirtualValueChangedCallbackHelper() {
+            return mVirtualValueChanged;
         }
 
         public void setAwContents(AwContents awContents) {
@@ -430,7 +434,6 @@ public class AwAutofillTest {
         }
 
         public void invokeAutofill(SparseArray<AutofillValue> values) {
-            mAutofillValues = new SparseArray<AutofillValue>();
             mAwContents.autofill(values);
         }
 
@@ -440,8 +443,15 @@ public class AwAutofillTest {
 
         @Override
         public void notifyVirtualValueChanged(View parent, int childId, AutofillValue value) {
-            if (mAutofillValues != null) mAutofillValues.append(childId, value);
+            if (mChangedValues == null) {
+                mChangedValues = new ArrayList<Pair<Integer, AutofillValue>>();
+            }
+            mChangedValues.add(new Pair<Integer, AutofillValue>(childId, value));
             mVirtualValueChanged.notifyCalled();
+        }
+
+        public ArrayList<Pair<Integer, AutofillValue>> getChangedValues() {
+            return mChangedValues;
         }
     }
 
@@ -561,6 +571,88 @@ public class AwAutofillTest {
                     mTestContainerView.getAwContents(), mContentsClient,
                     "document.getElementById('select1').value;");
             assertEquals("\"2\"", value2);
+        } finally {
+            webServer.shutdown();
+        }
+    }
+
+    @Test
+    @SmallTest
+    @Feature({"AndroidWebView"})
+    public void testNotifyVirtualValueChanged() throws Throwable {
+        TestWebServer webServer = TestWebServer.start();
+        mActivityTestRule.enableJavaScriptOnUiThread(mTestContainerView.getAwContents());
+        final String data = "<html><head></head><body><form action='a.html' name='formname'>"
+                + "<input type='text' id='text1' name='username'"
+                + " placeholder='placeholder@placeholder.com' autocomplete='username name'>"
+                + "</form></body></html>";
+        final String file = "/login.html";
+        try {
+            final String url = webServer.setResponse(file, data, null);
+            mActivityTestRule.loadUrlSync(mTestContainerView.getAwContents(),
+                    mContentsClient.getOnPageFinishedHelper(), url);
+            mActivityTestRule.executeJavaScriptAndWaitForResult(mTestContainerView.getAwContents(),
+                    mContentsClient, "document.getElementById('text1').select();");
+            CallbackHelper callbackHelper = mHelper.getVirtualValueChangedCallbackHelper();
+            int count = callbackHelper.getCallCount();
+            dispatchDownAndUpKeyEvents(KeyEvent.KEYCODE_A);
+            callbackHelper.waitForCallback(count);
+            ArrayList<Pair<Integer, AutofillValue>> values = mHelper.getChangedValues();
+            // Check if NotifyVirtualValueChanged() called and value is 'a'.
+            assertEquals(1, values.size());
+            assertEquals("a", values.get(0).second.getTextValue());
+            count = callbackHelper.getCallCount();
+            dispatchDownAndUpKeyEvents(KeyEvent.KEYCODE_B);
+            // Check if NotifyVirtualValueChanged() called 2 times, first value is 'a',
+            // second value is 'ab', and both time has the same id.
+            callbackHelper.waitForCallback(count);
+            values = mHelper.getChangedValues();
+            assertEquals(2, values.size());
+            assertEquals("a", values.get(0).second.getTextValue());
+            assertEquals("ab", values.get(1).second.getTextValue());
+            assertEquals(values.get(0).first, values.get(1).first);
+        } finally {
+            webServer.shutdown();
+        }
+    }
+
+    @Test
+    @SmallTest
+    @Feature({"AndroidWebView"})
+    public void testJavascriptNotTriggerNotifyVirtualValueChanged() throws Throwable {
+        TestWebServer webServer = TestWebServer.start();
+        mActivityTestRule.enableJavaScriptOnUiThread(mTestContainerView.getAwContents());
+        final String data = "<html><head></head><body><form action='a.html' name='formname'>"
+                + "<input type='text' id='text1' name='username'"
+                + " placeholder='placeholder@placeholder.com' autocomplete='username name'>"
+                + "</form></body></html>";
+        final String file = "/login.html";
+        try {
+            final String url = webServer.setResponse(file, data, null);
+            mActivityTestRule.loadUrlSync(mTestContainerView.getAwContents(),
+                    mContentsClient.getOnPageFinishedHelper(), url);
+            mActivityTestRule.executeJavaScriptAndWaitForResult(mTestContainerView.getAwContents(),
+                    mContentsClient, "document.getElementById('text1').select();");
+            CallbackHelper callbackHelper = mHelper.getVirtualValueChangedCallbackHelper();
+            int count = callbackHelper.getCallCount();
+            dispatchDownAndUpKeyEvents(KeyEvent.KEYCODE_A);
+            callbackHelper.waitForCallback(count);
+            ArrayList<Pair<Integer, AutofillValue>> values = mHelper.getChangedValues();
+            // Check if NotifyVirtualValueChanged() called and value is 'a'.
+            assertEquals(1, values.size());
+            assertEquals("a", values.get(0).second.getTextValue());
+            count = callbackHelper.getCallCount();
+            mActivityTestRule.executeJavaScriptAndWaitForResult(mTestContainerView.getAwContents(),
+                    mContentsClient, "document.getElementById('text1').value='c';");
+            dispatchDownAndUpKeyEvents(KeyEvent.KEYCODE_B);
+            // Check if NotifyVirtualValueChanged() called one more time and value is 'cb', this
+            // means javascript change didn't trigger the NotifyVirtualValueChanged().
+            callbackHelper.waitForCallback(count);
+            values = mHelper.getChangedValues();
+            assertEquals(2, values.size());
+            assertEquals("a", values.get(0).second.getTextValue());
+            assertEquals("cb", values.get(1).second.getTextValue());
+            assertEquals(values.get(0).first, values.get(1).first);
         } finally {
             webServer.shutdown();
         }
