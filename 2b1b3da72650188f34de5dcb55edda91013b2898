@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87840a37_5d4c0ff5",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-09-28T00:59:17Z",
+      "side": 1,
+      "message": "Is there any benefit to making this configurable?  Why not just check it every time, using the cached value when it\u0027s accessed more than once (in the same way that fetching the manifest is implicit, mandatory, and cached)?",
+      "range": {
+        "startLine": 401,
+        "startChar": 6,
+        "endLine": 401,
+        "endChar": 34
+      },
+      "revId": "2b1b3da72650188f34de5dcb55edda91013b2898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
