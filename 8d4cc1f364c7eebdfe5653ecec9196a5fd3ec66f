@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f867f78_6eab2dc9",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-28T13:59:15Z",
+      "side": 1,
+      "message": "Should this change to \"ToastGeneric\" at some point?",
+      "revId": "8d4cc1f364c7eebdfe5653ecec9196a5fd3ec66f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37ec5014_ac7a9100",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-28T13:59:15Z",
+      "side": 1,
+      "message": "nit: prefer early return to avoid the nesting;\n\nif (!buttons.size())\n  return;",
+      "revId": "8d4cc1f364c7eebdfe5653ecec9196a5fd3ec66f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eef1a5f_d9f4812f",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-28T13:59:15Z",
+      "side": 1,
+      "message": "TODO on inline replies (by adding a text box?)",
+      "revId": "8d4cc1f364c7eebdfe5653ecec9196a5fd3ec66f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c99696b_9b684636",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-28T13:59:15Z",
+      "side": 1,
+      "message": "nit: const auto\u0026 to avoid copying each entry",
+      "revId": "8d4cc1f364c7eebdfe5653ecec9196a5fd3ec66f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8adb884b_8bb61874",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-28T13:59:15Z",
+      "side": 1,
+      "message": "This is the string we get back when the button is activated, so presumably we want this to be buttonIndex\u003d|i|?\n\n(Where |i| is the index in the buttons() array.)",
+      "revId": "8d4cc1f364c7eebdfe5653ecec9196a5fd3ec66f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f7b2aa0_7cf23d42",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-28T13:59:15Z",
+      "side": 1,
+      "message": "TODO on button icons (through the \"imageUri\" argument)",
+      "revId": "8d4cc1f364c7eebdfe5653ecec9196a5fd3ec66f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a1d6852_f592f624",
+        "filename": "chrome/browser/notifications/notification_template_builder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-28T13:59:15Z",
+      "side": 1,
+      "message": "The \u003cactions\u003e element and co. don\u0027t seem to be part of the normal MSDN documentation. Could you add a link to where the docs are?",
+      "revId": "8d4cc1f364c7eebdfe5653ecec9196a5fd3ec66f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f991db9_10934016",
+        "filename": "chrome/browser/notifications/notification_template_builder_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-28T13:59:15Z",
+      "side": 1,
+      "message": "const\u0026, I\u0027d use buttons.size() for the check on line 65.\n\nUsing a pointer indicates (to the reader) that the value might have changed after the call, like is the case with |xml_template|.",
+      "revId": "8d4cc1f364c7eebdfe5653ecec9196a5fd3ec66f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e9cf28e_73103058",
+        "filename": "chrome/browser/notifications/notification_template_builder_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-28T13:59:15Z",
+      "side": 1,
+      "message": "nit: no {}",
+      "revId": "8d4cc1f364c7eebdfe5653ecec9196a5fd3ec66f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0af7d515_645446fc",
+        "filename": "chrome/browser/notifications/notification_template_builder_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-28T13:59:15Z",
+      "side": 1,
+      "message": "nit: use emplace_back:\n\nbuttons.emplace_back(base::ASCIIToUTF16(\"Button1\"));\nbuttons.emplace_back(base::ASCIIToUTF16(\"Button2\"));",
+      "revId": "8d4cc1f364c7eebdfe5653ecec9196a5fd3ec66f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
