@@ -46,6 +46,30 @@
       "revId": "e953f967a96a3db2d44d274dbeb393620d04ac2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3915f9e9_5a4f95ee",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-28T15:01:01Z",
+      "side": 1,
+      "message": "BrowserActionService would have a single TabModelObserver for the entire model that will be notified of each tab add. \n\nIf we need to wait to register BrowserActionService\u0027s observer until the tab state is initialized, TabModelSelectorObserver has a #onTabStateInitialized() method that we could use. TabModelSelectorBase calls #onTabStateInitialized() on each observer from its #markTabStateInitialized(). Since this method calls super#markTabStateInitialized() before executing the mTabCreationRunnable, the ordering works out correctly.\n\nWhen mTabCreationRunnable is executing, the tabs should be added to the model in the order they were added to mPendingUrls.",
+      "parentUuid": "c79e8629_0a06d07b",
+      "range": {
+        "startLine": 106,
+        "startChar": 20,
+        "endLine": 108,
+        "endChar": 47
+      },
+      "revId": "e953f967a96a3db2d44d274dbeb393620d04ac2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
