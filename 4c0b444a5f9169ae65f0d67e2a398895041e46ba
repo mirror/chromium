@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44270a1c_cd84b7be",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/VerticallyFixedEditText.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-28T00:23:21Z",
+      "side": 1,
+      "message": "What\u0027s the \"WrongConstant\"?",
+      "range": {
+        "startLine": 50,
+        "startChar": 4,
+        "endLine": 50,
+        "endChar": 34
+      },
+      "revId": "4c0b444a5f9169ae65f0d67e2a398895041e46ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71b7f95e_edfcd21b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/VerticallyFixedEditText.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-28T00:23:21Z",
+      "side": 1,
+      "message": "In thinking about this more over the day, I think we should introduce an ApiCompatibilityUtils method, e.g.\n\npublic static void disableSmartSelectionTextClassifier(TextView textView) {\n    if ( build \u003c 0) return;\n    textView.setTextClassifier(..)\n}\n\nThen we should call the ApiCompatibilityUtils methods from the specific TextView\u0027s where we want Smart Select disabled while we work on a policy for when to disable/enable in Chrome more broadly. For the purposes of this bug, I think we can just call this new method from UrlBar.",
+      "range": {
+        "startLine": 52,
+        "startChar": 3,
+        "endLine": 54,
+        "endChar": 5
+      },
+      "revId": "4c0b444a5f9169ae65f0d67e2a398895041e46ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
