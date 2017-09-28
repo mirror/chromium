@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa015d59_0ba45eb3",
+        "filename": "components/omnibox/browser/omnibox_field_trial.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-09-28T22:20:26Z",
+      "side": 1,
+      "message": "It looks to me like this should be:\n\nif (input.from_omnibox_focus())\n  return base::FL::IsEnabled(omnibox::kZeroSuggestSwapTitleAndUrl);\n\nSo that anyone evaluating the zero suggest UI doesn\u0027t have their expectations violated by the other settings below. Thoughts?",
+      "revId": "4109d70a81551baf17acbd01432de25f8e12d081",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
