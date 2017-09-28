@@ -214,7 +214,7 @@ void RasterizeAndRecordBenchmarkImpl::RunOnLayer(PictureLayerImpl* layer) {
     if (!is_solid_color)
       rasterize_results_.pixels_rasterized_with_non_solid_color += tile_size;
 
-    rasterize_results_.pixels_rasterized += tile_size;
+    rasterize_results_.pixels_rasterized += 1;
     rasterize_results_.total_best_time += min_time;
   }
 
