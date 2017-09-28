@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5ffc6a9c_056f0dff",
+        "filename": "ui/gl/gl_implementation.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1230115
+      },
+      "writtenOn": "2017-09-28T13:33:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6e23ade9_d12ca2f2",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 58
+      },
+      "revId": "070d645bb45b114f355f1e75c06ac869ddbfb9a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10c0c5e3_f0f2fdbd",
         "filename": "ui/gl/init/gl_initializer_x11.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-28T12:04:00Z",
       "side": 1,
       "message": "If this is false, then we would proceed with library names that have no path appended. How does this work?",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 37
+      },
+      "revId": "070d645bb45b114f355f1e75c06ac869ddbfb9a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ccb54e0_2a47714f",
+        "filename": "ui/gl/init/gl_initializer_x11.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1230115
+      },
+      "writtenOn": "2017-09-28T13:33:57Z",
+      "side": 1,
+      "message": "ldconfig ? In any case I just restored how it was written before your CL.",
+      "parentUuid": "10c0c5e3_f0f2fdbd",
       "range": {
         "startLine": 106,
         "startChar": 0,
