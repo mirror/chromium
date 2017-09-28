@@ -16,6 +16,24 @@
       "revId": "db050e233846fe8dcc1fa1d2a56728e16b473aa1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f747d666_0b8b40b6",
+        "filename": "third_party/WebKit/LayoutTests/SmokeTests",
+        "patchSetId": 11
+      },
+      "lineNbr": 833,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-28T18:36:45Z",
+      "side": 0,
+      "message": "Makes sense - I only added it because it was one of the top X% fastest tests.\n\nIn practice, currently, SmokeTests is mostly used for Clank, but it\u0027s also just a way to quickly run a fast subset of tests on your workstation (run-webkit-tests --smoke), and ideally in the future it would be nice to run most tests on Android, not just SmokeTests.",
+      "parentUuid": "397c952d_0d8eab78",
+      "revId": "db050e233846fe8dcc1fa1d2a56728e16b473aa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
