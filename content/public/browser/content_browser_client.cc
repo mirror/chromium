@@ -165,7 +165,8 @@ const gfx::ImageSkia* ContentBrowserClient::GetDefaultFavicon() {
   return empty;
 }
 
-base::FilePath ContentBrowserClient::GetLoggingFileName() {
+base::FilePath ContentBrowserClient::GetLoggingFileName(
+    const base::CommandLine& command_line) {
   return base::FilePath();
 }
 
