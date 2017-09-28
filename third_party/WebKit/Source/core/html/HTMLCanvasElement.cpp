@@ -69,6 +69,7 @@
 #include "core/paint/PaintTiming.h"
 #include "core/paint/compositing/PaintLayerCompositor.h"
 #include "core/probe/CoreProbes.h"
+#include "gpu/config/gpu_feature_info.h"
 #include "platform/Histogram.h"
 #include "platform/graphics/CanvasHeuristicParameters.h"
 #include "platform/graphics/CanvasMetrics.h"
@@ -974,6 +975,14 @@ HTMLCanvasElement::CreateAcceleratedImageBufferSurface(OpacityMode opacity_mode,
 
   if (context_provider_wrapper->ContextProvider()->IsSoftwareRendering())
     return nullptr;  // Don't use accelerated canvas with swiftshader.
+  const gpu::GpuFeatureInfo& gpu_feature_info =
+      context_provider_wrapper->ContextProvider()->GetGpuFeatureInfo();
+  if (gpu::kGpuFeatureStatusEnabled !=
+      gpu_feature_info
+          .status_values[gpu::GPU_FEATURE_TYPE_ACCELERATED_2D_CANVAS]) {
+    // Accelerated 2D canvas is blacklisted.
+    return nullptr;
+  }
 
   auto surface = WTF::MakeUnique<Canvas2DLayerBridge>(
       Size(), *msaa_sample_count, opacity_mode,

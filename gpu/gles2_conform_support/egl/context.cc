@@ -167,8 +167,11 @@ void Context::SetGpuControlClient(gpu::GpuControlClient*) {
   // The client is not currently called, so don't store it.
 }
 
-gpu::Capabilities Context::GetCapabilities() {
-  return decoder_->GetCapabilities();
+const gpu::Capabilities& Context::GetCapabilities() {
+  // Client side Capabilities queries return reference, service side return
+  // value. Here two sides are joined together.
+  capabilities_ = decoder_->GetCapabilities();
+  return capabilities_;
 }
 
 int32_t Context::CreateImage(ClientBuffer buffer,
