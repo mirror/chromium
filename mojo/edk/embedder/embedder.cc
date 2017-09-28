@@ -13,6 +13,7 @@
 #include "base/rand_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/task_runner.h"
+#include "build/build_config.h"
 #include "mojo/edk/embedder/embedder_internal.h"
 #include "mojo/edk/embedder/entrypoints.h"
 #include "mojo/edk/system/configuration.h"
@@ -20,6 +21,7 @@
 #include "mojo/edk/system/node_controller.h"
 
 #if !defined(OS_NACL)
+#include "base/debug/stack_trace.h"
 #include "crypto/random.h"
 #endif
 
@@ -38,6 +40,11 @@ Core* GetCore() { return g_core; }
 }  // namespace internal
 
 void Init(const Configuration& configuration) {
+  LOG(ERROR) << "mojo::edk::Init";
+#if !defined(OS_NACL)
+  base::debug::StackTrace().Print();
+#endif  // !defined(OS_NACL)
+  DCHECK(!internal::g_core);
   MojoSystemThunks thunks = MakeSystemThunks();
   size_t expected_size = MojoEmbedderSetSystemThunks(&thunks);
   DCHECK_EQ(expected_size, sizeof(thunks));
@@ -48,6 +55,10 @@ void Init(const Configuration& configuration) {
 
 void Init() {
   Init(Configuration());
+}
+
+void SetAsBrokerProcess() {
+  internal::g_configuration.is_broker_process = true;
 }
 
 void SetDefaultProcessErrorCallback(const ProcessErrorCallback& callback) {

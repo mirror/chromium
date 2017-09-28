@@ -15,6 +15,7 @@ executable("runner") {
     "//build/config:exe_and_shlib_deps",
     "//mojo/edk/system",
     "//services/service_manager",
+    "//services/service_manager/public/cpp",
     "//services/service_manager/runner:init",
     "//services/service_manager/standalone",
   ]
