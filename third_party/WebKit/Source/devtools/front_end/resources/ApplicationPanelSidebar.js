@@ -1098,11 +1098,16 @@ Resources.IndexedDBTreeElement = class extends Resources.StorageCategoryTreeElem
   _indexedDBLoaded(event) {
     var database = /** @type {!Resources.IndexedDBModel.Database} */ (event.data.database);
     var model = /** @type {!Resources.IndexedDBModel} */ (event.data.model);
+    var doUpdateData = /** @type {boolean} */ (event.data.doUpdateData);
 
     var idbDatabaseTreeElement = this._idbDatabaseTreeElement(model, database.databaseId);
     if (!idbDatabaseTreeElement)
       return;
 
+    if (!doUpdateData) {
+      idbDatabaseTreeElement.updateList(database);
+      return;
+    }
     idbDatabaseTreeElement.update(database);
   }
 
@@ -1143,6 +1148,8 @@ Resources.IDBDatabaseTreeElement = class extends Resources.BaseStorageTreeElemen
     var icon = UI.Icon.create('mediumicon-database', 'resource-tree-item');
     this.setLeadingIcons([icon]);
     this._model.addEventListener(Resources.IndexedDBModel.Events.DatabaseNamesRefreshed, this._refreshIndexedDB, this);
+    this._model.addEventListener(
+        Resources.IndexedDBModel.Events.IndexedDBContentUpdated, this._indexedDBContentUpdated, this);
   }
 
   get itemURL() {
@@ -1168,10 +1175,44 @@ Resources.IDBDatabaseTreeElement = class extends Resources.BaseStorageTreeElemen
   }
 
   /**
+   * @param {!Common.Event} event
+   */
+  _indexedDBContentUpdated(event) {
+    var securityOrigin = /** @type {string} */ (event.data.securityOrigin);
+    var databaseName = /** @type {string} */ (event.data.databaseName);
+    var objectStoreName = /** @type {string} */ (event.data.objectStoreName);
+    if (this._databaseId.securityOrigin !== securityOrigin || this._databaseId.name !== databaseName)
+      return;
+    for (var name in this._idbObjectStoreTreeElements) {
+      if (objectStoreName === name)
+        this._idbObjectStoreTreeElements[name].markNeedsRefresh();
+    }
+  }
+
+  /**
    * @param {!Resources.IndexedDBModel.Database} database
    */
   update(database) {
+    var addedObjectStores = this.updateList(database);
+    for (var objectStoreName in this._database.objectStores) {
+      var objectStore = this._database.objectStores[objectStoreName];
+      if (!addedObjectStores.includes(objectStore.name))
+        this._idbObjectStoreTreeElements[objectStore.name].update(objectStore);
+    }
+
+    if (this._view)
+      this._view.update(database);
+
+    this._updateTooltip();
+  }
+
+  /**
+   * @param {!Resources.IndexedDBModel.Database} database
+   * @return {!Array<string>}
+   */
+  updateList(database) {
     this._database = database;
+    var addedObjectStores = [];
     var objectStoreNames = {};
     for (var objectStoreName in this._database.objectStores) {
       var objectStore = this._database.objectStores[objectStoreName];
@@ -1179,20 +1220,18 @@ Resources.IDBDatabaseTreeElement = class extends Resources.BaseStorageTreeElemen
       if (!this._idbObjectStoreTreeElements[objectStore.name]) {
         var idbObjectStoreTreeElement =
             new Resources.IDBObjectStoreTreeElement(this._storagePanel, this._model, this._databaseId, objectStore);
+        idbObjectStoreTreeElement.update(objectStore);
         this._idbObjectStoreTreeElements[objectStore.name] = idbObjectStoreTreeElement;
         this.appendChild(idbObjectStoreTreeElement);
+        addedObjectStores.push(objectStore.name);
       }
-      this._idbObjectStoreTreeElements[objectStore.name].update(objectStore);
+      this._idbObjectStoreTreeElements[objectStore.name].updateList(objectStore);
     }
     for (var objectStoreName in this._idbObjectStoreTreeElements) {
       if (!objectStoreNames[objectStoreName])
         this._objectStoreRemoved(objectStoreName);
     }
-
-    if (this._view)
-      this._view.update(database);
-
-    this._updateTooltip();
+    return addedObjectStores;
   }
 
   _updateTooltip() {
@@ -1260,6 +1299,13 @@ Resources.IDBObjectStoreTreeElement = class extends Resources.BaseStorageTreeEle
     this.listItemElement.addEventListener('contextmenu', this._handleContextMenuEvent.bind(this), true);
   }
 
+  markNeedsRefresh() {
+    if (this._view)
+      this._view.markNeedsRefresh();
+    for (var indexName in this._idbIndexTreeElements)
+      this._idbIndexTreeElements[indexName].markNeedsRefresh();
+  }
+
   _handleContextMenuEvent(event) {
     var contextMenu = new UI.ContextMenu(event);
     contextMenu.appendItem(Common.UIString('Clear'), this._clearObjectStore.bind(this));
@@ -1275,8 +1321,29 @@ Resources.IDBObjectStoreTreeElement = class extends Resources.BaseStorageTreeEle
    * @param {!Resources.IndexedDBModel.ObjectStore} objectStore
    */
   update(objectStore) {
-    this._objectStore = objectStore;
+    var addedIndexes = this.updateList(objectStore);
+    for (var indexName in this._objectStore.indexes) {
+      var index = this._objectStore.indexes[indexName];
+      if (!addedIndexes.includes(index.name))
+        this._idbIndexTreeElements[index.name].update(this._objectStore, index);
+    }
 
+    if (this.childCount())
+      this.expand();
+
+    if (this._view)
+      this._view.update(this._objectStore, null);
+
+    this._updateTooltip();
+  }
+
+  /**
+   * @param {!Resources.IndexedDBModel.ObjectStore} objectStore
+   * @return {!Array<string>}
+   */
+  updateList(objectStore) {
+    this._objectStore = objectStore;
+    var addedIndexes = [];
     var indexNames = {};
     for (var indexName in this._objectStore.indexes) {
       var index = this._objectStore.indexes[indexName];
@@ -1284,10 +1351,11 @@ Resources.IDBObjectStoreTreeElement = class extends Resources.BaseStorageTreeEle
       if (!this._idbIndexTreeElements[index.name]) {
         var idbIndexTreeElement = new Resources.IDBIndexTreeElement(
             this._storagePanel, this._model, this._databaseId, this._objectStore, index);
+        idbIndexTreeElement.update(this._objectStore, index);
         this._idbIndexTreeElements[index.name] = idbIndexTreeElement;
         this.appendChild(idbIndexTreeElement);
+        addedIndexes.push(index.name);
       }
-      this._idbIndexTreeElements[index.name].update(index);
     }
     for (var indexName in this._idbIndexTreeElements) {
       if (!indexNames[indexName])
@@ -1299,14 +1367,7 @@ Resources.IDBObjectStoreTreeElement = class extends Resources.BaseStorageTreeEle
         delete this._idbIndexTreeElements[indexName];
       }
     }
-
-    if (this.childCount())
-      this.expand();
-
-    if (this._view)
-      this._view.update(this._objectStore, null);
-
-    this._updateTooltip();
+    return addedIndexes;
   }
 
   _updateTooltip() {
@@ -1372,14 +1433,21 @@ Resources.IDBIndexTreeElement = class extends Resources.BaseStorageTreeElement {
         this._objectStore.name + '/' + this._index.name;
   }
 
+  markNeedsRefresh() {
+    if (this._view)
+      this._view.markNeedsRefresh();
+  }
+
   /**
+   * @param {!Resources.IndexedDBModel.ObjectStore} objectStore
    * @param {!Resources.IndexedDBModel.Index} index
    */
-  update(index) {
+  update(objectStore, index) {
+    this._objectStore = objectStore;
     this._index = index;
 
     if (this._view)
-      this._view.update(this._index);
+      this._view.update(this._objectStore, this._index);
 
     this._updateTooltip();
   }
