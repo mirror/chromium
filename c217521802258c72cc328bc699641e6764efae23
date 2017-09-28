@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0105f4ac_8b95d2c6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-09-28T07:24:18Z",
+      "side": 1,
+      "message": "Make it one line summary.",
+      "revId": "c217521802258c72cc328bc699641e6764efae23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04ebaed2_81a1b102",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-09-28T07:24:18Z",
+      "side": 1,
+      "message": "are",
+      "range": {
+        "startLine": 7,
+        "startChar": 6,
+        "endLine": 7,
+        "endChar": 8
+      },
+      "revId": "c217521802258c72cc328bc699641e6764efae23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e74bf730_75c673de",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-09-28T07:24:18Z",
+      "side": 1,
+      "message": "Add an empty line above.\nhttp://www.chromium.org/developers/contributing-code#TOC-Writing-commit-descriptions",
+      "revId": "c217521802258c72cc328bc699641e6764efae23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c596a7e2_bcf8110e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-09-28T07:24:18Z",
+      "side": 1,
+      "message": "Could you update this with what you performed for test?",
+      "revId": "c217521802258c72cc328bc699641e6764efae23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a41275c_8b52402e",
+        "filename": "ui/file_manager/file_manager/foreground/js/metadata/content_metadata_provider.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-09-28T07:24:18Z",
+      "side": 1,
+      "message": "OK. chrome.mediaGalleries.getMetadata doesn\u0027t support image type, so early return here actually looks fine. Could you mention it in comment? (Update the ryoh\u0027s TODO).\nhttps://cs.chromium.org/chromium/src/chrome/utility/media_galleries/media_metadata_parser.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d115",
+      "revId": "c217521802258c72cc328bc699641e6764efae23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
