@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "098ed9c1_7080af14",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-09-28T07:49:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af2eadd0_181218db",
+      "revId": "854d20bb4f202958a4e647993732781ceca85294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f25abbd7_43a169f8",
         "filename": "content/public/common/referrer.h",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "854d20bb4f202958a4e647993732781ceca85294",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "663916ff_62a23143",
+        "filename": "content/public/common/referrer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-09-28T07:49:53Z",
+      "side": 1,
+      "message": "I think we should keep the consistency in the file.\n\nHmm.. I don\u0027t have a better idea...",
+      "parentUuid": "f25abbd7_43a169f8",
+      "revId": "854d20bb4f202958a4e647993732781ceca85294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "1909de78_00e0b62f",
+        "filename": "net/url_request/redirect_info.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-09-28T07:49:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b086205c_004fe3ed",
+      "range": {
+        "startLine": 180,
+        "startChar": 5,
+        "endLine": 180,
+        "endChar": 0
+      },
+      "revId": "854d20bb4f202958a4e647993732781ceca85294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a78c1172_64e39f6e",
         "filename": "net/url_request/redirect_info.h",
         "patchSetId": 5
@@ -79,6 +139,30 @@
       "revId": "854d20bb4f202958a4e647993732781ceca85294",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ebccbba_b3b355ae",
+        "filename": "net/url_request/redirect_info.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-09-28T07:49:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a78c1172_64e39f6e",
+      "range": {
+        "startLine": 37,
+        "startChar": 45,
+        "endLine": 37,
+        "endChar": 0
+      },
+      "revId": "854d20bb4f202958a4e647993732781ceca85294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "af62b27b_139ab179",
+        "filename": "net/url_request/redirect_info.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-09-28T07:49:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d63d77f8_62837a35",
+      "range": {
+        "startLine": 45,
+        "startChar": 21,
+        "endLine": 45,
+        "endChar": 25
+      },
+      "revId": "854d20bb4f202958a4e647993732781ceca85294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3aa2a84c_446b26cf",
         "filename": "net/url_request/redirect_info.h",
         "patchSetId": 5
@@ -125,6 +233,30 @@
       "revId": "854d20bb4f202958a4e647993732781ceca85294",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9f60b71_5ac20de5",
+        "filename": "net/url_request/redirect_info.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-09-28T07:49:53Z",
+      "side": 1,
+      "message": "Added redirect_info_unittest.cc.\nAnd I removed RedirectTransactionWithReferrerPolicyHeader test in url_request_job_unittest.cc.",
+      "parentUuid": "3aa2a84c_446b26cf",
+      "range": {
+        "startLine": 48,
+        "startChar": 33,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "854d20bb4f202958a4e647993732781ceca85294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
