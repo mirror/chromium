@@ -40,6 +40,7 @@ extern const base::Feature kAutofillSuppressDisusedAddresses;
 extern const base::Feature kAutofillSuppressDisusedCreditCards;
 extern const base::Feature kAutofillUpstreamAllowAllEmailDomains;
 extern const base::Feature kAutofillUpstreamRequestCvcIfMissing;
+extern const base::Feature kAutofillUpstreamSendDetectedValues;
 extern const base::Feature kAutofillUpstreamShowGoogleLogo;
 extern const base::Feature kAutofillUpstreamShowNewUi;
 extern const base::Feature kAutofillUpstreamUseAutofillProfileComparator;
@@ -132,6 +133,11 @@ bool IsAutofillOfferLocalSaveIfServerCardManuallyEnteredExperimentEnabled();
 // Returns whether the experiment is enabled where Chrome Upstream requests CVC
 // in the offer to save bubble if it was not detected during the checkout flow.
 bool IsAutofillUpstreamRequestCvcIfMissingExperimentEnabled();
+
+// Returns whether the experiment is enabled where Chrome Upstream always checks
+// to see if it can offer to save (even though some data like name, address, and
+// CVC might be missing) by sending metadata on what values were detected.
+bool IsAutofillUpstreamSendDetectedValuesExperimentEnabled();
 
 // Returns whether the experiment is enabled where Chrome Upstream displays a
 // Google Logo in the save card bubble/infobar.

@@ -79,6 +79,34 @@ class AutofillManager : public AutofillHandler,
                         public payments::FullCardRequest::ResultDelegate,
                         public payments::FullCardRequest::UIDelegate {
  public:
+  // Possible fields detected during credit card form submission, to be sent to
+  // Google Payments to better determine if upload credit card save should be
+  // offered.  These should stay consistent with the equivalent enum in Google
+  // Payments code.
+  enum DetectedValue {
+    // Set if a valid CVC was detected.  Will always be set if the CVC fix flow
+    // is enabled.
+    CVC = 1 << 0,
+    // Set if a cardholder name was found, *unless* conflicting names were
+    // found.
+    CARDHOLDER_NAME = 1 << 1,
+    // Set if an address name was found, *unless* conflicting names were found.
+    ADDRESS_NAME = 1 << 2,
+    // Set if an address line was found in any address (regardless of
+    // conflicts).
+    ADDRESS_LINE = 1 << 3,
+    // Set if a locality was found in any address (regardless of conflicts).
+    LOCALITY = 1 << 4,
+    // Set if an administrative area was found in any address (regardless of
+    // conflicts.)
+    ADMINISTRATIVE_AREA = 1 << 5,
+    // Set if a postal code was found in any address, *unless* conflicting
+    // postal codes were found.
+    POSTAL_CODE = 1 << 6,
+    // Set if a country code was found in any address (regardless of conflicts.)
+    COUNTRY_CODE = 1 << 7,
+  };
+
   // Registers our Enable/Disable Autofill pref.
   static void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry);
 
@@ -432,6 +460,11 @@ class AutofillManager : public AutofillHandler,
   // Imports the form data, submitted by the user, into |personal_data_|.
   void ImportFormData(const FormStructure& submitted_form);
 
+  // Analyzes the decisions made in ImportFormData(~) and
+  // SetProfilesForCreditCardUpload(~) to determine what credit card upload data
+  // is available.
+  int GetFormImportDetectedValues() const;
+
   // Examines |card| and the stored profiles and if a candidate set of profiles
   // is found that matches the client-side validation rules, assigns the values
   // to |upload_request.profiles| and returns 0. If no valid set can be found,
@@ -566,6 +599,7 @@ class AutofillManager : public AutofillHandler,
 
   // Collected information about a pending upload request.
   payments::PaymentsClient::UploadRequestDetails upload_request_;
+  int upload_decision_metrics_;
   bool user_did_accept_upload_prompt_;
 
   // |should_cvc_be_requested_| is |true| if we should request CVC from the user
@@ -653,6 +687,45 @@ class AutofillManager : public AutofillHandler,
                            OnLoadedServerPredictions_ResetManager);
   FRIEND_TEST_ALL_PREFIXES(AutofillManagerTest, DontOfferToSavePaymentsCard);
   FRIEND_TEST_ALL_PREFIXES(AutofillManagerTest, FillInUpdatedExpirationDate);
+  FRIEND_TEST_ALL_PREFIXES(AutofillManagerTest,
+                           GetFormImportDetectedValues_NothingIfNothingFound);
+  FRIEND_TEST_ALL_PREFIXES(AutofillManagerTest,
+                           GetFormImportDetectedValues_DetectCvc);
+  FRIEND_TEST_ALL_PREFIXES(
+      AutofillManagerTest,
+      GetFormImportDetectedValues_DetectCvcIfCvcFixFlowEnabled);
+  FRIEND_TEST_ALL_PREFIXES(AutofillManagerTest,
+                           GetFormImportDetectedValues_DetectCardholderName);
+  FRIEND_TEST_ALL_PREFIXES(AutofillManagerTest,
+                           GetFormImportDetectedValues_DetectAddressName);
+  FRIEND_TEST_ALL_PREFIXES(
+      AutofillManagerTest,
+      GetFormImportDetectedValues_DetectCardholderAndAddressNameIfMatching);
+  FRIEND_TEST_ALL_PREFIXES(
+      AutofillManagerTest,
+      GetFormImportDetectedValues_DetectNoUniqueNameIfNamesConflict);
+  FRIEND_TEST_ALL_PREFIXES(AutofillManagerTest,
+                           GetFormImportDetectedValues_DetectPostalCode);
+  FRIEND_TEST_ALL_PREFIXES(
+      AutofillManagerTest,
+      GetFormImportDetectedValues_DetectNoUniquePostalCodeIfZipsConflict);
+  FRIEND_TEST_ALL_PREFIXES(AutofillManagerTest,
+                           GetFormImportDetectedValues_DetectAddressLine);
+  FRIEND_TEST_ALL_PREFIXES(AutofillManagerTest,
+                           GetFormImportDetectedValues_DetectLocality);
+  FRIEND_TEST_ALL_PREFIXES(
+      AutofillManagerTest,
+      GetFormImportDetectedValues_DetectAdministrativeArea);
+  FRIEND_TEST_ALL_PREFIXES(AutofillManagerTest,
+                           GetFormImportDetectedValues_DetectCountryCode);
+  FRIEND_TEST_ALL_PREFIXES(AutofillManagerTest,
+                           GetFormImportDetectedValues_DetectEverythingAtOnce);
+  FRIEND_TEST_ALL_PREFIXES(
+      AutofillManagerTest,
+      GetFormImportDetectedValues_DetectSubsetOfPossibleFields);
+  FRIEND_TEST_ALL_PREFIXES(
+      AutofillManagerTest,
+      GetFormImportDetectedValues_DetectAddressComponentsAcrossProfiles);
   DISALLOW_COPY_AND_ASSIGN(AutofillManager);
 };
 
