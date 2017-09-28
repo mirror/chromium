@@ -209,7 +209,7 @@ def member_impl_context(member, interfaces_info, header_includes,
         if nullable_indicator_name:
             return nullable_indicator_name
         elif idl_type.is_union_type:
-            return '!%s_.isNull()' % cpp_name
+            return '!%s_.IsNull()' % cpp_name
         elif idl_type.is_enum or idl_type.is_string_type:
             return '!%s_.IsNull()' % cpp_name
         elif idl_type.name in ['Any', 'Object']:

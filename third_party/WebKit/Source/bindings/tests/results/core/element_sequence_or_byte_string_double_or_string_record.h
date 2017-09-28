@@ -28,17 +28,17 @@ class CORE_EXPORT ElementSequenceOrByteStringDoubleOrStringRecord final {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
  public:
   ElementSequenceOrByteStringDoubleOrStringRecord();
-  bool isNull() const { return type_ == SpecificTypeNone; }
+  bool IsNull() const { return type_ == SpecificTypes::kNone; }
 
-  bool isByteStringDoubleOrStringRecord() const { return type_ == SpecificTypeByteStringDoubleOrStringRecord; }
-  const HeapVector<std::pair<String, DoubleOrString>>& getAsByteStringDoubleOrStringRecord() const;
-  void setByteStringDoubleOrStringRecord(const HeapVector<std::pair<String, DoubleOrString>>&);
-  static ElementSequenceOrByteStringDoubleOrStringRecord fromByteStringDoubleOrStringRecord(const HeapVector<std::pair<String, DoubleOrString>>&);
+  bool IsByteStringDoubleOrStringRecord() const { return type_ == SpecificTypes::kByteStringDoubleOrStringRecord; }
+  const HeapVector<std::pair<String, DoubleOrString>>& GetAsByteStringDoubleOrStringRecord() const;
+  void SetByteStringDoubleOrStringRecord(const HeapVector<std::pair<String, DoubleOrString>>&);
+  static ElementSequenceOrByteStringDoubleOrStringRecord FromByteStringDoubleOrStringRecord(const HeapVector<std::pair<String, DoubleOrString>>&);
 
-  bool isElementSequence() const { return type_ == SpecificTypeElementSequence; }
-  const HeapVector<Member<Element>>& getAsElementSequence() const;
-  void setElementSequence(const HeapVector<Member<Element>>&);
-  static ElementSequenceOrByteStringDoubleOrStringRecord fromElementSequence(const HeapVector<Member<Element>>&);
+  bool IsElementSequence() const { return type_ == SpecificTypes::kElementSequence; }
+  const HeapVector<Member<Element>>& GetAsElementSequence() const;
+  void SetElementSequence(const HeapVector<Member<Element>>&);
+  static ElementSequenceOrByteStringDoubleOrStringRecord FromElementSequence(const HeapVector<Member<Element>>&);
 
   ElementSequenceOrByteStringDoubleOrStringRecord(const ElementSequenceOrByteStringDoubleOrStringRecord&);
   ~ElementSequenceOrByteStringDoubleOrStringRecord();
@@ -46,10 +46,10 @@ class CORE_EXPORT ElementSequenceOrByteStringDoubleOrStringRecord final {
   DECLARE_TRACE();
 
  private:
-  enum SpecificTypes {
-    SpecificTypeNone,
-    SpecificTypeByteStringDoubleOrStringRecord,
-    SpecificTypeElementSequence,
+  enum class SpecificTypes {
+    kNone,
+    kByteStringDoubleOrStringRecord,
+    kElementSequence,
   };
   SpecificTypes type_;
 

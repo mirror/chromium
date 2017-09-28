@@ -25,17 +25,17 @@ class CORE_EXPORT TestEnumOrDouble final {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
  public:
   TestEnumOrDouble();
-  bool isNull() const { return type_ == SpecificTypeNone; }
+  bool IsNull() const { return type_ == SpecificTypes::kNone; }
 
-  bool isDouble() const { return type_ == SpecificTypeDouble; }
-  double getAsDouble() const;
-  void setDouble(double);
-  static TestEnumOrDouble fromDouble(double);
+  bool IsDouble() const { return type_ == SpecificTypes::kDouble; }
+  double GetAsDouble() const;
+  void SetDouble(double);
+  static TestEnumOrDouble FromDouble(double);
 
-  bool isTestEnum() const { return type_ == SpecificTypeTestEnum; }
-  const String& getAsTestEnum() const;
-  void setTestEnum(const String&);
-  static TestEnumOrDouble fromTestEnum(const String&);
+  bool IsTestEnum() const { return type_ == SpecificTypes::kTestEnum; }
+  const String& GetAsTestEnum() const;
+  void SetTestEnum(const String&);
+  static TestEnumOrDouble FromTestEnum(const String&);
 
   TestEnumOrDouble(const TestEnumOrDouble&);
   ~TestEnumOrDouble();
@@ -43,10 +43,10 @@ class CORE_EXPORT TestEnumOrDouble final {
   DECLARE_TRACE();
 
  private:
-  enum SpecificTypes {
-    SpecificTypeNone,
-    SpecificTypeDouble,
-    SpecificTypeTestEnum,
+  enum class SpecificTypes {
+    kNone,
+    kDouble,
+    kTestEnum,
   };
   SpecificTypes type_;
 

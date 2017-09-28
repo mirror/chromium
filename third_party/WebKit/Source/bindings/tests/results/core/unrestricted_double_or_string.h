@@ -25,17 +25,17 @@ class CORE_EXPORT UnrestrictedDoubleOrString final {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
  public:
   UnrestrictedDoubleOrString();
-  bool isNull() const { return type_ == SpecificTypeNone; }
+  bool IsNull() const { return type_ == SpecificTypes::kNone; }
 
-  bool isString() const { return type_ == SpecificTypeString; }
-  const String& getAsString() const;
-  void setString(const String&);
-  static UnrestrictedDoubleOrString fromString(const String&);
+  bool IsString() const { return type_ == SpecificTypes::kString; }
+  const String& GetAsString() const;
+  void SetString(const String&);
+  static UnrestrictedDoubleOrString FromString(const String&);
 
-  bool isUnrestrictedDouble() const { return type_ == SpecificTypeUnrestrictedDouble; }
-  double getAsUnrestrictedDouble() const;
-  void setUnrestrictedDouble(double);
-  static UnrestrictedDoubleOrString fromUnrestrictedDouble(double);
+  bool IsUnrestrictedDouble() const { return type_ == SpecificTypes::kUnrestrictedDouble; }
+  double GetAsUnrestrictedDouble() const;
+  void SetUnrestrictedDouble(double);
+  static UnrestrictedDoubleOrString FromUnrestrictedDouble(double);
 
   UnrestrictedDoubleOrString(const UnrestrictedDoubleOrString&);
   ~UnrestrictedDoubleOrString();
@@ -43,10 +43,10 @@ class CORE_EXPORT UnrestrictedDoubleOrString final {
   DECLARE_TRACE();
 
  private:
-  enum SpecificTypes {
-    SpecificTypeNone,
-    SpecificTypeString,
-    SpecificTypeUnrestrictedDouble,
+  enum class SpecificTypes {
+    kNone,
+    kString,
+    kUnrestrictedDouble,
   };
   SpecificTypes type_;
 
