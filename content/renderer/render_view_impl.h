@@ -375,6 +375,8 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
                         HandledEventCallback callback) override;
   void ScrollFocusedEditableNodeIntoRect(const gfx::Rect& rect);
 
+  void UpdateWebViewWithDeviceScaleFactor();
+
  protected:
   // RenderWidget overrides:
   blink::WebWidget* GetWebWidget() const override;
@@ -602,8 +604,6 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
 #else
   void UpdateThemePrefs() {}
 #endif
-
-  void UpdateWebViewWithDeviceScaleFactor();
 
   // Send the appropriate ack to be able discard this input event message.
   void OnDiscardInputEvent(
