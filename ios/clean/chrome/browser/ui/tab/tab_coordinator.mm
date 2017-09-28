@@ -92,6 +92,11 @@
   [self.dispatcher startDispatchingToTarget:self
                                 forSelector:@selector(loadURL:)];
 
+  [self.browser->broadcaster()
+      broadcastValue:@"toolbarHeight"
+            ofObject:self.viewController
+            selector:@selector(broadcastToolbarHeight:)];
+
   // NavigationController will handle all the dispatcher navigation calls.
   self.navigationController = [[TabNavigationController alloc]
       initWithDispatcher:self.callableDispatcher
@@ -134,6 +139,8 @@
   _webStateListObserver.reset();
   _webStateObserver.reset();
   [self.dispatcher stopDispatchingToTarget:self];
+  [self.browser->broadcaster()
+      stopBroadcastingForSelector:@selector(broadcastToolbarHeight:)];
   [self.navigationController stop];
 }
 

@@ -51,6 +51,10 @@
 // given frame is in the window's coordinate system.
 - (void)broadcastOmniboxFrame:(CGRect)frame;
 
+#pragma mark - Toobar UI
+
+- (void)broadcastToolbarHeight:(CGFloat)height;
+
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_BROADCASTER_CHROME_BROADCAST_OBSERVER_H_
