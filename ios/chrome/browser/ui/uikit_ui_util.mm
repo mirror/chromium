@@ -7,10 +7,11 @@
 #import <Accelerate/Accelerate.h>
 #import <Foundation/Foundation.h>
 #import <QuartzCore/QuartzCore.h>
+#import <UIKit/UIKit.h>
 #include <stddef.h>
 #include <stdint.h>
-#import <UIKit/UIKit.h>
 #include <cmath>
+#include <limits>
 
 #include "base/ios/ios_util.h"
 #include "base/logging.h"
@@ -557,6 +558,10 @@ UIResponder* GetFirstResponder() {
   UIResponder* firstResponder = gFirstResponder;
   gFirstResponder = nil;
   return firstResponder;
+}
+
+bool CGFloatEquals(CGFloat a, CGFloat b) {
+  return std::fabs(a - b) <= std::numeric_limits<CGFloat>::epsilon();
 }
 
 // On iOS10 and above, trigger a haptic vibration for the user selecting an

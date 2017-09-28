@@ -201,6 +201,9 @@ bool IsCompactTablet();
 // Returns the current first responder.
 UIResponder* GetFirstResponder();
 
+// Returns whether |a| and |b| are within CGFloat's epsilon value.
+bool CGFloatEquals(CGFloat a, CGFloat b);
+
 // On iOS10 and above, trigger a haptic vibration for various types of
 // actions. This is a no-op for devices that do not support haptic feedback.
 void TriggerHapticFeedbackForAction();
