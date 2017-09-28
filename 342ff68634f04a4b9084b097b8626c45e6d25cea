@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a7d5282_2bcde742",
+        "filename": "third_party/WebKit/Source/core/editing/EditingBehavior.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-28T02:58:31Z",
+      "side": 1,
+      "message": "Curious: why is it named \"dead key\"? Can we have a better name?\n\nIt is hard to infer the meaning of \"dead key\".",
+      "range": {
+        "startLine": 116,
+        "startChar": 28,
+        "endLine": 116,
+        "endChar": 36
+      },
+      "revId": "342ff68634f04a4b9084b097b8626c45e6d25cea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11f9be9e_63a84d38",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-28T02:58:31Z",
+      "side": 1,
+      "message": "Please add some comment about this function.",
+      "range": {
+        "startLine": 191,
+        "startChar": 7,
+        "endLine": 191,
+        "endChar": 40
+      },
+      "revId": "342ff68634f04a4b9084b097b8626c45e6d25cea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20d4bcf5_b2b2e86d",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-28T02:58:31Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 333,
+        "startChar": 16,
+        "endLine": 333,
+        "endChar": 38
+      },
+      "revId": "342ff68634f04a4b9084b097b8626c45e6d25cea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be12b672_44e6cfa6",
+        "filename": "third_party/WebKit/Source/core/editing/EditorKeyBindings.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-28T02:58:31Z",
+      "side": 1,
+      "message": "This function is too hard to understand. Could you add more comments and/or break it into more self-explanatory functions?\n\nBtw, I feel that Editor.cpp is a better place to put this function. Since Editor.cpp is already a kitchen sync, I don\u0027t care if more random stuff is added there, for now. However, it has to be cleaned up some day in the future (by someone I don\u0027t know).",
+      "range": {
+        "startLine": 196,
+        "startChar": 13,
+        "endLine": 196,
+        "endChar": 45
+      },
+      "revId": "342ff68634f04a4b9084b097b8626c45e6d25cea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
