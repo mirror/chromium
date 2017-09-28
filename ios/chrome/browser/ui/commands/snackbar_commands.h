@@ -7,12 +7,21 @@
 
 #import <Foundation/Foundation.h>
 
+@class MDCSnackbarMessage;
+
+// Default snackbar category.
+NSString* const kDefaultSnackbarCategory = @"DefaultSnackbarCategory";
+
 // Commands related to Snackbar.
 @protocol SnackbarCommands
-// Shows a snackbar with |message|. This method uses a default category. Only
-// the last message of the default category will be shown. Any currently showing
-// or pending message of the default category will be dismissed.
-- (void)showSnackbarWithMessage:(NSString*)message;
+
+// Shows a snackbar with |message|.
+- (void)showSnackbarMessage:(MDCSnackbarMessage*)message;
+
+// Dismisses all snackbar messages (shown and queued) of |category|. If
+// |category| is nil, all snackbar messages are dismissed.
+- (void)dismissSnackbarsAndCallCompletionBlocksWithCategory:(NSString*)category;
+
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_COMMANDS_SNACKBAR_COMMANDS_H_

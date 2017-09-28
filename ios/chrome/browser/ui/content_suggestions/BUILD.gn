@@ -35,6 +35,7 @@ source_set("content_suggestions") {
     "//components/strings",
     "//ios/chrome/browser/ui",
     "//ios/chrome/browser/ui/collection_view",
+    "//ios/chrome/browser/ui/commands",
     "//ios/chrome/browser/ui/content_suggestions/cells:cells_ui",
     "//ios/chrome/browser/ui/content_suggestions/identifier",
     "//ios/chrome/browser/ui/favicon:favicon_ui",
@@ -42,9 +43,6 @@ source_set("content_suggestions") {
     "//ios/chrome/browser/ui/ntp:ntp_header",
     "//ios/chrome/browser/ui/overscroll_actions",
     "//ui/base",
-  ]
-  public_deps = [
-    "//ios/third_party/material_components_ios",
   ]
   configs += [ "//build/config/compiler:enable_arc" ]
 }
