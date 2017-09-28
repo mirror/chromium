@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b584adf_a8ee7696",
+        "filename": "third_party/WebKit/Source/core/html/TextControlElement.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-28T00:07:03Z",
+      "side": 1,
+      "message": "It seem this field can be private.",
+      "revId": "338d32404b4849f34a539ecd109590dc01b68d0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
