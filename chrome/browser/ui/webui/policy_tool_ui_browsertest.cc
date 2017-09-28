@@ -11,8 +11,10 @@
 #include "base/threading/thread_restrictions.h"
 #include "base/values.h"
 #include "chrome/browser/ui/browser.h"
+#include "chrome/browser/ui/browser_commands.h"
 #include "chrome/browser/ui/javascript_dialogs/javascript_dialog_tab_helper.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
+#include "chrome/browser/ui/webui/policy_tool_ui_handler.h"
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/test/base/in_process_browser_test.h"
@@ -32,6 +34,9 @@ class PolicyToolUITest : public InProcessBrowserTest {
   void SetUp() override;
 
   base::FilePath GetSessionsDir();
+  base::FilePath::StringType GetDefaultSessionName();
+  base::FilePath::StringType GetSessionExtension();
+  base::FilePath GetSessionPath(const base::FilePath::StringType& session_name);
 
   void LoadSession(const std::string& session_name);
 
@@ -48,7 +53,22 @@ base::FilePath PolicyToolUITest::GetSessionsDir() {
   base::FilePath profile_dir;
   EXPECT_TRUE(PathService::Get(chrome::DIR_USER_DATA, &profile_dir));
   return profile_dir.AppendASCII(TestingProfile::kTestUserProfileDir)
-      .Append(FILE_PATH_LITERAL("Policy sessions"));
+      .Append(PolicyToolUIHandler::kPolicyToolSessionsDir);
+}
+
+base::FilePath::StringType PolicyToolUITest::GetDefaultSessionName() {
+  return PolicyToolUIHandler::kPolicyToolDefaultSessionName;
+}
+
+base::FilePath::StringType PolicyToolUITest::GetSessionExtension() {
+  return PolicyToolUIHandler::kPolicyToolSessionExtension;
+}
+
+base::FilePath PolicyToolUITest::GetSessionPath(
+    const base::FilePath::StringType& session_name) {
+  return GetSessionsDir()
+      .Append(session_name)
+      .AddExtension(GetSessionExtension());
 }
 
 PolicyToolUITest::PolicyToolUITest() {}
@@ -122,25 +142,18 @@ IN_PROC_BROWSER_TEST_F(PolicyToolUITest, CreatingSessionFiles) {
 
   ui_test_utils::NavigateToURL(browser(), GURL("chrome://policy-tool"));
 
-  const base::FilePath default_session_path =
-      GetSessionsDir().Append(FILE_PATH_LITERAL("policy.json"));
   // Check that the default session file was created.
-  EXPECT_TRUE(PathExists(default_session_path));
+  EXPECT_TRUE(PathExists(GetSessionPath(GetDefaultSessionName())));
 
   // Check that when moving to a different session the corresponding file is
   // created.
   LoadSession("test_creating_sessions");
-
-  const base::FilePath test_session_path =
-      GetSessionsDir().Append(FILE_PATH_LITERAL("test_creating_sessions.json"));
-  EXPECT_TRUE(PathExists(test_session_path));
+  EXPECT_TRUE(
+      PathExists(GetSessionPath(FILE_PATH_LITERAL("test_creating_sessions"))));
 
   // Check that unicode characters are valid for the session name.
   LoadSession("сессия");
-
-  const base::FilePath russian_session_path =
-      GetSessionsDir().Append(FILE_PATH_LITERAL("сессия.json"));
-  EXPECT_TRUE(PathExists(russian_session_path));
+  EXPECT_TRUE(PathExists(GetSessionPath(FILE_PATH_LITERAL("сессия"))));
 }
 
 IN_PROC_BROWSER_TEST_F(PolicyToolUITest, ImportingSession) {
@@ -158,9 +171,8 @@ IN_PROC_BROWSER_TEST_F(PolicyToolUITest, ImportingSession) {
   std::string json;
   base::JSONWriter::WriteWithOptions(
       test_policies, base::JSONWriter::Options::OPTIONS_PRETTY_PRINT, &json);
-  base::WriteFile(
-      GetSessionsDir().Append(FILE_PATH_LITERAL("test_session.json")),
-      json.c_str(), json.size());
+  base::WriteFile(GetSessionPath(FILE_PATH_LITERAL("test_session")),
+                  json.c_str(), json.size());
 
   // Import the created session and wait until all the tasks are finished.
   LoadSession("test_session");
@@ -200,9 +212,8 @@ IN_PROC_BROWSER_TEST_F(PolicyToolUITest, Editing) {
   // Check if the session file is correct.
   base::ThreadRestrictions::ScopedAllowIO allow_io;
   std::string file_contents;
-  base::ReadFileToString(
-      GetSessionsDir().Append(FILE_PATH_LITERAL("policy.json")),
-      &file_contents);
+  base::ReadFileToString(GetSessionPath(GetDefaultSessionName()),
+                         &file_contents);
   values = base::JSONReader::Read(file_contents);
   expected.SetDictionary("extensionPolicies",
                          base::MakeUnique<base::DictionaryValue>());
@@ -231,8 +242,7 @@ IN_PROC_BROWSER_TEST_F(PolicyToolUITest, InvalidFilename) {
 IN_PROC_BROWSER_TEST_F(PolicyToolUITest, InvalidJson) {
   ui_test_utils::NavigateToURL(browser(), GURL("chrome://policy-tool"));
   base::ThreadRestrictions::ScopedAllowIO allow_io;
-  base::WriteFile(
-      GetSessionsDir().Append(FILE_PATH_LITERAL("test_session.json")), "{", 1);
+  base::WriteFile(GetSessionPath(FILE_PATH_LITERAL("test_session")), "{", 1);
   LoadSessionAndWaitForAlert("test_session");
 }
 
@@ -244,4 +254,59 @@ IN_PROC_BROWSER_TEST_F(PolicyToolUITest, UnableToCreateDirectoryOrFile) {
                                                  base::File::Flags::FLAG_WRITE);
   not_directory.Close();
   LoadSessionAndWaitForAlert("test_session");
+}
+
+IN_PROC_BROWSER_TEST_F(PolicyToolUITest, DefaultSession) {
+  // Navigate to the tool to make sure the sessions directory is created.
+  ui_test_utils::NavigateToURL(browser(), GURL("chrome://policy-tool"));
+
+  // Check that if there are no sessions, a session with default name is
+  // created.
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
+  EXPECT_TRUE(base::PathExists(GetSessionPath(GetDefaultSessionName())));
+
+  // Create a session file and load it.
+  base::DictionaryValue expected;
+  expected.SetString("chromePolicies.SessionName.value", "session");
+  std::string file_contents;
+  base::JSONWriter::Write(expected, &file_contents);
+
+  base::WriteFile(GetSessionPath(FILE_PATH_LITERAL("session")),
+                  file_contents.c_str(), file_contents.size());
+  LoadSession("session");
+  std::unique_ptr<base::DictionaryValue> values = ExtractPolicyValues(false);
+  EXPECT_EQ(expected, *values);
+
+  // Open the tool in a new tab and check that it loads the newly created
+  // session (which is the last used session) and not the default session.
+  chrome::NewTab(browser());
+  ui_test_utils::NavigateToURL(browser(), GURL("chrome://policy-tool"));
+  values = ExtractPolicyValues(false);
+  EXPECT_EQ(expected, *values);
+}
+
+IN_PROC_BROWSER_TEST_F(PolicyToolUITest, MultipleSessionsChoice) {
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
+  base::CreateDirectory(GetSessionsDir());
+  // Create 5 session files with different last access times and contents.
+  base::DictionaryValue contents;
+  base::Time initial_time = base::Time::Now();
+  for (int i = 0; i < 5; ++i) {
+    contents.SetPath({"chromePolicies", "SessionId", "value"},
+                     base::Value(base::IntToString(i)));
+    base::FilePath::StringType session_name =
+        base::FilePath::FromUTF8Unsafe(base::IntToString(i)).value();
+    std::string stringified_contents;
+    base::JSONWriter::Write(contents, &stringified_contents);
+    base::WriteFile(GetSessionPath(session_name), stringified_contents.c_str(),
+                    stringified_contents.size());
+    base::Time current_time = initial_time + base::TimeDelta::FromSeconds(i);
+    base::TouchFile(GetSessionPath(session_name), current_time, current_time);
+  }
+
+  // Load the page. This should load the last session.
+  ui_test_utils::NavigateToURL(browser(), GURL("chrome://policy-tool"));
+  std::unique_ptr<base::DictionaryValue> page_contents =
+      ExtractPolicyValues(false);
+  EXPECT_EQ(contents, *page_contents);
 }
