@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b57ac513_6e61d2b0",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 3822,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-09-28T20:00:49Z",
+      "side": 1,
+      "message": "ProcessLayerTreeMutations/BeginFrameCallbacks removed.",
+      "parentUuid": "d494f0f6_c7bf4d0e",
+      "revId": "db73162091ea1491ac30fbec1b439189395eec1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cdf75ff_16ba3058",
         "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorClient.h",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a36e49e3_cf161ab6",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorClient.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-09-28T20:00:49Z",
+      "side": 1,
+      "message": "this seems to still be called to cause an initial Mutate call in CompositorMutatorImpl::RegisterCompositorAnimator.  I agree the assertion that that is unnecessary deserves a separate patch.\n\nCommented.",
+      "parentUuid": "1cdf75ff_16ba3058",
+      "revId": "db73162091ea1491ac30fbec1b439189395eec1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6942079c_810a6f2c",
         "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorClientTest.cpp",
         "patchSetId": 10
@@ -50,6 +86,24 @@
       "revId": "db73162091ea1491ac30fbec1b439189395eec1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eee2679_b6108fa2",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorClientTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-09-28T20:00:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6942079c_810a6f2c",
+      "revId": "db73162091ea1491ac30fbec1b439189395eec1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
