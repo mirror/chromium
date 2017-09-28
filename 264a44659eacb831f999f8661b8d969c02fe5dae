@@ -1,0 +1,226 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cff91028_26146f29",
+        "filename": "ash/animation_frame.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-28T22:10:09Z",
+      "side": 1,
+      "message": "nit: Animation is too generic and we have cc::Animation and gfx::Animation already. How about AnimationFrames ?",
+      "range": {
+        "startLine": 22,
+        "startChar": 6,
+        "endLine": 22,
+        "endChar": 15
+      },
+      "revId": "264a44659eacb831f999f8661b8d969c02fe5dae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a71873e_8a7bfc0a",
+        "filename": "ash/login/ui/animated_rounded_image_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-28T22:10:09Z",
+      "side": 1,
+      "message": "nit: GetContentsBounds() then we don\u0027t need to do Inset on L57.\n\nOr is it important we do ClampToCenteredSize before Inset ?",
+      "range": {
+        "startLine": 55,
+        "startChar": 25,
+        "endLine": 55,
+        "endChar": 31
+      },
+      "revId": "264a44659eacb831f999f8661b8d969c02fe5dae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a366072_2cc8c625",
+        "filename": "ash/login/ui/animated_rounded_image_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-28T22:10:09Z",
+      "side": 1,
+      "message": "nit: push_back(std::move(frame)) to save a copy ?",
+      "range": {
+        "startLine": 83,
+        "startChar": 12,
+        "endLine": 83,
+        "endChar": 28
+      },
+      "revId": "264a44659eacb831f999f8661b8d969c02fe5dae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "377d4c78_ee74e8ca",
+        "filename": "ash/login/ui/animated_rounded_image_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-28T22:10:09Z",
+      "side": 1,
+      "message": "nit: DCHECK(!framee_.empty());",
+      "revId": "264a44659eacb831f999f8661b8d969c02fe5dae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6451859_94cc6d09",
+        "filename": "ash/login/ui/animated_rounded_image_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-28T22:10:09Z",
+      "side": 1,
+      "message": "I could imagine this class would be useful for system tray as well. Find a better home to share the code? Maybe under a new ash/ui/views (not sure whether we should even put it in ui/views/controls along side of ImageView).",
+      "revId": "264a44659eacb831f999f8661b8d969c02fe5dae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdc2b7b1_1575b541",
+        "filename": "ash/login/ui/animated_rounded_image_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-28T22:10:09Z",
+      "side": 1,
+      "message": "nit: const int",
+      "revId": "264a44659eacb831f999f8661b8d969c02fe5dae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3d140d4_cd3eec99",
+        "filename": "ash/login/ui/image_parser.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-28T22:10:09Z",
+      "side": 1,
+      "message": "nit: #include \u003cutility\u003e for std::move",
+      "revId": "264a44659eacb831f999f8661b8d969c02fe5dae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edfcc72a_8b19ab18",
+        "filename": "ash/login/ui/image_parser.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-28T22:10:09Z",
+      "side": 1,
+      "message": "nit: #include \"base/callback_forward.h\"",
+      "revId": "264a44659eacb831f999f8661b8d969c02fe5dae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5f756de_e062211c",
+        "filename": "ash/public/interfaces/user_info.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-28T22:10:09Z",
+      "side": 1,
+      "message": "What is the rough size of the data? If more than hundreds of KB, we should consider use shared buffer as transport to avoid congesting the message pipe.\n\nIt seems to be a generic problem though. Maybe we should consider creating a mojo.Blob to for passing around bytes via shared buffer.\n\nWe can do it in a separate CL and leave a TODO here to follow up.",
+      "revId": "264a44659eacb831f999f8661b8d969c02fe5dae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43117c6d_00eacf38",
+        "filename": "services/data_decoder/public/cpp/decode_image.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-28T22:10:09Z",
+      "side": 1,
+      "message": "nit: #include \u003cutility\u003e",
+      "revId": "264a44659eacb831f999f8661b8d969c02fe5dae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5ec9717_c43c779e",
+        "filename": "services/data_decoder/public/interfaces/image_decoder.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-28T22:10:09Z",
+      "side": 1,
+      "message": "mojo.common.mojom.TimeDelta ?",
+      "revId": "264a44659eacb831f999f8661b8d969c02fe5dae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54af170c_590a2b2b",
+        "filename": "third_party/WebKit/Source/platform/exported/WebImage.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-28T22:10:09Z",
+      "side": 1,
+      "message": "Why do we need to do this? Each iteration should have |bitmap| pointing to a different pixel buffer of corresponding frame, right?",
+      "revId": "264a44659eacb831f999f8661b8d969c02fe5dae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
