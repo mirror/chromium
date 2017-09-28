@@ -401,6 +401,25 @@ void NotifyResourceSchedulerOfNavigation(
                  render_process_id, params.render_view_routing_id));
 }
 
+bool DidRendererReportedCommitOfValidOrigin(
+    const url::Origin& origin_reported_by_renderer,
+    NavigationHandleImpl* navigation_handle) {
+  // TODO / DO NOT SUBMIT - should this return false instead?
+  // Or maybe this should be a DCHECK?
+  if (!navigation_handle)
+    return true;
+
+  if (origin_reported_by_renderer.unique())
+    return true;
+
+  // TODO(lukasza): Rely on something like |initiator_origin| instead.
+  if (navigation_handle->GetURL().IsAboutBlank())
+    return true;
+
+  url::Origin expected_origin(navigation_handle->GetURL());
+  return expected_origin.IsSamePhysicalOriginWith(origin_reported_by_renderer);
+}
+
 }  // namespace
 
 // static
@@ -1565,6 +1584,14 @@ void RenderFrameHostImpl::DidCommitProvisionalLoad(
     bad_message::ReceivedBadMessage(GetProcess(),
                                     bad_message::RFH_INVALID_ORIGIN_ON_COMMIT);
     return;
+  }
+
+  // Verify that the origin reported by the renderer matches the expectations
+  // based on where we were navigating.
+  if (!DidRendererReportedCommitOfValidOrigin(validated_params->origin,
+                                              navigation_handle_.get())) {
+    // TODO / DO NOT SUBMT - replace this with a renderer kill.
+    NOTREACHED();
   }
 
   // Without this check, an evil renderer can trick the browser into creating
