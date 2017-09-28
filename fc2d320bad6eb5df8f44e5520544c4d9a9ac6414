@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bfc1b0c2_6de776ae",
+        "filename": "cc/layers/layer_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-28T21:26:04Z",
+      "side": 1,
+      "message": "Oooh, good idea! Done.",
+      "parentUuid": "500e4532_042e643a",
+      "revId": "fc2d320bad6eb5df8f44e5520544c4d9a9ac6414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65405d05_c822660d",
         "filename": "cc/layers/picture_layer_impl.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "86b43380_35c45fd7",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-28T21:26:04Z",
+      "side": 1,
+      "message": "Done. I\u0027ve added an expect in the tests. I\u0027m not really sure where to DCHECK this. We want to make sure that the tile.origin + quad_offset is never negative, right? We could do that..",
+      "parentUuid": "65405d05_c822660d",
+      "revId": "fc2d320bad6eb5df8f44e5520544c4d9a9ac6414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6811859b_5d00b92f",
         "filename": "cc/layers/picture_layer_impl.cc",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-28T19:54:21Z",
       "side": 1,
       "message": "Can you change these things earlier, up with changing the shared quad state transform? If you did that, then maybe you wouldn\u0027t need offset_visible_geometry_rect and such and could pass quad_layer_rect direction to append debug quads \u0026c \u0026c",
+      "revId": "fc2d320bad6eb5df8f44e5520544c4d9a9ac6414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b05cdda_c87f8a70",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-28T21:26:04Z",
+      "side": 1,
+      "message": "We use the visible_quad_layer_rect in the PLTS::CoverageIterator in the above loop. This does need to be in the non-offset space, since it\u0027s pulling specific tiles. I think this is the earliest time when I can update it. (I mean, technically I can updated quad_layer_rect earlier, but I just kept it together with the visible one)",
+      "parentUuid": "6811859b_5d00b92f",
       "revId": "fc2d320bad6eb5df8f44e5520544c4d9a9ac6414",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
