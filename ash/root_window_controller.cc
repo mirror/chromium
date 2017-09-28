@@ -6,6 +6,7 @@
 
 #include <algorithm>
 #include <queue>
+#include <utility>
 #include <vector>
 
 #include "ash/ash_constants.h"
@@ -28,6 +29,8 @@
 #include "ash/shelf/shelf_window_targeter.h"
 #include "ash/shell.h"
 #include "ash/shell_port.h"
+#include "ash/system/lock_screen_action/lock_screen_action_background_controller_impl.h"
+#include "ash/system/lock_screen_action/lock_screen_action_background_controller_stub.h"
 #include "ash/system/status_area_layout_manager.h"
 #include "ash/system/status_area_widget.h"
 #include "ash/touch/touch_hud_debug.h"
@@ -756,12 +759,23 @@ void RootWindowController::InitLayoutManagers() {
   lock_modal_container->SetLayoutManager(
       new SystemModalContainerLayoutManager(lock_modal_container));
 
+  std::unique_ptr<LockScreenActionBackgroundController>
+      lock_screen_action_background_controller;
+  if (IsUsingMdLogin()) {
+    lock_screen_action_background_controller =
+        std::make_unique<LockScreenActionBackgroundControllerImpl>();
+  } else {
+    lock_screen_action_background_controller =
+        std::make_unique<LockScreenActionBackgroundControllerStub>();
+  }
+
   aura::Window* lock_action_handler_container =
       GetContainer(kShellWindowId_LockActionHandlerContainer);
   DCHECK(lock_action_handler_container);
   lock_action_handler_container->SetLayoutManager(
-      new LockActionHandlerLayoutManager(lock_action_handler_container,
-                                         shelf_.get()));
+      new LockActionHandlerLayoutManager(
+          lock_action_handler_container, shelf_.get(),
+          std::move(lock_screen_action_background_controller)));
 
   aura::Window* lock_container =
       GetContainer(kShellWindowId_LockScreenContainer);
