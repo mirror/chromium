@@ -61,6 +61,8 @@ class PrintersSyncBridge : public syncer::ModelTypeSyncBridge {
   base::Optional<sync_pb::PrinterSpecifics> GetPrinter(
       const std::string& id) const;
 
+  void SetOnReadyCallback(base::OnceClosure callback);
+
  private:
   class StoreProxy;
 
@@ -78,6 +80,7 @@ class PrintersSyncBridge : public syncer::ModelTypeSyncBridge {
                        syncer::ModelTypeStore::WriteBatch* batch);
 
   std::unique_ptr<StoreProxy> store_delegate_;
+  base::OnceClosure ready_callback_;
 
   // Lock over |all_data_|.
   mutable base::Lock data_lock_;

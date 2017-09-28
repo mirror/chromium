@@ -44,13 +44,17 @@ class SyncedPrintersManagerImpl : public SyncedPrintersManager {
                             std::unique_ptr<PrintersSyncBridge> sync_bridge)
       : profile_(profile),
         sync_bridge_(std::move(sync_bridge)),
-        observers_(new base::ObserverListThreadSafe<Observer>()) {
+        observers_(new base::ObserverListThreadSafe<Observer>()),
+        weak_factory_(this) {
     pref_change_registrar_.Init(profile->GetPrefs());
     pref_change_registrar_.Add(
         prefs::kRecommendedNativePrinters,
         base::Bind(&SyncedPrintersManagerImpl::UpdateRecommendedPrinters,
                    base::Unretained(this)));
     UpdateRecommendedPrinters();
+    sync_bridge_->SetOnReadyCallback(base::BindOnce(
+        &SyncedPrintersManagerImpl::NotifyConfiguredPrintersChanged,
+        weak_factory_.GetWeakPtr()));
   }
   ~SyncedPrintersManagerImpl() override = default;
 
@@ -143,6 +147,10 @@ class SyncedPrintersManagerImpl : public SyncedPrintersManager {
     }
 
     sync_bridge_->UpdatePrinter(PrinterToSpecifics(printer));
+    NotifyConfiguredPrintersChanged();
+  }
+
+  void NotifyConfiguredPrintersChanged() {
     observers_->Notify(
         FROM_HERE,
         &SyncedPrintersManager::Observer::OnConfiguredPrintersChanged,
@@ -234,6 +242,7 @@ class SyncedPrintersManagerImpl : public SyncedPrintersManager {
   std::map<std::string, std::string> installed_printer_fingerprints_;
 
   scoped_refptr<base::ObserverListThreadSafe<Observer>> observers_;
+  base::WeakPtrFactory<SyncedPrintersManagerImpl> weak_factory_;
 };
 
 }  // namespace
