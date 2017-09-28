@@ -16,6 +16,24 @@
       "revId": "26fdc09f486a55a7e5eb7514e6f3021a7dcfdb80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0683fc3a_29c54e8b",
+        "filename": "ash/message_center/message_list_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-09-28T04:30:05Z",
+      "side": 1,
+      "message": "I updated the logic and it\u0027s now O(N).\n\nThe size of notification is 100 in maximum. So I think much-optimize is not necessary here.",
+      "parentUuid": "a312814f_63dee2f1",
+      "revId": "26fdc09f486a55a7e5eb7514e6f3021a7dcfdb80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
