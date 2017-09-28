@@ -493,8 +493,9 @@ void NGInlineNode::ShapeText(const String& text_content,
       continue;
 
     const Font& font = item.Style()->GetFont();
-    RefPtr<ShapeResult> shape_result = shaper.Shape(
-        &font, item.Direction(), item.StartOffset(), item.EndOffset());
+    RefPtr<ShapeResult> shape_result =
+        shaper.Shape(&font, item.Direction(), item.StartOffset(),
+                     item.EndOffset(), item.ShapeOptions());
 
     if (UNLIKELY(spacing.SetSpacing(font.GetFontDescription())))
       shape_result->ApplySpacing(spacing);
