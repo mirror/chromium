@@ -36,12 +36,11 @@ import org.chromium.base.library_loader.ProcessInitException;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeApplication;
 import org.chromium.chrome.browser.IntentHandler;
+import org.chromium.chrome.browser.LaunchIntentDispatcher;
 import org.chromium.chrome.browser.WarmupManager;
 import org.chromium.chrome.browser.firstrun.FirstRunFlowSequencer;
 import org.chromium.chrome.browser.metrics.MemoryUma;
 import org.chromium.chrome.browser.profiles.Profile;
-import org.chromium.chrome.browser.tabmodel.DocumentModeAssassin;
-import org.chromium.chrome.browser.upgrade.UpgradeActivity;
 import org.chromium.ui.base.ActivityWindowAndroid;
 import org.chromium.ui.base.DeviceFormFactor;
 import org.chromium.ui.base.WindowAndroid;
@@ -244,18 +243,19 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
         TraceEvent.end("AsyncInitializationActivity.onCreate()");
     }
 
+    protected @LaunchIntentDispatcher.Action int maybeDispatchLaunchIntent(Intent intent) {
+        return LaunchIntentDispatcher.Action.CONTINUE;
+    }
+
     private final void onCreateInternal(Bundle savedInstanceState) {
-        setIntent(validateIntent(getIntent()));
-        if (DocumentModeAssassin.getInstance().isMigrationNecessary()) {
-            super.onCreate(null);
-
-            // Kick the user to the MigrationActivity.
-            UpgradeActivity.launchInstance(this, getIntent());
-
-            // Don't remove this task -- it may be a DocumentActivity that exists only in Recents.
-            finish();
+        @LaunchIntentDispatcher.Action
+        int dispatchAction = maybeDispatchLaunchIntent(getIntent());
+        if (dispatchAction != LaunchIntentDispatcher.Action.CONTINUE) {
+            abortLaunch();
             return;
         }
+
+        setIntent(validateIntent(getIntent()));
 
         Intent intent = getIntent();
         if (!isStartedUpCorrectly(intent)) {
