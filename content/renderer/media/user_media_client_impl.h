@@ -17,6 +17,7 @@
 #include "content/common/media/media_devices.h"
 #include "content/common/media/media_devices.mojom.h"
 #include "content/public/renderer/render_frame_observer.h"
+#include "content/renderer/media/apply_constraints_processor.h"
 #include "content/renderer/media/media_devices_event_dispatcher.h"
 #include "content/renderer/media/user_media_processor.h"
 #include "third_party/WebKit/public/platform/WebVector.h"
@@ -134,6 +135,7 @@ class CONTENT_EXPORT UserMediaClientImpl : public RenderFrameObserver,
 
   // |user_media_processor_| is a unique_ptr for testing purposes.
   std::unique_ptr<UserMediaProcessor> user_media_processor_;
+  ApplyConstraintsProcessor apply_constraints_processor_;
 
   ::mojom::MediaDevicesDispatcherHostPtr media_devices_dispatcher_;
 
