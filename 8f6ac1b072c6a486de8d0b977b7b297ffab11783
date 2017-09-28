@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7efe728_941ce2a0",
+        "filename": "third_party/WebKit/Source/core/events/MouseEvent.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-09-28T19:45:08Z",
+      "side": 1,
+      "message": "In addition to what Dave mentioned offline, please make sure this MouseEvent.h change is /only/ in the very last CL your commit sequence.  This will possibly cause the biggest regression in the web, so you have to be prepared to repeat {revert the last CL, fix the bug, reland the last CL} :(\n\nI know this sounds like a bit of throwaway work (adding temporary truncations like floor() etc only to drop them later on).  But\n- reverting any CL potentially adds a lot of extra work, and\n- anything that changes DOM Mouse events causes regressions, so I will be surprised if you don\u0027t have to revert this MouseEvent.h change a few times.\n\nOther than DOM MouseEvent, you can also consider holding back WebMouseEvent.h changes before all platform-specific fixes have landed.",
+      "revId": "8f6ac1b072c6a486de8d0b977b7b297ffab11783",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
