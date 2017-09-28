@@ -21,13 +21,8 @@
 
 namespace content {
 
-namespace {
-
-// Buffer size for reading script data from network. We chose this size because
-// the AppCache uses this.
-const uint32_t kReadBufferSize = 32768;
-
-}  // namespace
+// We chose this size because the AppCache uses this.
+uint32_t ServiceWorkerScriptURLLoader::s_read_buffer_size_ = 32768;
 
 // TODO(nhiroki): We're doing multiple things in the ctor. Consider factors out
 // some of them into a separate function.
@@ -374,9 +369,10 @@ void ServiceWorkerScriptURLLoader::OnNetworkDataAvailable(MojoResult) {
 void ServiceWorkerScriptURLLoader::WriteData(
     scoped_refptr<network::MojoToNetPendingBuffer> pending_buffer,
     uint32_t bytes_available) {
-  // Cap the buffer size up to |kReadBufferSize|. The remaining will be written
-  // next time.
-  uint32_t bytes_written = std::min<uint32_t>(kReadBufferSize, bytes_available);
+  // Cap the buffer size up to |s_read_buffer_size_|. The remaining will be
+  // written next time.
+  uint32_t bytes_written =
+      std::min<uint32_t>(s_read_buffer_size_, bytes_available);
 
   auto buffer = base::MakeRefCounted<network::MojoToNetIOBuffer>(
       pending_buffer.get(), bytes_written);
