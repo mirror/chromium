@@ -32,4 +32,9 @@ public interface ToolbarTabController {
      * Opens hompage in the current tab.
      */
     void openHomepage();
+
+    /**
+     * Opens URL in the current tab.
+     */
+    void openUI(String url);
 }
