@@ -231,6 +231,7 @@ class AudioParam final : public GarbageCollectedFinalized<AudioParam>,
   String GetParamName() const;
 
   float value() const;
+  void setValue(float, ExceptionState&);
   void setValue(float);
   float defaultValue() const;
   // Use when setting the initial value of an AudioParam when creating

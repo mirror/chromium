@@ -461,6 +461,20 @@ void AudioParam::setValue(float value) {
   Handler().SetValue(value);
 }
 
+void AudioParam::setValue(float value, ExceptionState& exception_state) {
+  WarnIfOutsideRange("value", value);
+#if 0
+  Handler().SetValue(value, exception_state);
+#else
+  // This is to signal any errors, if necessary, about conflicting
+  // automations.
+  setValueAtTime(value, Context()->currentTime(), exception_state);
+  // This is to change the value so that an immediate query for the
+  // value returns the expected values.
+  Handler().SetValue(value);
+#endif
+}
+
 float AudioParam::defaultValue() const {
   return Handler().DefaultValue();
 }
