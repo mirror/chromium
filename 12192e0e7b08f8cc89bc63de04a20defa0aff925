@@ -22,6 +22,47 @@
       "revId": "12192e0e7b08f8cc89bc63de04a20defa0aff925",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f825795e_790b8c17",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-28T01:38:32Z",
+      "side": 1,
+      "message": "|layout_text| comes from |node.GetLayoutObject()| at L585 in\n|CalcSelectionRangeAndSetSelectionState()|.\n\nIt seems we should use |const Node\u0026| instead of |LayoutObject| in\n|CalcSelectionRangeAndSetSelectionState()| and make |MarkXXX()| to\ntake |const Node\u0026| for marking.\n\nTo adopt Layout NG, |LayoutObject| will not be place for storing in\n|SelectionState|, thus using |Node| makes us not to change |Calc...()|\nand |MarkXXX()|.",
+      "parentUuid": "fdd55ade_20aca3cc",
+      "range": {
+        "startLine": 399,
+        "startChar": 32,
+        "endLine": 399,
+        "endChar": 54
+      },
+      "revId": "12192e0e7b08f8cc89bc63de04a20defa0aff925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4ae183e_5d194efa",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-28T01:38:32Z",
+      "side": 1,
+      "message": "nit: This DCHECK should be before L398.",
+      "revId": "12192e0e7b08f8cc89bc63de04a20defa0aff925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
