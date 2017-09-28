@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "991c93e6_d0202825",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-28T20:53:31Z",
+      "side": 1,
+      "message": "Isn\u0027t this logged to the server? In which case I believe you\u0027ll want to add the new values after LM_LINUX_MAC_BEOS. Also, add a comment here to that effect (there is boilerplate we use for values logged).",
+      "range": {
+        "startLine": 101,
+        "startChar": 5,
+        "endLine": 101,
+        "endChar": 15
+      },
+      "revId": "9df6c57aafe5426d3477b1663ee710abbcb3fe1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fcc43dc_60c5b886",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-28T20:53:31Z",
+      "side": 1,
+      "message": "Chromium style is no else after a return.",
+      "range": {
+        "startLine": 155,
+        "startChar": 2,
+        "endLine": 155,
+        "endChar": 11
+      },
+      "revId": "9df6c57aafe5426d3477b1663ee710abbcb3fe1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44d69b10_76c6b6c2",
+        "filename": "chrome/installer/setup/user_experiment.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-28T20:53:31Z",
+      "side": 1,
+      "message": "If this switch is only applicable to windows, could you update chrome_switches too?",
+      "range": {
+        "startLine": 530,
+        "startChar": 46,
+        "endLine": 530,
+        "endChar": 61
+      },
+      "revId": "9df6c57aafe5426d3477b1663ee710abbcb3fe1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
