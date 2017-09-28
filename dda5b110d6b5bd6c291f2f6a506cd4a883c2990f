@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "52463dc5_282b7350",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerMessagingProxy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-28T09:48:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "457a9aef_135e7bdb",
+      "revId": "dda5b110d6b5bd6c291f2f6a506cd4a883c2990f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1785a550_3d1a3ad4",
         "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerMessagingProxy.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-28T09:23:12Z",
       "side": 1,
       "message": "I know this hasn\u0027t had a good comment ever, but can we add a brief class-level comment while we\u0027re here?",
+      "revId": "dda5b110d6b5bd6c291f2f6a506cd4a883c2990f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c4f345c_c847db79",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerMessagingProxy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-28T09:48:38Z",
+      "side": 1,
+      "message": "Yes, we definitely should add such a comment here.\n\nLet me do it once all InProcessWorker-\u003eDedicatedWorker move are done because I\u0027d prefer to keep the CL pure as much as possible and the comment might need to be updated again during the move. Added a TODO comment instead.",
+      "parentUuid": "1785a550_3d1a3ad4",
       "revId": "dda5b110d6b5bd6c291f2f6a506cd4a883c2990f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
