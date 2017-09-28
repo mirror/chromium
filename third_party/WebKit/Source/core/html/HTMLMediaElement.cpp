@@ -3124,6 +3124,9 @@ void HTMLMediaElement::DurationChanged(double duration, bool request_seek) {
   if (duration_ == duration)
     return;
 
+  bool update_button = (duration_ == std::numeric_limits<double>::infinity() &&
+                        duration != std::numeric_limits<double>::infinity());
+
   BLINK_MEDIA_LOG << "durationChanged(" << (void*)this << ") : " << duration_
                   << " -> " << duration;
   duration_ = duration;
@@ -3134,6 +3137,9 @@ void HTMLMediaElement::DurationChanged(double duration, bool request_seek) {
 
   if (request_seek)
     Seek(duration);
+
+  if (update_button)
+    GetMediaControls()->OnControlsListUpdated();
 }
 
 void HTMLMediaElement::PlaybackStateChanged() {
