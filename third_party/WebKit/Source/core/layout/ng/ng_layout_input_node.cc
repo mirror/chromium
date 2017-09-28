@@ -77,6 +77,10 @@ bool NGLayoutInputNode::IsReplaced() const {
   return box_->IsLayoutReplaced();
 }
 
+bool NGLayoutInputNode::ShouldComputeSizeAsReplaced() const {
+  return box_->ShouldComputeSizeAsReplaced();
+}
+
 bool NGLayoutInputNode::IsQuirkyContainer() const {
   return box_->GetDocument().InQuirksMode() &&
          (box_->IsBody() || box_->IsTableCell());
