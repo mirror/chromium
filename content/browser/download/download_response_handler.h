@@ -76,6 +76,7 @@ class DownloadResponseHandler : public mojom::URLLoaderClient {
   std::vector<GURL> url_chain_;
   std::string method_;
   GURL referrer_;
+  bool fetch_error_body_;
   bool is_transient_;
   net::CertStatus cert_status_;
   bool has_strong_validators_;
