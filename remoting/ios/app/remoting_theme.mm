@@ -8,6 +8,9 @@
 
 #import "remoting/ios/app/remoting_theme.h"
 
+#include "remoting/base/string_resources.h"
+#include "ui/base/l10n/l10n_util.h"
+
 @implementation RemotingTheme
 
 #pragma mark - Colors
@@ -176,6 +179,7 @@
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
     icon = [UIImage imageNamed:@"ic_close_white"];
+    icon.accessibilityLabel = l10n_util::GetNSString(IDS_CLOSE);
   });
   return icon;
 }
@@ -194,6 +198,7 @@
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
     icon = [UIImage imageNamed:@"ic_menu_white"];
+    icon.accessibilityLabel = l10n_util::GetNSString(IDS_ACTIONBAR_MENU);
   });
   return icon;
 }
