@@ -20,15 +20,4 @@ FaviconDriver::FaviconDriver() {
 FaviconDriver::~FaviconDriver() {
 }
 
-void FaviconDriver::NotifyFaviconUpdatedObservers(
-    FaviconDriverObserver::NotificationIconType notification_icon_type,
-    const GURL& icon_url,
-    bool icon_url_changed,
-    const gfx::Image& image) {
-  for (FaviconDriverObserver& observer : observer_list_) {
-    observer.OnFaviconUpdated(this, notification_icon_type, icon_url,
-                              icon_url_changed, image);
-  }
-}
-
 }  // namespace favicon

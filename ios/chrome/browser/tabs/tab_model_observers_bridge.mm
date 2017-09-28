@@ -46,6 +46,8 @@ class FaviconDriverObserverBridge : public favicon::FaviconDriverObserver {
                         const GURL& icon_url,
                         bool icon_url_changed,
                         const gfx::Image& image) override;
+  void OnFaviconDeleted(favicon::FaviconDriver* favicon_driver,
+                        NotificationIconType notification_icon_type) override;
 
  private:
   // The owning TabModelObserversBridge. Notifications will be forwarded to
@@ -85,6 +87,19 @@ void FaviconDriverObserverBridge::OnFaviconUpdated(
     const GURL& icon_url,
     bool icon_url_changed,
     const gfx::Image& image) {
+  // It is safe to cast the driver to favicon::WebFaviconDriver* if it is
+  // observed as only favicon::WebFaviconDrivers can be added to the
+  // ScopedObserver.
+  DCHECK(scoped_observer_.IsObserving(favicon_driver));
+  web::WebState* web_state =
+      static_cast<favicon::WebFaviconDriver*>(favicon_driver)->web_state();
+  [bridge_ webStateFaviconChanged:web_state];
+}
+
+void FaviconDriverObserverBridge::OnFaviconDeleted(
+    favicon::FaviconDriver* favicon_driver,
+    favicon::FaviconDriverObserver::NotificationIconType
+        notification_icon_type) {
   // It is safe to cast the driver to favicon::WebFaviconDriver* if it is
   // observed as only favicon::WebFaviconDrivers can be added to the
   // ScopedObserver.

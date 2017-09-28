@@ -140,6 +140,8 @@ class TabAndroid : public CoreTabHelperDelegate,
                         const GURL& icon_url,
                         bool icon_url_changed,
                         const gfx::Image& image) override;
+  void OnFaviconDeleted(favicon::FaviconDriver* favicon_driver,
+                        NotificationIconType notification_icon_type) override;
 
   // Returns true if this tab is currently presented in the context of custom
   // tabs. Tabs can be moved between different activities so the returned value

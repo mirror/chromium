@@ -60,6 +60,16 @@ class FaviconDriverImpl : public FaviconDriver,
 
   FaviconService* favicon_service() { return favicon_service_; }
 
+  // Notifies FaviconDriverObservers that the favicon image has been updated.
+  void NotifyFaviconUpdatedObservers(
+      FaviconDriverObserver::NotificationIconType notification_icon_type,
+      const GURL& icon_url,
+      bool icon_url_changed,
+      const gfx::Image& image);
+
+  void NotifyFaviconDeletedObservers(
+      FaviconDriverObserver::NotificationIconType notification_icon_type);
+
  private:
   // KeyedServices used by FaviconDriverImpl. They may be null during testing,
   // but if they are defined, they must outlive the FaviconDriverImpl.

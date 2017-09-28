@@ -112,6 +112,9 @@ class FaviconWaiter : public favicon::FaviconDriverObserver {
     }
   }
 
+  void OnFaviconDeleted(favicon::FaviconDriver* favicon_driver,
+                        NotificationIconType notification_icon_type) override {}
+
   favicon::ContentFaviconDriver* driver_;
   GURL target_favicon_url_;
   base::Closure quit_closure_;
