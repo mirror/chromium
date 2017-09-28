@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "4ec7e365_7db04cfb",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1240200
+      },
+      "writtenOn": "2017-09-28T05:08:07Z",
+      "side": 1,
+      "message": "Remove inffast.c (that is, include it in the sources unconditionally, so that infBack can still use it).",
+      "revId": "0397489124ce7e6aced020f8b85f5034c7d5f49b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3779fc23_7a9cb562",
         "filename": "third_party/zlib/contrib/arm/chunkcopy.h",
         "patchSetId": 4
@@ -66,6 +83,97 @@
       "side": 1,
       "message": "\u003e Similarly, git grep doesn\u0027t show any reference to inflateBack within chromium source, so I guess that can\u0027t be the source of the Cronet bug?\n\nYeah, it might not be the source of the Cronet bug (I don\u0027t have any additional insight into that bug), but it (using restrict here, and allowing inflateBack to call contrib\u0027s version of inflate_fast) still looks like a bug to me as is.\n\nIf using restrict (and related assumptions about the history and output buffer being unaliased) is necessary for the performance gain, is it possible to Assert that the pointers are actually restrict\u0027ed? I\u0027m not sure if that\u0027s even possible if the restrict\u0027ion allows the compiler to optimize the assertion to be a no-op.\n\n\n\u003e in inflate.c the window allocation is extended by a few bytes\n\nOh, that change wasn\u0027t obvious to me when reading this CL, but when it gets un-rolled-back, I think it needs calling out (in addition to whatever bug fixes build on this CL as is). The CL description, directly and in the .patch file, doesn\u0027t mention it.\n\nThere are two flavors of inflate.c: the top level file and the one in contrib. The latter is a copy/paste of the former, plus a few lines of edits, but it\u0027s not easy to see the diff between the two, even when looking in 0003-arm-inffast.patch.\n\nIn my crrev.com/c/601694, I added a link to https://chromium-review.googlesource.com/c/chromium/src/+/601694/14/third_party/zlib/contrib/inffast64/README.txt that pointed to such a diff. There are other ways to structure it.\n\nBack to this CL. For example, on closer inspection, the contrib version of inflate.c has added a new INFLATE_CLEAR_UNUSED_UNDEFINED macro, to quieten some analysis tools over this extra allocation, but that\u0027s really not obvious from the +1571 \"added\" lines of code in https://chromium-review.googlesource.com/c/chromium/src/+/641575/4/third_party/zlib/contrib/arm/inflate.c\n\nOn eyeballing the new INFLATE_CLEAR_UNUSED_UNDEFINED-guarded code, it looks fine, and that macro defaults to undefined, but again, it\u0027s new code that\u0027s hard to notice, and it was probably worth calling out to reviewers, especially as anything malloc and memset related can be dangerous.\n\nSeparate, but related: inffast.c (both the top level and contrib flavors, and note that it\u0027s inffast.c, not inflate.c) also has a comment about inflate_fast\u0027s preconditions (\"Entry assumptions\"). It\u0027d be nice if the contrib version also mentioned this additional precondition (that the window allocation is extended by at least CHUNKCOPY_CHUNK_SIZE bytes of slack). Again, even better if it\u0027s obvious for reviewers what preconditions in the contrib version are additional to the top level vanilla version.\n\n\n\u003e Unfortunately most copies are short... which means that the single-iteration wide load/store is the case that most benefits from optimisation.  To reduce it to a more careful loop is a big compromise.\n\nIt is admittedly a big compromise. One argument for compromise, though, is that zlib is old enough and well-used enough that Hyrum\u0027s law (http://www.hyrumslaw.com/) possibly applies. Something to think about, perhaps, while we wait for more information on the Cronet bug...",
       "parentUuid": "ea966ac6_8bed4894",
+      "revId": "0397489124ce7e6aced020f8b85f5034c7d5f49b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5087d54b_627aa48d",
+        "filename": "third_party/zlib/contrib/arm/inffast.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1240200
+      },
+      "writtenOn": "2017-09-28T05:08:07Z",
+      "side": 1,
+      "message": "More assumptions:\n\n    strm-\u003enext_out[0..strm-\u003eavail_out] does not overlap with strm-\u003enext_in[0..strm-\u003eavail_in]\n    strm-\u003estate-\u003ewindow is allocated with an additional CHUNKCOPY_CHUNK_SIZE-1 bytes of padding beyond strm-\u003estate-\u003ewsize",
+      "revId": "0397489124ce7e6aced020f8b85f5034c7d5f49b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56ec634c_0ed39d88",
+        "filename": "third_party/zlib/contrib/arm/inffast.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1240200
+      },
+      "writtenOn": "2017-09-28T05:08:07Z",
+      "side": 1,
+      "message": "inflate_fast_and_loose()",
+      "revId": "0397489124ce7e6aced020f8b85f5034c7d5f49b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7537356_eb803e43",
+        "filename": "third_party/zlib/contrib/arm/inffast.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1240200
+      },
+      "writtenOn": "2017-09-28T05:08:07Z",
+      "side": 1,
+      "message": "Delete?  It\u0027s perhaps misleading to discuss old-generation optimisation experiments when things have been refactored so much for modern compilers.",
+      "range": {
+        "startLine": 293,
+        "startChar": 0,
+        "endLine": 305,
+        "endChar": 3
+      },
+      "revId": "0397489124ce7e6aced020f8b85f5034c7d5f49b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e8f532f_40263b5a",
+        "filename": "third_party/zlib/contrib/arm/inflate.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 1058,
+      "author": {
+        "id": 1240200
+      },
+      "writtenOn": "2017-09-28T05:08:07Z",
+      "side": 1,
+      "message": "inflate_fast_and_loose()",
+      "revId": "0397489124ce7e6aced020f8b85f5034c7d5f49b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "247950ae_d2940444",
+        "filename": "third_party/zlib/contrib/arm/inflate.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 1263,
+      "author": {
+        "id": 1240200
+      },
+      "writtenOn": "2017-09-28T05:08:07Z",
+      "side": 1,
+      "message": "Insert something like:\n\n    if (left \u003e\u003d CHUNKCOPY_CHUNK_SIZE) memset(put, 0x55, CHUNKCOPY_CHUNK_SIZE);\n    else memset(put, 0x55, left);\n\nThis ensures that whatever spill bytes were copied to the output beyond the official end are defined to be a fixed pattern and not random chunks of the original buffer or data from earlier in the stream.",
       "revId": "0397489124ce7e6aced020f8b85f5034c7d5f49b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
