@@ -433,19 +433,24 @@ void PaintPath(Canvas* canvas,
     previous_command_type = command_type;
   }
 
+  ScopedCanvas scoped_canvas(canvas);
+
   if (dip_size != canvas_size) {
     SkScalar scale = SkIntToScalar(dip_size) / SkIntToScalar(canvas_size);
     canvas->sk_canvas()->scale(scale, scale);
   }
 
-  ScopedRTLFlipCanvas scoped_rtl_flip_canvas(canvas, canvas_size, flips_in_rtl);
+  {
+    ScopedRTLFlipCanvas scoped_rtl_flip_canvas(canvas, canvas_size,
+                                               flips_in_rtl);
 
-  if (!clip_rect.isEmpty())
-    canvas->sk_canvas()->clipRect(clip_rect);
+    if (!clip_rect.isEmpty())
+      canvas->sk_canvas()->clipRect(clip_rect);
 
-  DCHECK_EQ(flags_array.size(), paths.size());
-  for (size_t i = 0; i < paths.size(); ++i)
-    canvas->DrawPath(paths[i], flags_array[i]);
+    DCHECK_EQ(flags_array.size(), paths.size());
+    for (size_t i = 0; i < paths.size(); ++i)
+      canvas->DrawPath(paths[i], flags_array[i]);
+  }
 }
 
 class VectorIconSource : public CanvasImageSource {
