@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5cc1511_ce58d387",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browser_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-28T04:34:53Z",
+      "side": 1,
+      "message": "remove duplicated line",
+      "revId": "eedb33098f7faa0e476cf85c1e18b2120f7431ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0e3bc3b_6a1beeb1",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browser_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-28T04:34:53Z",
+      "side": 1,
+      "message": "nit: move after gfx {} (I think that\u0027s how it\u0027s normally ordered..)",
+      "revId": "eedb33098f7faa0e476cf85c1e18b2120f7431ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4933fb9a_5b6eaaeb",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1627,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-28T04:34:53Z",
+      "side": 1,
+      "message": "HostedAppBrowserController has a reference to |browser|, I think we can delegate all tasks to that when there is a controller. i.e. \n\nadd a fallback call to browser_-\u003eGetCurrentPageIcon().AsImageSkia() to hosted_app_controller if it makes sense to do that as well. (perhaps rename GetExtensionAppIcon to GetWindowAppIcon ?)\n\nthen here, something like\n\n\n auto* app_controller \u003d browser_-\u003ehosted_app_controller());\n return app_controller ? app_controller-\u003eGetWindowAppIcon() ? GetWindowIcon();",
+      "revId": "eedb33098f7faa0e476cf85c1e18b2120f7431ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec945d9b_28eaffe8",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1642,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-28T04:34:53Z",
+      "side": 1,
+      "message": "Seems this complex block can also just be something like\n\n if (auto* app_controller \u003d browser_-\u003ehosted_app_controller()))\n   return app_controller-\u003eGetWindowIcon();\n\n?\n\nThe difference just seems to be whether the {window,taskbar} icon should react to page navigations and start using favicons when the experimental PWA windowing feature off. I.e. HostedAppBrowserController::GetWindowIcon() should just `return browser_-\u003eGetCurrentPageIcon().AsImageSkia();` when the feature is off, otherwise call GetWindowAppIcon().",
+      "revId": "eedb33098f7faa0e476cf85c1e18b2120f7431ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "084e5eb3_a470463c",
+        "filename": "chrome/browser/ui/views/tab_icon_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-28T04:34:53Z",
+      "side": 1,
+      "message": "Has there been any discussion around just showing a different placeholder icon, rather than rendering blank? Blank would make the text look strangely out of alignment. Also isn\u0027t there a menu behind that icon, if it\u0027s not painted, how is the user expected to know they can click it?\n\nBut if we have a different placeholder icon, then we can guarantee that GetWindowAppIcon() *never* returns a null ImageSkia and we don\u0027t need that.\n\nAlso, even if we don\u0027t have a placeholder, what about just having HostedAppBrowserController return a completely transparent, non-null icon? That would also remove the need for this..",
+      "revId": "eedb33098f7faa0e476cf85c1e18b2120f7431ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
