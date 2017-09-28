@@ -4,8 +4,13 @@
 
 #include "base/command_line.h"
 #include "base/test/launcher/test_launcher.h"
+#include "build/build_config.h"
 #include "chrome/test/base/chrome_test_launcher.h"
 #include "chrome/test/base/chrome_test_suite.h"
+
+#if defined(OS_WIN)
+#include "base/win/win_util.h"
+#endif  // defined(OS_WIN)
 
 int main(int argc, char** argv) {
   base::CommandLine::Init(argc, argv);
@@ -15,6 +20,10 @@ int main(int argc, char** argv) {
   } else if (parallel_jobs > 1U) {
     parallel_jobs /= 2U;
   }
+
+#if defined(OS_WIN)
+  base::win::EnableHighDPISupport();
+#endif  // defined(OS_WIN)
 
   ChromeTestSuiteRunner runner;
   ChromeTestLauncherDelegate delegate(&runner);
