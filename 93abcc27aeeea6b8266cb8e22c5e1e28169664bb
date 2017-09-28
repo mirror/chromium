@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f82108b9_35350a2c",
+        "filename": "chrome/browser/resources/settings/site_settings/category_setting_exceptions.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-09-28T21:08:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81c5976e_3c9c7522",
+      "revId": "93abcc27aeeea6b8266cb8e22c5e1e28169664bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb8e536f_7c25946b",
         "filename": "chrome/browser/resources/settings/site_settings/category_setting_exceptions.js",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "93abcc27aeeea6b8266cb8e22c5e1e28169664bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d830d1f5_0153b742",
+        "filename": "chrome/browser/resources/settings/site_settings/category_setting_exceptions.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-09-28T21:08:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb8e536f_7c25946b",
+      "revId": "93abcc27aeeea6b8266cb8e22c5e1e28169664bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "cea1397b_7e4131a7",
+        "filename": "chrome/browser/resources/settings/site_settings/category_setting_exceptions.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-09-28T21:08:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad1b33f2_9b42ef07",
+      "revId": "93abcc27aeeea6b8266cb8e22c5e1e28169664bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56ffecd2_6db8fce1",
         "filename": "chrome/browser/resources/settings/site_settings/category_setting_exceptions.js",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "93abcc27aeeea6b8266cb8e22c5e1e28169664bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6643fec_cda0815f",
+        "filename": "chrome/browser/resources/settings/site_settings/category_setting_exceptions.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-09-28T21:08:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56ffecd2_6db8fce1",
+      "revId": "93abcc27aeeea6b8266cb8e22c5e1e28169664bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "4621fb90_d108b834",
+        "filename": "chrome/browser/resources/settings/site_settings/category_setting_exceptions.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-09-28T21:08:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fc8214d_6829c563",
+      "revId": "93abcc27aeeea6b8266cb8e22c5e1e28169664bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bec14c68_0608eb1d",
         "filename": "chrome/browser/resources/settings/site_settings/compiled_resources2.gyp",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "93abcc27aeeea6b8266cb8e22c5e1e28169664bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4f575d8_5497b17b",
+        "filename": "chrome/browser/resources/settings/site_settings/compiled_resources2.gyp",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-09-28T21:08:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bec14c68_0608eb1d",
+      "revId": "93abcc27aeeea6b8266cb8e22c5e1e28169664bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
