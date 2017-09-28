@@ -29,7 +29,6 @@ class FakeMessageCenterTrayDelegate : public MessageCenterTrayDelegate {
   bool ShowMessageCenter() override;
   void HideMessageCenter() override;
   bool ShowNotifierSettings() override;
-  bool IsContextMenuEnabled() const override;
   MessageCenterTray* GetMessageCenterTray() override;
 
  private:

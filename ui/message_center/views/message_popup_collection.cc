@@ -22,7 +22,6 @@
 #include "ui/message_center/notification_list.h"
 #include "ui/message_center/public/cpp/message_center_constants.h"
 #include "ui/message_center/views/message_view.h"
-#include "ui/message_center/views/message_view_context_menu_controller.h"
 #include "ui/message_center/views/message_view_factory.h"
 #include "ui/message_center/views/popup_alignment_delegate.h"
 #include "ui/message_center/views/toast_contents_view.h"
@@ -58,7 +57,6 @@ MessagePopupCollection::MessagePopupCollection(
       latest_toast_entered_(NULL),
       user_is_closing_toasts_by_clicking_(false),
       target_top_edge_(0),
-      context_menu_controller_(new MessageViewContextMenuController(this)),
       weak_factory_(this) {
   DCHECK(message_center_);
   defer_timer_.reset(new base::OneShotTimer);
@@ -101,12 +99,6 @@ void MessagePopupCollection::RemoveNotification(
 
     break;
   }
-}
-
-std::unique_ptr<ui::MenuModel> MessagePopupCollection::CreateMenuModel(
-    const NotifierId& notifier_id,
-    const base::string16& display_source) {
-  return tray_->CreateNotificationMenuModel(notifier_id, display_source);
 }
 
 bool MessagePopupCollection::HasClickedListener(
@@ -202,11 +194,6 @@ void MessagePopupCollection::UpdateWidgets() {
     view->set_force_disable_pinned();
 #endif  // defined(OS_CHROMEOS)
     view->SetExpanded(true);
-
-    // TODO(yoshiki): Temporary disable context menu on custom notifications.
-    // See crbug.com/750307 for detail.
-    if ((*iter)->type() != NOTIFICATION_TYPE_CUSTOM)
-      view->set_context_menu_controller(context_menu_controller_.get());
 
     int view_height = ToastContentsView::GetToastSizeForView(view).height();
     int height_available =

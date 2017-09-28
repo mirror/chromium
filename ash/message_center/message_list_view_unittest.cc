@@ -175,12 +175,6 @@ class MessageListViewTest : public AshTestBase,
   void ClickOnNotification(const std::string& notification_id) override {}
   void RemoveNotification(const std::string& notification_id,
                           bool by_user) override {}
-  std::unique_ptr<ui::MenuModel> CreateMenuModel(
-      const NotifierId& notifier_id,
-      const base::string16& display_source) override {
-    NOTREACHED();
-    return nullptr;
-  }
   bool HasClickedListener(const std::string& notification_id) override {
     return false;
   }
