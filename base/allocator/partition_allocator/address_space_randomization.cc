@@ -83,6 +83,104 @@ uint32_t ranval(ranctx* x) {
 
 static LazyInstance<ranctx>::Leaky s_ranctx = LAZY_INSTANCE_INITIALIZER;
 
+#define ASLR_ADDRESS(mask) ((mask)&kPageAllocationGranularityBaseMask);
+#define ASLR_MASK(bits) ASLR_ADDRESS((1UL << static_cast<size_t>(bits)) - 1UL)
+
+#if defined(ARCH_CPU_64_BITS)
+#if defined(MEMORY_TOOL_REPLACES_ALLOCATOR)
+// This range is copied from the TSan source, but works for all tools.
+static const size_t kASLRMask = ASLR_ADDRESS(0x007fffffffffUL);
+static const size_t kASLROffset = ASLR_ADDRESS(0x7e8000000000UL);
+#elif defined(OS_WIN)
+static const size_t kASLRMask = ASLR_MASK(47);
+static const size_t kASLRMaskBefore8_10 = ASLR_MASK(43);
+static const size_t kASLROffset = 0;
+#elif defined(OS_MACOSX)
+// macOS as of 10.12.5 does not clean up entries in page map levels 3/4
+// [PDP/PML4] created from mmap or mach_vm_allocate, even after the region is
+// destroyed. Using a virtual address space that is too large causes a leak of
+// about 1 wired [can never be paged out] page per call to mmap(). The page is
+// only reclaimed when the process is killed. Confine the hint to a 39-bit
+// section of the virtual address space.
+//
+// This implementation adapted from
+// https://chromium-review.googlesource.com/c/v8/v8/+/557958. The difference
+// is that here we clamp to 39 bits, not 32.
+//
+// TODO(crbug.com/738925): Remove this limitation if/when the macOS behavior
+// changes.
+static const size_t kASLRMask = ASLR_MASK(39);
+static const size_t kASLROffset = 0x1000000000UL;
+#else  // defined(OS_POSIX)
+#if defined(ARCH_CPU_X86_64)
+// Linux and OS X support the full 47-bit user space of x64 processors.
+static const size_t kASLRMask = ASLR_MASK(47);
+static const size_t kASLROffset = 0;
+#elif defined(ARCH_CPU_ARM64)
+// ARM64 on Linux has 39-bit user space.
+static const size_t kASLRMask = ASLR_MASK(39);
+static const size_t kASLROffset = 0x1000000000UL;
+#elif defined(ARCH_CPU_PPC64)
+#if defined(OS_AIX)
+// AIX: 64 bits of virtual addressing, but we limit address range to:
+//   a) minimize Segment Lookaside Buffer (SLB) misses and
+//   b) use extra address space to isolate the mmap regions.
+static const size_t kASLRMask = ASLR_MASK(30);
+static const size_t kASLROffset = 0x400000000000UL;
+#elif defined(ARCH_CPU_BIG_ENDIAN)
+// Big-endian Linux: 44 bits of virtual addressing.
+static const size_t kASLRMask = ASLR_MASK(44);
+static const size_t kASLROffset = 0;
+#else   // !defined(OS_AIX) && !defined(ARCH_CPU_BIG_ENDIAN)
+// Little-endian Linux: 48 bits of virtual addressing.
+static const size_t kASLRMask = ASLR_MASK(48);
+static const size_t kASLROffset = 0;
+#endif  // !defined(OS_AIX) && !defined(ARCH_CPU_BIG_ENDIAN)
+#elif defined(ARCH_CPU_S390X)
+// Linux on Z uses bits 22-32 for Region Indexing, which translates to 42 bits
+// of virtual addressing.  Truncate to 40 bits to allow kernel chance to
+// fulfill request.
+static const size_t kASLRMask = ASLR_MASK(40);
+static const size_t kASLROffset = 0;
+#elif defined(ARCH_CPU_S390)
+// 31 bits of virtual addressing.  Truncate to 29 bits to allow kernel a chance
+// to fulfill request.
+static const size_t kASLRMask = ASLR_MASK(29);
+static const size_t kASLROffset = 0;
+#else  // !defined(ARCH_CPU_X86_64) && !defined(ARCH_CPU_PPC64) &&
+// !defined(ARCH_CPU_S390X) && !defined(ARCH_CPU_S390)
+static const uintptr_t kASLRMask = ASLR_MASK(30);
+#if defined(OS_SOLARIS)
+// For our Solaris/illumos mmap hint, we pick a random address in the bottom
+// half of the top half of the address space (that is, the third quarter).
+// Because we do not MAP_FIXED, this will be treated only as a hint -- the
+// system will not fail to mmap() because something else happens to already
+// be mapped at our random address. We deliberately set the hint high enough
+// to get well above the system's break (that is, the heap); Solaris and
+// illumos will try the hint and if that fails allocate as if there were
+// no hint at all. The high hint prevents the break from getting hemmed in
+// at low values, ceding half of the address space to the system heap.
+static const size_t kASLROffset = 0x80000000UL;
+#elif defined(OS_AIX)
+// The range 0x30000000 - 0xD0000000 is available on AIX;
+// choose the upper range.
+static const size_t kASLROffset = 0x90000000UL;
+#else   // !defined(OS_SOLARIS) && !defined(OS_AIX)
+// The range 0x20000000 - 0x60000000 is relatively unpopulated across a
+// variety of ASLR modes (PAE kernel, NX compat mode, etc) and on macos
+// 10.6 and 10.7.
+static const size_t kASLROffset = 0x20000000;
+#endif  // !defined(OS_SOLARIS) && !defined(OS_AIX)
+#endif  // !defined(ARCH_CPU_X86_64) && !defined(ARCH_CPU_PPC64) &&
+// !defined(ARCH_CPU_S390X) && !defined(ARCH_CPU_S390)
+#endif  // defined(OS_POSIX)
+#else   // defined(ARCH_CPU_32_BITS)
+// This is a good range on 32 bit Windows, Linux and Mac.
+// Allocates in the 0.5-1.5GB region.
+static const size_t kASLRMask = ASLR_MASK(30);
+static const size_t kASLROffset = 0x20000000;
+#endif  // defined(ARCH_CPU_32_BITS)
+
 }  // namespace
 
 // Calculates a random preferred mapping address. In calculating an address, we
@@ -90,15 +188,12 @@ static LazyInstance<ranctx>::Leaky s_ranctx = LAZY_INSTANCE_INITIALIZER;
 void* GetRandomPageBase() {
   uintptr_t random = static_cast<uintptr_t>(ranval(s_ranctx.Pointer()));
 
-#if defined(ARCH_CPU_X86_64)
+#if defined(ARCH_CPU_64_BITS)
   random <<= 32UL;
   random |= static_cast<uintptr_t>(ranval(s_ranctx.Pointer()));
 
-// This address mask gives a low likelihood of address space collisions. We
-// handle the situation gracefully if there is a collision.
 #if defined(OS_WIN)
-  random &= 0x3ffffffffffUL;
-  // Windows >= 8.1 has the full 47 bits. Use them where available.
+  // Windows >= 8.1 has the full 48 bits. Use them where available.
   static bool windows_81 = false;
   static bool windows_81_initialized = false;
   if (!windows_81_initialized) {
@@ -106,23 +201,16 @@ void* GetRandomPageBase() {
     windows_81_initialized = true;
   }
   if (!windows_81) {
-    random += 0x10000000000UL;
+    random &= kASLRMaskBefore8_10;
+  } else {
+    random &= kASLRMask;
   }
-#elif defined(MEMORY_TOOL_REPLACES_ALLOCATOR)
-  // This range is copied from the TSan source, but works for all tools.
-  random &= 0x007fffffffffUL;
-  random += 0x7e8000000000UL;
-#else
-  // Linux and OS X support the full 47-bit user space of x64 processors.
-  random &= 0x3fffffffffffUL;
-#endif  // defined(OS_WIN)
-
-#elif defined(ARCH_CPU_ARM64)
-  // ARM64 on Linux has 39-bit user space.
-  random &= 0x3fffffffffUL;
-  random += 0x1000000000UL;
-#else  // !defined(ARCH_CPU_X86_64) && !defined(ARCH_CPU_ARM64)
-
+  random += kASLROffset;
+#else   // defined(OS_POSIX)
+  random &= kASLRMask;
+  random += kASLROffset;
+#endif  // defined(OS_POSIX)
+#else   // defined(ARCH_CPU_32_BITS)
 #if defined(OS_WIN)
   // On win32 host systems the randomization plus huge alignment causes
   // excessive fragmentation. Plus most of these systems lack ASLR, so the
@@ -133,31 +221,12 @@ void* GetRandomPageBase() {
     isWow64 = FALSE;
   if (!isWow64)
     return nullptr;
-#elif defined(OS_MACOSX)
-  // macOS as of 10.12.5 does not clean up entries in page map levels 3/4
-  // [PDP/PML4] created from mmap or mach_vm_allocate, even after the region is
-  // destroyed. Using a virtual address space that is too large causes a leak of
-  // about 1 wired [can never be paged out] page per call to mmap(). The page is
-  // only reclaimed when the process is killed. Confine the hint to a 39-bit
-  // section of the virtual address space.
-  //
-  // This implementation adapted from
-  // https://chromium-review.googlesource.com/c/v8/v8/+/557958. The difference
-  // is that here we clamp to 39 bits, not 32.
-  //
-  // TODO(crbug.com/738925): Remove this limitation if/when the macOS behavior
-  // changes.
-  random &= 0x3fffffffffUL;
-  random += 0x1000000000UL;
 #endif  // defined(OS_WIN)
+  random &= kASLRMask;
+  random += kASLROffset;
+#endif  // defined(ARCH_CPU_32_BITS)
 
-  // This is a good range on Windows, Linux and Mac.
-  // Allocates in the 0.5-1.5GB region.
-  random &= 0x3fffffff;
-  random += 0x20000000;
-#endif  // defined(ARCH_CPU_X86_64)
-
-  random &= kPageAllocationGranularityBaseMask;
+  DCHECK_EQ(0UL, (random & ~kPageAllocationGranularityBaseMask));
   return reinterpret_cast<void*>(random);
 }
 
