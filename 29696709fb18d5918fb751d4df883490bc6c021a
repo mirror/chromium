@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4640f315_13f591be",
+        "filename": "third_party/WebKit/Source/core/loader/resource/CSSStyleSheetResource.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-09-28T21:59:35Z",
+      "side": 1,
+      "message": "This looks hacky. Would you describe why this is needed? (and add that as a comment)?",
+      "revId": "29696709fb18d5918fb751d4df883490bc6c021a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a9e1d29_590c7e56",
+        "filename": "third_party/WebKit/Source/core/loader/resource/TextResource.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-09-28T21:59:35Z",
+      "side": 1,
+      "message": "DecodedTextMaybeIncomplete? MaybeIncompleteDecodedText?",
+      "revId": "29696709fb18d5918fb751d4df883490bc6c021a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
