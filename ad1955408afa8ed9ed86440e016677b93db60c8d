@@ -22,6 +22,40 @@
       "revId": "ad1955408afa8ed9ed86440e016677b93db60c8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "844b4de3_d9d37cae",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-09-28T20:08:45Z",
+      "side": 1,
+      "message": "This is a good idea.",
+      "revId": "ad1955408afa8ed9ed86440e016677b93db60c8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a07d82d_363b85d0",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasColorParams.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-09-28T20:08:45Z",
+      "side": 1,
+      "message": "This will have some problems. We have 2 modes:\n- linear pixel math \u003d true\n   - SkSurface has an SkColorSpace assigned\n   - SkColorTranformXform is not used\n- linear pixel math \u003d false\n   - SkSurface has no SkColorSpace assigned\n   - SkColorTranformXform is used\n\nThis turns both mode into the \"linear pixel math \u003d true\"mode.",
+      "revId": "ad1955408afa8ed9ed86440e016677b93db60c8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
