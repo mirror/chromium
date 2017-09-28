@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9cac7275_c44eb1c8",
+        "filename": "ios/chrome/app/application_delegate/tab_opening.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-09-28T13:13:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "163218c8_ec4027c0",
+      "revId": "c6e6e9251a1f5d81be936dcc558e8ed3d6f2860a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "629ff403_f5eb44c5",
         "filename": "ios/chrome/app/main_controller.mm",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "36589dff_ce2b2d2d",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 2269,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-09-28T13:13:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "629ff403_f5eb44c5",
+      "revId": "c6e6e9251a1f5d81be936dcc558e8ed3d6f2860a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25edb800_79f0842e",
         "filename": "ios/chrome/app/main_controller.mm",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "c6e6e9251a1f5d81be936dcc558e8ed3d6f2860a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4977ed42_1d9147dd",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 2378,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-09-28T13:13:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25edb800_79f0842e",
+      "revId": "c6e6e9251a1f5d81be936dcc558e8ed3d6f2860a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
