@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b296500_897329c7",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRSessionEvent.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-28T12:26:12Z",
+      "side": 1,
+      "message": "Add a link to the spec.",
+      "revId": "847a12e0f6bd94b6531eb948d8a1e3fb4abb5763",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04978d6f_67ab00cb",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRSessionEventInit.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-28T12:26:12Z",
+      "side": 1,
+      "message": "Add a link to the spec.",
+      "revId": "847a12e0f6bd94b6531eb948d8a1e3fb4abb5763",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
