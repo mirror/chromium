@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// Next MinVersion: 10
+// Next MinVersion: 11
 
 module arc.mojom;
 
@@ -12,7 +12,7 @@ enum ArcSignInFailureReason {
   // Negative values are reserved for internal use.
   // The values are shuffled to keep the backward compatibility and don't match
   // ProvisioningResult in arc_optin_uma.h
-  // Next value: 16.
+  // Next value: 19.
   UNKNOWN_ERROR = 0,
 
   // Mojo errors:
@@ -64,6 +64,14 @@ enum ArcSignInFailureReason {
 
   // Network connection is unavailable.
   [MinVersion=8] NO_NETWORK_CONNECTION = 15,
+
+  // Server does not return authorization.
+  [MinVersion=10] CHROME_SERVER_COMMUNICATION_ERROR = 16,
+
+  // ARC was disabled for Active Directory user.
+  [MinVersion=10] ARC_DISABLED = 17,
+
+  [MinVersion=10] SUCCESS = 18,
 };
 
 // These values describe account check status.
@@ -187,8 +195,11 @@ interface AuthInstance {
   // Callback from RequestAccountInfo. This cannot be a normal callback since
   // the result can sometimes take a few minutes in some cases (Kiosk mode),
   // and in other cases there is a UI that the user is shown and they can take
-  // an arbitrarily long amount of time to interact with.
-  // If |account_info| is null, it implies that there was an error in the
-  // process.
-  [MinVersion=5] OnAccountInfoReady(AccountInfo? account_info);
+  // an arbitrarily long amount of time to interact with. If request completes
+  // successfully, |account_info| is not null and |status| must be SUCCESS.
+  // In case of error |account_info| is null, |status| must contain the reason
+  // of failure, other than SUCCESS.
+  [MinVersion=5] OnAccountInfoReady@1(
+      AccountInfo? account_info,
+      [MinVersion=10] ArcSignInFailureReason status);
 };
