@@ -231,7 +231,6 @@ void GIFImageDecoder::Decode(size_t index) {
     if (required_previous_frame_index == kNotFound) {
       frame.AllocatePixelData(Size().Width(), Size().Height(),
                               ColorSpaceForSkImages());
-      frame.ZeroFillPixelData();
     } else {
       size_t previous_frame_index = GetViableReferenceFrameIndex(index);
       if (previous_frame_index == kNotFound) {
@@ -273,7 +272,9 @@ void GIFImageDecoder::Decode(size_t index) {
     frame.SetStatus(ImageFrame::kFramePartial);
   }
 
-  SkCodec::Result incremental_decode_result = codec_->incrementalDecode();
+  int rows_decoded;
+  SkCodec::Result incremental_decode_result =
+      codec_->incrementalDecode(&rows_decoded);
   switch (incremental_decode_result) {
     case SkCodec::kSuccess: {
       SkCodec::FrameInfo frame_info;
@@ -286,11 +287,24 @@ void GIFImageDecoder::Decode(size_t index) {
       break;
     }
     case SkCodec::kIncompleteInput:
+      if (!index) {
+        IntSize image_size = Size();
+        frame.ZeroFillFrameRect(IntRect(0, rows_decoded, image_size.Width(),
+                                        image_size.Height() - rows_decoded));
+      }
       frame.SetPixelsChanged(true);
       if (FrameIsReceivedAtIndex(index) || IsAllDataReceived()) {
         SetFailed();
       }
       break;
+    case SkCodec::kErrorInInput: {
+      IntSize image_size = Size();
+      frame.ZeroFillFrameRect(IntRect(0, rows_decoded, image_size.Width(),
+                                      image_size.Height() - rows_decoded));
+      frame.SetPixelsChanged(true);
+      SetFailed();
+      break;
+    }
     default:
       SetFailed();
       break;
