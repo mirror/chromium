@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "702d0b69_36629d98",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001841
+      },
+      "writtenOn": "2017-09-28T08:18:01Z",
+      "side": 1,
+      "message": "BUG\u003d768792",
+      "revId": "386fff29a7384cd68f33ac411be0c0ceeb4a2f4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78a1e689_c74c1c25",
+        "filename": "media/audio/cras/audio_manager_cras.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1001841
+      },
+      "writtenOn": "2017-09-28T08:18:01Z",
+      "side": 1,
+      "message": "Before http://crrev.com/c/662761, it used to return \"\". Are we sure changing to \"default\" is correct?",
+      "revId": "386fff29a7384cd68f33ac411be0c0ceeb4a2f4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
