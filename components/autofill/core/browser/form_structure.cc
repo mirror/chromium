@@ -716,7 +716,8 @@ void FormStructure::LogQualityMetrics(
 
     if (IsUPIVirtualPaymentAddress(field->value)) {
       AutofillMetrics::LogUserHappinessMetric(
-          AutofillMetrics::USER_DID_ENTER_UPI_VPA);
+          AutofillMetrics::USER_DID_ENTER_UPI_VPA,
+          field->Type().group() == CREDIT_CARD);
     }
 
     form_interactions_ukm_logger->LogFieldFillStatus(*this, *field,
@@ -1419,6 +1420,14 @@ base::string16 FormStructure::FindLongestCommonPrefix(
     }
   }
   return filtered_strings[0];
+}
+
+bool FormStructure::HasCreditCardFields() const {
+  for (const auto& field : fields_) {
+    if (field->Type().group() == CREDIT_CARD)
+      return true;
+  }
+  return false;
 }
 
 }  // namespace autofill

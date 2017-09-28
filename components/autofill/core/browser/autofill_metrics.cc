@@ -716,10 +716,15 @@ void AutofillMetrics::LogServerQueryMetric(ServerQueryMetric metric) {
 }
 
 // static
-void AutofillMetrics::LogUserHappinessMetric(UserHappinessMetric metric) {
+void AutofillMetrics::LogUserHappinessMetric(UserHappinessMetric metric,
+                                             bool is_credit_card_form) {
   DCHECK_LT(metric, NUM_USER_HAPPINESS_METRICS);
   UMA_HISTOGRAM_ENUMERATION("Autofill.UserHappiness", metric,
                             NUM_USER_HAPPINESS_METRICS);
+  UMA_HISTOGRAM_ENUMERATION(is_credit_card_form
+                                ? "Autofill.UserHappiness.Address"
+                                : "Autofill.UserHappiness.Address",
+                            metric, NUM_USER_HAPPINESS_METRICS);
 }
 
 // static
