@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e24ded3_531bb64a",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 5595,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-09-28T10:48:21Z",
+      "side": 1,
+      "message": "nit. please specify what kind of prompt this is, e.g. something like \"prompt to store a username/password combination\"",
+      "revId": "ebddb75862dfc5f1a122d31e6a7d7d5b0cfca1b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
