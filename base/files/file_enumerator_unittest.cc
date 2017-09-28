@@ -272,9 +272,59 @@ TEST(FileEnumerator, FileInSubfolder) {
 }
 
 TEST(FileEnumerator, FilesInSubfoldersWithFiltering) {
+  TimeTicks s = TimeTicks::Now();
+
   ScopedTempDir temp_dir;
+
+  std::vector<base::TimeDelta> delays;
+
+  for (int i = 0; i < 1000; i++) {
+    DirectoryExists(FilePath("/"));
+  }
+
+  TimeTicks now = TimeTicks::Now();
+  LOG(ERROR) << "stat0 "<<  (now - s);
+  s = now;
+
+  TimeTicks t0 = TimeTicks::Now();
+  for (int i = 0; i < 1000; i++) {
+    DirectoryExists(FilePath("/"));
+    TimeTicks now = TimeTicks::Now();
+    delays.push_back(now-t0);
+    t0 = now;
+  }
+
+  now = TimeTicks::Now();
+  LOG(ERROR) << "stat "<<  (now - s);
+  s = now;
+
+  for (int i = 0; i < 1000; i++) {
+     LOG(ERROR) << i << " " << delays[i];
+  }
+  now = TimeTicks::Now();
+  LOG(ERROR) << "LOG "<<  (now - s);
+  s = now;
+
+
+  // for (int i = 0; i < 1000; i++) {
+  //   std::cerr << " \n";
+  // }
+  // now = TimeTicks::Now();
+  // LOG(ERROR) << "CERR " << (now - s);
+  // s = now;
+
+  for (int i = 0; i < 1000; i++) {
+    LOG(ERROR) << "--";
+  }
+  now = TimeTicks::Now();
+  LOG(ERROR) << "LOG(ERROR) " << (now - s);
+  s = now;
+
+
+
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
 
+  LOG(ERROR) << (TimeTicks::Now() - s);
   const FilePath test_txt = temp_dir.GetPath().AppendASCII("test.txt");
   const FilePath subdir_foo = temp_dir.GetPath().AppendASCII("foo_subdir");
   const FilePath subdir_bar = temp_dir.GetPath().AppendASCII("bar_subdir");
@@ -284,29 +334,45 @@ TEST(FileEnumerator, FilesInSubfoldersWithFiltering) {
   const FilePath bar_test = subdir_bar.AppendASCII("test.txt");
   const FilePath bar_foo = subdir_bar.AppendASCII("foo.txt");
   const FilePath bar_bar = subdir_bar.AppendASCII("bar.txt");
+  LOG(ERROR) << (TimeTicks::Now() - s);
   ASSERT_TRUE(CreateDummyFile(test_txt));
+  LOG(ERROR) << (TimeTicks::Now() - s);
   ASSERT_TRUE(CreateDirectory(subdir_foo));
+  LOG(ERROR) << (TimeTicks::Now() - s);
   ASSERT_TRUE(CreateDirectory(subdir_bar));
+  LOG(ERROR) << (TimeTicks::Now() - s);
   ASSERT_TRUE(CreateDummyFile(foo_test));
+  LOG(ERROR) << (TimeTicks::Now() - s);
   ASSERT_TRUE(CreateDummyFile(foo_foo));
+  LOG(ERROR) << (TimeTicks::Now() - s);
   ASSERT_TRUE(CreateDummyFile(foo_bar));
+  LOG(ERROR) << (TimeTicks::Now() - s);
   ASSERT_TRUE(CreateDummyFile(bar_test));
+  LOG(ERROR) << (TimeTicks::Now() - s);
   ASSERT_TRUE(CreateDummyFile(bar_foo));
+  LOG(ERROR) << (TimeTicks::Now() - s);
   ASSERT_TRUE(CreateDummyFile(bar_bar));
+  LOG(ERROR) << (TimeTicks::Now() - s);
 
   auto files =
       RunEnumerator(temp_dir.GetPath(), true,
                     FileEnumerator::FILES | FileEnumerator::DIRECTORIES,
                     FILE_PATH_LITERAL("foo*"),
                     FileEnumerator::FolderSearchPolicy::MATCH_ONLY);
+  LOG(ERROR) << (TimeTicks::Now() - s);
   EXPECT_THAT(files,
               UnorderedElementsAre(subdir_foo, foo_test, foo_foo, foo_bar));
+  LOG(ERROR) << (TimeTicks::Now() - s);
 
   files = RunEnumerator(temp_dir.GetPath(), true,
                         FileEnumerator::FILES | FileEnumerator::DIRECTORIES,
                         FILE_PATH_LITERAL("foo*"),
                         FileEnumerator::FolderSearchPolicy::ALL);
+  LOG(ERROR) << (TimeTicks::Now() - s);
   EXPECT_THAT(files, UnorderedElementsAre(subdir_foo, foo_foo, bar_foo));
+  LOG(ERROR) << (TimeTicks::Now() - s);
+
+  EXPECT_TRUE(false);
 }
 
 }  // namespace base
