@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1c307e78_7cebe096",
+        "filename": "chrome/browser/plugins/plugin_info_message_filter_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-28T08:55:05Z",
+      "side": 1,
+      "message": "Not in terms of checks, but I\u0027ve found that the error message is nicer. ASSERT_EQ tells you to put the expected value first, but the error message is \"expected \u003cfirst expression\u003e to be equal to \u003csecond expression\u003e\", which feels the wrong way around to me. ASSERT_THAT in contrast makes it clear that |status| is the value under test.",
+      "parentUuid": "7f285650_fb4b8dcb",
+      "revId": "010f2d8d9a36be885deb451c01c3eb8717c8db42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d02cc9b_655d38f0",
         "filename": "chrome/browser/plugins/plugin_info_message_filter_unittest.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "010f2d8d9a36be885deb451c01c3eb8717c8db42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6c6d94f_58fc0ea2",
+        "filename": "chrome/browser/plugins/plugin_info_message_filter_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-28T08:55:05Z",
+      "side": 1,
+      "message": "Yes, because in the code path triggered by the policy, DecidePluginStatus() doesn\u0027t touch |status| at all. It just keeps its old value, which it got from FindEnabledPlugin().",
+      "parentUuid": "5d02cc9b_655d38f0",
+      "revId": "010f2d8d9a36be885deb451c01c3eb8717c8db42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3284c6df_8d531050",
+        "filename": "chrome/browser/plugins/plugin_power_saver_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-28T08:55:05Z",
+      "side": 1,
+      "message": "I copied those plugins from other test cases in here, but it\u0027s probably good to be explicit (both for readers as well as an additional sanity-check). Done!",
+      "parentUuid": "1dc59503_7444391f",
+      "revId": "010f2d8d9a36be885deb451c01c3eb8717c8db42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8baed2a_7c87cc10",
         "filename": "chrome/browser/prefs/browser_prefs.cc",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "010f2d8d9a36be885deb451c01c3eb8717c8db42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "536553a4_c239ea2b",
+        "filename": "chrome/browser/prefs/browser_prefs.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-28T08:55:05Z",
+      "side": 1,
+      "message": "Yes, per the comment in line 460, these should be ordered alphabetically. Sadly, this regresses occasionally, but as a prefs/ OWNER I feel like I don\u0027t have an excuse not to shave that particular yak :)",
+      "parentUuid": "f8baed2a_7c87cc10",
+      "revId": "010f2d8d9a36be885deb451c01c3eb8717c8db42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "3eee92d0_44742018",
+        "filename": "chrome/common/pref_names.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 995,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-28T08:55:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b767e018_1bbff91a",
+      "revId": "010f2d8d9a36be885deb451c01c3eb8717c8db42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60cabe02_2a3aeaa3",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 6
@@ -124,6 +214,30 @@
       "revId": "010f2d8d9a36be885deb451c01c3eb8717c8db42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7e13e54_25b3d944",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 4324,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-28T08:55:05Z",
+      "side": 1,
+      "message": "Done.\n\n(Note that this will also work with user-defined exceptions though, which is the desired behavior).",
+      "parentUuid": "60cabe02_2a3aeaa3",
+      "range": {
+        "startLine": 4324,
+        "startChar": 20,
+        "endLine": 4324,
+        "endChar": 83
+      },
+      "revId": "010f2d8d9a36be885deb451c01c3eb8717c8db42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
