@@ -167,7 +167,7 @@ class MockInputHandler : public cc::InputHandler {
   MOCK_METHOD0(PinchGestureBegin, void());
   MOCK_METHOD2(PinchGestureUpdate,
                void(float magnify_delta, const gfx::Point& anchor));
-  MOCK_METHOD0(PinchGestureEnd, void());
+  MOCK_METHOD1(PinchGestureEnd, void(const gfx::Point& anchor));
 
   MOCK_METHOD0(SetNeedsAnimateInput, void());
 
@@ -916,7 +916,7 @@ TEST_P(InputHandlerProxyTest, GesturePinch) {
   VERIFY_AND_RESET_MOCKS();
 
   gesture_.SetType(WebInputEvent::kGesturePinchEnd);
-  EXPECT_CALL(mock_input_handler_, PinchGestureEnd());
+  EXPECT_CALL(mock_input_handler_, PinchGestureEnd(gfx::Point()));
   EXPECT_EQ(expected_disposition_, input_handler_->HandleInputEvent(gesture_));
 
   VERIFY_AND_RESET_MOCKS();
@@ -1017,7 +1017,7 @@ TEST_P(InputHandlerProxyTest, GesturePinchAfterScrollOnMainThread) {
   VERIFY_AND_RESET_MOCKS();
 
   gesture_.SetType(WebInputEvent::kGesturePinchEnd);
-  EXPECT_CALL(mock_input_handler_, PinchGestureEnd());
+  EXPECT_CALL(mock_input_handler_, PinchGestureEnd(gfx::Point()));
   EXPECT_EQ(expected_disposition_, input_handler_->HandleInputEvent(gesture_));
 
   // After the pinch gesture ends, they should go to back to the main
@@ -3820,7 +3820,7 @@ TEST_P(InputHandlerProxyEventQueueTest, VSyncAlignedGestureScrollPinchScroll) {
   // Two |GesturePinchUpdate| will be coalesced.
   EXPECT_CALL(mock_input_handler_,
               PinchGestureUpdate(0.7f, gfx::Point(13, 17)));
-  EXPECT_CALL(mock_input_handler_, PinchGestureEnd());
+  EXPECT_CALL(mock_input_handler_, PinchGestureEnd(gfx::Point()));
 
   HandleGestureEvent(WebInputEvent::kGestureScrollUpdate, -30);
   HandleGestureEvent(WebInputEvent::kGestureScrollEnd);
