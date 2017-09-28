@@ -1,0 +1,180 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46b8d694_956f7fb1",
+        "filename": "base/metrics/dummy_histogram.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-28T19:02:16Z",
+      "side": 1,
+      "message": "Can you add an override dtor?",
+      "revId": "301c517587ddf597268f49dd0cd334d126c52d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3832f8b6_ef7ef3ad",
+        "filename": "base/metrics/dummy_histogram.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-28T19:02:16Z",
+      "side": 1,
+      "message": "If nobody else has a strong preference, I would just inline these since the method bodies are 0-1 lines.",
+      "revId": "301c517587ddf597268f49dd0cd334d126c52d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e095ca9a_4175cbf8",
+        "filename": "base/metrics/dummy_histogram.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-28T19:02:16Z",
+      "side": 1,
+      "message": "Does just \"return nullptr;\" work?",
+      "revId": "301c517587ddf597268f49dd0cd334d126c52d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37decdbe_5bcb57a5",
+        "filename": "base/metrics/dummy_histogram.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-28T19:02:16Z",
+      "side": 1,
+      "message": "Can you use a Leaky LazyInstance instead?",
+      "revId": "301c517587ddf597268f49dd0cd334d126c52d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a29bcccc_4ed800d9",
+        "filename": "base/metrics/dummy_histogram.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-28T19:02:16Z",
+      "side": 1,
+      "message": "Why are the overrides split into 2 sections?",
+      "revId": "301c517587ddf597268f49dd0cd334d126c52d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19ccda7f_bbf40a41",
+        "filename": "base/metrics/dummy_histogram.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-28T19:02:16Z",
+      "side": 1,
+      "message": "Doesn\u0027t HistogramBase have a variable of the same name already? It\u0027s a bit confusing. Does removing this and calling histogram_name() in dummy_histogram.cc do what you want?",
+      "revId": "301c517587ddf597268f49dd0cd334d126c52d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3e8537d_52cd3c56",
+        "filename": "base/metrics/histogram.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-28T19:02:16Z",
+      "side": 1,
+      "message": "Is this for another CL? Why not just leave this small block of code out until it\u0027s ready?",
+      "revId": "301c517587ddf597268f49dd0cd334d126c52d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78a67f54_440091a9",
+        "filename": "base/metrics/histogram_base.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-28T19:02:16Z",
+      "side": 1,
+      "message": "Typo, BTW.",
+      "range": {
+        "startLine": 142,
+        "startChar": 5,
+        "endLine": 142,
+        "endChar": 13
+      },
+      "revId": "301c517587ddf597268f49dd0cd334d126c52d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4236e30_c8b983ef",
+        "filename": "base/metrics/statistics_recorder.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-28T19:02:16Z",
+      "side": 1,
+      "message": "Will this ever happen?",
+      "revId": "301c517587ddf597268f49dd0cd334d126c52d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a81cbbab_463be47a",
+        "filename": "base/metrics/statistics_recorder.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-28T19:02:16Z",
+      "side": 1,
+      "message": "This has no callers.",
+      "revId": "301c517587ddf597268f49dd0cd334d126c52d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
