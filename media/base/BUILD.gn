@@ -17,6 +17,7 @@ if (is_android) {
 source_set("base") {
   visibility = media_subcomponent_deps
   visibility += [ "//media" ]
+  visibility += [ "//third_party/WebKit/public:blink_headers" ]
 
   # TODO(dalecurtis): Replace this with empty targets on non-mac so
   # we can just include //media/base/mac in media_subcomponent_deps.
@@ -103,6 +104,7 @@ source_set("base") {
     "container_names.h",
     "content_decryption_module.cc",
     "content_decryption_module.h",
+    "context_provider_callback.h",
     "data_buffer.cc",
     "data_buffer.h",
     "data_source.cc",

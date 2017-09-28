@@ -4,6 +4,7 @@
 
 #include "base/threading/thread_checker.h"
 #include "components/viz/common/surfaces/local_surface_id_allocator.h"
+#include "media/base/context_provider_callback.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "platform/PlatformExport.h"
 #include "platform/graphics/VideoFrameResourceProvider.h"
@@ -22,7 +23,8 @@ class PLATFORM_EXPORT VideoFrameSubmitter
     : public WebVideoFrameSubmitter,
       public viz::mojom::blink::CompositorFrameSinkClient {
  public:
-  explicit VideoFrameSubmitter(cc::VideoFrameProvider*);
+  VideoFrameSubmitter(cc::VideoFrameProvider*,
+                      const media::ContextProviderCallback&);
 
   ~VideoFrameSubmitter() override;
 
@@ -64,7 +66,8 @@ class PLATFORM_EXPORT VideoFrameSubmitter
   mojo::Binding<viz::mojom::blink::CompositorFrameSinkClient> binding_;
   viz::LocalSurfaceIdAllocator local_surface_id_allocator_;
   viz::LocalSurfaceId current_local_surface_id_;
-  VideoFrameResourceProvider resource_provider_;
+  media::ContextProviderCallback context_provider_callback_;
+  std::unique_ptr<VideoFrameResourceProvider> resource_provider_;
 
   bool is_rendering_;
 

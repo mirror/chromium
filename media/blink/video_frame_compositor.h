@@ -16,8 +16,10 @@
 #include "base/time/time.h"
 #include "base/timer/timer.h"
 #include "cc/layers/video_frame_provider.h"
+#include "media/base/context_provider_callback.h"
 #include "media/base/video_renderer_sink.h"
 #include "media/blink/media_blink_export.h"
+#include "media/blink/webmediaplayer_params.h"
 #include "third_party/WebKit/public/platform/WebVideoFrameSubmitter.h"
 #include "ui/gfx/geometry/size.h"
 
@@ -68,7 +70,8 @@ class MEDIA_BLINK_EXPORT VideoFrameCompositor : public VideoRendererSink,
   // |task_runner| is the task runner on which this class will live,
   // though it may be constructed on any thread.
   explicit VideoFrameCompositor(
-      const scoped_refptr<base::SingleThreadTaskRunner>& task_runner);
+      const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
+      const ContextProviderCallback& media_context_provider_callback);
 
   // Destruction must happen on the compositor thread; Stop() must have been
   // called before destruction starts.

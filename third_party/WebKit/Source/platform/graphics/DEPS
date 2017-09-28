@@ -16,8 +16,10 @@ include_rules = [
     "+gpu/command_buffer/common/capabilities.h",
     "+gpu/command_buffer/common/mailbox.h",
     "+gpu/command_buffer/common/sync_token.h",
+    "+media/base/context_provider_callback.h",
     "+media/base/media_switches.h",
     "+media/base/video_frame.h",
+    "+media/video/gpu_video_accelerator_factories.h",
     "+services/viz/public/interfaces",
     "+public/web/WebSettings.h",
 ]
