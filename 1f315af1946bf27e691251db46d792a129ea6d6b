@@ -16,6 +16,29 @@
       "revId": "1f315af1946bf27e691251db46d792a129ea6d6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6501ef22_d77e3a99",
+        "filename": "google_apis/gaia/fake_gaia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-28T12:46:37Z",
+      "side": 1,
+      "message": "I personally do not like this change as I think this may lead to changing the expectations that other tests have. I think I would prefer the following:\n* Add a boolean |any_scope| in AuthTokenInfo that we would use here to determine if we should skip checking the scopes.\n* We would then set this boolean for the tests that are failing.\n\nWDYT?",
+      "range": {
+        "startLine": 480,
+        "startChar": 29,
+        "endLine": 480,
+        "endChar": 30
+      },
+      "revId": "1f315af1946bf27e691251db46d792a129ea6d6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
