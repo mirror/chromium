@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b28ac9f6_7ab85e51",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-28T16:24:51Z",
+      "side": 1,
+      "message": "Are there tests that still use something like the old style and make sure that waiting on the response to be complete and then reading the body pipe is successful, at least for small uses?  (I\u0027m hoping yes, but will defer to you if you don\u0027t think it\u0027s necessary.)   If so, could you change the comment to make clear that you\u0027re offering an option and changing those tests that aren\u0027t specifically configured to test the other pattern over to this new pattern?  \n\nTo put it slightly differently, I\u0027d like to be able to read the CL description and understand whether the shift in test pattern (from waiting for response complete and then reading the body over to reading the body until complete and then waiting for response complete) is universal or just for the majority of tests that aren\u0027t testing that case.",
+      "range": {
+        "startLine": 19,
+        "startChar": 11,
+        "endLine": 19,
+        "endChar": 12
+      },
+      "revId": "8135cf40ff8cd9e09685c48763264b8037956ff5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
