@@ -153,6 +153,11 @@ class CORE_EXPORT OffscreenCanvas final
   bool IsWebGL2Enabled() const override { return true; }
   bool IsWebGLBlocked() const override { return false; }
 
+  bool HostAddEventListener(const AtomicString& event_type,
+                            EventListener* listener) override {
+    return addEventListener(event_type, listener);
+  }
+
   FontSelector* GetFontSelector() override;
 
   DECLARE_VIRTUAL_TRACE();

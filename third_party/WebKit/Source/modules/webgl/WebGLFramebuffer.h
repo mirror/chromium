@@ -68,6 +68,7 @@ class WebGLFramebuffer final : public WebGLContextObject {
   ~WebGLFramebuffer() override;
 
   static WebGLFramebuffer* Create(WebGLRenderingContextBase*);
+  static WebGLFramebuffer* CreateOpaque(WebGLRenderingContextBase*);
 
   GLuint Object() const { return object_; }
 
@@ -94,6 +95,8 @@ class WebGLFramebuffer final : public WebGLContextObject {
 
   void SetHasEverBeenBound() { has_ever_been_bound_ = true; }
 
+  bool IsOpaque() const { return is_opaque_; }
+
   bool HasStencilBuffer() const;
 
   // Wrapper for drawBuffersEXT/drawBuffersARB to work around a driver bug.
@@ -109,7 +112,7 @@ class WebGLFramebuffer final : public WebGLContextObject {
   DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
  protected:
-  explicit WebGLFramebuffer(WebGLRenderingContextBase*);
+  explicit WebGLFramebuffer(WebGLRenderingContextBase*, bool opaque);
 
   bool HasObject() const override { return object_ != 0; }
   void DeleteObjectImpl(gpu::gles2::GLES2Interface*) override;
@@ -148,6 +151,7 @@ class WebGLFramebuffer final : public WebGLContextObject {
 
   bool has_ever_been_bound_;
   bool web_gl1_depth_stencil_consistent_;
+  const bool is_opaque_;
 
   Vector<GLenum> draw_buffers_;
   Vector<GLenum> filtered_draw_buffers_;

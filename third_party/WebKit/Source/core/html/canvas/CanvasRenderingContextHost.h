@@ -39,6 +39,8 @@ class CORE_EXPORT CanvasRenderingContextHost : public GarbageCollectedMixin {
 
   virtual ExecutionContext* GetTopExecutionContext() const = 0;
   virtual DispatchEventResult HostDispatchEvent(Event*) = 0;
+  virtual bool HostAddEventListener(const AtomicString& event_type,
+                                    EventListener*) = 0;
   virtual const KURL& GetExecutionContextUrl() const = 0;
 
   virtual ScriptPromise Commit(RefPtr<StaticBitmapImage>,

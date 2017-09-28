@@ -8,14 +8,24 @@
 ] interface VRSession : EventTarget {
   readonly attribute VRDevice device;
   readonly attribute boolean exclusive;
+  readonly attribute VRPresentationContext outputContext;
 
   attribute double depthNear;
   attribute double depthFar;
+
+  attribute VRLayer baseLayer;
 
   attribute EventHandler onblur;
   attribute EventHandler onfocus;
   attribute EventHandler onresetpose;
   attribute EventHandler onend;
 
+  [CallWith=ScriptState] Promise requestFrameOfReference(VRFrameOfReferenceType type, [PermissiveDictionaryConversion] optional VRFrameOfReferenceOptions options);
+
+  long requestFrame(VRFrameRequestCallback callback);
+  void cancelFrame(long handle);
+
   [CallWith=ScriptState] Promise end();
+
+  FrozenArray<VRController> getControllers();
 };

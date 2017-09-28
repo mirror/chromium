@@ -427,6 +427,69 @@ void VrShellGl::GvrInit(gvr_context* gvr_api) {
   if (cardboard_ && web_vr_mode_) {
     browser_->ToggleCardboardGamepad(true);
   }
+
+  if (session_client_) {
+    session_client_->OnControllerConnected(
+        cardboard_ ? GetGazeVRControllerInfoPtr()
+                   : controller_->GetVRControllerInfoPtr());
+  }
+}
+
+device::mojom::VRControllerInfoPtr VrShellGl::GetGazeVRControllerInfoPtr() {
+  device::mojom::VRControllerInfoPtr controller_info =
+      device::mojom::VRControllerInfo::New();
+
+  // Only one controller
+  controller_info->index = 1;
+
+  // It's a gaze-cursor-based device.
+  controller_info->gazeCursor = true;
+
+  // No implicit handedness
+  controller_info->handedness = device::mojom::VRControllerHandedness::NONE;
+
+  // Pointer transform is omitted.
+
+  // One input: the cardboard button. Listed here as a "trigger".
+  // TODO(bajones): Is trigger the right designation for this?
+  device::mojom::VRControllerElementInfoPtr trigger =
+      device::mojom::VRControllerElementInfo::New();
+
+  trigger->name = "trigger";
+  trigger->hasXAxis = false;
+  trigger->hasYAxis = false;
+
+  controller_info->elements.push_back(std::move(trigger));
+
+  return controller_info;
+}
+
+device::mojom::VRControllerStatePtr VrShellGl::GetGazeVRControllerStatePtr(
+    bool triggered) {
+  device::mojom::VRControllerStatePtr controller_state =
+      device::mojom::VRControllerState::New();
+
+  controller_state->index = 1;
+  controller_state->handedness = device::mojom::VRControllerHandedness::NONE;
+
+  device::mojom::VRControllerElementStatePtr trigger =
+      device::mojom::VRControllerElementState::New();
+
+  trigger->name = "trigger";
+  trigger->value = triggered ? 1.0 : 0.0;
+  trigger->touched = triggered;
+  trigger->pressed = triggered;
+
+  controller_state->elements.push_back(std::move(trigger));
+
+  return controller_state;
+}
+
+void VrShellGl::OnTriggerEvent() {
+  if (cardboard_ && session_client_) {
+    session_client_->OnControllerSelectGesture(
+        GetGazeVRControllerStatePtr(true));
+  }
 }
 
 void VrShellGl::InitializeRenderer() {
@@ -543,9 +606,6 @@ void VrShellGl::HandleControllerInput(const gfx::Vector3dF& head_direction) {
 
   HandleControllerAppButtonActivity(controller_direction);
 
-  if (ShouldDrawWebVr())
-    return;
-
   controller_->GetTransform(&controller_info_.transform);
   std::unique_ptr<GestureList> gesture_list_ptr = controller_->DetectGestures();
   GestureList& gesture_list = *gesture_list_ptr;
@@ -557,6 +617,17 @@ void VrShellGl::HandleControllerInput(const gfx::Vector3dF& head_direction) {
     controller_info_.touchpad_button_state =
         vr::UiInputManager::ButtonState::DOWN;
   }
+
+  if (!cardboard_ && session_client_ &&
+      controller_->ButtonDownHappened(gvr::kControllerButtonClick)) {
+    session_client_->OnControllerSelectGesture(
+        controller_->GetVRControllerStatePtr());
+  }
+
+  if (ShouldDrawWebVr()) {
+    return;
+  }
+
   controller_info_.app_button_state =
       controller_->ButtonState(gvr::kControllerButtonApp)
           ? vr::UiInputManager::ButtonState::DOWN
@@ -1232,6 +1303,17 @@ void VrShellGl::UpdateLayerBounds(int16_t frame_index,
   }
 }
 
+void VrShellGl::SetSessionClient(
+    device::mojom::VRSessionClientPtr session_client) {
+  session_client_ = std::move(session_client);
+
+  if (controller_) {
+    session_client_->OnControllerConnected(
+        cardboard_ ? GetGazeVRControllerInfoPtr()
+                   : controller_->GetVRControllerInfoPtr());
+  }
+}
+
 int64_t VrShellGl::GetPredictedFrameTimeNanos() {
   int64_t frame_time_micros =
       vsync_helper_.LastVSyncInterval().InMicroseconds();
@@ -1257,6 +1339,16 @@ void VrShellGl::SendVSync(base::TimeTicks time, GetVSyncCallback callback) {
 
   int64_t prediction_nanos = GetPredictedFrameTimeNanos();
 
+  if (session_client_) {
+    if (cardboard_) {
+      session_client_->OnControllerStateChange(
+          GetGazeVRControllerStatePtr(false));
+    } else if (controller_) {
+      session_client_->OnControllerStateChange(
+          controller_->GetVRControllerStatePtr());
+    }
+  }
+
   gfx::Transform head_mat;
   device::mojom::VRPosePtr pose =
       device::GvrDelegate::GetVRPosePtrWithNeckModel(gvr_api_.get(), &head_mat,
@@ -1274,6 +1366,7 @@ void VrShellGl::SendVSync(base::TimeTicks time, GetVSyncCallback callback) {
 void VrShellGl::ClosePresentationBindings() {
   webvr_frame_timeout_.Cancel();
   submit_client_.reset();
+  session_client_.reset();
   if (!callback_.is_null()) {
     // When this Presentation provider is going away we have to respond to
     // pending callbacks, so instead of providing a VSync, tell the requester

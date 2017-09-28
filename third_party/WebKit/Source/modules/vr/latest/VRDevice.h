@@ -6,6 +6,7 @@
 #define VRDevice_h
 
 #include "bindings/core/v8/ScriptPromise.h"
+#include "bindings/modules/v8/webgl_rendering_context_or_webgl2_rendering_context.h"
 #include "core/dom/events/EventTarget.h"
 #include "device/vr/vr_service.mojom-blink.h"
 #include "modules/vr/latest/VRSessionCreationOptions.h"
@@ -17,6 +18,7 @@
 namespace blink {
 
 class VR;
+class VRFrameProvider;
 
 class VRDevice final : public EventTargetWithInlineData,
                        public device::mojom::blink::VRDisplayClient {
@@ -36,6 +38,10 @@ class VRDevice final : public EventTargetWithInlineData,
                                 const VRSessionCreationOptions&) const;
   ScriptPromise requestSession(ScriptState*, const VRSessionCreationOptions&);
 
+  ScriptPromise ensureContextCompatibility(
+      ScriptState*,
+      const WebGLRenderingContextOrWebGL2RenderingContext&) const;
+
   // EventTarget overrides.
   ExecutionContext* GetExecutionContext() const override;
   const AtomicString& InterfaceName() const override;
@@ -48,6 +54,8 @@ class VRDevice final : public EventTargetWithInlineData,
   void OnActivate(device::mojom::blink::VRDisplayEventReason,
                   OnActivateCallback on_handled) override;
   void OnDeactivate(device::mojom::blink::VRDisplayEventReason) override;
+
+  VRFrameProvider* frameProvider();
 
   void Dispose();
 
@@ -66,6 +74,7 @@ class VRDevice final : public EventTargetWithInlineData,
   const char* checkSessionSupport(const VRSessionCreationOptions&) const;
 
   Member<VR> vr_;
+  Member<VRFrameProvider> frame_provider_;
   String device_name_;
   bool is_external_;
   bool supports_exclusive_;
