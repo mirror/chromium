@@ -535,6 +535,11 @@ void NGBlockNode::AddAtomicInlineBaselineFromOldLayout(
     const NGBaselineRequest& request,
     bool is_first_line,
     NGFragmentBuilder* builder) {
+  // Some form controls return 0 for BaselinePosition() if 'display:block'.
+  // Blocks without line boxes should not produce baselines.
+  if (box_->IsLayoutBlock() && !box_->IsInline())
+    return;
+
   LineDirectionMode line_direction =
       IsHorizontalWritingMode(builder->WritingMode())
           ? LineDirectionMode::kHorizontalLine
