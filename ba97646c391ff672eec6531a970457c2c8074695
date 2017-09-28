@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1bfdad85_2b80f2f1",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/workers/resources/terminate-during-sync-operation.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-28T02:34:51Z",
+      "side": 1,
+      "message": "This seems really precise. \"More than 20 workers causes OOM crashes.\" ?",
+      "revId": "ba97646c391ff672eec6531a970457c2c8074695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
