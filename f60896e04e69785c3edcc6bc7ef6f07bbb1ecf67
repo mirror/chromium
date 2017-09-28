@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0fdf9ce5_2a7fa951",
+        "filename": "components/metrics/file_metrics_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-09-28T21:45:49Z",
+      "side": 1,
+      "message": "Done.  It\u0027s recorded by the caller after return true.",
+      "parentUuid": "339a78c7_f730eae8",
+      "range": {
+        "startLine": 306,
+        "startChar": 31,
+        "endLine": 306,
+        "endChar": 0
+      },
+      "revId": "f60896e04e69785c3edcc6bc7ef6f07bbb1ecf67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "638242df_9d6b44f4",
         "filename": "components/metrics/file_metrics_provider_unittest.cc",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "53977765_de74813f",
+        "filename": "components/metrics/file_metrics_provider_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-09-28T21:45:49Z",
+      "side": 1,
+      "message": "The use of *var++ is a long-established C-ism and I think people know what it means.  Adding parenthesis would make it less clear as people would note it as \"different\" than typical and wonder if it is doing something different than typical.  I\u0027d have to spend a couple seconds trying to determine if the ++ increment was no longer \"post\".",
+      "parentUuid": "638242df_9d6b44f4",
+      "range": {
+        "startLine": 225,
+        "startChar": 30,
+        "endLine": 225,
+        "endChar": 0
+      },
+      "revId": "f60896e04e69785c3edcc6bc7ef6f07bbb1ecf67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "279ed910_37dba1a8",
         "filename": "components/metrics/file_metrics_provider_unittest.cc",
         "patchSetId": 5
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-28T07:59:51Z",
       "side": 1,
       "message": "It looks like you\u0027ve only added test coverage for the atomic case.  If that\u0027s accurate, could you please also add coverage for the non-atomic case?",
+      "range": {
+        "startLine": 337,
+        "startChar": 50,
+        "endLine": 337,
+        "endChar": 0
+      },
+      "revId": "f60896e04e69785c3edcc6bc7ef6f07bbb1ecf67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48e01bae_0efa7d10",
+        "filename": "components/metrics/file_metrics_provider_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-09-28T21:45:49Z",
+      "side": 1,
+      "message": "There\u0027s no differences in these code paths between active and atomic files.  Those settings only affect how the data is extracted from the file (read-write vs read-only) and whether the file is deleted afterwards.  This is the same as the other \"access\" tests.",
+      "parentUuid": "279ed910_37dba1a8",
       "range": {
         "startLine": 337,
         "startChar": 50,
