@@ -15,6 +15,7 @@
 #include "base/timer/elapsed_timer.h"
 #include "base/values.h"
 #include "extensions/browser/api/declarative_net_request/constants.h"
+#include "extensions/browser/api/declarative_net_request/flat/extension_ruleset_generated.h"
 #include "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.h"
 #include "extensions/browser/api/declarative_net_request/indexed_rule.h"
 #include "extensions/browser/api/declarative_net_request/parse_info.h"
@@ -24,6 +25,7 @@
 #include "extensions/common/file_util.h"
 #include "extensions/common/install_warning.h"
 #include "extensions/common/manifest_constants.h"
+#include "third_party/flatbuffers/src/include/flatbuffers/flatbuffers.h"
 
 namespace extensions {
 namespace declarative_net_request {
@@ -59,13 +61,10 @@ std::string GetJSONRulesetFilename(const Extension& extension) {
 
 // Helper function to index |rules| and persist them to the
 // |indexed_ruleset_path|.
-ParseInfo IndexAndPersistRulesImpl(const base::Value& rules,
+ParseInfo IndexAndPersistRulesImpl(const base::ListValue& rules,
                                    const Extension& extension,
                                    std::vector<InstallWarning>* warnings) {
   base::ThreadRestrictions::AssertIOAllowed();
-
-  if (!rules.is_list())
-    return ParseInfo(ParseResult::ERROR_LIST_NOT_PASSED);
 
   FlatRulesetIndexer indexer;
   bool all_rules_parsed = true;
@@ -121,7 +120,7 @@ ParseInfo IndexAndPersistRulesImpl(const base::Value& rules,
 
 }  // namespace
 
-bool IndexAndPersistRules(const base::Value& rules,
+bool IndexAndPersistRules(const base::ListValue& rules,
                           const Extension& extension,
                           std::string* error,
                           std::vector<InstallWarning>* warnings) {
@@ -141,6 +140,20 @@ bool IndexAndPersistRules(const base::Value& rules,
   if (error)
     *error = info.GetErrorDescription(GetJSONRulesetFilename(extension));
   return false;
+}
+
+bool HasValidIndexedRulesetForTesting(const Extension& extension) {
+  base::ThreadRestrictions::AssertIOAllowed();
+
+  std::string data;
+  if (!base::ReadFileToString(
+          file_util::GetIndexedRulesetPath(extension.path()), &data)) {
+    return false;
+  }
+
+  flatbuffers::Verifier verifier(reinterpret_cast<const uint8_t*>(data.c_str()),
+                                 data.size());
+  return flat::VerifyExtensionIndexedRulesetBuffer(verifier);
 }
 
 }  // namespace declarative_net_request
