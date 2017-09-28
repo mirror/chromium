@@ -129,4 +129,12 @@ gfx::ImageSkia HostedAppBrowserController::GetWindowIcon() const {
   return browser_->GetCurrentPageIcon().AsImageSkia();
 }
 
+SkColor HostedAppBrowserController::GetThemeColor() const {
+  extensions::ExtensionRegistry* registry =
+      extensions::ExtensionRegistry::Get(browser->profile());
+  const extensions::Extension* extension =
+      registry->GetExtensionById(id, extensions::ExtensionRegistry::EVERYTHING);
+  return extensions::AppThemeColorInfo::GetThemeColor(extension);
+}
+
 }  // namespace extensions

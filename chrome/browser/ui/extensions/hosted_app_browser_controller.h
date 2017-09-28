@@ -44,6 +44,10 @@ class HostedAppBrowserController {
   // Returns the icon to be displayed in the window title bar.
   gfx::ImageSkia GetWindowIcon() const;
 
+  // Returns the color of the title bar, is SK_ColorTRANSPARENT if none
+  // specified.
+  SkColor GetThemeColor() const;
+
  private:
   Browser* browser_;
   const std::string extension_id_;
