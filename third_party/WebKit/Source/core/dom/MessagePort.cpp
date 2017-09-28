@@ -126,9 +126,12 @@ void MessagePort::start() {
 }
 
 void MessagePort::close() {
-  // A closed port should not be neutered, so don't disconnect the message pipe.
-  // TODO(crbug.com/673526): Make sure that transfering a closed port keeps the
-  // port closed.
+  // A closed port should not be neutered, so rather than merely disconnecting
+  // from the mojo message pipe, also entangle with a new dangling message pipe.
+  // This will also make sure that no more incoming messages can be read from
+  // the incoming message pipe.
+  if (IsEntangled())
+    channel_ = MessagePortChannel(mojo::MessagePipe().handle0);
   closed_ = true;
 }
 
@@ -183,12 +186,6 @@ void MessagePort::DispatchMessages() {
     return;
 
   while (true) {
-    // Because close() doesn't cancel any in flight calls to dispatchMessages(),
-    // and can be triggered by the onmessage event handler, we need to check if
-    // the port is still open before each dispatch.
-    if (closed_)
-      break;
-
     // WorkerGlobalScope::close() in Worker onmessage handler should prevent
     // the next message from dispatching.
     if (GetExecutionContext()->IsWorkerGlobalScope() &&
