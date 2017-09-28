@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a312814f_63dee2f1",
+        "filename": "ash/message_center/message_list_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-09-28T04:14:01Z",
+      "side": 1,
+      "message": "This function takes O(N^2) where N is the number of notifications.\nIs it OK?\n\nI guess it\u0027s OK assuming GetNotificationById is not called so frequently and N is not big.\nBut if it is a concern, maybe we should add a private function to create vector\u003cconst MessageView*\u003e instance for valid notifications and access an element in it using given |index|?",
+      "revId": "26fdc09f486a55a7e5eb7514e6f3021a7dcfdb80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
