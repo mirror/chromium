@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b4da2e4_5dec613b",
+        "filename": "chrome/browser/resources/md_downloads/manager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-09-28T01:36:06Z",
+      "side": 0,
+      "message": "this.async(function() {\n  this.set(\u0027items_.\u0027 + i + \u0027.hideDate\u0027, hideDate);\n}, 1);\n\nalso works, but renders templates twice and is kinda lame, IMO.",
+      "range": {
+        "startLine": 215,
+        "startChar": 29,
+        "endLine": 215,
+        "endChar": 30
+      },
+      "revId": "31885d177b085f6f815e466cddba75c36d652f6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
