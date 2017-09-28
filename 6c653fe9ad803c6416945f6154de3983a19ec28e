@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab6033d9_0b944a87",
+        "filename": "third_party/zlib/contrib/arm/inffast.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-09-28T21:51:58Z",
+      "side": 1,
+      "message": "Should we be using INFLATE_FAST_MIN_HAVE and INFLATE_FAST_MIN_LEFT here?\n\nI guess not. It would be ideal to keep this as close as possible to the originally-landed patch. Then we can add that in a separate patch.",
+      "range": {
+        "startLine": 27,
+        "startChar": 26,
+        "endLine": 27,
+        "endChar": 27
+      },
+      "revId": "6c653fe9ad803c6416945f6154de3983a19ec28e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
