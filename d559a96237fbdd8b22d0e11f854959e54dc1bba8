@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "28be68f5_d5bd341d",
+        "filename": "chrome_elf/nt_registry/nt_registry.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-28T08:50:03Z",
+      "side": 1,
+      "message": "It\u0027s handy for other intish types as well. For example, you could have:\n\nenum : size_t { kSomeConst \u003d 1234 };\n\nif you needed a size_t rather than an int.",
+      "parentUuid": "5dc962cb_581c2576",
+      "revId": "d559a96237fbdd8b22d0e11f854959e54dc1bba8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f86cc5c_8d87f842",
         "filename": "chrome_elf/nt_registry/nt_registry.cc",
         "patchSetId": 5
@@ -234,6 +252,24 @@
       "writtenOn": "2017-09-26T21:44:23Z",
       "side": 1,
       "message": "EXPECT_EQ(get_sz, sz_val);\nhere and elsewhere",
+      "revId": "d559a96237fbdd8b22d0e11f854959e54dc1bba8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31667b56_89aeadb9",
+        "filename": "chrome_elf/nt_registry/nt_registry_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-28T08:50:03Z",
+      "side": 1,
+      "message": "ping!",
+      "parentUuid": "e43b854a_970ea03b",
       "revId": "d559a96237fbdd8b22d0e11f854959e54dc1bba8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

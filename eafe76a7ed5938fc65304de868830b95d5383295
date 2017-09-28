@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0800ea1d_79da5c4f",
+        "filename": "chrome_elf/nt_registry/nt_registry.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 811,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-28T08:50:03Z",
+      "side": 1,
+      "message": "does it make sense to pre-allocate some reasonable amount of memory so that there\u0027s a chance that the first call will succeed, or do you think that will end up being a pessimization in the real world?",
+      "revId": "eafe76a7ed5938fc65304de868830b95d5383295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb7a89f2_b39d7199",
+        "filename": "chrome_elf/nt_registry/nt_registry.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-28T08:50:03Z",
+      "side": 1,
+      "message": "nit: use \"buffer.data()\", which is even valid when size_needed \u003d\u003d 0 so long as it is never dereferenced (http://en.cppreference.com/w/cpp/container/vector/data).",
+      "range": {
+        "startLine": 816,
+        "startChar": 63,
+        "endLine": 816,
+        "endChar": 73
+      },
+      "revId": "eafe76a7ed5938fc65304de868830b95d5383295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f09954f7_2ecf9f54",
+        "filename": "chrome_elf/nt_registry/nt_registry_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-28T08:50:03Z",
+      "side": 1,
+      "message": "please use EXPECT_EQ wherever possible rather than EXPECT_TRUE -- the former will give a more informative log message if the expectation ever fails.",
+      "range": {
+        "startLine": 338,
+        "startChar": 2,
+        "endLine": 338,
+        "endChar": 3
+      },
+      "revId": "eafe76a7ed5938fc65304de868830b95d5383295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74de705a_d1d305f3",
+        "filename": "chrome_elf/nt_registry/nt_registry_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-28T08:50:03Z",
+      "side": 1,
+      "message": "subkey_handle is leaked if this assertion fails. same issue below. i think it\u0027s ideal to close the handles so that there\u0027s no risk of leaks from this test impacting subsequent tests in the same process.",
+      "range": {
+        "startLine": 602,
+        "startChar": 35,
+        "endLine": 602,
+        "endChar": 48
+      },
+      "revId": "eafe76a7ed5938fc65304de868830b95d5383295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
