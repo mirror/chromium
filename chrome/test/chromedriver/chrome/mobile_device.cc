@@ -9,9 +9,11 @@
 #include "base/json/json_reader.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
+#include "base/strings/string_util.h"
 #include "base/values.h"
 #include "chrome/test/chromedriver/chrome/mobile_device_list.h"
 #include "chrome/test/chromedriver/chrome/status.h"
+#include "components/version_info/version_info.h"
 
 MobileDevice::MobileDevice() {}
 MobileDevice::~MobileDevice() {}
@@ -40,6 +42,12 @@ Status FindMobileDevice(std::string device_name,
     return Status(kUnknownError,
                   "malformed device user agent: should be a string");
   }
+  // The userAgent string may contain "%s", which should be replaced with
+  // Chrome version. However, we don't know the Chrome version until after
+  // starting Chrome, but we need to set userAgent before starting Chrome.
+  // So instead, use the Chrome version at the time of ChromeDriver build.
+  base::ReplaceSubstringsAfterOffset(&tmp_mobile_device->user_agent, 0, "%s",
+                                     version_info::GetVersionNumber());
   int width = 0;
   int height = 0;
   double device_scale_factor = 0.0;
