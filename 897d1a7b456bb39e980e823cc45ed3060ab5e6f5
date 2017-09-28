@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c000527_991c5194",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-09-28T21:48:37Z",
+      "side": 1,
+      "message": "This is weird...it doesn\u0027t seem to be the right place to do this. Can this be part of RegisterFrameSinkId?",
+      "revId": "897d1a7b456bb39e980e823cc45ed3060ab5e6f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69c93d39_c842ffd2",
+        "filename": "content/renderer/input/render_widget_input_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-09-28T21:48:37Z",
+      "side": 1,
+      "message": "I think we want a FrameSinkId not a routing ID.",
+      "revId": "897d1a7b456bb39e980e823cc45ed3060ab5e6f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9105fec2_1224cd92",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1984,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-09-28T21:48:37Z",
+      "side": 1,
+      "message": "What happens to this request? What binds it?",
+      "revId": "897d1a7b456bb39e980e823cc45ed3060ab5e6f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "977c0a99_c5bc5419",
+        "filename": "services/viz/public/interfaces/hit_test/target_frame_for_input_delegate.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-09-28T21:48:37Z",
+      "side": 1,
+      "message": "This is a privileged interface, right? Move it to services/viz/privileged/interfaces/hit_test?",
+      "revId": "897d1a7b456bb39e980e823cc45ed3060ab5e6f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "531e30fd_c576c520",
+        "filename": "services/viz/public/interfaces/hit_test/target_frame_for_input_delegate.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-09-28T21:48:37Z",
+      "side": 1,
+      "message": "This is an unusual name for a mojo interface. How about just InputTarget?",
+      "revId": "897d1a7b456bb39e980e823cc45ed3060ab5e6f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b546feea_4d966f9a",
+        "filename": "services/viz/public/interfaces/hit_test/target_frame_for_input_delegate.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-09-28T21:48:37Z",
+      "side": 1,
+      "message": "What\u0027s a frame_id in this context. We shouldn\u0027t expose web details to the viz API.",
+      "revId": "897d1a7b456bb39e980e823cc45ed3060ab5e6f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bde18559_957a35d0",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2130,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-09-28T21:48:37Z",
+      "side": 1,
+      "message": "Revert?",
+      "range": {
+        "startLine": 2130,
+        "startChar": 23,
+        "endLine": 2130,
+        "endChar": 24
+      },
+      "revId": "897d1a7b456bb39e980e823cc45ed3060ab5e6f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e56ebc3_b9aa5226",
+        "filename": "third_party/WebKit/Source/core/frame/WebViewFrameWidget.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-09-28T21:48:37Z",
+      "side": 1,
+      "message": "Revert?",
+      "revId": "897d1a7b456bb39e980e823cc45ed3060ab5e6f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
