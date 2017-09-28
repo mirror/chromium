@@ -16,6 +16,24 @@
       "revId": "f5a66d09c2e9286e0d0c5371c396bae823740340",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a420a9e7_6e8bd248",
+        "filename": "third_party/WebKit/public/platform/WebClientHintsType.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-28T19:13:07Z",
+      "side": 1,
+      "message": "There is no .cc file corresponding to this file. I can add one that only contains the static_assert but that does not sound worth a separate file. The other option is to add the static_assert to platform/loader/fetch/ClientHintsPreferences.h, but then the static_assert would be far away from  the actual array (kClientHintsHeaderMapping). Let me know what you think?\n\nI renamed the array variable to kClientHintsHeaderMapping since now it is in blink namespace.",
+      "parentUuid": "09250e07_2d855f71",
+      "revId": "f5a66d09c2e9286e0d0c5371c396bae823740340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
