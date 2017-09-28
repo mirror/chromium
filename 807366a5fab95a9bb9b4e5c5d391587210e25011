@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f1f2d59_e04dd451",
+        "filename": "ui/display/manager/managed_display_info.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-28T03:11:08Z",
+      "side": 1,
+      "message": "move this to anonymous namespace.",
+      "revId": "807366a5fab95a9bb9b4e5c5d391587210e25011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
