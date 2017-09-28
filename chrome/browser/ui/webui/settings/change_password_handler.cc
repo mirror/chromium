@@ -51,7 +51,8 @@ void ChangePasswordHandler::OnGaiaPasswordChanged() {
 }
 
 void ChangePasswordHandler::OnMarkingSiteAsLegitimate(const GURL& url) {
-  if (service_->unhandled_password_reuses().empty()) {
+  if (!ChromePasswordProtectionService::ShouldShowChangePasswordSettingUI(
+          profile_)) {
     CallJavascriptFunction("cr.webUIListenerCallback",
                            base::Value("change-password-on-dismiss"));
   }
