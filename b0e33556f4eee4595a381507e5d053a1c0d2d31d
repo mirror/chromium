@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edd0f92b_f79112a7",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwContents.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 1064,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-28T04:38:49Z",
+      "side": 1,
+      "message": "I meant you need a null check (and probably actually throw an exception) instead",
+      "revId": "b0e33556f4eee4595a381507e5d053a1c0d2d31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc6c459d_42ae6d74",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-28T04:38:49Z",
+      "side": 1,
+      "message": "why not just put this in the constructor?",
+      "revId": "b0e33556f4eee4595a381507e5d053a1c0d2d31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d96ba073_894661ee",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-28T04:38:49Z",
+      "side": 1,
+      "message": "make this a static class",
+      "revId": "b0e33556f4eee4595a381507e5d053a1c0d2d31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fde0801_ba74ac0e",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-28T04:38:49Z",
+      "side": 1,
+      "message": "hmm, should assert somehow that this can be called at most once",
+      "revId": "b0e33556f4eee4595a381507e5d053a1c0d2d31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
