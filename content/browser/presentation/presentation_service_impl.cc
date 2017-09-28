@@ -91,6 +91,10 @@ void PresentationServiceImpl::CreateMojoService(
   auto* receiver_delegate =
       browser->GetReceiverPresentationServiceDelegate(web_contents);
 
+  LOG(ERROR) << "PresentationServiceImpl::CreateMojoService________ receiver "
+                "delegate: "
+             << receiver_delegate;
+
   // In current implementation, web_contents can be controller or receiver
   // but not both.
   auto* controller_delegate =
