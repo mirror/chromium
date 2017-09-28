@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3806d557_ed0be956",
+        "filename": "chrome/browser/resources/md_downloads/manager.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-28T18:23:50Z",
+      "side": 1,
+      "message": "This would have been more readable with ... spread operator.\n\nthis.items.splice(index, 0, ...list);\n\nMaybe this is a good time to propose spread operator syntax (along with string templates) as allowed features for the ES6 styleguide.",
+      "revId": "b5ac26772401925ed5e7ec991c0fdf38244ab277",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
