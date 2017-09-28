@@ -14,6 +14,8 @@
 #import "ios/chrome/browser/ui/history_popup/requirements/tab_history_constants.h"
 #import "ios/chrome/browser/ui/tools_menu/tools_menu_configuration.h"
 #import "ios/clean/chrome/browser/ui/commands/tools_menu_commands.h"
+#import "ios/clean/chrome/browser/ui/fullscreen/fullscreen_controller.h"
+#import "ios/clean/chrome/browser/ui/fullscreen/fullscreen_ui_updater.h"
 #import "ios/clean/chrome/browser/ui/history_popup/history_popup_coordinator.h"
 #import "ios/clean/chrome/browser/ui/omnibox/location_bar_coordinator.h"
 #import "ios/clean/chrome/browser/ui/overlays/overlay_service.h"
@@ -31,7 +33,9 @@
 #error "This file requires ARC support."
 #endif
 
-@interface ToolbarCoordinator ()<ToolsMenuCommands, TabHistoryPopupCommands>
+@interface ToolbarCoordinator ()<ToolsMenuCommands, TabHistoryPopupCommands> {
+  std::unique_ptr<FullscreenUIUpdater> _fullscreenUIUpdater;
+}
 // Location Bar contains the omnibox amongst other views.
 @property(nonatomic, weak) LocationBarCoordinator* locationBarCoordinator;
 // History Popup displays the forward or backward history in a popup menu.
@@ -106,11 +110,21 @@
   self.locationBarCoordinator = locationBarCoordinator;
   [self addChildCoordinator:locationBarCoordinator];
   [locationBarCoordinator start];
+
+  // Update the toolbar UI for fullscreen events.
+  _fullscreenUIUpdater =
+      base::MakeUnique<FullscreenUIUpdater>(self.viewController);
+  FullscreenController::FromBrowser(self.browser)
+      ->AddObserver(_fullscreenUIUpdater.get());
+
   [super start];
 }
 
 - (void)stop {
   [super stop];
+  FullscreenController::FromBrowser(self.browser)
+      ->RemoveObserver(_fullscreenUIUpdater.get());
+  _fullscreenUIUpdater = nullptr;
   if (self.usesTabStrip) {
     [self.browser->broadcaster()
         removeObserver:self.mediator

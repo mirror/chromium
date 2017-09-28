@@ -7,6 +7,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import "ios/clean/chrome/browser/ui/fullscreen/fullscreen_ui_element.h"
 #import "ios/clean/chrome/browser/ui/transitions/animators/zoom_transition_delegate.h"
 #import "ios/clean/chrome/browser/ui/transitions/presenters/menu_presentation_delegate.h"
 
@@ -16,7 +17,9 @@
 // each managed by their own view controllers.
 // Subclasses manage the specific layout of these view controllers.
 @interface TabContainerViewController
-    : UIViewController<MenuPresentationDelegate, ZoomTransitionDelegate>
+    : UIViewController<FullscreenUIElement,
+                       MenuPresentationDelegate,
+                       ZoomTransitionDelegate>
 
 // View controller showing the main content for the tab. If there is no
 // toolbar view controller set, the contents of this view controller will

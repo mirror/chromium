@@ -6,6 +6,7 @@
 #import "ios/clean/chrome/browser/ui/tab/tab_container_view_controller+internal.h"
 
 #import "base/logging.h"
+#import "ios/clean/chrome/browser/ui/fullscreen/fullscreen_scroll_end_animator.h"
 #import "ios/clean/chrome/browser/ui/transitions/animators/swap_from_above_animator.h"
 #import "ios/clean/chrome/browser/ui/transitions/containment_transition_context.h"
 #import "ios/clean/chrome/browser/ui/transitions/containment_transitioning_delegate.h"
@@ -30,6 +31,19 @@ const CGFloat kToolbarHeight = 56.0f;
 @property(nonatomic, strong) UIView* toolbarView;
 @property(nonatomic, strong) UIView* contentView;
 
+// A layout guide representing the space visually occupied by the toolbar.  When
+// fullscreen animations occur, it is translated up and down using its transform
+// and this layout guide updates to represent the visual space occupied by the
+// transformed layer.
+@property(nonatomic, strong) UILayoutGuide* visibleToolbarLayoutGuide;
+@property(nonatomic, strong) NSLayoutConstraint* visibleToolbarHeightConstraint;
+
+// Returns the vertical translation of the toolbar from its fully visible
+// position for a fullscreen progress value.
+- (CGFloat)toolbarDeltaForFullscreenProgress:(CGFloat)progress;
+// Returns the transform that translates the toolbar for fullscreen events.
+- (CGAffineTransform)toolbarTransformForFullscreenProgress:(CGFloat)progress;
+
 @end
 
 @implementation TabContainerViewController
@@ -43,6 +57,8 @@ const CGFloat kToolbarHeight = 56.0f;
 @synthesize containmentTransitioningDelegate =
     _containmentTransitioningDelegate;
 @synthesize usesBottomToolbar = _usesBottomToolbar;
+@synthesize visibleToolbarLayoutGuide = _visibleToolbarLayoutGuide;
+@synthesize visibleToolbarHeightConstraint = _visibleToolbarHeightConstraint;
 
 #pragma mark - UIViewController
 
@@ -124,6 +140,43 @@ const CGFloat kToolbarHeight = 56.0f;
   return kToolbarHeight;
 }
 
+#pragma mark - FullscreenUIElement
+
+- (void)updateForFullscreenProgress:(CGFloat)progress {
+  self.toolbarView.transform =
+      [self toolbarTransformForFullscreenProgress:progress];
+  self.visibleToolbarHeightConstraint.constant =
+      [self toolbarDeltaForFullscreenProgress:progress];
+}
+
+- (void)updateForFullscreenEnabled:(BOOL)enabled {
+  self.toolbarView.transform = CGAffineTransformIdentity;
+  self.visibleToolbarHeightConstraint.constant =
+      CGRectGetHeight(self.toolbarView.bounds);
+}
+
+- (void)finishFullscreenScrollWithAnimator:
+    (FullscreenScrollEndAnimator*)animator {
+  CGFloat finalProgress = animator.finalProgress;
+  [animator addAnimations:^{
+    self.toolbarView.transform =
+        [self toolbarTransformForFullscreenProgress:finalProgress];
+    // Calculate the final frame of the content view since adjusting the visible
+    // toolbar height constraint is not not animatable.
+    CGFloat verticalInset =
+        kToolbarHeight + [self toolbarDeltaForFullscreenProgress:finalProgress];
+    UIEdgeInsets insets = self.usesBottomToolbar
+                              ? UIEdgeInsetsMake(0, 0, verticalInset, 0)
+                              : UIEdgeInsetsMake(verticalInset, 0, 0, 0);
+    self.contentView.frame =
+        UIEdgeInsetsInsetRect(self.containerView.bounds, insets);
+  }];
+  [animator addCompletion:^(UIViewAnimatingPosition finalPosition) {
+    self.visibleToolbarHeightConstraint.constant =
+        [self toolbarDeltaForFullscreenProgress:finalProgress];
+  }];
+}
+
 #pragma mark - MenuPresentationDelegate
 
 - (CGRect)boundsForMenuPresentation {
@@ -191,6 +244,9 @@ const CGFloat kToolbarHeight = 56.0f;
   [self.containerView addSubview:self.findBarView];
   self.findBarView.hidden = YES;
 
+  self.visibleToolbarLayoutGuide = [[UILayoutGuide alloc] init];
+  [self.containerView addLayoutGuide:self.visibleToolbarLayoutGuide];
+
   [self attachChildViewController:self.toolbarViewController
                         toSubview:self.toolbarView];
   [self attachChildViewController:self.contentViewController
@@ -238,12 +294,25 @@ animationControllerForAddingChildController:(UIViewController*)addedChild
 // Constraints that are shared between topToolbar and bottomToolbar
 // configurations.
 - (Constraints*)commonToolbarConstraints {
+  self.visibleToolbarHeightConstraint =
+      [self.visibleToolbarLayoutGuide.heightAnchor
+          constraintEqualToAnchor:self.toolbarView.heightAnchor
+                       multiplier:1.0
+                         constant:0.0];
   return @[
     // Toolbar leading, trailing constraints.
     [self.toolbarView.leadingAnchor
         constraintEqualToAnchor:self.containerView.leadingAnchor],
     [self.toolbarView.trailingAnchor
         constraintEqualToAnchor:self.containerView.trailingAnchor],
+
+    // The visible toolbar guide leading and trailing cosntraints are
+    // constrained to the toolbar view.
+    [self.visibleToolbarLayoutGuide.leadingAnchor
+        constraintEqualToAnchor:self.toolbarView.leadingAnchor],
+    [self.visibleToolbarLayoutGuide.trailingAnchor
+        constraintEqualToAnchor:self.toolbarView.trailingAnchor],
+    self.visibleToolbarHeightConstraint,
 
     // Content leading and trailing constraints.
     [self.contentView.leadingAnchor
@@ -259,13 +328,16 @@ animationControllerForAddingChildController:(UIViewController*)addedChild
     [self.toolbarView.topAnchor
         constraintEqualToAnchor:self.topLayoutGuide.topAnchor],
     [self.contentView.topAnchor
-        constraintEqualToAnchor:self.toolbarView.bottomAnchor],
+        constraintEqualToAnchor:self.visibleToolbarLayoutGuide.bottomAnchor],
     [self.contentView.bottomAnchor
         constraintEqualToAnchor:self.containerView.bottomAnchor],
     [self.toolbarView.heightAnchor
         constraintEqualToConstant:kToolbarHeight +
-                                  [UIApplication sharedApplication]
-                                      .statusBarFrame.size.height],
+                                  CGRectGetHeight(
+                                      [UIApplication sharedApplication]
+                                          .statusBarFrame)],
+    [self.visibleToolbarLayoutGuide.topAnchor
+        constraintEqualToAnchor:self.topLayoutGuide.topAnchor],
   ];
 }
 
@@ -274,12 +346,25 @@ animationControllerForAddingChildController:(UIViewController*)addedChild
   return @[
     [self.contentView.topAnchor
         constraintEqualToAnchor:self.containerView.topAnchor],
+    [self.contentView.bottomAnchor
+        constraintEqualToAnchor:self.visibleToolbarLayoutGuide.topAnchor],
     [self.toolbarView.topAnchor
         constraintEqualToAnchor:self.contentView.bottomAnchor],
     [self.toolbarView.bottomAnchor
         constraintEqualToAnchor:self.containerView.bottomAnchor],
     [self.toolbarView.heightAnchor constraintEqualToConstant:kToolbarHeight],
+    [self.visibleToolbarLayoutGuide.topAnchor
+        constraintEqualToAnchor:self.topLayoutGuide.topAnchor],
   ];
+}
+
+- (CGFloat)toolbarDeltaForFullscreenProgress:(CGFloat)progress {
+  return (progress - 1.0) * self.toolbarHeight;
+}
+
+- (CGAffineTransform)toolbarTransformForFullscreenProgress:(CGFloat)progress {
+  return CGAffineTransformMakeTranslation(
+      0.0, [self toolbarDeltaForFullscreenProgress:progress]);
 }
 
 @end
