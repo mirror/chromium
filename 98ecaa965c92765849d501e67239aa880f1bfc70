@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8333f5b_61ce4622",
+        "filename": "content/renderer/media/mock_peer_connection_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-28T16:08:37Z",
+      "side": 1,
+      "message": "I exposed this existing class in the header so that I could reuse it in rtc_peer_connection_handler_unittest.cc. I can move it in a separate CL to its own file and make this CL depend on that.",
+      "revId": "98ecaa965c92765849d501e67239aa880f1bfc70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
