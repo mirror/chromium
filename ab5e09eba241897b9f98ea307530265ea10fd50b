@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "61ad3abe_cd12a774",
+        "filename": "android_webview/browser/net/aw_cookie_store_wrapper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-28T15:29:07Z",
+      "side": 1,
+      "message": "I always forget that for some reason.  Done.",
+      "parentUuid": "a4ffbc13_14247c37",
+      "revId": "ab5e09eba241897b9f98ea307530265ea10fd50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3dbbd4b_2c1291b7",
         "filename": "android_webview/browser/net/aw_cookie_store_wrapper.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9b57ce6a_3c5685f6",
+        "filename": "android_webview/browser/net/aw_cookie_store_wrapper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-28T15:29:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3dbbd4b_2c1291b7",
+      "revId": "ab5e09eba241897b9f98ea307530265ea10fd50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3b50410_f5a6ba38",
         "filename": "ios/net/cookies/cookie_store_ios.mm",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-28T13:43:28Z",
       "side": 1,
       "message": "optional: There\u0027s already an anonymous namespace at the top of the file. I prefer to consolidate this one with the other one.",
+      "revId": "ab5e09eba241897b9f98ea307530265ea10fd50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8846f158_e91f089c",
+        "filename": "ios/net/cookies/cookie_store_ios.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-28T15:29:07Z",
+      "side": 1,
+      "message": "Heh.  Ok, but I\u0027ll just call out that this is exactly why I didn\u0027t use an anonymous namespace in the first place--I wanted to keep the class decl near its use, and I too prefer to consolidate anonymous namespaces at the top of files.  So I looked at the style guide, decided it didn\u0027t actually require consolidation, and just wrapped it in place.  But done.",
+      "parentUuid": "b3b50410_f5a6ba38",
       "revId": "ab5e09eba241897b9f98ea307530265ea10fd50b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "1483dcdd_e059a2c9",
+        "filename": "ios/net/cookies/cookie_store_ios.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-28T15:29:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3153d800_f5bc434d",
+      "revId": "ab5e09eba241897b9f98ea307530265ea10fd50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27e67e4c_a320367e",
         "filename": "ios/net/cookies/cookie_store_ios.mm",
         "patchSetId": 6
@@ -81,6 +153,24 @@
       "writtenOn": "2017-09-28T13:43:28Z",
       "side": 1,
       "message": "nit: use std::make_unique\u003c\u003e instead of the base:: one.",
+      "revId": "ab5e09eba241897b9f98ea307530265ea10fd50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d32e0a22_b49f9e61",
+        "filename": "ios/net/cookies/cookie_store_ios.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-28T15:29:07Z",
+      "side": 1,
+      "message": "I wince a bit about being inconsistent with the rest of the file, but done (I gave in a little bit to consistency and changed the use three lines up).",
+      "parentUuid": "27e67e4c_a320367e",
       "revId": "ab5e09eba241897b9f98ea307530265ea10fd50b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "52b9a78d_a61929e5",
+        "filename": "net/cookies/cookie_monster.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-28T15:29:07Z",
+      "side": 1,
+      "message": "Reluctantly (for same reason as other comment) done.",
+      "parentUuid": "34ca4233_c62a352f",
+      "revId": "ab5e09eba241897b9f98ea307530265ea10fd50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "17c391c8_cd655422",
         "filename": "net/cookies/cookie_monster.cc",
         "patchSetId": 6
@@ -115,6 +223,24 @@
       "writtenOn": "2017-09-28T13:43:28Z",
       "side": 1,
       "message": "nit: use std::make_unique\u003c\u003e and below.",
+      "revId": "ab5e09eba241897b9f98ea307530265ea10fd50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3a2be73_c429821c",
+        "filename": "net/cookies/cookie_monster.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-28T15:29:07Z",
+      "side": 1,
+      "message": "Changed throughout file.",
+      "parentUuid": "17c391c8_cd655422",
       "revId": "ab5e09eba241897b9f98ea307530265ea10fd50b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
