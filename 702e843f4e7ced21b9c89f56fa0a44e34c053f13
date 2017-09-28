@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bb50c6c0_b43e29cc",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-28T22:09:01Z",
+      "side": 1,
+      "message": "Thanks. Sorry I\u0027m new, but I think the \u003d\u003e annotation is introduced in ES6. I just want to make sure, are we using ES6 everywhere?",
+      "parentUuid": "1d5174ab_1435b200",
+      "revId": "702e843f4e7ced21b9c89f56fa0a44e34c053f13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b8288b9_f3b32b4e",
         "filename": "chrome/browser/resources/interventions_internals/index.js",
         "patchSetId": 17
@@ -33,6 +51,24 @@
       "revId": "702e843f4e7ced21b9c89f56fa0a44e34c053f13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3b6d5bb_af899f7e",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-28T22:09:01Z",
+      "side": 1,
+      "message": "Ack. We don\u0027t need i18n for internal page.",
+      "parentUuid": "7b8288b9_f3b32b4e",
+      "revId": "702e843f4e7ced21b9c89f56fa0a44e34c053f13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ac3ea657_860455c0",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-28T22:09:01Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "42710726_5aaca755",
+      "revId": "702e843f4e7ced21b9c89f56fa0a44e34c053f13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83bce86c_ec949d93",
         "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
         "patchSetId": 17
@@ -67,6 +121,24 @@
       "revId": "702e843f4e7ced21b9c89f56fa0a44e34c053f13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccdf29b7_99790630",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-28T22:09:01Z",
+      "side": 1,
+      "message": "I\u0027ve just read about constexpr, does this mean we should use constexpr from now on? Do you mind giving an example where const is preferred, because it seems like constexpr is better.",
+      "parentUuid": "83bce86c_ec949d93",
+      "revId": "702e843f4e7ced21b9c89f56fa0a44e34c053f13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "bbbb8bbb_1afbb545",
+        "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-28T22:09:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcd1caa6_1f490e4d",
+      "revId": "702e843f4e7ced21b9c89f56fa0a44e34c053f13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9603906f_1cedbbc4",
         "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
         "patchSetId": 17
@@ -101,6 +191,24 @@
       "revId": "702e843f4e7ced21b9c89f56fa0a44e34c053f13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73b39b3c_a8a745ee",
+        "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-28T22:09:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9603906f_1cedbbc4",
+      "revId": "702e843f4e7ced21b9c89f56fa0a44e34c053f13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
