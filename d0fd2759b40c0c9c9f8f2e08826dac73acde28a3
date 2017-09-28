@@ -25,6 +25,57 @@
     },
     {
       "key": {
+        "uuid": "413bd20d_3e18b775",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletThread.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-28T13:14:20Z",
+      "side": 1,
+      "message": "Can we add a DCHECK to check that ClearWorkerBackingThread() has been called before reaching the destructor?",
+      "revId": "d0fd2759b40c0c9c9f8f2e08826dac73acde28a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfe60506_a6abb81a",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletThread.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-28T13:14:20Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be:\n\n  if (--s_ref_count \u003d\u003d 0)\n\n?",
+      "revId": "d0fd2759b40c0c9c9f8f2e08826dac73acde28a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfc6bdb5_1f00b6d1",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletThread.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-28T13:14:20Z",
+      "side": 1,
+      "message": "Just to confirm: There is no issue in recreating the backing thread after the ref count becomes 0, right? (e.g., the ref count changes like 0 \u003d\u003e 1 \u003d\u003e 2 \u003d\u003e 1 \u003d\u003e 0 \u003d\u003e 1.)",
+      "revId": "d0fd2759b40c0c9c9f8f2e08826dac73acde28a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e633c403_e5dc81bd",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletThread.h",
         "patchSetId": 4
@@ -93,6 +144,23 @@
       "writtenOn": "2017-09-28T09:34:30Z",
       "side": 1,
       "message": "DCHECK(!worklet_messaging_proxy_);",
+      "revId": "d0fd2759b40c0c9c9f8f2e08826dac73acde28a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eaeaff2_50e8ab81",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1045,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-28T13:14:20Z",
+      "side": 1,
+      "message": "DCHECK(worklet_messaging_proxy_)?",
       "revId": "d0fd2759b40c0c9c9f8f2e08826dac73acde28a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
