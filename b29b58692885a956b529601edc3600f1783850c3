@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff4d1f80_6312e7e3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/main/module.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-09-28T22:27:29Z",
+      "side": 1,
+      "message": "You depend on this from main, but it is marked as v8only. Seems like it will break node.",
+      "revId": "b29b58692885a956b529601edc3600f1783850c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b47c85f_86b0b1d9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/workspace/UISourceCode.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-09-28T22:27:29Z",
+      "side": 1,
+      "message": "When is this necessary? Won’t it be covered by save as?",
+      "revId": "b29b58692885a956b529601edc3600f1783850c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
