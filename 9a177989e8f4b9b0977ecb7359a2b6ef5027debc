@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "db34466b_63aade84",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/eventsource/resources/last-event-id.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-09-28T04:00:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6371a487_4207ed22",
+      "revId": "9a177989e8f4b9b0977ecb7359a2b6ef5027debc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7378b46_5041cdcd",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/eventsource/resources/last-event-id.py",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-26T03:59:47Z",
       "side": 1,
       "message": "u\"\\u2026\"?",
+      "revId": "9a177989e8f4b9b0977ecb7359a2b6ef5027debc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65e8c832_de1e494d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/eventsource/resources/last-event-id.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-09-28T04:00:32Z",
+      "side": 1,
+      "message": "Yeah, thanks for pointing it out. This doesn\u0027t work for Python 3.\n\nBlink\u0027s layout test infra doesn\u0027t support Python 3, so it\u0027s ok for Chromium. But wptserve itself is using the six library (six.moves). This means that it\u0027s supposed to be working for both Python 2 and 3.\n\nCurrently only 2 files are using Unicode literals with the u-prefix. We have 4 files using the coding magic comment.\n\nPEP 263 and PEP 414 are both old enough. I think it\u0027s ok to use the u-prefix.",
+      "parentUuid": "b7378b46_5041cdcd",
       "revId": "9a177989e8f4b9b0977ecb7359a2b6ef5027debc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
