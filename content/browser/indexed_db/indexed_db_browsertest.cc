@@ -782,7 +782,6 @@ IN_PROC_BROWSER_TEST_F(IndexedDBBrowserTest, PRE_VersionChangeCrashResilience) {
   // (VersionChangeCrashResilience) as an optimization. googletest's
   // ASSERT_DEATH/EXIT fails to work properly (on Windows) due to how we
   // implement the PRE_* test mechanism.
-  exit(0);
 }
 
 // Fails to cleanup GPU processes on swarming.
