@@ -140,6 +140,30 @@
       "revId": "6deb39ea924f58624523d414bcbb1e8252ae4677",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6e3475f_46136dcf",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/HomeSheetCardsUiCaptureTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-09-28T09:54:28Z",
+      "side": 1,
+      "message": "I don\u0027t feel strongly about this one, no need to change it. Keeping rules together at the top is also fine.",
+      "parentUuid": "d829b319_c636a3f2",
+      "range": {
+        "startLine": 59,
+        "startChar": 12,
+        "endLine": 59,
+        "endChar": 39
+      },
+      "revId": "6deb39ea924f58624523d414bcbb1e8252ae4677",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
