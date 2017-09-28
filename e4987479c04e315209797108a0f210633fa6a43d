@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "68de82e5_6d614e0e",
+        "filename": "extensions/browser/api/declarative_net_request/utils.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-28T21:27:23Z",
+      "side": 1,
+      "message": "Not currently, but will be needed subsequently. Have added a ForTesting annotation for now.",
+      "parentUuid": "24095b10_609597fa",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 56
+      },
+      "revId": "e4987479c04e315209797108a0f210633fa6a43d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f58017c2_fc152f20",
         "filename": "extensions/common/extension_unpacker.mojom",
         "patchSetId": 21
@@ -39,6 +63,24 @@
       "revId": "e4987479c04e315209797108a0f210633fa6a43d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a64a85df_105e3431",
+        "filename": "extensions/common/extension_unpacker.mojom",
+        "patchSetId": 21
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-28T21:27:23Z",
+      "side": 1,
+      "message": "Done, this needed a small refactor though.",
+      "parentUuid": "f58017c2_fc152f20",
+      "revId": "e4987479c04e315209797108a0f210633fa6a43d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
