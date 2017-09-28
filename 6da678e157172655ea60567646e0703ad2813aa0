@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "279fff4b_d2b7ced3",
+        "filename": "third_party/WebKit/Source/core/editing/testing/EditingTestBase.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-28T06:06:29Z",
+      "side": 1,
+      "message": "Please add a comment that:\n - Why this is deprecated\n - What we should use instead.",
+      "revId": "6da678e157172655ea60567646e0703ad2813aa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
