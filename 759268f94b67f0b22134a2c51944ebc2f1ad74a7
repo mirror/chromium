@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f9c3d0e_f62aec07",
+        "filename": "components/safe_browsing/features.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-28T22:16:35Z",
+      "side": 1,
+      "message": "Do you want to update /testing/variations/fieldtrial_testing_config.json as well? so this feature can be turned on by default on try bots. \n\nAnd when you create finch config in google3, it will keep on nagging you if your experiment is not in fieldtrial_testing_config.json.\n\nNot required for this CL though.",
+      "revId": "759268f94b67f0b22134a2c51944ebc2f1ad74a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
