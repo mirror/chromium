@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "90c73d77_459e7c2b",
+        "filename": "extensions/common/features/simple_feature.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-28T19:51:38Z",
+      "side": 1,
+      "message": "optional nit: Have a DCHECK before accessing Optional members. Here and below.",
+      "range": {
+        "startLine": 318,
+        "startChar": 11,
+        "endLine": 318,
+        "endChar": 32
+      },
+      "revId": "ef94f5b1a0b6de2927f04b9f6f842507329ba11a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f07ddd8c_7a7abae3",
         "filename": "extensions/common/features/simple_feature.h",
         "patchSetId": 4
@@ -16,6 +39,24 @@
       "revId": "ef94f5b1a0b6de2927f04b9f6f842507329ba11a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40656b87_44731645",
+        "filename": "extensions/common/features/simple_feature.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-28T19:51:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f07ddd8c_7a7abae3",
+      "revId": "ef94f5b1a0b6de2927f04b9f6f842507329ba11a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
