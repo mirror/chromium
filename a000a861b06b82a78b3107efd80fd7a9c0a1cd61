@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d18bcec_2349db32",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/module/dynamic-import/inline-event-handler.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2017-09-28T16:50:47Z",
+      "side": 1,
+      "message": "Nit: easier to understand if it\u0027s `window.continueTest` instead of `window.cont`.",
+      "revId": "a000a861b06b82a78b3107efd80fd7a9c0a1cd61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
