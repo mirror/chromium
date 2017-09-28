@@ -9,5 +9,5 @@ has_proguard_flags = true
 has_r_text_file = false
 is_manifest_empty = true
 resources = [  ]
-subjar_tuples = [ [ "internal_impl_25.0.1", "libs/internal_impl-25.0.1.jar" ] ]
-subjars = [ "libs/internal_impl-25.0.1.jar" ]
+subjar_tuples = [  ]
+subjars = [  ]
