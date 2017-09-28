@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "84a80d27_7bcfbd1a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-09-28T22:56:30Z",
+      "side": 1,
+      "message": "talked offline; comment does not apply.",
+      "parentUuid": "3f7b9b61_b775dd13",
+      "revId": "a4585b6f9dba1e0c30520449fee366555e461742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e79e8f2a_0c5ad290",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
         "patchSetId": 3
@@ -161,6 +179,30 @@
       "side": 1,
       "message": "Why doesn\u0027t the default one-line infobar style work?",
       "parentUuid": "701a7a0a_02a73af5",
+      "range": {
+        "startLine": 71,
+        "startChar": 8,
+        "endLine": 79,
+        "endChar": 67
+      },
+      "revId": "a4585b6f9dba1e0c30520449fee366555e461742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7766d660_c46dd93a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-09-28T22:56:30Z",
+      "side": 1,
+      "message": "applying BlackTitle1.",
+      "parentUuid": "67faa9c1_ccb78021",
       "range": {
         "startLine": 71,
         "startChar": 8,
