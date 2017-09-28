@@ -27,22 +27,22 @@ class CORE_EXPORT UnsignedLongLongOrBooleanOrTestCallbackInterface final {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
  public:
   UnsignedLongLongOrBooleanOrTestCallbackInterface();
-  bool isNull() const { return type_ == SpecificTypeNone; }
+  bool IsNull() const { return type_ == SpecificTypes::kNone; }
 
-  bool isBoolean() const { return type_ == SpecificTypeBoolean; }
-  bool getAsBoolean() const;
-  void setBoolean(bool);
-  static UnsignedLongLongOrBooleanOrTestCallbackInterface fromBoolean(bool);
+  bool IsBoolean() const { return type_ == SpecificTypes::kBoolean; }
+  bool GetAsBoolean() const;
+  void SetBoolean(bool);
+  static UnsignedLongLongOrBooleanOrTestCallbackInterface FromBoolean(bool);
 
-  bool isTestCallbackInterface() const { return type_ == SpecificTypeTestCallbackInterface; }
-  TestCallbackInterface* getAsTestCallbackInterface() const;
-  void setTestCallbackInterface(TestCallbackInterface*);
-  static UnsignedLongLongOrBooleanOrTestCallbackInterface fromTestCallbackInterface(TestCallbackInterface*);
+  bool IsTestCallbackInterface() const { return type_ == SpecificTypes::kTestCallbackInterface; }
+  TestCallbackInterface* GetAsTestCallbackInterface() const;
+  void SetTestCallbackInterface(TestCallbackInterface*);
+  static UnsignedLongLongOrBooleanOrTestCallbackInterface FromTestCallbackInterface(TestCallbackInterface*);
 
-  bool isUnsignedLongLong() const { return type_ == SpecificTypeUnsignedLongLong; }
-  uint64_t getAsUnsignedLongLong() const;
-  void setUnsignedLongLong(uint64_t);
-  static UnsignedLongLongOrBooleanOrTestCallbackInterface fromUnsignedLongLong(uint64_t);
+  bool IsUnsignedLongLong() const { return type_ == SpecificTypes::kUnsignedLongLong; }
+  uint64_t GetAsUnsignedLongLong() const;
+  void SetUnsignedLongLong(uint64_t);
+  static UnsignedLongLongOrBooleanOrTestCallbackInterface FromUnsignedLongLong(uint64_t);
 
   UnsignedLongLongOrBooleanOrTestCallbackInterface(const UnsignedLongLongOrBooleanOrTestCallbackInterface&);
   ~UnsignedLongLongOrBooleanOrTestCallbackInterface();
@@ -50,11 +50,11 @@ class CORE_EXPORT UnsignedLongLongOrBooleanOrTestCallbackInterface final {
   DECLARE_TRACE();
 
  private:
-  enum SpecificTypes {
-    SpecificTypeNone,
-    SpecificTypeBoolean,
-    SpecificTypeTestCallbackInterface,
-    SpecificTypeUnsignedLongLong,
+  enum class SpecificTypes {
+    kNone,
+    kBoolean,
+    kTestCallbackInterface,
+    kUnsignedLongLong,
   };
   SpecificTypes type_;
 

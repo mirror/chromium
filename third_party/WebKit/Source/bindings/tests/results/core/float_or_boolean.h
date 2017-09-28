@@ -25,17 +25,17 @@ class CORE_EXPORT FloatOrBoolean final {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
  public:
   FloatOrBoolean();
-  bool isNull() const { return type_ == SpecificTypeNone; }
+  bool IsNull() const { return type_ == SpecificTypes::kNone; }
 
-  bool isBoolean() const { return type_ == SpecificTypeBoolean; }
-  bool getAsBoolean() const;
-  void setBoolean(bool);
-  static FloatOrBoolean fromBoolean(bool);
+  bool IsBoolean() const { return type_ == SpecificTypes::kBoolean; }
+  bool GetAsBoolean() const;
+  void SetBoolean(bool);
+  static FloatOrBoolean FromBoolean(bool);
 
-  bool isFloat() const { return type_ == SpecificTypeFloat; }
-  float getAsFloat() const;
-  void setFloat(float);
-  static FloatOrBoolean fromFloat(float);
+  bool IsFloat() const { return type_ == SpecificTypes::kFloat; }
+  float GetAsFloat() const;
+  void SetFloat(float);
+  static FloatOrBoolean FromFloat(float);
 
   FloatOrBoolean(const FloatOrBoolean&);
   ~FloatOrBoolean();
@@ -43,10 +43,10 @@ class CORE_EXPORT FloatOrBoolean final {
   DECLARE_TRACE();
 
  private:
-  enum SpecificTypes {
-    SpecificTypeNone,
-    SpecificTypeBoolean,
-    SpecificTypeFloat,
+  enum class SpecificTypes {
+    kNone,
+    kBoolean,
+    kFloat,
   };
   SpecificTypes type_;
 

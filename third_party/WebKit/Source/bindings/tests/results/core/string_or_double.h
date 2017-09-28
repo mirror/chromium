@@ -25,17 +25,17 @@ class CORE_EXPORT StringOrDouble final {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
  public:
   StringOrDouble();
-  bool isNull() const { return type_ == SpecificTypeNone; }
+  bool IsNull() const { return type_ == SpecificTypes::kNone; }
 
-  bool isDouble() const { return type_ == SpecificTypeDouble; }
-  double getAsDouble() const;
-  void setDouble(double);
-  static StringOrDouble fromDouble(double);
+  bool IsDouble() const { return type_ == SpecificTypes::kDouble; }
+  double GetAsDouble() const;
+  void SetDouble(double);
+  static StringOrDouble FromDouble(double);
 
-  bool isString() const { return type_ == SpecificTypeString; }
-  const String& getAsString() const;
-  void setString(const String&);
-  static StringOrDouble fromString(const String&);
+  bool IsString() const { return type_ == SpecificTypes::kString; }
+  const String& GetAsString() const;
+  void SetString(const String&);
+  static StringOrDouble FromString(const String&);
 
   StringOrDouble(const StringOrDouble&);
   ~StringOrDouble();
@@ -43,10 +43,10 @@ class CORE_EXPORT StringOrDouble final {
   DECLARE_TRACE();
 
  private:
-  enum SpecificTypes {
-    SpecificTypeNone,
-    SpecificTypeDouble,
-    SpecificTypeString,
+  enum class SpecificTypes {
+    kNone,
+    kDouble,
+    kString,
   };
   SpecificTypes type_;
 

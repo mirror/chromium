@@ -27,17 +27,17 @@ class CORE_EXPORT XMLHttpRequestOrString final {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
  public:
   XMLHttpRequestOrString();
-  bool isNull() const { return type_ == SpecificTypeNone; }
+  bool IsNull() const { return type_ == SpecificTypes::kNone; }
 
-  bool isString() const { return type_ == SpecificTypeString; }
-  const String& getAsString() const;
-  void setString(const String&);
-  static XMLHttpRequestOrString fromString(const String&);
+  bool IsString() const { return type_ == SpecificTypes::kString; }
+  const String& GetAsString() const;
+  void SetString(const String&);
+  static XMLHttpRequestOrString FromString(const String&);
 
-  bool isXMLHttpRequest() const { return type_ == SpecificTypeXMLHttpRequest; }
-  XMLHttpRequest* getAsXMLHttpRequest() const;
-  void setXMLHttpRequest(XMLHttpRequest*);
-  static XMLHttpRequestOrString fromXMLHttpRequest(XMLHttpRequest*);
+  bool IsXMLHttpRequest() const { return type_ == SpecificTypes::kXMLHttpRequest; }
+  XMLHttpRequest* GetAsXMLHttpRequest() const;
+  void SetXMLHttpRequest(XMLHttpRequest*);
+  static XMLHttpRequestOrString FromXMLHttpRequest(XMLHttpRequest*);
 
   XMLHttpRequestOrString(const XMLHttpRequestOrString&);
   ~XMLHttpRequestOrString();
@@ -45,10 +45,10 @@ class CORE_EXPORT XMLHttpRequestOrString final {
   DECLARE_TRACE();
 
  private:
-  enum SpecificTypes {
-    SpecificTypeNone,
-    SpecificTypeString,
-    SpecificTypeXMLHttpRequest,
+  enum class SpecificTypes {
+    kNone,
+    kString,
+    kXMLHttpRequest,
   };
   SpecificTypes type_;
 
