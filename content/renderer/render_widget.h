@@ -457,6 +457,8 @@ class CONTENT_EXPORT RenderWidget
     TTFAP_5MIN_AFTER_BACKGROUNDED,
   };
 
+  void DidResizeAck();
+
  protected:
   // Friend RefCounted so that the dtor can be non-public. Using this class
   // without ref-counting is an error.
@@ -523,6 +525,9 @@ class CONTENT_EXPORT RenderWidget
   void OnClose();
   void OnCreatingNewAck();
   virtual void OnResize(const ResizeParams& params);
+  void OnSetLocalSurfaceIdForAutoResize(
+      const gfx::Size& physical_backing_size,
+      const viz::LocalSurfaceId& local_surface_id);
   void OnEnableDeviceEmulation(const blink::WebDeviceEmulationParams& params);
   void OnDisableDeviceEmulation();
   virtual void OnWasHidden();
