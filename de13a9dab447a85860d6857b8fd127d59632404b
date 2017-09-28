@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af1ba22a_90bc50d1",
+        "filename": "third_party/WebKit/Source/platform/resource_bundle/OWNERS",
+        "patchSetId": 26
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-28T00:34:02Z",
+      "side": 1,
+      "message": "Blink normally doesn\u0027t add a name to OWNERS until the person commits/reviews a sufficient number of CLs to that area. Shall we drop the line for now?",
+      "revId": "de13a9dab447a85860d6857b8fd127d59632404b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
