@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d263ee1c_063c0b84",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-28T08:22:10Z",
+      "side": 1,
+      "message": "add \"Handle a redirect response.\" as the first sentence for parallel structure with line 350 and 361.",
+      "revId": "275e5599ea20a6c9a3af181f1182fac52dd758b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
