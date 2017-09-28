@@ -8,6 +8,7 @@
 #include "components/viz/common/resources/resource_format_utils.h"
 #include "components/viz/common/resources/shared_bitmap_manager.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
+#include "gpu/command_buffer/client/gpu_memory_buffer_manager.h"
 #include "third_party/skia/include/gpu/GrBackendSurface.h"
 
 using gpu::gles2::GLES2Interface;
