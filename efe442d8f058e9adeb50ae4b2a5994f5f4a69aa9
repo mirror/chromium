@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "725cadf6_009d220e",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-09-28T18:56:39Z",
+      "side": 1,
+      "message": "There was an effort to remove TextClassifier dependency from SelectionPopupController.java https://chromium-review.googlesource.com/c/chromium/src/+/676563, because our robolectric library isn\u0027t support O yet.",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 50
+      },
+      "revId": "efe442d8f058e9adeb50ae4b2a5994f5f4a69aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c434d2a9_6c588448",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
         "patchSetId": 2
