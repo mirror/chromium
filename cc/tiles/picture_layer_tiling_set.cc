@@ -262,6 +262,18 @@ void PictureLayerTilingSet::RemoveNonIdealTilings() {
   });
 }
 
+gfx::Size PictureLayerTilingSet::GetMaxTileSizeInLayerSpace() const {
+  gfx::Size result(0, 0);
+  for (auto& tiling : tilings_) {
+    float inverse_contents_scale = 1.f / tiling->contents_scale_key();
+    gfx::Size tile_size = ScaleToCeiledSize(
+        tiling->tile_size(), inverse_contents_scale, inverse_contents_scale);
+    result.set_width(std::max(tile_size.width(), result.width()));
+    result.set_height(std::max(tile_size.height(), result.height()));
+  }
+  return result;
+}
+
 void PictureLayerTilingSet::MarkAllTilingsNonIdeal() {
   for (const auto& tiling : tilings_)
     tiling->set_resolution(NON_IDEAL_RESOLUTION);
