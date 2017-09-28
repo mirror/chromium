@@ -14,6 +14,7 @@
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/containers/hash_tables.h"
+#include "base/debug/stack_trace.h"
 #include "base/i18n/rtl.h"
 #include "base/lazy_instance.h"
 #include "base/location.h"
@@ -2448,6 +2449,10 @@ void RenderWidgetHostImpl::DelayedAutoResized() {
 
   if (delegate_)
     delegate_->ResizeDueToAutoResize(this, new_size);
+
+  viz::LocalSurfaceId local_surface_id(view_->GetLocalSurfaceId());
+  Send(new ViewMsg_SetLocalSurfaceIdForAutoResize(
+      routing_id_, view_->GetPhysicalBackingSize(), local_surface_id));
 }
 
 void RenderWidgetHostImpl::DetachDelegate() {
