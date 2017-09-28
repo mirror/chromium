@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efc0c60b_cbb87725",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-09-28T08:11:37Z",
+      "side": 1,
+      "message": "This GetDevices() is only used by wizard_controller to determine whether to show the HIDDectionScreen. Don\u0027t need observer. So in OnGetInputDevicesListForCheck() callback, we won\u0027t save the received devices.\n\nIn HIDDectionScreen::Show(), it will call GetDevices() again, then in the GetInputDevicesList() callback, the received devices are saved.\n\nI have tried to call GetDevices() only one time, but found it make the callback logic hard to understand. To make the logic easier, let\u0027s call GetDevices() twice.\n\nIn the mojofication step later, the GetDevices() here will be changed to:\n     input_device_manager_for_check_-\u003eGetDevices(base::Bind(\u0026OnGetInputDevicesListForCheck));\n\nThe GetDevices() in HIDDectionScreen::Show() will be changed to:\n     input_device_manager_-\u003eGetDevicesAndSetObserver(base::Bind(\u0026OnGetInputDevicesList), observer_);",
+      "range": {
+        "startLine": 127,
+        "startChar": 2,
+        "endLine": 129,
+        "endChar": 69
+      },
+      "revId": "f19265e6a63818c7a8b25a93f2ac46ffd70be8af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79b0bda7_77d652b8",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-09-28T08:11:37Z",
+      "side": 0,
+      "message": "No matter it is on showing or not, it should always keep updating the device list owned by itself.",
+      "range": {
+        "startLine": 149,
+        "startChar": 2,
+        "endLine": 149,
+        "endChar": 44
+      },
+      "revId": "fb1ed007d63e99408e9c577710a33a2bb97ade3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08d5750d_8df2ad16",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-09-28T08:11:37Z",
+      "side": 0,
+      "message": "The timing of GetDevices() here is postponed to Show(). I think it is safe. Because the CheckIsScreenRequired() doesn\u0027t depend on the result of the GetDevices() here, the CheckIsScreenRequired() will send out another GetDevices() to get the latest devices list.",
+      "range": {
+        "startLine": 433,
+        "startChar": 2,
+        "endLine": 433,
+        "endChar": 18
+      },
+      "revId": "fb1ed007d63e99408e9c577710a33a2bb97ade3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
