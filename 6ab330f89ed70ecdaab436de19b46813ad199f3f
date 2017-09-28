@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24ce6dde_237a35f5",
+        "filename": "content/browser/frame_host/interstitial_page_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-28T16:56:46Z",
+      "side": 1,
+      "message": "why are these needed?",
+      "revId": "6ab330f89ed70ecdaab436de19b46813ad199f3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f01bb214_25e78eb5",
+        "filename": "content/browser/web_contents/web_contents_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-28T16:56:46Z",
+      "side": 1,
+      "message": "does this compile? where\u0027s the corresponding web_contents.h change? are all the callers removed?",
+      "revId": "6ab330f89ed70ecdaab436de19b46813ad199f3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
