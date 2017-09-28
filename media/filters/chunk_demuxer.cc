@@ -477,7 +477,9 @@ std::string ChunkDemuxer::GetDisplayName() const {
 void ChunkDemuxer::Initialize(DemuxerHost* host,
                               const PipelineStatusCB& init_cb,
                               bool enable_text_tracks) {
-  DVLOG(1) << "Init(), buffering_by_pts_=" << buffering_by_pts_;
+  MEDIA_LOG(INFO, media_log_)
+      << GetDisplayName()
+      << (buffering_by_pts_ ? ": buffering by PTS" : ": buffering by DTS");
 
   base::AutoLock auto_lock(lock_);
   if (state_ == SHUTDOWN) {
