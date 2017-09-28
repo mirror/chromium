@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "764beea3_209629cf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-28T01:47:02Z",
+      "side": 1,
+      "message": "per https://www.chromium.org/developers/contributing-code#TOC-Writing-commit-descriptions there should be something about the current behaviour and how this is fixed. E.g.\n\n  Currently, a toast only on ChromeOS public sessions shows when using the\n  html5 fullscreen API. It should also be shown when an app uses the\n  extension windowing API to go fullscreen. Fix by including \n  FULLSCREEN_TYPE_WINDOW_API in the types that trigger the toast and update\n  tests.",
+      "revId": "b8993d0294621e702e508d0b42e5ff688accc8ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3bc9591_66875868",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-28T01:47:02Z",
+      "side": 1,
+      "message": "\u0027Test:\u0027 lines are occasionally checked by Chrome QA to verify a repro case is fixed. If repro steps on the bug are clear, and it\u0027s likely QA can do those steps (and the bug is public), you can say \"See bug\".\n\nOtherwise, there\u0027s usually a summary on how to repro the bug.\n\nIf it\u0027s unlikely that QA can test, the Test: line can be removed.",
+      "revId": "b8993d0294621e702e508d0b42e5ff688accc8ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
