@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecc56bed_92eb32e9",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-28T01:05:26Z",
+      "side": 1,
+      "message": "optional: maybe use a kConstValue for \"chrome://policy-tool\".\nThe advantage would be to make it easier to change in the future and to avoid string duplication in the binary: but both of those don\u0027t have a lot of merit because you\u0027d end up changing them all now (the thing being avoided) and modern linkers take care of string duplication iiuc. Maybe this is a \"next time\" suggestion.",
+      "revId": "e620a3c999fc7e2776a838e13f0886b9656ba89c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55f37c06_9264c304",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-28T01:05:26Z",
+      "side": 1,
+      "message": "The style is \n/*recursive\u003d*/false\n(no spaces are used and the comment comes first).\nAnd thanks(!) for the comment, much appreciated.\n\nSee\nhttps://google.github.io/styleguide/cppguide.html#Implementation_Comments",
+      "revId": "e620a3c999fc7e2776a838e13f0886b9656ba89c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de873dec_856f2369",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-28T01:05:26Z",
+      "side": 1,
+      "message": "Maybe: for (const Session\u0026 session [...]\n(not required)",
+      "revId": "e620a3c999fc7e2776a838e13f0886b9656ba89c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18835a78_e82489c8",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-28T01:05:26Z",
+      "side": 1,
+      "message": "Braces are allowed here. If this is your preference to remove them (I\u0027m sad but) okay.\nIf there\u0027s a misunderstanding that they should be removed, please go ahead and leave them.",
+      "revId": "e620a3c999fc7e2776a838e13f0886b9656ba89c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c315ccf_ebed16f5",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-28T01:05:26Z",
+      "side": 1,
+      "message": "A blank line commonly follows the \u0027if\u0027 block, if there is no closing brace.",
+      "revId": "e620a3c999fc7e2776a838e13f0886b9656ba89c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
