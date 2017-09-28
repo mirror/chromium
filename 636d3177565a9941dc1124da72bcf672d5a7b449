@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "895bf94e_bf281ed2",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1377,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-28T18:24:15Z",
+      "side": 1,
+      "message": "triggering",
+      "range": {
+        "startLine": 1377,
+        "startChar": 27,
+        "endLine": 1377,
+        "endChar": 37
+      },
+      "revId": "636d3177565a9941dc1124da72bcf672d5a7b449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65022686_a83d331b",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1378,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-28T18:24:15Z",
+      "side": 1,
+      "message": "triggered",
+      "range": {
+        "startLine": 1378,
+        "startChar": 35,
+        "endLine": 1378,
+        "endChar": 45
+      },
+      "revId": "636d3177565a9941dc1124da72bcf672d5a7b449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
