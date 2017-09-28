@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fa3e338_56b42b0b",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-28T09:26:07Z",
+      "side": 1,
+      "message": "You need to update the unit test.",
+      "range": {
+        "startLine": 79,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 26
+      },
+      "revId": "f7fcf3bc7732355338fe9f720295433b0f5229f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9ca0bad_25e6ca71",
+        "filename": "components/arc/common/accessibility_helper.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-28T09:26:07Z",
+      "side": 1,
+      "message": "- nit: indent should be 2 spaces.\n- Please add a comment.",
+      "range": {
+        "startLine": 263,
+        "startChar": 0,
+        "endLine": 263,
+        "endChar": 4
+      },
+      "revId": "f7fcf3bc7732355338fe9f720295433b0f5229f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
