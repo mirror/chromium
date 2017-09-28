@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81c5976e_3c9c7522",
+        "filename": "chrome/browser/resources/settings/site_settings/category_setting_exceptions.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-28T19:11:54Z",
+      "side": 1,
+      "message": "Okay, I think I see what the goal is, I\u0027d like to have it implemented differently if that\u0027s okay. Rather than doing an if/else in this category-setting-exceptions dom-module, let\u0027s pass in the header text from the instantiation of the category-setting-exceptions.\n\nFirst, change BlockHeader to blockHeader so that it will match block-header\u003d\"foo\" when passed in.",
+      "revId": "93abcc27aeeea6b8266cb8e22c5e1e28169664bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb8e536f_7c25946b",
+        "filename": "chrome/browser/resources/settings/site_settings/category_setting_exceptions.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-28T19:11:54Z",
+      "side": 1,
+      "message": "delete lines 13 to 17",
+      "revId": "93abcc27aeeea6b8266cb8e22c5e1e28169664bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad1b33f2_9b42ef07",
+        "filename": "chrome/browser/resources/settings/site_settings/category_setting_exceptions.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-28T19:11:54Z",
+      "side": 1,
+      "message": "Add a property for the passed in value, like:\n\nblockHeader: String,",
+      "revId": "93abcc27aeeea6b8266cb8e22c5e1e28169664bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56ffecd2_6db8fce1",
+        "filename": "chrome/browser/resources/settings/site_settings/category_setting_exceptions.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-28T19:11:54Z",
+      "side": 1,
+      "message": "delete lines 33 to 39 since we\u0027ll pass in the block-header at the point of instantiation.",
+      "revId": "93abcc27aeeea6b8266cb8e22c5e1e28169664bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fc8214d_6829c563",
+        "filename": "chrome/browser/resources/settings/site_settings/category_setting_exceptions.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-28T19:11:54Z",
+      "side": 1,
+      "message": "The uses of category-setting-exceptions is all here:\nhttps://cs.chromium.org/search/?q\u003dcategory-setting-exceptions\u0026sq\u003dpackage:chromium\u0026type\u003dcs\n\nMost of them will have this line added to the element properties:\n\n\u003ccategory-setting-exceptions [...]\n  block-header\u003d\"$i18n{siteSettingsBlock}\"\u003e\n\nBut sound will have:\n\n\u003ccategory-setting-exceptions [...]\n  block-header\u003d\"$i18n{siteSettingsBlockSound}\"\u003e\n\nIn the future, we could have other custom values for siteSettingsBlock\u003csomething else\u003e.",
+      "revId": "93abcc27aeeea6b8266cb8e22c5e1e28169664bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bec14c68_0608eb1d",
+        "filename": "chrome/browser/resources/settings/site_settings/compiled_resources2.gyp",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-28T19:11:54Z",
+      "side": 1,
+      "message": "This looks like it has tabs in the indent (maybe set the editor to use spaces instead of tabs or convert tabs to spaces on save).\n\nAlso, these won\u0027t be needed if we pass in the block-header.",
+      "revId": "93abcc27aeeea6b8266cb8e22c5e1e28169664bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
