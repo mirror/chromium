@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8060d825_9e57c34c",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-09-28T15:55:53Z",
+      "side": 1,
+      "message": "These changes are not specifically related to this CL, I forgot to update the doc comments when I added the -o argument. The reason of changing from \u0027url/third_party\u0027 to \u0027url/mojo\u0027 is to keep the command on one line.",
+      "revId": "f8d13b418bc27db3871a56f394c0f47ca3dbc7b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
