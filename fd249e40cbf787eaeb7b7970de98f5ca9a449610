@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "68c9d050_96ae3d48",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2090,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-28T19:25:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ad60e179_e52833f5",
+      "revId": "fd249e40cbf787eaeb7b7970de98f5ca9a449610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7975da3_50b978ea",
         "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "fd249e40cbf787eaeb7b7970de98f5ca9a449610",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26ae587a_f2efa852",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2110,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-28T19:25:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f7975da3_50b978ea",
+      "revId": "fd249e40cbf787eaeb7b7970de98f5ca9a449610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "0d56cbec_dd77c244",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2190,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-28T19:25:15Z",
+      "side": 1,
+      "message": "I don\u0027t understand this. There was no change in the code here; the std::max was used before this patch. The comment is about whether it\u0027s correct or not to get \u0027end\u0027 values smaller than \u0027start\u0027. \n\nIn any case, I have agreed with rego in a previous review that we should double-check this and understand properly in which cases this situation may happen.",
+      "parentUuid": "d184f572_23dda3fd",
+      "revId": "fd249e40cbf787eaeb7b7970de98f5ca9a449610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6142b4d2_237fcfb2",
         "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
         "patchSetId": 6
@@ -81,6 +135,24 @@
       "writtenOn": "2017-09-28T15:50:33Z",
       "side": 1,
       "message": "This makes no sense to me. Let\u0027s add the tests or remove it.",
+      "revId": "fd249e40cbf787eaeb7b7970de98f5ca9a449610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9138d488_8b224f78",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2206,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-28T19:25:15Z",
+      "side": 1,
+      "message": "What I meant with the comment is that our CURRENT codebase lacks of tests for the code below.",
+      "parentUuid": "6142b4d2_237fcfb2",
       "revId": "fd249e40cbf787eaeb7b7970de98f5ca9a449610",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -101,6 +173,24 @@
       "revId": "fd249e40cbf787eaeb7b7970de98f5ca9a449610",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64b544a7_a234e2b4",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2210,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-28T19:25:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d10305d4_3d651e94",
+      "revId": "fd249e40cbf787eaeb7b7970de98f5ca9a449610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -192,6 +282,24 @@
     },
     {
       "key": {
+        "uuid": "67cc3aa3_be24446e",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2242,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-28T19:25:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "faaf378b_49002acd",
+      "revId": "fd249e40cbf787eaeb7b7970de98f5ca9a449610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bea894c4_13ac556b",
         "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
         "patchSetId": 6
@@ -206,6 +314,24 @@
       "revId": "fd249e40cbf787eaeb7b7970de98f5ca9a449610",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e659a9fa_c0c8e3b4",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2246,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-28T19:25:15Z",
+      "side": 1,
+      "message": "Agreed. It\u0027d be a good idea to do it now, but this pattern is also quite frequent in the rest of the grid layout logic. It\u0027s not a good idea to touch unrelated codepath, so I\u0027ll definitively do the refactoring in a follow up patch.\n\nI\u0027ll add TODO, though.",
+      "parentUuid": "bea894c4_13ac556b",
+      "revId": "fd249e40cbf787eaeb7b7970de98f5ca9a449610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
