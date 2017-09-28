@@ -44,6 +44,9 @@ class CHROMEOS_EXPORT SystemClockClient : public DBusClient {
   // Checks if the system time can be set.
   virtual bool CanSetTime() = 0;
 
+  // Checks if the system time is synchronized with network time.
+  virtual bool IsNetworkSynchronized() = 0;
+
   // Creates the instance.
   static SystemClockClient* Create();
 
