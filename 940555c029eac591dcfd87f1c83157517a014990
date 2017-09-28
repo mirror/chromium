@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "46b77d0a_4303df3b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1678,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-28T20:46:01Z",
+      "side": 1,
+      "message": "nit: The only place this is used already checks for this. Remove one or the other?",
+      "range": {
+        "startLine": 1678,
+        "startChar": 35,
+        "endLine": 1678,
+        "endChar": 44
+      },
+      "revId": "940555c029eac591dcfd87f1c83157517a014990",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6bbf2b8_3a0aaf50",
         "filename": "tools/metrics/actions/actions.xml",
         "patchSetId": 4
