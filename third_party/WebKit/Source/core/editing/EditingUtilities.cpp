@@ -38,6 +38,7 @@
 #include "core/editing/EditingStrategy.h"
 #include "core/editing/Editor.h"
 #include "core/editing/EphemeralRange.h"
+#include "core/editing/FrameSelection.h"
 #include "core/editing/PlainTextRange.h"
 #include "core/editing/PositionIterator.h"
 #include "core/editing/PositionWithAffinity.h"
@@ -797,12 +798,12 @@ int FindNextBoundaryOffset(const String& str, int current) {
   return current + machine.FinalizeAndGetBoundaryOffset();
 }
 
-int PreviousGraphemeBoundaryOf(const Node* node, int current) {
+int PreviousGraphemeBoundaryOf(const Node& node, int current) {
   // TODO(yosin): Need to support grapheme crossing |Node| boundary.
   DCHECK_GE(current, 0);
-  if (current <= 1 || !node->IsTextNode())
+  if (current <= 1 || !node.IsTextNode())
     return current - 1;
-  const String& text = ToText(node)->data();
+  const String& text = ToText(node).data();
   // TODO(yosin): Replace with DCHECK for out-of-range request.
   if (static_cast<unsigned>(current) > text.length())
     return current - 1;
@@ -810,23 +811,23 @@ int PreviousGraphemeBoundaryOf(const Node* node, int current) {
                                                                       current);
 }
 
-static int PreviousBackwardDeletionOffsetOf(const Node* node, int current) {
+static int PreviousBackwardDeletionOffsetOf(const Node& node, int current) {
   DCHECK_GE(current, 0);
   if (current <= 1)
     return 0;
-  if (!node->IsTextNode())
+  if (!node.IsTextNode())
     return current - 1;
 
-  const String& text = ToText(node)->data();
+  const String& text = ToText(node).data();
   DCHECK_LT(static_cast<unsigned>(current - 1), text.length());
   return FindNextBoundaryOffset<BackspaceStateMachine>(text, current);
 }
 
-int NextGraphemeBoundaryOf(const Node* node, int current) {
+int NextGraphemeBoundaryOf(const Node& node, int current) {
   // TODO(yosin): Need to support grapheme crossing |Node| boundary.
-  if (!node->IsTextNode())
+  if (!node.IsTextNode())
     return current + 1;
-  const String& text = ToText(node)->data();
+  const String& text = ToText(node).data();
   const int length = text.length();
   DCHECK_LE(current, length);
   if (current >= length - 1)
@@ -862,10 +863,10 @@ PositionTemplate<Strategy> PreviousPositionOfAlgorithm(
         return PositionTemplate<Strategy>(node, offset - 1);
       case PositionMoveType::kBackwardDeletion:
         return PositionTemplate<Strategy>(
-            node, PreviousBackwardDeletionOffsetOf(node, offset));
+            node, PreviousBackwardDeletionOffsetOf(*node, offset));
       case PositionMoveType::kGraphemeCluster:
         return PositionTemplate<Strategy>(
-            node, PreviousGraphemeBoundaryOf(node, offset));
+            node, PreviousGraphemeBoundaryOf(*node, offset));
       default:
         NOTREACHED() << "Unhandled moveType: " << move_type;
     }
@@ -927,7 +928,7 @@ PositionTemplate<Strategy> NextPositionOfAlgorithm(
         return PositionTemplate<Strategy>::EditingPositionOf(node, offset + 1);
       case PositionMoveType::kGraphemeCluster:
         return PositionTemplate<Strategy>::EditingPositionOf(
-            node, NextGraphemeBoundaryOf(node, offset));
+            node, NextGraphemeBoundaryOf(*node, offset));
       default:
         NOTREACHED() << "Unhandled moveType: " << move_type;
     }

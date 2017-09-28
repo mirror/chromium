@@ -1392,9 +1392,7 @@ public class LocationBarLayout extends FrameLayout
 
         changeLocationBarIcon();
         updateLocationBarIconContainerVisibility();
-        // Since we emphasize the scheme of the URL based on the security type, we need to
-        // refresh the emphasis.
-        mUrlBar.deEmphasizeUrl();
+
         emphasizeUrl();
         mIsEmphasizingHttpsScheme = shouldEmphasizeHttpsScheme;
     }
@@ -1405,7 +1403,9 @@ public class LocationBarLayout extends FrameLayout
 
     @Override
     public boolean shouldEmphasizeHttpsScheme() {
-        if (mToolbarDataProvider.isUsingBrandColor() || mToolbarDataProvider.isIncognito()) {
+        if (!ColorUtils.isUsingDefaultToolbarColor(
+                    getResources(), mToolbarDataProvider.getPrimaryColor())
+                || mToolbarDataProvider.isIncognito()) {
             return false;
         }
         return true;
@@ -2147,7 +2147,6 @@ public class LocationBarLayout extends FrameLayout
             setUrlBarText("", null);
         } else {
             if (setUrlBarText(url, displayText)) {
-                mUrlBar.deEmphasizeUrl();
                 emphasizeUrl();
             }
         }
@@ -2664,9 +2663,8 @@ public class LocationBarLayout extends FrameLayout
 
     /**
      * Scroll to ensure the TLD is visible.
-     * @return Whether the TLD was discovered and successfully scrolled to.
      */
-    public boolean scrollUrlBarToTld() {
-        return mUrlBar.scrollToTLD();
+    public void scrollUrlBarToTld() {
+        mUrlBar.scrollToTLD();
     }
 }

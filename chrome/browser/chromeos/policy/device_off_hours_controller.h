@@ -14,13 +14,14 @@
 #include "base/values.h"
 #include "chrome/browser/chromeos/policy/off_hours/off_hours_interval.h"
 #include "chrome/browser/chromeos/policy/proto/chrome_device_policy.pb.h"
+#include "chromeos/dbus/power_manager_client.h"
 
 namespace policy {
 
 // Return DictionaryValue in format:
 // { "timezone" : string,
 //   "intervals" : list of "OffHours" Intervals,
-//   "ignored_policies" : string list }
+//   "ignored_policy_proto_tags" : integer list }
 // "OffHours" Interval dictionary format:
 // { "start" : WeeklyTime,
 //   "end" : WeeklyTime }
@@ -34,8 +35,8 @@ std::unique_ptr<base::DictionaryValue> ConvertOffHoursProtoToValue(
     const enterprise_management::DeviceOffHoursProto& container);
 
 // Apply "OffHours" policy for proto which contains device policies. Return
-// ChromeDeviceSettingsProto without |ignored_policies|. The system will revert
-// to the default behavior for the removed policies.
+// ChromeDeviceSettingsProto without policies from |ignored_policy_proto_tags|.
+// The system will revert to the default behavior for the removed policies.
 std::unique_ptr<enterprise_management::ChromeDeviceSettingsProto>
 ApplyOffHoursPolicyToProto(
     const enterprise_management::ChromeDeviceSettingsProto& input_policies);
@@ -52,11 +53,11 @@ ApplyOffHoursPolicyToProto(
 // policies in PrefValueMap and PolicyMap. The system will revert to the default
 // behavior for the removed policies. And behavior of policies is handled during
 // decoding process from proto to PolicyMap.
-class DeviceOffHoursController {
+class DeviceOffHoursController : public chromeos::PowerManagerClient::Observer {
  public:
   // Creates a device off hours controller instance.
   DeviceOffHoursController();
-  ~DeviceOffHoursController();
+  ~DeviceOffHoursController() override;
 
   // Return current "OffHours" mode status.
   bool IsOffHoursMode();
@@ -66,6 +67,9 @@ class DeviceOffHoursController {
   void UpdateOffHoursPolicy(
       const enterprise_management::ChromeDeviceSettingsProto&
           device_settings_proto);
+
+  // chromeos::PowerManagerClient::Observer:
+  void SuspendDone(const base::TimeDelta& sleep_duration) override;
 
  private:
   // Call when "OffHours" mode is changed and ask DeviceSettingsService to

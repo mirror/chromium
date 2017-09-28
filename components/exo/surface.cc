@@ -20,9 +20,9 @@
 #include "components/exo/surface_observer.h"
 #include "components/viz/common/quads/render_pass.h"
 #include "components/viz/common/quads/shared_quad_state.h"
-#include "components/viz/common/quads/single_release_callback.h"
 #include "components/viz/common/quads/solid_color_draw_quad.h"
 #include "components/viz/common/quads/texture_draw_quad.h"
+#include "components/viz/common/resources/single_release_callback.h"
 #include "components/viz/common/surfaces/sequence_surface_reference_factory.h"
 #include "components/viz/service/surfaces/surface.h"
 #include "components/viz/service/surfaces/surface_manager.h"
@@ -174,6 +174,16 @@ class CustomWindowTargeter : public aura::WindowTargeter {
     return surface->HitTestRect(gfx::Rect(local_point, gfx::Size(1, 1)));
   }
 
+  std::unique_ptr<HitTestRects> GetExtraHitTestShapeRects(
+      aura::Window* window) const override {
+    Surface* surface = Surface::AsSurface(window);
+    if (!surface)
+      return nullptr;
+    if (!surface->HasHitTestMask())
+      return nullptr;
+    return surface->GetHitTestShapeRects();
+  }
+
  private:
   DISALLOW_COPY_AND_ASSIGN(CustomWindowTargeter);
 };
@@ -294,8 +304,14 @@ void Surface::RemoveSubSurface(Surface* sub_surface) {
   DCHECK(ListContainsEntry(pending_sub_surfaces_, sub_surface));
   pending_sub_surfaces_.erase(
       FindListEntry(pending_sub_surfaces_, sub_surface));
+
   DCHECK(ListContainsEntry(sub_surfaces_, sub_surface));
-  sub_surfaces_.erase(FindListEntry(sub_surfaces_, sub_surface));
+  auto it = FindListEntry(sub_surfaces_, sub_surface);
+  pending_damage_.op(SkIRect::MakeXYWH(it->second.x(), it->second.y(),
+                                       sub_surface->content_size().width(),
+                                       sub_surface->content_size().height()),
+                     SkRegion::kUnion_Op);
+  sub_surfaces_.erase(it);
   // Force recreating resources when the surface is added to a tree again.
   sub_surface->SurfaceHierarchyResourcesLost();
 }
@@ -564,6 +580,15 @@ bool Surface::HasHitTestMask() const {
 
 void Surface::GetHitTestMask(gfx::Path* mask) const {
   state_.input_region.getBoundaryPath(mask);
+}
+
+std::unique_ptr<aura::WindowTargeter::HitTestRects>
+Surface::GetHitTestShapeRects() const {
+  auto rects = std::make_unique<aura::WindowTargeter::HitTestRects>();
+  SkRegion::Iterator it(state_.input_region);
+  for (const SkIRect& rect = it.rect(); !it.done(); it.next())
+    rects->push_back(gfx::SkIRectToRect(rect));
+  return rects;
 }
 
 void Surface::RegisterCursorProvider(Pointer* provider) {

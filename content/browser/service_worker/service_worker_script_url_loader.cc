@@ -14,7 +14,9 @@
 #include "content/browser/service_worker/service_worker_version.h"
 #include "content/browser/service_worker/service_worker_write_to_cache_job.h"
 #include "content/browser/url_loader_factory_getter.h"
+#include "content/common/service_worker/service_worker_utils.h"
 #include "content/public/common/resource_response.h"
+#include "net/cert/cert_status_flags.h"
 #include "third_party/WebKit/common/mime_util/mime_util.h"
 
 namespace content {
@@ -157,10 +159,17 @@ void ServiceWorkerScriptURLLoader::OnReceiveResponse(
     return;
   }
 
-  // TODO(nhiroki): Check the path restriction.
-  // (See ServiceWorkerWriteToCacheJob::CheckPathRestriction())
-
-  // TODO(nhiroki): Check the SSL certificate.
+  // Check the certificate error.
+  // TODO(nhiroki): Ignore the certificate error when the
+  // --ignore-certificate-errors flag etc are specified.
+  // See ShouldIgnoreSSLError() in service_worker_write_to_cache_job.cc.
+  if (net::IsCertStatusError(response_head.cert_status)) {
+    // TODO(nhiroki): Show an error message equivalent to kSSLError in
+    // service_worker_write_to_cache_job.cc.
+    CommitCompleted(
+        ResourceRequestCompletionStatus(net::ERR_INSECURE_RESPONSE));
+    return;
+  }
 
   if (resource_type_ == RESOURCE_TYPE_SERVICE_WORKER) {
     if (!blink::IsSupportedJavascriptMimeType(response_head.mime_type)) {
@@ -170,6 +179,23 @@ void ServiceWorkerScriptURLLoader::OnReceiveResponse(
           ResourceRequestCompletionStatus(net::ERR_INSECURE_RESPONSE));
       return;
     }
+
+    // Check the path restriction defined in the spec:
+    // https://w3c.github.io/ServiceWorker/#service-worker-script-response
+    const char kServiceWorkerAllowed[] = "Service-Worker-Allowed";
+    std::string service_worker_allowed;
+    bool has_header = response_head.headers->EnumerateHeader(
+        nullptr, kServiceWorkerAllowed, &service_worker_allowed);
+    std::string error_message;
+    if (!ServiceWorkerUtils::IsPathRestrictionSatisfied(
+            version_->scope(), request_url_,
+            has_header ? &service_worker_allowed : nullptr, &error_message)) {
+      // TODO(nhiroki): Report |error_message|.
+      CommitCompleted(
+          ResourceRequestCompletionStatus(net::ERR_INSECURE_RESPONSE));
+      return;
+    }
+
     version_->SetMainScriptHttpResponseInfo(*response_info);
   }
 

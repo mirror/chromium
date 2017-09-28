@@ -5,21 +5,8 @@
 
 """Tool to move Blink source from third_party/WebKit to third_party/blink.
 
-How to use:
-1. third_party/blink/tools/move_blink_source.py update --run
- (It would take a few minutes to complete this command.)
-2. git cl format
-3. git commit -a
-4. Land the commit
-
-5. third_party/blink/tools/move_blink_source.py move --git
- (It would take an hour to complete this command.)
-6. third_party/WebKit/Tools/Scripts/run-bindings-test --reset-results
-7. git commit -a
-8. Land the commit
-9. Pray for successful build!
-
-TODO(tkent): More automation.
+See https://docs.google.com/document/d/1l3aPv1Wx__SpRkdOhvJz8ciEGigNT3wFKv78XiuW0Tw/edit?usp=sharing#heading=h.o225wrxp242h
+for the details.
 """
 
 import argparse
@@ -157,7 +144,7 @@ class MoveBlinkSource(object):
               ('third_party/WebKit/Source', 'third_party/blink/renderer')]),
         ]
         for file_path, replacement_list in file_replacement_list:
-            self._update_single_file_content(file_path, replacement_list)
+            self._update_single_file_content(file_path, replacement_list, should_write=self._options.run)
 
     def move(self):
         _log.info('Planning renaming ...')
@@ -179,6 +166,10 @@ class MoveBlinkSource(object):
                 self._fs.move(self._fs.join(self._repo_root, src_from_repo),
                               self._fs.join(self._repo_root, dest_from_repo))
                 _log.info('[%d/%d] Moved %s', i + 1, len(file_pairs), src)
+        self._update_single_file_content(
+            'build/get_landmines.py',
+            [('\ndef main', '  print \'The Great Blink mv for source files (crbug.com/768828)\'\n\ndef main')])
+
 
     def _create_basename_maps(self, file_pairs):
         basename_map = {}
@@ -408,7 +399,7 @@ class MoveBlinkSource(object):
         return re.sub(r'#include\s+"(\w+\.h)"',
                       partial(self._replace_basename_only_include, subdir, source_path), content)
 
-    def _update_single_file_content(self, file_path, replace_list):
+    def _update_single_file_content(self, file_path, replace_list, should_write=True):
         full_path = self._fs.join(self._repo_root, file_path)
         original_content = self._fs.read_text_file(full_path)
         content = original_content
@@ -421,7 +412,7 @@ class MoveBlinkSource(object):
             else:
                 raise TypeError('A tuple or a function is expected.')
         if content != original_content:
-            if self._options.run:
+            if should_write:
                 self._fs.write_text_file(full_path, content)
             _log.info('Updated %s', file_path)
         else:

@@ -16,6 +16,7 @@
 #include "chrome/browser/chromeos/policy/off_hours/weekly_time.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
 #include "chrome/browser/chromeos/settings/device_settings_service.h"
+#include "chromeos/dbus/dbus_thread_manager.h"
 #include "third_party/icu/source/common/unicode/unistr.h"
 #include "third_party/icu/source/common/unicode/utypes.h"
 #include "third_party/icu/source/i18n/unicode/gregocal.h"
@@ -103,11 +104,12 @@ std::vector<off_hours::OffHoursInterval> GetIntervals(
   return intervals;
 }
 
-// Return list of ignored policies from DeviceOffHoursProto structure.
-std::vector<std::string> GetIgnoredPolicies(
+// Return list of proto tags of ignored policies from DeviceOffHoursProto
+// structure.
+std::vector<int> GetIgnoredPolicyProtoTags(
     const em::DeviceOffHoursProto& container) {
-  return std::vector<std::string>(container.ignored_policies().begin(),
-                                  container.ignored_policies().end());
+  return std::vector<int>(container.ignored_policy_proto_tags().begin(),
+                          container.ignored_policy_proto_tags().end());
 }
 
 // Return timezone from DeviceOffHoursProto if exists otherwise return nullptr.
@@ -183,11 +185,13 @@ std::unique_ptr<base::DictionaryValue> ConvertOffHoursProtoToValue(
   for (const auto& interval : intervals)
     intervals_value->Append(interval.ToValue());
   off_hours->SetList("intervals", std::move(intervals_value));
-  std::vector<std::string> ignored_policies = GetIgnoredPolicies(container);
+  std::vector<int> ignored_policy_proto_tags =
+      GetIgnoredPolicyProtoTags(container);
   auto ignored_policies_value = base::MakeUnique<base::ListValue>();
-  for (const auto& policy : ignored_policies)
-    ignored_policies_value->AppendString(policy);
-  off_hours->SetList("ignored_policies", std::move(ignored_policies_value));
+  for (const auto& policy : ignored_policy_proto_tags)
+    ignored_policies_value->GetList().emplace_back(policy);
+  off_hours->SetList("ignored_policy_proto_tags",
+                     std::move(ignored_policies_value));
   return off_hours;
 }
 
@@ -196,16 +200,34 @@ std::unique_ptr<em::ChromeDeviceSettingsProto> ApplyOffHoursPolicyToProto(
   if (!input_policies.has_device_off_hours())
     return nullptr;
   const em::DeviceOffHoursProto& container(input_policies.device_off_hours());
-  std::vector<std::string> ignored_policies = GetIgnoredPolicies(container);
+  std::vector<int> ignored_policy_proto_tags =
+      GetIgnoredPolicyProtoTags(container);
   std::unique_ptr<em::ChromeDeviceSettingsProto> policies =
       base::MakeUnique<em::ChromeDeviceSettingsProto>(input_policies);
-  RemovePolicies(policies.get(), ignored_policies);
+  RemovePolicies(policies.get(), ignored_policy_proto_tags);
   return policies;
 }
 
-DeviceOffHoursController::DeviceOffHoursController() {}
+DeviceOffHoursController::DeviceOffHoursController() {
+  if (chromeos::DBusThreadManager::IsInitialized()) {
+    chromeos::DBusThreadManager::Get()->GetPowerManagerClient()->AddObserver(
+        this);
+  }
+}
 
-DeviceOffHoursController::~DeviceOffHoursController() {}
+DeviceOffHoursController::~DeviceOffHoursController() {
+  if (chromeos::DBusThreadManager::IsInitialized()) {
+    chromeos::DBusThreadManager::Get()->GetPowerManagerClient()->RemoveObserver(
+        this);
+  }
+}
+
+void DeviceOffHoursController::SuspendDone(
+    const base::TimeDelta& sleep_duration) {
+  // Triggered when device wakes up. "OffHours" state could be changed during
+  // sleep mode and should be updated after that.
+  UpdateOffHoursMode();
+}
 
 void DeviceOffHoursController::UpdateOffHoursMode() {
   if (off_hours_intervals_.empty()) {

@@ -29,8 +29,8 @@
 #include "cc/trees/mutator_host.h"
 #include "cc/trees/scroll_node.h"
 #include "cc/trees/transform_node.h"
-#include "components/viz/common/quads/copy_output_request.h"
-#include "components/viz/common/quads/copy_output_result.h"
+#include "components/viz/common/frame_sinks/copy_output_request.h"
+#include "components/viz/common/frame_sinks/copy_output_result.h"
 #include "third_party/skia/include/core/SkImageFilter.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/geometry/vector2d_conversions.h"
@@ -74,7 +74,7 @@ Layer::Inputs::Inputs(int layer_id)
 Layer::Inputs::~Inputs() {}
 
 scoped_refptr<Layer> Layer::Create() {
-  return make_scoped_refptr(new Layer());
+  return base::WrapRefCounted(new Layer());
 }
 
 Layer::Layer()
@@ -454,7 +454,7 @@ void Layer::SetMaskLayer(Layer* mask_layer) {
     inputs_.mask_layer->RemoveFromParent();
     DCHECK(!inputs_.mask_layer->parent());
     inputs_.mask_layer->SetParent(this);
-    if (inputs_.filters.IsEmpty() &&
+    if (inputs_.filters.IsEmpty() && inputs_.background_filters.IsEmpty() &&
         (!layer_tree_host_ ||
          layer_tree_host_->GetSettings().enable_mask_tiling)) {
       inputs_.mask_layer->SetLayerMaskType(
@@ -473,9 +473,10 @@ void Layer::SetFilters(const FilterOperations& filters) {
   if (inputs_.filters == filters)
     return;
   inputs_.filters = filters;
-  if (inputs_.mask_layer)
+  if (inputs_.mask_layer && !filters.IsEmpty()) {
     inputs_.mask_layer->SetLayerMaskType(
         Layer::LayerMaskType::SINGLE_TEXTURE_MASK);
+  }
   SetSubtreePropertyChanged();
   SetPropertyTreesNeedRebuild();
   SetNeedsCommit();
@@ -486,6 +487,14 @@ void Layer::SetBackgroundFilters(const FilterOperations& filters) {
   if (inputs_.background_filters == filters)
     return;
   inputs_.background_filters = filters;
+
+  // We will not set the mask type to MULTI_TEXTURE_MASK if the mask layer's
+  // filters are removed, because we do not want to reraster if the filters are
+  // being animated.
+  if (inputs_.mask_layer && !filters.IsEmpty()) {
+    inputs_.mask_layer->SetLayerMaskType(
+        Layer::LayerMaskType::SINGLE_TEXTURE_MASK);
+  }
   SetSubtreePropertyChanged();
   SetPropertyTreesNeedRebuild();
   SetNeedsCommit();
@@ -1413,8 +1422,8 @@ void Layer::SetElementId(ElementId id) {
   if ((layer_tree_host_ && layer_tree_host_->IsUsingLayerLists()) ||
       inputs_.element_id == id)
     return;
-  TRACE_EVENT1(TRACE_DISABLED_BY_DEFAULT("compositor-worker"),
-               "Layer::SetElementId", "element", id.AsValue().release());
+  TRACE_EVENT1(TRACE_DISABLED_BY_DEFAULT("cc.debug"), "Layer::SetElementId",
+               "element", id.AsValue().release());
   if (inputs_.element_id && layer_tree_host()) {
     layer_tree_host_->UnregisterElement(inputs_.element_id,
                                         ElementListType::ACTIVE);
@@ -1434,7 +1443,7 @@ void Layer::SetMutableProperties(uint32_t properties) {
   DCHECK(IsPropertyChangeAllowed());
   if (inputs_.mutable_properties == properties)
     return;
-  TRACE_EVENT1(TRACE_DISABLED_BY_DEFAULT("compositor-worker"),
+  TRACE_EVENT1(TRACE_DISABLED_BY_DEFAULT("cc.debug"),
                "Layer::SetMutableProperties", "properties", properties);
   inputs_.mutable_properties = properties;
   SetNeedsCommit();

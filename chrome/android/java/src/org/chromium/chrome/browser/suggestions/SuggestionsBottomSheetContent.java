@@ -89,7 +89,7 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
                 new TileGroupDelegateImpl(activity, profile, navigationDelegate, snackbarManager);
         mSuggestionsUiDelegate = new SuggestionsUiDelegateImpl(
                 depsFactory.createSuggestionSource(profile), depsFactory.createEventReporter(),
-                navigationDelegate, profile, sheet, activity.getReferencePool());
+                navigationDelegate, profile, sheet, activity.getReferencePool(), snackbarManager);
 
         mView = LayoutInflater.from(activity).inflate(
                 R.layout.suggestions_bottom_sheet_content, null);
@@ -134,6 +134,13 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
         mBottomSheetObserver = new SuggestionsSheetVisibilityChangeObserver(this, activity) {
             @Override
             public void onContentShown(boolean isFirstShown) {
+                // TODO(dgn): Temporary workaround to trigger an event in the backend when the
+                // sheet is opened following inactivity. See https://crbug.com/760974. Should be
+                // moved back to the "new opening of the sheet" path once we are able to trigger it
+                // in that case.
+                mSuggestionsUiDelegate.getEventReporter().onSurfaceOpened();
+                SuggestionsMetrics.recordSurfaceVisible();
+
                 if (isFirstShown) {
                     adapter.refreshSuggestions();
 
@@ -147,13 +154,7 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
                     mRecyclerView.getScrollEventReporter().reset();
                 }
 
-                // TODO(dgn): Temporary workaround to trigger an event in the backend when the
-                // sheet is opened following inactivity. See https://crbug.com/760974. Should be
-                // moved back to the "new opening of the sheet" path once we are able to trigger it
-                // in that case.
-                mSuggestionsUiDelegate.getEventReporter().onSurfaceOpened();
 
-                SuggestionsMetrics.recordSurfaceVisible();
             }
 
             @Override

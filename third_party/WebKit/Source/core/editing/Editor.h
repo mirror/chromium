@@ -33,10 +33,10 @@
 #include "core/editing/EditingStyle.h"
 #include "core/editing/FindOptions.h"
 #include "core/editing/Forward.h"
-#include "core/editing/FrameSelection.h"
 #include "core/editing/VisibleSelection.h"
 #include "core/editing/WritingDirection.h"
 #include "core/events/InputEvent.h"
+#include "core/layout/ScrollAlignment.h"
 #include "platform/PasteMode.h"
 #include "platform/heap/Handle.h"
 
@@ -51,6 +51,7 @@ class LocalFrame;
 class HitTestResult;
 class KillRing;
 class Pasteboard;
+class SetSelectionOptions;
 class SpellChecker;
 class StylePropertySet;
 class TextEvent;
@@ -107,7 +108,7 @@ class CORE_EXPORT Editor final : public GarbageCollectedFinalized<Editor> {
   void RespondToChangedContents(const Position&);
 
   bool SelectionStartHasStyle(CSSPropertyID, const String& value) const;
-  TriState SelectionHasStyle(CSSPropertyID, const String& value) const;
+  EditingTriState SelectionHasStyle(CSSPropertyID, const String& value) const;
   String SelectionStartCSSPropertyValue(CSSPropertyID);
 
   void RemoveFormattingAndStyle();
@@ -149,7 +150,7 @@ class CORE_EXPORT Editor final : public GarbageCollectedFinalized<Editor> {
     bool IsSupported() const;
     bool IsEnabled(Event* triggering_event = nullptr) const;
 
-    TriState GetState(Event* triggering_event = nullptr) const;
+    EditingTriState GetState(Event* triggering_event = nullptr) const;
     String Value(Event* triggering_event = nullptr) const;
 
     bool IsTextInsertion() const;
@@ -350,8 +351,7 @@ class CORE_EXPORT Editor final : public GarbageCollectedFinalized<Editor> {
                         PasteMode = kAllMimeTypes);
 
   void RevealSelectionAfterEditingOperation(
-      const ScrollAlignment& = ScrollAlignment::kAlignCenterIfNeeded,
-      RevealExtentOption = kDoNotRevealExtent);
+      const ScrollAlignment& = ScrollAlignment::kAlignCenterIfNeeded);
   void ChangeSelectionAfterCommand(const SelectionInDOMTree&,
                                    const SetSelectionOptions&);
 

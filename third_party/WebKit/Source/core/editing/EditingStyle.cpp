@@ -50,6 +50,7 @@
 #include "core/dom/NodeTraversal.h"
 #include "core/dom/QualifiedName.h"
 #include "core/editing/EditingStyleUtilities.h"
+#include "core/editing/EditingTriState.h"
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/Editor.h"
 #include "core/editing/FrameSelection.h"
@@ -487,6 +488,22 @@ void EditingStyle::Init(Node* node, PropertiesToInclude properties_to_include) {
 
   if (node && node->EnsureComputedStyle()) {
     const ComputedStyle* computed_style = node->EnsureComputedStyle();
+
+    // Fix for crbug.com/768261: due to text-autosizing, reading the current
+    // computed font size and re-writing it to an element may actually cause the
+    // font size to become larger (since the autosizer will run again on the new
+    // computed size). The fix is to toss out the computed size property here
+    // and use ComputedStyle::SpecifiedFontSize().
+    if (computed_style->ComputedFontSize() !=
+        computed_style->SpecifiedFontSize()) {
+      // ReplaceSelectionCommandTest_TextAutosizingDoesntInflateText gets here.
+      mutable_style_->SetProperty(
+          CSSPropertyFontSize,
+          CSSPrimitiveValue::Create(computed_style->SpecifiedFontSize(),
+                                    CSSPrimitiveValue::UnitType::kPixels)
+              ->CssText());
+    }
+
     RemoveInheritedColorsIfNeeded(computed_style);
     ReplaceFontSizeByKeywordIfPossible(computed_style,
                                        computed_style_at_position);
@@ -752,14 +769,14 @@ static const CSSPropertyID kTextOnlyProperties[] = {
     CSSPropertyColor,
 };
 
-TriState EditingStyle::TriStateOfStyle(EditingStyle* style) const {
+EditingTriState EditingStyle::TriStateOfStyle(EditingStyle* style) const {
   if (!style || !style->mutable_style_)
-    return kFalseTriState;
+    return EditingTriState::kFalse;
   return TriStateOfStyle(style->mutable_style_->EnsureCSSStyleDeclaration(),
                          kDoNotIgnoreTextOnlyProperties);
 }
 
-TriState EditingStyle::TriStateOfStyle(
+EditingTriState EditingStyle::TriStateOfStyle(
     CSSStyleDeclaration* style_to_compare,
     ShouldIgnoreTextOnlyProperties should_ignore_text_only_properties) const {
   MutableStylePropertySet* difference =
@@ -770,24 +787,24 @@ TriState EditingStyle::TriStateOfStyle(
                                       WTF_ARRAY_LENGTH(kTextOnlyProperties));
 
   if (difference->IsEmpty())
-    return kTrueTriState;
+    return EditingTriState::kTrue;
   if (difference->PropertyCount() == mutable_style_->PropertyCount())
-    return kFalseTriState;
+    return EditingTriState::kFalse;
 
-  return kMixedTriState;
+  return EditingTriState::kMixed;
 }
 
-TriState EditingStyle::TriStateOfStyle(
+EditingTriState EditingStyle::TriStateOfStyle(
     const VisibleSelection& selection) const {
   if (selection.IsNone())
-    return kFalseTriState;
+    return EditingTriState::kFalse;
 
   if (selection.IsCaret()) {
     return TriStateOfStyle(
         EditingStyleUtilities::CreateStyleAtSelectionStart(selection));
   }
 
-  TriState state = kFalseTriState;
+  EditingTriState state = EditingTriState::kFalse;
   bool node_is_start = true;
   for (Node& node : NodeTraversal::StartsAt(*selection.Start().AnchorNode())) {
     if (node.GetLayoutObject() && HasEditableStyle(node)) {
@@ -812,13 +829,13 @@ TriState EditingStyle::TriStateOfStyle(
         // Pass EditingStyle::DoNotIgnoreTextOnlyProperties without checking if
         // node.isTextNode() because the node can be an element node. See bug
         // http://crbug.com/584939.
-        TriState node_state = TriStateOfStyle(
+        EditingTriState node_state = TriStateOfStyle(
             node_style, EditingStyle::kDoNotIgnoreTextOnlyProperties);
         if (node_is_start) {
           state = node_state;
           node_is_start = false;
         } else if (state != node_state && node.IsTextNode()) {
-          state = kMixedTriState;
+          state = EditingTriState::kMixed;
           break;
         }
       }

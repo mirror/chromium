@@ -20,9 +20,9 @@
 #include "build/build_config.h"
 #include "cc/layers/layer.h"
 #include "cc/trees/layer_tree_settings.h"
+#include "components/viz/common/frame_sinks/copy_output_request.h"
+#include "components/viz/common/frame_sinks/copy_output_result.h"
 #include "components/viz/common/gl_helper.h"
-#include "components/viz/common/quads/copy_output_request.h"
-#include "components/viz/common/quads/copy_output_result.h"
 #include "components/viz/common/quads/texture_mailbox.h"
 #include "content/browser/accessibility/browser_accessibility_manager.h"
 #include "content/browser/accessibility/browser_accessibility_state_impl.h"
@@ -380,9 +380,12 @@ bool IsMus() {
 ////////////////////////////////////////////////////////////////////////////////
 // RenderWidgetHostViewAura, public:
 
-RenderWidgetHostViewAura::RenderWidgetHostViewAura(RenderWidgetHost* host,
-                                                   bool is_guest_view_hack)
+RenderWidgetHostViewAura::RenderWidgetHostViewAura(
+    RenderWidgetHost* host,
+    bool is_guest_view_hack,
+    bool enable_surface_synchronization)
     : host_(RenderWidgetHostImpl::From(host)),
+      enable_surface_synchronization_(enable_surface_synchronization),
       window_(nullptr),
       in_shutdown_(false),
       in_bounds_changed_(false),
@@ -1938,7 +1941,8 @@ void RenderWidgetHostViewAura::CreateDelegatedFrameHostClient() {
         base::MakeUnique<DelegatedFrameHostClientAura>(this);
   }
   delegated_frame_host_ = base::MakeUnique<DelegatedFrameHost>(
-      frame_sink_id_, delegated_frame_host_client_.get());
+      frame_sink_id_, delegated_frame_host_client_.get(),
+      enable_surface_synchronization_);
   if (renderer_compositor_frame_sink_) {
     delegated_frame_host_->DidCreateNewRendererCompositorFrameSink(
         renderer_compositor_frame_sink_);

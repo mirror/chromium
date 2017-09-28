@@ -36,6 +36,7 @@ source_set("common") {
   sources = [
     "accessibility_messages.h",
     "all_messages.h",
+    "android/browser_side_navigation_policy_android.cc",
     "android/gin_java_bridge_errors.cc",
     "android/gin_java_bridge_errors.h",
     "android/gin_java_bridge_value.cc",
@@ -140,7 +141,6 @@ source_set("common") {
     "edit_command.h",
     "feature_policy/feature_policy.cc",
     "feature_policy/feature_policy.h",
-    "file_utilities_messages.h",
     "fileapi/file_system_messages.h",
     "fileapi/webblob_messages.h",
     "font_cache_dispatcher_win.cc",
@@ -633,6 +633,7 @@ mojom("mojo_bindings") {
     "child.mojom",
     "child_memory_coordinator.mojom",
     "field_trial_recorder.mojom",
+    "file_utilities.mojom",
     "frame.mojom",
     "frame_sink_provider.mojom",
     "host_zoom.mojom",

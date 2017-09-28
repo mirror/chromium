@@ -35,7 +35,7 @@
 #include "cc/trees/proxy.h"
 #include "cc/trees/scroll_node.h"
 #include "cc/trees/transform_node.h"
-#include "components/viz/common/quads/copy_output_request.h"
+#include "components/viz/common/frame_sinks/copy_output_request.h"
 #include "components/viz/common/quads/debug_border_draw_quad.h"
 #include "components/viz/common/quads/render_pass.h"
 #include "components/viz/common/traced_value.h"
@@ -216,19 +216,19 @@ void LayerImpl::GetDebugBorderProperties(SkColor* color, float* width) const {
 
 void LayerImpl::AppendDebugBorderQuad(
     viz::RenderPass* render_pass,
-    const gfx::Size& bounds,
+    const gfx::Rect& quad_rect,
     const viz::SharedQuadState* shared_quad_state,
     AppendQuadsData* append_quads_data) const {
   SkColor color;
   float width;
   GetDebugBorderProperties(&color, &width);
-  AppendDebugBorderQuad(render_pass, bounds, shared_quad_state,
+  AppendDebugBorderQuad(render_pass, quad_rect, shared_quad_state,
                         append_quads_data, color, width);
 }
 
 void LayerImpl::AppendDebugBorderQuad(
     viz::RenderPass* render_pass,
-    const gfx::Size& bounds,
+    const gfx::Rect& quad_rect,
     const viz::SharedQuadState* shared_quad_state,
     AppendQuadsData* append_quads_data,
     SkColor color,
@@ -236,7 +236,6 @@ void LayerImpl::AppendDebugBorderQuad(
   if (!ShowDebugBorders(DebugBorderType::LAYER))
     return;
 
-  gfx::Rect quad_rect(bounds);
   gfx::Rect visible_quad_rect(quad_rect);
   auto* debug_border_quad =
       render_pass->CreateAndAppendDrawQuad<viz::DebugBorderDrawQuad>();
@@ -642,9 +641,8 @@ void LayerImpl::SetElementId(ElementId element_id) {
   if (element_id == element_id_)
     return;
 
-  TRACE_EVENT1(TRACE_DISABLED_BY_DEFAULT("compositor-worker"),
-               "LayerImpl::SetElementId", "element",
-               element_id.AsValue().release());
+  TRACE_EVENT1(TRACE_DISABLED_BY_DEFAULT("cc.debug"), "LayerImpl::SetElementId",
+               "element", element_id.AsValue().release());
 
   layer_tree_impl_->RemoveFromElementMap(this);
   element_id_ = element_id;
@@ -657,7 +655,7 @@ void LayerImpl::SetMutableProperties(uint32_t properties) {
   if (mutable_properties_ == properties)
     return;
 
-  TRACE_EVENT1(TRACE_DISABLED_BY_DEFAULT("compositor-worker"),
+  TRACE_EVENT1(TRACE_DISABLED_BY_DEFAULT("cc.debug"),
                "LayerImpl::SetMutableProperties", "properties", properties);
 
   mutable_properties_ = properties;

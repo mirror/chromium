@@ -31,6 +31,7 @@ TextPainterBase::TextPainterBase(GraphicsContext& context,
       text_origin_(text_origin),
       text_bounds_(text_bounds),
       horizontal_(horizontal),
+      has_combined_text_(false),
       emphasis_mark_offset_(0),
       ellipsis_offset_(0) {}
 
@@ -117,7 +118,7 @@ TextPaintStyle TextPainterBase::TextPaintingStyle(const Document& document,
     text_style.stroke_color = Color::kBlack;
     text_style.emphasis_mark_color = Color::kBlack;
     text_style.stroke_width = style.TextStrokeWidth();
-    text_style.shadow = 0;
+    text_style.shadow = nullptr;
   } else {
     text_style.current_color = style.VisitedDependentColor(CSSPropertyColor);
     text_style.fill_color =
@@ -143,10 +144,6 @@ TextPaintStyle TextPainterBase::TextPaintingStyle(const Document& document,
       text_style.emphasis_mark_color =
           TextColorForWhiteBackground(text_style.emphasis_mark_color);
     }
-
-    // Text shadows are disabled when printing. http://crbug.com/258321
-    if (is_printing)
-      text_style.shadow = 0;
   }
 
   return text_style;
@@ -191,10 +188,15 @@ void TextPainterBase::PaintDecorationsExceptLineThrough(
     const DecorationInfo& decoration_info,
     const PaintInfo& paint_info,
     const Vector<AppliedTextDecoration>& decorations,
+    const TextPaintStyle& text_style,
     bool* has_line_through_decoration) {
   GraphicsContext& context = paint_info.context;
   GraphicsContextStateSaver state_saver(context);
+  UpdateGraphicsContext(context, text_style, horizontal_, state_saver);
   context.SetStrokeThickness(decoration_info.thickness);
+
+  if (has_combined_text_)
+    context.ConcatCTM(Rotation(text_bounds_, kClockwise));
 
   // text-underline-position may flip underline and overline.
   ResolvedUnderlinePosition underline_position =
@@ -238,15 +240,25 @@ void TextPainterBase::PaintDecorationsExceptLineThrough(
     *has_line_through_decoration |=
         EnumHasFlags(lines, TextDecoration::kLineThrough);
   }
+
+  // Restore rotation as needed.
+  if (has_combined_text_)
+    context.ConcatCTM(Rotation(text_bounds_, kCounterclockwise));
 }
 
 void TextPainterBase::PaintDecorationsOnlyLineThrough(
     const DecorationInfo& decoration_info,
     const PaintInfo& paint_info,
-    const Vector<AppliedTextDecoration>& decorations) {
+    const Vector<AppliedTextDecoration>& decorations,
+    const TextPaintStyle& text_style) {
   GraphicsContext& context = paint_info.context;
   GraphicsContextStateSaver state_saver(context);
+  UpdateGraphicsContext(context, text_style, horizontal_, state_saver);
   context.SetStrokeThickness(decoration_info.thickness);
+
+  if (has_combined_text_)
+    context.ConcatCTM(Rotation(text_bounds_, kClockwise));
+
   for (const AppliedTextDecoration& decoration : decorations) {
     TextDecoration lines = decoration.Lines();
     if (EnumHasFlags(lines, TextDecoration::kLineThrough)) {
@@ -259,6 +271,10 @@ void TextPainterBase::PaintDecorationsOnlyLineThrough(
       decoration_painter.Paint();
     }
   }
+
+  // Restore rotation as needed.
+  if (has_combined_text_)
+    context.ConcatCTM(Rotation(text_bounds_, kCounterclockwise));
 }
 
 namespace {

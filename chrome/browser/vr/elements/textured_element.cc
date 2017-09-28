@@ -54,8 +54,9 @@ void TexturedElement::UpdateElementSize() {
   SetSize(size().width(), height);
 }
 
-void TexturedElement::Render(UiElementRenderer* renderer,
-                             const gfx::Transform& view_proj_matrix) const {
+void TexturedElement::Render(
+    UiElementRenderer* renderer,
+    const gfx::Transform& model_view_proj_matrix) const {
   if (!g_initialized_for_testing_) {
     if (!initialized_)
       return;
@@ -64,9 +65,10 @@ void TexturedElement::Render(UiElementRenderer* renderer,
   gfx::SizeF drawn_size = GetTexture()->GetDrawnSize();
   gfx::RectF copy_rect(0, 0, drawn_size.width() / texture_size_.width(),
                        drawn_size.height() / texture_size_.height());
-  renderer->DrawTexturedQuad(
-      texture_handle_, UiElementRenderer::kTextureLocationLocal,
-      view_proj_matrix, copy_rect, computed_opacity(), size(), corner_radius());
+  renderer->DrawTexturedQuad(texture_handle_,
+                             UiElementRenderer::kTextureLocationLocal,
+                             model_view_proj_matrix, copy_rect,
+                             computed_opacity(), size(), corner_radius());
 }
 
 void TexturedElement::Flush(SkSurface* surface) {
@@ -75,13 +77,17 @@ void TexturedElement::Flush(SkSurface* surface) {
   SkPixmap pixmap;
   CHECK(surface->peekPixels(&pixmap));
 
+  SkColorType type = pixmap.colorType();
+  DCHECK(type == kRGBA_8888_SkColorType || type == kBGRA_8888_SkColorType);
+  GLint format = (type == kRGBA_8888_SkColorType ? GL_RGBA : GL_BGRA);
+
   glBindTexture(GL_TEXTURE_2D, texture_handle_);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, pixmap.width(), pixmap.height(), 0,
-               GL_RGBA, GL_UNSIGNED_BYTE, pixmap.addr());
+  glTexImage2D(GL_TEXTURE_2D, 0, format, pixmap.width(), pixmap.height(), 0,
+               format, GL_UNSIGNED_BYTE, pixmap.addr());
 }
 
 void TexturedElement::OnSetMode() {

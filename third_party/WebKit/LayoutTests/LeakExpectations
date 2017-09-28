@@ -36,7 +36,6 @@ crbug.com/672740 http/tests/security/mixedContent/websocket/insecure-websocket-i
 crbug.com/672740 virtual/mojo-loading/http/tests/security/mixedContent/websocket/insecure-websocket-in-secure-page-worker-allowed.html [ Leak Pass ]
 crbug.com/672740 http/tests/security/mixedContent/websocket/insecure-websocket-in-secure-page-worker.html [ Leak Pass ]
 crbug.com/672740 virtual/mojo-loading/http/tests/security/mixedContent/websocket/insecure-websocket-in-secure-page-worker.html [ Leak Pass ]
-crbug.com/754222 external/wpt/pointerevents/pointerevent_releasepointercapture_onpointerup_mouse-manual.html [ Leak Pass ]
 
 crbug.com/755625 external/wpt/beacon/beacon-error.window.html [ Leak ]
 
@@ -44,13 +43,6 @@ crbug.com/755625 external/wpt/beacon/beacon-error.window.html [ Leak ]
 # Flakily leaks
 # -----------------------------------------------------------------
 crbug.com/762353 external/wpt/beacon/headers/header-referrer-no-referrer.html [ Leak Pass ]
-
-# -----------------------------------------------------------------
-# Known as false positives
-# -----------------------------------------------------------------
-crbug.com/726218 [ Linux ] fast/dom/inert/inert-node-is-uneditable.html [ Leak ]
-crbug.com/726218 [ Linux ] fast/dom/inert/inert-inlines.html [ Leak ]
-crbug.com/726218 [ Linux ] fast/dom/inert/inert-label-focus.html [ Leak ]
 
 # -----------------------------------------------------------------
 # Not revert suspected CL as jam@ request, expected to be fixed soon.

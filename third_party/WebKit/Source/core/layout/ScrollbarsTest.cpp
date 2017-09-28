@@ -1105,7 +1105,11 @@ TEST_P(ScrollbarAppearanceTest, ThemeEngineDefinesMinimumThumbLength) {
 
 // Ensure thumb position is correctly calculated even at ridiculously large
 // scales.
+#if defined(OS_ANDROID)
+TEST_P(ScrollbarAppearanceTest, DISABLED_HugeScrollingThumbPosition) {
+#else
 TEST_P(ScrollbarAppearanceTest, HugeScrollingThumbPosition) {
+#endif
   ScopedTestingPlatformSupport<ScrollbarTestingPlatformSupport> platform;
 
   v8::HandleScope handle_scope(v8::Isolate::GetCurrent());

@@ -7,7 +7,6 @@
 #include <memory>
 
 #include "base/callback.h"
-#include "base/memory/ptr_util.h"
 #include "base/test/simple_test_tick_clock.h"
 #include "components/viz/test/ordered_simple_task_runner.h"
 #include "platform/WebTaskRunner.h"
@@ -21,6 +20,8 @@
 
 namespace blink {
 namespace scheduler {
+namespace web_frame_scheduler_impl_unittest {  // To avoid symbol collisions in
+                                               // jumbo builds.
 
 class WebFrameSchedulerImplTest : public ::testing::Test {
  public:
@@ -247,7 +248,7 @@ TEST_F(WebFrameSchedulerImplTest, PauseAndResume) {
 // Tests if throttling observer interfaces work.
 TEST_F(WebFrameSchedulerImplTest, ThrottlingObserver) {
   std::unique_ptr<MockThrottlingObserver> observer =
-      base::MakeUnique<MockThrottlingObserver>();
+      std::make_unique<MockThrottlingObserver>();
 
   size_t throttled_count = 0u;
   size_t not_throttled_count = 0u;
@@ -285,5 +286,6 @@ TEST_F(WebFrameSchedulerImplTest, ThrottlingObserver) {
   observer->CheckObserverState(throttled_count, not_throttled_count);
 }
 
+}  // namespace web_frame_scheduler_impl_unittest
 }  // namespace scheduler
 }  // namespace blink

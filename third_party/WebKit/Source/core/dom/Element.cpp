@@ -1139,7 +1139,7 @@ void Element::ScrollFrameTo(const ScrollToOptions& scroll_to_options) {
 }
 
 void Element::UpdateFromCompositorMutation(const CompositorMutation& mutation) {
-  TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("compositor-worker"),
+  TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("cc"),
                "Element::updateFromCompositorMutation");
   if (mutation.IsOpacityMutated() || mutation.IsTransformMutated())
     EnsureElementAnimations().GetCustomCompositorAnimations().ApplyUpdate(
@@ -2168,15 +2168,21 @@ StyleRecalcChange Element::RecalcOwnStyle(StyleRecalcChange change) {
   if (local_change != kNoChange)
     UpdateCallbackSelectors(old_style.Get(), new_style.Get());
 
-  if (local_change != kNoChange) {
-    if (LayoutObject* layout_object = this->GetLayoutObject()) {
+  if (LayoutObject* layout_object = this->GetLayoutObject()) {
+    // kNoChange may means that the computed style didn't change, but there are
+    // additional flags in ComputedStyle which may have changed. For instance,
+    // the AffectedBy* flags. We don't need to go through the visual
+    // invalidation diffing in that case, but we replace the old ComputedStyle
+    // object with the new one to ensure the mentioned flags are up to date.
+    if (local_change == kNoChange)
+      layout_object->SetStyleInternal(new_style.Get());
+    else
       layout_object->SetStyle(new_style.Get());
-    } else {
-      if (ShouldStoreNonLayoutObjectComputedStyle(*new_style))
-        StoreNonLayoutObjectComputedStyle(new_style);
-      else if (HasRareData())
-        GetElementRareData()->ClearComputedStyle();
-    }
+  } else {
+    if (ShouldStoreNonLayoutObjectComputedStyle(*new_style))
+      StoreNonLayoutObjectComputedStyle(new_style);
+    else if (HasRareData())
+      GetElementRareData()->ClearComputedStyle();
   }
 
   if (GetStyleChangeType() >= kSubtreeStyleChange)
@@ -2409,9 +2415,16 @@ ShadowRoot* Element::createShadowRoot(const ScriptState* script_state,
         "tree.");
     return nullptr;
   }
-  GetDocument().SetShadowCascadeOrder(ShadowCascadeOrder::kShadowCascadeV0);
+  // Some elements make assumptions about what kind of layoutObjects they allow
+  // as children so we can't allow author shadows on them for now.
+  if (!AreAuthorShadowsAllowed()) {
+    exception_state.ThrowDOMException(
+        kHierarchyRequestError,
+        "Author-created shadow roots are disabled for this element.");
+    return nullptr;
+  }
 
-  return CreateShadowRootInternal(ShadowRootType::V0, exception_state);
+  return &CreateShadowRootInternal();
 }
 
 bool Element::CanAttachShadowRoot() const {
@@ -2428,10 +2441,6 @@ bool Element::CanAttachShadowRoot() const {
          tag_name == HTMLNames::navTag || tag_name == HTMLNames::mainTag ||
          tag_name == HTMLNames::pTag || tag_name == HTMLNames::sectionTag ||
          tag_name == HTMLNames::spanTag;
-}
-
-ShadowRoot* Element::createShadowRoot(const ScriptState* script_state) {
-  return createShadowRoot(script_state, ASSERT_NO_EXCEPTION);
 }
 
 ShadowRoot* Element::attachShadow(const ScriptState* script_state,
@@ -2464,32 +2473,28 @@ ShadowRoot* Element::attachShadow(const ScriptState* script_state,
   else
     UseCounter::Count(GetDocument(), WebFeature::kElementAttachShadowClosed);
 
-  bool delegateFocus = shadow_root_init_dict.hasDelegatesFocus() &&
-                       shadow_root_init_dict.delegatesFocus();
-  return &AttachShadowRootInternal(type, delegateFocus);
+  DCHECK(!shadow_root_init_dict.hasMode() || !GetShadowRoot());
+  bool delegates_focus = shadow_root_init_dict.hasDelegatesFocus() &&
+                         shadow_root_init_dict.delegatesFocus();
+  return &AttachShadowRootInternal(type, delegates_focus);
 }
 
-ShadowRoot* Element::CreateShadowRootInternal(ShadowRootType type,
-                                              ExceptionState& exception_state) {
+ShadowRoot& Element::CreateShadowRootInternal() {
   DCHECK(!ClosedShadowRoot());
-
-  // Some elements make assumptions about what kind of layoutObjects they allow
-  // as children so we can't allow author shadows on them for now.
-  if (!AreAuthorShadowsAllowed()) {
-    exception_state.ThrowDOMException(
-        kHierarchyRequestError,
-        "Author-created shadow roots are disabled for this element.");
-    return nullptr;
-  }
-
+  DCHECK(AreAuthorShadowsAllowed());
   if (AlwaysCreateUserAgentShadowRoot())
     EnsureUserAgentShadowRoot();
+  GetDocument().SetShadowCascadeOrder(ShadowCascadeOrder::kShadowCascadeV0);
+  return EnsureShadow().AddShadowRoot(*this, ShadowRootType::V0);
+}
 
-  return &EnsureShadow().AddShadowRoot(*this, type);
+ShadowRoot& Element::CreateUserAgentShadowRoot() {
+  DCHECK(!GetShadowRoot());
+  return EnsureShadow().AddShadowRoot(*this, ShadowRootType::kUserAgent);
 }
 
 ShadowRoot& Element::AttachShadowRootInternal(ShadowRootType type,
-                                              const bool delegate_focus) {
+                                              bool delegates_focus) {
   DCHECK(CanAttachShadowRoot());
   DCHECK(AreAuthorShadowsAllowed());
   DCHECK(type == ShadowRootType::kOpen || type == ShadowRootType::kClosed)
@@ -2497,11 +2502,8 @@ ShadowRoot& Element::AttachShadowRootInternal(ShadowRootType type,
   DCHECK(!AlwaysCreateUserAgentShadowRoot());
 
   GetDocument().SetShadowCascadeOrder(ShadowCascadeOrder::kShadowCascadeV1);
-
   ShadowRoot& shadow_root = EnsureShadow().AddShadowRoot(*this, type);
-
-  shadow_root.SetDelegatesFocus(delegate_focus);
-
+  shadow_root.SetDelegatesFocus(delegates_focus);
   return shadow_root;
 }
 

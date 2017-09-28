@@ -17,8 +17,8 @@
 #include "base/memory/weak_ptr.h"
 #include "base/time/time.h"
 #include "cc/cc_export.h"
-#include "components/viz/common/quads/release_callback.h"
 #include "components/viz/common/quads/texture_mailbox.h"
+#include "components/viz/common/resources/release_callback.h"
 #include "components/viz/common/resources/resource_format.h"
 #include "ui/gfx/buffer_types.h"
 #include "ui/gfx/geometry/size.h"
@@ -154,14 +154,12 @@ class CC_EXPORT VideoResourceUpdater {
       viz::ResourceFormat resource_format,
       const gfx::ColorSpace& color_space,
       bool software_resource,
-      bool immutable_hint,
       int unique_id,
       int plane_index);
   ResourceList::iterator AllocateResource(const gfx::Size& plane_size,
                                           viz::ResourceFormat format,
                                           const gfx::ColorSpace& color_space,
-                                          bool has_mailbox,
-                                          bool immutable_hint);
+                                          bool has_mailbox);
   void DeleteResource(ResourceList::iterator resource_it);
   void CopyPlaneTexture(media::VideoFrame* video_frame,
                         const gfx::ColorSpace& resource_color_space,

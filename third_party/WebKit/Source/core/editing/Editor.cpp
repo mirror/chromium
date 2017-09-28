@@ -44,8 +44,10 @@
 #include "core/dom/Text.h"
 #include "core/dom/events/ScopedEventQueue.h"
 #include "core/editing/EditingStyleUtilities.h"
+#include "core/editing/EditingTriState.h"
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/EphemeralRange.h"
+#include "core/editing/FrameSelection.h"
 #include "core/editing/InputMethodController.h"
 #include "core/editing/RenderedPosition.h"
 #include "core/editing/SelectionTemplate.h"
@@ -877,11 +879,12 @@ bool Editor::SelectionStartHasStyle(CSSPropertyID property_id,
       EditingStyleUtilities::CreateStyleAtSelectionStart(
           GetFrameSelection().ComputeVisibleSelectionInDOMTreeDeprecated(),
           property_id == CSSPropertyBackgroundColor, style_to_check->Style());
-  return style_to_check->TriStateOfStyle(style_at_start);
+  return style_to_check->TriStateOfStyle(style_at_start) !=
+         EditingTriState::kFalse;
 }
 
-TriState Editor::SelectionHasStyle(CSSPropertyID property_id,
-                                   const String& value) const {
+EditingTriState Editor::SelectionHasStyle(CSSPropertyID property_id,
+                                          const String& value) const {
   return EditingStyle::Create(property_id, value)
       ->TriStateOfStyle(
           GetFrameSelection().ComputeVisibleSelectionInDOMTreeDeprecated());
@@ -1394,13 +1397,12 @@ void Editor::SetBaseWritingDirection(WritingDirection direction) {
 }
 
 void Editor::RevealSelectionAfterEditingOperation(
-    const ScrollAlignment& alignment,
-    RevealExtentOption reveal_extent_option) {
+    const ScrollAlignment& alignment) {
   if (prevent_reveal_selection_)
     return;
   if (!GetFrameSelection().IsAvailable())
     return;
-  GetFrameSelection().RevealSelection(alignment, reveal_extent_option);
+  GetFrameSelection().RevealSelection(alignment, kDoNotRevealExtent);
 }
 
 // TODO(yosin): We should move |Transpose()| into |ExecuteTranspose()| in

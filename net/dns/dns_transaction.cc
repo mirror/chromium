@@ -48,11 +48,6 @@ namespace net {
 
 namespace {
 
-// Provide a common macro to simplify code and readability. We must use a
-// macro as the underlying HISTOGRAM macro creates static variables.
-#define DNS_HISTOGRAM(name, time) UMA_HISTOGRAM_CUSTOM_TIMES(name, time, \
-    base::TimeDelta::FromMilliseconds(1), base::TimeDelta::FromHours(1), 100)
-
 // Count labels in the fully-qualified name in DNS format.
 int CountLabels(const std::string& name) {
   size_t count = 0;
@@ -216,11 +211,11 @@ class DnsUDPAttempt : public DnsAttempt {
       return ERR_DNS_MALFORMED_RESPONSE;
     if (rv == OK) {
       DCHECK_EQ(STATE_NONE, next_state_);
-      DNS_HISTOGRAM("AsyncDNS.UDPAttemptSuccess",
-                    base::TimeTicks::Now() - start_time_);
+      UMA_HISTOGRAM_LONG_TIMES_100("AsyncDNS.UDPAttemptSuccess",
+                                   base::TimeTicks::Now() - start_time_);
     } else if (rv != ERR_IO_PENDING) {
-      DNS_HISTOGRAM("AsyncDNS.UDPAttemptFail",
-                    base::TimeTicks::Now() - start_time_);
+      UMA_HISTOGRAM_LONG_TIMES_100("AsyncDNS.UDPAttemptFail",
+                                   base::TimeTicks::Now() - start_time_);
     }
     return rv;
   }
@@ -389,11 +384,11 @@ class DnsTCPAttempt : public DnsAttempt {
     set_result(rv);
     if (rv == OK) {
       DCHECK_EQ(STATE_NONE, next_state_);
-      DNS_HISTOGRAM("AsyncDNS.TCPAttemptSuccess",
-                    base::TimeTicks::Now() - start_time_);
+      UMA_HISTOGRAM_LONG_TIMES_100("AsyncDNS.TCPAttemptSuccess",
+                                   base::TimeTicks::Now() - start_time_);
     } else if (rv != ERR_IO_PENDING) {
-      DNS_HISTOGRAM("AsyncDNS.TCPAttemptFail",
-                    base::TimeTicks::Now() - start_time_);
+      UMA_HISTOGRAM_LONG_TIMES_100("AsyncDNS.TCPAttemptFail",
+                                   base::TimeTicks::Now() - start_time_);
     }
     return rv;
   }
@@ -559,10 +554,12 @@ class DnsTransactionImpl : public DnsTransaction,
                      const std::string& hostname,
                      uint16_t qtype,
                      const DnsTransactionFactory::CallbackType& callback,
-                     const NetLogWithSource& net_log)
+                     const NetLogWithSource& net_log,
+                     const OptRecordRdata* opt_rdata)
       : session_(session),
         hostname_(hostname),
         qtype_(qtype),
+        opt_rdata_(opt_rdata),
         callback_(callback),
         net_log_(net_log),
         qnames_initial_size_(0),
@@ -708,7 +705,7 @@ class DnsTransactionImpl : public DnsTransaction,
     uint16_t id = session_->NextQueryId();
     std::unique_ptr<DnsQuery> query;
     if (attempts_.empty()) {
-      query.reset(new DnsQuery(id, qnames_.front(), qtype_));
+      query.reset(new DnsQuery(id, qnames_.front(), qtype_, opt_rdata_));
     } else {
       query = attempts_[0]->GetQuery()->CloneWithNewId(id);
     }
@@ -944,6 +941,7 @@ class DnsTransactionImpl : public DnsTransaction,
   scoped_refptr<DnsSession> session_;
   std::string hostname_;
   uint16_t qtype_;
+  const OptRecordRdata* opt_rdata_;
   // Cleared in DoCallback.
   DnsTransactionFactory::CallbackType callback_;
 
@@ -985,11 +983,19 @@ class DnsTransactionFactoryImpl : public DnsTransactionFactory {
       const CallbackType& callback,
       const NetLogWithSource& net_log) override {
     return std::unique_ptr<DnsTransaction>(new DnsTransactionImpl(
-        session_.get(), hostname, qtype, callback, net_log));
+        session_.get(), hostname, qtype, callback, net_log, opt_rdata_.get()));
+  }
+
+  void AddEDNSOption(const OptRecordRdata::Opt& opt) override {
+    if (opt_rdata_ == nullptr)
+      opt_rdata_ = std::make_unique<OptRecordRdata>();
+
+    opt_rdata_->AddOpt(opt);
   }
 
  private:
   scoped_refptr<DnsSession> session_;
+  std::unique_ptr<OptRecordRdata> opt_rdata_;
 };
 
 }  // namespace

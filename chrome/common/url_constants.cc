@@ -195,6 +195,7 @@ const char kChromeUIDNSHost[] = "dns";
 const char kChromeUIDomainReliabilityInternalsHost[] =
     "domain-reliability-internals";
 const char kChromeUIDownloadsHost[] = "downloads";
+const char kChromeUIDownloadInternalsHost[] = "download-internals";
 const char kChromeUIDriveInternalsHost[] = "drive-internals";
 const char kChromeUIExtensionIconHost[] = "extension-icon";
 const char kChromeUIExtensionsFrameHost[] = "extensions-frame";
@@ -626,6 +627,8 @@ const char kAndroidAppsLearnMoreURL[] =
     "https://support.google.com/chromebook/?p=playapps";
 const char kInstantTetheringLearnMoreURL[] =
     "https://support.google.com/chromebook?p=instant_tethering";
+const char kTPMFirmwareUpdateLearnMoreURL[] =
+    "https://support.google.com/chromebook/?p=tpm_update";
 #endif
 
 const char kRemoveNonCWSExtensionURL[] =
@@ -654,6 +657,7 @@ const char* const kChromeHostURLs[] = {
     kChromeUIDeviceEmulatorHost,
 #endif
     kChromeUIDeviceLogHost,
+    kChromeUIDownloadInternalsHost,
     kChromeUIFlagsHost,
     kChromeUIGCMInternalsHost,
     kChromeUIHistoryHost,

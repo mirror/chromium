@@ -4,8 +4,8 @@
 
 #include "public/platform/scheduler/renderer/renderer_scheduler.h"
 
+#include <memory>
 #include "base/command_line.h"
-#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/field_trial.h"
 #include "base/time/default_tick_clock.h"
@@ -25,19 +25,20 @@ RendererScheduler::RAILModeObserver::~RAILModeObserver() = default;
 
 // static
 std::unique_ptr<RendererScheduler> RendererScheduler::Create() {
-  // Ensure worker.scheduler, worker.scheduler.debug and
-  // renderer.scheduler.debug appear as an option in about://tracing
+  // Ensure categories appear as an option in chrome://tracing.
   base::trace_event::TraceLog::GetCategoryGroupEnabled(
       TRACE_DISABLED_BY_DEFAULT("worker.scheduler"));
   base::trace_event::TraceLog::GetCategoryGroupEnabled(
       TRACE_DISABLED_BY_DEFAULT("worker.scheduler.debug"));
   base::trace_event::TraceLog::GetCategoryGroupEnabled(
       TRACE_DISABLED_BY_DEFAULT("renderer.scheduler.debug"));
+  base::trace_event::TraceLog::GetCategoryGroupEnabled(
+      TRACE_DISABLED_BY_DEFAULT("renderer.scheduler.enable_verbose_snapshots"));
 
   base::MessageLoop* message_loop = base::MessageLoop::current();
   std::unique_ptr<RendererSchedulerImpl> scheduler(
       new RendererSchedulerImpl(SchedulerTqmDelegateImpl::Create(
-          message_loop, base::MakeUnique<base::DefaultTickClock>())));
+          message_loop, std::make_unique<base::DefaultTickClock>())));
   return base::WrapUnique<RendererScheduler>(scheduler.release());
 }
 

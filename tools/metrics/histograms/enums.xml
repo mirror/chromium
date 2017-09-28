@@ -5757,6 +5757,8 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="8" label="FAILURE_SESSION_RATE_PARSE"/>
   <int value="9" label="FAILURE_AVAILABILITY_PARSE"/>
   <int value="10" label="FAILURE_UNKNOWN_KEY"/>
+  <int value="11" label="FAILURE_SESSION_RATE_IMPACT_PARSE"/>
+  <int value="12" label="FAILURE_SESSION_RATE_IMPACT_UNKNOWN_FEATURE"/>
 </enum>
 
 <enum name="ConnectionDiagnosticsIssue">
@@ -13536,6 +13538,8 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="1194" label="PASSWORDSPRIVATE_IMPORTPASSWORDS"/>
   <int value="1195" label="PASSWORDSPRIVATE_EXPORTPASSWORDS"/>
   <int value="1196" label="LANGUAGESETTINGSPRIVATE_SETTRANSLATEFORLANGUAGE"/>
+  <int value="1197"
+      label="PASSWORDSPRIVATE_UNDOREMOVESAVEDPASSWORDOREXCEPTION"/>
 </enum>
 
 <enum name="ExtensionIconState">
@@ -16396,6 +16400,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="2155" label="WebAudioDezipperBiquadFilterNodeQ"/>
   <int value="2156" label="WebAudioDezipperBiquadFilterNodeGain"/>
   <int value="2157" label="PerformanceServerTiming"/>
+  <int value="2158" label="FileReaderResultBeforeCompletion"/>
 </enum>
 
 <enum name="FeedbackSource">
@@ -23192,6 +23197,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-1964261747" label="WebVrVsyncAlign:disabled"/>
   <int value="-1963427770" label="EmojiHandwritingVoiceInput:disabled"/>
   <int value="-1963402827" label="enable-topchrome-md"/>
+  <int value="-1962588488" label="SpeculativePreconnect:disabled"/>
   <int value="-1961648833" label="show_summary"/>
   <int value="-1960567385" label="KeepPrefetchedContentSuggestions:enabled"/>
   <int value="-1956349722" label="disable-smooth-scrolling"/>
@@ -24376,6 +24382,7 @@ from previous Chrome versions.
   <int value="1579461102" label="MemoryCoordinator:disabled"/>
   <int value="1586022426" label="AutofillCreditCardAssist:enabled"/>
   <int value="1589341623" label="disable-easy-unlock"/>
+  <int value="1591653786" label="SpeculativePreconnect:enabled"/>
   <int value="1594247626" label="ContentSuggestionsSettings:enabled"/>
   <int value="1600926040" label="TranslateCompactUI:enabled"/>
   <int value="1605611615" label="enable-webrtc-srtp-aes-gcm"/>
@@ -33184,6 +33191,7 @@ from previous Chrome versions.
   <int value="87" label="IDC_CONTENT_CONTEXT_OPEN_WITH14"/>
   <int value="88" label="IDC_CONTENT_CONTEXT_EXIT_FULLSCREEN"/>
   <int value="89" label="IDC_CONTENT_CONTEXT_OPENLINKBOOKMARKAPP"/>
+  <int value="90" label="IDC_CONTENT_CONTEXT_SHOWALLSAVEDPASSWORDS"/>
 </enum>
 
 <enum name="ReportingHeaderEndpointOutcome">
@@ -35728,6 +35736,7 @@ from previous Chrome versions.
   <int value="18" label="TRANSLATE_ALWAYS"/>
   <int value="19" label="TRANSLATE_NEVER"/>
   <int value="20" label="TRANSLATE_NEVER_SITE"/>
+  <int value="21" label="SNIPPET_FETCH_FAILED"/>
 </enum>
 
 <enum name="SnippetOpenMethod">

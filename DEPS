@@ -45,11 +45,11 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling Skia
   # and whatever else without interference from each other.
-  'skia_revision': 'f6f7cf60985d8e109cc136f25e2a3c3383ca05ea',
+  'skia_revision': 'a78f1bc1d4055b82c8d31861f80cafdcc17f3d1f',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling V8
   # and whatever else without interference from each other.
-  'v8_revision': '67e0f78144293721ad4ef16686212f6f8d0203d3',
+  'v8_revision': '408b8e44d48614986196fe66bf470c2dbf853e82',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling swarming_client
   # and whatever else without interference from each other.
@@ -69,7 +69,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling PDFium
   # and whatever else without interference from each other.
-  'pdfium_revision': 'a7caeb52912150e59aadf49ed21a45a4a1260a4a',
+  'pdfium_revision': '8b1408e7053247def45659515cda19a64a7fccd5',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling openmax_dl
   # and whatever else without interference from each other.
@@ -97,11 +97,11 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling freetype
   # and whatever else without interference from each other.
-  'freetype_revision': '02e80da6090c21d6e59ac955b7f56e1ad4a9850b',
+  'freetype_revision': '6f2b6f8f72ffb5017ab00fca83185b21f1a9f56d',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling catapult
   # and whatever else without interference from each other.
-  'catapult_revision': '0b563bed301ef780e6f0cac7bab670aaffb65fdf',
+  'catapult_revision': 'd08152f8a5da45712afa0b89eff8d1df0f05b2ad',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling libFuzzer
   # and whatever else without interference from each other.
@@ -365,7 +365,7 @@ deps_os = {
       Var('chromium_git') + '/external/github.com/swisspol/GCDWebServer.git' + '@' + '43555c66627f6ed44817855a0f6d465f559d30e0',
 
     'src/ios/third_party/material_components_ios/src':
-      Var('chromium_git') + '/external/github.com/material-components/material-components-ios.git' + '@' + 'c4d69252797e53936770746247d79f48a7054f07',
+      Var('chromium_git') + '/external/github.com/material-components/material-components-ios.git' + '@' + '74e87aa83f93ef27347b91c33a6d54af34b90977',
 
     'src/ios/third_party/material_font_disk_loader_ios/src':
       Var('chromium_git') + '/external/github.com/material-foundation/material-font-disk-loader-ios.git' + '@' + '8e30188777b016182658fbaa0a4a020a48183224',
@@ -413,7 +413,7 @@ deps_os = {
 
     # Build tools for Chrome OS. Note: This depends on third_party/pyelftools.
     'src/third_party/chromite':
-      Var('chromium_git') + '/chromiumos/chromite.git' + '@' + 'edcefea34e6071e9fdd673a9e0932932453df515',
+      Var('chromium_git') + '/chromiumos/chromite.git' + '@' + '06f4ada706cd879e364c52b490347b78235b8d33',
 
     # Dependency of chromite.git and skia.
     'src/third_party/pyelftools':

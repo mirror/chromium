@@ -56,6 +56,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/app_list/app_list_constants.h"
 #include "ui/app_list/app_list_model.h"
+#include "ui/display/types/display_constants.h"
 #include "ui/events/event_constants.h"
 #include "ui/gfx/geometry/safe_integer_conversions.h"
 #include "ui/gfx/image/image_skia.h"
@@ -117,7 +118,7 @@ void WaitForIconCreation(ArcAppListPrefs* prefs,
   // Process pending tasks. This performs multiple thread hops, so we need
   // to run it continuously until it is resolved.
   do {
-    content::RunAllBlockingPoolTasksUntilIdle();
+    content::RunAllTasksUntilIdle();
   } while (!base::PathExists(icon_path));
 }
 
@@ -969,7 +970,7 @@ TEST_P(ArcAppModelBuilderTest, RequestIcons) {
 
       // This does not result in an icon being loaded, so WaitForIconUpdates
       // cannot be used.
-      content::RunAllBlockingPoolTasksUntilIdle();
+      content::RunAllTasksUntilIdle();
     }
   }
 
@@ -1125,7 +1126,7 @@ TEST_P(ArcAppModelBuilderTest, RemoveAppCleanUpFolder) {
   // Process pending tasks. This performs multiple thread hops, so we need
   // to run it continuously until it is resolved.
   do {
-    content::RunAllBlockingPoolTasksUntilIdle();
+    content::RunAllTasksUntilIdle();
   } while (IsIconCreated(prefs, app_id, scale_factor));
 }
 
@@ -1382,7 +1383,7 @@ TEST_P(ArcAppModelBuilderTest, IconLoaderForShelfGroup) {
   app_instance()->RefreshAppList();
   app_instance()->SendRefreshAppList(std::vector<arc::mojom::AppInfo>(
       fake_apps().begin(), fake_apps().begin() + 1));
-  content::RunAllBlockingPoolTasksUntilIdle();
+  content::RunAllTasksUntilIdle();
 
   // Store number of requests generated during the App List item creation. Same
   // request will not be re-sent without clearing the request record in
@@ -1397,7 +1398,7 @@ TEST_P(ArcAppModelBuilderTest, IconLoaderForShelfGroup) {
       ";S.org.chromium.arc.shelf_group_id=arc_test_shelf_group;end";
   app_instance()->SendInstallShortcuts(shortcuts);
   const std::string shortcut_id = ArcAppTest::GetAppId(shortcuts[0]);
-  content::RunAllBlockingPoolTasksUntilIdle();
+  content::RunAllTasksUntilIdle();
 
   const std::string id_shortcut_exist =
       arc::ArcAppShelfId("arc_test_shelf_group", app_id).ToString();
@@ -1414,7 +1415,7 @@ TEST_P(ArcAppModelBuilderTest, IconLoaderForShelfGroup) {
   delegate.WaitForIconUpdates(ui::GetSupportedScaleFactors().size());
   EXPECT_EQ(id_shortcut_exist, delegate.app_id());
 
-  content::RunAllBlockingPoolTasksUntilIdle();
+  content::RunAllTasksUntilIdle();
   const size_t shortcut_request_cnt =
       app_instance()->shortcut_icon_requests().size();
   EXPECT_NE(0U, shortcut_request_cnt);
@@ -1430,7 +1431,7 @@ TEST_P(ArcAppModelBuilderTest, IconLoaderForShelfGroup) {
   icon_loader.FetchImage(id_shortcut_absent);
   // Expected default update.
   EXPECT_EQ(update_image_count_before + 1, delegate.update_image_cnt());
-  content::RunAllBlockingPoolTasksUntilIdle();
+  content::RunAllTasksUntilIdle();
   EXPECT_TRUE(app_instance()->icon_requests().size() >
               initial_icon_request_count);
   EXPECT_EQ(shortcut_request_cnt,
@@ -1454,7 +1455,7 @@ TEST_P(ArcAppModelBuilderTest, IconLoaderWithBadIcon) {
   app_instance()->RefreshAppList();
   app_instance()->SendRefreshAppList(std::vector<arc::mojom::AppInfo>(
       fake_apps().begin(), fake_apps().begin() + 1));
-  content::RunAllBlockingPoolTasksUntilIdle();
+  content::RunAllTasksUntilIdle();
 
   // Store number of requests generated during the App List item creation. Same
   // request will not be re-sent without clearing the request record in
@@ -1721,13 +1722,13 @@ TEST_P(ArcAppModelBuilderTest, AppLauncher) {
   const std::string id2 = ArcAppTest::GetAppId(app2);
   const std::string id3 = ArcAppTest::GetAppId(app3);
 
-  ArcAppLauncher launcher1(profile(), id1, base::Optional<std::string>(),
-                           false);
+  ArcAppLauncher launcher1(profile(), id1, base::Optional<std::string>(), false,
+                           display::kInvalidDisplayId);
   EXPECT_FALSE(launcher1.app_launched());
   EXPECT_TRUE(prefs->HasObserver(&launcher1));
 
-  ArcAppLauncher launcher3(profile(), id3, base::Optional<std::string>(),
-                           false);
+  ArcAppLauncher launcher3(profile(), id3, base::Optional<std::string>(), false,
+                           display::kInvalidDisplayId);
   EXPECT_FALSE(launcher1.app_launched());
   EXPECT_TRUE(prefs->HasObserver(&launcher1));
   EXPECT_FALSE(launcher3.app_launched());
@@ -1748,7 +1749,8 @@ TEST_P(ArcAppModelBuilderTest, AppLauncher) {
 
   const std::string launch_intent2 = arc::GetLaunchIntent(
       app2.package_name, app2.activity, std::vector<std::string>());
-  ArcAppLauncher launcher2(profile(), id2, launch_intent2, false);
+  ArcAppLauncher launcher2(profile(), id2, launch_intent2, false,
+                           display::kInvalidDisplayId);
   EXPECT_TRUE(launcher2.app_launched());
   EXPECT_FALSE(prefs->HasObserver(&launcher2));
   EXPECT_EQ(1u, app_instance()->launch_requests().size());
@@ -1919,10 +1921,11 @@ TEST_P(ArcAppLauncherForDefaulAppTest, AppLauncherForDefaultApps) {
   const std::string id2 = ArcAppTest::GetAppId(app2);
 
   // Launch when app is registered and ready.
-  ArcAppLauncher launcher1(profile(), id1, base::Optional<std::string>(),
-                           false);
+  ArcAppLauncher launcher1(profile(), id1, base::Optional<std::string>(), false,
+                           display::kInvalidDisplayId);
   // Launch when app is registered.
-  ArcAppLauncher launcher2(profile(), id2, base::Optional<std::string>(), true);
+  ArcAppLauncher launcher2(profile(), id2, base::Optional<std::string>(), true,
+                           display::kInvalidDisplayId);
 
   EXPECT_FALSE(launcher1.app_launched());
   EXPECT_FALSE(launcher2.app_launched());

@@ -14,10 +14,10 @@
 #include "cc/trees/layer_tree_impl.h"
 #include "cc/trees/occlusion.h"
 #include "cc/trees/task_runner_provider.h"
-#include "components/viz/common/quads/single_release_callback.h"
 #include "components/viz/common/quads/stream_video_draw_quad.h"
 #include "components/viz/common/quads/texture_draw_quad.h"
 #include "components/viz/common/quads/yuv_video_draw_quad.h"
+#include "components/viz/common/resources/single_release_callback.h"
 #include "media/base/video_frame.h"
 #include "ui/gfx/color_space.h"
 
@@ -169,13 +169,14 @@ void VideoLayerImpl::AppendQuads(viz::RenderPass* render_pass,
 
   viz::SharedQuadState* shared_quad_state =
       render_pass->CreateAndAppendSharedQuadState();
-  shared_quad_state->SetAll(transform, gfx::Rect(rotated_size),
-                            visible_layer_rect(), clip_rect(), is_clipped(),
-                            contents_opaque(), draw_opacity(),
-                            SkBlendMode::kSrcOver, GetSortingContextId());
+  gfx::Rect rotated_size_rect(rotated_size);
+  shared_quad_state->SetAll(transform, rotated_size_rect, visible_layer_rect(),
+                            clip_rect(), is_clipped(), contents_opaque(),
+                            draw_opacity(), SkBlendMode::kSrcOver,
+                            GetSortingContextId());
 
-  AppendDebugBorderQuad(
-      render_pass, rotated_size, shared_quad_state, append_quads_data);
+  AppendDebugBorderQuad(render_pass, rotated_size_rect, shared_quad_state,
+                        append_quads_data);
 
   gfx::Rect quad_rect(rotated_size);
   gfx::Rect visible_rect = frame_->visible_rect();

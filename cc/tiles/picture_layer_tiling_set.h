@@ -58,6 +58,11 @@ class CC_EXPORT PictureLayerTilingSet {
                       PictureLayerTilingSet* twin_set);
   void RemoveNonIdealTilings();
 
+  // Returns the largest tile size in layer space out of all of the tilings.
+  // Note that this size doesn't have to represent an actual tile size, since
+  // width and height are computed independently.
+  gfx::Size GetMaxTileSizeInLayerSpace() const;
+
   // This function is called on the active tree during activation.
   void UpdateTilingsToCurrentRasterSourceForActivation(
       scoped_refptr<RasterSource> raster_source,

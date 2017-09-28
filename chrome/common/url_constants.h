@@ -182,6 +182,7 @@ extern const char kChromeUIDevToolsCustomPath[];
 extern const char kChromeUIDNSHost[];
 extern const char kChromeUIDomainReliabilityInternalsHost[];
 extern const char kChromeUIDownloadsHost[];
+extern const char kChromeUIDownloadInternalsHost[];
 extern const char kChromeUIDriveInternalsHost[];
 extern const char kChromeUIExtensionIconHost[];
 extern const char kChromeUIExtensionsFrameHost[];
@@ -522,6 +523,9 @@ extern const char kAndroidAppsLearnMoreURL[];
 
 // The URL for the "learn more" link for Instant Tethering.
 extern const char kInstantTetheringLearnMoreURL[];
+
+// The URL for the "learn more" link for TPM firmware update.
+extern const char kTPMFirmwareUpdateLearnMoreURL[];
 #endif
 
 // The URL for the Learn More link of the non-CWS bubble.
