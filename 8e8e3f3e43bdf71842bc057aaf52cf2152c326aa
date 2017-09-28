@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65a01b65_5aa94cfb",
+        "filename": "ash/message_center/message_list_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-09-28T04:06:24Z",
+      "side": 1,
+      "message": "Should we return here if clear_all_started_ \u0026\u0026 clearing_all_views_.empty()? If we want to simulate the non-delayed behavior, we shouldn\u0027t execute the remaining code (l.326-342) if the clear-all is not finished.",
+      "range": {
+        "startLine": 313,
+        "startChar": 6,
+        "endLine": 313,
+        "endChar": 55
+      },
+      "revId": "8e8e3f3e43bdf71842bc057aaf52cf2152c326aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
