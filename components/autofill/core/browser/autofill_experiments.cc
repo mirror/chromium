@@ -55,6 +55,8 @@ const base::Feature kAutofillUpstreamAllowAllEmailDomains{
     "AutofillUpstreamAllowAllEmailDomains", base::FEATURE_DISABLED_BY_DEFAULT};
 const base::Feature kAutofillUpstreamRequestCvcIfMissing{
     "AutofillUpstreamRequestCvcIfMissing", base::FEATURE_DISABLED_BY_DEFAULT};
+const base::Feature kAutofillUpstreamSendDetectedValues{
+    "AutofillUpstreamSendDetectedValues", base::FEATURE_DISABLED_BY_DEFAULT};
 const base::Feature kAutofillUpstreamShowGoogleLogo{
     "AutofillUpstreamShowGoogleLogo", base::FEATURE_DISABLED_BY_DEFAULT};
 const base::Feature kAutofillUpstreamShowNewUi{
@@ -282,6 +284,10 @@ bool IsAutofillUpstreamRequestCvcIfMissingExperimentEnabled() {
 #else
   return base::FeatureList::IsEnabled(kAutofillUpstreamRequestCvcIfMissing);
 #endif
+}
+
+bool IsAutofillUpstreamSendDetectedValuesExperimentEnabled() {
+  return base::FeatureList::IsEnabled(kAutofillUpstreamSendDetectedValues);
 }
 
 bool IsAutofillUpstreamShowGoogleLogoExperimentEnabled() {

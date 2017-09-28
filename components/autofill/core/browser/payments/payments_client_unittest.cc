@@ -8,9 +8,11 @@
 #include "base/command_line.h"
 #include "base/macros.h"
 #include "base/strings/string_piece.h"
+#include "base/test/scoped_feature_list.h"
 #include "base/test/scoped_task_environment.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/values.h"
+#include "components/autofill/core/browser/autofill_experiments.h"
 #include "components/autofill/core/browser/autofill_test_utils.h"
 #include "components/autofill/core/browser/payments/payments_client.h"
 #include "components/autofill/core/common/autofill_switches.h"
@@ -53,6 +55,11 @@ class PaymentsClientTest : public testing::Test, public PaymentsClientDelegate {
     return identity_provider_.get();
   }
 
+  void EnableAutofillUpstreamSendDetectedValuesExperiment() {
+    scoped_feature_list_.InitAndEnableFeature(
+        kAutofillUpstreamSendDetectedValues);
+  }
+
   void OnDidGetRealPan(AutofillClient::PaymentsRpcResult result,
                        const std::string& real_pan) override {
     result_ = result;
@@ -74,6 +81,8 @@ class PaymentsClientTest : public testing::Test, public PaymentsClientDelegate {
   }
 
  protected:
+  base::test::ScopedFeatureList scoped_feature_list_;
+
   void StartUnmasking() {
     token_service_->AddAccount("example@gmail.com");
     identity_provider_->LogIn("example@gmail.com");
@@ -87,16 +96,18 @@ class PaymentsClientTest : public testing::Test, public PaymentsClientDelegate {
   void StartGettingUploadDetails() {
     token_service_->AddAccount("example@gmail.com");
     identity_provider_->LogIn("example@gmail.com");
-    client_->GetUploadDetails(BuildTestProfiles(), std::vector<const char*>(),
-                              "language-LOCALE");
+    client_->GetUploadDetails(BuildTestProfiles(), /*detected_values=*/255,
+                              std::vector<const char*>(), "language-LOCALE");
   }
 
-  void StartUploading() {
+  void StartUploading(bool include_cvc) {
     token_service_->AddAccount("example@gmail.com");
     identity_provider_->LogIn("example@gmail.com");
     PaymentsClient::UploadRequestDetails request_details;
     request_details.card = test::GetCreditCard();
-    request_details.cvc = base::ASCIIToUTF16("123");
+    if (include_cvc) {
+      request_details.cvc = base::ASCIIToUTF16("123");
+    }
     request_details.context_token = base::ASCIIToUTF16("context token");
     request_details.risk_data = "some risk data";
     request_details.app_locale = "language-LOCALE";
@@ -228,8 +239,28 @@ TEST_F(PaymentsClientTest, GetDetailsRemovesNonLocationData) {
   EXPECT_TRUE(GetUploadData().find("0090") == std::string::npos);
 }
 
+TEST_F(PaymentsClientTest,
+       GetDetailsIncludesDetectedValuesInRequestIfExperimentOn) {
+  EnableAutofillUpstreamSendDetectedValuesExperiment();
+
+  StartGettingUploadDetails();
+
+  // Verify that the detected values were included in the request.
+  EXPECT_TRUE(GetUploadData().find("\"detected_values\":255") !=
+              std::string::npos);
+}
+
+TEST_F(PaymentsClientTest,
+       GetDetailsDoesNotIncludeDetectedValuesInRequestIfExperimentOff) {
+  StartGettingUploadDetails();
+
+  // Verify that the detected values were left out of the request.
+  EXPECT_TRUE(GetUploadData().find("\"detected_values\":255") ==
+              std::string::npos);
+}
+
 TEST_F(PaymentsClientTest, UploadSuccessWithoutServerId) {
-  StartUploading();
+  StartUploading(/*include_cvc=*/true);
   IssueOAuthToken();
   ReturnResponse(net::HTTP_OK, "{}");
   EXPECT_EQ(AutofillClient::SUCCESS, result_);
@@ -237,7 +268,7 @@ TEST_F(PaymentsClientTest, UploadSuccessWithoutServerId) {
 }
 
 TEST_F(PaymentsClientTest, UploadSuccessWithServerId) {
-  StartUploading();
+  StartUploading(/*include_cvc=*/true);
   IssueOAuthToken();
   ReturnResponse(net::HTTP_OK, "{ \"credit_card_id\": \"InstrumentData:1\" }");
   EXPECT_EQ(AutofillClient::SUCCESS, result_);
@@ -245,7 +276,7 @@ TEST_F(PaymentsClientTest, UploadSuccessWithServerId) {
 }
 
 TEST_F(PaymentsClientTest, UploadIncludesNonLocationData) {
-  StartUploading();
+  StartUploading(/*include_cvc=*/true);
 
   // Verify that the recipient name field and test names do appear in the upload
   // data.
@@ -267,6 +298,26 @@ TEST_F(PaymentsClientTest, UploadIncludesNonLocationData) {
   EXPECT_TRUE(GetUploadData().find("0090") != std::string::npos);
 }
 
+TEST_F(PaymentsClientTest, UploadIncludesCvcInRequestIfProvided) {
+  StartUploading(/*include_cvc=*/true);
+
+  // Verify that the encrypted_cvc and s7e_13_cvc parameters were included in
+  // the request.
+  EXPECT_TRUE(GetUploadData().find("encrypted_cvc") != std::string::npos);
+  EXPECT_TRUE(GetUploadData().find("__param:s7e_13_cvc") != std::string::npos);
+  EXPECT_TRUE(GetUploadData().find("&s7e_13_cvc=") != std::string::npos);
+}
+
+TEST_F(PaymentsClientTest, UploadDoesNotIncludeCvcInRequestIfNotProvided) {
+  StartUploading(/*include_cvc=*/false);
+
+  // Verify that the encrypted_cvc and s7e_13_cvc parameters were not included
+  // in the request.
+  EXPECT_TRUE(GetUploadData().find("encrypted_cvc") == std::string::npos);
+  EXPECT_TRUE(GetUploadData().find("__param:s7e_13_cvc") == std::string::npos);
+  EXPECT_TRUE(GetUploadData().find("&s7e_13_cvc=") == std::string::npos);
+}
+
 TEST_F(PaymentsClientTest, GetDetailsFollowedByUploadSuccess) {
   StartGettingUploadDetails();
   ReturnResponse(
@@ -276,7 +327,7 @@ TEST_F(PaymentsClientTest, GetDetailsFollowedByUploadSuccess) {
 
   result_ = AutofillClient::NONE;
 
-  StartUploading();
+  StartUploading(/*include_cvc=*/true);
   IssueOAuthToken();
   ReturnResponse(net::HTTP_OK, "{}");
   EXPECT_EQ(AutofillClient::SUCCESS, result_);

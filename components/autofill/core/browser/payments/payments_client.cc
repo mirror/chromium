@@ -19,6 +19,7 @@
 #include "base/values.h"
 #include "build/build_config.h"
 #include "components/autofill/core/browser/autofill_data_model.h"
+#include "components/autofill/core/browser/autofill_experiments.h"
 #include "components/autofill/core/browser/autofill_type.h"
 #include "components/autofill/core/browser/credit_card.h"
 #include "components/autofill/core/browser/payments/payments_request.h"
@@ -52,6 +53,9 @@ const char kUploadCardRequestPath[] =
 const char kUploadCardRequestFormat[] =
     "requestContentType=application/json; charset=utf-8&request=%s"
     "&s7e_1_pan=%s&s7e_13_cvc=%s";
+const char kUploadCardRequestFormatWithoutCvc[] =
+    "requestContentType=application/json; charset=utf-8&request=%s"
+    "&s7e_1_pan=%s";
 
 const char kTokenServiceConsumerId[] = "wallet_client";
 const char kPaymentsOAuth2Scope[] =
@@ -238,9 +242,11 @@ class UnmaskCardRequest : public PaymentsRequest {
 class GetUploadDetailsRequest : public PaymentsRequest {
  public:
   GetUploadDetailsRequest(const std::vector<AutofillProfile>& addresses,
+                          const int detected_values,
                           const std::vector<const char*>& active_experiments,
                           const std::string& app_locale)
       : addresses_(addresses),
+        detected_values_(detected_values),
         active_experiments_(active_experiments),
         app_locale_(app_locale) {}
   ~GetUploadDetailsRequest() override {}
@@ -269,6 +275,10 @@ class GetUploadDetailsRequest : public PaymentsRequest {
     }
     request_dict.Set("address", std::move(addresses));
 
+    if (IsAutofillUpstreamSendDetectedValuesExperimentEnabled()) {
+      request_dict.SetInteger("detected_values", detected_values_);
+    }
+
     SetActiveExperiments(active_experiments_, &request_dict);
 
     std::string request_content;
@@ -296,6 +306,7 @@ class GetUploadDetailsRequest : public PaymentsRequest {
 
  private:
   const std::vector<AutofillProfile> addresses_;
+  const int detected_values_;
   const std::vector<const char*> active_experiments_;
   std::string app_locale_;
   base::string16 context_token_;
@@ -317,7 +328,9 @@ class UploadCardRequest : public PaymentsRequest {
   std::string GetRequestContent() override {
     base::DictionaryValue request_dict;
     request_dict.SetString("encrypted_pan", "__param:s7e_1_pan");
-    request_dict.SetString("encrypted_cvc", "__param:s7e_13_cvc");
+    if (!request_details_.cvc.empty()) {
+      request_dict.SetString("encrypted_cvc", "__param:s7e_13_cvc");
+    }
     request_dict.Set("risk_data_encoded",
                      BuildRiskDictionary(request_details_.risk_data));
 
@@ -353,13 +366,21 @@ class UploadCardRequest : public PaymentsRequest {
         AutofillType(CREDIT_CARD_NUMBER), app_locale);
     std::string json_request;
     base::JSONWriter::Write(request_dict, &json_request);
-    std::string request_content = base::StringPrintf(
-        kUploadCardRequestFormat,
-        net::EscapeUrlEncodedData(json_request, true).c_str(),
-        net::EscapeUrlEncodedData(base::UTF16ToASCII(pan), true).c_str(),
-        net::EscapeUrlEncodedData(base::UTF16ToASCII(request_details_.cvc),
-                                  true)
-            .c_str());
+    std::string request_content;
+    if (request_details_.cvc.empty()) {
+      request_content = base::StringPrintf(
+          kUploadCardRequestFormatWithoutCvc,
+          net::EscapeUrlEncodedData(json_request, true).c_str(),
+          net::EscapeUrlEncodedData(base::UTF16ToASCII(pan), true).c_str());
+    } else {
+      request_content = base::StringPrintf(
+          kUploadCardRequestFormat,
+          net::EscapeUrlEncodedData(json_request, true).c_str(),
+          net::EscapeUrlEncodedData(base::UTF16ToASCII(pan), true).c_str(),
+          net::EscapeUrlEncodedData(base::UTF16ToASCII(request_details_.cvc),
+                                    true)
+              .c_str());
+    }
     VLOG(3) << "savecard request body: " << request_content;
     return request_content;
   }
@@ -417,10 +438,11 @@ void PaymentsClient::UnmaskCard(
 
 void PaymentsClient::GetUploadDetails(
     const std::vector<AutofillProfile>& addresses,
+    const int detected_values,
     const std::vector<const char*>& active_experiments,
     const std::string& app_locale) {
   IssueRequest(base::MakeUnique<GetUploadDetailsRequest>(
-                   addresses, active_experiments, app_locale),
+                   addresses, detected_values, active_experiments, app_locale),
                false);
 }
 
