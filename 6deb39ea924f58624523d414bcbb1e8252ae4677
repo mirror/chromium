@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7a663c83_42bb7726",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-28T09:48:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab3602b6_39bc8a59",
+      "range": {
+        "startLine": 353,
+        "startChar": 13,
+        "endLine": 353,
+        "endChar": 29
+      },
+      "revId": "6deb39ea924f58624523d414bcbb1e8252ae4677",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ced9b172_ee671bfc",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "57f342e6_36148fe8",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-28T09:48:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ced9b172_ee671bfc",
+      "range": {
+        "startLine": 356,
+        "startChar": 12,
+        "endLine": 357,
+        "endChar": 43
+      },
+      "revId": "6deb39ea924f58624523d414bcbb1e8252ae4677",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10e6849a_5226c31e",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/HomeSheetCardsUiCaptureTest.java",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-28T09:22:59Z",
       "side": 1,
       "message": "Please move this above the method that assigns it. It reads a bit strange otherwise.",
+      "range": {
+        "startLine": 59,
+        "startChar": 12,
+        "endLine": 59,
+        "endChar": 39
+      },
+      "revId": "6deb39ea924f58624523d414bcbb1e8252ae4677",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d829b319_c636a3f2",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/HomeSheetCardsUiCaptureTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-28T09:48:36Z",
+      "side": 1,
+      "message": "But rules.... Is it okay if I make it final and assign it here?",
+      "parentUuid": "10e6849a_5226c31e",
       "range": {
         "startLine": 59,
         "startChar": 12,
