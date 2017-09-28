@@ -62,7 +62,7 @@ OffscreenCanvasFrameDispatcherImpl::OffscreenCanvasFrameDispatcherImpl(
                                         mojo::MakeRequest(&sink_));
   }
   offscreen_canvas_resource_provider_ =
-      std::make_unique<OffscreenCanvasResourceProvider>(width, height);
+      std::make_unique<OffscreenCanvasResourceProvider>(width, height, this);
 }
 
 OffscreenCanvasFrameDispatcherImpl::~OffscreenCanvasFrameDispatcherImpl() {
@@ -87,24 +87,26 @@ void UpdatePlaceholderImage(WeakPtr<OffscreenCanvasFrameDispatcher> dispatcher,
 
 }  // namespace
 
-void OffscreenCanvasFrameDispatcherImpl::PostImageToPlaceholder(
-    RefPtr<StaticBitmapImage> image) {
-  // After this point, |image| can only be used on the main thread, until
-  // it is returned.
-  image->Transfer();
-  RefPtr<WebTaskRunner> dispatcher_task_runner =
-      Platform::Current()->CurrentThread()->GetWebTaskRunner();
+void OffscreenCanvasFrameDispatcherImpl::PostLatestImageToPlaceholder() {
+  if (latest_unposted_image_) {
+    // After this point, |latest_unposted_image_| can only be used on the main
+    // thread, until it is returned.
+    latest_unposted_image_->Transfer();
+    RefPtr<WebTaskRunner> dispatcher_task_runner =
+        Platform::Current()->CurrentThread()->GetWebTaskRunner();
 
-  Platform::Current()
-      ->MainThread()
-      ->Scheduler()
-      ->CompositorTaskRunner()
-      ->PostTask(BLINK_FROM_HERE,
-                 CrossThreadBind(
-                     UpdatePlaceholderImage, this->CreateWeakPtr(),
-                     WTF::Passed(std::move(dispatcher_task_runner)),
-                     placeholder_canvas_id_, std::move(image),
-                     offscreen_canvas_resource_provider_->GetNextResourceId()));
+    Platform::Current()
+        ->MainThread()
+        ->Scheduler()
+        ->CompositorTaskRunner()
+        ->PostTask(
+            BLINK_FROM_HERE,
+            CrossThreadBind(
+                UpdatePlaceholderImage, this->CreateWeakPtr(),
+                WTF::Passed(std::move(dispatcher_task_runner)),
+                placeholder_canvas_id_, std::move(latest_unposted_image_),
+                offscreen_canvas_resource_provider_->GetNextResourceId()));
+  }
 }
 
 void OffscreenCanvasFrameDispatcherImpl::DispatchFrame(
@@ -116,8 +118,18 @@ void OffscreenCanvasFrameDispatcherImpl::DispatchFrame(
     ) {
   if (!image || !VerifyImageSize(image->Size()))
     return;
+
+  bool can_post_image_to_placeholder = true;
+  if (offscreen_canvas_resource_provider_->IsPlaceholderResourceLocksUsedUp()) {
+    // The main thread has already hold too many resources, do not post any
+    // more images to placeholder.
+    can_post_image_to_placeholder = false;
+  }
   if (!frame_sink_id_.is_valid()) {
-    PostImageToPlaceholder(std::move(image));
+    latest_unposted_image_ = std::move(image);
+    if (can_post_image_to_placeholder) {
+      PostLatestImageToPlaceholder();
+    }
     return;
   }
   viz::CompositorFrame frame;
@@ -188,7 +200,11 @@ void OffscreenCanvasFrameDispatcherImpl::DispatchFrame(
     }
   }
 
-  PostImageToPlaceholder(std::move(image));
+  latest_unposted_image_ = std::move(image);
+  if (can_post_image_to_placeholder) {
+    PostLatestImageToPlaceholder();
+  }
+
   commit_type_histogram.Count(commit_type);
 
   offscreen_canvas_resource_provider_->IncNextResourceId();
@@ -372,6 +388,10 @@ void OffscreenCanvasFrameDispatcherImpl::ReclaimResources(
 
 void OffscreenCanvasFrameDispatcherImpl::ReclaimResource(unsigned resource_id) {
   offscreen_canvas_resource_provider_->ReclaimResource(resource_id);
+}
+
+void OffscreenCanvasFrameDispatcherImpl::OnPlaceholderResourceLocksFreed() {
+  this->PostLatestImageToPlaceholder();
 }
 
 bool OffscreenCanvasFrameDispatcherImpl::VerifyImageSize(
