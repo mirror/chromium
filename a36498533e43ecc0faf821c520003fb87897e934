@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24857eef_2c0136de",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-28T03:20:03Z",
+      "side": 1,
+      "message": "Changing this isn\u0027t necessary (just the changes to layoutSiteSettingsSection are) to reorder the views, but I thought maybe also doing this is clearer.",
+      "revId": "a36498533e43ecc0faf821c520003fb87897e934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
