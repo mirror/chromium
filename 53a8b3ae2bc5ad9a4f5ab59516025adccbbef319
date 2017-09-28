@@ -16,6 +16,24 @@
       "revId": "53a8b3ae2bc5ad9a4f5ab59516025adccbbef319",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d82e5b20_1b92eb8f",
+        "filename": "third_party/WebKit/Source/platform/wtf/RefPtr.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-09-28T05:04:24Z",
+      "side": 1,
+      "message": "Adding LeakRef to scoped_refptr is kind of controversial, as it may increase the manual ref count manipulation case.\nAlso, as it\u0027s followed by `ptr_ \u003d nullptr`, I expect these ref count manipulations are cancelled on the release build.",
+      "parentUuid": "5bfdff51_56489c67",
+      "revId": "53a8b3ae2bc5ad9a4f5ab59516025adccbbef319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
