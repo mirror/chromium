@@ -70,6 +70,24 @@
       "revId": "4cf3754920f8579b2eb0e273e04114a0c0a129b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28a6d504_70418a28",
+        "filename": "gpu/command_buffer/service/create_gr_gl_interface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1231409
+      },
+      "writtenOn": "2017-09-28T15:41:39Z",
+      "side": 1,
+      "message": "OK..looks like the disabled extension string https://cs.chromium.org/chromium/src/ui/gl/gl_context.cc?type\u003dcs\u0026l\u003d112 is the difference. We do not check it here while creating the extension list ? I will check more how to make it available here.",
+      "parentUuid": "8d1fcfbf_4e4f1b1f",
+      "revId": "4cf3754920f8579b2eb0e273e04114a0c0a129b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
