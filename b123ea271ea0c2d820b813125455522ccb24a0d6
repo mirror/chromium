@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5097649_451942ee",
+        "filename": "ui/app_list/views/apps_container_view.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-09-28T01:13:06Z",
+      "side": 1,
+      "message": "APP_LIST_EXPORT here?",
+      "range": {
+        "startLine": 34,
+        "startChar": 5,
+        "endLine": 34,
+        "endChar": 6
+      },
+      "revId": "b123ea271ea0c2d820b813125455522ccb24a0d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
