@@ -36,6 +36,40 @@
     },
     {
       "key": {
+        "uuid": "17725a32_7b83efa6",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-28T13:21:14Z",
+      "side": 1,
+      "message": "personal preference: this comment adds nothing since the use of an unnamed namespace implies privateness.",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c41ee399_b33ea4ff",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-28T13:21:14Z",
+      "side": 1,
+      "message": "is this ctor needed?",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b8a67bf_911d5e72",
         "filename": "chrome_elf/whitelist/whitelist_ime.cc",
         "patchSetId": 3
@@ -53,6 +87,40 @@
     },
     {
       "key": {
+        "uuid": "d2cabe36_dbd38431",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-28T13:21:14Z",
+      "side": 1,
+      "message": "nit: \" \u003d default;\" rather than {}",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "265b1188_fb32764e",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-28T13:21:14Z",
+      "side": 1,
+      "message": "nit: constipate these methods",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4014af43_13a84ca1",
         "filename": "chrome_elf/whitelist/whitelist_ime.cc",
         "patchSetId": 3
@@ -64,6 +132,171 @@
       "writtenOn": "2017-09-28T09:32:25Z",
       "side": 1,
       "message": "since IME is small and movable, consider getting rid of std::unique_ptr. especially interesting if you can pre-allocate the space for the vector so that you know there will be zero post-insert moves.",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bcb7276_e8821444",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-28T13:21:14Z",
+      "side": 1,
+      "message": "this global will lead to an exit-time dtor, which is forbidden. one way to get around it would be to create a function such as:\n\nstd::vector\u003cblah\u003e GetImeList() {\n  // Intentionally leak the instance at shutdown to avoid exit-time dtors.\n  static std::vector\u003cblah\u003e* const instance \u003d new std::vector\u003cblah\u003e();\n  return instance;\n}\n\nthis will give you threadsafe initialization of the global on the first call to GetImeList.",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dece7508_a5d4862d",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-28T13:21:14Z",
+      "side": 1,
+      "message": "nit: pass |guid| by const std::wstring\u0026 rather than a raw ptr",
+      "range": {
+        "startLine": 101,
+        "startChar": 28,
+        "endLine": 101,
+        "endChar": 42
+      },
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dd3db84_44fd6814",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-28T13:21:14Z",
+      "side": 1,
+      "message": "nit: push_back(L\u0027\\\\\u0027);",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e3c9f1e_634c6171",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-28T13:21:14Z",
+      "side": 1,
+      "message": "nit: capture the result here in a local so that there\u0027s only one call to CloseRegKey; for example:\n\n  bool found \u003d nt::QueryRegValueSZ(key_handle, L\"\", value);\n  nt::CloseRegKey(key_handle);\n  return found;",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaf52363_08dddc4e",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-28T13:21:14Z",
+      "side": 1,
+      "message": "does this need to handle both? how could a 64-bit chrome.exe load a 32-bit IME (or vice-versa)?",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d8572d9_e22e772a",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-28T13:21:14Z",
+      "side": 1,
+      "message": "maybe static_assert that sizeof(IMAGE_DOS_HEADER) \u003c\u003d kPageSize? you and i both know that it is, but it\u0027s nice to be explicit with the assumption.",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54744c99_66b31b2d",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-28T13:21:14Z",
+      "side": 1,
+      "message": "this needs some range checking in case e_lfanew is \u003e 4096 - sizeof(IMAGE_NT_HEADERS), or maybe that e_lfanew + offsetof(IMAGE_NT_HEADERS, OptionalHeader) + offsetof(IMAGE_OPTIONAL_HEADER, SizeOfImage) + sizeof(DWORD) is within the buffer. (or something along those lines)",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a902968_126818eb",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-28T13:21:14Z",
+      "side": 1,
+      "message": "consider moving this up so that it encloses the unnamed namespace -- this way you don\u0027t need \"whitelist::\" anywhere up there.",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83f0f325_01cd14a6",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-28T13:21:14Z",
+      "side": 1,
+      "message": "nit: use empty() rather than size() \u003d\u003d 0",
+      "range": {
+        "startLine": 203,
+        "startChar": 9,
+        "endLine": 203,
+        "endChar": 26
+      },
       "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -183,6 +416,131 @@
       "writtenOn": "2017-09-28T09:32:25Z",
       "side": 1,
       "message": "move the definition of these into the .cc -- it\u0027s bad form to have string definitions in headers.",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57c75bf5_cd4cdd68",
+        "filename": "chrome_elf/whitelist/whitelist_ime_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-28T13:21:14Z",
+      "side": 1,
+      "message": "nit: push_back for single char",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cf12f67_7024811b",
+        "filename": "chrome_elf/whitelist/whitelist_ime_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-28T13:21:14Z",
+      "side": 1,
+      "message": "ReadValue returns a last error code, so this should be:\n    if (classes_key.ReadValue(L\"\", path) !\u003d ERROR_SUCCESS)",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4882e695_0fd2863f",
+        "filename": "chrome_elf/whitelist/whitelist_ime_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-28T13:21:14Z",
+      "side": 1,
+      "message": "how about changing the fn so that it returns a base::FilePath (which is empty in case of failure)? could lines 71 on down be:\n\n    base::FilePath file_path(path);\n    if (base::PathExists(file_path))\n      return file_path;\n  }\n  return base::FilePath();\n}",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e803788d_607c7217",
+        "filename": "chrome_elf/whitelist/whitelist_ime_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-28T13:21:14Z",
+      "side": 1,
+      "message": "simplify!\n  return found_guid;",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16237ed3_2c13faeb",
+        "filename": "chrome_elf/whitelist/whitelist_ime_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-28T13:21:14Z",
+      "side": 1,
+      "message": "compare result to ERROR_SUCCESS",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "643ac983_24c8bc61",
+        "filename": "chrome_elf/whitelist/whitelist_ime_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-28T13:21:14Z",
+      "side": 1,
+      "message": "nit: \"const std::wstring\u0026\"",
+      "range": {
+        "startLine": 99,
+        "startChar": 46,
+        "endLine": 99,
+        "endChar": 59
+      },
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5084dd9_1e34d284",
+        "filename": "chrome_elf/whitelist/whitelist_ime_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-28T13:21:14Z",
+      "side": 1,
+      "message": "compare result to ERROR_SUCCESS",
       "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
