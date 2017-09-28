@@ -191,6 +191,10 @@ static const float doubleTapZoomAlreadyLegibleRatio = 1.2f;
 static const double multipleTargetsZoomAnimationDurationInSeconds = 0.25;
 static const double findInPageAnimationDurationInSeconds = 0;
 
+// Constants for snapping to minimum zoom
+static const double maximumZoomForSnapToMinimum = 1.05;
+static const double snapToMiminimumZoomAnimationDurationInSeconds = 0.2;
+
 // Constants for viewport anchoring on resize.
 static const float viewportAnchorCoordX = 0.5f;
 static const float viewportAnchorCoordY = 0;
@@ -2085,6 +2089,20 @@ WebInputEventResult WebViewImpl::HandleInputEvent(
             pinch_event.data.pinch_update.scale,
             FloatPoint(pinch_event.x, pinch_event.y)))
       return WebInputEventResult::kHandledSystem;
+  }
+
+  // If the page is close to minimum scale at pinch end, snap to minimum
+  if (input_event.GetType() == WebInputEvent::kGesturePinchEnd) {
+    const WebGestureEvent& pinch_event =
+        static_cast<const WebGestureEvent&>(input_event);
+    float min_scale = MinimumPageScaleFactor();
+    if (PageScaleFactor() <= min_scale * maximumZoomForSnapToMinimum) {
+      IntPoint target_position =
+          MainFrameImpl()->GetFrameView()->RootFrameToContents(
+              IntPoint(pinch_event.x, pinch_event.y));
+      StartPageScaleAnimation(target_position, true, min_scale,
+                              snapToMiminimumZoomAnimationDurationInSeconds);
+    }
   }
 
   return WebInputEventResult::kNotHandled;
