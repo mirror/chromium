@@ -9,6 +9,7 @@
 #include "base/json/json_writer.h"
 #include "base/logging.h"
 #include "base/trace_event/trace_event.h"
+#include "content/public/browser/browser_thread.h"
 #include "content/public/browser/tracing_controller.h"
 #include "jni/TracingControllerAndroid_jni.h"
 
@@ -46,9 +47,16 @@ bool TracingControllerAndroid::StartTracing(
   // This log is required by adb_profile_chrome.py.
   LOG(WARNING) << "Logging performance trace to file";
 
-  return TracingController::GetInstance()->StartTracing(
-      base::trace_event::TraceConfig(categories, options),
-      TracingController::StartTracingDoneCallback());
+  BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::BindOnce(base::IgnoreResult(&TracingController::StartTracing),
+                       base::Unretained(TracingController::GetInstance()),
+                       base::trace_event::TraceConfig(categories, options),
+                       TracingController::StartTracingDoneCallback()));
+
+  // Assume it will start.
+  // TODO: Avoid deadlock on Android when waiting for the response.
+  return true;
 }
 
 void TracingControllerAndroid::StopTracing(
@@ -57,14 +65,19 @@ void TracingControllerAndroid::StopTracing(
     const JavaParamRef<jstring>& jfilepath) {
   base::FilePath file_path(
       base::android::ConvertJavaStringToUTF8(env, jfilepath));
-  if (!TracingController::GetInstance()->StopTracing(
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(
+          base::IgnoreResult(&TracingController::StopTracing),
+          base::Unretained(TracingController::GetInstance()),
           TracingController::CreateFileSink(
               file_path,
               base::Bind(&TracingControllerAndroid::OnTracingStopped,
-                         weak_factory_.GetWeakPtr())))) {
-    LOG(ERROR) << "EndTracingAsync failed, forcing an immediate stop";
-    OnTracingStopped();
-  }
+                         weak_factory_.GetWeakPtr()))));
+
+  // Assume it will stop.
+  // TODO: Avoid deadlock on Android when waiting for the response.
+  return;
 }
 
 void TracingControllerAndroid::GenerateTracingFilePath(
