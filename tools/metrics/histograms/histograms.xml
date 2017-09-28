@@ -34281,6 +34281,17 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram
+    name="Memory.Experimental.Renderer.PurgedMemory.PrivateMemoryFootprint"
+    units="MB">
+  <owner>tasak@google.com</owner>
+  <summary>
+    Amount of reclaimed memory (in terms of private memory footprint) after a
+    purge request on a renderer process. Recorded 2 seconds after the purge
+    request.
+  </summary>
+</histogram>
+
 <histogram name="Memory.Experimental.Renderer.Uptime" units="ms">
   <owner>keishi@chromium.org</owner>
   <summary>

@@ -1810,6 +1810,13 @@ bool RenderThreadImpl::GetRendererMemoryMetrics(
   memory_metrics->total_allocated_per_render_view_mb =
       total_allocated / render_view_count / 1024 / 1024;
 
+#if defined(MACOS_X)
+  memory_metrics->private_memory_footprint_mb =
+      metric->GetPrivateMemoryFootprint() / 1024 / 1024;
+#else
+  memory_metrics->private_memory_footprint_mb = 0;
+#endif
+
   return true;
 }
 
@@ -2334,6 +2341,15 @@ void RenderThreadImpl::RecordPurgeMemory(RendererMemoryMetrics before) {
     mbytes = 0;
   UMA_HISTOGRAM_MEMORY_LARGE_MB("Memory.Experimental.Renderer.PurgedMemory",
                                 mbytes);
+
+  int64_t private_memory_footprint_mb =
+      static_cast<int64_t>(before.private_memory_footprint_mb) -
+      static_cast<int64_t>(after.private_memory_footprint_mb);
+  if (private_memory_footprint_mb < 0)
+    private_memory_footprint_mb = 0;
+  UMA_HISTOGRAM_MEMORY_LARGE_MB(
+      "Memory.Experimental.Renderer.PurgedMemory.PrivateMemoryFootprint",
+      private_memory_footprint_mb);
 }
 
 void RenderThreadImpl::ClearMemory() {

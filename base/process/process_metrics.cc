@@ -93,4 +93,11 @@ int ProcessMetrics::GetIdleWakeupsPerSecond() {
 }
 #endif  // defined(OS_MACOSX) || defined(OS_LINUX)
 
+#if !defined(OS_MACOSX)
+size_t ProcessMetrics::GetPrivateMemoryFootprint() const {
+  NOTIMPLEMENTED();
+  return 0;
+}
+#endif
+
 }  // namespace base
