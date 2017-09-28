@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aac42ea3_7a8f49e9",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2368,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-28T17:36:31Z",
+      "side": 1,
+      "message": "s/will be moved to/are split between",
+      "range": {
+        "startLine": 2368,
+        "startChar": 50,
+        "endLine": 2368,
+        "endChar": 66
+      },
+      "revId": "edd1c34845a78e8252d00be65cc30e4f71d7450f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b1f61da_c401c007",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2368,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-28T17:36:31Z",
+      "side": 1,
+      "message": "s/Strarting/Starting",
+      "range": {
+        "startLine": 2368,
+        "startChar": 16,
+        "endLine": 2368,
+        "endChar": 25
+      },
+      "revId": "edd1c34845a78e8252d00be65cc30e4f71d7450f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
