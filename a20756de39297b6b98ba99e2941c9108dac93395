@@ -16,6 +16,24 @@
       "revId": "a20756de39297b6b98ba99e2941c9108dac93395",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efe4d3fd_bd00b21f",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-28T05:48:14Z",
+      "side": 1,
+      "message": "We (falken@, kinuko@ and I) chatted offline and decided to do nothing for now because the number of occurrences of this pattern is quite small. We\u0027ll revisit this when this is getting more problematic.\n\n(IMO, handling certificate errors in the clients (not in the lower layer) would be natural, but it\u0027d be better that they don\u0027t have to take care of the flag. We could add a helper which is similar to net::IsCertStatusError() but respects the flag.)",
+      "parentUuid": "d9f7c94a_7a48603d",
+      "revId": "a20756de39297b6b98ba99e2941c9108dac93395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
