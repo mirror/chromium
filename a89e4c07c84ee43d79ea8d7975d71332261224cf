@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77a71713_7b63c630",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-28T21:55:35Z",
+      "side": 1,
+      "message": "715541",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 3
+      },
+      "revId": "a89e4c07c84ee43d79ea8d7975d71332261224cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d90b0f1d_1a9f9211",
+        "filename": "content/browser/frame_host/interstitial_page_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-28T21:55:35Z",
+      "side": 1,
+      "message": "Are you sure about this? Looks like a completely separate render view, should have a different guid.",
+      "revId": "a89e4c07c84ee43d79ea8d7975d71332261224cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1cc905f_3b66f6fd",
+        "filename": "content/common/renderer.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-28T21:55:35Z",
+      "side": 1,
+      "message": "be consistent",
+      "range": {
+        "startLine": 47,
+        "startChar": 17,
+        "endLine": 47,
+        "endChar": 27
+      },
+      "revId": "a89e4c07c84ee43d79ea8d7975d71332261224cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d583f58_f32eea14",
+        "filename": "content/common/renderer.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-28T21:55:35Z",
+      "side": 1,
+      "message": "Let\u0027s call it main_frame_devtools_guid, to be consistent with main_frame_routing_id?",
+      "range": {
+        "startLine": 48,
+        "startChar": 9,
+        "endLine": 48,
+        "endChar": 28
+      },
+      "revId": "a89e4c07c84ee43d79ea8d7975d71332261224cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4191df11_4e1ce344",
+        "filename": "third_party/WebKit/Source/core/inspector/IdentifiersFactory.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-28T21:55:35Z",
+      "side": 1,
+      "message": "We should cache this somewhere. Otherwise it gets converted from std::string on each call.",
+      "revId": "a89e4c07c84ee43d79ea8d7975d71332261224cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdb54185_835380cc",
+        "filename": "third_party/WebKit/Source/core/inspector/MainThreadDebugger.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-28T21:55:35Z",
+      "side": 1,
+      "message": "Please just inline this method.",
+      "revId": "a89e4c07c84ee43d79ea8d7975d71332261224cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25834700_9ed69c11",
+        "filename": "third_party/WebKit/public/web/WebFrameClient.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-28T21:55:35Z",
+      "side": 1,
+      "message": "Let\u0027s add a comment.",
+      "revId": "a89e4c07c84ee43d79ea8d7975d71332261224cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
