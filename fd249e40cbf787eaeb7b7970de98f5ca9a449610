@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5e83aa84_8fe9b09f",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2229,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-28T08:53:15Z",
+      "side": 1,
+      "message": "Well, when an key is not present in a map, it returns the keyType.EmptyValue(). I assumed that for this case, it\u0027d be WTF::nullopt. However, I had doubts whether it could be 0. In this case, since the Optional is not nullopt, the conditional clause will be resolved as true, so I wanted to double check the key was indeed in the map.\n\nI wouldn\u0027t oppose to remove the DCHECK if we are sure it\u0027s not needed.",
+      "parentUuid": "a6e0786f_aad63235",
+      "revId": "fd249e40cbf787eaeb7b7970de98f5ca9a449610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bf6a467_7f255e2d",
         "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.h",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-28T07:30:51Z",
       "side": 1,
       "message": "This name is really confusing, you\u0027re not storing a position (LayoutUnit) like in row_positions_,\nbut a line number (size_t).\nOn top of that we\u0027re only storing the info for the positioned items when start is not auto.\nWhat about renaming it to: positioned_item_non_auto_start_row_lines_ ?",
+      "revId": "fd249e40cbf787eaeb7b7970de98f5ca9a449610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aa9ca82_96bdfb82",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-28T08:53:15Z",
+      "side": 1,
+      "message": "Too long for my taste :) \nwhat about row_of_positioned_item ?",
+      "parentUuid": "5bf6a467_7f255e2d",
       "revId": "fd249e40cbf787eaeb7b7970de98f5ca9a449610",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
