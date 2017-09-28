@@ -437,24 +437,24 @@ void VrShellGl::InitializeRenderer() {
   webvr_frame_oustanding_.assign(kPoseRingBufferSize, false);
   webvr_time_js_submit_.assign(kPoseRingBufferSize, base::TimeTicks());
 
-  std::vector<gvr::BufferSpec> specs;
   // For kFramePrimaryBuffer (primary VrShell and WebVR content)
-  specs.push_back(gvr_api_->CreateBufferSpec());
-  specs.push_back(gvr_api_->CreateBufferSpec());
+  specs_.push_back(gvr_api_->CreateBufferSpec());
+  specs_.push_back(gvr_api_->CreateBufferSpec());
 
-  gvr::Sizei render_size_default = specs[kFramePrimaryBuffer].GetSize();
+  gvr::Sizei render_size_default = specs_[kFramePrimaryBuffer].GetSize();
   render_size_default_ = {render_size_default.width,
                           render_size_default.height};
 
-  specs[kFrameWebVrBrowserUiBuffer].SetSize(
+  specs_[kFrameWebVrBrowserUiBuffer].SetSize(
       {render_size_default.width / kWebVrBrowserUiSizeFactor,
        render_size_default.height / kWebVrBrowserUiSizeFactor});
+  specs_[kFrameWebVrBrowserUiBuffer].SetSamples(2);
   render_size_webvr_ui_ = {
       render_size_default.width / kWebVrBrowserUiSizeFactor,
       render_size_default.height / kWebVrBrowserUiSizeFactor};
 
   swap_chain_ =
-      base::MakeUnique<gvr::SwapChain>(gvr_api_->CreateSwapChain(specs));
+      base::MakeUnique<gvr::SwapChain>(gvr_api_->CreateSwapChain(specs_));
 
   // Allocate a buffer viewport for use in UI drawing. This isn't
   // initialized at this point, it'll be set from other viewport list
@@ -1077,6 +1077,11 @@ void VrShellGl::OnResume() {
 }
 
 void VrShellGl::SetWebVrMode(bool enabled) {
+  if (web_vr_mode_ != enabled) {
+    specs_[kFramePrimaryBuffer].SetSamples(enabled ? 1 : 2);
+    swap_chain_ =
+        base::MakeUnique<gvr::SwapChain>(gvr_api_->CreateSwapChain(specs_));
+  }
   web_vr_mode_ = enabled;
 
   if (web_vr_mode_ && submit_client_) {

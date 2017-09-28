@@ -280,6 +280,8 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
 
   base::CancelableCallback<void()> webvr_frame_timeout_;
 
+  std::vector<gvr::BufferSpec> specs_;
+
   base::WeakPtrFactory<VrShellGl> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(VrShellGl);
