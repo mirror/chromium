@@ -94,6 +94,7 @@ PendingDecode::PendingDecode(PendingDecode&& other) = default;
 PendingDecode::~PendingDecode() = default;
 
 MediaCodecVideoDecoder::MediaCodecVideoDecoder(
+    const gpu::GpuPreferences& gpu_preferences,
     VideoFrameFactory::OutputWithReleaseMailboxCB output_cb,
     DeviceInfo* device_info,
     AVDACodecAllocator* codec_allocator,
@@ -109,6 +110,8 @@ MediaCodecVideoDecoder::MediaCodecVideoDecoder(
       video_frame_factory_(std::move(video_frame_factory)),
       overlay_factory_cb_(std::move(overlay_factory_cb)),
       device_info_(device_info),
+      enable_threaded_texture_mailboxes_(
+          gpu_preferences.enable_threaded_texture_mailboxes),
       context_ref_(std::move(context_ref)),
       weak_factory_(this),
       codec_allocator_weak_factory_(this) {
@@ -216,6 +219,7 @@ void MediaCodecVideoDecoder::InitializeSurfaceChooser() {
   DCHECK_EQ(state_, State::kInitializing);
   // Initialize |surface_chooser_| and wait for its decision. Note: the
   // callback may be reentrant.
+  // TODO(watk): Make use of enable_threaded_texture_mailboxes_.
   surface_chooser_->Initialize(
       base::Bind(&MediaCodecVideoDecoder::OnSurfaceChosen,
                  weak_factory_.GetWeakPtr()),
