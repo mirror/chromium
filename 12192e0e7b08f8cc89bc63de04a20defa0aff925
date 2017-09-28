@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "cc725446_91619f1f",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-28T03:00:03Z",
+      "side": 1,
+      "message": "This is a good idea. However, it seems orthogonal to this patch. I\u0027m fine if is done later.\n\nI prefer adding a DCHECK(layout_text-\u003eGetNode()) in this patch.",
+      "parentUuid": "f825795e_790b8c17",
+      "range": {
+        "startLine": 399,
+        "startChar": 32,
+        "endLine": 399,
+        "endChar": 54
+      },
+      "revId": "12192e0e7b08f8cc89bc63de04a20defa0aff925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4ae183e_5d194efa",
         "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
         "patchSetId": 23
