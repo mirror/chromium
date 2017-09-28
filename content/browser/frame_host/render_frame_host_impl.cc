@@ -968,7 +968,6 @@ bool RenderFrameHostImpl::OnMessageReceived(const IPC::Message &msg) {
     IPC_MESSAGE_HANDLER(FrameHostMsg_FocusedNodeChanged, OnFocusedNodeChanged)
     IPC_MESSAGE_HANDLER(FrameHostMsg_SetHasReceivedUserGesture,
                         OnSetHasReceivedUserGesture)
-    IPC_MESSAGE_HANDLER(FrameHostMsg_SetDevToolsFrameId, OnSetDevToolsFrameId)
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
     IPC_MESSAGE_HANDLER(FrameHostMsg_ShowPopup, OnShowPopup)
     IPC_MESSAGE_HANDLER(FrameHostMsg_HidePopup, OnHidePopup)
@@ -1180,6 +1179,7 @@ bool RenderFrameHostImpl::CreateRenderFrame(int proxy_routing_id,
   params->parent_routing_id = parent_routing_id;
   params->previous_sibling_routing_id = previous_sibling_routing_id;
   params->replication_state = frame_tree_node()->current_replication_state();
+  params->devtools_frame_guid = frame_tree_node()->devtools_frame_guid();
 
   // Normally, the replication state contains effective frame policy, excluding
   // sandbox flags and feature policy attributes that were updated but have not
@@ -1343,6 +1343,7 @@ void RenderFrameHostImpl::OnCreateChildFrame(
     blink::WebTreeScopeType scope,
     const std::string& frame_name,
     const std::string& frame_unique_name,
+    const std::string& devtools_frame_guid,
     blink::WebSandboxFlags sandbox_flags,
     const ParsedFeaturePolicyHeader& container_policy,
     const FrameOwnerProperties& frame_owner_properties) {
@@ -1357,8 +1358,9 @@ void RenderFrameHostImpl::OnCreateChildFrame(
     return;
 
   frame_tree_->AddFrame(frame_tree_node_, GetProcess()->GetID(), new_routing_id,
-                        scope, frame_name, frame_unique_name, sandbox_flags,
-                        container_policy, frame_owner_properties);
+                        scope, frame_name, frame_unique_name,
+                        devtools_frame_guid, sandbox_flags, container_policy,
+                        frame_owner_properties);
 }
 
 void RenderFrameHostImpl::SetLastCommittedOrigin(const url::Origin& origin) {
@@ -2729,11 +2731,6 @@ void RenderFrameHostImpl::OnFocusedNodeChanged(
 
 void RenderFrameHostImpl::OnSetHasReceivedUserGesture() {
   frame_tree_node_->OnSetHasReceivedUserGesture();
-}
-
-void RenderFrameHostImpl::OnSetDevToolsFrameId(
-    const std::string& devtools_frame_id) {
-  untrusted_devtools_frame_id_ = devtools_frame_id;
 }
 
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
