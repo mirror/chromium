@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "ac769a83_7159ee9f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-28T15:28:11Z",
+      "side": 1,
+      "message": "Nit: window",
+      "range": {
+        "startLine": 9,
+        "startChar": 30,
+        "endLine": 9,
+        "endChar": 37
+      },
+      "revId": "39606f0a68dda3e0eccdd387f000d08b2901b734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4812f7fc_afb2aa43",
         "filename": "chrome/browser/vr/testapp/gl_renderer.cc",
         "patchSetId": 5
@@ -18,6 +41,166 @@
         "startChar": 22,
         "endLine": 50,
         "endChar": 25
+      },
+      "revId": "39606f0a68dda3e0eccdd387f000d08b2901b734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64e7f1a8_7721c63e",
+        "filename": "chrome/browser/vr/testapp/gl_renderer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-28T15:28:11Z",
+      "side": 1,
+      "message": "Nit: // namespace vr",
+      "revId": "39606f0a68dda3e0eccdd387f000d08b2901b734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e98f0da_d48c419d",
+        "filename": "chrome/browser/vr/testapp/gl_renderer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-28T15:28:11Z",
+      "side": 1,
+      "message": "Change this to the VR namespace?",
+      "revId": "39606f0a68dda3e0eccdd387f000d08b2901b734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80d85be2_6c5c1952",
+        "filename": "chrome/browser/vr/testapp/gl_renderer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-28T15:28:11Z",
+      "side": 1,
+      "message": "Please add a class comment to this and the other classes.",
+      "revId": "39606f0a68dda3e0eccdd387f000d08b2901b734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "085477de_bf953ed4",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-28T15:28:11Z",
+      "side": 1,
+      "message": "Define this as a const at the top.",
+      "range": {
+        "startLine": 62,
+        "startChar": 31,
+        "endLine": 62,
+        "endChar": 35
+      },
+      "revId": "39606f0a68dda3e0eccdd387f000d08b2901b734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20c5241c_f220ac36",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-28T15:28:11Z",
+      "side": 1,
+      "message": "I\u0027d prefer to just call this proj_matrix. And also the values below.",
+      "range": {
+        "startLine": 63,
+        "startChar": 23,
+        "endLine": 63,
+        "endChar": 32
+      },
+      "revId": "39606f0a68dda3e0eccdd387f000d08b2901b734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "877f3546_a267cec9",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-28T15:28:11Z",
+      "side": 1,
+      "message": "This should be proj_matrix * head_pose.",
+      "range": {
+        "startLine": 72,
+        "startChar": 47,
+        "endLine": 72,
+        "endChar": 56
+      },
+      "revId": "39606f0a68dda3e0eccdd387f000d08b2901b734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb8fd0c1_3187f426",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-28T15:28:11Z",
+      "side": 1,
+      "message": "Nit: curly braces here too since you use them below for one line if. I\u0027ve also seen with and without curly braces in the other files of this CL. It should be consistent.",
+      "revId": "39606f0a68dda3e0eccdd387f000d08b2901b734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3136348e_109493b6",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-28T15:28:11Z",
+      "side": 1,
+      "message": "I think this should not be called context since it sounds a bit like GL context. IIUC, this is the testapps\u0027s equivalent of VrShellGl. Maybe VrShellLinux? Or VrShellLinuxViewer?",
+      "range": {
+        "startLine": 24,
+        "startChar": 6,
+        "endLine": 24,
+        "endChar": 19
       },
       "revId": "39606f0a68dda3e0eccdd387f000d08b2901b734",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
