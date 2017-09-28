@@ -3719,6 +3719,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="AsyncDNS.ResolveError" enum="NetErrorCodes">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.DnsTaskError.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Counts of specific error codes returned by DnsTask if a subsequent ProcTask
@@ -3727,6 +3730,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="AsyncDNS.ResolveFail" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.DnsTaskFail.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Duration of time taken by DnsTask in resolutions that failed. Excludes time
@@ -3735,6 +3741,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="AsyncDNS.ResolveStatus" enum="AsyncDNSResolveStatus">
+  <obsolete>
+    Deprecated as of 9/2017.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Counts of the overall results of using asynchronous DNS in HostResolverImpl.
@@ -3744,6 +3753,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="AsyncDNS.ResolveSuccess" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.DnsTaskSuccess.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Duration of time taken by DnsTask in resolutions that succeeded.
@@ -3751,6 +3763,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="AsyncDNS.ResolveSuccess_FAMILY_IPV4" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.DnsTaskSuccess.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Same as AsyncDNS.ResolveSuccess, but limited to pure IPv4 lookups.
@@ -3758,6 +3773,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="AsyncDNS.ResolveSuccess_FAMILY_IPV6" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.DnsTaskSuccess.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Same as AsyncDNS.ResolveSuccess, but limited to pure IPv6 lookups.
@@ -3765,6 +3783,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="AsyncDNS.ResolveSuccess_FAMILY_UNSPEC" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.DnsTaskSuccess.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Same as AsyncDNS.ResolveSuccess, but limited to IPv4/IPv6 lookups.
@@ -14609,6 +14630,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="DNS.ResolveCategory" enum="ResolutionCategory">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.ResolveCategory.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Counts of successes and failures of OS resolutions in various categories.
@@ -14616,6 +14640,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="DNS.ResolveFail" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.ProcTaskFail.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Duration of time taken in OS resolutions for actual navigations.  Note that
@@ -14624,21 +14651,33 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="DNS.ResolveFail_FAMILY_IPV4" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.ProcTaskFail.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>Same as DNS.ResolveFail, but limited to pure IPv4 lookups.</summary>
 </histogram>
 
 <histogram name="DNS.ResolveFail_FAMILY_IPV6" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.ProcTaskFail.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>Same as DNS.ResolveFail, but limited to pure IPv6 lookups.</summary>
 </histogram>
 
 <histogram name="DNS.ResolveFail_FAMILY_UNSPEC" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.ProcTaskFail.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>Same as DNS.ResolveFail, but limited to IPv4/IPv6 lookups.</summary>
 </histogram>
 
 <histogram name="DNS.ResolveSpeculativeFail" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.ProcTaskFail.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Duration of time taken in speculative OS resolutions.  Note that cached OS
@@ -14647,6 +14686,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="DNS.ResolveSpeculativeSuccess" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.ProcTaskSuccess.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Duration of time taken in speculative OS resolution that succeeded.  Note
@@ -14655,6 +14697,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="DNS.ResolveSuccess" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.ProcTaskSuccess.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Duration of time taken in OS resolutions that succeeded and were requested
@@ -14664,6 +14709,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="DNS.ResolveSuccess_FAMILY_IPV4" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.ProcTaskSuccess.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Same as DNS.ResolveSuccess, but limited to pure IPv4 lookups.
@@ -14671,6 +14719,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="DNS.ResolveSuccess_FAMILY_IPV6" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.ProcTaskSuccess.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Same as DNS.ResolveSuccess, but limited to pure IPv6 lookups.
@@ -14678,6 +14729,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="DNS.ResolveSuccess_FAMILY_UNSPEC" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.ProcTaskSuccess.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Same as DNS.ResolveSuccess, but limited to IPv4/IPv6 lookups.
@@ -39452,6 +39506,29 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Net.DNS.DnsTask.Errors" enum="NetErrorCodes">
+  <owner>mgersh@chromium.org</owner>
+  <summary>
+    Counts of specific error codes returned by DnsTask if a subsequent ProcTask
+    succeeded.
+  </summary>
+</histogram>
+
+<histogram name="Net.DNS.DnsTask.FailureTime" units="ms">
+  <owner>mgersh@chromium.org</owner>
+  <summary>
+    Duration of time taken by DnsTask in resolutions that failed. Excludes time
+    spent in the subsequent fallback.
+  </summary>
+</histogram>
+
+<histogram name="Net.DNS.DnsTask.SuccessTime" units="ms">
+  <owner>mgersh@chromium.org</owner>
+  <summary>
+    Duration of time taken by DnsTask in resolutions that succeeded.
+  </summary>
+</histogram>
+
 <histogram name="Net.DNS.JobQueueTime" units="ms">
   <owner>mgersh@chromium.org</owner>
   <summary>
@@ -39466,6 +39543,48 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     Time elapsed between the last time the priority of a HostResolverImpl::Job
     changed (when a Request was attached or detached) and the time the Job was
     started.
+  </summary>
+</histogram>
+
+<histogram name="Net.DNS.ProcTask.FailureTime" units="ms">
+  <owner>mgersh@chromium.org</owner>
+  <summary>
+    Duration of time taken by ProcTask in resolutions that failed.
+  </summary>
+</histogram>
+
+<histogram name="Net.DNS.ProcTask.SuccessTime" units="ms">
+  <owner>mgersh@chromium.org</owner>
+  <summary>
+    Duration of time taken by ProcTask in resolutions that succeeded.
+  </summary>
+</histogram>
+
+<histogram name="Net.DNS.ResolveCategory" enum="ResolutionCategory">
+  <owner>mgersh@chromium.org</owner>
+  <summary>
+    Whether a DNS resolution (single HostResolverImpl::Job) succeeded or failed,
+    and whether it was speculative.
+  </summary>
+</histogram>
+
+<histogram name="Net.DNS.ResolveFailureTime" units="ms">
+  <owner>mgersh@chromium.org</owner>
+  <summary>
+    Duration of time taken by HostResolverImpl::Job in resolutions that failed.
+    This is the time to resolve a hostname from start to finish. The main
+    histogram and by-priority versions exclude speculative requests, which are
+    recorded in the _speculative version.
+  </summary>
+</histogram>
+
+<histogram name="Net.DNS.ResolveSuccessTime" units="ms">
+  <owner>mgersh@chromium.org</owner>
+  <summary>
+    Duration of time taken by HostResolverImpl::Job in resolutions that
+    succeeded. This is the time to resolve a hostname from start to finish. The
+    main histogram and by-priority versions exclude speculative requests, which
+    are recorded in the _speculative version.
   </summary>
 </histogram>
 
@@ -97794,6 +97913,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram name="Net.BidirectionalStream.TimeToSendStart"/>
 </histogram_suffixes>
 
+<histogram_suffixes name="Net.DNS.AddressFamily" separator=".">
+  <suffix name="IPV4" label="Requests for ADDRESS_FAMILY_IPV4."/>
+  <suffix name="IPV6" label="Requests for ADDRESS_FAMILY_IPV6."/>
+  <suffix name="UNSPEC" label="Requests for ADDRESS_FAMILY_UNSPEC."/>
+  <affected-histogram name="Net.DNS.ResolveFailureTime"/>
+  <affected-histogram name="Net.DNS.ResolveSuccessTime"/>
+</histogram_suffixes>
+
 <histogram_suffixes name="Net.DNS.Priorities" separator=".">
   <suffix name="THROTTLED" label="Jobs with priority THROTTLED."/>
   <suffix name="IDLE" label="Jobs with priority IDLE."/>
@@ -97807,6 +97934,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram_suffixes name="Net.DNS.Speculative" separator=".">
   <suffix name="Speculative" label="Speculative resolutions only."/>
+  <affected-histogram name="Net.DNS.ResolveFailureTime"/>
+  <affected-histogram name="Net.DNS.ResolveSuccessTime"/>
   <affected-histogram name="Net.DNS.TotalTime"/>
   <affected-histogram name="Net.DNS.TotalTimeNotCached"/>
 </histogram_suffixes>
