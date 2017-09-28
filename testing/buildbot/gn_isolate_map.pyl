@@ -563,7 +563,11 @@
   "ios_chrome_integration_egtests": {
     "label": "//ios/chrome/test/earl_grey:ios_chrome_integration_egtests",
     "type": "raw",
-    "args": [],
+    # TODO(crbug.com/435048): Remove this flag once the feature is implemented
+    # and enabled.
+    "args": [
+      "--enable-features=CredentialManager",
+    ],
   },
   "ios_chrome_payments_egtests": {
     "label": "//ios/chrome/test/earl_grey:ios_chrome_payments_egtests",
