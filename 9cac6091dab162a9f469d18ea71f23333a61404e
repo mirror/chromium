@@ -305,6 +305,24 @@
     },
     {
       "key": {
+        "uuid": "e9675fd0_cf5a4a92",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 16
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-28T16:02:00Z",
+      "side": 1,
+      "message": "That sounds good for me (i.e. have the ARM (C) added here).",
+      "parentUuid": "fb2f5a9e_3256574c",
+      "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97702a1c_7079702a",
         "filename": "third_party/zlib/adler32_simd.c",
         "patchSetId": 16
