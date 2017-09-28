@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "0a7d35b3_1923c192",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-28T18:04:37Z",
+      "side": 1,
+      "message": "\u003e \" I\u0027m less certain about this case, because in this case the effect of the pause is likely to be a no-op; no data is actually going to be read because of the pause, so we\u0027re over-counting bytes \"\n\n\nI am not quite sure I have understood your idea here. Let me try to clarify:\nImagine, when the Pause request arrives, there have been completed reads from |url_requests_| and the total number is __X__ bytes. However, there is a pending read at that point, so we delay reporting.\n\nLater, we get here while the read is still pending (very likely, it is because the user closes the data pipe consumer end). In this case, we still have to report __X__ as the histogram value. The pending read may or may not have caused any more data being cached, but there is no way to know at this point. And I don\u0027t worry too much about that.\n\nWDYT? Thanks!",
+      "parentUuid": "2640a526_077bb19c",
+      "range": {
+        "startLine": 484,
+        "startChar": 4,
+        "endLine": 484,
+        "endChar": 30
+      },
+      "revId": "0808f972c9bd445db5df5287b13fd957db4091f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b12c8443_be6b3cd1",
         "filename": "content/network/url_loader_impl.cc",
         "patchSetId": 2
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "Ah, good point; missed the multiple calls possibility. \n\nSo in my opinion we should guarantee reporting this stat exactly once per request that ReportBodyReadBeforePaused() is called on; does that match your understanding?  Specifically, I think if we can call it multiple times on one request, that\u0027ll mess up our statistics--I think we\u0027ll bias towards too many cases in which the pause happened before any bytes were read.  I could imagine an argument that we want to report once per pause, even if it\u0027s called multiple times per request, but I\u0027d like to see that argument written out.  Naively, we\u0027re only racing reading from the network with the last SB check on a redirect chain, so that\u0027s the only one I care about whether we got bytes despite pausing for.  WDYT?",
       "parentUuid": "d62332a4_dc82414d",
+      "range": {
+        "startLine": 541,
+        "startChar": 20,
+        "endLine": 541,
+        "endChar": 46
+      },
+      "revId": "0808f972c9bd445db5df5287b13fd957db4091f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3a712ed_c0cdc286",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-28T18:04:37Z",
+      "side": 1,
+      "message": "Yeah,I think I can see your point.\nI am fine changing it to one value per request.\nDone.",
+      "parentUuid": "c8229b67_a2c9fbde",
       "range": {
         "startLine": 541,
         "startChar": 20,
