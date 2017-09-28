@@ -214,6 +214,10 @@ executable("wayland_simple_client") {
     "//base",
     "//build/config:exe_and_shlib_deps",
   ]
+
+  if (ozone_platform_gbm) {
+    defines = [ "OZONE_PLATFORM_GBM" ]
+  }
 }
 
 executable("wayland_subsurface_client") {
