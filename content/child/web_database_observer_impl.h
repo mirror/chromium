@@ -7,7 +7,7 @@
 
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
-#include "ipc/ipc_sync_message_filter.h"
+#include "content/common/web_database.mojom.h"
 #include "storage/common/database/database_connections.h"
 #include "third_party/WebKit/public/platform/WebDatabaseObserver.h"
 
@@ -19,7 +19,7 @@ namespace content {
 
 class WebDatabaseObserverImpl : public blink::WebDatabaseObserver {
  public:
-  explicit WebDatabaseObserverImpl(IPC::SyncMessageFilter* sender);
+  explicit WebDatabaseObserverImpl(content::mojom::WebDatabaseHost&);
   virtual ~WebDatabaseObserverImpl();
 
   void DatabaseOpened(const blink::WebSecurityOrigin& origin,
@@ -67,7 +67,7 @@ class WebDatabaseObserverImpl : public blink::WebDatabaseObserver {
                          const blink::WebString& database_name,
                          int error);
 
-  scoped_refptr<IPC::SyncMessageFilter> sender_;
+  content::mojom::WebDatabaseHost& web_database_host_;
   scoped_refptr<storage::DatabaseConnectionsWrapper> open_connections_;
   scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner_;
 
