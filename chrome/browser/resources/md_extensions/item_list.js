@@ -15,6 +15,9 @@ cr.define('extensions', function() {
       /** @type {extensions.ItemDelegate} */
       delegate: Object,
 
+      /** @type {?HTMLElement} */
+      scrollTarget: Object,
+
       inDevMode: {
         type: Boolean,
         value: false,
