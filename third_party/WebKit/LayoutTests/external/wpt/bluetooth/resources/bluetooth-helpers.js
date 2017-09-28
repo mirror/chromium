@@ -18,15 +18,17 @@ function loadScripts(paths) {
 }
 
 function loadChromiumResources() {
-  let root = window.location.pathname.match(/.*LayoutTests/);
-  let resource_prefix = `${root}/resources`;
-  let gen_prefix = 'file:///gen/';
+  let prefix = '/resources/chromium';
+  if (window.location.pathname.includes('/LayoutTests/')) {
+    let root = window.location.pathname.match(/.*LayoutTests/);
+    prefix = `file://${root}/external/wpt/resources/chromium`;
+  }
   return loadScripts([
-    `${gen_prefix}/layout_test_data/mojo/public/js/mojo_bindings.js`,
-    `${gen_prefix}/content/test/data/mojo_layouttest_test.mojom.js`,
-    `${gen_prefix}/device/bluetooth/public/interfaces/uuid.mojom.js`,
-    `${gen_prefix}/device/bluetooth/public/interfaces/test/fake_bluetooth.mojom.js`,
-    `${resource_prefix}/bluetooth/web-bluetooth-test.js`,
+    `${prefix}/mojo_bindings.js`,
+    `${prefix}/mojo_layouttest_test.mojom.js`,
+    `${prefix}/uuid.mojom.js`,
+    `${prefix}/fake_bluetooth.mojom.js`,
+    `${prefix}/web-bluetooth-test.js`,
   ]);
 }
 
