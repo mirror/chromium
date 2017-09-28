@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "231f70c4_04b19aa4",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-28T18:09:21Z",
+      "side": 1,
+      "message": "nit: these are only logged if credit card fields are detected.\n\n// A drop down with credit card suggestions was shown...",
+      "revId": "1c5754f01f9573486133e712bef5034615022616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3e2a729_c9338819",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-28T18:09:21Z",
+      "side": 1,
+      "message": "nit: would be nice to add CC somewhere in these names (since they refer specifically to credit card suggestions).\n\ndownside... the names are getting kinda long and unwieldy.",
+      "revId": "1c5754f01f9573486133e712bef5034615022616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
