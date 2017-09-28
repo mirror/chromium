@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c29c81f2_6a872af8",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnitsLine.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-28T02:32:57Z",
+      "side": 1,
+      "message": "This function should also be templatized.",
+      "range": {
+        "startLine": 287,
+        "startChar": 11,
+        "endLine": 287,
+        "endChar": 42
+      },
+      "revId": "8083a9d9730a319b34234719d6ea0b21241ac950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f83366c2_8be6a011",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnitsTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1861,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-28T02:32:57Z",
+      "side": 1,
+      "message": "Sorry, I was wrong yesterday about linebreaking. Since divs are always laid out in different lines, there is no need to add width style.",
+      "range": {
+        "startLine": 1861,
+        "startChar": 12,
+        "endLine": 1861,
+        "endChar": 31
+      },
+      "revId": "8083a9d9730a319b34234719d6ea0b21241ac950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
