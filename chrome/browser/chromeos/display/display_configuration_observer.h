@@ -6,6 +6,7 @@
 #define CHROME_BROWSER_CHROMEOS_DISPLAY_DISPLAY_CONFIGURATION_OBSERVER_H_
 
 #include "ash/display/window_tree_host_manager.h"
+#include "ash/wm/tablet_mode/tablet_mode_observer.h"
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 
@@ -14,15 +15,23 @@ namespace chromeos {
 // DisplayConfigurationObserver observes and saves
 // the change of display configurations.
 class DisplayConfigurationObserver
-    : public ash::WindowTreeHostManager::Observer {
+    : public ash::WindowTreeHostManager::Observer,
+      public ash::TabletModeObserver {
  public:
   DisplayConfigurationObserver();
   ~DisplayConfigurationObserver() override;
 
  protected:
-  // ash::WindowTreeHostManager::Observer overrides:
+  // ash::WindowTreeHostManager::Observer:
   void OnDisplaysInitialized() override;
   void OnDisplayConfigurationChanged() override;
+
+  // ash::TabletModeObserver:
+  void OnTabletModeStarted() override;
+  void OnTabletModeEnded() override;
+
+  bool suppressed_ = false;
+  bool was_in_mirror_mode_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(DisplayConfigurationObserver);
 };
