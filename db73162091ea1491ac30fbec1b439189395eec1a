@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d494f0f6_c7bf4d0e",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 3822,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-28T14:24:31Z",
+      "side": 1,
+      "message": "It seems to me that this entire BeginFrameCallbacks infrastructure is dead code. Happy to split this out into another patch but I\u0027d like to see at least LayerTreeHostImpl::ProcessLayerTreeMutations go away since that is explicitly CompositorWorker related code.\n\nAnimationWorklet will most likely have explicit code in BeginMainFrame for syncing the time values back rather than using arbitrary callbacks as we did for CompositorProxies.",
+      "revId": "db73162091ea1491ac30fbec1b439189395eec1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cdf75ff_16ba3058",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorClient.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-28T14:24:31Z",
+      "side": 1,
+      "message": "Add TODO referencing removal bug to remove this as well. Can be done in a separate patch of course.",
+      "revId": "db73162091ea1491ac30fbec1b439189395eec1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6942079c_810a6f2c",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutatorClientTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-28T14:24:31Z",
+      "side": 1,
+      "message": "This file is now empty - remove please :-)",
+      "revId": "db73162091ea1491ac30fbec1b439189395eec1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
