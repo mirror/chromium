@@ -16,6 +16,7 @@
 #include "base/timer/timer.h"
 #include "content/common/content_export.h"
 #include "content/network/cookie_manager_impl.h"
+#include "content/network/restricted_cookie_manager_impl.h"
 #include "content/public/common/network_service.mojom.h"
 #include "content/public/common/url_loader_factory.mojom.h"
 #include "mojo/public/cpp/bindings/binding.h"
@@ -141,6 +142,7 @@ class CONTENT_EXPORT NetworkContext : public mojom::NetworkContext {
   mojo::Binding<mojom::NetworkContext> binding_;
 
   std::unique_ptr<CookieManagerImpl> cookie_manager_;
+  std::unique_ptr<RestrictedCookieManagerImpl> restricted_cookie_manager_;
 
   // Owned by |owned_url_request_context_|. May be nullptr.
   net::HttpServerPropertiesManager* http_server_properties_manager_ = nullptr;
