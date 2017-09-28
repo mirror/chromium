@@ -31,13 +31,20 @@ MediaControlsResourceLoader::MediaControlsResourceLoader()
 MediaControlsResourceLoader::~MediaControlsResourceLoader(){};
 
 String MediaControlsResourceLoader::GetMediaControlsCSS() const {
-  return ResourceBundleHelper::GetResourceAsString(
-      IDR_UASTYLE_MEDIA_CONTROLS_CSS);
+  if (RuntimeEnabledFeatures::ModernMediaControlsEnabled()) {
+    return ResourceBundleHelper::GetResourceAsString(
+        IDR_UASTYLE_MODERN_MEDIA_CONTROLS_CSS);
+  } else {
+    return ResourceBundleHelper::GetResourceAsString(
+        IDR_UASTYLE_LEGACY_MEDIA_CONTROLS_CSS);
+  }
 };
 
 String MediaControlsResourceLoader::GetMediaControlsAndroidCSS() const {
+  if (RuntimeEnabledFeatures::ModernMediaControlsEnabled())
+    return String();
   return ResourceBundleHelper::UncompressResourceAsString(
-      IDR_UASTYLE_MEDIA_CONTROLS_ANDROID_CSS);
+      IDR_UASTYLE_LEGACY_MEDIA_CONTROLS_ANDROID_CSS);
 };
 
 String MediaControlsResourceLoader::GetUAStyleSheet() {
