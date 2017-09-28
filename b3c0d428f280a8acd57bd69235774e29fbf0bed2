@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "1d025c24_1c7c2f3a",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasResourceProvider.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-09-28T17:21:30Z",
+      "side": 1,
+      "message": "If context_provider_wrapper can change any time, is this line still correct? This one sets the wrapper only when wrapper is null or texture id is 0.",
+      "revId": "b3c0d428f280a8acd57bd69235774e29fbf0bed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7115799a_3f0a3257",
         "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasResourceProvider.cpp",
         "patchSetId": 2
