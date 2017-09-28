@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5dcbe36d_cbb3cec5",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-28T18:20:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "231f70c4_04b19aa4",
+      "revId": "1c5754f01f9573486133e712bef5034615022616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3e2a729_c9338819",
         "filename": "components/autofill/core/browser/autofill_metrics.h",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "1c5754f01f9573486133e712bef5034615022616",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fc29b1d_270000bb",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-28T18:20:34Z",
+      "side": 1,
+      "message": "Yeah. Prefer not adding CC:\n1) Adding CC will make the names hard to read. \n2) I think the suffix and comments above already indicated that this should be CC form.\n3) People will understand when they see these metrics being zero in the address histogram.",
+      "parentUuid": "c3e2a729_c9338819",
+      "revId": "1c5754f01f9573486133e712bef5034615022616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
