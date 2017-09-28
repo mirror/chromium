@@ -126,6 +126,10 @@ public class SuggestionsRecyclerView extends RecyclerView {
         mTouchEnabled = enabled;
     }
 
+    public boolean isTouchEnabled() {
+        return mTouchEnabled;
+    }
+
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         mGestureDetector.onTouchEvent(ev);

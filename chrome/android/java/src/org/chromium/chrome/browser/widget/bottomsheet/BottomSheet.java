@@ -29,6 +29,7 @@ import android.widget.PopupWindow.OnDismissListener;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.Callback;
+import org.chromium.base.Log;
 import org.chromium.base.ObserverList;
 import org.chromium.base.SysUtils;
 import org.chromium.base.VisibleForTesting;
@@ -329,6 +330,10 @@ public class BottomSheet
          * Called to scroll to the top of {@link BottomSheetContent}.
          */
         void scrollToTop();
+
+        default boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+            return false;
+        }
     }
 
     /**
@@ -361,6 +366,10 @@ public class BottomSheet
             if (!mIsScrolling && slope < MIN_VERTICAL_SCROLL_SLOPE) {
                 mVelocityTracker.clear();
                 return false;
+            }
+
+            if (mSheetContent != null && mSheetContent.onScroll(e1, e2, distanceX, distanceY)) {
+                return true;
             }
 
             // Cancel the settling animation if it is running so it doesn't conflict with where the
@@ -590,6 +599,7 @@ public class BottomSheet
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent e) {
+//        Log.w("mvano", "BottomSheet onInterceptTouchEvent motionEvent: %s", e);
         // If touch is disabled, act like a black hole and consume touch events without doing
         // anything with them.
         if (!mIsTouchEnabled) return true;
@@ -606,6 +616,7 @@ public class BottomSheet
 
     @Override
     public boolean onTouchEvent(MotionEvent e) {
+//        Log.w("mvano", "BottomSheet onTouchEvent motionEvent: %s", e);
         // If touch is disabled, act like a black hole and consume touch events without doing
         // anything with them.
         if (!mIsTouchEnabled) return true;
@@ -1573,7 +1584,7 @@ public class BottomSheet
         return prevState;
     }
 
-    private boolean isSmallScreen() {
+    public boolean isSmallScreen() {
         // A small screen is defined by there being less than 160dp between half and full states.
         float fullToHalfDiff = (getFullRatio() - getHalfRatio()) * mContainerHeight;
         return fullToHalfDiff < mMinHalfFullDistance;
