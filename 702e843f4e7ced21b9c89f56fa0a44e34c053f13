@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d5174ab_1435b200",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-28T20:43:56Z",
+      "side": 1,
+      "message": "An invitation to use \u003d\u003e arrow notation, not a required change:\n\nresponse.statuses.forEach((value, key) \u003d\u003e {",
+      "revId": "702e843f4e7ced21b9c89f56fa0a44e34c053f13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b8288b9_f3b32b4e",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-28T20:43:56Z",
+      "side": 1,
+      "message": "Iff this will be localized for i18n this won\u0027t work, but I\u0027m guessing this page is not intended to be localized.",
+      "revId": "702e843f4e7ced21b9c89f56fa0a44e34c053f13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42710726_5aaca755",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-28T20:43:56Z",
+      "side": 1,
+      "message": "This comment seems unnecessary.\nMaybe delete it; or say who changes the value; or say something about how it\u0027s used(?).",
+      "revId": "702e843f4e7ced21b9c89f56fa0a44e34c053f13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83bce86c_ec949d93",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-28T20:43:56Z",
+      "side": 1,
+      "message": "This could be constexpr if ya like being more specific (an invitation, not a required change).\n\n(constexpr could also be used on lines 19 to 26 above).",
+      "revId": "702e843f4e7ced21b9c89f56fa0a44e34c053f13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcd1caa6_1f490e4d",
+        "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-28T20:43:56Z",
+      "side": 1,
+      "message": "Can we so {!Map} here and above (is map allowed to be null?).",
+      "revId": "702e843f4e7ced21b9c89f56fa0a44e34c053f13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9603906f_1cedbbc4",
+        "filename": "chrome/test/data/webui/interventions_internals_browsertest.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-28T20:43:56Z",
+      "side": 1,
+      "message": "Consider using arrow here \u003d\u003e",
+      "revId": "702e843f4e7ced21b9c89f56fa0a44e34c053f13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
