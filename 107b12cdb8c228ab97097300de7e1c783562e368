@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "989d0c10_8a209703",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-28T16:09:57Z",
+      "side": 1,
+      "message": "s/does/is",
+      "range": {
+        "startLine": 852,
+        "startChar": 10,
+        "endLine": 852,
+        "endChar": 14
+      },
+      "revId": "107b12cdb8c228ab97097300de7e1c783562e368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc5123d4_ab59d602",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2096,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-28T16:09:57Z",
+      "side": 1,
+      "message": "I find the below block of code confusing for a couple of reasons.\n\n1) If every form is either a credit card for or address form, then instead of checking \"if (has_credit_card_form || has_address_form)\" this should probably keep the logic of \"if (!forms.empty())\".\n\n2) What if there are three forms on the page - shipping address, billing address, and payments info.  What does this log?  \"Loaded a credit card form\" + \"Loaded a address form\"?  Does it matter that it logs \"address form loaded\" even though we had two of them?",
+      "revId": "107b12cdb8c228ab97097300de7e1c783562e368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e3c98fe_05142f17",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 93583,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-28T16:09:57Z",
+      "side": 1,
+      "message": "https://cs.chromium.org/chromium/src/tools/metrics/histograms/enums.xml?l\u003d2385\u0026rcl\u003dd909eb8729040c2d81b8953312c274245d97031a\n\nCan you make a corresponding enums.xml change with a \u003csummary\u003e tag that mentions what this does, and that UserHappiness moved to UserHappiness.Address and UserHappiness.CreditCard in M63?",
+      "revId": "107b12cdb8c228ab97097300de7e1c783562e368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
