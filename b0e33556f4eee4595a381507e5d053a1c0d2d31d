@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "005e4902_f19a6cae",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwContents.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 1064,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-09-28T06:29:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edd0f92b_f79112a7",
+      "revId": "b0e33556f4eee4595a381507e5d053a1c0d2d31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc6c459d_42ae6d74",
         "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
         "patchSetId": 28
@@ -33,6 +51,24 @@
       "revId": "b0e33556f4eee4595a381507e5d053a1c0d2d31d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc443fcb_c39976f5",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-09-28T06:29:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc6c459d_42ae6d74",
+      "revId": "b0e33556f4eee4595a381507e5d053a1c0d2d31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3df02b9f_37ac1f69",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-09-28T06:29:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d96ba073_894661ee",
+      "revId": "b0e33556f4eee4595a381507e5d053a1c0d2d31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fde0801_ba74ac0e",
         "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
         "patchSetId": 28
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-28T04:38:49Z",
       "side": 1,
       "message": "hmm, should assert somehow that this can be called at most once",
+      "revId": "b0e33556f4eee4595a381507e5d053a1c0d2d31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d2d0019_9f0d709c",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-09-28T06:29:59Z",
+      "side": 1,
+      "message": "Used instanceof operator to check the current type. Let me know if this is not a preferable way.",
+      "parentUuid": "7fde0801_ba74ac0e",
       "revId": "b0e33556f4eee4595a381507e5d053a1c0d2d31d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
