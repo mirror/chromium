@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b9e2b5e_6e7accf5",
+        "filename": "content/browser/loader/resource_dispatcher_host_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1250,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-28T12:13:14Z",
+      "side": 1,
+      "message": "I thought we were shifting away from using the RVH concept.  Could you explain a bit about why you\u0027re using GRVH here and GMF elsewhere?  (Other than consistency with the next line?",
+      "range": {
+        "startLine": 1250,
+        "startChar": 21,
+        "endLine": 1250,
+        "endChar": 38
+      },
+      "revId": "4dd0eb015ea1e26eb3830dc68ce56c08af52f934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
