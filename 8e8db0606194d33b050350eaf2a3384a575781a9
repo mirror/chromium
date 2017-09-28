@@ -52,6 +52,24 @@
       "revId": "8e8db0606194d33b050350eaf2a3384a575781a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e52bf31e_9dc91113",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/TileGridLayoutTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-28T18:27:05Z",
+      "side": 1,
+      "message": "All right, documented and removed the orientation constant check",
+      "parentUuid": "56180fe5_4b8da698",
+      "revId": "8e8db0606194d33b050350eaf2a3384a575781a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
