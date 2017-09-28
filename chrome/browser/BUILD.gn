@@ -1335,6 +1335,8 @@ split_static_library("browser") {
     "speech/tts_win.cc",
     "ssl/bad_clock_blocking_page.cc",
     "ssl/bad_clock_blocking_page.h",
+    "ssl/captive_portal_util.h",
+    "ssl/captive_portal_util_win.cc",
     "ssl/cert_report_helper.cc",
     "ssl/cert_report_helper.h",
     "ssl/chrome_expect_ct_reporter.cc",

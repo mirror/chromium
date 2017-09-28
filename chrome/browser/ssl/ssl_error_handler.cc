@@ -812,6 +812,12 @@ void SSLErrorHandler::StartHandlingError() {
 
   RecordSuperfishUMA(ssl_info_.cert);
 
+  if (chrome::GetIsCaptivePortal()) {
+    ShowCaptivePortalInterstitial(
+        GURL(captive_portal::CaptivePortalDetector::kDefaultURL));
+    return;
+  }
+
   if (ssl_errors::ErrorInfo::NetErrorToErrorType(cert_error_) ==
       ssl_errors::ErrorInfo::CERT_DATE_INVALID) {
     HandleCertDateInvalidError();
