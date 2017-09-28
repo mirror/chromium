@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "7950d880_b202fe28",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerFilter.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-09-28T21:16:00Z",
+      "side": 1,
+      "message": "Switched to using the toolbar.",
+      "parentUuid": "c537cd02_dff64a61",
+      "revId": "a8c3030d4684567fe5596053b6205fbee8daa855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f9884ca_927d5110",
         "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkersView.js",
         "patchSetId": 2
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "6bec20e2_b74e69b0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkersView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-09-28T21:16:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f9884ca_927d5110",
+      "revId": "a8c3030d4684567fe5596053b6205fbee8daa855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11fcb2c7_28bf0cdb",
         "filename": "third_party/WebKit/Source/devtools/front_end/resources/serviceWorkerFilter.css",
         "patchSetId": 2
@@ -68,6 +104,24 @@
       "revId": "a8c3030d4684567fe5596053b6205fbee8daa855",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b47c756_b5a9edf1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/serviceWorkerFilter.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-09-28T21:16:00Z",
+      "side": 1,
+      "message": "I removed half of it now that the toolbar is used. Rest is styling the toggle.",
+      "parentUuid": "11fcb2c7_28bf0cdb",
+      "revId": "a8c3030d4684567fe5596053b6205fbee8daa855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
