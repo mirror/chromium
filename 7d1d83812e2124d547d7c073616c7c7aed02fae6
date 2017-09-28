@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd6de15f_7da917ea",
+        "filename": "base/allocator/partition_allocator/address_space_randomization.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-09-28T14:34:38Z",
+      "side": 0,
+      "message": "This is only 42 bits.",
+      "range": {
+        "startLine": 100,
+        "startChar": 12,
+        "endLine": 100,
+        "endChar": 27
+      },
+      "revId": "7d1d83812e2124d547d7c073616c7c7aed02fae6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79016c37_2d97446d",
+        "filename": "base/allocator/partition_allocator/address_space_randomization.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-09-28T14:34:38Z",
+      "side": 0,
+      "message": "This potentially increases the address range, but for Windows before 8.10.",
+      "range": {
+        "startLine": 108,
+        "startChar": 0,
+        "endLine": 110,
+        "endChar": 3
+      },
+      "revId": "7d1d83812e2124d547d7c073616c7c7aed02fae6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "530b740e_4232a806",
+        "filename": "base/allocator/partition_allocator/address_space_randomization.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-09-28T14:34:38Z",
+      "side": 0,
+      "message": "46 bits",
+      "range": {
+        "startLine": 117,
+        "startChar": 12,
+        "endLine": 117,
+        "endChar": 29
+      },
+      "revId": "7d1d83812e2124d547d7c073616c7c7aed02fae6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
