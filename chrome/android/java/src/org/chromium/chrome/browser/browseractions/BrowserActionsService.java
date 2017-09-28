@@ -20,6 +20,7 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeTabbedActivity;
 import org.chromium.chrome.browser.IntentHandler;
+import org.chromium.chrome.browser.LaunchIntentDispatcher;
 import org.chromium.chrome.browser.document.ChromeLauncherActivity;
 import org.chromium.chrome.browser.notifications.ChromeNotificationBuilder;
 import org.chromium.chrome.browser.notifications.NotificationBuilderFactory;
@@ -115,7 +116,7 @@ public class BrowserActionsService extends Service {
                 launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 launchIntent.setClass(context, ChromeLauncherActivity.class);
                 launchIntent.putExtra(
-                        ChromeLauncherActivity.EXTRA_IS_ALLOWED_TO_RETURN_TO_PARENT, false);
+                        LaunchIntentDispatcher.EXTRA_IS_ALLOWED_TO_RETURN_TO_PARENT, false);
                 IntentUtils.safeStartActivity(context, launchIntent);
             }
 
