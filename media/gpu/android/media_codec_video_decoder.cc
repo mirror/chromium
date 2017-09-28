@@ -94,8 +94,6 @@ PendingDecode::PendingDecode(PendingDecode&& other) = default;
 PendingDecode::~PendingDecode() = default;
 
 MediaCodecVideoDecoder::MediaCodecVideoDecoder(
-    scoped_refptr<base::SingleThreadTaskRunner> gpu_task_runner,
-    base::Callback<gpu::GpuCommandBufferStub*()> get_stub_cb,
     VideoFrameFactory::OutputWithReleaseMailboxCB output_cb,
     DeviceInfo* device_info,
     AVDACodecAllocator* codec_allocator,
@@ -104,10 +102,7 @@ MediaCodecVideoDecoder::MediaCodecVideoDecoder(
     RequestOverlayInfoCB request_overlay_info_cb,
     std::unique_ptr<VideoFrameFactory> video_frame_factory,
     std::unique_ptr<service_manager::ServiceContextRef> context_ref)
-    : state_(State::kInitializing),
-      output_cb_(output_cb),
-      gpu_task_runner_(gpu_task_runner),
-      get_stub_cb_(get_stub_cb),
+    : output_cb_(output_cb),
       codec_allocator_(codec_allocator),
       request_overlay_info_cb_(std::move(request_overlay_info_cb)),
       surface_chooser_(std::move(surface_chooser)),
@@ -131,7 +126,7 @@ void MediaCodecVideoDecoder::Destroy() {
   // Mojo callbacks require that they're run before destruction.
   if (reset_cb_)
     reset_cb_.Run();
-  // Cancel pending codec creation.
+  // Cancel callbacks we no longer want.
   codec_allocator_weak_factory_.InvalidateWeakPtrs();
   ClearPendingDecodes(DecodeStatus::ABORTED);
   StartDrainingCodec(DrainType::kForDestroy);
@@ -191,9 +186,8 @@ void MediaCodecVideoDecoder::OnKeyAdded() {
 void MediaCodecVideoDecoder::StartLazyInit() {
   DVLOG(2) << __func__;
   video_frame_factory_->Initialize(
-      gpu_task_runner_, get_stub_cb_,
       base::Bind(&MediaCodecVideoDecoder::OnVideoFrameFactoryInitialized,
-                 weak_factory_.GetWeakPtr()));
+                 base::Unretained(this)));
 }
 
 void MediaCodecVideoDecoder::OnVideoFrameFactoryInitialized(
@@ -474,7 +468,7 @@ bool MediaCodecVideoDecoder::QueueInput() {
 
 bool MediaCodecVideoDecoder::DequeueOutput() {
   DVLOG(4) << __func__;
-  if (!codec_ || waiting_for_key_)
+  if (!codec_ || codec_->IsDrained() || waiting_for_key_)
     return false;
 
   // If a surface transition is pending, wait for all outstanding buffers to be
@@ -509,11 +503,9 @@ bool MediaCodecVideoDecoder::DequeueOutput() {
   if (eos) {
     DVLOG(2) << "DequeueOutputBuffer(): EOS";
     if (eos_decode_cb_) {
-      // Note: It's important to post |eos_decode_cb_| through the gpu task
-      // runner to ensure it follows all previous outputs.
-      gpu_task_runner_->PostTaskAndReply(
-          FROM_HERE, base::Bind(&base::DoNothing),
-          base::Bind(base::ResetAndReturn(&eos_decode_cb_), DecodeStatus::OK));
+      // Guarantee that the EOS DecodeCB is run after all previous frames.
+      video_frame_factory_->RunAfterPendingVideoFrames(base::Bind(
+          &MediaCodecVideoDecoder::RunEosDecodeCb, base::Unretained(this)));
     }
     if (drain_type_)
       OnCodecDrained();
@@ -532,29 +524,21 @@ bool MediaCodecVideoDecoder::DequeueOutput() {
 
   video_frame_factory_->CreateVideoFrame(
       std::move(output_buffer), surface_texture_bundle_->surface_texture,
-      presentation_time, decoder_config_.natural_size(),
-      base::Bind(&MediaCodecVideoDecoder::ForwardVideoFrame,
-                 weak_factory_.GetWeakPtr(), reset_generation_));
+      presentation_time, decoder_config_.natural_size(), output_cb_);
   return true;
 }
 
-void MediaCodecVideoDecoder::ForwardVideoFrame(
-    int reset_generation,
-    VideoFrameFactory::ReleaseMailboxCB release_cb,
-    const scoped_refptr<VideoFrame>& frame) {
-  if (reset_generation_ == reset_generation)
-    output_cb_.Run(std::move(release_cb), frame);
+void MediaCodecVideoDecoder::RunEosDecodeCb() {
+  // If |eos_decode_cb_| was cleared, this callback should have been canceled.
+  DCHECK(eos_decode_cb_);
+  base::ResetAndReturn(&eos_decode_cb_).Run(DecodeStatus::OK);
 }
 
 void MediaCodecVideoDecoder::Reset(const base::Closure& closure) {
   DVLOG(2) << __func__;
-  reset_generation_++;
-  ClearPendingDecodes(DecodeStatus::ABORTED);
-  if (!codec_) {
-    closure.Run();
-    return;
-  }
+  video_frame_factory_->CancelPendingCallbacks();
   reset_cb_ = std::move(closure);
+  ClearPendingDecodes(DecodeStatus::ABORTED);
   StartDrainingCodec(DrainType::kForReset);
 }
 
@@ -597,7 +581,7 @@ void MediaCodecVideoDecoder::OnCodecDrained() {
     return;
   }
 
-  base::ResetAndReturn(&reset_cb_).Run();
+  std::move(reset_cb_).Run();
   FlushCodec();
 }
 
@@ -624,6 +608,7 @@ void MediaCodecVideoDecoder::ClearPendingDecodes(DecodeStatus status) {
   pending_decodes_.clear();
   if (eos_decode_cb_)
     base::ResetAndReturn(&eos_decode_cb_).Run(status);
+  video_frame_factory_->CancelPendingCallbacks();
 }
 
 void MediaCodecVideoDecoder::ReleaseCodec() {
