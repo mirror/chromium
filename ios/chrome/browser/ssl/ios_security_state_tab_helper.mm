@@ -63,6 +63,9 @@ IOSSecurityStateTabHelper::GetVisibleSecurityState() const {
       (ssl.content_status & web::SSLStatus::DISPLAYED_CREDIT_CARD_FIELD_ON_HTTP)
           ? true
           : false;
+  state->insecure_input_events.insecure_field_edited =
+      (ssl.content_status & web::SSLStatus::EDITED_FIELD_ON_HTTP) ? true
+                                                                  : false;
   state->is_incognito = web_state_->GetBrowserState()->IsOffTheRecord();
 
   return state;

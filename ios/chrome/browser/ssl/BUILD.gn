@@ -56,6 +56,7 @@ source_set("unit_tests") {
   testonly = true
   sources = [
     "ios_captive_portal_blocking_page_unittest.mm",
+    "ios_security_state_tab_helper_unittest.mm",
     "ios_ssl_error_handler_unittest.mm",
   ]
   deps = [

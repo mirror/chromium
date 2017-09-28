@@ -3766,6 +3766,18 @@ registerLoadRequestForURL:(const GURL&)requestURL
   _webStateImpl->OnVisibleSecurityStateChange();
 }
 
+- (void)didEditInsecureField {
+  DCHECK(!web::IsOriginSecure(self.webState->GetLastCommittedURL()));
+  web::NavigationItem* item =
+      _webStateImpl->GetNavigationManager()->GetLastCommittedItem();
+  bool bFieldPreviouslyEdited =
+      (item->GetSSL().content_status & web::SSLStatus::EDITED_FIELD_ON_HTTP);
+  if (!bFieldPreviouslyEdited) {
+    item->GetSSL().content_status |= web::SSLStatus::EDITED_FIELD_ON_HTTP;
+    _webStateImpl->OnVisibleSecurityStateChange();
+  }
+}
+
 - (void)handleSSLCertError:(NSError*)error
              forNavigation:(WKNavigation*)navigation {
   CHECK(web::IsWKWebViewSSLCertError(error));
