@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44f68ba8_5033940d",
+        "filename": "ios/chrome/browser/ui/commands/snackbar_commands.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-28T17:31:23Z",
+      "side": 1,
+      "message": "It feels like there are too many variants of this call.  Do you think we could get away with just two?  |showSnackbarWithMessage|, which uses all the default values, and one variant which requires the caller to specify everything?\n\nThe biggest downside there is that we\u0027d have to expose the default duration as a constant, so that callers could use it.  But I\u0027d like to avoid exposing methods for every combination of parameters.",
+      "revId": "6b4e633ad3a0aa7dcfcb7e4b48d9dcc9dae9a42e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05a3d0e2_de6ca469",
+        "filename": "ios/chrome/browser/ui/snackbar/snackbar_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-28T17:31:23Z",
+      "side": 1,
+      "message": "This is sort of what I\u0027d like to avoid, having parallel implementations for the various versions of this call.  It would be nice if all of the convenience methods ended up in one single implementation.",
+      "revId": "6b4e633ad3a0aa7dcfcb7e4b48d9dcc9dae9a42e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
