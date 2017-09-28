@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c55f0ba_c018d2d0",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_camera.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-28T17:16:34Z",
+      "side": 1,
+      "message": "nit: I don\u0027t know whether or not JS is smart enough to optimize CAPTURE_DURATION_MS / CAPTURE_INTERVAL_MS, but I\u0027m guessing not, we should probably pre-calculate that.",
+      "revId": "c8a3d4e1b789f9652fca90c494f4a4b14161b285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
