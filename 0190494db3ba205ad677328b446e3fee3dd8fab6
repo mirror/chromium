@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e7c13863_de13a7d5",
+        "filename": "net/http/http_stream_factory_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-09-28T16:58:57Z",
+      "side": 1,
+      "message": "Good idea! Done",
+      "parentUuid": "ee37a2dd_242c748a",
+      "revId": "0190494db3ba205ad677328b446e3fee3dd8fab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c08b8f4_d30449eb",
         "filename": "net/socket/client_socket_pool_base_unittest.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "0190494db3ba205ad677328b446e3fee3dd8fab6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b230818_9e9371e5",
+        "filename": "net/socket/client_socket_pool_base_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3709,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-09-28T16:58:57Z",
+      "side": 1,
+      "message": "We already have an expected motivation from EXPECT_EQ(motivation, static_cast\u003cMockClientSocket*\u003e(handle.socket())-\u003emotivation()) if a test fails. I\u0027ve added a scoped trace message as well.",
+      "parentUuid": "7c08b8f4_d30449eb",
+      "revId": "0190494db3ba205ad677328b446e3fee3dd8fab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
