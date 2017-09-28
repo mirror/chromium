@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5213c43_5960fa0f",
+        "filename": "components/ntp_snippets/contextual/contextual_suggestion.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-28T14:01:50Z",
+      "side": 1,
+      "message": "\"... directly, but through the service, which ...\" \n\nto avoid using fetch twice.",
+      "range": {
+        "startLine": 54,
+        "startChar": 66,
+        "endLine": 55,
+        "endChar": 58
+      },
+      "revId": "4c0e0482e5b9338ea65904bd743a6c49680c9769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
