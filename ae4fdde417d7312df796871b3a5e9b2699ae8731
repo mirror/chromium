@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f177cbf_9fce505e",
+        "filename": "content/browser/android/java/gin_java_bridge_message_filter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-28T17:27:17Z",
+      "side": 1,
+      "message": "yeah, GinBridge stuff needs to be fixed. doesn\u0027t look too hard. GinJavaBridgeDispatcherHost::InstallFilterAndRegisterAllRoutingIds right now assumes all frames of a webcontents belong to the same process. just need to fix that assumption.\n\nAnd From(GinBridge)Host doesn\u0027t make sense anymore. it should be From(RenderProcess)Host. Any place GinBridgeHost calls FromHost right now, it probably needs to iterate through all the processes instead.",
+      "revId": "ae4fdde417d7312df796871b3a5e9b2699ae8731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
