@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "642cdf81_ae202602",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-28T21:07:34Z",
+      "side": 1,
+      "message": "nit: Why are these defined as macros?  Unless you have a very compelling reason to do otherwise, please use C++ constants.",
+      "range": {
+        "startLine": 21,
+        "startChar": 79,
+        "endLine": 21,
+        "endChar": 0
+      },
+      "revId": "0c9ebbac09309168801505030909542df2c845eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
