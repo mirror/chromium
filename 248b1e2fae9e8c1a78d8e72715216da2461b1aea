@@ -16,6 +16,24 @@
       "revId": "248b1e2fae9e8c1a78d8e72715216da2461b1aea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "234c8e35_eba40c7f",
+        "filename": "extensions/renderer/messaging_bindings.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-28T16:03:16Z",
+      "side": 1,
+      "message": "I *think* that clang is smart enough to know that these values will always be the same and evaluate them at compile time, but constexpr makes that a guarantee of the language, rather than a compiler optimization, so using that sgtm. :)  Done.",
+      "parentUuid": "40be833b_64b2c8a4",
+      "revId": "248b1e2fae9e8c1a78d8e72715216da2461b1aea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
