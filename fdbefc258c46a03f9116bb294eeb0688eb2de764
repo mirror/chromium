@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "88cc4732_1cf336ea",
+        "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-28T20:50:54Z",
+      "side": 1,
+      "message": "nit: this word seems out of place.",
+      "range": {
+        "startLine": 36,
+        "startChar": 38,
+        "endLine": 36,
+        "endChar": 41
+      },
+      "revId": "fdbefc258c46a03f9116bb294eeb0688eb2de764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "86a1a696_f8a28453",
         "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory_impl_unittest.cc",
         "patchSetId": 1
@@ -13,6 +36,23 @@
       "writtenOn": "2017-09-28T19:10:52Z",
       "side": 1,
       "message": "There are already test helpers that can respond from the network, so you should not need to friend the class.  https://cs.chromium.org/chromium/src/components/offline_pages/core/prefetch/prefetch_request_test_base.h?rcl\u003dc91d4ca6224b4284a6ae14c08efddbb1144de67d\u0026l\u003d23",
+      "revId": "fdbefc258c46a03f9116bb294eeb0688eb2de764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faf349dd_0c1cd14a",
+        "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-28T20:50:54Z",
+      "side": 1,
+      "message": "As these are the only tests that check what\u0027s done with the callbacks form the conclusion of network operations, could you also check that the operation names have been properly cleaned up from the pending requests list? Test names should probably be more generic then.\n\nFor another CL: we should also test that when the maximum concurrent requests has been reached, operations resumes to normal once they are handled.",
       "revId": "fdbefc258c46a03f9116bb294eeb0688eb2de764",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -47,6 +87,24 @@
       "writtenOn": "2017-09-28T19:10:52Z",
       "side": 1,
       "message": "Could you please have separate histograms for GetOperation and for GeneratePageBundle?",
+      "revId": "fdbefc258c46a03f9116bb294eeb0688eb2de764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48c6a5a5_97cb49b8",
+        "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-28T20:50:54Z",
+      "side": 1,
+      "message": "We _could_ reuse the existing OfflinePrefechRetriableAction histogram suffix defined for all 3 existing retry-able pipeline actions. It includes these two but also DownloadInitiation. I personally don\u0027t think it would be bad to not have the latter used and, in fact, given the issues we\u0027re having with download initiation we might even chose to report that status too at some point.\n\nNot sure if this is a good idea but I wanted to offer this alternative to adding another mostly repeated entry in histograms.xml.",
+      "parentUuid": "59c99fe3_731b2fe6",
       "revId": "fdbefc258c46a03f9116bb294eeb0688eb2de764",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
