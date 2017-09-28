@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fd9fb9c_f580f8aa",
+        "filename": "ios/chrome/browser/net/http_server_properties_manager_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-28T23:39:22Z",
+      "side": 1,
+      "message": "I hope to remove this in a followup CL, when I rework the PrefDelegate API a little.",
+      "revId": "1c4db0e1cbdbe66a0c11f3dd3e7eaa2cdec168c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
