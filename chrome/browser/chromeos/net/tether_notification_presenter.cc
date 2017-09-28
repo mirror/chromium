@@ -21,6 +21,7 @@
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/gfx/vector_icon_types.h"
 #include "ui/message_center/message_center.h"
+#include "ui/message_center/notification.h"
 #include "ui/message_center/notification_types.h"
 #include "ui/message_center/notifier_settings.h"
 
@@ -30,11 +31,8 @@ namespace tether {
 
 namespace {
 
-// Mean value of NetworkStat's signal_strength() range.
+// Mean value of NetworkState's signal_strength() range.
 const int kMediumSignalStrength = 50;
-
-// Dimensions of Tether notification icon in pixels.
-constexpr gfx::Size kTetherSignalIconSize(40, 40);
 
 const char kTetherSettingsSubpage[] = "networks?type=Tether";
 
@@ -50,61 +48,54 @@ class SettingsUiDelegateImpl
   }
 };
 
-// Gets the normalized signal strength that can range from 0 to 4. This return
-// value is then used to get an appropriate image to display on the
-// notification.  Defaults to full signal strength (4) if |signal_strength|
-// is out of bounds.
-int GetNormalizedSignalStrength(int signal_strength) {
-  int normalized_signal_strength = signal_strength / 25;
-  return std::min(std::max(normalized_signal_strength, 0), 4);
-}
+// Returns the icon to use for a network with the given signal strength, which
+// should range from 0 to 100 (inclusive).
+const gfx::VectorIcon& GetIconForSignalStrength(int signal_strength) {
+  // Convert the [0, 100] range to [0, 4], since there are 5 distinct signal
+  // strength icons (0 bars to 4 bars).
+  int normalized_signal_strength =
+      std::min(std::max(signal_strength / 25, 0), 4);
 
-std::unique_ptr<message_center::Notification> CreateNotificationWithBadge(
-    const std::string& id,
-    const base::string16& title,
-    const base::string16& message,
-    const message_center::RichNotificationData& rich_notification_data,
-    int signal_strength,
-    const gfx::VectorIcon& badge) {
-  gfx::ImageSkia icon = gfx::CanvasImageSource::MakeImageSkia<
-      ash::network_icon::SignalStrengthImageSource>(
-      ash::network_icon::BARS, gfx::kGoogleBlue500, kTetherSignalIconSize,
-      GetNormalizedSignalStrength(signal_strength));
-
-  if (!badge.is_empty()) {
-    gfx::ImageSkia badge_icon = gfx::CreateVectorIcon(
-        badge, kTetherSignalIconSize.height(), gfx::kGoogleRed700);
-    icon = gfx::ImageSkiaOperations::CreateIconWithBadge(icon, badge_icon);
+  switch (normalized_signal_strength) {
+    case 0:
+      return kNotificationCellular0BarIcon;
+    case 1:
+      return kNotificationCellular1BarIcon;
+    case 2:
+      return kNotificationCellular2BarIcon;
+    case 3:
+      return kNotificationCellular3BarIcon;
+    case 4:
+      return kNotificationCellular4BarIcon;
+    default:
+      NOTREACHED();
+      return std::move(gfx::VectorIcon());
   }
-
-  auto notification = base::MakeUnique<message_center::Notification>(
-      message_center::NotificationType::NOTIFICATION_TYPE_SIMPLE, id, title,
-      message, gfx::Image(icon), base::string16() /* display_source */,
-      GURL() /* origin_url */,
-      message_center::NotifierId(
-          message_center::NotifierId::NotifierType::SYSTEM_COMPONENT,
-          ash::system_notifier::kNotifierTether),
-      rich_notification_data, nullptr);
-  notification->SetSystemPriority();
-  return notification;
 }
 
 std::unique_ptr<message_center::Notification> CreateNotification(
     const std::string& id,
     const base::string16& title,
     const base::string16& message,
-    const message_center::RichNotificationData& rich_notification_data,
-    int signal_strength) {
-  return CreateNotificationWithBadge(id, title, message, rich_notification_data,
-                                     signal_strength, gfx::VectorIcon());
-}
+    const gfx::VectorIcon& small_icon,
+    const message_center::RichNotificationData& rich_notification_data =
+        message_center::RichNotificationData()) {
+  // If the notification icon is the "alert" icon, use the warning level;
+  // otherwise, use the normal level.
+  message_center::SystemNotificationWarningLevel warning_level =
+      (&small_icon == &kNotificationCellularAlertIcon)
+          ? message_center::SystemNotificationWarningLevel::WARNING
+          : message_center::SystemNotificationWarningLevel::NORMAL;
 
-std::unique_ptr<message_center::Notification>
-CreateNotificationWithMediumSignalStrengthIcon(const std::string& id,
-                                               const base::string16& title,
-                                               const base::string16& message) {
-  return CreateNotification(id, title, message, {} /* rich_notification_data */,
-                            kMediumSignalStrength);
+  return message_center::Notification::CreateSystemNotification(
+      message_center::NotificationType::NOTIFICATION_TYPE_SIMPLE, id, title,
+      message, gfx::Image() /* icon */, base::string16() /* display_source */,
+      GURL() /* origin_url */,
+      message_center::NotifierId(
+          message_center::NotifierId::NotifierType::SYSTEM_COMPONENT,
+          ash::system_notifier::kNotifierTether),
+      rich_notification_data, nullptr /* delegate */, small_icon,
+      warning_level);
 }
 
 }  // namespace
@@ -160,6 +151,7 @@ void TetherNotificationPresenter::NotifyPotentialHotspotNearby(
   rich_notification_data.buttons.push_back(
       message_center::ButtonInfo(l10n_util::GetStringUTF16(
           IDS_TETHER_NOTIFICATION_WIFI_AVAILABLE_ONE_DEVICE_CONNECT)));
+
   ShowNotification(CreateNotification(
       kPotentialHotspotNotificationId,
       l10n_util::GetStringUTF16(
@@ -167,7 +159,7 @@ void TetherNotificationPresenter::NotifyPotentialHotspotNearby(
       l10n_util::GetStringFUTF16(
           IDS_TETHER_NOTIFICATION_WIFI_AVAILABLE_ONE_DEVICE_MESSAGE,
           base::ASCIIToUTF16(remote_device.name)),
-      rich_notification_data, signal_strength));
+      GetIconForSignalStrength(signal_strength), rich_notification_data));
 }
 
 void TetherNotificationPresenter::NotifyMultiplePotentialHotspotsNearby() {
@@ -177,12 +169,13 @@ void TetherNotificationPresenter::NotifyMultiplePotentialHotspotsNearby() {
 
   hotspot_nearby_device_id_.reset();
 
-  ShowNotification(CreateNotificationWithMediumSignalStrengthIcon(
+  ShowNotification(CreateNotification(
       kPotentialHotspotNotificationId,
       l10n_util::GetStringUTF16(
           IDS_TETHER_NOTIFICATION_WIFI_AVAILABLE_MULTIPLE_DEVICES_TITLE),
       l10n_util::GetStringUTF16(
-          IDS_TETHER_NOTIFICATION_WIFI_AVAILABLE_MULTIPLE_DEVICES_MESSAGE)));
+          IDS_TETHER_NOTIFICATION_WIFI_AVAILABLE_MULTIPLE_DEVICES_MESSAGE),
+      GetIconForSignalStrength(kMediumSignalStrength)));
 }
 
 NotificationPresenter::PotentialHotspotNotificationState
@@ -205,16 +198,18 @@ void TetherNotificationPresenter::RemovePotentialHotspotNotification() {
 }
 
 void TetherNotificationPresenter::NotifySetupRequired(
-    const std::string& device_name) {
+    const std::string& device_name,
+    int signal_strength) {
   PA_LOG(INFO) << "Displaying \"setup required\" notification. Notification "
                << "ID = " << kSetupRequiredNotificationId;
 
-  ShowNotification(CreateNotificationWithMediumSignalStrengthIcon(
+  ShowNotification(CreateNotification(
       kSetupRequiredNotificationId,
       l10n_util::GetStringFUTF16(IDS_TETHER_NOTIFICATION_SETUP_REQUIRED_TITLE,
                                  base::ASCIIToUTF16(device_name)),
       l10n_util::GetStringFUTF16(IDS_TETHER_NOTIFICATION_SETUP_REQUIRED_MESSAGE,
-                                 base::ASCIIToUTF16(device_name))));
+                                 base::ASCIIToUTF16(device_name)),
+      GetIconForSignalStrength(signal_strength)));
 }
 
 void TetherNotificationPresenter::RemoveSetupRequiredNotification() {
@@ -225,14 +220,13 @@ void TetherNotificationPresenter::NotifyConnectionToHostFailed() {
   PA_LOG(INFO) << "Displaying \"connection attempt failed\" notification. "
                << "Notification ID = " << kActiveHostNotificationId;
 
-  ShowNotification(CreateNotificationWithBadge(
-      kActiveHostNotificationId,
-      l10n_util::GetStringUTF16(
-          IDS_TETHER_NOTIFICATION_CONNECTION_FAILED_TITLE),
-      l10n_util::GetStringUTF16(
-          IDS_TETHER_NOTIFICATION_CONNECTION_FAILED_MESSAGE),
-      {} /* rich_notification_data */, kMediumSignalStrength,
-      kWarningBadgeCircleIcon));
+  ShowNotification(
+      CreateNotification(kActiveHostNotificationId,
+                         l10n_util::GetStringUTF16(
+                             IDS_TETHER_NOTIFICATION_CONNECTION_FAILED_TITLE),
+                         l10n_util::GetStringUTF16(
+                             IDS_TETHER_NOTIFICATION_CONNECTION_FAILED_MESSAGE),
+                         kNotificationCellularAlertIcon));
 }
 
 void TetherNotificationPresenter::RemoveConnectionToHostFailedNotification() {

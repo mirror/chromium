@@ -32,8 +32,6 @@ namespace {
 constexpr int64_t kMinAdvertisingIntervalMilliseconds = 100;
 constexpr int64_t kMaxAdvertisingIntervalMilliseconds = 100;
 
-}  // namespace
-
 // static
 TetherService* TetherService::Get(Profile* profile) {
   if (IsFeatureFlagEnabled())
@@ -41,6 +39,8 @@ TetherService* TetherService::Get(Profile* profile) {
 
   return nullptr;
 }
+
+}  // namespace
 
 // static
 void TetherService::RegisterProfilePrefs(PrefRegistrySimple* registry) {
