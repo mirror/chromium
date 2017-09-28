@@ -1,0 +1,242 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49adc50f_ecb777b5",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 884,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-28T08:52:13Z",
+      "side": 1,
+      "message": "f -\u003e feature",
+      "revId": "301ad2ad3f74d51ae1f89053545b0479731fe39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c188ef29_7950ae27",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-28T08:52:13Z",
+      "side": 1,
+      "message": "if strict_cast failed can you use checked_cast instead?",
+      "revId": "301ad2ad3f74d51ae1f89053545b0479731fe39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d25e0c35_665b0fb7",
+        "filename": "content/browser/service_worker/service_worker_provider_host_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-28T08:52:13Z",
+      "side": 1,
+      "message": "is -\u003e was",
+      "revId": "301ad2ad3f74d51ae1f89053545b0479731fe39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94038abc_c0bdd95c",
+        "filename": "content/browser/service_worker/service_worker_provider_host_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-28T08:52:13Z",
+      "side": 1,
+      "message": "Code comments use the tense \"Set\", \"Associate\", \"Create\", etc. Function comments use \"Sets\", \"Associates\", \"Creates\", etc.",
+      "revId": "301ad2ad3f74d51ae1f89053545b0479731fe39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3a7f239_77f556b5",
+        "filename": "content/browser/service_worker/service_worker_provider_host_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-28T08:52:13Z",
+      "side": 1,
+      "message": "Add \u0027.\u0027 to the end of the sentence.",
+      "revId": "301ad2ad3f74d51ae1f89053545b0479731fe39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2e36be2_84da2b21",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-28T08:52:13Z",
+      "side": 1,
+      "message": "I\u0027d probably just remove this comment.",
+      "revId": "301ad2ad3f74d51ae1f89053545b0479731fe39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b2adc53_03693d4d",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-28T08:52:13Z",
+      "side": 1,
+      "message": "instead of using |handle_ref| and you just say state-\u003econtroller \u003d dispatcher-\u003eAdopt(controller)?",
+      "revId": "301ad2ad3f74d51ae1f89053545b0479731fe39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89d84ef8_f9bf3f56",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-28T08:52:13Z",
+      "side": 1,
+      "message": "add an empty line here",
+      "revId": "301ad2ad3f74d51ae1f89053545b0479731fe39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2d01fef_bfb9385e",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-28T08:52:13Z",
+      "side": 1,
+      "message": "I\u0027m finding this sentence confusing since \"SetController()\" means two different functions.",
+      "revId": "301ad2ad3f74d51ae1f89053545b0479731fe39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6f50a15_1564a21b",
+        "filename": "content/child/service_worker/service_worker_provider_context.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-28T08:52:13Z",
+      "side": 1,
+      "message": "Yea now it\u0027s looking like SetWebServiceWorkerProvider is a better name. Sorry.",
+      "revId": "301ad2ad3f74d51ae1f89053545b0479731fe39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07341267_aefde0c2",
+        "filename": "content/child/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-28T08:52:13Z",
+      "side": 1,
+      "message": "we usually say Mock instead of Mocked",
+      "revId": "301ad2ad3f74d51ae1f89053545b0479731fe39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd414fa3_a645eac3",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-28T08:52:13Z",
+      "side": 1,
+      "message": "I don\u0027t think we need comments 80-81 now, it made more sense when we were calling CountFeature() directly here.",
+      "revId": "301ad2ad3f74d51ae1f89053545b0479731fe39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77c5c72d_8d23e702",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-28T08:52:13Z",
+      "side": 1,
+      "message": "I don\u0027t think we need controller in quotes. It should probably mention \"ServiceWorkerContainer#controller\"",
+      "revId": "301ad2ad3f74d51ae1f89053545b0479731fe39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48540568_16c136ab",
+        "filename": "content/common/service_worker/service_worker_container.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-28T08:52:13Z",
+      "side": 1,
+      "message": "This will need some sort of comment.",
+      "revId": "301ad2ad3f74d51ae1f89053545b0479731fe39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
