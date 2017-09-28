@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2eb74d38_789bcae7",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_auth_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-09-28T17:39:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11a5b2c2_7b9eaa21",
+      "range": {
+        "startLine": 217,
+        "startChar": 21,
+        "endLine": 217,
+        "endChar": 56
+      },
+      "revId": "acb4d90bc618432cb6bc0c63e73003d6e6c5bd72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3502acf_71028fd8",
         "filename": "components/arc/common/auth.mojom",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "acb4d90bc618432cb6bc0c63e73003d6e6c5bd72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9e1fce5_c28054d6",
+        "filename": "components/arc/common/auth.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-09-28T17:39:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3502acf_71028fd8",
+      "range": {
+        "startLine": 11,
+        "startChar": 5,
+        "endLine": 11,
+        "endChar": 27
+      },
+      "revId": "acb4d90bc618432cb6bc0c63e73003d6e6c5bd72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
