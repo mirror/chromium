@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb90f673_e620782b",
+        "filename": "components/error_page/common/localized_error.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-28T15:18:15Z",
+      "side": 1,
+      "message": "400_500 -\u003e 4xx_5xx, maybe?  That\u0027s what we generally use to refer to all errors in either range.",
+      "range": {
+        "startLine": 391,
+        "startChar": 24,
+        "endLine": 391,
+        "endChar": 46
+      },
+      "revId": "b23a2073c86ff7b16b974b4b562648867fdb9621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "639c23c3_7be7d7b2",
+        "filename": "components/error_page/common/localized_error.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-28T15:18:15Z",
+      "side": 1,
+      "message": "unspecific -\u003e other?  Or miscellaneous?  Some of these are specified in the HTTP RFC.",
+      "range": {
+        "startLine": 450,
+        "startChar": 32,
+        "endLine": 450,
+        "endChar": 38
+      },
+      "revId": "b23a2073c86ff7b16b974b4b562648867fdb9621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ba50cb4_c7f41b7a",
+        "filename": "components/error_page/common/localized_error.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-28T15:18:15Z",
+      "side": 1,
+      "message": "This check seem weird to me.  Maybe put this in the corresponding branch in LookupErrorMap instead?",
+      "range": {
+        "startLine": 451,
+        "startChar": 14,
+        "endLine": 451,
+        "endChar": 32
+      },
+      "revId": "b23a2073c86ff7b16b974b4b562648867fdb9621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea26f58e_1bee58ec",
+        "filename": "components/error_page/common/localized_error.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-28T15:18:15Z",
+      "side": 1,
+      "message": "nit:  To be consistent with above code, don\u0027t use braces in this loop.",
+      "range": {
+        "startLine": 454,
+        "startChar": 5,
+        "endLine": 454,
+        "endChar": 0
+      },
+      "revId": "b23a2073c86ff7b16b974b4b562648867fdb9621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
