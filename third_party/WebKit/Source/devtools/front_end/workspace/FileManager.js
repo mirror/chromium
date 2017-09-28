@@ -35,12 +35,12 @@ Workspace.FileManager = class extends Common.Object {
   constructor() {
     super();
     this._savedURLsSetting = Common.settings.createLocalSetting('savedURLs', {});
-    /** @type {!Map<string, function(boolean)>} */
+    /** @type {!Map<string, function({success: boolean, fileSystemPath: (string|undefined)})>} */
     this._saveCallbacks = new Map();
     InspectorFrontendHost.events.addEventListener(
         InspectorFrontendHostAPI.Events.SavedURL, this._savedURL.bind(this, true), this);
     InspectorFrontendHost.events.addEventListener(
-        InspectorFrontendHostAPI.Events.CanceledSaveURL, this._savedURL.bind(this, false), this);
+        InspectorFrontendHostAPI.Events.CanceledSaveURL, this._canceledSavedURL.bind(this, false), this);
     InspectorFrontendHost.events.addEventListener(
         InspectorFrontendHostAPI.Events.AppendedToURL, this._appendedToURL, this);
   }
@@ -49,7 +49,7 @@ Workspace.FileManager = class extends Common.Object {
    * @param {string} url
    * @param {string} content
    * @param {boolean} forceSaveAs
-   * @return {!Promise<boolean>}
+   * @return {!Promise<!{success: boolean, fileSystemPath: (string|undefined)}>}
    */
   save(url, content, forceSaveAs) {
     // Remove this url from the saved URLs while it is being saved.
@@ -65,11 +65,29 @@ Workspace.FileManager = class extends Common.Object {
    * @param {!Common.Event} event
    */
   _savedURL(success, event) {
+    var url = /** @type {string} */ (event.data.url);
+    var callback = this._saveCallbacks.get(url);
+    this._saveCallbacks.delete(url);
+    if (callback)
+      callback({success: success, fileSystemPath: /** @type {string} */ (event.data.fileSystemPath)});
+    if (!success)
+      return;
+    var savedURLs = this._savedURLsSetting.get();
+    savedURLs[url] = true;
+    this._savedURLsSetting.set(savedURLs);
+    this.dispatchEventToListeners(Workspace.FileManager.Events.SavedURL, event.data);
+  }
+
+  /**
+   * @param {boolean} success
+   * @param {!Common.Event} event
+   */
+  _canceledSavedURL(success, event) {
     var url = /** @type {string} */ (event.data);
     var callback = this._saveCallbacks.get(url);
     this._saveCallbacks.delete(url);
     if (callback)
-      callback(success);
+      callback({success: success});
     if (!success)
       return;
     var savedURLs = this._savedURLsSetting.get();
