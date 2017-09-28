@@ -71,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "ed7488a3_7904d094",
+        "filename": "chrome/browser/ui/views/payments/payment_sheet_view_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 966,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-28T23:36:07Z",
+      "side": 1,
+      "message": "\u003e It looks like you missed this comment.\n\nThanks! Done.",
+      "parentUuid": "0ebbef34_9109760d",
+      "revId": "23d7e4fc143feba14f73e1c440eebc407aaa15d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a04bede6_9060a847",
         "filename": "ui/views/controls/styled_label.h",
         "patchSetId": 9
