@@ -22,6 +22,17 @@
 
 - (void)dismissModalsAndOpenSelectedTabInMode:(ApplicationMode)targetMode
                                       withURL:(const GURL&)url
+                               dismissOmnibox:(BOOL)dismissOmnibox
+                                   transition:(ui::PageTransition)transition
+                                   completion:(ProceduralBlock)completion {
+  [self dismissModalsAndOpenSelectedTabInMode:targetMode
+                                      withURL:url
+                                   transition:transition
+                                   completion:completion];
+}
+
+- (void)dismissModalsAndOpenSelectedTabInMode:(ApplicationMode)targetMode
+                                      withURL:(const GURL&)url
                                    transition:(ui::PageTransition)transition
                                    completion:(ProceduralBlock)completion {
   _url = url;
