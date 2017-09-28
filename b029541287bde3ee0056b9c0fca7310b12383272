@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1052996d_8a7a7539",
+        "filename": "ash/shelf/shelf_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-28T23:18:13Z",
+      "side": 1,
+      "message": "nit: move up with other inline getter\n\n(Aside: I prefer inline getters near the top of the class and I think that\u0027s more common in ash. But I\u0027ve seen a trend toward people putting them at the bottom. I wonder if we should prefer one or the other in new code.)",
+      "revId": "b029541287bde3ee0056b9c0fca7310b12383272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94996d59_0b338b21",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-28T23:18:13Z",
+      "side": 1,
+      "message": "Why are these key release? The test comment says it is testing clicking. If it has to be this way, add something to the comment above about why it can\u0027t be the default mouse event.",
+      "revId": "b029541287bde3ee0056b9c0fca7310b12383272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e71b554_6c028ea5",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-28T23:18:13Z",
+      "side": 1,
+      "message": "aside: probably not needed :-)",
+      "revId": "b029541287bde3ee0056b9c0fca7310b12383272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6433f0b3_a66af486",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-28T23:18:13Z",
+      "side": 1,
+      "message": "ditto re mouse vs. keyboard.\n\nMaybe there should be a helper function called ActivateShelfItem() in this class, just for the cases where it doesn\u0027t matter which way? Or just so it can have a name that suggests why the item can\u0027t be clicked.",
+      "revId": "b029541287bde3ee0056b9c0fca7310b12383272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d242adc_57697a62",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2281,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-28T23:18:13Z",
+      "side": 1,
+      "message": "nit: EXPECT_TRUE(item_controller)?",
+      "revId": "b029541287bde3ee0056b9c0fca7310b12383272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
