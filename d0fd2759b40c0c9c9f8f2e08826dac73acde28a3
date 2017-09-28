@@ -218,6 +218,30 @@
     },
     {
       "key": {
+        "uuid": "4db2fee7_60507757",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletThread.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-28T23:34:37Z",
+      "side": 1,
+      "message": "I think fixed width integer types are generally preferable (especially for a counter like this) in terms of safety and compatibility. IIUC, \"unsigned\" doesn\u0027t guarantee its width (I guess almost all major platforms has 32 bit width though).\n\nI checked the coding style guide[1]. Surprisingly it recommends not to use unsigned types including \"uint32_t\" but to use signed types w/ the range check. I don\u0027t have a strong opinion here and I\u0027ll defer to your decision :)\n\n[1] https://google.github.io/styleguide/cppguide.html#Integer_Types",
+      "parentUuid": "87ab7fd4_309fd123",
+      "range": {
+        "startLine": 60,
+        "startChar": 9,
+        "endLine": 60,
+        "endChar": 17
+      },
+      "revId": "d0fd2759b40c0c9c9f8f2e08826dac73acde28a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "83ff1c46_091727dd",
         "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
         "patchSetId": 4

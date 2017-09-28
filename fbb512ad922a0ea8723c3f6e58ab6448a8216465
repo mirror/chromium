@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "258220ff_d3d2c044",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-28T23:34:37Z",
+      "side": 1,
+      "message": "In the current implementation, all BaseAudioContexts are associated with the same proxy. We might want to have a smarter proxy selection / load balance mechanism later (TODO comment?).",
+      "revId": "fbb512ad922a0ea8723c3f6e58ab6448a8216465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "724063b2_131d4215",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletMessagingProxy.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-28T23:34:37Z",
+      "side": 1,
+      "message": "(optional) \"auto\"?",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 20
+      },
+      "revId": "fbb512ad922a0ea8723c3f6e58ab6448a8216465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58aca1c9_12280a44",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletMessagingProxy.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-28T23:34:37Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 20
+      },
+      "revId": "fbb512ad922a0ea8723c3f6e58ab6448a8216465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25f13da3_3ab2705a",
+        "filename": "third_party/WebKit/Source/modules/webaudio/DefaultAudioDestinationNode.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-28T23:34:37Z",
+      "side": 1,
+      "message": "Looks like the indent needs additional 2-spaces.",
+      "revId": "fbb512ad922a0ea8723c3f6e58ab6448a8216465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
