@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c408a62_0af28ac1",
+        "filename": "chrome/profiling/backtrace_storage.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1215674
+      },
+      "writtenOn": "2017-09-28T06:14:12Z",
+      "side": 1,
+      "message": "for sharding, no need to use a vector, it\u0027s a fixed size array",
+      "revId": "5d264bfec2590740833091985f3dc72c47807125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
