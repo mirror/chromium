@@ -28,8 +28,13 @@ GrContext* WebGraphicsContext3DProviderImpl::GetGrContext() {
   return provider_->GrContext();
 }
 
-gpu::Capabilities WebGraphicsContext3DProviderImpl::GetCapabilities() {
+const gpu::Capabilities& WebGraphicsContext3DProviderImpl::GetCapabilities() {
   return provider_->ContextCapabilities();
+}
+
+const gpu::GpuFeatureInfo&
+WebGraphicsContext3DProviderImpl::GetGpuFeatureInfo() {
+  return provider_->GetGpuFeatureInfo();
 }
 
 bool WebGraphicsContext3DProviderImpl::IsSoftwareRendering() const {
