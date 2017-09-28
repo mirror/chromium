@@ -733,6 +733,17 @@ class BLINK_PLATFORM_EXPORT Platform {
       const WebFeaturePolicy&,
       const WebSecurityOrigin&);
 
+  // Returns whether or not the given feature is enabled by this policy for a
+  // specific origin.
+  virtual bool IsFeatureEnabledForOrigin(blink::WebFeaturePolicyFeature,
+                                         const WebSecurityOrigin&,
+                                         const WebFeaturePolicy*) const;
+
+  // Returns a list of origins where a given feature is eanbled.
+  virtual WebVector<WebString> GetOriginsForFeature(
+      WebFeaturePolicyFeature,
+      const WebFeaturePolicy*) const;
+
  protected:
   Platform();
   virtual ~Platform();

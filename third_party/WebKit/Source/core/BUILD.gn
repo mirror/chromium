@@ -1405,6 +1405,7 @@ jumbo_source_set("unit_tests") {
     "dom/MutationObserverTest.cpp",
     "dom/NodeTest.cpp",
     "dom/NthIndexCacheTest.cpp",
+    "dom/PolicyTest.cpp",
     "dom/RangeTest.cpp",
     "dom/ScriptModuleResolverImplTest.cpp",
     "dom/ScriptRunnerTest.cpp",

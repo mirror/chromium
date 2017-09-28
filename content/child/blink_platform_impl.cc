@@ -854,4 +854,25 @@ BlinkPlatformImpl::DuplicateFeaturePolicyWithOrigin(
       static_cast<const FeaturePolicy&>(policy), url::Origin(new_origin));
 }
 
+bool BlinkPlatformImpl::IsFeatureEnabledForOrigin(
+    blink::WebFeaturePolicyFeature feature,
+    const blink::WebSecurityOrigin& origin,
+    const blink::WebFeaturePolicy* policy) const {
+  return policy->IsFeatureEnabledForOrigin(feature, url::Origin(origin));
+}
+
+blink::WebVector<blink::WebString> BlinkPlatformImpl::GetOriginsForFeature(
+    blink::WebFeaturePolicyFeature feature,
+    const blink::WebFeaturePolicy* policy) const {
+  std::vector<blink::WebString> origins;
+  if (policy->IsFeatureEnabledForAll(feature)) {
+    origins.push_back("*");
+  } else {
+    for (const auto& origin : policy->GetOriginsForFeature(feature)) {
+      origins.push_back(blink::WebString::FromUTF8(origin.Serialize()));
+    }
+  }
+  return origins;
+}
+
 }  // namespace content

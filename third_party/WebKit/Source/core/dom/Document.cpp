@@ -96,6 +96,7 @@
 #include "core/dom/NodeTraversal.h"
 #include "core/dom/NodeWithIndex.h"
 #include "core/dom/NthIndexCache.h"
+#include "core/dom/Policy.h"
 #include "core/dom/ProcessingInstruction.h"
 #include "core/dom/ScriptRunner.h"
 #include "core/dom/ScriptedAnimationController.h"
@@ -233,6 +234,7 @@
 #include "platform/bindings/Microtask.h"
 #include "platform/bindings/V8DOMWrapper.h"
 #include "platform/bindings/V8PerIsolateData.h"
+#include "platform/feature_policy/FeaturePolicy.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/network/ContentSecurityPolicyParsers.h"
@@ -7148,6 +7150,10 @@ void Document::RecordDeferredLoadReason(WouldLoadReason reason) {
        i <= static_cast<int>(reason); ++i)
     RecordLoadReasonToHistogram(static_cast<WouldLoadReason>(i));
   would_load_reason_ = reason;
+}
+
+Policy* Document::policy() {
+  return Policy::Create(this);
 }
 
 DEFINE_TRACE_WRAPPERS(Document) {
