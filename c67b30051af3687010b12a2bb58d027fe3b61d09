@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14be881b_dae30080",
+        "filename": "content/test/fuzzer/clear_site_data_fuzzer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-09-28T02:48:39Z",
+      "side": 1,
+      "message": "why did you need this?",
+      "revId": "c67b30051af3687010b12a2bb58d027fe3b61d09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
