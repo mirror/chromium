@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8f41011_18c44d17",
+        "filename": "third_party/WebKit/public/platform/WebVector.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-28T14:16:48Z",
+      "side": 1,
+      "message": "nit: It\u0027s convenient to have this here, but unusual. I wonder if we might prefer giving this a less magical name (\"std::vector\u003cT\u003e ReleaseStdVector() { return std::move(data_); }\" or similar), but I don\u0027t feel super strongly.\n\n(Mostly because rvalue-ref-qualified conversion operators are kinda subtle, even though I\u0027m pretty sure this use is correct.)",
+      "revId": "c05ebfaf70b103f56beef57567cfff92a2de1f7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
