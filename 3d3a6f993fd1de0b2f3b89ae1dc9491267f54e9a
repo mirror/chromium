@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9b5a1c70_d8e2ddb0",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1061,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-28T05:44:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3426ded2_83de57bd",
+      "revId": "3d3a6f993fd1de0b2f3b89ae1dc9491267f54e9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b9eeeab_bb7db93f",
         "filename": "chrome/browser/ui/BUILD.gn",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-21T05:00:08Z",
       "side": 1,
       "message": "Considering this block is here, as well as extension_installed_notification.cc above, I think we can assume enable_extensions is always true for CrOS. And so...",
+      "revId": "3d3a6f993fd1de0b2f3b89ae1dc9491267f54e9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3756e71_8a8ba143",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1357,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-28T05:44:48Z",
+      "side": 1,
+      "message": "Added an assert() to help enforce this.",
+      "parentUuid": "3b9eeeab_bb7db93f",
       "revId": "3d3a6f993fd1de0b2f3b89ae1dc9491267f54e9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "77dde0c8_e9daa6d6",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1773,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-28T05:44:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ae68894c_c184c62b",
+      "revId": "3d3a6f993fd1de0b2f3b89ae1dc9491267f54e9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5a61e60_84f1cf0f",
         "filename": "chrome/browser/ui/BUILD.gn",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "3d3a6f993fd1de0b2f3b89ae1dc9491267f54e9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c536b606_7e8088d0",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 3074,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-28T05:44:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5a61e60_84f1cf0f",
+      "revId": "3d3a6f993fd1de0b2f3b89ae1dc9491267f54e9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "198e79bd_ae3d7f8a",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 3510,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-28T05:44:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02938e51_14b3d179",
+      "revId": "3d3a6f993fd1de0b2f3b89ae1dc9491267f54e9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf4ec53a_5a37cd72",
         "filename": "chrome/browser/ui/BUILD.gn",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "3d3a6f993fd1de0b2f3b89ae1dc9491267f54e9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88a7ac97_0ed04a0f",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 3521,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-28T05:44:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf4ec53a_5a37cd72",
+      "revId": "3d3a6f993fd1de0b2f3b89ae1dc9491267f54e9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
