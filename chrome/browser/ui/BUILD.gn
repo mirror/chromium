@@ -3651,6 +3651,13 @@ static_library("test_support") {
     ]
   }
 
+  if (use_ash) {
+    sources += [
+      "ash/fake_tablet_mode_controller.cc",
+      "ash/fake_tablet_mode_controller.h",
+    ]
+  }
+
   if (enable_extensions) {
     deps += [ "//extensions/browser" ]
   }
