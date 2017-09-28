@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57b61889_f9164233",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1207755
+      },
+      "writtenOn": "2017-09-28T21:01:33Z",
+      "side": 1,
+      "message": "Doesn\u0027t spatnav also looks in *non-scrollable* parents? Hmm.",
+      "revId": "2f5b14f8d764e5d1677e659740339a3cdc97bb35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a39b151f_393841ff",
+        "filename": "third_party/WebKit/Source/core/page/SpatialNavigation.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1207755
+      },
+      "writtenOn": "2017-09-28T21:01:33Z",
+      "side": 1,
+      "message": "Nit: this method could be private.",
+      "revId": "2f5b14f8d764e5d1677e659740339a3cdc97bb35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

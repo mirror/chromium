@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "00cf0b72_fa24abeb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1207755
+      },
+      "writtenOn": "2017-09-28T21:01:33Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "12f499d7_a71ee3f8",
+      "revId": "eff9fbdb1d4cb27b178c259186c26ac8b98e1f3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f167ea30_b258dbbc",
         "filename": "third_party/WebKit/LayoutTests/fast/spatial-navigation/snav-container-select.html",
         "patchSetId": 1
@@ -151,6 +169,30 @@
       "revId": "eff9fbdb1d4cb27b178c259186c26ac8b98e1f3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73d2dd08_5229dd36",
+        "filename": "third_party/WebKit/Source/core/page/SpatialNavigation.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1207755
+      },
+      "writtenOn": "2017-09-28T21:01:33Z",
+      "side": 1,
+      "message": "Thanks for clarifying.\n\nLuckily ScrollableEnclosingBoxOrParentFrameForNodeInDirection is only used by AdvanceFocusDirectionally :) Hmm, there are many cases here that I don\u0027t understand. Would have been easier if ScrollableEnclosingBoxOrParentFrameForNodeInDirection was called once and not 3 times :).\n\nI wonder if\n\n... while (parent \u0026\u0026 !parent-\u003eIsDocumentNode() \u0026\u0026 (!HasOverflowInDirection(parent, type) || !CanScrollInDirection(parent, type)));\n\ncatches any cases that we have missed?",
+      "parentUuid": "9e214c52_17e46472",
+      "range": {
+        "startLine": 320,
+        "startChar": 0,
+        "endLine": 320,
+        "endChar": 3
+      },
+      "revId": "eff9fbdb1d4cb27b178c259186c26ac8b98e1f3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -251,6 +293,24 @@
       "revId": "eff9fbdb1d4cb27b178c259186c26ac8b98e1f3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c7bee5f_bbceb518",
+        "filename": "third_party/WebKit/Source/core/page/SpatialNavigation.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1207755
+      },
+      "writtenOn": "2017-09-28T21:01:33Z",
+      "side": 1,
+      "message": "\u003e \u003e Can we make other clients of CanScrollInDirection() use HasOverflowInDirection() instead of CanScrollInDirection()?\n\u003e \n\u003e Yes. I found another point should be changed to HasOverflowInDirection().\n\u003e \n\u003e bool FocusController::AdvanceFocusDirectionallyInContainer() {\n\u003e   ...\n\u003e   if (CanScrollInDirection(focus_candidate.visible_node, type)) {\n\u003e     ...\n\u003e     AdvanceFocusDirectionallyInContainer(focus_candidate.visible_node);\n\u003e   }\n\u003e }\n\nThanks for looking into this. We can solve it as a follow up. Could you create a bug for it? This code could really need some refactoring to get easier to read and reason about. It\u0027s really tricky.\n\n\u003e \u003e Why do we still need CanScrollInDirection()? When is \"can scroll\" not the same as \"has overflow\"?\n\u003e \n\u003e CanScrollInDirection() still very important because scroll is triggered instead focus moving in some cases.\n\u003e For example, if no exists focusable element in current container but can scroll in direction, then just scroll is triggered.\n\nRight, OK. Thanks!",
+      "parentUuid": "6678df27_3d24cc0f",
+      "revId": "eff9fbdb1d4cb27b178c259186c26ac8b98e1f3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
