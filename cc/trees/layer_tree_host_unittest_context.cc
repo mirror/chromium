@@ -914,11 +914,15 @@ class LayerTreeHostContextTestDontUseLostResources
     scoped_refptr<TextureLayer> texture = TextureLayer::CreateForMailbox(NULL);
     texture->SetBounds(gfx::Size(10, 10));
     texture->SetIsDrawable(true);
-    texture->SetTextureMailbox(
-        viz::TextureMailbox(mailbox, sync_token, GL_TEXTURE_2D),
-        viz::SingleReleaseCallback::Create(
-            base::Bind(&LayerTreeHostContextTestDontUseLostResources::
-                           EmptyReleaseCallback)));
+    viz::TransferableResource resource;
+    resource.is_software = false;
+    resource.mailbox_holder.mailbox = mailbox;
+    resource.mailbox_holder.sync_token = sync_token;
+    resource.mailbox_holder.texture_target = GL_TEXTURE_2D;
+    texture->SetTransferableResource(
+        resource, viz::SingleReleaseCallback::Create(
+                      base::Bind(&LayerTreeHostContextTestDontUseLostResources::
+                                     EmptyReleaseCallback)));
     root->AddChild(texture);
 
     scoped_refptr<PictureLayer> mask = PictureLayer::Create(&client_);

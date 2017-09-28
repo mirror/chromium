@@ -52,23 +52,22 @@ TEST(TextureLayerImplTest, Occlusion) {
 
   LayerTestCommon::LayerImplTest impl;
 
-  gpu::Mailbox mailbox;
-  impl.layer_tree_frame_sink()
-      ->context_provider()
-      ->ContextGL()
-      ->GenMailboxCHROMIUM(mailbox.name);
-  viz::TextureMailbox texture_mailbox(
-      mailbox,
+  auto* gl = impl.layer_tree_frame_sink()->context_provider()->ContextGL();
+
+  viz::TransferableResource resource;
+  resource.is_software = false;
+  gl->GenMailboxCHROMIUM(resource.mailbox_holder.mailbox.name);
+  resource.mailbox_holder.sync_token =
       gpu::SyncToken(gpu::CommandBufferNamespace::GPU_IO, 0x123,
-                     gpu::CommandBufferId::FromUnsafeValue(0x234), 0x456),
-      GL_TEXTURE_2D);
+                     gpu::CommandBufferId::FromUnsafeValue(0x234), 0x456);
+  resource.mailbox_holder.texture_target = GL_TEXTURE_2D;
 
   TextureLayerImpl* texture_layer_impl =
       impl.AddChildToRoot<TextureLayerImpl>();
   texture_layer_impl->SetBounds(layer_size);
   texture_layer_impl->SetDrawsContent(true);
-  texture_layer_impl->SetTextureMailbox(
-      texture_mailbox,
+  texture_layer_impl->SetTransferableResource(
+      resource,
       viz::SingleReleaseCallback::Create(base::Bind(&IgnoreCallback)));
 
   impl.CalcDrawProps(viewport_size);
@@ -112,23 +111,23 @@ TEST(TextureLayerImplTest, OutputIsSecure) {
 
   LayerTestCommon::LayerImplTest impl;
 
-  gpu::Mailbox mailbox;
-  impl.layer_tree_frame_sink()
-      ->context_provider()
-      ->ContextGL()
-      ->GenMailboxCHROMIUM(mailbox.name);
-  viz::TextureMailbox texture_mailbox(
-      mailbox,
+  auto* gl = impl.layer_tree_frame_sink()->context_provider()->ContextGL();
+
+  viz::TransferableResource resource;
+  resource.is_software = false;
+  gl->GenMailboxCHROMIUM(resource.mailbox_holder.mailbox.name);
+  resource.mailbox_holder.sync_token =
       gpu::SyncToken(gpu::CommandBufferNamespace::GPU_IO, 0x123,
-                     gpu::CommandBufferId::FromUnsafeValue(0x234), 0x456),
-      GL_TEXTURE_2D, layer_size, false, true);
+                     gpu::CommandBufferId::FromUnsafeValue(0x234), 0x456);
+  resource.mailbox_holder.texture_target = GL_TEXTURE_2D;
+  resource.size = layer_size;
 
   TextureLayerImpl* texture_layer_impl =
       impl.AddChildToRoot<TextureLayerImpl>();
   texture_layer_impl->SetBounds(layer_size);
   texture_layer_impl->SetDrawsContent(true);
-  texture_layer_impl->SetTextureMailbox(
-      texture_mailbox,
+  texture_layer_impl->SetTransferableResource(
+      resource,
       viz::SingleReleaseCallback::Create(base::Bind(&IgnoreCallback)));
 
   impl.CalcDrawProps(viewport_size);
@@ -155,26 +154,25 @@ TEST(TextureLayerImplTest, ResourceNotFreedOnGpuRasterToggle) {
   gfx::Size layer_size(1000, 1000);
   gfx::Size viewport_size(1000, 1000);
 
-  gpu::Mailbox mailbox;
-  impl.layer_tree_frame_sink()
-      ->context_provider()
-      ->ContextGL()
-      ->GenMailboxCHROMIUM(mailbox.name);
-  viz::TextureMailbox texture_mailbox(
-      mailbox,
+  auto* gl = impl.layer_tree_frame_sink()->context_provider()->ContextGL();
+
+  viz::TransferableResource resource;
+  resource.is_software = false;
+  gl->GenMailboxCHROMIUM(resource.mailbox_holder.mailbox.name);
+  resource.mailbox_holder.sync_token =
       gpu::SyncToken(gpu::CommandBufferNamespace::GPU_IO, 0x123,
-                     gpu::CommandBufferId::FromUnsafeValue(0x234), 0x456),
-      GL_TEXTURE_2D);
+                     gpu::CommandBufferId::FromUnsafeValue(0x234), 0x456);
+  resource.mailbox_holder.texture_target = GL_TEXTURE_2D;
 
   TextureLayerImpl* texture_layer_impl =
       impl.AddChildToRoot<TextureLayerImpl>();
   texture_layer_impl->SetBounds(layer_size);
   texture_layer_impl->SetDrawsContent(true);
-  texture_layer_impl->SetTextureMailbox(
-      texture_mailbox, viz::SingleReleaseCallback::Create(base::Bind(
-                           [](bool* released, const gpu::SyncToken& sync_token,
-                              bool lost) { *released = true; },
-                           base::Unretained(&released))));
+  texture_layer_impl->SetTransferableResource(
+      resource, viz::SingleReleaseCallback::Create(base::Bind(
+                    [](bool* released, const gpu::SyncToken& sync_token,
+                       bool lost) { *released = true; },
+                    base::Unretained(&released))));
 
   impl.CalcDrawProps(viewport_size);
 
