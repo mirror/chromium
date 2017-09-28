@@ -16,6 +16,24 @@
       "revId": "06f1401e7bd52b5c597f40bf22c67c58c66cf48e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6dbd5d1a_abb3bd48",
+        "filename": "ash/public/interfaces/system_tray.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-28T23:24:14Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "2431c512_07649b37",
+      "revId": "06f1401e7bd52b5c597f40bf22c67c58c66cf48e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
