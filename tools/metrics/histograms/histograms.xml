@@ -3536,6 +3536,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="AsyncDNS.JobQueueTime" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.JobQueueTime.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Time elapsed between the time the HostResolverImpl::Job was created and the
@@ -3544,6 +3547,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="AsyncDNS.JobQueueTime_HIGHEST" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.JobQueueTime.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Time elapsed between the time the HostResolverImpl::Job was created and the
@@ -3553,6 +3559,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="AsyncDNS.JobQueueTime_IDLE" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.JobQueueTime.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Time elapsed between the time the HostResolverImpl::Job was created and the
@@ -3562,6 +3571,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="AsyncDNS.JobQueueTime_LOW" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.JobQueueTime.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Time elapsed between the time the HostResolverImpl::Job was created and the
@@ -3571,6 +3583,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="AsyncDNS.JobQueueTime_LOWEST" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.JobQueueTime.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Time elapsed between the time the HostResolverImpl::Job was created and the
@@ -3580,6 +3595,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="AsyncDNS.JobQueueTime_MEDIUM" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.JobQueueTime.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Time elapsed between the time the HostResolverImpl::Job was created and the
@@ -3589,6 +3607,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="AsyncDNS.JobQueueTimeAfterChange" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.JobQueueTimeAfterChange.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Time elapsed between the last time the priority of a HostResolverImpl::Job
@@ -3598,6 +3619,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="AsyncDNS.JobQueueTimeAfterChange_HIGHEST" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.JobQueueTimeAfterChange.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Time elapsed between the last time the priority of a HostResolverImpl::Job
@@ -3608,6 +3632,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="AsyncDNS.JobQueueTimeAfterChange_IDLE" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.JobQueueTimeAfterChange.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Time elapsed between the last time the priority of a HostResolverImpl::Job
@@ -3618,6 +3645,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="AsyncDNS.JobQueueTimeAfterChange_LOW" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.JobQueueTimeAfterChange.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Time elapsed between the last time the priority of a HostResolverImpl::Job
@@ -3628,6 +3658,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="AsyncDNS.JobQueueTimeAfterChange_LOWEST" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.JobQueueTimeAfterChange.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Time elapsed between the last time the priority of a HostResolverImpl::Job
@@ -3638,6 +3671,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="AsyncDNS.JobQueueTimeAfterChange_MEDIUM" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.JobQueueTimeAfterChange.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Time elapsed between the last time the priority of a HostResolverImpl::Job
@@ -3891,6 +3927,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="AsyncDNS.TotalTime" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.TotalTime.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Duration of time since a HostResolverImpl::Resolve request to the time a
@@ -3900,6 +3939,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="AsyncDNS.TotalTime_speculative" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.TotalTime_speculative.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Duration of time since a HostResolverImpl::Resolve request to the time a
@@ -14273,6 +14315,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="DNS.JobQueueTime" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.JobQueueTime.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Time elapsed between the time the HostResolverImpl::Job was created and the
@@ -14282,6 +14327,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="DNS.JobQueueTime_HIGHEST" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.JobQueueTime.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Time elapsed between the time the HostResolverImpl::Job was created and the
@@ -14291,6 +14339,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="DNS.JobQueueTime_IDLE" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.JobQueueTime.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Time elapsed between the time the HostResolverImpl::Job was created and the
@@ -14300,6 +14351,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="DNS.JobQueueTime_LOW" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.JobQueueTime.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Time elapsed between the time the HostResolverImpl::Job was created and the
@@ -14309,6 +14363,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="DNS.JobQueueTime_LOWEST" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.JobQueueTime.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Time elapsed between the time the HostResolverImpl::Job was created and the
@@ -14318,6 +14375,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="DNS.JobQueueTime_MEDIUM" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.JobQueueTime.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Time elapsed between the time the HostResolverImpl::Job was created and the
@@ -14327,6 +14387,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="DNS.JobQueueTimeAfterChange" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.JobQueueTimeAfterChange.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Time elapsed between the last time the priority of a HostResolverImpl::Job
@@ -14336,6 +14399,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="DNS.JobQueueTimeAfterChange_HIGHEST" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.JobQueueTimeAfterChange.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Time elapsed between the last time the priority of a HostResolverImpl::Job
@@ -14346,6 +14412,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="DNS.JobQueueTimeAfterChange_IDLE" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.JobQueueTimeAfterChange.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Time elapsed between the last time the priority of a HostResolverImpl::Job
@@ -14356,6 +14425,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="DNS.JobQueueTimeAfterChange_LOW" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.JobQueueTimeAfterChange.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Time elapsed between the last time the priority of a HostResolverImpl::Job
@@ -14366,6 +14438,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="DNS.JobQueueTimeAfterChange_LOWEST" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.JobQueueTimeAfterChange.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Time elapsed between the last time the priority of a HostResolverImpl::Job
@@ -14376,6 +14451,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="DNS.JobQueueTimeAfterChange_MEDIUM" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.JobQueueTimeAfterChange.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Time elapsed between the last time the priority of a HostResolverImpl::Job
@@ -14672,6 +14750,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="DNS.TotalTime" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.TotalTime.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Duration of time since a HostResolverImpl::Resolve request to the time a
@@ -14681,6 +14762,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="DNS.TotalTime_speculative" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017. Replaced by Net.DNS.TotalTime_speculative.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Duration of time since a HostResolverImpl::Resolve request to the time a
@@ -39365,6 +39449,43 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     is only recorded for 0.1% of profiles, to reduce overhead for most users.
     This is meant to be a temporary metric to help debug a potential HTTP cache
     leak. We do not yet know which milestone we expect it to be removed in.
+  </summary>
+</histogram>
+
+<histogram name="Net.DNS.JobQueueTime" units="ms">
+  <owner>mgersh@chromium.org</owner>
+  <summary>
+    Time elapsed between the time the HostResolverImpl::Job was created and the
+    time the Job was started.
+  </summary>
+</histogram>
+
+<histogram name="Net.DNS.JobQueueTimeAfterChange" units="ms">
+  <owner>mgersh@chromium.org</owner>
+  <summary>
+    Time elapsed between the last time the priority of a HostResolverImpl::Job
+    changed (when a Request was attached or detached) and the time the Job was
+    started.
+  </summary>
+</histogram>
+
+<histogram name="Net.DNS.TotalTime" units="ms">
+  <owner>mgersh@chromium.org</owner>
+  <summary>
+    Duration of time since a HostResolverImpl::Resolve request to the time a
+    result is posted. Excludes canceled, evicted, and aborted requests. Includes
+    cache hits (recorded as 0). Main histogram excludes speculative requests,
+    which go in the _speculative version.
+  </summary>
+</histogram>
+
+<histogram name="Net.DNS.TotalTimeNotCached" units="ms">
+  <owner>mgersh@chromium.org</owner>
+  <summary>
+    Duration of time since a HostResolverImpl::Resolve request to the time a
+    result is posted. Excludes canceled, evicted, and aborted requests and
+    requests that returned synchronously (such as cache hits). Main histogram
+    excludes speculative requests, which go in the _speculative version.
   </summary>
 </histogram>
 
@@ -97671,6 +97792,23 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram name="Net.BidirectionalStream.TimeToReadStart"/>
   <affected-histogram name="Net.BidirectionalStream.TimeToSendEnd"/>
   <affected-histogram name="Net.BidirectionalStream.TimeToSendStart"/>
+</histogram_suffixes>
+
+<histogram_suffixes name="Net.DNS.Priorities" separator=".">
+  <suffix name="THROTTLED" label="Jobs with priority THROTTLED."/>
+  <suffix name="IDLE" label="Jobs with priority IDLE."/>
+  <suffix name="LOWEST" label="Jobs with priority LOWEST."/>
+  <suffix name="LOW" label="Jobs with priority LOW."/>
+  <suffix name="MEDIUM" label="Jobs with priority MEDIUM."/>
+  <suffix name="HIGHEST" label="Jobs with priority HIGHEST."/>
+  <affected-histogram name="Net.DNS.JobQueueTime"/>
+  <affected-histogram name="Net.DNS.JobQueueTimeAfterChange"/>
+</histogram_suffixes>
+
+<histogram_suffixes name="Net.DNS.Speculative" separator=".">
+  <suffix name="Speculative" label="Speculative resolutions only."/>
+  <affected-histogram name="Net.DNS.TotalTime"/>
+  <affected-histogram name="Net.DNS.TotalTimeNotCached"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="Net.HttpJob.TotalTimeSuccess.Priorities"
