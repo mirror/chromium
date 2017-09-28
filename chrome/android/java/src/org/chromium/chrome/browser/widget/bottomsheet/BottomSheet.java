@@ -1504,7 +1504,7 @@ public class BottomSheet
      * @param state The state to get the height from.
      * @return The height of the sheet at the provided state.
      */
-    private float getSheetHeightForState(@SheetState int state) {
+    public float getSheetHeightForState(@SheetState int state) {
         return mStateRatios[state] * mContainerHeight;
     }
 
