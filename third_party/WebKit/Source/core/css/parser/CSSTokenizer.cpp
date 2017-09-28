@@ -31,10 +31,20 @@ CSSTokenizer::CSSTokenizer(const String& string, size_t offset)
     return;
 
   input_.Advance(offset);
+}
 
+Vector<CSSParserToken, 32> CSSTokenizer::TokenizeToEOF() {
   // To avoid resizing we err on the side of reserving too much space.
   // Most strings we tokenize have about 3.5 to 5 characters per token.
-  tokens_.ReserveInitialCapacity((string.length() - offset) / 3);
+  Vector<CSSParserToken, 32> tokens;
+  tokens.ReserveInitialCapacity((input_.length() - Offset()) / 3);
+  while (true) {
+    const CSSParserToken token = TokenizeSingle();
+    if (token.IsEOF())
+      break;
+    tokens.push_back(token);
+  }
+  return tokens;
 }
 
 CSSParserToken CSSTokenizer::TokenizeSingle() {
@@ -43,37 +53,17 @@ CSSParserToken CSSTokenizer::TokenizeSingle() {
     const CSSParserToken token = NextToken();
     if (token.GetType() == kCommentToken)
       continue;
-    if (!token.IsEOF())
-      tokens_.push_back(token);
     return token;
   }
 }
 
 CSSParserToken CSSTokenizer::TokenizeSingleWithComments() {
   prev_offset_ = input_.Offset();
-  const CSSParserToken token = NextToken();
-  if (token.GetType() != kCommentToken && !token.IsEOF())
-    tokens_.push_back(token);
-  return token;
-}
-
-void CSSTokenizer::EnsureTokenizedToEOF() {
-  while (!TokenizeSingle().IsEOF()) {
-  }
-}
-
-CSSParserTokenRange CSSTokenizer::TokenRange() {
-  EnsureTokenizedToEOF();
-  return tokens_;
-}
-
-unsigned CSSTokenizer::CurrentSize() const {
-  return tokens_.size();
+  return NextToken();
 }
 
 unsigned CSSTokenizer::TokenCount() {
-  EnsureTokenizedToEOF();
-  return tokens_.size();
+  return token_count_;
 }
 
 static bool IsNewLine(UChar cc) {
@@ -315,6 +305,7 @@ CSSParserToken CSSTokenizer::NextToken() {
     code_point_func = &CSSTokenizer::NameStart;
   }
 
+  ++token_count_;
   if (code_point_func)
     return ((this)->*(code_point_func))(cc);
   return CSSParserToken(kDelimiterToken, cc);
