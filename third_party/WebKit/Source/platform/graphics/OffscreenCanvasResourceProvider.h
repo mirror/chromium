@@ -14,9 +14,19 @@ namespace blink {
 
 class WebGraphicsContext3DProviderWrapper;
 
+class OffscreenCanvasResourceObserver {
+ public:
+  // If OffscreenCanvasResourceProvider currently has the maximum number of
+  // frame resources locked by placeholder, this function will be triggered
+  // when one of these locked resources has been unlocked.
+  virtual void OnPlaceholderResourceLocksFreed() = 0;
+};
+
 class PLATFORM_EXPORT OffscreenCanvasResourceProvider {
  public:
-  OffscreenCanvasResourceProvider(int width, int height);
+  OffscreenCanvasResourceProvider(int width,
+                                  int height,
+                                  OffscreenCanvasResourceObserver*);
 
   ~OffscreenCanvasResourceProvider();
 
@@ -27,10 +37,13 @@ class PLATFORM_EXPORT OffscreenCanvasResourceProvider {
                                                  RefPtr<StaticBitmapImage>);
   void SetTransferableResourceToStaticBitmapImage(viz::TransferableResource&,
                                                   RefPtr<StaticBitmapImage>);
+
   void ReclaimResource(unsigned resource_id);
   void ReclaimResources(const WTF::Vector<viz::ReturnedResource>& resources);
   void IncNextResourceId() { next_resource_id_++; }
   unsigned GetNextResourceId() { return next_resource_id_; }
+
+  bool IsPlaceholderResourceLocksUsedUp();
 
   void Reshape(int width, int height) {
     width_ = width;
@@ -40,7 +53,10 @@ class PLATFORM_EXPORT OffscreenCanvasResourceProvider {
  private:
   int width_;
   int height_;
+  OffscreenCanvasResourceObserver* observer_;
   unsigned next_resource_id_;
+
+  int num_placeholder_resource_locks;
 
   struct FrameResource {
     RefPtr<StaticBitmapImage> image_;
@@ -51,7 +67,11 @@ class PLATFORM_EXPORT OffscreenCanvasResourceProvider {
     GLuint texture_id_ = 0;
     GLuint image_id_ = 0;
 
-    bool spare_lock_ = true;
+    // These locks indicate who (GPU compositor, or placeholder canvas on main
+    // thread) has not yet release the current resource.
+    bool gpu_compositor_lock_ = true;
+    bool placeholder_lock_;
+
     gpu::Mailbox mailbox_;
 
     FrameResource() {}
@@ -64,7 +84,8 @@ class PLATFORM_EXPORT OffscreenCanvasResourceProvider {
   void SetNeedsBeginFrameInternal();
 
   typedef HashMap<unsigned, std::unique_ptr<FrameResource>> ResourceMap;
-  void ReclaimResourceInternal(const ResourceMap::iterator&);
+  void ReclaimResourceInternal(const ResourceMap::iterator&,
+                               bool is_reclaimed_by_compositor);
   ResourceMap resources_;
 };
 
