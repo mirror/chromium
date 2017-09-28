@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6e8894a_717b5a94",
+        "filename": "tools/perf/page_sets/android_screen_restoration_shared_state.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-09-28T22:01:41Z",
+      "side": 1,
+      "message": "With SUPPORTED_PLATFORMS we could probably just get rid of this check all together. If a benchmark has SUPPORTED_PLATFORMS \u003d [expectations.ALL_ANDROID/ALL_MOBILE] then it will only ever make it this far if the phone is an android device.\n\nThat might cause problems if a benchmark that should set SUPPORTED_PLATFORMS doesn\u0027t, but if we have a mobile benchmark running on a desktop platform, maybe problems should be expected?\n\nAre there cases where a benchmark contains stories with this shared state, and other stories with another? Thats the only case I can think of that might be broken by just removing this check.",
+      "range": {
+        "startLine": 24,
+        "startChar": 4,
+        "endLine": 24,
+        "endChar": 6
+      },
+      "revId": "1372f17b4128801d5e9f48c0ef79edbe0281d7ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
