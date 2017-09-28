@@ -54,7 +54,9 @@ class LogSourceAccessManager {
 
  private:
   FRIEND_TEST_ALL_PREFIXES(LogSourceAccessManagerTest,
-                           MaxNumberOfOpenLogSources);
+                           MaxNumberOfOpenLogSourcesSameExtension);
+  FRIEND_TEST_ALL_PREFIXES(LogSourceAccessManagerTest,
+                           MaxNumberOfOpenLogSourcesDifferentExtensions);
 
   // Contains a source/extension pair.
   struct SourceAndExtension {
@@ -66,53 +68,50 @@ class LogSourceAccessManager {
              std::make_pair(other.source, other.extension_id);
     }
 
+    // The log source that this handle is accessing.
     api::feedback_private::LogSource source;
+    // ID of the extension that opened this handle.
     std::string extension_id;
   };
 
   // Creates a new LogSourceResource for the source and extension indicated by
-  // |key|. Stores the new resource in the API Resource Manager and stores the
-  // resource ID in |sources_| as a new entry. Returns the nonzero ID of the
-  // newly created resource, or 0 if there was already an existing resource for
-  // |key|.
-  int CreateResource(const SourceAndExtension& key);
+  // |source| and |extension_id|. Stores the new resource in the API Resource
+  // Manager, and generates a new LogSourceHandle containing |source| and
+  // |extension_id| in |open_handles_| as a new entry.
+  //
+  // Returns the nonzero ID of the newly created LogSourceResource, or 0 if a
+  // new resource could be created.
+  int CreateResource(api::feedback_private::LogSource source,
+                     const std::string& extension_id);
 
   // Callback that is passed to the log source from FetchFromSource.
   // Arguments:
-  // - key: The source that was read, and the extension requesting the read.
-  // - delete_source: Set this if the source indicated by |key| should be
-  //   removed from both the API Resource Manager and from |sources_|.
+  // - extension_id: ID of extension that opened the log source.
+  // - resource_id: Resource ID provided by API Resource Manager for the reader.
+  // - delete_source: Set this if the source opened by |handle| should be
+  //   removed from both the API Resource Manager and from |open_handles_|.
   // - response_callback: Callback for sending the response as a
   //   ReadLogSourceResult struct.
-  void OnFetchComplete(const SourceAndExtension& key,
+  void OnFetchComplete(const std::string& extension_id,
+                       int resource_id,
                        bool delete_source,
                        const ReadLogSourceCallback& callback,
                        system_logs::SystemLogsResponse* response);
 
-  // Removes an existing log source indicated by |key| from both the API
-  // Resource Manager and |sources_|.
-  void RemoveSource(const SourceAndExtension& key);
+  // Removes an existing log source handle indicated by |id| from
+  // |open_handles_|.
+  void RemoveHandle(int id);
 
-  // Attempts to update the entry for |key| in |last_access_times_| to the
-  // current time, to record that the source is being accessed by the extension
-  // right now. If less than |min_time_between_reads_| has elapsed since the
-  // last successful read, do not update the timestamp in |last_access_times_|,
-  // and instead return false. Otherwise returns true.
-  //
-  // Creates a new entry in |last_access_times_| if it doesn't exist. Will not
-  // delete from |last_access_times_|.
-  bool UpdateSourceAccessTime(const SourceAndExtension& key);
-
-  // Returns the number of entries in |sources_| with source=|source|.
+  // Returns the number of entries in |open_handles_| with source=|source|.
   size_t GetNumActiveResourcesForSource(
       api::feedback_private::LogSource source) const;
 
-  // Every SourceAndExtension is linked to a unique SingleLogSource.
-  //
-  // Keys: SourceAndExtension for which a SingleLogSource has been created
-  //       and not yet destroyed. (i.e. currently in use).
-  // Values: ID of the API Resource containing the SingleLogSource.
-  std::map<SourceAndExtension, int> sources_;
+  // Attempts to update the |last_access_time| field for the SourceAndExtension
+  // |open_handles[id]|, to record that the source is being accessed by the
+  // handle right now. If less than |min_time_between_reads_| has elapsed since
+  // the last successful read, does not update |last_access_times|, and instead
+  // returns false. Otherwise returns true.
+  bool UpdateSourceAccessTime(int id);
 
   // Keeps track of the last time each source was accessed by each extension.
   // Each time FetchFromSource() is called, the timestamp gets updated.
@@ -122,6 +121,9 @@ class LogSourceAccessManager {
   // recorded access times.
   std::map<SourceAndExtension, std::unique_ptr<AccessRateLimiter>>
       rate_limiters_;
+
+  // Contains all open LogSourceHandles.
+  std::map<int, std::unique_ptr<SourceAndExtension>> open_handles_;
 
   // For fetching browser resources like ApiResourceManager.
   content::BrowserContext* context_;
