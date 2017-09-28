@@ -4,6 +4,7 @@
 
 #include "components/policy/core/common/policy_loader_win.h"
 
+#include <lm.h>       // For NetGetJoinInformation
 #include <ntdsapi.h>  // For Ds[Un]Bind
 #include <rpc.h>      // For struct GUID
 #include <shlwapi.h>  // For PathIsUNC()
@@ -24,7 +25,9 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram.h"
+#include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/path_service.h"
 #include "base/scoped_native_library.h"
 #include "base/sequenced_task_runner.h"
 #include "base/stl_util.h"
@@ -106,7 +109,7 @@ void FilterUntrustedPolicy(PolicyMap* policy) {
   const PolicyMap::Entry* map_entry =
       policy->Get(key::kExtensionInstallForcelist);
   if (map_entry && map_entry->value) {
-    const base::ListValue* policy_list_value = NULL;
+    const base::ListValue* policy_list_value = nullptr;
     if (!map_entry->value->GetAsList(&policy_list_value))
       return;
 
@@ -159,10 +162,10 @@ void FilterUntrustedPolicy(PolicyMap* policy) {
 class Wow64Functions {
  public:
   Wow64Functions()
-      : kernel32_lib_(base::FilePath(L"kernel32")),
-        is_wow_64_process_(NULL),
-        wow_64_disable_wow_64_fs_redirection_(NULL),
-        wow_64_revert_wow_64_fs_redirection_(NULL) {
+      : kernel32_lib_(base::FilePath(FILE_PATH_LITERAL("kernel32"))),
+        is_wow_64_process_(nullptr),
+        wow_64_disable_wow_64_fs_redirection_(nullptr),
+        wow_64_revert_wow_64_fs_redirection_(nullptr) {
     if (kernel32_lib_.is_valid()) {
       is_wow_64_process_ = reinterpret_cast<IsWow64Process>(
           kernel32_lib_.GetFunctionPointer("IsWow64Process"));
@@ -218,7 +221,7 @@ static base::LazyInstance<Wow64Functions>::DestructorAtExit g_wow_64_functions =
 // Scoper that switches off Wow64 File System Redirection during its lifetime.
 class ScopedDisableWow64Redirection {
  public:
-  ScopedDisableWow64Redirection() : active_(false), previous_state_(NULL) {
+  ScopedDisableWow64Redirection() : active_(false), previous_state_(nullptr) {
     Wow64Functions* wow64 = g_wow_64_functions.Pointer();
     if (wow64->is_valid() && wow64->IsWow64()) {
       if (wow64->DisableFsRedirection(&previous_state_))
@@ -277,13 +280,57 @@ void ParsePolicy(const RegistryDict* gpo_dict,
     return;
 
   std::unique_ptr<base::Value> policy_value(gpo_dict->ConvertToJSON(schema));
-  const base::DictionaryValue* policy_dict = NULL;
+  const base::DictionaryValue* policy_dict = nullptr;
   if (!policy_value->GetAsDictionary(&policy_dict) || !policy_dict) {
     LOG(WARNING) << "Root policy object is not a dictionary!";
     return;
   }
 
   policy->LoadFrom(policy_dict, level, scope, POLICY_SOURCE_PLATFORM);
+}
+
+// Make sure to use the real NetGetJoinInformation, otherwise fallback to the
+// linked one.
+bool IsDomainJoined() {
+  decltype(&::NetGetJoinInformation) NetGetJoinInformation_function =
+      &::NetGetJoinInformation;
+  decltype(&::NetApiBufferFree) NetApiBufferFree_function = &::NetApiBufferFree;
+  bool got_function_addresses = false;
+  // Use an absolute path to load the DLL to avoid DLL preloading attacks.
+  base::FilePath path;
+  if (PathService::Get(base::DIR_SYSTEM, &path)) {
+    HINSTANCE net_api_library = ::LoadLibraryEx(
+        path.Append(FILE_PATH_LITERAL("Netapi32.dll")).value().c_str(), nullptr,
+        LOAD_WITH_ALTERED_SEARCH_PATH);
+    if (net_api_library) {
+      NetGetJoinInformation_function =
+          reinterpret_cast<decltype(&::NetGetJoinInformation)>(
+              ::GetProcAddress(net_api_library, "NetGetJoinInformation"));
+      NetApiBufferFree_function =
+          reinterpret_cast<decltype(&::NetApiBufferFree)>(
+              ::GetProcAddress(net_api_library, "NetApiBufferFree"));
+      ::FreeLibrary(net_api_library);
+
+      if (NetGetJoinInformation_function && NetApiBufferFree_function) {
+        got_function_addresses = true;
+      } else {
+        NetGetJoinInformation_function = &::NetGetJoinInformation;
+        NetApiBufferFree_function = &::NetApiBufferFree;
+      }
+    }
+  }
+  base::UmaHistogramBoolean("EnterpriseCheck.NetGetJoinInformationAddress",
+                            got_function_addresses);
+
+  LPWSTR buffer = nullptr;
+  NETSETUP_JOIN_STATUS buffer_type = NetSetupUnknownStatus;
+  bool is_joined = NetGetJoinInformation_function(
+                       nullptr, &buffer, &buffer_type) == NERR_Success &&
+                   buffer_type == NetSetupDomainName;
+  if (buffer)
+    NetApiBufferFree_function(buffer);
+
+  return is_joined;
 }
 
 // Collects stats about the enterprise environment that can be used to decide
@@ -294,12 +341,13 @@ void CollectEnterpriseUMAs() {
                             base::win::OSInfo::GetInstance()->version_type(),
                             base::win::SUITE_LAST);
 
-  UMA_HISTOGRAM_BOOLEAN("EnterpriseCheck.InDomain",
-                        base::win::IsEnrolledToDomain());
-  UMA_HISTOGRAM_BOOLEAN("EnterpriseCheck.IsManaged",
-                        base::win::IsDeviceRegisteredWithManagement());
-  UMA_HISTOGRAM_BOOLEAN("EnterpriseCheck.IsEnterpriseUser",
-                        base::win::IsEnterpriseManaged());
+  base::UmaHistogramBoolean("EnterpriseCheck.IsDomainJoined", IsDomainJoined());
+  base::UmaHistogramBoolean("EnterpriseCheck.InDomain",
+                            base::win::IsEnrolledToDomain());
+  base::UmaHistogramBoolean("EnterpriseCheck.IsManaged",
+                            base::win::IsDeviceRegisteredWithManagement());
+  base::UmaHistogramBoolean("EnterpriseCheck.IsEnterpriseUser",
+                            base::win::IsEnterpriseManaged());
 }
 
 }  // namespace
@@ -508,9 +556,9 @@ bool PolicyLoaderWin::LoadGPOPolicy(PolicyScope scope,
 bool PolicyLoaderWin::ReadPolicyFromGPO(PolicyScope scope,
                                         RegistryDict* policy,
                                         PolicyLoadStatusSampler* status) {
-  PGROUP_POLICY_OBJECT policy_object_list = NULL;
+  PGROUP_POLICY_OBJECT policy_object_list = nullptr;
   DWORD flags = scope == POLICY_SCOPE_MACHINE ? GPO_LIST_FLAG_MACHINE : 0;
-  if (gpo_provider_->GetAppliedGPOList(flags, NULL, NULL,
+  if (gpo_provider_->GetAppliedGPOList(flags, nullptr, nullptr,
                                        &kRegistrySettingsCSEGUID,
                                        &policy_object_list) != ERROR_SUCCESS) {
     PLOG(ERROR) << "GetAppliedGPOList scope " << scope;
