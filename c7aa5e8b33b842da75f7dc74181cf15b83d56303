@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8b637f89_ddace8e7",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-09-28T17:43:50Z",
+      "side": 1,
+      "message": "ContainingBlock is the grid box. Child is sized wrt to cell, not the entire box. Override sizes are cell sizes.",
+      "parentUuid": "0763a9e3_4340bb86",
+      "range": {
+        "startLine": 86,
+        "startChar": 5,
+        "endLine": 86,
+        "endChar": 40
+      },
+      "revId": "c7aa5e8b33b842da75f7dc74181cf15b83d56303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e646c04_56256f0d",
         "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "c7aa5e8b33b842da75f7dc74181cf15b83d56303",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6206ac06_98bd9190",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-09-28T17:43:50Z",
+      "side": 1,
+      "message": "NGLogicalOffset::ConvertToPhysical converts more than just offset. It takes a rectangle (inner_size) positioned by offset inside another rectangle (outer_size). To convert to physical, it has to compute topLeft of the rectangle. So it does more than a simple flip.\nWhen converting size to physical, all you need is a coordinate flip if not horizontal.",
+      "parentUuid": "4e646c04_56256f0d",
+      "range": {
+        "startLine": 144,
+        "startChar": 2,
+        "endLine": 147,
+        "endChar": 58
+      },
+      "revId": "c7aa5e8b33b842da75f7dc74181cf15b83d56303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2a93a3a5_493819e3",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-09-28T17:43:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "732eec0d_c396fa11",
+      "range": {
+        "startLine": 156,
+        "startChar": 15,
+        "endLine": 156,
+        "endChar": 16
+      },
+      "revId": "c7aa5e8b33b842da75f7dc74181cf15b83d56303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d38f82be_a098af31",
         "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "c7aa5e8b33b842da75f7dc74181cf15b83d56303",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5c8ebf7_947a42f9",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-09-28T17:43:50Z",
+      "side": 1,
+      "message": "The code and comment got out of sync, it refers to a line 10 lines below. I\u0027l remove the comment, code is now self explanatory.",
+      "parentUuid": "d38f82be_a098af31",
+      "range": {
+        "startLine": 163,
+        "startChar": 5,
+        "endLine": 163,
+        "endChar": 70
+      },
+      "revId": "c7aa5e8b33b842da75f7dc74181cf15b83d56303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "d11a0a35_781c1333",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-09-28T17:43:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10ec9542_23365cb6",
+      "range": {
+        "startLine": 165,
+        "startChar": 7,
+        "endLine": 166,
+        "endChar": 47
+      },
+      "revId": "c7aa5e8b33b842da75f7dc74181cf15b83d56303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5cc74bd9_7b28a256",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_fragment_builder.cc",
         "patchSetId": 4
@@ -131,6 +251,24 @@
       "revId": "c7aa5e8b33b842da75f7dc74181cf15b83d56303",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d48b2cb_21387945",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_fragment_builder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-09-28T17:43:50Z",
+      "side": 1,
+      "message": "Done. Thanks for this, it prevents a footgun.",
+      "parentUuid": "5cc74bd9_7b28a256",
+      "revId": "c7aa5e8b33b842da75f7dc74181cf15b83d56303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
