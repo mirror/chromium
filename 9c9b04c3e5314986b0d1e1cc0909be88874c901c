@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f18722c0_a8e889c5",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-28T22:12:46Z",
+      "side": 1,
+      "message": "It seems like these are part of the implementation of CastChannelOpenParams. Can they be defined there?",
+      "revId": "9c9b04c3e5314986b0d1e1cc0909be88874c901c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25b0222e_e7f35b58",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-28T22:12:46Z",
+      "side": 1,
+      "message": "This is only called in OpenChannel - can it be private?",
+      "revId": "9c9b04c3e5314986b0d1e1cc0909be88874c901c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17953d2a_0e8d08e5",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_params.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-28T22:12:46Z",
+      "side": 1,
+      "message": "This seems like an implementation detail of CastMediaSinkServiceImpl.  Should it be declared/defined in cast_media_sink_service_impl.{h,cc}?  It could be CastMediaSinkServiceImpl::RetryParams (as a private class).",
+      "revId": "9c9b04c3e5314986b0d1e1cc0909be88874c901c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1e3ae8f_b221beb8",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_params.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-28T22:12:46Z",
+      "side": 1,
+      "message": "Clarify that this must be \u003e\u003d 1.0.",
+      "revId": "9c9b04c3e5314986b0d1e1cc0909be88874c901c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce39405f_8012e795",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_params.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-28T22:12:46Z",
+      "side": 1,
+      "message": "These only seem to be used when parsing the field trial parameters.  Should they be declared in the .cc?",
+      "revId": "9c9b04c3e5314986b0d1e1cc0909be88874c901c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "246eb496_25b924da",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_params.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-28T22:12:46Z",
+      "side": 1,
+      "message": "I think this is used only by CastSocketService.  Can it be defined/declared in cast_socket_service.{h,cc}?  Maybe as CastSocketService::OpenParams (public class since it is part of API).",
+      "revId": "9c9b04c3e5314986b0d1e1cc0909be88874c901c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6b13063_3b863e78",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_params.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-28T22:12:46Z",
+      "side": 1,
+      "message": "Similar comment here.",
+      "revId": "9c9b04c3e5314986b0d1e1cc0909be88874c901c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
