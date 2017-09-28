@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "094fd9f9_2c1d265a",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_dictionary.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-28T03:50:17Z",
+      "side": 1,
+      "message": "merge with following \u0027elif\u0027.",
+      "revId": "ce5572e3fdc43016af0569ba38daa55f08646881",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f99b2391_fe6356b4",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_dictionary.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-28T03:50:17Z",
+      "side": 1,
+      "message": "Optional:\ncould you change this if-elif-elif-else branches to\n\"\"\"\nif ...:\n  return ...\nif ...:\n  return ...\nreturn ...\n\"\"\"\nstyle?",
+      "revId": "ce5572e3fdc43016af0569ba38daa55f08646881",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "179aa758_8f618fc7",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_interface.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 1413,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-28T03:50:17Z",
+      "side": 1,
+      "message": "Merge with \"if idl_type.is_string_type\".",
+      "revId": "ce5572e3fdc43016af0569ba38daa55f08646881",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44e6874d_7376c96a",
+        "filename": "third_party/WebKit/Source/bindings/templates/union_container.h.tmpl",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-28T03:50:17Z",
+      "side": 1,
+      "message": "Optional: Could you drop \u0027s\u0027 suffix in this enum class name?",
+      "revId": "ce5572e3fdc43016af0569ba38daa55f08646881",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
