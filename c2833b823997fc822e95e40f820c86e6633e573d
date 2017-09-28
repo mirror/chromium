@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f9547c2f_befd6e34",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-09-28T05:36:55Z",
+      "side": 1,
+      "message": "This constant is used from several places including outside of ash/message_center. So I want to keep it as is.",
+      "parentUuid": "1ef611ec_4df565b6",
+      "revId": "c2833b823997fc822e95e40f820c86e6633e573d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1d9d042_c561bd0e",
         "filename": "ash/message_center/message_center_view.cc",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-28T04:37:53Z",
       "side": 1,
       "message": "remove this line.",
+      "revId": "c2833b823997fc822e95e40f820c86e6633e573d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fc5b9db_60eecf2a",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-09-28T05:36:55Z",
+      "side": 1,
+      "message": "Good catch. Thanks. Done.",
+      "parentUuid": "e1d9d042_c561bd0e",
       "revId": "c2833b823997fc822e95e40f820c86e6633e573d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
