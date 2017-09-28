@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "e333ac15_7b783a53",
+        "filename": "components/history/content/browser/web_contents_top_sites_observer.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-28T20:19:39Z",
+      "side": 1,
+      "message": "Can you point me at the history code you are referring to Xi?",
+      "parentUuid": "355c8b44_fbeb9796",
+      "range": {
+        "startLine": 42,
+        "startChar": 5,
+        "endLine": 43,
+        "endChar": 36
+      },
+      "revId": "842b89bc8dc02098b20d1dcf7de0dba366bec38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dca6f857_071702e5",
         "filename": "components/history/content/browser/web_contents_top_sites_observer.cc",
         "patchSetId": 34
@@ -108,6 +132,30 @@
       "side": 1,
       "message": "I actually thought the same way. However, if I make TopSites::OnNavigationCommitted take a LoadCommittedDetails, I have to include content/public/browser/navigation_details.h and another similar one in topsites.h. This unfortunately violates checkdeps rules when running \"fit cl upload\". \n\nHere is the message: \u003cBecause of \"-content\" from components/history/core\u0027s include_rules\u003e",
       "parentUuid": "dca6f857_071702e5",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 48,
+        "endChar": 3
+      },
+      "revId": "842b89bc8dc02098b20d1dcf7de0dba366bec38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d5abe2e_ea562897",
+        "filename": "components/history/content/browser/web_contents_top_sites_observer.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-28T20:19:39Z",
+      "side": 1,
+      "message": "*SIGH* You are right.",
+      "parentUuid": "c6a24502_a28f8289",
       "range": {
         "startLine": 42,
         "startChar": 2,
