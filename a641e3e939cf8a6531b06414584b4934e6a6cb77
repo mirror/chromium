@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "42b9f211_85df5faa",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 9816,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-28T21:50:11Z",
+      "side": 1,
+      "message": "nit: \"from using,\" ditto below",
+      "range": {
+        "startLine": 9816,
+        "startChar": 114,
+        "endLine": 9816,
+        "endChar": 120
+      },
+      "revId": "a641e3e939cf8a6531b06414584b4934e6a6cb77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "424c4c27_97c67ae8",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-28T21:50:11Z",
+      "side": 1,
+      "message": "nit: order these two so context is first.",
+      "range": {
+        "startLine": 397,
+        "startChar": 8,
+        "endLine": 397,
+        "endChar": 19
+      },
+      "revId": "a641e3e939cf8a6531b06414584b4934e6a6cb77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17155333_5a47f8f4",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-28T21:50:11Z",
+      "side": 1,
+      "message": "I\u0027d rather change any bubble that\u0027s using its message as the title to just use the real title. But when I glanced through all the existing dialogs, I didn\u0027t see any without real titles. So hopefully we don\u0027t have to do this?",
+      "range": {
+        "startLine": 400,
+        "startChar": 43,
+        "endLine": 400,
+        "endChar": 63
+      },
+      "revId": "a641e3e939cf8a6531b06414584b4934e6a6cb77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29f3b23c_2ea169df",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-28T21:50:11Z",
+      "side": 1,
+      "message": "nit: \"bubbles\"",
+      "range": {
+        "startLine": 404,
+        "startChar": 17,
+        "endLine": 404,
+        "endChar": 18
+      },
+      "revId": "a641e3e939cf8a6531b06414584b4934e6a6cb77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "17d18622_d12a4d2f",
         "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
         "patchSetId": 1
