@@ -187,6 +187,30 @@
       "revId": "cb82c0813dd5bf0a69c8a36811253d1042cdf181",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa9c80e2_9a0866fa",
+        "filename": "chromeos/dbus/system_clock_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-28T17:28:26Z",
+      "side": 1,
+      "message": "You\u0027re right.",
+      "parentUuid": "c000f905_a8afc1a4",
+      "range": {
+        "startLine": 183,
+        "startChar": 10,
+        "endLine": 183,
+        "endChar": 50
+      },
+      "revId": "cb82c0813dd5bf0a69c8a36811253d1042cdf181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
