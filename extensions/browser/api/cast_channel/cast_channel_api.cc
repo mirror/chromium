@@ -118,6 +118,14 @@ bool IsValidConnectInfoIpAddress(const ConnectInfo& connect_info) {
 CastChannelAPI::CastChannelAPI(content::BrowserContext* context)
     : browser_context_(context) {
   DCHECK(browser_context_);
+
+  EventRouter* event_router = EventRouter::Get(context);
+  if (event_router) {
+    event_router->RegisterObserver(this,
+                                   api::cast_channel::OnMessage::kEventName);
+    event_router->RegisterObserver(this,
+                                   api::cast_channel::OnError::kEventName);
+  }
 }
 
 // static
@@ -132,18 +140,6 @@ void CastChannelAPI::SendEvent(const std::string& extension_id,
   if (event_router) {
     event_router->DispatchEventToExtension(extension_id, std::move(event));
   }
-}
-
-cast_channel::CastSocket::Observer* CastChannelAPI::GetObserver(
-    const std::string& extension_id,
-    scoped_refptr<cast_channel::Logger> logger) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  if (!observer_) {
-    observer_.reset(new CastMessageHandler(
-        base::Bind(&CastChannelAPI::SendEvent, this->AsWeakPtr(), extension_id),
-        logger));
-  }
-  return observer_.get();
 }
 
 static base::LazyInstance<
@@ -170,6 +166,23 @@ content::BrowserContext* CastChannelAPI::GetBrowserContext() const {
 }
 
 CastChannelAPI::~CastChannelAPI() {}
+
+void CastChannelAPI::OnListenerAdded(const EventListenerInfo& details) {
+  // Observer has been registered to CastSocketService.
+  if (observer_)
+    return;
+
+  observer_.reset(new CastMessageHandler(
+      base::Bind(&CastChannelAPI::SendEvent, this->AsWeakPtr(),
+                 details.extension_id),
+      cast_channel::CastSocketService::GetInstance()->GetLogger()));
+  cast_channel::CastSocketService::GetInstance()->AddObserver(observer_.get());
+}
+
+void CastChannelAPI::OnListenerRemoved(const EventListenerInfo& details) {
+  // TODO(zhaobin): Keep track of the number of listeners and remove |observer_|
+  // from CastSocketService if the last listener is removed.
+}
 
 CastChannelAsyncApiFunction::CastChannelAsyncApiFunction()
     : cast_socket_service_(nullptr) {}
@@ -283,9 +296,6 @@ void CastChannelOpenFunction::AsyncWorkStart() {
   if (test_socket.get())
     cast_socket_service_->SetSocketForTest(std::move(test_socket));
 
-  auto* observer =
-      api_->GetObserver(extension_->id(), cast_socket_service_->GetLogger());
-
   cast_channel::CastSocketOpenParams open_params(
       *ip_endpoint_, ExtensionsBrowserClient::Get()->GetNetLog(),
       base::TimeDelta::FromMilliseconds(connect_info.timeout.get()
@@ -296,8 +306,7 @@ void CastChannelOpenFunction::AsyncWorkStart() {
                                       : CastDeviceCapability::NONE);
 
   cast_socket_service_->OpenSocket(
-      open_params, base::Bind(&CastChannelOpenFunction::OnOpen, this),
-      observer);
+      open_params, base::Bind(&CastChannelOpenFunction::OnOpen, this));
 }
 
 void CastChannelOpenFunction::OnOpen(CastSocket* socket) {
@@ -356,6 +365,7 @@ void CastChannelSendFunction::AsyncWorkStart() {
     AsyncWorkCompleted();
     return;
   }
+
   CastMessage message_to_send;
   if (!MessageInfoToCastMessage(params_->message, &message_to_send)) {
     SetResultFromError(params_->channel.channel_id,
@@ -428,7 +438,7 @@ CastChannelAPI::CastMessageHandler::CastMessageHandler(
     const EventDispatchCallback& ui_dispatch_cb,
     scoped_refptr<Logger> logger)
     : ui_dispatch_cb_(ui_dispatch_cb), logger_(logger) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DETACH_FROM_THREAD(thread_checker_);
   DCHECK(logger_);
 }
 
