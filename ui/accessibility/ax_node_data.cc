@@ -555,6 +555,8 @@ std::string AXNodeData::ToString() const {
 
   result += StateBitfieldToString(state);
 
+  // TODO: Add offscreen and focus??
+
   result += " (" + IntToString(location.x()) + ", " +
                    IntToString(location.y()) + ")-(" +
                    IntToString(location.width()) + ", " +

@@ -13,6 +13,10 @@
 
 namespace ui {
 
+// TODO: Where to define these in namespace ui?
+const static char* AX_STATE_OFFSCREEN_FLAG = "offscreen";
+const static char* AX_STATE_FOCUSED_FLAG = "focused";
+
 // One node in an AXTree.
 class AX_EXPORT AXNode {
  public:
