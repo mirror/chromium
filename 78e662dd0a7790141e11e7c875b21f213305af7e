@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45d4f06e_93ac78b9",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1729,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-09-28T21:27:07Z",
+      "side": 1,
+      "message": "Didn\u0027t we establish that +2 was potentially necessary, in the discussion in https://codereview.chromium.org/2534413004/",
+      "revId": "78e662dd0a7790141e11e7c875b21f213305af7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
