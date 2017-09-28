@@ -43,10 +43,19 @@ class BacktraceStorage {
  private:
   using Container = std::unordered_set<Backtrace>;
 
-  mutable base::Lock lock_;
+  struct ContainerShard {
+    ContainerShard();
+    ~ContainerShard();
 
-  // List of live backtraces for de-duping. Protected by the lock_.
-  Container backtraces_;
+    // List of live backtraces for de-duping. All modifications to |backtraces|
+    // or the Backtrace elements owned by |backtraces| must be protected by the
+    // lock.
+    Container backtraces;
+    mutable base::Lock lock;
+  };
+
+  // Backtraces are sharded by fingerprint to reduce lock contention.
+  std::vector<ContainerShard> backtraces_;
 };
 
 }  // namespace profiling
