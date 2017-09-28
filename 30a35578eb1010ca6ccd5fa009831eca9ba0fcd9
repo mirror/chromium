@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18e62e2f_f39d590d",
+        "filename": "chrome/browser/apps/app_url_redirector.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-28T05:01:30Z",
+      "side": 1,
+      "message": "perhaps rename this (and header, browsertest, class) to platform_app_url_redirector / PlatformAppUrlRedirector? The test harness class is already called PlatformAppUrlRedirectorBrowserTest :)",
+      "revId": "30a35578eb1010ca6ccd5fa009831eca9ba0fcd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c39273e7_a25a75bb",
+        "filename": "chrome/browser/apps/app_url_redirector.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-28T05:01:30Z",
+      "side": 1,
+      "message": "remove?  also chrome_features.h probably",
+      "revId": "30a35578eb1010ca6ccd5fa009831eca9ba0fcd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ddd2b3d_69d0784b",
+        "filename": "chrome/browser/apps/app_url_redirector.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-28T05:01:30Z",
+      "side": 1,
+      "message": "remove? - maybe others also",
+      "revId": "30a35578eb1010ca6ccd5fa009831eca9ba0fcd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "707af0af_17c4c031",
+        "filename": "chrome/browser/apps/app_url_redirector.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-28T05:01:30Z",
+      "side": 1,
+      "message": "for (const auto\u0026 extension_ref : enabled_extensions)\n\nthen you can get rid of (*iter) goo. (maybe you need cbegin/cend methods on ExtensionSet? or maybe it Just Works (tm)).",
+      "revId": "30a35578eb1010ca6ccd5fa009831eca9ba0fcd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27d3c592_f5bb2347",
+        "filename": "chrome/browser/apps/app_url_redirector.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-28T05:01:30Z",
+      "side": 1,
+      "message": "nit: no curlies",
+      "revId": "30a35578eb1010ca6ccd5fa009831eca9ba0fcd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f6c4ee1_0121f568",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-28T05:01:30Z",
+      "side": 1,
+      "message": "move this to an #if block?",
+      "revId": "30a35578eb1010ca6ccd5fa009831eca9ba0fcd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beac0b05_c13fbd48",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3182,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-28T05:01:30Z",
+      "side": 1,
+      "message": "auto? for consistency",
+      "revId": "30a35578eb1010ca6ccd5fa009831eca9ba0fcd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffdddcab_91613d80",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3183,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-28T05:01:30Z",
+      "side": 1,
+      "message": "AppUrlRedirector also needs extensions:: - I\u0027m guessing the #else just above should instead be #elif BUILDFLAG(ENABLE_EXTENSISONS)",
+      "revId": "30a35578eb1010ca6ccd5fa009831eca9ba0fcd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb2fd0c5_c9b8e0f1",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-28T05:01:30Z",
+      "side": 1,
+      "message": "Why all the DVLOG? I wouldn\u0027t add it just because AppUrlDirector has them.. but if you expect they\u0027ll be needed, that\u0027s OK.",
+      "revId": "30a35578eb1010ca6ccd5fa009831eca9ba0fcd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30c10aca_1f3f6c62",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-28T05:01:30Z",
+      "side": 1,
+      "message": "does this need new tests as well?  the old class was just returning a InterceptNavigationThrottle with a bound method - this class seems to introduce special new functionality, so needs new tests",
+      "revId": "30a35578eb1010ca6ccd5fa009831eca9ba0fcd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26d5b409_308c46b6",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-28T05:01:30Z",
+      "side": 1,
+      "message": "can this be private?",
+      "revId": "30a35578eb1010ca6ccd5fa009831eca9ba0fcd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6458933_9cb47b6c",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-28T05:01:30Z",
+      "side": 1,
+      "message": "// content::NavigationThrottle:",
+      "revId": "30a35578eb1010ca6ccd5fa009831eca9ba0fcd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5adc937_9bcfb825",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-28T05:01:30Z",
+      "side": 1,
+      "message": "move to anonymous namespace?",
+      "revId": "30a35578eb1010ca6ccd5fa009831eca9ba0fcd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
