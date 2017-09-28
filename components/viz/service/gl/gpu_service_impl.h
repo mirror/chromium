@@ -31,6 +31,7 @@
 namespace gpu {
 class GpuMemoryBufferFactory;
 class GpuWatchdogThread;
+class ProtectedGpuMemoryBufferManager;
 class Scheduler;
 class SyncPointManager;
 }  // namespace gpu
@@ -56,10 +57,12 @@ class VIZ_SERVICE_EXPORT GpuServiceImpl : public gpu::GpuChannelManagerDelegate,
 
   void UpdateGPUInfoFromPreferences(const gpu::GpuPreferences& preferences);
 
-  void InitializeWithHost(ui::mojom::GpuHostPtr gpu_host,
-                          gpu::GpuProcessActivityFlags activity_flags,
-                          gpu::SyncPointManager* sync_point_manager = nullptr,
-                          base::WaitableEvent* shutdown_event = nullptr);
+  void InitializeWithHost(
+      ui::mojom::GpuHostPtr gpu_host,
+      gpu::GpuProcessActivityFlags activity_flags,
+      gpu::SyncPointManager* sync_point_manager = nullptr,
+      gpu::ProtectedGpuMemoryBufferManager* protected_buffer_manager = nullptr,
+      base::WaitableEvent* shutdown_event = nullptr);
   void Bind(mojom::GpuServiceRequest request);
 
   bool is_initialized() const { return !!gpu_host_; }

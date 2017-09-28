@@ -340,23 +340,6 @@ scoped_refptr<TextureRef> TextureRef::Create(
   return make_scoped_refptr(new TextureRef(texture_id, no_longer_needed_cb));
 }
 
-#if defined(OS_CHROMEOS)
-gfx::BufferFormat VideoPixelFormatToGfxBufferFormat(
-    VideoPixelFormat pixel_format) {
-  switch (pixel_format) {
-    case VideoPixelFormat::PIXEL_FORMAT_ARGB:
-      return gfx::BufferFormat::BGRA_8888;
-    case VideoPixelFormat::PIXEL_FORMAT_XRGB:
-      return gfx::BufferFormat::BGRX_8888;
-    case VideoPixelFormat::PIXEL_FORMAT_NV12:
-      return gfx::BufferFormat::YUV_420_BIPLANAR;
-    default:
-      LOG_ASSERT(false) << "Unknown VideoPixelFormat";
-      return gfx::BufferFormat::BGRX_8888;
-  }
-}
-#endif
-
 // static
 scoped_refptr<TextureRef> TextureRef::CreatePreallocated(
     uint32_t texture_id,

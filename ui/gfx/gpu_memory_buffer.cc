@@ -4,6 +4,7 @@
 
 #include "ui/gfx/gpu_memory_buffer.h"
 
+#include "base/files/scoped_file.h"
 #include "ui/gfx/generic_shared_memory_id.h"
 
 namespace gfx {
@@ -47,6 +48,31 @@ GpuMemoryBufferHandle CloneHandleForIPC(
       return source_handle;
   }
   return gfx::GpuMemoryBufferHandle();
+}
+
+void CloseGpuMemoryBufferHandle(GpuMemoryBufferHandle* handle) {
+  switch (handle->type) {
+    case gfx::EMPTY_BUFFER:
+    case gfx::IO_SURFACE_BUFFER:
+      break;
+
+    case gfx::SHARED_MEMORY_BUFFER:
+      handle->handle.Close();
+      break;
+
+    case gfx::NATIVE_PIXMAP: {
+#if defined(OS_LINUX)
+      for (const auto& fd : handle->native_pixmap_handle.fds) {
+        // Close the fd by wrapping it in a ScopedFD and letting
+        // it fall out of scope.
+        base::ScopedFD scoped_fd(fd.fd);
+      }
+#endif
+      break;
+    }
+  }
+
+  *handle = GpuMemoryBufferHandle();
 }
 
 base::trace_event::MemoryAllocatorDumpGuid GpuMemoryBuffer::GetGUIDForTracing(
