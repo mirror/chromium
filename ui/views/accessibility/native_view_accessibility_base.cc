@@ -221,6 +221,10 @@ bool NativeViewAccessibilityBase::ShouldIgnoreHoveredStateForTesting() {
   return false;
 }
 
+bool NativeViewAccessibilityBase::IsOffscreen() const {
+  return false;
+}
+
 void NativeViewAccessibilityBase::OnWidgetDestroying(Widget* widget) {
   if (parent_widget_ == widget) {
     parent_widget_->RemoveObserver(this);
