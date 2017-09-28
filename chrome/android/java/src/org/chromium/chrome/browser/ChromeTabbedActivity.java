@@ -99,6 +99,7 @@ import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.signin.SigninPromoUtil;
 import org.chromium.chrome.browser.snackbar.undo.UndoBarController;
 import org.chromium.chrome.browser.suggestions.SuggestionsEventReporterBridge;
+import org.chromium.chrome.browser.survey.ChromeHomeSurveyController;
 import org.chromium.chrome.browser.tab.BrowserControlsVisibilityDelegate;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tab.TabDelegateFactory;
@@ -245,6 +246,8 @@ public class ChromeTabbedActivity
 
     private AppIndexingUtil mAppIndexingUtil;
 
+    private ChromeHomeSurveyController mController;
+
     /**
      * Whether an initial tab needs to be created during UI initialization.
      */
@@ -373,6 +376,7 @@ public class ChromeTabbedActivity
         mActivityStopMetrics = new ActivityStopMetrics();
         mMainIntentMetrics = new MainIntentBehaviorMetrics(this);
         mAppIndexingUtil = new AppIndexingUtil();
+        mController = new ChromeHomeSurveyController();
     }
 
     @Override
@@ -492,7 +496,7 @@ public class ChromeTabbedActivity
             } else {
                 preferenceManager.setPromosSkippedOnFirstStart(true);
             }
-
+            mController.initSurveyController(getActivityTab(), getApplicationContext());
             super.finishNativeInitialization();
         } finally {
             TraceEvent.end("ChromeTabbedActivity.finishNativeInitialization");
