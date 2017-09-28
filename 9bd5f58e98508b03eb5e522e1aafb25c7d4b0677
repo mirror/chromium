@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47598839_fdd422be",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-28T00:34:28Z",
+      "side": 1,
+      "message": "Can you add a TODO to externalize the frame index from paint image. It\u0027s becoming a bit confusing who updates it and what it represents.",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 52
+      },
+      "revId": "9bd5f58e98508b03eb5e522e1aafb25c7d4b0677",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
