@@ -47,18 +47,28 @@ struct BufferSlice;
 
 class PLATFORM_EXPORT HarfBuzzShaper final {
  public:
+  // Whether pre- and post-context should be used for shaping.
+  enum { kNoContext = 0, kPreContext = 1, kPostContext = 2 };
+
   HarfBuzzShaper(const UChar*, unsigned length);
 
   // Shape a range, defined by the start and end parameters, of the string
   // supplied to the constructor.
+  //
   // The start and end positions should represent boundaries where a break may
   // occur, such as at the beginning or end of lines or at element boundaries.
   // If given arbitrary positions the results are not guaranteed to be correct.
   // May be called multiple times; font and direction may vary between calls.
+  //
+  // The last option controls whether shaping takes the preceding and following
+  // content into account. By default full context will be used meaning the
+  // range is shaped as if the full string is shaped in its entirety.
   RefPtr<ShapeResult> Shape(const Font*,
                             TextDirection,
                             unsigned start,
-                            unsigned end) const;
+                            unsigned end,
+                            unsigned shape_options = kPreContext |
+                                                     kPostContext) const;
 
   // Shape the entire string with a single font and direction.
   // Equivalent to calling the range version with a start offset of zero and an
