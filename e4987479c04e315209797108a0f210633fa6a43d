@@ -22,6 +22,23 @@
       "revId": "e4987479c04e315209797108a0f210633fa6a43d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f58017c2_fc152f20",
+        "filename": "extensions/common/extension_unpacker.mojom",
+        "patchSetId": 21
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-28T04:25:08Z",
+      "side": 1,
+      "message": "Please pass a ListValue or array\u003cmojo.common.mojom.Value\u003e here, since that\u0027s the only valid type to be sending anyway.",
+      "revId": "e4987479c04e315209797108a0f210633fa6a43d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
