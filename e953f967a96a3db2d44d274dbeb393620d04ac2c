@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f045e262_02a1544a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-28T00:36:41Z",
+      "side": 1,
+      "message": "Instead of calling a generic callback from here, can BrowserActionService register a TabModelObserver and execute the code currently in Callback#onResult() inside its TabModelObserver#didAddTab()? That would remove the need for tracking Callbacks in this class.",
+      "range": {
+        "startLine": 106,
+        "startChar": 20,
+        "endLine": 108,
+        "endChar": 47
+      },
+      "revId": "e953f967a96a3db2d44d274dbeb393620d04ac2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
