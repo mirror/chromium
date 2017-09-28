@@ -637,6 +637,9 @@ extern const char kPasswordImportExportDescription[];
 extern const char kPasswordSelectionName[];
 extern const char kPasswordSelectionDescription[];
 
+extern const char kPdfExtensionInOutOfProcessFrameName[];
+extern const char kPdfExtensionInOutOfProcessFrameDescription[];
+
 extern const char kPermissionActionReportingName[];
 extern const char kPermissionActionReportingDescription[];
 

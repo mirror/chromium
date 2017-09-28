@@ -64,6 +64,8 @@ class WebAutofillClient;
 class WebDevToolsAgentImpl;
 class WebDevToolsFrontendImpl;
 class WebFrameClient;
+class WebInputMethodControllerImpl;
+class WebMimeHandlerViewManager;
 class WebNode;
 class WebPerformance;
 class WebPlugin;
@@ -439,6 +441,9 @@ class CORE_EXPORT WebLocalFrameImpl final
   // Sets the local core frame and registers destruction observers.
   void SetCoreFrame(LocalFrame*);
 
+  WebMimeHandlerViewManager* GetMimeHandlerViewManager();
+  void ResetMimeHandlerViewManager();
+
   DECLARE_VIRTUAL_TRACE();
 
  private:
@@ -514,6 +519,8 @@ class CORE_EXPORT WebLocalFrameImpl final
   WebTextCheckClient* text_check_client_;
 
   WebSpellCheckPanelHostClient* spell_check_panel_host_client_;
+
+  std::unique_ptr<WebMimeHandlerViewManager> mime_handler_view_manager_;
 
   // Oilpan: WebLocalFrameImpl must remain alive until close() is called.
   // Accomplish that by keeping a self-referential Persistent<>. It is

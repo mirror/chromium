@@ -231,6 +231,7 @@
 #include "public/web/WebIconURL.h"
 #include "public/web/WebInputElement.h"
 #include "public/web/WebKit.h"
+#include "public/web/WebMimeHandlerViewManager.h"
 #include "public/web/WebNode.h"
 #include "public/web/WebPerformance.h"
 #include "public/web/WebPlugin.h"
@@ -1703,6 +1704,16 @@ DEFINE_TRACE(WebLocalFrameImpl) {
 
 void WebLocalFrameImpl::SetCoreFrame(LocalFrame* frame) {
   frame_ = frame;
+}
+
+WebMimeHandlerViewManager* WebLocalFrameImpl::GetMimeHandlerViewManager() {
+  if (!mime_handler_view_manager_)
+    mime_handler_view_manager_.reset(client_->CreateMimeHandlerViewManager());
+  return mime_handler_view_manager_.get();
+}
+
+void WebLocalFrameImpl::ResetMimeHandlerViewManager() {
+  mime_handler_view_manager_.reset(nullptr);
 }
 
 void WebLocalFrameImpl::InitializeCoreFrame(Page& page,

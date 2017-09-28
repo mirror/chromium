@@ -104,6 +104,7 @@ class WebMediaPlayerClient;
 class WebMediaPlayerEncryptedMediaClient;
 class WebMediaPlayerSource;
 class WebMediaSession;
+class WebMimeHandlerViewManager;
 class WebServiceWorkerProvider;
 class WebPlugin;
 class WebPresentationClient;
@@ -822,6 +823,12 @@ class BLINK_EXPORT WebFrameClient {
   // An empty URL is returned if the URL is not overriden.
   virtual WebURL OverrideFlashEmbedWithHTML(const WebURL& url) {
     return WebURL();
+  }
+
+  // Creates and returns a new instance of WebMimeHandlerViewManager for the
+  // frame.
+  virtual WebMimeHandlerViewManager* CreateMimeHandlerViewManager() {
+    return nullptr;
   }
 
   // Loading --------------------------------------------------------------

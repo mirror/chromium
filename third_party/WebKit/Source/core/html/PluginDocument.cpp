@@ -39,6 +39,7 @@
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/FrameLoader.h"
 #include "core/plugins/PluginView.h"
+#include "public/web/WebMimeHandlerViewManager.h"
 
 namespace blink {
 
@@ -149,8 +150,13 @@ void PluginDocumentParser::AppendBytes(const char* data, size_t length) {
 
   if (!length)
     return;
-  if (PluginView* view = GetPluginView())
+
+  if (auto* manager =
+          GetDocument()->GetFrame()->Client()->GetMimeHandlerViewManager()) {
+    manager->DidReceiveDataInPluginDocument(data, length);
+  } else if (PluginView* view = GetPluginView()) {
     view->DidReceiveData(data, length);
+  }
 }
 
 void PluginDocumentParser::Finish() {

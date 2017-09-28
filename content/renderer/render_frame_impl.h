@@ -100,6 +100,7 @@ struct FrameMsg_TextTrackSettings_Params;
 namespace blink {
 class WebContentDecryptionModule;
 class WebLocalFrame;
+class WebMimeHandlerViewManager;
 class WebPresentationClient;
 class WebPushClient;
 class WebSecurityOrigin;
@@ -245,6 +246,7 @@ class CONTENT_EXPORT RenderFrameImpl
 
   // Overwrites the given URL to use an HTML5 embed if possible.
   blink::WebURL OverrideFlashEmbedWithHTML(const blink::WebURL& url) override;
+  blink::WebMimeHandlerViewManager* CreateMimeHandlerViewManager() override;
 
   ~RenderFrameImpl() override;
 

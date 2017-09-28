@@ -1663,6 +1663,17 @@ GURL ChromeContentRendererClient::OverrideFlashEmbedWithHTML(const GURL& url) {
   return corrected_url.ReplaceComponents(r);
 }
 
+blink::WebMimeHandlerViewManager*
+ChromeContentRendererClient::CreateMimeHandlerViewManager(
+    content::RenderFrame* render_frame) const {
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  return ChromeExtensionsRendererClient::CreateMimeHandlerViewManager(
+      render_frame);
+#else
+  return nullptr;
+#endif
+}
+
 std::unique_ptr<base::TaskScheduler::InitParams>
 ChromeContentRendererClient::GetTaskSchedulerInitParams() {
   return task_scheduler_util::
