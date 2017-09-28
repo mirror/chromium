@@ -1,8 +1,10 @@
 <link rel="import" href="chrome://resources/html/polymer.html">
 
+<link rel="import" href="chrome://resources/html/i18n_behavior.html">
 <link rel="import" href="../settings_shared_css.html">
 <link rel="import" href="constants.html">
 <link rel="import" href="site_list.html">
+<link rel="import" href="site_settings_behavior.html">
 
 <dom-module id="category-setting-exceptions">
   <template>
@@ -18,7 +20,7 @@
     <site-list
         category="[[category]]"
         category-subtype="[[ContentSetting.BLOCK]]"
-        category-header="$i18n{siteSettingsBlock}"
+        category-header="[[BlockHeader]]"
         read-only-list="[[readOnlyList]]">
     </site-list>
     <site-list
