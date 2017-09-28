@@ -35,14 +35,6 @@ namespace {
 
 DEFINE_CERT_ERROR_ID(kCertificateRevoked, "Certificate is revoked");
 
-// Enum to indicate whether the revocation status for a certificate is
-// known. When the status is "known" it means it was either revoked, or
-// affirmatively unrevoked.
-enum class CertRevocationStatus {
-  kUnknown,
-  kKnown,
-};
-
 // TODO(eroman): The path building code in this file enforces its idea of weak
 // keys, and separately cert_verify_proc.cc also checks the chains with its
 // own policy. These policies should be aligned, to give path building the
@@ -64,26 +56,25 @@ class PathBuilderDelegateImpl : public SimplePathBuilderDelegate {
  private:
   // This method checks whether a certificate chain has been revoked, and if
   // so adds errors to the affected certificates.
-  CertRevocationStatus CheckRevocation(const CertPath& path,
-                                       CertPathErrors* errors) const {
+  void CheckRevocation(const CertPath& path, CertPathErrors* errors) const {
     // First check for revocations using the CRLSet. This does not require
     // any network activity.
     if (crl_set_) {
-      CertRevocationStatus status = CheckRevocationUsingCRLSet(path, errors);
-      if (status == CertRevocationStatus::kKnown)
-        return status;
+      bool revoked = !CheckRevocationUsingCRLSet(path, errors);
+      if (revoked)
+        return;
     }
 
     // TODO(eroman): Next check revocation using OCSP and CRL.
-    return CertRevocationStatus::kUnknown;
   }
 
-  // Checks the revocation status of the certificate chain using the CRLSet. If
-  // any certificate is revoked, the kCertificateRevoked high-severity error is
-  // added.
-  CertRevocationStatus CheckRevocationUsingCRLSet(
-      const CertPath& path,
-      CertPathErrors* errors) const {
+  // Checks for any revoked certificates in |path|. If any are found, a
+  // high-severity error kCertificateRevoked is added.
+  //
+  // Returns false if the chain was determined to be revoked, and true
+  // otherwise.
+  bool CheckRevocationUsingCRLSet(const CertPath& path,
+                                  CertPathErrors* errors) const {
     // Iterate from root certificate towards the leaf (the root certificate is
     // also checked for revocation by CRLSet).
     std::string issuer_spki_hash;
@@ -93,8 +84,6 @@ class PathBuilderDelegateImpl : public SimplePathBuilderDelegate {
 
       // True if |cert| is the root of the chain.
       const bool is_root = reverse_i == 0;
-      // True if |cert| is the leaf certificate of the chain.
-      const bool is_target = i == 0;
 
       // Check for revocation using the certificate's SPKI.
       std::string spki_hash =
@@ -116,28 +105,19 @@ class PathBuilderDelegateImpl : public SimplePathBuilderDelegate {
           // If any certificate was revoked, add an error to the chain and
           // return (no need to check the remaining certificates).
           errors->GetErrorsForCert(i)->AddError(kCertificateRevoked);
-          return CertRevocationStatus::kKnown;
-        case CRLSet::UNKNOWN:
-          // If the status is unknown, advance to the subordinate certificate.
-          break;
+          return false;
+
         case CRLSet::GOOD:
-          if (is_target && !crl_set_->IsExpired()) {
-            // If the target is covered by the CRLSet and known good, consider
-            // the entire chain to be valid (even though the revocation status
-            // of the intermediates may have been UNKNOWN).
-            //
-            // Only the leaf certificate is considered for coverage because some
-            // intermediates have CRLs with no revocations (after filtering) and
-            // those CRLs are pruned from the CRLSet at generation time.
-            return CertRevocationStatus::kKnown;
-          }
+          // A status of GOOD is treated the same as a status of UNKOWN, since
+          // it doesn't affirmatively mean the certificate is unrevoked.
+          break;
+        case CRLSet::UNKNOWN:
           break;
       }
     }
 
-    // If no certificate was revoked, and the target was not known good, then
-    // the revocation status is still unknown.
-    return CertRevocationStatus::kUnknown;
+    // As far as the CRLSet is concerned, this chain was not revoked.
+    return true;
   }
 
   // The CRLSet may be null.
