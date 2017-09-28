@@ -953,8 +953,8 @@ bool SVGElement::SendSVGLoadEventIfPossible() {
 }
 
 void SVGElement::SendSVGLoadEventToSelfAndAncestorChainIfPossible() {
-  // Let Document::implicitClose() dispatch the 'load' to the outermost SVG
-  // root.
+  // Let Document::MaybeFireLoadCompletionEvents() dispatch the 'load' to the
+  // outermost SVG root.
   if (IsOutermostSVGSVGElement())
     return;
 

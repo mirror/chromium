@@ -690,9 +690,10 @@ void SVGImage::LoadCompleted() {
       load_state_ = kLoadCompleted;
 
       // Because LoadCompleted() is called synchronously from
-      // Document::ImplicitClose(), we defer AsyncLoadCompleted() to avoid
-      // potential bugs and timing dependencies around ImplicitClose() and
-      // to make LoadEventFinished() true when AsyncLoadCompleted() is called.
+      // Document::MaybeFireLoadCompletionEvents(), we defer
+      // AsyncLoadCompleted() to avoid potential bugs and timing dependencies
+      // around MaybeFireLoadCompletionEvents() and to make LoadEventFinished()
+      // true when AsyncLoadCompleted() is called.
       TaskRunnerHelper::Get(TaskType::kUnspecedLoading,
                             ToLocalFrame(page_->MainFrame()))
           ->PostTask(BLINK_FROM_HERE,

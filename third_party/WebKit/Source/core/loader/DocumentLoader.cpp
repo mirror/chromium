@@ -425,11 +425,10 @@ void DocumentLoader::LoadFailed(const ResourceError& error) {
       state_ = kSentDidFinishLoad;
       GetLocalFrameClient().DispatchDidFailLoad(error, history_commit_type);
       if (frame_)
-        frame_->GetDocument()->CheckCompleted();
+        GetFrameLoader().DidFinishNavigation();
       break;
     case kSentDidFinishLoad:
-      // TODO(japhet): Why do we need to call DidFinishNavigation() again?
-      GetFrameLoader().DidFinishNavigation();
+      NOTREACHED();
       break;
   }
   DCHECK_EQ(kSentDidFinishLoad, state_);
