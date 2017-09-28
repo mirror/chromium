@@ -146,17 +146,16 @@ std::unique_ptr<BackgroundSyncParameters> GetControllerParameters(
   return parameters;
 }
 
-void OnSyncEventFinished(
-    scoped_refptr<ServiceWorkerVersion> active_version,
-    int request_id,
-    const ServiceWorkerVersion::LegacyStatusCallback& callback,
-    ServiceWorkerStatusCode status,
-    base::Time dispatch_event_time) {
+void OnSyncEventFinished(scoped_refptr<ServiceWorkerVersion> active_version,
+                         int request_id,
+                         ServiceWorkerVersion::StatusCallback callback,
+                         ServiceWorkerStatusCode status,
+                         base::Time dispatch_event_time) {
   if (!active_version->FinishRequest(request_id, status == SERVICE_WORKER_OK,
                                      dispatch_event_time)) {
     return;
   }
-  callback.Run(status);
+  std::move(callback).Run(status);
 }
 
 }  // namespace
@@ -264,14 +263,14 @@ void BackgroundSyncManager::EmulateDispatchSyncEvent(
     const std::string& tag,
     scoped_refptr<ServiceWorkerVersion> active_version,
     bool last_chance,
-    const ServiceWorkerVersion::LegacyStatusCallback& callback) {
+    ServiceWorkerVersion::StatusCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DispatchSyncEvent(
       tag, std::move(active_version),
       last_chance
           ? blink::mojom::BackgroundSyncEventLastChance::IS_LAST_CHANCE
           : blink::mojom::BackgroundSyncEventLastChance::IS_NOT_LAST_CHANCE,
-      callback);
+      std::move(callback));
 }
 
 BackgroundSyncManager::BackgroundSyncManager(
@@ -757,29 +756,31 @@ void BackgroundSyncManager::DispatchSyncEvent(
     const std::string& tag,
     scoped_refptr<ServiceWorkerVersion> active_version,
     blink::mojom::BackgroundSyncEventLastChance last_chance,
-    const ServiceWorkerVersion::LegacyStatusCallback& callback) {
+    ServiceWorkerVersion::StatusCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(active_version);
 
   if (active_version->running_status() != EmbeddedWorkerStatus::RUNNING) {
+    auto error_callback = base::AdaptCallbackForRepeating(std::move(callback));
     active_version->RunAfterStartWorker(
         ServiceWorkerMetrics::EventType::SYNC,
         base::BindOnce(&BackgroundSyncManager::DispatchSyncEvent,
                        weak_ptr_factory_.GetWeakPtr(), tag, active_version,
-                       last_chance, callback),
-        callback);
+                       last_chance, error_callback),
+        error_callback);
     return;
   }
 
+  auto error_callback = base::AdaptCallbackForRepeating(std::move(callback));
   int request_id = active_version->StartRequestWithCustomTimeout(
-      ServiceWorkerMetrics::EventType::SYNC, callback,
+      ServiceWorkerMetrics::EventType::SYNC, error_callback,
       parameters_->max_sync_event_duration,
       ServiceWorkerVersion::CONTINUE_ON_TIMEOUT);
 
   active_version->event_dispatcher()->DispatchSyncEvent(
       tag, last_chance,
       base::BindOnce(&OnSyncEventFinished, std::move(active_version),
-                     request_id, callback));
+                     request_id, error_callback));
 }
 
 void BackgroundSyncManager::ScheduleDelayedTask(base::OnceClosure callback,

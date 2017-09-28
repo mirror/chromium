@@ -208,10 +208,10 @@ void DispatchNotificationClickEventOnWorker(
     const NotificationDatabaseData& notification_database_data,
     const base::Optional<int>& action_index,
     const base::Optional<base::string16>& reply,
-    const ServiceWorkerVersion::LegacyStatusCallback& callback) {
+    ServiceWorkerVersion::StatusCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   int request_id = service_worker->StartRequest(
-      ServiceWorkerMetrics::EventType::NOTIFICATION_CLICK, callback);
+      ServiceWorkerMetrics::EventType::NOTIFICATION_CLICK, std::move(callback));
 
   int action_index_int = -1 /* no value */;
   if (action_index.has_value())
@@ -280,10 +280,10 @@ void DeleteNotificationDataFromDatabase(
 void DispatchNotificationCloseEventOnWorker(
     const scoped_refptr<ServiceWorkerVersion>& service_worker,
     const NotificationDatabaseData& notification_database_data,
-    const ServiceWorkerVersion::LegacyStatusCallback& callback) {
+    ServiceWorkerVersion::StatusCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   int request_id = service_worker->StartRequest(
-      ServiceWorkerMetrics::EventType::NOTIFICATION_CLOSE, callback);
+      ServiceWorkerMetrics::EventType::NOTIFICATION_CLOSE, std::move(callback));
 
   service_worker->event_dispatcher()->DispatchNotificationCloseEvent(
       notification_database_data.notification_id,
