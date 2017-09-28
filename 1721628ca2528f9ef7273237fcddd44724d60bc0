@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "08004570_9a170103",
+        "filename": "content/child/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-28T07:50:42Z",
+      "side": 1,
+      "message": "I think these blob_ stuff aren\u0027t used yet in this CL?",
+      "revId": "1721628ca2528f9ef7273237fcddd44724d60bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5b263b4b_cfa6a13a",
         "filename": "content/child/service_worker/service_worker_subresource_loader_unittest.cc",
         "patchSetId": 2
@@ -13,6 +30,75 @@
       "writtenOn": "2017-09-26T09:16:47Z",
       "side": 1,
       "message": "nit: can you add a short class-level comment?  Also maybe add a TODO comment to merge this and the one in service_worker_url_loader_job_unittest.cc",
+      "revId": "1721628ca2528f9ef7273237fcddd44724d60bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff997e1a_bb1b793d",
+        "filename": "content/child/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-28T07:50:42Z",
+      "side": 1,
+      "message": "+1 also this file is using Fake* for these mocks, so let\u0027s call this Fake also.",
+      "parentUuid": "5b263b4b_cfa6a13a",
+      "revId": "1721628ca2528f9ef7273237fcddd44724d60bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eae50486_eebdfe8c",
+        "filename": "content/child/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-28T07:50:42Z",
+      "side": 1,
+      "message": "this controller",
+      "revId": "1721628ca2528f9ef7273237fcddd44724d60bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82bd8d33_a1119eed",
+        "filename": "content/child/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-28T07:50:42Z",
+      "side": 1,
+      "message": "this controller",
+      "revId": "1721628ca2528f9ef7273237fcddd44724d60bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7ece503_84bac77f",
+        "filename": "content/child/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-28T07:50:42Z",
+      "side": 1,
+      "message": "move this below the other members, since it\u0027s only used for kStream mode",
       "revId": "1721628ca2528f9ef7273237fcddd44724d60bc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
