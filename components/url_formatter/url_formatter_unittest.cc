@@ -205,10 +205,10 @@ const IDNTestCase idn_cases[] = {
      false},
     // Devanagari + Latin
     {"xn--ab-3ofh8fqbj6h.in", L"ab\x0939\x093f\x0928\x094d\x0926\x0940.in",
-     true},
+     false},
     // Thai + Latin
     {"xn--ab-jsi9al4bxdb6n.th",
-     L"ab\x0e20\x0e32\x0e29\x0e32\x0e44\x0e17\x0e22.th", true},
+     L"ab\x0e20\x0e32\x0e29\x0e32\x0e44\x0e17\x0e22.th", false},
     // <vitamin in Katakana>b1.com
     {"xn--b1-xi4a7cvc9f.com",
      L"\x30d3\x30bf\x30df\x30f3"
