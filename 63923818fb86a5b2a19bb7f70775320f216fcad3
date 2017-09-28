@@ -1,0 +1,237 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3eba1561_cf3fdb76",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 21
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-28T10:34:07Z",
+      "side": 1,
+      "message": "nit: please remove.",
+      "revId": "63923818fb86a5b2a19bb7f70775320f216fcad3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61d8b235_663fdaa6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 21
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-28T10:34:07Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "63923818fb86a5b2a19bb7f70775320f216fcad3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24017fa8_0b92e01e",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-28T10:34:07Z",
+      "side": 1,
+      "message": "nit:\n\nDVLOG(1, !x509_cert) \u003c\u003c ...;",
+      "revId": "63923818fb86a5b2a19bb7f70775320f216fcad3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57dfbf6e_230a1007",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-28T10:34:07Z",
+      "side": 1,
+      "message": "ForProfile?",
+      "range": {
+        "startLine": 158,
+        "startChar": 58,
+        "endLine": 158,
+        "endChar": 65
+      },
+      "revId": "63923818fb86a5b2a19bb7f70775320f216fcad3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34b60c2c_38b27c93",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-28T10:34:07Z",
+      "side": 1,
+      "message": "Now, this is a part of concrete implementation (as you moved UNIMPLEMENTED to below).\nSo, please inline this to each callback.Run().\n\nDitto for below.\n\nAs for UNIMPLEMENTED, up to you.",
+      "revId": "63923818fb86a5b2a19bb7f70775320f216fcad3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f2a2292_c2ee5938",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-28T10:34:07Z",
+      "side": 1,
+      "message": "The log is recorded in ARC_GET_INSTANCE_FOR_METHOD macro, already.\nPlease remove.",
+      "range": {
+        "startLine": 356,
+        "startChar": 16,
+        "endLine": 356,
+        "endChar": 17
+      },
+      "revId": "63923818fb86a5b2a19bb7f70775320f216fcad3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72164865_e01747ea",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-28T10:34:07Z",
+      "side": 1,
+      "message": "Could you rebase? You\u0027d need to work with OnceCallback, now.",
+      "revId": "63923818fb86a5b2a19bb7f70775320f216fcad3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3128005d_70303a15",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-28T10:34:07Z",
+      "side": 1,
+      "message": "nit: std::make_unique() ?",
+      "revId": "63923818fb86a5b2a19bb7f70775320f216fcad3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7caeab4c_10cdd1d9",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-28T10:34:07Z",
+      "side": 1,
+      "message": "FYI: please keep using () for \"new\".\n(This is not needed, I think, by std::make_unique() anyway, though.)\n\ncf) https://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Prefer-MakeUnique-to-WrapUnique",
+      "revId": "63923818fb86a5b2a19bb7f70775320f216fcad3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4e8e80a_68f6160c",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-28T10:34:07Z",
+      "side": 1,
+      "message": "If certs size is not 1, this would cause infinite wait.",
+      "revId": "63923818fb86a5b2a19bb7f70775320f216fcad3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cf23371_3f303249",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-28T10:34:07Z",
+      "side": 1,
+      "message": "This would cause infinite wait, if |certs| size different.\n\nI still recommend you to just return the value, and call EXPECT/ASSERT macros in TEST_F body.",
+      "revId": "63923818fb86a5b2a19bb7f70775320f216fcad3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1e105fe_d12a5c66",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-28T10:34:07Z",
+      "side": 1,
+      "message": "If cert size check is failed in the callback, the following scenario should not run.",
+      "revId": "63923818fb86a5b2a19bb7f70775320f216fcad3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a02f3ca_c79f0624",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-28T10:34:07Z",
+      "side": 1,
+      "message": "style: Could you use initializer list?",
+      "revId": "63923818fb86a5b2a19bb7f70775320f216fcad3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
