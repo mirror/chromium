@@ -155,7 +155,15 @@ class GFX_EXPORT Image {
   ImageSkia* CopyImageSkia() const;
   SkBitmap* CopySkBitmap() const;
 #if defined(OS_IOS)
+  // CopyUIImage returns a retained UIImage. This is a problem when building
+  // with ARC as for C++ methods the compiler does not use the name to make
+  // assumption on the memory management. Add the ns_returns_retained attribute
+  // to fix this. See https://clang-analyzer.llvm.org/annotations.html.
+#if defined(__has_feature) && __has_feature(attribute_ns_returns_retained)
+  UIImage* CopyUIImage() const __attribute__((ns_returns_retained));
+#else
   UIImage* CopyUIImage() const;
+#endif
 #elif defined(OS_MACOSX)
   NSImage* CopyNSImage() const;
 #endif
