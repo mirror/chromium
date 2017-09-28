@@ -191,6 +191,7 @@ bool IsSupportedInFeaturePolicy(WebFeaturePolicyFeature feature) {
   if (!RuntimeEnabledFeatures::FeaturePolicyEnabled())
     return false;
   switch (feature) {
+    case WebFeaturePolicyFeature::kBluetooth:
     case WebFeaturePolicyFeature::kFullscreen:
     case WebFeaturePolicyFeature::kPayment:
     case WebFeaturePolicyFeature::kUsb:
@@ -210,6 +211,8 @@ const FeatureNameMap& GetDefaultFeatureNameMap() {
                                  WebFeaturePolicyFeature::kFullscreen);
     default_feature_name_map.Set("payment", WebFeaturePolicyFeature::kPayment);
     default_feature_name_map.Set("usb", WebFeaturePolicyFeature::kUsb);
+    default_feature_name_map.Set("bluetooth",
+                                 WebFeaturePolicyFeature::kBluetooth);
     default_feature_name_map.Set("camera", WebFeaturePolicyFeature::kCamera);
     default_feature_name_map.Set("encrypted-media",
                                  WebFeaturePolicyFeature::kEme);

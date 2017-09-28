@@ -23,9 +23,11 @@
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_delegate.h"
+#include "content/public/common/content_features.h"
 #include "device/bluetooth/bluetooth_adapter.h"
 #include "device/bluetooth/bluetooth_common.h"
 #include "device/bluetooth/bluetooth_discovery_session.h"
+#include "third_party/WebKit/public/platform/WebFeaturePolicyFeature.h"
 
 using device::BluetoothUUID;
 using UUIDSet = device::BluetoothDevice::UUIDSet;
@@ -343,10 +345,19 @@ void BluetoothDeviceChooserController::GetDevice(
   // TODO(crbug.com/518042): Enforce correctly-delegated permissions instead of
   // matching origins. When relaxing this, take care to handle non-sandboxed
   // unique origins.
-  if (!embedding_origin.IsSameOriginWith(requesting_origin)) {
-    PostErrorCallback(blink::mojom::WebBluetoothResult::
-                          REQUEST_DEVICE_FROM_CROSS_ORIGIN_IFRAME);
-    return;
+  if (base::FeatureList::IsEnabled(features::kFeaturePolicy)) {
+    if (!render_frame_host_->IsFeatureEnabled(
+            blink::WebFeaturePolicyFeature::kBluetooth)) {
+      PostErrorCallback(
+          blink::mojom::WebBluetoothResult::REQUEST_DEVICE_BLOCKED_BY_POLICY);
+      return;
+    }
+  } else {
+    if (!embedding_origin.IsSameOriginWith(requesting_origin)) {
+      PostErrorCallback(blink::mojom::WebBluetoothResult::
+                            REQUEST_DEVICE_FROM_CROSS_ORIGIN_IFRAME);
+      return;
+    }
   }
   // The above also excludes unique origins, which are not even same-origin with
   // themselves.
