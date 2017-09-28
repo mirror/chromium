@@ -307,6 +307,24 @@
     },
     {
       "key": {
+        "uuid": "5ded04c3_ce7844c2",
+        "filename": "chrome_elf/nt_registry/nt_registry_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-09-28T01:59:20Z",
+      "side": 1,
+      "message": "So the handle close isn\u0027t really needed either.\n\nThe \"NtRegistryTest\" harness overrides registry, each of these tests run in their own little temp sub-hive.  Even on assert, the whole little subtree of registry that these handles are open to gets deleted. \n\nThe system doesn\u0027t actually remove the subkey until the last handle is closed - which happens as soon as the test process\u0027 handle table is destroyed by the OS during the test process teardown.\n\n\nHowever.  I\u0027ve just decided to put back in the original handle close.  It\u0027s really not needed - but in the case where someone is running every single test, in a single process, there could be 5 extra handles in the process handle table and 5 little test sub-hives... until the process ends.  I don\u0027t know, it looks a bit better. ?\n\nI think the base stuff you mentioned might be a bit extreme here - but let me know if you feel strongly about it.  Once I actually finish https://bugs.chromium.org/p/chromium/issues/detail?id\u003d693215, handles will be scoped.",
+      "parentUuid": "58c6e4c3_b78d2b1b",
+      "revId": "0a6f83ebcbca2636e72d8ee5a9815a852bf10d56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4148d1ec_b21e581a",
         "filename": "chrome_elf/nt_registry/nt_registry_unittest.cc",
         "patchSetId": 3
@@ -354,6 +372,24 @@
       "side": 1,
       "message": "Thanks. Some care should be taken with EXPECT vs ASSERT. As per https://github.com/google/googletest/blob/master/googletest/docs/Primer.md#assertions:\n\n\"Usually EXPECT_* are preferred, as they allow more than one failures to be reported in a test. However, you should use ASSERT_* if it doesn\u0027t make sense to continue when the assertion in question fails.\"",
       "parentUuid": "88846723_c1446498",
+      "revId": "0a6f83ebcbca2636e72d8ee5a9815a852bf10d56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04a9e465_ad0df8ac",
+        "filename": "chrome_elf/nt_registry/nt_registry_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-09-28T01:59:20Z",
+      "side": 1,
+      "message": "Ah yes.  That\u0027s why I didn\u0027t have them all asserts.  Re-adjusted.",
+      "parentUuid": "d08a4df4_b52a0d41",
       "revId": "0a6f83ebcbca2636e72d8ee5a9815a852bf10d56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5dc962cb_581c2576",
+        "filename": "chrome_elf/nt_registry/nt_registry.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-09-28T01:59:20Z",
+      "side": 1,
+      "message": "TIL: I have not seen this enum hack before!  I suppose only works for integer constants... but ya, saves a variable.  wow.\n\nDone.",
+      "parentUuid": "9309cc03_a6dc7f16",
+      "revId": "d559a96237fbdd8b22d0e11f854959e54dc1bba8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f86cc5c_8d87f842",
         "filename": "chrome_elf/nt_registry/nt_registry.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "21e9c040_87217f06",
+        "filename": "chrome_elf/nt_registry/nt_registry.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 766,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-09-28T01:59:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f86cc5c_8d87f842",
+      "revId": "d559a96237fbdd8b22d0e11f854959e54dc1bba8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a421ccb5_b738eec7",
         "filename": "chrome_elf/nt_registry/nt_registry.cc",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-26T21:44:23Z",
       "side": 1,
       "message": "can you roll this first call into the loop, too?",
+      "revId": "d559a96237fbdd8b22d0e11f854959e54dc1bba8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6100a78c_8bb2c656",
+        "filename": "chrome_elf/nt_registry/nt_registry.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-09-28T01:59:20Z",
+      "side": 1,
+      "message": "\u003csigh\u003e yes.  I\u0027m making initial size_needed \u003d 1, just to ensure the internal vector array exists for first call.\n\nI should have done this in the first place. Sorry.\nDone.",
+      "parentUuid": "a421ccb5_b738eec7",
       "revId": "d559a96237fbdd8b22d0e11f854959e54dc1bba8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "e8c0a62d_39993401",
+        "filename": "chrome_elf/nt_registry/nt_registry.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-09-28T01:59:20Z",
+      "side": 1,
+      "message": "Done - thanks for ref.  I usually avoid \"int\" like the plague.  Good to know for loop counters.",
+      "parentUuid": "2f39a0a2_b7bfe268",
+      "revId": "d559a96237fbdd8b22d0e11f854959e54dc1bba8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a51f5b5_3b3b6fb0",
         "filename": "chrome_elf/nt_registry/nt_registry.cc",
         "patchSetId": 5
@@ -90,6 +162,30 @@
       "revId": "d559a96237fbdd8b22d0e11f854959e54dc1bba8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb9d4a0c_ede39b8b",
+        "filename": "chrome_elf/nt_registry/nt_registry.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-09-28T01:59:20Z",
+      "side": 1,
+      "message": "Done.  Snazzy.",
+      "parentUuid": "0a51f5b5_3b3b6fb0",
+      "range": {
+        "startLine": 832,
+        "startChar": 50,
+        "endLine": 832,
+        "endChar": 55
+      },
+      "revId": "d559a96237fbdd8b22d0e11f854959e54dc1bba8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
