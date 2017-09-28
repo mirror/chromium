@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6b7af03_218ee154",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/WebViewChromiumFactoryProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-09-28T15:48:40Z",
+      "side": 1,
+      "message": "You can just merge these two try-finally blocks together; there\u0027s no need to save and restore the policy twice. It\u0027s thread-specific and all our code should only be modifying it in this push/pop way anyway.",
+      "revId": "e122220d67603307a094d9403b3b6be9f60e63a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dc49d64f_63250905",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/WebViewChromiumFactoryProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-09-28T15:48:40Z",
+      "side": 1,
+      "message": "This isn\u0027t necessary - allowing writes allows reads. I went through the codebase and removed all the redundant allowThreadDiskReads a while ago :)",
+      "revId": "e122220d67603307a094d9403b3b6be9f60e63a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da2d55b5_6ce741fc",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwBrowserProcess.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-09-28T15:48:40Z",
+      "side": 1,
+      "message": "This would look neater and need less nesting if you just merged the try-finally into the surrounding try-catch. You can move the switchCommandLineForWebView outside of the try block entirely if you don\u0027t want to leave strict mode turned off for that, since that function doesn\u0027t actually throw ProcessInitException anyway as far as I can see.",
+      "revId": "e122220d67603307a094d9403b3b6be9f60e63a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
