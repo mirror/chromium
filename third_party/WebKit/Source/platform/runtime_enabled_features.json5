@@ -524,7 +524,7 @@
     },
     {
       name: "LazyParseCSS",
-      status: "experimental",
+      status: "stable",
     },
     {
       name: "LinkServiceWorker",
