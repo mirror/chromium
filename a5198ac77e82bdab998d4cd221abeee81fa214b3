@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08edbd3c_2cd4e921",
+        "filename": "ios/chrome/browser/passwords/credential_manager_egtest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-28T11:54:55Z",
+      "side": 1,
+      "message": "Add separation using #pragma mark - Utils\n(or Private, as you want).",
+      "revId": "a5198ac77e82bdab998d4cd221abeee81fa214b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "566fefd0_ad8d769e",
+        "filename": "ios/chrome/browser/passwords/credential_manager_egtest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-28T11:54:55Z",
+      "side": 1,
+      "message": "Add #pragma mark - Tests",
+      "revId": "a5198ac77e82bdab998d4cd221abeee81fa214b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b302328f_96252ae2",
+        "filename": "ios/chrome/browser/passwords/password_controller.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-28T11:54:55Z",
+      "side": 1,
+      "message": "Don\u0027t you need to reset pendingAutoSigninPasswordForm_ so the snackbar is not shown the next time you open the tab?\nAnd you are using std::move on it so... :)",
+      "revId": "a5198ac77e82bdab998d4cd221abeee81fa214b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
