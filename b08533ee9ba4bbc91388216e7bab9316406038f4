@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b49541b8_7a52b6c4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-28T20:19:33Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s possible fora tab to be added before the tab state is initialized. Can this just be an \"assert mSelector.isTabStateInitialized()\"?",
+      "range": {
+        "startLine": 88,
+        "startChar": 16,
+        "endLine": 88,
+        "endChar": 49
+      },
+      "revId": "b08533ee9ba4bbc91388216e7bab9316406038f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6af7c831_3eb0b276",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-28T20:19:33Z",
+      "side": 1,
+      "message": "nit: Let\u0027s initialize this in launchTabInBrowserActionsModel() below if it\u0027s null.",
+      "range": {
+        "startLine": 84,
+        "startChar": 41,
+        "endLine": 94,
+        "endChar": 6
+      },
+      "revId": "b08533ee9ba4bbc91388216e7bab9316406038f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
