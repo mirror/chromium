@@ -89,7 +89,7 @@ std::string GetFetchEndpoint() {
 // |suggestions|. Returns true on success, false if anything went wrong.
 bool AddSuggestionsFromListValue(bool content_suggestions_api,
                                  const base::ListValue& list,
-                                 RemoteSuggestion::PtrVector* suggestions) {
+                                 ContextualSuggestion::PtrVector* suggestions) {
   for (const auto& value : list) {
     const base::DictionaryValue* dict = nullptr;
     if (!value.GetAsDictionary(&dict)) {
@@ -99,8 +99,8 @@ bool AddSuggestionsFromListValue(bool content_suggestions_api,
     std::string s;
     dict->GetAsString(&s);
     DVLOG(1) << "AddSuggestionsFromListValue " << s;
-    std::unique_ptr<RemoteSuggestion> suggestion =
-        RemoteSuggestion::CreateFromContextualSuggestionsDictionary(*dict);
+    std::unique_ptr<ContextualSuggestion> suggestion =
+        ContextualSuggestion::CreateFromDictionary(*dict);
     suggestions->push_back(std::move(suggestion));
   }
   return true;
@@ -242,7 +242,7 @@ void ContextualSuggestionsFetcherImpl::JsonRequestDone(
     return;
   }
 
-  OptionalSuggestions optional_suggestions = RemoteSuggestion::PtrVector();
+  OptionalSuggestions optional_suggestions = ContextualSuggestion::PtrVector();
   if (!JsonToSuggestions(*result, &optional_suggestions.value())) {
     DLOG(WARNING) << "Received invalid suggestions: " << last_fetch_json_;
     FetchFinished(OptionalSuggestions(), std::move(callback),
@@ -272,7 +272,7 @@ void ContextualSuggestionsFetcherImpl::FetchFinished(
 
 bool ContextualSuggestionsFetcherImpl::JsonToSuggestions(
     const base::Value& parsed,
-    RemoteSuggestion::PtrVector* suggestions) {
+    ContextualSuggestion::PtrVector* suggestions) {
   const base::DictionaryValue* top_dict = nullptr;
   if (!parsed.GetAsDictionary(&top_dict)) {
     return false;
