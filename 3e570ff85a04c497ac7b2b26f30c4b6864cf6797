@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4cc25fbe_16d76ba9",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-28T16:37:14Z",
+      "side": 0,
+      "message": "The mocks show a separator between permissions and other site info now. Are you planning to add that?",
+      "revId": "3e570ff85a04c497ac7b2b26f30c4b6864cf6797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

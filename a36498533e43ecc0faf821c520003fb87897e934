@@ -16,6 +16,24 @@
       "revId": "a36498533e43ecc0faf821c520003fb87897e934",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c9bea47_20d69ed3",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-28T16:37:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "24857eef_2c0136de",
+      "revId": "a36498533e43ecc0faf821c520003fb87897e934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
