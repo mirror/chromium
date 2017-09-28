@@ -1297,7 +1297,6 @@ crbug.com/768102 compositing/overflow/reparented-overlay-scrollbars-should-respe
 
 crbug.com/644358 fast/css3-text/css3-text-decoration/repaint/repaint-text-decoration-style.html [ Failure ]
 crbug.com/644358 paint/invalidation/svg/image-with-clip-path.svg [ Failure ]
-crbug.com/644358 paint/invalidation/video-paint-invalidation.html [ Crash ]
 
 Bug(none) compositing/layer-creation/main-thread-scrolling-for-non-composited-fixed-position-if-overflow-hidden.html [ Failure ]
 Bug(none) compositing/layer-creation/main-thread-scrolling-for-non-composited-fixed-position.html [ Failure ]
