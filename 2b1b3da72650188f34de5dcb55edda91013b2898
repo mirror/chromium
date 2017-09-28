@@ -46,6 +46,29 @@
       "revId": "2b1b3da72650188f34de5dcb55edda91013b2898",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b960d0c7_d280ce86",
+        "filename": "chrome/browser/installable/installable_params.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-09-28T01:27:09Z",
+      "side": 1,
+      "message": "\"fetched first\" is confusing here, because it could be interpreted as \"before the eligibility check\".  What about:\n\n\"If the eligibility check fails, processing halts immediately.\nOtherwise, a web app manifest is fetched before the remaining items.\"",
+      "range": {
+        "startLine": 9,
+        "startChar": 69,
+        "endLine": 11,
+        "endChar": 44
+      },
+      "revId": "2b1b3da72650188f34de5dcb55edda91013b2898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
