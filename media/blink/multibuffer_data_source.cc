@@ -53,6 +53,9 @@ const int kSlowPreloadPercentage = 10;
 // Update buffer sizes every 32 progress updates.
 const int kUpdateBufferSizeFrequency = 32;
 
+// How long to we delay a seek after a read?
+const int kSeekDelayMS = 20;
+
 }  // namespace
 
 namespace media {
@@ -358,10 +361,16 @@ void MultibufferDataSource::Read(int64_t position,
     if (reader_) {
       int bytes_read = reader_->TryReadAt(position, data, size);
       if (bytes_read > 0) {
-        render_task_runner_->PostTask(
-            FROM_HERE,
-            base::Bind(&MultibufferDataSource::SeekTask,
-                       weak_factory_.GetWeakPtr(), position, bytes_read));
+        bytes_read_ += bytes_read;
+        seek_positions_.push_back(position + bytes_read);
+        if (seek_positions_.size() == 1) {
+          render_task_runner_->PostDelayedTask(
+              FROM_HERE,
+              base::Bind(&MultibufferDataSource::SeekTask,
+                         weak_factory_.GetWeakPtr()),
+              base::TimeDelta::FromMilliseconds(kSeekDelayMS));
+        }
+
         read_cb.Run(bytes_read);
         return;
       }
@@ -415,13 +424,10 @@ void MultibufferDataSource::ReadTask() {
         reader_->TryReadAt(read_op_->position(), read_op_->data(), bytes_read);
     url_data_->AddBytesRead(bytes_read);
 
-    int64_t new_pos = read_op_->position() + bytes_read;
-    // If we're seeking to a new location, (not just slightly further
-    // in the file) and we have more data buffered in that new location
-    // than in our current location, then we don't actually seek anywhere.
-    // Instead we keep preloading at the old location a while longer.
-    if (reader_->AvailableAt(new_pos) <= reader_->Available())
-      reader_->Seek(new_pos);
+    if (bytes_read > 0)
+      bytes_read_ += bytes_read;
+    seek_positions_.push_back(read_op_->position() + bytes_read);
+
     if (bytes_read == 0 && total_bytes_ == kPositionNotSpecified) {
       // We've reached the end of the file and we didn't know the total size
       // before. Update the total size so Read()s past the end of the file will
@@ -432,31 +438,50 @@ void MultibufferDataSource::ReadTask() {
     }
 
     ReadOperation::Run(std::move(read_op_), bytes_read);
+
+    SeekTask_Locked();
   } else {
     reader_->Seek(read_op_->position());
     reader_->Wait(1, base::Bind(&MultibufferDataSource::ReadTask,
                                 weak_factory_.GetWeakPtr()));
+    UpdateLoadingState_Locked(false);
   }
-  UpdateLoadingState_Locked(false);
 }
 
-void MultibufferDataSource::SeekTask(int64_t pos, int bytes_read) {
+void MultibufferDataSource::SeekTask() {
   DCHECK(render_task_runner_->BelongsToCurrentThread());
-  DCHECK_GT(bytes_read, 0);
-
   base::AutoLock auto_lock(lock_);
+  SeekTask_Locked();
+}
+
+void MultibufferDataSource::SeekTask_Locked() {
+  DCHECK(render_task_runner_->BelongsToCurrentThread());
+  lock_.AssertAcquired();
+
   if (stop_signal_received_)
     return;
 
-  url_data_->AddBytesRead(bytes_read);
+  url_data_->AddBytesRead(bytes_read_);
+  bytes_read_ = 0;
 
-  int64_t new_pos = pos + bytes_read;
-  // If we're seeking to a new location, (not just slightly further
-  // in the file) and we have more data buffered in that new location
-  // than in our current location, then we don't actually seek anywhere.
-  // Instead we keep preloading at the old location a while longer.
-  if (reader_ && reader_->AvailableAt(new_pos) <= reader_->Available())
-    reader_->Seek(new_pos);
+  if (reader_) {
+    // If we're seeking to a new location, (not just slightly further
+    // in the file) and we have more data buffered in that new location
+    // than in our current location, then we don't actually seek anywhere.
+    // Instead we keep preloading at the old location a while longer.
+
+    int64_t pos = reader_->Tell();
+    int64_t available = reader_->Available();
+    for (int64_t new_pos : seek_positions_) {
+      int64_t available_at_new_pos = reader_->AvailableAt(new_pos);
+      if (available_at_new_pos < available) {
+        pos = new_pos;
+        available = available_at_new_pos;
+      }
+    }
+    reader_->Seek(pos);
+  }
+  seek_positions_.clear();
 
   UpdateLoadingState_Locked(false);
 }
