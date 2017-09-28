@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79927d91_e3e8e4ce",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 3294,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-28T12:57:03Z",
+      "side": 1,
+      "message": "Would this argument be clearer if it were named safeAreaInsets?",
+      "revId": "6b0e45799bdcbb4a44c0dc24a7a511ecdef8bf29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c284496_c12e6161",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_bar.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-28T12:57:03Z",
+      "side": 1,
+      "message": "What does \"replaces\" mean in this sentence?  It sounds like this is only used before the view is added to the hierarchy, and afterwards we switch to using the real safeAreaInsets?",
+      "revId": "6b0e45799bdcbb4a44c0dc24a7a511ecdef8bf29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40060fc4_6793afff",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_view.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-28T12:57:03Z",
+      "side": 1,
+      "message": "I was expecting to see this call in safeAreaInsetsDidChange rather than in layoutSubviews.  Is it expensive to have here?",
+      "revId": "6b0e45799bdcbb4a44c0dc24a7a511ecdef8bf29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
