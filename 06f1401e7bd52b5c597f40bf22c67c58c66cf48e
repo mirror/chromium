@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2431c512_07649b37",
+        "filename": "ash/public/interfaces/system_tray.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-28T22:44:00Z",
+      "side": 0,
+      "message": "Hooray for fewer mojo methods!",
+      "revId": "06f1401e7bd52b5c597f40bf22c67c58c66cf48e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
