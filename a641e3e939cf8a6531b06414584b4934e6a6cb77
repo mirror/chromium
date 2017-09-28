@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17d18622_d12a4d2f",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1002294
+      },
+      "writtenOn": "2017-09-28T19:59:35Z",
+      "side": 1,
+      "message": "if (!bubble_content.title.empty() \u0026\u0026 provider-\u003eUseExtraDialogPadding())",
+      "range": {
+        "startLine": 405,
+        "startChar": 40,
+        "endLine": 405,
+        "endChar": 0
+      },
+      "revId": "a641e3e939cf8a6531b06414584b4934e6a6cb77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
