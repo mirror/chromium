@@ -37,12 +37,14 @@ class VIEWS_EXPORT ProgressBar : public View, public gfx::AnimationDelegate {
   // be displayed with an infinite loading animation.
   void SetValue(double value);
 
- protected:
   // The color of the progress portion.
-  SkColor GetForegroundColor() const;
+  SkColor GetForegroundColor() const { return foreground_color_; }
+  void SetForegroundColor(SkColor color) { foreground_color_ = color; }
   // The color of the portion that displays potential progress.
-  SkColor GetBackgroundColor() const;
+  SkColor GetBackgroundColor() const { return background_color_; }
+  void SetBackgroundColor(SkColor color) { background_color_ = color; }
 
+ protected:
   int preferred_height() const { return preferred_height_; }
 
  private:
@@ -62,6 +64,9 @@ class VIEWS_EXPORT ProgressBar : public View, public gfx::AnimationDelegate {
   const int preferred_height_;
 
   const bool allow_round_corner_;
+
+  SkColor foreground_color_;
+  SkColor background_color_;
 
   std::unique_ptr<gfx::LinearAnimation> indeterminate_bar_animation_;
 

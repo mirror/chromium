@@ -48,6 +48,10 @@ ProgressBar::ProgressBar(int preferred_height, bool allow_round_corner)
     : preferred_height_(preferred_height),
       allow_round_corner_(allow_round_corner) {
   EnableCanvasFlippingForRTLUI(true);
+  SetForegroundColor(GetNativeTheme()->GetSystemColor(
+      ui::NativeTheme::kColorId_ProminentButtonColor));
+  SetBackgroundColor(
+      color_utils::BlendTowardOppositeLuma(GetForegroundColor(), 0xCC));
 }
 
 ProgressBar::~ProgressBar() {
@@ -118,17 +122,6 @@ void ProgressBar::SetValue(double value) {
     indeterminate_bar_animation_.reset();
     SchedulePaint();
   }
-}
-
-SkColor ProgressBar::GetForegroundColor() const {
-  return GetNativeTheme()->GetSystemColor(
-      ui::NativeTheme::kColorId_ProminentButtonColor);
-}
-
-SkColor ProgressBar::GetBackgroundColor() const {
-  // The default foreground is GoogleBlue500, and the default background is
-  // that color but 80% lighter.
-  return color_utils::BlendTowardOppositeLuma(GetForegroundColor(), 0xCC);
 }
 
 void ProgressBar::AnimationProgressed(const gfx::Animation* animation) {
