@@ -133,8 +133,7 @@ ContentMetadataProvider.prototype.getImpl_ = function(entry, names, callback) {
   // We parse it in our pure js parser.
   // chrome/browser/media_galleries/fileapi/supported_image_type_validator.cc
   var type = FileType.getType(entry);
-  if (type && type.type === 'image' &&
-      (type.subtype === 'JPEG' || type.subtype === 'ICO')) {
+  if (type && type.type === 'image') {
     var url = entry.toURL();
     if (this.callbacks_[url]) {
       this.callbacks_[url].push(callback);
