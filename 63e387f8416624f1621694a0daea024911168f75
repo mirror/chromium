@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a160d933_756158b3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1045,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-28T04:05:22Z",
+      "side": 1,
+      "message": "It should be fine because all BrowserActions tabs are added to the end of list. The TabPersistenceStore.restoreTab will make sure they are inserted before the BrowserActions tabs. \n\nThe only exception is when tab merging, the tabs to be merged might be added after the ones from Browser Actions.\n (https://codesearch.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java?rcl\u003d5bf022ea5f59ac51c7705b0f8235b43fbb8dc58c\u0026l\u003d584) It is a little hard to solve this because the only way to identify the Browser Actions tabs are the TabLaunchType. However TabLaunchType.FROM_BROWSER_ACTIONS tabs can comes from multiple cases (directly add to ChromeTabbedActivity, merge through initializeState or multi-window tabs merging), and since the TabLaunchType is a final field, so there is no way to separate these cases.",
+      "parentUuid": "4f59ffc0_fac4a3b0",
+      "range": {
+        "startLine": 1045,
+        "startChar": 34,
+        "endLine": 1045,
+        "endChar": 45
+      },
+      "revId": "63e387f8416624f1621694a0daea024911168f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6eacbffc_fd9d9fb9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "63e387f8416624f1621694a0daea024911168f75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20d223c3_e21250e2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1077,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-28T04:05:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6eacbffc_fd9d9fb9",
+      "revId": "63e387f8416624f1621694a0daea024911168f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -103,6 +145,24 @@
       "revId": "63e387f8416624f1621694a0daea024911168f75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da2d5b55_6d90255a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1086,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-28T04:05:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3c670f2_d7fae96c",
+      "revId": "63e387f8416624f1621694a0daea024911168f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -177,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "01b211ce_88a95780",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-28T04:05:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a6711db_dd8d5bad",
+      "range": {
+        "startLine": 86,
+        "startChar": 18,
+        "endLine": 86,
+        "endChar": 48
+      },
+      "revId": "63e387f8416624f1621694a0daea024911168f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0ec57a4_77d31dcf",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
         "patchSetId": 4
@@ -188,6 +272,30 @@
       "writtenOn": "2017-09-27T00:19:27Z",
       "side": 1,
       "message": "What does this do?\n\nIf we did want to stop the saving, I would think we\u0027d want to just remove the tab to the queue (removeTabFromQueues), but since the tab state is in the same directory as CTA we don\u0027t actually want to stop saving either.",
+      "range": {
+        "startLine": 107,
+        "startChar": 26,
+        "endLine": 107,
+        "endChar": 43
+      },
+      "revId": "63e387f8416624f1621694a0daea024911168f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "144f7a85_b04d4183",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-28T04:05:22Z",
+      "side": 1,
+      "message": "This just updates the Browser Actions tab list state file to remove the merged tab. I think passing null will skip saving a tab state but call saveTabListAsynchronously() to update the tab list state file.",
+      "parentUuid": "d0ec57a4_77d31dcf",
       "range": {
         "startLine": 107,
         "startChar": 26,
@@ -214,6 +322,24 @@
       "revId": "63e387f8416624f1621694a0daea024911168f75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59962a66_6d41345e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1451,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-28T04:05:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fa93d5d_05105441",
+      "revId": "63e387f8416624f1621694a0daea024911168f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -276,6 +402,30 @@
       "side": 1,
       "message": "native should be initialized at this point, so these all would seem to have internal dependencies on web contents?\n\nIt would be good to verify why they\u0027re breaking though and potentially making these classes more tolerant of web contents not being there.  Maybe these are all destroyed when swapping webcontents, but if not, then they\u0027re already handling webcontents switching.",
       "parentUuid": "1ec0a73c_9ff50538",
+      "range": {
+        "startLine": 1474,
+        "startChar": 37,
+        "endLine": 1474,
+        "endChar": 70
+      },
+      "revId": "63e387f8416624f1621694a0daea024911168f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11c78456_52b0efd1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1474,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-28T04:05:22Z",
+      "side": 1,
+      "message": "nativeUpdateDelegates: crashes because of here (https://codesearch.chromium.org/chromium/src/chrome/browser/android/tab_android.cc?rcl\u003d9aa97209c99ecaaa9879a5ef16a2bfd332a2176c\u0026l\u003d432) that WebContents is not available.\nsetInterceptNavigationDelegate: crashes because inside here (https://codesearch.chromium.org/chromium/src/components/navigation_interception/intercept_navigation_delegate.cc?rcl\u003d9f9c8a87440bd8f809423cf1f3227a31e4efe1e7\u0026l\u003d76) that DCHECK(sequence_checker_.CalledOnValidSequence()) is not satisfied.\ngetAppBannerManager().setIsEnabledForTab: crashes also because of here (https://codesearch.chromium.org/chromium/src/chrome/browser/android/banners/app_banner_manager_android.cc?rcl\u003daa3643958e427e2603132945b5601deb87187e71\u0026l\u003d327) that WebContents is not available.\nnativeAttachDetachedTab(mNativeTabAndroid): seems works.\n\nAnd both createContextMenuPopulator and setInterceptNavigationDelegate are called in setContentViewCore. So ultimately both of them will be called. The only problem is getAppBannerManager is missing in setContentViewCore.",
+      "parentUuid": "20d43f41_3b4565c2",
       "range": {
         "startLine": 1474,
         "startChar": 37,
