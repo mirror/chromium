@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68a9f76d_c3999c26",
+        "filename": "third_party/WebKit/Source/devtools/front_end/accessibility/AXBreadcrumbsPane.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-09-28T20:04:25Z",
+      "side": 0,
+      "message": "JSDoc here and below disappeared.",
+      "revId": "d48e4e6f540260c86aa49d908c8333e2f8d0b842",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
