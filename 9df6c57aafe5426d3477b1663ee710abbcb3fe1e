@@ -188,6 +188,30 @@
       "revId": "9df6c57aafe5426d3477b1663ee710abbcb3fe1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0bc6c002_65aa3d6b",
+        "filename": "chrome/installer/setup/user_experiment.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-28T22:30:22Z",
+      "side": 1,
+      "message": "Sorry for not being clear. By update I meant wrap kTryChromeAgain in an ifdef OS_WIN (most likely moving both definition/declaration inside an existing OS_WIN ifdef).",
+      "parentUuid": "82444f40_0edb7679",
+      "range": {
+        "startLine": 530,
+        "startChar": 46,
+        "endLine": 530,
+        "endChar": 61
+      },
+      "revId": "9df6c57aafe5426d3477b1663ee710abbcb3fe1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
