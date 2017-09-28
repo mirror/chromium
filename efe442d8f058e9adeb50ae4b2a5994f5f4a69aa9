@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c434d2a9_6c588448",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-09-28T18:35:44Z",
+      "side": 1,
+      "message": "nit: SmartSelectionClient.ResultCallback",
+      "range": {
+        "startLine": 99,
+        "startChar": 32,
+        "endLine": 99,
+        "endChar": 36
+      },
+      "revId": "efe442d8f058e9adeb50ae4b2a5994f5f4a69aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
