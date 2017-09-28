@@ -163,7 +163,7 @@ deps = {
     Var('chromium_git') + '/external/github.com/google/crc32c.git' + '@' + '9bc7a0cada31f3224779b7ba7f56cc7382758e54',
 
   'src/third_party/depot_tools':
-    Var('chromium_git') + '/chromium/tools/depot_tools.git' + '@' + 'b2e961b1171d9f27278461a0a3286ab89161368c',
+    Var('chromium_git') + '/chromium/tools/depot_tools.git' + '@' + '4145082558e22927a2dc85c8459533b106e1051f',
 
   'src/third_party/googletest/src':
     Var('chromium_git') + '/external/github.com/google/googletest.git' + '@' + '7f8fefabedf2965980585be8c2bff97458f28e0b',
