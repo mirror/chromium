@@ -88,6 +88,24 @@
       "revId": "a7a97725a51c58dfa62fd68af62058faf167f2af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9434f57_f3abcc2b",
+        "filename": "content/browser/appcache/appcache_histograms.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-28T01:15:47Z",
+      "side": 1,
+      "message": "Yes, reducing the number of buckets would help, both on the client and on the server \u003d)\n\nIn general, if some metrics are still useful to you, it\u0027s likely fine to keep them.  If it\u0027s possible to reduce their resource footprint while maintaining their usefulness, then great -- let\u0027s do that!  But if that would diminish their usefulness, it\u0027s likely ok not to change them.  Feel free to point me at specific bugs if you\u0027re not sure.",
+      "parentUuid": "142a8096_842d3333",
+      "revId": "a7a97725a51c58dfa62fd68af62058faf167f2af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
