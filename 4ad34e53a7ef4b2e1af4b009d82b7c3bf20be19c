@@ -22,6 +22,30 @@
       "revId": "4ad34e53a7ef4b2e1af4b009d82b7c3bf20be19c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cef9404_e9ef1c37",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/dom/events/Event-timestamp-safe-resolution.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-28T20:49:05Z",
+      "side": 1,
+      "message": "Good catch! Done.",
+      "parentUuid": "70ba6821_62ff9c47",
+      "range": {
+        "startLine": 47,
+        "startChar": 15,
+        "endLine": 47,
+        "endChar": 16
+      },
+      "revId": "4ad34e53a7ef4b2e1af4b009d82b7c3bf20be19c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
