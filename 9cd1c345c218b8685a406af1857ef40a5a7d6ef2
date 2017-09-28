@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "eb808ccb_285420c3",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-28T14:58:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be82a7d3_9b8be35d",
+      "range": {
+        "startLine": 193,
+        "startChar": 30,
+        "endLine": 193,
+        "endChar": 33
+      },
+      "revId": "9cd1c345c218b8685a406af1857ef40a5a7d6ef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c709de5b_888d41d9",
         "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
         "patchSetId": 5
