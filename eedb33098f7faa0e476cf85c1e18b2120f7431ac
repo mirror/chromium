@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a53e50cd_5f107d83",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browser_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-28T05:44:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5cc1511_ce58d387",
+      "revId": "eedb33098f7faa0e476cf85c1e18b2120f7431ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0e3bc3b_6a1beeb1",
         "filename": "chrome/browser/ui/extensions/hosted_app_browser_controller.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "eedb33098f7faa0e476cf85c1e18b2120f7431ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a8a1a60_a9271599",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browser_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-28T05:44:09Z",
+      "side": 1,
+      "message": "Looks like namespaceless stuff comes first (looking at browser.h)",
+      "parentUuid": "a0e3bc3b_6a1beeb1",
+      "revId": "eedb33098f7faa0e476cf85c1e18b2120f7431ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "eaeb83cf_d942b8a4",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1627,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-28T05:44:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4933fb9a_5b6eaaeb",
+      "revId": "eedb33098f7faa0e476cf85c1e18b2120f7431ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec945d9b_28eaffe8",
         "filename": "chrome/browser/ui/views/frame/browser_view.cc",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "053849fa_e6f1e637",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1642,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-28T05:44:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec945d9b_28eaffe8",
+      "revId": "eedb33098f7faa0e476cf85c1e18b2120f7431ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "084e5eb3_a470463c",
         "filename": "chrome/browser/ui/views/tab_icon_view.h",
         "patchSetId": 4
@@ -81,6 +153,24 @@
       "writtenOn": "2017-09-28T04:34:53Z",
       "side": 1,
       "message": "Has there been any discussion around just showing a different placeholder icon, rather than rendering blank? Blank would make the text look strangely out of alignment. Also isn\u0027t there a menu behind that icon, if it\u0027s not painted, how is the user expected to know they can click it?\n\nBut if we have a different placeholder icon, then we can guarantee that GetWindowAppIcon() *never* returns a null ImageSkia and we don\u0027t need that.\n\nAlso, even if we don\u0027t have a placeholder, what about just having HostedAppBrowserController return a completely transparent, non-null icon? That would also remove the need for this..",
+      "revId": "eedb33098f7faa0e476cf85c1e18b2120f7431ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0d05831_0955f871",
+        "filename": "chrome/browser/ui/views/tab_icon_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-28T05:44:09Z",
+      "side": 1,
+      "message": "The only time an icon here should be null is when the page is loading for the first time. AFAICT, the only reason you\u0027d get a title without an icon is that the icon is taking forever to load from disk. In that case, I think it\u0027s ok to keep the title in the same place and have the icon load into the blank space.\n\nHaving a placeholder looks pretty bad because the placeholder flashes a bit when the real icon loads (Chrome icon \u003d\u003e app icon). We\u0027re better off having nothing there until the page is ready. A throbber is usually displayed, but that would break our \u0027app\u0027 feel.\n\nIs there a better way to have a non-null icon than:\n\n  SkBitmap bitmap;\n  bitmap.allocN32Pixels(16, 16);\n  bitmap.eraseColor(SK_ColorTRANSPARENT);\n  return gfx::ImageSkia::CreateFrom1xBitmap(bitmap);\n\nThis seems like a convoluted way to not paint a default icon. I\u0027m not sure why TabIconView should always assume that its client always wants a default icon anyhow.",
+      "parentUuid": "084e5eb3_a470463c",
       "revId": "eedb33098f7faa0e476cf85c1e18b2120f7431ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
