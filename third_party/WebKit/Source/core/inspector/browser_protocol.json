@@ -4157,6 +4157,18 @@
                 ]
             },
             {
+                "id": "PointerAction",
+                "type": "object",
+                "experimental": true,
+                "properties": [
+                    { "name": "type", "type": "string", "description": ""},
+                    { "name": "pointerType", "type": "string", "description": ""},
+                    { "name": "x", "type": "number", "optional": true, "description": "X coordinate of the event relative to the main frame's viewport in CSS pixels."},
+                    { "name": "y", "type": "number", "optional": true, "description": "Y coordinate of the event relative to the main frame's viewport in CSS pixels. 0 refers to the top of the viewport and Y increases as it proceeds towards the bottom of the viewport."},
+                    { "name": "button", "type": "number", "optional": true, "description": ""}
+                ]
+            },
+            {
                 "id": "GestureSourceType",
                 "type": "string",
                 "experimental": true,
@@ -4220,6 +4232,14 @@
                     { "name": "timestamp", "$ref": "TimeSinceEpoch", "optional": true, "description": "Time at which the event occurred." }
                 ],
                 "description": "Dispatches a touch event to the page."
+            },
+            {
+            	"name": "dispatchPointerActions",
+            	"experimental": true,
+            	"parameters": [
+                    { "name": "pointerActions", "type": "array", "items": { "$ref": "PointerAction" }, "description": "" }
+              ],
+            	"description": "Dispatches a pointer event to the page."
             },
             {
                 "name": "emulateTouchFromMouseEvent",

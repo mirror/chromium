@@ -118,6 +118,9 @@ class WebView {
                                     const base::ListValue& args,
                                     std::string* out_frame) = 0;
 
+  // this is a comment
+  virtual Status DispatchPointerActions(base::ListValue& actions) = 0;
+
   // Dispatch a sequence of mouse events.
   virtual Status DispatchMouseEvents(const std::list<MouseEvent>& events,
                                      const std::string& frame) = 0;
