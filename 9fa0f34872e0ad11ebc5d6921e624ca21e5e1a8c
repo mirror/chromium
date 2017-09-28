@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "8d01f58c_653ef6c8",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1573,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-28T23:26:03Z",
+      "side": 1,
+      "message": "Please mention \"on focus\" here.  There are personalized as-you-type omnibox suggestions as well (which, for what it\u0027s worth, are already enabled).",
+      "revId": "9fa0f34872e0ad11ebc5d6921e624ca21e5e1a8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ace6884_71ffca16",
+        "filename": "components/omnibox/browser/omnibox_field_trial.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-28T23:26:03Z",
+      "side": 1,
+      "message": "Please mention on-focus or zero suggest in the comment here.",
+      "revId": "9fa0f34872e0ad11ebc5d6921e624ca21e5e1a8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f08a983_0278c1c7",
+        "filename": "components/omnibox/browser/omnibox_field_trial.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-28T23:26:03Z",
+      "side": 1,
+      "message": "Please mention zero suggest or on focus in this comment.  (I know it\u0027s in the function name too.)",
+      "revId": "9fa0f34872e0ad11ebc5d6921e624ca21e5e1a8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6e09172_505b6fec",
+        "filename": "components/omnibox/browser/omnibox_pref_names.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-28T23:26:03Z",
+      "side": 1,
+      "message": "Please mention on focus or zero suggest in the comment here.",
+      "revId": "9fa0f34872e0ad11ebc5d6921e624ca21e5e1a8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93a4b0c7_27138530",
         "filename": "components/omnibox/browser/zero_suggest_provider.cc",
         "patchSetId": 11
@@ -13,6 +81,30 @@
       "writtenOn": "2017-09-27T23:25:14Z",
       "side": 1,
       "message": "I tried adding const to AutcompleteProviderClient::GetPrefs() but the ios implementation relies on ChromeBrowserState::GetPrefs() which is not const.",
+      "range": {
+        "startLine": 521,
+        "startChar": 10,
+        "endLine": 521,
+        "endChar": 49
+      },
+      "revId": "9fa0f34872e0ad11ebc5d6921e624ca21e5e1a8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad2eed1e_5db3840d",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-28T23:26:03Z",
+      "side": 1,
+      "message": "\u003e I tried adding const to AutcompleteProviderClient::GetPrefs() but the ios implementation relies on ChromeBrowserState::GetPrefs() which is not const.\n\nPlease add a comment about why the const-casts in this function are safe.\n\n(Presumably the omnibox field trial code isn\u0027t actually going to modify anything, prefs or otherwise, right?)",
+      "parentUuid": "93a4b0c7_27138530",
       "range": {
         "startLine": 521,
         "startChar": 10,
