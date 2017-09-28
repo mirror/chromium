@@ -16,6 +16,24 @@
       "revId": "2c504fa544d5fe845f46ed050ba315b3bcee8b9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c69728a_6fd0e3da",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImplTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-09-28T08:49:28Z",
+      "side": 0,
+      "message": "We no longer invalid the slider on input so the test is obsolete.",
+      "parentUuid": "d5a74b32_409b4a1d",
+      "revId": "2c504fa544d5fe845f46ed050ba315b3bcee8b9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
