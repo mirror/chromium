@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ddb24ad0_558dd6d8",
+        "filename": "third_party/WebKit/LayoutTests/navigator_webdriver/navigator_webdriver.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-09-28T10:56:39Z",
+      "side": 1,
+      "message": "Can you also add a LayoutTests/external/wpt/webdriver/interface/interface.html with a similar test, that asserts that either !(\u0027webdriver\u0027 in navigator) or navigator.webdriver\u003d\u003d\u003dtrue?\n\nWe can\u0027t assume that wpt is controlled by webdriver, but we can still share a test ensuring that if the attribute is there at all, it\u0027s true, as opposed to being there with the value undefined.",
+      "range": {
+        "startLine": 8,
+        "startChar": 13,
+        "endLine": 8,
+        "endChar": 22
+      },
+      "revId": "3f05d94d915e0dd3524816456895b79a0521642e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97784f1e_7489ba89",
+        "filename": "third_party/WebKit/LayoutTests/navigator_webdriver/navigator_webdriver_enabled.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-09-28T10:56:39Z",
+      "side": 1,
+      "message": "I guess you can test these bits in the wpt test as well, if the attribute is there.",
+      "range": {
+        "startLine": 29,
+        "startChar": 27,
+        "endLine": 29,
+        "endChar": 28
+      },
+      "revId": "3f05d94d915e0dd3524816456895b79a0521642e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea4ed17f_b26be976",
+        "filename": "third_party/WebKit/Source/core/frame/Navigator.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-09-28T10:56:39Z",
+      "side": 1,
+      "message": "Put this in the header file? Less lines and more obvious that it\u0027s always true.",
+      "range": {
+        "startLine": 91,
+        "startChar": 9,
+        "endLine": 91,
+        "endChar": 13
+      },
+      "revId": "3f05d94d915e0dd3524816456895b79a0521642e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f932937_15132ec1",
+        "filename": "third_party/WebKit/Source/core/frame/NavigatorAutomationInformation.idl",
+        "patchSetId": 12
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-09-28T10:56:39Z",
+      "side": 1,
+      "message": "Can you link to https://w3c.github.io/webdriver/webdriver-spec.html#interface? I regularly go around purging /TR/ links from our IDL files, because they\u0027re usually stale.",
+      "range": {
+        "startLine": 5,
+        "startChar": 14,
+        "endLine": 5,
+        "endChar": 15
+      },
+      "revId": "3f05d94d915e0dd3524816456895b79a0521642e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
