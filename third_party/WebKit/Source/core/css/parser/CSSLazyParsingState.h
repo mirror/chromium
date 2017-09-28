@@ -16,7 +16,6 @@
 namespace blink {
 
 class CSSLazyPropertyParserImpl;
-class CSSParserTokenStream;
 
 // This class helps lazy parsing by retaining necessary state. It should not
 // outlive the StyleSheetContents that initiated the parse, as it retains a raw
@@ -43,8 +42,6 @@ class CSSLazyParsingState
   bool HasRuleSet() { return owning_contents_->HasRuleSet(); }
 
   void CountRuleParsed();
-
-  bool IsEmptyBlock(const CSSParserTokenStream&) const;
 
   DECLARE_TRACE();
 

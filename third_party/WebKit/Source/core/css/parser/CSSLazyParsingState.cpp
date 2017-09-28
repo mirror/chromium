@@ -68,16 +68,6 @@ void CSSLazyParsingState::CountRuleParsed() {
   }
 }
 
-bool CSSLazyParsingState::IsEmptyBlock(
-    const CSSParserTokenStream& block) const {
-  // We should avoid lazy parsing empty blocks so we can avoid considering them
-  // when possible for matching. Lazy blocks must always be considered.
-  // Unfortunately, we can't tell how big the block will be, so the
-  // best we can do is to check if the next token is the end of the block.
-  // TODO(shend): Can we peek further than one token?
-  return block.AtEnd();
-}
-
 void CSSLazyParsingState::RecordUsageMetrics() {
   DEFINE_STATIC_LOCAL(EnumerationHistogram, usage_histogram,
                       ("Style.LazyUsage.Percent", kUsageLastValue));
