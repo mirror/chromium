@@ -1476,6 +1476,7 @@ test("content_unittests") {
     "../common/unique_name_helper_unittest.cc",
     "../common/webplugininfo_unittest.cc",
     "../network/cookie_manager_impl_unittest.cc",
+    "../network/network_change_manager_impl_unittest.cc",
     "../network/network_context_unittest.cc",
     "../network/network_service_unittest.cc",
     "../network/url_loader_unittest.cc",
