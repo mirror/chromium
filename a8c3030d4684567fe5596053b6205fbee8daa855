@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3757d3e_5cd038bb",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerFilter.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-28T00:01:53Z",
+      "side": 1,
+      "message": "Don\u0027t we have anything that does it? You could install a borderless toolbar that would do that for you for example.",
+      "revId": "a8c3030d4684567fe5596053b6205fbee8daa855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f9884ca_927d5110",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkersView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-28T00:01:53Z",
+      "side": 1,
+      "message": "We no longer need this workaround, right?",
+      "revId": "a8c3030d4684567fe5596053b6205fbee8daa855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11fcb2c7_28bf0cdb",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/serviceWorkerFilter.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-28T00:01:53Z",
+      "side": 1,
+      "message": "Do you have an idea why we need so much CSS for a generic filter control?",
+      "revId": "a8c3030d4684567fe5596053b6205fbee8daa855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
