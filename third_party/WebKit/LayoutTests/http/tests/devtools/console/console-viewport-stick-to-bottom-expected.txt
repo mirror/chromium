@@ -600,7 +600,7 @@ Verifies viewport stick-to-bottom behavior.
 
 
 Running: verifyViewportIsTallEnough
-Viewport contains 13 messages
+Viewport contains 11 messages
 
 Running: testScrollViewportToBottom
 Is at bottom: true, should stick: true

@@ -173,6 +173,10 @@
     border-bottom: 1px solid rgb(240, 240, 240);
 }
 
+.console-message-wrapper[data-keyboard-focus="true"]:focus {
+    background-color: hsl(214, 67%, 95%);
+}
+
 .console-message-wrapper.console-adjacent-user-command-result {
     border-bottom: none;
 }
