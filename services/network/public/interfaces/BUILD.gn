@@ -6,6 +6,7 @@ import("//mojo/public/tools/bindings/mojom.gni")
 
 mojom("interfaces") {
   sources = [
+    "checked_cookie_manager.mojom",
     "cookie_manager.mojom",
     "fetch_api.mojom",
     "http_request_headers.mojom",

@@ -137,6 +137,11 @@ void NetworkContext::GetCookieManager(
   cookie_manager_->AddRequest(std::move(request));
 }
 
+void NetworkContext::GetCheckedCookieManager(
+    network::mojom::CheckedCookieManagerRequest request) {
+  checked_cookie_manager_->AddRequest(std::move(request));
+}
+
 void NetworkContext::DisableQuic() {
   url_request_context_->http_transaction_factory()->GetSession()->DisableQuic();
 }

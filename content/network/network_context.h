@@ -15,6 +15,7 @@
 #include "base/time/time.h"
 #include "base/timer/timer.h"
 #include "content/common/content_export.h"
+#include "content/network/checked_cookie_manager_impl.h"
 #include "content/network/cookie_manager_impl.h"
 #include "content/public/common/network_service.mojom.h"
 #include "content/public/common/url_loader_factory.mojom.h"
@@ -85,6 +86,8 @@ class CONTENT_EXPORT NetworkContext : public mojom::NetworkContext {
   void HandleViewCacheRequest(const GURL& url,
                               mojom::URLLoaderClientPtr client) override;
   void GetCookieManager(network::mojom::CookieManagerRequest request) override;
+  void GetCheckedCookieManager(
+      network::mojom::CheckedCookieManagerRequest request) override;
   void ClearNetworkingHistorySince(
       base::Time time,
       base::OnceClosure completion_callback) override;
@@ -140,6 +143,7 @@ class CONTENT_EXPORT NetworkContext : public mojom::NetworkContext {
 
   mojo::Binding<mojom::NetworkContext> binding_;
 
+  std::unique_ptr<CheckedCookieManagerImpl> checked_cookie_manager_;
   std::unique_ptr<CookieManagerImpl> cookie_manager_;
 
   // Owned by |owned_url_request_context_|. May be nullptr.
