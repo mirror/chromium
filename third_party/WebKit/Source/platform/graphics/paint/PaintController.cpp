@@ -607,6 +607,7 @@ void PaintController::CommitNewDisplayItems() {
 
   Vector<const DisplayItemClient*> skipped_cache_clients;
   for (const auto& item : new_display_item_list_) {
+    item.Client().ClearPartialInvalidationRect();
     if (item.IsCacheable()) {
       item.Client().SetDisplayItemsCached(current_cache_generation_);
     } else {
@@ -882,9 +883,16 @@ void PaintController::GenerateRasterInvalidation(
   }
 
   if (client.GetPaintInvalidationReason() ==
-      PaintInvalidationReason::kIncremental) {
+          PaintInvalidationReason::kRectangle ||
+      client.GetPaintInvalidationReason() ==
+          PaintInvalidationReason::kIncremental) {
     GenerateIncrementalRasterInvalidation(chunk, *old_item, *new_item);
-    return;
+
+    auto partial_rect = client.PartialInvalidationRect();
+    if (!partial_rect.IsEmpty()) {
+      AddRasterInvalidation(client, chunk, FloatRect(partial_rect),
+                            PaintInvalidationReason::kRectangle);
+    }
   }
 
   GenerateFullRasterInvalidation(chunk, *old_item, *new_item);
