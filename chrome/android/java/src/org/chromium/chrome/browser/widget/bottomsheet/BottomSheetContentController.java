@@ -91,7 +91,8 @@ public class BottomSheetContentController extends BottomNavigationView
             if (!mOmniboxHasFocus) {
                 float offsetY =
                         (mBottomSheet.getMinOffset() - mBottomSheet.getSheetOffsetFromBottom())
-                        + mDistanceBelowToolbarPx;
+                        + Math.min(mDistanceBelowToolbarPx,
+                                  mBottomSheet.getMaxSheetOffsetFromBottom());
                 setTranslationY(Math.max(offsetY, 0f));
 
                 if (mBottomSheet.getTargetSheetState() != BottomSheet.SHEET_STATE_PEEK
@@ -237,14 +238,22 @@ public class BottomSheetContentController extends BottomNavigationView
         mTabModelSelector.addObserver(mTabModelSelectorObserver);
 
         Resources res = getContext().getResources();
-        mDistanceBelowToolbarPx = controlContainerHeight
-                + res.getDimensionPixelOffset(R.dimen.bottom_nav_space_from_toolbar);
+        mDistanceBelowToolbarPx = controlContainerHeight + mBottomSheet.getBottomNavHeight()
+                + res.getDimensionPixelOffset(R.dimen.bottom_nav_extra_space_from_toolbar);
 
         setOnNavigationItemSelectedListener(this);
         hideMenuLabels();
 
-        mSnackbarManager = new SnackbarManager(
-                mActivity, (ViewGroup) activity.findViewById(R.id.bottom_sheet_snackbar_container));
+        ViewGroup snackbarContainer =
+                (ViewGroup) activity.findViewById(R.id.bottom_sheet_snackbar_container);
+
+        if (mBottomSheet.useTallBottomNav()) {
+            getLayoutParams().height = mBottomSheet.getBottomNavHeight();
+            ((MarginLayoutParams) snackbarContainer.getLayoutParams()).bottomMargin =
+                    mBottomSheet.getBottomNavHeight();
+        }
+
+        mSnackbarManager = new SnackbarManager(mActivity, snackbarContainer);
         mSnackbarManager.onStart();
 
         ApplicationStatus.registerStateListenerForActivity(new ActivityStateListener() {
