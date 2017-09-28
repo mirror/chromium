@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07dbcd9f_76b77411",
+        "filename": "components/policy/tools/template_writers/writers/template_writer_unittest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-09-28T08:50:55Z",
+      "side": 1,
+      "message": "nit: Revert the line removal. IIRC python styleguide requires two lines before a class.",
+      "revId": "c2b296dbebd5535e1a04925fac62cb0b280d561d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
