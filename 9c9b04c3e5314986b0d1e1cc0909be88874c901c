@@ -36,6 +36,74 @@
     },
     {
       "key": {
+        "uuid": "808ba4fb_8f60b505",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_params.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-28T22:17:06Z",
+      "side": 1,
+      "message": "Is this operator used, or only for tests?  If the latter, you could define a GMock matcher to reduce code size in the Chrome binary.",
+      "revId": "9c9b04c3e5314986b0d1e1cc0909be88874c901c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcdb2fdb_cadb66a6",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_params.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-28T22:17:06Z",
+      "side": 1,
+      "message": "Please validate all of these parameters.  If one fails, return defaults so that we don\u0027t break Cast for everyone by pushing invalid field trial parameters.",
+      "revId": "9c9b04c3e5314986b0d1e1cc0909be88874c901c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea575c1e_94b6ce7d",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_params.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-28T22:17:06Z",
+      "side": 1,
+      "message": "Similar comment about \u003d\u003d as above here",
+      "revId": "9c9b04c3e5314986b0d1e1cc0909be88874c901c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca8e459a_1e428d2b",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_params.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-28T22:17:06Z",
+      "side": 1,
+      "message": "Similar comment about validation.",
+      "revId": "9c9b04c3e5314986b0d1e1cc0909be88874c901c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "17953d2a_0e8d08e5",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_params.h",
         "patchSetId": 1
