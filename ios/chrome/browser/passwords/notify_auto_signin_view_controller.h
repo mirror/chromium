@@ -26,6 +26,14 @@ class GURL;
 - (instancetype)initWithCoder:(NSCoder*)aDecoder NS_UNAVAILABLE;
 - (instancetype)init NS_UNAVAILABLE;
 
+// At first self.view will be hidden under the screen and then animate to appear
+// from below.
+- (void)beginAppearanceTransition;
+
+// Animate sliding the view out of the screen and remove it from parent view
+// once animation finishes.
+- (void)beginDisappearanceTransition;
+
 @end
 
 #endif  // IOS_CHROME_BROWSER_PASSWORDS_NOTIFY_AUTO_SIGNIN_VIEW_CONTROLLER_H_
