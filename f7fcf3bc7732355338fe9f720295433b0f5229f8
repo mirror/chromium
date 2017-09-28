@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "38bf58e3_e0128e60",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-09-28T18:09:05Z",
+      "side": 1,
+      "message": "Yes, of course. I wanted to get this out for you to review but didn\u0027t add wip.",
+      "parentUuid": "3fa3e338_56b42b0b",
+      "range": {
+        "startLine": 79,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 26
+      },
+      "revId": "f7fcf3bc7732355338fe9f720295433b0f5229f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9ca0bad_25e6ca71",
         "filename": "components/arc/common/accessibility_helper.mojom",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "f7fcf3bc7732355338fe9f720295433b0f5229f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c87affb_c515672e",
+        "filename": "components/arc/common/accessibility_helper.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-09-28T18:09:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9ca0bad_25e6ca71",
+      "range": {
+        "startLine": 263,
+        "startChar": 0,
+        "endLine": 263,
+        "endChar": 4
+      },
+      "revId": "f7fcf3bc7732355338fe9f720295433b0f5229f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
