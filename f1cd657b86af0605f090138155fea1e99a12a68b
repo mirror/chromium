@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a0a24e41_a3236c5b",
+        "filename": "content/renderer/media/media_stream_center.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-28T18:39:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06345fb1_5031ef71",
+      "range": {
+        "startLine": 206,
+        "startChar": 2,
+        "endLine": 206,
+        "endChar": 27
+      },
+      "revId": "f1cd657b86af0605f090138155fea1e99a12a68b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92ecc7b5_139f2438",
         "filename": "third_party/WebKit/Source/modules/mediacapturefromelement/HTMLMediaElementCapture.cpp",
         "patchSetId": 1
@@ -57,6 +81,24 @@
       "revId": "f1cd657b86af0605f090138155fea1e99a12a68b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b79536f_815ddc8c",
+        "filename": "third_party/WebKit/Source/modules/mediacapturefromelement/HTMLMediaElementCapture.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-28T18:39:17Z",
+      "side": 1,
+      "message": "Cannot merge the earlier CL because it breaks Web Platform Tests (e.g., view-source:http://w3c-test.org/mediacapture-fromelement/capture.html).\n\nIt turns out that if the source is empty/null the cross-origin check fails and the exception is thrown.\nThe tests assign the source and immediately invoke captureStream(). At that point the src is still empty and the check fails.\nIs this maybe a bug in the cross-origin check?",
+      "parentUuid": "000c02b4_a7b29e15",
+      "revId": "f1cd657b86af0605f090138155fea1e99a12a68b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
