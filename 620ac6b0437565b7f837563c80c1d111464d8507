@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30576126_fa335640",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/resources/featurepolicy.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-28T07:37:45Z",
+      "side": 1,
+      "message": "nit: maybe fold this into the above function and just return based on the result? \n\ntest_feature_if_in_iframe?",
+      "revId": "620ac6b0437565b7f837563c80c1d111464d8507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5c2091f_0ae06a02",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/resources/featurepolicy.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-28T07:37:45Z",
+      "side": 1,
+      "message": "nit: with \"allow\" attribute set to none.",
+      "revId": "620ac6b0437565b7f837563c80c1d111464d8507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
