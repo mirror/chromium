@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5113a5d_785cedb8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-28T23:49:55Z",
+      "side": 1,
+      "message": "Why do we even do this on mousedown? Perhaps, click is enough?",
+      "revId": "9a94fa781adb7548adfd9aaa3f7dfe4286474679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a4269b4_14786e4c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-28T23:49:55Z",
+      "side": 1,
+      "message": "JSDoc please.",
+      "revId": "9a94fa781adb7548adfd9aaa3f7dfe4286474679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "344d6e7c_c3316b69",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-28T23:49:55Z",
+      "side": 1,
+      "message": "Blink suggests to not compare against zeroes:\n\nif (event.screenX || event.screenY)",
+      "revId": "9a94fa781adb7548adfd9aaa3f7dfe4286474679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc218b04_500e69cb",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-28T23:49:55Z",
+      "side": 1,
+      "message": "I think you should not need this control in ContrastDetails, and instead should setExpanded on the call sites.",
+      "revId": "9a94fa781adb7548adfd9aaa3f7dfe4286474679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0f47ae7_3e330fae",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-28T23:49:55Z",
+      "side": 1,
+      "message": "Unused?",
+      "revId": "9a94fa781adb7548adfd9aaa3f7dfe4286474679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fb126ac_828ad67f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-28T23:49:55Z",
+      "side": 1,
+      "message": "textContent",
+      "range": {
+        "startLine": 733,
+        "startChar": 28,
+        "endLine": 733,
+        "endChar": 37
+      },
+      "revId": "9a94fa781adb7548adfd9aaa3f7dfe4286474679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
