@@ -23,6 +23,8 @@
 namespace {
 
 constexpr int kBackgroundColor = 0x4285F4;
+constexpr int kViewHeight = 48;
+constexpr double kAnimationDuration = 0.3;  // seconds
 
 // NetworkTrafficAnnotationTag for fetching avatar.
 const net::NetworkTrafficAnnotationTag kTrafficAnnotation =
@@ -60,6 +62,7 @@ const net::NetworkTrafficAnnotationTag kTrafficAnnotation =
 
 @interface NotifyUserAutoSigninViewController () {
   std::unique_ptr<image_fetcher::ImageFetcher> _imageFetcher;
+  NSMutableArray* _bottomConstraints;
 }
 
 // Username, corresponding to Credential.id field in JS.
@@ -86,6 +89,7 @@ const net::NetworkTrafficAnnotationTag kTrafficAnnotation =
     _iconURL = iconURL;
     _imageFetcher = std::make_unique<image_fetcher::ImageFetcherImpl>(
         image_fetcher::CreateIOSImageDecoder(), contextGetter);
+    _bottomConstraints = [[NSMutableArray alloc] init];
   }
   return self;
 }
@@ -154,21 +158,68 @@ const net::NetworkTrafficAnnotationTag kTrafficAnnotation =
   }
 }
 
+- (void)beginAppearanceTransition:(BOOL)isAppearing animated:(BOOL)animated {
+  [super beginAppearanceTransition:isAppearing animated:animated];
+  if (isAppearing) {
+    // At first self.view will be hidden under the screen and then animate to
+    // appear from below.
+    NSLayoutConstraint* bottomConstraint = [self.view.bottomAnchor
+        constraintEqualToAnchor:self.view.superview.bottomAnchor
+                       constant:kViewHeight];
+    // Set constraints for blue background.
+    [NSLayoutConstraint activateConstraints:@[
+      bottomConstraint,
+      [self.view.leadingAnchor
+          constraintEqualToAnchor:self.view.superview.leadingAnchor],
+      [self.view.trailingAnchor
+          constraintEqualToAnchor:self.view.superview.trailingAnchor],
+    ]];
+
+    // Commit all pending layout changes.
+    [self.view layoutIfNeeded];
+    [self.view.superview layoutIfNeeded];
+
+    // Animate bottomAnchor offset.
+    bottomConstraint.constant = 0;
+    [UIView animateWithDuration:kAnimationDuration
+                     animations:^{
+                       [self.view.superview layoutIfNeeded];
+                     }];
+
+    [_bottomConstraints addObject:bottomConstraint];
+  } else {
+    // Remove existing constraints for self.view.bottomAnchor.
+    [self.view removeConstraints:_bottomConstraints];
+    [self.view.superview removeConstraints:_bottomConstraints];
+
+    // Create a constraint corresponding to current position of the view and
+    // commit all pending changes.
+    NSLayoutConstraint* bottomConstraint = [self.view.bottomAnchor
+        constraintEqualToAnchor:self.view.superview.bottomAnchor
+                       constant:0];
+    bottomConstraint.active = YES;
+
+    // Animate sliding the view out of the screen.
+    bottomConstraint.constant = kViewHeight;
+    [UIView animateWithDuration:kAnimationDuration
+        animations:^{
+          [self.view.superview layoutIfNeeded];
+        }
+        completion:^(BOOL finished) {
+          // Remove view and its controller after the animation.
+          [self.view removeFromSuperview];
+          [self removeFromParentViewController];
+        }];
+  }
+}
+
 - (void)didMoveToParentViewController:(UIViewController*)parent {
   [super didMoveToParentViewController:parent];
   if (parent == nil) {
     return;
   }
 
-  // Set constraints for blue background.
-  [NSLayoutConstraint activateConstraints:@[
-    [self.view.bottomAnchor
-        constraintEqualToAnchor:self.view.superview.bottomAnchor],
-    [self.view.leadingAnchor
-        constraintEqualToAnchor:self.view.superview.leadingAnchor],
-    [self.view.trailingAnchor
-        constraintEqualToAnchor:self.view.superview.trailingAnchor],
-  ]];
+  [self beginAppearanceTransition:YES animated:YES];
 }
 
 @end
