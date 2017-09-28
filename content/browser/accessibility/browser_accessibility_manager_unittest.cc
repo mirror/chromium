@@ -1039,7 +1039,7 @@ TEST(BrowserAccessibilityManagerTest, TestNextPreviousInTreeOrder) {
   EXPECT_EQ(node4_accessible, manager->PreviousInTreeOrder(node5_accessible));
   EXPECT_EQ(node3_accessible, manager->PreviousInTreeOrder(node4_accessible));
   EXPECT_EQ(node2_accessible, manager->PreviousInTreeOrder(node3_accessible));
-  EXPECT_EQ(root_accessible, manager->PreviousInTreeOrder(node2_accessible));
+  EXPECT_EQ(nullptr, manager->PreviousInTreeOrder(node2_accessible));
 
   EXPECT_EQ(ui::AX_TREE_ORDER_EQUAL,
             BrowserAccessibilityManager::CompareNodes(
@@ -1172,7 +1172,7 @@ TEST(BrowserAccessibilityManagerTest, TestNextPreviousTextOnlyObject) {
   EXPECT_EQ(
       text1_accessible, manager->PreviousTextOnlyObject(node3_accessible));
   EXPECT_EQ(nullptr, manager->PreviousTextOnlyObject(node2_accessible));
-  EXPECT_EQ(nullptr, manager->PreviousTextOnlyObject(root_accessible));
+  EXPECT_EQ(text4_accessible, manager->PreviousTextOnlyObject(root_accessible));
 }
 
 TEST(BrowserAccessibilityManagerTest, TestFindIndicesInCommonParent) {
