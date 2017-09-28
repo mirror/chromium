@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "78da356d_cc3198dc",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwContents.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-09-28T01:25:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b1c7b92_fcdd1fe9",
+      "revId": "707e5c53e416419e53677cae87bf80e1eeacfaec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a06c676f_ae75ad2a",
         "filename": "android_webview/java/src/org/chromium/android_webview/AwContents.java",
         "patchSetId": 26
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-27T23:04:34Z",
       "side": 1,
       "message": "you can\u0027t assert that..?",
+      "revId": "707e5c53e416419e53677cae87bf80e1eeacfaec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "167b8b73_ff703957",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwContents.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 1059,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-09-28T01:25:34Z",
+      "side": 1,
+      "message": "Just wanted to make sure |set()| is called when AwContents is alive. \nDo you think it\u0027s okay to remove it?",
+      "parentUuid": "a06c676f_ae75ad2a",
       "revId": "707e5c53e416419e53677cae87bf80e1eeacfaec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4908a864_37eb415d",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-09-28T01:25:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4cb0b9b_c4ae7c17",
+      "revId": "707e5c53e416419e53677cae87bf80e1eeacfaec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8d30d77_413d7745",
         "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
         "patchSetId": 26
@@ -67,6 +121,24 @@
       "revId": "707e5c53e416419e53677cae87bf80e1eeacfaec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1b9d3e8_523aea93",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-09-28T01:25:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8d30d77_413d7745",
+      "revId": "707e5c53e416419e53677cae87bf80e1eeacfaec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
