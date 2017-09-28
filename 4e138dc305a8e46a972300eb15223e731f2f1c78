@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff0a6f61_815cec68",
+        "filename": "ui/chromeos/ime/candidate_window_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-28T21:06:15Z",
+      "side": 1,
+      "message": "This code shouldn\u0027t depend upon ash. Instead make the code take an id that chrome supplies.",
+      "range": {
+        "startLine": 11,
+        "startChar": 10,
+        "endLine": 11,
+        "endChar": 43
+      },
+      "revId": "4e138dc305a8e46a972300eb15223e731f2f1c78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
