@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3eb908ca_db2d25d2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1369,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-28T23:58:05Z",
+      "side": 1,
+      "message": "Make more generic name?",
+      "range": {
+        "startLine": 1369,
+        "startChar": 21,
+        "endLine": 1369,
+        "endChar": 24
+      },
+      "revId": "7cdb6dfa10fcf0e4912fa357f3715bcb904567f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
