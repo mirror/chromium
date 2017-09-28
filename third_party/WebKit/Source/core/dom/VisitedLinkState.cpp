@@ -52,8 +52,8 @@ static inline LinkHash LinkHashForElement(
     const Element& element,
     const AtomicString& attribute = AtomicString()) {
   DCHECK(attribute.IsNull() || LinkAttribute(element) == attribute);
-  if (isHTMLAnchorElement(element))
-    return toHTMLAnchorElement(element).VisitedLinkHash();
+  if (auto* anchor = ToHTMLAnchorElementOrNull(element))
+    return anchor->VisitedLinkHash();
   return VisitedLinkHash(
       element.GetDocument().BaseURL(),
       attribute.IsNull() ? LinkAttribute(element) : attribute);
@@ -67,7 +67,7 @@ static void InvalidateStyleForAllLinksRecursively(
     bool invalidate_visited_link_hashes) {
   for (Node& node : NodeTraversal::StartsAt(root_node)) {
     if (node.IsLink()) {
-      if (invalidate_visited_link_hashes && isHTMLAnchorElement(node))
+      if (invalidate_visited_link_hashes && IsHTMLAnchorElement(node))
         toHTMLAnchorElement(node).InvalidateCachedVisitedLinkHash();
       ToElement(node).PseudoStateChanged(CSSSelector::kPseudoLink);
       ToElement(node).PseudoStateChanged(CSSSelector::kPseudoVisited);

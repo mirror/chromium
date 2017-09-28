@@ -1415,36 +1415,34 @@ bool HTMLCanvasElement::IsSupportedInteractiveCanvasFallback(
 
   // An a element that represents a hyperlink and that does not have any img
   // descendants.
-  if (isHTMLAnchorElement(element))
+  if (IsHTMLAnchorElement(element))
     return !Traversal<HTMLImageElement>::FirstWithin(element);
 
   // A button element
-  if (isHTMLButtonElement(element))
+  if (IsHTMLButtonElement(element))
     return true;
 
   // An input element whose type attribute is in one of the Checkbox or Radio
   // Button states.  An input element that is a button but its type attribute is
   // not in the Image Button state.
-  if (isHTMLInputElement(element)) {
-    const HTMLInputElement& input_element = toHTMLInputElement(element);
-    if (input_element.type() == InputTypeNames::checkbox ||
-        input_element.type() == InputTypeNames::radio ||
-        input_element.IsTextButton())
+  if (auto* input_element = ToHTMLInputElementOrNull(element)) {
+    if (input_element->type() == InputTypeNames::checkbox ||
+        input_element->type() == InputTypeNames::radio ||
+        input_element->IsTextButton())
       return true;
   }
 
   // A select element with a "multiple" attribute or with a display size greater
   // than 1.
-  if (isHTMLSelectElement(element)) {
-    const HTMLSelectElement& select_element = toHTMLSelectElement(element);
-    if (select_element.IsMultiple() || select_element.size() > 1)
+  if (auto* select_element = ToHTMLSelectElementOrNull(element)) {
+    if (select_element->IsMultiple() || select_element->size() > 1)
       return true;
   }
 
   // An option element that is in a list of options of a select element with a
   // "multiple" attribute or with a display size greater than 1.
-  if (isHTMLOptionElement(element) && element.parentNode() &&
-      isHTMLSelectElement(*element.parentNode())) {
+  if (IsHTMLOptionElement(element) && element.parentNode() &&
+      IsHTMLSelectElement(*element.parentNode())) {
     const HTMLSelectElement& select_element =
         toHTMLSelectElement(*element.parentNode());
     if (select_element.IsMultiple() || select_element.size() > 1)
@@ -1458,7 +1456,7 @@ bool HTMLCanvasElement::IsSupportedInteractiveCanvasFallback(
 
   // A non-interactive table, caption, thead, tbody, tfoot, tr, td, or th
   // element.
-  if (isHTMLTableElement(element) ||
+  if (IsHTMLTableElement(element) ||
       element.HasTagName(HTMLNames::captionTag) ||
       element.HasTagName(HTMLNames::theadTag) ||
       element.HasTagName(HTMLNames::tbodyTag) ||

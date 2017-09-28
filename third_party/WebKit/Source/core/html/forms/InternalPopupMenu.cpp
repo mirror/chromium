@@ -272,14 +272,14 @@ void InternalPopupMenu::WriteDocument(SharedBuffer* data) {
   const HeapVector<Member<HTMLElement>>& items = owner_element.GetListItems();
   for (; context.list_index_ < items.size(); ++context.list_index_) {
     Element& child = *items[context.list_index_];
-    if (!isHTMLOptGroupElement(child.parentNode()))
+    if (!IsHTMLOptGroupElement(child.parentNode()))
       context.FinishGroupIfNecessary();
-    if (isHTMLOptionElement(child))
-      AddOption(context, toHTMLOptionElement(child));
-    else if (isHTMLOptGroupElement(child))
-      AddOptGroup(context, toHTMLOptGroupElement(child));
-    else if (isHTMLHRElement(child))
-      AddSeparator(context, toHTMLHRElement(child));
+    if (auto* option = ToHTMLOptionElementOrNull(child))
+      AddOption(context, *option);
+    else if (auto* optgroup = ToHTMLOptGroupElementOrNull(child))
+      AddOptGroup(context, *optgroup);
+    else if (auto* hr = ToHTMLHRElementOrNull(child))
+      AddSeparator(context, *hr);
   }
   context.FinishGroupIfNecessary();
   PagePopupClient::AddString("],\n", data);
@@ -532,14 +532,14 @@ void InternalPopupMenu::Update() {
   const HeapVector<Member<HTMLElement>>& items = owner_element_->GetListItems();
   for (; context.list_index_ < items.size(); ++context.list_index_) {
     Element& child = *items[context.list_index_];
-    if (!isHTMLOptGroupElement(child.parentNode()))
+    if (!IsHTMLOptGroupElement(child.parentNode()))
       context.FinishGroupIfNecessary();
-    if (isHTMLOptionElement(child))
-      AddOption(context, toHTMLOptionElement(child));
-    else if (isHTMLOptGroupElement(child))
-      AddOptGroup(context, toHTMLOptGroupElement(child));
-    else if (isHTMLHRElement(child))
-      AddSeparator(context, toHTMLHRElement(child));
+    if (auto* option = ToHTMLOptionElementOrNull(child))
+      AddOption(context, *option);
+    else if (auto* optgroup = ToHTMLOptGroupElementOrNull(child))
+      AddOptGroup(context, *optgroup);
+    else if (auto* hr = ToHTMLHRElementOrNull(child))
+      AddSeparator(context, *hr);
   }
   context.FinishGroupIfNecessary();
   PagePopupClient::AddString("],\n", data.Get());

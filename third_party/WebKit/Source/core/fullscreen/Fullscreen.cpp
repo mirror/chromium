@@ -167,7 +167,7 @@ bool FullscreenElementReady(const Element& element) {
 bool RequestFullscreenConditionsMet(Element& pending, Document& document) {
   // |pending|'s namespace is the HTML namespace or |pending| is an SVG svg or
   // MathML math element. Note: MathML is not supported.
-  if (!pending.IsHTMLElement() && !isSVGSVGElement(pending))
+  if (!pending.IsHTMLElement() && !IsSVGSVGElement(pending))
     return false;
 
   // The fullscreen element ready check for |pending| returns false.
@@ -487,7 +487,7 @@ void Fullscreen::RequestFullscreen(Element& pending, RequestType request_type) {
     // layer. Either disallowing fullscreen for dialog elements entirely or just
     // preventing dialog elements from simultaneously being fullscreen and modal
     // are good candidates. See https://github.com/whatwg/fullscreen/pull/91
-    if (isHTMLDialogElement(pending)) {
+    if (IsHTMLDialogElement(pending)) {
       UseCounter::Count(document,
                         WebFeature::kRequestFullscreenForDialogElement);
       if (pending.IsInTopLayer()) {
@@ -872,7 +872,7 @@ void Fullscreen::FullscreenElementChanged(Element* old_element,
     // the iframe element for the out-of-process frame that contains the
     // fullscreen element. Hence, it must match :-webkit-full-screen-ancestor.
     if (new_request_type == RequestType::kPrefixedForCrossProcessDescendant) {
-      DCHECK(isHTMLIFrameElement(new_element));
+      DCHECK(IsHTMLIFrameElement(new_element));
       new_element->SetContainsFullScreenElement(true);
     }
     new_element->SetContainsFullScreenElementOnAncestorsCrossingFrameBoundaries(

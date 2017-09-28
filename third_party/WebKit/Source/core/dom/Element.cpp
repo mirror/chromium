@@ -3080,8 +3080,8 @@ void Element::SetInnerHTMLFromString(const String& html,
   if (DocumentFragment* fragment = CreateFragmentForInnerOuterHTML(
           html, this, kAllowScriptingContent, "innerHTML", exception_state)) {
     ContainerNode* container = this;
-    if (isHTMLTemplateElement(*this))
-      container = toHTMLTemplateElement(this)->content();
+    if (auto* template_element = ToHTMLTemplateElementOrNull(*this))
+      container = template_element->content();
     ReplaceChildrenWithFragment(container, fragment, exception_state);
   }
 }
@@ -3520,7 +3520,7 @@ bool Element::ShouldStoreNonLayoutObjectComputedStyle(
 #endif
 
   return style.Display() == EDisplay::kContents ||
-         isHTMLOptGroupElement(*this) || isHTMLOptionElement(*this);
+         IsHTMLOptGroupElement(*this) || IsHTMLOptionElement(*this);
 }
 
 void Element::StoreNonLayoutObjectComputedStyle(RefPtr<ComputedStyle> style) {
@@ -3781,11 +3781,11 @@ DOMStringMap& Element::dataset() {
 KURL Element::HrefURL() const {
   // FIXME: These all have href() or url(), but no common super class. Why
   // doesn't <link> implement URLUtils?
-  if (isHTMLAnchorElement(*this) || isHTMLAreaElement(*this) ||
-      isHTMLLinkElement(*this))
+  if (IsHTMLAnchorElement(*this) || IsHTMLAreaElement(*this) ||
+      IsHTMLLinkElement(*this))
     return GetURLAttribute(hrefAttr);
-  if (isSVGAElement(*this))
-    return toSVGAElement(*this).LegacyHrefURL(GetDocument());
+  if (auto* svg_a = ToSVGAElementOrNull(*this))
+    return svg_a->LegacyHrefURL(GetDocument());
   return KURL();
 }
 

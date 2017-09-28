@@ -68,7 +68,7 @@ ClipStrategy DetermineClipStrategy(const SVGGraphicsElement& element) {
 ClipStrategy DetermineClipStrategy(const SVGElement& element) {
   // <use> within <clipPath> have a restricted content model.
   // (https://drafts.fxtf.org/css-masking-1/#ClipPathElement)
-  if (isSVGUseElement(element)) {
+  if (IsSVGUseElement(element)) {
     const LayoutObject* use_layout_object = element.GetLayoutObject();
     if (!use_layout_object ||
         use_layout_object->StyleRef().Display() == EDisplay::kNone)
@@ -91,10 +91,10 @@ bool ContributesToClip(const SVGElement& element) {
 }
 
 void PathFromElement(const SVGElement& element, Path& clip_path) {
-  if (IsSVGGeometryElement(element))
-    ToSVGGeometryElement(element).ToClipPath(clip_path);
-  else if (isSVGUseElement(element))
-    toSVGUseElement(element).ToClipPath(clip_path);
+  if (auto* geometry = ToSVGGeometryElementOrNull(element))
+    geometry->ToClipPath(clip_path);
+  else if (auto* use = ToSVGUseElementOrNull(element))
+    use->ToClipPath(clip_path);
 }
 
 }  // namespace

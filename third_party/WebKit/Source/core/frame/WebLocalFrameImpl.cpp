@@ -872,10 +872,8 @@ void WebLocalFrameImpl::ReloadWithOverrideURL(const WebURL& override_url,
 
 void WebLocalFrameImpl::ReloadImage(const WebNode& web_node) {
   const Node* node = web_node.ConstUnwrap<Node>();
-  if (isHTMLImageElement(*node)) {
-    const HTMLImageElement& image_element = toHTMLImageElement(*node);
-    image_element.ForceReload();
-  }
+  if (auto* image_element = ToHTMLImageElementOrNull(*node))
+    image_element->ForceReload();
 }
 
 void WebLocalFrameImpl::ReloadLoFiImages() {
@@ -1969,8 +1967,8 @@ void WebLocalFrameImpl::SendPings(const WebURL& destination_url) {
   DCHECK(GetFrame());
   DCHECK(context_menu_node_.Get());
   Element* anchor = context_menu_node_->EnclosingLinkEventParentOrSelf();
-  if (isHTMLAnchorElement(anchor))
-    toHTMLAnchorElement(anchor)->SendPings(destination_url);
+  if (auto* html_anchor = ToHTMLAnchorElementOrNull(anchor))
+    html_anchor->SendPings(destination_url);
 }
 
 bool WebLocalFrameImpl::DispatchBeforeUnloadEvent(bool is_reload) {
@@ -2399,7 +2397,7 @@ std::unique_ptr<WebURLLoader> WebLocalFrameImpl::CreateURLLoader(
 
 void WebLocalFrameImpl::CopyImageAt(const WebPoint& pos_in_viewport) {
   HitTestResult result = HitTestResultForVisualViewportPos(pos_in_viewport);
-  if (!isHTMLCanvasElement(result.InnerNodeOrImageMapImage()) &&
+  if (!IsHTMLCanvasElement(result.InnerNodeOrImageMapImage()) &&
       result.AbsoluteImageURL().IsEmpty()) {
     // There isn't actually an image at these coordinates.  Might be because
     // the window scrolled while the context menu was open or because the page
@@ -2421,7 +2419,7 @@ void WebLocalFrameImpl::CopyImageAt(const WebPoint& pos_in_viewport) {
 void WebLocalFrameImpl::SaveImageAt(const WebPoint& pos_in_viewport) {
   Node* node = HitTestResultForVisualViewportPos(pos_in_viewport)
                    .InnerNodeOrImageMapImage();
-  if (!node || !(isHTMLCanvasElement(*node) || isHTMLImageElement(*node)))
+  if (!node || !(IsHTMLCanvasElement(*node) || IsHTMLImageElement(*node)))
     return;
 
   String url = ToElement(*node).ImageSourceURL();

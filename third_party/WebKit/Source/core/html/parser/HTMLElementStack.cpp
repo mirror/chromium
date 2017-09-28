@@ -167,8 +167,8 @@ void HTMLElementStack::PopAll() {
     Node& node = *TopNode();
     if (node.IsElementNode()) {
       ToElement(node).FinishParsingChildren();
-      if (isHTMLSelectElement(node))
-        ToHTMLFormControlElement(node).SetBlocksFormSubmission(true);
+      if (auto* select = ToHTMLSelectElementOrNull(node))
+        select->SetBlocksFormSubmission(true);
     }
     top_ = top_->ReleaseNext();
   }
@@ -351,7 +351,7 @@ void HTMLElementStack::RemoveHTMLHeadElement(Element* element) {
 }
 
 void HTMLElementStack::Remove(Element* element) {
-  DCHECK(!isHTMLHeadElement(element));
+  DCHECK(!IsHTMLHeadElement(element));
   if (top_->GetElement() == element) {
     Pop();
     return;
@@ -505,8 +505,8 @@ void HTMLElementStack::PopCommon() {
 }
 
 void HTMLElementStack::RemoveNonTopCommon(Element* element) {
-  DCHECK(!isHTMLHtmlElement(element));
-  DCHECK(!isHTMLBodyElement(element));
+  DCHECK(!IsHTMLHtmlElement(element));
+  DCHECK(!IsHTMLBodyElement(element));
   DCHECK_NE(Top(), element);
   for (ElementRecord* pos = top_.Get(); pos; pos = pos->Next()) {
     if (pos->Next()->GetElement() == element) {

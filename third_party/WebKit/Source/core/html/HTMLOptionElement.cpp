@@ -303,13 +303,11 @@ HTMLDataListElement* HTMLOptionElement::OwnerDataListElement() const {
 HTMLSelectElement* HTMLOptionElement::OwnerSelectElement() const {
   if (!parentNode())
     return nullptr;
-  if (isHTMLSelectElement(*parentNode()))
-    return toHTMLSelectElement(parentNode());
-  if (!isHTMLOptGroupElement(*parentNode()))
-    return nullptr;
-  Node* grand_parent = parentNode()->parentNode();
-  return isHTMLSelectElement(grand_parent) ? toHTMLSelectElement(grand_parent)
-                                           : nullptr;
+  if (auto* select = ToHTMLSelectElementOrNull(*parentNode()))
+    return select;
+  if (IsHTMLOptGroupElement(*parentNode()))
+    return ToHTMLSelectElementOrNull(parentNode()->parentNode());
+  return nullptr;
 }
 
 String HTMLOptionElement::label() const {
@@ -327,7 +325,7 @@ void HTMLOptionElement::setLabel(const AtomicString& label) {
 
 String HTMLOptionElement::TextIndentedToRespectGroupLabel() const {
   ContainerNode* parent = parentNode();
-  if (parent && isHTMLOptGroupElement(*parent))
+  if (parent && IsHTMLOptGroupElement(*parent))
     return "    " + DisplayLabel();
   return DisplayLabel();
 }
@@ -340,7 +338,7 @@ bool HTMLOptionElement::IsDisabledFormControl() const {
   if (OwnElementDisabled())
     return true;
   if (Element* parent = parentElement())
-    return isHTMLOptGroupElement(*parent) && parent->IsDisabledFormControl();
+    return IsHTMLOptGroupElement(*parent) && parent->IsDisabledFormControl();
   return false;
 }
 
@@ -354,7 +352,7 @@ Node::InsertionNotificationRequest HTMLOptionElement::InsertedInto(
     ContainerNode* insertion_point) {
   HTMLElement::InsertedInto(insertion_point);
   if (HTMLSelectElement* select = OwnerSelectElement()) {
-    if (insertion_point == select || (isHTMLOptGroupElement(*insertion_point) &&
+    if (insertion_point == select || (IsHTMLOptGroupElement(*insertion_point) &&
                                       insertion_point->parentNode() == select))
       select->OptionInserted(*this, is_selected_);
   }
@@ -362,13 +360,12 @@ Node::InsertionNotificationRequest HTMLOptionElement::InsertedInto(
 }
 
 void HTMLOptionElement::RemovedFrom(ContainerNode* insertion_point) {
-  if (isHTMLSelectElement(*insertion_point)) {
-    if (!parentNode() || isHTMLOptGroupElement(*parentNode()))
-      toHTMLSelectElement(insertion_point)->OptionRemoved(*this);
-  } else if (isHTMLOptGroupElement(*insertion_point)) {
-    Node* parent = insertion_point->parentNode();
-    if (isHTMLSelectElement(parent))
-      toHTMLSelectElement(parent)->OptionRemoved(*this);
+  if (auto* select = ToHTMLSelectElementOrNull(*insertion_point)) {
+    if (!parentNode() || IsHTMLOptGroupElement(*parentNode()))
+      select->OptionRemoved(*this);
+  } else if (IsHTMLOptGroupElement(*insertion_point)) {
+    if (auto* select = ToHTMLSelectElementOrNull(insertion_point->parentNode()))
+      select->OptionRemoved(*this);
   }
   HTMLElement::RemovedFrom(insertion_point);
 }
@@ -423,7 +420,7 @@ bool HTMLOptionElement::IsDisplayNone() const {
     // ComputedStyle.
     Element* parent = parentElement();
     DCHECK(parent);
-    if (isHTMLOptGroupElement(*parent)) {
+    if (IsHTMLOptGroupElement(*parent)) {
       const ComputedStyle* parent_style = parent->GetComputedStyle()
                                               ? parent->GetComputedStyle()
                                               : parent->EnsureComputedStyle();

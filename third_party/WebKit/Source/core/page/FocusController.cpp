@@ -305,10 +305,8 @@ HTMLSlotElement* ScopedFocusNavigation::FindFallbackScopeOwnerSlot(
     const Element& element) {
   Element* parent = const_cast<Element*>(element.parentElement());
   while (parent) {
-    if (isHTMLSlotElement(parent))
-      return toHTMLSlotElement(parent)->AssignedNodes().IsEmpty()
-                 ? toHTMLSlotElement(parent)
-                 : nullptr;
+    if (auto* slot = ToHTMLSlotElementOrNull(parent))
+      return slot->AssignedNodes().IsEmpty() ? slot : nullptr;
     parent = parent->parentElement();
   }
   return nullptr;
@@ -323,7 +321,7 @@ bool ScopedFocusNavigation::IsSlotFallbackScopedForThisSlot(
     const Element& current) {
   Element* parent = current.parentElement();
   while (parent) {
-    if (isHTMLSlotElement(parent) &&
+    if (IsHTMLSlotElement(parent) &&
         toHTMLSlotElement(parent)->AssignedNodes().IsEmpty())
       return !SlotScopedTraversal::IsSlotScoped(current) &&
              toHTMLSlotElement(parent) == slot;
@@ -412,7 +410,7 @@ inline bool IsKeyboardFocusableShadowHost(const Element& element) {
 inline bool IsNonFocusableFocusScopeOwner(Element& element) {
   return IsNonKeyboardFocusableShadowHost(element) ||
          IsShadowInsertionPointFocusScopeOwner(element) ||
-         isHTMLSlotElement(element);
+         IsHTMLSlotElement(element);
 }
 
 inline bool IsShadowHostDelegatesFocus(const Element& element) {
@@ -1423,12 +1421,11 @@ bool FocusController::AdvanceFocusDirectionally(WebFocusType type) {
           type, focused_element);
       starting_rect = NodeRectInAbsoluteCoordinates(focused_element,
                                                     true /* ignore border */);
-    } else if (isHTMLAreaElement(*focused_element)) {
-      HTMLAreaElement& area = toHTMLAreaElement(*focused_element);
-      if (area.ImageElement()) {
+    } else if (auto* area = ToHTMLAreaElementOrNull(*focused_element)) {
+      if (area->ImageElement()) {
         container = ScrollableEnclosingBoxOrParentFrameForNodeInDirection(
-            type, area.ImageElement());
-        starting_rect = VirtualRectForAreaElementAndDirection(area, type);
+            type, area->ImageElement());
+        starting_rect = VirtualRectForAreaElementAndDirection(*area, type);
       }
     }
   }

@@ -71,13 +71,13 @@ bool ThemePainter::Paint(const LayoutObject& o,
   if (part == kButtonPart && o.GetNode()) {
     UseCounter::Count(o.GetDocument(),
                       WebFeature::kCSSValueAppearanceButtonRendered);
-    if (isHTMLAnchorElement(o.GetNode())) {
+    if (IsHTMLAnchorElement(o.GetNode())) {
       UseCounter::Count(o.GetDocument(),
                         WebFeature::kCSSValueAppearanceButtonForAnchor);
-    } else if (isHTMLButtonElement(o.GetNode())) {
+    } else if (IsHTMLButtonElement(o.GetNode())) {
       UseCounter::Count(o.GetDocument(),
                         WebFeature::kCSSValueAppearanceButtonForButton);
-    } else if (isHTMLInputElement(o.GetNode()) &&
+    } else if (IsHTMLInputElement(o.GetNode()) &&
                toHTMLInputElement(o.GetNode())->IsTextButton()) {
       // Text buttons (type=button, reset, submit) has
       // -webkit-appearance:push-button by default.
@@ -179,8 +179,7 @@ bool ThemePainter::PaintBorderOnly(const LayoutObject& o,
     case kTextFieldPart:
       UseCounter::Count(o.GetDocument(),
                         WebFeature::kCSSValueAppearanceTextFieldRendered);
-      if (isHTMLInputElement(o.GetNode())) {
-        HTMLInputElement* input = toHTMLInputElement(o.GetNode());
+      if (auto* input = ToHTMLInputElementOrNull(o.GetNode())) {
         if (input->type() == InputTypeNames::search) {
           UseCounter::Count(o.GetDocument(),
                             WebFeature::kCSSValueAppearanceTextFieldForSearch);
@@ -251,7 +250,7 @@ void ThemePainter::PaintSliderTicks(const LayoutObject& o,
                                     const PaintInfo& paint_info,
                                     const IntRect& rect) {
   Node* node = o.GetNode();
-  if (!isHTMLInputElement(node))
+  if (!IsHTMLInputElement(node))
     return;
 
   HTMLInputElement* input = toHTMLInputElement(node);
