@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "6d8969d7_d8935582",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-28T17:33:22Z",
+      "side": 1,
+      "message": "I think the important thing here is that its possible that the transaction does not exist and in that case we need to keep writers responsible to let HttpCache know if its done. For consistency, then we can always call it from Writers.",
+      "parentUuid": "36a0aab1_dc608b0e",
+      "range": {
+        "startLine": 440,
+        "startChar": 15,
+        "endLine": 440,
+        "endChar": 40
+      },
+      "revId": "dd9da7ed53b12900600f3d1ca952cb6cacb948bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0225ba9_a0126043",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 46
