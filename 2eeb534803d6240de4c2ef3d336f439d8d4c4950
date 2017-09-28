@@ -69,6 +69,24 @@
       "revId": "2eeb534803d6240de4c2ef3d336f439d8d4c4950",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e98b00b8_9600afb5",
+        "filename": "chrome/browser/chromeos/system/timezone_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-28T22:13:02Z",
+      "side": 1,
+      "message": "It is still used for settings UI.\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/extensions/api/settings_private/prefs_util.cc?rcl\u003d5b267c0c4ffb22f07bea43853567c0b8a2ab9c21\u0026l\u003d735",
+      "parentUuid": "b2b4f5ab_04f24702",
+      "revId": "2eeb534803d6240de4c2ef3d336f439d8d4c4950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
