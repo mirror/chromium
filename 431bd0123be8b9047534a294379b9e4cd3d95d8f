@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "60891096_10bbd992",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 878,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-28T22:50:17Z",
+      "side": 1,
+      "message": "Can we use NativePageFactory.isNativePageUrl(...)? We would actually be able to remove the block that uses this below since this would now handle that case (the NTP check in there is obsolete).",
+      "parentUuid": "66d4f5fc_371e2336",
+      "range": {
+        "startLine": 874,
+        "startChar": 8,
+        "endLine": 878,
+        "endChar": 0
+      },
+      "revId": "431bd0123be8b9047534a294379b9e4cd3d95d8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b9c045d_a0a14657",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
         "patchSetId": 1
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "parse doesn\u0027t throw a URISyntaxException, looks like pretty much only the constructors do.",
       "parentUuid": "1b9c045d_a0a14657",
+      "range": {
+        "startLine": 880,
+        "startChar": 8,
+        "endLine": 880,
+        "endChar": 45
+      },
+      "revId": "431bd0123be8b9047534a294379b9e4cd3d95d8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d28de397_3438a500",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-28T22:50:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a2763663_8b1c4edc",
       "range": {
         "startLine": 880,
         "startChar": 8,
@@ -178,6 +226,30 @@
       "side": 1,
       "message": "So do we want the URL in the omnibox to change if we\u0027re loading these things in the sheet? As is, this won\u0027t be called because we\u0027ll exit early upon loading a native page in the sheet.",
       "parentUuid": "93c2c5e2_d0fe4d32",
+      "range": {
+        "startLine": 902,
+        "startChar": 8,
+        "endLine": 902,
+        "endChar": 78
+      },
+      "revId": "431bd0123be8b9047534a294379b9e4cd3d95d8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6712b78f_2ee8654c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 902,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-28T22:50:17Z",
+      "side": 1,
+      "message": "Leaving this here is fine; as discussed offline, the url immediately changes back to the background page so this doesn\u0027t really represent that event (plus we have the onSheetContentChanged if we really want to observe that).",
+      "parentUuid": "535918d4_b9f85009",
       "range": {
         "startLine": 902,
         "startChar": 8,
