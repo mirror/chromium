@@ -287,6 +287,24 @@
     },
     {
       "key": {
+        "uuid": "fb2f5a9e_3256574c",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 16
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-09-28T08:37:54Z",
+      "side": 1,
+      "message": "I asked our open source lawyers. I\u0027ll let you know when I hear back.",
+      "parentUuid": "6647007b_0a1f1317",
+      "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97702a1c_7079702a",
         "filename": "third_party/zlib/adler32_simd.c",
         "patchSetId": 16

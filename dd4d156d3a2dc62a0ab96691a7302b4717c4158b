@@ -250,6 +250,24 @@
     },
     {
       "key": {
+        "uuid": "34e1b7b1_ef89fa8e",
+        "filename": "third_party/zlib/inflate.c",
+        "patchSetId": 26
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-09-28T08:37:54Z",
+      "side": 1,
+      "message": "I see the stub here:\nhttps://cs.chromium.org/chromium/src/third_party/zlib/simd_stub.c?q\u003dzlib+x86_check_features\u0026sq\u003dpackage:chromium\u0026l\u003d33\u0026dr\u003dCSs",
+      "parentUuid": "72a1eb35_2a02b7dc",
+      "revId": "dd4d156d3a2dc62a0ab96691a7302b4717c4158b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cfdd6b5_7ae85f5d",
         "filename": "third_party/zlib/names.h",
         "patchSetId": 26

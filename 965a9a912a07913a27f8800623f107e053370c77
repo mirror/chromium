@@ -422,6 +422,24 @@
       "revId": "965a9a912a07913a27f8800623f107e053370c77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "25ca488d_fc184ef8",
+        "filename": "third_party/zlib/inflate.c",
+        "patchSetId": 41
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-09-28T08:37:54Z",
+      "side": 1,
+      "message": "As mentioned in my other comment, I see the do-nothing stub for other platforms.\n\nI was worried about this. At first, I didn\u0027t see it and had NO IDEA how the inline asm \"cpuid\" compiled. But it turns out, it isn\u0027t being compiled on ARM. :) Phew.\n\nBefore I knew that, I was going to strongly recommend a #if defined(__i386__) etc etc.\nBut now that I know there is a do-nothing stub, the name \"x86_check_features()\" is good enough for me for now. I\u0027m okay changing things when we clean up the original Intel patch.",
+      "parentUuid": "3a9cdf82_f96ee5f3",
+      "revId": "965a9a912a07913a27f8800623f107e053370c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
