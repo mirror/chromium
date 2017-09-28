@@ -22,6 +22,30 @@
       "revId": "2107e9db6e9bc95590df0616c60f3b846f7c9ac0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "845c3af6_da8c6729",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1096,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-09-28T20:29:55Z",
+      "side": 0,
+      "message": "the pending request is properly aborted and reset in -abortPendingRequestWithReason:",
+      "parentUuid": "bb704a7c_d7b1b089",
+      "range": {
+        "startLine": 1096,
+        "startChar": 2,
+        "endLine": 1096,
+        "endChar": 35
+      },
+      "revId": "2107e9db6e9bc95590df0616c60f3b846f7c9ac0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
