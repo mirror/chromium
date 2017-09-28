@@ -35,12 +35,16 @@ component("chromeos") {
   ]
   defines = [ "UI_CHROMEOS_IMPLEMENTATION" ]
   deps = [
+    "//ash/public/cpp:ash_public_cpp",
     "//base",
     "//base/third_party/dynamic_annotations",
     "//chromeos:chromeos",
     "//chromeos:power_manager_proto",
     "//components/device_event_log",
     "//components/onc",
+    "//mojo/public/cpp/bindings",
+    "//services/ui/public/cpp",
+    "//services/ui/public/interfaces",
     "//skia",
     "//ui/aura",
     "//ui/base",
