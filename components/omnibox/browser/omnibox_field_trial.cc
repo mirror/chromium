@@ -126,14 +126,18 @@ const base::Feature kUIExperimentHideSuggestionUrlTrivialSubdomains{
     "OmniboxUIExperimentHideSuggestionUrlTrivialSubdomains",
     base::FEATURE_DISABLED_BY_DEFAULT};
 
+// Feature used for the omnibox narrow suggestions dropdown UI experiment.
+const base::Feature kUIExperimentNarrowDropdown{
+    "OmniboxUIExperimentNarrowDropdown", base::FEATURE_DISABLED_BY_DEFAULT};
+
 // Feature used for showing the URL suggestion favicons as a UI experiment.
 const base::Feature kUIExperimentShowSuggestionFavicons{
     "OmniboxUIExperimentShowSuggestionFavicons",
     base::FEATURE_DISABLED_BY_DEFAULT};
 
-// Feature used for the omnibox narrow suggestions dropdown UI experiment.
-const base::Feature kUIExperimentNarrowDropdown{
-    "OmniboxUIExperimentNarrowDropdown", base::FEATURE_DISABLED_BY_DEFAULT};
+// Feature used to always swap the title and URL.
+const base::Feature kUIExperimentSwapTitleAndUrl{
+    "OmniboxUIExperimentSwapTitleAndUrl", base::FEATURE_DISABLED_BY_DEFAULT};
 
 // Feature used for the vertical margin UI experiment.
 const base::Feature kUIExperimentVerticalLayout{
@@ -634,6 +638,12 @@ OmniboxFieldTrial::GetEmphasizeTitlesConditionForInput(
       base::FeatureList::IsEnabled(omnibox::kZeroSuggestSwapTitleAndUrl)) {
     return EMPHASIZE_WHEN_NONEMPTY;
   }
+
+  // Check the feature that always swaps title and URL (assuming the title is
+  // non-empty).
+  if (base::FeatureList::IsEnabled(omnibox::kUIExperimentSwapTitleAndUrl))
+    return EMPHASIZE_WHEN_NONEMPTY;
+
   // Look up the parameter named kEmphasizeTitlesRule + "_" + input.type(),
   // find its value, and return that value as an enum.  If the parameter
   // isn't redefined, fall back to the generic rule kEmphasizeTitlesRule + "_*"
