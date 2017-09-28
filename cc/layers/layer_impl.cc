@@ -217,18 +217,20 @@ void LayerImpl::GetDebugBorderProperties(SkColor* color, float* width) const {
 void LayerImpl::AppendDebugBorderQuad(
     viz::RenderPass* render_pass,
     const gfx::Size& bounds,
+    const gfx::Vector2d& quad_offset,
     const viz::SharedQuadState* shared_quad_state,
     AppendQuadsData* append_quads_data) const {
   SkColor color;
   float width;
   GetDebugBorderProperties(&color, &width);
-  AppendDebugBorderQuad(render_pass, bounds, shared_quad_state,
+  AppendDebugBorderQuad(render_pass, bounds, quad_offset, shared_quad_state,
                         append_quads_data, color, width);
 }
 
 void LayerImpl::AppendDebugBorderQuad(
     viz::RenderPass* render_pass,
     const gfx::Size& bounds,
+    const gfx::Vector2d& quad_offset,
     const viz::SharedQuadState* shared_quad_state,
     AppendQuadsData* append_quads_data,
     SkColor color,
@@ -237,6 +239,7 @@ void LayerImpl::AppendDebugBorderQuad(
     return;
 
   gfx::Rect quad_rect(bounds);
+  quad_rect.Offset(quad_offset);
   gfx::Rect visible_quad_rect(quad_rect);
   auto* debug_border_quad =
       render_pass->CreateAndAppendDrawQuad<viz::DebugBorderDrawQuad>();
