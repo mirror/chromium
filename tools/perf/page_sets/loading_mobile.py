@@ -27,6 +27,10 @@ class LoadingMobileStorySet(story.StorySet):
     if traffic_settings is None:
       traffic_settings = [traffic_setting_module.NONE]
 
+    cache_temperatures_without_hot = [
+        temperature for temperature in cache_temperatures
+        if temperature != cache_temperature_module.HOT]
+
     self.AddStories(['global'], [
       ('https://www.google.com/search?q=flower#q=flower+delivery',
        'GoogleRedirectToGoogleJapan'),
@@ -79,7 +83,7 @@ class LoadingMobileStorySet(story.StorySet):
       # pylint: disable=line-too-long
       # ('http://m.detik.com/finance/read/2016/02/19/151843/3146351/1034/ekspor-tambang-mentah-mau-dibuka-lagi-kalau-sudah-bangun-smelter-bagaimana',
       #  'Detik'),
-    ], cache_temperatures, traffic_settings)
+    ], cache_temperatures_without_hot, traffic_settings)
 
     self.AddStories(['pwa'], [
       # pylint: disable=line-too-long
@@ -111,7 +115,7 @@ class LoadingMobileStorySet(story.StorySet):
       ('http://www.thairath.co.th', 'Thairath'),
       ('http://www.hashocean.com', 'HashOcean'),
       ('http://www.163.com', '163'),
-    ], cache_temperatures, traffic_settings)
+    ], cache_temperatures_without_hot, traffic_settings)
 
     self.AddStories(['easy_ttfmp'], [
       ('http://www.slideshare.net', 'SlideShare'),
@@ -119,7 +123,7 @@ class LoadingMobileStorySet(story.StorySet):
       ('http://www.gsshop.com', 'GSShop'),
       ('http://www.sbs.co.kr', 'SBS'),
       ('http://www.futura-sciences.com', 'FuturaSciences'),
-    ], cache_temperatures, traffic_settings)
+    ], cache_temperatures_without_hot, traffic_settings)
 
     self.AddStories(['tough_tti'], [
       ('http://www.thestar.com.my', 'TheStar'),
@@ -127,7 +131,7 @@ class LoadingMobileStorySet(story.StorySet):
       ('http://www.hongkiat.com', 'Hongkiat'),
       ('http://www.ebs.in', 'EBS'),
       ('http://www.ibicn.com', 'IBI'),
-    ], cache_temperatures, traffic_settings)
+    ], cache_temperatures_without_hot, traffic_settings)
 
     self.AddStories(['easy_tti'], [
       ('http://www.dramaq.com.tw', 'Dramaq'),
@@ -135,7 +139,7 @@ class LoadingMobileStorySet(story.StorySet):
       ('http://www.francetvinfo.fr', 'FranceTVInfo'),
       ('http://www.gfk.com', 'GFK'),
       ('http://www.mlsmatrix.com', 'MLSMatrix'),
-    ], cache_temperatures, traffic_settings)
+    ], cache_temperatures_without_hot, traffic_settings)
 
   def AddStories(self, tags, urls, cache_temperatures, traffic_settings):
     for url, name in urls:

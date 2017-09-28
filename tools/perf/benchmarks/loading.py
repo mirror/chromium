@@ -54,7 +54,9 @@ class LoadingMobile(_LoadingBase):
 
   def CreateStorySet(self, options):
     return page_sets.LoadingMobileStorySet(
-        cache_temperatures=[cache_temperature.ANY],
+        cache_temperatures=[cache_temperature.COLD,
+                            cache_temperature.WARM,
+                            cache_temperature.HOT],
         traffic_settings=[traffic_setting.NONE, traffic_setting.REGULAR_3G])
 
   def GetExpectations(self):
