@@ -10,6 +10,7 @@
 <link rel="import" href="chrome://resources/cr_elements/chromeos/network/cr_network_icon.html">
 <link rel="import" href="chrome://resources/cr_elements/chromeos/network/cr_onc_types.html">
 <link rel="import" href="chrome://resources/cr_elements/icons.html">
+<link rel="import" href="chrome://resources/html/load_time_data.html">
 <link rel="import" href="chrome://resources/html/i18n_behavior.html">
 <link rel="import" href="chrome://resources/polymer/v1_0/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="chrome://resources/polymer/v1_0/paper-button/paper-button.html">
@@ -74,13 +75,15 @@
     </div>
 
     <!-- Device properties (Cellular only) -->
-    <div class="section single-column">
-      <network-property-list
-          hidden$="[[!hasDeviceFields_(networkProperties)]]"
-          fields="[[getDeviceFields_(networkProperties)]]"
-          property-dict="[[networkProperties]]">
-      </network-property-list>
-    </div>
+    <template is="dom-if" if="[[isCellular_(networkProperties)]]">
+      <div class="section single-column">
+        <network-property-list
+            hidden$="[[!hasDeviceFields_(networkProperties)]]"
+            fields="[[getDeviceFields_(networkProperties)]]"
+            property-dict="[[networkProperties]]">
+        </network-property-list>
+      </div>
+    </template>
 
     <!-- Choose Mobile Network (Cellular only) -->
     <template is="dom-if"
@@ -141,3 +144,11 @@
   </template>
   <script src="internet_detail_dialog.js"></script>
 </dom-module>
+
+<!doctype html>
+<html i18n-values="dir:textdirection;lang:language">
+  <script src="chrome://internet-detail-dialog/strings.js"></script>
+  <body>
+    <internet-detail-dialog></internet-detail-dialog>
+  </body>
+</html>

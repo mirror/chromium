@@ -227,7 +227,7 @@ NetworkPortalDetectorImpl::NetworkPortalDetectorImpl(
                    weak_factory_.GetWeakPtr()));
   }
 
-  registrar_.Add(this, chrome::NOTIFICATION_LOGIN_PROXY_CHANGED,
+  registrar_.Add(this, chrome::NOTIFICATION_LOGIN_NETWORK_CHANGED,
                  content::NotificationService::AllSources());
   registrar_.Add(this, chrome::NOTIFICATION_AUTH_SUPPLIED,
                  content::NotificationService::AllSources());
@@ -570,7 +570,7 @@ void NetworkPortalDetectorImpl::Observe(
     int type,
     const content::NotificationSource& source,
     const content::NotificationDetails& details) {
-  if (type == chrome::NOTIFICATION_LOGIN_PROXY_CHANGED ||
+  if (type == chrome::NOTIFICATION_LOGIN_NETWORK_CHANGED ||
       type == chrome::NOTIFICATION_AUTH_SUPPLIED ||
       type == chrome::NOTIFICATION_AUTH_CANCELLED) {
     NET_LOG(EVENT) << "Restarting portal detection due to proxy change"

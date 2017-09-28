@@ -327,8 +327,9 @@ enum NotificationType {
   //    NOTIFICATION_KIOSK_APP_LAUNCHED
   NOTIFICATION_LOGIN_OR_LOCK_WEBUI_VISIBLE,
 
-  // Sent when proxy dialog is closed.
-  NOTIFICATION_LOGIN_PROXY_CHANGED,
+  // Sent when network properties may have changed during login, i.e. when the
+  // internet details dialog is closed.
+  NOTIFICATION_LOGIN_NETWORK_CHANGED,
 
   // Send when kiosk auto-launch warning screen is visible.
   NOTIFICATION_KIOSK_AUTOLAUNCH_WARNING_VISIBLE,
