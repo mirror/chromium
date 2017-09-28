@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6f1b13c_b63ddebc",
+        "filename": "chrome/browser/vr/testapp/gl_renderer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-28T18:38:27Z",
+      "side": 1,
+      "message": "Nit: Don\u0027t need to open and close namespace.",
+      "revId": "cc517a63086322822630b316cd3ccdb8cbd62459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f827472_250dc1fd",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-28T18:38:27Z",
+      "side": 1,
+      "message": "Nit: should also be a const at the top.",
+      "range": {
+        "startLine": 105,
+        "startChar": 6,
+        "endLine": 105,
+        "endChar": 7
+      },
+      "revId": "cc517a63086322822630b316cd3ccdb8cbd62459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bacaf109_9b0fdbbd",
+        "filename": "chrome/browser/vr/testapp/vr_testapp.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-28T18:38:27Z",
+      "side": 1,
+      "message": "Nit: curly braces.",
+      "revId": "cc517a63086322822630b316cd3ccdb8cbd62459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81643579_52e7aa7d",
+        "filename": "chrome/browser/vr/testapp/vr_testapp.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-28T18:38:27Z",
+      "side": 1,
+      "message": "Nit: curly braces.",
+      "revId": "cc517a63086322822630b316cd3ccdb8cbd62459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
