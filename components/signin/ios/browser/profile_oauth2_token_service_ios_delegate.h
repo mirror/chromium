@@ -67,6 +67,11 @@ class ProfileOAuth2TokenServiceIOSDelegate : public OAuth2TokenServiceDelegate {
   // |OnRefreshTokenAvailable| if the account info is updated.
   virtual void AddOrUpdateAccount(const std::string& account_id);
 
+  // Returns the token provider passed into constructor.
+  ProfileOAuth2TokenServiceIOSProvider* GetProvider() {
+    return provider_.get();
+  }
+
  protected:
   // Removes |account_id| from |accounts_|. Fires |OnRefreshTokenRevoked|
   // if the account info is removed.
