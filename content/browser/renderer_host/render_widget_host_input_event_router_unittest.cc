@@ -175,8 +175,8 @@ TEST_F(RenderWidgetHostInputEventRouterTest,
 
   blink::WebGestureEvent gesture_event(
       blink::WebInputEvent::kGestureTapDown, blink::WebInputEvent::kNoModifiers,
-      blink::WebInputEvent::kTimeStampForTesting);
-  gesture_event.source_device = blink::kWebGestureDeviceTouchscreen;
+      blink::WebInputEvent::kTimeStampForTesting,
+      blink::kWebGestureDeviceTouchscreen);
   gesture_event.unique_touch_event_id = touch_event.unique_touch_event_id;
 
   rwhier_.RouteGestureEvent(view_root_.get(), &gesture_event,

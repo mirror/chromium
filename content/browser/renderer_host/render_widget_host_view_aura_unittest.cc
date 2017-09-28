@@ -2125,12 +2125,12 @@ TEST_F(RenderWidgetHostViewAuraWheelScrollLatchingEnabledTest,
   input_event = GetInputEventFromMessage(*sink_->GetMessageAt(1));
   gesture_event = static_cast<const WebGestureEvent*>(input_event);
   EXPECT_EQ(WebInputEvent::kGestureScrollEnd, gesture_event->GetType());
-  EXPECT_EQ(blink::kWebGestureDeviceTouchpad, gesture_event->source_device);
+  EXPECT_EQ(blink::kWebGestureDeviceTouchpad, gesture_event->SourceDevice());
 
   input_event = GetInputEventFromMessage(*sink_->GetMessageAt(2));
   gesture_event = static_cast<const WebGestureEvent*>(input_event);
   EXPECT_EQ(WebInputEvent::kGestureScrollBegin, gesture_event->GetType());
-  EXPECT_EQ(blink::kWebGestureDeviceTouchscreen, gesture_event->source_device);
+  EXPECT_EQ(blink::kWebGestureDeviceTouchscreen, gesture_event->SourceDevice());
   sink_->ClearMessages();
 }
 

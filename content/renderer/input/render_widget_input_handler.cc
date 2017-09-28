@@ -332,7 +332,7 @@ void RenderWidgetInputHandler::HandleInputEvent(
       input_event.GetType() == WebInputEvent::kGestureScrollUpdate) {
     const WebGestureEvent& gesture_event =
         static_cast<const WebGestureEvent&>(input_event);
-    if (gesture_event.source_device == blink::kWebGestureDeviceTouchpad) {
+    if (gesture_event.SourceDevice() == blink::kWebGestureDeviceTouchpad) {
       delegate_->ObserveGestureEventAndResult(
           gesture_event,
           event_overscroll ? event_overscroll->latest_overscroll_delta

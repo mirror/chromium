@@ -38,8 +38,10 @@ class WebGestureEvent : public WebInputEvent {
   int y;
   int global_x;
   int global_y;
-  WebGestureDevice source_device;
   bool is_source_touch_event_set_non_blocking;
+
+  WebGestureDevice SourceDevice() const { return source_device_; }
+  void SetSourceDevice(WebGestureDevice device) { source_device_ = device; }
 
   // The pointer type for the first touch point in the gesture.
   WebPointerProperties::PointerType primary_pointer_type =
@@ -163,18 +165,30 @@ class WebGestureEvent : public WebInputEvent {
     } pinch_update;
   } data;
 
-  WebGestureEvent(Type type, int modifiers, double time_stamp_seconds)
+ protected:
+  WebGestureDevice source_device_;
+
+ public:
+  WebGestureEvent(Type type,
+                  int modifiers,
+                  double time_stamp_seconds,
+                  WebGestureDevice device = kWebGestureDeviceUninitialized)
       : WebInputEvent(sizeof(WebGestureEvent),
                       type,
                       modifiers,
                       time_stamp_seconds),
-        source_device(kWebGestureDeviceUninitialized),
-        resending_plugin_id(-1) {}
+        resending_plugin_id(-1),
+        source_device_(device) {
+    if (type != kUndefined && device == kWebGestureDeviceTouchpad) {
+      DCHECK_GE(type, kGestureScrollBegin);
+      DCHECK_LE(type, kGesturePinchTypeLast);
+    }
+  }
 
   WebGestureEvent()
       : WebInputEvent(sizeof(WebGestureEvent)),
-        source_device(kWebGestureDeviceUninitialized),
-        resending_plugin_id(-1) {}
+        resending_plugin_id(-1),
+        source_device_(kWebGestureDeviceUninitialized) {}
 
   WebFloatPoint PositionInWidget() const { return WebFloatPoint(x, y); }
   WebFloatPoint PositionInScreen() const {

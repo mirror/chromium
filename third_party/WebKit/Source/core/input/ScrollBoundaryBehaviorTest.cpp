@@ -80,10 +80,10 @@ WebGestureEvent ScrollBoundaryBehaviorTest::ScrollBegin(double hint_x,
                                                         double hint_y) {
   WebGestureEvent event(WebInputEvent::kGestureScrollBegin,
                         WebInputEvent::kNoModifiers,
-                        TimeTicks::Now().InSeconds());
+                        TimeTicks::Now().InSeconds(),
+                        WebGestureDevice::kWebGestureDeviceTouchscreen);
   event.x = event.global_x = 20;
   event.y = event.global_y = 20;
-  event.source_device = WebGestureDevice::kWebGestureDeviceTouchscreen;
   event.data.scroll_begin.delta_x_hint = -hint_x;
   event.data.scroll_begin.delta_y_hint = -hint_y;
   event.data.scroll_begin.pointer_count = 1;
@@ -95,10 +95,10 @@ WebGestureEvent ScrollBoundaryBehaviorTest::ScrollUpdate(double delta_x,
                                                          double delta_y) {
   WebGestureEvent event(WebInputEvent::kGestureScrollUpdate,
                         WebInputEvent::kNoModifiers,
-                        TimeTicks::Now().InSeconds());
+                        TimeTicks::Now().InSeconds(),
+                        WebGestureDevice::kWebGestureDeviceTouchscreen);
   event.x = event.global_x = 20;
   event.y = event.global_y = 20;
-  event.source_device = WebGestureDevice::kWebGestureDeviceTouchscreen;
   event.data.scroll_update.delta_x = -delta_x;
   event.data.scroll_update.delta_y = -delta_y;
   event.SetFrameScale(1);
@@ -108,10 +108,10 @@ WebGestureEvent ScrollBoundaryBehaviorTest::ScrollUpdate(double delta_x,
 WebGestureEvent ScrollBoundaryBehaviorTest::ScrollEnd() {
   WebGestureEvent event(WebInputEvent::kGestureScrollEnd,
                         WebInputEvent::kNoModifiers,
-                        TimeTicks::Now().InSeconds());
+                        TimeTicks::Now().InSeconds(),
+                        WebGestureDevice::kWebGestureDeviceTouchscreen);
   event.x = event.global_x = 20;
   event.y = event.global_y = 20;
-  event.source_device = WebGestureDevice::kWebGestureDeviceTouchscreen;
   return event;
 }
 

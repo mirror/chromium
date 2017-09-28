@@ -111,7 +111,8 @@ bool StructTraits<content::mojom::EventDataView, InputEventUniquePtr>::Read(
     if (!event.ReadGestureData<content::mojom::GestureDataPtr>(&gesture_data))
       return false;
     (*out)->web_event.reset(new blink::WebGestureEvent(
-        type, event.modifiers(), event.timestamp_seconds()));
+        type, event.modifiers(), event.timestamp_seconds(),
+        gesture_data->source_device));
 
     blink::WebGestureEvent* gesture_event =
         static_cast<blink::WebGestureEvent*>((*out)->web_event.get());
@@ -119,7 +120,6 @@ bool StructTraits<content::mojom::EventDataView, InputEventUniquePtr>::Read(
     gesture_event->y = gesture_data->widget_position.y();
     gesture_event->global_x = gesture_data->screen_position.x();
     gesture_event->global_y = gesture_data->screen_position.y();
-    gesture_event->source_device = gesture_data->source_device;
     gesture_event->unique_touch_event_id = gesture_data->unique_touch_event_id;
     gesture_event->resending_plugin_id = gesture_data->resending_plugin_id;
 
@@ -423,7 +423,7 @@ StructTraits<content::mojom::EventDataView, InputEventUniquePtr>::gesture_data(
   auto gesture_data = content::mojom::GestureData::New();
   gesture_data->screen_position = gesture_event->PositionInScreen();
   gesture_data->widget_position = gesture_event->PositionInWidget();
-  gesture_data->source_device = gesture_event->source_device;
+  gesture_data->source_device = gesture_event->SourceDevice();
   gesture_data->unique_touch_event_id = gesture_event->unique_touch_event_id;
   gesture_data->resending_plugin_id = gesture_event->resending_plugin_id;
   switch (gesture_event->GetType()) {

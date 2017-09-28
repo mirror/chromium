@@ -523,18 +523,12 @@ blink::WebGestureEvent WebGestureEventBuilder::Build(NSEvent* event,
   blink::WebMouseEvent temp;
 
   SetWebEventLocationFromEventInView(&temp, event, view);
-  result.x = temp.PositionInWidget().x;
-  result.y = temp.PositionInWidget().y;
-  result.global_x = temp.PositionInScreen().x;
-  result.global_y = temp.PositionInScreen().y;
 
-  result.SetModifiers(ModifiersFromEvent(event));
-  result.SetTimeStampSeconds([event timestamp]);
-
-  result.source_device = blink::kWebGestureDeviceTouchpad;
   switch ([event type]) {
     case NSEventTypeMagnify:
-      result.SetType(blink::WebInputEvent::kGesturePinchUpdate);
+      result = blink::WebGestureEvent(
+          blink::WebInputEvent::kGesturePinchUpdate, ModifiersFromEvent(event),
+          [event timestamp], blink::kWebGestureDeviceTouchpad);
       result.data.pinch_update.scale = [event magnification] + 1.0;
       break;
     case NSEventTypeSmartMagnify:
@@ -542,7 +536,9 @@ blink::WebGestureEvent WebGestureEventBuilder::Build(NSEvent* event,
       // GestureDoubleTap, because the effect is similar to single-finger
       // double-tap zoom on mobile platforms. Note that tapCount is set to 1
       // because the gesture type already encodes that information.
-      result.SetType(blink::WebInputEvent::kGestureDoubleTap);
+      result = blink::WebGestureEvent(
+          blink::WebInputEvent::kGestureDoubleTap, ModifiersFromEvent(event),
+          [event timestamp], blink::kWebGestureDeviceTouchpad);
       result.data.tap.tap_count = 1;
       break;
     case NSEventTypeBeginGesture:
@@ -554,6 +550,11 @@ blink::WebGestureEvent WebGestureEventBuilder::Build(NSEvent* event,
     default:
       NOTIMPLEMENTED();
   }
+
+  result.x = temp.PositionInWidget().x;
+  result.y = temp.PositionInWidget().y;
+  result.global_x = temp.PositionInScreen().x;
+  result.global_y = temp.PositionInScreen().y;
 
   return result;
 }

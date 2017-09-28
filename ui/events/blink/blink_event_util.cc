@@ -370,7 +370,7 @@ bool CanCoalesce(const WebGestureEvent& event_to_coalesce,
                  const WebGestureEvent& event) {
   if (event.GetType() != event_to_coalesce.GetType() ||
       event.resending_plugin_id != event_to_coalesce.resending_plugin_id ||
-      event.source_device != event_to_coalesce.source_device ||
+      event.SourceDevice() != event_to_coalesce.SourceDevice() ||
       event.GetModifiers() != event_to_coalesce.GetModifiers())
     return false;
 
@@ -499,7 +499,7 @@ bool IsCompatibleScrollorPinch(const WebGestureEvent& new_event,
   return (event_in_queue.GetType() == WebInputEvent::kGestureScrollUpdate ||
           event_in_queue.GetType() == WebInputEvent::kGesturePinchUpdate) &&
          event_in_queue.GetModifiers() == new_event.GetModifiers() &&
-         event_in_queue.source_device == new_event.source_device;
+         event_in_queue.SourceDevice() == new_event.SourceDevice();
 }
 
 std::pair<WebGestureEvent, WebGestureEvent> CoalesceScrollAndPinch(
@@ -513,11 +513,10 @@ std::pair<WebGestureEvent, WebGestureEvent> CoalesceScrollAndPinch(
   DCHECK(!second_last_event ||
          IsCompatibleScrollorPinch(new_event, *second_last_event));
 
-  WebGestureEvent scroll_event(WebInputEvent::kGestureScrollUpdate,
-                               new_event.GetModifiers(),
-                               new_event.TimeStampSeconds());
+  WebGestureEvent scroll_event(
+      WebInputEvent::kGestureScrollUpdate, new_event.GetModifiers(),
+      new_event.TimeStampSeconds(), new_event.SourceDevice());
   WebGestureEvent pinch_event;
-  scroll_event.source_device = new_event.source_device;
   scroll_event.primary_pointer_type = new_event.primary_pointer_type;
   pinch_event = scroll_event;
   pinch_event.SetType(WebInputEvent::kGesturePinchUpdate);
@@ -627,26 +626,26 @@ WebGestureEvent CreateWebGestureEvent(const GestureEventDetails& details,
                                       const gfx::PointF& raw_location,
                                       int flags,
                                       uint32_t unique_touch_event_id) {
-  WebGestureEvent gesture(WebInputEvent::kUndefined,
-                          EventFlagsToWebEventModifiers(flags),
-                          ui::EventTimeStampToSeconds(timestamp));
+  blink::WebGestureDevice source_device = blink::kWebGestureDeviceUninitialized;
+  switch (details.device_type()) {
+    case GestureDeviceType::DEVICE_TOUCHSCREEN:
+      source_device = blink::kWebGestureDeviceTouchscreen;
+      break;
+    case GestureDeviceType::DEVICE_TOUCHPAD:
+      source_device = blink::kWebGestureDeviceTouchpad;
+      break;
+    case GestureDeviceType::DEVICE_UNKNOWN:
+      NOTREACHED() << "Unknown device type is not allowed";
+      break;
+  }
+  WebGestureEvent gesture(
+      WebInputEvent::kUndefined, EventFlagsToWebEventModifiers(flags),
+      ui::EventTimeStampToSeconds(timestamp), source_device);
+
   gesture.x = gfx::ToFlooredInt(location.x());
   gesture.y = gfx::ToFlooredInt(location.y());
   gesture.global_x = gfx::ToFlooredInt(raw_location.x());
   gesture.global_y = gfx::ToFlooredInt(raw_location.y());
-
-  switch (details.device_type()) {
-    case GestureDeviceType::DEVICE_TOUCHSCREEN:
-      gesture.source_device = blink::kWebGestureDeviceTouchscreen;
-      break;
-    case GestureDeviceType::DEVICE_TOUCHPAD:
-      gesture.source_device = blink::kWebGestureDeviceTouchpad;
-      break;
-    case GestureDeviceType::DEVICE_UNKNOWN:
-      NOTREACHED() << "Unknown device type is not allowed";
-      gesture.source_device = blink::kWebGestureDeviceUninitialized;
-      break;
-  }
 
   gesture.is_source_touch_event_set_non_blocking =
       details.is_source_touch_event_set_non_blocking();

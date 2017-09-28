@@ -368,7 +368,7 @@ WebInputEventResult ScrollManager::HandleGestureScrollBegin(
   PassScrollGestureEvent(gesture_event,
                          scroll_gesture_handling_node_->GetLayoutObject());
 
-  RecordScrollRelatedMetrics(gesture_event.source_device);
+  RecordScrollRelatedMetrics(gesture_event.SourceDevice());
 
   current_scroll_chain_.clear();
   std::unique_ptr<ScrollStateData> scroll_state_data =
@@ -381,7 +381,7 @@ WebInputEventResult ScrollManager::HandleGestureScrollBegin(
   scroll_state_data->is_beginning = true;
   scroll_state_data->from_user_input = true;
   scroll_state_data->is_direct_manipulation =
-      gesture_event.source_device == kWebGestureDeviceTouchscreen;
+      gesture_event.SourceDevice() == kWebGestureDeviceTouchscreen;
   scroll_state_data->delta_consumed_for_scroll_sequence =
       delta_consumed_for_scroll_sequence_;
   ScrollState* scroll_state = ScrollState::Create(std::move(scroll_state_data));
@@ -392,7 +392,7 @@ WebInputEventResult ScrollManager::HandleGestureScrollBegin(
 
   CustomizedScroll(*scroll_state);
 
-  if (gesture_event.source_device == kWebGestureDeviceTouchscreen)
+  if (gesture_event.SourceDevice() == kWebGestureDeviceTouchscreen)
     UseCounter::Count(frame_->GetDocument(), WebFeature::kScrollByTouch);
   else
     UseCounter::Count(frame_->GetDocument(), WebFeature::kScrollByWheel);
@@ -448,7 +448,7 @@ WebInputEventResult ScrollManager::HandleGestureScrollUpdate(
   scroll_state_data->is_in_inertial_phase =
       gesture_event.InertialPhase() == WebGestureEvent::kMomentumPhase;
   scroll_state_data->is_direct_manipulation =
-      gesture_event.source_device == kWebGestureDeviceTouchscreen;
+      gesture_event.SourceDevice() == kWebGestureDeviceTouchscreen;
   scroll_state_data->from_user_input = true;
   scroll_state_data->delta_consumed_for_scroll_sequence =
       delta_consumed_for_scroll_sequence_;
@@ -502,7 +502,7 @@ WebInputEventResult ScrollManager::HandleGestureScrollEnd(
         gesture_event.InertialPhase() == WebGestureEvent::kMomentumPhase;
     scroll_state_data->from_user_input = true;
     scroll_state_data->is_direct_manipulation =
-        gesture_event.source_device == kWebGestureDeviceTouchscreen;
+        gesture_event.SourceDevice() == kWebGestureDeviceTouchscreen;
     scroll_state_data->delta_consumed_for_scroll_sequence =
         delta_consumed_for_scroll_sequence_;
     ScrollState* scroll_state =
@@ -638,7 +638,7 @@ bool ScrollManager::IsScrollbarHandlingGestures() const {
 bool ScrollManager::HandleScrollGestureOnResizer(
     Node* event_target,
     const WebGestureEvent& gesture_event) {
-  if (gesture_event.source_device != kWebGestureDeviceTouchscreen)
+  if (gesture_event.SourceDevice() != kWebGestureDeviceTouchscreen)
     return false;
 
   if (gesture_event.GetType() == WebInputEvent::kGestureScrollBegin) {

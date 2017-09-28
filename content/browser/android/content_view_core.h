@@ -290,6 +290,7 @@ class ContentViewCore : public WebContentsObserver {
   RenderWidgetHostViewAndroid* GetRenderWidgetHostViewAndroid() const;
 
   blink::WebGestureEvent MakeGestureEvent(blink::WebInputEvent::Type type,
+                                          blink::WebGestureDevice source_device,
                                           int64_t time_ms,
                                           float x,
                                           float y) const;
