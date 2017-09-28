@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8691637_75dcedaf",
+        "filename": "chrome/renderer/extensions/automation_internal_custom_bindings.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1023,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-28T21:46:59Z",
+      "side": 1,
+      "message": "What you really want here is the \"focused\" state from the\nautomation API.\n\nTry something like ToString(STATE_TYPE_FOCUSED) - namespaces\nmay be needed, these are both from generated code:\n\nhttps://cs.chromium.org/chromium/src/out/Debug/gen/chrome/common/extensions/api/automation.h",
+      "revId": "9bc10cd50dcb5a333533b68776cb04fd7243af83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2fd66be_76eb90db",
+        "filename": "content/browser/accessibility/accessibility_tree_formatter_blink.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-28T21:46:59Z",
+      "side": 1,
+      "message": "For this one just use the string \"offscreen\", or define a string\nconstant local to this file.\n\nThis is only for testing and debugging, so it doesn\u0027t\nhave to be a constant. Nothing will break if we rename it\n(other than our own tests).",
+      "revId": "9bc10cd50dcb5a333533b68776cb04fd7243af83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69fbd5d9_76a56116",
+        "filename": "content/browser/accessibility/browser_accessibility.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 887,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-28T21:46:59Z",
+      "side": 1,
+      "message": "This won\u0027t work inside an iframe, you have to walk up all of\nthe frames (in this file, we have to walk up all of the\nBrowserAccessibilityManagers).\n\nI think you should just call BrowserAccessibility::RelativeToAbsoluteBounds, which does the right thing now - and you already modified it to return |offscreen|.",
+      "revId": "9bc10cd50dcb5a333533b68776cb04fd7243af83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef499aa4_4e810ac0",
+        "filename": "ui/accessibility/ax_node.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-28T21:46:59Z",
+      "side": 1,
+      "message": "I wouldn\u0027t define these here.\n\nOffscreen and focused are deliberately not part of the\nstate of a node or even a tree. They are both only things\nthat can be computed on the fly knowing the entire state of\nthe desktop.\n\nOffscreen and focused are still part of individual platform\nAPIs, including the automation API.",
+      "revId": "9bc10cd50dcb5a333533b68776cb04fd7243af83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70e8bac4_556147f9",
+        "filename": "ui/accessibility/ax_node_data.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-28T21:46:59Z",
+      "side": 1,
+      "message": "Nope, deliberately not here, as explained earlier.\n\nIn general AXNodeData should only contain state that\u0027s\nintrinsically part of the node, and not things that we\ncan or should compute based on other context.",
+      "revId": "9bc10cd50dcb5a333533b68776cb04fd7243af83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d71b26d8_3afe18e7",
+        "filename": "ui/views/accessibility/native_view_accessibility_auralinux.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-28T21:46:59Z",
+      "side": 1,
+      "message": "Fine for now, Linux accessibility support is incomplete.\n\nYou could just say // TODO: need to implement.",
+      "revId": "9bc10cd50dcb5a333533b68776cb04fd7243af83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8c8874e_9ccfc599",
+        "filename": "ui/views/accessibility/native_view_accessibility_base.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-28T21:46:59Z",
+      "side": 1,
+      "message": "I\u0027d maybe mark this as a TODO also. Not a high priority since\nwe don\u0027t normally scroll views offscreen but we scroll things on\nthe web offscreen a lot.",
+      "revId": "9bc10cd50dcb5a333533b68776cb04fd7243af83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
