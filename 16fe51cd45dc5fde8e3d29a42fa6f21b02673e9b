@@ -213,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "153dc347_d0bc826e",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-09-28T17:45:31Z",
+      "side": 1,
+      "message": "Sorry missed this comment. We can move it below only_error_is_name_mismatch check, but note that currently captive portal detector doesn\u0027t check for only_error_is_name_mismatch either (it\u0027s only used for CaptivePortalCertificateList and www-redirects). So we do show captive portal interstitial even when there are non-name mismatch errors.\n\nWe can ignore all captive portal code when only_error_is_name_mismatch\u003d\u003dfalse. But then captive portal detector will still automatically open a new tab to the login page of the portal which I think it looks a bit bad.\n\nWDYT?",
+      "parentUuid": "a438166b_fd1be4bd",
+      "range": {
+        "startLine": 853,
+        "startChar": 0,
+        "endLine": 857,
+        "endChar": 3
+      },
+      "revId": "16fe51cd45dc5fde8e3d29a42fa6f21b02673e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58eef9bf_836aafcd",
         "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
         "patchSetId": 4
