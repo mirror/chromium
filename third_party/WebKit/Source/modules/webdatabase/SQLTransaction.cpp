@@ -276,8 +276,8 @@ void SQLTransaction::PerformPendingCallback() {
 
 void SQLTransaction::ExecuteSQL(const String& sql_statement,
                                 const Vector<SQLValue>& arguments,
-                                SQLStatementCallback* callback,
-                                SQLStatementErrorCallback* callback_error,
+                                V8SQLStatementCallback* callback,
+                                V8SQLStatementErrorCallback* callback_error,
                                 ExceptionState& exception_state) {
   DCHECK(IsMainThread());
   if (!execute_sql_allowed_) {
@@ -313,8 +313,8 @@ void SQLTransaction::executeSql(ScriptState* script_state,
 void SQLTransaction::executeSql(ScriptState* script_state,
                                 const String& sql_statement,
                                 const Nullable<Vector<ScriptValue>>& arguments,
-                                SQLStatementCallback* callback,
-                                SQLStatementErrorCallback* callback_error,
+                                V8SQLStatementCallback* callback,
+                                V8SQLStatementErrorCallback* callback_error,
                                 ExceptionState& exception_state) {
   Vector<SQLValue> sql_values;
   if (!arguments.IsNull())

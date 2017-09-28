@@ -30,7 +30,10 @@
 
 #include "modules/filesystem/FileSystemCallbacks.h"
 
-#include <memory>
+#include "bindings/modules/v8/V8EntriesCallback.h"
+#include "bindings/modules/v8/V8EntryCallback.h"
+#include "bindings/modules/v8/V8ErrorCallback.h"
+#include "bindings/modules/v8/V8FileSystemCallback.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/fileapi/BlobCallback.h"
 #include "core/fileapi/File.h"
@@ -51,6 +54,7 @@
 #include "modules/filesystem/Metadata.h"
 #include "modules/filesystem/MetadataCallback.h"
 #include "platform/FileMetadata.h"
+#include "platform/bindings/CallbackInterfaceCollection.h"
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/WebFileWriter.h"
 
@@ -82,6 +86,30 @@ bool FileSystemCallbacksBase::ShouldScheduleCallback() const {
   return !ShouldBlockUntilCompletion() && execution_context_ &&
          execution_context_->IsContextSuspended();
 }
+
+template <typename CallbackType, typename ...Args>
+void FileSystemCallbacksBase::CallOrScheduleCallbackHandleEvent(
+    CallbackType* callback, ScriptWrappable* callback_this_object,
+    Args... args) {
+  DCHECK(callback);
+  if (ShouldScheduleCallback()) {
+    DOMFileSystem::ScheduleCallback(
+        execution_context_.Get(),
+        WTF::Bind(
+            &CallbackType::handleEvent,
+            WrapPersistent(callback,
+                           execution_context_->KeepAliveHostFor(callback)),
+            WrapPersistent(callback_this_object),
+            WrapPersistent(args)...));
+  } else {
+    callback->handleEvent(callback_this_object, args...);
+  }
+  execution_context_.Clear();
+}
+
+  
+
+
 
 template <typename CB, typename CBArg>
 void FileSystemCallbacksBase::InvokeOrScheduleCallback(CB* callback,
@@ -134,13 +162,18 @@ void FileSystemCallbacksBase::HandleEventOrScheduleCallback(CB* callback) {
 // ScriptErrorCallback --------------------------------------------------------
 
 // static
-ScriptErrorCallback* ScriptErrorCallback::Wrap(ErrorCallback* callback) {
+ScriptErrorCallback* ScriptErrorCallback::Wrap(V8ErrorCallback* callback, ExecutionContext* execution_context) {
   // DOMFileSystem operations take an optional (nullable) callback. If a
   // script callback was not passed, don't bother creating a dummy wrapper
   // and checking during invoke().
   if (!callback)
     return nullptr;
-  return new ScriptErrorCallback(callback);
+  return new ScriptErrorCallback(callback, execution_context);
+}
+
+ScriptErrorCallback::~ScriptErrorCallback() {
+  if (keep_alive_host_)
+    keep_alive_host_->UnregisterCallbackInterface(*callback_);
 }
 
 DEFINE_TRACE(ScriptErrorCallback) {
@@ -149,16 +182,20 @@ DEFINE_TRACE(ScriptErrorCallback) {
 }
 
 void ScriptErrorCallback::Invoke(FileError::ErrorCode error) {
-  callback_->handleEvent(FileError::CreateDOMException(error));
+  callback_->handleEvent(nullptr, FileError::CreateDOMException(error));
 };
 
-ScriptErrorCallback::ScriptErrorCallback(ErrorCallback* callback)
-    : callback_(callback) {}
+ScriptErrorCallback::ScriptErrorCallback(V8ErrorCallback* callback,
+                                         ExecutionContext* execution_context)
+    : callback_(callback),
+      keep_alive_host_(&execution_context->KeepAliveHostFor(callback_)) {
+  keep_alive_host_->RegisterCallbackInterface(*callback_);
+}
 
 // EntryCallbacks -------------------------------------------------------------
 
 std::unique_ptr<AsyncFileSystemCallbacks> EntryCallbacks::Create(
-    EntryCallback* success_callback,
+    V8EntryCallback* success_callback,
     ErrorCallbackBase* error_callback,
     ExecutionContext* context,
     DOMFileSystemBase* file_system,
@@ -169,7 +206,7 @@ std::unique_ptr<AsyncFileSystemCallbacks> EntryCallbacks::Create(
                                             is_directory));
 }
 
-EntryCallbacks::EntryCallbacks(EntryCallback* success_callback,
+EntryCallbacks::EntryCallbacks(V8EntryCallback* success_callback,
                                ErrorCallbackBase* error_callback,
                                ExecutionContext* context,
                                DOMFileSystemBase* file_system,
@@ -178,25 +215,37 @@ EntryCallbacks::EntryCallbacks(EntryCallback* success_callback,
     : FileSystemCallbacksBase(error_callback, file_system, context),
       success_callback_(success_callback),
       expected_path_(expected_path),
-      is_directory_(is_directory) {}
+      is_directory_(is_directory) {
+  DCHECK(success_callback_);
+  execution_context_->SetKeepAlive(*success_callback_);
+}
+
+EntryCallbacks::~EntryCallbacks() {
+  if (success_callback_)
+    execution_context_->UnsetKeepAlive(*success_callback_);
+}
 
 void EntryCallbacks::DidSucceed() {
-  if (success_callback_) {
-    if (is_directory_)
-      HandleEventOrScheduleCallback(
-          success_callback_.Release(),
-          DirectoryEntry::Create(file_system_, expected_path_));
-    else
-      HandleEventOrScheduleCallback(
-          success_callback_.Release(),
-          FileEntry::Create(file_system_, expected_path_));
+  if (!success_callback_)
+    return;
+
+  execution_context_->UnsetKeepAlive(*success_callback_);
+
+  if (is_directory_) {
+    CallOrScheduleCallbackHandleEvent(
+        success_callback_.Release(), nullptr,
+        DirectoryEntry::Create(file_system_, expected_path_));
+  } else {
+    CallOrScheduleCallbackHandleEvent(
+        success_callback_.Release(), nullptr,
+        FileEntry::Create(file_system_, expected_path_));
   }
 }
 
 // EntriesCallbacks -----------------------------------------------------------
 
 std::unique_ptr<AsyncFileSystemCallbacks> EntriesCallbacks::Create(
-    EntriesCallback* success_callback,
+    V8EntriesCallback* success_callback,
     ErrorCallbackBase* error_callback,
     ExecutionContext* context,
     DirectoryReaderBase* directory_reader,
@@ -205,7 +254,7 @@ std::unique_ptr<AsyncFileSystemCallbacks> EntriesCallbacks::Create(
       success_callback, error_callback, context, directory_reader, base_path));
 }
 
-EntriesCallbacks::EntriesCallbacks(EntriesCallback* success_callback,
+EntriesCallbacks::EntriesCallbacks(V8EntriesCallback* success_callback,
                                    ErrorCallbackBase* error_callback,
                                    ExecutionContext* context,
                                    DirectoryReaderBase* directory_reader,
@@ -217,6 +266,13 @@ EntriesCallbacks::EntriesCallbacks(EntriesCallback* success_callback,
       directory_reader_(directory_reader),
       base_path_(base_path) {
   DCHECK(directory_reader_);
+  DCHECK(success_callback_);
+  execution_context_->SetKeepAlive(*success_callback_);
+}
+
+EntriesCallbacks::~EntriesCallbacks() {
+  DCHECK(success_callback_);
+  execution_context_->UnsetKeepAlive(*success_callback_);
 }
 
 void EntriesCallbacks::DidReadDirectoryEntry(const String& name,
@@ -237,13 +293,13 @@ void EntriesCallbacks::DidReadDirectoryEntries(bool has_more) {
   entries.swap(entries_);
   // FIXME: delay the callback iff shouldScheduleCallback() is true.
   if (success_callback_)
-    success_callback_->handleEvent(entries);
+    success_callback_->handleEvent(nullptr, entries);
 }
 
 // FileSystemCallbacks --------------------------------------------------------
 
 std::unique_ptr<AsyncFileSystemCallbacks> FileSystemCallbacks::Create(
-    FileSystemCallback* success_callback,
+    V8FileSystemCallback* success_callback,
     ErrorCallbackBase* error_callback,
     ExecutionContext* context,
     FileSystemType type) {
@@ -251,20 +307,32 @@ std::unique_ptr<AsyncFileSystemCallbacks> FileSystemCallbacks::Create(
       new FileSystemCallbacks(success_callback, error_callback, context, type));
 }
 
-FileSystemCallbacks::FileSystemCallbacks(FileSystemCallback* success_callback,
+FileSystemCallbacks::FileSystemCallbacks(V8FileSystemCallback* success_callback,
                                          ErrorCallbackBase* error_callback,
                                          ExecutionContext* context,
                                          FileSystemType type)
     : FileSystemCallbacksBase(error_callback, nullptr, context),
       success_callback_(success_callback),
-      type_(type) {}
+      type_(type) {
+  DCHECK(success_callback_);
+  execution_context_->SetKeepAlive(*success_callback_);
+}
+
+FileSystemCallbacks::~FileSystemCallbacks() {
+  if (success_callback_)
+    execution_context_->UnsetKeepAlive(*success_callback_);
+}
 
 void FileSystemCallbacks::DidOpenFileSystem(const String& name,
                                             const KURL& root_url) {
-  if (success_callback_)
-    HandleEventOrScheduleCallback(
-        success_callback_.Release(),
-        DOMFileSystem::Create(execution_context_.Get(), name, type_, root_url));
+  if (!success_callback_)
+    return;
+
+  execution_context_->UnsetKeepAlive(*success_callback_);
+
+  CallOrScheduleCallbackHandleEvent(
+      success_callback_.Release(), nullptr,
+      DOMFileSystem::Create(execution_context_, name, type_, root_url));
 }
 
 // ResolveURICallbacks --------------------------------------------------------

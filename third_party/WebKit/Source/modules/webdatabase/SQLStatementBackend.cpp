@@ -111,6 +111,10 @@ DEFINE_TRACE(SQLStatementBackend) {
   visitor->Trace(result_set_);
 }
 
+DEFINE_TRACE_WRAPPERS(SQLStatementBackend) {
+  visitor->TraceWrappers(frontend_);
+}
+
 SQLStatement* SQLStatementBackend::GetFrontend() {
   return frontend_.Get();
 }

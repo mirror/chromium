@@ -226,6 +226,8 @@ def cpp_type(idl_type, extended_attributes=None, raw_type=False, used_as_rvalue_
             else:
                 return cpp_template_type('NotShared', idl_type.implemented_as)
     if idl_type.is_interface_type:
+        if idl_type.is_callback_interface:
+            return 'V8%s*' % base_idl_type
         implemented_as_class = idl_type.implemented_as
         if raw_type or (used_as_rvalue_type and idl_type.is_garbage_collected) or not used_in_cpp_sequence:
             return implemented_as_class + '*'

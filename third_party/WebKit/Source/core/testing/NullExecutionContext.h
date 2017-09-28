@@ -57,6 +57,10 @@ class NullExecutionContext
     ExecutionContext::Trace(visitor);
   }
 
+  DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {
+    ExecutionContext::TraceWrappers(visitor);
+  }
+
  protected:
   const KURL& VirtualURL() const override { return url_; }
   KURL VirtualCompleteURL(const String&) const override { return url_; }

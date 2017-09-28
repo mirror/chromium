@@ -211,7 +211,7 @@ File* DOMFileSystemBase::CreateFile(const FileMetadata& metadata,
 }
 
 void DOMFileSystemBase::GetMetadata(const EntryBase* entry,
-                                    MetadataCallback* success_callback,
+                                    V8MetadataCallback* success_callback,
                                     ErrorCallbackBase* error_callback,
                                     SynchronousType synchronous_type) {
   if (!FileSystem()) {
@@ -265,7 +265,7 @@ static bool VerifyAndGetDestinationPathForCopyOrMove(const EntryBase* source,
 void DOMFileSystemBase::Move(const EntryBase* source,
                              EntryBase* parent,
                              const String& new_name,
-                             EntryCallback* success_callback,
+                             V8EntryCallback* success_callback,
                              ErrorCallbackBase* error_callback,
                              SynchronousType synchronous_type) {
   if (!FileSystem()) {

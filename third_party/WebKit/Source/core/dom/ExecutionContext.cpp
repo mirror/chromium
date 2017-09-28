@@ -39,6 +39,7 @@
 #include "core/probe/CoreProbes.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "core/workers/WorkerThread.h"
+#include "platform/bindings/CallbackInterfaceCollection.h"
 #include "platform/loader/fetch/MemoryCache.h"
 #include "platform/weborigin/SecurityPolicy.h"
 #include "platform/wtf/PtrUtil.h"
@@ -51,9 +52,9 @@ ExecutionContext::ExecutionContext()
       is_context_suspended_(false),
       is_context_destroyed_(false),
       window_interaction_tokens_(0),
-      referrer_policy_(kReferrerPolicyDefault) {}
-
-ExecutionContext::~ExecutionContext() {}
+      referrer_policy_(kReferrerPolicyDefault),
+      keep_alive_host_for_callback_interfaces_(
+          CallbackInterfaceCollection::Create()) {}
 
 // static
 ExecutionContext* ExecutionContext::From(const ScriptState* script_state) {
@@ -254,8 +255,13 @@ void ExecutionContext::RemoveURLFromMemoryCache(const KURL& url) {
 DEFINE_TRACE(ExecutionContext) {
   visitor->Trace(public_url_manager_);
   visitor->Trace(pending_exceptions_);
+  visitor->Trace(keep_alive_host_for_callback_interfaces_);
   ContextLifecycleNotifier::Trace(visitor);
   Supplementable<ExecutionContext>::Trace(visitor);
+}
+
+DEFINE_TRACE_WRAPPERS(ExecutionContext) {
+  visitor->TraceWrappers(keep_alive_host_for_callback_interfaces_);
 }
 
 }  // namespace blink

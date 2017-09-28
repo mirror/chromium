@@ -43,12 +43,12 @@ class DatabaseContext;
 class ExecutionContext;
 class SQLTransaction;
 class SQLTransactionBackend;
-class SQLTransactionCallback;
 class SQLTransactionClient;
 class SQLTransactionCoordinator;
-class SQLTransactionErrorCallback;
 class V8DatabaseCallback;
-class VoidCallback;
+class V8SQLTransactionCallback;
+class V8SQLTransactionErrorCallback;
+class V8VoidCallback;
 
 class Database final : public GarbageCollectedFinalized<Database>,
                        public ScriptWrappable {
@@ -77,15 +77,15 @@ class Database final : public GarbageCollectedFinalized<Database>,
   String version() const;
   void changeVersion(const String& old_version,
                      const String& new_version,
-                     SQLTransactionCallback*,
-                     SQLTransactionErrorCallback*,
-                     VoidCallback* success_callback);
-  void transaction(SQLTransactionCallback*,
-                   SQLTransactionErrorCallback*,
-                   VoidCallback* success_callback);
-  void readTransaction(SQLTransactionCallback*,
-                       SQLTransactionErrorCallback*,
-                       VoidCallback* success_callback);
+                     V8SQLTransactionCallback*,
+                     V8SQLTransactionErrorCallback*,
+                     V8VoidCallback* success_callback);
+  void transaction(V8SQLTransactionCallback*,
+                   V8SQLTransactionErrorCallback*,
+                   V8VoidCallback* success_callback);
+  void readTransaction(V8SQLTransactionCallback*,
+                       V8SQLTransactionErrorCallback*,
+                       V8VoidCallback* success_callback);
 
   bool Opened();
   bool IsNew() const { return new_; }
@@ -149,9 +149,9 @@ class Database final : public GarbageCollectedFinalized<Database>,
   void SetCachedVersion(const String&);
   bool GetActualVersionForTransaction(String& version);
 
-  void RunTransaction(SQLTransactionCallback*,
-                      SQLTransactionErrorCallback*,
-                      VoidCallback* success_callback,
+  void RunTransaction(V8SQLTransactionCallback*,
+                      V8SQLTransactionErrorCallback*,
+                      V8VoidCallback* success_callback,
                       bool read_only,
                       const ChangeVersionData* = 0);
   Vector<String> PerformGetTableNames();

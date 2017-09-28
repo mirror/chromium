@@ -30,6 +30,7 @@
 
 #include <memory>
 #include "modules/webdatabase/sqlite/SQLValue.h"
+#include "platform/bindings/TraceWrapperMember.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/Vector.h"
@@ -43,13 +44,15 @@ class SQLResultSet;
 class SQLStatement;
 
 class SQLStatementBackend final
-    : public GarbageCollectedFinalized<SQLStatementBackend> {
+    : public GarbageCollectedFinalized<SQLStatementBackend>,
+      public TraceWrapperBase {
  public:
   static SQLStatementBackend* Create(SQLStatement*,
                                      const String& sql_statement,
                                      const Vector<SQLValue>& arguments,
                                      int permissions);
   DECLARE_TRACE();
+  DECLARE_TRACE_WRAPPERS();
 
   bool Execute(Database*);
   bool LastExecutionFailedDueToQuota() const;
@@ -72,7 +75,7 @@ class SQLStatementBackend final
   void SetFailureDueToQuota(Database*);
   void ClearFailureDueToQuota();
 
-  Member<SQLStatement> frontend_;
+  TraceWrapperMember<SQLStatement> frontend_;
   String statement_;
   Vector<SQLValue> arguments_;
   bool has_callback_;

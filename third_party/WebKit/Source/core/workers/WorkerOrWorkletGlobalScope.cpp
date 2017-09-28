@@ -101,4 +101,8 @@ DEFINE_TRACE(WorkerOrWorkletGlobalScope) {
   ExecutionContext::Trace(visitor);
 }
 
+DEFINE_TRACE_WRAPPERS(WorkerOrWorkletGlobalScope) {
+  ExecutionContext::TraceWrappers(visitor);
+}
+
 }  // namespace blink

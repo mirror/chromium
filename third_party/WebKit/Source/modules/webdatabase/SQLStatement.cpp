@@ -43,14 +43,14 @@
 namespace blink {
 
 SQLStatement* SQLStatement::Create(Database* database,
-                                   SQLStatementCallback* callback,
-                                   SQLStatementErrorCallback* error_callback) {
+                                   V8SQLStatementCallback* callback,
+                                   V8SQLStatementErrorCallback* error_callback) {
   return new SQLStatement(database, callback, error_callback);
 }
 
 SQLStatement::SQLStatement(Database* database,
-                           SQLStatementCallback* callback,
-                           SQLStatementErrorCallback* error_callback)
+                           V8SQLStatementCallback* callback,
+                           V8SQLStatementErrorCallback* error_callback)
     : statement_callback_(callback), statement_error_callback_(error_callback) {
   DCHECK(IsMainThread());
 
@@ -64,6 +64,11 @@ DEFINE_TRACE(SQLStatement) {
   visitor->Trace(backend_);
   visitor->Trace(statement_callback_);
   visitor->Trace(statement_error_callback_);
+}
+
+DEFINE_TRACE_WRAPPERS(SQLStatement) {
+  visitor->TraceWrappers(statement_callback_);
+  visitor->TraceWrappers(statement_error_callback_);
 }
 
 void SQLStatement::SetBackend(SQLStatementBackend* backend) {

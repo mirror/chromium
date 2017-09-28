@@ -7070,6 +7070,7 @@ DEFINE_TRACE_WRAPPERS(Document) {
           Supplementable<Document>::supplements_.at(
               FontFaceSetDocument::SupplementName())));
   ContainerNode::TraceWrappers(visitor);
+  ExecutionContext::TraceWrappers(visitor);
 }
 
 template class CORE_TEMPLATE_EXPORT Supplement<Document>;
