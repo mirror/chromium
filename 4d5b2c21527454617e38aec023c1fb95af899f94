@@ -16,6 +16,24 @@
       "revId": "4d5b2c21527454617e38aec023c1fb95af899f94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2f7411e_dfd0fd32",
+        "filename": "chrome/browser/resources/print_preview/native_layer.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-28T19:08:28Z",
+      "side": 1,
+      "message": "C++ currently doesn\u0027t store any lists of printers, so we would need to add that in the handler to avoid re-fetching all the printers each time. The other problem is that I do not think anything stops 2 printers of different types from having the same destination ID. In the map of destinations, we use DestinationStore.getKey_() to obtain unique identifiers for each destination, and the key contains both the id and the origin. It should be possible to send this key to C++ and then parse the id and origin from the string and convert the origin to PrinterType there, but I am not sure if that is any better than just sending the type and id directly.",
+      "parentUuid": "c258dd56_6fbd77dd",
+      "revId": "4d5b2c21527454617e38aec023c1fb95af899f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
