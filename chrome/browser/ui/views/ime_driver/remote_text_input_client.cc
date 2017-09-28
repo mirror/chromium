@@ -10,6 +10,7 @@
 #include "chrome/browser/ui/views/ime_driver/remote_text_input_client.h"
 
 #include "base/strings/utf_string_conversions.h"
+#include "ui/base/ime/ime_bridge.h"
 
 RemoteTextInputClient::RemoteTextInputClient(
     ui::mojom::TextInputClientPtr remote_client,
@@ -23,7 +24,11 @@ RemoteTextInputClient::RemoteTextInputClient(
       text_input_mode_(text_input_mode),
       text_direction_(text_direction),
       text_input_flags_(text_input_flags),
-      caret_bounds_(caret_bounds) {}
+      caret_bounds_(caret_bounds) {
+#if defined(OS_CHROMEOS)
+  ui::IMEBridge::Get()->SetCandidateWindowHandler(this);
+#endif
+}
 
 RemoteTextInputClient::~RemoteTextInputClient() {}
 
@@ -176,4 +181,22 @@ ui::EventDispatchDetails RemoteTextInputClient::DispatchKeyEventPostIME(
   remote_client_->DispatchKeyEventPostIME(ui::Event::Clone(*event),
                                           base::OnceCallback<void(bool)>());
   return ui::EventDispatchDetails();
+}
+
+void RemoteTextInputClient::UpdateLookupTable(
+    const ui::CandidateWindow& candidate_window,
+    bool visible) {}
+
+void RemoteTextInputClient::UpdatePreeditText(const base::string16& text,
+                                              uint32_t cursor_pos,
+                                              bool visible) {}
+
+void RemoteTextInputClient::SetCursorBounds(const gfx::Rect& cursor_bounds,
+                                            const gfx::Rect& composition_head) {
+}
+
+void RemoteTextInputClient::UpdateCandidateWindowVisibility(bool visible) {
+#if defined(OS_CHROMEOS)
+  remote_client_->SetCandidateWindowVisible(visible);
+#endif
 }
