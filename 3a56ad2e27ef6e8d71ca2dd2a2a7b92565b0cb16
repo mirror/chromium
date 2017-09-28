@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6ce983e_dbca8cbf",
+        "filename": "net/http/http_auth_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-09-28T15:59:58Z",
+      "side": 1,
+      "message": "authenticating",
+      "range": {
+        "startLine": 44,
+        "startChar": 44,
+        "endLine": 44,
+        "endChar": 58
+      },
+      "revId": "3a56ad2e27ef6e8d71ca2dd2a2a7b92565b0cb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d51d991_15dd2e06",
+        "filename": "net/http/http_auth_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-09-28T15:59:58Z",
+      "side": 1,
+      "message": "This one is not quite accurate.\n\nIf NeedsIdentity() returns true, then a subsequent call to GenerateAuthToken() must indicate which identity to use. This can be done either by passing in a non-empty set of credentials, or an empty set to force the handler to use the default credentials. The latter is only an option if AllowsDefaultCredentials() returns true.\n\nIf NeedsIdentity() returns false, then the handler is already bound to an identity and GenerateAuthToken() will ignore any credentials that are passed in.",
+      "revId": "3a56ad2e27ef6e8d71ca2dd2a2a7b92565b0cb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
