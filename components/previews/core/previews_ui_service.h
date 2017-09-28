@@ -8,6 +8,7 @@
 #include <string>
 
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "base/threading/thread_checker.h"
@@ -40,11 +41,20 @@ class PreviewsUIService {
   // thread. Virtualized in testing.
   virtual void SetIOData(base::WeakPtr<PreviewsIOData> io_data);
 
+  // Sets up PreviewsLog object. Injection mock |logger| during test.
+  void SetPreviewsLog(std::unique_ptr<PreviewsLog> logger);
+
   // Adds a navigation to |url| to the black list with result |opt_out|.
   void AddPreviewNavigation(const GURL& url, PreviewsType type, bool opt_out);
 
   // Clears the history of the black list between |begin_time| and |end_time|.
   void ClearBlackList(base::Time begin_time, base::Time end_time);
+
+  // Log the navigation to PreviewsLog. Virutalized in testing.
+  virtual void LogPreviewNavigation(const GURL& url,
+                                    PreviewsType type,
+                                    bool opt_out,
+                                    base::Time time);
 
  private:
   // The IO thread portion of the inter-thread communication for previews/.
@@ -55,6 +65,9 @@ class PreviewsUIService {
   // The IO thread task runner. Used to post tasks to |io_data_|.
   scoped_refptr<base::SingleThreadTaskRunner> io_task_runner_;
 
+  // A log object to keep tract of events such as previews navigations,
+  // blacklist actions, etc.
+  std::unique_ptr<PreviewsLog> logger_;
   base::WeakPtrFactory<PreviewsUIService> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(PreviewsUIService);
