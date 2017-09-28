@@ -9,8 +9,6 @@
 #include <vector>
 
 #include "base/containers/flat_map.h"
-#include "base/files/file.h"
-#include "base/files/platform_file.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/process/process_handle.h"
@@ -18,7 +16,10 @@
 #include "base/values.h"
 #include "build/build_config.h"
 #include "chrome/common/profiling/memlog.mojom.h"
+#include "chrome/profiling/allocation_event.h"
+#include "chrome/profiling/allocation_tracker.h"
 #include "chrome/profiling/backtrace_storage.h"
+#include "mojo/edk/embedder/scoped_platform_handle.h"
 #include "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom.h"
 
 namespace base {
@@ -44,8 +45,9 @@ class MemlogConnectionManager {
   // Parameters to DumpProcess().
   struct DumpProcessArgs {
     DumpProcessArgs();
+    DumpProcessArgs(DumpProcessArgs&&) noexcept;
     ~DumpProcessArgs();
-    DumpProcessArgs(DumpProcessArgs&&);
+
     base::ProcessId pid;
     std::unique_ptr<base::DictionaryValue> metadata;
     std::vector<memory_instrumentation::mojom::VmRegionPtr> maps;
@@ -58,30 +60,43 @@ class MemlogConnectionManager {
 
   // Dumps the memory log for the given process into |args.output_file|. This
   // must be provided the memory map for the given process since that is not
-  // tracked as part of the normal allocation process. When
-  // |hop_to_connection_thread| is |true|, the task is posted onto the
-  // connection thread's task runner, and then back onto the current task
-  // runner. This ensures that all queued tasks on the connection's thread are
-  // flushed before the dump is executed.
-  void DumpProcess(DumpProcessArgs args, bool hop_to_connection_thread);
+  // tracked as part of the normal allocation process.
+  //
+  // Dumping is asynchronous so will not be complete when this function
+  // returns. The dump is complete when the callback provided in the args is
+  // fired.
+  void DumpProcess(DumpProcessArgs args);
 
   void DumpProcessForTracing(
       base::ProcessId pid,
       mojom::Memlog::DumpProcessForTracingCallback callback,
-      const std::vector<memory_instrumentation::mojom::VmRegionPtr>& maps);
+      std::vector<memory_instrumentation::mojom::VmRegionPtr> maps);
 
-  void OnNewConnection(base::ScopedPlatformFile file, base::ProcessId pid);
+  void OnNewConnection(base::ProcessId pid,
+                       mojom::MemlogClientPtr client,
+                       mojo::edk::ScopedPlatformHandle handle);
 
  private:
   struct Connection;
 
-  // This method is posted on the connection's thread, and immediately reposts
-  // DumpProcess back to |task_runner|. This ensures that all queued tasks on
-  // the connection's thread are flushed before the dump is executed.
-  static void HopToConnectionThread(
-      base::WeakPtr<MemlogConnectionManager> manager,
-      DumpProcessArgs args,
-      scoped_refptr<base::SequencedTaskRunner> task_runner);
+  // Schedules the given callback to execute after the given process ID has
+  // been synchronized. If the process ID isn't found, the callback will be
+  // asynchronously run with "false" as the success parameter.
+  void SynchronizeOnPid(base::ProcessId process_id,
+                        AllocationTracker::SnapshotCallback callback);
+
+  // Actually does the dump assuming the given process has been synchronized.
+  void DoDumpProcess(DumpProcessArgs args,
+                     bool success,
+                     AllocationCountMap counts,
+                     AllocationTracker::ContextMap context);
+  void DoDumpProcessForTracing(
+      base::ProcessId pid,
+      mojom::Memlog::DumpProcessForTracingCallback callback,
+      std::vector<memory_instrumentation::mojom::VmRegionPtr> maps,
+      bool success,
+      AllocationCountMap counts,
+      AllocationTracker::ContextMap context);
 
   // Notification that a connection is complete. Unlike OnNewConnection which
   // is signaled by the pipe server, this is signaled by the allocation tracker
@@ -89,11 +104,17 @@ class MemlogConnectionManager {
   // messages.
   void OnConnectionComplete(base::ProcessId pid);
 
-  void OnConnectionCompleteThunk(
+  // These thunks post the request back to the given thread.
+  static void OnConnectionCompleteThunk(
       scoped_refptr<base::SequencedTaskRunner> main_loop,
+      base::WeakPtr<MemlogConnectionManager> connection_manager,
       base::ProcessId process_id);
 
   BacktraceStorage backtrace_storage_;
+
+  // Next ID to use for a barrier request. This is incremented for each use
+  // to ensure barrier IDs are unique.
+  uint32_t next_barrier_id_ = 1;
 
   // Maps process ID to the connection information for it.
   base::flat_map<base::ProcessId, std::unique_ptr<Connection>> connections_;
