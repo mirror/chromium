@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "91d8a3da_7f4e0c9d",
+        "filename": "chrome/browser/browser_process_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-28T18:48:33Z",
+      "side": 1,
+      "message": "Ack. Got it. Thanks!",
+      "parentUuid": "864a352e_522e6fa7",
+      "range": {
+        "startLine": 105,
+        "startChar": 15,
+        "endLine": 105,
+        "endChar": 0
+      },
+      "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c75dc33_5f3828ae",
         "filename": "content/network/network_change_manager_impl.cc",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-25T20:19:40Z",
       "side": 1,
       "message": "Should either check that this erases exactly 1 element, or make this take an iterator (If you take my set suggestion) and remove that iterator.",
+      "range": {
+        "startLine": 44,
+        "startChar": 23,
+        "endLine": 44,
+        "endChar": 0
+      },
+      "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e4bfe2d_2cc1f064",
+        "filename": "content/network/network_change_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-28T18:48:33Z",
+      "side": 1,
+      "message": "std::find_if returns the 1 element at most. Do you want to me continue iterating and make sure |client| doesn\u0027t appear more than once?",
+      "parentUuid": "7c75dc33_5f3828ae",
       "range": {
         "startLine": 44,
         "startChar": 23,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "060acb17_4fcee0f8",
+        "filename": "content/network/network_change_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-28T18:48:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80bcc011_55fe7875",
+      "range": {
+        "startLine": 50,
+        "startChar": 18,
+        "endLine": 50,
+        "endChar": 34
+      },
+      "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7b27b60_296ce639",
         "filename": "content/network/network_change_manager_impl.h",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1661e9bc_231a720c",
+        "filename": "content/network/network_change_manager_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-28T18:48:33Z",
+      "side": 1,
+      "message": "Talked offline. std::set\u003c\u003e doesn\u0027t seem it will work for this case.\nAn alternative suggested by Matt is std::list\u003c\u003e, but I didn\u0027t get that working.\nI decided to keep it as it is because we usually will have very few clients (1 per process). The perf cost of iterating a std::vector\u003c\u003e should be minimal.",
+      "parentUuid": "b7b27b60_296ce639",
+      "range": {
+        "startLine": 44,
+        "startChar": 21,
+        "endLine": 44,
+        "endChar": 50
+      },
+      "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "4c2a8880_08052e59",
+        "filename": "content/network/network_change_manager_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-28T18:48:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62142a03_108618e5",
+      "range": {
+        "startLine": 21,
+        "startChar": 17,
+        "endLine": 21,
+        "endChar": 19
+      },
+      "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b1b2cc3_64a4e1f7",
         "filename": "content/network/network_change_manager_impl_unittest.cc",
         "patchSetId": 6
@@ -137,6 +257,30 @@
       "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e2d2e53_c995968a",
+        "filename": "content/network/network_change_manager_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-28T18:48:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b1b2cc3_64a4e1f7",
+      "range": {
+        "startLine": 51,
+        "startChar": 26,
+        "endLine": 51,
+        "endChar": 27
+      },
+      "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "24e2c771_a9c446eb",
+        "filename": "content/network/network_change_manager_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-28T18:48:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d764606_f660e84e",
+      "range": {
+        "startLine": 57,
+        "startChar": 33,
+        "endLine": 57,
+        "endChar": 45
+      },
+      "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e0d1e22_2af7edf6",
         "filename": "content/network/network_change_manager_impl_unittest.cc",
         "patchSetId": 6
@@ -183,6 +351,30 @@
       "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9436550_2568bc07",
+        "filename": "content/network/network_change_manager_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-28T18:48:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e0d1e22_2af7edf6",
+      "range": {
+        "startLine": 89,
+        "startChar": 37,
+        "endLine": 89,
+        "endChar": 51
+      },
+      "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "33f5fbf0_5cdce330",
+        "filename": "content/network/network_service_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-28T18:48:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e3ed336_326417ee",
+      "range": {
+        "startLine": 63,
+        "startChar": 6,
+        "endLine": 63,
+        "endChar": 14
+      },
+      "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b459c1e_82bd495c",
         "filename": "content/network/network_service_impl.cc",
         "patchSetId": 6
@@ -229,6 +445,30 @@
       "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "482982d6_dc1eb56c",
+        "filename": "content/network/network_service_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-28T18:48:33Z",
+      "side": 1,
+      "message": "There is only on constructor of NetworkServiceImpl. I didn\u0027t find other implementations of mojom::NetworkService. Which other constructors did you refer to?\n Thanks.",
+      "parentUuid": "8b459c1e_82bd495c",
+      "range": {
+        "startLine": 64,
+        "startChar": 36,
+        "endLine": 64,
+        "endChar": 46
+      },
+      "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "841d5a67_35beca88",
+        "filename": "content/public/browser/network_change_manager_client_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-28T18:48:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc1c5a80_2faf0a58",
+      "range": {
+        "startLine": 25,
+        "startChar": 9,
+        "endLine": 25,
+        "endChar": 37
+      },
+      "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e9549bf_049f7d4f",
         "filename": "content/public/browser/network_change_manager_client_impl.h",
         "patchSetId": 6
@@ -275,6 +539,30 @@
       "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee9d662f_4efc532c",
+        "filename": "content/public/browser/network_change_manager_client_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-28T18:48:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e9549bf_049f7d4f",
+      "range": {
+        "startLine": 23,
+        "startChar": 42,
+        "endLine": 23,
+        "endChar": 50
+      },
+      "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -324,6 +612,54 @@
     },
     {
       "key": {
+        "uuid": "b9fabcde_12454c78",
+        "filename": "content/public/browser/network_change_manager_client_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-28T18:48:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c43bd3b3_73ad1998",
+      "range": {
+        "startLine": 25,
+        "startChar": 21,
+        "endLine": 25,
+        "endChar": 51
+      },
+      "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7f3c062_bfe11092",
+        "filename": "content/public/browser/network_change_manager_client_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-28T18:48:33Z",
+      "side": 1,
+      "message": "Can I add tests when I hook it up in Chrome?  I was planning to do that in a separate CL.\nFor some reason, the files in content/public/browser/ do not have their _unittest.cc files. I didn\u0027t find a unit test target.",
+      "parentUuid": "0ea8d53f_aced7619",
+      "range": {
+        "startLine": 25,
+        "startChar": 6,
+        "endLine": 25,
+        "endChar": 21
+      },
+      "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "334fea84_f4dfa232",
         "filename": "content/public/browser/network_change_manager_client_impl.h",
         "patchSetId": 6
@@ -344,6 +680,30 @@
       "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb4c9d75_b76330a0",
+        "filename": "content/public/browser/network_change_manager_client_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-28T18:48:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "334fea84_f4dfa232",
+      "range": {
+        "startLine": 54,
+        "startChar": 37,
+        "endLine": 54,
+        "endChar": 0
+      },
+      "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -370,6 +730,30 @@
     },
     {
       "key": {
+        "uuid": "e1c90ee2_299078ad",
+        "filename": "content/public/browser/network_change_manager_client_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-28T18:48:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e76b804_c5bb6740",
+      "range": {
+        "startLine": 79,
+        "startChar": 24,
+        "endLine": 79,
+        "endChar": 41
+      },
+      "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c8ed1df_e0e1c963",
         "filename": "content/public/browser/network_change_manager_client_impl.h",
         "patchSetId": 6
@@ -390,6 +774,30 @@
       "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fa5eef3_903bf58b",
+        "filename": "content/public/browser/network_change_manager_client_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-28T18:48:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c8ed1df_e0e1c963",
+      "range": {
+        "startLine": 97,
+        "startChar": 36,
+        "endLine": 97,
+        "endChar": 0
+      },
+      "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -416,6 +824,30 @@
     },
     {
       "key": {
+        "uuid": "03f65d60_d3bbbcef",
+        "filename": "content/public/common/network_change_manager.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-28T18:48:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba0b3e51_8b0a5845",
+      "range": {
+        "startLine": 64,
+        "startChar": 32,
+        "endLine": 64,
+        "endChar": 0
+      },
+      "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36d2d6c3_1a27b37a",
         "filename": "content/public/common/network_change_manager.mojom",
         "patchSetId": 6
@@ -436,6 +868,30 @@
       "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fff044a7_d63d7798",
+        "filename": "content/public/common/network_change_manager.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-28T18:48:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36d2d6c3_1a27b37a",
+      "range": {
+        "startLine": 65,
+        "startChar": 22,
+        "endLine": 65,
+        "endChar": 49
+      },
+      "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
