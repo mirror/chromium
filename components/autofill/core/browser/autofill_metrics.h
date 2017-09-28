@@ -684,7 +684,8 @@ class AutofillMetrics {
 
   static void LogServerQueryMetric(ServerQueryMetric metric);
 
-  static void LogUserHappinessMetric(UserHappinessMetric metric);
+  static void LogUserHappinessMetric(UserHappinessMetric metric,
+                                     bool is_credit_card_form);
 
   // Logs |event| to the unmask prompt events histogram.
   static void LogUnmaskPromptEvent(UnmaskPromptEvent event);
