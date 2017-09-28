@@ -1,0 +1,295 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e25b43c3_8c6cc9b8",
+        "filename": "base/task_scheduler/scheduler_single_thread_task_runner_manager.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-28T19:59:07Z",
+      "side": 1,
+      "message": "\"before starting\" would be more accurate, right? i.e. if you create+start and set this immediately after it\u0027s still racy",
+      "range": {
+        "startLine": 154,
+        "startChar": 19,
+        "endLine": 154,
+        "endChar": 39
+      },
+      "revId": "cb6cc5a359149ca604995e0b3ae0df72f83b9594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f9d9704_90cc4fa0",
+        "filename": "base/task_scheduler/scheduler_worker_pool.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-28T19:59:07Z",
+      "side": 1,
+      "message": "Actually, I think something you can do is make the destructor of CanScheduleSequenceObserver private (or perhaps you can even \u003ddelete; it?) and then this destructor isn\u0027t virtual.\n\nThis would clearly indicate that users of this class own it as is and not through a container of CanScheduleSequenceObservers (CanScheduleSequenceObservers are always just passed as raw pointers).\n\nI\u0027d prefer that approach.\n\nI think this is the recommendation in general for C++ destructors: https://stackoverflow.com/questions/461203/when-to-use-virtual-destructors",
+      "revId": "cb6cc5a359149ca604995e0b3ae0df72f83b9594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bd1bbc3_63b9cead",
+        "filename": "base/task_scheduler/scheduler_worker_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-28T19:59:07Z",
+      "side": 1,
+      "message": "move",
+      "range": {
+        "startLine": 463,
+        "startChar": 51,
+        "endLine": 463,
+        "endChar": 59
+      },
+      "revId": "cb6cc5a359149ca604995e0b3ae0df72f83b9594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f629809b_ec2e32d0",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-28T19:59:07Z",
+      "side": 1,
+      "message": "Checking again in RunNextTask() was useful when foreground work might have started in the mean time in v1 of this CL. But now that we only ever schedule the desired amount of background tasks. RunNextTask() being called with a BACKGROUND task should mean it ought to run it and everything is already accounted for, no?\n\n(Note to self: if answer is we still need this then I need to take a look at this + MaybeScheduleSequenceAfterRunBackgroundTask code)",
+      "revId": "cb6cc5a359149ca604995e0b3ae0df72f83b9594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04bbaa20_9839a3a5",
+        "filename": "base/task_scheduler/task_tracker.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-28T19:59:07Z",
+      "side": 1,
+      "message": "it\n\n(to reduce verbosity a bit here)",
+      "range": {
+        "startLine": 85,
+        "startChar": 61,
+        "endLine": 85,
+        "endChar": 71
+      },
+      "revId": "cb6cc5a359149ca604995e0b3ae0df72f83b9594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36ec52df_849bc7b7",
+        "filename": "base/task_scheduler/task_tracker.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-28T19:59:07Z",
+      "side": 1,
+      "message": "that",
+      "range": {
+        "startLine": 165,
+        "startChar": 37,
+        "endLine": 165,
+        "endChar": 40
+      },
+      "revId": "cb6cc5a359149ca604995e0b3ae0df72f83b9594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e126b3d3_b01eb8b6",
+        "filename": "base/task_scheduler/task_tracker.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-28T19:59:07Z",
+      "side": 1,
+      "message": "With this CL we now use \"scheduled\" both to mean \"enqueued\" and \"handed to thread for execution\" which are two very different things. Let\u0027s fix that and even ideally have a meta comment at the top of TaskTracker explaining the phases and transitions a task goes through in its lifetime.",
+      "range": {
+        "startLine": 166,
+        "startChar": 5,
+        "endLine": 166,
+        "endChar": 16
+      },
+      "revId": "cb6cc5a359149ca604995e0b3ae0df72f83b9594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5223d92b_94b744d4",
+        "filename": "base/task_scheduler/task_tracker_posix_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-28T19:59:07Z",
+      "side": 1,
+      "message": "Add a comment as to why this is EXPECT_FALSE since test name/description doesn\u0027t mention that.",
+      "revId": "cb6cc5a359149ca604995e0b3ae0df72f83b9594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a1f768f_4285595c",
+        "filename": "base/task_scheduler/task_tracker_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-28T19:59:07Z",
+      "side": 1,
+      "message": "Make it a StrictMock to ensure it\u0027s never called? Otherwise you could be blocking tasks without failure",
+      "revId": "cb6cc5a359149ca604995e0b3ae0df72f83b9594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aee5408_779283bb",
+        "filename": "base/task_scheduler/task_tracker_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-28T19:59:07Z",
+      "side": 1,
+      "message": "Should this be a StrictMock? (i.e. don\u0027t you always need to tell it what to do? or at least expect its calls?)",
+      "revId": "cb6cc5a359149ca604995e0b3ae0df72f83b9594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b627386_2d289fbf",
+        "filename": "base/task_scheduler/task_tracker_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-28T19:59:07Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "cb6cc5a359149ca604995e0b3ae0df72f83b9594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b602d17_6d2baf64",
+        "filename": "base/task_scheduler/task_tracker_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-28T19:59:07Z",
+      "side": 1,
+      "message": "I think RunTask test above already has this EXPECT_FALSE (as I highlighted there)",
+      "revId": "cb6cc5a359149ca604995e0b3ae0df72f83b9594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18d4dfb8_ee6946b7",
+        "filename": "base/task_scheduler/task_tracker_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-28T19:59:07Z",
+      "side": 1,
+      "message": "Should be StrictMock too",
+      "range": {
+        "startLine": 927,
+        "startChar": 30,
+        "endLine": 927,
+        "endChar": 61
+      },
+      "revId": "cb6cc5a359149ca604995e0b3ae0df72f83b9594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "179f2513_8658a80f",
+        "filename": "base/task_scheduler/task_tracker_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 979,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-28T19:59:07Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to support this use case. Earlier tasks showing up after the task was scheduled is only a possibility for delayed tasks and the API has no guarantee in that regard.\n\n(same argument I had on my RunNextTask comment on TaskTracker)",
+      "revId": "cb6cc5a359149ca604995e0b3ae0df72f83b9594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47203a2d_30895cbf",
+        "filename": "base/task_scheduler/task_tracker_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 1108,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-28T19:59:07Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "cb6cc5a359149ca604995e0b3ae0df72f83b9594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
