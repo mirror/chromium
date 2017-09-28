@@ -1,0 +1,30 @@
+{
+    "extensions": [
+        {
+            "type": "setting",
+            "category": "Network",
+            "title": "Override requests with saved files",
+            "settingName": "network_file_server.interception-enabled",
+            "settingType": "boolean",
+            "defaultValue": true,
+            "tags": "intercept, local, disk",
+            "options": [
+                {
+                    "value": true,
+                    "title": "Enable override requests with local files from disk"
+                },
+                {
+                    "value": false,
+                    "title": "Disable override requests with local files from disk"
+                }
+            ]
+        }
+    ],
+    "dependencies": [
+        "common",
+        "sdk"
+    ],
+    "scripts": [
+        "Interceptor.js"
+    ]
+}

@@ -230,6 +230,7 @@ Main.Main = class {
     new Main.NetworkPanelIndicator();
     new Main.SourcesPanelIndicator();
     new Main.BackendSettingsSync();
+    new NetworkFileServer.Interceptor();
 
     UI.actionRegistry = new UI.ActionRegistry();
     UI.shortcutRegistry = new UI.ShortcutRegistry(UI.actionRegistry, document);
