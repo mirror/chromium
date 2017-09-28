@@ -1280,6 +1280,7 @@ void LayoutObject::ShowLineTreeForThis() const {
 void LayoutObject::ShowLayoutObject() const {
   StringBuilder string_builder;
   ShowLayoutObject(string_builder);
+  DLOG(INFO) << string_builder.ToString().Utf8().data();
 }
 
 void LayoutObject::ShowLayoutObject(StringBuilder& string_builder) const {
@@ -1298,19 +1299,15 @@ void LayoutObject::ShowLayoutObject(StringBuilder& string_builder) const {
     while (string_builder.length() < kShowTreeCharacterOffset)
       string_builder.Append(' ');
     string_builder.Append('\t');
-    WTFLogAlways("%s%s", string_builder.ToString().Utf8().data(),
-                 GetNode()->ToString().Utf8().data());
-  } else {
-    WTFLogAlways("%s", string_builder.ToString().Utf8().data());
   }
 }
 
-void LayoutObject::ShowLayoutTreeAndMark(const LayoutObject* marked_object1,
+void LayoutObject::ShowLayoutTreeAndMark(StringBuilder& string_builder,
+                                         const LayoutObject* marked_object1,
                                          const char* marked_label1,
                                          const LayoutObject* marked_object2,
                                          const char* marked_label2,
                                          unsigned depth) const {
-  StringBuilder string_builder;
   if (marked_object1 == this && marked_label1)
     string_builder.Append(marked_label1);
   if (marked_object2 == this && marked_label2)
@@ -1321,9 +1318,10 @@ void LayoutObject::ShowLayoutTreeAndMark(const LayoutObject* marked_object1,
   ShowLayoutObject(string_builder);
 
   for (const LayoutObject* child = SlowFirstChild(); child;
-       child = child->NextSibling())
-    child->ShowLayoutTreeAndMark(marked_object1, marked_label1, marked_object2,
-                                 marked_label2, depth + 1);
+       child = child->NextSibling()) {
+    child->ShowLayoutTreeAndMark(string_builder, marked_object1, marked_label1,
+                                 marked_object2, marked_label2, depth + 1);
+  }
 }
 
 #endif  // NDEBUG
@@ -3562,14 +3560,14 @@ void showTree(const blink::LayoutObject* object) {
   if (object)
     object->ShowTreeForThis();
   else
-    WTFLogAlways("%s", "Cannot showTree. Root is (nil)");
+    DLOG(INFO) << "Cannot showTree. Root is (nil)";
 }
 
 void showLineTree(const blink::LayoutObject* object) {
   if (object)
     object->ShowLineTreeForThis();
   else
-    WTFLogAlways("%s", "Cannot showLineTree. Root is (nil)");
+    DLOG(INFO) << "Cannot showLineTree. Root is (nil)";
 }
 
 void showLayoutTree(const blink::LayoutObject* object1) {
@@ -3582,9 +3580,14 @@ void showLayoutTree(const blink::LayoutObject* object1,
     const blink::LayoutObject* root = object1;
     while (root->Parent())
       root = root->Parent();
-    root->ShowLayoutTreeAndMark(object1, "*", object2, "-", 0);
+    if (object1) {
+      StringBuilder string_builder;
+      root->ShowLayoutTreeAndMark(string_builder, object1, "*", object2, "-",
+                                  0);
+      DLOG(INFO) << "\n" << string_builder.ToString().Utf8().data();
+    }
   } else {
-    WTFLogAlways("%s", "Cannot showLayoutTree. Root is (nil)");
+    DLOG(INFO) << "Cannot showLayoutTree. Root is (nil)";
   }
 }
 
