@@ -129,6 +129,23 @@
       "revId": "12192e0e7b08f8cc89bc63de04a20defa0aff925",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bcb1d9d0_3925ffdf",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-28T05:47:09Z",
+      "side": 1,
+      "message": "Since |FirstLetterPartFor()| isn\u0027t cheap and we call |AssocaitedLayoutObjectsOf()| twice in |FirstLetterPartFor()| and \n|ComputeLayoutObjectAndOffsetModTextFragment()|, we could write:\n\n\nLayoutTextFragment* const first_letter_part \u003d FirstLatterPartfor(start_layout_object);\nif (!first_letter_part) {\n  MarkSelected(invalidation_set, start_layout_object, SelectionState::kStart);\n  return {start_layout_object, start_offset};\n}\nLayoutTextFragment* const remaining_part \u003d ToLayouTextFragment(start_layout_object);\nif (start_offset \u003c remaing_part-\u003eStart()) {\n  MarkSelected(invalidation_set, first_letter_part, SelectionState::kStart);\n  MarkSelected(invalidation_set, remaing_part, SelectionState::kInside);\n  return {first_letter_part, start_offset};\n}\n\nMarkSelected(invalidation_set, remaing_part, SelectionState::kStart);\nreturn {reamaing_part, start_offset};",
+      "revId": "12192e0e7b08f8cc89bc63de04a20defa0aff925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
