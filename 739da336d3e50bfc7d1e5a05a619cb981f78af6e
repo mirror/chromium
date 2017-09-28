@@ -16,6 +16,24 @@
       "revId": "739da336d3e50bfc7d1e5a05a619cb981f78af6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e05c06a2_8bd39366",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1851,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-28T22:11:55Z",
+      "side": 1,
+      "message": "Without this the utility processes end up rerunning the browser_test. This is triggered here: https://chromium.googlesource.com/chromium/src/+/master/content/public/test/test_launcher.cc#521 . I\u0027m going to leave this for now, but a better fix may be to move the kProcessType conditional on line 525 to be before the conditional on 515. That would mean I don\u0027t need to remove these switches. I\u0027ll investigate later.",
+      "parentUuid": "8a823dbc_f48ce60b",
+      "revId": "739da336d3e50bfc7d1e5a05a619cb981f78af6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
