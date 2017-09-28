@@ -26,7 +26,8 @@ class GPU_EXPORT GpuMemoryBufferFactoryNativePixmap
     : public GpuMemoryBufferFactory,
       public ImageFactory {
  public:
-  GpuMemoryBufferFactoryNativePixmap();
+  GpuMemoryBufferFactoryNativePixmap(
+      ProtectedGpuMemoryBufferManager* protected_buffer_manager);
   ~GpuMemoryBufferFactoryNativePixmap() override;
 
   // Overridden from GpuMemoryBufferFactory:
@@ -63,6 +64,8 @@ class GPU_EXPORT GpuMemoryBufferFactoryNativePixmap
                                              NativePixmapMapKeyHash>;
   NativePixmapMap native_pixmaps_;
   base::Lock native_pixmaps_lock_;
+
+  ProtectedGpuMemoryBufferManager* protected_buffer_manager_;
 
   DISALLOW_COPY_AND_ASSIGN(GpuMemoryBufferFactoryNativePixmap);
 };
