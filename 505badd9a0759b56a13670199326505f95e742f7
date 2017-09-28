@@ -99,6 +99,24 @@
       "revId": "505badd9a0759b56a13670199326505f95e742f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4589939_a7e6e77f",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-28T23:31:56Z",
+      "side": 1,
+      "message": "The WebUI C++ \u003c-\u003e JS interaction is explained at https://chromium.googlesource.com/chromium/src/+/lkcr/docs/webui_explainer.md#Browser-C_Renderer-JS. Specifically there is a very frequent cause of crashes, which Allow/DisallowJavascript try to address.\n\nThe crashes happen when an async C++ callback is trying to call to the page even after the page is gone. The pattern that seems to work in a lot of places is\n\n1) Register observers in OnJavascriptAllowed\n2) Unregister observers in OnJavascriptDisallowed\n3) Call JavascriptAllowed() manually (which triggers 1) when JS sends the 1st message, indicating that the page is alive.\n4) OnJavascriptDisallowed is automatically called when the page is refreshed/closed.\n\nI don\u0027t know how to proceed with this change. If you are saying that this observers eventually will end up calling asynchronous C++ callbacks, which in turn try to call JS, then a crash will happen. Maybe @skau can provide some more info on whether/how this call is safe  to be here.",
+      "parentUuid": "52eae0ac_ddf9d29c",
+      "revId": "505badd9a0759b56a13670199326505f95e742f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
