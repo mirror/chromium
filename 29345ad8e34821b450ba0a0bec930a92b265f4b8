@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd938477_d34ef80f",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_handlers.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 856,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-28T22:16:21Z",
+      "side": 1,
+      "message": "Not directly related to this patch, but because it\u0027s a security issue and you\u0027re here anyway...\nPlease use |pixels_shm_id| instead of c.pixels_shm_id, because of TOCTOU issues. |c| resides in shared memory controlled by an untrusted process so we should read its fields no more than once.",
+      "revId": "29345ad8e34821b450ba0a0bec930a92b265f4b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d2692d6_cee09645",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_handlers.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 887,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-28T22:16:21Z",
+      "side": 1,
+      "message": "ditto, we don\u0027t want to read c.result_shm_id here and below (l.890). Please read into a local variable, preferably with the other ones (l.850). I also strongly recommend doing the same with c.result_shm_offset for consistency and/or avoiding future problems.",
+      "revId": "29345ad8e34821b450ba0a0bec930a92b265f4b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35261959_d3fdf85a",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_unittest_framebuffers.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-28T22:16:21Z",
+      "side": 1,
+      "message": "What puts non-0 values in the framebuffer?",
+      "revId": "29345ad8e34821b450ba0a0bec930a92b265f4b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abbe3c0a_c23bee53",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_unittest_framebuffers.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-28T22:16:21Z",
+      "side": 1,
+      "message": "nit: expect_written",
+      "revId": "29345ad8e34821b450ba0a0bec930a92b265f4b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
