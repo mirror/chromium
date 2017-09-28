@@ -343,9 +343,9 @@ class CORE_EXPORT ContainerNode : public Node {
  protected:
   ContainerNode(TreeScope*, ConstructionType = kCreateContainer);
 
-  void InvalidateNodeListCachesInAncestors(
-      const QualifiedName* attr_name = nullptr,
-      Element* attribute_owner_element = nullptr);
+  void InvalidateNodeListCachesInAncestors(const QualifiedName* attr_name,
+                                           Element* attribute_owner_element,
+                                           const ChildrenChange*);
 
   void SetFirstChild(Node* child) {
     first_child_ = child;

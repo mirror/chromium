@@ -36,6 +36,19 @@ Node* ChildNodeList::VirtualOwnerNode() const {
 
 ChildNodeList::~ChildNodeList() {}
 
+void ChildNodeList::ChildrenChanged(
+    const ContainerNode::ChildrenChange& change) {
+  if (change.IsChildInsertion()) {
+    collection_index_cache_.CollectionChanged(
+        CollectionIndexCache<ChildNodeList, Node>::kNodeInserted);
+  } else if (change.IsChildRemoval()) {
+    collection_index_cache_.CollectionChanged(
+        CollectionIndexCache<ChildNodeList, Node>::kNodeRemoved);
+  } else {
+    collection_index_cache_.Invalidate();
+  }
+}
+
 Node* ChildNodeList::TraverseForwardToOffset(unsigned offset,
                                              Node& current_node,
                                              unsigned& current_offset) const {
