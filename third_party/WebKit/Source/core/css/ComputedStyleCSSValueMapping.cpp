@@ -2220,8 +2220,12 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
     Node* styled_node,
     bool allow_visited_style) {
   const SVGComputedStyle& svg_style = style.SvgStyle();
-  property_id = CSSProperty::ResolveDirectionAwareProperty(
-      property_id, style.Direction(), style.GetWritingMode());
+  if (property_id != CSSPropertyInvalid) {
+    property_id = CSSPropertyAPI::Get(property_id)
+                      .ResolveDirectionAwareProperty(style.Direction(),
+                                                     style.GetWritingMode())
+                      .PropertyID();
+  }
   switch (property_id) {
     case CSSPropertyInvalid:
       return nullptr;
