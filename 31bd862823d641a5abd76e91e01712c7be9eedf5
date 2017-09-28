@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37b36fa0_65b16147",
+        "filename": "chrome/common/extensions/docs/templates/intros/browserAction.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002693
+      },
+      "writtenOn": "2017-09-28T17:59:18Z",
+      "side": 1,
+      "message": "The first sentence is almost a run-on sentence and seems partially unnecessary. Things could be a bit more active voice too (I realize you didn\u0027t write the original language, but let\u0027s clean it up). Something like:\n\nProvide multiple sizes for your icons and Chrome will select the closest one and scale it to fill the 16-dip space. If the icon display size changes, you don\u0027t need to provide more icons.\nHowever, if the size difference is too extreme, the scaling may cause the icon to lose detail or look fuzzy.",
+      "range": {
+        "startLine": 44,
+        "startChar": 1,
+        "endLine": 44,
+        "endChar": 2
+      },
+      "revId": "31bd862823d641a5abd76e91e01712c7be9eedf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
