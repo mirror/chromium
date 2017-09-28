@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0188c82b_12a5942b",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-28T23:34:01Z",
+      "side": 1,
+      "message": "The state transition here is:\n1) Advance to current frame and invalidate. Wait for someone to draw this frame.\n1) Draw the current frame. Call StartAnimation immediately after draw to schedule a task for the next frame.\n\nIf we get here, this means that the time for the next frame after drawing the current frame is in the future and we didn\u0027t to skip anything.",
+      "parentUuid": "1602fcec_8f8e10b6",
+      "revId": "d61e969dd69ce2088205cadc70260d12de5f5017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4205483f_2e89875c",
         "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
         "patchSetId": 12
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7bf0b142_8c89a328",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-28T23:34:01Z",
+      "side": 1,
+      "message": "Yes. And we wouldn\u0027t emit anything here because of the return on line 570.\n\nIn fact, we should be emitting one at the end of the for loop at line 578, instead of the return on line 593. I restructured the code to do that.",
+      "parentUuid": "4205483f_2e89875c",
+      "revId": "d61e969dd69ce2088205cadc70260d12de5f5017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c907f7cd_01bbf851",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 12
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-28T18:26:50Z",
       "side": 1,
       "message": "This metric needs to state clearly when it is emitted.  On each frame draw?",
+      "revId": "d61e969dd69ce2088205cadc70260d12de5f5017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87214923_8c598c2a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 1419,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-28T23:34:01Z",
+      "side": 1,
+      "message": "I updated the description to be clearer.",
+      "parentUuid": "c907f7cd_01bbf851",
       "revId": "d61e969dd69ce2088205cadc70260d12de5f5017",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
