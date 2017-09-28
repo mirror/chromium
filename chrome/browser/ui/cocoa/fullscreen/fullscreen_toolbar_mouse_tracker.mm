@@ -121,7 +121,7 @@ initWithFullscreenToolbarController:(FullscreenToolbarController*)owner
 
   animationController_->AnimateToolbarOutIfPossible();
 
-  [owner_ updateToolbarLayout];
+  [owner_ layoutToolbar];
   [self removeTrackingArea];
 }
 
