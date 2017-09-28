@@ -20,6 +20,7 @@
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/test/histogram_tester.h"
+#include "base/test/simple_test_clock.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "components/previews/core/previews_black_list.h"
@@ -445,6 +446,87 @@ TEST_F(PreviewsIODataTest, ClientLoFiObeysHostBlackListFromServer) {
         1);
   }
   variations::testing::ClearAllVariationParams();
+}
+
+/**
+ * Stub class of PreviewsUIService to test logging functionalities in
+ * PreviewsIOData.
+ */
+class TestPreviewsUIService : public PreviewsUIService {
+ public:
+  TestPreviewsUIService(
+      PreviewsIOData* previews_io_data,
+      const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner,
+      std::unique_ptr<PreviewsOptOutStore> previews_opt_out_store)
+      : PreviewsUIService(previews_io_data,
+                          io_task_runner,
+                          std::move(previews_opt_out_store),
+                          PreviewsIsEnabledCallback()),
+        url_(GURL("")),
+        opt_out_(false),
+        type_(PreviewsType::NONE) {}
+
+  ~TestPreviewsUIService() override {}
+
+  /**
+   * Mock log method call in PreviewsUIService, and record the passed in
+   * parameters.
+   */
+  void LogPreviewNavigation(const GURL& url,
+                            PreviewsType type,
+                            bool opt_out,
+                            base::Time time) override {
+    url_ = GURL(url);
+    opt_out_ = opt_out;
+    type_ = type;
+    time_ = base::Time(time);
+  }
+
+  GURL getPassedInUrl() const { return url_; }
+
+  bool getPassedInOptOut() const { return opt_out_; }
+
+  PreviewsType getPassedInType() const { return type_; }
+
+  base::Time getPassedInTime() const { return time_; }
+
+ private:
+  GURL url_;
+  bool opt_out_;
+  PreviewsType type_;
+  base::Time time_;
+};
+
+TEST_F(PreviewsIODataTest, LogPreviewNavigationPassInCorrectParams) {
+  std::unique_ptr<PreviewsIOData> io_data(base::MakeUnique<PreviewsIOData>(
+      loop_.task_runner(), loop_.task_runner()));
+
+  std::unique_ptr<TestPreviewsUIService> ui_service(
+      base::MakeUnique<TestPreviewsUIService>(io_data.get(),
+                                              loop_.task_runner(), nullptr));
+
+  base::WeakPtrFactory<TestPreviewsUIService> ui_weak_factory(ui_service.get());
+
+  io_data->Initialize(ui_weak_factory.GetWeakPtr(),
+                      base::MakeUnique<TestPreviewsOptOutStore>(),
+                      base::Bind(&IsPreviewFieldTrialEnabled));
+  base::RunLoop().RunUntilIdle();
+
+  std::unique_ptr<base::SimpleTestClock> test_clock_ =
+      base::MakeUnique<base::SimpleTestClock>();
+
+  GURL url("http://www.url_a.com/url_a");
+  bool opt_out = true;
+  PreviewsType type = PreviewsType::OFFLINE;
+  base::Time time = test_clock_->Now();
+
+  io_data->LogPreviewNavigation(url, opt_out, type, time);
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_EQ(url, ui_service->getPassedInUrl());
+  EXPECT_EQ(opt_out, ui_service->getPassedInOptOut());
+  EXPECT_EQ(type, ui_service->getPassedInType());
+  EXPECT_EQ(time, ui_service->getPassedInTime());
 }
 
 }  // namespace
