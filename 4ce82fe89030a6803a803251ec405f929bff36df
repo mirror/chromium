@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70fdfbe9_c20d9363",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-28T21:35:24Z",
+      "side": 0,
+      "message": "The notifications server can potentially end up choosing /usr/share/icons/hicolor/256x256/apps/google-chrome.png if it needs to, right?\n\nIf we instead give the server IDR_PRODUCT_LOGO_32, would that make the notification icon more pixel-ly / the wrong size in some cases?",
+      "revId": "4ce82fe89030a6803a803251ec405f929bff36df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

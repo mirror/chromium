@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "6f945bd1_07f466a8",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-28T21:35:24Z",
+      "side": 1,
+      "message": "In ResourceFile, can you add a DCHECK() to make sure the file path is absolute?",
+      "revId": "a8f062f75f88be2c68166fac6865cdf1a27ff8c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "015e467e_ed478fb1",
         "filename": "chrome/browser/notifications/notification_platform_bridge_linux.cc",
         "patchSetId": 4
