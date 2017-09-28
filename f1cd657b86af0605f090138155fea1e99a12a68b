@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92ecc7b5_139f2438",
+        "filename": "third_party/WebKit/Source/modules/mediacapturefromelement/HTMLMediaElementCapture.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-28T16:43:34Z",
+      "side": 1,
+      "message": "This approach lgtm for the eventually bad case, but why not also throw a clearer exception here in the immediately bad case for clarity?",
+      "revId": "f1cd657b86af0605f090138155fea1e99a12a68b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
