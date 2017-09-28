@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6d3efbf1_56519351",
+        "filename": "third_party/zlib/patches/0004-adler-simd.patch",
+        "patchSetId": 51
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-28T01:29:00Z",
+      "side": 1,
+      "message": "\u003e This is odd. For some reason the .patch file doesn\u0027t have a changelog description.\n\u003e \n\u003e Are the instructions in the README incorrect?\n\nYes, they\u0027re incorrect.  They assume there are only two commits in your git client branch when doing the rebase HEAD~2 part.  My branch client had many more commits that that, the diff computed by the instructions contained many unsquashed commits.\n\nTo fix: I reverted patches/0004-adler-simd.patch and the README change locally and  uploaded the result (patch set #54).  Then I cherrypicked change #54 into a clean client branch, and used the instructions.  The 0004-adler-simd.patch looks sane in that case, no unsquashed commits.",
+      "parentUuid": "9e53fa93_b2a74b54",
+      "revId": "279d2cdd9b854e0e52055a675ca68dd1739c19d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2da5178_ff8b5de1",
         "filename": "third_party/zlib/patches/README",
         "patchSetId": 51
@@ -33,6 +51,24 @@
       "revId": "279d2cdd9b854e0e52055a675ca68dd1739c19d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2d4188a_c264c18f",
+        "filename": "third_party/zlib/patches/README",
+        "patchSetId": 51
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-28T01:29:00Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "d2da5178_ff8b5de1",
+      "revId": "279d2cdd9b854e0e52055a675ca68dd1739c19d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
