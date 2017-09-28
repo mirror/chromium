@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0763a9e3_4340bb86",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-09-28T16:09:47Z",
+      "side": 1,
+      "message": "I\u0027m slightly surprised by this, won\u0027t the containing block sized by grid/flex layout have LogicalWidth/LogicalHeight be respecting this override width/height?",
+      "range": {
+        "startLine": 86,
+        "startChar": 5,
+        "endLine": 86,
+        "endChar": 40
+      },
+      "revId": "c7aa5e8b33b842da75f7dc74181cf15b83d56303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e646c04_56256f0d",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-09-28T16:09:47Z",
+      "side": 1,
+      "message": "why doesn\u0027t this go through all the branches which we do for NGLogicalOffset -\u003e NGPhysicalOffset, in ConvertToPhysical?",
+      "range": {
+        "startLine": 144,
+        "startChar": 2,
+        "endLine": 147,
+        "endChar": 58
+      },
+      "revId": "c7aa5e8b33b842da75f7dc74181cf15b83d56303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "732eec0d_c396fa11",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-09-28T16:09:47Z",
+      "side": 1,
+      "message": ".nit remove double spacing.",
+      "range": {
+        "startLine": 156,
+        "startChar": 15,
+        "endLine": 156,
+        "endChar": 16
+      },
+      "revId": "c7aa5e8b33b842da75f7dc74181cf15b83d56303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d38f82be_a098af31",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-09-28T16:09:47Z",
+      "side": 1,
+      "message": "what does this comment have to do with the loop below?",
+      "range": {
+        "startLine": 163,
+        "startChar": 5,
+        "endLine": 163,
+        "endChar": 70
+      },
+      "revId": "c7aa5e8b33b842da75f7dc74181cf15b83d56303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10ec9542_23365cb6",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-09-28T16:09:47Z",
+      "side": 1,
+      "message": "Can you add a comment explaining this will contain descendants of the current OOF - if any.",
+      "range": {
+        "startLine": 165,
+        "startChar": 7,
+        "endLine": 166,
+        "endChar": 47
+      },
+      "revId": "c7aa5e8b33b842da75f7dc74181cf15b83d56303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cc74bd9_7b28a256",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_fragment_builder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-09-28T16:09:47Z",
+      "side": 1,
+      "message": "DCHECK_GE(size_.inline_size, LayoutUnit());\nDCHECK_GE(size_.block_size, LayoutUnit());\n\nmight be good.",
+      "revId": "c7aa5e8b33b842da75f7dc74181cf15b83d56303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
