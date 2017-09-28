@@ -19,7 +19,7 @@ class BASE_EXPORT RecordHistogramChecker {
 
   // Returns true iff the given histogram should be recorded.
   // This method may be called on any thread, so it should not mutate any state.
-  virtual bool ShouldRecord(uint64_t histogram_hash) const = 0;
+  virtual bool ShouldRecord(uint64_t histogram_hash) = 0;
 };
 
 }  // namespace base
