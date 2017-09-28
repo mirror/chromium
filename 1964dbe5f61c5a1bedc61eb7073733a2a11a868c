@@ -2,6 +2,114 @@
   "comments": [
     {
       "key": {
+        "uuid": "c181a491_5bf57df8",
+        "filename": "chrome/browser/resources/print_preview/data/destination_match.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-28T00:14:37Z",
+      "side": 1,
+      "message": "Nit (cleanup suggestion for a separate CL): Let\u0027s convert this to ES6 class syntax, similar to NativeLayer class.",
+      "revId": "1964dbe5f61c5a1bedc61eb7073733a2a11a868c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "142a5517_eccc8150",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-28T00:14:37Z",
+      "side": 1,
+      "message": "This method does not access |this|. Let\u0027s make it a simple function (declared before DestinationStore class in this file).\n\nEdit: See other comment in this file about this method, with alternative suggestion (line 741).",
+      "revId": "1964dbe5f61c5a1bedc61eb7073733a2a11a868c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f86277f_77ae44c6",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-28T00:14:37Z",
+      "side": 1,
+      "message": "Can we change the type annotation at line 665 to be only {!print_preview.DestinationOrigin} and avoid this casting? Would it require making this type cast in multiple other places in the code?\n\nIt seems a bit odd that we allow two types.",
+      "revId": "1964dbe5f61c5a1bedc61eb7073733a2a11a868c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a71ac8a5_9e9e371f",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-28T00:14:37Z",
+      "side": 1,
+      "message": "Is this effectively equivalent to the slightly shorter version below?\n\n(origin \u003d\u003d print_preview.DestinationOrigin.PRIVET)",
+      "range": {
+        "startLine": 710,
+        "startChar": 12,
+        "endLine": 710,
+        "endChar": 66
+      },
+      "revId": "1964dbe5f61c5a1bedc61eb7073733a2a11a868c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d4ab4ea_ed410679",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-28T00:14:37Z",
+      "side": 1,
+      "message": "Would it make sense to make a destinationMatch.getType() or getDestinationType() helper method and put this logic in the DestinationMatch class?",
+      "revId": "1964dbe5f61c5a1bedc61eb7073733a2a11a868c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "917a6311_65982d01",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-28T00:14:37Z",
+      "side": 1,
+      "message": "Nit: Indentation seems off by 2 here.",
+      "revId": "1964dbe5f61c5a1bedc61eb7073733a2a11a868c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f26fb2dc_b111b8dd",
         "filename": "chrome/browser/ui/webui/print_preview/extension_printer_handler_unittest.cc",
         "patchSetId": 6
