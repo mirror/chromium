@@ -77,6 +77,9 @@ const char kSettingsButtonId[] = "settings";
 const int kMaxImageWidth = 200;
 const int kMaxImageHeight = 100;
 
+// Notification on-screen time, in milliseconds.
+const int32_t kExpireTimeout = 25000;
+
 // The values in this enumeration correspond to those of the
 // Linux.NotificationPlatformBridge.InitializationStatus histogram, so
 // the ordering should not be changed.  New error codes should be
@@ -645,10 +648,9 @@ class NotificationPlatformBridgeLinuxImpl
 
     writer.CloseContainer(&hints_writer);
 
-    const int32_t kExpireTimeoutDefault = -1;
     const int32_t kExpireTimeoutNever = 0;
     writer.AppendInt32(notification->never_timeout() ? kExpireTimeoutNever
-                                                     : kExpireTimeoutDefault);
+                                                     : kExpireTimeout);
 
     std::unique_ptr<dbus::Response> response =
         notification_proxy_->CallMethodAndBlock(

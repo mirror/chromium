@@ -350,13 +350,13 @@ TEST_F(NotificationPlatformBridgeLinuxTest, NotificationListItemsInBody) {
 }
 
 TEST_F(NotificationPlatformBridgeLinuxTest, NotificationTimeouts) {
-  const int32_t kExpireTimeoutDefault = -1;
+  const int32_t kExpireTimeout = 25000;
   const int32_t kExpireTimeoutNever = 0;
   EXPECT_CALL(*mock_notification_proxy_.get(),
               CallMethodAndBlock(Calls("Notify"), _))
       .WillOnce(OnNotify(
           [=](const NotificationRequest& request) {
-            EXPECT_EQ(kExpireTimeoutDefault, request.expire_timeout);
+            EXPECT_EQ(kExpireTimeout, request.expire_timeout);
           },
           1))
       .WillOnce(OnNotify(
