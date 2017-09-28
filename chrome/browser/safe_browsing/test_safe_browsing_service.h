@@ -7,7 +7,6 @@
 
 #include "chrome/browser/safe_browsing/safe_browsing_service.h"
 
-#include "chrome/browser/safe_browsing/protocol_manager.h"
 #include "chrome/browser/safe_browsing/ui_manager.h"
 #include "components/safe_browsing/db/v4_protocol_manager_util.h"
 
@@ -66,11 +65,9 @@ class TestSafeBrowsingService : public SafeBrowsingService {
   ~TestSafeBrowsingService() override;
   SafeBrowsingDatabaseManager* CreateDatabaseManager() override;
   SafeBrowsingUIManager* CreateUIManager() override;
-  SafeBrowsingProtocolManagerDelegate* GetProtocolManagerDelegate() override;
   void SendSerializedDownloadReport(const std::string& report) override;
 
  private:
-  bool protocol_manager_delegate_disabled_;
   std::unique_ptr<SafeBrowsingProtocolConfig> protocol_config_;
   std::unique_ptr<V4ProtocolConfig> v4_protocol_config_;
   std::string serialized_download_report_;
