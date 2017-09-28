@@ -52,6 +52,24 @@
       "revId": "53a8b3ae2bc5ad9a4f5ab59516025adccbbef319",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8954135c_79ffe9bd",
+        "filename": "third_party/WebKit/Source/platform/wtf/RefPtr.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-09-28T09:17:29Z",
+      "side": 1,
+      "message": "Hmm, should we resurrect http://crrev.com/c/668314 ?\n\ndcheng: WDYT?",
+      "parentUuid": "3c7f0675_25a411b6",
+      "revId": "53a8b3ae2bc5ad9a4f5ab59516025adccbbef319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
