@@ -53,21 +53,15 @@ public class SelectionPopupControllerTest {
     private static final String AMPHITHEATRE_FULL = "1600 Amphitheatre Parkway";
     private static final String AMPHITHEATRE = "Amphitheatre";
 
-    private class TestSelectionClient implements SelectionClient {
-        private SelectionClient.Result mResult;
-        private SelectionClient.ResultCallback mResultCallback;
+    private class TestSmartSelectionClient implements SmartSelectionClient {
+        private SmartSelectionClient.Result mResult;
+        private SmartSelectionClient.ResultCallback mResultCallback;
 
         @Override
         public void onSelectionChanged(String selection) {}
 
         @Override
         public void onSelectionEvent(int eventType, float posXPix, float poxYPix) {}
-
-        @Override
-        public void showUnhandledTapUIIfNeeded(int x, int y) {}
-
-        @Override
-        public void selectWordAroundCaretAck(boolean didSelect, int startAdjust, int endAdjust) {}
 
         @Override
         public boolean requestSelectionPopupUpdates(boolean shouldSuggest) {
@@ -78,16 +72,16 @@ public class SelectionPopupControllerTest {
         @Override
         public void cancelAllRequests() {}
 
-        public void setResult(SelectionClient.Result result) {
+        public void setResult(SmartSelectionClient.Result result) {
             mResult = result;
         }
 
-        public void setResultCallback(SelectionClient.ResultCallback callback) {
+        public void setResultCallback(SmartSelectionClient.ResultCallback callback) {
             mResultCallback = callback;
         }
     }
 
-    class SelectionClientOnlyReturnTrue extends TestSelectionClient {
+    class SelectionClientOnlyReturnTrue extends TestSmartSelectionClient {
         @Override
         public boolean requestSelectionPopupUpdates(boolean shouldSuggest) {
             return true;
@@ -117,13 +111,13 @@ public class SelectionPopupControllerTest {
     @Feature({"TextInput", "SmartSelection"})
     public void testSmartSelectionAdjustSelectionRange() {
         InOrder order = inOrder(mWebContents, mView);
-        SelectionClient.Result result = resultForAmphitheatre();
+        SmartSelectionClient.Result result = resultForAmphitheatre();
 
-        // Setup SelectionClient for SelectionPopupController.
-        TestSelectionClient client = new TestSelectionClient();
+        // Setup SmartSelectionClient for SelectionPopupController.
+        TestSmartSelectionClient client = new TestSmartSelectionClient();
         client.setResult(result);
         client.setResultCallback(mController.getResultCallback());
-        mController.setSelectionClient(client);
+        mController.setSmartSelectionClient(client);
 
         // Long press triggered showSelectionMenu() call.
         mController.showSelectionMenu(0, 0, 0, 0, /* isEditable = */ true,
@@ -149,7 +143,7 @@ public class SelectionPopupControllerTest {
         order.verify(mView).startActionMode(
                 isA(FloatingActionModeCallback.class), eq(ActionMode.TYPE_FLOATING));
 
-        SelectionClient.Result returnResult = mController.getClassificationResult();
+        SmartSelectionClient.Result returnResult = mController.getClassificationResult();
         assertEquals(-5, returnResult.startAdjust);
         assertEquals(8, returnResult.endAdjust);
         assertEquals("Maps", returnResult.label);
@@ -161,14 +155,14 @@ public class SelectionPopupControllerTest {
     @Feature({"TextInput", "SmartSelection"})
     public void testSmartSelectionAnotherLongPressAfterAdjustment() {
         InOrder order = inOrder(mWebContents, mView);
-        SelectionClient.Result result = resultForAmphitheatre();
-        SelectionClient.Result newResult = resultForMountain();
+        SmartSelectionClient.Result result = resultForAmphitheatre();
+        SmartSelectionClient.Result newResult = resultForMountain();
 
-        // Set SelectionClient for SelectionPopupController.
-        TestSelectionClient client = new TestSelectionClient();
+        // Set SmartSelectionClient for SelectionPopupController.
+        TestSmartSelectionClient client = new TestSmartSelectionClient();
         client.setResult(result);
         client.setResultCallback(mController.getResultCallback());
-        mController.setSelectionClient(client);
+        mController.setSmartSelectionClient(client);
 
         // Long press triggered showSelectionMenu() call.
         mController.showSelectionMenu(0, 0, 0, 0, /* isEditable = */ true,
@@ -201,7 +195,7 @@ public class SelectionPopupControllerTest {
                 /* canRichlyEdit = */ true, /* shouldSuggest = */ true,
                 /* fromSelectionAdjustment = */ true);
 
-        SelectionClient.Result returnResult = mController.getClassificationResult();
+        SmartSelectionClient.Result returnResult = mController.getClassificationResult();
         assertEquals(-21, returnResult.startAdjust);
         assertEquals(15, returnResult.endAdjust);
         assertEquals("Maps", returnResult.label);
@@ -222,12 +216,12 @@ public class SelectionPopupControllerTest {
     @Feature({"TextInput", "SmartSelection"})
     public void testSmartSelectionAnotherLongPressBeforeAdjustment() {
         InOrder order = inOrder(mWebContents, mView);
-        SelectionClient.Result result = resultForAmphitheatre();
-        SelectionClient.Result newResult = resultForMountain();
+        SmartSelectionClient.Result result = resultForAmphitheatre();
+        SmartSelectionClient.Result newResult = resultForMountain();
 
         // This client won't call SmartSelectionCallback.
-        TestSelectionClient client = new SelectionClientOnlyReturnTrue();
-        mController.setSelectionClient(client);
+        TestSmartSelectionClient client = new SelectionClientOnlyReturnTrue();
+        mController.setSmartSelectionClient(client);
 
         // Long press triggered showSelectionMenu() call.
         mController.showSelectionMenu(0, 0, 0, 0, /* isEditable = */ true,
@@ -264,7 +258,7 @@ public class SelectionPopupControllerTest {
                 /* canRichlyEdit = */ true, /* shouldSuggest = */ true,
                 /* fromSelectionAdjustment = */ true);
 
-        SelectionClient.Result returnResult = mController.getClassificationResult();
+        SmartSelectionClient.Result returnResult = mController.getClassificationResult();
         assertEquals(-21, returnResult.startAdjust);
         assertEquals(15, returnResult.endAdjust);
         assertEquals("Maps", returnResult.label);
@@ -282,8 +276,8 @@ public class SelectionPopupControllerTest {
     }
 
     // Result generated by long press "Amphitheatre" in "1600 Amphitheatre Parkway".
-    private SelectionClient.Result resultForAmphitheatre() {
-        SelectionClient.Result result = new SelectionClient.Result();
+    private SmartSelectionClient.Result resultForAmphitheatre() {
+        SmartSelectionClient.Result result = new SmartSelectionClient.Result();
         result.startAdjust = -5;
         result.endAdjust = 8;
         result.label = "Maps";
@@ -291,8 +285,8 @@ public class SelectionPopupControllerTest {
     }
 
     // Result generated by long press "Mountain" in "585 Franklin Street, Mountain View, CA 94041".
-    private SelectionClient.Result resultForMountain() {
-        SelectionClient.Result result = new SelectionClient.Result();
+    private SmartSelectionClient.Result resultForMountain() {
+        SmartSelectionClient.Result result = new SmartSelectionClient.Result();
         result.startAdjust = -21;
         result.endAdjust = 15;
         result.label = "Maps";

@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnGlobalFocusChangeListener;
-import android.view.textclassifier.TextClassifier;
 
 import org.chromium.base.ObserverList;
 import org.chromium.base.SysUtils;
@@ -45,7 +44,7 @@ import org.chromium.chrome.browser.widget.findinpage.FindToolbarManager;
 import org.chromium.chrome.browser.widget.findinpage.FindToolbarObserver;
 import org.chromium.components.navigation_interception.NavigationParams;
 import org.chromium.content.browser.ContentViewCore;
-import org.chromium.content.browser.SelectionClient;
+import org.chromium.content.browser.ContextualSearchSelectionClient;
 import org.chromium.content_public.browser.GestureStateListener;
 import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.content_public.browser.NavigationEntry;
@@ -64,10 +63,10 @@ import javax.annotation.Nullable;
  * Manager for the Contextual Search feature. This class keeps track of the status of Contextual
  * Search and coordinates the control with the layout.
  */
-public class ContextualSearchManager implements ContextualSearchManagementDelegate,
-                                                ContextualSearchTranslateInterface,
-                                                ContextualSearchNetworkCommunicator,
-                                                ContextualSearchSelectionHandler, SelectionClient {
+public class ContextualSearchManager
+        implements ContextualSearchManagementDelegate, ContextualSearchTranslateInterface,
+                   ContextualSearchNetworkCommunicator, ContextualSearchSelectionHandler,
+                   ContextualSearchSelectionClient {
     // TODO(donnd): provide an inner class that implements some of these interfaces (like the
     // ContextualSearchTranslateInterface) rather than having the manager itself implement the
     // interface because that exposes all the public methods of that interface at the manager level.
@@ -1209,7 +1208,7 @@ public class ContextualSearchManager implements ContextualSearchManagementDelega
     }
 
     // ============================================================================================
-    // SelectionClient -- interface used by ContentViewCore.
+    // ContextualSearchSelectionClient -- interface used by SelectionPopupController.
     // ============================================================================================
 
     @Override
@@ -1250,27 +1249,6 @@ public class ContextualSearchManager implements ContextualSearchManagementDelega
         } else {
             hideContextualSearch(StateChangeReason.UNKNOWN);
         }
-    }
-
-    @Override
-    public boolean requestSelectionPopupUpdates(boolean shouldSuggest) {
-        return false;
-    }
-
-    @Override
-    public void cancelAllRequests() {}
-
-    @Override
-    public void setTextClassifier(TextClassifier textClassifier) {}
-
-    @Override
-    public TextClassifier getTextClassifier() {
-        return null;
-    }
-
-    @Override
-    public TextClassifier getCustomTextClassifier() {
-        return null;
     }
 
     /**

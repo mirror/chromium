@@ -73,6 +73,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nullable;
+
 /**
  * Provides a Java-side 'wrapper' around a WebContent (native) instance.
  * Contains all the major functionality necessary to manage the lifecycle of a ContentView without
@@ -480,7 +482,7 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
 
         mSelectionPopupController = new SelectionPopupController(
                 mContext, windowAndroid, webContents, mContainerView, mRenderCoordinates);
-        mSelectionPopupController.setSelectionClient(SmartSelectionClient.create(
+        mSelectionPopupController.setSmartSelectionClient(SmartSelectionClientImpl.create(
                 mSelectionPopupController.getResultCallback(), windowAndroid, webContents));
         mSelectionPopupController.setCallback(ActionModeCallbackHelper.EMPTY_CALLBACK);
         mSelectionPopupController.setContainerView(mContainerView);
@@ -2127,40 +2129,51 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
     }
 
     /**
-     * Sets the client that can process and augment existing text selection, e.g. Contextual Search.
-     * @param selectionClient The client that receives related notifications.
+     * Sets the client that can process and augment existing text selection for Smart Select.
+     * @param smartSelectionClient A {@link SmartSelectionClient} that receives related
+     *        notifications or {@code null} to remove the current client receiving them.
      */
-    public void setSelectionClient(SelectionClient selectionClient) {
-        mSelectionPopupController.setSelectionClient(selectionClient);
+    public void setSmartSelectionClient(@Nullable SmartSelectionClient smartSelectionClient) {
+        mSelectionPopupController.setSmartSelectionClient(smartSelectionClient);
     }
 
     /**
-     * Sets TextClassifier for Smart Text selection.
+     * Sets the client that can process and augment existing text selection for Contextual Search.
+     * @param contextualSearchSelectionClient A {@link SmartSelectionClientImpl} that receives
+     * related notifications or {@code null} to remove the current client receiving them.
      */
-    public void setTextClassifier(TextClassifier textClassifier) {
+    public void setContextualSearchSelectionClient(
+            @Nullable ContextualSearchSelectionClient contextualSearchSelectionClient) {
+        mSelectionPopupController.setContextualSearchSelectionClient(
+                contextualSearchSelectionClient);
+    }
+
+    /**
+     * Sets the {@link TextClassifier} for the Smart Select text selection.
+     * @param textClassifier The classifier to use, or {@code null} to use the system classifier.
+     */
+    public void setTextClassifier(@Nullable TextClassifier textClassifier) {
         assert Build.VERSION.SDK_INT >= Build.VERSION_CODES.O;
-        SelectionClient client = mSelectionPopupController.getSelectionClient();
-        if (client != null) client.setTextClassifier(textClassifier);
+        mSelectionPopupController.setTextClassifier(textClassifier);
     }
 
     /**
-     * Returns TextClassifier that is used for Smart Text selection. If the custom classifier
-     * has been set with setTextClassifier, returns that object, otherwise returns the system
-     * classifier.
+     * @return The {@link TextClassifier} that is used for the Smart Select text selection.
+     *         If the custom classifier has been set with #setTextClassifier, returns that object,
+     *         otherwise returns the system classifier.
      */
     public TextClassifier getTextClassifier() {
         assert Build.VERSION.SDK_INT >= Build.VERSION_CODES.O;
-        SelectionClient client = mSelectionPopupController.getSelectionClient();
-        return client == null ? null : client.getTextClassifier();
+        return mSelectionPopupController.getTextClassifier();
     }
 
     /**
-     * Returns the TextClassifier which has been set with setTextClassifier(), or null.
+     * @return The {@link TextClassifier} which has been set with #setTextClassifier, or
+     *         {@code null} if no custom classifier has been set.
      */
     public TextClassifier getCustomTextClassifier() {
         assert Build.VERSION.SDK_INT >= Build.VERSION_CODES.O;
-        SelectionClient client = mSelectionPopupController.getSelectionClient();
-        return client == null ? null : client.getCustomTextClassifier();
+        return mSelectionPopupController.getCustomTextClassifier();
     }
 
     private native long nativeInit(WebContents webContents, ViewAndroidDelegate viewAndroidDelegate,

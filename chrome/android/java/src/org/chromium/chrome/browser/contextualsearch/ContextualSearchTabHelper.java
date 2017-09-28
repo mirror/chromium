@@ -195,7 +195,7 @@ public class ContextualSearchTabHelper
         if (mGestureStateListener == null && manager != null) {
             mGestureStateListener = manager.getGestureStateListener();
             cvc.addGestureStateListener(mGestureStateListener);
-            cvc.setSelectionClient(manager);
+            cvc.setContextualSearchSelectionClient(manager);
         }
     }
 
@@ -209,7 +209,7 @@ public class ContextualSearchTabHelper
         if (mGestureStateListener != null) {
             cvc.removeGestureStateListener(mGestureStateListener);
             mGestureStateListener = null;
-            cvc.setSelectionClient(null);
+            cvc.setContextualSearchSelectionClient(null);
         }
     }
 

@@ -4,161 +4,124 @@
 
 package org.chromium.content.browser;
 
-import android.os.Build;
-import android.support.annotation.IntDef;
-import android.text.TextUtils;
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.view.View.OnClickListener;
 import android.view.textclassifier.TextClassifier;
 
-import org.chromium.base.annotations.CalledByNative;
-import org.chromium.base.annotations.JNINamespace;
-import org.chromium.content_public.browser.WebContents;
-import org.chromium.ui.base.WindowAndroid;
-
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+import javax.annotation.Nullable;
 
 /**
- * A class that controls Smart Text selection. Smart Text selection automatically augments the
- * selected boundaries and classifies the selected text based on the context.
- * This class requests the selection together with its surrounding text from the focused frame and
- * sends it to SmartSelectionProvider which does the classification itself.
+ * Interface to a content layer client that can process and modify selection text and supports
+ * Smart Select.
  */
-@JNINamespace("content")
-public class SmartSelectionClient implements SelectionClient {
-    @IntDef({CLASSIFY, SUGGEST_AND_CLASSIFY})
-    @Retention(RetentionPolicy.SOURCE)
-    private @interface RequestType {}
+public interface SmartSelectionClient {
+    /**
+     * The result of the text analysis.
+     */
+    public static class Result {
+        /**
+         * The number of characters that the left boundary of the original
+         * selection should be moved. Negative number means moving left.
+         */
+        public int startAdjust;
 
-    // Request to obtain the type (e.g. phone number, e-mail address) and the most
-    // appropriate operation for the selected text.
-    private static final int CLASSIFY = 0;
+        /**
+         * The number of characters that the right boundary of the original
+         * selection should be moved. Negative number means moving left.
+         */
+        public int endAdjust;
 
-    // Request to obtain the type (e.g. phone number, e-mail address), the most
-    // appropriate operation for the selected text and a better selection boundaries.
-    private static final int SUGGEST_AND_CLASSIFY = 1;
+        /**
+         * Label for the suggested menu item.
+         */
+        public CharSequence label;
 
-    // The maximal number of characters on the left and on the right from the current selection.
-    // Used for surrounding text request.
-    private static final int NUM_EXTRA_CHARS = 240;
+        /**
+         * Icon for the suggested menu item.
+         */
+        public Drawable icon;
 
-    // Is smart selection enabled?
-    private static boolean sEnabled;
+        /**
+         * Intent for the suggested menu item.
+         */
+        public Intent intent;
 
-    private long mNativeSmartSelectionClient;
-    private SmartSelectionProvider mProvider;
-    private ResultCallback mCallback;
+        /**
+         * OnClickListener for the suggested menu item.
+         */
+        public OnClickListener onClickListener;
 
-    public static void setEnabled(boolean enabled) {
-        sEnabled = enabled;
+        /**
+         * A helper method that returns true if the result has both visual info
+         * and an action so that, for instance, one can make a new menu item.
+         */
+        public boolean hasNamedAction() {
+            return (label != null || icon != null) && (intent != null || onClickListener != null);
+        }
     }
 
     /**
-     * Creates the SmartSelectionClient. Returns null in case SmartSelectionProvider does not exist
-     * in the system.
+     * The interface that returns the result of the selected text analysis.
      */
-    public static SmartSelectionClient create(
-            ResultCallback callback, WindowAndroid windowAndroid, WebContents webContents) {
-        if (!sEnabled) return null;
-        SmartSelectionProvider provider = new SmartSelectionProvider(callback, windowAndroid);
-        return new SmartSelectionClient(provider, callback, webContents);
+    public interface ResultCallback {
+        /**
+         * The result is delivered with this method.
+         */
+        void onClassified(Result result);
     }
 
-    private SmartSelectionClient(
-            SmartSelectionProvider provider, ResultCallback callback, WebContents webContents) {
-        assert Build.VERSION.SDK_INT >= Build.VERSION_CODES.O;
-        mProvider = provider;
-        mCallback = callback;
-        mNativeSmartSelectionClient = nativeInit(webContents);
-    }
+    /**
+     * Notification that the web content selection has changed, regardless of the causal action.
+     * @param selection The newly established selection.
+     */
+    void onSelectionChanged(String selection);
 
-    @CalledByNative
-    private void onNativeSideDestroyed(long nativeSmartSelectionClient) {
-        assert nativeSmartSelectionClient == mNativeSmartSelectionClient;
-        mNativeSmartSelectionClient = 0;
-        mProvider.cancelAllRequests();
-    }
+    /**
+     * Notification that a user-triggered selection or insertion-related event has occurred.
+     * @param eventType The selection event type, see {@link SelectionEventType}.
+     * @param posXPix The x coordinate of the selection start handle.
+     * @param posYPix The y coordinate of the selection start handle.
+     */
+    void onSelectionEvent(int eventType, float posXPix, float posYPix);
 
-    // SelectionClient implementation
-    @Override
-    public void onSelectionChanged(String selection) {}
+    /**
+     * Notifies the SelectionClient that the Smart Select menu has been requested.
+     * @param shouldSuggest Whether the SelectionClient should suggest and classify or just
+     *        classify.
+     * @return True if embedder should wait for a response before showing selection menu.
+     */
+    boolean requestSelectionPopupUpdates(boolean shouldSuggest);
 
-    @Override
-    public void onSelectionEvent(int eventType, float posXPix, float posYPix) {}
+    /**
+     * Cancels any outstanding requests the embedder had previously requested using
+     * SelectionClient.requestSelectionPopupUpdates().
+     */
+    void cancelAllRequests();
 
-    @Override
-    public void showUnhandledTapUIIfNeeded(int x, int y) {}
+    /**
+     * Sets the {@link TextClassifier} for the Smart Select text selection. Pass {@code null} to use
+     * the system classifier.
+     */
+    default void
+        setTextClassifier(@Nullable TextClassifier textClassifier) {}
 
-    @Override
-    public void selectWordAroundCaretAck(boolean didSelect, int startAdjust, int endAdjust) {}
-
-    @Override
-    public boolean requestSelectionPopupUpdates(boolean shouldSuggest) {
-        requestSurroundingText(shouldSuggest ? SUGGEST_AND_CLASSIFY : CLASSIFY);
-        return true;
-    }
-
-    @Override
-    public void cancelAllRequests() {
-        if (mNativeSmartSelectionClient != 0) {
-            nativeCancelAllRequests(mNativeSmartSelectionClient);
+    /**
+     * Gets the {@link TextClassifier} that is used for the Smart Select text selection. If the
+     * custom classifier has been set with #setTextClassifier, returns that object, otherwise
+     * returns the system classifier.
+     */
+    default TextClassifier
+        getTextClassifier() {
+            return null;
         }
 
-        mProvider.cancelAllRequests();
-    }
-
-    @Override
-    public void setTextClassifier(TextClassifier textClassifier) {
-        mProvider.setTextClassifier(textClassifier);
-    }
-
-    @Override
-    public TextClassifier getTextClassifier() {
-        return mProvider.getTextClassifier();
-    }
-
-    @Override
-    public TextClassifier getCustomTextClassifier() {
-        return mProvider.getCustomTextClassifier();
-    }
-
-    private void requestSurroundingText(@RequestType int callbackData) {
-        if (mNativeSmartSelectionClient == 0) {
-            onSurroundingTextReceived(callbackData, "", 0, 0);
-            return;
+    /**
+     * Returns the {@link TextClassifier} which has been set with #setTextClassifier, or
+     * {@code null} if no custom classifier has been set.
+     */
+    default TextClassifier
+        getCustomTextClassifier() {
+            return null;
         }
-
-        nativeRequestSurroundingText(mNativeSmartSelectionClient, NUM_EXTRA_CHARS, callbackData);
-    }
-
-    @CalledByNative
-    private void onSurroundingTextReceived(
-            @RequestType int callbackData, String text, int start, int end) {
-        if (!textHasValidSelection(text, start, end)) {
-            mCallback.onClassified(new Result());
-            return;
-        }
-
-        switch (callbackData) {
-            case SUGGEST_AND_CLASSIFY:
-                mProvider.sendSuggestAndClassifyRequest(text, start, end, null);
-                break;
-
-            case CLASSIFY:
-                mProvider.sendClassifyRequest(text, start, end, null);
-                break;
-
-            default:
-                assert false : "Unexpected callback data";
-                break;
-        }
-    }
-
-    private boolean textHasValidSelection(String text, int start, int end) {
-        return !TextUtils.isEmpty(text) && 0 <= start && start < end && end <= text.length();
-    }
-
-    private native long nativeInit(WebContents webContents);
-    private native void nativeRequestSurroundingText(
-            long nativeSmartSelectionClient, int numExtraCharacters, int callbackData);
-    private native void nativeCancelAllRequests(long nativeSmartSelectionClient);
 }

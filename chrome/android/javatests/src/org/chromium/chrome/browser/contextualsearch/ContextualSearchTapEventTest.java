@@ -28,7 +28,7 @@ import org.chromium.chrome.browser.compositor.layouts.LayoutUpdateHost;
 import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 import org.chromium.content.browser.ContentViewCore;
-import org.chromium.content.browser.SelectionClient;
+import org.chromium.content.browser.ContextualSearchSelectionClient;
 import org.chromium.content.browser.SelectionPopupController;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.ui.resources.dynamics.DynamicResourceLoader;
@@ -50,7 +50,7 @@ public class ContextualSearchTapEventTest {
     private ContextualSearchManagerWrapper mContextualSearchManager;
     private ContextualSearchPanel mPanel;
     private OverlayPanelManagerWrapper mPanelManager;
-    private SelectionClient mContextualSearchClient;
+    private ContextualSearchSelectionClient mContextualSearchSelectionClient;
 
     // --------------------------------------------------------------------------------------------
 
@@ -86,7 +86,7 @@ public class ContextualSearchTapEventTest {
             WebContents webContents = WebContentsFactory.createWebContents(false, false);
             contentView.setSelectionPopupControllerForTesting(new SelectionPopupController(
                     activity, null, webContents, null, contentView.getRenderCoordinates()));
-            contentView.setSelectionClient(this);
+            contentView.setContextualSearchSelectionClient(this);
             MockContextualSearchPolicy policy = new MockContextualSearchPolicy();
             setContextualSearchPolicy(policy);
             mTranslateController = new MockedCSTranslateController(activity, policy, null);
@@ -189,8 +189,8 @@ public class ContextualSearchTapEventTest {
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
-                mContextualSearchClient.onSelectionEvent(SelectionEventType.SELECTION_HANDLES_SHOWN,
-                        0, 0);
+                mContextualSearchSelectionClient.onSelectionEvent(
+                        SelectionEventType.SELECTION_HANDLES_SHOWN, 0, 0);
             }
         });
     }
@@ -204,7 +204,7 @@ public class ContextualSearchTapEventTest {
             @Override
             public void run() {
                 mContextualSearchManager.getGestureStateListener().onTouchDown();
-                mContextualSearchClient.showUnhandledTapUIIfNeeded(0, 0);
+                mContextualSearchSelectionClient.showUnhandledTapUIIfNeeded(0, 0);
             }
         });
     }
@@ -216,8 +216,8 @@ public class ContextualSearchTapEventTest {
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
-                mContextualSearchClient.showUnhandledTapUIIfNeeded(0, 0);
-                mContextualSearchClient.onSelectionEvent(
+                mContextualSearchSelectionClient.showUnhandledTapUIIfNeeded(0, 0);
+                mContextualSearchSelectionClient.onSelectionEvent(
                         SelectionEventType.SELECTION_HANDLES_CLEARED, 0, 0);
             }
         });
@@ -272,7 +272,7 @@ public class ContextualSearchTapEventTest {
                 mPanel.setManagementDelegate(mContextualSearchManager);
                 mContextualSearchManager.setContextualSearchPanel(mPanel);
 
-                mContextualSearchClient = mContextualSearchManager;
+                mContextualSearchSelectionClient = mContextualSearchManager;
             }
         });
     }
