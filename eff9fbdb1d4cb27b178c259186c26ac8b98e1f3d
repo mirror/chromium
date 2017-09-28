@@ -233,6 +233,24 @@
       "revId": "eff9fbdb1d4cb27b178c259186c26ac8b98e1f3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6678df27_3d24cc0f",
+        "filename": "third_party/WebKit/Source/core/page/SpatialNavigation.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2017-09-28T02:09:54Z",
+      "side": 1,
+      "message": "\u003e Can we make other clients of CanScrollInDirection() use HasOverflowInDirection() instead of CanScrollInDirection()?\n\nYes. I found another point should be changed to HasOverflowInDirection().\n\nbool FocusController::AdvanceFocusDirectionallyInContainer() {\n  ...\n  if (CanScrollInDirection(focus_candidate.visible_node, type)) {\n    ...\n    AdvanceFocusDirectionallyInContainer(focus_candidate.visible_node);\n  }\n}\n\nHonestly, I considered only enclosing parent for container, but above code scoping down to child.\nIn this case, just replacing to HasOverflowInDirection() is not trivial.\n\nI think following definition about container is more proper rather than original suggestion.\n1) Scrollable(HasOverflowInDirection if it is an element).\n2) CanScrollInDirection() or Has at least one focusable element except focused element.\n\n\n\u003e Why do we still need CanScrollInDirection()? When is \"can scroll\" not the same as \"has overflow\"?\n\nCanScrollInDirection() still very important because scroll is triggered instead focus moving in some cases.\nFor example, if no exists focusable element in current container but can scroll in direction, then just scroll is triggered.",
+      "parentUuid": "8db709c2_896cd24a",
+      "revId": "eff9fbdb1d4cb27b178c259186c26ac8b98e1f3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
