@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f23f78c1_b2cb79be",
+        "filename": "components/history/core/browser/typed_url_model_type_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-09-28T23:28:23Z",
+      "side": 1,
+      "message": "Or you could have kept task_ as base::Closure and called task_.Reset();",
+      "revId": "f91412d0aa8af74d004ef5a3f7de5f2efc94dc76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "22951ad5_b5dc616c",
+        "filename": "components/history/core/browser/typed_url_model_type_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-09-28T23:28:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd906b1b_5a37600b",
+      "range": {
+        "startLine": 102,
+        "startChar": 6,
+        "endLine": 102,
+        "endChar": 36
+      },
+      "revId": "d96b89b0ad241d42f24dc7d6c261d9517fb278fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2569bc09_73638591",
         "filename": "components/history/core/browser/typed_url_sync_bridge.cc",
         "patchSetId": 7
@@ -83,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "49f68dfb_f47f61f8",
+        "filename": "components/history/core/browser/typed_url_sync_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-09-28T23:28:23Z",
+      "side": 1,
+      "message": "The reason I asked is that I noticed that you added a check for return value of WriteToHistoryBackend(), but still return success regardless of result of UpdateStorageKey/UntrackEntity calls.\n\nNo, I don\u0027t think we should add return value to UpdateStorageKey(). This would mean we need to add return value to all functions in ModelTypeChangeProcessor.\n\nThis is not a unique problem. How is error handling done in other places where we use change_processor()?",
+      "parentUuid": "ce403dd9_435f7739",
+      "revId": "d96b89b0ad241d42f24dc7d6c261d9517fb278fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a621abd_df33302a",
         "filename": "components/sync/driver/model_type_controller.h",
         "patchSetId": 7
@@ -97,6 +139,24 @@
       "revId": "d96b89b0ad241d42f24dc7d6c261d9517fb278fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59d37606_7c236b51",
+        "filename": "components/sync/driver/model_type_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-09-28T23:28:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a621abd_df33302a",
+      "revId": "d96b89b0ad241d42f24dc7d6c261d9517fb278fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
