@@ -111,8 +111,7 @@ void ExclusiveAccessController::UpdateUIForTabFullscreen(
 }
 
 void ExclusiveAccessController::UpdateFullscreenToolbar() {
-  [[controller_ fullscreenToolbarController]
-      updateToolbarStyleExitingTabFullscreen:NO];
+  [[controller_ fullscreenToolbarController] invalidateToolbarStyle:NO];
 }
 
 // See the Fullscreen terminology section and the (Fullscreen) interface
