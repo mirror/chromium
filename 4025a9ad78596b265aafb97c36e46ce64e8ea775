@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48f5cbe9_19027dc3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/textbubble/TextBubble.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-28T23:54:42Z",
+      "side": 1,
+      "message": "Does this work properly across all versions of Android?",
+      "range": {
+        "startLine": 289,
+        "startChar": 8,
+        "endLine": 291,
+        "endChar": 75
+      },
+      "revId": "4025a9ad78596b265aafb97c36e46ce64e8ea775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af0b625d_5a86d006",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/textbubble/ViewAnchoredTextBubble.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-28T23:54:42Z",
+      "side": 1,
+      "message": "Again just confirm on all supported versions of android",
+      "range": {
+        "startLine": 114,
+        "startChar": 20,
+        "endLine": 114,
+        "endChar": 65
+      },
+      "revId": "4025a9ad78596b265aafb97c36e46ce64e8ea775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
