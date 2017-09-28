@@ -8,6 +8,7 @@
 #include <utility>
 
 #include "base/macros.h"
+#include "base/test/gtest_util.h"
 #include "build/build_config.h"
 #include "cc/ipc/cc_param_traits.h"
 #include "cc/resources/resource_provider.h"
@@ -17,6 +18,8 @@
 #include "ipc/ipc_message.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/skia/include/effects/SkBlurImageFilter.h"
+#include "third_party/skia/include/effects/SkImageSource.h"
+#include "third_party/skia/include/effects/SkPaintImageFilter.h"
 
 #if defined(OS_POSIX)
 #include "base/file_descriptor_posix.h"
@@ -44,6 +47,22 @@ using viz::YUVVideoDrawQuad;
 
 namespace content {
 namespace {
+
+class FakeImageGenerator : public SkImageGenerator {
+ public:
+  FakeImageGenerator() : SkImageGenerator(SkImageInfo::MakeN32Premul(10, 10)) {}
+  ~FakeImageGenerator() override = default;
+
+  SkData* onRefEncodedData() override {
+    // Use a generator that lets the caller encode it.
+    return SkData::MakeWithCString("evilimage").release();
+  }
+
+  bool onGetPixels(const SkImageInfo&, void*, size_t, const Options&) override {
+    NOTREACHED();
+    return false;
+  }
+};
 
 static constexpr viz::FrameSinkId kArbitraryFrameSinkId(1, 1);
 
@@ -656,6 +675,22 @@ TEST_F(CCParamTraitsTest, SurfaceInfo) {
       IPC::ParamTraits<viz::SurfaceInfo>::Read(&msg, &iter, &surface_info_out));
 
   ASSERT_EQ(surface_info_in, surface_info_out);
+}
+
+TEST_F(CCParamTraitsTest, ImageSerializationFails) {
+  auto image =
+      SkImage::MakeFromGenerator(base::MakeUnique<FakeImageGenerator>());
+  auto filter = SkImageSource::Make(image);
+  base::Pickle p;
+  EXPECT_DEATH(IPC::ParamTraits<sk_sp<SkImageFilter>>::Write(&p, filter),
+               "Check failed");
+
+  SkPaint paint;
+  paint.setShader(
+      image->makeShader(SkShader::kClamp_TileMode, SkShader::kClamp_TileMode));
+  filter = SkPaintImageFilter::Make(paint);
+  EXPECT_DEATH(IPC::ParamTraits<sk_sp<SkImageFilter>>::Write(&p, filter),
+               "Check failed");
 }
 
 }  // namespace

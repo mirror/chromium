@@ -26,11 +26,39 @@
 #include "third_party/skia/include/core/SkFlattenableSerialization.h"
 #include "third_party/skia/include/core/SkImageFilter.h"
 #include "third_party/skia/include/core/SkRefCnt.h"
+#include "third_party/skia/include/core/SkWriteBuffer.h"
 #include "third_party/skia/include/effects/SkBlurImageFilter.h"
 #include "ui/gfx/ipc/geometry/gfx_param_traits.h"
 #include "ui/gfx/ipc/skia/gfx_skia_param_traits.h"
 
 namespace IPC {
+namespace {
+
+class ImageDisallowingPixelSerializer : public SkPixelSerializer {
+ public:
+  ImageDisallowingPixelSerializer() = default;
+  ~ImageDisallowingPixelSerializer() override = default;
+
+ protected:
+  bool onUseEncodedData(const void* data, size_t len) override {
+    CHECK(false) << "We should not have codec backed image filters";
+    return false;
+  }
+
+  SkData* onEncode(const SkPixmap&) override { return nullptr; }
+};
+
+SkData* ValidatingSerializeFlattenable(SkFlattenable* flattenable) {
+  SkBinaryWriteBuffer writer;
+  writer.setPixelSerializer(sk_make_sp<ImageDisallowingPixelSerializer>());
+  writer.writeFlattenable(flattenable);
+  size_t size = writer.bytesWritten();
+  auto data = SkData::MakeUninitialized(size);
+  writer.writeToMemory(data->writable_data());
+  return data.release();
+}
+
+}  // namespace
 
 void ParamTraits<cc::FilterOperation>::Write(base::Pickle* m,
                                              const param_type& p) {
@@ -274,7 +302,7 @@ void ParamTraits<sk_sp<SkImageFilter>>::Write(base::Pickle* m,
                "ParamTraits::SkImageFilter::Write");
   SkImageFilter* filter = p.get();
   if (filter) {
-    sk_sp<SkData> data(SkValidatingSerializeFlattenable(filter));
+    sk_sp<SkData> data(ValidatingSerializeFlattenable(filter));
     m->WriteData(static_cast<const char*>(data->data()),
                  base::checked_cast<int>(data->size()));
   } else {
