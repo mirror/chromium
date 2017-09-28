@@ -171,12 +171,6 @@ class HomePrefNotificationBridge {
 // Sets up the back and forward segmented control.
 - (void)setupBackForwardControl;
 
-// Methods to update controls on the touch bar. Called when creating the
-// touch bar or the page load state has been updated.
-- (void)updateReloadStopButton;
-- (void)updateBackForwardControl;
-- (void)updateStarredButton;
-
 // Creates and returns the search button.
 - (NSView*)searchTouchBarView API_AVAILABLE(macos(10.12));
 @end
@@ -513,6 +507,18 @@ class HomePrefNotificationBridge {
   [self updateReloadStopButton];
   [self updateBackForwardControl];
   [self updateStarredButton];
+}
+
+@end
+
+// Private methods exposed for testing.
+@implementation BrowserWindowTouchBar (ExposedForTesting)
+
+- (NSButton*)reloadStopButton {
+  if (!reloadStopButton_)
+    [self updateReloadStopButton];
+
+  return reloadStopButton_.get();
 }
 
 @end
