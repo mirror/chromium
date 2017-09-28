@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94ec0f3b_1247a294",
+        "filename": "chrome/browser/browser_resources.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-28T22:36:56Z",
+      "side": 0,
+      "message": "Shouldn\u0027t there be a location updated for uber_shared.css? At first glance I don\u0027t see uber_shared.css in any .grd file. Do you have any idea how it gets included in the final build?",
+      "revId": "31885d177b085f6f815e466cddba75c36d652f6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
