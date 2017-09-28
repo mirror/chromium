@@ -53,6 +53,7 @@
 #include "content/browser/loader/navigation_resource_throttle.h"
 #include "content/browser/loader/navigation_url_loader_impl_core.h"
 #include "content/browser/loader/null_resource_controller.h"
+#include "content/browser/loader/origin_manifest_resource_handler.h"
 #include "content/browser/loader/redirect_to_file_resource_handler.h"
 #include "content/browser/loader/resource_loader.h"
 #include "content/browser/loader/resource_message_filter.h"
@@ -1616,6 +1617,8 @@ ResourceDispatcherHostImpl::AddStandardHandlers(
   // Add the pre mime sniffing throttles.
   handler.reset(new ThrottlingResourceHandler(
       std::move(handler), request, std::move(pre_mime_sniffing_throttles)));
+
+  handler.reset(new OriginManifestResourceHandler(request, std::move(handler)));
 
   return handler;
 }

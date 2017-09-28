@@ -947,6 +947,8 @@ source_set("browser") {
     "loader/navigation_url_loader_network_service.h",
     "loader/null_resource_controller.cc",
     "loader/null_resource_controller.h",
+    "loader/origin_manifest_resource_handler.cc",
+    "loader/origin_manifest_resource_handler.h",
     "loader/redirect_to_file_resource_handler.cc",
     "loader/redirect_to_file_resource_handler.h",
     "loader/resource_buffer.cc",
