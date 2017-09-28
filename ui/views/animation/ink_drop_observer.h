@@ -21,6 +21,8 @@ class VIEWS_EXPORT InkDropObserver {
   // implementation.
   virtual void InkDropAnimationStarted() = 0;
 
+  virtual void InkDropAnimationEnded() {}
+
  protected:
   InkDropObserver() = default;
   virtual ~InkDropObserver() = default;

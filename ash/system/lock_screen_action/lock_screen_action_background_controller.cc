@@ -1,0 +1,45 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include "ash/system/lock_screen_action/lock_screen_action_background_controller.h"
+
+#include "ash/system/lock_screen_action/lock_screen_action_background_observer.h"
+
+namespace ash {
+
+LockScreenActionBackgroundController::LockScreenActionBackgroundController() =
+    default;
+
+LockScreenActionBackgroundController::~LockScreenActionBackgroundController() {
+  UpdateState(LockScreenActionBackgroundState::kHidden);
+}
+
+void LockScreenActionBackgroundController::SetParentWindow(
+    aura::Window* parent_window) {
+  DCHECK(!parent_window_);
+  parent_window_ = parent_window;
+}
+
+void LockScreenActionBackgroundController::AddObserver(
+    LockScreenActionBackgroundObserver* observer) {
+  observers_.AddObserver(observer);
+}
+
+void LockScreenActionBackgroundController::RemoveObserver(
+    LockScreenActionBackgroundObserver* observer) {
+  observers_.RemoveObserver(observer);
+}
+
+void LockScreenActionBackgroundController::UpdateState(
+    LockScreenActionBackgroundState state) {
+  if (state_ == state)
+    return;
+
+  state_ = state;
+
+  for (auto& observer : observers_)
+    observer.OnLockScreenActionBackgroundStateChanged(state_);
+}
+
+}  // namespace ash
