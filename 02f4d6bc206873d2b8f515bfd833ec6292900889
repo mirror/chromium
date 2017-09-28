@@ -34,6 +34,24 @@
       "revId": "02f4d6bc206873d2b8f515bfd833ec6292900889",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab4d2324_3c752f26",
+        "filename": "third_party/crc32c/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-28T20:43:37Z",
+      "side": 1,
+      "message": "I don\u0027t have a preference, it\u0027s just that prior to this change, if I\u0027m correct, HAVE_WEAK_GETAUXVAL would *not* have been set on linux/chromeos. The equivalent to that is HAVE_WEAK_GETAUXVAL\u003d0 and not HAVE_WEAK_GETAUXVAL\u003d1.\n\nIf HAVE_WEAK_GETAUXVAL\u003d1 is correct for those platforms then I\u0027m cool with this change.",
+      "parentUuid": "bbe29dc2_f69db49c",
+      "revId": "02f4d6bc206873d2b8f515bfd833ec6292900889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
