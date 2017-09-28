@@ -28,8 +28,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef InProcessWorkerObjectProxy_h
-#define InProcessWorkerObjectProxy_h
+#ifndef DedicatedWorkerObjectProxy_h
+#define DedicatedWorkerObjectProxy_h
 
 #include <memory>
 #include "core/CoreExport.h"
@@ -51,18 +51,15 @@ class WorkerThread;
 
 // A proxy to talk to the parent worker object. See class comments on
 // ThreadedObjectProxyBase.h for lifetime of this class etc.
-//
-// This also checks pending activities on WorkerGlobalScope and reports a result
-// to the message proxy when an exponential backoff timer is fired.
-class CORE_EXPORT InProcessWorkerObjectProxy : public ThreadedObjectProxyBase {
-  USING_FAST_MALLOC(InProcessWorkerObjectProxy);
-  WTF_MAKE_NONCOPYABLE(InProcessWorkerObjectProxy);
+class CORE_EXPORT DedicatedWorkerObjectProxy : public ThreadedObjectProxyBase {
+  USING_FAST_MALLOC(DedicatedWorkerObjectProxy);
+  WTF_MAKE_NONCOPYABLE(DedicatedWorkerObjectProxy);
 
  public:
-  static std::unique_ptr<InProcessWorkerObjectProxy> Create(
+  static std::unique_ptr<DedicatedWorkerObjectProxy> Create(
       DedicatedWorkerMessagingProxy*,
       ParentFrameTaskRunners*);
-  ~InProcessWorkerObjectProxy() override;
+  ~DedicatedWorkerObjectProxy() override;
 
   void PostMessageToWorkerObject(RefPtr<SerializedScriptValue>,
                                  MessagePortChannelArray);
@@ -79,14 +76,14 @@ class CORE_EXPORT InProcessWorkerObjectProxy : public ThreadedObjectProxyBase {
   void WillDestroyWorkerGlobalScope() override;
 
  protected:
-  InProcessWorkerObjectProxy(DedicatedWorkerMessagingProxy*,
+  DedicatedWorkerObjectProxy(DedicatedWorkerMessagingProxy*,
                              ParentFrameTaskRunners*);
 
   CrossThreadWeakPersistent<ThreadedMessagingProxyBase> MessagingProxyWeakPtr()
       final;
 
  private:
-  friend class InProcessWorkerObjectProxyForTest;
+  friend class DedicatedWorkerObjectProxyForTest;
 
   // No guarantees about the lifetimes of tasks posted by this proxy wrt the
   // DedicatedWorkerMessagingProxy so a weak pointer must be used when posting
@@ -99,4 +96,4 @@ class CORE_EXPORT InProcessWorkerObjectProxy : public ThreadedObjectProxyBase {
 
 }  // namespace blink
 
-#endif  // InProcessWorkerObjectProxy_h
+#endif  // DedicatedWorkerObjectProxy_h
