@@ -79,6 +79,18 @@ class PhysicalToLogical {
     return IsFlippedBlocksWritingMode(writing_mode_) ? left_ : right_;
   }
 
+  Value InlineSize() const {
+    if (IsHorizontalWritingMode(writing_mode_))
+      return left_ + right_;
+    return top_ + bottom_;
+  }
+
+  Value BlockSize() const {
+    if (IsHorizontalWritingMode(writing_mode_))
+      return top_ + bottom_;
+    return left_ + right_;
+  }
+
   Value Over() const {
     return IsHorizontalWritingMode(writing_mode_) ? top_ : right_;
   }
@@ -219,6 +231,8 @@ class PhysicalToLogicalGetter {
   Value InlineEnd() const { return (object_.*converter_.InlineEnd())(); }
   Value BlockStart() const { return (object_.*converter_.BlockStart())(); }
   Value BlockEnd() const { return (object_.*converter_.BlockEnd())(); }
+  Value InlineSize() const { return (object_.*converter_.InlineSize())(); }
+  Value BlockSize() const { return (object_.*converter_.BlockSize())(); }
   Value Over() const { return (object_.*converter_.Over())(); }
   Value Under() const { return (object_.*converter_.Under())(); }
   Value LineLeft() const { return (object_.*converter_.LineLeft())(); }
