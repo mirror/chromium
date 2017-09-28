@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90d26cf5_0cc23bde",
+        "filename": "cc/resources/layer_tree_resource_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-28T22:02:09Z",
+      "side": 1,
+      "message": "I think some of the names in here are just attrocious but also idk how many ways to say transferable in the same type.. pls halp",
+      "revId": "914821532a8c5ec3dd59f2451b3bef3715562ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
