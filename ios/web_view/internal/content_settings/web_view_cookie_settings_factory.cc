@@ -13,7 +13,7 @@
 namespace ios_web_view {
 
 // static
-content_settings::CookieSettings*
+scoped_refptr<content_settings::CookieSettings>
 WebViewCookieSettingsFactory::GetForBrowserState(
     ios_web_view::WebViewBrowserState* browser_state) {
   return static_cast<content_settings::CookieSettings*>(

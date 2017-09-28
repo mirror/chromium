@@ -22,8 +22,8 @@
 IOSWebViewSigninClient::IOSWebViewSigninClient(
     ios_web_view::WebViewBrowserState* browser_state,
     SigninErrorController* signin_error_controller,
-    content_settings::CookieSettings* cookie_settings,
-    HostContentSettingsMap* host_content_settings_map,
+    scoped_refptr<content_settings::CookieSettings> cookie_settings,
+    scoped_refptr<HostContentSettingsMap> host_content_settings_map,
     scoped_refptr<TokenWebData> token_web_data)
     : IOSSigninClient(browser_state->GetPrefs(),
                       browser_state->GetRequestContext(),
