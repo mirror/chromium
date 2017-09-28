@@ -174,6 +174,24 @@
       "revId": "eedb33098f7faa0e476cf85c1e18b2120f7431ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69c70cce_12061b45",
+        "filename": "chrome/browser/ui/views/tab_icon_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-28T05:53:10Z",
+      "side": 1,
+      "message": "That approach seems neat enough - that\u0027s how window_icon_util_mac and taskbar_decorator_win do it anyway.\n\nTabIconView is a views::MenuButton, so I think it\u0027s fair for it to assume something gets painted, so that it\u0027s obvious there\u0027s a menu hiding.",
+      "parentUuid": "a0d05831_0955f871",
+      "revId": "eedb33098f7faa0e476cf85c1e18b2120f7431ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
