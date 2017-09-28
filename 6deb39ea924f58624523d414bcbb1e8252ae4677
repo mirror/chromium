@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "ab3602b6_39bc8a59",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-09-28T09:22:59Z",
+      "side": 1,
+      "message": "You could simplify this to if (!mChromeHomeEnabled)",
+      "range": {
+        "startLine": 353,
+        "startChar": 13,
+        "endLine": 353,
+        "endChar": 29
+      },
+      "revId": "6deb39ea924f58624523d414bcbb1e8252ae4677",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ced9b172_ee671bfc",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
         "patchSetId": 1
@@ -18,6 +41,29 @@
         "startChar": 12,
         "endLine": 357,
         "endChar": 43
+      },
+      "revId": "6deb39ea924f58624523d414bcbb1e8252ae4677",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10e6849a_5226c31e",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/HomeSheetCardsUiCaptureTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-09-28T09:22:59Z",
+      "side": 1,
+      "message": "Please move this above the method that assigns it. It reads a bit strange otherwise.",
+      "range": {
+        "startLine": 59,
+        "startChar": 12,
+        "endLine": 59,
+        "endChar": 39
       },
       "revId": "6deb39ea924f58624523d414bcbb1e8252ae4677",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
