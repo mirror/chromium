@@ -69,6 +69,30 @@
       "revId": "2b1b3da72650188f34de5dcb55edda91013b2898",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5ff75b3_b5177586",
+        "filename": "chrome/browser/installable/installable_params.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-28T01:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b960d0c7_d280ce86",
+      "range": {
+        "startLine": 9,
+        "startChar": 69,
+        "endLine": 11,
+        "endChar": 44
+      },
+      "revId": "2b1b3da72650188f34de5dcb55edda91013b2898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
