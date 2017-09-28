@@ -661,7 +661,7 @@ void CreateTestY16TextureDrawQuad_TwoColor(
 
 using RendererTypes =
     ::testing::Types<GLRenderer,
-                     SoftwareRenderer,
+                     SkiaRenderer,
                      cc::GLRendererWithExpandedViewport,
                      cc::SoftwareRendererWithExpandedViewport>;
 TYPED_TEST_CASE(RendererPixelTest, RendererTypes);
@@ -670,8 +670,7 @@ template <typename RendererType>
 class SoftwareRendererPixelTest : public cc::RendererPixelTest<RendererType> {};
 
 using SoftwareRendererTypes =
-    ::testing::Types<SoftwareRenderer,
-                     cc::SoftwareRendererWithExpandedViewport>;
+    ::testing::Types<SkiaRenderer, cc::SoftwareRendererWithExpandedViewport>;
 TYPED_TEST_CASE(SoftwareRendererPixelTest, SoftwareRendererTypes);
 
 template <typename RendererType>
@@ -689,7 +688,7 @@ class FuzzyForSoftwareOnlyPixelComparator : public cc::PixelComparator {
 };
 
 template <>
-bool FuzzyForSoftwareOnlyPixelComparator<SoftwareRenderer>::Compare(
+bool FuzzyForSoftwareOnlyPixelComparator<SkiaRenderer>::Compare(
     const SkBitmap& actual_bmp,
     const SkBitmap& expected_bmp) const {
   return fuzzy_.Compare(actual_bmp, expected_bmp);
@@ -977,8 +976,7 @@ class IntersectingQuadSoftwareTest
     : public IntersectingQuadPixelTest<TypeParam> {};
 
 using SoftwareRendererTypes =
-    ::testing::Types<SoftwareRenderer,
-                     cc::SoftwareRendererWithExpandedViewport>;
+    ::testing::Types<SkiaRenderer, cc::SoftwareRendererWithExpandedViewport>;
 using GLRendererTypes =
     ::testing::Types<GLRenderer, cc::GLRendererWithExpandedViewport>;
 
@@ -2264,7 +2262,7 @@ class RendererPixelTestWithBackgroundFilter
 };
 
 using BackgroundFilterRendererTypes =
-    ::testing::Types<GLRenderer, SoftwareRenderer>;
+    ::testing::Types<GLRenderer, SkiaRenderer>;
 TYPED_TEST_CASE(RendererPixelTestWithBackgroundFilter,
                 BackgroundFilterRendererTypes);
 
@@ -2759,7 +2757,7 @@ bool IsSoftwareRenderer() {
 }
 
 template <>
-bool IsSoftwareRenderer<SoftwareRenderer>() {
+bool IsSoftwareRenderer<SkiaRenderer>() {
   return true;
 }
 

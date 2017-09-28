@@ -23,6 +23,7 @@
 #include "components/viz/common/quads/compositor_frame_metadata.h"
 #include "components/viz/service/display/gl_renderer.h"
 #include "components/viz/service/display/output_surface_client.h"
+#include "components/viz/service/display/skia_renderer.h"
 #include "components/viz/service/display/software_output_device.h"
 #include "components/viz/service/display/software_renderer.h"
 #include "components/viz/service/display/texture_mailbox_deleter.h"
@@ -202,7 +203,7 @@ void PixelTest::SetUpSoftwareRenderer() {
       delegated_sync_points_required,
       settings_.enable_color_correct_rasterization,
       settings_.resource_settings);
-  auto renderer = std::make_unique<viz::SoftwareRenderer>(
+  auto renderer = std::make_unique<viz::SkiaRenderer>(
       &renderer_settings_, output_surface_.get(), resource_provider_.get());
   software_renderer_ = renderer.get();
   renderer_ = std::move(renderer);

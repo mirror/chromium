@@ -42,7 +42,7 @@ class DirectRenderer;
 class DisplayClient;
 class OutputSurface;
 class SharedBitmapManager;
-class SoftwareRenderer;
+class SkiaRenderer;
 class TextureMailboxDeleter;
 
 class VIZ_SERVICE_EXPORT DisplayObserver {
@@ -136,7 +136,7 @@ class VIZ_SERVICE_EXPORT Display : public DisplaySchedulerClient,
   std::unique_ptr<SurfaceAggregator> aggregator_;
   std::unique_ptr<TextureMailboxDeleter> texture_mailbox_deleter_;
   std::unique_ptr<DirectRenderer> renderer_;
-  SoftwareRenderer* software_renderer_ = nullptr;
+  SkiaRenderer* software_renderer_ = nullptr;
   std::vector<ui::LatencyInfo> stored_latency_info_;
 
  private:

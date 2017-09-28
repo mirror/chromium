@@ -11,6 +11,7 @@
 #include "cc/resources/scoped_resource.h"
 #include "components/viz/common/display/renderer_settings.h"
 #include "components/viz/common/frame_sinks/copy_output_request.h"
+#include "components/viz/common/frame_sinks/copy_output_result.h"
 #include "components/viz/common/quads/debug_border_draw_quad.h"
 #include "components/viz/common/quads/picture_draw_quad.h"
 #include "components/viz/common/quads/render_pass_draw_quad.h"
@@ -56,24 +57,185 @@ bool IsScaleAndIntegerTranslate(const SkMatrix& matrix) {
          SkScalarNearlyZero(matrix[SkMatrix::kMPersp2] - 1.0f);
 }
 
+class SoftwareDelegateForSkiaRenderer : public SkiaRendererDelegate {
+ public:
+  explicit SoftwareDelegateForSkiaRenderer(OutputSurface* output_surface)
+      : output_device_(output_surface->software_device()) {
+    DCHECK(output_device_);
+  }
+
+  ~SoftwareDelegateForSkiaRenderer() override = default;
+
+  // SkiaRendererDelegate:
+  SkCanvas* GetRootCanvas(
+      DirectRenderer::DrawingFrame* current_frame) override {
+    return output_device_->BeginPaint(current_frame->root_damage_rect);
+  }
+
+  void OnFinishedDrawingFrame() override { output_device_->EndPaint(); }
+
+  SkCanvas* GetCanvasForTexture(
+      const cc::ScopedResource* texture,
+      cc::DisplayResourceProvider* resource_provider) override {
+    DCHECK(texture->id());
+
+    // Explicitly release lock, otherwise we can crash when try to lock
+    // same texture again.
+    current_framebuffer_lock_ = nullptr;
+    current_framebuffer_lock_ =
+        base::MakeUnique<cc::ResourceProvider::ScopedWriteLockSoftware>(
+            resource_provider, texture->id());
+    current_framebuffer_canvas_ =
+        base::MakeUnique<SkCanvas>(current_framebuffer_lock_->sk_bitmap());
+    return current_framebuffer_canvas_.get();
+  }
+
+  void ResetCanvasForTexture() override {
+    current_framebuffer_lock_ = nullptr;
+    current_framebuffer_canvas_ = nullptr;
+  }
+
+  scoped_refptr<cc::ResourceProvider::Fence> CreateReadLockFence() override {
+    return nullptr;
+  }
+
+ private:
+  SoftwareOutputDevice* const output_device_;
+  std::unique_ptr<cc::ResourceProvider::ScopedWriteLockSoftware>
+      current_framebuffer_lock_;
+  std::unique_ptr<SkCanvas> current_framebuffer_canvas_;
+
+  DISALLOW_COPY_AND_ASSIGN(SoftwareDelegateForSkiaRenderer);
+};
+
+class GLDelegateForSkiaRenderer : public SkiaRendererDelegate {
+ public:
+  explicit GLDelegateForSkiaRenderer(OutputSurface* output_surface)
+      : context_provider_(output_surface->context_provider()) {
+    DCHECK(context_provider_);
+  }
+
+  ~GLDelegateForSkiaRenderer() override = default;
+
+  // SkiaRendererDelegate:
+  SkCanvas* GetRootCanvas(
+      DirectRenderer::DrawingFrame* current_frame) override {
+    GrContext* gr_context = context_provider_->GrContext();
+    if (root_surface_) {
+      SkCanvas* root_canvas = root_surface_->getCanvas();
+      if (root_canvas && root_canvas->getGrContext() == gr_context &&
+          gfx::SkISizeToSize(root_canvas->getBaseLayerSize()) ==
+              current_frame->device_viewport_size)
+        return root_canvas;
+    }
+
+    // TODO(weiliangc): Set up correct can_use_lcd_text and
+    // use_distance_field_text for SkSurfaceProps flags. How to setup is in
+    // ResourceProvider. (crbug.com/644851)
+
+    // Either no SkSurface setup yet, or new GrContext, need to create new
+    // surface.
+    int width = current_frame->device_viewport_size.width();
+    int height = current_frame->device_viewport_size.height();
+    constexpr int sample_count = 0;
+    constexpr int stencil_bits = 8;
+    constexpr GrPixelConfig config = kRGBA_8888_GrPixelConfig;
+
+    GrBackendRenderTarget desc(width, height, sample_count, stencil_bits,
+                               config, GrGLFramebufferInfo());
+
+    // This is for use_distance_field_text false, and can_use_lcd_text true.
+    // LegacyFontHost will get LCD text and skia figures out what type to use.
+    SkSurfaceProps surface_props =
+        SkSurfaceProps(0, SkSurfaceProps::kLegacyFontHost_InitType);
+
+    root_surface_ = SkSurface::MakeFromBackendRenderTarget(
+        gr_context, desc, kBottomLeft_GrSurfaceOrigin, nullptr, &surface_props);
+    return root_surface_->getCanvas();
+  }
+
+  void OnFinishedDrawingFrame() override {}
+
+  SkCanvas* GetCanvasForTexture(
+      const cc::ScopedResource* texture,
+      cc::DisplayResourceProvider* resource_provider) override {
+    // Explicitly release lock, otherwise we can crash when try to lock
+    // same texture again.
+    current_framebuffer_surface_lock_ = nullptr;
+    current_framebuffer_lock_ = nullptr;
+    current_framebuffer_lock_ =
+        base::WrapUnique(new cc::ResourceProvider::ScopedWriteLockGL(
+            resource_provider, texture->id()));
+    current_framebuffer_surface_lock_ =
+        base::WrapUnique(new cc::ResourceProvider::ScopedSkSurface(
+            context_provider_->GrContext(),
+            current_framebuffer_lock_->GetTexture(),
+            current_framebuffer_lock_->target(),
+            current_framebuffer_lock_->size(),
+            current_framebuffer_lock_->format(), false, true, 0));
+    return current_framebuffer_surface_lock_->surface()->getCanvas();
+  }
+
+  void ResetCanvasForTexture() override {
+    current_framebuffer_surface_lock_ = nullptr;
+    current_framebuffer_lock_ = nullptr;
+  }
+
+  scoped_refptr<cc::ResourceProvider::Fence> CreateReadLockFence() override {
+    return base::MakeRefCounted<cc::ResourceProvider::SynchronousFence>(
+        context_provider_->ContextGL());
+  }
+
+ private:
+  ContextProvider* const context_provider_;
+  sk_sp<SkSurface> root_surface_;
+  std::unique_ptr<cc::ResourceProvider::ScopedWriteLockGL>
+      current_framebuffer_lock_;
+  std::unique_ptr<cc::ResourceProvider::ScopedSkSurface>
+      current_framebuffer_surface_lock_;
+
+  DISALLOW_COPY_AND_ASSIGN(GLDelegateForSkiaRenderer);
+};
+
+std::unique_ptr<SkiaRendererDelegate> MakeDelegateForOutputSurface(
+    OutputSurface* output_surface) {
+  if (output_surface->context_provider())
+    return std::make_unique<GLDelegateForSkiaRenderer>(output_surface);
+  if (output_surface->software_device())
+    return std::make_unique<SoftwareDelegateForSkiaRenderer>(output_surface);
+  return nullptr;
+}
+
+bool GetUseSwapWithBounds(ContextProvider* context_provider) {
+  if (!context_provider)
+    return true;
+  const auto& context_caps = context_provider->ContextCapabilities();
+  return context_caps.swap_buffers_with_bounds;
+}
+
+bool GetCanPartialSwap(ContextProvider* context_provider) {
+  DCHECK(context_provider);
+  return context_provider->ContextCapabilities().post_sub_buffer;
+}
+
 }  // anonymous namespace
 
 SkiaRenderer::SkiaRenderer(const RendererSettings* settings,
                            OutputSurface* output_surface,
                            cc::DisplayResourceProvider* resource_provider)
-    : DirectRenderer(settings, output_surface, resource_provider) {
-  const auto& context_caps =
-      output_surface_->context_provider()->ContextCapabilities();
-  use_swap_with_bounds_ = context_caps.swap_buffers_with_bounds;
+    : DirectRenderer(settings, output_surface, resource_provider),
+      delegate_(MakeDelegateForOutputSurface(output_surface)),
+      use_swap_with_bounds_(
+          GetUseSwapWithBounds(output_surface->context_provider())),
+      can_partial_swap_(!use_swap_with_bounds_ &&
+                        GetCanPartialSwap(output_surface->context_provider())) {
+  DCHECK(delegate_);
 }
 
 SkiaRenderer::~SkiaRenderer() {}
 
 bool SkiaRenderer::CanPartialSwap() {
-  if (use_swap_with_bounds_)
-    return false;
-  auto* context_provider = output_surface_->context_provider();
-  return context_provider->ContextCapabilities().post_sub_buffer;
+  return can_partial_swap_;
 }
 
 ResourceFormat SkiaRenderer::BackbufferFormat() const {
@@ -94,9 +256,7 @@ void SkiaRenderer::BeginDrawingFrame() {
   if (use_sync_query_) {
     NOTIMPLEMENTED();
   } else {
-    read_lock_fence =
-        base::MakeRefCounted<cc::ResourceProvider::SynchronousFence>(
-            output_surface_->context_provider()->ContextGL());
+    read_lock_fence = delegate_->CreateReadLockFence();
   }
   resource_provider_->SetReadLockFence(read_lock_fence.get());
 
@@ -109,6 +269,7 @@ void SkiaRenderer::BeginDrawingFrame() {
         resource_provider->WaitSyncToken(resource_id);
     }
   }
+  root_canvas_ = delegate_->GetRootCanvas(current_frame());
 }
 
 void SkiaRenderer::FinishDrawingFrame() {
@@ -121,17 +282,18 @@ void SkiaRenderer::FinishDrawingFrame() {
     };
     sk_sp<SkColorFilter> color_filter = SkOverdrawColorFilter::Make(colors);
     paint.setColorFilter(color_filter);
-    root_surface_->getCanvas()->drawImage(image.get(), 0, 0, &paint);
-    root_surface_->getCanvas()->flush();
+    root_canvas_->drawImage(image.get(), 0, 0, &paint);
+    root_canvas_->flush();
   }
-  current_framebuffer_surface_lock_ = nullptr;
-  current_framebuffer_lock_ = nullptr;
+  delegate_->ResetCanvasForTexture();
   current_canvas_ = nullptr;
+  root_canvas_ = nullptr;
 
   swap_buffer_rect_ = current_frame()->root_damage_rect;
 
   if (use_swap_with_bounds_)
     swap_content_bounds_ = current_frame()->root_content_bounds;
+  delegate_->OnFinishedDrawingFrame();
 }
 
 void SkiaRenderer::SwapBuffers(std::vector<ui::LatencyInfo> latency_info) {
@@ -169,39 +331,13 @@ void SkiaRenderer::EnsureScissorTestDisabled() {
 
 void SkiaRenderer::BindFramebufferToOutputSurface() {
   DCHECK(!output_surface_->HasExternalStencilTest());
-  current_framebuffer_lock_ = nullptr;
 
-  // TODO(weiliangc): Set up correct can_use_lcd_text and
-  // use_distance_field_text for SkSurfaceProps flags. How to setup is in
-  // ResourceProvider. (crbug.com/644851)
-
-  GrContext* gr_context = output_surface_->context_provider()->GrContext();
-  if (!root_canvas_ || root_canvas_->getGrContext() != gr_context ||
-      gfx::SkISizeToSize(root_canvas_->getBaseLayerSize()) !=
-          current_frame()->device_viewport_size) {
-    // Either no SkSurface setup yet, or new GrContext, need to create new
-    // surface.
-    GrGLFramebufferInfo framebuffer_info;
-    framebuffer_info.fFBOID = 0;
-    GrBackendRenderTarget render_target(
-        current_frame()->device_viewport_size.width(),
-        current_frame()->device_viewport_size.height(), 0, 8,
-        kRGBA_8888_GrPixelConfig, framebuffer_info);
-
-    // This is for use_distance_field_text false, and can_use_lcd_text true.
-    // LegacyFontHost will get LCD text and skia figures out what type to use.
-    SkSurfaceProps surface_props =
-        SkSurfaceProps(0, SkSurfaceProps::kLegacyFontHost_InitType);
-
-    root_surface_ = SkSurface::MakeFromBackendRenderTarget(
-        gr_context, render_target, kBottomLeft_GrSurfaceOrigin, nullptr,
-        &surface_props);
-  }
-
-  root_canvas_ = root_surface_->getCanvas();
+  delegate_->ResetCanvasForTexture();
+  root_canvas_ = delegate_->GetRootCanvas(current_frame());
   if (settings_->show_overdraw_feedback) {
-    const gfx::Size size(root_surface_->width(), root_surface_->height());
-    overdraw_surface_ = root_surface_->makeSurface(
+    const gfx::Size size(root_canvas_->imageInfo().width(),
+                         root_canvas_->imageInfo().height());
+    overdraw_surface_ = root_canvas_->makeSurface(
         SkImageInfo::MakeA8(size.width(), size.height()));
     nway_canvas_ = std::make_unique<SkNWayCanvas>(size.width(), size.height());
     overdraw_canvas_ =
@@ -216,24 +352,7 @@ void SkiaRenderer::BindFramebufferToOutputSurface() {
 
 bool SkiaRenderer::BindFramebufferToTexture(const cc::ScopedResource* texture) {
   DCHECK(texture->id());
-
-  // Explicitly release lock, otherwise we can crash when try to lock
-  // same texture again.
-  current_framebuffer_surface_lock_ = nullptr;
-  current_framebuffer_lock_ = nullptr;
-  current_framebuffer_lock_ =
-      base::WrapUnique(new cc::ResourceProvider::ScopedWriteLockGL(
-          resource_provider_, texture->id()));
-
-  current_framebuffer_surface_lock_ =
-      base::WrapUnique(new cc::ResourceProvider::ScopedSkSurface(
-          output_surface_->context_provider()->GrContext(),
-          current_framebuffer_lock_->GetTexture(),
-          current_framebuffer_lock_->target(),
-          current_framebuffer_lock_->size(),
-          current_framebuffer_lock_->format(), false, true, 0));
-
-  current_canvas_ = current_framebuffer_surface_lock_->surface()->getCanvas();
+  current_canvas_ = delegate_->GetCanvasForTexture(texture, resource_provider_);
   return true;
 }
 
@@ -301,19 +420,6 @@ void SkiaRenderer::PrepareSurfaceForPass(
       ClearFramebuffer();
       break;
   }
-}
-
-bool SkiaRenderer::IsSoftwareResource(ResourceId resource_id) const {
-  switch (resource_provider_->GetResourceType(resource_id)) {
-    case cc::ResourceProvider::RESOURCE_TYPE_GPU_MEMORY_BUFFER:
-    case cc::ResourceProvider::RESOURCE_TYPE_GL_TEXTURE:
-      return true;
-    case cc::ResourceProvider::RESOURCE_TYPE_BITMAP:
-      return false;
-  }
-
-  LOG(FATAL) << "Invalid resource type.";
-  return false;
 }
 
 void SkiaRenderer::DoDrawQuad(const DrawQuad* quad,
@@ -492,11 +598,6 @@ void SkiaRenderer::DrawSolidColorQuad(const SolidColorDrawQuad* quad) {
 }
 
 void SkiaRenderer::DrawTextureQuad(const TextureDrawQuad* quad) {
-  if (!IsSoftwareResource(quad->resource_id())) {
-    DrawUnsupportedQuad(quad);
-    return;
-  }
-
   // TODO(skaslev): Add support for non-premultiplied alpha.
   cc::DisplayResourceProvider::ScopedReadLockSkImage lock(resource_provider_,
                                                           quad->resource_id());
@@ -539,7 +640,6 @@ void SkiaRenderer::DrawTileQuad(const TileDrawQuad* quad) {
   // |resource_provider_| can be NULL in resourceless software draws, which
   // should never produce tile quads in the first place.
   DCHECK(resource_provider_);
-  DCHECK(IsSoftwareResource(quad->resource_id()));
   cc::DisplayResourceProvider::ScopedReadLockSkImage lock(resource_provider_,
                                                           quad->resource_id());
   if (!lock.sk_image())
@@ -563,7 +663,6 @@ void SkiaRenderer::DrawRenderPassQuad(const RenderPassDrawQuad* quad) {
       render_pass_textures_[quad->render_pass_id].get();
   DCHECK(content_texture);
   DCHECK(content_texture->id());
-  DCHECK(IsSoftwareResource(content_texture->id()));
   cc::DisplayResourceProvider::ScopedReadLockSkImage lock(
       resource_provider_, content_texture->id());
   if (!lock.sk_image())
@@ -585,7 +684,7 @@ void SkiaRenderer::DrawRenderPassQuad(const RenderPassDrawQuad* quad) {
 
   // TODO(weiliangc): Implement filters. (crbug.com/644851)
   if (filters) {
-    NOTIMPLEMENTED();
+    NOTIMPLEMENTED() << " filters";
   }
 
   SkMatrix content_mat;
@@ -598,7 +697,7 @@ void SkiaRenderer::DrawRenderPassQuad(const RenderPassDrawQuad* quad) {
 
   // TODO(weiliangc): Implement mask. (crbug.com/644851)
   if (quad->mask_resource_id()) {
-    NOTIMPLEMENTED();
+    NOTIMPLEMENTED() << " masks";
   }
 
   // TODO(weiliangc): If we have a background filter shader, render its results
@@ -625,6 +724,21 @@ void SkiaRenderer::CopyDrawnRenderPass(
     std::unique_ptr<CopyOutputRequest> request) {
   // TODO(weiliangc): Make copy request work. (crbug.com/644851)
   NOTIMPLEMENTED();
+  gfx::Rect copy_rect = current_frame()->current_render_pass->output_rect;
+  if (request->has_area())
+    copy_rect.Intersect(request->area());
+  gfx::Rect window_copy_rect = MoveFromDrawToWindowSpace(copy_rect);
+
+  SkBitmap bitmap;
+  bitmap.allocPixels(SkImageInfo::MakeN32Premul(
+      window_copy_rect.width(), window_copy_rect.height(),
+      current_canvas_->imageInfo().refColorSpace()));
+  if (!current_canvas_->readPixels(bitmap, window_copy_rect.x(),
+                                   window_copy_rect.y()))
+    return;
+
+  request->SendResult(
+      std::make_unique<CopyOutputSkBitmapResult>(copy_rect, bitmap));
 }
 
 void SkiaRenderer::SetEnableDCLayers(bool enable) {

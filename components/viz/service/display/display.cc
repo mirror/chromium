@@ -206,7 +206,7 @@ void Display::InitializeRenderer() {
     NOTREACHED();
 #endif
   } else {
-    auto renderer = base::MakeUnique<SoftwareRenderer>(
+    auto renderer = std::make_unique<SkiaRenderer>(
         &settings_, output_surface_.get(), resource_provider_.get());
     software_renderer_ = renderer.get();
     renderer_ = std::move(renderer);
