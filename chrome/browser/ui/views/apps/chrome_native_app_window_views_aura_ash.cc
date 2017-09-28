@@ -53,29 +53,12 @@ using extensions::AppWindow;
 namespace {
 
 // This class handles a user's fullscreen request (Shift+F4/F4).
-class NativeAppWindowStateDelegate : public ash::wm::WindowStateDelegate,
-                                     public ash::wm::WindowStateObserver,
-                                     public aura::WindowObserver {
+class NativeAppWindowStateDelegate : public ash::wm::WindowStateDelegate {
  public:
   NativeAppWindowStateDelegate(AppWindow* app_window,
                                extensions::NativeAppWindow* native_app_window)
-      : app_window_(app_window),
-        window_state_(
-            ash::wm::GetWindowState(native_app_window->GetNativeWindow())) {
-    // Add a window state observer to exit fullscreen properly in case
-    // fullscreen is exited without going through AppWindow::Restore(). This
-    // is the case when exiting immersive fullscreen via the "Restore" window
-    // control.
-    // TODO(pkotwicz): This is a hack. Remove ASAP. http://crbug.com/319048
-    window_state_->AddObserver(this);
-    window_state_->window()->AddObserver(this);
-  }
-  ~NativeAppWindowStateDelegate() override {
-    if (window_state_) {
-      window_state_->RemoveObserver(this);
-      window_state_->window()->RemoveObserver(this);
-    }
-  }
+      : app_window_(app_window) {}
+  ~NativeAppWindowStateDelegate() override {}
 
  private:
   // Overridden from ash::wm::WindowStateDelegate.
@@ -95,34 +78,8 @@ class NativeAppWindowStateDelegate : public ash::wm::WindowStateDelegate,
     return true;
   }
 
-  // Overridden from ash::wm::WindowStateObserver:
-  void OnPostWindowStateTypeChange(
-      ash::wm::WindowState* window_state,
-      ash::mojom::WindowStateType old_type) override {
-    // Since the window state might get set by a window manager, it is possible
-    // to come here before the application set its |BaseWindow|.
-    if (!window_state->IsFullscreen() && !window_state->IsMinimized() &&
-        app_window_->GetBaseWindow() &&
-        app_window_->GetBaseWindow()->IsFullscreenOrPending()) {
-      app_window_->Restore();
-      // Usually OnNativeWindowChanged() is called when the window bounds are
-      // changed as a result of a state type change. Because the change in state
-      // type has already occurred, we need to call OnNativeWindowChanged()
-      // explicitly.
-      app_window_->OnNativeWindowChanged();
-    }
-  }
-
-  // Overridden from aura::WindowObserver:
-  void OnWindowDestroying(aura::Window* window) override {
-    window_state_->RemoveObserver(this);
-    window_state_->window()->RemoveObserver(this);
-    window_state_ = nullptr;
-  }
-
   // Not owned.
   AppWindow* app_window_;
-  ash::wm::WindowState* window_state_;
 
   DISALLOW_COPY_AND_ASSIGN(NativeAppWindowStateDelegate);
 };
