@@ -138,6 +138,8 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
     // SelectionClient was able to classify it, otherwise null.
     private SelectionClient.Result mClassificationResult;
 
+    private boolean mIsSmartSelectionReset;
+
     // Whether a scroll is in progress.
     private boolean mScrollInProgress;
 
@@ -255,6 +257,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
     public void showSelectionMenu(int left, int top, int right, int bottom, boolean isEditable,
             boolean isPasswordType, String selectionText, boolean canSelectAll,
             boolean canRichlyEdit, boolean shouldSuggest, boolean fromSelectionAdjustment) {
+        // boolean canRichlyEdit, boolean shouldSuggest, boolean isSmartSelectionReset) {
         mSelectionRect.set(left, top, right, bottom);
         mEditable = isEditable;
         mLastSelectedText = selectionText;
@@ -263,6 +266,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
         mCanSelectAllForPastePopup = canSelectAll;
         mCanEditRichly = canRichlyEdit;
         mUnselectAllOnDismiss = true;
+        mIsSmartSelectionReset = isSmartSelectionReset;
         if (hasSelection()) {
             // From selection adjustment, show menu directly.
             if (fromSelectionAdjustment) {
@@ -1191,6 +1195,8 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
                         result.startAdjust, result.endAdjust, /* show_selection_menu = */ true);
                 return;
             }
+
+            if (mPendingShowActionMode && mIsSmartSelectionReset) return;
 
             // Rely on this method to clear |mHidden| and unhide the action mode.
             showActionModeOrClearOnFailure();

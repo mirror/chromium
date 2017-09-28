@@ -445,7 +445,9 @@ class EmptyContextMenuClient final : public ContextMenuClient {
  public:
   EmptyContextMenuClient() : ContextMenuClient() {}
   ~EmptyContextMenuClient() override {}
-  bool ShowContextMenu(const ContextMenu*, WebMenuSourceType) override;
+  bool ShowContextMenu(const ContextMenu*,
+                       WebMenuSourceType,
+                       unsigned) override;
   void ClearContextMenu() override {}
 };
 

@@ -222,10 +222,13 @@ bool FrameSelection::SetSelectionDeprecated(
       selection_editor_->GetSelectionInDOMTree();
   const bool is_changed = old_selection_in_dom_tree != new_selection;
   const bool should_show_handle = options.ShouldShowHandle();
-  if (!is_changed && is_handle_visible_ == should_show_handle)
+  const bool should_tap_select_word = options.ShouldTapSelectWord();
+  if (!is_changed && is_handle_visible_ == should_show_handle &&
+      should_tap_select_word_ == should_tap_select_word)
     return false;
   if (is_changed)
     selection_editor_->SetSelection(new_selection);
+  should_tap_select_word_ = should_tap_select_word;
   is_handle_visible_ = should_show_handle;
   ScheduleVisualUpdateForPaintInvalidationIfNeeded();
 

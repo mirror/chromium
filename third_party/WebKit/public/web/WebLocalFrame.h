@@ -504,6 +504,15 @@ class WebLocalFrame : public WebFrame {
   virtual void SelectRange(const WebRange&,
                            HandleVisibilityBehavior,
                            mojom::SelectionMenuBehavior) = 0;
+  // enum SelectionTapBehavior {
+  //   // Clears the selection, for editable text set caret position at click.
+  //   kClearSelection,
+  //   // Shrinks the selection to the closest word.
+  //   kSelectClosestWord,
+  // };
+  // virtual void SelectRange(const WebRange&,
+  //                          HandleVisibilityBehavior = kHideSelectionHandle,
+  //                          SelectionTapBehavior = kClearSelection) = 0;
 
   virtual WebString RangeAsText(const WebRange&) = 0;
 

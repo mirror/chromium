@@ -177,6 +177,7 @@ class CORE_EXPORT FrameSelection final
   void SetUseSecureKeyboardEntryWhenActive(bool);
 
   bool IsHandleVisible() const { return is_handle_visible_; }
+  bool ShouldTapSelectWord() const { return should_tap_select_word_; }
 
   void UpdateSecureKeyboardEntryIfActive();
 
@@ -269,6 +270,7 @@ class CORE_EXPORT FrameSelection final
 
   bool focused_ : 1;
   bool is_handle_visible_ = false;
+  bool should_tap_select_word_ = false;
 
   // Controls text granularity used to adjust the selection's extent in
   // moveRangeSelectionExtent.
