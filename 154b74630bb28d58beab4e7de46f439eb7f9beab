@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4522319f_c940d7d1",
+        "filename": "chrome_elf/whitelist/whitelist.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-28T09:32:25Z",
+      "side": 1,
+      "message": "nit: \"static bool\" since i think non-consts at namespace scope have external linkage by default (even though their names are gobbedlygook).",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54300975_d2e440bc",
+        "filename": "chrome_elf/whitelist/whitelist.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-28T09:32:25Z",
+      "side": 1,
+      "message": "should this be declared in the .h?",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b8a67bf_911d5e72",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-28T09:32:25Z",
+      "side": 1,
+      "message": "(part 1 of memory suggestion): i\u0027m fairly certain you can have the same good memory patterns without std::unique_ptr. try changing guid_ and path_ to plain std::string and change this ctor to:\n\n  IME(std::wstring\u0026\u0026 guid, ..., std::wstring\u0026\u0026 path) : ..., guid_(std::move(guid)), path_(std::move(path)) {}",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4014af43_13a84ca1",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-28T09:32:25Z",
+      "side": 1,
+      "message": "since IME is small and movable, consider getting rid of std::unique_ptr. especially interesting if you can pre-allocate the space for the vector so that you know there will be zero post-insert moves.",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0747335e_853aec33",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-28T09:32:25Z",
+      "side": 1,
+      "message": "it would be nice to size g_ime_list properly before putting anything in it. i can think of a few options:\n1. run the loop below twice: once to get the exact size needed then once to populate g_ime_list. this makes the code O(2count), but gives you the tightest memory usage possible (O(count - fluff)).\n2. g_ime_list.reserve(count); down on line 224. this will over-allocate the vector, but will guarantee no reallocations while inserting. back to O(count) insertion, but also O(count) space.\n2.a. same as 2, but follow it with g_ime_list.shrink_to_fit(). this may do a single reallocation and move-all to bring the space back to O(count - fluff) at some cost.",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d5d298d_4de25416",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-28T09:32:25Z",
+      "side": 1,
+      "message": "omit \"whitelist::\" since this is in the namespace",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc45a786_dae85c4c",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-28T09:32:25Z",
+      "side": 1,
+      "message": "(part 2 of memory suggestion) make this and dll_path plain-jane std::wstrings and std::move them into IME.",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d7b464a_98f92339",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-28T09:32:25Z",
+      "side": 1,
+      "message": "if you get rid of unique ptrs in the vector, add to it with:\n  g_ime_list.emplace_back(std::move(subkey_name), size, date_time, std::move(dll_path));\n\nemplace_back is the magical function i\u0027ve always wanted from std::vector. thank you C++ standards gang!",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edc4dfec_b68b4f85",
+        "filename": "chrome_elf/whitelist/whitelist_ime.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-28T09:32:25Z",
+      "side": 1,
+      "message": "nit \" : int\" isn\u0027t needed",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bdc575d_5d1d52cc",
+        "filename": "chrome_elf/whitelist/whitelist_ime.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-28T09:32:25Z",
+      "side": 1,
+      "message": "nit: new code should prefer kFooBar rather than FOO_BAR (https://google.github.io/styleguide/cppguide.html#Enumerator_Names).\n\nalso, how about using \"enum class\" and getting rid of the \"WL_\" prefix?",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bea516fb_6b27f48d",
+        "filename": "chrome_elf/whitelist/whitelist_ime.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-28T09:32:25Z",
+      "side": 1,
+      "message": "move the definition of these into the .cc -- it\u0027s bad form to have string definitions in headers.",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
