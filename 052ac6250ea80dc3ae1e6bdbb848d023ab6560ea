@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e64ad1f_6178dbf2",
+        "filename": "content/browser/media/media_interface_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-28T21:52:59Z",
+      "side": 1,
+      "message": "I wonder if it would be better to do this checking inside GetCdmInterfaceFactory(), like in the previous code. That way it would be clearer that ENABLE_STANDALONE_CDM_SERVICE does something different.",
+      "range": {
+        "startLine": 90,
+        "startChar": 5,
+        "endLine": 90,
+        "endChar": 14
+      },
+      "revId": "052ac6250ea80dc3ae1e6bdbb848d023ab6560ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b65a944e_7308ee17",
+        "filename": "content/browser/media/media_interface_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-28T21:52:59Z",
+      "side": 1,
+      "message": "Should this be in an anonymous namespace at the top of this file?",
+      "range": {
+        "startLine": 169,
+        "startChar": 32,
+        "endLine": 169,
+        "endChar": 54
+      },
+      "revId": "052ac6250ea80dc3ae1e6bdbb848d023ab6560ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e89d4bd_949340e1",
+        "filename": "content/browser/media/media_interface_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-28T21:52:59Z",
+      "side": 1,
+      "message": "I would put these checks below in GetCdmInterfaceFactory(). This function finds the CdmInfo, I\u0027m not sure it should be validating a few fields.",
+      "range": {
+        "startLine": 176,
+        "startChar": 10,
+        "endLine": 176,
+        "endChar": 26
+      },
+      "revId": "052ac6250ea80dc3ae1e6bdbb848d023ab6560ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce813aa7_6d0b6baf",
+        "filename": "content/browser/media/media_interface_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-28T21:52:59Z",
+      "side": 1,
+      "message": "is this just to have a different GUID than any registered CDM? If so, add a comment.",
+      "range": {
+        "startLine": 196,
+        "startChar": 49,
+        "endLine": 196,
+        "endChar": 63
+      },
+      "revId": "052ac6250ea80dc3ae1e6bdbb848d023ab6560ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cb1a717_6231d655",
+        "filename": "content/browser/media/media_interface_proxy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-28T21:52:59Z",
+      "side": 1,
+      "message": "s/Retusn/Returns/",
+      "range": {
+        "startLine": 75,
+        "startChar": 45,
+        "endLine": 75,
+        "endChar": 51
+      },
+      "revId": "052ac6250ea80dc3ae1e6bdbb848d023ab6560ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "240d39e0_b9a1a3db",
+        "filename": "media/test/data/multiple_cdm_types.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-28T21:52:59Z",
+      "side": 1,
+      "message": "As you include eme_player_js, you could use Utils.createJWKData().",
+      "range": {
+        "startLine": 21,
+        "startChar": 42,
+        "endLine": 21,
+        "endChar": 54
+      },
+      "revId": "052ac6250ea80dc3ae1e6bdbb848d023ab6560ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eee729d0_36213c0a",
+        "filename": "media/test/data/multiple_cdm_types.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-28T21:52:59Z",
+      "side": 1,
+      "message": "same for Utils.convertToUint8Array(), although not needed here as createJWKData() returns a Uint8Array.",
+      "range": {
+        "startLine": 22,
+        "startChar": 22,
+        "endLine": 22,
+        "endChar": 40
+      },
+      "revId": "052ac6250ea80dc3ae1e6bdbb848d023ab6560ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cee25a30_8c3f9d5e",
+        "filename": "media/test/data/multiple_cdm_types.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-28T21:52:59Z",
+      "side": 1,
+      "message": "This is Utils.createKeyIdsInitializationData(). It only takes 1 keyId, but looks like that is all that is needed here. (Or fix the Utils version).",
+      "range": {
+        "startLine": 53,
+        "startChar": 11,
+        "endLine": 53,
+        "endChar": 23
+      },
+      "revId": "052ac6250ea80dc3ae1e6bdbb848d023ab6560ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fe0a0c1_3c4a01ec",
+        "filename": "media/test/data/multiple_cdm_types.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-28T21:52:59Z",
+      "side": 1,
+      "message": "Should this be \"var mediaKeys \u003d result;\"?",
+      "range": {
+        "startLine": 87,
+        "startChar": 6,
+        "endLine": 87,
+        "endChar": 15
+      },
+      "revId": "052ac6250ea80dc3ae1e6bdbb848d023ab6560ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa105fad_edb55a35",
+        "filename": "media/test/data/multiple_cdm_types.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-28T21:52:59Z",
+      "side": 1,
+      "message": "s/Sesison/Session/",
+      "range": {
+        "startLine": 112,
+        "startChar": 53,
+        "endLine": 112,
+        "endChar": 60
+      },
+      "revId": "052ac6250ea80dc3ae1e6bdbb848d023ab6560ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33eacbfc_8d33dd3b",
+        "filename": "media/test/data/multiple_cdm_types.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-28T21:52:59Z",
+      "side": 1,
+      "message": "No reference to the GUIDs above. Maybe note above \"session1 will run in process1, and session2 and session3 will run in process2 due to a different CDM GUIDs. Then we send a special response \u0027crashJwkSet\u0027 to session2 which will cause the CDM in process2 to crash. This will close both session2 and session3 as they run in the same process. session1 should not be affected. Then we try to create another MediaKeySession using the CDM GUID of process2, and the creation should work as a new process will be started.\"",
+      "range": {
+        "startLine": 113,
+        "startChar": 5,
+        "endLine": 113,
+        "endChar": 36
+      },
+      "revId": "052ac6250ea80dc3ae1e6bdbb848d023ab6560ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bd373a4_fee3273e",
+        "filename": "media/test/data/multiple_cdm_types.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-28T21:52:59Z",
+      "side": 1,
+      "message": "s/wrok/work/",
+      "range": {
+        "startLine": 113,
+        "startChar": 68,
+        "endLine": 113,
+        "endChar": 72
+      },
+      "revId": "052ac6250ea80dc3ae1e6bdbb848d023ab6560ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19252ab8_0128fae8",
+        "filename": "media/test/data/multiple_cdm_types.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-28T21:52:59Z",
+      "side": 1,
+      "message": "Don\u0027t think this line is necessary.",
+      "range": {
+        "startLine": 119,
+        "startChar": 2,
+        "endLine": 119,
+        "endChar": 22
+      },
+      "revId": "052ac6250ea80dc3ae1e6bdbb848d023ab6560ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
