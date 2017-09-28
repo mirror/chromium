@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f37b8bd9_ca7e9949",
+        "filename": "base/logging_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-28T20:02:16Z",
+      "side": 1,
+      "message": "constexpr",
+      "revId": "c91f557bd48cd3ef0d83af5090c3ce8d905c1c62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
