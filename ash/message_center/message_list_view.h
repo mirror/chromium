@@ -48,6 +48,10 @@ class ASH_EXPORT MessageListView : public views::View,
   void RemoveNotification(message_center::MessageView* view);
   void UpdateNotification(message_center::MessageView* view,
                           const message_center::Notification& notification);
+  std::pair<int, message_center::MessageView*> GetNotificationById(
+      const std::string& id);
+  message_center::MessageView* GetNotificationAt(int index);
+  int GetNotificationCount() const;
   void SetRepositionTarget(const gfx::Rect& target_rect);
   void ResetRepositionSession();
   void ClearAllClosableNotifications(const gfx::Rect& visible_scroll_rect);
