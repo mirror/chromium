@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "91f73721_6356a610",
+        "filename": "net/disk_cache/simple/simple_entry_format.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-28T14:50:35Z",
+      "side": 1,
+      "message": "Yes, a separate CL would be good.",
+      "parentUuid": "2a2a1145_fda5d762",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 64
+      },
+      "revId": "43e04c47d8c877337743b63887a65b1825688e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0c55a7fc_ddc067b8",
         "filename": "net/disk_cache/simple/simple_file_tracker.h",
         "patchSetId": 22
