@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d95629ca_7839b0c6",
+        "filename": "content/public/browser/background_fetch_delegate.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-09-28T14:42:26Z",
+      "side": 1,
+      "message": "Kinda surprised we didn\u0027t already have a failure callback.",
+      "range": {
+        "startLine": 73,
+        "startChar": 17,
+        "endLine": 73,
+        "endChar": 33
+      },
+      "revId": "42eea5d2c71c4c9c8466594af3260056578d9f3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
