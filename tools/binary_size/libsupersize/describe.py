@@ -9,6 +9,7 @@ import collections
 import csv
 import datetime
 import itertools
+import math
 import time
 
 import models
@@ -75,6 +76,47 @@ def _GetSectionSizeInfo(section_sizes):
   return (total_bytes, section_names)
 
 
+class Histogram(object):
+  def __init__(self):
+    self.data = collections.defaultdict(int)
+
+  # Input:  (-8,-4], (-4,-2], (-2,-1], (-1,0), {0}, (0,1), [1,2), [2,4), [4,8).
+  # Output:   -4,      -3,      -2,      -1,    0,    1,     2,     3,     4.
+  @staticmethod
+  def _Bucket(v):
+    if abs(v) < 1:
+      return 0 if v == 0 else (-1 if v < 0 else 1)
+    mag = int(math.floor(math.log(abs(v), 2.0)) + 2)
+    return mag if v > 0 else -mag
+
+  @staticmethod
+  def _BucketName(k):
+    if abs(k) <= 1:
+      return ['(-1,0)', '{0}', '(0,1)'][k + 1]
+    if k < 0:
+      return '(-%d,-%d]' % (1 << (-k - 1), 1 << (-k - 2))
+    return '[%d,%d)' % (1 << (k - 2), 1 << (k - 1))
+
+  def Add(self, v):
+    self.data[self._Bucket(v)] += 1
+
+  def Generate(self):
+    keys = sorted(self.data.keys())
+    items1 = [self._BucketName(k) for k in keys]
+    items2 = [str(self.data[k]) for k in keys]
+    n = len(keys)
+    w = 6  # Number of columns.
+    h = (n + w - 1) / w  # Number of rows, which is ceil(float(n) / w).
+    # Space needed by items in each column, to align on ':'.
+    sp1 = [max([0] + [len(s) for s in items1[i * h:][:h]]) for i in xrange(w)]
+    sp2 = [max([0] + [len(s) for s in items2[i * h:][:h]]) for i in xrange(w)]
+    yield 'Stats for pss:'
+    for r in xrange(h):
+      row = zip(sp1, items1[r:n:h], sp2, items2[r:n:h])
+      line = '    ' + '   '.join('%*s: %-*s' % t for t in row)
+      yield line.rstrip()
+
+
 class Describer(object):
   def __init__(self):
     pass
@@ -119,6 +161,7 @@ class DescriberText(Describer):
     self.verbose = verbose
     self.recursive = recursive
     self.summarize = summarize
+    self.histogram = Histogram() if self.summarize else None
 
   def _DescribeSectionSizes(self, section_sizes):
     total_bytes, section_names = _GetSectionSizeInfo(section_sizes)
@@ -242,6 +285,8 @@ class DescriberText(Describer):
       section_sizes = collections.defaultdict(float)
       for s in group.IterLeafSymbols():
         section_sizes[s.section_name] += s.pss
+      for s in group:
+        self.histogram.Add(s.pss)
 
     # Apply this filter after calcualating size since an alias being removed
     # causes some symbols to be UNCHANGED, yet have pss != 0.
@@ -275,14 +320,15 @@ class DescriberText(Describer):
           '{}={}'.format(models.SECTION_NAME_TO_SECTION[k], k)
           for k in relevant_sections if k in models.SECTION_NAME_TO_SECTION)
 
-      summary_desc = [
-          'Showing {:,} symbols ({}) with total pss: {} bytes'.format(
-              len(group), unique_part, int(total_size)),
-          size_summary,
-          'Number of unique paths: {}'.format(len(unique_paths)),
-          '',
-          'Section Legend: {}'.format(section_legend),
-      ]
+      summary_desc = itertools.chain(
+          ['Showing {:,} symbols ({}) with total pss: {} bytes'.format(
+              len(group), unique_part, int(total_size))],
+          self.histogram.Generate(),
+          [size_summary.rstrip()],
+          ['Number of unique paths: {}'.format(len(unique_paths))],
+          [''],
+          ['Section Legend: {}'.format(section_legend)],
+      )
     else:
       summary_desc = ()
 
@@ -339,6 +385,12 @@ class DescriberText(Describer):
       header_template = ('{} symbols added (+), {} changed (~), '
                          '{} removed (-), {} unchanged ({})')
       unchanged_msg = '=' if self.verbose else 'not shown'
+      # Apply this filter since an alias being removed causes some symbols to be
+      # UNCHANGED, yet have pss != 0.
+      changed_delta_group = delta_group.WhereDiffStatusIs(
+          models.DIFF_STATUS_UNCHANGED).Inverted()
+      num_inc = sum(1 for s in changed_delta_group if s.pss > 0)
+      num_dec = sum(1 for s in changed_delta_group if s.pss < 0)
       counts = delta_group.CountsByDiffStatus()
       num_unique_before_symbols, num_unique_after_symbols = (
           delta_group.CountUniqueSymbols())
@@ -349,6 +401,7 @@ class DescriberText(Describer):
               counts[models.DIFF_STATUS_REMOVED],
               counts[models.DIFF_STATUS_UNCHANGED],
               unchanged_msg),
+          'Of changed symbols, {} grew, {} shrank'.format(num_inc, num_dec),
           'Number of unique symbols {} -> {} ({:+})'.format(
               num_unique_before_symbols, num_unique_after_symbols,
               num_unique_after_symbols - num_unique_before_symbols),
