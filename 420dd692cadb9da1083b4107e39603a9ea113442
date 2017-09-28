@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd24c859_70aa7f02",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/indexeddb/delete-entry.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-28T20:11:44Z",
+      "side": 1,
+      "message": "there are a few longer than 80 char lines in the file, not sure what .js syle guide says about that, just pointing it out",
+      "range": {
+        "startLine": 11,
+        "startChar": 31,
+        "endLine": 11,
+        "endChar": 47
+      },
+      "revId": "420dd692cadb9da1083b4107e39603a9ea113442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b6138cb_ab5bc527",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/indexeddb/delete-entry.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-28T20:11:44Z",
+      "side": 1,
+      "message": "What is the purpose of the refreshIndexedDB call? Its not clear to me what this has to do with waiting for a db_added event. If this is needed for the test to execute properly, would it make more sense to put the call between line 50 and 51?",
+      "revId": "420dd692cadb9da1083b4107e39603a9ea113442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0499db4b_79877870",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/indexeddb/delete-entry.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-28T20:11:44Z",
+      "side": 1,
+      "message": "if you\u0027ve got some flexibility in the details of the output, you might be able to structure this for slightly better readability by virtue of less branching\n\nrunner.addResult(\u0027    Number of entries: \u0027 + entries.length);\nfor (j \u003d 0; i \u003c entries.length, j++) {\n  runner.addResult(\u0027     Key \u003d \u0027 + ...);\n}",
+      "revId": "420dd692cadb9da1083b4107e39603a9ea113442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3d3fe3a_6bc13798",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/indexeddb/delete-entry.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-28T20:11:44Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "420dd692cadb9da1083b4107e39603a9ea113442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67bb6df3_d0599e2c",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBObjectStore.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-28T20:11:44Z",
+      "side": 1,
+      "message": "What if backendDB is a nullptr, is that not a possibility?",
+      "revId": "420dd692cadb9da1083b4107e39603a9ea113442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f2fe727_4a8d4b3b",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBObjectStore.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 937,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-28T20:11:44Z",
+      "side": 1,
+      "message": "please put the new method here to keep the order the same in the .h and .cc files",
+      "revId": "420dd692cadb9da1083b4107e39603a9ea113442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "145aa464_30eb811b",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/InspectorIndexedDBAgent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 977,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-28T20:11:44Z",
+      "side": 1,
+      "message": "drive-by: Does it matter which frame is returned? there could be multiple frames from the same origin? I\u0027m asking for a couple reasons...\n- because some of the frames could be accessing databases while others are not\n- the more deeply nested the frame, the shorter lived it\u0027s likely to be\n\nI\u0027d guess FrameWithSecurityOrigin probably looks for the topmost of that origin w/o any regard for IDB usage. That\u0027s probably fine, just checking.",
+      "revId": "420dd692cadb9da1083b4107e39603a9ea113442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
