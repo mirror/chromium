@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "df594175_47da9dea",
+        "filename": "components/arc/intent_helper/activity_icon_loader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-28T08:15:45Z",
+      "side": 1,
+      "message": "I feel like this is too long to inline. Can you factor this out to a separate function?",
+      "revId": "6913a63ff3b01e949dcb2b1dbc9e454bafa89165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c572e5b9_c91c7229",
         "filename": "components/arc/intent_helper/activity_icon_loader.cc",
         "patchSetId": 1
@@ -37,6 +54,46 @@
     },
     {
       "key": {
+        "uuid": "eedd4bf9_9d361e94",
+        "filename": "components/arc/intent_helper/activity_icon_loader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-28T08:15:45Z",
+      "side": 1,
+      "message": "Does this always yield a good result? What happens if Files.app is on a non-primary display?\n\nWouldn\u0027t it be a little bit better (if not perfect) to check all displays and pick the highest scale?",
+      "revId": "6913a63ff3b01e949dcb2b1dbc9e454bafa89165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13a0894b_bc9a148e",
+        "filename": "components/arc/intent_helper/activity_icon_loader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-28T08:15:45Z",
+      "side": 1,
+      "message": "false /* discard_transparency */,",
+      "range": {
+        "startLine": 124,
+        "startChar": 57,
+        "endLine": 124,
+        "endChar": 63
+      },
+      "revId": "6913a63ff3b01e949dcb2b1dbc9e454bafa89165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4fd211f4_79362652",
         "filename": "components/arc/intent_helper/activity_icon_loader.cc",
         "patchSetId": 1
@@ -69,6 +126,23 @@
       "revId": "6913a63ff3b01e949dcb2b1dbc9e454bafa89165",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "01f5334d_16e03279",
+        "filename": "components/arc/intent_helper/activity_icon_loader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-28T08:15:45Z",
+      "side": 1,
+      "message": "Do we need the copy? Doesn\u0027t\n\n base::Base64Encode(base::StringPiece(reinterpret_cast\u003cconst char*\u003e(output.data()), output.size()), \u0026encoded);\n\nwork?",
+      "revId": "6913a63ff3b01e949dcb2b1dbc9e454bafa89165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
