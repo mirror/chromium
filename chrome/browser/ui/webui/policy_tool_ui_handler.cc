@@ -153,7 +153,8 @@ void PolicyToolUIHandler::OnFileRead(const std::string& contents) {
   // a new session with a generated name.
   if (!value) {
     value = base::MakeUnique<base::DictionaryValue>();
-    ShowErrorMessageToUser("errorFileCorrupted");
+    CallJavascriptFunction("policy.Page.disableEditing");
+    return;
   } else {
     bool logged;
     if (value->GetBoolean("logged", &logged)) {
