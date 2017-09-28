@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dca4be63_2079fc72",
+        "filename": "chrome/browser/chromeos/policy/off_hours/off_hours_interval.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-28T17:47:27Z",
+      "side": 1,
+      "message": "I think not, because interval is [start_, end_)\nAnd if start_ is equal to end_ it\u0027s interval with zero duration.",
+      "parentUuid": "098d8abf_5108550c",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 17
+      },
+      "revId": "098c66b755609fd0de10b5296fbbdd94f8804ab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cbb9a5ab_303ef428",
         "filename": "chrome/browser/chromeos/policy/off_hours/off_hours_interval_unittest.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "098c66b755609fd0de10b5296fbbdd94f8804ab5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97acf1c4_42435855",
+        "filename": "chrome/browser/chromeos/policy/off_hours/off_hours_interval_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-28T17:47:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbb9a5ab_303ef428",
+      "range": {
+        "startLine": 37,
+        "startChar": 41,
+        "endLine": 37,
+        "endChar": 46
+      },
+      "revId": "098c66b755609fd0de10b5296fbbdd94f8804ab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
