@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c572e5b9_c91c7229",
+        "filename": "components/arc/intent_helper/activity_icon_loader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-28T06:59:38Z",
+      "side": 1,
+      "message": "nit/optional/style:\n\ndisplay::Screen* screen \u003d ...;\nfloat scale \u003d screen ? ... : 1.0f;",
+      "revId": "6913a63ff3b01e949dcb2b1dbc9e454bafa89165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fd211f4_79362652",
+        "filename": "components/arc/intent_helper/activity_icon_loader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-28T06:59:38Z",
+      "side": 1,
+      "message": "nit: Maybe,\n\nstd::string encoded(output.begin(), output.end());\n\nor\n\nstd::string encoded;\nbase::Base64Encode(StringPiece(output.begin(), output.end()), \u0026encoded);\n\n?",
+      "revId": "6913a63ff3b01e949dcb2b1dbc9e454bafa89165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
