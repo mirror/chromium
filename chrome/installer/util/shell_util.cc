@@ -2080,9 +2080,9 @@ bool ShellUtil::MakeChromeDefaultProtocolClient(
            dist, chrome_exe, base::string16(), protocol, true))
     return false;
 
-  // Windows 8 does not permit making a browser default just like that.
+  // Windows 8 and beyond do not permit making a browser default just like that.
   // This process needs to be routed through the system's UI. Use
-  // ShowMakeChromeDefaultProocolClientSystemUI instead (below).
+  // ShowMakeChromeDefaultProtocolClientSystemUI instead (below).
   if (!CanMakeChromeDefaultUnattended())
     return false;
 
