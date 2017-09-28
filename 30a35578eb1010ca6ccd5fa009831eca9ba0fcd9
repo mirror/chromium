@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3fd58bc8_268b4c3a",
+        "filename": "chrome/browser/apps/app_url_redirector.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-28T07:25:36Z",
+      "side": 1,
+      "message": "haha that\u0027s weird. Done.",
+      "parentUuid": "18e62e2f_f39d590d",
+      "revId": "30a35578eb1010ca6ccd5fa009831eca9ba0fcd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c39273e7_a25a75bb",
         "filename": "chrome/browser/apps/app_url_redirector.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "30a35578eb1010ca6ccd5fa009831eca9ba0fcd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e50d2aed_d4f0e25f",
+        "filename": "chrome/browser/apps/app_url_redirector.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-28T07:25:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c39273e7_a25a75bb",
+      "revId": "30a35578eb1010ca6ccd5fa009831eca9ba0fcd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c2d29cdc_624ab4bb",
+        "filename": "chrome/browser/apps/app_url_redirector.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-28T07:25:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ddd2b3d_69d0784b",
+      "revId": "30a35578eb1010ca6ccd5fa009831eca9ba0fcd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "707af0af_17c4c031",
         "filename": "chrome/browser/apps/app_url_redirector.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "30a35578eb1010ca6ccd5fa009831eca9ba0fcd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6613b66_a9551be0",
+        "filename": "chrome/browser/apps/app_url_redirector.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-28T07:25:36Z",
+      "side": 1,
+      "message": "I didn\u0027t want to change too much outside of what was needed. Changed it to what you suggested.",
+      "parentUuid": "707af0af_17c4c031",
+      "revId": "30a35578eb1010ca6ccd5fa009831eca9ba0fcd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "1568cde4_007fdf0d",
+        "filename": "chrome/browser/apps/app_url_redirector.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-28T07:25:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27d3c592_f5bb2347",
+      "revId": "30a35578eb1010ca6ccd5fa009831eca9ba0fcd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f6c4ee1_0121f568",
         "filename": "chrome/browser/chrome_content_browser_client.cc",
         "patchSetId": 5
@@ -101,6 +191,24 @@
       "revId": "30a35578eb1010ca6ccd5fa009831eca9ba0fcd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a79e08c_728a38b8",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-28T07:25:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f6c4ee1_0121f568",
+      "revId": "30a35578eb1010ca6ccd5fa009831eca9ba0fcd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "eeff56e0_840ae5e9",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3182,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-28T07:25:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "beac0b05_c13fbd48",
+      "revId": "30a35578eb1010ca6ccd5fa009831eca9ba0fcd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffdddcab_91613d80",
         "filename": "chrome/browser/chrome_content_browser_client.cc",
         "patchSetId": 5
@@ -135,6 +261,24 @@
       "revId": "30a35578eb1010ca6ccd5fa009831eca9ba0fcd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee49bf08_44536b53",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3183,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-28T07:25:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffdddcab_91613d80",
+      "revId": "30a35578eb1010ca6ccd5fa009831eca9ba0fcd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "d916dd1b_bc7eced7",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-28T07:25:36Z",
+      "side": 1,
+      "message": "I\u0027m actually the one that added many of the DVLOGs to AppUrlRedirector haha. They have been really useful for understanding what navigations (don\u0027t) get redirected and why. We\u0027ll probably remove them when the feature stabilizes.",
+      "parentUuid": "eb2fd0c5_c9b8e0f1",
+      "revId": "30a35578eb1010ca6ccd5fa009831eca9ba0fcd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30c10aca_1f3f6c62",
         "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
         "patchSetId": 5
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "90f1700a_fbb43a0c",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-28T07:25:36Z",
+      "side": 1,
+      "message": "So two things:\n\n1. I don\u0027t think this is changing the behavior. AppUrlRedirector does this already[1].\n2. I actually added a bunch of tests, including one for prerender, before this patch to make sure the behavior is not changing[2]. The patch got reverted, but it landed again.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/apps/app_url_redirector.cc?q\u003dapp_url_redirector\u0026sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d80\n[2] https://chromium-review.googlesource.com/c/chromium/src/+/661998/9/chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc#533",
+      "parentUuid": "30c10aca_1f3f6c62",
+      "revId": "30a35578eb1010ca6ccd5fa009831eca9ba0fcd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26d5b409_308c46b6",
         "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.h",
         "patchSetId": 5
@@ -183,6 +363,24 @@
       "writtenOn": "2017-09-28T05:01:30Z",
       "side": 1,
       "message": "can this be private?",
+      "revId": "30a35578eb1010ca6ccd5fa009831eca9ba0fcd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b0ce4e0_ac5beb1e",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-28T07:25:36Z",
+      "side": 1,
+      "message": "Yes, but then we would have to use bases::WrapUnique(new BookmarkAppNavigationThrottle(...)) in CreateThrottleFor.",
+      "parentUuid": "26d5b409_308c46b6",
       "revId": "30a35578eb1010ca6ccd5fa009831eca9ba0fcd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "256330a0_b543288d",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-28T07:25:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6458933_9cb47b6c",
+      "revId": "30a35578eb1010ca6ccd5fa009831eca9ba0fcd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5adc937_9bcfb825",
         "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.h",
         "patchSetId": 5
@@ -220,6 +436,24 @@
       "revId": "30a35578eb1010ca6ccd5fa009831eca9ba0fcd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3568dd3_ae6f06fb",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-28T07:25:36Z",
+      "side": 1,
+      "message": "A follow up patch changes CheckNavigation to post a task to run this function and the function should only run if the throttle is still alive. So I could move it but then I would have move it back in the follow up patch.",
+      "parentUuid": "a5adc937_9bcfb825",
+      "revId": "30a35578eb1010ca6ccd5fa009831eca9ba0fcd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
