@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "789395d2_3326cab0",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-28T02:10:43Z",
+      "side": 1,
+      "message": "I recommend to introduce create functions instead of making constructor\npublic. Create functions are ease to use, e.g. Position::BeforeNode(),\nPosition::FirstPositionInNode() etc.",
+      "revId": "26a79a500dc01baf0db9e1262ccbc95c7780008b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d9bb24b_1220a27e",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-28T02:10:43Z",
+      "side": 1,
+      "message": "We should have |AXPosition::From(const Position\u0026)|, or another name,\ninstead of constructor since |Position| to |AXPosition| is complex\nprocess and constructor should be as simple as possible.",
+      "revId": "26a79a500dc01baf0db9e1262ccbc95c7780008b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "512e99b7_b5a40f9b",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-28T02:10:43Z",
+      "side": 1,
+      "message": "We should have IsValidFor(const Document\u0026), since Node can be move into\nanother Document.",
+      "revId": "26a79a500dc01baf0db9e1262ccbc95c7780008b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cef6b68a_3b96b550",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-28T02:10:43Z",
+      "side": 1,
+      "message": "I recommend not to use offset as position in anchor object, since it\ntake O(N) to compute it.\n\nIt is better to follow RangeBoundaryPoint, Position will be replaced\nby it[1].\n\nFor AXPosition, we can have\n\n// I think we should use |WeakPersitent| since |AXPosition| doesn\u0027t\n// observe DOM mutation and style change.\n// Note: |contaner_object_| can\u0027t be null at initialization.\nWeakPersistent\u003cAXObject\u003e container_object_;\n// |nullptr| when |this| position is before first child in\n// |container_object_|.\nWeakPersistent\u003cAXObject\u003e child_before_anchor_\nbase::Optional\u003cint\u003e offset_in_container_;\n\n|offset_in_container_| has not value until someone really wants to have\nit.\n\nCreate function AXPosition::BeforeObject(AXObject*) can be\n\n// static\nAXPosition AXPosition::BeforeObject(AXObject* anchor_object) {\n  return AXPosition(*anchor_object-\u003eParent(), \n                    anchor_object-\u003ePreviousSibling());\n}\n\n// private\nAXPosition::AXPosition(AXObject\u0026 container_object,\n                       AXObject* child_before_anchor)\n  : contaner_object_(container_object),\n    child_before_anchor_(child_before_anchor_) {\n  if (!child_before_anchor)\n    return;\n  DCHECK_EQ(container_object_, child_before_anchor_-\u003eParent());\n}\n\n\n\n\n[1] http://crbug.com/751387 Unify Position and RangeBoundaryPoint",
+      "revId": "26a79a500dc01baf0db9e1262ccbc95c7780008b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99c1d9e5_20ed6198",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-28T02:10:43Z",
+      "side": 1,
+      "message": "We also want to track |Document::StyleVersion()| since style change also\ncauses layout change.",
+      "revId": "26a79a500dc01baf0db9e1262ccbc95c7780008b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5da0feeb_fa399b64",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-28T02:10:43Z",
+      "side": 1,
+      "message": "I recommend to make |operator\u003d\u003d()| not to accept null AXPosition,\n|Position::operator\u003d\u003d()| will be so[1].\n\n[1] http://crbug.com/722234 Make Position::operator\u003d\u003d() not to take null Position",
+      "revId": "26a79a500dc01baf0db9e1262ccbc95c7780008b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f32e7a4_9531ef46",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXRange.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-28T02:10:43Z",
+      "side": 1,
+      "message": "Range should be start/end and keep start \u003c\u003d end.\n\nAnchor/Focus are terms using in Selection API.\n\nNote: In Blink, we use \"base\" and \"extent\" instead of \"anchor\" and \"focus\".\nThus, I recommend to use \"base\" and \"extent\" in |AXSelection|.",
+      "revId": "26a79a500dc01baf0db9e1262ccbc95c7780008b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
