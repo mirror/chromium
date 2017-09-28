@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1c00b1da_0792f8b0",
+        "filename": "chrome/browser/resources/settings/site_settings/site_list.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-09-28T00:31:34Z",
+      "side": 1,
+      "message": "You\u0027re preaching to the choir :). I agree that this is not beneficial to users and I\u0027m currently trying to convince UX to agree with me (which is why I said I wasn\u0027t landing this CL unless that discussion doesn\u0027t work out the way I hope)",
+      "parentUuid": "14d5a231_17502270",
+      "revId": "d6abe2c1114d2bd9593c5338f35562ef6ceefd98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3f176b6_81df6421",
         "filename": "chrome/browser/resources/settings/site_settings_page/site_settings_page.html",
         "patchSetId": 4
