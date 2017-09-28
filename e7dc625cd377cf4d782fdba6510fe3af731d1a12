@@ -16,6 +16,24 @@
       "revId": "e7dc625cd377cf4d782fdba6510fe3af731d1a12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2973665_b3f3381f",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1656,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-09-28T21:48:45Z",
+      "side": 1,
+      "message": "Supervised user will not have the ARC enabled flag, so we do not need to check it here.",
+      "parentUuid": "901824d7_697740ef",
+      "revId": "e7dc625cd377cf4d782fdba6510fe3af731d1a12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
