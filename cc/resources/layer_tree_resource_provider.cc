@@ -14,6 +14,30 @@ using gpu::gles2::GLES2Interface;
 
 namespace cc {
 
+struct LayerTreeResourceProvider::ExportableTransferableResource {
+  viz::ResourceId local_id;
+  viz::TransferableResource transferable;
+  std::unique_ptr<viz::SingleReleaseCallback> release_callback;
+  int exported_count = 0;
+  bool marked_for_deletion = false;
+
+  gpu::SyncToken returned_sync_token;
+  bool returned_lost = false;
+
+  ExportableTransferableResource(
+      viz::ResourceId local_id,
+      const viz::TransferableResource& transferable,
+      std::unique_ptr<viz::SingleReleaseCallback> release_callback)
+      : local_id(local_id),
+        transferable(transferable),
+        release_callback(std::move(release_callback)) {}
+  ~ExportableTransferableResource() = default;
+
+  ExportableTransferableResource(ExportableTransferableResource&&) = default;
+  ExportableTransferableResource& operator=(ExportableTransferableResource&&) =
+      default;
+};
+
 LayerTreeResourceProvider::LayerTreeResourceProvider(
     viz::ContextProvider* compositor_context_provider,
     viz::SharedBitmapManager* shared_bitmap_manager,
@@ -28,7 +52,12 @@ LayerTreeResourceProvider::LayerTreeResourceProvider(
                        enable_color_correct_rasterization,
                        resource_settings) {}
 
-LayerTreeResourceProvider::~LayerTreeResourceProvider() {}
+LayerTreeResourceProvider::~LayerTreeResourceProvider() {
+  for (auto& pair : transferable_resources_) {
+    ExportableTransferableResource& exportable = pair.second;
+    exportable.release_callback->Run(gpu::SyncToken(), true /* is_lost */);
+  }
+}
 
 gpu::SyncToken LayerTreeResourceProvider::GetSyncTokenForResources(
     const ResourceIdArray& resource_ids) {
@@ -42,22 +71,34 @@ gpu::SyncToken LayerTreeResourceProvider::GetSyncTokenForResources(
 }
 
 void LayerTreeResourceProvider::PrepareSendToParent(
-    const ResourceIdArray& resource_ids,
+    const ResourceIdArray& export_ids,
     std::vector<viz::TransferableResource>* list) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   GLES2Interface* gl = ContextGL();
 
   // This function goes through the array multiple times, store the resources
   // as pointers so we don't have to look up the resource id multiple times.
-  std::vector<Resource*> resources;
-  resources.reserve(resource_ids.size());
-  for (const viz::ResourceId id : resource_ids)
-    resources.push_back(GetResource(id));
+  // Make sure the maps do not change while these vectors are alive or they
+  // will become invalid.
+  std::vector<std::pair<Resource*, viz::ResourceId>> resources;
+  std::vector<std::pair<ExportableTransferableResource*, viz::ResourceId>>
+      exportables;
+  resources.reserve(export_ids.size());
+  exportables.reserve(export_ids.size());
+  for (const viz::ResourceId id : export_ids) {
+    auto it = transferable_resources_.find(id);
+    if (it != transferable_resources_.end())
+      exportables.push_back({&it->second, id});
+    else
+      resources.push_back({GetResource(id), id});
+  }
+  DCHECK_EQ(resources.size() + exportables.size(), export_ids.size());
 
   // Lazily create any mailboxes and verify all unverified sync tokens.
   std::vector<GLbyte*> unverified_sync_tokens;
   std::vector<Resource*> need_synchronization_resources;
-  for (Resource* resource : resources) {
+  for (auto& pair : resources) {
+    Resource* resource = pair.first;
     if (!ResourceProvider::IsGpuResourceType(resource->type))
       continue;
 
@@ -69,6 +110,14 @@ void LayerTreeResourceProvider::PrepareSendToParent(
       } else if (!resource->mailbox().sync_token().verified_flush()) {
         unverified_sync_tokens.push_back(resource->GetSyncTokenData());
       }
+    }
+  }
+  for (auto& pair : exportables) {
+    ExportableTransferableResource* exportable = pair.first;
+    if (!exportable->transferable.is_software &&
+        !exportable->transferable.mailbox_holder.sync_token.verified_flush()) {
+      unverified_sync_tokens.push_back(
+          exportable->transferable.mailbox_holder.sync_token.GetData());
     }
   }
 
@@ -100,11 +149,10 @@ void LayerTreeResourceProvider::PrepareSendToParent(
     resource->SetSynchronized();
   }
 
-  // Transfer Resources
-  DCHECK_EQ(resources.size(), resource_ids.size());
+  // Transfer Resources.
   for (size_t i = 0; i < resources.size(); ++i) {
-    Resource* source = resources[i];
-    const viz::ResourceId id = resource_ids[i];
+    Resource* source = resources[i].first;
+    const viz::ResourceId id = resources[i].second;
 
     DCHECK(!settings_.delegated_sync_points_required ||
            !source->needs_sync_token());
@@ -115,7 +163,17 @@ void LayerTreeResourceProvider::PrepareSendToParent(
     TransferResource(source, id, &resource);
 
     source->exported_count++;
-    list->push_back(resource);
+    list->push_back(std::move(resource));
+  }
+  for (auto& pair : exportables) {
+    ExportableTransferableResource* exportable = pair.first;
+    const viz::ResourceId& id = pair.second;
+
+    viz::TransferableResource resource = exportable->transferable;
+    resource.id = id;
+
+    exportable->exported_count++;
+    list->push_back(std::move(resource));
   }
 }
 
@@ -126,9 +184,38 @@ void LayerTreeResourceProvider::ReceiveReturnsFromParent(
 
   for (const viz::ReturnedResource& returned : resources) {
     viz::ResourceId local_id = returned.id;
-    ResourceMap::iterator map_iterator = resources_.find(local_id);
+
+    auto transferable_it = transferable_resources_.find(local_id);
+    if (transferable_it != transferable_resources_.end()) {
+      ExportableTransferableResource& exportable = transferable_it->second;
+
+      CHECK_GE(exportable.exported_count, returned.count);
+      exportable.exported_count -= returned.count;
+      exportable.returned_lost |= returned.lost;
+
+      if (exportable.exported_count)
+        continue;
+
+      if (returned.sync_token.HasData()) {
+        DCHECK(!exportable.transferable.is_software);
+        exportable.returned_sync_token = returned.sync_token;
+      }
+
+      if (exportable.marked_for_deletion) {
+        exportable.release_callback->Run(exportable.returned_sync_token,
+                                         exportable.returned_lost);
+        transferable_resources_.erase(transferable_it);
+      }
+
+      continue;
+    }
+
+    auto map_iterator = resources_.find(local_id);
+    DCHECK(map_iterator != resources_.end());
     // Resource was already lost (e.g. it belonged to a child that was
     // destroyed).
+    // TODO(danakj): Remove this. There is no "child" here anymore, and
+    // lost resources are still in the map until exported_count == 0.
     if (map_iterator == resources_.end())
       continue;
 
@@ -158,6 +245,33 @@ void LayerTreeResourceProvider::ReceiveReturnsFromParent(
     // The resource belongs to this LayerTreeResourceProvider, so it can be
     // destroyed.
     DeleteResourceInternal(map_iterator, NORMAL);
+  }
+}
+
+viz::ResourceId LayerTreeResourceProvider::AddTransferrableResource(
+    const viz::TransferableResource& transferable,
+    std::unique_ptr<viz::SingleReleaseCallback> release_callback) {
+  // This field is only for LayerTreeResourceProvider-created resources.
+  DCHECK(!transferable.read_lock_fences_enabled);
+
+  viz::ResourceId id = next_id_++;
+  auto result = transferable_resources_.emplace(
+      id, ExportableTransferableResource(id, transferable,
+                                         std::move(release_callback)));
+  DCHECK(result.second);  // If false, the id was already in the map.
+  return id;
+}
+
+void LayerTreeResourceProvider::RemoveTransferrableResource(
+    viz::ResourceId id) {
+  auto it = transferable_resources_.find(id);
+  DCHECK(it != transferable_resources_.end());
+  ExportableTransferableResource& exportable = it->second;
+  exportable.marked_for_deletion = true;
+  if (exportable.exported_count == 0) {
+    exportable.release_callback->Run(exportable.returned_sync_token,
+                                     exportable.returned_lost);
+    transferable_resources_.erase(it);
   }
 }
 
