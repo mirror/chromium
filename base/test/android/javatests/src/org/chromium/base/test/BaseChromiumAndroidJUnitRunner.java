@@ -22,6 +22,7 @@ import android.support.test.runner.AndroidJUnitRunner;
 import org.chromium.base.Log;
 import org.chromium.base.multidex.ChromiumMultiDexInstaller;
 
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -158,6 +159,19 @@ public class BaseChromiumAndroidJUnitRunner extends AndroidJUnitRunner {
                 new RunnerArgs.Builder().fromManifest(this).fromBundle(arguments).build();
         TestRequestBuilder builder = new TestRequestBuilder(this, arguments);
         builder.addApkToScan(getContext().getPackageCodePath());
+
+        try {
+            Class<?> incrementalInstallApp =
+                    Class.forName("org.chromium.incrementalinstall.BootstrapApplication");
+            File[] incrementalDexFiles =
+                    (File[]) incrementalInstallApp.getDeclaredField("sIncrementalDexFiles")
+                            .get(incrementalInstallApp);
+            for (File f : incrementalDexFiles) {
+                builder.addApkToScan(f.getAbsolutePath());
+            }
+        } catch (Exception e) {
+            // Not an incremental build.
+        }
         builder.addFromRunnerArgs(runnerArgs);
         return builder.build();
     }
