@@ -679,12 +679,11 @@
     "type": "additional_compile_target",
   },
   "mash_browser_tests": {
-    "label": "//chrome/test:mash_browser_tests",
-    "label_type": "group",
+    "label": "//chrome/test:browser_tests",
     "type": "windowed_test_launcher",
     "executable": "browser_tests",
     "args": [
-      "--run-in-mash",
+      "--mash",
     ],
   },
   "media_unittests": {
@@ -764,13 +763,11 @@
     "type": "additional_compile_target",
   },
   "mus_browser_tests": {
-    "label": "//chrome/test:mus_browser_tests",
-    "label_type": "group",
+    "label": "//chrome/test:browser_tests",
     "type": "windowed_test_launcher",
     "executable": "browser_tests",
     "args": [
       "--mus",
-      "--service-overrides=../../chrome/app/mash/mash_service_overrides.json",
     ],
   },
   "message_center_unittests": {
