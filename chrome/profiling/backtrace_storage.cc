@@ -8,30 +8,54 @@
 
 namespace profiling {
 
-BacktraceStorage::BacktraceStorage() {}
+namespace {
+constexpr size_t kShardCount = 64;
+}  // namespace
+
+BacktraceStorage::BacktraceStorage() : backtraces_(kShardCount) {}
 
 BacktraceStorage::~BacktraceStorage() {}
 
 const Backtrace* BacktraceStorage::Insert(std::vector<Address>&& bt) {
-  base::AutoLock lock(lock_);
+  Backtrace backtrace(std::move(bt));
+  size_t shard_index = backtrace.fingerprint() % kShardCount;
+  ContainerShard& shard = backtraces_[shard_index];
 
-  auto iter = backtraces_.insert(Backtrace(std::move(bt))).first;
+  base::AutoLock lock(shard.lock);
+  auto iter = shard.backtraces.insert(std::move(backtrace)).first;
   iter->AddRef();
   return &*iter;
 }
 
 void BacktraceStorage::Free(const Backtrace* bt) {
-  base::AutoLock lock(lock_);
+  size_t shard_index = bt->fingerprint() % kShardCount;
+  ContainerShard& shard = backtraces_[shard_index];
+  base::AutoLock lock(shard.lock);
   if (!bt->Release())
-    backtraces_.erase(backtraces_.find(*bt));
+    shard.backtraces.erase(*bt);
 }
 
 void BacktraceStorage::Free(const std::vector<const Backtrace*>& bts) {
-  base::AutoLock lock(lock_);
-  for (size_t i = 0; i < bts.size(); i++) {
-    if (!bts[i]->Release())
-      backtraces_.erase(backtraces_.find(*bts[i]));
+  // Separate backtraces by fingerprint.
+  std::vector<std::vector<const Backtrace*>> backtraces_by_shard(kShardCount);
+  for (auto& backtraces : backtraces_by_shard) {
+    backtraces.reserve(bts.size() / kShardCount + 1);
+  }
+  for (const Backtrace* bt : bts) {
+    size_t shard_index = bt->fingerprint() % kShardCount;
+    backtraces_by_shard[shard_index].push_back(bt);
+  }
+  for (size_t i = 0; i < kShardCount; ++i) {
+    ContainerShard& shard = backtraces_[i];
+    base::AutoLock lock(shard.lock);
+    for (const Backtrace* bt : backtraces_by_shard[i]) {
+      if (!bt->Release())
+        shard.backtraces.erase(*bt);
+    }
   }
 }
+
+BacktraceStorage::ContainerShard::ContainerShard() = default;
+BacktraceStorage::ContainerShard::~ContainerShard() = default;
 
 }  // namespace profiling
