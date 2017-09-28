@@ -44,6 +44,12 @@ class CC_EXPORT LayerTreeResourceProvider : public ResourceProvider {
   void ReceiveReturnsFromParent(
       const std::vector<viz::ReturnedResource>& transferable_resources);
 
+  // TODO(danakj): Override OnMemoryDump to add these.
+  viz::ResourceId AddTransferrableResource(
+      const viz::TransferableResource&,
+      std::unique_ptr<viz::SingleReleaseCallback>);
+  void RemoveTransferrableResource(viz::ResourceId);
+
   // The following lock classes are part of the LayerTreeResourceProvider API
   // and are needed to write the resource contents. The user must ensure that
   // they only use GL locks on GL resources, etc, and this is enforced by
@@ -77,6 +83,10 @@ class CC_EXPORT LayerTreeResourceProvider : public ResourceProvider {
   void TransferResource(Resource* source,
                         viz::ResourceId id,
                         viz::TransferableResource* resource);
+
+  struct ExportableTransferableResource;
+  base::flat_map<viz::ResourceId, ExportableTransferableResource>
+      transferable_resources_;
 
   DISALLOW_COPY_AND_ASSIGN(LayerTreeResourceProvider);
 };
