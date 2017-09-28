@@ -67,6 +67,7 @@ class VIEWS_EXPORT InkDrop {
 
   // Notifes all of the observers that the animation has started.
   void NotifyInkDropAnimationStarted();
+  void NotifyInkDropAnimationEnded();
 
  private:
   base::ObserverList<InkDropObserver> observers_;
