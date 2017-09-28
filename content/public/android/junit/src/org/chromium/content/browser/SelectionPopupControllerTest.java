@@ -34,18 +34,12 @@ public class SelectionPopupControllerTest {
     View mView;
     RenderCoordinates mRenderCoordinates;
 
-    class MySelectionClient implements SelectionClient {
+    class SmartSelectionClientStub implements SmartSelectionClient {
         @Override
         public void onSelectionChanged(String selection) {}
 
         @Override
         public void onSelectionEvent(int eventType, float posXPix, float poxYPix) {}
-
-        @Override
-        public void showUnhandledTapUIIfNeeded(int x, int y) {}
-
-        @Override
-        public void selectWordAroundCaretAck(boolean didSelect, int startAdjust, int endAdjust) {}
 
         @Override
         public boolean requestSelectionPopupUpdates(boolean shouldSuggest) {
@@ -74,6 +68,6 @@ public class SelectionPopupControllerTest {
     @Feature({"SmartSelection"})
     public void testSmartSelectionAdjustSelectionRange() {
         assertNotNull(mController);
-        MySelectionClient client = new MySelectionClient();
+        new SmartSelectionClientStub();
     }
 }

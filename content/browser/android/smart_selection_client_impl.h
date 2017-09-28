@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_BROWSER_ANDROID_SMART_SELECTION_CLIENT_H_
-#define CONTENT_BROWSER_ANDROID_SMART_SELECTION_CLIENT_H_
+#ifndef CONTENT_BROWSER_ANDROID_SMART_SELECTION_CLIENT_IMPL_H_
+#define CONTENT_BROWSER_ANDROID_SMART_SELECTION_CLIENT_IMPL_H_
 
 #include <jni.h>
 
@@ -16,16 +16,16 @@ namespace content {
 
 class WebContents;
 
-// The native portion of Java SmartSelectionClient.
+// The native portion of Java SmartSelectionClientImpl.
 // This class performs one operation: retrieves the selected text together with
 // its surrounding context from WebContents. This surrounding text is obtained
 // asynchronously from the current focused frame and passed back to Java layer.
-class SmartSelectionClient {
+class SmartSelectionClientImpl {
  public:
-  SmartSelectionClient(JNIEnv* env,
-                       const base::android::JavaRef<jobject>& obj,
-                       WebContents* web_contents);
-  ~SmartSelectionClient();
+  SmartSelectionClientImpl(JNIEnv* env,
+                           const base::android::JavaRef<jobject>& obj,
+                           WebContents* web_contents);
+  ~SmartSelectionClientImpl();
 
   // Sends asynchronius request to retrieve the text.
   void RequestSurroundingText(JNIEnv* env,
@@ -50,11 +50,11 @@ class SmartSelectionClient {
   // the request for the text.
   WebContents* web_contents_;
 
-  base::WeakPtrFactory<SmartSelectionClient> weak_ptr_factory_;
+  base::WeakPtrFactory<SmartSelectionClientImpl> weak_ptr_factory_;
 
-  DISALLOW_COPY_AND_ASSIGN(SmartSelectionClient);
+  DISALLOW_COPY_AND_ASSIGN(SmartSelectionClientImpl);
 };
 
 }  // namespace content
 
-#endif  // CONTENT_BROWSER_ANDROID_SMART_SELECTION_CLIENT_H_
+#endif  // CONTENT_BROWSER_ANDROID_SMART_SELECTION_CLIENT_IMPL_H_

@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/browser/android/smart_selection_client.h"
+#include "content/browser/android/smart_selection_client_impl.h"
 
 #include "base/android/jni_android.h"
 #include "base/android/jni_string.h"
@@ -11,7 +11,7 @@
 #include "base/supports_user_data.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
-#include "jni/SmartSelectionClient_jni.h"
+#include "jni/SmartSelectionClientImpl_jni.h"
 
 using base::android::AttachCurrentThread;
 using base::android::ConvertUTF16ToJavaString;
@@ -23,30 +23,30 @@ namespace content {
 namespace {
 const void* const kSmartSelectionClientUDKey = &kSmartSelectionClientUDKey;
 
-// This class deletes SmartSelectionClient when WebContents is destroyed.
+// This class deletes SmartSelectionClientImpl when WebContents is destroyed.
 class UserData : public base::SupportsUserData::Data {
  public:
-  explicit UserData(SmartSelectionClient* client) : client_(client) {}
+  explicit UserData(SmartSelectionClientImpl* client) : client_(client) {}
 
  private:
-  std::unique_ptr<SmartSelectionClient> client_;
+  std::unique_ptr<SmartSelectionClientImpl> client_;
 
   DISALLOW_IMPLICIT_CONSTRUCTORS(UserData);
 };
-}
+}  // namespace
 
 jlong Init(JNIEnv* env,
            const JavaParamRef<jobject>& obj,
            const JavaParamRef<jobject>& jweb_contents) {
   WebContents* web_contents = WebContents::FromJavaWebContents(jweb_contents);
-  CHECK(web_contents)
-      << "A SmartSelectionClient should be created with a valid WebContents.";
+  CHECK(web_contents) << "A SmartSelectionClientImpl should be created with a "
+                         "valid WebContents.";
 
   return reinterpret_cast<intptr_t>(
-      new SmartSelectionClient(env, obj, web_contents));
+      new SmartSelectionClientImpl(env, obj, web_contents));
 }
 
-SmartSelectionClient::SmartSelectionClient(
+SmartSelectionClientImpl::SmartSelectionClientImpl(
     JNIEnv* env,
     const base::android::JavaRef<jobject>& obj,
     WebContents* web_contents)
@@ -58,16 +58,16 @@ SmartSelectionClient::SmartSelectionClient(
                              base::MakeUnique<UserData>(this));
 }
 
-SmartSelectionClient::~SmartSelectionClient() {
+SmartSelectionClientImpl::~SmartSelectionClientImpl() {
   JNIEnv* env = base::android::AttachCurrentThread();
   ScopedJavaLocalRef<jobject> j_obj = java_ref_.get(env);
   if (!j_obj.is_null()) {
-    Java_SmartSelectionClient_onNativeSideDestroyed(
+    Java_SmartSelectionClientImpl_onNativeSideDestroyed(
         env, j_obj, reinterpret_cast<intptr_t>(this));
   }
 }
 
-void SmartSelectionClient::RequestSurroundingText(
+void SmartSelectionClientImpl::RequestSurroundingText(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj,
     int num_extra_characters,
@@ -79,27 +79,28 @@ void SmartSelectionClient::RequestSurroundingText(
   }
 
   focused_frame->RequestTextSurroundingSelection(
-      base::Bind(&SmartSelectionClient::OnSurroundingTextReceived,
+      base::Bind(&SmartSelectionClientImpl::OnSurroundingTextReceived,
                  weak_ptr_factory_.GetWeakPtr(), callback_data),
       num_extra_characters);
 }
 
-void SmartSelectionClient::CancelAllRequests(
+void SmartSelectionClientImpl::CancelAllRequests(
     JNIEnv* env,
     const base::android::JavaParamRef<jobject>& obj) {
   weak_ptr_factory_.InvalidateWeakPtrs();
 }
 
-void SmartSelectionClient::OnSurroundingTextReceived(int callback_data,
-                                                     const base::string16& text,
-                                                     int start,
-                                                     int end) {
+void SmartSelectionClientImpl::OnSurroundingTextReceived(
+    int callback_data,
+    const base::string16& text,
+    int start,
+    int end) {
   JNIEnv* env = AttachCurrentThread();
   ScopedJavaLocalRef<jobject> obj = java_ref_.get(env);
   if (!obj.is_null()) {
     ScopedJavaLocalRef<jstring> j_text = ConvertUTF16ToJavaString(env, text);
-    Java_SmartSelectionClient_onSurroundingTextReceived(env, obj, callback_data,
-                                                        j_text, start, end);
+    Java_SmartSelectionClientImpl_onSurroundingTextReceived(
+        env, obj, callback_data, j_text, start, end);
   }
 }
 
