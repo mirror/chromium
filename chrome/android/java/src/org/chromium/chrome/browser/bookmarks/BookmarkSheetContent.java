@@ -55,6 +55,11 @@ public class BookmarkSheetContent implements BottomSheetContent {
     }
 
     @Override
+    public View getViewForPadding() {
+        return mBookmarkManager.getRecyclerView();
+    }
+
+    @Override
     public View getToolbarView() {
         return mToolbarView;
     }
