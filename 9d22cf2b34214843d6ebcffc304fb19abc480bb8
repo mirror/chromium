@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a801860_1ef17afa",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_auth_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-28T05:28:03Z",
+      "side": 1,
+      "message": "Are these still in use?\nIIUC, no, then let\u0027s get rid of |account_type|, which AUTH_CODE_AND_ACCOUNT only requires.\nYou can provide the dummy value with comment.\nOr, you can just say NOTREACHED(), maybe with TODO comment to remove it.\n\n(Actually, I was preparing it, but it conflicted with this so I just suspended ;-)).",
+      "range": {
+        "startLine": 130,
+        "startChar": 6,
+        "endLine": 139,
+        "endChar": 14
+      },
+      "revId": "9d22cf2b34214843d6ebcffc304fb19abc480bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af54fe84_e65fbfed",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_auth_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-28T05:28:03Z",
+      "side": 1,
+      "message": "nit: static ?",
+      "revId": "9d22cf2b34214843d6ebcffc304fb19abc480bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ba2016f_682306cd",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_auth_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-28T05:28:03Z",
+      "side": 1,
+      "message": "In OnSignInFailed(), could you add\nDCHECK_NE(reason, SUCCESS);\n?\n\n(Off topic.)\nMaybe, in future, we\u0027d like to merge these into one somehow, as FailureReason now can take SUCCESS.",
+      "range": {
+        "startLine": 227,
+        "startChar": 0,
+        "endLine": 234,
+        "endChar": 1
+      },
+      "revId": "9d22cf2b34214843d6ebcffc304fb19abc480bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14ddae1e_e33d748b",
+        "filename": "components/arc/common/auth.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-28T05:28:03Z",
+      "side": 1,
+      "message": "\"and |failure_reason| must be SUCCESS.\"\n\nI think?",
+      "revId": "9d22cf2b34214843d6ebcffc304fb19abc480bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a475a233_05c6f806",
+        "filename": "components/arc/common/auth.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-28T05:28:03Z",
+      "side": 1,
+      "message": "\"... other than SUCCESS.\" ?",
+      "revId": "9d22cf2b34214843d6ebcffc304fb19abc480bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d308fe17_caff7867",
+        "filename": "components/arc/common/auth.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-28T05:28:03Z",
+      "side": 1,
+      "message": "This is no longer only \"failure\", how about renaming to something other, like |status| ?",
+      "revId": "9d22cf2b34214843d6ebcffc304fb19abc480bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
