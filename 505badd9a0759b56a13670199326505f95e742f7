@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "7fe8d8df_f7843cff",
+        "filename": "chrome/browser/chromeos/printing/cups_printers_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-09-28T20:44:16Z",
+      "side": 1,
+      "message": "Do you mean receiving?  If I were a consumer of this class, I would expect this  to mean that I had to call this before registering myself as an observer.  You may want to say something like \"Observers of this class will not receive events until after this method is called\".",
+      "range": {
+        "startLine": 86,
+        "startChar": 14,
+        "endLine": 86,
+        "endChar": 26
+      },
+      "revId": "505badd9a0759b56a13670199326505f95e742f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c222f652_3b7e0bf3",
         "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
         "patchSetId": 4
