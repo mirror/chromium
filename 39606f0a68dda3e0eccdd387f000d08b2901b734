@@ -343,6 +343,30 @@
       "revId": "39606f0a68dda3e0eccdd387f000d08b2901b734",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "587f6279_c9a7d20f",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-28T18:39:24Z",
+      "side": 1,
+      "message": "Acknowledged as discussed offline.",
+      "parentUuid": "fa4bdb42_f4e2b367",
+      "range": {
+        "startLine": 24,
+        "startChar": 6,
+        "endLine": 24,
+        "endChar": 19
+      },
+      "revId": "39606f0a68dda3e0eccdd387f000d08b2901b734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
