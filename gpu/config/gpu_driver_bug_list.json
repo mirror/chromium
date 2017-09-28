@@ -1,6 +1,6 @@
 {
   "name": "gpu driver bug list",
-  "version": "10.31",
+  "version": "10.32",
   "entries": [
     {
       "id": 1,
@@ -2260,11 +2260,16 @@
       "comment": [
         "Corresponds to software rendering list #140",
         "Mysteriously, the first workaround won't work without the second. crbug.com/698197#c10",
-        "MSAA workaround shouldn't be needed beyond Adreno 3xx. crbug.com/682075#c17"
+        "MSAA workaround shouldn't be needed beyond Adreno GLES 3.0 driver. crbug.com/682075#c17"
       ],
-      "description": "Some Adreno 3xx don't setup scissor state correctly when FBO0 is bound, nor support MSAA properly.",
+      "description": "Some Adreno with GLES 3.0 don't setup scissor state correctly when FBO0 is bound, nor support MSAA properly.",
       "cr_bugs": [670607, 682075, 696627, 698197, 707839],
-      "gl_renderer": "Adreno \\(TM\\) 3.*",
+      "gl_renderer": "Adreno.*",
+      "gl_type": "gles",
+      "gl_version": {
+        "op": "=",
+        "value": "3.0"
+      },
       "features": [
         "force_update_scissor_state_when_binding_fbo0",
         "disable_chromium_framebuffer_multisample"
