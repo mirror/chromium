@@ -1140,9 +1140,7 @@ void LayoutObject::InvalidatePaintRectangle(const LayoutRect& dirty_rect) {
   if (dirty_rect.IsEmpty())
     return;
 
-  auto& rare_paint_data = EnsureRarePaintData();
-  rare_paint_data.SetPartialInvalidationRect(
-      UnionRect(dirty_rect, rare_paint_data.PartialInvalidationRect()));
+  SetPartialInvalidationRect(UnionRect(dirty_rect, PartialInvalidationRect()));
 
   if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     SetMayNeedPaintInvalidationWithoutGeometryChange();
@@ -3426,12 +3424,12 @@ void LayoutObject::SetMayNeedPaintInvalidationAnimatedBackgroundImage() {
 }
 
 void LayoutObject::ClearPaintInvalidationFlags() {
-// paintInvalidationStateIsDirty should be kept in sync with the
+// PaintInvalidationStateIsDirty should be kept in sync with the
 // booleans that are cleared below.
 #if DCHECK_IS_ON()
   DCHECK(!ShouldCheckForPaintInvalidation() || PaintInvalidationStateIsDirty());
 #endif
-  if (rare_paint_data_)
+  if (rare_paint_data_ && !RuntimeEnabledFeatures::SlimmingPaintV175Enabled())
     rare_paint_data_->SetPartialInvalidationRect(LayoutRect());
   ClearShouldDoFullPaintInvalidation();
   bitfields_.SetMayNeedPaintInvalidation(false);
