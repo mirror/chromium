@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab351ae7_3f2cff65",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-28T14:31:33Z",
+      "side": 1,
+      "message": "Make it a property.",
+      "range": {
+        "startLine": 67,
+        "startChar": 22,
+        "endLine": 67,
+        "endChar": 39
+      },
+      "revId": "28ecf6b2939f8ca3135c29338ce718a6c008edc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d528782_8f3ec234",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-28T14:31:33Z",
+      "side": 1,
+      "message": "Add a comment explaining why you need this bool.",
+      "range": {
+        "startLine": 76,
+        "startChar": 62,
+        "endLine": 76,
+        "endChar": 71
+      },
+      "revId": "28ecf6b2939f8ca3135c29338ce718a6c008edc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ab23120_b20d48a7",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-28T14:31:33Z",
+      "side": 1,
+      "message": "s/isPresented/presented/\nAdd getter \u003d isPresented in the property attributes (following apple guidelines).",
+      "range": {
+        "startLine": 77,
+        "startChar": 26,
+        "endLine": 77,
+        "endChar": 37
+      },
+      "revId": "28ecf6b2939f8ca3135c29338ce718a6c008edc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dab2f21_30604f60",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-28T14:31:33Z",
+      "side": 1,
+      "message": "Add assign.",
+      "range": {
+        "startLine": 77,
+        "startChar": 10,
+        "endLine": 77,
+        "endChar": 19
+      },
+      "revId": "28ecf6b2939f8ca3135c29338ce718a6c008edc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4947793_232a42b8",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-28T14:31:33Z",
+      "side": 1,
+      "message": "Nit: split appearance and disappearance in two different sub-methods for readability please.",
+      "range": {
+        "startLine": 168,
+        "startChar": 6,
+        "endLine": 168,
+        "endChar": 17
+      },
+      "revId": "28ecf6b2939f8ca3135c29338ce718a6c008edc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02175776_20efda56",
+        "filename": "ios/chrome/browser/passwords/password_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-28T14:31:33Z",
+      "side": 1,
+      "message": "I would expect this call to be done in the completion block of the animation.",
+      "range": {
+        "startLine": 754,
+        "startChar": 0,
+        "endLine": 754,
+        "endChar": 75
+      },
+      "revId": "28ecf6b2939f8ca3135c29338ce718a6c008edc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "be82a7d3_9b8be35d",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-28T14:31:33Z",
+      "side": 1,
+      "message": "Using the same as MDC should be fine, thanks for the explanation :)",
+      "parentUuid": "d5b1fcee_1c76de1b",
+      "range": {
+        "startLine": 193,
+        "startChar": 30,
+        "endLine": 193,
+        "endChar": 33
+      },
+      "revId": "9cd1c345c218b8685a406af1857ef40a5a7d6ef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c709de5b_888d41d9",
         "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
         "patchSetId": 5
@@ -187,6 +211,30 @@
       "revId": "9cd1c345c218b8685a406af1857ef40a5a7d6ef2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47dc3819_13f85f4c",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-28T14:31:33Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d7877006_789fbc73",
+      "range": {
+        "startLine": 225,
+        "startChar": 0,
+        "endLine": 225,
+        "endChar": 39
+      },
+      "revId": "9cd1c345c218b8685a406af1857ef40a5a7d6ef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
