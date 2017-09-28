@@ -21,6 +21,14 @@ class SSLInfo;
 // HttpAuthHandler is the interface for the authentication schemes
 // (basic, digest, NTLM, Negotiate).
 // HttpAuthHandler objects are typically created by an HttpAuthHandlerFactory.
+//
+// HttpAuthHandlers and generally created and managed by an HttpAuthController,
+// which is the interaction point between the rest of net and the HTTP auth
+// code.
+//
+// For connection-based authentication, an HttpAuthHandler handles all rounds
+// related to using a single identity. If the identity is rejected, a new
+// HttpAuthHandler must be created.
 class NET_EXPORT_PRIVATE HttpAuthHandler {
  public:
   HttpAuthHandler();
@@ -123,7 +131,9 @@ class NET_EXPORT_PRIVATE HttpAuthHandler {
   }
 
   // Returns true if the response to the current authentication challenge
-  // requires an identity.
+  // requires an identity. An identity can be provided by adding it to the
+  // auth cache, and then used by creating a new HttpAuthHandler.
+  //
   // TODO(wtc): Find a better way to handle a multi-round challenge-response
   // sequence used by a connection-based authentication scheme.
   virtual bool NeedsIdentity();
