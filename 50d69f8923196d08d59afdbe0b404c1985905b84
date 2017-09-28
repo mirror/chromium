@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e77be0c1_eac85ec2",
+        "filename": "extensions/renderer/gin_port.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-28T22:50:36Z",
+      "side": 1,
+      "message": "Mistaken, confused with delegate\u0027s ClosePort.",
+      "parentUuid": "f37567b0_85ae9175",
+      "range": {
+        "startLine": 229,
+        "startChar": 0,
+        "endLine": 229,
+        "endChar": 20
+      },
+      "revId": "50d69f8923196d08d59afdbe0b404c1985905b84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42d93c7d_7188cd30",
         "filename": "extensions/renderer/gin_port.h",
         "patchSetId": 8
@@ -175,6 +199,30 @@
       "revId": "50d69f8923196d08d59afdbe0b404c1985905b84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c753a8f_a0c9e1ff",
+        "filename": "extensions/renderer/native_renderer_messaging_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-28T22:50:36Z",
+      "side": 1,
+      "message": "Sure.",
+      "parentUuid": "df6ef48a_60151adf",
+      "range": {
+        "startLine": 170,
+        "startChar": 10,
+        "endLine": 170,
+        "endChar": 21
+      },
+      "revId": "50d69f8923196d08d59afdbe0b404c1985905b84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
