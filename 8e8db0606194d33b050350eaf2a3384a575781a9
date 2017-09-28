@@ -16,6 +16,24 @@
       "revId": "8e8db0606194d33b050350eaf2a3384a575781a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e070d628_71ea74ed",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/TileGridLayoutTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-28T15:40:15Z",
+      "side": 1,
+      "message": "Thought about it but I would end up wrapping them in another method since I\u0027m running these checks twice: once to see if I can skip the request, and once to check the criteria.\n\nOr I could just skip the first check, since it has been unreliable so far... It\u0027s mostly there for documentation purposes as I see it.",
+      "parentUuid": "cdc03cce_f8853153",
+      "revId": "8e8db0606194d33b050350eaf2a3384a575781a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
