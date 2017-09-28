@@ -91,6 +91,7 @@
 #include "content/common/site_isolation_policy.h"
 #include "content/common/swapped_out_messages.h"
 #include "content/common/widget.mojom.h"
+#include "content/network/restricted_cookie_manager_impl.h"
 #include "content/public/browser/ax_event_notification_details.h"
 #include "content/public/browser/browser_accessibility_state.h"
 #include "content/public/browser/browser_context.h"
@@ -3090,6 +3091,17 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
   }
 
   registry_->AddInterface(base::Bind(&media::VideoDecodeStatsRecorder::Create));
+
+  registry_->AddInterface(
+      base::BindRepeating(
+          &RestrictedCookieManagerImpl::CreateMojoService,
+          GetProcess()->GetBrowserContext(),
+          scoped_refptr<net::URLRequestContextGetter>(
+              BrowserContext::GetStoragePartition(
+                  GetProcess()->GetBrowserContext(), GetSiteInstance())
+                  ->GetURLRequestContext()),
+          GetProcess()->GetID(), GetRoutingID()),
+      BrowserThread::GetTaskRunnerForThread(BrowserThread::IO));
 }
 
 void RenderFrameHostImpl::ResetWaitingState() {
