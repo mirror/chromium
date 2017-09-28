@@ -4,6 +4,7 @@
 
 #include <string>
 
+#include "base/command_line.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_commands.h"
@@ -12,6 +13,7 @@
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/ui_test_utils.h"
 #include "components/prefs/pref_service.h"
+#include "content/public/common/content_switches.h"
 #include "content/public/test/browser_test_base.h"
 #include "content/public/test/browser_test_utils.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
@@ -20,11 +22,24 @@
 
 class DataSaverBrowserTest : public InProcessBrowserTest {
  protected:
+  bool RunScriptExtractBool(const std::string& script) {
+    bool data;
+    EXPECT_TRUE(ExecuteScriptAndExtractBool(
+        browser()->tab_strip_model()->GetActiveWebContents(), script, &data));
+    return data;
+  }
+
   void EnableDataSaver(bool enabled) {
     PrefService* prefs = browser()->profile()->GetPrefs();
     prefs->SetBoolean(prefs::kDataSaverEnabled, enabled);
     // Give the setting notification a chance to propagate.
     content::RunAllPendingInMessageLoop();
+  }
+
+  void InitForJSTest() {
+    test_server_.reset(new net::EmbeddedTestServer());
+    test_server_->ServeFilesFromSourceDirectory("content/test/data");
+    ASSERT_TRUE(test_server_->Start());
   }
 
   void VerifySaveDataHeader(const std::string& expected_header_value) {
@@ -37,6 +52,20 @@ class DataSaverBrowserTest : public InProcessBrowserTest {
         &header_value));
     EXPECT_EQ(expected_header_value, header_value);
   }
+
+  void VerifySaveDataJS(bool expected_header_set) {
+    ui_test_utils::NavigateToURL(browser(),
+                                 test_server_->GetURL("/net_info.html"));
+    EXPECT_EQ(expected_header_set, RunScriptExtractBool("getSaveData()"));
+  }
+
+ private:
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    command_line->AppendSwitch(
+        switches::kEnableExperimentalWebPlatformFeatures);
+  }
+
+  std::unique_ptr<net::EmbeddedTestServer> test_server_;
 };
 
 IN_PROC_BROWSER_TEST_F(DataSaverBrowserTest, DataSaverEnabled) {
@@ -45,10 +74,22 @@ IN_PROC_BROWSER_TEST_F(DataSaverBrowserTest, DataSaverEnabled) {
   VerifySaveDataHeader("on");
 }
 
+IN_PROC_BROWSER_TEST_F(DataSaverBrowserTest, DataSaverEnabledJS) {
+  InitForJSTest();
+  EnableDataSaver(true);
+  VerifySaveDataJS(true);
+}
+
 IN_PROC_BROWSER_TEST_F(DataSaverBrowserTest, DataSaverDisabled) {
   ASSERT_TRUE(embedded_test_server()->Start());
   EnableDataSaver(false);
   VerifySaveDataHeader("None");
+}
+
+IN_PROC_BROWSER_TEST_F(DataSaverBrowserTest, DataSaverDisabledJS) {
+  InitForJSTest();
+  EnableDataSaver(false);
+  VerifySaveDataJS(false);
 }
 
 class DataSaverWithServerBrowserTest : public InProcessBrowserTest {

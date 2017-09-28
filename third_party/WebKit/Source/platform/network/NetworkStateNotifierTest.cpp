@@ -75,7 +75,8 @@ class StateObserver : public NetworkStateNotifier::NetworkStateObserver {
       WebEffectiveConnectionType effective_type,
       const Optional<TimeDelta>& http_rtt,
       const Optional<TimeDelta>& transport_rtt,
-      const Optional<double>& downlink_throughput_mbps) {
+      const Optional<double>& downlink_throughput_mbps,
+      bool save_data) {
     observed_type_ = type;
     observed_max_bandwidth_mbps_ = max_bandwidth_mbps;
     observed_effective_type_ = effective_type;
