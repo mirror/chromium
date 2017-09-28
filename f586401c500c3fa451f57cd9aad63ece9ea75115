@@ -1,0 +1,265 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00c5aac9_51afe3d9",
+        "filename": "components/previews/core/previews_io_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-28T17:22:40Z",
+      "side": 1,
+      "message": "Would it make more sense to have this called within previews_black_list_-\u003eAddPreviewNavigation and use the time generated in that, so we don\u0027t check the clock twice and possibly get different results? Alternatively, generate the time here and pass it into the blacklist call.\n\nYou don\u0027t need clock_-\u003eNow(), you can use base::Time::Now, the only reason you would use a clock is if you dependency inject it. (pass it in from whatever constructs/initializes).",
+      "revId": "f586401c500c3fa451f57cd9aad63ece9ea75115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19259df2_333f980a",
+        "filename": "components/previews/core/previews_log.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-28T17:22:40Z",
+      "side": 1,
+      "message": "I don\u0027t think there is a need to put that in all caps",
+      "revId": "f586401c500c3fa451f57cd9aad63ece9ea75115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46c4ea1b_d1887165",
+        "filename": "components/previews/core/previews_log.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-28T17:22:40Z",
+      "side": 1,
+      "message": "you can expose this (rename the method) as log_messages()",
+      "revId": "f586401c500c3fa451f57cd9aad63ece9ea75115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5029bc55_939f3fbb",
+        "filename": "components/previews/core/previews_log.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-28T17:22:40Z",
+      "side": 1,
+      "message": "I\u0027d prefer if you constructed the log message in place, to reduce it by one copy.\n\nSpecifically, pass in the event_type, description, etc. to this method and call log_messages_.emplace_back(args)\n\nI think ConvertToLogMessage doesn\u0027t need to exist in that case, but instead you may want to do the work in it directly in LogPreviewNavigation",
+      "revId": "f586401c500c3fa451f57cd9aad63ece9ea75115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21e65680_e6f451b7",
+        "filename": "components/previews/core/previews_log.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-28T17:22:40Z",
+      "side": 1,
+      "message": "For now, let\u0027s bound this to 10 entries, so pop_front if it is too large. I\u0027d pass that in as a constructor value, so you can test that.",
+      "revId": "f586401c500c3fa451f57cd9aad63ece9ea75115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "593dd3f8_8aa1ade8",
+        "filename": "components/previews/core/previews_log.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-28T17:22:40Z",
+      "side": 1,
+      "message": "I\u0027d prefer \"LoFi Preview Navigation user opted out: \u003cTrue|False\u003e\" I believe there is a helper function to get the preview name from the PreviewType",
+      "revId": "f586401c500c3fa451f57cd9aad63ece9ea75115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1d239c5_8c736aed",
+        "filename": "components/previews/core/previews_log.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-28T17:22:40Z",
+      "side": 1,
+      "message": "s/These/This/",
+      "range": {
+        "startLine": 18,
+        "startChar": 41,
+        "endLine": 18,
+        "endChar": 46
+      },
+      "revId": "f586401c500c3fa451f57cd9aad63ece9ea75115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c414de66_7c063b9e",
+        "filename": "components/previews/core/previews_log.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-28T17:22:40Z",
+      "side": 1,
+      "message": "s/of/about/",
+      "revId": "f586401c500c3fa451f57cd9aad63ece9ea75115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "992553d2_00d7059b",
+        "filename": "components/previews/core/previews_log.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-28T17:22:40Z",
+      "side": 1,
+      "message": "class comments",
+      "revId": "f586401c500c3fa451f57cd9aad63ece9ea75115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "560c35ab_48186862",
+        "filename": "components/previews/core/previews_log_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-28T17:22:40Z",
+      "side": 1,
+      "message": "expected size can be a size_t",
+      "revId": "f586401c500c3fa451f57cd9aad63ece9ea75115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8940371a_7c3c1968",
+        "filename": "components/previews/core/previews_log_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-28T17:22:40Z",
+      "side": 1,
+      "message": "I don\u0027t think you need caps, try more than 1 event type and description.",
+      "revId": "f586401c500c3fa451f57cd9aad63ece9ea75115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ea18776_60ac9430",
+        "filename": "components/previews/core/previews_log_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-28T17:22:40Z",
+      "side": 1,
+      "message": "size_t",
+      "revId": "f586401c500c3fa451f57cd9aad63ece9ea75115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b46d23f1_9a6d8063",
+        "filename": "components/previews/core/previews_log_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-28T17:22:40Z",
+      "side": 1,
+      "message": "Expect instead of assert?\n\nIt will fail below when you try to read, but at least the failing output will show one of the entries.",
+      "revId": "f586401c500c3fa451f57cd9aad63ece9ea75115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7356e18_dc1a45b7",
+        "filename": "components/previews/core/previews_ui_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-28T17:22:40Z",
+      "side": 1,
+      "message": "can you add a test around this. Either mock logger or just verify that a single PreviewNavigation will get propagated correctly.",
+      "revId": "f586401c500c3fa451f57cd9aad63ece9ea75115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeec95df_9298a9b7",
+        "filename": "components/previews/core/previews_ui_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-28T17:22:40Z",
+      "side": 1,
+      "message": "comment",
+      "revId": "f586401c500c3fa451f57cd9aad63ece9ea75115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

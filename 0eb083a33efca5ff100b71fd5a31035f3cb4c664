@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b8e3867_ed93808b",
+        "filename": "components/previews/core/previews_io_data_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-28T17:22:40Z",
+      "side": 1,
+      "message": "No block comments. Just do // every line same below",
+      "revId": "0eb083a33efca5ff100b71fd5a31035f3cb4c664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
