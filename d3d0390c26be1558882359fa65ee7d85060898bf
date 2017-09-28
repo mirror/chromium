@@ -50,6 +50,24 @@
       "revId": "d3d0390c26be1558882359fa65ee7d85060898bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4d12e28_51bbec97",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1049,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-28T01:40:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97c39c7d_b182b9e3",
+      "revId": "d3d0390c26be1558882359fa65ee7d85060898bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

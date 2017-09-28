@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "748a5d0d_fd9101f1",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 1140,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-28T01:40:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77aae8ec_8500230d",
+      "revId": "7c4ac8253825a5fa298fc9fbcf918fac4e984df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64135765_8a8882d6",
         "filename": "ash/display/touch_calibrator_controller.h",
         "patchSetId": 20
@@ -33,6 +51,24 @@
       "revId": "7c4ac8253825a5fa298fc9fbcf918fac4e984df2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17804527_b47c5877",
+        "filename": "ash/display/touch_calibrator_controller.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-28T01:40:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64135765_8a8882d6",
+      "revId": "7c4ac8253825a5fa298fc9fbcf918fac4e984df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ace45440_d0da3316",
+        "filename": "ash/display/touch_calibrator_controller.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-28T01:40:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34798bde_8fef0363",
+      "revId": "7c4ac8253825a5fa298fc9fbcf918fac4e984df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c97638f4_007e06f1",
         "filename": "chrome/browser/chromeos/display/display_preferences.cc",
         "patchSetId": 20
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "7510dc03_5478d5b0",
+        "filename": "chrome/browser/chromeos/display/display_preferences.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-28T01:40:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c97638f4_007e06f1",
+      "revId": "7c4ac8253825a5fa298fc9fbcf918fac4e984df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e123fb8_a3f4d84c",
         "filename": "chrome/browser/chromeos/display/display_preferences_unittest.cc",
         "patchSetId": 20
@@ -84,6 +156,24 @@
       "revId": "7c4ac8253825a5fa298fc9fbcf918fac4e984df2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdb237e1_884054b9",
+        "filename": "chrome/browser/chromeos/display/display_preferences_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-28T01:40:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e123fb8_a3f4d84c",
+      "revId": "7c4ac8253825a5fa298fc9fbcf918fac4e984df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -107,6 +197,30 @@
       "revId": "7c4ac8253825a5fa298fc9fbcf918fac4e984df2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "050c2a9e_f5c0afe4",
+        "filename": "ui/display/manager/managed_display_info.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-28T01:40:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb8442b7_ba66b3b1",
+      "range": {
+        "startLine": 542,
+        "startChar": 21,
+        "endLine": 542,
+        "endChar": 22
+      },
+      "revId": "7c4ac8253825a5fa298fc9fbcf918fac4e984df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
