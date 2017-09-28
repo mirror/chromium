@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4760db31_cdae16aa",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionTemplate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-09-28T11:55:41Z",
+      "side": 1,
+      "message": "I uploaded crrev.com/c/690134.",
+      "parentUuid": "cceec515_bb467c4f",
+      "revId": "0e4c203b8ec42bfce31e204cc9b93c0783e19373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5014cad1_6ce21ec9",
         "filename": "third_party/WebKit/Source/core/editing/VisibleSelectionTest.cpp",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "0e4c203b8ec42bfce31e204cc9b93c0783e19373",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c4aa8be_99b62a65",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleSelectionTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-09-28T11:55:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5014cad1_6ce21ec9",
+      "revId": "0e4c203b8ec42bfce31e204cc9b93c0783e19373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +123,24 @@
     },
     {
       "key": {
+        "uuid": "72f36c7a_fc3e786f",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleSelectionTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-09-28T11:55:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8533c29_77c18a20",
+      "revId": "0e4c203b8ec42bfce31e204cc9b93c0783e19373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3d5fbb8_130bc1d2",
         "filename": "third_party/WebKit/Source/core/editing/VisibleSelectionTest.cpp",
         "patchSetId": 3
@@ -101,6 +155,24 @@
       "revId": "0e4c203b8ec42bfce31e204cc9b93c0783e19373",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "882016f1_a91d8257",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleSelectionTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-09-28T11:55:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3d5fbb8_130bc1d2",
+      "revId": "0e4c203b8ec42bfce31e204cc9b93c0783e19373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +193,24 @@
     },
     {
       "key": {
+        "uuid": "59e43ac1_3ef9e27e",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleSelectionTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-09-28T11:55:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8789309_5b508aad",
+      "revId": "0e4c203b8ec42bfce31e204cc9b93c0783e19373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3bc76832_c7950050",
         "filename": "third_party/WebKit/Source/core/editing/VisibleSelectionTest.cpp",
         "patchSetId": 3
@@ -138,6 +228,24 @@
     },
     {
       "key": {
+        "uuid": "953add55_de0e94f3",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleSelectionTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-09-28T11:55:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bc76832_c7950050",
+      "revId": "0e4c203b8ec42bfce31e204cc9b93c0783e19373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52c2324f_8deb1c75",
         "filename": "third_party/WebKit/Source/core/editing/VisibleSelectionTest.cpp",
         "patchSetId": 3
@@ -149,6 +257,24 @@
       "writtenOn": "2017-09-28T05:31:16Z",
       "side": 1,
       "message": "Please introduce flat tree version of GetSelectionTextFromBody().\nThen we could write:\n\nEXPECT_EQ(\n  \"\u003cdiv\u003e\u003cspan slot\u003dtwo\u003e^c\u003c/span\u003e\u003cspan slot\u003done\u003ea|\u003c/span\u003e\",\n  GetSelectionTextFromBody(\n    SelectionInFlatTree::Builder()\n     .SetBaseAndExtent(visible_selection.FirstEphemeralRange())\n     .Build());",
+      "revId": "0e4c203b8ec42bfce31e204cc9b93c0783e19373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf114da2_63021b7e",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleSelectionTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-09-28T11:55:41Z",
+      "side": 1,
+      "message": "You mean adding flat tree version of GetSelectionTextFromBody() to EditingTestBase.{h, cpp}?",
+      "parentUuid": "52c2324f_8deb1c75",
       "revId": "0e4c203b8ec42bfce31e204cc9b93c0783e19373",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
