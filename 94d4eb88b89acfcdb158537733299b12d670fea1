@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "de64d36f_29ceff07",
+        "filename": "chrome/browser/ui/views/ime_driver/remote_text_input_client.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-09-28T23:06:09Z",
+      "side": 1,
+      "message": "Done. In ime_candidate_window_handler_interface.h, I added interface \nvirtual void UpdateCandidateWindowVisibility(bool visible) {}",
+      "parentUuid": "4a68a89e_7d8157bb",
+      "range": {
+        "startLine": 186,
+        "startChar": 27,
+        "endLine": 186,
+        "endChar": 46
+      },
+      "revId": "94d4eb88b89acfcdb158537733299b12d670fea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7b565d7_5bcf31ec",
         "filename": "chrome/browser/ui/views/ime_driver/remote_text_input_client.h",
         "patchSetId": 11
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "9099c584_19125665",
+        "filename": "chrome/browser/ui/views/ime_driver/remote_text_input_client.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-09-28T23:06:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7b565d7_5bcf31ec",
+      "range": {
+        "startLine": 71,
+        "startChar": 47,
+        "endLine": 71,
+        "endChar": 50
+      },
+      "revId": "94d4eb88b89acfcdb158537733299b12d670fea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2614559_6377cf31",
         "filename": "ui/aura/mus/text_input_client_impl.h",
         "patchSetId": 11
@@ -68,6 +116,30 @@
       "revId": "94d4eb88b89acfcdb158537733299b12d670fea1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af4bac5d_a1d32a15",
+        "filename": "ui/aura/mus/text_input_client_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-09-28T23:06:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2614559_6377cf31",
+      "range": {
+        "startLine": 26,
+        "startChar": 7,
+        "endLine": 26,
+        "endChar": 38
+      },
+      "revId": "94d4eb88b89acfcdb158537733299b12d670fea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
