@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53a2562e_892808db",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 16699,
+      "author": {
+        "id": 1172235
+      },
+      "writtenOn": "2017-09-28T00:43:53Z",
+      "side": 1,
+      "message": "I can rename \"SetDriverVertexAttribEnabled\" to more accurately reflect this if you would like. However I\u0027ll keep that out of this patch to minimize the amount of change that needs to be reviewed for mergeback.",
+      "revId": "272ebbba6742ad50add4b9d578a29bbe69c48b46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
