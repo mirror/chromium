@@ -22,6 +22,30 @@
       "revId": "b123ea271ea0c2d820b813125455522ccb24a0d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53a5411f_5820e2a1",
+        "filename": "ui/app_list/views/apps_container_view.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-09-28T22:05:56Z",
+      "side": 1,
+      "message": "Yes, I also think so.",
+      "parentUuid": "a5097649_451942ee",
+      "range": {
+        "startLine": 34,
+        "startChar": 5,
+        "endLine": 34,
+        "endChar": 6
+      },
+      "revId": "b123ea271ea0c2d820b813125455522ccb24a0d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
