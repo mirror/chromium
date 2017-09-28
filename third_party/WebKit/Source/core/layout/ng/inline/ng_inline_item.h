@@ -40,13 +40,6 @@ class CORE_EXPORT NGInlineItem {
     // enough to store.
   };
 
-  // Whether pre- and post-context should be used for shaping.
-  enum NGLayoutInlineShapeOptions {
-    kNoContext = 0,
-    kPreContext = 1,
-    kPostContext = 2
-  };
-
   // The constructor and destructor can't be implicit or inlined, because they
   // require full definition of ComputedStyle.
   NGInlineItem(NGInlineItemType type,
@@ -60,16 +53,13 @@ class CORE_EXPORT NGInlineItem {
   const char* NGInlineItemTypeToString(int val) const;
 
   const ShapeResult* TextShapeResult() const { return shape_result_.Get(); }
-  NGLayoutInlineShapeOptions ShapeOptions() const {
-    return static_cast<NGLayoutInlineShapeOptions>(shape_options_);
-  }
-
   unsigned StartOffset() const { return start_offset_; }
   unsigned EndOffset() const { return end_offset_; }
   unsigned Length() const { return end_offset_ - start_offset_; }
   TextDirection Direction() const { return DirectionFromLevel(BidiLevel()); }
   UBiDiLevel BidiLevel() const { return static_cast<UBiDiLevel>(bidi_level_); }
   UScriptCode GetScript() const { return script_; }
+  unsigned ShapeOptions() const { return shape_options_; }
   const ComputedStyle* Style() const { return style_.Get(); }
   LayoutObject* GetLayoutObject() const { return layout_object_; }
 
