@@ -22,6 +22,13 @@ Resources.ServiceWorkersView = class extends UI.VBox {
     /** @type {?SDK.SecurityOriginManager} */
     this._securityOriginManager = null;
 
+    this._filterSection = this._reportView.appendSection('');
+
+    this._filter = new Resources.ServiceWorkerFilter();
+    this._filter.show(this._filterSection.element);
+    this._filter.addEventListener(
+        Resources.ServiceWorkerFilter.Events.FilterChanged, this._updateSectionVisibility.bind(this));
+
     this._toolbar.appendToolbarItem(MobileThrottling.throttlingManager().createOfflineToolbarCheckbox());
     var updateOnReloadSetting = Common.settings.createSetting('serviceWorkerUpdateOnReload', false);
     updateOnReloadSetting.setTitle(Common.UIString('Update on reload'));
@@ -33,11 +40,6 @@ Resources.ServiceWorkersView = class extends UI.VBox {
     var fallbackToNetwork = new UI.ToolbarSettingCheckbox(
         bypassServiceWorkerSetting, Common.UIString('Bypass Service Worker and load resources from the network'));
     this._toolbar.appendToolbarItem(fallbackToNetwork);
-    this._showAllCheckbox = new UI.ToolbarCheckbox(
-        Common.UIString('Show all'), Common.UIString('Show all Service Workers regardless of the origin'));
-    this._showAllCheckbox.setRightAligned(true);
-    this._showAllCheckbox.inputElement.addEventListener('change', this._updateSectionVisibility.bind(this), false);
-    this._toolbar.appendToolbarItem(this._showAllCheckbox);
 
     /** @type {!Map<!SDK.ServiceWorkerManager, !Array<!Common.EventTarget.EventDescriptor>>}*/
     this._eventListeners = new Map();
@@ -86,25 +88,34 @@ Resources.ServiceWorkersView = class extends UI.VBox {
   _updateSectionVisibility() {
     var securityOrigins = new Set(this._securityOriginManager.securityOrigins());
     var matchingSections = new Set();
+    var filter = this._filterSection;
+    filter.showWidget();
     for (var section of this._sections.values()) {
       if (securityOrigins.has(section._registration.securityOrigin))
         matchingSections.add(section._section);
     }
-
+    function group(section) {
+      if (matchingSections.has(section))
+        return 1;
+      if (filter === section)
+        return 2;
+      return 3;
+    }
     this._reportView.sortSections((a, b) => {
-      var aMatching = matchingSections.has(a);
-      var bMatching = matchingSections.has(b);
-      if (aMatching === bMatching)
-        return a.title().localeCompare(b.title());
-      return aMatching ? -1 : 1;
+      var cmp = group(a) - group(b);
+      return cmp === 0 ? a.title().localeCompare(b.title()) : cmp;
     });
-
     for (var section of this._sections.values()) {
-      if (this._showAllCheckbox.checked() || securityOrigins.has(section._registration.securityOrigin))
+      if (matchingSections.has(section._section) || this._filter.isRegistrationVisible(section._registration))
         section._section.showWidget();
       else
         section._section.hideWidget();
     }
+    var numberOfHiddenSections = this._sections.size - matchingSections.size;
+    if (!numberOfHiddenSections)
+      filter.hideWidget();
+    else
+      this._filter.setLabel(Common.UIString('Show all service workers (%d)', numberOfHiddenSections));
   }
 
   /**
@@ -120,8 +131,7 @@ Resources.ServiceWorkersView = class extends UI.VBox {
     var hasNonDeletedRegistrations = false;
     var securityOrigins = new Set(this._securityOriginManager.securityOrigins());
     for (var registration of this._manager.registrations().values()) {
-      var visible = this._showAllCheckbox.checked() || securityOrigins.has(registration.securityOrigin);
-      if (!visible)
+      if (!securityOrigins.has(registration.securityOrigin) && !this._filter.isRegistrationVisible(registration))
         continue;
       if (!registration.canBeRemoved()) {
         hasNonDeletedRegistrations = true;
@@ -133,8 +143,9 @@ Resources.ServiceWorkersView = class extends UI.VBox {
       return;
 
     for (var registration of this._manager.registrations().values()) {
-      var visible = this._showAllCheckbox.checked() || securityOrigins.has(registration.securityOrigin);
-      if (visible && registration.canBeRemoved())
+      var visible =
+          securityOrigins.has(registration.securityOrigin) || this._filter.isRegistrationVisible(registration);
+      if (!visible && registration.canBeRemoved())
         this._removeRegistrationFromList(registration);
     }
   }
@@ -171,6 +182,7 @@ Resources.ServiceWorkersView = class extends UI.VBox {
     if (section)
       section._section.detach();
     this._sections.delete(registration);
+    this._updateSectionVisibility();
   }
 
   /**

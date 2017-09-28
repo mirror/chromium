@@ -45,6 +45,7 @@
         "ApplicationPanelSidebar.js",
         "ResourcesSection.js",
         "ServiceWorkerCacheViews.js",
+        "ServiceWorkerFilter.js",
         "ServiceWorkersView.js"
     ],
     "resources": [
@@ -54,6 +55,7 @@
         "resourcesPanel.css",
         "resourcesSidebar.css",
         "serviceWorkerCacheViews.css",
+        "serviceWorkerFilter.css",
         "serviceWorkersView.css"
     ]
 }
