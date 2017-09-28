@@ -66,7 +66,8 @@ class CORE_EXPORT ImageLoader : public GarbageCollectedFinalized<ImageLoader>,
     kUpdateSizeChanged,
     // This force the image to refetch and reload the image source, even if it
     // has not changed.
-    kUpdateForcedReload
+    kUpdateForcedReload,
+    kUpdateWithNoPreviews,
   };
 
   enum BypassMainWorldBehavior {

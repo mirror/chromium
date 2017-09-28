@@ -25,6 +25,7 @@
 #define HTMLImageElement_h
 
 #include "core/CoreExport.h"
+#include "core/dom/ElementVisibilityObserver.h"
 #include "core/html/FormAssociated.h"
 #include "core/html/HTMLElement.h"
 #include "core/html/HTMLImageLoader.h"
@@ -204,6 +205,9 @@ class CORE_EXPORT HTMLImageElement final
   HTMLImageLoader& GetImageLoader() const override { return *image_loader_; }
   void NotifyViewportChanged();
   void CreateMediaQueryListIfDoesNotExist();
+
+  void OnImageVisible(bool visible);
+  Member<ElementVisibilityObserver> visibility_observer_;
 
   Member<HTMLImageLoader> image_loader_;
   Member<ViewportChangeListener> listener_;
