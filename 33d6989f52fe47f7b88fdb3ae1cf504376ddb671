@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c2b47e9_e856aa82",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-28T23:12:29Z",
+      "side": 1,
+      "message": "What about the time during tab restore where you haven\u0027t added anything to the loading tab set yet?\n\nDo you actually need to keep track of the tab IDs?  Can this just be a counter that you increment in launchTabInBrowserActionsModel and just decrement in the observer there?\n\nOtherwise, you could have timing issues if you get a cancel call before the restore has completed and it could not end up calling stop foreground.  If this can happen, it would be good to add a test to prevent it from regressing (find a way to overwrite the selector and have it not return that it is initialized and ensure this never marks itself as a background service).",
+      "range": {
+        "startLine": 146,
+        "startChar": 15,
+        "endLine": 146,
+        "endChar": 29
+      },
+      "revId": "33d6989f52fe47f7b88fdb3ae1cf504376ddb671",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "812f5b6b_6e095a35",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-28T23:12:29Z",
+      "side": 1,
+      "message": "this can be final as well.",
+      "range": {
+        "startLine": 47,
+        "startChar": 17,
+        "endLine": 47,
+        "endChar": 30
+      },
+      "revId": "33d6989f52fe47f7b88fdb3ae1cf504376ddb671",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e7b9721_b9018279",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-28T23:12:29Z",
+      "side": 1,
+      "message": "any reason not parallel/thread_pool here?",
+      "range": {
+        "startLine": 138,
+        "startChar": 49,
+        "endLine": 138,
+        "endChar": 64
+      },
+      "revId": "33d6989f52fe47f7b88fdb3ae1cf504376ddb671",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a9bc1a6_e578b948",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-28T23:12:29Z",
+      "side": 1,
+      "message": "can this be called before isTabStateInitialized() returns true?  I\u0027m slightly worried that someone could incorrectly call this and end up bypassing the checks above.\n\nIs this how tab restore adds tabs?  I\u0027m wondering if there is some signal we could enforce here as well, something like:\n\nif (!isTabStateInitialize()) {\n    assert type \u003d\u003d FROM_RESTORE;\n}",
+      "revId": "33d6989f52fe47f7b88fdb3ae1cf504376ddb671",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
