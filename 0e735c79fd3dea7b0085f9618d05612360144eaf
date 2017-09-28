@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7ba0ecc1_3eddef56",
+        "filename": "chrome/browser/resources/settings/people_page/change_picture.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-28T01:11:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "997bffe4_c871a251",
+      "revId": "0e735c79fd3dea7b0085f9618d05612360144eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e32adc6_569ab2e4",
         "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_camera.js",
         "patchSetId": 9
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "42feb7ba_1c3f3835",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_camera.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-28T01:11:21Z",
+      "side": 1,
+      "message": "Using the same context/canvas for each frame prevents the optimization I did to ensure that this is fast enough on all devices. If I use the same canvas then we need to encode or copy frames from the canvas before I can capture the next frame.\n\nFYI, canvas.getContext returns the same context each time. First call might be expensive but second call is fast. First call is done above as part of the pre-allocate step for ideal performance.",
+      "parentUuid": "cbd67232_81317d95",
+      "revId": "0e735c79fd3dea7b0085f9618d05612360144eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3fe36e3a_334a415b",
         "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_camera.js",
         "patchSetId": 9
@@ -64,6 +100,24 @@
       "writtenOn": "2017-09-27T20:18:48Z",
       "side": 1,
       "message": "Maybe something like:\n\nvar interval \u003d setInterval(() \u003d\u003e {\n  capturedFrames.push(this.getContext(...));\n  if (allocatedFrames.length \u003d\u003d 0) {\n    clearInterval(interval);\n    this.stopCapture(...);\n  }\n}, CAPTURE_INTERVAL_MS);",
+      "revId": "0e735c79fd3dea7b0085f9618d05612360144eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "188cd267_410ad60f",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_camera.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-28T01:11:21Z",
+      "side": 1,
+      "message": "I\u0027ve done something like that in latest patch. PTAL and let me know what you think.",
+      "parentUuid": "3fe36e3a_334a415b",
       "revId": "0e735c79fd3dea7b0085f9618d05612360144eaf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
