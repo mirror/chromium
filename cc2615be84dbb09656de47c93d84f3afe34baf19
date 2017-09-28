@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7b7c3732_07272e2f",
+        "filename": "chromeos/cryptohome/async_method_caller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-28T06:35:48Z",
+      "side": 1,
+      "message": "Maybe, we\u0027d like to allow using overridden comparators for unittest. E.g.,\n\nEXPECT_EQ(async_id, 0);\n\nthan\n\nASSERT_TRUE(async_id.has_value());\nEXPECT_EQ(async_id.value(), 0);\n\nfor simplicity. Also, TBH, async_id.value() sounds slightly weird, because id looks like not an id, but a container holding id.\nOther than that, I\u0027m ok with either way.\n\nOff topic.\nFocusing on this specific case, probably this is slightly redundant, because the error case can be reported via D-Bus\u0027s error?",
+      "parentUuid": "925d31df_92b8977a",
+      "range": {
+        "startLine": 296,
+        "startChar": 8,
+        "endLine": 296,
+        "endChar": 16
+      },
+      "revId": "cc2615be84dbb09656de47c93d84f3afe34baf19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd85019f_990e71dd",
         "filename": "chromeos/cryptohome/async_method_caller.cc",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "cc2615be84dbb09656de47c93d84f3afe34baf19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22f6e7aa_3fbdebb0",
+        "filename": "chromeos/cryptohome/async_method_caller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-28T06:35:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd85019f_990e71dd",
+      "revId": "cc2615be84dbb09656de47c93d84f3afe34baf19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "fd983245_461361a7",
+        "filename": "chromeos/dbus/cryptohome_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-28T06:35:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "deec5d33_b7089665",
+      "range": {
+        "startLine": 49,
+        "startChar": 30,
+        "endLine": 49,
+        "endChar": 65
+      },
+      "revId": "cc2615be84dbb09656de47c93d84f3afe34baf19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d604698f_c045d0bb",
         "filename": "chromeos/dbus/cryptohome_client.h",
         "patchSetId": 3
@@ -85,6 +151,30 @@
       "revId": "cc2615be84dbb09656de47c93d84f3afe34baf19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "286478e9_5a62ff49",
+        "filename": "chromeos/dbus/cryptohome_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-28T06:35:48Z",
+      "side": 1,
+      "message": "Done. orz...",
+      "parentUuid": "d604698f_c045d0bb",
+      "range": {
+        "startLine": 50,
+        "startChar": 17,
+        "endLine": 50,
+        "endChar": 20
+      },
+      "revId": "cc2615be84dbb09656de47c93d84f3afe34baf19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +224,54 @@
     },
     {
       "key": {
+        "uuid": "86ea85ab_28c477dd",
+        "filename": "chromeos/dbus/cryptohome_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-28T06:35:48Z",
+      "side": 1,
+      "message": "SGTM. Done.",
+      "parentUuid": "89dfc84b_430f21c8",
+      "range": {
+        "startLine": 51,
+        "startChar": 33,
+        "endLine": 51,
+        "endChar": 39
+      },
+      "revId": "cc2615be84dbb09656de47c93d84f3afe34baf19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c1701b4_8b1de77b",
+        "filename": "chromeos/dbus/cryptohome_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-28T06:35:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4804fc84_764eb808",
+      "range": {
+        "startLine": 51,
+        "startChar": 5,
+        "endLine": 51,
+        "endChar": 12
+      },
+      "revId": "cc2615be84dbb09656de47c93d84f3afe34baf19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b751d5ae_ea935f13",
         "filename": "chromeos/dbus/cryptohome_client.h",
         "patchSetId": 3
@@ -154,6 +292,30 @@
       "revId": "cc2615be84dbb09656de47c93d84f3afe34baf19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8940890_4234d3cd",
+        "filename": "chromeos/dbus/cryptohome_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-28T06:35:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b751d5ae_ea935f13",
+      "range": {
+        "startLine": 52,
+        "startChar": 30,
+        "endLine": 52,
+        "endChar": 59
+      },
+      "revId": "cc2615be84dbb09656de47c93d84f3afe34baf19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "ffb4c2a0_437da3d6",
+        "filename": "chromeos/dbus/cryptohome_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-28T06:35:48Z",
+      "side": 1,
+      "message": "It\u0027s syntax error. Per offline chat, used /* async_id */",
+      "parentUuid": "849a64eb_b9d96fc4",
+      "range": {
+        "startLine": 53,
+        "startChar": 49,
+        "endLine": 53,
+        "endChar": 52
+      },
+      "revId": "cc2615be84dbb09656de47c93d84f3afe34baf19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "430fb278_455430cc",
         "filename": "chromeos/dbus/cryptohome_client.h",
         "patchSetId": 3
@@ -194,6 +380,24 @@
       "revId": "cc2615be84dbb09656de47c93d84f3afe34baf19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5273fea2_9c751569",
+        "filename": "chromeos/dbus/cryptohome_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-28T06:35:48Z",
+      "side": 1,
+      "message": "Hmm, ok. Done.\n\nOff topic.\nBTW, The order looks slightly confusing to me.\n1) Signal handlers and callbacks are mixed. 2) those are not chronological order.\nWhat\u0027s the rule here...?",
+      "parentUuid": "430fb278_455430cc",
+      "revId": "cc2615be84dbb09656de47c93d84f3afe34baf19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
