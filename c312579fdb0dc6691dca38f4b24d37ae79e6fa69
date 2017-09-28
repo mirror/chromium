@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cef01dc6_b0b27c67",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-09-28T20:34:47Z",
+      "side": 1,
+      "message": "Q: Is there any code expecting unhandled_password_resuses() to have something in it (when it won\u0027t) if ShouldShowChangePasswordSesttingUI()\u003d\u003dtrue?  It looks like PasswordProtection.GaiaPasswordReusesBeforeGaiaPasswordChanged will log a \"0\" in OnGaiaPasswordChanged(), but that seems reasonable.",
+      "range": {
+        "startLine": 170,
+        "startChar": 31,
+        "endLine": 170,
+        "endChar": 56
+      },
+      "revId": "c312579fdb0dc6691dca38f4b24d37ae79e6fa69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
