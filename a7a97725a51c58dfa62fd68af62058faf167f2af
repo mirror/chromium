@@ -70,6 +70,24 @@
       "revId": "a7a97725a51c58dfa62fd68af62058faf167f2af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "142a8096_842d3333",
+        "filename": "content/browser/appcache/appcache_histograms.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-28T00:03:38Z",
+      "side": 1,
+      "message": "Ok, not a good idea then, it probably won\u0027t have much effect?\n\nWhat about reducing the number of buckets? Currently there are 50 buckets for times up to 10 seconds. Would 25 buckets cut memory usage roughly in half?\n\nI have several bugs about uma stats using memory, I\u0027m wondering if there are practical steps that that can be taken to reduce memory usage w/o total removal?",
+      "parentUuid": "ceeea5bd_c3f17895",
+      "revId": "a7a97725a51c58dfa62fd68af62058faf167f2af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
