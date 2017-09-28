@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dc343a0e_52ba3ab3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimationHandler.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-28T17:15:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be6500e3_dde468b0",
+      "range": {
+        "startLine": 70,
+        "startChar": 48,
+        "endLine": 70,
+        "endChar": 51
+      },
+      "revId": "e919efdc332f895ffcbccfd0c5217494a3d3a971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73173efc_e63891e2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchBarControl.java",
         "patchSetId": 11
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "f37087df_d1984ae8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchBarControl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-28T17:15:10Z",
+      "side": 1,
+      "message": "Animator.cancel() does exactly this (Animator.end() will jump to the end). Done.",
+      "parentUuid": "73173efc_e63891e2",
+      "revId": "e919efdc332f895ffcbccfd0c5217494a3d3a971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d844ba67_9754071f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchBarControl.java",
         "patchSetId": 11
@@ -53,6 +95,30 @@
       "writtenOn": "2017-09-22T17:09:34Z",
       "side": 1,
       "message": "Should this cancel be above if \u003d\u003d null block? Or does it not matter?",
+      "range": {
+        "startLine": 542,
+        "startChar": 8,
+        "endLine": 542,
+        "endChar": 42
+      },
+      "revId": "e919efdc332f895ffcbccfd0c5217494a3d3a971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fbac14a_ad61b5c0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchBarControl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-28T17:15:10Z",
+      "side": 1,
+      "message": ".cancel() is inert if the animation is not started or running. I can change this for clarity if you want.",
+      "parentUuid": "d844ba67_9754071f",
       "range": {
         "startLine": 542,
         "startChar": 8,
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "bbc41fd1_0cbec424",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchBarControl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-28T17:15:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b9b7fc4_00c9d732",
+      "range": {
+        "startLine": 568,
+        "startChar": 20,
+        "endLine": 568,
+        "endChar": 24
+      },
+      "revId": "e919efdc332f895ffcbccfd0c5217494a3d3a971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56c2ec54_e25163c5",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchBarControl.java",
         "patchSetId": 11
@@ -99,6 +189,30 @@
       "writtenOn": "2017-09-22T17:09:34Z",
       "side": 1,
       "message": "Should we be setting the m*Animation variables back to null when the animations end?",
+      "range": {
+        "startLine": 584,
+        "startChar": 12,
+        "endLine": 584,
+        "endChar": 41
+      },
+      "revId": "e919efdc332f895ffcbccfd0c5217494a3d3a971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f42d332_c7edc6a6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchBarControl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-28T17:15:10Z",
+      "side": 1,
+      "message": "It depends, it is definitely something we can do. We don\u0027t expect this object to exist for very long, so GC will pick it up pretty quickly with or without setting it to null. However, if you think it will make the code more clear, it is worth adding.",
+      "parentUuid": "56c2ec54_e25163c5",
       "range": {
         "startLine": 584,
         "startChar": 12,
@@ -131,6 +245,30 @@
       "revId": "e919efdc332f895ffcbccfd0c5217494a3d3a971",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "422dd4c8_68f0c896",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchCaptionControl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-28T17:15:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b2de010_5a56d4de",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 64
+      },
+      "revId": "e919efdc332f895ffcbccfd0c5217494a3d3a971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
