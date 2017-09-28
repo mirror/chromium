@@ -870,7 +870,8 @@ void ApplyStyleCommand::FixRangeAndApplyInlineStyle(
   if (start.ComputeEditingOffset() >= CaretMaxOffset(start.AnchorNode())) {
     start_node = NodeTraversal::Next(*start_node);
     if (!start_node ||
-        ComparePositions(end, FirstPositionInOrBeforeNode(start_node)) < 0)
+        ComparePositions(end,
+                         FirstPositionInOrBeforeNodeDeprecated(start_node)) < 0)
       return;
   }
 
@@ -1270,8 +1271,8 @@ HTMLElement* ApplyStyleCommand::HighestAncestorWithConflictingInlineStyle(
     return 0;
 
   HTMLElement* result = nullptr;
-  Node* unsplittable_element =
-      UnsplittableElementForPosition(FirstPositionInOrBeforeNode(node));
+  Node* unsplittable_element = UnsplittableElementForPosition(
+      FirstPositionInOrBeforeNodeDeprecated(node));
 
   for (Node* n = node; n; n = n->parentNode()) {
     if (n->IsHTMLElement() &&
@@ -1501,7 +1502,7 @@ void ApplyStyleCommand::RemoveInlineStyle(EditingStyle* style,
           DCHECK(s.IsBeforeAnchor() || s.IsBeforeChildren() ||
                  s.OffsetInContainerNode() <= 0)
               << s;
-          s = FirstPositionInOrBeforeNode(next);
+          s = FirstPositionInOrBeforeNodeDeprecated(next);
         }
         if (e.AnchorNode() == elem) {
           // Since elem must have been fully selected, and it is at the end
@@ -1511,7 +1512,7 @@ void ApplyStyleCommand::RemoveInlineStyle(EditingStyle* style,
                  !OffsetIsBeforeLastNodeOffset(s.OffsetInContainerNode(),
                                                s.ComputeContainerNode()))
               << s;
-          e = LastPositionInOrAfterNode(prev);
+          e = LastPositionInOrAfterNodeDeprecated(prev);
         }
       }
 
@@ -1539,10 +1540,11 @@ bool ApplyStyleCommand::ElementFullySelected(HTMLElement& element,
   // layout.
   element.GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
 
-  return ComparePositions(FirstPositionInOrBeforeNode(&element), start) >= 0 &&
-         ComparePositions(
-             MostBackwardCaretPosition(LastPositionInOrAfterNode(&element)),
-             end) <= 0;
+  return ComparePositions(FirstPositionInOrBeforeNodeDeprecated(&element),
+                          start) >= 0 &&
+         ComparePositions(MostBackwardCaretPosition(
+                              LastPositionInOrAfterNodeDeprecated(&element)),
+                          end) <= 0;
 }
 
 void ApplyStyleCommand::SplitTextAtStart(const Position& start,
@@ -1849,7 +1851,7 @@ Position ApplyStyleCommand::PositionToComputeInlineStyleChange(
     return Position::BeforeNode(*dummy_element);
   }
 
-  return FirstPositionInOrBeforeNode(start_node);
+  return FirstPositionInOrBeforeNodeDeprecated(start_node);
 }
 
 void ApplyStyleCommand::ApplyInlineStyleChange(
