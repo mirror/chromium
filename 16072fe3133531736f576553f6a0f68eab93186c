@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "74e4ee76_39461e37",
+        "filename": "extensions/browser/extension_registrar_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-28T00:44:15Z",
+      "side": 1,
+      "message": "std::make_unique is defined in \u003cmemory\u003e, isn\u0027t it?\n\nhttp://en.cppreference.com/w/cpp/memory/unique_ptr/make_unique",
+      "parentUuid": "516f182f_e3e68eb4",
+      "revId": "16072fe3133531736f576553f6a0f68eab93186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fc3ed58_04745649",
         "filename": "extensions/browser/extension_registrar_unittest.cc",
         "patchSetId": 19
