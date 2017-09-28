@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "098d8abf_5108550c",
+        "filename": "chrome/browser/chromeos/policy/off_hours/off_hours_interval.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-28T17:34:29Z",
+      "side": 1,
+      "message": "But, if |w| \u003d\u003d |begin_|, shouldn\u0027t true be returned?",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 17
+      },
+      "revId": "098c66b755609fd0de10b5296fbbdd94f8804ab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbb9a5ab_303ef428",
+        "filename": "chrome/browser/chromeos/policy/off_hours/off_hours_interval_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-28T17:34:29Z",
+      "side": 1,
+      "message": "nit: #include \u003ctuple\u003e",
+      "range": {
+        "startLine": 37,
+        "startChar": 41,
+        "endLine": 37,
+        "endChar": 46
+      },
+      "revId": "098c66b755609fd0de10b5296fbbdd94f8804ab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
