@@ -171,9 +171,7 @@ class TabHistoryContext : public history::Context {
 };
 }  // namespace
 
-@interface Tab ()<CRWWebStateObserver,
-                  CRWWebControllerObserver,
-                  FindInPageControllerDelegate> {
+@interface Tab ()<CRWWebStateObserver, FindInPageControllerDelegate> {
   __weak TabModel* _parentTabModel;
   ios::ChromeBrowserState* _browserState;
 
@@ -333,7 +331,6 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
         base::MakeUnique<web::WebStateObserverBridge>(webState, self);
 
     [self updateLastVisitedTimestamp];
-    [[self webController] addObserver:self];
     [[self webController] setDelegate:self];
 
     _snapshotManager = [[SnapshotManager alloc] initWithWebState:webState];
@@ -710,6 +707,8 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   // Cancel any queued dialogs.
   [self.dialogDelegate cancelDialogForTab:self];
 
+  [[self webController] setDelegate:nil];
+
   _webStateObserver.reset();
   _webStateImpl = nullptr;
 }
@@ -971,14 +970,6 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   DCHECK(_secondFactorController);
   [_secondFactorController evaluateU2FResultFromU2FURL:URL
                                               webState:self.webState];
-}
-
-#pragma mark - CRWWebControllerObserver protocol methods.
-
-- (void)webControllerWillClose:(CRWWebController*)webController {
-  DCHECK_EQ(webController, [self webController]);
-  [[self webController] removeObserver:self];
-  [[self webController] setDelegate:nil];
 }
 
 #pragma mark - CRWWebDelegate and CRWWebStateObserver protocol methods.
