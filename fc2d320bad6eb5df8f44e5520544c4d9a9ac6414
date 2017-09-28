@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "4aeb18d4_09a4e86d",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-28T23:41:24Z",
+      "side": 1,
+      "message": "Hmm. I\u0027ve undone this part of the change altogether and I can\u0027t seem to reproduce any problem. I think I had a different bug in my code before. The thing is that all of the quads we append are contained in the visible quad layer rect, since that\u0027s a promise that coverage iterator makes... So nothing really should be negative at all.",
+      "parentUuid": "55c5c92d_4b303cc6",
+      "revId": "fc2d320bad6eb5df8f44e5520544c4d9a9ac6414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6811859b_5d00b92f",
         "filename": "cc/layers/picture_layer_impl.cc",
         "patchSetId": 3
@@ -140,6 +158,24 @@
       "revId": "fc2d320bad6eb5df8f44e5520544c4d9a9ac6414",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f1ef091_d5b6ba1b",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-28T23:41:24Z",
+      "side": 1,
+      "message": "Makes sense. Done.",
+      "parentUuid": "49b8061c_7efa6666",
+      "revId": "fc2d320bad6eb5df8f44e5520544c4d9a9ac6414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
