@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "42cc26bc_3874e189",
+        "filename": "chrome/browser/chromeos/policy/off_hours/off_hours_interval.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-28T18:07:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d061815f_0e9e882c",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 17
+      },
+      "revId": "098c66b755609fd0de10b5296fbbdd94f8804ab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbb9a5ab_303ef428",
         "filename": "chrome/browser/chromeos/policy/off_hours/off_hours_interval_unittest.cc",
         "patchSetId": 4
