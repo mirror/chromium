@@ -6,6 +6,7 @@
 
 #include "base/command_line.h"
 #include "base/feature_list.h"
+#include "base/metrics/histogram_macros.h"
 #include "chrome/browser/profiles/profile.h"
 #import "chrome/browser/ui/cocoa/browser_window_controller.h"
 #import "chrome/browser/ui/cocoa/fullscreen/fullscreen_menubar_tracker.h"
@@ -40,6 +41,11 @@ void UnlockMenu() {
 
 }  // namespace
 
+@interface FullscreenToolbarController ()
+// Updates |toolbarStyle_|.
+- (void)updateToolbarStyle:(BOOL)isExitingTabFullscreen;
+@end
+
 @implementation FullscreenToolbarController
 
 - (id)initWithBrowserController:(BrowserWindowController*)controller {
@@ -64,7 +70,9 @@ void UnlockMenu() {
   DCHECK(!inFullscreenMode_);
   inFullscreenMode_ = YES;
 
-  [self updateToolbarStyleExitingTabFullscreen:NO];
+  [self updateToolbarStyle:NO];
+  UMA_HISTOGRAM_ENUMERATION("OSX.Fullscreen.ToolbarStyle", toolbarStyle_,
+                            kFullscreenToolbarStyleCount);
 
   if ([browserController_ isInImmersiveFullscreen]) {
     immersiveFullscreenController_.reset([[ImmersiveFullscreenController alloc]
@@ -166,9 +174,7 @@ void UnlockMenu() {
     [mouseTracker_ updateToolbarFrame:frame];
 }
 
-- (void)updateToolbarStyleExitingTabFullscreen:(BOOL)isExitingTabFullscreen {
-  FullscreenToolbarStyle oldStyle = toolbarStyle_;
-
+- (void)updateToolbarStyle:(BOOL)isExitingTabFullscreen {
   if ([browserController_ isFullscreenForTabContentOrExtension] &&
       !isExitingTabFullscreen) {
     toolbarStyle_ = FullscreenToolbarStyle::TOOLBAR_NONE;
@@ -178,12 +184,20 @@ void UnlockMenu() {
                         ? FullscreenToolbarStyle::TOOLBAR_PRESENT
                         : FullscreenToolbarStyle::TOOLBAR_HIDDEN;
   }
-
-  if (oldStyle != toolbarStyle_)
-    [self updateToolbarLayout];
 }
 
-- (void)updateToolbarLayout {
+- (void)invalidateToolbarStyle:(BOOL)isExitingTabFullscreen {
+  FullscreenToolbarStyle oldStyle = toolbarStyle_;
+  [self updateToolbarStyle:isExitingTabFullscreen];
+
+  if (oldStyle != toolbarStyle_) {
+    [self layoutToolbar];
+    UMA_HISTOGRAM_ENUMERATION("OSX.Fullscreen.ToolbarStyle", toolbarStyle_,
+                              kFullscreenToolbarStyleCount);
+  }
+}
+
+- (void)layoutToolbar {
   if ([mouseTracker_ mouseInsideTrackingArea]) {
     if (!menubarLocked_)
       LockMenu();
