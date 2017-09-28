@@ -67,6 +67,8 @@ class VIEWS_EXPORT InkDrop {
 
   // Notifes all of the observers that the animation has started.
   void NotifyInkDropAnimationStarted();
+  // Notifies all of the observers that an annimation to a state has eneded.
+  void NotifyInkDropAnimationEnded(InkDropState state);
 
  private:
   base::ObserverList<InkDropObserver> observers_;
