@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f1cc81e9_b486e7f8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 965,
+      "author": {
+        "id": 1130690
+      },
+      "writtenOn": "2017-09-28T18:24:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28aff753_6a85a9cc",
+      "range": {
+        "startLine": 965,
+        "startChar": 30,
+        "endLine": 965,
+        "endChar": 31
+      },
+      "revId": "770498c9cc536c827e29656a127cbe7b0faf3a66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4362a772_74924faa",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarTabController.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "770498c9cc536c827e29656a127cbe7b0faf3a66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ade13172_8e313e15",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarTabController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1130690
+      },
+      "writtenOn": "2017-09-28T18:24:32Z",
+      "side": 1,
+      "message": "Done. Ya, I like this a lot better!",
+      "parentUuid": "4362a772_74924faa",
+      "range": {
+        "startLine": 39,
+        "startChar": 9,
+        "endLine": 39,
+        "endChar": 16
+      },
+      "revId": "770498c9cc536c827e29656a127cbe7b0faf3a66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ab55fb08_754b64a8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarTablet.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1130690
+      },
+      "writtenOn": "2017-09-28T18:24:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c69014da_3f9eed0a",
+      "range": {
+        "startLine": 264,
+        "startChar": 12,
+        "endLine": 264,
+        "endChar": 40
+      },
+      "revId": "770498c9cc536c827e29656a127cbe7b0faf3a66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70aa7372_c46b89fd",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarTablet.java",
         "patchSetId": 3
@@ -85,6 +157,24 @@
       "revId": "770498c9cc536c827e29656a127cbe7b0faf3a66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d452eb8_963dc49a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarTablet.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1130690
+      },
+      "writtenOn": "2017-09-28T18:24:32Z",
+      "side": 1,
+      "message": "Done. I think the tab switcher is sufficient. The long press behavior doesn\u0027t make as much sense when the tab strip is present.",
+      "parentUuid": "70aa7372_c46b89fd",
+      "revId": "770498c9cc536c827e29656a127cbe7b0faf3a66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -108,6 +198,30 @@
       "revId": "770498c9cc536c827e29656a127cbe7b0faf3a66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71e0feae_7d5fd376",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1583,
+      "author": {
+        "id": 1130690
+      },
+      "writtenOn": "2017-09-28T18:24:32Z",
+      "side": 1,
+      "message": "Done. Added \"Restricted to opted-in Googlers.\"",
+      "parentUuid": "313ecd3f_55ad8ea6",
+      "range": {
+        "startLine": 1583,
+        "startChar": 45,
+        "endLine": 1583,
+        "endChar": 46
+      },
+      "revId": "770498c9cc536c827e29656a127cbe7b0faf3a66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
