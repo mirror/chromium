@@ -8,6 +8,7 @@
 #include <utility>
 
 #include "base/bind.h"
+#include "base/debug/stack_trace.h"
 #include "base/logging.h"
 #include "base/memory/ref_counted.h"
 #include "base/rand_util.h"
@@ -38,6 +39,9 @@ Core* GetCore() { return g_core; }
 }  // namespace internal
 
 void Init(const Configuration& configuration) {
+  LOG(ERROR) << "mojo::edk::Init";
+  base::debug::StackTrace().Print();
+  DCHECK(!internal::g_core);
   MojoSystemThunks thunks = MakeSystemThunks();
   size_t expected_size = MojoEmbedderSetSystemThunks(&thunks);
   DCHECK_EQ(expected_size, sizeof(thunks));
@@ -48,6 +52,10 @@ void Init(const Configuration& configuration) {
 
 void Init() {
   Init(Configuration());
+}
+
+void SetAsBrokerProcess() {
+  internal::g_configuration.is_broker_process = true;
 }
 
 void SetDefaultProcessErrorCallback(const ProcessErrorCallback& callback) {

@@ -74,10 +74,6 @@ namespace service_manager {
 
 namespace {
 
-// Maximum message size allowed to be read from a Mojo message pipe in any
-// service manager embedder process.
-constexpr size_t kMaximumMojoMessageSize = 128 * 1024 * 1024;
-
 class ServiceProcessLauncherDelegateImpl
     : public service_manager::ServiceProcessLauncherDelegate {
  public:
@@ -401,13 +397,12 @@ int Main(const MainParams& params) {
   InitializeMac();
 #endif
 
-  mojo::edk::Configuration mojo_config;
   ProcessType process_type = delegate->OverrideProcessType();
   if (process_type == ProcessType::kDefault) {
     std::string type_switch =
         command_line.GetSwitchValueASCII(switches::kProcessType);
     if (type_switch == switches::kProcessTypeServiceManager) {
-      mojo_config.is_broker_process = true;
+      mojo::edk::SetAsBrokerProcess();
       process_type = ProcessType::kServiceManager;
     } else if (type_switch == switches::kProcessTypeService) {
       process_type = ProcessType::kService;
@@ -415,9 +410,8 @@ int Main(const MainParams& params) {
       process_type = ProcessType::kEmbedder;
     }
   }
-  mojo_config.max_message_num_bytes = kMaximumMojoMessageSize;
-  delegate->OverrideMojoConfiguration(&mojo_config);
-  mojo::edk::Init(mojo_config);
+  if (delegate->ShouldBeBrokerProcess())
+    mojo::edk::SetAsBrokerProcess();
 
   ui::RegisterPathProvider();
 
