@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4ffbc13_14247c37",
+        "filename": "android_webview/browser/net/aw_cookie_store_wrapper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-28T13:43:28Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN() same as CookieStoreIOSCookieChangedSubscription?",
+      "revId": "ab5e09eba241897b9f98ea307530265ea10fd50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3dbbd4b_2c1291b7",
+        "filename": "android_webview/browser/net/aw_cookie_store_wrapper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-28T13:43:28Z",
+      "side": 1,
+      "message": "nit: There\u0027s a preference of make_unique over WrapUnique. can you write this in\nstd::make_unique\u003cAwCookieChangeSubscription\u003e(..) ?",
+      "revId": "ab5e09eba241897b9f98ea307530265ea10fd50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3b50410_f5a6ba38",
+        "filename": "ios/net/cookies/cookie_store_ios.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-28T13:43:28Z",
+      "side": 1,
+      "message": "optional: There\u0027s already an anonymous namespace at the top of the file. I prefer to consolidate this one with the other one.",
+      "revId": "ab5e09eba241897b9f98ea307530265ea10fd50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3153d800_f5bc434d",
+        "filename": "ios/net/cookies/cookie_store_ios.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-28T13:43:28Z",
+      "side": 1,
+      "message": "This friend declaration is not needed.",
+      "revId": "ab5e09eba241897b9f98ea307530265ea10fd50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27e67e4c_a320367e",
+        "filename": "ios/net/cookies/cookie_store_ios.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-28T13:43:28Z",
+      "side": 1,
+      "message": "nit: use std::make_unique\u003c\u003e instead of the base:: one.",
+      "revId": "ab5e09eba241897b9f98ea307530265ea10fd50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34ca4233_c62a352f",
+        "filename": "net/cookies/cookie_monster.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-28T13:43:28Z",
+      "side": 1,
+      "message": "optional: I prefer consolidating anonymous namespaces at the top of the file (line 351).\nI don\u0027t know a style guide specifying this, so I will bring this up as an optional nit.",
+      "revId": "ab5e09eba241897b9f98ea307530265ea10fd50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17c391c8_cd655422",
+        "filename": "net/cookies/cookie_monster.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-28T13:43:28Z",
+      "side": 1,
+      "message": "nit: use std::make_unique\u003c\u003e and below.",
+      "revId": "ab5e09eba241897b9f98ea307530265ea10fd50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
