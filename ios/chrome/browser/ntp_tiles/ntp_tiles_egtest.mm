@@ -48,6 +48,7 @@ using web::test::HttpServer;
   chrome_test_util::ClearBrowsingHistory();
   [[GREYUIThreadExecutor sharedInstance] drainUntilIdle];
   chrome_test_util::OpenNewTab();
+  [[GREYUIThreadExecutor sharedInstance] drainUntilIdle];
 
   [[EarlGrey selectElementWithMatcher:
                  chrome_test_util::StaticTextWithAccessibilityLabel(@"title1")]
@@ -60,6 +61,8 @@ using web::test::HttpServer;
   [ChromeEarlGrey goBack];
 
   chrome_test_util::OpenNewTab();
+  [[GREYUIThreadExecutor sharedInstance] drainUntilIdle];
+
   [[EarlGrey selectElementWithMatcher:
                  chrome_test_util::StaticTextWithAccessibilityLabel(@"title1")]
       assertWithMatcher:grey_notNil()];
@@ -92,6 +95,8 @@ using web::test::HttpServer;
   chrome_test_util::ClearBrowsingHistory();
   [[GREYUIThreadExecutor sharedInstance] drainUntilIdle];
   chrome_test_util::OpenNewTab();
+  [[GREYUIThreadExecutor sharedInstance] drainUntilIdle];
+
   [[EarlGrey selectElementWithMatcher:
                  chrome_test_util::StaticTextWithAccessibilityLabel(@"title2")]
       assertWithMatcher:grey_nil()];
@@ -104,6 +109,7 @@ using web::test::HttpServer;
   // with the icon present.
   [ChromeEarlGrey goBack];
   chrome_test_util::OpenNewTab();
+  [[GREYUIThreadExecutor sharedInstance] drainUntilIdle];
 
   // Which of the two tiles that is displayed is an implementation detail, and
   // this test helps document it. The purpose of the test is to verify that only
