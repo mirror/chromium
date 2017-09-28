@@ -279,6 +279,24 @@
     },
     {
       "key": {
+        "uuid": "7cca78c0_63b26492",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1424,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-28T22:21:21Z",
+      "side": 1,
+      "message": "Done, using https://chromium-review.googlesource.com/c/chromium/src/+/689968",
+      "parentUuid": "56893957_9dab5f1e",
+      "revId": "2e78b7c958f3c00096ad817d2d1d326e7a5b13eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d633fe68_1e2065ab",
         "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
         "patchSetId": 6
