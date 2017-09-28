@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "522a1c85_94868eeb",
+        "filename": "chrome/browser/ui/ash/multi_user/multi_user_window_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-28T17:22:12Z",
+      "side": 1,
+      "message": "optional nit: return g_instance \u0026\u0026 !g_instance-\u003eIsWindow...",
+      "range": {
+        "startLine": 56,
+        "startChar": 3,
+        "endLine": 56,
+        "endChar": 18
+      },
+      "revId": "8c998e9de1769e9ecde3fb89c7301e37638dfff4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
