@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b68fcb0_bf2bab97",
+        "filename": "ash/login/ui/login_pin_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-28T22:00:57Z",
+      "side": 1,
+      "message": "Make this part of the LoginPinView class.",
+      "revId": "800da531bf3308280bd916135a80754ab5c348d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
