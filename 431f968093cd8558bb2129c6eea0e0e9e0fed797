@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d9208855_07a75a68",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/preferences/PasswordViewingTypeTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-28T18:08:40Z",
+      "side": 1,
+      "message": "I\u0027ve removed this as it is no longer necessary with https://crrev.com/c/685514.",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 88
+      },
+      "revId": "431f968093cd8558bb2129c6eea0e0e9e0fed797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7793bdca_4f873ba9",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/signin/OAuth2TokenServiceIntegrationTest.java",
         "patchSetId": 12
@@ -13,6 +36,30 @@
       "writtenOn": "2017-09-27T15:56:55Z",
       "side": 1,
       "message": "Can you make these lambdas?",
+      "range": {
+        "startLine": 368,
+        "startChar": 40,
+        "endLine": 370,
+        "endChar": 29
+      },
+      "revId": "431f968093cd8558bb2129c6eea0e0e9e0fed797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "266b9ef0_f8c292dc",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/signin/OAuth2TokenServiceIntegrationTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-28T18:08:40Z",
+      "side": 1,
+      "message": "Converting all Runnables in this file creates a very big CL. I\u0027ve extracted it into a separate CL, hope you don\u0027t mind: https://crrev.com/c/690478. I\u0027ll send it to review when this one lands.",
+      "parentUuid": "7793bdca_4f873ba9",
       "range": {
         "startLine": 368,
         "startChar": 40,
@@ -48,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "3a6e7ac5_77a0e4f6",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-28T18:08:40Z",
+      "side": 1,
+      "message": "Done. FYI, my CL that changes initializeAccountManagerFacade and overrideAccountManagerFacade has landed (https://crrev.com/c/685514), so after rebasing code around this line has moved up.",
+      "parentUuid": "2acab825_1306cd8f",
+      "range": {
+        "startLine": 115,
+        "startChar": 34,
+        "endLine": 115,
+        "endChar": 56
+      },
+      "revId": "431f968093cd8558bb2129c6eea0e0e9e0fed797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9114ccb_4e7e11da",
         "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
         "patchSetId": 12
@@ -59,6 +130,30 @@
       "writtenOn": "2017-09-27T15:56:55Z",
       "side": 1,
       "message": "Can you add a comment about when and from where this can be called? From any thread, but in production only the UI thread, right?",
+      "range": {
+        "startLine": 128,
+        "startChar": 4,
+        "endLine": 128,
+        "endChar": 14
+      },
+      "revId": "431f968093cd8558bb2129c6eea0e0e9e0fed797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50e04ede_134c1b72",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-28T18:08:40Z",
+      "side": 1,
+      "message": "You\u0027re right, it is called from UI thread in production, but this function should work correctly from any thread. Should I put @MainThread here? IUUC, annotations should describe the class itself, not the way it is used.",
+      "parentUuid": "f9114ccb_4e7e11da",
       "range": {
         "startLine": 128,
         "startChar": 4,
@@ -94,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "9d6d2928_ea8343ca",
+        "filename": "components/signin/core/browser/android/javatests/src/org/chromium/components/signin/test/util/FakeAccountManagerDelegate.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-28T18:08:40Z",
+      "side": 1,
+      "message": "Excellent point, thank you very much! Done.",
+      "parentUuid": "50048840_24680828",
+      "range": {
+        "startLine": 213,
+        "startChar": 70,
+        "endLine": 213,
+        "endChar": 97
+      },
+      "revId": "431f968093cd8558bb2129c6eea0e0e9e0fed797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ca3a73e_0593f707",
         "filename": "components/signin/core/browser/android/javatests/src/org/chromium/components/signin/test/util/FakeAccountManagerDelegate.java",
         "patchSetId": 12
@@ -117,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "dd4f309b_6ac7db18",
+        "filename": "components/signin/core/browser/android/javatests/src/org/chromium/components/signin/test/util/FakeAccountManagerDelegate.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-28T18:08:40Z",
+      "side": 1,
+      "message": "I tend to disagree with you, sorry. Because of possible spurious wakeups and requirement to obtain the lock prior to waiting, using Object.wait() and Object.notifyAll() leads to pretty complicated code that is hard to read and validate:\n\nObject lock \u003d new Object();\nAtomicBoolean cacheUpdated \u003d new AtomicBoolean();\nAccountsChangeObserver observer \u003d () -\u003e {\n    if (!AccountManagerFacade.get().hasAccountForName(accountHolder.getAccount().name)) {\n        synchronized (lock) {\n            cacheUpdated.set(true);\n            lock.notifyAll();\n        }\n    }\n};\n\nThreadUtils.runOnUiThreadBlocking(() -\u003e {\n    AccountManagerFacade.get().addObserver(observer);\n    removeAccountHolderExplicitly(accountHolder);\n});\n\ntry {\n    synchronized (lock) {\n        while (!cacheUpdated.get()) {\n            lock.wait();\n        }\n    }\n} // ...\n\n\nI could use non-atomic variable for cacheUpdated or use it for locking, but it wouldn\u0027t change the line count that much. Am I missing something and there\u0027s a more efficient way to implement this?\n\nThat being said, I really don\u0027t like the fact that signin code has it\u0027s own SimpleFuture implemented for test code. I\u0027d like to add something like CompletableFuture from Java 8 to base, but it\u0027s definitely outside of scope of this CL.",
+      "parentUuid": "7ca3a73e_0593f707",
+      "range": {
+        "startLine": 216,
+        "startChar": 8,
+        "endLine": 216,
+        "endChar": 26
+      },
+      "revId": "431f968093cd8558bb2129c6eea0e0e9e0fed797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23ab6dd2_b7194bab",
         "filename": "components/signin/core/browser/android/javatests/src/org/chromium/components/signin/test/util/FakeAccountManagerDelegate.java",
         "patchSetId": 12
@@ -128,6 +271,30 @@
       "writtenOn": "2017-09-27T15:56:55Z",
       "side": 1,
       "message": "Hm, if this returns false, we\u0027re never going to call the callback, which might not be the best failure behavior. Should we instead throw an exception or something?",
+      "range": {
+        "startLine": 218,
+        "startChar": 16,
+        "endLine": 218,
+        "endChar": 93
+      },
+      "revId": "431f968093cd8558bb2129c6eea0e0e9e0fed797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca7b360c_5fc8d451",
+        "filename": "components/signin/core/browser/android/javatests/src/org/chromium/components/signin/test/util/FakeAccountManagerDelegate.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-28T18:08:40Z",
+      "side": 1,
+      "message": "Theoretically, we might have several changes to account list happening at the same time. For example, if we call addAccountHolderExplicitly(account1) and then addAccountHolderBlocking(account2), first notification will be for the account1, before account2 is in the cache. This observer waits before account is actually in the cache. Since this class is intended for tests only, this relies on timeout in SimpleFuture or timeout for the whole test that uses this method.\nTBH, I don\u0027t see any better way to wait until the cache is updated. Propagating callbacks on every change to accounts would require huge changes to both FakeAccountManagerDelegate and AccountManagerFacade without any reasonable benefit for production code.",
+      "parentUuid": "23ab6dd2_b7194bab",
       "range": {
         "startLine": 218,
         "startChar": 16,
