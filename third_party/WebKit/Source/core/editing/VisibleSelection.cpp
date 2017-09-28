@@ -178,12 +178,24 @@ PositionTemplate<Strategy> VisibleSelectionTemplate<Strategy>::End() const {
   return base_is_first_ ? extent_ : base_;
 }
 
-EphemeralRange FirstEphemeralRangeOf(const VisibleSelection& selection) {
+template <typename Strategy>
+EphemeralRangeTemplate<Strategy> FirstEphemeralRangeOfAlgorithm(
+    const VisibleSelectionTemplate<Strategy>& selection) {
   if (selection.IsNone())
-    return EphemeralRange();
-  Position start = selection.Start().ParentAnchoredEquivalent();
-  Position end = selection.End().ParentAnchoredEquivalent();
-  return EphemeralRange(start, end);
+    return EphemeralRangeTemplate<Strategy>();
+  PositionTemplate<Strategy> start =
+      selection.Start().ParentAnchoredEquivalent();
+  PositionTemplate<Strategy> end = selection.End().ParentAnchoredEquivalent();
+  return EphemeralRangeTemplate<Strategy>(start, end);
+}
+
+EphemeralRange FirstEphemeralRangeOf(const VisibleSelection& selection) {
+  return FirstEphemeralRangeOfAlgorithm(selection);
+}
+
+EphemeralRangeInFlatTree FirstEphemeralRangeOf(
+    const VisibleSelectionInFlatTree& selection) {
+  return FirstEphemeralRangeOfAlgorithm(selection);
 }
 
 template <typename Strategy>
