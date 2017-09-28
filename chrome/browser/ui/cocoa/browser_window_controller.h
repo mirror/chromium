@@ -398,6 +398,9 @@ constexpr const gfx::Size kMinCocoaPopupWindowSize(100, 122);
 // UpdateAlertState.
 - (TabAlertState)alertState;
 
+// Sets |browserWindowTouchbar_|.
+- (void)setBrowserWindowTouchBar:(BrowserWindowTouchBar*)touchBar;
+
 // Returns the BrowserWindowTouchBar object associated with the window.
 - (BrowserWindowTouchBar*)browserWindowTouchBar;
 
