@@ -45,7 +45,8 @@ String CSSPaintValue::GetName() const {
 RefPtr<Image> CSSPaintValue::GetImage(const ImageResourceObserver& client,
                                       const Document& document,
                                       const ComputedStyle&,
-                                      const IntSize& size) {
+                                      const IntSize& size,
+                                      LayoutSize* logical_tile_size) {
   if (!generator_) {
     generator_ = CSSPaintImageGenerator::Create(
         GetName(), document, paint_image_generator_observer_);
@@ -54,7 +55,8 @@ RefPtr<Image> CSSPaintValue::GetImage(const ImageResourceObserver& client,
   if (!ParseInputArguments())
     return nullptr;
 
-  return generator_->Paint(client, size, parsed_input_arguments_);
+  return generator_->Paint(client, size, parsed_input_arguments_,
+                           logical_tile_size);
 }
 
 bool CSSPaintValue::ParseInputArguments() {

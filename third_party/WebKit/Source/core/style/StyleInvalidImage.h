@@ -38,7 +38,8 @@ class StyleInvalidImage final : public StyleImage {
   RefPtr<Image> GetImage(const ImageResourceObserver&,
                          const Document&,
                          const ComputedStyle&,
-                         const IntSize&) const override {
+                         const IntSize&,
+                         LayoutSize*) const override {
     return nullptr;
   }
   bool KnownToBeOpaque(const Document&, const ComputedStyle&) const override {

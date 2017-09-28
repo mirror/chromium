@@ -31,10 +31,13 @@ class CSSPaintValue : public CSSImageGeneratorValue {
 
   String GetName() const;
 
+  // The third parameter is container size with subpixel snapping, where the
+  // fourth is without it. Both sizes include zoom.
   RefPtr<Image> GetImage(const ImageResourceObserver&,
                          const Document&,
                          const ComputedStyle&,
-                         const IntSize&);
+                         const IntSize&,
+                         LayoutSize*);
   bool IsFixedSize() const { return false; }
   IntSize FixedSize(const Document&) { return IntSize(); }
 

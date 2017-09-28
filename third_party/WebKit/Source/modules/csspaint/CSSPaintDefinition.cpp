@@ -23,12 +23,13 @@ namespace blink {
 
 namespace {
 
-IntSize GetSpecifiedSize(const IntSize& size, float zoom) {
+IntSize GetSpecifiedSize(LayoutSize* size, float zoom) {
   float un_zoom_factor = 1 / zoom;
-  auto un_zoom_fn = [un_zoom_factor](int a) -> int {
+  auto un_zoom_fn = [un_zoom_factor](float a) -> int {
     return round(a * un_zoom_factor);
   };
-  return IntSize(un_zoom_fn(size.Width()), un_zoom_fn(size.Height()));
+  return IntSize(un_zoom_fn(size->Width().ToFloat()),
+                 un_zoom_fn(size->Height().ToFloat()));
 }
 
 }  // namespace
@@ -70,14 +71,16 @@ CSSPaintDefinition::~CSSPaintDefinition() {}
 RefPtr<Image> CSSPaintDefinition::Paint(
     const ImageResourceObserver& client,
     const IntSize& size,
-    const CSSStyleValueVector* paint_arguments) {
+    const CSSStyleValueVector* paint_arguments,
+    LayoutSize* logical_tile_size) {
   DCHECK(paint_arguments);
+  DCHECK(logical_tile_size);
 
   // TODO: Break dependency on LayoutObject. Passing the Node should work.
   const LayoutObject& layout_object = static_cast<const LayoutObject&>(client);
 
   float zoom = layout_object.StyleRef().EffectiveZoom();
-  const IntSize specified_size = GetSpecifiedSize(size, zoom);
+  const IntSize specified_size = GetSpecifiedSize(logical_tile_size, zoom);
 
   ScriptState::Scope scope(script_state_.Get());
 

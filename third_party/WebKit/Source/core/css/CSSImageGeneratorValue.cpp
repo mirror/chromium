@@ -123,7 +123,8 @@ RefPtr<Image> CSSImageGeneratorValue::GetImage(
     const ImageResourceObserver& client,
     const Document& document,
     const ComputedStyle& style,
-    const IntSize& size) {
+    const IntSize& size,
+    LayoutSize* logical_tile_size) {
   switch (GetClassType()) {
     case kCrossfadeClass:
       return ToCSSCrossfadeValue(this)->GetImage(client, document, style, size);
@@ -131,7 +132,8 @@ RefPtr<Image> CSSImageGeneratorValue::GetImage(
       return ToCSSLinearGradientValue(this)->GetImage(client, document, style,
                                                       size);
     case kPaintClass:
-      return ToCSSPaintValue(this)->GetImage(client, document, style, size);
+      return ToCSSPaintValue(this)->GetImage(client, document, style, size,
+                                             logical_tile_size);
     case kRadialGradientClass:
       return ToCSSRadialGradientValue(this)->GetImage(client, document, style,
                                                       size);
