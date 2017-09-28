@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ce26061_714354e1",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-28T13:36:15Z",
+      "side": 1,
+      "message": "How about changing the signature of this to:\n\nvoid EscapeForHtml(std::string* message);\n\nAnd doing the replacements by calling base::ReplaceChars() three times?\n\nI realise that this would be somewhat slower, but it would avoid a number of reallocations (std::string::push_back w/o reserve is expensive-ish too) and significantly simplify the code.\n\nI would personally rename this method to EscapeUnsafeCharacters, and add a comment to the Ubuntu guidelines that explain that the subset on line 121 is sufficient.",
+      "revId": "3b5522a65e1523cc276368bb9d2f81c57fa3e71a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
