@@ -23,13 +23,13 @@ namespace blink {
 template class WorkletThreadHolder<AudioWorkletThread>;
 
 WebThread* AudioWorkletThread::s_backing_thread_ = nullptr;
+unsigned AudioWorkletThread::s_ref_count_ = 0;
 
 std::unique_ptr<AudioWorkletThread> AudioWorkletThread::Create(
     ThreadableLoadingContext* loading_context,
     WorkerReportingProxy& worker_reporting_proxy) {
   TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("audio-worklet"),
                "AudioWorkletThread::create");
-  DCHECK(IsMainThread());
   return WTF::WrapUnique(
       new AudioWorkletThread(loading_context, worker_reporting_proxy));
 }
@@ -37,12 +37,25 @@ std::unique_ptr<AudioWorkletThread> AudioWorkletThread::Create(
 AudioWorkletThread::AudioWorkletThread(
     ThreadableLoadingContext* loading_context,
     WorkerReportingProxy& worker_reporting_proxy)
-    : WorkerThread(loading_context, worker_reporting_proxy) {}
+    : WorkerThread(loading_context, worker_reporting_proxy) {
+  DCHECK(IsMainThread());
+  if (++s_ref_count_ == 1)
+    EnsureSharedBackingThread();
+}
 
-AudioWorkletThread::~AudioWorkletThread() {}
+AudioWorkletThread::~AudioWorkletThread() {
+  DCHECK_EQ(s_ref_count_, 0);
+  DCHECK(!s_backing_thread_);
+}
 
 WorkerBackingThread& AudioWorkletThread::GetWorkerBackingThread() {
   return *WorkletThreadHolder<AudioWorkletThread>::GetInstance()->GetThread();
+}
+
+void AudioWorkletThread::ClearWorkerBackingThread() {
+  DCHECK(IsMainThread());
+  if (--s_ref_count_ == 0)
+    ClearSharedBackingThread();
 }
 
 void CollectAllGarbageOnAudioWorkletThread(WaitableEvent* done_event) {
