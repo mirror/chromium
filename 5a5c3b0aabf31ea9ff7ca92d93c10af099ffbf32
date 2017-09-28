@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c59982b_8721a08e",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-09-28T18:34:39Z",
+      "side": 1,
+      "message": "nit: could merge this condition into line 180 as an OR.",
+      "range": {
+        "startLine": 182,
+        "startChar": 18,
+        "endLine": 182,
+        "endChar": 32
+      },
+      "revId": "5a5c3b0aabf31ea9ff7ca92d93c10af099ffbf32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
