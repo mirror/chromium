@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71221fe6_e89fd24c",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1112,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-09-28T17:08:21Z",
+      "side": 1,
+      "message": "nit: worth extracting this out of the ProceduralBlockWithBool?",
+      "range": {
+        "startLine": 1110,
+        "startChar": 12,
+        "endLine": 1112,
+        "endChar": 71
+      },
+      "revId": "5d63653419b969d24622f18c4ec0033c5d194dda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
