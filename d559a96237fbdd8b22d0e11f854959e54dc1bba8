@@ -241,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "bb92ca47_85147f9d",
+        "filename": "chrome_elf/nt_registry/nt_registry_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-09-28T22:22:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36c69cb2_0495c952",
+      "revId": "d559a96237fbdd8b22d0e11f854959e54dc1bba8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e43b854a_970ea03b",
         "filename": "chrome_elf/nt_registry/nt_registry_unittest.cc",
         "patchSetId": 5
@@ -270,6 +288,24 @@
       "side": 1,
       "message": "ping!",
       "parentUuid": "e43b854a_970ea03b",
+      "revId": "d559a96237fbdd8b22d0e11f854959e54dc1bba8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f06de096_79448c9c",
+        "filename": "chrome_elf/nt_registry/nt_registry_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-09-28T22:22:42Z",
+      "side": 1,
+      "message": "Gah!  Missed this after my \"restoration\" of EXPECTs.\nDone.",
+      "parentUuid": "31667b56_89aeadb9",
       "revId": "d559a96237fbdd8b22d0e11f854959e54dc1bba8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c34db965_2dfe4de9",
+        "filename": "chrome_elf/nt_registry/nt_registry.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 811,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-09-28T22:22:42Z",
+      "side": 1,
+      "message": "I just ran some limited tests (on only my machine):\n\n- QueryRegEnumerationInfo: ran through a bunch of HKCU to see what is common for the variable-length \"class\" string in this structure.  It appears to almost always be length 0 (unused).  So I\u0027ve adjusted QueryRegEnumerationInfo to start with sizeof(KEY_FULL_INFORMATION).\n\n- For QueryRegSubkey: a large number of key names seem to be \u003c 12 characters.  Adjusted.\n\n- For QueryRegKeyValue: nothing we can do here.  I don\u0027t think it helps to pre-allocate any reasonable number, and it probably is a pessimization here.",
+      "parentUuid": "0800ea1d_79da5c4f",
+      "revId": "eafe76a7ed5938fc65304de868830b95d5383295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb7a89f2_b39d7199",
         "filename": "chrome_elf/nt_registry/nt_registry.cc",
         "patchSetId": 6
@@ -30,6 +48,30 @@
       "writtenOn": "2017-09-28T08:50:03Z",
       "side": 1,
       "message": "nit: use \"buffer.data()\", which is even valid when size_needed \u003d\u003d 0 so long as it is never dereferenced (http://en.cppreference.com/w/cpp/container/vector/data).",
+      "range": {
+        "startLine": 816,
+        "startChar": 63,
+        "endLine": 816,
+        "endChar": 73
+      },
+      "revId": "eafe76a7ed5938fc65304de868830b95d5383295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d7fd491_c90a2bc5",
+        "filename": "chrome_elf/nt_registry/nt_registry.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-09-28T22:22:42Z",
+      "side": 1,
+      "message": "Done.\nI just assumed that function returned a const pointer.  Bad assumption.",
+      "parentUuid": "eb7a89f2_b39d7199",
       "range": {
         "startLine": 816,
         "startChar": 63,
@@ -76,6 +118,30 @@
       "writtenOn": "2017-09-28T08:50:03Z",
       "side": 1,
       "message": "subkey_handle is leaked if this assertion fails. same issue below. i think it\u0027s ideal to close the handles so that there\u0027s no risk of leaks from this test impacting subsequent tests in the same process.",
+      "range": {
+        "startLine": 602,
+        "startChar": 35,
+        "endLine": 602,
+        "endChar": 48
+      },
+      "revId": "eafe76a7ed5938fc65304de868830b95d5383295",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ced71c8_2f89469b",
+        "filename": "chrome_elf/nt_registry/nt_registry_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-09-28T22:22:42Z",
+      "side": 1,
+      "message": "- I\u0027ve fixed the subkey_handle problem by using EXPECT instead of ASSERT before closing the handle.  (Consistent with existing test CreateRegKeyRecursion.)\n\n- I\u0027ve added the base::ScopedClosureRunner you recommended to top-level keys that are opened once at the start of a test.",
+      "parentUuid": "74de705a_d1d305f3",
       "range": {
         "startLine": 602,
         "startChar": 35,
