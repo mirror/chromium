@@ -16,6 +16,52 @@
       "revId": "ead25ad8217348ff5ae8e66b216ddb2fc3c9c0bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a236880_708d9779",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 41084,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-28T20:50:58Z",
+      "side": 1,
+      "message": "Optional nit: In case you want to add additional related histograms later, you might want a naming scheme like \"Net.ExpectCTHeader.ParseSuccess\"",
+      "range": {
+        "startLine": 41084,
+        "startChar": 21,
+        "endLine": 41084,
+        "endChar": 40
+      },
+      "revId": "ead25ad8217348ff5ae8e66b216ddb2fc3c9c0bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d5f7bfe_00161a85",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 41084,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-28T20:50:58Z",
+      "side": 1,
+      "message": "nit: Could this be BooleanParsed or BooleanSuccess?",
+      "range": {
+        "startLine": 41084,
+        "startChar": 48,
+        "endLine": 41084,
+        "endChar": 55
+      },
+      "revId": "ead25ad8217348ff5ae8e66b216ddb2fc3c9c0bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
