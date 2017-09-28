@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "5f844b05_da710a69",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/site-per-process",
+        "patchSetId": 11
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-09-28T13:05:31Z",
+      "side": 1,
+      "message": "Is this an issue with the test, or with the feature itself? (Looking briefly at the parent patch, I see that the activation delegation flags on the frame owner should be replicated to proxies, so it seems like the feature should work -- wondering here whether we just need a different way to test it)",
+      "range": {
+        "startLine": 170,
+        "startChar": 1,
+        "endLine": 170,
+        "endChar": 47
+      },
+      "revId": "402f60a5b5ebefad4f8212af6c804aeeb0557d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10fb6089_341ca325",
+        "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-09-28T13:05:31Z",
+      "side": 1,
+      "message": "Are these includes necessary?",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 40
+      },
+      "revId": "402f60a5b5ebefad4f8212af6c804aeeb0557d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5d2d98a_92eeb6e4",
         "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.cpp",
         "patchSetId": 11
