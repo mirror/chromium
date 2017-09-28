@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f07ddd8c_7a7abae3",
+        "filename": "extensions/common/features/simple_feature.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-28T15:57:05Z",
+      "side": 1,
+      "message": "I was debating using optionals here, too, but it\u0027s less obviously a win since it doesn\u0027t save us heap allocations (like in the case of channel) or weird \"invalid\" values (like for manifest version or location).  However, it might still be worth it because optionals don\u0027t allocate the object, so we\u0027d save on the allocation cost for a half dozen vectors.  I\u0027ll dig a bit more, but I think it can safely be orthogonal to this change.",
+      "revId": "ef94f5b1a0b6de2927f04b9f6f842507329ba11a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
