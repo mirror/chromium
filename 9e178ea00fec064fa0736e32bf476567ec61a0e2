@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "805cd8ba_c713eb54",
+        "filename": "content/browser/android/tracing_controller_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-09-29T19:48:13Z",
+      "side": 1,
+      "message": "I have no idea what\u0027s going on, but I\u0027ve tried the following:\n1) Using ThreadUtils.postOnUiThread to post to the UI thread in Java.\n2) Using ThreadUtils.getUiThreadHandler to register the intent filter in Java so it automatically runs on the UI thread.\n3) Posting to the UI thread in C++, like this patch currently does.\n\nI hit the DCHECK in 1 and 2, but not 3.\n\nEither the C++ and Java logic have a different idea of which thread is the UI thread or our C++ logic can\u0027t tell that we are on the correct thread when called through JNI.",
+      "parentUuid": "564d7225_13d5a2ce",
+      "range": {
+        "startLine": 50,
+        "startChar": 17,
+        "endLine": 50,
+        "endChar": 25
+      },
+      "revId": "9e178ea00fec064fa0736e32bf476567ec61a0e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c3ae472_6a9e5a22",
         "filename": "content/browser/android/tracing_controller_android.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-29T10:15:51Z",
       "side": 1,
       "message": "Not sure what deadlock this is referring to. Also, no need for an empty return.",
+      "range": {
+        "startLine": 80,
+        "startChar": 2,
+        "endLine": 80,
+        "endChar": 8
+      },
+      "revId": "9e178ea00fec064fa0736e32bf476567ec61a0e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b36f2046_711fe0ed",
+        "filename": "content/browser/android/tracing_controller_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-09-29T19:48:13Z",
+      "side": 1,
+      "message": "Re deadlock: I initially wrote this patch locally such that it uses a WaitableEvent to synchronously wait for the return value instead of ignoring it, but that just caused Chrome to hang and crash.\n\nI assumed that meant the UI thread was somehow synchronously running the intent on another thread. But it could be that C++ just isn\u0027t detecting the UI thread correctly from JNI.",
+      "parentUuid": "4c3ae472_6a9e5a22",
       "range": {
         "startLine": 80,
         "startChar": 2,
