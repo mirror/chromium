@@ -1815,8 +1815,8 @@ void RenderWidget::OnSetIsInert(bool inert) {
 
 void RenderWidget::OnDragTargetDragEnter(
     const std::vector<DropData::Metadata>& drop_meta_data,
-    const gfx::Point& client_point,
-    const gfx::Point& screen_point,
+    const gfx::PointF& client_point,
+    const gfx::PointF& screen_point,
     WebDragOperationsMask ops,
     int key_modifiers) {
   if (!GetWebWidget())
@@ -1831,8 +1831,8 @@ void RenderWidget::OnDragTargetDragEnter(
   Send(new DragHostMsg_UpdateDragCursor(routing_id(), operation));
 }
 
-void RenderWidget::OnDragTargetDragOver(const gfx::Point& client_point,
-                                        const gfx::Point& screen_point,
+void RenderWidget::OnDragTargetDragOver(const gfx::PointF& client_point,
+                                        const gfx::PointF& screen_point,
                                         WebDragOperationsMask ops,
                                         int key_modifiers) {
   if (!GetWebWidget())
@@ -1847,8 +1847,8 @@ void RenderWidget::OnDragTargetDragOver(const gfx::Point& client_point,
   Send(new DragHostMsg_UpdateDragCursor(routing_id(), operation));
 }
 
-void RenderWidget::OnDragTargetDragLeave(const gfx::Point& client_point,
-                                         const gfx::Point& screen_point) {
+void RenderWidget::OnDragTargetDragLeave(const gfx::PointF& client_point,
+                                         const gfx::PointF& screen_point) {
   if (!GetWebWidget())
     return;
   DCHECK(GetWebWidget()->IsWebFrameWidget());
@@ -1858,8 +1858,8 @@ void RenderWidget::OnDragTargetDragLeave(const gfx::Point& client_point,
 }
 
 void RenderWidget::OnDragTargetDrop(const DropData& drop_data,
-                                    const gfx::Point& client_point,
-                                    const gfx::Point& screen_point,
+                                    const gfx::PointF& client_point,
+                                    const gfx::PointF& screen_point,
                                     int key_modifiers) {
   if (!GetWebWidget())
     return;
@@ -1871,8 +1871,8 @@ void RenderWidget::OnDragTargetDrop(const DropData& drop_data,
                        key_modifiers);
 }
 
-void RenderWidget::OnDragSourceEnded(const gfx::Point& client_point,
-                                     const gfx::Point& screen_point,
+void RenderWidget::OnDragSourceEnded(const gfx::PointF& client_point,
+                                     const gfx::PointF& screen_point,
                                      WebDragOperation op) {
   if (!GetWebWidget())
     return;
@@ -2389,6 +2389,13 @@ float RenderWidget::GetOriginalDeviceScaleFactor() const {
       screen_metrics_emulator_ ?
       screen_metrics_emulator_->original_screen_info().device_scale_factor :
       device_scale_factor_;
+}
+
+gfx::PointF RenderWidget::ConvertWindowPointToViewport(
+    const gfx::PointF& point) {
+  blink::WebFloatRect point_in_viewport(point.x(), point.y(), 0, 0);
+  ConvertWindowToViewport(&point_in_viewport);
+  return gfx::PointF(point_in_viewport.x, point_in_viewport.y);
 }
 
 gfx::Point RenderWidget::ConvertWindowPointToViewport(

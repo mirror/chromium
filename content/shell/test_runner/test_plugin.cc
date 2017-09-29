@@ -562,8 +562,8 @@ bool TestPlugin::HandleDragStatusUpdate(
     blink::WebDragStatus drag_status,
     const blink::WebDragData& data,
     blink::WebDragOperationsMask mask,
-    const blink::WebPoint& position,
-    const blink::WebPoint& screen_position) {
+    const blink::WebFloatPoint& position,
+    const blink::WebFloatPoint& screen_position) {
   const char* drag_status_name = 0;
   switch (drag_status) {
     case blink::kWebDragStatusEnter:
