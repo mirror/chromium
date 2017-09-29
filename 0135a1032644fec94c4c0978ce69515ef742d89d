@@ -33,6 +33,24 @@
       "revId": "0135a1032644fec94c4c0978ce69515ef742d89d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bec7838_d2239a9a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-29T18:01:58Z",
+      "side": 1,
+      "message": "I can do that. We need to survive cross-process navigation.",
+      "parentUuid": "f5dc8e14_3690f4c4",
+      "revId": "0135a1032644fec94c4c0978ce69515ef742d89d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
