@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8f556c53_4196d622",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2017-09-29T10:46:30Z",
+      "side": 1,
+      "message": "We may consider non-scrollable parent. But it requires algorithmic and UI change. I think we need to more discussion about what is proper change before start.",
+      "parentUuid": "57b61889_f9164233",
+      "revId": "2f5b14f8d764e5d1677e659740339a3cdc97bb35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b20266c_337ce935",
         "filename": "third_party/WebKit/LayoutTests/fast/spatial-navigation/snav-container-select.html",
         "patchSetId": 3
