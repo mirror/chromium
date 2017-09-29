@@ -14,6 +14,10 @@ namespace blink {
 class ThreadableLoadingContext;
 class WorkerReportingProxy;
 
+// Represents the shared backing thread that is used by all animation worklets
+// and participates in Blink garbage collection process. At the moment, instead
+// of creating a dedicated backing thread it uses the existing compositor thread
+// (i.e., |Platform::CompositorThread()|).
 class MODULES_EXPORT AnimationWorkletThread final : public WorkerThread {
  public:
   static std::unique_ptr<AnimationWorkletThread> Create(
