@@ -21,7 +21,6 @@
 #include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/viz/common/resources/buffer_to_texture_target_map.h"
-#include "content/app/mojo/mojo_init.h"
 #include "content/common/in_process_child_thread_params.h"
 #include "content/common/resource_messages.h"
 #include "content/common/service_manager/child_connection.h"
@@ -47,6 +46,7 @@
 #include "ipc/ipc_channel_mojo.h"
 #include "mojo/edk/embedder/embedder.h"
 #include "mojo/edk/embedder/outgoing_broker_client_invitation.h"
+#include "services/service_manager/public/cpp/mojo_init.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/public/platform/scheduler/renderer/renderer_scheduler.h"
 #include "ui/base/ui_base_switches.h"
@@ -180,7 +180,7 @@ class RenderThreadImplBrowserTest : public testing::Test {
     scoped_refptr<base::SingleThreadTaskRunner> io_task_runner =
         base::ThreadTaskRunnerHandle::Get();
 
-    InitializeMojo();
+    service_manager::InitializeMojo();
     shell_context_.reset(new TestServiceManagerContext);
     mojo::edk::OutgoingBrokerClientInvitation invitation;
     service_manager::Identity child_identity(

@@ -21,6 +21,7 @@ source_set("common_initialization") {
     "//mojo/edk/system",
     "//services/catalog:lib",
     "//services/service_manager/background:lib",
+    "//services/service_manager/public/cpp",
   ]
 
   if (is_android) {

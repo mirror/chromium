@@ -264,7 +264,7 @@ test("wayland_client_perftests") {
     "//cc:test_support",
     "//components/exo",
     "//components/viz/test:test_support",
-    "//mojo/edk/embedder:headers",
+    "//services/service_manager/public/cpp",
     "//testing/perf",
     "//ui/aura",
     "//ui/base",

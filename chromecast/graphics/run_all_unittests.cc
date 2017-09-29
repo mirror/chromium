@@ -7,7 +7,7 @@
 #include "base/path_service.h"
 #include "base/test/launcher/unit_test_launcher.h"
 #include "base/test/test_suite.h"
-#include "mojo/edk/embedder/embedder.h"
+#include "services/service_manager/public/cpp/mojo_init.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/aura/env.h"
 #include "ui/base/resource/resource_bundle.h"
@@ -46,7 +46,7 @@ class ChromecastGraphicsTestSuite : public base::TestSuite {
 int main(int argc, char** argv) {
   ChromecastGraphicsTestSuite test_suite(argc, argv);
 
-  mojo::edk::Init();
+  service_manager::InitializeMojo();
 
   return base::LaunchUnitTests(argc, argv,
                                base::Bind(&ChromecastGraphicsTestSuite::Run,

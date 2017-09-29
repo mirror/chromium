@@ -41,7 +41,6 @@
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
 #include "components/tracing/common/trace_startup.h"
-#include "content/app/mojo/mojo_init.h"
 #include "content/common/url_schemes.h"
 #include "content/public/app/content_main.h"
 #include "content/public/app/content_main_delegate.h"

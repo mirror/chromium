@@ -35,7 +35,6 @@ source_set("minimal") {
     "//components/nacl/common:mojo_bindings",
     "//crypto",
     "//ipc",
-    "//mojo/edk/system",
     "//native_client/src/trusted/service_runtime:sel_main_chrome",
     "//ppapi/c",
     "//ppapi/proxy:ipc",
@@ -191,8 +190,8 @@ if (is_win && target_cpu == "x86" && current_cpu == "x64") {
       "//components/nacl/broker",
       "//components/nacl/common:switches",
       "//content/public/common:static_switches",
-      "//mojo/edk/system",
       "//sandbox",
+      "//services/service_manager/public/cpp",
     ]
   }
 }

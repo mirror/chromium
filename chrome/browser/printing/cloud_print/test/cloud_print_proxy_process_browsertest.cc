@@ -53,11 +53,11 @@
 #include "ipc/ipc.mojom.h"
 #include "ipc/ipc_channel_mojo.h"
 #include "ipc/ipc_channel_proxy.h"
-#include "mojo/edk/embedder/embedder.h"
 #include "mojo/edk/embedder/named_platform_handle.h"
 #include "mojo/edk/embedder/named_platform_handle_utils.h"
 #include "mojo/edk/embedder/peer_connection.h"
 #include "mojo/edk/embedder/scoped_ipc_support.h"
+#include "services/service_manager/public/cpp/mojo_init.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/multiprocess_func_list.h"
@@ -219,7 +219,7 @@ int CloudPrintMockService_Main(SetExpectationsCallback set_expectations) {
   EXPECT_TRUE(service_process.Initialize(&main_message_loop, state));
 
   // Needed for IPC.
-  mojo::edk::Init();
+  service_manager::InitializeMojo();
   mojo::edk::ScopedIPCSupport ipc_support(
       service_process.io_task_runner(),
       mojo::edk::ScopedIPCSupport::ShutdownPolicy::FAST);
@@ -474,7 +474,7 @@ base::CommandLine CloudPrintProxyPolicyStartupTest::MakeCmdLine(
 }
 
 TEST_F(CloudPrintProxyPolicyStartupTest, StartAndShutdown) {
-  mojo::edk::Init();
+  service_manager::InitializeMojo();
   mojo::edk::ScopedIPCSupport ipc_support(
       BrowserThread::GetTaskRunnerForThread(BrowserThread::IO),
       mojo::edk::ScopedIPCSupport::ShutdownPolicy::FAST);

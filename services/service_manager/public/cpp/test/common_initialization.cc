@@ -11,6 +11,7 @@
 #include "mojo/edk/embedder/embedder.h"
 #include "mojo/edk/embedder/scoped_ipc_support.h"
 #include "services/catalog/catalog.h"
+#include "services/service_manager/public/cpp/mojo_init.h"
 #include "services/service_manager/public/cpp/test/service_test_catalog.h"
 
 #if defined(OS_ANDROID)
@@ -30,7 +31,7 @@ int InitializeAndLaunchUnitTests(
   catalog::Catalog::SetDefaultCatalogManifest(
       service_manager::test::CreateTestCatalog());
 
-  mojo::edk::Init();
+  InitializeMojo();
 
 #if defined(OS_MACOSX) && !defined(OS_IOS)
   mojo::edk::SetMachPortProvider(

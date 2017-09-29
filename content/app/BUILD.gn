@@ -100,14 +100,11 @@ template("implement_content_app") {
     sources = [
       "content_service_manager_main_delegate.cc",
       "content_service_manager_main_delegate.h",
-      "mojo/mojo_init.cc",
-      "mojo/mojo_init.h",
     ]
 
     configs += extra_configs
     deps = content_app_deps + [
              ":$runner_target_name",
-             "//ipc",
              "//services/service_manager/embedder",
            ]
     forward_variables_from(invoker,

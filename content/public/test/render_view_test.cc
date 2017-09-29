@@ -14,7 +14,6 @@
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "build/build_config.h"
-#include "content/app/mojo/mojo_init.h"
 #include "content/common/dom_storage/dom_storage_types.h"
 #include "content/common/frame_messages.h"
 #include "content/common/input_messages.h"
@@ -39,6 +38,7 @@
 #include "content/test/test_content_client.h"
 #include "content/test/test_render_frame.h"
 #include "services/service_manager/public/cpp/connector.h"
+#include "services/service_manager/public/cpp/mojo_init.h"
 #include "third_party/WebKit/public/platform/WebGestureEvent.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "third_party/WebKit/public/platform/WebMouseEvent.h"
@@ -129,7 +129,7 @@ class RendererBlinkPlatformImplTestOverrideImpl
 
 RenderViewTest::RendererBlinkPlatformImplTestOverride::
     RendererBlinkPlatformImplTestOverride() {
-  InitializeMojo();
+  service_manager::InitializeMojo();
 }
 
 RenderViewTest::RendererBlinkPlatformImplTestOverride::
