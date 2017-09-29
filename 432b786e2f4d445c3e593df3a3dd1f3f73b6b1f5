@@ -122,6 +122,24 @@
       "revId": "432b786e2f4d445c3e593df3a3dd1f3f73b6b1f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e053ce08_55254ea3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/bluetooth-default-feature-policy.https.sub.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-09-29T17:46:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "486c43de_815e9efb",
+      "revId": "432b786e2f4d445c3e593df3a3dd1f3f73b6b1f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
