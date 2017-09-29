@@ -48,7 +48,6 @@ class CORE_EXPORT AXObjectCache
     : public GarbageCollectedFinalized<AXObjectCache>,
       public ContextLifecycleObserver {
   WTF_MAKE_NONCOPYABLE(AXObjectCache);
-  USING_GARBAGE_COLLECTED_MIXIN(AXObjectCache);
 
  public:
   static AXObjectCache* Create(Document&);
