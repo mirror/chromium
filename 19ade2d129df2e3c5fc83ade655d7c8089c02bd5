@@ -22,6 +22,30 @@
       "revId": "19ade2d129df2e3c5fc83ade655d7c8089c02bd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e18f47c2_cff8b69c",
+        "filename": "mojo/public/tools/bindings/mojom.gni",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-09-29T20:33:16Z",
+      "side": 1,
+      "message": "Maybe... that\u0027s how this started actually, but I decided to hardcode //chrome/VERSION for now instead. Long-term I\u0027m hoping this can actually just be a string parameter in GN args, but that\u0027s less immediately useful given our build infrastructure.",
+      "parentUuid": "651f9399_5b542a4a",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 32
+      },
+      "revId": "19ade2d129df2e3c5fc83ade655d7c8089c02bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
