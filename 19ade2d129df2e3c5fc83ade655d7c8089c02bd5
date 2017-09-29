@@ -94,6 +94,30 @@
       "revId": "19ade2d129df2e3c5fc83ade655d7c8089c02bd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a28122d0_5a6075b6",
+        "filename": "mojo/public/tools/bindings/mojom.gni",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-09-29T21:24:32Z",
+      "side": 1,
+      "message": "With a build config for the base salt file, couldn\u0027t the official build just override it with a private file instead of appending the private file?",
+      "parentUuid": "25ff91ef_d559d6b1",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 32
+      },
+      "revId": "19ade2d129df2e3c5fc83ade655d7c8089c02bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
