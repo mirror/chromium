@@ -346,17 +346,17 @@
 
     <!-- Cast and media playback notifications -->
     <style
-        name="MediaNotificationTitle"
-        parent="@android:style/TextAppearance.StatusBar.EventContent.Title"/>
+        name="MediaNotificationTitle" />
+        <!-- parent="@android:style/TextAppearance.Material.Notification.Title"/> -->
     <style
-        name="MediaNotificationText"
-        parent="@android:style/TextAppearance.StatusBar.EventContent"/>
+        name="MediaNotificationText" />
+        <!-- parent="@android:style/TextAppearance.Material.Notification"/> -->
     <style
-        name="RemoteNotificationTitle"
-        parent="@android:style/TextAppearance.StatusBar.EventContent.Title"/>
+        name="RemoteNotificationTitle" />
+        <!-- parent="@android:style/TextAppearance.Material.Notification.Title"/> -->
     <style
-        name="RemoteNotificationText"
-        parent="@android:style/TextAppearance.StatusBar.EventContent"/>
+        name="RemoteNotificationText" />
+        <!-- parent="@android:style/TextAppearance.Material.Notification"/> -->
     <style
         name="RemoteNotificationProgressBar"
         parent="@android:style/Widget.Holo.ProgressBar.Horizontal"/>
@@ -379,24 +379,24 @@
     </style>
 
     <!-- Web Notifications -->
-    <style name="WebNotificationTitle"
-        parent="@style/TextAppearance.StatusBar.EventContent.Title">
+    <style name="WebNotificationTitle">
+        <!-- parent="@style/TextAppearance.StatusBar.EventContent.Title"> -->
         <item name="android:layout_marginStart">8dp</item>
     </style>
-    <style name="WebNotificationBody"
-        parent="@style/TextAppearance.StatusBar.EventContent.Line2">
+    <style name="WebNotificationBody">
+        <!-- parent="@style/TextAppearance.StatusBar.EventContent.Line2"> -->
         <item name="android:layout_marginStart">8dp</item>
     </style>
-    <style name="WebNotificationBodyBig"
-        parent="@style/TextAppearance.StatusBar.EventContent">
+    <style name="WebNotificationBodyBig">
+        <!-- parent="@style/TextAppearance.StatusBar.EventContent"> -->
         <item name="android:layout_marginStart">8dp</item>
     </style>
-    <style name="WebNotificationOrigin"
-        parent="@style/TextAppearance.StatusBar.EventContent.Line2">
+    <style name="WebNotificationOrigin">
+        <!-- parent="@style/TextAppearance.StatusBar.EventContent.Line2"> -->
         <item name="android:layout_marginStart">8dp</item>
     </style>
-    <style name="WebNotificationTime"
-        parent="@style/TextAppearance.StatusBar.EventContent.Line2"/>
+    <style name="WebNotificationTime"/>
+        <!-- parent="@style/TextAppearance.StatusBar.EventContent.Line2"/> -->
     <style name="WebNotificationDivider">
         <item name="android:background">?android:dividerHorizontal</item>
     </style>
@@ -413,7 +413,7 @@
     </style>
     <style name="WebNotificationSettingsButton"
         parent="@style/WebNotificationButton">
-        <item name="android:textAppearance">@style/TextAppearance.StatusBar.EventContent.Line2</item>
+        <!-- <item name="android:textAppearance">@style/TextAppearance.StatusBar.EventContent.Line2</item> -->
         <item name="android:paddingStart">40dp</item>
         <!-- Margin at the end to avoid overlap with the small icon. -->
         <item name="android:layout_marginEnd">24dp</item>
