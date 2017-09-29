@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "834a335a_a084b1b7",
+        "filename": "third_party/WebKit/LayoutTests/fast/loader/navigate-during-javascript-url-commit.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-29T06:04:43Z",
+      "side": 1,
+      "message": "If you\u0027re up for it, I would suggest writing this as a testharness.js test (but I don\u0027t feel strongly about it).",
+      "revId": "cd8024d576146de127a93bc385dc15f1f20ba0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee992e9e_103952e6",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-29T06:04:43Z",
+      "side": 1,
+      "message": "Nit: since we\u0027re changing this, can this use frame_-\u003eIsAttached()? Also, update the comment above to cover this line.",
+      "range": {
+        "startLine": 406,
+        "startChar": 7,
+        "endLine": 406,
+        "endChar": 24
+      },
+      "revId": "cd8024d576146de127a93bc385dc15f1f20ba0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
