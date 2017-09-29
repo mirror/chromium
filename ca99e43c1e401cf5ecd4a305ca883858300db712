@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73bc4948_a9f4b4fd",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-29T22:40:15Z",
+      "side": 1,
+      "message": "this will call GetNotificationCount() for each iteration.\nIf it won\u0027t change during the loop, just keep it in a temp variable.",
+      "revId": "ca99e43c1e401cf5ecd4a305ca883858300db712",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4158211e_676b6487",
+        "filename": "ash/message_center/message_list_view.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-29T22:40:15Z",
+      "side": 1,
+      "message": "why not size_t ?",
+      "revId": "ca99e43c1e401cf5ecd4a305ca883858300db712",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
