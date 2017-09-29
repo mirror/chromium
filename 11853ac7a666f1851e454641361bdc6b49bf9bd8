@@ -52,6 +52,24 @@
       "revId": "11853ac7a666f1851e454641361bdc6b49bf9bd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeafe57a_eae7fabe",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 1194,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-09-29T18:30:17Z",
+      "side": 1,
+      "message": "Could you explain what the flake risks are? Bots sometimes being unable to fetch hashes from the CWS?\n\n\u003e Maybe we can add a check in CrxInstaller somehow to make sure we do not install crx with content verification turned on in tests, unless specifically requested?\n\u003e We can do a sweep on existing tests this way by running them on bots, but we also need to add some test only sanity check so new tests being added  are guarded.\n\nNewly added tests would fail with a meaningful error message:\nDLOG(WARNING) \u003c\u003c \"Disabling extension \" \u003c\u003c extension_id \u003c\u003c \" (\u0027\"\n              \u003c\u003c extension-\u003ename()\n              \u003c\u003c \"\u0027) due to content verification failure. In tests you \"\n              \u003c\u003c \"might want to use a ScopedIgnoreContentVerifierForTest \"\n              \u003c\u003c \"instance to prevent this.\";\n\nThis won\u0027t happen for tests which are based on ExtensionBrowserTest if https://chromium-review.googlesource.com/c/chromium/src/+/692718 lands.\n\nShould I just put all of these into a single CL?\n* fieldtrial_testing_config (this CL)\n* Ignore content verifier by default (https://chromium-review.googlesource.com/c/chromium/src/+/692718)\n* Content verifier uses IsFromStore (https://chromium-review.googlesource.com/c/chromium/src/+/677403)",
+      "parentUuid": "f5625254_fb96c9b1",
+      "revId": "11853ac7a666f1851e454641361bdc6b49bf9bd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
