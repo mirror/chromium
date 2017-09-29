@@ -21,6 +21,7 @@
 #include "components/autofill/core/browser/autofill_metrics.h"
 #include "components/autofill/core/browser/autofill_type.h"
 #include "components/autofill/core/browser/field_types.h"
+#include "components/autofill/core/browser/form_types.h"
 #include "components/autofill/core/browser/proto/server.pb.h"
 #include "url/gurl.h"
 
@@ -245,6 +246,9 @@ class FormStructure {
 
   bool operator==(const FormData& form) const;
   bool operator!=(const FormData& form) const;
+
+  // Returns the possible form types.
+  std::unordered_set<FormType> GetFormTypes();
 
  private:
   friend class AutofillMergeTest;

@@ -531,19 +531,22 @@ void AutofillManager::OnTextFieldDidChangeImpl(const FormData& form,
 
   if (!user_did_type_) {
     user_did_type_ = true;
-    AutofillMetrics::LogUserHappinessMetric(AutofillMetrics::USER_DID_TYPE);
+    AutofillMetrics::LogUserHappinessMetric(AutofillMetrics::USER_DID_TYPE,
+                                            autofill_field->Type().group());
   }
 
   if (autofill_field->is_autofilled) {
     autofill_field->is_autofilled = false;
     autofill_field->set_previously_autofilled(true);
     AutofillMetrics::LogUserHappinessMetric(
-        AutofillMetrics::USER_DID_EDIT_AUTOFILLED_FIELD);
+        AutofillMetrics::USER_DID_EDIT_AUTOFILLED_FIELD,
+        autofill_field->Type().group());
 
     if (!user_did_edit_autofilled_field_) {
       user_did_edit_autofilled_field_ = true;
       AutofillMetrics::LogUserHappinessMetric(
-          AutofillMetrics::USER_DID_EDIT_AUTOFILLED_FIELD_ONCE);
+          AutofillMetrics::USER_DID_EDIT_AUTOFILLED_FIELD_ONCE,
+          autofill_field->Type().group());
     }
   }
 
@@ -842,11 +845,19 @@ void AutofillManager::OnDidFillAutofillFormData(const FormData& form,
 
   UpdatePendingForm(form);
 
-  AutofillMetrics::LogUserHappinessMetric(AutofillMetrics::USER_DID_AUTOFILL);
+  FormStructure* form_structure = NULL;
+  std::unordered_set<FormType> form_types;
+  // Find the FormStructure that corresponds to |form|. Use default form type if
+  // form is not present in our cache, which will happen rarely.
+  if (FindCachedForm(form, &form_structure)) {
+    form_types = form_structure->GetFormTypes();
+  }
+  AutofillMetrics::LogUserHappinessMetric(AutofillMetrics::USER_DID_AUTOFILL,
+                                          form_types);
   if (!user_did_autofill_) {
     user_did_autofill_ = true;
     AutofillMetrics::LogUserHappinessMetric(
-        AutofillMetrics::USER_DID_AUTOFILL_ONCE);
+        AutofillMetrics::USER_DID_AUTOFILL_ONCE, form_types);
   }
 
   UpdateInitialInteractionTimestamp(timestamp);
@@ -863,12 +874,14 @@ void AutofillManager::DidShowSuggestions(bool is_new_popup,
     return;
 
   if (is_new_popup) {
-    AutofillMetrics::LogUserHappinessMetric(AutofillMetrics::SUGGESTIONS_SHOWN);
+    AutofillMetrics::LogUserHappinessMetric(AutofillMetrics::SUGGESTIONS_SHOWN,
+                                            autofill_field->Type().group());
 
     if (!did_show_suggestions_) {
       did_show_suggestions_ = true;
       AutofillMetrics::LogUserHappinessMetric(
-          AutofillMetrics::SUGGESTIONS_SHOWN_ONCE);
+          AutofillMetrics::SUGGESTIONS_SHOWN_ONCE,
+          autofill_field->Type().group());
     }
 
     if (autofill_field->Type().group() == CREDIT_CARD) {
@@ -2052,6 +2065,7 @@ void AutofillManager::ParseForms(const std::vector<FormData>& forms) {
 
   std::vector<FormStructure*> non_queryable_forms;
   std::vector<FormStructure*> queryable_forms;
+  std::unordered_set<FormType> form_types;
   for (const FormData& form : forms) {
     const auto parse_form_start_time = TimeTicks::Now();
 
@@ -2060,6 +2074,8 @@ void AutofillManager::ParseForms(const std::vector<FormData>& forms) {
       continue;
     DCHECK(form_structure);
 
+    form_types.insert(form_structure->GetFormTypes().begin(),
+                      form_structure->GetFormTypes().end());
     // Set aside forms with method GET or author-specified types, so that they
     // are not included in the query to the server.
     if (form_structure->ShouldBeCrowdsourced())
@@ -2072,7 +2088,8 @@ void AutofillManager::ParseForms(const std::vector<FormData>& forms) {
   }
 
   if (!queryable_forms.empty() || !non_queryable_forms.empty()) {
-    AutofillMetrics::LogUserHappinessMetric(AutofillMetrics::FORMS_LOADED);
+    AutofillMetrics::LogUserHappinessMetric(AutofillMetrics::FORMS_LOADED,
+                                            form_types);
 
 #if defined(OS_IOS)
     // Log this from same location as AutofillMetrics::FORMS_LOADED to ensure
