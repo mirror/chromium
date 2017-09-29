@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c0b335df_6c737501",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 884,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-29T09:14:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49adc50f_ecb777b5",
+      "revId": "301ad2ad3f74d51ae1f89053545b0479731fe39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c188ef29_7950ae27",
         "filename": "content/browser/service_worker/service_worker_provider_host.cc",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-28T08:52:13Z",
       "side": 1,
       "message": "if strict_cast failed can you use checked_cast instead?",
+      "revId": "301ad2ad3f74d51ae1f89053545b0479731fe39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6e4407e_8e8ed8be",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-29T09:14:25Z",
+      "side": 1,
+      "message": "The same result: \"Result must be numeric.\"\nBoth of them are for numeric types.",
+      "parentUuid": "c188ef29_7950ae27",
       "revId": "301ad2ad3f74d51ae1f89053545b0479731fe39e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4268c768_c9b87f9b",
+        "filename": "content/browser/service_worker/service_worker_provider_host_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-29T09:14:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d25e0c35_665b0fb7",
+      "revId": "301ad2ad3f74d51ae1f89053545b0479731fe39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94038abc_c0bdd95c",
         "filename": "content/browser/service_worker/service_worker_provider_host_unittest.cc",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "301ad2ad3f74d51ae1f89053545b0479731fe39e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c066e7d_c1755c9e",
+        "filename": "content/browser/service_worker/service_worker_provider_host_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-29T09:14:25Z",
+      "side": 1,
+      "message": "Done. Great! Thanks a lot.",
+      "parentUuid": "94038abc_c0bdd95c",
+      "revId": "301ad2ad3f74d51ae1f89053545b0479731fe39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "327bdb98_9dc8e4a9",
+        "filename": "content/browser/service_worker/service_worker_provider_host_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-29T09:14:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3a7f239_77f556b5",
+      "revId": "301ad2ad3f74d51ae1f89053545b0479731fe39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2e36be2_84da2b21",
         "filename": "content/child/service_worker/service_worker_provider_context.cc",
         "patchSetId": 7
@@ -101,6 +191,24 @@
       "revId": "301ad2ad3f74d51ae1f89053545b0479731fe39e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fb44797_2f367e9b",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-29T09:14:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2e36be2_84da2b21",
+      "revId": "301ad2ad3f74d51ae1f89053545b0479731fe39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "5c4b6f5d_ceba4cac",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-29T09:14:25Z",
+      "side": 1,
+      "message": "Done, It\u0027s better, thanks.",
+      "parentUuid": "6b2adc53_03693d4d",
+      "revId": "301ad2ad3f74d51ae1f89053545b0479731fe39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89d84ef8_f9bf3f56",
         "filename": "content/child/service_worker/service_worker_provider_context.cc",
         "patchSetId": 7
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "61be3a56_c0d73f31",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-29T09:14:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89d84ef8_f9bf3f56",
+      "revId": "301ad2ad3f74d51ae1f89053545b0479731fe39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2d01fef_bfb9385e",
         "filename": "content/child/service_worker/service_worker_provider_context.cc",
         "patchSetId": 7
@@ -149,6 +293,24 @@
       "writtenOn": "2017-09-28T08:52:13Z",
       "side": 1,
       "message": "I\u0027m finding this sentence confusing since \"SetController()\" means two different functions.",
+      "revId": "301ad2ad3f74d51ae1f89053545b0479731fe39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cb010af_a2e8f06e",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-29T09:14:25Z",
+      "side": 1,
+      "message": "yea, how about use ServiceWorkerProviderContext::SetController() instead? But the comment will a bit long...",
+      "parentUuid": "a2d01fef_bfb9385e",
       "revId": "301ad2ad3f74d51ae1f89053545b0479731fe39e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "8dc84784_a65665b4",
+        "filename": "content/child/service_worker/service_worker_provider_context.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-29T09:14:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6f50a15_1564a21b",
+      "revId": "301ad2ad3f74d51ae1f89053545b0479731fe39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07341267_aefde0c2",
         "filename": "content/child/service_worker/service_worker_provider_context_unittest.cc",
         "patchSetId": 7
@@ -186,6 +366,24 @@
       "revId": "301ad2ad3f74d51ae1f89053545b0479731fe39e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aa64b03_7d3c1449",
+        "filename": "content/child/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-29T09:14:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07341267_aefde0c2",
+      "revId": "301ad2ad3f74d51ae1f89053545b0479731fe39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "eabaf30b_c65449dd",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-29T09:14:25Z",
+      "side": 1,
+      "message": "Done. Sorry, I missed this previous comment.",
+      "parentUuid": "fd414fa3_a645eac3",
+      "revId": "301ad2ad3f74d51ae1f89053545b0479731fe39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77c5c72d_8d23e702",
         "filename": "content/child/service_worker/web_service_worker_provider_impl.h",
         "patchSetId": 7
@@ -220,6 +436,24 @@
       "revId": "301ad2ad3f74d51ae1f89053545b0479731fe39e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2428402_b3d1f991",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-29T09:14:25Z",
+      "side": 1,
+      "message": "Done. I see other comments use ServiceWorkerContainer#controller without quotes.",
+      "parentUuid": "77c5c72d_8d23e702",
+      "revId": "301ad2ad3f74d51ae1f89053545b0479731fe39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

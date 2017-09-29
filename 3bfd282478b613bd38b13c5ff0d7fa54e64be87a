@@ -1,0 +1,22 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "959efda4_24591e66",
+        "filename": "content/common/service_worker/service_worker_container.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-29T09:14:25Z",
+      "side": 1,
+      "message": "Done. I am not sure if this comment is proper enough. Still thinking about it or could you give some advice?\n\"Sets the controller ServiceWorker or clear the controller by sending an invalid ServiceWorkerHandle. If |should_notify_controllerchange| is true, instructs the renderer to dispatch a \u0027controllerchange\u0027 event.\nThis method is for the navigator.serviceWorker.controller, and must be called only by the controllees.",
+      "parentUuid": "48540568_16c136ab",
+      "revId": "3bfd282478b613bd38b13c5ff0d7fa54e64be87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
