@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52609841_21089fb1",
+        "filename": "build/config/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-09-29T20:38:57Z",
+      "side": 0,
+      "message": "Nothing ever read this one.",
+      "revId": "4ab438c67eeff77bbe7594c32cea26ec249d39a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ca9c363_2b96099e",
+        "filename": "content/browser/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 1905,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-09-29T20:38:57Z",
+      "side": 0,
+      "message": "...which is why we can remove this",
+      "range": {
+        "startLine": 1905,
+        "startChar": 18,
+        "endLine": 1905,
+        "endChar": 31
+      },
+      "revId": "4ab438c67eeff77bbe7594c32cea26ec249d39a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

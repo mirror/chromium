@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "911cd788_49113f02",
+        "filename": "build/config/linux/pangocairo/pangocairo.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-09-29T20:38:57Z",
+      "side": 1,
+      "message": "In particular, use_ozone implies !use_pangocairo",
+      "range": {
+        "startLine": 7,
+        "startChar": 19,
+        "endLine": 7,
+        "endChar": 21
+      },
+      "revId": "c32e8ef036cb12e20477084afed7f56fc2c33a4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e681baeb_c109b77c",
+        "filename": "printing/metafile.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-09-29T20:38:57Z",
+      "side": 1,
+      "message": "We could probably drop most of these explicit namespaces now.",
+      "range": {
+        "startLine": 77,
+        "startChar": 28,
+        "endLine": 77,
+        "endChar": 38
+      },
+      "revId": "c32e8ef036cb12e20477084afed7f56fc2c33a4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3459267b_e25a969f",
+        "filename": "printing/native_drawing_context.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-09-29T20:38:57Z",
+      "side": 1,
+      "message": "(i wonder what happens on ozone linux builds. we probably don\u0027t support printing then?)",
+      "range": {
+        "startLine": 14,
+        "startChar": 9,
+        "endLine": 14,
+        "endChar": 24
+      },
+      "revId": "c32e8ef036cb12e20477084afed7f56fc2c33a4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
