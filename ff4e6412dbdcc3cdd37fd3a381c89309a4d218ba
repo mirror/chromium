@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fcb63cdd_94fabefa",
+        "filename": "content/renderer/shared_worker/embedded_shared_worker_stub.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-29T22:20:35Z",
+      "side": 1,
+      "message": "Good point. Seems I messed up rebasing this CL at some point (it had make_pair when I started writing this patch, but not anymore apparently). Done.",
+      "parentUuid": "69ca082b_c5240c01",
+      "revId": "ff4e6412dbdcc3cdd37fd3a381c89309a4d218ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "438dd48c_f66c01c7",
         "filename": "third_party/WebKit/Source/core/dom/MessagePort.cpp",
         "patchSetId": 21
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "b1fa9ff6_3b9a4839",
+        "filename": "third_party/WebKit/Source/core/dom/MessagePort.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-29T22:20:35Z",
+      "side": 1,
+      "message": "Yeah, unfortunately these can\u0027t be anything other than std::vector to be able to talk to WebKit/common code. At least in a follow-up patch (https://chromium-review.googlesource.com/c/chromium/src/+/667401 or maybe more something like https://chromium-review.googlesource.com/c/chromium/src/+/665883) these std::vectors disappear again...",
+      "parentUuid": "438dd48c_f66c01c7",
+      "revId": "ff4e6412dbdcc3cdd37fd3a381c89309a4d218ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb985335_c6f99a41",
         "filename": "third_party/WebKit/public/platform/WebVector.h",
         "patchSetId": 21
@@ -50,6 +86,24 @@
       "revId": "ff4e6412dbdcc3cdd37fd3a381c89309a4d218ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5b9491f_306f51b8",
+        "filename": "third_party/WebKit/public/platform/WebVector.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-29T22:20:35Z",
+      "side": 1,
+      "message": "Okay... you two (and the style guide) win. Changed it to ReleaseVector().",
+      "parentUuid": "bb985335_c6f99a41",
+      "revId": "ff4e6412dbdcc3cdd37fd3a381c89309a4d218ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
