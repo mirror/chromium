@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f98b3223_3faab1ca",
+        "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-29T02:18:06Z",
+      "side": 1,
+      "message": "We need to add EventRouter as a dependency of this API now, right?",
+      "revId": "301619d119aeaa6868109a1f238639d92157dd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da279882_cfcf2738",
+        "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-29T02:18:06Z",
+      "side": 1,
+      "message": "When can event_router be null?",
+      "revId": "301619d119aeaa6868109a1f238639d92157dd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "540eef91_5d70d057",
+        "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-29T02:18:06Z",
+      "side": 1,
+      "message": "prefer std::make_unique\u003c\u003e",
+      "revId": "301619d119aeaa6868109a1f238639d92157dd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abc2db45_cd371d92",
+        "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-29T02:18:06Z",
+      "side": 1,
+      "message": "no need for this-\u003e",
+      "revId": "301619d119aeaa6868109a1f238639d92157dd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "367ac73d_1fa130a5",
+        "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-29T02:18:06Z",
+      "side": 1,
+      "message": "Couldn\u0027t we just do this with a call to EventRouter::HasEventListener()?\n\n(Just mentioning in case the TODO is easier than you thought)",
+      "revId": "301619d119aeaa6868109a1f238639d92157dd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
