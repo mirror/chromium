@@ -2,17 +2,17 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef NET_PROXY_TEST_MOJO_PROXY_RESOLVER_FACTORY_H_
-#define NET_PROXY_TEST_MOJO_PROXY_RESOLVER_FACTORY_H_
+#ifndef SERVICES_PROXY_RESOLVER_PUBLIC_CPP_TEST_MOJO_PROXY_RESOLVER_FACTORY_H_
+#define SERVICES_PROXY_RESOLVER_PUBLIC_CPP_TEST_MOJO_PROXY_RESOLVER_FACTORY_H_
 
 #include <memory>
 #include <string>
 
 #include "base/macros.h"
 #include "base/memory/singleton.h"
-#include "net/proxy/mojo_proxy_resolver_factory.h"
+#include "services/proxy_resolver/public/cpp/mojo_proxy_resolver_factory.h"
 
-namespace net {
+namespace proxy_resolver {
 
 // MojoProxyResolverFactory that runs PAC scripts in-process, for tests.
 class TestMojoProxyResolverFactory : public MojoProxyResolverFactory {
@@ -31,8 +31,8 @@ class TestMojoProxyResolverFactory : public MojoProxyResolverFactory {
   // Overridden from MojoProxyResolverFactory:
   std::unique_ptr<base::ScopedClosureRunner> CreateResolver(
       const std::string& pac_script,
-      mojo::InterfaceRequest<interfaces::ProxyResolver> req,
-      interfaces::ProxyResolverFactoryRequestClientPtr client) override;
+      mojo::InterfaceRequest<mojom::ProxyResolver> req,
+      mojom::ProxyResolverFactoryRequestClientPtr client) override;
 
  private:
   TestMojoProxyResolverFactory();
@@ -40,13 +40,13 @@ class TestMojoProxyResolverFactory : public MojoProxyResolverFactory {
 
   friend struct base::DefaultSingletonTraits<TestMojoProxyResolverFactory>;
 
-  interfaces::ProxyResolverFactoryPtr factory_;
+  mojom::ProxyResolverFactoryPtr factory_;
 
   bool resolver_created_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(TestMojoProxyResolverFactory);
 };
 
-}  // namespace net
+}  // namespace proxy_resolver
 
-#endif  // NET_PROXY_TEST_MOJO_PROXY_RESOLVER_FACTORY_H_
+#endif  // SERVICES_PROXY_RESOLVER_PUBLIC_CPP_TEST_MOJO_PROXY_RESOLVER_FACTORY_H_
