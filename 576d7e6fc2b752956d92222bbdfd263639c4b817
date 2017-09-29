@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3742b6dd_05462476",
+        "filename": "components/arc/common/file_system.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-09-29T19:44:37Z",
+      "side": 1,
+      "message": "It\u0027s unfortunate that we have to use signed values for sizes (which are inherently non-negative), only to signal an error condition. Can\u0027t we use the same format as the other methods?",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 58
+      },
+      "revId": "576d7e6fc2b752956d92222bbdfd263639c4b817",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
