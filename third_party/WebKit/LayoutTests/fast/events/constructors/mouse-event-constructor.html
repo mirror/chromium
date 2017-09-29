@@ -12,6 +12,7 @@ description("This tests the constructor for the MouseEvent DOM class.");
 var testObject = {nyannyan: 123};
 var testDiv = document.createElement("div");
 var xhr = new XMLHttpRequest;
+var floatPrecision = 0.00001;
 
 // No initializer is passed.
 shouldBe("new MouseEvent('eventType').bubbles", "false");
@@ -93,8 +94,8 @@ shouldBeEqualToNumber("new MouseEvent('eventType', { detail: {valueOf: function 
     shouldBeEqualToNumber("new MouseEvent('eventType', { " + attr + ": -1 })." + attr, -1);
     shouldBeEqualToNumber("new MouseEvent('eventType', { " + attr + ": 2147483647 })." + attr, 2147483647);
     shouldBeEqualToNumber("new MouseEvent('eventType', { " + attr + ": -2147483648 })." + attr, -2147483648);
-    shouldBeEqualToNumber("new MouseEvent('eventType', { " + attr + ": 123.45 })." + attr, 123);
-    shouldBeEqualToNumber("new MouseEvent('eventType', { " + attr + ": -123.45 })." + attr, -123);
+    shouldBeCloseTo("new MouseEvent('eventType', { " + attr + ": 123.45 })." + attr, 123.45, floatPrecision );
+    shouldBeCloseTo("new MouseEvent('eventType', { " + attr + ": -123.45 })." + attr, -123.45, floatPrecision);
     shouldThrow("new MouseEvent('eventType', { " + attr + ": NaN })." + attr);
 
     // Non-numeric values.

@@ -11,6 +11,7 @@ description("This tests the constructor for the WheelEvent DOM class.");
 var testObject = {nyannyan: 123};
 var testDiv = document.createElement("div");
 var xhr = new XMLHttpRequest;
+var floatPrecision = 0.00001;
 
 // No initializer is passed.
 shouldBe("new WheelEvent('eventType').bubbles", "false");
@@ -94,8 +95,8 @@ shouldBeEqualToNumber("new WheelEvent('eventType', { detail: {valueOf: function 
     shouldBeEqualToNumber("new WheelEvent('eventType', { " + attr + ": -1 })." + attr, -1);
     shouldBeEqualToNumber("new WheelEvent('eventType', { " + attr + ": 2147483647 })." + attr, 2147483647);
     shouldBeEqualToNumber("new WheelEvent('eventType', { " + attr + ": -2147483648 })." + attr, -2147483648);
-    shouldBeEqualToNumber("new WheelEvent('eventType', { " + attr + ": 123.45 })." + attr, 123);
-    shouldBeEqualToNumber("new WheelEvent('eventType', { " + attr + ": -123.45 })." + attr, -123);
+    shouldBeCloseTo("new WheelEvent('eventType', { " + attr + ": 123.45 })." + attr, 123.45, floatPrecision);
+    shouldBeCloseTo("new WheelEvent('eventType', { " + attr + ": -123.45 })." + attr, -123.45, floatPrecision);
     shouldThrow("new WheelEvent('eventType', { " + attr + ": NaN })." + attr);
 
     // Non-numeric values.
