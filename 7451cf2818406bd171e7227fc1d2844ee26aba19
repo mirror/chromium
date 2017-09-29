@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "805f473c_edf98b9f",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-29T01:24:07Z",
+      "side": 1,
+      "message": "Should also check null selection here.",
+      "revId": "7451cf2818406bd171e7227fc1d2844ee26aba19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
