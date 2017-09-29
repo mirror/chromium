@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6db8b359_30e62ddd",
+        "filename": "components/exo/surface_tree_host.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1148594
+      },
+      "writtenOn": "2017-09-29T23:52:44Z",
+      "side": 1,
+      "message": "Could you make this protected? The large diff in surface_tree_host.cc would also be avoided.",
+      "range": {
+        "startLine": 75,
+        "startChar": 7,
+        "endLine": 75,
+        "endChar": 28
+      },
+      "revId": "fb371ef94e9abd8bb77a83cc00696e6decdcf6ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
