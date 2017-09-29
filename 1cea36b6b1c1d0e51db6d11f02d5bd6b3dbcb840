@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "99f911f1_7e63fef8",
+        "filename": "ios/chrome/browser/content_settings/cookie_settings_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-29T08:36:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e05be565_ba352dfc",
+      "revId": "1cea36b6b1c1d0e51db6d11f02d5bd6b3dbcb840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4aa8f4a8_03f888ff",
         "filename": "ios/chrome/browser/signin/ios_chrome_signin_client.h",
         "patchSetId": 8
@@ -30,6 +48,30 @@
       "writtenOn": "2017-09-28T11:16:45Z",
       "side": 1,
       "message": "If possible, we should avoid passing the ChromeBrowserState to KeyedService but instead pass the service or data that is needed by them. This make the code easier to unit test (as you do not need a real browser state nor the KeyedService factory infrastructure and instead can just inject fake objects).\n\nHere it looks like browser_state is only used to get the original browser state\u0027s state path, the preferences and the request context, so maybe just pass that:\n\n  IOSChromeSigninClient(\n    PrefService* pref_service,\n    net::URLRequestContextGetter* url_request_context,\n    SigninErrorController* signin_error_controller,\n    scoped_refptr\u003ccontent_settings::CookieSettings\u003e cookie_settings,\n    scoped_refptr\u003cHostContentSettingsMap\u003e host_content_settings_map,\n    scoped_refptr\u003cTokenWebData\u003e token_web_data,\n    const base::FilePath\u0026 browser_state_path);",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 44
+      },
+      "revId": "1cea36b6b1c1d0e51db6d11f02d5bd6b3dbcb840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7594db2c_f7b05c29",
+        "filename": "ios/chrome/browser/signin/ios_chrome_signin_client.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-29T08:36:33Z",
+      "side": 1,
+      "message": "IOSChromeSigninClient passes a browser_state to GaiaAuthFetcherIOS, is there a way to get around this cleanly? Only thing I can think of is passing everything GaiaAuthFetcherIOS actually needs from browser_state through as well..",
+      "parentUuid": "4aa8f4a8_03f888ff",
       "range": {
         "startLine": 18,
         "startChar": 6,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "67114c47_9b755b75",
+        "filename": "ios/chrome/browser/signin/signin_client_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-29T08:36:33Z",
+      "side": 1,
+      "message": "replied in the other comment.",
+      "parentUuid": "25056b7a_aa63b83f",
+      "revId": "1cea36b6b1c1d0e51db6d11f02d5bd6b3dbcb840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9668ca8_3cdb1023",
         "filename": "ios/web_view/internal/signin/ios_web_view_signin_client.h",
         "patchSetId": 8
@@ -79,6 +139,30 @@
       "revId": "1cea36b6b1c1d0e51db6d11f02d5bd6b3dbcb840",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fb38dd0_161d1490",
+        "filename": "ios/web_view/internal/signin/ios_web_view_signin_client.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-29T08:36:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9668ca8_3cdb1023",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 54
+      },
+      "revId": "1cea36b6b1c1d0e51db6d11f02d5bd6b3dbcb840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

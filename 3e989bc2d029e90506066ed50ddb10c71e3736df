@@ -16,6 +16,24 @@
       "revId": "3e989bc2d029e90506066ed50ddb10c71e3736df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dbfe778_636f1a33",
+        "filename": "ios/chrome/browser/signin/ios_chrome_signin_client.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-29T08:36:33Z",
+      "side": 1,
+      "message": "Sorry I don\u0027t know why my other comment wasn\u0027t saved, let me repeat it here:\n\nIOSChromeSigninClient actually passes the browser state through to GaiaAuthFetcherIOS. Is there a way to simply this?",
+      "parentUuid": "1d91d81a_379c3f7e",
+      "revId": "3e989bc2d029e90506066ed50ddb10c71e3736df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
