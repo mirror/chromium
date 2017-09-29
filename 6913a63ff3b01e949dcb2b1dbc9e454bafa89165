@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "1dd2f097_ab94b069",
+        "filename": "components/arc/intent_helper/activity_icon_loader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-09-29T06:33:09Z",
+      "side": 1,
+      "message": "I checked the quality on minnie.\n(Attached screenshots on https://bugs.chromium.org/p/chromium/issues/detail?id\u003d751362#c6)\nI don\u0027t see noticeable regression on scale\u003d1.0 device.",
+      "parentUuid": "849595ae_b9f541fe",
+      "revId": "6913a63ff3b01e949dcb2b1dbc9e454bafa89165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13a0894b_bc9a148e",
         "filename": "components/arc/intent_helper/activity_icon_loader.cc",
         "patchSetId": 1

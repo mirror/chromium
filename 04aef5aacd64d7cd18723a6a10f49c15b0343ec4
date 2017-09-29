@@ -22,6 +22,30 @@
       "revId": "04aef5aacd64d7cd18723a6a10f49c15b0343ec4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66646b2d_5e6ae4c6",
+        "filename": "components/arc/intent_helper/activity_icon_loader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-09-29T06:33:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1744cdd0_75807fea",
+      "range": {
+        "startLine": 97,
+        "startChar": 9,
+        "endLine": 97,
+        "endChar": 50
+      },
+      "revId": "04aef5aacd64d7cd18723a6a10f49c15b0343ec4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
