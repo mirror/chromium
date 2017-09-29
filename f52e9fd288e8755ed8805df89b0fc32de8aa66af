@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e89cb2a_4dd5d967",
+        "filename": "third_party/WebKit/Source/devtools/front_end/coverage/CoverageListView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-09-29T23:01:30Z",
+      "side": 1,
+      "message": "the page?",
+      "revId": "f52e9fd288e8755ed8805df89b0fc32de8aa66af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b03830ec_9fceb379",
+        "filename": "third_party/WebKit/Source/devtools/front_end/coverage/CoverageModel.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-09-29T23:01:30Z",
+      "side": 1,
+      "message": "annotate plz",
+      "revId": "f52e9fd288e8755ed8805df89b0fc32de8aa66af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
