@@ -279,12 +279,22 @@ public class RecordHistogram {
     }
 
     /**
+     * Enables or disables record checker for histograms in tests.
+     */
+    @VisibleForTesting
+    public static void setRecordCheckerEnabledForTesting(boolean enabled) {
+        nativeSetRecordCheckerEnabled(enabled);
+    }
+
+    /**
      * Initializes the metrics system.
      */
     public static void initialize() {
         if (sDisabledBy != null) return;
         nativeInitialize();
     }
+
+    private static native void nativeSetRecordCheckerEnabled(boolean enabled);
 
     private static native long nativeRecordCustomTimesHistogramMilliseconds(
             String name, long key, int duration, int min, int max, int numBuckets);

@@ -65,8 +65,10 @@ import java.util.concurrent.Callable;
  * Tests the app banners.
  */
 @RunWith(ChromeJUnit4ClassRunner.class)
-@CommandLineFlags.Add({ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE,
-        ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG})
+@CommandLineFlags.Add({
+        ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE,
+        ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG
+})
 public class AppBannerManagerTest {
     @Rule
     public ChromeTabbedActivityTestRule mActivityTestRule = new ChromeTabbedActivityTestRule();
@@ -221,10 +223,13 @@ public class AppBannerManagerTest {
                 InstrumentationRegistry.getInstrumentation().getContext());
         mNativeAppUrl = mTestServer.getURL(NATIVE_APP_PATH);
         mWebAppUrl = mTestServer.getURL(WEB_APP_PATH);
+
+        RecordHistogram.setRecordCheckerEnabledForTesting(true);
     }
 
     @After
     public void tearDown() throws Exception {
+        RecordHistogram.setRecordCheckerEnabledForTesting(false);
         mTestServer.stopAndDestroyServer();
     }
 

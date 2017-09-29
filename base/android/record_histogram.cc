@@ -289,6 +289,14 @@ jlong RecordCustomTimesHistogramMilliseconds(
   return reinterpret_cast<jlong>(histogram);
 }
 
+void SetRecordCheckerEnabled(
+    JNIEnv* env,
+    const JavaParamRef<jclass>& clazz,
+    jboolean enabled) {
+  // Waiting for crrev.com/c/677086.
+  // StatisticsRecorder::SetRecordCheckerEnabled(static_cast<bool>(enabled));
+}
+
 void Initialize(JNIEnv* env, const JavaParamRef<jclass>&) {
   StatisticsRecorder::Initialize();
 }

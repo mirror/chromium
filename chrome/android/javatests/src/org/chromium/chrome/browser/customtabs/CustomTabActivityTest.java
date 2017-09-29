@@ -127,7 +127,7 @@ import java.util.concurrent.atomic.AtomicReference;
 @RunWith(ChromeJUnit4ClassRunner.class)
 @CommandLineFlags.Add({
         ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE,
-        ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG,
+        ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG
 })
 public class CustomTabActivityTest {
     @Rule
@@ -212,10 +212,14 @@ public class CustomTabActivityTest {
 
         CustomTabsConnection connection = CustomTabsConnection.getInstance();
         connection.setForcePrerender(true);
+
+        RecordHistogram.setRecordCheckerEnabledForTesting(false);
     }
 
     @After
     public void tearDown() throws Exception {
+        RecordHistogram.setRecordCheckerEnabledForTesting(true);
+
         CustomTabsConnection connection = CustomTabsConnection.getInstance();
         connection.setForcePrerender(false);
 
