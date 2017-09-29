@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb9771c4_ccb5497b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-09-29T20:56:07Z",
+      "side": 1,
+      "message": "https://webbluetoothcg.github.io/web-bluetooth/tests.html is a better, long lived URL.  It currently redirects to the document, but we should update the .bs/.html file as part of near term work landing changes into WPT.",
+      "range": {
+        "startLine": 12,
+        "startChar": 42,
+        "endLine": 12,
+        "endChar": 48
+      },
+      "revId": "5085a5630bda785c5bc9f83a49db10ec941f1607",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
