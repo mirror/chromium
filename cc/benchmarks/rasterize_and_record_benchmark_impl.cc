@@ -39,6 +39,16 @@ void RunBenchmark(RasterSource* raster_source,
   const int kWarmupRuns = 0;
   const int kTimeCheckInterval = 1;
 
+  gfx::Rect layer_rect =
+      gfx::ScaleToEnclosingRect(content_rect, 1.f / contents_scale);
+
+  // Predecode all of these images for consistent R&R performance.
+  std::vector<const DrawImage*> image_refs;
+  raster_source->GetDiscardableImagesInRect(layer_rect, &image_refs);
+  std::vector<DrawImage> images(image_refs.size());
+  for (size_t i = 0; i < image_refs.size(); ++i)
+    images.push_back(*image_refs[i]);
+
   *min_time = base::TimeDelta::Max();
   for (size_t i = 0; i < repeat_count; ++i) {
     // Run for a minimum amount of time to avoid problems with timer
@@ -47,8 +57,6 @@ void RunBenchmark(RasterSource* raster_source,
                    base::TimeDelta::FromMilliseconds(kTimeLimitMillis),
                    kTimeCheckInterval);
     SkColor color = SK_ColorTRANSPARENT;
-    gfx::Rect layer_rect =
-        gfx::ScaleToEnclosingRect(content_rect, 1.f / contents_scale);
     *is_solid_color =
         raster_source->PerformSolidColorAnalysis(layer_rect, &color);
 
@@ -58,12 +66,10 @@ void RunBenchmark(RasterSource* raster_source,
                                                     content_rect.height()));
       SkCanvas canvas(bitmap);
 
-      // Pass an empty settings to make sure that the decode cache is used to
-      // replace all images.
       base::Optional<PlaybackImageProvider::Settings> image_settings;
       image_settings.emplace();
       image_settings->images_to_skip = {};
-      image_settings->at_raster_images = {};
+      image_settings->at_raster_images = images;
       image_settings->image_to_current_frame_index = {};
 
       PlaybackImageProvider image_provider(

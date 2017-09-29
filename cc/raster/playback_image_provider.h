@@ -53,6 +53,10 @@ class CC_EXPORT PlaybackImageProvider : public ImageProvider {
       const DrawImage& draw_image) override;
 
  private:
+  ScopedDecodedDrawImage GetDecodedDrawImageInternal(
+      const DrawImage& draw_image,
+      bool image_is_predecoded);
+
   ImageDecodeCache* cache_;
   gfx::ColorSpace target_color_space_;
   base::Optional<Settings> settings_;

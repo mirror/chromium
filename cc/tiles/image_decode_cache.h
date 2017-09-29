@@ -115,6 +115,11 @@ class CC_EXPORT ImageDecodeCache {
   // should discard any frames from the same source not in use in the
   // compositor.
   virtual DecodedDrawImage GetDecodedImageForDraw(const DrawImage& image) = 0;
+  // Gets an already decoded and already ref'd image for drawing.  This
+  // will assert if the image is not currently ref'd.  It does not add an
+  // additional ref.
+  virtual DecodedDrawImage GetPredecodedImageForDraw(
+      const DrawImage& image) = 0;
   // Unrefs an image. This should be called for every GetDecodedImageForDraw
   // when the draw with the image is finished.
   virtual void DrawWithImageFinished(const DrawImage& image,

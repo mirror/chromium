@@ -19,6 +19,29 @@
 
 namespace cc {
 
+class DecodeFailureImageGenerator : public FakePaintImageGenerator {
+ public:
+  using FakePaintImageGenerator::FakePaintImageGenerator;
+
+  bool GetPixels(const SkImageInfo& info,
+                 void* pixels,
+                 size_t row_bytes,
+                 size_t frame_index,
+                 uint32_t lazy_pixel_ref) override {
+    return false;
+  }
+  bool QueryYUV8(SkYUVSizeInfo* info,
+                 SkYUVColorSpace* color_space) const override {
+    return false;
+  }
+  bool GetYUV8Planes(const SkYUVSizeInfo& info,
+                     void* planes[3],
+                     size_t frame_index,
+                     uint32_t lazy_pixel_ref) override {
+    return false;
+  }
+};
+
 void DrawDisplayList(unsigned char* buffer,
                      const gfx::Rect& layer_rect,
                      scoped_refptr<const DisplayItemList> list) {
@@ -59,6 +82,18 @@ PaintImage CreateDiscardablePaintImage(const gfx::Size& size,
   return PaintImageBuilder()
       .set_id(PaintImage::GetNextId())
       .set_paint_image_generator(sk_make_sp<FakePaintImageGenerator>(
+          SkImageInfo::MakeN32Premul(size.width(), size.height(), color_space)))
+      .TakePaintImage();
+}
+
+PaintImage CreateDecodeFailurePaintImage(const gfx::Size& size,
+                                         sk_sp<SkColorSpace> color_space) {
+  if (!color_space)
+    color_space = SkColorSpace::MakeSRGB();
+
+  return PaintImageBuilder()
+      .set_id(PaintImage::GetNextId())
+      .set_paint_image_generator(sk_make_sp<DecodeFailureImageGenerator>(
           SkImageInfo::MakeN32Premul(size.width(), size.height(), color_space)))
       .TakePaintImage();
 }

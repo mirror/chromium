@@ -480,7 +480,7 @@ ImageDecodeCache::TaskResult GpuImageDecodeCache::GetTaskForImageAndRefInternal(
     // Image is at-raster, just return, this usage will be at-raster as well.
     return TaskResult(false);
   } else if (image_data->decode.decode_failure) {
-    // We have already tried and failed to decode this image, so just return.
+    // We have already tried and failed to decode this image.
     return TaskResult(false);
   } else if (image_data->upload.image()) {
     // The image is already uploaded, ref and return.
@@ -535,6 +535,43 @@ void GpuImageDecodeCache::UnrefImage(const DrawImage& draw_image) {
                "GpuImageDecodeCache::UnrefImage");
   base::AutoLock lock(lock_);
   UnrefImageInternal(draw_image);
+}
+
+DecodedDrawImage GpuImageDecodeCache::GetPredecodedImageForDraw(
+    const DrawImage& draw_image) {
+  TRACE_EVENT0("cc", "GpuImageDecodeCache::GetPredecodedImageForDraw");
+
+  // We are being called during raster. The context lock must already be
+  // acquired by the caller.
+  context_->GetLock()->AssertAcquired();
+
+  // If we're skipping the image, then the filter quality doesn't matter.
+  if (SkipImage(draw_image))
+    return DecodedDrawImage(nullptr, kNone_SkFilterQuality);
+
+  base::AutoLock lock(lock_);
+  ImageData* image_data = GetImageDataForDrawImage(draw_image);
+  // Image must already exist and be ref'd.
+  DCHECK(image_data);
+  if (image_data->decode.decode_failure || !image_data->upload.image()) {
+    return DecodedDrawImage(nullptr, kNone_SkFilterQuality);
+  }
+
+  auto found = in_use_cache_.find(InUseCacheKey::FromDrawImage(draw_image));
+  DCHECK(found != in_use_cache_.end());
+  DCHECK_GT(found->second.ref_count, 0u);
+
+  sk_sp<SkImage> image = image_data->upload.image();
+  image_data->upload.mark_used();
+  DCHECK(image);
+
+  SkSize scale_factor = CalculateScaleFactorForMipLevel(
+      draw_image, image_data->upload_params.fPreScaleMipLevel);
+  DecodedDrawImage decoded_draw_image(
+      std::move(image), SkSize(), scale_factor,
+      CalculateDesiredFilterQuality(draw_image));
+  decoded_draw_image.set_at_raster_decode(image_data->is_at_raster);
+  return decoded_draw_image;
 }
 
 DecodedDrawImage GpuImageDecodeCache::GetDecodedImageForDraw(

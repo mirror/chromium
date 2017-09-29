@@ -260,6 +260,9 @@ SoftwareImageDecodeCache::GetTaskForImageAndRefInternal(
 
   // If we already have the image in cache, then we can return it.
   auto decoded_it = decoded_images_.Get(key);
+  // TODO(enne): failed decodes still take up budget size for the size
+  // they would have been, but there's no way to know they'll fail the first
+  // time through, so they take up space every ref for consistency.
   bool new_image_fits_in_memory =
       locked_images_budget_.AvailableMemoryBytes() >= key.locked_bytes();
   if (decoded_it != decoded_images_.end()) {
@@ -386,15 +389,16 @@ void SoftwareImageDecodeCache::DecodeImage(const ImageKey& key,
     CleanupDecodedImagesCache(key, image_it);
   }
 
+  // If there's no image to decode, then abort.
+  if (!image.paint_image())
+    return;
+
   std::unique_ptr<DecodedImage> decoded_image;
   {
     base::AutoUnlock unlock(lock_);
     decoded_image = DecodeImageInternal(key, image);
   }
-
-  // Abort if we failed to decode the image.
-  if (!decoded_image)
-    return;
+  DCHECK(decoded_image);
 
   // At this point, it could have been the case that this image was decoded in
   // place by an already running raster task from a previous schedule. If that's
@@ -434,8 +438,7 @@ SoftwareImageDecodeCache::DecodeImageInternal(const ImageKey& key,
                "SoftwareImageDecodeCache::DecodeImageInternal", "key",
                key.ToString());
   const PaintImage& paint_image = draw_image.paint_image();
-  if (!paint_image)
-    return nullptr;
+  DCHECK(paint_image);
 
   // Special case subrect into a special function.
   if (key.should_use_subrect())
@@ -461,6 +464,48 @@ SoftwareImageDecodeCache::DecodeImageInternal(const ImageKey& key,
     return GetExactSizeImageDecode(key, paint_image);
   }
   return GetScaledImageDecode(key, paint_image);
+}
+
+DecodedDrawImage SoftwareImageDecodeCache::GetPredecodedImageForDraw(
+    const DrawImage& draw_image) {
+  ImageKey key = ImageKey::FromDrawImage(draw_image, color_type_);
+  TRACE_EVENT1(TRACE_DISABLED_BY_DEFAULT("cc.debug"),
+               "SoftwareImageDecodeCache::GetPredecodedImageForDraw", "key",
+               key.ToString());
+  // If the target size is empty, we can skip this image draw.
+  if (key.target_size().IsEmpty())
+    return DecodedDrawImage(nullptr, kNone_SkFilterQuality);
+
+  base::AutoLock lock(lock_);
+  auto decoded_images_it = decoded_images_.Get(key);
+
+  if (decoded_images_it != decoded_images_.end()) {
+    DecodedImage* decoded_image = decoded_images_it->second.get();
+    // If we get here and this is a decoded image that is not at raster,
+    // then this should have already gone through the GetDecodedImageForDraw
+    // path to get the at raster image.  Thus, any image should be locked
+    // and externally ref'd.
+    DCHECK(decoded_image->is_locked());
+    DCHECK_GT(decoded_images_ref_counts_[key], 0);
+    return DecodedDrawImage(
+        decoded_image->image(), decoded_image->src_rect_offset(),
+        GetScaleAdjustment(key), GetDecodedFilterQuality(key));
+  }
+
+  // If this image is not in the decoded images list, then it must be
+  // at raster and have already been predecoded, locked, and ref'd.
+  auto at_raster_images_it = at_raster_decoded_images_.Get(key);
+  DCHECK(at_raster_images_it != at_raster_decoded_images_.end());
+  DCHECK(at_raster_images_it->second->is_locked());
+  DCHECK_GT(at_raster_decoded_images_ref_counts_[key], 0);
+
+  DecodedImage* at_raster_decoded_image = at_raster_images_it->second.get();
+  auto decoded_draw_image =
+      DecodedDrawImage(at_raster_decoded_image->image(),
+                       at_raster_decoded_image->src_rect_offset(),
+                       GetScaleAdjustment(key), GetDecodedFilterQuality(key));
+  decoded_draw_image.set_at_raster_decode(true);
+  return decoded_draw_image;
 }
 
 DecodedDrawImage SoftwareImageDecodeCache::GetDecodedImageForDraw(
@@ -600,7 +645,7 @@ SoftwareImageDecodeCache::GetExactSizeImageDecode(
                                      key.frame_key().frame_index());
     if (!result) {
       decoded_pixels->Unlock();
-      return nullptr;
+      return base::MakeUnique<DecodedImage>();
     }
   }
 
@@ -639,7 +684,7 @@ SoftwareImageDecodeCache::GetSubrectImageDecode(const ImageKey& key,
   AutoDrawWithImageFinished auto_finish_draw(this, exact_size_draw_image,
                                              decoded_draw_image);
   if (!decoded_draw_image.image())
-    return nullptr;
+    return base::MakeUnique<DecodedImage>();
 
   DCHECK(SkColorSpace::Equals(decoded_draw_image.image()->colorSpace(),
                               key.target_color_space().ToSkColorSpace().get()));
@@ -716,7 +761,7 @@ SoftwareImageDecodeCache::GetScaledImageDecode(const ImageKey& key,
   AutoDrawWithImageFinished auto_finish_draw(this, exact_size_draw_image,
                                              decoded_draw_image);
   if (!decoded_draw_image.image())
-    return nullptr;
+    return base::MakeUnique<DecodedImage>();
 
   SkPixmap decoded_pixmap;
   bool result = decoded_draw_image.image()->peekPixels(&decoded_pixmap);
@@ -766,7 +811,8 @@ void SoftwareImageDecodeCache::DrawWithImageFinished(
                "SoftwareImageDecodeCache::DrawWithImageFinished", "key",
                ImageKey::FromDrawImage(image, color_type_).ToString());
   ImageKey key = ImageKey::FromDrawImage(image, color_type_);
-  if (!decoded_image.image())
+  // This early out matches the lack of ref in GetTaskForImageAndRefInternal.
+  if (key.target_size().IsEmpty())
     return;
 
   if (decoded_image.is_at_raster_decode())
@@ -926,6 +972,8 @@ void SoftwareImageDecodeCache::DumpImageMemoryForCache(
 
   for (const auto& image_pair : cache) {
     int image_id = static_cast<int>(image_pair.first.frame_key().hash());
+    if (!image_pair.second->tracing_id())
+      continue;
     std::string dump_name = base::StringPrintf(
         "cc/image_memory/cache_0x%" PRIXPTR "/%s/image_%" PRIu64 "_id_%d",
         reinterpret_cast<uintptr_t>(this), cache_name,
@@ -1094,13 +1142,14 @@ std::string ImageDecodeCacheKey::ToString() const {
 }
 
 // DecodedImage
+SoftwareImageDecodeCache::DecodedImage::DecodedImage() = default;
+
 SoftwareImageDecodeCache::DecodedImage::DecodedImage(
     const SkImageInfo& info,
     std::unique_ptr<base::DiscardableMemory> memory,
     const SkSize& src_rect_offset,
     uint64_t tracing_id)
-    : locked_(true),
-      image_info_(info),
+    : image_info_(info),
       memory_(std::move(memory)),
       src_rect_offset_(src_rect_offset),
       tracing_id_(tracing_id) {
@@ -1158,7 +1207,7 @@ SoftwareImageDecodeCache::DecodedImage::~DecodedImage() {
 
 bool SoftwareImageDecodeCache::DecodedImage::Lock() {
   DCHECK(!locked_);
-  bool success = memory_->Lock();
+  bool success = !memory_ || memory_->Lock();
   if (!success) {
     usage_stats_.last_lock_failed = true;
     return false;
@@ -1170,7 +1219,8 @@ bool SoftwareImageDecodeCache::DecodedImage::Lock() {
 
 void SoftwareImageDecodeCache::DecodedImage::Unlock() {
   DCHECK(locked_);
-  memory_->Unlock();
+  if (memory_)
+    memory_->Unlock();
   locked_ = false;
   if (usage_stats_.lock_count == 1)
     usage_stats_.first_lock_wasted = !usage_stats_.used;

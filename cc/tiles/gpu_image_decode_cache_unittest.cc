@@ -79,6 +79,28 @@ TEST_P(GpuImageDecodeCacheTest, GetTaskForImageSameImage) {
   cache.UnrefImage(draw_image);
 }
 
+TEST_P(GpuImageDecodeCacheTest, GetTaskForBrokenDecodeImage) {
+  auto context_provider = TestContextProvider::Create();
+  context_provider->BindToCurrentThread();
+  TestGpuImageDecodeCache cache(context_provider.get(), GetParam());
+  PaintImage paint_image = CreateDecodeFailurePaintImage(gfx::Size(100, 100));
+  bool is_decomposable = true;
+  SkFilterQuality quality = kHigh_SkFilterQuality;
+
+  DrawImage draw_image(
+      paint_image, SkIRect::MakeWH(paint_image.width(), paint_image.height()),
+      quality, CreateMatrix(SkSize::Make(0.5f, 0.5f), is_decomposable),
+      PaintImage::kDefaultFrameIndex, DefaultColorSpace());
+  ImageDecodeCache::TaskResult result =
+      cache.GetTaskForImageAndRef(draw_image, ImageDecodeCache::TracingInfo());
+  EXPECT_TRUE(result.need_unref);
+  EXPECT_TRUE(result.task);
+
+  TestTileTaskRunner::ProcessTask(result.task->dependencies()[0].get());
+  TestTileTaskRunner::ProcessTask(result.task.get());
+  cache.UnrefImage(draw_image);
+}
+
 TEST_P(GpuImageDecodeCacheTest, GetTaskForImageSmallerScale) {
   auto context_provider = TestContextProvider::Create();
   context_provider->BindToCurrentThread();
@@ -398,6 +420,36 @@ TEST_P(GpuImageDecodeCacheTest, GetTaskForImageAlreadyDecodedNotLocked) {
 
   TestTileTaskRunner::ProcessTask(another_result.task->dependencies()[0].get());
   TestTileTaskRunner::ProcessTask(another_result.task.get());
+
+  cache.UnrefImage(draw_image);
+}
+
+TEST_P(GpuImageDecodeCacheTest,
+       GetTaskForBrokenDecodeImageAlreadyDecodedAndLocked) {
+  auto context_provider = TestContextProvider::Create();
+  context_provider->BindToCurrentThread();
+  TestGpuImageDecodeCache cache(context_provider.get(), GetParam());
+  bool is_decomposable = true;
+  SkFilterQuality quality = kHigh_SkFilterQuality;
+
+  PaintImage paint_image = CreateDecodeFailurePaintImage(gfx::Size(100, 100));
+  DrawImage draw_image(
+      paint_image, SkIRect::MakeWH(paint_image.width(), paint_image.height()),
+      quality, CreateMatrix(SkSize::Make(0.5f, 0.5f), is_decomposable),
+      PaintImage::kDefaultFrameIndex, DefaultColorSpace());
+  ImageDecodeCache::TaskResult result =
+      cache.GetTaskForImageAndRef(draw_image, ImageDecodeCache::TracingInfo());
+  EXPECT_TRUE(result.need_unref);
+  EXPECT_TRUE(result.task);
+
+  TestTileTaskRunner::ProcessTask(result.task->dependencies()[0].get());
+  TestTileTaskRunner::ProcessTask(result.task.get());
+
+  ImageDecodeCache::TaskResult another_result =
+      cache.GetTaskForImageAndRef(draw_image, ImageDecodeCache::TracingInfo());
+  // Unlike the software image decode cache, failed decodes are not reffed.
+  EXPECT_FALSE(another_result.need_unref);
+  EXPECT_FALSE(another_result.task);
 
   cache.UnrefImage(draw_image);
 }

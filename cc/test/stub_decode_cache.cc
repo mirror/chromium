@@ -24,6 +24,11 @@ DecodedDrawImage StubDecodeCache::GetDecodedImageForDraw(
                           SkSize::Make(1.0f, 1.0f), kNone_SkFilterQuality);
 }
 
+DecodedDrawImage StubDecodeCache::GetPredecodedImageForDraw(
+    const DrawImage& image) {
+  return GetDecodedImageForDraw(image);
+}
+
 size_t StubDecodeCache::GetMaximumMemoryLimitBytes() const {
   return 0u;
 }

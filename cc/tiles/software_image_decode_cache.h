@@ -130,6 +130,7 @@ class CC_EXPORT SoftwareImageDecodeCache
       const DrawImage& image) override;
   void UnrefImage(const DrawImage& image) override;
   DecodedDrawImage GetDecodedImageForDraw(const DrawImage& image) override;
+  DecodedDrawImage GetPredecodedImageForDraw(const DrawImage& image) override;
   void DrawWithImageFinished(const DrawImage& image,
                              const DecodedDrawImage& decoded_image) override;
   void ReduceCacheUsage() override;
@@ -159,6 +160,8 @@ class CC_EXPORT SoftwareImageDecodeCache
   // construct an image out of SkImageInfo and stored discardable memory.
   class DecodedImage {
    public:
+    // Default constructor is for a failed decode with no memory.
+    DecodedImage();
     DecodedImage(const SkImageInfo& info,
                  std::unique_ptr<base::DiscardableMemory> memory,
                  const SkSize& src_rect_offset,
@@ -198,12 +201,12 @@ class CC_EXPORT SoftwareImageDecodeCache
       bool first_lock_out_of_raster = false;
     };
 
-    bool locked_;
+    bool locked_ = true;
     SkImageInfo image_info_;
     std::unique_ptr<base::DiscardableMemory> memory_;
     sk_sp<SkImage> image_;
     SkSize src_rect_offset_;
-    uint64_t tracing_id_;
+    uint64_t tracing_id_ = 0u;
     UsageStats usage_stats_;
   };
 

@@ -37,6 +37,10 @@ PaintImage CreateDiscardablePaintImage(
     const gfx::Size& size,
     sk_sp<SkColorSpace> color_space = nullptr);
 
+PaintImage CreateDecodeFailurePaintImage(
+    const gfx::Size& size,
+    sk_sp<SkColorSpace> color_space = nullptr);
+
 DrawImage CreateDiscardableDrawImage(const gfx::Size& size,
                                      sk_sp<SkColorSpace> color_space,
                                      SkRect rect,

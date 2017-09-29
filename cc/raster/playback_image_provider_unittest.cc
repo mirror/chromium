@@ -36,6 +36,12 @@ class MockDecodeCache : public StubDecodeCache {
     return CreateDecode();
   }
 
+  DecodedDrawImage GetPredecodedImageForDraw(
+      const DrawImage& draw_image) override {
+    last_image_ = draw_image;
+    return CreateDecode();
+  }
+
   void DrawWithImageFinished(
       const DrawImage& draw_image,
       const DecodedDrawImage& decoded_draw_image) override {
@@ -97,25 +103,32 @@ TEST(PlaybackImageProviderTest, SkipsSomeImages) {
 
 TEST(PlaybackImageProviderTest, RefAndUnrefDecode) {
   MockDecodeCache cache;
+  SkRect rect = SkRect::MakeWH(10, 10);
+  SkMatrix matrix = SkMatrix::I();
+  auto draw_image = CreateDiscardableDrawImage(gfx::Size(10, 10), nullptr, rect,
+                                               kMedium_SkFilterQuality, matrix);
 
   base::Optional<PlaybackImageProvider::Settings> settings;
   settings.emplace();
+  settings->at_raster_images = {draw_image};
   PlaybackImageProvider provider(&cache, gfx::ColorSpace(), settings);
   provider.BeginRaster();
+  EXPECT_EQ(cache.refed_image_count(), 1);
 
   {
-    SkRect rect = SkRect::MakeWH(10, 10);
-    SkMatrix matrix = SkMatrix::I();
-    auto decode = provider.GetDecodedDrawImage(CreateDiscardableDrawImage(
-        gfx::Size(10, 10), nullptr, rect, kMedium_SkFilterQuality, matrix));
+    // Get decode at raster should not call the predecode get, which won't
+    // ref or decode.
+    auto decode = provider.GetDecodedDrawImage(draw_image);
     EXPECT_TRUE(decode);
     EXPECT_EQ(cache.refed_image_count(), 1);
   }
 
-  // Destroying the decode unrefs the image from the cache.
-  EXPECT_EQ(cache.refed_image_count(), 0);
+  // Destroying the decode doesn't unref the image from the cache.
+  EXPECT_EQ(cache.refed_image_count(), 1);
 
+  // Ending the provider does unref the image.
   provider.EndRaster();
+  EXPECT_EQ(cache.refed_image_count(), 0);
 }
 
 TEST(PlaybackImageProviderTest, AtRasterImages) {
