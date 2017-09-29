@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e50bfb4d_7723043d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/workspace/FileManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-09-29T21:10:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e236b66_28296f3e",
+      "revId": "7b99e418bf7c885f41e8c68394c546f0b28819e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b45a48ee_02e0bcfe",
         "filename": "third_party/WebKit/Source/devtools/front_end/workspace/FileManager.js",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "7b99e418bf7c885f41e8c68394c546f0b28819e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e621f33_c2905a0a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/workspace/FileManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-09-29T21:10:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b45a48ee_02e0bcfe",
+      "range": {
+        "startLine": 67,
+        "startChar": 12,
+        "endLine": 67,
+        "endChar": 19
+      },
+      "revId": "7b99e418bf7c885f41e8c68394c546f0b28819e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "94e64504_1f290c8a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/workspace/FileManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-09-29T21:10:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32e798d7_1dacd6f7",
+      "range": {
+        "startLine": 85,
+        "startChar": 20,
+        "endLine": 85,
+        "endChar": 27
+      },
+      "revId": "7b99e418bf7c885f41e8c68394c546f0b28819e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61339e59_45c2cc08",
         "filename": "third_party/WebKit/Source/devtools/front_end/workspace/FileManager.js",
         "patchSetId": 3
@@ -79,6 +145,24 @@
       "revId": "7b99e418bf7c885f41e8c68394c546f0b28819e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8bebafd_12939427",
+        "filename": "third_party/WebKit/Source/devtools/front_end/workspace/FileManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-09-29T21:10:21Z",
+      "side": 1,
+      "message": "No, I was just going for smallest changes as possible. Removed.",
+      "parentUuid": "61339e59_45c2cc08",
+      "revId": "7b99e418bf7c885f41e8c68394c546f0b28819e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
