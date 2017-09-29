@@ -9,6 +9,7 @@
 import os
 import os.path
 import sys
+import zlib
 if __name__ == '__main__':
   sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))
 
@@ -63,6 +64,21 @@ class StructureUnittest(unittest.TestCase):
                             '<p>\n'
                             '  Hello!\n'
                             '</p>\n'), result)
+
+  def testCompressGzip(self):
+    root = util.ParseGrdForUnittest('''
+        <structures>
+          <structure name="TEST_TXT" file="test_text.txt"
+                   compress="gzip" type="chrome_html" />
+        </structures>''', base_dir = util.PathFromRoot('grit/testdata'))
+    struc, = root.GetChildrenOfType(structure.StructureNode)
+    struc.RunPreSubstitutionGatherer()
+    _, compressed = struc.GetDataPackPair(lang='en', encoding=1)
+
+    decompressed_data = zlib.decompress(compressed, 16 + zlib.MAX_WBITS)
+    self.assertEqual(util.ReadFile(util.PathFromRoot('grit/testdata')
+                                   + "/test_text.txt", util.BINARY),
+                     decompressed_data)
 
 
 if __name__ == '__main__':

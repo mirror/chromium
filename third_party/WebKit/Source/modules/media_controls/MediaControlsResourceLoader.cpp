@@ -32,10 +32,10 @@ MediaControlsResourceLoader::~MediaControlsResourceLoader(){};
 
 String MediaControlsResourceLoader::GetMediaControlsCSS() const {
   if (RuntimeEnabledFeatures::ModernMediaControlsEnabled()) {
-    return ResourceBundleHelper::GetResourceAsString(
+    return ResourceBundleHelper::UncompressResourceAsString(
         IDR_UASTYLE_MODERN_MEDIA_CONTROLS_CSS);
   } else {
-    return ResourceBundleHelper::GetResourceAsString(
+    return ResourceBundleHelper::UncompressResourceAsString(
         IDR_UASTYLE_LEGACY_MEDIA_CONTROLS_CSS);
   }
 };
