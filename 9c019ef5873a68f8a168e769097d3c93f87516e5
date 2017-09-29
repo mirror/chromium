@@ -16,6 +16,24 @@
       "revId": "9c019ef5873a68f8a168e769097d3c93f87516e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f08ed132_ed324130",
+        "filename": "third_party/WebKit/PerformanceTests/Canvas/draw-video-to-hw-accelerated-canvas-2d.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-29T17:06:08Z",
+      "side": 0,
+      "message": "There are some other places that uses this file:\nhttps://cs.chromium.org/search/?q\u003d%22bear-1280x720.mp4%22\u0026sq\u003dpackage:chromium\u0026type\u003dcs\n\nI am not sure whether it is safe to use the new file in those places, such as demuxer_perftest.cc and container_names_unittest.cc",
+      "parentUuid": "b43cf767_a56b410c",
+      "revId": "9c019ef5873a68f8a168e769097d3c93f87516e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
