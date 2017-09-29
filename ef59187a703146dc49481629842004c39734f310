@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49572082_55d5646f",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1535,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-09-29T13:58:50Z",
+      "side": 1,
+      "message": "Thanks for catching this! I was expecting such a mistake would be caught in tests we had on this but apparently we do not have a test which verifies hiding the tab hides the child frame.\nI will file a bug for this and follow up later.",
+      "revId": "ef59187a703146dc49481629842004c39734f310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
