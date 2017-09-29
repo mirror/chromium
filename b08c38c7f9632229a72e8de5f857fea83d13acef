@@ -311,6 +311,30 @@
       "revId": "b08c38c7f9632229a72e8de5f857fea83d13acef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c69c48e0_5fc03c02",
+        "filename": "components/search_provider_logos/logo_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-29T09:21:41Z",
+      "side": 1,
+      "message": "Hm, I guess technically not, then, but it does feel a bit weird to have a class with virtual methods but no dtor. Meh, up to you.",
+      "parentUuid": "1652c6f7_348fe672",
+      "range": {
+        "startLine": 47,
+        "startChar": 16,
+        "endLine": 47,
+        "endChar": 0
+      },
+      "revId": "b08c38c7f9632229a72e8de5f857fea83d13acef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
