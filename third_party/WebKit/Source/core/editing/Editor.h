@@ -95,6 +95,7 @@ class CORE_EXPORT Editor final : public GarbageCollectedFinalized<Editor> {
   bool CanPaste() const;
   bool CanDelete() const;
   bool CanSmartCopyOrDelete() const;
+  bool CanNotSuggest() const;
 
   void Cut(EditorCommandSource);
   void Copy(EditorCommandSource);
