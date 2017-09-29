@@ -71,13 +71,15 @@ class WorkerThreadableLoadingContext : public ThreadableLoadingContext {
   Member<WorkerGlobalScope> worker_global_scope_;
 };
 
-ThreadableLoadingContext* ThreadableLoadingContext::Create(Document& document) {
-  return new DocumentThreadableLoadingContext(document);
-}
-
 ThreadableLoadingContext* ThreadableLoadingContext::Create(
-    WorkerGlobalScope& worker_global_scope) {
-  return new WorkerThreadableLoadingContext(worker_global_scope);
+    ExecutionContext& execution_context) {
+  if (execution_context.IsWorkerGlobalScope()) {
+    return new WorkerThreadableLoadingContext(
+        ToWorkerGlobalScope(execution_context));
+  } else {
+    DCHECK(execution_context.IsDocument());
+    return new DocumentThreadableLoadingContext(ToDocument(execution_context));
+  }
 }
 
 BaseFetchContext* ThreadableLoadingContext::GetFetchContext() {

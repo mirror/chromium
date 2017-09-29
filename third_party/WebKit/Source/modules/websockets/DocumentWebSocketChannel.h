@@ -70,14 +70,9 @@ class MODULES_EXPORT DocumentWebSocketChannel final
   // explicitly by passing the last parameter.
   // In the usual case, they are set automatically and you don't have to
   // pass it.
-  static DocumentWebSocketChannel* Create(
-      Document* document,
-      WebSocketChannelClient* client,
-      std::unique_ptr<SourceLocation> location) {
-    DCHECK(document);
-    return Create(ThreadableLoadingContext::Create(*document), client,
-                  std::move(location));
-  }
+  static DocumentWebSocketChannel* Create(Document*,
+                                          WebSocketChannelClient*,
+                                          std::unique_ptr<SourceLocation>);
   static DocumentWebSocketChannel* Create(ThreadableLoadingContext*,
                                           WebSocketChannelClient*,
                                           std::unique_ptr<SourceLocation>);

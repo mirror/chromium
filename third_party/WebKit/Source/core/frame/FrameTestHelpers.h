@@ -434,6 +434,27 @@ class TestWebRemoteFrameClient : public WebRemoteFrameClient {
   WebRemoteFrame* frame_ = nullptr;
 };
 
+class TestWebWorkerFetchContext : public WebWorkerFetchContext {
+ public:
+  ~TestWebWorkerFetchContext() override {}
+
+  void InitializeOnWorkerThread(SingleThreadTaskRunnerRefPtr) override {}
+  std::unique_ptr<WebURLLoader> CreateURLLoader(
+      const WebURLRequest&,
+      SingleThreadTaskRunnerRefPtr) override;
+  void WillSendRequest(WebURLRequest&) override {}
+  bool IsControlledByServiceWorker() const override { return false; }
+  void SetDataSaverEnabled(bool) override {}
+  bool IsDataSaverEnabled() const override { return false; }
+  void SetIsOnSubframe(bool) {}
+  bool IsOnSubframe() const override { return false; }
+  WebURL SiteForCookies() const override { return WebURL(); }
+  void DidRunContentWithCertificateErrors(const WebURL& url) override {}
+  void DidDisplayContentWithCertificateErrors(const WebURL& url) override {}
+  void DidRunInsecureContent(const WebSecurityOrigin&,
+                             const WebURL& insecure_url) override {}
+};
+
 }  // namespace FrameTestHelpers
 }  // namespace blink
 
