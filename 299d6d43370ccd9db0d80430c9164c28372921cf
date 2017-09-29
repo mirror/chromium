@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "69fa290c_8f5c23b6",
+        "filename": "ash/system/ime_menu/ime_menu_tray.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-29T21:08:21Z",
+      "side": 1,
+      "message": "I see. They can be opened by keyboard shortcuts and become active. In this case, we should also not install pre-target handler.",
+      "parentUuid": "ef744a9c_9d333aa1",
+      "range": {
+        "startLine": 452,
+        "startChar": 29,
+        "endLine": 452,
+        "endChar": 33
+      },
+      "revId": "299d6d43370ccd9db0d80430c9164c28372921cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fbbf200f_2e7f8060",
         "filename": "ash/system/palette/palette_tray.cc",
         "patchSetId": 9
@@ -87,6 +111,24 @@
       "revId": "299d6d43370ccd9db0d80430c9164c28372921cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12b4bcd8_7e77aca4",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-29T21:08:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbbf200f_2e7f8060",
+      "revId": "299d6d43370ccd9db0d80430c9164c28372921cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -107,6 +149,24 @@
     },
     {
       "key": {
+        "uuid": "d313dc6b_83a3278c",
+        "filename": "ui/views/bubble/tray_bubble_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-29T21:08:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc4c66a9_9211815b",
+      "revId": "299d6d43370ccd9db0d80430c9164c28372921cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f751b036_b125f3f7",
         "filename": "ui/views/bubble/tray_bubble_view.h",
         "patchSetId": 9
@@ -121,6 +181,24 @@
       "revId": "299d6d43370ccd9db0d80430c9164c28372921cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5589b726_ae25b377",
+        "filename": "ui/views/bubble/tray_bubble_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-29T21:08:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f751b036_b125f3f7",
+      "revId": "299d6d43370ccd9db0d80430c9164c28372921cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
