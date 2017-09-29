@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22006b1e_c58e1519",
+        "filename": "device/bluetooth/test/fake_central.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-09-29T05:01:35Z",
+      "side": 1,
+      "message": "Please comment why static_cast is safe. e.g.\n// static_cast justification: parent class\u0027s BluetoothAdapter::devices_\n// is only populated via this FakeCentral, and always with FakePeripherals\n\nBut... static_casts always make me quite sad ;( I\u0027m tempted to ask that the\nFakeCentral keep a parallel set of fake_devices_ and add to them on line 35.\n\nIt\u0027s subjective -- so OK to keep the cast so long as there\u0027s a comment.",
+      "revId": "6697e3e061851d8fddbb48d3989c0349a648ffbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
