@@ -236,6 +236,30 @@
       "revId": "9df6c57aafe5426d3477b1663ee710abbcb3fe1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fcff3059_b211783d",
+        "filename": "chrome/installer/setup/user_experiment.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-09-29T17:41:16Z",
+      "side": 1,
+      "message": "Yes I did (I\u0027m having trouble seeing what comments I\u0027ve responded to across the various patchsets in gerrit). Thank you for the clarification. I worked on the change before leaving for the day yesterday. It makes things hairy in one spot so I needed to come back fresh and look at it again to make sure it\u0027s correct. I\u0027ll upload the new patchset based on all the comments I have so far. Still not sure exactly what to change the histogram type to but I will do what I think makes sense and go another round with mpearson@ or getting it right.",
+      "parentUuid": "4468d2b4_51d9b094",
+      "range": {
+        "startLine": 530,
+        "startChar": 46,
+        "endLine": 530,
+        "endChar": 61
+      },
+      "revId": "9df6c57aafe5426d3477b1663ee710abbcb3fe1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
