@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ae2fe3d_2d7ecd8d",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-29T16:11:41Z",
+      "side": 1,
+      "message": "How about getNearestContainingWindow?",
+      "revId": "82ff0816eeb6df10b7a748eacf969acb50c49967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65c0eae0_9135fb98",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-29T16:11:41Z",
+      "side": 1,
+      "message": "As an optimization, I think that if node.root.role is ROOT_WEB_AREA,\nyou could safely jump to node.root and not worry about missing any\nwindows in-between.\n\nYou could then go to node.parent and keep doing that until\nnode.root.role is not ROOT_WEB_AREA, quickly jumping up through\niframes.",
+      "revId": "82ff0816eeb6df10b7a748eacf969acb50c49967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be130233_8014ce50",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-29T16:11:41Z",
+      "side": 1,
+      "message": "\"hit test\" (two words)",
+      "revId": "82ff0816eeb6df10b7a748eacf969acb50c49967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
