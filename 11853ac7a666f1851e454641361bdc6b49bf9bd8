@@ -16,6 +16,24 @@
       "revId": "11853ac7a666f1851e454641361bdc6b49bf9bd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7858b48f_1efeec5f",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 1194,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-09-29T17:38:42Z",
+      "side": 1,
+      "message": "This has indeed been running on the official bots with EnforceStrict for some time. \nThis change should be safe.\n\nIt seems that none of the extensions stored on disk specify an update URL; |ChromeContentVerifierDelegate::ShouldBeVerified| returns ContentVerifierDelegate::NONE.\n\nTo re-land https://chromium-review.googlesource.com/c/chromium/src/+/677403 (which causes on-disk extensions to start doing content validation), I\u0027ll need to explicitly disable content verification for most tests. (Example: https://chromium-review.googlesource.com/c/chromium/src/+/692718)",
+      "parentUuid": "fbfbece0_fa792ab3",
+      "revId": "11853ac7a666f1851e454641361bdc6b49bf9bd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
