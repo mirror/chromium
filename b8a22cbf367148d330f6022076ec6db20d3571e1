@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "81c49cb7_2056b2dd",
+        "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T20:24:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ee8fdc10_35efc8b1",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf643ab2_e4b20134",
         "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
         "patchSetId": 3
@@ -69,6 +87,24 @@
       "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b73e0a1a_d3bbad64",
+        "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T20:24:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a7c9c909_97d7f9b2",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -107,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "dbfe7bca_da051338",
+        "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T20:24:31Z",
+      "side": 1,
+      "message": "Up to you, but I still think calling the function first with no outputs would be better then choosing an arbitrary size like 16. You can keep the try again loop in the case that it changes between now and then.",
+      "parentUuid": "d8cd41c9_1f9e5234",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1507ae6_5f0f745e",
         "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
         "patchSetId": 3
@@ -139,6 +193,24 @@
       "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9147e71_5c5b8fb4",
+        "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T20:24:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ea7e23ff_e5598a68",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -212,6 +284,24 @@
     },
     {
       "key": {
+        "uuid": "5e5cfa72_8eca24c5",
+        "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T20:24:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e4045536_80cc974e",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b63e2782_6d9adb74",
         "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
         "patchSetId": 3
@@ -244,6 +334,24 @@
       "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23afe4eb_e6c2f039",
+        "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T20:24:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "caff5b18_f96e8218",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -282,6 +390,24 @@
     },
     {
       "key": {
+        "uuid": "375b1641_8c7d6a97",
+        "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T20:24:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b6a60e04_30fea7ea",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7a42d4c_cf639a63",
         "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
         "patchSetId": 3
@@ -311,6 +437,24 @@
       "side": 1,
       "message": "Done, but why do we want to default to low-level format? Couldn\u0027t the caller change the format if it needs low-latency?\n\nAlso latency requirements and audio format are orthogonal concepts, so it seems strange that low-latency is requested as a format (low-latency streams still use linear PCM). Would it be better to add a separate field in AudioParameters for latency requirements?\n\nThere are probably some details I\u0027m missing. If AUDIO_PCM_LOW_LATENCY is the default for PCM, then should we rename AUDIO_PCM_LINEAR -\u003e AUDIO_PCM_HIGH_LATENCY_DEPRECATED and AUDIO_PCM_LOW_LATENCY -\u003e AUDIO_PCM_LINEAR?",
       "parentUuid": "e7a42d4c_cf639a63",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7172baa_773cd46f",
+        "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T20:24:31Z",
+      "side": 1,
+      "message": "You\u0027re correct, it is deprecated and should be renamed. The only user should be those I mentioned. For new non-pepper platforms there should be no usage.",
+      "parentUuid": "ed589f66_3cf22fcf",
       "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -352,6 +496,24 @@
     },
     {
       "key": {
+        "uuid": "378499d4_20ec0e0d",
+        "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T20:24:31Z",
+      "side": 1,
+      "message": "I meant NOTIMPLEMENTED(). It doesn\u0027t really matter except to allow someone to accidentally start using this.",
+      "parentUuid": "e1a21e1d_ebf26b19",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1bac024c_f12e8329",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
         "patchSetId": 3
@@ -384,6 +546,24 @@
       "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "820a1104_e745c6fe",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T20:24:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1b2f995f_fb711917",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -439,6 +619,24 @@
     },
     {
       "key": {
+        "uuid": "01ab3d26_a4ce4549",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T20:24:31Z",
+      "side": 1,
+      "message": "I think you missed my point. I meant that Fuschia needs to implement a callback based API which provides a thread. It should then drive those callbacks with that internal OS level thread that guarantees the highest priority and scheduling. Generally this is functionality that may not be available at the application level. I.e. CoreAudio and Pulse will have root level permissions that allow configuration of real time priorities. So (1) is different then Chrome handling the threading itself. Even if Fuschia does this differently, I would not count on the PostTask system as being sufficient for the precise scheduling required here. \n\nI guarantee you will have scheduling issues with this approach. Looking over the audio API you linked leaves me a bit worried. Please chat with dgreid@ from the libcras team to understand sound server design better and the solutions they created for the ChromeOS audio server. I recommend you have him review any API and mixer development you do for Fuschia, so we don\u0027t repeat any mistakes and benefit from the knowledge his team has.\n\nI\u0027m less worried about (2), but it is very tricky to get right, so again please make sure dgreid@ looks over the audio driver.\n\nIt\u0027s funny that you mention the ALSA driver, because that\u0027s used almost nowhere for precisely the reason that it glitches constantly :) We were unable to take advantage of more modern ALSA features due to the library requirements for Chrome at the time, so we switched to Pulse Audio which provides a callback driven API and no (less? :) glitching.\n\nI absolutely welcome disagreement and questioning here, but keep in mind I\u0027m speaking from the experience of having owned the audio drivers on all platforms for the better part of 6 years now :)",
+      "parentUuid": "f0363930_ee329d53",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec9994b8_48fce016",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
         "patchSetId": 3
@@ -471,6 +669,24 @@
       "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2880bad_0b2ec0ea",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T20:24:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f8832831_e572de32",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -544,6 +760,24 @@
     },
     {
       "key": {
+        "uuid": "c921906d_a421dd2a",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T20:24:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1936f450_d8bb3489",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2f9c978_b6081328",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
         "patchSetId": 3
@@ -596,6 +830,23 @@
     },
     {
       "key": {
+        "uuid": "13cf970b_bcf6d8e2",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T20:24:31Z",
+      "side": 1,
+      "message": "Keep in mind you can get massive jumps here upon suspend resume.",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a23f8e28_cc5e73cf",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
         "patchSetId": 3
@@ -628,6 +879,24 @@
       "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d200a45b_98da4618",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T20:24:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "72e60296_63b31829",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -695,6 +964,24 @@
       "side": 1,
       "message": "Actually in this particular case case the scheduling delay makes very little difference. This logic is the same that\u0027s used in AlsaPcmOutputStream::ScheduleNextWrite(): if the source is exhausted then we want to try pull data from it again but it doesn\u0027t matter very much when it happens.",
       "parentUuid": "bd4c577e_575ad4fb",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52f67ff9_6b6d18c1",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T20:24:31Z",
+      "side": 1,
+      "message": "Again, do not use that code as a reference, it\u0027s bad and sounds bad.",
+      "parentUuid": "9eaaedc1_4874edfe",
       "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -806,6 +1093,24 @@
     },
     {
       "key": {
+        "uuid": "85c64e2a_3c73d75c",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T20:24:31Z",
+      "side": 1,
+      "message": "It\u0027s okay that it uses TimeDelta, you can unwrap it with\n\nTimeTicks \u003d TimeTicks() + TimeDelta or wrap it with TimeDelta \u003d TimeTicks - TimeTicks().\n\nUp to you in either case though. I recommend preferring audio primitives whereever possible even at the expense of a little obfuscation since they are generally better tested and vetted over time then one off solutions.",
+      "parentUuid": "a449911d_237e21f0",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e97b6b1_ffca8656",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
         "patchSetId": 3
@@ -841,6 +1146,24 @@
     },
     {
       "key": {
+        "uuid": "01397540_fa069b58",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T20:24:31Z",
+      "side": 1,
+      "message": "Up to you. (1) never happens, OnMoreData should always fill completely or nothing at all. The frames filled value is a bit of a deprecated relic. I don\u0027t think 2 is true in the general case either. Buffers tend to be nice round millisecond values.",
+      "parentUuid": "6e0178f5_8707d976",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "864a4ea0_d26f33d2",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.h",
         "patchSetId": 3
@@ -870,6 +1193,24 @@
       "side": 1,
       "message": "Are you talking about file name of name of that header guard? For header guards the style guide is unambiguous about the name (https://google.github.io/styleguide/cppguide.html#The__define_Guard). File name should normally match the the name if the class defined in that file (https://google.github.io/styleguide/cppguide.html#File_Names).",
       "parentUuid": "864a4ea0_d26f33d2",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "346a0b97_ad390aa1",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T20:24:31Z",
+      "side": 1,
+      "message": "I meant the file name and by transitivity the header guard.",
+      "parentUuid": "b6cc169b_4798d1e3",
       "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
