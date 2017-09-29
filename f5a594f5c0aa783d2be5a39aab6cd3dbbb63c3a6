@@ -117,6 +117,30 @@
       "revId": "f5a594f5c0aa783d2be5a39aab6cd3dbbb63c3a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57c8f404_c03e9c02",
+        "filename": "components/history/core/browser/top_sites_impl.cc",
+        "patchSetId": 43
+      },
+      "lineNbr": 919,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-09-29T18:30:07Z",
+      "side": 1,
+      "message": "Sure, I\u0027ve updated StartQueryForMostVisited to cancel the timer.",
+      "parentUuid": "deca4b80_c1e169f3",
+      "range": {
+        "startLine": 919,
+        "startChar": 2,
+        "endLine": 919,
+        "endChar": 17
+      },
+      "revId": "f5a594f5c0aa783d2be5a39aab6cd3dbbb63c3a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

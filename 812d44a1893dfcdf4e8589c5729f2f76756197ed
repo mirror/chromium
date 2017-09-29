@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c1d6a049_b917e4a9",
+        "filename": "components/history/content/browser/web_contents_top_sites_observer.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-09-29T18:30:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a94da12_4180a0ea",
+      "range": {
+        "startLine": 45,
+        "startChar": 6,
+        "endLine": 45,
+        "endChar": 35
+      },
+      "revId": "812d44a1893dfcdf4e8589c5729f2f76756197ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e194b85_e1827a6c",
         "filename": "components/history/core/browser/top_sites_impl.cc",
         "patchSetId": 47
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "aef8a02a_7ef7b522",
+        "filename": "components/history/core/browser/top_sites_impl.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-09-29T18:30:07Z",
+      "side": 1,
+      "message": "I was thinking that since TopSites now only observers relevant navigation events, the delay can be reduced a bit. Previously, the delay was inconsistent and can be a bit less than kMaxUpdateIntervalMinute.\n\nHonestly, I don\u0027t think this change has a big impact as each NTP will refresh TopSites immediately (and cancel the timer). Anyway, I\u0027ve reverted the timers.",
+      "parentUuid": "3e194b85_e1827a6c",
+      "range": {
+        "startLine": 99,
+        "startChar": 32,
+        "endLine": 99,
+        "endChar": 35
+      },
+      "revId": "812d44a1893dfcdf4e8589c5729f2f76756197ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "176947ca_d0b69f05",
         "filename": "components/history/core/browser/top_sites_impl.cc",
         "patchSetId": 47
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-29T08:38:03Z",
       "side": 1,
       "message": "Should you also check the |timer_|\u0027s delay here, and reduce it if |delta| is smaller?\nE.g. if this method is called to request an update in 10 seconds, then that probably shouldn\u0027t be ignored just because we have an update scheduled in an hour.",
+      "range": {
+        "startLine": 860,
+        "startChar": 25,
+        "endLine": 860,
+        "endChar": 0
+      },
+      "revId": "812d44a1893dfcdf4e8589c5729f2f76756197ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57c7b1ff_e4fb52fa",
+        "filename": "components/history/core/browser/top_sites_impl.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-09-29T18:30:07Z",
+      "side": 1,
+      "message": "In the old impl where the delay is inconsistent, the check is needed. While in the new one, I don\u0027t the check is needed anymore. Now we only have kShortDelayForUpdates and kLongDelayForUpdates, and the the short one is one applied to the very first refresh upon startup. That means, all delays (except for the first refresh) are the same, so the check has no effect at all.",
+      "parentUuid": "176947ca_d0b69f05",
       "range": {
         "startLine": 860,
         "startChar": 25,
