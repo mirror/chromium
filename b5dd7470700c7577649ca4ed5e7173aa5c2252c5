@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "28c3cd77_43fd69f4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchFieldTrial.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-09-29T21:23:59Z",
+      "side": 1,
+      "message": "I renamed this switch to help make it clear that this only applies to whether CS will suppress its UX or not whenever smart select is active.  Elsewhere Contextual Search will know whether Smart Select is active based on the enable logic in Smart Select, which determines if the SelectionClient is created.",
+      "parentUuid": "1e7ae6b5_797db365",
+      "range": {
+        "startLine": 80,
+        "startChar": 32,
+        "endLine": 80,
+        "endChar": 57
+      },
+      "revId": "b5dd7470700c7577649ca4ed5e7173aa5c2252c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8d3861a_3f5cc836",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
         "patchSetId": 4
