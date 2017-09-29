@@ -336,6 +336,7 @@ void ImeMenuTray::ShowImeMenuBubbleInternal() {
   init_params.close_on_deactivate = true;
 
   views::TrayBubbleView* bubble_view = new views::TrayBubbleView(init_params);
+  set_show_bubble_by_click(false);
   bubble_view->set_anchor_view_insets(GetBubbleAnchorInsets());
 
   // Add a title item with a separator on the top of the IME menu.
@@ -444,10 +445,12 @@ void ImeMenuTray::ClickedOutsideBubble() {
 }
 
 bool ImeMenuTray::PerformAction(const ui::Event& event) {
-  if (bubble_)
+  if (bubble_) {
     CloseBubble();
-  else
+  } else {
+    set_show_bubble_by_click(true);
     ShowBubble();
+  }
   return true;
 }
 

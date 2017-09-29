@@ -417,6 +417,7 @@ bool PaletteTray::PerformAction(const ui::Event& event) {
     return true;
   }
 
+  set_show_bubble_by_click(true);
   ShowBubble();
   return true;
 }
@@ -450,6 +451,7 @@ void PaletteTray::ShowBubble() {
 
   // Create and customize bubble view.
   views::TrayBubbleView* bubble_view = new views::TrayBubbleView(init_params);
+  set_show_bubble_by_click(false);
   bubble_view->set_anchor_view_insets(GetBubbleAnchorInsets());
   bubble_view->set_margins(
       gfx::Insets(kPalettePaddingOnTop, 0, kPalettePaddingOnBottom, 0));

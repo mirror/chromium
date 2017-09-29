@@ -91,6 +91,7 @@ class VIEWS_EXPORT TrayBubbleView : public BubbleDialogDelegateView,
     int max_width = 0;
     int max_height = 0;
     bool close_on_deactivate = true;
+    bool show_by_click = false;
     // If not provided, the bg color will be derived from the NativeTheme.
     base::Optional<SkColor> bg_color;
   };
@@ -202,6 +203,9 @@ class VIEWS_EXPORT TrayBubbleView : public BubbleDialogDelegateView,
   std::unique_ptr<views::BubbleBorder> owned_bubble_border_;
   std::unique_ptr<ui::LayerOwner> bubble_content_mask_;
   bool is_gesture_dragging_;
+
+  // True if tray bubble view is shown by clicking on the tray view.
+  bool show_by_click_ = false;
 
   // True once the mouse cursor was actively moved by the user over the bubble.
   // Only then the OnMouseExitedView() event will get passed on to listeners.
