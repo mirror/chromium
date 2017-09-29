@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "910dff1d_382e7217",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/paint-timing/paint-visited.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-09-29T04:32:43Z",
+      "side": 1,
+      "message": "Let\u0027s use rgba(0, 0, 0, 0);\n\n(Note the added semi-colon)",
+      "range": {
+        "startLine": 4,
+        "startChar": 10,
+        "endLine": 4,
+        "endChar": 15
+      },
+      "revId": "ddafb1beff2acbe6ddadd04e6e7d74ff58697f6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2abef433_550f417c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/paint-timing/paint-visited.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-09-29T04:32:43Z",
+      "side": 1,
+      "message": "Ha, that\u0027s funny.\n\nTo test this, see if the test fails if you set opacity:0 instead of color.",
+      "range": {
+        "startLine": 35,
+        "startChar": 9,
+        "endLine": 35,
+        "endChar": 11
+      },
+      "revId": "ddafb1beff2acbe6ddadd04e6e7d74ff58697f6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
