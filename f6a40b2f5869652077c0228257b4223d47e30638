@@ -67,6 +67,24 @@
       "revId": "f6a40b2f5869652077c0228257b4223d47e30638",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e97e47f4_9f866477",
+        "filename": "third_party/WebKit/public/BUILD.gn",
+        "patchSetId": 19
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T01:20:29Z",
+      "side": 1,
+      "message": "Actually on second thought I\u0027m not sure this is correct. I don\u0027t think Blink should be taking DEPS except under rare circumstances. Is this really okay @dglazkov?",
+      "parentUuid": "04b33e37_b366810f",
+      "revId": "f6a40b2f5869652077c0228257b4223d47e30638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
