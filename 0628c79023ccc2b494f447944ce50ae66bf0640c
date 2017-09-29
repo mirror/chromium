@@ -34,6 +34,24 @@
       "revId": "0628c79023ccc2b494f447944ce50ae66bf0640c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f9e8b9c_c8569dde",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002110
+      },
+      "writtenOn": "2017-09-29T14:47:25Z",
+      "side": 1,
+      "message": "Right, ScopedLayerAnimationSettings only sticks around for scheduling the animation, so it can\u0027t own the observer. Your explanation for why OnImplicitAnimationsCompleted will get called looks correct to me, but I also agree that this is pretty non-obvious. Would it make sense to have the Layer own these observers?",
+      "parentUuid": "8ad9e808_d7882f0c",
+      "revId": "0628c79023ccc2b494f447944ce50ae66bf0640c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
