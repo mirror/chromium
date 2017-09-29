@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d66b4772_b892dde8",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-29T20:40:58Z",
+      "side": 1,
+      "message": "this can be implemented in terms of the other.\n\ni.e.,\n\n  if (field_type_group \u003d\u003d CREDIT_CARD) {\n    LogUserHappinessMetric(metric, {CREDIT_CARD_FORM});\n  } else if (field_type_group !\u003d PASSWORD \u0026 field_type_group !\u003d NO_GROUP) {\n    LogUserHappinessMetric(metric, {ADDRESS_FORM});\n  }\n\n\nor\n  // Add a func mapping field type group to form type and an \"UNKNOWN\" form type?\n  LogUserHappinessMetric(metric, {FieldTypeGroupToFormType(field_type_group)});",
+      "revId": "1610bd0877327d723d0f8d955a51953880a6d6cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff236042_ab906ee3",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-29T20:40:58Z",
+      "side": 1,
+      "message": "should this just be an if?",
+      "revId": "1610bd0877327d723d0f8d955a51953880a6d6cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
