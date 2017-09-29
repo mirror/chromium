@@ -173,6 +173,24 @@
     },
     {
       "key": {
+        "uuid": "099c1ad8_5364e0b3",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-09-29T18:59:59Z",
+      "side": 1,
+      "message": "I had trouble instantiating base::UmaHistogramEnumeration so I\u0027m thinking we\u0027re only to add histograms through the macros? Switching it to UMA_HISTOGRAM_SPARSE_SLOWLY. mpearson@ - please let me know if there\u0027s anything else I need to do for this change, or if changing the macro is all that\u0027s needed.",
+      "parentUuid": "85f5f7b4_8b1686a6",
+      "revId": "638b2bfd516825b8691189bcf5b3b0e92104fc3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1cd34c1_0086fd4d",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 6
