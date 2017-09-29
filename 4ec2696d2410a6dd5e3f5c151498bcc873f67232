@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bef1e31f_42d8d769",
+        "filename": "content/common/throttling_url_loader_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-29T17:29:55Z",
+      "side": 1,
+      "message": "Nit, suggestion: Probably just my confusion, but I\u0027d think an empty body would be the wrong thing here.  Either you don\u0027t expect this to be called in this test fixture (so NOTIMPLEMENTED() or something like it) or the client will call it, and you\u0027ll need to do something in response?",
+      "range": {
+        "startLine": 81,
+        "startChar": 7,
+        "endLine": 81,
+        "endChar": 21
+      },
+      "revId": "4ec2696d2410a6dd5e3f5c151498bcc873f67232",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8a3deb6_731bfb33",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-29T17:29:55Z",
+      "side": 1,
+      "message": "This logic appears to rely on ReadMore() never being called if paused_reading_body_ is true.  Worth a DCHECK?  Maybe worth a comment about why there\u0027s no race with OnResponseBodyStreamReady()?  (I\u0027m in favor of the DCHECK and neutral about the comment, but it did take me a little bit of time scanning code to be comfortable that there isn\u0027t a race with OnResponseBodyStreamRead().)",
+      "range": {
+        "startLine": 330,
+        "startChar": 3,
+        "endLine": 330,
+        "endChar": 0
+      },
+      "revId": "4ec2696d2410a6dd5e3f5c151498bcc873f67232",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18106d0f_c37d9625",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-29T17:29:55Z",
+      "side": 1,
+      "message": "I don\u0027t see tests for cases the code seems to support?:\n* Pause occurring after reads have started, both during an outstanding read and between reads. \n* Resume occuring after CloseResponseBodyStreamProducer\n* Multiple pause/resume calls.",
+      "range": {
+        "startLine": 696,
+        "startChar": 12,
+        "endLine": 696,
+        "endChar": 28
+      },
+      "revId": "4ec2696d2410a6dd5e3f5c151498bcc873f67232",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
