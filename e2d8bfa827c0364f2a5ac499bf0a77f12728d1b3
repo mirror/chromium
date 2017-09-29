@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9493b682_fba36585",
+        "filename": "ui/chromeos/events/modifier_key.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-29T22:51:34Z",
+      "side": 1,
+      "message": "any reason why we don\u0027t want to use enum class here? (I\u0027m fine as is. just curious)",
+      "revId": "e2d8bfa827c0364f2a5ac499bf0a77f12728d1b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
