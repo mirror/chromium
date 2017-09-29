@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aaa26208_c4f3a9f7",
+        "filename": "chrome/browser/chromeos/arc/arc_play_store_enabled_preference_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-29T15:48:38Z",
+      "side": 1,
+      "message": "Seems to be unneeded now.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 33
+      },
+      "revId": "8adebbf345f949e30e84bb5d411dc8e5f2cad89b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bd32b8e_0a344045",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_auth_service_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-29T15:48:38Z",
+      "side": 1,
+      "message": "#include \u003cmemory\u003e\n\nI wonder why `git cl lint` didn\u0027t complain.",
+      "revId": "8adebbf345f949e30e84bb5d411dc8e5f2cad89b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d1890da_d3878828",
+        "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-29T15:48:38Z",
+      "side": 1,
+      "message": "In another _unittest.cc you relied on the fact that the header imported \u003cmemory\u003e. What\u0027s the rule here?",
+      "revId": "8adebbf345f949e30e84bb5d411dc8e5f2cad89b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e44b78b_49842bc3",
+        "filename": "chrome/browser/chromeos/arc/downloads_watcher/arc_downloads_watcher_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-29T15:48:38Z",
+      "side": 1,
+      "message": "unused?",
+      "revId": "8adebbf345f949e30e84bb5d411dc8e5f2cad89b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22358206_bfa99172",
+        "filename": "chrome/browser/chromeos/arc/kiosk/arc_kiosk_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-29T15:48:38Z",
+      "side": 1,
+      "message": "#include \"base/memory/ptr_util.h\"",
+      "range": {
+        "startLine": 64,
+        "startChar": 15,
+        "endLine": 64,
+        "endChar": 25
+      },
+      "revId": "8adebbf345f949e30e84bb5d411dc8e5f2cad89b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
