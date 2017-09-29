@@ -52,6 +52,24 @@
       "revId": "ee38331f944db5110e8f1c2e0d2e04233c4fccf7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "305a2d4a_fd342fe0",
+        "filename": "chrome/browser/resources/md_extensions/item_list.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-29T02:16:01Z",
+      "side": 1,
+      "message": "So, I am implementing your suggestion at https://chromium-review.googlesource.com/c/chromium/src/+/691047. I think this produces the exact behavior we want (and also fixes 2 more bugs as a result).",
+      "parentUuid": "6a3f2f54_24d6c118",
+      "revId": "ee38331f944db5110e8f1c2e0d2e04233c4fccf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
