@@ -53,6 +53,63 @@
     },
     {
       "key": {
+        "uuid": "20f41cae_9e11536c",
+        "filename": "content/renderer/media/webrtc/rtc_rtp_contributing_source.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1132136
+      },
+      "writtenOn": "2017-09-29T22:09:42Z",
+      "side": 1,
+      "message": "base::Optional\u003cuint8_t\u003e AudioLevel()? Or is Optional discouraged in this code (hbos, you know?)",
+      "revId": "3a0fb0765ca649a33ec52f21448f946a9869d32b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "094bb8ba_7da58067",
+        "filename": "content/shell/test_runner/mock_webrtc_peer_connection_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1132136
+      },
+      "writtenOn": "2017-09-29T22:09:42Z",
+      "side": 1,
+      "message": "nit: This contains both CSRCs and an SSRC entry, so maybe it should just be called \"sources\".",
+      "range": {
+        "startLine": 311,
+        "startChar": 8,
+        "endLine": 311,
+        "endChar": 28
+      },
+      "revId": "3a0fb0765ca649a33ec52f21448f946a9869d32b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73943fb8_27d593be",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpReceiver.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1132136
+      },
+      "writtenOn": "2017-09-29T22:09:42Z",
+      "side": 1,
+      "message": "nit: Can use a switch statement. The advantage is that if a new WebRTCRtpSourceType is added, and the switch statement isn\u0027t updated, there will be an error at compile time rather than runtime. Probably doesn\u0027t matter in this case, but is a good habit to form.",
+      "revId": "3a0fb0765ca649a33ec52f21448f946a9869d32b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8414300f_52f1bbdb",
         "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpSynchronizationSource.cpp",
         "patchSetId": 1
@@ -64,6 +121,23 @@
       "writtenOn": "2017-09-27T16:47:36Z",
       "side": 1,
       "message": "The TODO should be here too. But see other comment about only putting the \"if missing return 127\" in one of the layers.",
+      "revId": "3a0fb0765ca649a33ec52f21448f946a9869d32b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1268a369_c75977d5",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpSynchronizationSource.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1132136
+      },
+      "writtenOn": "2017-09-29T22:09:42Z",
+      "side": 1,
+      "message": "If our implementation must be nonstandard, I think returning a null value is preferable to returning silence. That way you can tell the difference between \"no value\" and true silence.",
       "revId": "3a0fb0765ca649a33ec52f21448f946a9869d32b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
