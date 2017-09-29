@@ -34,6 +34,24 @@
       "revId": "801a9f1f73817b19b5316250a880d5ed6cc62480",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f5db3c6_65205cd1",
+        "filename": "third_party/closure_compiler/compiled_resources2.gyp",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-29T03:50:33Z",
+      "side": 1,
+      "message": "Not sure. I\u0027ll defer to fukino@.",
+      "parentUuid": "c9e381f6_a9345a08",
+      "revId": "801a9f1f73817b19b5316250a880d5ed6cc62480",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
