@@ -34,6 +34,24 @@
       "revId": "cc083d534e6a887ce3da6dce399e61fe57e322c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98cd3c68_86dbd648",
+        "filename": "content/public/browser/network_connection_tracker_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-29T17:32:13Z",
+      "side": 1,
+      "message": "Done. including network_service.h also gives me an error so I modified content/public DEPs file. PTAL.\n\n** Presubmit ERRORS **\nYou added one or more #includes that violate checkdeps rules.\n  content/public/browser/network_connection_tracker_unittest.cc\n      Illegal include: \"content/public/network/network_service.h\"\n    Because of \"-content\" from content/public\u0027s include_rules.",
+      "parentUuid": "664ea570_894b0710",
+      "revId": "cc083d534e6a887ce3da6dce399e61fe57e322c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
