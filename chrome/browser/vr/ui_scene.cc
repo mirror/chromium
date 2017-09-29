@@ -31,6 +31,8 @@ UiScene::Elements GetVisibleElements(UiElement* root, P predicate) {
 
 }  // namespace
 
+FrameLifecyclePhase UiScene::g_current_phase_ = kClean;
+
 void UiScene::AddUiElement(UiElementName parent,
                            std::unique_ptr<UiElement> element) {
   CHECK_GE(element->id(), 0);
@@ -61,28 +63,44 @@ void UiScene::RemoveAnimation(int element_id, int animation_id) {
 
 void UiScene::OnBeginFrame(const base::TimeTicks& current_time,
                            const gfx::Vector3dF& look_at) {
+  g_current_phase_ = kDirty;
+
+  // Process all animations and pre-binding work. I.e., induce any time-related
+  // "dirtiness" on the scene graph.
   for (auto& element : *root_element_) {
-    // Process all animations before calculating object transforms.
-    element.OnBeginFrame(current_time);
+    element.OnBeginFrame(current_time, look_at);
   }
 
+  g_current_phase_ = kAnimationClean;
+
+  // Propagate updates across bindings.
   for (auto& element : *root_element_) {
     for (auto& binding : element.bindings()) {
       binding->Update();
     }
   }
 
+  g_current_phase_ = kBindingsClean;
+
+  // Update textures and sizes.
   for (auto& element : *root_element_) {
-    element.LayOutChildren();
-    element.AdjustRotationForHeadPose(look_at);
+    element.PrepareToDraw();
   }
 
-  root_element_->UpdateInheritedProperties();
-}
+  g_current_phase_ = kTexturesAndSizesClean;
 
-void UiScene::PrepareToDraw() {
-  for (auto& element : *root_element_)
-    element.PrepareToDraw();
+  // Update layout, which depends on size.
+  for (auto& element : *root_element_) {
+    element.LayOutChildren();
+  }
+
+  g_current_phase_ = kLayoutClean;
+
+  // Now that we have finalized our local values, we can safely update our
+  // inherited values.
+  root_element_->UpdateInheritedProperties();
+
+  g_current_phase_ = kClean;
 }
 
 UiElement& UiScene::root_element() {
