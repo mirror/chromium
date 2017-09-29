@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2c9fa9e_63d5b9d6",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-09-29T21:08:24Z",
+      "side": 1,
+      "message": "I think you should stick this in the code path that uses readPixels to avoid allocating a large buffer if it isn\u0027t needed.",
+      "range": {
+        "startLine": 213,
+        "startChar": 15,
+        "endLine": 213,
+        "endChar": 21
+      },
+      "revId": "3b47271eabb9e517bf7016860dc11e23a3ead5ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
