@@ -65,6 +65,23 @@
     },
     {
       "key": {
+        "uuid": "b636d3a2_260bbcaa",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletThread.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-29T00:53:42Z",
+      "side": 1,
+      "message": "These conditions hold only when we create only 1 AudioWorklet, right? If we create two, we will hit these DCHECKs.",
+      "revId": "fbb512ad922a0ea8723c3f6e58ab6448a8216465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "25f13da3_3ab2705a",
         "filename": "third_party/WebKit/Source/modules/webaudio/DefaultAudioDestinationNode.cpp",
         "patchSetId": 6
