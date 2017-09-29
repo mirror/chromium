@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "760f39ac_b3db96fa",
+        "filename": "chromeos/network/geolocation_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-29T22:09:38Z",
+      "side": 1,
+      "message": "Use a more descriptive name than \u0027tmp\u0027 here, e.g. hex_cell_id.",
+      "revId": "46954bcadeca4ebfb2236b0c51175ef1327f66ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "652d49be_b3f6c9c0",
+        "filename": "chromeos/network/geolocation_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-29T22:09:38Z",
+      "side": 1,
+      "message": "Same here; use a different / descriptive variable name.",
+      "revId": "46954bcadeca4ebfb2236b0c51175ef1327f66ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
