@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "ea93fc03_f98b25bb",
+        "filename": "ios/chrome/browser/signin/ios_chrome_signin_client.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-29T15:37:32Z",
+      "side": 1,
+      "message": "Ah, I missed that. Yeah, I guess that you have to pass the browser_state then.",
+      "parentUuid": "7594db2c_f7b05c29",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 44
+      },
+      "revId": "1cea36b6b1c1d0e51db6d11f02d5bd6b3dbcb840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25056b7a_aa63b83f",
         "filename": "ios/chrome/browser/signin/signin_client_factory.cc",
         "patchSetId": 8
