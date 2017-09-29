@@ -787,6 +787,13 @@ void FrameFetchContext::AddClientHintsIfNecessary(
   if (!RuntimeEnabledFeatures::ClientHintsEnabled())
     return;
 
+  if (GetSettings() && !GetSettings()->GetCookieEnabled())
+    return;
+
+  if (!AllowScriptFromSource(request.Url())) {
+    return;
+  }
+
   WebEnabledClientHints enabled_hints;
   if (blink::RuntimeEnabledFeatures::ClientHintsPersistentEnabled() &&
       GetContentSettingsClient()) {
@@ -1132,6 +1139,10 @@ void FrameFetchContext::ParseAndPersistClientHints(
 
   if (persist_duration.InSeconds() <= 0)
     return;
+
+  if (!AllowScriptFromSource(response.Url())) {
+    return;
+  }
 
   GetContentSettingsClient()->PersistClientHints(
       enabled_client_hints, persist_duration, response.Url());
