@@ -3,6 +3,9 @@
 // found in the LICENSE file.
 
 #include "media/mojo/services/video_decode_perf_history.h"
+
+#include <inttypes.h>
+
 #include "base/callback.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
@@ -86,7 +89,7 @@ void VideoDecodePerfHistory::OnGotPerfInfo(
                                  entry.frame_rate())
            << (info.get()
                    ? base::StringPrintf(
-                         "smooth:%d frames_decoded:%d pcnt_dropped:%f",
+                         "smooth:%d frames_decoded:%" PRIu64 " pcnt_dropped:%f",
                          is_smooth, info->frames_decoded, percent_dropped)
                    : (database_success ? "no info" : "query FAILED"));
 

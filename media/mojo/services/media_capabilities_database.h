@@ -37,11 +37,11 @@ class MEDIA_MOJO_EXPORT MediaCapabilitiesDatabase {
     int frame_rate_;
   };
 
-  // Information saves to identify the capabilities related to a given |Entry|.
+  // Information saved to identify the capabilities related to a given |Entry|.
   struct MEDIA_MOJO_EXPORT Info {
-    Info(uint32_t frames_decoded, uint32_t frames_dropped);
-    uint32_t frames_decoded;
-    uint32_t frames_dropped;
+    Info(uint64_t frames_decoded, uint64_t frames_dropped);
+    uint64_t frames_decoded;
+    uint64_t frames_dropped;
   };
 
   virtual ~MediaCapabilitiesDatabase() {}
