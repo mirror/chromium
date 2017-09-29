@@ -22,7 +22,7 @@ class Metric(object):
 
     To add options here, call options.AppendExtraBrowserArgs(arg).
     """
-    pass
+    options.AppendExtraBrowserArgs(['--disable-expiring-histograms'])
 
   def Start(self, page, tab):
     """Start collecting data for this metric."""
