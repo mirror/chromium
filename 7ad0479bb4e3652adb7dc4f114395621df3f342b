@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f788c56_553e5e96",
+        "filename": "components/arc/common/bluetooth.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-29T03:36:32Z",
+      "side": 0,
+      "message": "Note: Needed to be removed. Otherwise even if this is empty list, this field is serialized, and deserialized in other side so that protocol mismatch causes an error, unfortunately.\n\nThis removal would also cause protocol mismatch between Chrome and ARC, but 1) currently it is already broken, and 2) there\u0027s no way to gracefully remove this field AFAIK.\nWe decided to accept breaking change.\n\nThe only affected stuff is what is currently broken, so we should be able to roll this safely.",
+      "revId": "7ad0479bb4e3652adb7dc4f114395621df3f342b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

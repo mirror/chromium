@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b0868cd_7c52b939",
+        "filename": "components/arc/bluetooth/bluetooth_type_converters_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-29T03:36:32Z",
+      "side": 1,
+      "message": "FYI: TODO, reformat to follow the chromium style guide. I just ignored most of them.",
+      "revId": "5d0aeaa438fe4a335efdef33a6916cdd35d1adeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
