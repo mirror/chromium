@@ -17,6 +17,7 @@
 #include "gpu/ipc/service/gpu_channel.h"
 #include "gpu/ipc/service/gpu_command_buffer_stub.h"
 #include "media/base/bind_to_current_loop.h"
+#include "media/base/scoped_callback_runner.h"
 #include "media/base/video_frame.h"
 #include "media/gpu//android/codec_image.h"
 #include "media/gpu/android/codec_wrapper.h"
@@ -32,23 +33,88 @@ bool MakeContextCurrent(gpu::GpuCommandBufferStub* stub) {
 
 }  // namespace
 
-VideoFrameFactoryImpl::VideoFrameFactoryImpl() = default;
+// GpuVideoFrameFactory is where most of the implementation of
+// VideoFrameFactoryImpl is. It may be created on any thread but only accessed
+// on the gpu thread thereafter.
+class GpuVideoFrameFactory
+    : public gpu::GpuCommandBufferStub::DestructionObserver {
+ public:
+  GpuVideoFrameFactory();
+  ~GpuVideoFrameFactory() override;
+
+  scoped_refptr<SurfaceTextureGLOwner> Initialize(
+      VideoFrameFactory::GetStubCb get_stub_cb);
+
+  // Creates and returns a VideoFrame with its ReleaseMailboxCB.
+  void CreateVideoFrame(
+      std::unique_ptr<CodecOutputBuffer> output_buffer,
+      scoped_refptr<SurfaceTextureGLOwner> surface_texture,
+      base::TimeDelta timestamp,
+      gfx::Size natural_size,
+      VideoFrameFactory::OutputWithReleaseMailboxCB output_cb,
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner);
+
+ private:
+  // Creates a TextureRef and VideoFrame.
+  void CreateVideoFrameInternal(
+      std::unique_ptr<CodecOutputBuffer> output_buffer,
+      scoped_refptr<SurfaceTextureGLOwner> surface_texture,
+      base::TimeDelta timestamp,
+      gfx::Size natural_size,
+      scoped_refptr<VideoFrame>* video_frame_out,
+      scoped_refptr<gpu::gles2::TextureRef>* texture_ref_out);
+
+  void OnWillDestroyStub() override;
+
+  // Clears |texture_refs_|. Makes the gl context current.
+  void ClearTextureRefs();
+
+  // Removes |ref| from texture_refs_. Makes the gl context current.
+  // |token| is ignored because MojoVideoDecoderService guarantees that it has
+  // already passed by the time we get the callback.
+  void DropTextureRef(gpu::gles2::TextureRef* ref, const gpu::SyncToken& token);
+
+  // Removes |image| from |images_|.
+  void OnImageDestructed(CodecImage* image);
+
+  // Outstanding images that should be considered for early rendering.
+  std::vector<CodecImage*> images_;
+
+  // Outstanding TextureRefs that are still referenced by a mailbox VideoFrame.
+  // They're kept alive until their mailboxes are released (or |this| is
+  // destructed).
+  std::map<gpu::gles2::TextureRef*, scoped_refptr<gpu::gles2::TextureRef>>
+      texture_refs_;
+  gpu::GpuCommandBufferStub* stub_;
+
+  // A helper for creating textures. Only valid while |stub_| is valid.
+  std::unique_ptr<GLES2DecoderHelper> decoder_helper_;
+  THREAD_CHECKER(thread_checker_);
+  base::WeakPtrFactory<GpuVideoFrameFactory> weak_factory_;
+  DISALLOW_COPY_AND_ASSIGN(GpuVideoFrameFactory);
+};
+
+VideoFrameFactoryImpl::VideoFrameFactoryImpl(
+    scoped_refptr<base::SingleThreadTaskRunner> gpu_task_runner,
+    GetStubCb get_stub_cb)
+    : gpu_task_runner_(std::move(gpu_task_runner)),
+      get_stub_cb_(std::move(get_stub_cb)) {}
 
 VideoFrameFactoryImpl::~VideoFrameFactoryImpl() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   if (gpu_video_frame_factory_)
     gpu_task_runner_->DeleteSoon(FROM_HERE, gpu_video_frame_factory_.release());
 }
 
-void VideoFrameFactoryImpl::Initialize(
-    scoped_refptr<base::SingleThreadTaskRunner> gpu_task_runner,
-    GetStubCb get_stub_cb,
-    InitCb init_cb) {
-  gpu_task_runner_ = std::move(gpu_task_runner);
+void VideoFrameFactoryImpl::Initialize(InitCb init_cb) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(!gpu_video_frame_factory_);
   gpu_video_frame_factory_ = base::MakeUnique<GpuVideoFrameFactory>();
   base::PostTaskAndReplyWithResult(
       gpu_task_runner_.get(), FROM_HERE,
       base::Bind(&GpuVideoFrameFactory::Initialize,
-                 base::Unretained(gpu_video_frame_factory_.get()), get_stub_cb),
+                 base::Unretained(gpu_video_frame_factory_.get()),
+                 get_stub_cb_),
       std::move(init_cb));
 }
 
@@ -58,6 +124,7 @@ void VideoFrameFactoryImpl::CreateVideoFrame(
     base::TimeDelta timestamp,
     gfx::Size natural_size,
     OutputWithReleaseMailboxCB output_cb) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   gpu_task_runner_->PostTask(
       FROM_HERE, base::Bind(&GpuVideoFrameFactory::CreateVideoFrame,
                             base::Unretained(gpu_video_frame_factory_.get()),
@@ -66,9 +133,20 @@ void VideoFrameFactoryImpl::CreateVideoFrame(
                             base::ThreadTaskRunnerHandle::Get()));
 }
 
-GpuVideoFrameFactory::GpuVideoFrameFactory() : weak_factory_(this) {}
+void VideoFrameFactoryImpl::RunAfterPendingVideoFrames(
+    base::OnceClosure closure) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  // Hop through |gpu_task_runner_| to ensure it comes after pending frames.
+  gpu_task_runner_->PostTaskAndReply(
+      FROM_HERE, base::BindOnce(&base::DoNothing), std::move(closure));
+}
+
+GpuVideoFrameFactory::GpuVideoFrameFactory() : weak_factory_(this) {
+  DETACH_FROM_THREAD(thread_checker_);
+}
 
 GpuVideoFrameFactory::~GpuVideoFrameFactory() {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   if (stub_)
     stub_->RemoveDestructionObserver(this);
   ClearTextureRefs();
@@ -76,6 +154,7 @@ GpuVideoFrameFactory::~GpuVideoFrameFactory() {
 
 scoped_refptr<SurfaceTextureGLOwner> GpuVideoFrameFactory::Initialize(
     VideoFrameFactoryImpl::GetStubCb get_stub_cb) {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   stub_ = get_stub_cb.Run();
   if (!MakeContextCurrent(stub_))
     return nullptr;
@@ -91,6 +170,7 @@ void GpuVideoFrameFactory::CreateVideoFrame(
     gfx::Size natural_size,
     VideoFrameFactory::OutputWithReleaseMailboxCB output_cb,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   scoped_refptr<VideoFrame> frame;
   scoped_refptr<gpu::gles2::TextureRef> texture_ref;
   CreateVideoFrameInternal(std::move(output_buffer), std::move(surface_texture),
@@ -105,11 +185,17 @@ void GpuVideoFrameFactory::CreateVideoFrame(
   // release callback lifetime should be separate from MCVD or
   // MojoVideoDecoderService (http://crbug.com/737220).
   texture_refs_[texture_ref.get()] = texture_ref;
-  auto release_cb = BindToCurrentLoop(base::Bind(
-      &GpuVideoFrameFactory::DropTextureRef, weak_factory_.GetWeakPtr(),
-      base::Unretained(texture_ref.get())));
-  task_runner->PostTask(FROM_HERE, base::Bind(output_cb, std::move(release_cb),
-                                              std::move(frame)));
+  auto drop_texture_ref = base::Bind(&GpuVideoFrameFactory::DropTextureRef,
+                                     weak_factory_.GetWeakPtr(),
+                                     base::Unretained(texture_ref.get()));
+
+  // Guarantee that the TextureRef is released even if the VideoFrame is
+  // dropped. Otherwise we could keep TextureRefs we don't need alive.
+  auto release_cb = ScopedCallbackRunner(
+      ToOnceCallback(BindToCurrentLoop(drop_texture_ref)), gpu::SyncToken());
+  task_runner->PostTask(
+      FROM_HERE,
+      base::BindOnce(output_cb, std::move(release_cb), std::move(frame)));
 }
 
 void GpuVideoFrameFactory::CreateVideoFrameInternal(
@@ -119,6 +205,7 @@ void GpuVideoFrameFactory::CreateVideoFrameInternal(
     gfx::Size natural_size,
     scoped_refptr<VideoFrame>* video_frame_out,
     scoped_refptr<gpu::gles2::TextureRef>* texture_ref_out) {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   if (!MakeContextCurrent(stub_))
     return;
 
@@ -184,6 +271,7 @@ void GpuVideoFrameFactory::CreateVideoFrameInternal(
 }
 
 void GpuVideoFrameFactory::OnWillDestroyStub() {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK(stub_);
   ClearTextureRefs();
   stub_ = nullptr;
@@ -191,6 +279,7 @@ void GpuVideoFrameFactory::OnWillDestroyStub() {
 }
 
 void GpuVideoFrameFactory::ClearTextureRefs() {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK(stub_ || texture_refs_.empty());
   // If we fail to make the context current, we have to notify the TextureRefs
   // so they don't try to delete textures without a context.
@@ -203,6 +292,7 @@ void GpuVideoFrameFactory::ClearTextureRefs() {
 
 void GpuVideoFrameFactory::DropTextureRef(gpu::gles2::TextureRef* ref,
                                           const gpu::SyncToken& token) {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   auto it = texture_refs_.find(ref);
   if (it == texture_refs_.end())
     return;
@@ -214,6 +304,7 @@ void GpuVideoFrameFactory::DropTextureRef(gpu::gles2::TextureRef* ref,
 }
 
 void GpuVideoFrameFactory::OnImageDestructed(CodecImage* image) {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   base::Erase(images_, image);
   internal::MaybeRenderEarly(&images_);
 }
