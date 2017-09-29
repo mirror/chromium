@@ -74,7 +74,7 @@ class BASE_EXPORT RefCountedBase {
     }
 #endif
 
-    AddRefImpl();
+    ++ref_count_;
   }
 
   // Returns true if the object should self-delete.
@@ -131,12 +131,6 @@ class BASE_EXPORT RefCountedBase {
     needs_adopt_ref_ = false;
 #endif
   }
-
-#if defined(ARCH_CPU_64_BIT)
-  void AddRefImpl() const;
-#else
-  void AddRefImpl() const { ++ref_count_; }
-#endif
 
 #if DCHECK_IS_ON()
   bool CalledOnValidSequence() const;
@@ -532,13 +526,13 @@ class scoped_refptr {
   scoped_refptr() {}
 
   scoped_refptr(T* p) : ptr_(p) {
-    if (ptr_)
+    if (LIKELY(ptr_))
       AddRef(ptr_);
   }
 
   // Copy constructor.
   scoped_refptr(const scoped_refptr<T>& r) : ptr_(r.ptr_) {
-    if (ptr_)
+    if (LIKELY(ptr_))
       AddRef(ptr_);
   }
 
@@ -547,7 +541,7 @@ class scoped_refptr {
             typename = typename std::enable_if<
                 std::is_convertible<U*, T*>::value>::type>
   scoped_refptr(const scoped_refptr<U>& r) : ptr_(r.get()) {
-    if (ptr_)
+    if (LIKELY(ptr_))
       AddRef(ptr_);
   }
 
@@ -564,7 +558,7 @@ class scoped_refptr {
   }
 
   ~scoped_refptr() {
-    if (ptr_)
+    if (LIKELY(ptr_))
       Release(ptr_);
   }
 
@@ -582,11 +576,11 @@ class scoped_refptr {
 
   scoped_refptr<T>& operator=(T* p) {
     // AddRef first so that self assignment should work
-    if (p)
+    if (LIKELY(p))
       AddRef(p);
     T* old_ptr = ptr_;
     ptr_ = p;
-    if (old_ptr)
+    if (LIKELY(old_ptr))
       Release(old_ptr);
     return *this;
   }
