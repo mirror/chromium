@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af086c04_bf01d577",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-29T09:28:13Z",
+      "side": 1,
+      "message": "Discussion (not blocking the CL): Should we remove the invalid token for B in this case? I think we\u0027ll need to chat about this.",
+      "range": {
+        "startLine": 371,
+        "startChar": 47,
+        "endLine": 371,
+        "endChar": 51
+      },
+      "revId": "3ffbfd3216152dbc0aa2f763355a177db500d2d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c8e7b1f_db170e4d",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-29T09:28:13Z",
+      "side": 1,
+      "message": "Same here: should we remove the token for B?",
+      "range": {
+        "startLine": 377,
+        "startChar": 66,
+        "endLine": 377,
+        "endChar": 67
+      },
+      "revId": "3ffbfd3216152dbc0aa2f763355a177db500d2d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a16e4bd_66d90631",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-29T09:28:13Z",
+      "side": 1,
+      "message": "Same her: Should we remove the token for B?",
+      "range": {
+        "startLine": 395,
+        "startChar": 42,
+        "endLine": 395,
+        "endChar": 51
+      },
+      "revId": "3ffbfd3216152dbc0aa2f763355a177db500d2d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eddfe19f_2ed3d3e9",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-29T09:28:13Z",
+      "side": 1,
+      "message": "This also made me thing about the fact that the reconcile operation should leave the accounts in a stable state. We need to make sure that running in a result state does not modify the state anymore.",
+      "range": {
+        "startLine": 424,
+        "startChar": 20,
+        "endLine": 424,
+        "endChar": 21
+      },
+      "revId": "3ffbfd3216152dbc0aa2f763355a177db500d2d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "607d3b30_36255cd2",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-29T09:28:13Z",
+      "side": 1,
+      "message": "Accounts are inconsistent in this case, so I think we have 2 options:\n1. \"\", \"*xAxB\"\nor\n2. \"A\", \"*AxB\"\n\nIn the current state, on the next reaconcile we would end up in \"A\", \"*AxB\" anyway.",
+      "range": {
+        "startLine": 424,
+        "startChar": 57,
+        "endLine": 424,
+        "endChar": 67
+      },
+      "revId": "3ffbfd3216152dbc0aa2f763355a177db500d2d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae864f87_a023f7c6",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-29T09:28:13Z",
+      "side": 1,
+      "message": "Same as above.",
+      "range": {
+        "startLine": 427,
+        "startChar": 9,
+        "endLine": 427,
+        "endChar": 12
+      },
+      "revId": "3ffbfd3216152dbc0aa2f763355a177db500d2d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
