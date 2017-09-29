@@ -102,7 +102,7 @@ LoadingPredictorConfig::LoadingPredictorConfig()
     : mode(0),
       max_navigation_lifetime_seconds(60),
       max_urls_to_track(500),
-      max_hosts_to_track(200),
+      max_hosts_to_track(100),
       min_url_visit_count(2),
       max_resources_per_entry(50),
       max_origins_per_entry(50),
