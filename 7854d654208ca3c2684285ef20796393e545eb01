@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c830210_36786ebf",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3428,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-29T18:00:28Z",
+      "side": 1,
+      "message": "Can you remove this too then?",
+      "revId": "7854d654208ca3c2684285ef20796393e545eb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
