@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "28317e6d_198bf5e7",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/BaseChromiumAndroidJUnitRunner.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-29T13:50:51Z",
+      "side": 1,
+      "message": "With incremental, the dex files live in /data/local/tmp, and not within the .apk. So, to find the test classes, we need to tell it to look in all of the test .dex since the only thing in the apk\u0027s dex is the incremental install bootstrap code.",
+      "parentUuid": "97bdc89f_b05862db",
+      "revId": "2502039272bb154aae0d57127839dcb2abf91c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "46362a62_ba01fa1d",
         "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-28T18:59:09Z",
       "side": 1,
       "message": "out of curiosity, why are permissions needed?",
+      "revId": "2502039272bb154aae0d57127839dcb2abf91c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "111051d8_c983b2c0",
+        "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-29T13:50:51Z",
+      "side": 1,
+      "message": "It\u0027s writing the test list to a .json file on /sdcard (not sure why... might be better to just return the list directly via test output).\n\nWithout granting permission, it fails to write to /sdcard.",
+      "parentUuid": "46362a62_ba01fa1d",
       "revId": "2502039272bb154aae0d57127839dcb2abf91c28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
