@@ -1382,19 +1382,15 @@ TEST(HttpCache, SimpleGET_ManyReaders) {
   // Allow all requests to move from the Create queue to the active entry.
   base::RunLoop().RunUntilIdle();
 
-  // The first request should be a writer at this point, and the subsequent
-  // requests should have passed the validation phase and waiting for the
-  // response to be written to the cache before they can read.
-  EXPECT_TRUE(cache.IsWriterPresent(kSimpleGET_Transaction.url));
-  EXPECT_EQ(kNumTransactions - 1,
-            cache.GetCountDoneHeadersQueue(kSimpleGET_Transaction.url));
+  // All requests would be added to writers.
+  EXPECT_EQ(kNumTransactions,
+            cache.GetCountWriterTransactions(kSimpleGET_Transaction.url));
 
   EXPECT_EQ(1, cache.network_layer()->transaction_count());
   EXPECT_EQ(0, cache.disk_cache()->open_count());
   EXPECT_EQ(1, cache.disk_cache()->create_count());
 
-  // All requests depend on the writer, and the writer is between Start and
-  // Read, i.e. idle.
+  // All requests are between Start and Read, i.e. idle.
   for (auto& context : context_list) {
     EXPECT_EQ(LOAD_STATE_IDLE, context->trans->GetLoadState());
   }
@@ -1404,6 +1400,8 @@ TEST(HttpCache, SimpleGET_ManyReaders) {
     if (c->result == ERR_IO_PENDING)
       c->result = c->callback.WaitForResult();
 
+    // After the 1st transaction has completed the response, all transactions
+    // get added to readers.
     if (i > 0) {
       EXPECT_FALSE(cache.IsWriterPresent(kSimpleGET_Transaction.url));
       EXPECT_EQ(kNumTransactions - i,
@@ -1414,7 +1412,6 @@ TEST(HttpCache, SimpleGET_ManyReaders) {
   }
 
   // We should not have had to re-open the disk entry
-
   EXPECT_EQ(1, cache.network_layer()->transaction_count());
   EXPECT_EQ(0, cache.disk_cache()->open_count());
   EXPECT_EQ(1, cache.disk_cache()->create_count());
@@ -2121,23 +2118,20 @@ TEST(HttpCache, SimpleGET_ParallelValidationNoMatch1) {
   // Allow all requests to move from the Create queue to the active entry.
   base::RunLoop().RunUntilIdle();
 
-  // The first request should be a writer at this point, and the second
-  // request should have passed the validation phase and created a new
-  // entry. Rest of them should be added to the new entry.
-  EXPECT_TRUE(cache.IsWriterPresent(kSimpleGET_Transaction.url));
-  EXPECT_EQ(3, cache.GetCountDoneHeadersQueue(kSimpleGET_Transaction.url));
+  // The new entry will have all the transactions except the first one which
+  // will continue in the doomed entry.
+  EXPECT_EQ(kNumTransactions - 1,
+            cache.GetCountWriterTransactions(kSimpleGET_Transaction.url));
+
+  EXPECT_EQ(1, cache.disk_cache()->doomed_count());
 
   EXPECT_EQ(2, cache.network_layer()->transaction_count());
   EXPECT_EQ(0, cache.disk_cache()->open_count());
   EXPECT_EQ(2, cache.disk_cache()->create_count());
 
-  // All requests depend on the writer, and the writer is between Start and
-  // Read, i.e. idle.
   for (auto& context : context_list) {
     EXPECT_EQ(LOAD_STATE_IDLE, context->trans->GetLoadState());
   }
-
-  EXPECT_EQ(1, cache.disk_cache()->doomed_count());
 
   for (size_t i = 0; i < context_list.size(); i++) {
     if (context_list[i]->result == ERR_IO_PENDING)
@@ -2241,15 +2235,13 @@ TEST(HttpCache, SimpleGET_ParallelValidationCancelValidated) {
   // Allow all requests to move from the Create queue to the active entry.
   base::RunLoop().RunUntilIdle();
 
-  // The first request should be a writer at this point, and the subsequent
-  // requests should have completed validation.
-
   EXPECT_EQ(1, cache.network_layer()->transaction_count());
   EXPECT_EQ(0, cache.disk_cache()->open_count());
   EXPECT_EQ(1, cache.disk_cache()->create_count());
 
-  EXPECT_TRUE(cache.IsWriterPresent(kSimpleGET_Transaction.url));
-  EXPECT_EQ(1, cache.GetCountDoneHeadersQueue(kSimpleGET_Transaction.url));
+  // Both transactions would be added to writers.
+  EXPECT_EQ(kNumTransactions,
+            cache.GetCountWriterTransactions(kSimpleGET_Transaction.url));
 
   context_list[1].reset();
 
@@ -2274,6 +2266,10 @@ TEST(HttpCache, SimpleGET_ParallelValidationValidatedTimeout) {
 
   MockHttpRequest request(kSimpleGET_Transaction);
 
+  MockTransaction transaction(kSimpleGET_Transaction);
+  transaction.load_flags |= LOAD_ONLY_FROM_CACHE;
+  MockHttpRequest read_only_request(transaction);
+
   std::vector<std::unique_ptr<Context>> context_list;
   const int kNumTransactions = 2;
 
@@ -2281,8 +2277,11 @@ TEST(HttpCache, SimpleGET_ParallelValidationValidatedTimeout) {
     context_list.push_back(std::make_unique<Context>());
     auto& c = context_list[i];
 
-    if (i == 1)
+    MockHttpRequest* this_request = &request;
+    if (i == 1) {
+      this_request = &read_only_request;
       cache.SimulateCacheLockTimeoutAfterHeaders();
+    }
 
     c->result = cache.CreateTransaction(&c->trans);
     ASSERT_THAT(c->result, IsOk());
@@ -2296,22 +2295,22 @@ TEST(HttpCache, SimpleGET_ParallelValidationValidatedTimeout) {
 
   // The first request should be a writer at this point, and the subsequent
   // requests should have completed validation, timed out and restarted.
+  // Since it is a read only request, it will error out.
 
-  EXPECT_EQ(2, cache.network_layer()->transaction_count());
+  EXPECT_EQ(1, cache.network_layer()->transaction_count());
   EXPECT_EQ(0, cache.disk_cache()->open_count());
   EXPECT_EQ(1, cache.disk_cache()->create_count());
 
   EXPECT_TRUE(cache.IsWriterPresent(kSimpleGET_Transaction.url));
   EXPECT_EQ(0, cache.GetCountDoneHeadersQueue(kSimpleGET_Transaction.url));
 
-  // Complete the rest of the transactions.
-  for (auto& context : context_list) {
-    ReadAndVerifyTransaction(context->trans.get(), kSimpleGET_Transaction);
-  }
+  base::RunLoop().RunUntilIdle();
 
-  EXPECT_EQ(2, cache.network_layer()->transaction_count());
-  EXPECT_EQ(0, cache.disk_cache()->open_count());
-  EXPECT_EQ(1, cache.disk_cache()->create_count());
+  int rv = context_list[1]->callback.WaitForResult();
+  EXPECT_EQ(ERR_CACHE_MISS, rv);
+
+  ReadAndVerifyTransaction(context_list[0]->trans.get(),
+                           kSimpleGET_Transaction);
 }
 
 // Tests that a transaction which is in readers can be destroyed without
@@ -2352,8 +2351,8 @@ TEST(HttpCache, SimpleGET_ParallelValidationCancelReader) {
   EXPECT_EQ(0, cache.disk_cache()->open_count());
   EXPECT_EQ(1, cache.disk_cache()->create_count());
 
-  EXPECT_TRUE(cache.IsWriterPresent(kSimpleGET_Transaction.url));
-  EXPECT_EQ(2, cache.GetCountDoneHeadersQueue(kSimpleGET_Transaction.url));
+  EXPECT_EQ(kNumTransactions - 1,
+            cache.GetCountWriterTransactions(kSimpleGET_Transaction.url));
   EXPECT_TRUE(cache.IsHeadersTransactionPresent(kSimpleGET_Transaction.url));
 
   // Complete the response body.
@@ -2362,7 +2361,8 @@ TEST(HttpCache, SimpleGET_ParallelValidationCancelReader) {
 
   // Rest of the transactions should move to readers.
   EXPECT_FALSE(cache.IsWriterPresent(kSimpleGET_Transaction.url));
-  EXPECT_EQ(2, cache.GetCountReaders(kSimpleGET_Transaction.url));
+  EXPECT_EQ(kNumTransactions - 2,
+            cache.GetCountReaders(kSimpleGET_Transaction.url));
   EXPECT_EQ(0, cache.GetCountDoneHeadersQueue(kSimpleGET_Transaction.url));
   EXPECT_TRUE(cache.IsHeadersTransactionPresent(kSimpleGET_Transaction.url));
 
@@ -2395,11 +2395,10 @@ TEST(HttpCache, SimpleGET_ParallelValidationCancelReader) {
   auto& context = context_list[3];
   context->trans->ResumeNetworkStart();
 
-  // The pending transactions will be added to a new entry.
+  // The pending transactions will be added to a new entry as writers.
   base::RunLoop().RunUntilIdle();
 
-  EXPECT_EQ(2, cache.GetCountDoneHeadersQueue(kSimpleGET_Transaction.url));
-  EXPECT_TRUE(cache.IsWriterPresent(kSimpleGET_Transaction.url));
+  EXPECT_EQ(3, cache.GetCountWriterTransactions(kSimpleGET_Transaction.url));
 
   // Complete the rest of the transactions.
   for (int i = 2; i < kNumTransactions; ++i) {
@@ -2450,27 +2449,21 @@ TEST(HttpCache, SimpleGET_ParallelValidationCancelWriter) {
   EXPECT_EQ(0, cache.disk_cache()->open_count());
   EXPECT_EQ(1, cache.disk_cache()->create_count());
 
-  EXPECT_TRUE(cache.IsWriterPresent(kSimpleGET_Transaction.url));
   EXPECT_TRUE(cache.IsHeadersTransactionPresent(kSimpleGET_Transaction.url));
-  EXPECT_EQ(1, cache.GetCountDoneHeadersQueue(kSimpleGET_Transaction.url));
+  EXPECT_EQ(2, cache.GetCountWriterTransactions(kSimpleGET_Transaction.url));
 
-  // Deleting the writer at this point will lead to destroying the entry and
-  // restarting the remaining transactions which will then create a new entry.
+  // Deleting one writer at this point will not impact other transactions
+  // since writers contain more transactions.
   context_list[0].reset();
 
-  // Resume network start for headers_transaction. It should be restarted due to
-  // writer cancellation.
+  // Resume network start for headers_transaction. It will doom the existing
+  // entry and create a new entry due to validation returning a 200.
   auto& c = context_list[2];
   c->trans->ResumeNetworkStart();
 
   base::RunLoop().RunUntilIdle();
 
-  EXPECT_TRUE(cache.IsWriterPresent(kSimpleGET_Transaction.url));
-  EXPECT_TRUE(cache.IsHeadersTransactionPresent(kSimpleGET_Transaction.url));
-
-  // Resume network start for the transaction the second time.
-  c->trans->ResumeNetworkStart();
-  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(1, cache.GetCountWriterTransactions(kSimpleGET_Transaction.url));
 
   // Complete the rest of the transactions.
   for (auto& context : context_list) {
@@ -2479,14 +2472,14 @@ TEST(HttpCache, SimpleGET_ParallelValidationCancelWriter) {
     ReadAndVerifyTransaction(context->trans.get(), kSimpleGET_Transaction);
   }
 
-  EXPECT_EQ(4, cache.network_layer()->transaction_count());
+  EXPECT_EQ(2, cache.network_layer()->transaction_count());
   EXPECT_EQ(0, cache.disk_cache()->open_count());
-  EXPECT_EQ(3, cache.disk_cache()->create_count());
+  EXPECT_EQ(2, cache.disk_cache()->create_count());
 }
 
 // Tests when a writer is destroyed mid-read and entry is marked as truncated,
 // it should lead to restarting the dependent transactions.
-TEST(HttpCache, SimpleGET_ParallelValidationCancelWriterTruncateEntry) {
+TEST(HttpCache, SimpleGET_ParallelValidationCancelWriterNotTruncateEntry) {
   MockHttpCache cache;
 
   ScopedMockTransaction transaction(kSimpleGET_Transaction);
@@ -2517,11 +2510,10 @@ TEST(HttpCache, SimpleGET_ParallelValidationCancelWriterTruncateEntry) {
   EXPECT_EQ(0, cache.disk_cache()->open_count());
   EXPECT_EQ(1, cache.disk_cache()->create_count());
 
-  EXPECT_TRUE(cache.IsWriterPresent(kSimpleGET_Transaction.url));
-  EXPECT_EQ(2, cache.GetCountDoneHeadersQueue(kSimpleGET_Transaction.url));
+  EXPECT_EQ(kNumTransactions,
+            cache.GetCountWriterTransactions(kSimpleGET_Transaction.url));
 
-  // Let first transaction read some bytes, so that entry can be marked as
-  // truncated.
+  // Let first transaction read some bytes.
   {
     auto& c = context_list[0];
     const int kBufferSize = 5;
@@ -2531,14 +2523,13 @@ TEST(HttpCache, SimpleGET_ParallelValidationCancelWriterTruncateEntry) {
     EXPECT_EQ(kBufferSize, cb.GetResult(c->result));
   }
 
-  // Deleting the writer at this point will lead to restarting the remaining
-  // transactions which will then be able to read the truncated status of the
-  // entry.
+  // Deleting the writer at this point will not impact the other transactions
+  // since there are other transactions in writer
   context_list[0].reset();
 
   base::RunLoop().RunUntilIdle();
 
-  EXPECT_EQ(2, cache.network_layer()->transaction_count());
+  EXPECT_EQ(1, cache.network_layer()->transaction_count());
   EXPECT_EQ(0, cache.disk_cache()->open_count());
   EXPECT_EQ(1, cache.disk_cache()->create_count());
 
@@ -2553,6 +2544,61 @@ TEST(HttpCache, SimpleGET_ParallelValidationCancelWriterTruncateEntry) {
 // Tests that when StopCaching is invoked on a writer, dependent transactions
 // are restarted.
 TEST(HttpCache, SimpleGET_ParallelValidationStopCaching) {
+  MockHttpCache cache;
+
+  MockHttpRequest request(kSimpleGET_Transaction);
+
+  MockTransaction transaction(kSimpleGET_Transaction);
+  transaction.load_flags |= LOAD_ONLY_FROM_CACHE;
+  MockHttpRequest read_only_request(transaction);
+
+  const int kNumTransactions = 2;
+  std::vector<std::unique_ptr<Context>> context_list;
+
+  for (int i = 0; i < kNumTransactions; ++i) {
+    context_list.push_back(std::make_unique<Context>());
+    auto& c = context_list[i];
+
+    c->result = cache.CreateTransaction(&c->trans);
+    ASSERT_THAT(c->result, IsOk());
+
+    MockHttpRequest* this_request = &request;
+    if (i == 1) {
+      this_request = &read_only_request;
+    }
+
+    c->result = c->trans->Start(this_request, c->callback.callback(),
+                                NetLogWithSource());
+  }
+
+  // Allow all requests to move from the Create queue to the active entry.
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_EQ(1, cache.network_layer()->transaction_count());
+  EXPECT_EQ(0, cache.disk_cache()->open_count());
+  EXPECT_EQ(1, cache.disk_cache()->create_count());
+
+  EXPECT_EQ(kNumTransactions - 1,
+            cache.GetCountWriterTransactions(kSimpleGET_Transaction.url));
+  EXPECT_EQ(1, cache.GetCountDoneHeadersQueue(kSimpleGET_Transaction.url));
+
+  // Invoking StopCaching on the writer will lead to dooming the entry and
+  // restarting the validated transactions. Since it is a read-only transaction
+  // it will error out.
+  context_list[0]->trans->StopCaching();
+
+  base::RunLoop().RunUntilIdle();
+
+  int rv = context_list[1]->callback.WaitForResult();
+  EXPECT_EQ(ERR_CACHE_MISS, rv);
+
+  ReadAndVerifyTransaction(context_list[0]->trans.get(),
+                           kSimpleGET_Transaction);
+}
+
+// Tests that when StopCaching is invoked on a writer transaction, it is a
+// no-op if there are other writer transactions.
+TEST(HttpCache, SimpleGET_ParallelWritersStopCachingNoOp) {
   MockHttpCache cache;
 
   MockHttpRequest request(kSimpleGET_Transaction);
@@ -2588,27 +2634,21 @@ TEST(HttpCache, SimpleGET_ParallelValidationStopCaching) {
   EXPECT_EQ(0, cache.disk_cache()->open_count());
   EXPECT_EQ(1, cache.disk_cache()->create_count());
 
-  EXPECT_TRUE(cache.IsWriterPresent(kSimpleGET_Transaction.url));
   EXPECT_TRUE(cache.IsHeadersTransactionPresent(kSimpleGET_Transaction.url));
-  EXPECT_EQ(1, cache.GetCountDoneHeadersQueue(kSimpleGET_Transaction.url));
+  EXPECT_EQ(kNumTransactions - 1,
+            cache.GetCountWriterTransactions(kSimpleGET_Transaction.url));
 
-  // Invoking StopCaching on the writer will lead to dooming the entry and
-  // restarting the remaining transactions which will then create a new entry.
+  // Invoking StopCaching on the writer will be a no-op since there are multiple
+  // transaction in writers.
   context_list[0]->trans->StopCaching();
 
-  // Resume network start for headers_transaction. It should be restarted due to
-  // writer cancellation.
+  // Resume network start for headers_transaction.
   auto& c = context_list[2];
   c->trans->ResumeNetworkStart();
-
   base::RunLoop().RunUntilIdle();
-
-  EXPECT_TRUE(cache.IsWriterPresent(kSimpleGET_Transaction.url));
-  EXPECT_TRUE(cache.IsHeadersTransactionPresent(kSimpleGET_Transaction.url));
-
-  // Resume network start for the transaction the second time.
-  c->trans->ResumeNetworkStart();
-  base::RunLoop().RunUntilIdle();
+  // After validation old entry will be doomed and headers_transaction will be
+  // added to the new entry.
+  EXPECT_EQ(1, cache.GetCountWriterTransactions(kSimpleGET_Transaction.url));
 
   // Complete the rest of the transactions.
   for (auto& context : context_list) {
@@ -2617,9 +2657,9 @@ TEST(HttpCache, SimpleGET_ParallelValidationStopCaching) {
     ReadAndVerifyTransaction(context->trans.get(), kSimpleGET_Transaction);
   }
 
-  EXPECT_EQ(4, cache.network_layer()->transaction_count());
+  EXPECT_EQ(2, cache.network_layer()->transaction_count());
   EXPECT_EQ(0, cache.disk_cache()->open_count());
-  EXPECT_EQ(3, cache.disk_cache()->create_count());
+  EXPECT_EQ(2, cache.disk_cache()->create_count());
 }
 
 // Tests that a transaction is currently in headers phase and is destroyed
@@ -2674,7 +2714,7 @@ TEST(HttpCache, SimpleGET_ParallelValidationCancelHeaders) {
 
 // Similar to the above test, except here cache write fails and the
 // validated transactions should be restarted.
-TEST(HttpCache, SimpleGET_ParallelValidationFailWrite) {
+TEST(HttpCache, SimpleGET_ParallelWritersFailWrite) {
   MockHttpCache cache;
 
   MockHttpRequest request(kSimpleGET_Transaction);
@@ -2702,21 +2742,15 @@ TEST(HttpCache, SimpleGET_ParallelValidationFailWrite) {
   // Allow all requests to move from the Create queue to the active entry.
   base::RunLoop().RunUntilIdle();
 
-  // The first request should be a writer at this point, and the subsequent
-  // requests should have passed the validation phase and waiting for the
-  // response to be written to the cache before they can read.
-  EXPECT_TRUE(cache.IsWriterPresent(kSimpleGET_Transaction.url));
-  EXPECT_EQ(4, cache.GetCountDoneHeadersQueue(kSimpleGET_Transaction.url));
+  // All transactions become writers.
+  EXPECT_EQ(kNumTransactions,
+            cache.GetCountWriterTransactions(kSimpleGET_Transaction.url));
 
   // All requests depend on the writer, and the writer is between Start and
   // Read, i.e. idle.
   for (auto& context : context_list) {
     EXPECT_EQ(LOAD_STATE_IDLE, context->trans->GetLoadState());
   }
-
-  // The first request should be a writer at this point, and the subsequent
-  // requests should have passed the validation phase and waiting for the
-  // response to be written to the cache before they can read.
 
   EXPECT_EQ(1, cache.network_layer()->transaction_count());
   EXPECT_EQ(0, cache.disk_cache()->open_count());
@@ -2738,14 +2772,19 @@ TEST(HttpCache, SimpleGET_ParallelValidationFailWrite) {
       EXPECT_TRUE(
           cache.disk_cache()->IsDiskEntryDoomed(kSimpleGET_Transaction.url));
     }
-    ReadAndVerifyTransaction(c->trans.get(), kSimpleGET_Transaction);
-  }
 
-  // Since validated transactions were restarted and new entry read/write
-  // operations would also fail, all requests would have gone to the network.
-  EXPECT_EQ(5, cache.network_layer()->transaction_count());
-  EXPECT_EQ(1, cache.disk_cache()->open_count());
-  EXPECT_EQ(5, cache.disk_cache()->create_count());
+    if (i == 0) {
+      // Consumer gets the response even if cache write failed.
+      ReadAndVerifyTransaction(c->trans.get(), kSimpleGET_Transaction);
+    } else {
+      // Read should lead to a failure being returned.
+      const int kBufferSize = 5;
+      scoped_refptr<IOBuffer> buffer(new IOBuffer(kBufferSize));
+      ReleaseBufferCompletionCallback cb(buffer.get());
+      c->result = c->trans->Read(buffer.get(), kBufferSize, cb.callback());
+      EXPECT_EQ(ERR_CACHE_WRITE_FAILURE, cb.GetResult(c->result));
+    }
+  }
 }
 
 // This is a test for http://code.google.com/p/chromium/issues/detail?id=4769.
@@ -2953,11 +2992,13 @@ TEST(HttpCache, SimpleGET_ManyWriters_CancelFirst) {
   }
 
   // Allow all requests to move from the Create queue to the active entry.
+  // All would have been added to writers.
   base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(kNumTransactions,
+            cache.GetCountWriterTransactions(kSimpleGET_Transaction.url));
 
-  // The first request should be a writer at this point, and the subsequent
-  // requests should be pending.
-
+  // The second transaction skipped validationn, thus only one network
+  // transaction is created.
   EXPECT_EQ(1, cache.network_layer()->transaction_count());
   EXPECT_EQ(0, cache.disk_cache()->open_count());
   EXPECT_EQ(1, cache.disk_cache()->create_count());
@@ -2967,9 +3008,8 @@ TEST(HttpCache, SimpleGET_ManyWriters_CancelFirst) {
     if (c->result == ERR_IO_PENDING)
       c->result = c->callback.WaitForResult();
     // Destroy only the first transaction.
-    // This should lead to all transactions to restart, even those that have
-    // validated themselves and were waiting for the writer transaction to
-    // complete writing to the cache.
+    // This should not impact the other writer transaction and the network
+    // transaction will continue to be used by them.
     if (i == 0) {
       context_list[i].reset();
     }
@@ -2981,11 +3021,9 @@ TEST(HttpCache, SimpleGET_ManyWriters_CancelFirst) {
     ReadAndVerifyTransaction(c->trans.get(), kSimpleGET_Transaction);
   }
 
-  // We should have had to re-open the disk entry.
-
-  EXPECT_EQ(2, cache.network_layer()->transaction_count());
+  EXPECT_EQ(1, cache.network_layer()->transaction_count());
   EXPECT_EQ(0, cache.disk_cache()->open_count());
-  EXPECT_EQ(2, cache.disk_cache()->create_count());
+  EXPECT_EQ(1, cache.disk_cache()->create_count());
 }
 
 // Tests that we can cancel requests that are queued waiting to open the disk

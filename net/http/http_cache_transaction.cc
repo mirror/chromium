@@ -174,7 +174,7 @@ HttpCache::Transaction::Transaction(RequestPriority priority, HttpCache* cache)
       io_buf_len_(0),
       read_offset_(0),
       effective_load_flags_(0),
-      shared_writing_error_(OK),
+      shared_writing_error_(0),
       cache_entry_status_(CacheEntryStatus::ENTRY_UNDEFINED),
       validation_cause_(VALIDATION_CAUSE_UNDEFINED),
       recorded_histograms_(false),
@@ -198,7 +198,7 @@ HttpCache::Transaction::~Transaction() {
 
   if (cache_) {
     if (entry_) {
-      DoneWithEntry(false /* entry_is_complete */);
+      DoneWithEntry(false /* did_finish */);
     } else if (cache_pending_) {
       cache_->RemovePendingTransaction(this);
     }
@@ -391,12 +391,11 @@ int HttpCache::Transaction::TransitionToReadingState() {
     // from. An error state should be set for the next read, else this
     // transaction should have been terminated once it reached this state.
     next_state_ = STATE_NONE;
-    DCHECK_GT(OK, shared_writing_error_);
+    DCHECK_LT(shared_writing_error_, 0);
     return shared_writing_error_;
   }
 
-  // If entry_ is present, the transaction is either a member of entry_->writers
-  // or readers.
+  // If entry_ is present, the transaction is either a writer or reader.
   if (!InWriters()) {
     // Since transaction is not a writer and we are in Read(), it must be a
     // reader.
@@ -408,7 +407,10 @@ int HttpCache::Transaction::TransitionToReadingState() {
 
   // If it's a writer and it is partial then it may need to read from the cache
   // or from the network based on whether network transaction is present or not.
-  DCHECK(mode_ == WRITE || mode_ == NONE || (mode_ == READ_WRITE && partial_));
+  // If it's a writer and a full request then it may read from the cache if its
+  // offset is behind the current offset else from the network.
+  DCHECK(mode_ == WRITE || mode_ == NONE || (mode_ == READ_WRITE && partial_) ||
+         (mode_ == READ && CanDoSharedWriting()));
   if (partial_) {
     if (entry_->writers->network_transaction())
       next_state_ = STATE_NETWORK_READ_CACHE_WRITE;
@@ -418,8 +420,6 @@ int HttpCache::Transaction::TransitionToReadingState() {
   }
 
   // Full request.
-  // If it's a writer and a full request then it may read from the cache if its
-  // offset is behind the current offset else from the network.
   int disk_entry_size = entry_->disk_entry->GetDataSize(kResponseContentIndex);
   if (read_offset_ == disk_entry_size || entry_->writers->network_read_only()) {
     next_state_ = STATE_NETWORK_READ_CACHE_WRITE;
@@ -441,16 +441,16 @@ void HttpCache::Transaction::StopCaching() {
   // from the net.
   if (cache_.get() && (mode_ & WRITE) && !is_sparse_ && !range_requested_) {
     if (InWriters() && entry_->writers->network_transaction()) {
-      if (entry_->writers->StopCaching(this)) {
-        // This entry is now doomed.
+      if (entry_->writers->StopCaching(this))
+        // Any dependent transactions would be restarted and
+        // this entry is doomed.
         mode_ = NONE;
-      }
     } else if (network_trans_) {
       mode_ = NONE;
 
       // Let entry_ know so that any dependent transactions are restarted and
       // this entry is doomed.
-      DoneWithEntry(false /* entry_is_complete */);
+      DoneWithEntry(false /* did_finish */);
       entry_ = nullptr;
     }
   }
@@ -572,9 +572,6 @@ void HttpCache::Transaction::SetPriority(RequestPriority priority) {
 void HttpCache::Transaction::SetWebSocketHandshakeStreamCreateHelper(
     WebSocketHandshakeStreamBase::CreateHelper* create_helper) {
   websocket_handshake_stream_base_create_helper_ = create_helper;
-
-  // TODO(shivanisha). Since this function must be invoked before Start() as
-  // per the API header, a network transaction should not exist at that point.
   HttpTransaction* transaction = network_transaction();
   if (transaction)
     transaction->SetWebSocketHandshakeStreamCreateHelper(create_helper);
@@ -646,14 +643,22 @@ void HttpCache::Transaction::AboutToBeRemovedFromWriters(int result) {
     SaveNetworkTransactionInfo(*(entry_->writers->network_transaction()));
   }
 
-  // Transactions in the midst of a Read call through writers will get any error
-  // code through the IO callback but for idle transactions/transactions reading
-  // from the cache, the error for a future Read will be communicated here.
-  if (result < 0) {
+  if (result < 0 && (next_state_ == STATE_NONE ||
+                     next_state_ == STATE_CACHE_READ_DATA_COMPLETE)) {
     entry_ = nullptr;
-    mode_ = NONE;
     shared_writing_error_ = result;
   }
+}
+
+bool HttpCache::Transaction::CanDoSharedWriting() const {
+  // We need to distinguish between the transactions that came in with
+  // LOAD_ONLY_FROM_CACHE set and thus do not have the permission to write to
+  // the cache with those that got mode_ assigned as READ when it was
+  // established that the headers present in the cache are valid for this
+  // transaction to start reading. The latter can participate in response body
+  // writing if writing is still in progress.
+  return !partial_ && !range_requested_ &&
+         !(effective_load_flags_ & LOAD_ONLY_FROM_CACHE);
 }
 
 //-----------------------------------------------------------------------------
@@ -1991,8 +1996,11 @@ int HttpCache::Transaction::DoFinishHeaders(int result) {
   // If the transaction needs to wait because another transaction is still
   // writing the response body, it will return ERR_IO_PENDING now and the
   // io_callback_ will be invoked when the wait is done.
-  int rv = cache_->DoneWithResponseHeaders(entry_, this, partial_ != nullptr);
-  DCHECK(!reading_ || rv == OK) << "Expected OK, but got " << rv;
+  int rv = cache_->DoneWithResponseHeaders(entry_, this, partial_ != nullptr,
+                                           CanDoSharedWriting());
+  if (reading_) {
+    DCHECK_EQ(OK, rv);
+  }
 
   if (rv == ERR_IO_PENDING) {
     DCHECK(entry_lock_waiting_since_.is_null());
@@ -2054,14 +2062,13 @@ int HttpCache::Transaction::DoCacheReadMetadataComplete(int result) {
 
 int HttpCache::Transaction::DoNetworkReadCacheWrite() {
   TRACE_EVENT0("io", "HttpCacheTransaction::DoNetworkReadCacheWrite");
-  DCHECK(InWriters());
   TransitionToState(STATE_NETWORK_READ_CACHE_WRITE_COMPLETE);
+  DCHECK(InWriters());
   return entry_->writers->Read(read_buf_, io_buf_len_, io_callback_, this);
 }
 
 int HttpCache::Transaction::DoNetworkReadCacheWriteComplete(int result) {
   TRACE_EVENT0("io", "HttpCacheTransaction::DoNetworkReadCacheWriteComplete");
-  DCHECK(mode_ & WRITE || mode_ == NONE);
   if (!cache_.get()) {
     TransitionToState(STATE_NONE);
     return ERR_UNEXPECTED;
@@ -2070,14 +2077,6 @@ int HttpCache::Transaction::DoNetworkReadCacheWriteComplete(int result) {
   // cannot proceed further, so set entry_ to null. |result| will not be error
   // in case of cache write failure since |this| can continue to read from the
   // network. If response is completed, then also set entry to null.
-  if (result < 0) {
-    // We should have discovered this error in AboutToBeRemovedFromWriters
-    DCHECK_EQ(result, shared_writing_error_);
-    DCHECK_EQ(NONE, mode_);
-    DCHECK(!entry_);
-    TransitionToState(STATE_NONE);
-    return result;
-  }
 
   if (result < 0) {
     TransitionToState(STATE_NONE);
@@ -2103,8 +2102,6 @@ int HttpCache::Transaction::DoPartialNetworkReadCompleted(int result) {
   DCHECK(partial_);
 
   // Go to the next range if nothing returned or return the result.
-  // TODO(shivanisha) Simplify this condition if possible. It was introduced
-  // in https://codereview.chromium.org/545101
   if (result != 0 || truncated_ ||
       !(partial_->IsLastRange() || mode_ == WRITE)) {
     partial_->OnNetworkReadCompleted(result);
@@ -2917,11 +2914,11 @@ void HttpCache::Transaction::ContinueInNetworkReadOnlyMode(bool success) {
     mode_ = NONE;
     entry_->writers->SetNetworkReadOnly(success /* keep_entry */);
   } else if (entry_) {
-    DoneWithEntry(success /* entry_is_complete */);
+    DoneWithEntry(success /* did_finish */);
   }
 }
 
-void HttpCache::Transaction::DoneWithEntry(bool entry_is_complete) {
+void HttpCache::Transaction::DoneWithEntry(bool did_finish) {
   if (!entry_)
     return;
 
@@ -2929,7 +2926,7 @@ void HttpCache::Transaction::DoneWithEntry(bool entry_is_complete) {
   if (!InWriters())
     RecordHistograms();
 
-  cache_->DoneWithEntry(entry_, this, entry_is_complete, partial_ != nullptr);
+  cache_->DoneWithEntry(entry_, this, did_finish, partial_ != nullptr);
   entry_ = nullptr;
   mode_ = NONE;  // switch to 'pass through' mode
 }
@@ -2956,7 +2953,7 @@ int HttpCache::Transaction::OnCacheReadError(int result, bool restart) {
     // Since we are going to add this to a new entry, not recording histograms
     // or setting mode to NONE at this point by invoking the wrapper
     // DoneWithEntry.
-    cache_->DoneWithEntry(entry_, this, true /* entry_is_complete */,
+    cache_->DoneWithEntry(entry_, this, true /* did_finish */,
                           partial_ != nullptr);
     entry_ = NULL;
     is_sparse_ = false;
@@ -2982,7 +2979,7 @@ void HttpCache::Transaction::OnCacheLockTimeout(base::TimeTicks start_time) {
   if (next_state_ == STATE_ADD_TO_ENTRY_COMPLETE)
     cache_->RemovePendingTransaction(this);
   else
-    DoneWithEntry(false /* entry_is_complete */);
+    DoneWithEntry(false /* did_finish */);
   OnIOComplete(ERR_CACHE_LOCK_TIMEOUT);
 }
 
@@ -2993,7 +2990,7 @@ void HttpCache::Transaction::DoomPartialEntry(bool delete_object) {
     DCHECK_EQ(OK, rv);
   }
 
-  cache_->DoneWithEntry(entry_, this, true /* entry_is_complete */,
+  cache_->DoneWithEntry(entry_, this, true /* did_finish */,
                         partial_ != nullptr);
   entry_ = NULL;
   is_sparse_ = false;

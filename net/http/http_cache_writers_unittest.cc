@@ -381,6 +381,8 @@ class WritersTest : public testing::Test {
   void TruncateEntryNoStrongValidators() {
     writers_->TruncateEntry();
     EXPECT_FALSE(writers_->ShouldKeepEntry());
+    EXPECT_EQ(HttpCache::Writers::TruncateResultForTesting::FAIL_CANNOT_RESUME,
+              writers_->truncate_result_for_testing());
   }
 
   MockHttpCache cache_;
@@ -594,6 +596,20 @@ TEST_F(WritersTest, ReadMultipleNetworkReadFailed) {
   int rv = ReadNetworkFailure(&contents, ERR_INTERNET_DISCONNECTED);
 
   EXPECT_EQ(ERR_INTERNET_DISCONNECTED, rv);
+}
+
+// Tests moving idle writers to readers.
+TEST_F(WritersTest, MoveIdleWritersToReaders) {
+  CreateWritersAddTransaction();
+  EXPECT_FALSE(writers_->IsEmpty());
+
+  EXPECT_TRUE(writers_->CanAddWriters());
+  AddTransactionToExistingWriters();
+  AddTransactionToExistingWriters();
+
+  EXPECT_FALSE(writers_->IsEmpty());
+  writers_->RemoveAllIdleWriters();
+  EXPECT_TRUE(writers_->IsEmpty());
 }
 
 // Tests GetWriterLoadState.

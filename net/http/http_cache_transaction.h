@@ -183,8 +183,13 @@ class NET_EXPORT_PRIVATE HttpCache::Transaction : public HttpTransaction {
   bool is_truncated() { return truncated_; }
 
   // Invoked when this transaction is about to be removed from Writers.
-  // If result is an error code, a future Read should fail with |result|.
+  // If result is an error code, a future Read fails with |result|.
   void AboutToBeRemovedFromWriters(int result);
+
+  // Returns true if this transaction can participate in shared writing along
+  // with other transactions. Currently shared writing is not supported for
+  // transactions with range requests.
+  bool CanDoSharedWriting() const;
 
  private:
   static const size_t kNumValidationHeaders = 2;
@@ -427,15 +432,19 @@ class NET_EXPORT_PRIVATE HttpCache::Transaction : public HttpTransaction {
   // is always "OK".
   int OnWriteResponseInfoToEntryComplete(int result);
 
-  // Configures the transaction to read from the network and stop writing to the
-  // entry. It will release the entry if possible.
+  // Called when the transaction doesn't have to write to the cache anymore.
+  // This is invoked either when the transaction may be a writer or
+  // headers_transaction (for partial requests) or a headers transaction (for
+  // full requests). If its a writer, it will invoke
+  // entry_->writers->SetNetworkReadOnly which implies the response will not be
+  // subsequently written to the cache else DoneWithEntry will be invoked.
+  // If |success| is false and cannot be marked as truncated, entry will also be
+  // doomed.
   void ContinueInNetworkReadOnlyMode(bool success);
 
-  // Informs the HttpCache that this transaction is done with the entry and
-  // changes the mode to NONE. Set |did_finish| to false if the transaction has
-  // not yet finished fully reading or writing the request to/from the entry. If
-  // |did_finish| is false then the HttpCache may attempt to truncate the entry
-  // rather than doom it.
+  // Called when the transaction has finished working with the entry.
+  // |did_finish| is true if the transaction finished reading/writing from the
+  // entry successfully, else its false.
   void DoneWithEntry(bool did_finish);
 
   // Returns an error to signal the caller that the current read failed. The

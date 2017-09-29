@@ -30,20 +30,22 @@ class NET_EXPORT_PRIVATE HttpCache::Writers {
  public:
   // This is the information maintained by Writers in the context of each
   // transaction.
-  // |partial| is owned by the transaction and to be sure there are no
-  // dangling pointers, it must be ensured that transaction's reference and
-  // this information will be removed from writers once the transaction is
-  // deleted.
+  // |partial| and |truncated| are owned by the transaction and to be sure
+  // there are no dangling pointers, it is ensured that transaction's
+  // reference and this information will be removed from writers once the
+  // transaction is deleted.
   struct NET_EXPORT_PRIVATE TransactionInfo {
     TransactionInfo(PartialData* partial,
                     bool truncated,
                     HttpResponseInfo info);
     ~TransactionInfo();
-    TransactionInfo& operator=(const TransactionInfo&);
+    //  TransactionInfo& operator= (const TransactionInfo&);
     TransactionInfo(const TransactionInfo&);
 
     PartialData* partial;
     bool truncated;
+    // Note that its ok to keep a copy of response info since the headers are
+    // scoped_refptr.
     HttpResponseInfo response_info;
   };
 
@@ -78,8 +80,7 @@ class NET_EXPORT_PRIVATE HttpCache::Writers {
   // Should only be invoked if CanAddWriters() returns true.
   // If |is_exclusive| is true, it makes writing an exclusive operation
   // implying that Writers can contain at most one transaction till the
-  // completion of the response body. It is illegal to invoke with is_exclusive
-  // as true if there is already a transaction present.
+  // completion of the response body.
   // |transaction| can be destroyed at any point and it should invoke
   // HttpCache::DoneWithEntry() during its destruction. This will also ensure
   // any pointers in |info| are not accessed after the transaction is destroyed.
@@ -88,8 +89,12 @@ class NET_EXPORT_PRIVATE HttpCache::Writers {
                       RequestPriority priority,
                       TransactionInfo info);
 
-  // Invoked when the transaction is done working with the entry.
-  void RemoveTransaction(Transaction* transaction, bool success);
+  // Invoked when the transaction is done working with the entry. This must be
+  // invoked by HttpCache on behalf of HttpCache::Transaction because HttpCache
+  // is the single entry point for a transaction to indicate its membership
+  // status in the entry.
+  // |should_truncate| is true if it should attempt to truncate.
+  void RemoveTransaction(Transaction* transaction, bool should_truncate);
 
   // Invoked when there is a change in a member transaction's priority or a
   // member transaction is removed.
@@ -106,13 +111,18 @@ class NET_EXPORT_PRIVATE HttpCache::Writers {
     return all_writers_.count(const_cast<Transaction*>(transaction)) > 0;
   }
 
+  // Remove and return any idle writers. Should only be invoked when a
+  // response is completely written and when ContainesOnlyIdleWriters()
+  // returns true.
+  TransactionSet RemoveAllIdleWriters();
+
   // Returns true if more writers can be added for shared writing.
   bool CanAddWriters();
 
   // Returns if only one transaction can be a member of writers.
   bool IsExclusive() { return is_exclusive_; }
 
-  // Returns the network transaction which may be nullptr for range requests.
+  // Returns the network transaction which may be null for range requests.
   const HttpTransaction* network_transaction() const {
     return network_transaction_.get();
   }
@@ -127,9 +137,9 @@ class NET_EXPORT_PRIVATE HttpCache::Writers {
       Transaction* transaction,
       std::unique_ptr<HttpTransaction> network_transaction);
 
-  // Resets the network transaction to nullptr. Required for range requests as
-  // they might use the current network transaction only for part of the
-  // request. Must only be invoked for range requests.
+  // Resets the network transaction to null. Required for range requests as they
+  // might use the current network transaction only for part of the request.
+  // Must only be invoked for partial requests.
   void ResetNetworkTransaction();
 
   // Sets network_read_only_ which implies the response will not be subsequently
@@ -166,19 +176,27 @@ class NET_EXPORT_PRIVATE HttpCache::Writers {
   // completes writing the data to the cache, their buffer would be filled with
   // the data and their callback will be invoked.
   struct WaitingForRead {
+    Transaction* transaction;
     scoped_refptr<IOBuffer> read_buf;
     int read_buf_len;
     int write_len;
     const CompletionCallback callback;
-    WaitingForRead(scoped_refptr<IOBuffer> read_buf,
+    WaitingForRead(Transaction* transaction,
+                   scoped_refptr<IOBuffer> read_buf,
                    int len,
                    const CompletionCallback& consumer_callback);
     ~WaitingForRead();
     WaitingForRead(const WaitingForRead&);
   };
-  using WaitingForReadMap = std::unordered_map<Transaction*, WaitingForRead>;
+  using WaitingForReadList = std::list<WaitingForRead>;
 
-  using TransactionMap = std::unordered_map<Transaction*, TransactionInfo>;
+  using TransactionMap = std::map<Transaction*, TransactionInfo>;
+
+  // For unit testing.
+  enum class TruncateResultForTesting {
+    NONE,
+    FAIL_CANNOT_RESUME,
+  };
 
   // Runs the state transition loop. Resets and calls |callback_| on exit,
   // unless the return value is ERR_IO_PENDING.
@@ -222,10 +240,15 @@ class NET_EXPORT_PRIVATE HttpCache::Writers {
 
   // Invoked for truncating the entry either internally within DoLoop or through
   // the API TransactionDoneWithEntry.
+  // Invoked to mark an entry as truncated.
   // Sets |should_keep_entry_| as true if either the entry is marked as
   // truncated or the entry is already completely written and false if the entry
   // cannot be resumed later so no need to mark truncated.
   void TruncateEntry();
+
+  TruncateResultForTesting truncate_result_for_testing() {
+    return truncate_result_for_testing_;
+  }
 
   // Remove the transaction.
   void EraseTransaction(Transaction* transaction);
@@ -261,7 +284,7 @@ class NET_EXPORT_PRIVATE HttpCache::Writers {
   // Transactions whose consumers have invoked Read, but another transaction is
   // currently the |active_transaction_|. After the network read and cache write
   // is complete, the waiting transactions will be notified.
-  WaitingForReadMap waiting_for_read_;
+  WaitingForReadList waiting_for_read_;
 
   // Includes all transactions. ResetStateForEmptyWriters should be invoked
   // whenever all_writers_ becomes empty.
@@ -287,6 +310,10 @@ class NET_EXPORT_PRIVATE HttpCache::Writers {
   // True if the entry should be kept, even if the response was not completely
   // written.
   bool should_keep_entry_ = true;
+
+  // Truncate result for testing.
+  TruncateResultForTesting truncate_result_for_testing_ =
+      TruncateResultForTesting::NONE;
 
   CompletionCallback callback_;  // Callback for active_transaction_.
 
