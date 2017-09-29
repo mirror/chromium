@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f69125e4_194b586b",
+        "filename": "content/network/url_loader_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-29T16:49:48Z",
+      "side": 1,
+      "message": "nit, \"body_may_be_from_cache\" (\"may from cache\" doesn\u0027t make sense to me as a phrase).",
+      "range": {
+        "startLine": 110,
+        "startChar": 7,
+        "endLine": 110,
+        "endChar": 27
+      },
+      "revId": "5a655b8011489264860089e5fc11d1eaccc1dc1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cd3292d_510a5ce1",
+        "filename": "content/network/url_loader_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-29T16:49:48Z",
+      "side": 1,
+      "message": "Include a line describing what this means in the non--1 case?  Something like \"The number of byte reads initiated before the last time PauseReadingBodyFromNet() was called on this request.\"?  (I don\u0027t care about the wording, just about having a sentence describing the non-corner case meaning of the variable.)",
+      "range": {
+        "startLine": 114,
+        "startChar": 14,
+        "endLine": 114,
+        "endChar": 17
+      },
+      "revId": "5a655b8011489264860089e5fc11d1eaccc1dc1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
