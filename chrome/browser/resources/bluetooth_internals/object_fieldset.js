@@ -63,27 +63,30 @@ cr.define('object_fieldset', function() {
       this.innerHTML = '';
 
       Object.keys(this.value).forEach(function(propName) {
-        var name = this.nameMap_[propName] || propName;
         var value = this.value[propName];
-        var newField = document.createElement('div');
-        newField.classList.add('status');
+        if (value) {
+          var name = this.nameMap_[propName] || propName;
 
-        var nameDiv = document.createElement('div');
-        nameDiv.textContent = name + ':';
-        newField.appendChild(nameDiv);
+          var newField = document.createElement('div');
+          newField.classList.add('status');
 
-        var valueDiv = document.createElement('div');
-        valueDiv.dataset.field = propName;
+          var nameDiv = document.createElement('div');
+          nameDiv.textContent = name + ':';
+          newField.appendChild(nameDiv);
 
-        if (typeof(value) === 'boolean') {
-          valueDiv.classList.add('toggle-status');
-          valueDiv.classList.toggle('checked', value);
-        } else {
-          valueDiv.textContent = String(value);
+          var valueDiv = document.createElement('div');
+          valueDiv.dataset.field = propName;
+
+          if (typeof(value) === 'boolean') {
+            valueDiv.classList.add('toggle-status');
+            valueDiv.classList.toggle('checked', value);
+          } else {
+            valueDiv.textContent = String(value);
+          }
+
+          newField.appendChild(valueDiv);
+          this.appendChild(newField);
         }
-
-        newField.appendChild(valueDiv);
-        this.appendChild(newField);
       }, this);
     },
   };
