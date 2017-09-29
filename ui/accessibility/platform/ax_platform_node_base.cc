@@ -319,7 +319,6 @@ base::string16 AXPlatformNodeBase::GetInnerText() {
 
 bool AXPlatformNodeBase::IsRangeValueSupported() const {
   switch (GetData().role) {
-    case AX_ROLE_METER:
     case AX_ROLE_PROGRESS_INDICATOR:
     case AX_ROLE_SLIDER:
     case AX_ROLE_SPIN_BUTTON:
