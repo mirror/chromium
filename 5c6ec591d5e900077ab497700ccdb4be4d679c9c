@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "850af733_59b6b4f5",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-29T15:15:52Z",
+      "side": 1,
+      "message": "nit: Create is more idiomatic than Generate. \"Generate\" in the passwords sense is normally used for synthetically creating a strong password.",
+      "range": {
+        "startLine": 77,
+        "startChar": 36,
+        "endLine": 77,
+        "endChar": 44
+      },
+      "revId": "5c6ec591d5e900077ab497700ccdb4be4d679c9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
