@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8086c5ba_fcd832b5",
+        "filename": "gpu/command_buffer/client/gpu_control.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-09-29T01:40:15Z",
+      "side": 1,
+      "message": "Is it feasible to make this method const too?",
+      "revId": "c582aaa742b899ae7224cc85f5c5f77797039ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "204df0aa_21db2846",
+        "filename": "gpu/config/gpu_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-09-29T01:40:15Z",
+      "side": 1,
+      "message": "I don\u0027t understand the addition of the test of GPU_FEATURE_TYPE_GPU_COMPOSITING for WebGL and WebGL2; could you please explain that?",
+      "revId": "c582aaa742b899ae7224cc85f5c5f77797039ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ba0d4ad_8504ad18",
+        "filename": "gpu/config/gpu_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-09-29T01:40:15Z",
+      "side": 1,
+      "message": "Same question here.",
+      "revId": "c582aaa742b899ae7224cc85f5c5f77797039ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "784e38d2_8e900437",
+        "filename": "gpu/ipc/gl_in_process_context.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-09-29T01:40:15Z",
+      "side": 1,
+      "message": "Typo: callback",
+      "revId": "c582aaa742b899ae7224cc85f5c5f77797039ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eacbd2bc_bd869c62",
+        "filename": "gpu/ipc/gl_in_process_context.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-09-29T01:40:15Z",
+      "side": 1,
+      "message": "Is it feasible to make this method const too?",
+      "revId": "c582aaa742b899ae7224cc85f5c5f77797039ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d2079bd_aaa7f2a1",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 982,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-09-29T01:40:15Z",
+      "side": 1,
+      "message": "Seems a helper method on GpuFeatureInfo would simplify queries like this.",
+      "revId": "c582aaa742b899ae7224cc85f5c5f77797039ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c422956_206a18fa",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/AcceleratedImageBufferSurface.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-09-29T01:40:15Z",
+      "side": 1,
+      "message": "How did you figure out that it\u0027s appropriate to do this check here? It seems a little disconnected from the accelerated 2D canvas implementation. I thought that this class was also used to represent ImageBitmaps that are taken from OffscreenCanvases that might be rendered via WebGL rather than 2D canvas.",
+      "revId": "c582aaa742b899ae7224cc85f5c5f77797039ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1db9c70d_9d35504b",
+        "filename": "third_party/WebKit/public/platform/WebGraphicsContext3DProvider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-09-29T01:40:15Z",
+      "side": 1,
+      "message": "Is it feasible to make these methods const too?",
+      "revId": "c582aaa742b899ae7224cc85f5c5f77797039ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
