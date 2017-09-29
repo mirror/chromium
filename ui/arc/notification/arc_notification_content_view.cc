@@ -559,14 +559,17 @@ void ArcNotificationContentView::Layout() {
 void ArcNotificationContentView::OnPaint(gfx::Canvas* canvas) {
   views::NativeViewHost::OnPaint(canvas);
 
-  // Bail if there is a |surface_| or no item or no snapshot image.
-  if (surface_ || !item_ || item_->GetSnapshot().isNull())
-    return;
-  const gfx::Rect contents_bounds = GetContentsBounds();
-  canvas->DrawImageInt(item_->GetSnapshot(), 0, 0, item_->GetSnapshot().width(),
-                       item_->GetSnapshot().height(), contents_bounds.x(),
-                       contents_bounds.y(), contents_bounds.width(),
-                       contents_bounds.height(), false);
+  if (!surface_ && item_ && !item_->GetSnapshot().isNull()) {
+    // Draw the snapshot if there is no surface and the snapshot is available.
+    const gfx::Rect contents_bounds = GetContentsBounds();
+    canvas->DrawImageInt(
+        item_->GetSnapshot(), 0, 0, item_->GetSnapshot().width(),
+        item_->GetSnapshot().height(), contents_bounds.x(), contents_bounds.y(),
+        contents_bounds.width(), contents_bounds.height(), false);
+  } else {
+    // Draw a blank background otherwise.
+    canvas->DrawColor(SK_ColorWHITE);
+  }
 }
 
 void ArcNotificationContentView::OnMouseEntered(const ui::MouseEvent&) {
