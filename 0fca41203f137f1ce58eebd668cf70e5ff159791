@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6133e4ec_73fe7d69",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 1345,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-09-29T20:45:02Z",
+      "side": 1,
+      "message": "Any build impact to moving these out of the is_android block? Or is the idea that it\u0027s cleaner to keep them together and let the default source assignment filters handle?",
+      "range": {
+        "startLine": 1345,
+        "startChar": 9,
+        "endLine": 1345,
+        "endChar": 38
+      },
+      "revId": "0fca41203f137f1ce58eebd668cf70e5ff159791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6102db0a_52b90c05",
+        "filename": "chrome/browser/ssl/captive_portal_helper.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-09-29T20:45:02Z",
+      "side": 1,
+      "message": "Nit: Maybe GetIsBehindCaptivePortal or similar?",
+      "range": {
+        "startLine": 11,
+        "startChar": 5,
+        "endLine": 11,
+        "endChar": 23
+      },
+      "revId": "0fca41203f137f1ce58eebd668cf70e5ff159791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22206fb0_30e6288a",
+        "filename": "chrome/browser/ssl/captive_portal_helper_android.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-09-29T20:45:02Z",
+      "side": 1,
+      "message": "I thought it strange that \u003cstring\u003e was repeated here, but then I noticed this CC doesn\u0027t include its header (captive_portal_helper_android.h). Is this some weird Androidism whereby that magically becomes jni/CaptivePortalHelper_jni.h or something?",
+      "range": {
+        "startLine": 6,
+        "startChar": 10,
+        "endLine": 6,
+        "endChar": 16
+      },
+      "revId": "0fca41203f137f1ce58eebd668cf70e5ff159791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca6a141d_e77e2b73",
+        "filename": "chrome/browser/ssl/captive_portal_helper_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-09-29T20:45:02Z",
+      "side": 1,
+      "message": "Is there some reason not to accept with NLM_CONNECTIVITY_IPV6_LOCALNETWORK to match the ipv4 case?\n\nSimilarly, could there be a case where only NLM_CONNECTIVITY_*_SUBNET is set?",
+      "range": {
+        "startLine": 53,
+        "startChar": 6,
+        "endLine": 53,
+        "endChar": 36
+      },
+      "revId": "0fca41203f137f1ce58eebd668cf70e5ff159791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "990f5575_cfcacc24",
+        "filename": "chrome/browser/ssl/captive_portal_helper_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-09-29T20:45:02Z",
+      "side": 1,
+      "message": "Do we want to check for *all* or for *any*? I can imagine a scenario whereby I\u0027ve got some sort of \"weird\" network (Microsoft DirectAccess, Hyper-V bridge, etc) that Chrome\u0027s traffic isn\u0027t getting routing upon, and that one isn\u0027t behind a captive portal. However, the network on which all of Chrome\u0027s traffic would be routed (the default LAN connection) is behind a captive portal and the user is effectively behind the portal as far as their browser is concerned.",
+      "range": {
+        "startLine": 72,
+        "startChar": 27,
+        "endLine": 72,
+        "endChar": 75
+      },
+      "revId": "0fca41203f137f1ce58eebd668cf70e5ff159791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29189311_7887ecf2",
+        "filename": "chrome/browser/ssl/captive_portal_helper_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-09-29T20:45:02Z",
+      "side": 1,
+      "message": "Any reason not to use NLM_ENUM_NETWORK_CONNECTED here?",
+      "range": {
+        "startLine": 81,
+        "startChar": 41,
+        "endLine": 81,
+        "endChar": 61
+      },
+      "revId": "0fca41203f137f1ce58eebd668cf70e5ff159791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f1aba07_48671ddb",
+        "filename": "chrome/browser/ssl/captive_portal_helper_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-09-29T20:45:02Z",
+      "side": 1,
+      "message": "MSDN alleges: \"Pointer to the number of elements supplied. This parameter is set to NULL if celt has the value of 1.\" Is that wrong?",
+      "range": {
+        "startLine": 90,
+        "startChar": 57,
+        "endLine": 90,
+        "endChar": 71
+      },
+      "revId": "0fca41203f137f1ce58eebd668cf70e5ff159791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf454a8a_ef0cba8b",
+        "filename": "chrome/browser/ssl/captive_portal_helper_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-09-29T20:45:02Z",
+      "side": 1,
+      "message": "At this point, hr could be FAILED() but we\u0027re not looking at it until after we try operating on |network| below.",
+      "range": {
+        "startLine": 91,
+        "startChar": 8,
+        "endLine": 91,
+        "endChar": 23
+      },
+      "revId": "0fca41203f137f1ce58eebd668cf70e5ff159791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be2d0ea0_3510f554",
+        "filename": "chrome/browser/ssl/captive_portal_helper_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-09-29T20:45:02Z",
+      "side": 1,
+      "message": "Is there some reason not to use |break| here?",
+      "range": {
+        "startLine": 97,
+        "startChar": 8,
+        "endLine": 97,
+        "endChar": 16
+      },
+      "revId": "0fca41203f137f1ce58eebd668cf70e5ff159791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5316abd_81a1b868",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-09-29T20:45:02Z",
+      "side": 1,
+      "message": "Does this work via some magic, or should it be || ?",
+      "range": {
+        "startLine": 641,
+        "startChar": 24,
+        "endLine": 641,
+        "endChar": 27
+      },
+      "revId": "0fca41203f137f1ce58eebd668cf70e5ff159791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
