@@ -500,3 +500,7 @@ crbug.com/626703 [ Debug ] external/wpt/html/nemantics/tabular-data/processing-m
 
 # This test continues to fail as timeout on Win7(dbg)
 crbug.com/757292 [ Win Debug ] external/wpt/encoding/legacy-mb-korean/euc-kr/euckr-encode-form-errors-han.html [ Slow ]
+
+# These tests continue to timeout on Mac
+crbug.com/764179 [ Mac ] virtual/gpu-rasterization/images/color-profile-background-image-space.html [ Slow ]
+crbug.com/764179 [ Mac ] virtual/gpu-rasterization/images/color-profile-svg.html [ Slow ]
