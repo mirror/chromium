@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95889297_cbf1c24c",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-29T19:45:57Z",
+      "side": 1,
+      "message": "This was wrong because a child subsequence may end under-invalidation-checking of a parent subsequence. It\u0027s also unnecessary because under-invalidation checking will end normally (with under_invalidation_checking_begin_ being incremented to under_invalidation_checking_end_) when all display items have been checked.",
+      "revId": "0ac8ec3a8be483779614d89a474d3764c0d66d79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
