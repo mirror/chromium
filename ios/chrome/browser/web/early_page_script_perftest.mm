@@ -9,7 +9,6 @@
 #include "ios/chrome/test/base/perf_test_ios.h"
 #import "ios/web/public/test/js_test_util.h"
 #import "ios/web/public/web_view_creation_util.h"
-#import "ios/web/web_state/js/page_script_util.h"
 
 #import <Foundation/Foundation.h>
 #import <WebKit/WebKit.h>
@@ -25,33 +24,24 @@ namespace {
 class EarlyPageScriptPerfTest : public PerfTest {
  protected:
   EarlyPageScriptPerfTest() : PerfTest("Early Page Script for WKWebView") {
-    browser_state_ = TestChromeBrowserState::Builder().Build();
-    web_view_ = web::BuildWKWebView(CGRectZero, browser_state());
+    std::unique_ptr<ios::ChromeBrowserState> browser_state =
+        TestChromeBrowserState::Builder().Build();
+    // |web_view| already has the script injected. |web_view_| is a bare
+    // WKWebView, which will be used for script execution testing performance.
+    web_view_ = [[WKWebView alloc] init];
+    WKWebView* web_view = web::BuildWKWebView(CGRectZero, browser_state.get());
+    NSArray* scripts = web_view.configuration.userContentController.userScripts;
+    EXPECT_EQ(1U, scripts.count);
+    script_ = [scripts.firstObject source];
   }
 
   // Injects early script into WKWebView.
-  void InjectEarlyScript() {
-    web::ExecuteJavaScript(web_view_, web::GetEarlyPageScript(browser_state()));
-  }
+  void InjectEarlyScript() { web::ExecuteJavaScript(web_view_, script_); }
 
-  ios::ChromeBrowserState* browser_state() { return browser_state_.get(); }
-
-  // BrowserState required for web view creation.
-  std::unique_ptr<ios::ChromeBrowserState> browser_state_;
   // WKWebView to test scripts injections.
   WKWebView* web_view_;
+  NSString* script_;
 };
-
-// Tests script loading time.
-TEST_F(EarlyPageScriptPerfTest, ScriptLoading) {
-  RepeatTimedRuns("Loading",
-                  ^base::TimeDelta(int) {
-                    base::ElapsedTimer timer;
-                    web::GetEarlyPageScript(browser_state());
-                    return timer.Elapsed();
-                  },
-                  nil);
-}
 
 // Tests injection time into a bare web view.
 TEST_F(EarlyPageScriptPerfTest, BareWebViewInjection) {
