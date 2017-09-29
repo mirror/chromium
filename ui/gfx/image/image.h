@@ -35,6 +35,14 @@
 typedef struct CGColorSpace* CGColorSpaceRef;
 #endif
 
+#if defined(OS_MACOSX) && defined(__OBJC__) && !defined(NS_RETURNS_RETAINED)
+#if defined(__has_feature) && __has_feature(attribute_ns_returns_retained)
+#define NS_RETURNS_RETAINED __attribute__((ns_returns_retained))
+#else
+#define NS_RETURNS_RETAINED
+#endif
+#endif
+
 class SkBitmap;
 
 namespace gfx {
@@ -154,10 +162,17 @@ class GFX_EXPORT Image {
   scoped_refptr<base::RefCountedMemory> Copy1xPNGBytes() const;
   ImageSkia* CopyImageSkia() const;
   SkBitmap* CopySkBitmap() const;
+
+// Copy(UI|NS)Image returns a retained (UI|NS)Image. As the compiler does
+// not use the method name for C++ methods to infer memory management, it
+// is necessary to add annotation to avoid introducing leaks when calling
+// the method from code compiled with ARC (Automatic Reference Counting).
+// See https://clang-analyzer.llvm.org/annotations.html for details on the
+// annotations.
 #if defined(OS_IOS)
-  UIImage* CopyUIImage() const;
+  UIImage* CopyUIImage() const NS_RETURNS_RETAINED;
 #elif defined(OS_MACOSX)
-  NSImage* CopyNSImage() const;
+  NSImage* CopyNSImage() const NS_RETURNS_RETAINED;
 #endif
 
   // Inspects the representations map to see if the given type exists.
