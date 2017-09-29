@@ -29,7 +29,7 @@ class MESSAGE_CENTER_EXPORT MessageCenterTrayDelegate {
 
   // Display the message center containing all undismissed notifications to the
   // user.  Returns true if the center was actually displayed to the user.
-  virtual bool ShowMessageCenter() = 0;
+  virtual bool ShowMessageCenter(bool show_by_click) = 0;
 
   // Remove the message center from the UI.
   virtual void HideMessageCenter() = 0;

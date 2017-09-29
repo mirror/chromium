@@ -69,7 +69,7 @@ class ASH_EXPORT SystemTray : public TrayBackgroundView {
   std::vector<SystemTrayItem*> GetTrayItems() const;
 
   // Shows the default view of all items.
-  void ShowDefaultView(BubbleCreationType creation_type);
+  void ShowDefaultView(BubbleCreationType creation_type, bool show_by_click);
 
   // Shows default view that ingnores outside clicks and activation loss.
   void ShowPersistentDefaultView();
@@ -132,7 +132,7 @@ class ASH_EXPORT SystemTray : public TrayBackgroundView {
   void ClickedOutsideBubble() override;
   bool PerformAction(const ui::Event& event) override;
   void CloseBubble() override;
-  void ShowBubble() override;
+  void ShowBubble(bool show_by_click) override;
   views::TrayBubbleView* GetBubbleView() override;
 
   // views::TrayBubbleView::Delegate:
@@ -177,7 +177,8 @@ class ASH_EXPORT SystemTray : public TrayBackgroundView {
                  bool details,
                  bool can_activate,
                  BubbleCreationType creation_type,
-                 bool persistent);
+                 bool persistent,
+                 bool show_by_click);
 
   // Checks the current status of the system tray and updates the web
   // notification tray according to the current status.
