@@ -26,7 +26,8 @@ class UiInterface {
 
   virtual bool ShouldRenderWebVr() = 0;
 
-  virtual void OnGlInitialized(unsigned int content_texture_id) = 0;
+  virtual void OnGlInitialized(unsigned int content_texture_id,
+                               unsigned int ui_texture_id) = 0;
   virtual void OnAppButtonClicked() = 0;
   virtual void OnAppButtonGesturePerformed(
       UiInterface::Direction direction) = 0;

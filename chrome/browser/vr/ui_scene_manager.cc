@@ -41,6 +41,8 @@
 #include "components/vector_icons/vector_icons.h"
 #include "ui/gfx/transform_util.h"
 
+#include "chrome/browser/vr/elements/alert_dialog.h"
+
 namespace vr {
 
 namespace {
@@ -90,7 +92,7 @@ UiSceneManager::UiSceneManager(UiBrowserInterface* browser,
   CreateExitPrompt();
   CreateToasts();
   CreateSplashScreen();
-  CreateUnderDevelopmentNotice();
+  CreateAlertDialog();
 
   ConfigureScene();
 }
@@ -261,6 +263,19 @@ void UiSceneManager::CreateContentQuad(ContentInputDelegate* delegate) {
   content_elements_.push_back(main_content.get());
   scene_->AddUiElement(k2dBrowsingContentGroup, std::move(main_content));
 
+  std::unique_ptr<ContentElement> ui_dialog =
+      base::MakeUnique<ContentElement>(delegate);
+  ui_dialog->set_name(kUiQuad);
+  ui_dialog->set_draw_phase(kPhaseForeground);
+  ui_dialog->SetSize(kContentWidth / 2, kContentHeight / 2);
+  ui_dialog->SetVisible(false);
+  ui_dialog->set_corner_radius(kContentCornerRadius);
+  ui_dialog->SetTransitionedProperties({BOUNDS});
+  ui_dialog->SetTranslate(-1, 1, kTextureOffset + 0.1);
+  ui_dialog_ = ui_dialog.get();
+  content_elements_.push_back(ui_dialog.get());
+  scene_->AddUiElement(k2dBrowsingContentGroup, std::move(ui_dialog));
+
   // Limit reticle distance to a sphere based on content distance.
   scene_->set_background_distance(kContentDistance *
                                   kBackgroundDistanceMultiplier);
@@ -341,6 +356,24 @@ void UiSceneManager::CreateUnderDevelopmentNotice() {
   text->set_y_anchoring(YAnchoring::YBOTTOM);
   control_elements_.push_back(text.get());
   scene_->AddUiElement(kUrlBar, std::move(text));
+}
+
+void UiSceneManager::CreateAlertDialog() {
+  base::string16 temp_text;
+  std::unique_ptr<AlertDialog> dialog = base::MakeUnique<AlertDialog>(
+      1024, kAlertDialogHeightM, vector_icons::kLocationOnIcon, temp_text,
+      temp_text, temp_text, temp_text);
+  dialog->set_draw_phase(kPhaseForeground);
+  dialog->set_hit_testable(true);
+  dialog->SetSize(kAlertDialogWidthM, kAlertDialogHeightM);
+  dialog->SetTranslate(0, -kAlertDialogVerticalOffsetM, 0.1);
+  dialog->SetRotate(1, 0, 0, 0);
+  dialog->SetVisible(false);
+  dialog->set_y_anchoring(YAnchoring::YTOP);
+  control_elements_.push_back(dialog.get());
+  alert_dialog_ = dialog.get();
+  dialog_is_up_ = false;
+  scene_->AddUiElement(k2dBrowsingContentGroup, std::move(dialog));
 }
 
 void UiSceneManager::CreateBackground() {
@@ -755,6 +788,7 @@ void UiSceneManager::ConfigureScene() {
   ConfigureSecurityWarnings();
   ConfigureIndicators();
   ConfigureBackgroundColor();
+  ConfigureAlertDialog();
 }
 
 void UiSceneManager::ConfigureBackgroundColor() {
@@ -794,6 +828,19 @@ void UiSceneManager::SetBluetoothConnectedIndicator(bool enabled) {
   ConfigureIndicators();
 }
 
+void UiSceneManager::SetAlertContent(long icon,
+                                     base::string16 title_text,
+                                     base::string16 toggle_text,
+                                     int b_positive,
+                                     base::string16 b_positive_text,
+                                     int b_negative,
+                                     base::string16 b_negative_text) {
+  dialog_is_up_ = true;
+  alert_dialog_->SetContent(icon, title_text, toggle_text, b_positive,
+                            b_positive_text, b_negative, b_negative_text);
+  ConfigureAlertDialog();
+}
+
 void UiSceneManager::SetWebVrSecureOrigin(bool secure) {
   if (secure_origin_ == secure)
     return;
@@ -812,8 +859,10 @@ bool UiSceneManager::ShouldRenderWebVr() {
   return scene_->web_vr_rendering_enabled();
 }
 
-void UiSceneManager::OnGlInitialized(unsigned int content_texture_id) {
+void UiSceneManager::OnGlInitialized(unsigned int content_texture_id,
+                                     unsigned int ui_texture_id) {
   main_content_->set_texture_id(content_texture_id);
+  ui_dialog_->set_texture_id(ui_texture_id);
   scene_->OnGlInitialized();
 
   ConfigureScene();
@@ -876,6 +925,10 @@ void UiSceneManager::ConfigureIndicators() {
   location_access_indicator_->set_requires_layout(allowed && location_access_);
   bluetooth_connected_indicator_->set_requires_layout(allowed &&
                                                       bluetooth_connected_);
+}
+
+void UiSceneManager::ConfigureAlertDialog() {
+  alert_dialog_->SetVisible(dialog_is_up_);
 }
 
 void UiSceneManager::ConfigureExclusiveScreenToast() {

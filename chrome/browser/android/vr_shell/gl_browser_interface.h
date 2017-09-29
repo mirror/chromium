@@ -27,6 +27,7 @@ class GlBrowserInterface {
   virtual ~GlBrowserInterface() = default;
 
   virtual void ContentSurfaceChanged(jobject surface) = 0;
+  virtual void UiSurfaceChanged(jobject surface) = 0;
   virtual void GvrDelegateReady(gvr::ViewerType viewer_type) = 0;
   virtual void UpdateGamepadData(device::GvrGamepadData) = 0;
   virtual void ProcessContentGesture(

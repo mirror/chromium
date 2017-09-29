@@ -457,6 +457,16 @@ void VrShell::SetWebVRSecureOrigin(bool secure_origin) {
   ui_->SetWebVrSecureOrigin(secure_origin);
 }
 
+void VrShell::ShowAlertDialog(long icon,
+                              base::string16 title_text,
+                              base::string16 toggle_text,
+                              int b_positive,
+                              base::string16 b_positive_text,
+                              int b_negative,
+                              base::string16 b_negative_text) {
+  // TODO add the title, apply theme, add buttons
+}
+
 void VrShell::ConnectPresentingService(
     device::mojom::VRSubmitFrameClientPtr submit_client,
     device::mojom::VRPresentationProviderRequest request,
@@ -479,6 +489,17 @@ base::android::ScopedJavaGlobalRef<jobject> VrShell::TakeContentSurface(
   compositor_->SurfaceChanged(nullptr);
   base::android::ScopedJavaGlobalRef<jobject> surface(env, content_surface_);
   content_surface_ = nullptr;
+  return surface;
+}
+
+base::android::ScopedJavaGlobalRef<jobject> VrShell::TakeUiSurface(
+    JNIEnv* env,
+    const JavaParamRef<jobject>& obj) {
+  if (!ui_surface_) {
+    return base::android::ScopedJavaGlobalRef<jobject>(env, nullptr);
+  }
+  base::android::ScopedJavaGlobalRef<jobject> surface(env, ui_surface_);
+  ui_surface_ = nullptr;
   return surface;
 }
 
@@ -510,6 +531,13 @@ void VrShell::ContentSurfaceChanged(jobject surface) {
   JNIEnv* env = base::android::AttachCurrentThread();
   Java_VrShellImpl_contentSurfaceChanged(env, j_vr_shell_);
   compositor_->SurfaceChanged(content_surface_);
+}
+
+void VrShell::UiSurfaceChanged(jobject surface) {
+  ui_surface_ = surface;
+  JNIEnv* env = base::android::AttachCurrentThread();
+  base::android::ScopedJavaGlobalRef<jobject> ref(env, surface);
+  Java_VrShellImpl_UiSurfaceChanged(env, j_vr_shell_, ref);
 }
 
 void VrShell::GvrDelegateReady(gvr::ViewerType viewer_type) {
@@ -763,6 +791,7 @@ void VrShell::PollMediaAccessFlag() {
   bool is_capturing_video = num_tabs_capturing_video > 0;
   bool is_capturing_screen = num_tabs_capturing_screen > 0;
   bool is_bluetooth_connected = num_tabs_bluetooth_connected > 0;
+
   if (is_capturing_audio != is_capturing_audio_) {
     ui_->SetAudioCapturingIndicator(is_capturing_audio);
     is_capturing_audio_ = is_capturing_audio;

@@ -66,6 +66,9 @@ void InitializeColorSchemes() {
   normal_scheme.dimmer_outer = 0xE6000000;
   normal_scheme.splash_screen_background = SK_ColorBLACK;
   normal_scheme.splash_screen_text_color = 0xA6FFFFFF;
+  normal_scheme.alert_button_default = 0xA6000000;
+  normal_scheme.alert_button_hover = 0x66FFFFFF;
+  normal_scheme.alert_button_background = 0xA64444AA;
 
   gColorSchemes[ColorScheme::kModeFullscreen] =
       gColorSchemes[ColorScheme::kModeNormal];

@@ -53,6 +53,10 @@ struct ColorScheme {
   SkColor system_indicator_foreground;
   SkColor system_indicator_background;
 
+  SkColor alert_button_default;
+  SkColor alert_button_hover;
+  SkColor alert_button_background;
+
   // The colors used for text and buttons on prompts.
   SkColor prompt_foreground;
   SkColor prompt_primary_button_forground;

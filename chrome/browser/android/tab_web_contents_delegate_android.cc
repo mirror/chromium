@@ -275,12 +275,12 @@ void TabWebContentsDelegateAndroid::RequestMediaAccessPermission(
     content::WebContents* web_contents,
     const content::MediaStreamRequest& request,
     const content::MediaResponseCallback& callback) {
-  if (vr::VrTabHelper::IsInVr(web_contents)) {
-    callback.Run(content::MediaStreamDevices(),
-                 content::MEDIA_DEVICE_NOT_SUPPORTED, nullptr);
-    vr::VrTabHelper::UISuppressed(vr::UiSuppressedElement::kMediaPermission);
-    return;
-  }
+  /*  if (vr::VrTabHelper::IsInVr(web_contents)) {
+      callback.Run(content::MediaStreamDevices(),
+                   content::MEDIA_DEVICE_NOT_SUPPORTED, nullptr);
+      vr::VrTabHelper::UISuppressed(vr::UiSuppressedElement::kMediaPermission);
+      return;
+    }*/
   MediaCaptureDevicesDispatcher::GetInstance()->ProcessMediaAccessRequest(
       web_contents, request, callback, nullptr);
 }

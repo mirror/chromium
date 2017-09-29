@@ -68,7 +68,8 @@ class Ui : public BrowserUiInterface, public UiInterface {
 
   // UiInterface
   bool ShouldRenderWebVr() override;
-  void OnGlInitialized(unsigned int content_texture_id) override;
+  void OnGlInitialized(unsigned int content_texture_id,
+                       unsigned int ui_texture_id) override;
   void OnAppButtonClicked() override;
   void OnAppButtonGesturePerformed(UiInterface::Direction direction) override;
   void OnProjMatrixChanged(const gfx::Transform& proj_matrix) override;

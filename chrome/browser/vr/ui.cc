@@ -99,8 +99,9 @@ bool Ui::ShouldRenderWebVr() {
   return scene_manager_->ShouldRenderWebVr();
 }
 
-void Ui::OnGlInitialized(unsigned int content_texture_id) {
-  scene_manager_->OnGlInitialized(content_texture_id);
+void Ui::OnGlInitialized(unsigned int content_texture_id,
+                         unsigned int ui_texture_id) {
+  scene_manager_->OnGlInitialized(content_texture_id, ui_texture_id);
   input_manager_ = base::MakeUnique<vr::UiInputManager>(scene_.get());
   vr_shell_renderer_ = base::MakeUnique<vr::VrShellRenderer>();
   ui_renderer_ =

@@ -173,6 +173,7 @@ public class AndroidPermissionRequester {
             Collections.addAll(
                     permissionsToRequest, contentSettingsTypesToPermissionsMap.valueAt(i));
         }
+
         windowAndroid.requestPermissions(
                 permissionsToRequest.toArray(new String[permissionsToRequest.size()]), callback);
         return true;

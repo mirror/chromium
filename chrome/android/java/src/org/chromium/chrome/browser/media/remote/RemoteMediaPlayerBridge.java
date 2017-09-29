@@ -204,10 +204,10 @@ public class RemoteMediaPlayerBridge {
     private void requestRemotePlayback(long startPositionMillis) {
         Log.d(TAG, "requestRemotePlayback at t=%d", startPositionMillis);
         // TODO(crbug.com/736568): Re-enable dialog in VR.
-        if (VrShellDelegate.isInVr()) {
-            mMediaStateListener.onRouteDialogCancelled();
-            return;
-        }
+        //        if (VrShellDelegate.isInVr()) {
+        //            mMediaStateListener.onRouteDialogCancelled();
+        //            return;
+        //        }
         if (mRouteController == null) return;
         // Clear out the state
         mPauseRequested = false;
@@ -224,10 +224,10 @@ public class RemoteMediaPlayerBridge {
     private void requestRemotePlaybackControl() {
         Log.d(TAG, "requestRemotePlaybackControl");
         // TODO(crbug.com/736568): Re-enable dialog in VR.
-        if (VrShellDelegate.isInVr()) {
-            mMediaStateListener.onRouteDialogCancelled();
-            return;
-        }
+        //        if (VrShellDelegate.isInVr()) {
+        //            mMediaStateListener.onRouteDialogCancelled();
+        //            return;
+        //        }
         RemoteMediaPlayerController.instance().requestRemotePlaybackControl(mMediaStateListener);
     }
 

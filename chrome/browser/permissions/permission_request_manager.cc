@@ -129,7 +129,7 @@ PermissionRequestManager::~PermissionRequestManager() {
 }
 
 void PermissionRequestManager::AddRequest(PermissionRequest* request) {
-  DCHECK(!vr::VrTabHelper::IsInVr(web_contents()));
+  //  DCHECK(!vr::VrTabHelper::IsInVr(web_contents()));
 
   // TODO(tsergeant): change the UMA to no longer mention bubbles.
   base::RecordAction(base::UserMetricsAction("PermissionBubbleRequest"));
@@ -350,7 +350,7 @@ void PermissionRequestManager::Closing() {
     return;
 #endif
 
-  DCHECK(view_);
+  //  DCHECK(view_);
   std::vector<PermissionRequest*>::iterator requests_iter;
   for (requests_iter = requests_.begin();
        requests_iter != requests_.end();
@@ -400,6 +400,7 @@ void PermissionRequestManager::ShowBubble() {
   DCHECK(tab_is_visible_);
 
   view_ = view_factory_.Run(web_contents(), this);
+  DCHECK(view_);
   PermissionUmaUtil::PermissionPromptShown(requests_);
   NotifyBubbleAdded();
 
@@ -410,6 +411,7 @@ void PermissionRequestManager::ShowBubble() {
 
 void PermissionRequestManager::DeleteBubble() {
   DCHECK(view_);
+
   view_.reset();
 }
 

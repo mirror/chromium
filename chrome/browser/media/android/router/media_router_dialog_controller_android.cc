@@ -140,10 +140,11 @@ MediaRouterDialogControllerAndroid::~MediaRouterDialogControllerAndroid() {
 
 void MediaRouterDialogControllerAndroid::CreateMediaRouterDialog() {
   // TODO(crbug.com/736568): Re-enable dialog in VR.
-  if (vr::VrTabHelper::IsInVr(initiator())) {
-    CancelPresentationRequest();
-    return;
-  }
+  LOG(ERROR) << "VR: MediaRouterDialog";
+  //  if (vr::VrTabHelper::IsInVr(initiator())) {
+  //    CancelPresentationRequest();
+  //    return;
+  //  }
 
   JNIEnv* env = base::android::AttachCurrentThread();
 
