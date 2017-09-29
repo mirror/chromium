@@ -43,7 +43,7 @@ typedef std::set<std::string> HeaderNameSet;
 base::LazyInstance<HeaderNameSet>::DestructorAtExit g_excluded_header_name_set =
     LAZY_INSTANCE_INITIALIZER;
 
-void RunSoon(const base::Closure& closure) {
+void RunSoonFunctionNumber21(const base::Closure& closure) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, closure);
 }
 
@@ -560,7 +560,8 @@ void ServiceWorkerContextWrapper::FindReadyRegistrationForPattern(
     const FindRegistrationCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   if (!context_core_) {
-    RunSoon(base::Bind(callback, SERVICE_WORKER_ERROR_ABORT, nullptr));
+    RunSoonFunctionNumber21(
+        base::Bind(callback, SERVICE_WORKER_ERROR_ABORT, nullptr));
     return;
   }
   context_core_->storage()->FindRegistrationForPattern(
@@ -604,8 +605,9 @@ void ServiceWorkerContextWrapper::GetAllRegistrations(
     const GetRegistrationsInfosCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   if (!context_core_) {
-    RunSoon(base::Bind(callback, SERVICE_WORKER_ERROR_ABORT,
-                       std::vector<ServiceWorkerRegistrationInfo>()));
+    RunSoonFunctionNumber21(
+        base::Bind(callback, SERVICE_WORKER_ERROR_ABORT,
+                   std::vector<ServiceWorkerRegistrationInfo>()));
     return;
   }
   context_core_->storage()->GetAllRegistrationsInfos(callback);
@@ -617,8 +619,8 @@ void ServiceWorkerContextWrapper::GetRegistrationUserData(
     const GetUserDataCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   if (!context_core_) {
-    RunSoon(base::Bind(callback, std::vector<std::string>(),
-                       SERVICE_WORKER_ERROR_ABORT));
+    RunSoonFunctionNumber21(base::Bind(callback, std::vector<std::string>(),
+                                       SERVICE_WORKER_ERROR_ABORT));
     return;
   }
   context_core_->storage()->GetUserData(registration_id, keys, callback);
@@ -630,8 +632,8 @@ void ServiceWorkerContextWrapper::GetRegistrationUserDataByKeyPrefix(
     const GetUserDataCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   if (!context_core_) {
-    RunSoon(base::Bind(callback, std::vector<std::string>(),
-                       SERVICE_WORKER_ERROR_ABORT));
+    RunSoonFunctionNumber21(base::Bind(callback, std::vector<std::string>(),
+                                       SERVICE_WORKER_ERROR_ABORT));
     return;
   }
   context_core_->storage()->GetUserDataByKeyPrefix(registration_id, key_prefix,
@@ -645,7 +647,7 @@ void ServiceWorkerContextWrapper::StoreRegistrationUserData(
     const StatusCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   if (!context_core_) {
-    RunSoon(base::Bind(callback, SERVICE_WORKER_ERROR_ABORT));
+    RunSoonFunctionNumber21(base::Bind(callback, SERVICE_WORKER_ERROR_ABORT));
     return;
   }
   context_core_->storage()->StoreUserData(registration_id, origin.GetOrigin(),
@@ -658,7 +660,7 @@ void ServiceWorkerContextWrapper::ClearRegistrationUserData(
     const StatusCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   if (!context_core_) {
-    RunSoon(base::Bind(callback, SERVICE_WORKER_ERROR_ABORT));
+    RunSoonFunctionNumber21(base::Bind(callback, SERVICE_WORKER_ERROR_ABORT));
     return;
   }
   context_core_->storage()->ClearUserData(registration_id, keys, callback);
@@ -670,7 +672,7 @@ void ServiceWorkerContextWrapper::ClearRegistrationUserDataByKeyPrefixes(
     const StatusCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   if (!context_core_) {
-    RunSoon(base::Bind(callback, SERVICE_WORKER_ERROR_ABORT));
+    RunSoonFunctionNumber21(base::Bind(callback, SERVICE_WORKER_ERROR_ABORT));
     return;
   }
   context_core_->storage()->ClearUserDataByKeyPrefixes(registration_id,
@@ -682,8 +684,9 @@ void ServiceWorkerContextWrapper::GetUserDataForAllRegistrations(
     const GetUserDataForAllRegistrationsCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   if (!context_core_) {
-    RunSoon(base::Bind(callback, std::vector<std::pair<int64_t, std::string>>(),
-                       SERVICE_WORKER_ERROR_ABORT));
+    RunSoonFunctionNumber21(
+        base::Bind(callback, std::vector<std::pair<int64_t, std::string>>(),
+                   SERVICE_WORKER_ERROR_ABORT));
     return;
   }
   context_core_->storage()->GetUserDataForAllRegistrations(key, callback);
@@ -694,8 +697,9 @@ void ServiceWorkerContextWrapper::GetUserDataForAllRegistrationsByKeyPrefix(
     const GetUserDataForAllRegistrationsCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   if (!context_core_) {
-    RunSoon(base::Bind(callback, std::vector<std::pair<int64_t, std::string>>(),
-                       SERVICE_WORKER_ERROR_ABORT));
+    RunSoonFunctionNumber21(
+        base::Bind(callback, std::vector<std::pair<int64_t, std::string>>(),
+                   SERVICE_WORKER_ERROR_ABORT));
     return;
   }
   context_core_->storage()->GetUserDataForAllRegistrationsByKeyPrefix(

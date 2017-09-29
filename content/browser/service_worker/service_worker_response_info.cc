@@ -12,7 +12,7 @@ namespace content {
 
 namespace {
 
-int kUserDataKey;  // Only address is used, value is not important.
+int kSW3UserDataKey;  // Only address is used, value is not important.
 
 }  // namespace
 
@@ -21,10 +21,10 @@ ServiceWorkerResponseInfo* ServiceWorkerResponseInfo::ForRequest(
     net::URLRequest* request,
     bool create) {
   ServiceWorkerResponseInfo* info = static_cast<ServiceWorkerResponseInfo*>(
-      request->GetUserData(&kUserDataKey));
+      request->GetUserData(&kSW3UserDataKey));
   if (!info && create) {
     info = new ServiceWorkerResponseInfo();
-    request->SetUserData(&kUserDataKey, base::WrapUnique(info));
+    request->SetUserData(&kSW3UserDataKey, base::WrapUnique(info));
   }
   return info;
 }

@@ -37,7 +37,6 @@
 
 using ppapi::host::MessageFilterHost;
 using ppapi::host::ResourceHost;
-using ppapi::host::ResourceMessageFilter;
 using ppapi::proxy::SerializedTrueTypeFontDesc;
 using ppapi::UnpackMessage;
 
@@ -99,7 +98,7 @@ ContentBrowserPepperHostFactory::CreateResourceHost(
           new PepperNetworkProxyHost(host_, instance, resource));
     }
     case PpapiHostMsg_HostResolver_Create::ID: {
-      scoped_refptr<ResourceMessageFilter> host_resolver(
+      scoped_refptr<ppapi::host::ResourceMessageFilter> host_resolver(
           new PepperHostResolverMessageFilter(host_, instance, false));
       return std::unique_ptr<ResourceHost>(new MessageFilterHost(
           host_->GetPpapiHost(), instance, resource, host_resolver));
@@ -126,7 +125,7 @@ ContentBrowserPepperHostFactory::CreateResourceHost(
     }
     case PpapiHostMsg_UDPSocket_Create::ID: {
       if (CanCreateSocket()) {
-        scoped_refptr<ResourceMessageFilter> udp_socket(
+        scoped_refptr<ppapi::host::ResourceMessageFilter> udp_socket(
             new PepperUDPSocketMessageFilter(host_, instance, false));
         return std::unique_ptr<ResourceHost>(new MessageFilterHost(
             host_->GetPpapiHost(), instance, resource, udp_socket));
@@ -190,14 +189,14 @@ ContentBrowserPepperHostFactory::CreateResourceHost(
   // whitelisted apps which may not have access to the other private
   // interfaces.
   if (message.type() == PpapiHostMsg_HostResolver_CreatePrivate::ID) {
-    scoped_refptr<ResourceMessageFilter> host_resolver(
+    scoped_refptr<ppapi::host::ResourceMessageFilter> host_resolver(
         new PepperHostResolverMessageFilter(host_, instance, true));
     return std::unique_ptr<ResourceHost>(new MessageFilterHost(
         host_->GetPpapiHost(), instance, resource, host_resolver));
   }
   if (message.type() == PpapiHostMsg_TCPServerSocket_CreatePrivate::ID) {
     if (CanCreateSocket()) {
-      scoped_refptr<ResourceMessageFilter> tcp_server_socket(
+      scoped_refptr<ppapi::host::ResourceMessageFilter> tcp_server_socket(
           new PepperTCPServerSocketMessageFilter(this, host_, instance, true));
       return std::unique_ptr<ResourceHost>(new MessageFilterHost(
           host_->GetPpapiHost(), instance, resource, tcp_server_socket));
@@ -211,7 +210,7 @@ ContentBrowserPepperHostFactory::CreateResourceHost(
   }
   if (message.type() == PpapiHostMsg_UDPSocket_CreatePrivate::ID) {
     if (CanCreateSocket()) {
-      scoped_refptr<ResourceMessageFilter> udp_socket(
+      scoped_refptr<ppapi::host::ResourceMessageFilter> udp_socket(
           new PepperUDPSocketMessageFilter(host_, instance, true));
       return std::unique_ptr<ResourceHost>(new MessageFilterHost(
           host_->GetPpapiHost(), instance, resource, udp_socket));
@@ -228,7 +227,7 @@ ContentBrowserPepperHostFactory::CreateResourceHost(
   if (GetPermissions().HasPermission(ppapi::PERMISSION_FLASH)) {
     switch (message.type()) {
       case PpapiHostMsg_FlashFile_Create::ID: {
-        scoped_refptr<ResourceMessageFilter> file_filter(
+        scoped_refptr<ppapi::host::ResourceMessageFilter> file_filter(
             new PepperFlashFileMessageFilter(instance, host_));
         return std::unique_ptr<ResourceHost>(new MessageFilterHost(
             host_->GetPpapiHost(), instance, resource, file_filter));
@@ -246,7 +245,7 @@ ContentBrowserPepperHostFactory::CreateAcceptedTCPSocket(
     std::unique_ptr<net::TCPSocket> socket) {
   if (!CanCreateSocket())
     return std::unique_ptr<ResourceHost>();
-  scoped_refptr<ResourceMessageFilter> tcp_socket(
+  scoped_refptr<ppapi::host::ResourceMessageFilter> tcp_socket(
       new PepperTCPSocketMessageFilter(host_, instance, version,
                                        std::move(socket)));
   return std::unique_ptr<ResourceHost>(
@@ -261,7 +260,7 @@ ContentBrowserPepperHostFactory::CreateNewTCPSocket(
   if (!CanCreateSocket())
     return std::unique_ptr<ResourceHost>();
 
-  scoped_refptr<ResourceMessageFilter> tcp_socket(
+  scoped_refptr<ppapi::host::ResourceMessageFilter> tcp_socket(
       new PepperTCPSocketMessageFilter(this, host_, instance, version));
   if (!tcp_socket.get())
     return std::unique_ptr<ResourceHost>();
