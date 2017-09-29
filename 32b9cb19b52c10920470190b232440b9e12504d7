@@ -331,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "f80a77f9_401bd5d7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/privacy/ClearBrowsingDataPreferences.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T23:30:22Z",
+      "side": 1,
+      "message": "I agree that the user needs a way to clear survey data, but I\u0027m not sure attaching it to site cookies \u0026 data is correct. Let\u0027s follow up via email.",
+      "parentUuid": "1a03d4ae_4558e90a",
+      "range": {
+        "startLine": 330,
+        "startChar": 0,
+        "endLine": 332,
+        "endChar": 9
+      },
+      "revId": "32b9cb19b52c10920470190b232440b9e12504d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58ebec02_6c5d42b1",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
         "patchSetId": 12
