@@ -41,6 +41,7 @@ class InternetDetailDialog : public LoginWebDialog {
  protected:
   // ui::WebDialogDelegate implementation.
   void OnDialogClosed(const std::string& json_retval) override;
+  bool ShouldShowDialogTitle() const override;
 
  private:
   // TODO(altimofeev): consider avoidance static variable by extending current

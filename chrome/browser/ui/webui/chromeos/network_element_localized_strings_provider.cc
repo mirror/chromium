@@ -31,6 +31,7 @@ struct {
     {"networkListItemNotConnected", IDS_NETWORK_LIST_NOT_CONNECTED},
     {"vpnNameTemplate", IDS_NETWORK_LIST_THIRD_PARTY_VPN_NAME_TEMPLATE},
 };
+
 }  //  namespace
 
 void AddLocalizedStrings(content::WebUIDataSource* html_source) {
@@ -41,27 +42,6 @@ void AddLocalizedStrings(content::WebUIDataSource* html_source) {
 void AddLocalizedValuesToBuilder(::login::LocalizedValuesBuilder* builder) {
   for (const auto& entry : localized_strings)
     builder->Add(entry.name, entry.id);
-}
-
-void AddDetailsLocalizedStrings(content::WebUIDataSource* html_source) {
-  struct {
-    const char* name;
-    int id;
-  } localized_strings[] = {
-      {"OncTypeCellular", IDS_NETWORK_TYPE_MOBILE_DATA},
-      {"OncTypeEthernet", IDS_NETWORK_TYPE_ETHERNET},
-      {"OncTypeTether", IDS_NETWORK_TYPE_MOBILE_DATA},
-      {"OncTypeVPN", IDS_NETWORK_TYPE_VPN},
-      {"OncTypeWiFi", IDS_NETWORK_TYPE_WIFI},
-      {"OncTypeWiMAX", IDS_NETWORK_TYPE_WIMAX},
-      {"networkListItemConnected", IDS_STATUSBAR_NETWORK_DEVICE_CONNECTED},
-      {"networkListItemConnecting", IDS_STATUSBAR_NETWORK_DEVICE_CONNECTING},
-      {"networkListItemConnectingTo", IDS_NETWORK_LIST_CONNECTING_TO},
-      {"networkListItemNotConnected", IDS_NETWORK_LIST_NOT_CONNECTED},
-      {"vpnNameTemplate", IDS_NETWORK_LIST_THIRD_PARTY_VPN_NAME_TEMPLATE},
-  };
-  for (const auto& entry : localized_strings)
-    html_source->AddLocalizedString(entry.name, entry.id);
 }
 
 void AddOncLocalizedStrings(content::WebUIDataSource* html_source) {
@@ -179,7 +159,7 @@ void AddOncLocalizedStrings(content::WebUIDataSource* html_source) {
     html_source->AddLocalizedString(entry.name, entry.id);
 }
 
-void AddConfigLocalizedStrings(content::WebUIDataSource* html_source) {
+void AddDetailsLocalizedStrings(content::WebUIDataSource* html_source) {
   struct {
     const char* name;
     int id;
@@ -224,6 +204,21 @@ void AddConfigLocalizedStrings(content::WebUIDataSource* html_source) {
        IDS_SETTINGS_INTERNET_NETWORK_CELLULAR_NO_NETWORKS},
       {"networkNameservers", IDS_SETTINGS_INTERNET_NETWORK_NAMESERVERS},
       {"networkProxyWpad", IDS_SETTINGS_INTERNET_NETWORK_PROXY_WPAD},
+  };
+  for (const auto& entry : localized_strings)
+    html_source->AddLocalizedString(entry.name, entry.id);
+}
+
+void AddConfigLocalizedStrings(content::WebUIDataSource* html_source) {
+  struct {
+    const char* name;
+    int id;
+  } localized_strings[] = {
+      {"networkCAUseDefault", IDS_SETTINGS_INTERNET_NETWORK_CA_USE_DEFAULT},
+      {"networkCADoNotCheck", IDS_SETTINGS_INTERNET_NETWORK_CA_DO_NOT_CHECK},
+      {"networkConfigSaveCredentials",
+       IDS_SETTINGS_INTERNET_CONFIG_SAVE_CREDENTIALS},
+      {"networkConfigShare", IDS_SETTINGS_INTERNET_CONFIG_SHARE},
   };
   for (const auto& entry : localized_strings)
     html_source->AddLocalizedString(entry.name, entry.id);
