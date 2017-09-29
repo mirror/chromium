@@ -70,6 +70,13 @@ class ReportingService {
                                int message_size,
                                bool is_cellular);
 
+  // Determines, roughly, the percentage of data to omit from an upload in
+  // order to stay within data usage limits.
+  int GetUploadReductionPercent();
+
+  // Returns if the last reported activity was over a cellular link.
+  bool IsCellular();
+
   // Registers local state prefs used by this class. This should only be called
   // once.
   static void RegisterPrefs(PrefRegistrySimple* registry);

@@ -4,6 +4,7 @@
 
 #include "base/metrics/statistics_recorder.h"
 
+#include <algorithm>
 #include <memory>
 
 #include "base/at_exit.h"
@@ -291,11 +292,19 @@ void StatisticsRecorder::PrepareDeltas(
     bool include_persistent,
     HistogramBase::Flags flags_to_set,
     HistogramBase::Flags required_flags,
-    HistogramSnapshotManager* snapshot_manager) {
+    HistogramSnapshotManager* snapshot_manager,
+    int omit_percentage) {
+  if (omit_percentage >= 100)
+    return;
   if (include_persistent)
     ImportGlobalPersistentHistograms();
 
   auto known = GetKnownHistograms(include_persistent);
+  if (omit_percentage > 0) {
+    std::random_shuffle(known.begin(), known.end());
+    known.resize(known.size() * (100 - omit_percentage) / 100);
+  }
+
   snapshot_manager->PrepareDeltas(known.begin(), known.end(), flags_to_set,
                                   required_flags);
 }
