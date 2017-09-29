@@ -228,6 +228,25 @@
                     "title": "Disable request blocking"
                 }
             ]
+        },
+        {
+            "type": "setting",
+            "category": "Network",
+            "title": "Override requests with saved files",
+            "settingName": "networkLocalFileServerInterceptionEnabled",
+            "settingType": "boolean",
+            "defaultValue": false,
+            "tags": "intercept, local, disk",
+            "options": [
+                {
+                    "value": true,
+                    "title": "Enable override requests with local files from disk"
+                },
+                {
+                    "value": false,
+                    "title": "Disable override requests with local files from disk"
+                }
+            ]
         }
     ],
     "scripts": [

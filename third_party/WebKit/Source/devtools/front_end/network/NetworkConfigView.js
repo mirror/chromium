@@ -2,6 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+/**
+ * @implements {UI.ListWidget.Delegate}
+ */
 Network.NetworkConfigView = class extends UI.VBox {
   constructor() {
     super(true);
@@ -13,6 +16,14 @@ Network.NetworkConfigView = class extends UI.VBox {
     this._createNetworkThrottlingSection();
     this.contentElement.createChild('div').classList.add('panel-section-separator');
     this._createUserAgentSection();
+    this.contentElement.createChild('div').classList.add('panel-section-separator');
+
+    this._mappingsList = new UI.ListWidget(this);
+    this._interceptionFilesMapSetting =
+        Common.settings.createSetting('networkLogalFilesServerInterceptionFilesMap', {});
+    this._interceptionFilesMapSetting.addChangeListener(this._refreshMappingsList, this);
+    this._mappingEditor = this._createMappingEditor();
+    this._createFileServingSection();
   }
 
   /**
@@ -139,6 +150,125 @@ Network.NetworkConfigView = class extends UI.VBox {
       var customUA = useCustomUA ? customUserAgentSetting.get() : '';
       SDK.multitargetNetworkManager.setCustomUserAgentOverride(customUA);
     }
+  }
+
+  _createFileServingSection() {
+    var section = this._createSection(Common.UIString('Request override'), 'network-config-override');
+    this._mappingsList.element.classList.add('network-config-mappings-list');
+    this._mappingsList.registerRequiredCSS('network/networkConfigView.css');
+
+    var enableInterceptionCheckbox = new UI.ToolbarSettingCheckbox(
+        Common.moduleSetting('networkLocalFileServerInterceptionEnabled'),
+        Common.UIString('Enable request override from file system'),
+        Common.UIString('Enable request override from file system'));
+    section.appendChild(enableInterceptionCheckbox.element);
+
+    var header = section.createChild('div', 'network-config-mapping-list-header');
+    header.createChild('div', 'network-config-mapping-list-header-url').textContent = Common.UIString('URL');
+    header.createChild('div', 'network-config-mapping-list-header-file').textContent = Common.UIString('File');
+
+    var mappingsPlaceholder = createElementWithClass('div', 'network-config-mappings-list-empty');
+    mappingsPlaceholder.textContent = Common.UIString('None');
+    this._mappingsList.setEmptyPlaceholder(mappingsPlaceholder);
+
+    this._refreshMappingsList();
+    this._mappingsList.show(section);
+
+    section.appendChild(UI.createTextButton(
+        Common.UIString('Add Mapping'),
+        () => this._mappingsList.addNewItem(
+            Object.values(this._interceptionFilesMapSetting.get()).length, {url: '', file: ''}),
+        'add-button'));
+  }
+
+  /**
+   * @return {!UI.ListWidget.Editor}
+   */
+  _createMappingEditor() {
+    var editor = new UI.ListWidget.Editor();
+    var content = editor.contentElement();
+
+    var titles = content.createChild('div', 'network-config-file-system-mapping-edit-row');
+    titles.createChild('div', 'network-config-file-system-mapping-system-value').textContent =
+        Common.UIString('URL prefix');
+    titles.createChild('div', 'network-config-file-system-mapping-value').textContent = Common.UIString('URL');
+
+    var fields = content.createChild('div', 'network-config-file-system-mapping-edit-row');
+    fields.createChild('div', 'network-config-file-system-mapping-value')
+        .appendChild(editor.createInput('url', 'text', 'http://localhost:8000/url', (item, index, input) => {
+          return item && (item.url === input.value || !(input.value in this._interceptionFilesMapSetting.get()));
+        }));
+    fields.createChild('div', 'network-config-file-system-mapping-value')
+        .appendChild(editor.createInput('file', 'text', '/path/to/folder/', (item, index, input) => !!input.value));
+
+    return editor;
+  }
+
+  _refreshMappingsList() {
+    this._mappingsList.clear();
+    var interceptionFilesMap = this._interceptionFilesMapSetting.get();
+    var urls = Object.keys(interceptionFilesMap).sort();
+    for (var url of urls)
+      this._mappingsList.appendItem({url: url, file: interceptionFilesMap[url]}, true);
+  }
+
+  /**
+   * @override
+   * @param {!{url: string, file: string}} item
+   * @param {boolean} editable
+   * @return {!Element}
+   */
+  renderItem(item, editable) {
+    var element = createElementWithClass('div', 'network-config-file-system-mapping-list-item');
+
+    var entry = /** @type {!{url: string, file: string}} */ (item);
+    var urlElement = element.createChild('div', 'network-config-file-system-mapping-url');
+    urlElement.textContent = entry.url;
+    urlElement.title = entry.url;
+    var fileElement = element.createChild('div', 'network-config-file-system-mapping-file');
+    fileElement.textContent = entry.file;
+    fileElement.title = entry.file;
+
+    return element;
+  }
+
+  /**
+   * @override
+   * @param {*} item
+   * @param {number} index
+   */
+  removeItemRequested(item, index) {
+    var mappings = this._interceptionFilesMapSetting.get();
+    delete mappings[item.url];
+    this._interceptionFilesMapSetting.set(mappings);
+  }
+
+  /**
+   * @override
+   * @param {*} item
+   * @param {!UI.ListWidget.Editor} editor
+   * @param {boolean} isNew
+   */
+  commitEdit(item, editor, isNew) {
+    var entry = /** @type {!{url: string, file: string}} */ (item);
+    var mappings = this._interceptionFilesMapSetting.get();
+    var url = editor.control('url').value;
+    if (!isNew)
+      delete mappings[entry.url];
+    mappings[url] = editor.control('file').value;
+    this._interceptionFilesMapSetting.set(mappings);
+  }
+
+  /**
+   * @override
+   * @param {*} item
+   * @return {!UI.ListWidget.Editor}
+   */
+  beginEdit(item) {
+    var entry = /** @type {!{url: string, file: string}} */ (item);
+    this._mappingEditor.control('url').value = entry.url;
+    this._mappingEditor.control('file').value = entry.file;
+    return this._mappingEditor;
   }
 };
 

@@ -460,6 +460,7 @@ Workspace.Workspace.Events = {
   UISourceCodeAdded: Symbol('UISourceCodeAdded'),
   UISourceCodeRemoved: Symbol('UISourceCodeRemoved'),
   UISourceCodeRenamed: Symbol('UISourceCodeRenamed'),
+  UISourceCodeSavedAs: Symbol('UISourceCodeSavedAs'),
   WorkingCopyChanged: Symbol('WorkingCopyChanged'),
   WorkingCopyCommitted: Symbol('WorkingCopyCommitted'),
   WorkingCopyCommittedByUser: Symbol('WorkingCopyCommittedByUser'),

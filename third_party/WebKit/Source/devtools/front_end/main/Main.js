@@ -230,6 +230,7 @@ Main.Main = class {
     new Main.NetworkPanelIndicator();
     new Main.SourcesPanelIndicator();
     new Main.BackendSettingsSync();
+    new Main.NetworkLocalFileServer();
 
     UI.actionRegistry = new UI.ActionRegistry();
     UI.shortcutRegistry = new UI.ShortcutRegistry(UI.actionRegistry, document);
@@ -944,6 +945,62 @@ Main.ShowMetricsRulersSettingUI = class {
   settingElement() {
     return UI.SettingsUI.createSettingCheckbox(
         Common.UIString('Show rulers'), Common.moduleSetting('showMetricsRulers'));
+  }
+};
+
+Main.NetworkLocalFileServer = class {
+  constructor() {
+    this._interceptionFilesMapSetting =
+        Common.settings.createSetting('networkLogalFilesServerInterceptionFilesMap', {});
+    var interceptionEnabledSetting = Common.moduleSetting('networkLocalFileServerInterceptionEnabled');
+    this._interceptionFilesMapSetting.addChangeListener(updateInterceptionPatterns.bind(this));
+    interceptionEnabledSetting.addChangeListener(updateInterceptionPatterns.bind(this));
+    Workspace.workspace.addEventListener(
+        Workspace.Workspace.Events.UISourceCodeSavedAs, this._uiSourceCodeSavedAs, this);
+    this._boundHandler = this._interceptionHandler.bind(this);
+
+    updateInterceptionPatterns.call(this);
+
+    /**
+     * @this {Main.NetworkLocalFileServer}
+     */
+    function updateInterceptionPatterns() {
+      var patterns = interceptionEnabledSetting.get() ? Object.keys(this._interceptionFilesMapSetting.get()) : [];
+      SDK.multitargetNetworkManager.setInterceptionHandlerForPatterns(this._boundHandler, patterns);
+    }
+  }
+
+  /**
+   * @param {!Common.Event} event
+   */
+  _uiSourceCodeSavedAs(event) {
+    var uiSourceCode = /** @type {!Workspace.UISourceCode} */ (event.data.uiSourceCode);
+    var fileSystemPath = /** {string|undefined} */ (event.data.fileSystemPath);
+    if (!fileSystemPath)
+      return;
+
+    var interceptionFilesMap = this._interceptionFilesMapSetting.get();
+    interceptionFilesMap[uiSourceCode.url()] = fileSystemPath;
+    this._interceptionFilesMapSetting.set(interceptionFilesMap);
+  }
+
+  /**
+   * @param {!SDK.MultitargetNetworkManager.InterceptedRequest} interceptedRequest
+   * @return {!Promise}
+   */
+  async _interceptionHandler(interceptedRequest) {
+    var mappings = this._interceptionFilesMapSetting.get();
+    var url = interceptedRequest.request.url;
+    console.assert(mappings[url]);
+    return new Promise(resolve => {
+      var fileURL = 'file://' + mappings[url];
+      Host.ResourceLoader.load(fileURL, {}, (statusCode, headers, content) => {
+        if (statusCode === 200) {
+          var mimeType = Common.ResourceType.mimeFromURL(url) || 'text/x-unknown';
+          interceptedRequest.continueRequestWithContent(new Blob([content], {type: mimeType}));
+        }
+      });
+    });
   }
 };
 

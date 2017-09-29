@@ -349,6 +349,9 @@ Workspace.UISourceCode = class extends Common.Object {
       if (!saveResponse.success)
         return;
       this._contentCommitted(this.workingCopy(), true);
+      this._project.workspace().dispatchEventToListeners(
+          Workspace.Workspace.Events.UISourceCodeSavedAs,
+          {uiSourceCode: this, fileSystemPath: saveResponse.fileSystemPath});
     });
     Workspace.fileManager.close(this._url);
   }
