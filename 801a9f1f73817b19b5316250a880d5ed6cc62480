@@ -70,6 +70,24 @@
       "revId": "801a9f1f73817b19b5316250a880d5ed6cc62480",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee11daa9_001e3b90",
+        "filename": "third_party/closure_compiler/compiled_resources2.gyp",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-29T04:42:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b13fba7_8ad432bd",
+      "revId": "801a9f1f73817b19b5316250a880d5ed6cc62480",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
