@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51ca5b71_4a2057a2",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-29T17:31:27Z",
+      "side": 1,
+      "message": "How come you prefer this over the more typical EnumWindows? I realize this returns the topmost, but do you actually need that?",
+      "range": {
+        "startLine": 92,
+        "startChar": 3,
+        "endLine": 92,
+        "endChar": 57
+      },
+      "revId": "40b7ef1caf8c01b578ff4e377988e13b7dda37cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ade00447_a4a85885",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-29T17:31:27Z",
+      "side": 1,
+      "message": "hacker_style on all these.",
+      "range": {
+        "startLine": 94,
+        "startChar": 8,
+        "endLine": 94,
+        "endChar": 16
+      },
+      "revId": "40b7ef1caf8c01b578ff4e377988e13b7dda37cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
