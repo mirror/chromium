@@ -38,6 +38,7 @@ class AshWindowTreeHostUnified : public AshWindowTreeHostPlatform,
   // aura::WindowObserver:
   void OnWindowDestroying(aura::Window* window) override;
 
+ private:
   std::vector<AshWindowTreeHost*> mirroring_hosts_;
 
   DISALLOW_COPY_AND_ASSIGN(AshWindowTreeHostUnified);
