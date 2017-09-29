@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4ae6f68_79f5cd10",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2694,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-29T09:05:11Z",
+      "side": 1,
+      "message": "nit: I think new flags should go at the end",
+      "range": {
+        "startLine": 2694,
+        "startChar": 63,
+        "endLine": 2694,
+        "endChar": 0
+      },
+      "revId": "1b57be288c43243155d79dfd1994451fd3d4680c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fe8b861_987f8786",
+        "filename": "chrome/browser/engagement/site_engagement_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-29T09:05:11Z",
+      "side": 1,
+      "message": "Can we check urls-\u003esize() and get rid of the num_results var?",
+      "range": {
+        "startLine": 301,
+        "startChar": 27,
+        "endLine": 301,
+        "endChar": 0
+      },
+      "revId": "1b57be288c43243155d79dfd1994451fd3d4680c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b944e29_36cb3965",
+        "filename": "chrome/browser/history/top_sites_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-29T09:05:11Z",
+      "side": 1,
+      "message": "DependsOn(SiteEngagementServiceFactory::GetInstance());",
+      "range": {
+        "startLine": 123,
+        "startChar": 50,
+        "endLine": 123,
+        "endChar": 0
+      },
+      "revId": "1b57be288c43243155d79dfd1994451fd3d4680c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae0b6992_a3497886",
+        "filename": "components/history/core/browser/history_backend.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1381,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-29T09:05:11Z",
+      "side": 1,
+      "message": "optional:\nresult-\u003eemplace_back(current_data-\u003eGetURL(), current_data-\u003eGetTitle(), redirects);",
+      "range": {
+        "startLine": 1381,
+        "startChar": 75,
+        "endLine": 1381,
+        "endChar": 0
+      },
+      "revId": "1b57be288c43243155d79dfd1994451fd3d4680c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb82d4d7_ee3b127c",
+        "filename": "components/history/core/browser/history_types.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-29T09:05:11Z",
+      "side": 1,
+      "message": "nit: \"redirects()\" does nothing, remove",
+      "range": {
+        "startLine": 187,
+        "startChar": 30,
+        "endLine": 187,
+        "endChar": 41
+      },
+      "revId": "1b57be288c43243155d79dfd1994451fd3d4680c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55b9ec46_bc5a00a3",
+        "filename": "components/history/core/browser/history_types.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-29T09:05:11Z",
+      "side": 1,
+      "message": "Looks like this is the only call site for InitRedirects? If so, can we just inline it here?",
+      "range": {
+        "startLine": 188,
+        "startChar": 32,
+        "endLine": 188,
+        "endChar": 0
+      },
+      "revId": "1b57be288c43243155d79dfd1994451fd3d4680c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "779ba23a_0328241f",
+        "filename": "components/history/core/browser/top_sites_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-29T09:05:11Z",
+      "side": 1,
+      "message": "nit: We can use std::make_unique now :)",
+      "range": {
+        "startLine": 128,
+        "startChar": 10,
+        "endLine": 128,
+        "endChar": 26
+      },
+      "revId": "1b57be288c43243155d79dfd1994451fd3d4680c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0678eb64_ab874378",
+        "filename": "components/history/core/browser/top_sites_most_visited_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-29T09:05:11Z",
+      "side": 1,
+      "message": "nitty nit: no \"(c)\"",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "1b57be288c43243155d79dfd1994451fd3d4680c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6da88ef_1bcf7ef4",
+        "filename": "components/history/core/browser/top_sites_most_visited_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-29T09:05:11Z",
+      "side": 1,
+      "message": "This seems to contradict the comment for ProvidesMetadata.",
+      "range": {
+        "startLine": 19,
+        "startChar": 39,
+        "endLine": 19,
+        "endChar": 61
+      },
+      "revId": "1b57be288c43243155d79dfd1994451fd3d4680c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cc5851b_32d0fd62",
+        "filename": "components/history/core/browser/top_sites_most_visited_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-29T09:05:11Z",
+      "side": 1,
+      "message": "TBH I find this design a bit confusing - one class that does a different thing depending on whether |most_engaged_provider| is passed in. IMO the difference between TopSitesMostVisitedProvider and MostEngagedProvider isn\u0027t immediately clear; it took me a while to understand how they interact. How about the following:\nTopSitesMostVisitedProvider is a pure interface that exposes the QueryMostVisitedURLs method. There are two implementations: SiteEngagementProvider and HistoryFrecencyProvider.\nTopSites gets a unique_ptr\u003cTopSitesMostVisitedProvider\u003e passed in (never null), and doesn\u0027t know or care about the different impls.\n\nOne remaining oddity will be that TopSites observes the HistoryService, and uses those events to decide when to refresh. That will probably kinda-sorta work for SiteEngagement, but it does seem a bit arbitrary. I think for an experiment this is fine, but if we decide to actually launch this, we might want to also break the refreshing logic out of TopSites itself.",
+      "range": {
+        "startLine": 30,
+        "startChar": 74,
+        "endLine": 30,
+        "endChar": 0
+      },
+      "revId": "1b57be288c43243155d79dfd1994451fd3d4680c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
