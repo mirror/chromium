@@ -107,6 +107,7 @@ class CookieStoreIOSTest : public testing::Test {
         scoped_cookie_store_ios_client_(
             base::MakeUnique<TestCookieStoreIOSClient>()),
         backend_(new TestPersistentCookieStore) {
+    ClearCookies();
     std::unique_ptr<NSHTTPSystemCookieStore> system_store(
         base::MakeUnique<NSHTTPSystemCookieStore>());
     // |system_store_| doesn't own the NSHTTPSystemCookieStore object, the
