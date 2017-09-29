@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3af6ddf_aa3efeb3",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsResourceLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-29T18:05:07Z",
+      "side": 1,
+      "message": "Since you are changing it, might as well write it as:\n\nint id \u003d RuntimeEnabledFeatures::ModernMediaControlsEnabled() ?\n    IDR_FOO : IDR_BAR;\nreturn ResourceBundleHelper::UncompressResourceAsString(id);\n\nUnless you would want to some day call UncompressResourceAsString() with one and GetResourceAsString() with the other?",
+      "revId": "a291e592575f1f66360546b19a8d6db4a826aab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00ebe651_00adee03",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/media_controls_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-29T18:05:07Z",
+      "side": 1,
+      "message": "Out of curiosity, why aren\u0027t these named foo_bar.css?",
+      "range": {
+        "startLine": 33,
+        "startChar": 87,
+        "endLine": 33,
+        "endChar": 110
+      },
+      "revId": "a291e592575f1f66360546b19a8d6db4a826aab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2a83712_8bcfde2a",
+        "filename": "tools/grit/grit/node/base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-29T18:05:07Z",
+      "side": 1,
+      "message": "It\u0027s a bit weird that sometimes it doesn\u0027t compress data. I was reading the change in structure.py and I thought this was going to compress everything.",
+      "revId": "a291e592575f1f66360546b19a8d6db4a826aab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "481c6e29_2384c6ef",
+        "filename": "tools/grit/grit/node/structure_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-29T18:05:07Z",
+      "side": 1,
+      "message": "Can you add a second, non-compressed \u003cstructure\u003e and make sure they both read out correctly?",
+      "revId": "a291e592575f1f66360546b19a8d6db4a826aab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7360f57_2208fedb",
+        "filename": "tools/grit/grit/node/structure_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-29T18:05:07Z",
+      "side": 1,
+      "message": "Let\u0027s save it to a variable so we can reuse it on line 79.",
+      "range": {
+        "startLine": 73,
+        "startChar": 37,
+        "endLine": 73,
+        "endChar": 71
+      },
+      "revId": "a291e592575f1f66360546b19a8d6db4a826aab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75a9522b_31241c30",
+        "filename": "tools/grit/grit/node/structure_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-29T18:05:07Z",
+      "side": 1,
+      "message": "struct?",
+      "range": {
+        "startLine": 74,
+        "startChar": 4,
+        "endLine": 74,
+        "endChar": 9
+      },
+      "revId": "a291e592575f1f66360546b19a8d6db4a826aab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1297ba2c_a6bb62bb",
+        "filename": "tools/grit/grit/node/structure_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-29T18:05:07Z",
+      "side": 1,
+      "message": "use os.path.join().",
+      "range": {
+        "startLine": 80,
+        "startChar": 35,
+        "endLine": 80,
+        "endChar": 53
+      },
+      "revId": "a291e592575f1f66360546b19a8d6db4a826aab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
