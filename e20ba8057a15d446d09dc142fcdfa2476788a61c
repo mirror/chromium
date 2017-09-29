@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c53055ae_2938d5e0",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-09-29T20:51:17Z",
+      "side": 1,
+      "message": "You\u0027ve mentioned that static position calculation for use by OOF blocks is not as complete as that for blocks that are actually position:static. Would expanding this comment with a brief description of the differences be appropriate?",
+      "revId": "e20ba8057a15d446d09dc142fcdfa2476788a61c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c17d88b1_6ff1c87a",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-09-29T20:51:17Z",
+      "side": 1,
+      "message": "Flex/grid containers have already set the static position?",
+      "range": {
+        "startLine": 116,
+        "startChar": 23,
+        "endLine": 116,
+        "endChar": 49
+      },
+      "revId": "e20ba8057a15d446d09dc142fcdfa2476788a61c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76393ad5_44799344",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-09-29T20:51:17Z",
+      "side": 1,
+      "message": "Layer() can never be null because all out-of-flow blocks get a layer?",
+      "range": {
+        "startLine": 117,
+        "startChar": 20,
+        "endLine": 117,
+        "endChar": 25
+      },
+      "revId": "e20ba8057a15d446d09dc142fcdfa2476788a61c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23927732_f23051c7",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-09-29T20:51:17Z",
+      "side": 1,
+      "message": "This comment is confusing; it distinguishes between two concepts but uses four terms (\"ContainingBlock()\", \"Container()\", \"container\", and \"containing block\") and I\u0027m not sure which have the same meaning. Much compounded by line 75, which assigns container \u003d ContainingBlock().\n\nI *think* the distinction is important because of https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/layout/LayoutObject.cpp?l\u003d909\u0026rcl\u003d56615577e8a9364b7692a6363b8aff3024b0182b ?",
+      "revId": "e20ba8057a15d446d09dc142fcdfa2476788a61c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
