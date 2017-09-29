@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97eac3d5_f573e90c",
+        "filename": "components/metrics/expired_histograms_checker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-29T22:19:14Z",
+      "side": 1,
+      "message": "Why is this necessary?\n(couldn\u0027t you simply put the\nvariation_parameters_loaded_ \u003d true;\nline within the if statement below?)",
+      "revId": "a8a5faee53f09432cfe302cbfa488e2665a636b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4a3c972_9d65b3b4",
+        "filename": "components/metrics/expired_histograms_checker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-29T22:19:14Z",
+      "side": 1,
+      "message": "|array_|",
+      "revId": "a8a5faee53f09432cfe302cbfa488e2665a636b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22559317_3d095967",
+        "filename": "components/metrics/expired_histograms_checker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-29T22:19:14Z",
+      "side": 1,
+      "message": "enabled \u003d\u003d allowed to send\nor\nenabled \u003d\u003d expired\n?\n\n(I\u0027d normally think the former, but this is called the ExpiredHistogramsChecker so it makes me think the latter might be conceivable.)",
+      "revId": "a8a5faee53f09432cfe302cbfa488e2665a636b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
