@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fe4e9b40_8dddd4d6",
+        "filename": "ui/arc/notification/arc_notification_content_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-09-29T02:28:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c0af05e_ea9a2ebb",
+      "revId": "e0d5ff65825f5f549d87b572b5211b19032110e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e68b603f_b0e0d3d9",
         "filename": "ui/arc/notification/arc_notification_content_view.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "e0d5ff65825f5f549d87b572b5211b19032110e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0369bfd9_55b262d7",
+        "filename": "ui/arc/notification/arc_notification_content_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-09-29T02:28:24Z",
+      "side": 1,
+      "message": "Ah, I accidentally merged the old code. Reverted.",
+      "parentUuid": "e68b603f_b0e0d3d9",
+      "revId": "e0d5ff65825f5f549d87b572b5211b19032110e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
