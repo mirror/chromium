@@ -1,0 +1,238 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed2bb3cf_b44b6eed",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-29T23:19:41Z",
+      "side": 1,
+      "message": "nit:\n/**\n * Combination of ...\n * @enum {string}\n */",
+      "revId": "a8ac89b5a04e2e0bed9d9b36437df71176f420e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6f883dd_ff143912",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-29T23:19:41Z",
+      "side": 1,
+      "message": "@private {VPNConfigType}",
+      "revId": "a8ac89b5a04e2e0bed9d9b36437df71176f420e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ab4a55b_6fc17bed",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-29T23:19:41Z",
+      "side": 1,
+      "message": "nit: VPNConfigType",
+      "range": {
+        "startLine": 252,
+        "startChar": 24,
+        "endLine": 252,
+        "endChar": 30
+      },
+      "revId": "a8ac89b5a04e2e0bed9d9b36437df71176f420e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b35706f9_65f0b9f7",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-29T23:19:41Z",
+      "side": 1,
+      "message": "can you mention the reason for this\n\nAlso, I\u0027d clarify that this.vpnType_ must be set after this.configProperties_ (as opposed to vpnType itself)",
+      "range": {
+        "startLine": 439,
+        "startChar": 19,
+        "endLine": 439,
+        "endChar": 56
+      },
+      "revId": "a8ac89b5a04e2e0bed9d9b36437df71176f420e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b99a9384_61da01bd",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-29T23:19:41Z",
+      "side": 1,
+      "message": "How about:\nvpn.IPsec \u003d Object.assign({\n  AuthenticationType: CrOnc.IPsecAuthenticationType.PSK\n}, properties.VPN.IPsec);",
+      "range": {
+        "startLine": 505,
+        "startChar": 12,
+        "endLine": 508,
+        "endChar": 59
+      },
+      "revId": "a8ac89b5a04e2e0bed9d9b36437df71176f420e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1296f7e_41906bae",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-29T23:19:41Z",
+      "side": 1,
+      "message": "is this line needed?",
+      "revId": "a8ac89b5a04e2e0bed9d9b36437df71176f420e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4348fce3_1ffd5252",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-29T23:19:41Z",
+      "side": 1,
+      "message": "I\u0027d consider doing vpnType determination separately.\n\nvpnType \u003d this.getVpnType_(properties.VPN);\n\n\nfunction getVpnType_(vpnProperties) {\n  if (!vpnProperties)\n    return VPNConfigType.L2TP_IPSEC_PSK;\n  \n  if (vpnProperties.Type !\u003d CrOnc.VPNType.L2TP_IPSEC)\n    return VPNConfigType.OPEN_VPN;\n\n  if (vpnProperties.IPsec.AuthenticationType \u003d\u003d CrOnc.IPsecAuthenticationType.CERT)\n      return VPNConfigType.L2TP_IPSEC_CERT;\n   return VPNConfigType.L2TP_IPSEC_PSK;\n}",
+      "range": {
+        "startLine": 526,
+        "startChar": 10,
+        "endLine": 526,
+        "endChar": 17
+      },
+      "revId": "a8ac89b5a04e2e0bed9d9b36437df71176f420e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c965a643_0edaa1db",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-29T23:19:41Z",
+      "side": 1,
+      "message": "do we need:\nthis.showVpn_ \u003d null;",
+      "revId": "a8ac89b5a04e2e0bed9d9b36437df71176f420e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07d08f59_4417c3c2",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-29T23:19:41Z",
+      "side": 1,
+      "message": "suggestion (I find it easier to follow):\n\nif (!vpn.IPsec)\n  vpn.IPsec \u003d {};\n// or vpn.IPsec \u003d vpn.IPsec || {};\nvpn.IPsec.AuthenticationType \u003d CrOnc.IPsecAuthenticationType.PSK;",
+      "revId": "a8ac89b5a04e2e0bed9d9b36437df71176f420e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db294fd2_4d708d45",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-29T23:19:41Z",
+      "side": 1,
+      "message": "I\u0027d put this separately (after or before switch):\n\nthis.showVpn_ \u003d {\n  Cert: this.vpnType_ \u003d\u003d VPNConfigType.L2TP_IPSEC_CERT ||\n        this.vpnType_ \u003d\u003d VPNConfigType.OPEN_VPN,\n  OpenVPN: this.vpnType_ \u003d\u003d VPNConfigType.OPEN_VPN\n}",
+      "revId": "a8ac89b5a04e2e0bed9d9b36437df71176f420e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba3b7679_824bbdf0",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-29T23:19:41Z",
+      "side": 1,
+      "message": "return if vpnType !\u003d L2TP_IPSEC_CERT?\n\n(from my understanding, this might get called for other types of vpns, given that  updateVpnIPsecCerts_ observes vpnType_.\nWe should not reset selected certs in that case)",
+      "revId": "a8ac89b5a04e2e0bed9d9b36437df71176f420e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b03c6a6_99606bc5",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-29T23:19:41Z",
+      "side": 1,
+      "message": "either this or if (ipsec) is not needed",
+      "range": {
+        "startLine": 700,
+        "startChar": 12,
+        "endLine": 700,
+        "endChar": 17
+      },
+      "revId": "a8ac89b5a04e2e0bed9d9b36437df71176f420e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
