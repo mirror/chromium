@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58ebec02_6c5d42b1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T15:28:24Z",
+      "side": 1,
+      "message": "Let\u0027s call this #initialize(), and pass in the TabModelSelector here as well.\n\nThis public method needs a JavaDoc",
+      "revId": "32b9cb19b52c10920470190b232440b9e12504d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60d85ddd_5d329a1f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T15:28:24Z",
+      "side": 1,
+      "message": "This is because Callback doesn\u0027t have a type, right? You can use Callback\u003cVoid\u003e. The onResults method then takes \"Void result\" as the param.",
+      "range": {
+        "startLine": 66,
+        "startChar": 3,
+        "endLine": 66,
+        "endChar": 33
+      },
+      "revId": "32b9cb19b52c10920470190b232440b9e12504d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dcbe702_f70d3e42",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T15:28:24Z",
+      "side": 1,
+      "message": "Does this class need to be public?",
+      "range": {
+        "startLine": 67,
+        "startChar": 4,
+        "endLine": 67,
+        "endChar": 16
+      },
+      "revId": "32b9cb19b52c10920470190b232440b9e12504d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bb7317b_087fa45f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T15:28:24Z",
+      "side": 1,
+      "message": "This internal class can access its parents class variables so there\u0027s no need for this method.",
+      "range": {
+        "startLine": 92,
+        "startChar": 8,
+        "endLine": 96,
+        "endChar": 9
+      },
+      "revId": "32b9cb19b52c10920470190b232440b9e12504d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b2d0e45_e2096e19",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/SurveyController.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T15:28:24Z",
+      "side": 1,
+      "message": "Does this method still need these two parameters?\n\nCallback\u003c?\u003e should be Callback\u003cVoid\u003e",
+      "range": {
+        "startLine": 55,
+        "startChar": 12,
+        "endLine": 55,
+        "endChar": 53
+      },
+      "revId": "32b9cb19b52c10920470190b232440b9e12504d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
