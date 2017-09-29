@@ -13,7 +13,9 @@ import android.content.DialogInterface;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.MediumTest;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -63,6 +65,16 @@ public class PaymentRequestMetricsTest implements MainActivityStartCallback {
         mHelper.setCreditCard(new CreditCard("", "https://example.com", true, true, "Jon Doe",
                 "4111111111111111", "1111", "12", "2050", "visa", R.drawable.visa_card,
                 CardType.UNKNOWN, mBillingAddressId, "" /* serverId */));
+    }
+
+    @Before
+    public void setUp() throws Exception {
+        RecordHistogram.setRecordCheckerEnabledForTesting(false);
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        RecordHistogram.setRecordCheckerEnabledForTesting(true);
     }
 
     /**

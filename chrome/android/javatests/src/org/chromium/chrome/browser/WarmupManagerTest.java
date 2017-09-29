@@ -22,6 +22,7 @@ import org.junit.rules.RuleChain;
 import org.junit.runner.RunWith;
 
 import org.chromium.base.ThreadUtils;
+import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.MetricsUtils;
 import org.chromium.base.test.util.Restriction;
@@ -63,10 +64,13 @@ public class WarmupManagerTest {
             }
             mWarmupManager = WarmupManager.getInstance();
         });
+
+        RecordHistogram.setRecordCheckerEnabledForTesting(false);
     }
 
     @After
     public void tearDown() throws Exception {
+        RecordHistogram.setRecordCheckerEnabledForTesting(true);
         ThreadUtils.runOnUiThreadBlocking(() -> mWarmupManager.destroySpareWebContents());
     }
 

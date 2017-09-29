@@ -6,6 +6,7 @@ package org.chromium.chrome.browser.snackbar;
 
 import android.support.test.filters.MediumTest;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -55,6 +56,12 @@ public class DataReductionPromoSnackbarControllerTest {
         mManager = mActivityTestRule.getActivity().getSnackbarManager();
         mController =
                 new DataReductionPromoSnackbarController(mActivityTestRule.getActivity(), mManager);
+        RecordHistogram.setRecordCheckerEnabledForTesting(false);
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        RecordHistogram.setRecordCheckerEnabledForTesting(true);
     }
 
     @Test
