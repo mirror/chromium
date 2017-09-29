@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d149f4e9_3b3837d6",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-29T17:56:10Z",
+      "side": 1,
+      "message": "ASSERT_NO_FATAL_FAILURE is needed here, too.",
+      "revId": "28adbbf41c603e689c23e8fd4399fa61acbd86ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11cce472_3e76d648",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-29T17:56:10Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "28adbbf41c603e689c23e8fd4399fa61acbd86ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

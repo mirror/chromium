@@ -550,6 +550,24 @@
       "revId": "63923818fb86a5b2a19bb7f70775320f216fcad3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2f61769_067aa677",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-29T17:56:10Z",
+      "side": 1,
+      "message": "ooooops. Very sorry. I misunderstood.",
+      "parentUuid": "147ab7cb_8e5dd48f",
+      "revId": "63923818fb86a5b2a19bb7f70775320f216fcad3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
