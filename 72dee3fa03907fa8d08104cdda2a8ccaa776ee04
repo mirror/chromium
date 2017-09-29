@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "887b2f4e_3ae71508",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1307,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-29T20:49:18Z",
+      "side": 1,
+      "message": "Yeah. We should note that there can be some potential unknown issues.\nAs I understand this by now, here is more like a true or false slide. So I\u0027m pretty confident that there won\u0027t be any other reasons: if detected a card in submitted form and the know is not known by us, then the user is submitting an unknown card.",
+      "parentUuid": "441be26c_e570c7fa",
+      "range": {
+        "startLine": 1307,
+        "startChar": 7,
+        "endLine": 1307,
+        "endChar": 8
+      },
+      "revId": "72dee3fa03907fa8d08104cdda2a8ccaa776ee04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32a2e9d0_4ccf5a43",
         "filename": "components/autofill/core/browser/personal_data_manager.h",
         "patchSetId": 15
@@ -45,6 +69,30 @@
       "revId": "72dee3fa03907fa8d08104cdda2a8ccaa776ee04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce72bf94_b8a70468",
+        "filename": "components/autofill/core/browser/personal_data_manager.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-29T20:49:18Z",
+      "side": 1,
+      "message": "There may be fields with same type (e.g. credit card expiration field) in the form.\nYou will probably understand this after seeing: https://cs.chromium.org/chromium/src/components/autofill/core/browser/personal_data_manager.cc?q\u003dpersonal_data_manager\u0026sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d1715",
+      "parentUuid": "32a2e9d0_4ccf5a43",
+      "range": {
+        "startLine": 311,
+        "startChar": 0,
+        "endLine": 311,
+        "endChar": 74
+      },
+      "revId": "72dee3fa03907fa8d08104cdda2a8ccaa776ee04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
