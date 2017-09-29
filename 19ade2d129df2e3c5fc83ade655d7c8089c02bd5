@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "651f9399_5b542a4a",
+        "filename": "mojo/public/tools/bindings/mojom.gni",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-09-29T20:31:19Z",
+      "side": 1,
+      "message": "Would it be possible to put this in declare_args so that external projects can define their own salt path? (It should be fine to define this with enable_scrambled_message_ids set to false; it just won\u0027t be used.)",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 32
+      },
+      "revId": "19ade2d129df2e3c5fc83ade655d7c8089c02bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
