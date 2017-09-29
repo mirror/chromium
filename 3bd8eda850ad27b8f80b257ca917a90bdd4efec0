@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14ea3ff6_f5635801",
+        "filename": "chrome/android/java/res/layout/personalized_signin_promo_view_bookmarks.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-29T13:43:42Z",
+      "side": 1,
+      "message": "The biggest issue I have with \"header\" and \"footer\" is that they sound symmetric, but aren\u0027t actually siblings in the hierarchy. Could we rename this one _body maybe?",
+      "range": {
+        "startLine": 28,
+        "startChar": 60,
+        "endLine": 28,
+        "endChar": 66
+      },
+      "revId": "3bd8eda850ad27b8f80b257ca917a90bdd4efec0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "289b798a_f7f83adc",
+        "filename": "chrome/android/java/res/layout/personalized_signin_promo_view_footer.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-29T13:43:42Z",
+      "side": 0,
+      "message": "An alternative might be to just give this layout an ID and then manipulate it in code if necessary. It\u0027s maybe less declarative than doing everything in XML, but there is a limit do how much stuff you can do declaratively. \u003cShrug\u003e",
+      "range": {
+        "startLine": 10,
+        "startChar": 5,
+        "endLine": 10,
+        "endChar": 16
+      },
+      "revId": "6147aefeba4b6722fc0837952726f419791e8752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
