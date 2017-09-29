@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "728a3e4a_6687f5cd",
+        "filename": "base/metrics/dummy_histogram.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1232219
+      },
+      "writtenOn": "2017-09-29T18:21:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46b8d694_956f7fb1",
+      "revId": "301c517587ddf597268f49dd0cd334d126c52d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3832f8b6_ef7ef3ad",
         "filename": "base/metrics/dummy_histogram.cc",
         "patchSetId": 12
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-28T19:02:16Z",
       "side": 1,
       "message": "If nobody else has a strong preference, I would just inline these since the method bodies are 0-1 lines.",
+      "revId": "301c517587ddf597268f49dd0cd334d126c52d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73e93d95_da8f85dd",
+        "filename": "base/metrics/dummy_histogram.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1232219
+      },
+      "writtenOn": "2017-09-29T18:21:45Z",
+      "side": 1,
+      "message": "Do you mean all the dummy methods in this file?",
+      "parentUuid": "3832f8b6_ef7ef3ad",
       "revId": "301c517587ddf597268f49dd0cd334d126c52d24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "db38c937_fc480823",
+        "filename": "base/metrics/dummy_histogram.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1232219
+      },
+      "writtenOn": "2017-09-29T18:21:45Z",
+      "side": 1,
+      "message": "It worked, thank you.",
+      "parentUuid": "e095ca9a_4175cbf8",
+      "revId": "301c517587ddf597268f49dd0cd334d126c52d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37decdbe_5bcb57a5",
         "filename": "base/metrics/dummy_histogram.h",
         "patchSetId": 12
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "54be3250_4ebaaeef",
+        "filename": "base/metrics/dummy_histogram.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1232219
+      },
+      "writtenOn": "2017-09-29T18:21:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37decdbe_5bcb57a5",
+      "revId": "301c517587ddf597268f49dd0cd334d126c52d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a29bcccc_4ed800d9",
         "filename": "base/metrics/dummy_histogram.h",
         "patchSetId": 12
@@ -81,6 +153,24 @@
       "writtenOn": "2017-09-28T19:02:16Z",
       "side": 1,
       "message": "Why are the overrides split into 2 sections?",
+      "revId": "301c517587ddf597268f49dd0cd334d126c52d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79254819_26184669",
+        "filename": "base/metrics/dummy_histogram.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1232219
+      },
+      "writtenOn": "2017-09-29T18:21:45Z",
+      "side": 1,
+      "message": "Because they are split into 2 sections in the base class.",
+      "parentUuid": "a29bcccc_4ed800d9",
       "revId": "301c517587ddf597268f49dd0cd334d126c52d24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "89610434_d6f4941a",
+        "filename": "base/metrics/dummy_histogram.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1232219
+      },
+      "writtenOn": "2017-09-29T18:21:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19ccda7f_bbf40a41",
+      "revId": "301c517587ddf597268f49dd0cd334d126c52d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3e8537d_52cd3c56",
         "filename": "base/metrics/histogram.cc",
         "patchSetId": 12
@@ -118,6 +226,24 @@
       "revId": "301c517587ddf597268f49dd0cd334d126c52d24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08360277_bc1425cf",
+        "filename": "base/metrics/histogram.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1232219
+      },
+      "writtenOn": "2017-09-29T18:21:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3e8537d_52cd3c56",
+      "revId": "301c517587ddf597268f49dd0cd334d126c52d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -144,6 +270,30 @@
     },
     {
       "key": {
+        "uuid": "e1923013_b5cf9cb5",
+        "filename": "base/metrics/histogram_base.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1232219
+      },
+      "writtenOn": "2017-09-29T18:21:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78a67f54_440091a9",
+      "range": {
+        "startLine": 142,
+        "startChar": 5,
+        "endLine": 142,
+        "endChar": 13
+      },
+      "revId": "301c517587ddf597268f49dd0cd334d126c52d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4236e30_c8b983ef",
         "filename": "base/metrics/statistics_recorder.h",
         "patchSetId": 12
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "595ea3c5_ef71ef06",
+        "filename": "base/metrics/statistics_recorder.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1232219
+      },
+      "writtenOn": "2017-09-29T18:21:45Z",
+      "side": 1,
+      "message": "It is possible. But currently, record checker is set only once.",
+      "parentUuid": "a4236e30_c8b983ef",
+      "revId": "301c517587ddf597268f49dd0cd334d126c52d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a81cbbab_463be47a",
         "filename": "base/metrics/statistics_recorder.h",
         "patchSetId": 12
@@ -172,6 +340,24 @@
       "writtenOn": "2017-09-28T19:02:16Z",
       "side": 1,
       "message": "This has no callers.",
+      "revId": "301c517587ddf597268f49dd0cd334d126c52d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "760c8601_3c66cfe4",
+        "filename": "base/metrics/statistics_recorder.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1232219
+      },
+      "writtenOn": "2017-09-29T18:21:45Z",
+      "side": 1,
+      "message": "This method will be used later to disable record checker in tests because with enabled one some tests can fail.",
+      "parentUuid": "a81cbbab_463be47a",
       "revId": "301c517587ddf597268f49dd0cd334d126c52d24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
