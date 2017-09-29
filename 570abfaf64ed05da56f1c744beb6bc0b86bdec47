@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ed2947ad_3871206d",
+        "filename": "chrome/test/chromedriver/embed_mobile_devices_in_cpp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-09-29T16:58:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7109f257_0bfc92df",
+      "range": {
+        "startLine": 35,
+        "startChar": 38,
+        "endLine": 35,
+        "endChar": 52
+      },
+      "revId": "570abfaf64ed05da56f1c744beb6bc0b86bdec47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb62f93c_ff4f3f1d",
         "filename": "chrome/test/chromedriver/embed_mobile_devices_in_cpp.py",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-29T16:14:07Z",
       "side": 1,
       "message": "It seems better to create a map for the key and value. Here we assume the ordering of those keys in the file, but they could be changed.",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 48,
+        "endChar": 29
+      },
+      "revId": "570abfaf64ed05da56f1c744beb6bc0b86bdec47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4fc4dff_81d5deb3",
+        "filename": "chrome/test/chromedriver/embed_mobile_devices_in_cpp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-09-29T16:58:36Z",
+      "side": 1,
+      "message": "The version file is auto-generated, so the ordering should be stable. We also keep the order when concatenating the version parts into one string, so an alarm is appropriate if the ordering does change.",
+      "parentUuid": "bb62f93c_ff4f3f1d",
       "range": {
         "startLine": 38,
         "startChar": 2,
