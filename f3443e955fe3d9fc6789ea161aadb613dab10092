@@ -16,6 +16,24 @@
       "revId": "f3443e955fe3d9fc6789ea161aadb613dab10092",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed5c31b8_249bcb04",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_length_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-09-29T01:38:01Z",
+      "side": 1,
+      "message": "Reviewing again, yeah, I think your right. I\u0027ll see if I can fix this function rather than eliminating check. I guess I blindly assumed that function is quite well-tested, but apparently DCHECK means it\u0027s not. Thank you for pointing this out.",
+      "parentUuid": "89b7d92b_dd786cbc",
+      "revId": "f3443e955fe3d9fc6789ea161aadb613dab10092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
