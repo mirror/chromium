@@ -66,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "4ea162d8_411878b4",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-links-on-messages-before-inspection-expected.txt",
+        "patchSetId": 12
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-09-29T17:58:04Z",
+      "side": 1,
+      "message": "It\u0027s because the inspected page change - if the prefix of the resource matches the directory of the inspected page then it\u0027s doing a truncation here: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/devtools/front_end/bindings/ResourceUtils.js?q\u003dresourceutils\u0026sq\u003dpackage:chromium\u0026l\u003d78",
+      "parentUuid": "bd7fc459_ef8d49d8",
+      "revId": "d29390acd1bb1bf52956815883884301f061cf35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "acb826fb_960bd5d9",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-log-side-effects-expected.txt",
         "patchSetId": 12
@@ -80,6 +98,24 @@
       "revId": "d29390acd1bb1bf52956815883884301f061cf35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c95a95c5_c3b794e8",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-log-side-effects-expected.txt",
+        "patchSetId": 12
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-09-29T17:58:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acb826fb_960bd5d9",
+      "revId": "d29390acd1bb1bf52956815883884301f061cf35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
