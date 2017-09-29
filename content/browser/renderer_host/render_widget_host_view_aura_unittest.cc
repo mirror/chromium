@@ -2695,11 +2695,11 @@ TEST_F(RenderWidgetHostViewAuraTest, Resize) {
       id1, MakeDelegatedFrame(1.f, size1, gfx::Rect(size1)));
   ui::DrawWaiterForTest::WaitForCommit(
       root_window->GetHost()->compositor());
-  ViewHostMsg_UpdateRect_Params update_params;
+  ViewHostMsg_Resize_ACK_Params update_params;
   update_params.view_size = size1;
-  update_params.flags = ViewHostMsg_UpdateRect_Flags::IS_RESIZE_ACK;
+  update_params.flags = ViewHostMsg_Resize_ACK_Flags::IS_RESIZE_ACK;
   widget_host_->OnMessageReceived(
-      ViewHostMsg_UpdateRect(widget_host_->GetRoutingID(), update_params));
+      ViewHostMsg_Resize_ACK(widget_host_->GetRoutingID(), update_params));
   sink_->ClearMessages();
   // Resize logic is idle (no pending resize, no pending commit).
   EXPECT_EQ(size1.ToString(), view_->GetRequestedRendererSize().ToString());
@@ -2718,7 +2718,7 @@ TEST_F(RenderWidgetHostViewAuraTest, Resize) {
   // Send resize ack to observe new Resize messages.
   update_params.view_size = size2;
   widget_host_->OnMessageReceived(
-      ViewHostMsg_UpdateRect(widget_host_->GetRoutingID(), update_params));
+      ViewHostMsg_Resize_ACK(widget_host_->GetRoutingID(), update_params));
   sink_->ClearMessages();
 
   // Resize renderer again, before receiving a frame. Should not produce a
@@ -2790,7 +2790,7 @@ TEST_F(RenderWidgetHostViewAuraTest, Resize) {
   EXPECT_TRUE(has_resize);
   update_params.view_size = size3;
   widget_host_->OnMessageReceived(
-      ViewHostMsg_UpdateRect(widget_host_->GetRoutingID(), update_params));
+      ViewHostMsg_Resize_ACK(widget_host_->GetRoutingID(), update_params));
   sink_->ClearMessages();
 }
 
