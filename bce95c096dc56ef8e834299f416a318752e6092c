@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c992c3c7_c87dab33",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 2047,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-29T17:19:19Z",
+      "side": 1,
+      "message": "You don\u0027t need to allocate rare_paint_data_ if missing?",
+      "revId": "bce95c096dc56ef8e834299f416a318752e6092c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

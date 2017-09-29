@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8dc50db6_e4448439",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 3429,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-29T17:19:19Z",
+      "side": 1,
+      "message": "175?",
+      "revId": "faed1a8a34b3c3293d90bb0c2ed90beb805f7040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78427bcf_6b07323e",
+        "filename": "third_party/WebKit/Source/core/paint/ObjectPaintInvalidator.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-29T17:19:19Z",
+      "side": 1,
+      "message": "175?",
+      "revId": "faed1a8a34b3c3293d90bb0c2ed90beb805f7040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "979ada59_ea16c7ef",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/DisplayItemClient.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-29T17:19:19Z",
+      "side": 1,
+      "message": "Does any code clear the partial rect if a full invalidation is issued? A reasonable\noptimization? Regardless, this comment is not quite accurate without clearing it\nin that case.",
+      "revId": "faed1a8a34b3c3293d90bb0c2ed90beb805f7040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b0fb4be_c88bc366",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintController.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-29T17:19:19Z",
+      "side": 1,
+      "message": "175?",
+      "revId": "faed1a8a34b3c3293d90bb0c2ed90beb805f7040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eea2ae83_c86ebac9",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintControllerTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2245,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-29T17:19:19Z",
+      "side": 1,
+      "message": "|second| doesn\u0027t exist",
+      "revId": "faed1a8a34b3c3293d90bb0c2ed90beb805f7040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
