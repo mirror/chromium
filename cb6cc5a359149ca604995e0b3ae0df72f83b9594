@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "95b76138_197a8e7e",
+        "filename": "base/task_scheduler/scheduler_single_thread_task_runner_manager.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-29T16:36:46Z",
+      "side": 1,
+      "message": "Done\n\nbefore starting the SchedulerWorker or posting a task to it (because posting a task to the SchedulerWorker can cause as call to OnCanScheduleSequence)",
+      "parentUuid": "e25b43c3_8c6cc9b8",
+      "range": {
+        "startLine": 154,
+        "startChar": 19,
+        "endLine": 154,
+        "endChar": 39
+      },
+      "revId": "cb6cc5a359149ca604995e0b3ae0df72f83b9594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f9d9704_90cc4fa0",
         "filename": "base/task_scheduler/scheduler_worker_pool.h",
         "patchSetId": 23
@@ -39,6 +63,24 @@
       "revId": "cb6cc5a359149ca604995e0b3ae0df72f83b9594",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "495af072_fa1ec86e",
+        "filename": "base/task_scheduler/scheduler_worker_pool.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-29T16:36:46Z",
+      "side": 1,
+      "message": "\u003ddelete:\n\nC:\\src\\chromium\\src\\base/task_scheduler/scheduler_worker.h(50): error C2280: \u0027base::internal::CanScheduleSequenceObserver::~CanScheduleSequenceObserver(void)\u0027: attempting to reference a deleted function  \u003c--- line 50 is where I define SchedulerWorker::Delegate::~Delegate.\nC:\\src\\chromium\\src\\base/task_scheduler/can_schedule_sequence_observer.h(15): note: see declaration of \u0027base::internal::CanScheduleSequenceObserver::~CanScheduleSequenceObserver\u0027\nC:\\src\\chromium\\src\\base/task_scheduler/can_schedule_sequence_observer.h(15): note: \u0027base::internal::CanScheduleSequenceObserver::~CanScheduleSequenceObserver(void)\u0027: function was explicitly deleted\n\nprivate:\n\nC:\\src\\chromium\\src\\base/task_scheduler/scheduler_worker.h(78): warning C4624: \u0027base::internal::SchedulerWorker::Delegate\u0027: destructor was implicitly defined as deleted\nC:\\src\\chromium\\src\\base/task_scheduler/scheduler_worker.h(50): error C2282: \u0027base::internal::SchedulerWorker::Delegate::~Delegate\u0027 cannot override \u0027base::internal::CanScheduleSequenceObserver::~CanScheduleSequenceObserver\u0027\nC:\\src\\chromium\\src\\base/task_scheduler/can_schedule_sequence_observer.h(22): note: \u0027base::internal::CanScheduleSequenceObserver::~CanScheduleSequenceObserver\u0027 is not deleted\n\n\"protected:\" achieves what we want (prevents deletion via a CanScheduleSequenceObserver* but doesn\u0027t prevent the destructor of derived classes from accessing the destructor of the base class)",
+      "parentUuid": "0f9d9704_90cc4fa0",
+      "revId": "cb6cc5a359149ca604995e0b3ae0df72f83b9594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "c5d537d0_fd2afa1f",
+        "filename": "base/task_scheduler/scheduler_worker_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-29T16:36:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bd1bbc3_63b9cead",
+      "range": {
+        "startLine": 463,
+        "startChar": 51,
+        "endLine": 463,
+        "endChar": 59
+      },
+      "revId": "cb6cc5a359149ca604995e0b3ae0df72f83b9594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f629809b_ec2e32d0",
         "filename": "base/task_scheduler/task_tracker.cc",
         "patchSetId": 23
@@ -79,6 +145,24 @@
       "revId": "cb6cc5a359149ca604995e0b3ae0df72f83b9594",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83302a92_5b48e4c7",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-29T16:36:46Z",
+      "side": 1,
+      "message": "Let\u0027s say that the maximum number of background tasks that can run concurrently is 1.\n\nTHREAD_1: Post task TASK_A1 in SEQUENCE_A. WillScheduleSequence allows SEQUENCE_A to be scheduled.\nTHREAD_1: Post task TASK_B1 in SEQUENCE_B. WillScheduleSequence preempts SEQUENCE_B.\nTHREAD_1: Post task TASK_A2 in SEQUENCE_A.\nTHREAD_2: Run TASK_A1.\n\nHere, you want RunNextTask to preempt SEQUENCE_A and schedule SEQUENCE_B so that the next task that runs is TASK_B1.\n\nYou can also imagine this scenario, where a sequence that posts to itself starves other sequences without this code:\n\nTHREAD_1: Post task TASK_A1 in SEQUENCE_A. WillScheduleSequence allows SEQUENCE_A to be scheduled.\nTHREAD_1: Post task TASK_B1 in SEQUENCE_B. WillScheduleSequence preempts SEQUENCE_B.\nTHREAD_2: Run TASK_A1.\n          TASK_A1 posts TASK_A2 in SEQUENCE_B.",
+      "parentUuid": "f629809b_ec2e32d0",
+      "revId": "cb6cc5a359149ca604995e0b3ae0df72f83b9594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "d616dd73_24e6031d",
+        "filename": "base/task_scheduler/task_tracker.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-29T16:36:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04bbaa20_9839a3a5",
+      "range": {
+        "startLine": 85,
+        "startChar": 61,
+        "endLine": 85,
+        "endChar": 71
+      },
+      "revId": "cb6cc5a359149ca604995e0b3ae0df72f83b9594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36ec52df_849bc7b7",
         "filename": "base/task_scheduler/task_tracker.h",
         "patchSetId": 23
@@ -125,6 +233,30 @@
       "revId": "cb6cc5a359149ca604995e0b3ae0df72f83b9594",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf577f5a_2b27b626",
+        "filename": "base/task_scheduler/task_tracker.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-29T16:36:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36ec52df_849bc7b7",
+      "range": {
+        "startLine": 165,
+        "startChar": 37,
+        "endLine": 165,
+        "endChar": 40
+      },
+      "revId": "cb6cc5a359149ca604995e0b3ae0df72f83b9594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -168,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "560ff08a_4ae7a72a",
+        "filename": "base/task_scheduler/task_tracker_posix_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-29T16:36:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5223d92b_94b744d4",
+      "revId": "cb6cc5a359149ca604995e0b3ae0df72f83b9594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a1f768f_4285595c",
         "filename": "base/task_scheduler/task_tracker_unittest.cc",
         "patchSetId": 23
@@ -182,6 +332,24 @@
       "revId": "cb6cc5a359149ca604995e0b3ae0df72f83b9594",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e96c719_905606bf",
+        "filename": "base/task_scheduler/task_tracker_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-29T16:36:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a1f768f_4285595c",
+      "revId": "cb6cc5a359149ca604995e0b3ae0df72f83b9594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -202,6 +370,24 @@
     },
     {
       "key": {
+        "uuid": "b0c4310f_44619c43",
+        "filename": "base/task_scheduler/task_tracker_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-29T16:36:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2aee5408_779283bb",
+      "revId": "cb6cc5a359149ca604995e0b3ae0df72f83b9594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b627386_2d289fbf",
         "filename": "base/task_scheduler/task_tracker_unittest.cc",
         "patchSetId": 23
@@ -219,6 +405,24 @@
     },
     {
       "key": {
+        "uuid": "8b87c311_b601ad10",
+        "filename": "base/task_scheduler/task_tracker_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-29T16:36:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b627386_2d289fbf",
+      "revId": "cb6cc5a359149ca604995e0b3ae0df72f83b9594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b602d17_6d2baf64",
         "filename": "base/task_scheduler/task_tracker_unittest.cc",
         "patchSetId": 23
@@ -233,6 +437,24 @@
       "revId": "cb6cc5a359149ca604995e0b3ae0df72f83b9594",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8d511b4_7ede5da0",
+        "filename": "base/task_scheduler/task_tracker_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-29T16:36:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b602d17_6d2baf64",
+      "revId": "cb6cc5a359149ca604995e0b3ae0df72f83b9594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -259,6 +481,30 @@
     },
     {
       "key": {
+        "uuid": "0aa23fd0_6f7a8861",
+        "filename": "base/task_scheduler/task_tracker_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-29T16:36:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18d4dfb8_ee6946b7",
+      "range": {
+        "startLine": 927,
+        "startChar": 30,
+        "endLine": 927,
+        "endChar": 61
+      },
+      "revId": "cb6cc5a359149ca604995e0b3ae0df72f83b9594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "179f2513_8658a80f",
         "filename": "base/task_scheduler/task_tracker_unittest.cc",
         "patchSetId": 23
@@ -276,6 +522,24 @@
     },
     {
       "key": {
+        "uuid": "8c66907d_90fcf466",
+        "filename": "base/task_scheduler/task_tracker_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 979,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-29T16:36:46Z",
+      "side": 1,
+      "message": "See comment in task_tracker.cc.",
+      "parentUuid": "179f2513_8658a80f",
+      "revId": "cb6cc5a359149ca604995e0b3ae0df72f83b9594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47203a2d_30895cbf",
         "filename": "base/task_scheduler/task_tracker_unittest.cc",
         "patchSetId": 23
@@ -290,6 +554,24 @@
       "revId": "cb6cc5a359149ca604995e0b3ae0df72f83b9594",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1eb26b92_ea33af77",
+        "filename": "base/task_scheduler/task_tracker_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 1108,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-29T16:36:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47203a2d_30895cbf",
+      "revId": "cb6cc5a359149ca604995e0b3ae0df72f83b9594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
