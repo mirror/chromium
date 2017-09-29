@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed32d9f7_1d6a70d5",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v2/paint/invalidation/compositing/compositing-reason-removed-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-29T21:47:22Z",
+      "side": 1,
+      "message": "This was:\n{\n  \"layers\": [\n    {\n      \"name\": \"LayoutView #document\",\n      \"bounds\": [800, 600],\n      \"contentsOpaque\": true,\n      \"backgroundColor\": \"#FFFFFF\"\n    },\n    {\n      \"name\": \"LayoutBlockFlow (relative positioned) DIV id\u003d\u0027square\u0027\",\n      \"position\": [8, 8],\n      \"bounds\": [30, 30],\n      \"contentsOpaque\": true,\n      \"backfaceVisibility\": \"hidden\",\n      \"backgroundColor\": \"#0000FF\"\n    }\n  ]\n}\n\nwhich had two problems:\n1. \u0027square\u0027 still had a composited layer with backfaceVisibility:hidden after visibility changed to visible;\n2. \u0027square\u0027 missed raster invalidation.\n\nThe new baseline is still different from SPv1 baseline because of different invalidation reason, etc.",
+      "revId": "d4fce6ae188bae77ac42aa0d046a0840a63761ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
