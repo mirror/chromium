@@ -49,6 +49,7 @@ public class BrowserActionsTabCreatorManager implements TabCreatorManager {
             WindowAndroid windowAndroid = new WindowAndroid(context);
             Tab tab = Tab.createTabForLazyLoad(
                     false, windowAndroid, type, Tab.INVALID_TAB_ID, loadUrlParams);
+            tab.setDetached(true);
             tab.initialize(null, null, new TabDelegateFactory(), true, false);
             mTabModel.addTab(tab, -1, type);
             return tab;
@@ -57,6 +58,7 @@ public class BrowserActionsTabCreatorManager implements TabCreatorManager {
         @Override
         public Tab createFrozenTab(TabState state, int id, int index) {
             Tab tab = Tab.createFrozenTabFromState(id, false, null, Tab.INVALID_TAB_ID, state);
+            tab.setDetached(true);
             mTabModel.addTab(tab, index, TabLaunchType.FROM_RESTORE);
             return tab;
         }
