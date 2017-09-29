@@ -188,7 +188,7 @@ test("exo_unittests") {
     "//cc:test_support",
     "//components/viz/test:test_support",
     "//device/gamepad:test_helpers",
-    "//mojo/edk/embedder:headers",
+    "//services/service_manager/public/cpp",
     "//testing/gtest",
     "//ui/aura",
     "//ui/base",

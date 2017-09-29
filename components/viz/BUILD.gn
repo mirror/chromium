@@ -18,7 +18,7 @@ viz_test("viz_unittests") {
     "//components/viz/test:test_suite",
     "//components/viz/test:test_support",
     "//components/viz/test:unit_tests",
-    "//mojo/edk/system",
+    "//services/service_manager/public/cpp",
   ]
 
   if (!is_android) {

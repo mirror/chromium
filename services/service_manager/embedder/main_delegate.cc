@@ -24,7 +24,8 @@ ProcessType MainDelegate::OverrideProcessType() {
   return ProcessType::kDefault;
 }
 
-void MainDelegate::OverrideMojoConfiguration(mojo::edk::Configuration* config) {
+bool MainDelegate::ShouldBeBrokerProcess() {
+  return false;
 }
 
 std::unique_ptr<base::Value> MainDelegate::CreateServiceCatalog() {

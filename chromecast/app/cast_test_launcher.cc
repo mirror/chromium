@@ -10,7 +10,7 @@
 #include "chromecast/app/cast_main_delegate.h"
 #include "content/public/test/test_launcher.h"
 #include "ipc/ipc_channel.h"
-#include "mojo/edk/embedder/embedder.h"
+#include "services/service_manager/public/cpp/mojo_init.h"
 
 namespace chromecast {
 namespace shell {
@@ -49,6 +49,6 @@ int main(int argc, char** argv) {
     parallel_jobs /= 2U;
   }
   chromecast::shell::CastTestLauncherDelegate launcher_delegate;
-  mojo::edk::Init();
+  service_manager::InitializeMojo();
   return content::LaunchTests(&launcher_delegate, parallel_jobs, argc, argv);
 }

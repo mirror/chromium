@@ -617,6 +617,7 @@ if (!is_android) {
         "base/view_event_test_base.h",
       ]
       deps += [
+        "//services/service_manager/public/cpp",
         "//ui/views",
         "//ui/views:test_support",
         "//ui/views:views_interactive_ui_tests",
@@ -3816,6 +3817,7 @@ test("unit_tests") {
     deps += [
       "//components/signin/core/common:signin_features",
       "//ipc",
+      "//services/service_manager/public/cpp",
       "//third_party/libaddressinput",
     ]
   }

@@ -5,12 +5,12 @@
 #include "base/bind.h"
 #include "base/test/launcher/unit_test_launcher.h"
 #include "components/viz/test/viz_test_suite.h"
-#include "mojo/edk/embedder/embedder.h"
+#include "services/service_manager/public/cpp/mojo_init.h"
 
 int main(int argc, char** argv) {
   viz::VizTestSuite test_suite(argc, argv);
 
-  mojo::edk::Init();
+  service_manager::InitializeMojo();
 
   return base::LaunchUnitTests(
       argc, argv,

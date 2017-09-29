@@ -70,7 +70,7 @@ source_set("test_support") {
     "//chromecast/base",
     "//content/test:test_support",
     "//ipc",
-    "//mojo/edk/embedder:headers",
+    "//services/service_manager/public/cpp",
   ]
 }
 

@@ -35,7 +35,6 @@ source_set("minimal") {
     "//components/nacl/common:mojo_bindings",
     "//crypto",
     "//ipc",
-    "//mojo/edk/system",
     "//native_client/src/trusted/service_runtime:sel_main_chrome",
     "//ppapi/c",
     "//ppapi/proxy:ipc",

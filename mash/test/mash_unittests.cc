@@ -8,9 +8,9 @@
 #include "base/test/launcher/unit_test_launcher.h"
 #include "base/threading/thread.h"
 #include "mash/test/mash_test_suite.h"
-#include "mojo/edk/embedder/embedder.h"
 #include "mojo/edk/embedder/scoped_ipc_support.h"
 #include "services/catalog/catalog.h"
+#include "services/service_manager/public/cpp/mojo_init.h"
 
 namespace {
 
@@ -25,7 +25,7 @@ int main(int argc, char** argv) {
   catalog::Catalog::LoadDefaultCatalogManifest(
       base::FilePath(kCatalogFilename));
 
-  mojo::edk::Init();
+  service_manager::InitializeMojo();
   base::Thread ipc_thread("IPC thread");
   ipc_thread.StartWithOptions(
       base::Thread::Options(base::MessageLoop::TYPE_IO, 0));
