@@ -93,6 +93,30 @@
       "revId": "f5a594f5c0aa783d2be5a39aab6cd3dbbb63c3a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deca4b80_c1e169f3",
+        "filename": "components/history/core/browser/top_sites_impl.cc",
+        "patchSetId": 43
+      },
+      "lineNbr": 919,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-29T17:11:02Z",
+      "side": 1,
+      "message": "My mistake. Maybe StartQueryForMostVisited should cancel the timer to avoid the possibility.",
+      "parentUuid": "32cdfa74_d11b7f3b",
+      "range": {
+        "startLine": 919,
+        "startChar": 2,
+        "endLine": 919,
+        "endChar": 17
+      },
+      "revId": "f5a594f5c0aa783d2be5a39aab6cd3dbbb63c3a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
