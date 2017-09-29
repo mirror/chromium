@@ -428,7 +428,6 @@ void AccountReconcilor::OnReceivedManageAccountsResponse(
 //     4. The first account in the token service
 //   - On subsequent executions, the order is:
 //     1. The current first Gaia account
-//        * If the Gaia account has a token error, logout everything.
 //     2. The primary account
 //     3. The last known first Gaia account
 //     4. The first account in the token service
@@ -444,36 +443,37 @@ std::string AccountReconcilor::GetFirstGaiaAccountForReconcile() const {
   if (chrome_accounts_.empty())
     return std::string();  // No Chrome account, log out.
 
-  // Dice can only change the first Gaia account on the first execution.
+  bool invalid_first_gaia_account =
+      !gaia_accounts_.empty() &&
+      (!gaia_accounts_[0].valid ||
+       !base::ContainsValue(chrome_accounts_, gaia_accounts_[0].id));
+
+  // If the primary account is also the first Gaia account, and has no valid
+  // token, logout everything.
+  if (invalid_first_gaia_account && (primary_account_ == gaia_accounts_[0].id))
+    return std::string();
+
+  bool valid_primary_account =
+      !primary_account_.empty() &&
+      base::ContainsValue(chrome_accounts_, primary_account_);
+  bool valid_first_gaia_account =
+      !gaia_accounts_.empty() && gaia_accounts_[0].valid &&
+      base::ContainsValue(chrome_accounts_, gaia_accounts_[0].id);
+
   if (first_execution_) {
-    if (!primary_account_.empty()) {
-      if (base::ContainsValue(chrome_accounts_, primary_account_)) {
-        return primary_account_;
-      } else if (!gaia_accounts_.empty() && gaia_accounts_[0].valid &&
-                 (primary_account_ == gaia_accounts_[0].id)) {
-        // Currently signed-in on Gaia with the primary account, but the token
-        // is lost. Signout.
-        // Note: if there is a Sync account without a valid token, and the user
-        // is currently signed into Gaia with a different account, we don't log
-        // the user out of Gaia.
-        return std::string();
-      }
-    }
-    if (!gaia_accounts_.empty() && gaia_accounts_[0].valid &&
-        base::ContainsValue(chrome_accounts_, gaia_accounts_[0].id)) {
-      return gaia_accounts_[0].id;
-    }
-  } else {
-    // When this is not the first execution, and there is a valid Gaia account,
-    // it must be used. If its token is invalid, perform full logout.
-    if (!gaia_accounts_.empty() && gaia_accounts_[0].valid) {
-      return base::ContainsValue(chrome_accounts_, gaia_accounts_[0].id)
-                 ? gaia_accounts_[0].id
-                 : std::string();  // Main token lost: log out.
-    }
-    if (!primary_account_.empty() &&
-        base::ContainsValue(chrome_accounts_, primary_account_)) {
+    if (valid_primary_account)
       return primary_account_;
+    if (valid_first_gaia_account)
+      return gaia_accounts_[0].id;
+  } else {
+    if (valid_first_gaia_account)
+      return gaia_accounts_[0].id;
+    if (valid_primary_account)
+      return primary_account_;
+    // If the first Gaia account is invalid, and there is no valid primary
+    // account, logout everything.
+    if (invalid_first_gaia_account) {
+      return std::string();
     }
   }
 
