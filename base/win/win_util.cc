@@ -89,6 +89,20 @@ POWER_PLATFORM_ROLE GetPlatformRole() {
   return PowerDeterminePlatformRoleEx(POWER_PLATFORM_ROLE_V2);
 }
 
+// Helper function to find the application's HWND, if any.
+HWND FindProcessTopMostWindow() {
+  DWORD dwProcID = GetCurrentProcessId();
+  HWND hWnd = GetTopWindow(GetDesktopWindow());
+  while (hWnd) {
+    DWORD dwWndProcID = 0;
+    GetWindowThreadProcessId(hWnd, &dwWndProcID);
+    if (dwWndProcID == dwProcID)
+      return hWnd;
+    hWnd = GetNextWindow(hWnd, GW_HWNDNEXT);
+  }
+  return NULL;
+}
+
 }  // namespace
 
 // Uses the Windows 10 WRL API's to query the current system state. The API's
@@ -149,9 +163,6 @@ bool IsWindows10TabletMode(HWND hwnd) {
 
   base::win::ScopedComPtr<ABI::Windows::UI::ViewManagement::IUIViewSettings>
       view_settings;
-  // TODO(ananta)
-  // Avoid using GetForegroundWindow here and pass in the HWND of the window
-  // intiating the request to display the keyboard.
   hr = view_settings_interop->GetForWindow(hwnd, IID_PPV_ARGS(&view_settings));
   if (FAILED(hr))
     return false;
@@ -445,7 +456,7 @@ bool IsTabletDevice(std::string* reason) {
     return false;
   }
 
-  if (IsWindows10TabletMode(::GetForegroundWindow()))
+  if (IsWindows10TabletMode(FindProcessTopMostWindow()))
     return true;
 
   if (GetSystemMetrics(SM_MAXIMUMTOUCHES) == 0) {
