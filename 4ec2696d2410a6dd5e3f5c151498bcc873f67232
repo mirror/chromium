@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "73afd90b_af4b323a",
+        "filename": "content/common/throttling_url_loader_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-29T22:18:02Z",
+      "side": 1,
+      "message": "This URLLoader[Factory] doesn\u0027t actually do anything except counting certain calls. If some tests do want to verify that FollowRedirect() is called, we could add a counter for it.\n\nAnd then do something like:\n\n  DoSomethingThatWillTriggerRedirect();\n  // Make sure all URLLoader calls before this point are delivered to the impl\n  // side.\n  factory_.url_loader_binding().FlushForTesting();\n  XPECT_EQ(1u, factory_.follow_redirect_called());\n\nI don\u0027t think having an empty body of this method is an issue. In fact, nothing is handled by this testing URLLoader[Factory]. :)",
+      "parentUuid": "bef1e31f_42d8d769",
+      "range": {
+        "startLine": 81,
+        "startChar": 7,
+        "endLine": 81,
+        "endChar": 21
+      },
+      "revId": "4ec2696d2410a6dd5e3f5c151498bcc873f67232",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d8a3deb6_731bfb33",
         "filename": "content/network/url_loader_impl.cc",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-29T17:29:55Z",
       "side": 1,
       "message": "This logic appears to rely on ReadMore() never being called if paused_reading_body_ is true.  Worth a DCHECK?  Maybe worth a comment about why there\u0027s no race with OnResponseBodyStreamReady()?  (I\u0027m in favor of the DCHECK and neutral about the comment, but it did take me a little bit of time scanning code to be comfortable that there isn\u0027t a race with OnResponseBodyStreamRead().)",
+      "range": {
+        "startLine": 330,
+        "startChar": 3,
+        "endLine": 330,
+        "endChar": 0
+      },
+      "revId": "4ec2696d2410a6dd5e3f5c151498bcc873f67232",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a45c028_7d63a841",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-29T22:18:02Z",
+      "side": 1,
+      "message": "|paused_reading_body_| is true indicates that there is demand to read more, but it is suppressed because of PauseReadingBodyFromNet(); so when ResumeReadingBodyFromNet() is called we should continue reading more.\n\nIt is actually okay even if there are multiple ReadMore()s, this code should work correctly. Although the current code never results in a situation where ReadMore() is called while |paused_reading_body_| is true, IMO we don\u0027t need to DCHECK because that is not a precondition for this newly-added code to behave correctly. WDYT?",
+      "parentUuid": "d8a3deb6_731bfb33",
       "range": {
         "startLine": 330,
         "startChar": 3,
@@ -68,6 +116,30 @@
       "revId": "4ec2696d2410a6dd5e3f5c151498bcc873f67232",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ec54be7_8fde6cbd",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-29T22:18:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18106d0f_c37d9625",
+      "range": {
+        "startLine": 696,
+        "startChar": 12,
+        "endLine": 696,
+        "endChar": 28
+      },
+      "revId": "4ec2696d2410a6dd5e3f5c151498bcc873f67232",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
