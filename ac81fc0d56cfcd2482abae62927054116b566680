@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5092ec15_2b09758d",
+        "filename": "components/policy_strings.grdp",
+        "patchSetId": 6
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-09-29T20:58:20Z",
+      "side": 1,
+      "message": "As the words in UI, I think it\u0027s good to make it simple and formal. My idea:\n\nThe session file is corrupted, click the button to reset the session.\n\nWDYT? You could also change the text of button from \"Enable editing\" to \"Reset\"",
+      "revId": "ac81fc0d56cfcd2482abae62927054116b566680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
