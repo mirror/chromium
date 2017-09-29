@@ -173,17 +173,15 @@ void ApplyRenderParams(const FontRenderParams& params,
 class GFX_EXPORT RenderText {
  public:
 #if defined(OS_MACOSX)
-  // The character used for displaying obscured text. Use a bullet character on
-  // Mac.
-  static constexpr base::char16 kPasswordReplacementChar = 0x2022;
-
   // On Mac, while selecting text if the cursor is outside the vertical text
   // bounds, drag to the end of the text.
   static constexpr bool kDragToEndIfOutsideVerticalBounds = true;
 #else
-  static constexpr base::char16 kPasswordReplacementChar = '*';
   static constexpr bool kDragToEndIfOutsideVerticalBounds = false;
 #endif
+
+  // The character used for displaying obscured text. Use a bullet character.
+  static constexpr base::char16 kPasswordReplacementChar = 0x2022;
 
   virtual ~RenderText();
 
@@ -489,13 +487,6 @@ class GFX_EXPORT RenderText {
   base::string16 GetTextFromRange(const Range& range) const;
 
   void set_strike_thickness_factor(SkScalar f) { strike_thickness_factor_ = f; }
-
-  // Sets a password replacement char to override the default value.
-  void SetPasswordReplacementChar(base::char16 password_replacement_char);
-
-  base::char16 password_replacement_char() const {
-    return password_replacement_char_;
-  }
 
  protected:
   RenderText();
@@ -835,9 +826,6 @@ class GFX_EXPORT RenderText {
 
   // The ratio of strike-through line thickness to text height.
   SkScalar strike_thickness_factor_;
-
-  // The character used for displaying obscured text.
-  base::char16 password_replacement_char_ = kPasswordReplacementChar;
 
   DISALLOW_COPY_AND_ASSIGN(RenderText);
 };
