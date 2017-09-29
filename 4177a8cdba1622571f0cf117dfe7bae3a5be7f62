@@ -16,6 +16,24 @@
       "revId": "4177a8cdba1622571f0cf117dfe7bae3a5be7f62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8d736dc_17a68840",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-29T23:59:58Z",
+      "side": 0,
+      "message": "No, it is not clickable.",
+      "parentUuid": "822c069c_b8fd9f8c",
+      "revId": "4177a8cdba1622571f0cf117dfe7bae3a5be7f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
