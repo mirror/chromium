@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "053b43fe_9de62197",
+        "filename": "chrome/browser/resources/policy_tool.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-09-29T21:17:22Z",
+      "side": 1,
+      "message": "I\u0027m confused here. If saving session is disabled due to error like can\u0027t create directory.\nWhat will happened when user click the button? As Chrome is still not able to write value to disk.",
+      "revId": "08800fd657cb51d9989eb8b48f380eed467b8bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad9f9547_de7fa0ae",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-09-29T21:17:22Z",
+      "side": 1,
+      "message": "Why call AllowJavascript() again?",
+      "revId": "08800fd657cb51d9989eb8b48f380eed467b8bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d52e0a03_a1abbf72",
+        "filename": "components/policy_strings.grdp",
+        "patchSetId": 6
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-09-29T21:17:22Z",
+      "side": 1,
+      "message": "Personally, I prefer \"Save\" instead of \"logging\" here. Because it\u0027s more common. WDYT?",
+      "revId": "08800fd657cb51d9989eb8b48f380eed467b8bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
