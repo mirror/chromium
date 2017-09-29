@@ -70,6 +70,25 @@
       "revId": "0628c79023ccc2b494f447944ce50ae66bf0640c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af476312_b985cc31",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-29T23:08:50Z",
+      "side": 1,
+      "message": "What if the relevant classes (LayerAnimator, LayerAnimationSequence) are destroyed before the end of the animation? What if the animation is queued but never runs? What if no animation is started at all?\n\nI don\u0027t think that is well tested. But I don\u0027t think something as basic as ownership should rely on unit tests to prove correctness - it should be obvious from the code. We absolutely need to use smart pointers (unique_ptr) to make it obviously correct, instead of relying on explicit new/deletes.",
+      "parentUuid": "7be2ed6b_b41fc502",
+      "tag": "mailMessageId\u003d\u003cCAMeTaZdUDzP4pUawZtvSc9vqFsX9E8tkMFnB96wf4pATAGQk8Q@mail.gmail.com\u003e",
+      "revId": "0628c79023ccc2b494f447944ce50ae66bf0640c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
