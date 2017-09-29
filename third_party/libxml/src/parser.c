@@ -3380,7 +3380,7 @@ xmlParseNCNameComplex(xmlParserCtxtPtr ctxt) {
 	    /*
 	     * when shrinking to extend the buffer we really need to preserve
 	     * the part of the name we already parsed. Hence rolling back
-	     * by current lenght.
+	     * by current length.
 	     */
 	    ctxt->input->cur -= l;
 	    GROW;
