@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "8247b43e_6d19b9c2",
+        "filename": "content/renderer/browser_plugin/browser_plugin.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-09-29T13:40:33Z",
+      "side": 1,
+      "message": "I think (as dcheng@ pointed out) |render_frame| cannot be nullptr.",
+      "parentUuid": "36b99eac_ff8dd03f",
+      "revId": "3b34cbf27f591ccf6e848270560bc85a329899ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e4fddac_c60bcda5",
         "filename": "content/renderer/browser_plugin/browser_plugin.cc",
         "patchSetId": 2
@@ -101,6 +119,30 @@
       "writtenOn": "2017-09-25T14:35:03Z",
       "side": 1,
       "message": "We can use task_runner_ here, right?",
+      "range": {
+        "startLine": 429,
+        "startChar": 2,
+        "endLine": 429,
+        "endChar": 13
+      },
+      "revId": "3b34cbf27f591ccf6e848270560bc85a329899ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18deb6df_469cd15a",
+        "filename": "content/renderer/browser_plugin/browser_plugin.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-09-29T13:40:33Z",
+      "side": 1,
+      "message": "I also think it should be available here but does it matter that they are (potentially) of different types (kUnspecedTimer vs kInternalInitialization)?",
+      "parentUuid": "7e4fddac_c60bcda5",
       "range": {
         "startLine": 429,
         "startChar": 2,
