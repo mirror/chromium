@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "c8afd939_9f80fadd",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-09-29T18:20:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6fc330e_6fb1379f",
+      "revId": "b543bedbea7b1d9ea8f20de8a4f35e4de77daecb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19bc1c41_bae09f1a",
         "filename": "third_party/WebKit/Source/core/editing/serializers/StyledMarkupSerializer.cpp",
         "patchSetId": 1
@@ -47,6 +65,24 @@
       "writtenOn": "2017-09-29T01:46:18Z",
       "side": 1,
       "message": "Note: I\u0027m dreaming about renaming one letter variables to proper name...",
+      "revId": "b543bedbea7b1d9ea8f20de8a4f35e4de77daecb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f0cdb19_3fce14a5",
+        "filename": "third_party/WebKit/Source/core/editing/serializers/StyledMarkupSerializer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-09-29T18:20:10Z",
+      "side": 1,
+      "message": "Do we have a tracking bug for this?\nLooks like we can find one-letter variables with not so complex regexps.\nSo the fix can be mostly mechanical, I hope.",
+      "parentUuid": "19bc1c41_bae09f1a",
       "revId": "b543bedbea7b1d9ea8f20de8a4f35e4de77daecb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
