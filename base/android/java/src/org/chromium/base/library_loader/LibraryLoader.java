@@ -215,9 +215,10 @@ public class LibraryLoader {
     }
 
     /**
-     * @return whether not to prefetch libraries (see setDontPrefetchLibrariesOnNextRun()).
+     * @return whether "DontPrefetchLibraries" finch experiment is enabled
+     *         (see setDontPrefetchLibrariesOnNextRun()).
      */
-    private static boolean isNotPrefetchingLibraries() {
+    private static boolean getDontPrefetchLibaries() {
         // This might be the first time getAppSharedPreferences() is used, so relax strict mode
         // to allow disk reads.
         StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskReads();
@@ -227,6 +228,13 @@ public class LibraryLoader {
         } finally {
             StrictMode.setThreadPolicy(oldPolicy);
         }
+    }
+
+    /**
+     * @return whether to skip library prefetching.
+     */
+    private static boolean isNotPrefetchingLibraries() {
+        return SysUtils.is512MBAndroidGoDevice() || getDontPrefetchLibaries();
     }
 
     /** Prefetches the native libraries in a background thread.

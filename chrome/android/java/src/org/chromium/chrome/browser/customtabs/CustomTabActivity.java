@@ -39,6 +39,7 @@ import android.widget.RemoteViews;
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
+import org.chromium.base.SysUtils;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.metrics.RecordHistogram;
@@ -428,7 +429,7 @@ public class CustomTabActivity extends ChromeActivity {
 
     @Override
     public boolean shouldAllocateChildConnection() {
-        return !mHasCreatedTabEarly && !mHasSpeculated
+        return !SysUtils.is512MBAndroidGoDevice() && !mHasCreatedTabEarly && !mHasSpeculated
                 && !WarmupManager.getInstance().hasSpareWebContents();
     }
 
