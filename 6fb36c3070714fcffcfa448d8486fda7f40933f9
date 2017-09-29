@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1e7096d_7b3f0e58",
+        "filename": "chrome_elf/elf_imports_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1116013
+      },
+      "writtenOn": "2017-09-29T05:04:33Z",
+      "side": 1,
+      "message": "nit: do we need the intermediate here? could just return base::LaunchUnitTests(...).",
+      "range": {
+        "startLine": 202,
+        "startChar": 13,
+        "endLine": 202,
+        "endChar": 0
+      },
+      "revId": "6fb36c3070714fcffcfa448d8486fda7f40933f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
