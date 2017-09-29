@@ -8,6 +8,7 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.base.annotations.MainDex;
 import org.chromium.base.library_loader.LibraryLoader;
+import org.chromium.chrome.test.util.browser.Features;
 
 import java.util.Map;
 
@@ -162,6 +163,7 @@ public abstract class ChromeFeatureList {
     public static final String CHROME_HOME_DOODLE = "ChromeHomeDoodle";
     public static final String CHROME_HOME_EXPAND_BUTTON = "ChromeHomeExpandButton";
     public static final String CHROME_HOME_PROMO = "ChromeHomePromo";
+    public static final String CHROME_MEMEX = "ChromeMemex";
     public static final String CONTENT_SUGGESTIONS_FAVICONS_FROM_NEW_SERVER =
             "ContentSuggestionsFaviconsFromNewServer";
     public static final String CONTENT_SUGGESTIONS_NOTIFICATIONS =
