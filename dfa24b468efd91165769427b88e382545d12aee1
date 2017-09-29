@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6831caba_f5296ac9",
+        "filename": "chrome/browser/resources/md_extensions/error_page.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-29T22:40:24Z",
+      "side": 1,
+      "message": "Two-way binding probably is not needed here.",
+      "range": {
+        "startLine": 157,
+        "startChar": 34,
+        "endLine": 157,
+        "endChar": 36
+      },
+      "revId": "dfa24b468efd91165769427b88e382545d12aee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09af0681_f36cb251",
+        "filename": "chrome/browser/resources/md_extensions/error_page.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-29T22:40:24Z",
+      "side": 1,
+      "message": "Indent off.",
+      "revId": "dfa24b468efd91165769427b88e382545d12aee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87642733_599d0af6",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-29T22:40:24Z",
+      "side": 1,
+      "message": "Can this be as follows instead?\nvalue: null,",
+      "revId": "dfa24b468efd91165769427b88e382545d12aee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34b55675_734401ab",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-29T22:40:24Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "dfa24b468efd91165769427b88e382545d12aee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7928e468_6f8500b1",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-29T22:40:24Z",
+      "side": 1,
+      "message": "Do we need both this.isRuntimeError_ and this.selectedError_? It seems that isRuntimeError_ can always be inferred. Maybe it should be a computed property instead? Such that we don\u0027t have to keep updating it manually.",
+      "revId": "dfa24b468efd91165769427b88e382545d12aee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
