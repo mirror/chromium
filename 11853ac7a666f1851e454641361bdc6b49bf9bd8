@@ -34,6 +34,24 @@
       "revId": "11853ac7a666f1851e454641361bdc6b49bf9bd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5625254_fb96c9b1",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 1194,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-29T18:15:10Z",
+      "side": 1,
+      "message": "ScopedIgnoreContentVerifierForTest is the correct way to go here imo^^^. And yes, we need to be careful about flaky failures as mentioned above.\nMaybe we can add a check in CrxInstaller somehow to make sure we do not install crx with content verification turned on in tests, unless specifically requested?\nWe can do a sweep on existing tests this way by running them on bots, but we also need to add some test only sanity check so new tests being added  are guarded.",
+      "parentUuid": "7858b48f_1efeec5f",
+      "revId": "11853ac7a666f1851e454641361bdc6b49bf9bd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
