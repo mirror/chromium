@@ -439,6 +439,16 @@ test("gl_unittests") {
   data_deps = [
     "//third_party/mesa:osmesa",
   ]
+
+  if (is_linux) {
+    configs += [ "//build/config/linux:x11" ]
+    deps += [
+      "//third_party/libdrm",
+      "//ui/gfx/x",
+    ]
+    libs = [ "xcb-dri2" ]
+    sources += [ "gl_image_native_pixmap_dmabuf_unittest.cc" ]
+  }
 }
 
 # We can't run this test on real Chrome OS hardware for Ozone, so new target.
