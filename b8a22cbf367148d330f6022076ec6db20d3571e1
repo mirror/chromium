@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ee8fdc10_35efc8b1",
+        "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-29T19:56:44Z",
+      "side": 1,
+      "message": "This function is not fully implemented yet, so it\u0027s hard to tell how expensive it will be (we currently have only dummy implementation). But in general I don\u0027t think it will need it significantly more expensive than a simple malloc.\n\nAlso please keep in mind that long-term we will be using a different API. Media Client Library is a C wrapper around FIDL interfaces for Fuchsia\u0027s Media Service. We need it only because we can\u0027t use FILD directly. Once that issue is resolved we will be using FILD service directly in this class.",
+      "parentUuid": "bd7d708b_09581ee0",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf643ab2_e4b20134",
         "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-29T00:57:49Z",
       "side": 1,
       "message": "Also, wow these are really verbose function names.. no fuschia_audio_manager_-\u003eget_output_devices() type calling?\n\nAgain if this is expensive you may want to consider caching the value and listening for device changes to update the counts.",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7c9c909_97d7f9b2",
+        "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-29T19:56:44Z",
+      "side": 1,
+      "message": "Proper caching implementation would require adding some mechanism to get notified when devices are added/removed, which we don\u0027t have right now.\n\nAlso see my comments above. FIDL will generate C++ interfaces with shorter names. I don\u0027t think it will be expensive.",
+      "parentUuid": "cf643ab2_e4b20134",
       "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d8cd41c9_1f9e5234",
+        "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-29T19:56:44Z",
+      "side": 1,
+      "message": "The problem here is that list of devices may change at any moment, so if we get the number ahead of time there is no guarantee that it won\u0027t change when fuchsia_audio_manager_get_output_devices() is called again. Windows version of net::GetNetworkList() had this issue (internally it uses GetAdaptersAddresses() which is similar to this API). As result we had an obscure, hard to debug bug, see https://codereview.chromium.org/2071273004 . \nIt looks like GetAudioDeviceInfo() on mac may have the same bug (see media/audio/mac/audio_manager_mac.cc): it calls AudioObjectGetPropertyDataSize() and then AudioObjectGetPropertyData(), but I\u0027m not sure there is anything to guarantee that data doesn\u0027t change between these two calls.",
+      "parentUuid": "35be979f_d9953054",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1507ae6_5f0f745e",
         "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-29T00:57:49Z",
       "side": 1,
       "message": "DLOG?",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea7e23ff_e5598a68",
+        "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-29T19:56:44Z",
+      "side": 1,
+      "message": "IMO this is the case when LOG(ERROR) is useful. fuchsia_audio_manager_get_output_devices() normally shouldn\u0027t fail.",
+      "parentUuid": "f1507ae6_5f0f745e",
       "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "5a21c51c_7fd46e37",
+        "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-29T19:56:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9250c588_0fd6aaf2",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3bb4e43_459fddd8",
         "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
         "patchSetId": 3
@@ -98,6 +188,24 @@
       "writtenOn": "2017-09-29T00:57:49Z",
       "side": 1,
       "message": "Ditto.",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4045536_80cc974e",
+        "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-29T19:56:44Z",
+      "side": 1,
+      "message": "I prefer to keep them for loops.",
+      "parentUuid": "d3bb4e43_459fddd8",
       "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "caff5b18_f96e8218",
+        "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-29T19:56:44Z",
+      "side": 1,
+      "message": "I\u0027d prefer to keep LOG here",
+      "parentUuid": "b63e2782_6d9adb74",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a210ef94_feb76015",
         "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
         "patchSetId": 3
@@ -132,6 +258,24 @@
       "writtenOn": "2017-09-29T00:57:49Z",
       "side": 1,
       "message": "There\u0027s a GuessChannelLayout function that you can use from media/base/channel_layout. Long term fuschia will need to return the actual layout or allow the output stream to specify it.",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6a60e04_30fea7ea",
+        "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-29T19:56:44Z",
+      "side": 1,
+      "message": "Done. Multichannel support is not complete, so we will need to add it later.",
+      "parentUuid": "a210ef94_feb76015",
       "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "ed589f66_3cf22fcf",
+        "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-29T19:56:44Z",
+      "side": 1,
+      "message": "Done, but why do we want to default to low-level format? Couldn\u0027t the caller change the format if it needs low-latency?\n\nAlso latency requirements and audio format are orthogonal concepts, so it seems strange that low-latency is requested as a format (low-latency streams still use linear PCM). Would it be better to add a separate field in AudioParameters for latency requirements?\n\nThere are probably some details I\u0027m missing. If AUDIO_PCM_LOW_LATENCY is the default for PCM, then should we rename AUDIO_PCM_LINEAR -\u003e AUDIO_PCM_HIGH_LATENCY_DEPRECATED and AUDIO_PCM_LOW_LATENCY -\u003e AUDIO_PCM_LINEAR?",
+      "parentUuid": "e7a42d4c_cf639a63",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "202e3455_ed8d339d",
         "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
         "patchSetId": 3
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "e1a21e1d_ebf26b19",
+        "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-29T19:56:44Z",
+      "side": 1,
+      "message": "I think meant NOTREACHED(), not NOTIMPLEMENTED(). Done\nIs there any downside to having this function implemented?",
+      "parentUuid": "202e3455_ed8d339d",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1bac024c_f12e8329",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
         "patchSetId": 3
@@ -183,6 +363,24 @@
       "writtenOn": "2017-09-29T00:57:49Z",
       "side": 1,
       "message": "As mentioned earlier Fuschia needs to get a channel layout API; or ability to individually tag output channels.",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b2f995f_fb711917",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-29T19:56:44Z",
+      "side": 1,
+      "message": "We will add it later when it\u0027s implemented",
+      "parentUuid": "1bac024c_f12e8329",
       "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -223,6 +421,24 @@
     },
     {
       "key": {
+        "uuid": "f0363930_ee329d53",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-29T19:56:44Z",
+      "side": 1,
+      "message": "If I understand correctly you are concerned about 2 separate issues:\n1. Thread not being scheduled when necessary,\n2. Clock drift between CPU and audio device,\n\nCallback are not useful to solve (1), at least not at Fuchsia. To implement them we would need a separate thread calling that callback. That thread would still need to be woken up somehow (either by timer of after waiting on a handle). It\u0027s not any different from this thread waking up on a timer. If we see problems with the CPU scheduler on Fuchsia we will need to solve it somehow, e.g. by setting appropriate priority of the audio thread.\n\n(2) is handled by the mixer provided by the system, so we don\u0027t need to worry about it here. The mixer is always clocked by ZX_CLOCK_MONOTONIC, which is the same clock that MessagePumpFuchsia uses to schedule delayed tasks. The mixer is responsible for resampling the stream to workaround clock drift if the device uses a different clock source (e.g. async USB or Bluetooth device). You can find more details in the comments on this CL: https://fuchsia-review.googlesource.com/#/c/media/+/44387/\n\nAlso I disagree that callbacks are prerequisite to solve (2) on platforms where we cannot make assumption about clocks synchronization. AlsaPcmOutputStream doesn\u0027t use callbacks and there are no issues with glitching even with asynchronous devices.",
+      "parentUuid": "082709e2_fdbd7129",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec9994b8_48fce016",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
         "patchSetId": 3
@@ -234,6 +450,24 @@
       "writtenOn": "2017-09-29T00:57:49Z",
       "side": 1,
       "message": "Split out so you get useful logs from the DCHECK if it fails.",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8832831_e572de32",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-29T19:56:44Z",
+      "side": 1,
+      "message": "Added \" \u003c\u003c volume\".",
+      "parentUuid": "ec9994b8_48fce016",
       "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -257,6 +491,24 @@
     },
     {
       "key": {
+        "uuid": "fb09999b_c547b0e5",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-29T19:56:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fc1b284_0d84cb24",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f455a0af_95373c11",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
         "patchSetId": 3
@@ -268,6 +520,24 @@
       "writtenOn": "2017-09-29T00:57:49Z",
       "side": 1,
       "message": "Does this work correctly in the case of devices like bluetooth where some samples may be lost?",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1936f450_d8bb3489",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-29T19:56:44Z",
+      "side": 1,
+      "message": "Yes, the mixer is supposed to handle this case.",
+      "parentUuid": "f455a0af_95373c11",
       "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -308,6 +578,24 @@
     },
     {
       "key": {
+        "uuid": "f033eafd_9827b603",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-29T19:56:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "056c6751_fb16cbb0",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a23f8e28_cc5e73cf",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
         "patchSetId": 3
@@ -319,6 +607,24 @@
       "writtenOn": "2017-09-29T00:57:49Z",
       "side": 1,
       "message": "Do you know what clock this is in? Can we safely combine this value with base::TimeTicks?",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72e60296_63b31829",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-29T19:56:44Z",
+      "side": 1,
+      "message": "TimeTicks uses ZX_CLOCK_MONOTONIC internally, but TimeTicks stores the value in microseconds, while zx_time_get() is in nanoseconds. base::TimeTicks also doesn\u0027t have a clean way to get the internal value out.",
+      "parentUuid": "a23f8e28_cc5e73cf",
       "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -342,6 +648,24 @@
     },
     {
       "key": {
+        "uuid": "563a9756_76f2df57",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-29T19:56:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95ecea6c_ce68c355",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd4c577e_575ad4fb",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
         "patchSetId": 3
@@ -353,6 +677,24 @@
       "writtenOn": "2017-09-29T00:57:49Z",
       "side": 1,
       "message": "As noted above, this is insufficient for accurate audio delivery. Our MessagePump system provides no guarantees about that 10ms value.",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eaaedc1_4874edfe",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-29T19:56:44Z",
+      "side": 1,
+      "message": "Actually in this particular case case the scheduling delay makes very little difference. This logic is the same that\u0027s used in AlsaPcmOutputStream::ScheduleNextWrite(): if the source is exhausted then we want to try pull data from it again but it doesn\u0027t matter very much when it happens.",
+      "parentUuid": "bd4c577e_575ad4fb",
       "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -376,6 +718,24 @@
     },
     {
       "key": {
+        "uuid": "162bf152_4e70040b",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-29T19:56:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1940e558_6744babe",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32496134_0fc89d15",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
         "patchSetId": 3
@@ -393,6 +753,24 @@
     },
     {
       "key": {
+        "uuid": "4512dd76_c9caf022",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-29T19:56:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32496134_0fc89d15",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bdd002b2_eec25768",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
         "patchSetId": 3
@@ -404,6 +782,24 @@
       "writtenOn": "2017-09-29T00:57:49Z",
       "side": 1,
       "message": "Instead of tracking samples manually check out the AudioTimestampHelper",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a449911d_237e21f0",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-29T19:56:44Z",
+      "side": 1,
+      "message": "It looks great, but AudioTimestampHelper uses TimeDelta instead of TimeTicks which we need here, so it would be awkward to use it here. I updated GetCurrentStreamTime() to use AudioTimestampHelper::FramesToTime().",
+      "parentUuid": "bdd002b2_eec25768",
       "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -427,6 +823,24 @@
     },
     {
       "key": {
+        "uuid": "6e0178f5_8707d976",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-29T19:56:44Z",
+      "side": 1,
+      "message": "I didn\u0027t know about it. Looking at it I see two issues:\n1. It doesn\u0027t account for the case when OnMoreData() doesn\u0027t fill the buffer completely. is that the case we need to worry about?\n2. It uses TimeDelta to track stream position. This is problematic because for most cases sample duration cannot be expressed as integer number of microseconds. In other words buffer_duration_ expressed in TimeDelta doesn\u0027t always match actual buffer duration. As result it may accumulate some small error over time causing stream clock to drift from system clock. It may or may not be a problem depending on the buffer size. But I don\u0027t think it will work properly when we allow OnMoreData() fill any arbitrary number of samples.\n\nIn any case I think the logic here is quite simple, and using another helper would only complicate it.",
+      "parentUuid": "5e97b6b1_ffca8656",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "864a4ea0_d26f33d2",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.h",
         "patchSetId": 3
@@ -438,6 +852,24 @@
       "writtenOn": "2017-09-29T00:57:49Z",
       "side": 1,
       "message": "Feel free to use a less verbose name like fuschia_output_stream or something similar. Up to you.",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6cc169b_4798d1e3",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-29T19:56:44Z",
+      "side": 1,
+      "message": "Are you talking about file name of name of that header guard? For header guards the style guide is unambiguous about the name (https://google.github.io/styleguide/cppguide.html#The__define_Guard). File name should normally match the the name if the class defined in that file (https://google.github.io/styleguide/cppguide.html#File_Names).",
+      "parentUuid": "864a4ea0_d26f33d2",
       "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
