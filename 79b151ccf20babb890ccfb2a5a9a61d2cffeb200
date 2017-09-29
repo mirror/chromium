@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "836de16f_ea46b6b0",
+        "filename": "google_apis/gaia/fake_gaia.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-29T09:03:42Z",
+      "side": 1,
+      "message": "Optional: Should we move these to the header file?",
+      "range": {
+        "startLine": 128,
+        "startChar": 27,
+        "endLine": 128,
+        "endChar": 42
+      },
+      "revId": "79b151ccf20babb890ccfb2a5a9a61d2cffeb200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
