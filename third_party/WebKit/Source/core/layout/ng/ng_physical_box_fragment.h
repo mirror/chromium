@@ -29,7 +29,7 @@ class CORE_EXPORT NGPhysicalBoxFragment final
 
   const NGBaseline* Baseline(const NGBaselineRequest&) const;
 
-  void UpdateVisualRect() const override;
+  LayoutRect LocalVisualRectForSelf() const;
 
   RefPtr<NGPhysicalFragment> CloneWithoutOffset() const;
 

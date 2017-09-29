@@ -87,7 +87,7 @@ class CORE_EXPORT NGPhysicalTextFragment final : public NGPhysicalFragment {
   }
 
   // Update visual rect for this fragment.
-  void UpdateVisualRect() const override;
+  LayoutRect LocalVisualRect() const;
 
   NGTextEndEffect EndEffect() const {
     return static_cast<NGTextEndEffect>(end_effect_);

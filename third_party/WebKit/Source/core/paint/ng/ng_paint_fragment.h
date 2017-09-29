@@ -5,6 +5,7 @@
 #ifndef ng_paint_fragment_h
 #define ng_paint_fragment_h
 
+#include "core/CoreExport.h"
 #include "core/layout/ng/ng_physical_fragment.h"
 #include "core/loader/resource/ImageResourceObserver.h"
 #include "platform/graphics/paint/DisplayItemClient.h"
@@ -26,7 +27,8 @@ namespace blink {
 //   (See https://drafts.csswg.org/css-backgrounds-3/#the-background-image)
 // - image (<img>, svg <image>) or video (<video>) elements that are
 //   placeholders for displaying them.
-class NGPaintFragment : public DisplayItemClient, public ImageResourceObserver {
+class CORE_EXPORT NGPaintFragment : public DisplayItemClient,
+                                    public ImageResourceObserver {
  public:
   explicit NGPaintFragment(RefPtr<const NGPhysicalFragment>);
 
@@ -43,6 +45,8 @@ class NGPaintFragment : public DisplayItemClient, public ImageResourceObserver {
   LayoutRect VisualRect() const { return visual_rect_; }
   LayoutRect VisualOverflowRect() const { return VisualRect(); }
 
+  void PopulateDescendants();
+
   // DisplayItemClient methods.
   String DebugName() const { return "NGPaintFragment"; }
 
@@ -58,7 +62,8 @@ class NGPaintFragment : public DisplayItemClient, public ImageResourceObserver {
  private:
   void SetVisualRect(const LayoutRect& rect) { visual_rect_ = rect; }
 
-  void PopulateDescendants();
+  void PopulateDescendants(LayoutPoint paint_offset);
+  void CopyVisualRectToLayoutObject();
 
   RefPtr<const NGPhysicalFragment> physical_fragment_;
   LayoutRect visual_rect_;
