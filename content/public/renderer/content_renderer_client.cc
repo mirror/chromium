@@ -14,6 +14,7 @@
 #include "third_party/WebKit/public/platform/modules/webmidi/WebMIDIAccessor.h"
 #include "ui/gfx/icc_profile.h"
 #include "url/gurl.h"
+#include "v8/include/v8.h"
 
 namespace content {
 
@@ -30,6 +31,19 @@ bool ContentRendererClient::OverrideCreatePlugin(
     const blink::WebPluginParams& params,
     blink::WebPlugin** plugin) {
   return false;
+}
+
+bool ContentRendererClient::CreatePluginController(
+    const blink::WebElement& owner,
+    const GURL& completed_url,
+    const std::string& mime_type) {
+  return false;
+}
+
+v8::Local<v8::Object> ContentRendererClient::V8ScriptableObject(
+    const blink::WebElement& plugin_element,
+    v8::Isolate* isolate) {
+  return v8::Local<v8::Object>();
 }
 
 blink::WebPlugin* ContentRendererClient::CreatePluginReplacement(
@@ -250,6 +264,12 @@ bool ContentRendererClient::ShouldEnforceWebRTCRoutingPreferences() {
 
 GURL ContentRendererClient::OverrideFlashEmbedWithHTML(const GURL& url) {
   return GURL();
+}
+
+blink::WebMimeHandlerViewManager*
+ContentRendererClient::CreateMimeHandlerViewManager(
+    RenderFrame* render_frame) const {
+  return nullptr;
 }
 
 std::unique_ptr<base::TaskScheduler::InitParams>

@@ -2654,6 +2654,45 @@ void RenderFrameImpl::BindToFrame(WebLocalFrame* web_frame) {
   frame_ = web_frame;
 }
 
+bool RenderFrameImpl::CreatePluginController(
+    const blink::WebElement& owner_element,
+    const blink::WebURL& completed_url,
+    const blink::WebString& mime_type) {
+#if BUILDFLAG(ENABLE_PLUGINS)
+  if (!base::FeatureList::IsEnabled(features::kPdfExtensionInOutOfProcessFrame))
+    return false;
+  return GetContentClient()->renderer()->CreatePluginController(
+      owner_element, completed_url, mime_type.Utf8());
+#else
+  return false;
+#endif
+}
+
+void RenderFrameImpl::DidReceiveDataInPluginDocument(
+    const blink::WebElement& owner_element,
+    const char* data,
+    size_t length) {
+  CHECK(
+      base::FeatureList::IsEnabled(features::kPdfExtensionInOutOfProcessFrame));
+  CHECK_EQ(GetWebFrame(), owner_element.GetDocument().GetFrame());
+#if BUILDFLAG(ENABLE_PLUGINS)
+// Add code.
+#endif
+}
+v8::Local<v8::Object> RenderFrameImpl::V8ScriptableObject(
+    const blink::WebElement& owner_element,
+    v8::Isolate* isolate) {
+  CHECK(
+      base::FeatureList::IsEnabled(features::kPdfExtensionInOutOfProcessFrame));
+  CHECK_EQ(GetWebFrame(), owner_element.GetDocument().GetFrame());
+#if BUILDFLAG(ENABLE_PLUGINS)
+  // Add code
+  return v8::Local<v8::Object>();
+#else
+  return v8::Local<v8::Object>();
+#endif
+}
+
 blink::WebPlugin* RenderFrameImpl::CreatePlugin(
     const WebPluginInfo& info,
     const blink::WebPluginParams& params,

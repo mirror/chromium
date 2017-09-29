@@ -59,7 +59,6 @@ namespace blink {
 using namespace HTMLNames;
 
 namespace {
-
 // Used for histograms, do not change the order.
 enum PluginRequestObjectResult {
   kPluginRequestObjectResultFailure = 0,
@@ -130,6 +129,9 @@ bool HTMLPlugInElement::RequestObjectInternal(
       url_.IsEmpty() ? KURL() : GetDocument().CompleteURL(url_);
   if (!AllowedToLoadObject(completed_url, service_type_))
     return false;
+
+  if (TryUsingExternalHandler())
+    return true;
 
   ObjectContentType object_type = GetObjectContentType();
   if (object_type == ObjectContentType::kFrame ||
@@ -351,6 +353,17 @@ v8::Local<v8::Object> HTMLPlugInElement::PluginWrapper() {
   // return the cached allocated Bindings::Instance. Not supporting this
   // edge-case is OK.
   v8::Isolate* isolate = V8PerIsolateData::MainThreadIsolate();
+
+  if (ContentFrame() && ContentFrame()->IsPluginFrame()) {
+    v8::Local<v8::Object> object =
+        GetDocument().GetFrame()->Client()->V8ScriptableObject(this, isolate);
+
+    if (!object.IsEmpty()) {
+      plugin_wrapper_.Reset(isolate, object);
+      return plugin_wrapper_.Get(isolate);
+    }
+  }
+
   if (plugin_wrapper_.IsEmpty()) {
     PluginView* plugin;
 
@@ -695,6 +708,14 @@ void HTMLPlugInElement::LazyReattachIfNeeded() {
     LazyReattachIfAttached();
     SetPersistedPlugin(nullptr);
   }
+}
+
+bool HTMLPlugInElement::TryUsingExternalHandler() {
+  if (ContentFrame() && ContentFrame()->IsPluginFrame())
+    DisconnectContentFrame();
+
+  return GetDocument().GetFrame()->Client()->CreatePluginFrame(
+      this, GetDocument().CompleteURL(url_), service_type_);
 }
 
 }  // namespace blink
