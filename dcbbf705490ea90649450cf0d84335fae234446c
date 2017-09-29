@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "896f6849_b7ac0839",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/health-thermometer-two-iframes.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-09-29T18:19:23Z",
+      "side": 1,
+      "message": "Cal we clarify this to be \u0027RequestAndConnect\u0027?",
+      "range": {
+        "startLine": 9,
+        "startChar": 10,
+        "endLine": 9,
+        "endChar": 17
+      },
+      "revId": "dcbbf705490ea90649450cf0d84335fae234446c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "776a6fb9_d0be8c7c",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/health-thermometer-two-iframes.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-09-29T18:19:23Z",
+      "side": 1,
+      "message": "Since we don\u0027t use the error, might as well omit it and take out the msg.split in the asserts.\n\nAlso, name this expected failure differently from the failures of unexpected command and no gatt server, so that we know in the assert checks that we\u0027re getting the correct failure from a getPrimaryService call.",
+      "range": {
+        "startLine": 23,
+        "startChar": 47,
+        "endLine": 23,
+        "endChar": 54
+      },
+      "revId": "dcbbf705490ea90649450cf0d84335fae234446c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
