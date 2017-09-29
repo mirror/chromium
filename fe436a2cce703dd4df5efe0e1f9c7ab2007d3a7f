@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10c7e806_fff57f96",
+        "filename": "media/blink/multibuffer_data_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T01:01:17Z",
+      "side": 1,
+      "message": "Do you want to invalidate these in the event of a pending one while SeekTask_Lock executes? Or at least bail when no seek positions are available in SeekTask_Locked?",
+      "revId": "fe436a2cce703dd4df5efe0e1f9c7ab2007d3a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
