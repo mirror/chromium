@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d40fee40_50abb321",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabBottomBarDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-09-29T23:58:29Z",
+      "side": 1,
+      "message": "Why alpha? I thought we were doing translation here for the hide.",
+      "range": {
+        "startLine": 184,
+        "startChar": 35,
+        "endLine": 184,
+        "endChar": 36
+      },
+      "revId": "f3b2fa6a0d40598ce310c64e179cf544a5568b50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
