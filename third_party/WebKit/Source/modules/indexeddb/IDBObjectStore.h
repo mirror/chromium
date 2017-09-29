@@ -136,6 +136,10 @@ class MODULES_EXPORT IDBObjectStore final
       WebIDBCursorDirection,
       WebIDBTaskType = kWebIDBTaskTypeNormal,
       IDBRequest::AsyncTraceState = IDBRequest::AsyncTraceState());
+  IDBRequest* deleteFunction(
+      ScriptState*,
+      IDBKeyRange*,
+      IDBRequest::AsyncTraceState = IDBRequest::AsyncTraceState());
 
   void MarkDeleted();
   bool IsDeleted() const { return deleted_; }

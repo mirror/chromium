@@ -79,6 +79,8 @@ typedef blink::protocol::IndexedDB::Backend::RequestDatabaseCallback
     RequestDatabaseCallback;
 typedef blink::protocol::IndexedDB::Backend::RequestDataCallback
     RequestDataCallback;
+typedef blink::protocol::IndexedDB::Backend::DeleteObjectStoreEntryCallback
+    DeleteObjectStoreEntryCallback;
 typedef blink::protocol::IndexedDB::Backend::ClearObjectStoreCallback
     ClearObjectStoreCallback;
 typedef blink::protocol::IndexedDB::Backend::DeleteDatabaseCallback
@@ -870,6 +872,142 @@ void InspectorIndexedDBAgent::requestData(
       v8_session_, script_state, std::move(request_callback), object_store_name,
       index_name, idb_key_range, skip_count, page_size);
   data_loader->Start(idb_factory, document->GetSecurityOrigin(), database_name);
+}
+
+class DeleteObjectStoreEntryListener final : public EventListener {
+  WTF_MAKE_NONCOPYABLE(DeleteObjectStoreEntryListener);
+
+ public:
+  static DeleteObjectStoreEntryListener* Create(
+      std::unique_ptr<DeleteObjectStoreEntryCallback> request_callback) {
+    return new DeleteObjectStoreEntryListener(std::move(request_callback));
+  }
+
+  ~DeleteObjectStoreEntryListener() override {}
+
+  bool operator==(const EventListener& other) const override {
+    return this == &other;
+  }
+
+  void handleEvent(ExecutionContext*, Event* event) override {
+    if (event->type() != EventTypeNames::success) {
+      request_callback_->sendFailure(Response::Error("Unexpected event type."));
+      return;
+    }
+
+    request_callback_->sendSuccess();
+  }
+
+  DEFINE_INLINE_VIRTUAL_TRACE() { EventListener::Trace(visitor); }
+
+ private:
+  DeleteObjectStoreEntryListener(
+      std::unique_ptr<DeleteObjectStoreEntryCallback> request_callback)
+      : EventListener(EventListener::kCPPEventListenerType),
+        request_callback_(std::move(request_callback)) {}
+
+  std::unique_ptr<DeleteObjectStoreEntryCallback> request_callback_;
+};
+
+class DeleteObjectStoreEntry final
+    : public ExecutableWithDatabase<DeleteObjectStoreEntryCallback> {
+ public:
+  static RefPtr<DeleteObjectStoreEntry> Create(
+      ScriptState* script_state,
+      const String& object_store_name,
+      IDBKeyRange* idb_key_range,
+      std::unique_ptr<DeleteObjectStoreEntryCallback> request_callback) {
+    return AdoptRef(new DeleteObjectStoreEntry(script_state, object_store_name,
+                                               idb_key_range,
+                                               std::move(request_callback)));
+  }
+
+  DeleteObjectStoreEntry(
+      ScriptState* script_state,
+      const String& object_store_name,
+      IDBKeyRange* idb_key_range,
+      std::unique_ptr<DeleteObjectStoreEntryCallback> request_callback)
+      : ExecutableWithDatabase(script_state),
+        object_store_name_(object_store_name),
+        idb_key_range_(idb_key_range),
+        request_callback_(std::move(request_callback)) {}
+
+  void Execute(IDBDatabase* idb_database) override {
+    IDBTransaction* idb_transaction =
+        TransactionForDatabase(GetScriptState(), idb_database,
+                               object_store_name_, IndexedDBNames::readwrite);
+    if (!idb_transaction) {
+      request_callback_->sendFailure(
+          Response::Error("Could not get transaction"));
+      return;
+    }
+    IDBObjectStore* idb_object_store =
+        ObjectStoreForTransaction(idb_transaction, object_store_name_);
+    if (!idb_object_store) {
+      request_callback_->sendFailure(
+          Response::Error("Could not get object store"));
+      return;
+    }
+
+    IDBRequest* idb_request = idb_object_store->deleteFunction(
+        GetScriptState(), idb_key_range_.Get());
+    idb_request->addEventListener(
+        EventTypeNames::success,
+        DeleteObjectStoreEntryListener::Create(std::move(request_callback_)),
+        false);
+  }
+
+  DeleteObjectStoreEntryCallback* GetRequestCallback() override {
+    return request_callback_.get();
+  }
+
+ private:
+  const String object_store_name_;
+  Persistent<IDBKeyRange> idb_key_range_;
+  std::unique_ptr<DeleteObjectStoreEntryCallback> request_callback_;
+};
+
+void InspectorIndexedDBAgent::deleteObjectStoreEntry(
+    const String& security_origin,
+    const String& database_name,
+    const String& object_store_name,
+    protocol::Maybe<protocol::IndexedDB::KeyRange> key_range,
+    std::unique_ptr<DeleteObjectStoreEntryCallback> request_callback) {
+  LocalFrame* frame =
+      inspected_frames_->FrameWithSecurityOrigin(security_origin);
+  Document* document = frame ? frame->GetDocument() : nullptr;
+  if (!document) {
+    request_callback->sendFailure(Response::Error(kNoDocumentError));
+    return;
+  }
+  IDBFactory* idb_factory = nullptr;
+  Response response = AssertIDBFactory(document, idb_factory);
+  if (!response.isSuccess()) {
+    request_callback->sendFailure(response);
+    return;
+  }
+
+  IDBKeyRange* idb_key_range =
+      key_range.isJust() ? IdbKeyRangeFromKeyRange(key_range.fromJust())
+                         : nullptr;
+  if (!idb_key_range) {
+    request_callback->sendFailure(Response::Error("Can not parse key range."));
+    return;
+  }
+
+  ScriptState* script_state = ToScriptStateForMainWorld(frame);
+  if (!script_state) {
+    request_callback->sendFailure(Response::InternalError());
+    return;
+  }
+
+  ScriptState::Scope scope(script_state);
+  RefPtr<DeleteObjectStoreEntry> delete_object_store_entry =
+      DeleteObjectStoreEntry::Create(script_state, object_store_name,
+                                     idb_key_range,
+                                     std::move(request_callback));
+  delete_object_store_entry->Start(idb_factory, document->GetSecurityOrigin(),
+                                   database_name);
 }
 
 class ClearObjectStoreListener final : public EventListener {
