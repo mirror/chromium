@@ -2653,6 +2653,12 @@ To obtain new licenses, connect to the internet and play your downloaded content
       <message name="IDS_URL_COPIED" desc="Notification telling the user that the url has been copied to clipboard. [CHAR-LIMIT=32]">
         URL copied.
       </message>
+      <message name="IDS_SURVEY_INVITE" desc="Message shown on the survey infobar to invite the user to take a survey.">
+        Help improve Chrome.
+      </message>
+      <message name="IDS_TAKE_SURVEY" desc="Clickable portion of the survey infobar that triggers the survey.">
+        Take survey
+      </message>
 
       <!-- Accessibility -->
       <message name="IDS_ACCESSIBILITY_TOOLBAR_BTN_FORWARD" desc="Content description for the forward navigation button.">
