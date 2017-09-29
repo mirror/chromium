@@ -34,6 +34,23 @@
       "revId": "db0ab03ebb39b384c09dbd4ad3e244018c0b7fa2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a427288_01deaee6",
+        "filename": "third_party/WebKit/Source/core/page/ChromeClient.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-29T08:57:38Z",
+      "side": 1,
+      "message": "Drive-by nit: could we avoid using bool by any chance? (Prefer enum over bool in general)",
+      "revId": "db0ab03ebb39b384c09dbd4ad3e244018c0b7fa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
