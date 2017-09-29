@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7dc74b5_ecfce00e",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 10127,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-29T23:48:24Z",
+      "side": 1,
+      "message": "nit: you already have attrib from l.10096",
+      "revId": "a73a84baae8316cfda3b24e9f0b252637710b674",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
