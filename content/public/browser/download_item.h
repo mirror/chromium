@@ -457,6 +457,9 @@ class CONTENT_EXPORT DownloadItem : public base::SupportsUserData {
   // return |name|. Has no effect on the final target filename.
   virtual void SetDisplayName(const base::FilePath& name) = 0;
 
+  // Sets the forced file path used by download as the target file path.
+  virtual void SetForcedFilePath(const base::FilePath& path) = 0;
+
   // Debug/testing -------------------------------------------------------------
   virtual std::string DebugString(bool verbose) const = 0;
 };

@@ -732,8 +732,6 @@ const base::FilePath& DownloadItemImpl::GetTargetFilePath() const {
 }
 
 const base::FilePath& DownloadItemImpl::GetForcedFilePath() const {
-  // TODO(asanka): Get rid of GetForcedFilePath(). We should instead just
-  // require that clients respect GetTargetFilePath() if it is already set.
   return request_info_.forced_file_path;
 }
 
@@ -936,6 +934,10 @@ void DownloadItemImpl::SetLastAccessTime(base::Time last_access_time) {
 
 void DownloadItemImpl::SetDisplayName(const base::FilePath& name) {
   display_name_ = name;
+}
+
+void DownloadItemImpl::SetForcedFilePath(const base::FilePath& path) {
+  request_info_.forced_file_path = path;
 }
 
 std::string DownloadItemImpl::DebugString(bool verbose) const {

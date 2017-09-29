@@ -10,6 +10,10 @@ namespace content {
 
 DownloadInterruptReason ConvertFileErrorToInterruptReason(
     base::File::Error file_error) {
+  if (file_error != base::File::FILE_OK) {
+    LOG(ERROR) << "@@@ " << __func__ << "file_error = " << file_error;
+  }
+
   switch (file_error) {
     case base::File::FILE_OK:
       return DOWNLOAD_INTERRUPT_REASON_NONE;

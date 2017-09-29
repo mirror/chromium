@@ -847,6 +847,8 @@ public class DownloadManagerService
     @VisibleForTesting
     protected void onDownloadFailed(String fileName, int reason) {
         String failureMessage = getDownloadFailureMessage(fileName, reason);
+        Log.d("@@@", failureMessage);
+        Thread.dumpStack();
         if (mDownloadSnackbarController.getSnackbarManager() != null) {
             mDownloadSnackbarController.onDownloadFailed(
                     failureMessage,

@@ -277,6 +277,8 @@ class CONTENT_EXPORT DownloadItemImpl
   void SetOpened(bool opened) override;
   void SetLastAccessTime(base::Time last_access_time) override;
   void SetDisplayName(const base::FilePath& name) override;
+  void SetForcedFilePath(const base::FilePath& path) override;
+
   std::string DebugString(bool verbose) const override;
 
   // All remaining public interfaces virtual to allow for DownloadItemImpl

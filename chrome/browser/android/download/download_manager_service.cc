@@ -71,6 +71,8 @@ void DownloadManagerService::OnDownloadCanceled(
     DownloadController::DownloadCancelReason reason) {
   bool has_no_external_storage =
       (reason == DownloadController::CANCEL_REASON_NO_EXTERNAL_STORAGE);
+  LOG(ERROR) << "@@@ " << __func__
+             << "has_no_external_storage = " << has_no_external_storage;
   JNIEnv* env = base::android::AttachCurrentThread();
   ScopedJavaLocalRef<jstring> jname =
       ConvertUTF8ToJavaString(env, download->GetURL().ExtractFileName());

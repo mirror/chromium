@@ -332,6 +332,8 @@ void DownloadManagerImpl::DetermineDownloadTarget(
   // type.  If the types ever diverge, gasket code will need to
   // be written here.
   if (!delegate_ || !delegate_->DetermineDownloadTarget(item, callback)) {
+    LOG(ERROR)
+        << "@@@ retrieving force path because the target path may be empty!";
     base::FilePath target_path = item->GetForcedFilePath();
     // TODO(asanka): Determine a useful path if |target_path| is empty.
     callback.Run(target_path, DownloadItem::TARGET_DISPOSITION_OVERWRITE,
