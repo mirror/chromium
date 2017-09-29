@@ -56,9 +56,8 @@ class PaletteDelegate {
   virtual void CancelPartialScreenshot() = 0;
 
   // Shows the metalayer. |done| is called when the metalayer session has
-  // finished. |via_button| is true if metalayer is invoked via a hardware
-  // stylus button.
-  virtual void ShowMetalayer(base::OnceClosure done, bool via_button) = 0;
+  // finished.
+  virtual void ShowMetalayer(base::OnceClosure done) = 0;
 
   // Hides the metalayer.
   virtual void HideMetalayer() = 0;
