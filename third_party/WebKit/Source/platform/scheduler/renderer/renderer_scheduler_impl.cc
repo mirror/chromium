@@ -214,10 +214,14 @@ RendererSchedulerImpl::MainThreadOnly::MainThreadOnly(
       wake_up_budget_pool(nullptr),
       metrics_helper(renderer_scheduler_impl, now, renderer_backgrounded),
       process_type(RendererProcessType::kRenderer),
-      use_case_tracer("RendererScheduler.UseCase", renderer_scheduler_impl),
-      backgrounding_tracer("RendererScheduler.Backgrounded",
+      use_case_tracer(scheduler_tracing::kCategoryNameDefault,
+                      "RendererScheduler.UseCase",
+                      renderer_scheduler_impl),
+      backgrounding_tracer(scheduler_tracing::kCategoryNameDefault,
+                           "RendererScheduler.Backgrounded",
                            renderer_scheduler_impl),
-      audio_playing_tracer("RendererScheduler.AudioPlaying",
+      audio_playing_tracer(scheduler_tracing::kCategoryNameDefault,
+                           "RendererScheduler.AudioPlaying",
                            renderer_scheduler_impl) {}
 
 RendererSchedulerImpl::MainThreadOnly::~MainThreadOnly() {}
@@ -2078,11 +2082,11 @@ TimeDomain* RendererSchedulerImpl::GetActiveTimeDomain() {
 void RendererSchedulerImpl::OnTraceLogEnabled() {
   CreateTraceEventObjectSnapshot();
 
-  main_thread_only().use_case_tracer.Start(
+  main_thread_only().use_case_tracer.SetState(
       UseCaseToString(main_thread_only().current_use_case));
-  main_thread_only().backgrounding_tracer.Start(
+  main_thread_only().backgrounding_tracer.SetState(
       BackgroundStateToString(main_thread_only().renderer_backgrounded));
-  main_thread_only().audio_playing_tracer.Start(
+  main_thread_only().audio_playing_tracer.SetState(
       AudioPlayingToString(main_thread_only().is_audio_playing));
 }
 
