@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e44a2342_ce96f236",
+        "filename": "chrome/browser/resources/policy_tool.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-09-29T22:39:55Z",
+      "side": 1,
+      "message": "Well, this only means that the next time you do some operation with writing to disk, Chrome will *try* to do it. If it fails, you will see it, as the message will be put back.\n\nThe user might *think* that he fixed the problem, which is where he will probably click this button. However, all the checks are still going to be in place, so if the problem is still in place, the message will be back as soon as we know that the problem is still there.",
+      "parentUuid": "053b43fe_9de62197",
+      "revId": "08800fd657cb51d9989eb8b48f380eed467b8bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad9f9547_de7fa0ae",
         "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7c549024_bafdd48a",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-09-29T22:39:55Z",
+      "side": 1,
+      "message": "Because I wrote this a long time ago:)\n\nFixed.",
+      "parentUuid": "ad9f9547_de7fa0ae",
+      "revId": "08800fd657cb51d9989eb8b48f380eed467b8bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d52e0a03_a1abbf72",
         "filename": "components/policy_strings.grdp",
         "patchSetId": 6
@@ -50,6 +86,24 @@
       "revId": "08800fd657cb51d9989eb8b48f380eed467b8bf4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d544479_7cfc74ca",
+        "filename": "components/policy_strings.grdp",
+        "patchSetId": 6
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-09-29T22:39:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d52e0a03_a1abbf72",
+      "revId": "08800fd657cb51d9989eb8b48f380eed467b8bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
