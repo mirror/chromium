@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cb1e7ae_88657027",
+        "filename": "chrome/browser/ui/webui/chromeos/sys_internals/sys_internals_message_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-09-29T03:25:21Z",
+      "side": 1,
+      "message": "Using base::Value::Type::DICTIONARY is the new-style value API:\nsee https://chromium-review.googlesource.com/c/chromium/src/+/625499/11/chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc#118\nand src/base/values.h",
+      "range": {
+        "startLine": 113,
+        "startChar": 4,
+        "endLine": 113,
+        "endChar": 37
+      },
+      "revId": "86ab6ef23dc0c967a6fa04d144c6c713d5fb509a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
