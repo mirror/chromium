@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e172984c_3f26f879",
+        "filename": "chrome/common/web_application_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-29T22:46:45Z",
+      "side": 1,
+      "message": "This puts a dependency on extensions from chrome/common, which is usually something we want to avoid (since extensions aren\u0027t always compiled everywhere chrome/common is).  I wonder if it would make sense to store theme_color on WebApplicationInfo and AppThemeColorInfo as an optional, rather than having a separate invalid theme color value?  What\u0027s more, from the comments above content::Manifest::theme_color [1], it sounds like the color could potentially be any int32 value, potentially including -1.  Using an optional would solve that, too.\n\n[1] https://chromium.googlesource.com/chromium/src/+/d3a1af75d3e64c5cf6e1cf54a8ff1aadb9b9359b/content/public/common/manifest.h#144",
+      "revId": "58a05b536302e81024f788b7dc7ee6304aa9eb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
