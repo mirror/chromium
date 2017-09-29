@@ -7581,9 +7581,16 @@ I don't think this site should be blocked!
       <message name="IDS_COLLECTED_COOKIES_ALLOW_BUTTON" desc="A button that lets the use create a content settings exception to allow certain domains.">
         Allow
       </message>
-      <message name="IDS_COLLECTED_COOKIES_SESSION_ONLY_BUTTON" desc="A button that lets the use create a content settings exception to allow certain domains for a session only. Please consider that this text will be displayed as a button when translating.">
-        Clear on exit
-      </message>
+      <if expr="use_titlecase">
+        <message name="IDS_COLLECTED_COOKIES_SESSION_ONLY_BUTTON" desc="A button that lets the use create a content settings exception to allow certain domains for a session only. Please consider that this text will be displayed as a button when translating.">
+          Clear On Exit
+        </message>
+      </if>
+      <if expr="not use_titlecase">
+        <message name="IDS_COLLECTED_COOKIES_SESSION_ONLY_BUTTON" desc="A button that lets the use create a content settings exception to allow certain domains for a session only. Please consider that this text will be displayed as a button when translating.">
+          Clear on exit
+        </message>
+      </if>
       <message name="IDS_COLLECTED_COOKIES_BLOCK_BUTTON" desc="A button that lets the use create a content settings exception to block certain domains.">
         Block
       </message>

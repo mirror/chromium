@@ -45,8 +45,12 @@ class CollectedCookiesViews : public views::DialogDelegateView,
   // Use BrowserWindow::ShowCollectedCookiesDialog to show.
   explicit CollectedCookiesViews(content::WebContents* web_contents);
 
+  // views::WidgetDelegate:
+  bool ShouldShowCloseButton() const override;
+
   // views::DialogDelegate:
   base::string16 GetWindowTitle() const override;
+  int GetDefaultDialogButton() const override;
   int GetDialogButtons() const override;
   base::string16 GetDialogButtonLabel(ui::DialogButton button) const override;
   bool Cancel() override;

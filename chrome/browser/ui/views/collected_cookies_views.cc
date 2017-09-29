@@ -76,6 +76,7 @@ void StartNewButtonColumnSet(views::GridLayout* layout,
       provider->GetDistanceMetric(views::DISTANCE_BUTTON_MAX_LINKABLE_WIDTH);
 
   views::ColumnSet* column_set = layout->AddColumnSet(column_layout_id);
+  column_set->AddPaddingColumn(100.0, 0);
   column_set->AddColumn(views::GridLayout::FILL, views::GridLayout::CENTER, 0,
                         views::GridLayout::USE_PREF, 0, 0);
   column_set->AddPaddingColumn(0, button_padding);
@@ -258,19 +259,30 @@ CollectedCookiesViews::CollectedCookiesViews(content::WebContents* web_contents)
 }
 
 ///////////////////////////////////////////////////////////////////////////////
+// CollectedCookiesViews, views::WidgetDelegate implementation:
+
+bool CollectedCookiesViews::ShouldShowCloseButton() const {
+  return false;
+}
+
+///////////////////////////////////////////////////////////////////////////////
 // CollectedCookiesViews, views::DialogDelegate implementation:
 
 base::string16 CollectedCookiesViews::GetWindowTitle() const {
   return l10n_util::GetStringUTF16(IDS_COLLECTED_COOKIES_DIALOG_TITLE);
 }
 
+int CollectedCookiesViews::GetDefaultDialogButton() const {
+  return ui::DIALOG_BUTTON_OK;
+}
+
 int CollectedCookiesViews::GetDialogButtons() const {
-  return ui::DIALOG_BUTTON_CANCEL;
+  return ui::DIALOG_BUTTON_OK;
 }
 
 base::string16 CollectedCookiesViews::GetDialogButtonLabel(
     ui::DialogButton button) const {
-  return l10n_util::GetStringUTF16(IDS_DONE);
+  return l10n_util::GetStringUTF16(IDS_CLOSE);
 }
 
 bool CollectedCookiesViews::Cancel() {
