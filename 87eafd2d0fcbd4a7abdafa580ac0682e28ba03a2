@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce24ce99_8b784a62",
+        "filename": "chrome/browser/resources/bluetooth_internals/object_fieldset.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-09-29T04:51:49Z",
+      "side": 1,
+      "message": "May be we can move this inside the if condition.",
+      "range": {
+        "startLine": 66,
+        "startChar": 12,
+        "endLine": 66,
+        "endChar": 17
+      },
+      "revId": "87eafd2d0fcbd4a7abdafa580ac0682e28ba03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
