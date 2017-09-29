@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fea9fb4_58fd1491",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-29T19:04:26Z",
+      "side": 1,
+      "message": "Delete the first condition, since you\u0027re DCHECKing it above. Though this extra padding shouldn\u0027t be necessary if we\u0027re setting the proper title, so can we remove it?",
+      "range": {
+        "startLine": 402,
+        "startChar": 9,
+        "endLine": 402,
+        "endChar": 23
+      },
+      "revId": "61c7b4f05f87b49f0778de247de26ad5345f2d9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
