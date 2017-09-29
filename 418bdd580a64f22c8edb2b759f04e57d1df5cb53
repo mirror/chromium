@@ -22,6 +22,30 @@
       "revId": "418bdd580a64f22c8edb2b759f04e57d1df5cb53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a215e2a_f309b43b",
+        "filename": "ui/gfx/paint_vector_icon.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-09-29T16:46:03Z",
+      "side": 1,
+      "message": "That was to ensure scoped_canvas gets released after scoped_rtl_flip_canvas, but its not needed. Removed.",
+      "parentUuid": "e0ec1ce9_90e1bf69",
+      "range": {
+        "startLine": 443,
+        "startChar": 2,
+        "endLine": 443,
+        "endChar": 3
+      },
+      "revId": "418bdd580a64f22c8edb2b759f04e57d1df5cb53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
