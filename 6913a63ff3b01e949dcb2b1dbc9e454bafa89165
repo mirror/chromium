@@ -143,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "eb58891a_9b9fd5fe",
+        "filename": "components/arc/intent_helper/activity_icon_loader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-29T06:56:09Z",
+      "side": 1,
+      "message": "thanks!",
+      "parentUuid": "1dd2f097_ab94b069",
+      "revId": "6913a63ff3b01e949dcb2b1dbc9e454bafa89165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13a0894b_bc9a148e",
         "filename": "components/arc/intent_helper/activity_icon_loader.cc",
         "patchSetId": 1
