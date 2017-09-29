@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "bdc43259_38a79c2d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1682,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-29T21:20:36Z",
+      "side": 1,
+      "message": "Yeah I\u0027m not 100% happy with having to rely on the Activity to make this work.  My question about all size changes is more about browser-side changes (e.g. orientation, multiwindow resizing, etc.).  Do we just want to catch those and dismiss it?  I don\u0027t know if we dismiss IPH  if interacting with the multiwindow handle.  So I was wondering if we could catch Android size changes inside Tab and react based on that.\n\nIf not, or if it doesn\u0027t make sense, this is ok :).",
+      "parentUuid": "92e1973f_5777f414",
+      "range": {
+        "startLine": 1682,
+        "startChar": 25,
+        "endLine": 1682,
+        "endChar": 50
+      },
+      "revId": "749d234f627d30cce0d4201de0d4393207155463",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79dca9dc_097eb3c2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
         "patchSetId": 4
@@ -89,6 +113,53 @@
         "startChar": 32,
         "endLine": 3191,
         "endChar": 43
+      },
+      "revId": "749d234f627d30cce0d4201de0d4393207155463",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1e698f9_0733c73b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3191,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-29T21:20:36Z",
+      "side": 1,
+      "message": "Does making more popups incur extra surfaces?  I feel like the View shouldn\u0027t increase complexity, but if it does this is ok!\n\nDo both popup windows dismiss on a single touch?",
+      "parentUuid": "be499b37_e7787c0e",
+      "range": {
+        "startLine": 3191,
+        "startChar": 32,
+        "endLine": 3191,
+        "endChar": 43
+      },
+      "revId": "749d234f627d30cce0d4201de0d4393207155463",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c904892a_03cac53e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3206,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-29T21:20:36Z",
+      "side": 1,
+      "message": "mPulsePopupWindow \u003d null after?",
+      "range": {
+        "startLine": 3206,
+        "startChar": 12,
+        "endLine": 3206,
+        "endChar": 40
       },
       "revId": "749d234f627d30cce0d4201de0d4393207155463",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
