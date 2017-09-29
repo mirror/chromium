@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "5743bd4d_267204b6",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-09-29T13:38:22Z",
+      "side": 1,
+      "message": "That was a good question: \"this is not a size, it is an offset, so prove to me that your code works\". Conversion between writing modes still makes my brain hurt, but I think I have the answer: static_inline and static_block are not what we expect them to be.\nstatic_inline and static_block are weird in a sense they are physical coordinates (always wrt to topLeft), but they refer to inline/block direction. \nSo, swapping inline/block in vertical writing modes creates classic physical coordinates.\nWhat vertex do static_inline and static_block point to? inline_start/block_start vertex. Luckily, this is exactly what NGStaticLocation::Create expects: physical coordinates of inline_start, block_start vertex. I\u0027ve added a comment to NGStaticLocation constructor.",
+      "parentUuid": "6206ac06_98bd9190",
+      "range": {
+        "startLine": 144,
+        "startChar": 2,
+        "endLine": 147,
+        "endChar": 58
+      },
+      "revId": "c7aa5e8b33b842da75f7dc74181cf15b83d56303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "732eec0d_c396fa11",
         "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
         "patchSetId": 4
