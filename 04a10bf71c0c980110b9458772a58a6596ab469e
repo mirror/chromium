@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "afcd59de_682ba31a",
+        "filename": "content/renderer/pepper/pepper_graphics_2d_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-29T23:46:14Z",
+      "side": 1,
+      "message": "I don\u0027t think there\u0027s a \"waiting for connection to the GpuChannel\" condition. SharedMainThreadContextProvider calls EstablishGpuChannelSync, and so if context_provider is null, that means either we failed to create a channel (so we won\u0027t be compositing), or the context failed to create (might be lost on arrival, maybe we\u0027ll try again and succeed next time).",
+      "revId": "04a10bf71c0c980110b9458772a58a6596ab469e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "311070df_9acc8427",
         "filename": "content/renderer/pepper/pepper_graphics_2d_host.cc",
         "patchSetId": 3
@@ -13,6 +30,75 @@
       "writtenOn": "2017-09-29T23:04:59Z",
       "side": 1,
       "message": "My concern was like.. what if the context isn\u0027t there but then it\u0027s there later? I think it\u0027s okay tho because this is in the TextureLayerClient for 2d, which means the compositor has chosen it\u0027s mode when it gets here. So if the context isn\u0027t there, then that means the compositor won\u0027t try to show anything and will reboot itself too.\n\nBut maybe we need to not early out in PepperGraphics2DHost::PrepareTextureMailbox if !texture_mailbox_modified_ ?",
+      "revId": "04a10bf71c0c980110b9458772a58a6596ab469e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26c96b77_8a717b5d",
+        "filename": "content/renderer/pepper/pepper_graphics_2d_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-29T23:46:14Z",
+      "side": 1,
+      "message": "Yeah, this is tricky. I think it could happen in some edge cases. OTOH, retrying to create a channel (sync IPC) every frame doesn\u0027t sound very good if we\u0027re failing for good.",
+      "parentUuid": "311070df_9acc8427",
+      "revId": "04a10bf71c0c980110b9458772a58a6596ab469e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad6368ab_cad80f9d",
+        "filename": "content/renderer/pepper/pepper_graphics_2d_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-29T23:46:14Z",
+      "side": 1,
+      "message": "Well, RenderThreadImpl::RequestNewLayerTreeFrameSink also has a software fallback if we failed too many times in a row, whereas SharedMainThreadContextProvider might still succeed",
+      "revId": "04a10bf71c0c980110b9458772a58a6596ab469e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13ccc82e_0a9761ca",
+        "filename": "content/renderer/pepper/pepper_graphics_2d_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-29T23:46:14Z",
+      "side": 1,
+      "message": "nit: that\u0027s fine to do, but technically you don\u0027t need to wait until you reuse (or delete) the texture, so it might be worth keeping the sync token around when recycling, if you\u0027re going to keep the mailbox as well (see below).",
+      "revId": "04a10bf71c0c980110b9458772a58a6596ab469e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6c92f0b_597b28d5",
+        "filename": "content/renderer/pepper/pepper_graphics_2d_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-29T23:46:14Z",
+      "side": 1,
+      "message": "We want to do that only when creating a new texture, and keep the mailbox around and reusing it with the same texture - otherwise all the mailbox names stay attached to the texture, causing a logical leak.",
       "revId": "04a10bf71c0c980110b9458772a58a6596ab469e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
