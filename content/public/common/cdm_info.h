@@ -19,6 +19,7 @@ struct CONTENT_EXPORT CdmInfo {
   CdmInfo(const std::string& type,
           const base::Version& version,
           const base::FilePath& path,
+          const std::string& filesystem_plugin_id,
           const std::vector<std::string>& supported_codecs,
           const std::string& supported_key_system,
           bool supports_sub_key_systems);
@@ -35,6 +36,10 @@ struct CONTENT_EXPORT CdmInfo {
   // CDM is not a separate library (e.g. Widevine on Android).
   base::FilePath path;
 
+  // Identifier used by the PluginPrivateFileSystem to identify the files
+  // stored by this CDM.
+  std::string filesystem_plugin_id;
+
   // List of codecs supported by the CDM (e.g. vp8).
   // TODO(jrummell): use the enums from media::AudioCodec and media::VideoCodec
   // instead of strings.
@@ -47,7 +52,7 @@ struct CONTENT_EXPORT CdmInfo {
   // A sub key system to a key system is like a sub domain to a domain.
   // For example, com.example.somekeysystem.a and com.example.somekeysystem.b
   // are both sub key systems of com.example.somekeysystem.
-  bool supports_sub_key_systems = false;
+  bool supports_sub_key_systems;
 };
 
 struct CONTENT_EXPORT CdmHostFilePath {

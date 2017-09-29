@@ -30,6 +30,9 @@ const char kClearKeyCdmType[] = "Clear Key CDM";
 
 const char kClearKeyCdmPepperMimeType[] = "application/x-ppapi-clearkey-cdm";
 
+const char kClearKeyCdmPluginFileSystemId[] =
+    "application_x-ppapi-clearkey-cdm";
+
 // Note: This file must be in sync with cdm_paths.gni.
 // TODO(xhwang): Improve how we enable platform specific path. See
 // http://crbug.com/468584
