@@ -4,9 +4,6 @@
 
 #include "extensions/browser/external_install_info.h"
 
-#include "base/version.h"
-#include "url/gurl.h"
-
 namespace extensions {
 
 ExternalInstallInfo::ExternalInstallInfo(const std::string& extension_id,
@@ -18,7 +15,7 @@ ExternalInstallInfo::ExternalInstallInfo(const std::string& extension_id,
 
 ExternalInstallInfoFile::ExternalInstallInfoFile(
     const std::string& extension_id,
-    std::unique_ptr<base::Version> version,
+    const base::Version& version,
     const base::FilePath& path,
     Manifest::Location crx_location,
     int creation_flags,
@@ -35,7 +32,7 @@ ExternalInstallInfoFile::~ExternalInstallInfoFile() {}
 ExternalInstallInfoUpdateUrl::ExternalInstallInfoUpdateUrl(
     const std::string& extension_id,
     const std::string& install_parameter,
-    std::unique_ptr<GURL> update_url,
+    GURL update_url,
     Manifest::Location download_location,
     int creation_flags,
     bool mark_acknowledged)
