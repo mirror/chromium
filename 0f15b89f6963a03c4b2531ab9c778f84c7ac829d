@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4498e842_01d24348",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 36413,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-09-29T23:10:22Z",
+      "side": 0,
+      "message": "Mark this histogram obsolete instead of removing.",
+      "range": {
+        "startLine": 36410,
+        "startChar": 0,
+        "endLine": 36413,
+        "endChar": 12
+      },
+      "revId": "0f15b89f6963a03c4b2531ab9c778f84c7ac829d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

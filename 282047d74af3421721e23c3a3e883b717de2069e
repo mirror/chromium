@@ -16,6 +16,29 @@
       "revId": "282047d74af3421721e23c3a3e883b717de2069e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bbe22ec_64eb4fb5",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 36405,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-09-29T23:10:22Z",
+      "side": 1,
+      "message": "Add a description and an owner.",
+      "range": {
+        "startLine": 36402,
+        "startChar": 1,
+        "endLine": 36405,
+        "endChar": 12
+      },
+      "revId": "282047d74af3421721e23c3a3e883b717de2069e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
