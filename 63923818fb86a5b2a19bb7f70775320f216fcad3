@@ -464,6 +464,24 @@
     },
     {
       "key": {
+        "uuid": "478b43f5_112aae7a",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1124166
+      },
+      "writtenOn": "2017-09-29T10:06:14Z",
+      "side": 1,
+      "message": "Thanks for an explanation! Added ASSERT_NO_FATAL_FAILURE. Checked with \"fake\" ASSERT failure in ImportCerts() and debug logs and it seems like it works now.",
+      "parentUuid": "e8982202_0797c26d",
+      "revId": "63923818fb86a5b2a19bb7f70775320f216fcad3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a02f3ca_c79f0624",
         "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
         "patchSetId": 21
@@ -511,6 +529,24 @@
       "side": 1,
       "message": "Maybe miscommunication?\nI meant, you don\u0027t need emplac_back.\n\nstd::vector\u003c...\u003e expected_certs \u003d { ... };",
       "parentUuid": "277facac_e9094805",
+      "revId": "63923818fb86a5b2a19bb7f70775320f216fcad3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "147ab7cb_8e5dd48f",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1124166
+      },
+      "writtenOn": "2017-09-29T10:06:14Z",
+      "side": 1,
+      "message": "Probably I\u0027m doing something wrong here, but the next code requires a constructor for CertificatePtr which is not initialized for it. And I get a compilation failure.\n\nstd::vector\u003cmojom::CertificatePtr\u003e expected_certs \u003d {\n  std::move(mojom_cert1);\n};",
+      "parentUuid": "f2710f9a_5776d8cb",
       "revId": "63923818fb86a5b2a19bb7f70775320f216fcad3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
