@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "6690a865_bb6d772e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-09-29T02:27:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca356536_8e6f95ff",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 8
+      },
+      "revId": "f17efab2a62ff71632770df360e0c2c25bb47e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a51532f3_ff0cfa36",
         "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.cc",
         "patchSetId": 2
@@ -69,6 +93,30 @@
       "revId": "f17efab2a62ff71632770df360e0c2c25bb47e36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d21514e_097f1595",
+        "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1047,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-09-29T02:27:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a51532f3_ff0cfa36",
+      "range": {
+        "startLine": 1044,
+        "startChar": 0,
+        "endLine": 1047,
+        "endChar": 3
+      },
+      "revId": "f17efab2a62ff71632770df360e0c2c25bb47e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
