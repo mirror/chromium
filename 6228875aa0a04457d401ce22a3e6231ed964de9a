@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0c7a761c_38c01a49",
+        "filename": "ash/system/ime_menu/ime_menu_tray.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-29T18:15:32Z",
+      "side": 1,
+      "message": "I took the adding comment way. Just because adding parameter gets more work on SystemTray and WebNotificationTray since they have wrappers.",
+      "parentUuid": "bb6c8f6d_49acc73e",
+      "range": {
+        "startLine": 339,
+        "startChar": 2,
+        "endLine": 339,
+        "endChar": 34
+      },
+      "revId": "6228875aa0a04457d401ce22a3e6231ed964de9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b39c69a_27810896",
         "filename": "ash/system/web_notification/web_notification_tray.cc",
         "patchSetId": 8
