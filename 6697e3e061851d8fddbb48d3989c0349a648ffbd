@@ -16,6 +16,24 @@
       "revId": "6697e3e061851d8fddbb48d3989c0349a648ffbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54949d58_88eeefeb",
+        "filename": "device/bluetooth/test/fake_central.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-09-29T17:09:47Z",
+      "side": 1,
+      "message": "We\u0027d also have to that for FakeRemoteGattService, FakeRemoteGattCharacteristic, and FakeRemoteGattDescriptor.  Personally, I prefer just using static_cast.  We could also add template params to the parent class, but that would be just as messy.",
+      "parentUuid": "22006b1e_c58e1519",
+      "revId": "6697e3e061851d8fddbb48d3989c0349a648ffbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
