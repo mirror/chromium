@@ -68,9 +68,6 @@ class ASH_EXPORT LoginPasswordView : public views::View,
   // Erase the last entered value.
   void Backspace();
 
-  // Dispatch a submit event.
-  void Submit();
-
   // views::View:
   const char* GetClassName() const override;
   gfx::Size CalculatePreferredSize() const override;
