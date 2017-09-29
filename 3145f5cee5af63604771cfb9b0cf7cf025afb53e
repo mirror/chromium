@@ -34,6 +34,24 @@
       "revId": "3145f5cee5af63604771cfb9b0cf7cf025afb53e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1b8ac64_ef640d57",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 5170,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-09-29T20:40:38Z",
+      "side": 1,
+      "message": "Got it.  Then it\u0027s an accident that this works on other platforms because those happen to support Ctrl-+/- zoom level storage feature and Clank does not.  So your approach seems fine, ping again when you have the test.",
+      "parentUuid": "6fd0c9d9_7a16094d",
+      "revId": "3145f5cee5af63604771cfb9b0cf7cf025afb53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
