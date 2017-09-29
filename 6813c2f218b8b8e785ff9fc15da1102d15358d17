@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "119b3cb5_667a9933",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-09-29T17:20:22Z",
+      "side": 1,
+      "message": "Just FYI: I got tripped up for a bit thinking that present_callback_ was simply the passed callback saved for later use. I don\u0027t really think you need to do anything to fix it, it\u0027s clear if you read the code carefully, but if you happen to think of a naming scheme or something that could help disambiguate the two it probably wouldn\u0027t hurt.",
+      "range": {
+        "startLine": 161,
+        "startChar": 4,
+        "endLine": 161,
+        "endChar": 21
+      },
+      "revId": "6813c2f218b8b8e785ff9fc15da1102d15358d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
