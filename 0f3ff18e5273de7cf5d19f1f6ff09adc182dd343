@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "37b0d749_e94440f9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 38
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-29T18:07:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc4d985b_e7ce2bcc",
+      "revId": "0f3ff18e5273de7cf5d19f1f6ff09adc182dd343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe5a1150_56a861c9",
         "filename": "content/browser/frame_host/navigation_handle_impl.h",
         "patchSetId": 38
@@ -33,6 +51,24 @@
       "revId": "0f3ff18e5273de7cf5d19f1f6ff09adc182dd343",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bf12a64_7aaec0a6",
+        "filename": "content/browser/frame_host/navigation_handle_impl.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-29T18:07:47Z",
+      "side": 1,
+      "message": "By now it can, good catch! Updated.",
+      "parentUuid": "fe5a1150_56a861c9",
+      "revId": "0f3ff18e5273de7cf5d19f1f6ff09adc182dd343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e39567c4_5c861679",
+        "filename": "content/browser/frame_host/navigation_handle_impl_unittest.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-29T18:07:47Z",
+      "side": 1,
+      "message": "This was meant to be a sanity check before calling WillFailRequest, but I\u0027m not really convinced it\u0027s needed in the face of being able to check for ERR_CERT_DATE_INVALID specifically below. I\u0027ve removed this line.",
+      "parentUuid": "9e3a4162_cbf9a0ae",
+      "revId": "0f3ff18e5273de7cf5d19f1f6ff09adc182dd343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d7950c8_0242f8f4",
         "filename": "content/public/browser/navigation_throttle.h",
         "patchSetId": 38
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "c215944d_9c1a01b9",
+        "filename": "content/public/browser/navigation_throttle.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-29T18:07:47Z",
+      "side": 1,
+      "message": "It\u0027s used in tests, although apparently only in subclasses and only in //content. Shall I mark it protected for now?",
+      "parentUuid": "3d7950c8_0242f8f4",
+      "revId": "0f3ff18e5273de7cf5d19f1f6ff09adc182dd343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a50b88f_34281eb4",
         "filename": "content/test/navigation_simulator_unittest.cc",
         "patchSetId": 38
@@ -81,6 +153,24 @@
       "writtenOn": "2017-09-27T23:25:44Z",
       "side": 1,
       "message": "Why not add this functionality to the actual CancellingNavigationThrottle? Why do we need a separate class here?",
+      "revId": "0f3ff18e5273de7cf5d19f1f6ff09adc182dd343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd08e07a_9657addf",
+        "filename": "content/test/navigation_simulator_unittest.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-29T18:07:47Z",
+      "side": 1,
+      "message": "We already have CancellingNavigationThrottle [1] and a private NavigationThrottleCallbackRunner class [1], and it seemed more straightforward to add the part that I need to CancellingNavigationThrottle.\n\nWhat do you think of combining CancellingNavigationThrottle and NavigationThrottleCallbackRunner into a TestNavigationThrottle class?\n\n[1] https://cs.chromium.org/chromium/src/content/public/test/cancelling_navigation_throttle.h\n[2] https://cs.chromium.org/chromium/src/content/public/test/navigation_simulator.cc?l\u003d30\u0026rcl\u003d6ce01288dd6b7baaf160676a3b75495c462be61b",
+      "parentUuid": "2a50b88f_34281eb4",
       "revId": "0f3ff18e5273de7cf5d19f1f6ff09adc182dd343",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
