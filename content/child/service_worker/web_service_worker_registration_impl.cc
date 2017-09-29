@@ -15,7 +15,6 @@
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebNavigationPreloadState.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerError.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerRegistrationProxy.h"
-#include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom.h"
 
 namespace content {
 
@@ -56,6 +55,8 @@ WebServiceWorkerRegistrationImpl::WebServiceWorkerRegistrationImpl(
   DCHECK(info_);
   DCHECK_NE(blink::mojom::kInvalidServiceWorkerRegistrationHandleId,
             info_->handle_id);
+  registration_object_host_.Bind(std::move(info_->host_ptr_info));
+
   ServiceWorkerDispatcher* dispatcher =
       ServiceWorkerDispatcher::GetThreadSpecificInstance();
   DCHECK(dispatcher);
@@ -126,13 +127,11 @@ blink::WebURL WebServiceWorkerRegistrationImpl::Scope() const {
 void WebServiceWorkerRegistrationImpl::Update(
     blink::WebServiceWorkerProvider* provider,
     std::unique_ptr<WebServiceWorkerUpdateCallbacks> callbacks) {
-  WebServiceWorkerProviderImpl* provider_impl =
-      static_cast<WebServiceWorkerProviderImpl*>(provider);
-  ServiceWorkerDispatcher* dispatcher =
-      ServiceWorkerDispatcher::GetThreadSpecificInstance();
-  DCHECK(dispatcher);
-  dispatcher->UpdateServiceWorker(provider_impl->provider_id(),
-                                  RegistrationId(), std::move(callbacks));
+  // As |registration_object_host_| is owned by |this|, using base::Unretained()
+  // here is safe.
+  registration_object_host_->Update(
+      base::BindOnce(&WebServiceWorkerRegistrationImpl::OnUpdated,
+                     base::Unretained(this), std::move(callbacks)));
 }
 
 void WebServiceWorkerRegistrationImpl::Unregister(
@@ -189,6 +188,21 @@ void WebServiceWorkerRegistrationImpl::SetNavigationPreloadHeader(
 
 int64_t WebServiceWorkerRegistrationImpl::RegistrationId() const {
   return info_->registration_id;
+}
+
+void WebServiceWorkerRegistrationImpl::OnUpdated(
+    std::unique_ptr<WebServiceWorkerUpdateCallbacks> callbacks,
+    blink::mojom::ServiceWorkerErrorType error,
+    const base::Optional<std::string>& error_msg) {
+  if (error != blink::mojom::ServiceWorkerErrorType::kNone) {
+    DCHECK(error_msg);
+    callbacks->OnError(blink::WebServiceWorkerError(
+        error, blink::WebString::FromASCII(*error_msg)));
+    return;
+  }
+
+  DCHECK(!error_msg);
+  callbacks->OnSuccess();
 }
 
 // static
