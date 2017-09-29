@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10226737_b78c46f8",
+        "filename": "content/browser/frame_host/render_frame_proxy_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-09-29T19:01:43Z",
+      "side": 1,
+      "message": "Add comment.",
+      "revId": "e9daed3d5d9f493bcf94473f6a465d1958fec456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2a70aaf_ab15d244",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2583,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-09-29T19:01:43Z",
+      "side": 1,
+      "message": "Is there a reason that this is in WebViewImpl rather than WebRemoteFrameImpl? Then it could be called on the WebRemoteFrame rather than passing it as an argument.",
+      "revId": "e9daed3d5d9f493bcf94473f6a465d1958fec456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81785345_075b1abe",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2589,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-09-29T19:01:43Z",
+      "side": 1,
+      "message": "You don\u0027t really need a DCHECK since it becomes a nullptr crash on the next line anyway.",
+      "revId": "e9daed3d5d9f493bcf94473f6a465d1958fec456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5712eac0_90d179f5",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-09-29T19:01:43Z",
+      "side": 1,
+      "message": "I\u0027ve had pushback before about adding OOPIF-specific logic into layout code. It might need to add a method to LocalFrameView and move this logic there (except the EnclosingLayoutRect() calculation).",
+      "revId": "e9daed3d5d9f493bcf94473f6a465d1958fec456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de6c757f_dbeead9b",
+        "filename": "third_party/WebKit/Source/platform/exported/WebRemoteScrollProperties.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-09-29T19:01:43Z",
+      "side": 1,
+      "message": "It would be stronger to use STATIC_ASSERT_ENUM on each enumerated value. Also, why are you not checking the Alignment enum?",
+      "revId": "e9daed3d5d9f493bcf94473f6a465d1958fec456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfceb237_c09d4626",
+        "filename": "third_party/WebKit/public/platform/WebRemoteScrollProperties.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-09-29T19:01:43Z",
+      "side": 1,
+      "message": "nit: The last element in these enums could be, for example, \u0027kLast \u003d kRightAlways,\u0027 to make the max value always stay the same in the IPC enum traits.",
+      "revId": "e9daed3d5d9f493bcf94473f6a465d1958fec456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
