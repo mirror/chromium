@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de22a9dc_f44b4b4d",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-09-29T14:36:02Z",
+      "side": 1,
+      "message": "nit: I suggest those can be moved to .h file, this will simplify the constructors.",
+      "range": {
+        "startLine": 95,
+        "startChar": 6,
+        "endLine": 95,
+        "endChar": 26
+      },
+      "revId": "15d828ce45b4e79484df7dc579fabbc43d80b6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
