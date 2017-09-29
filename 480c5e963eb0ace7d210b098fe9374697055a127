@@ -16,6 +16,24 @@
       "revId": "480c5e963eb0ace7d210b098fe9374697055a127",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df6afece_8b528faf",
+        "filename": "remoting/protocol/sdp_message.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-09-29T23:03:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d682aa0e_6c509d27",
+      "revId": "480c5e963eb0ace7d210b098fe9374697055a127",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
