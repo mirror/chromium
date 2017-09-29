@@ -236,6 +236,10 @@ class OmniboxEditModel {
     return !is_keyword_hint_ && !keyword_.empty();
   }
 
+  // When the user activates the extension keyword via a space or tab key, this
+  // calls into the keyword provider to handle the entered keyword event.
+  void HandleOnKeywordEntered();
+
   // Accepts the current keyword hint as a keyword. It always returns true for
   // caller convenience. |entered_method| indicates how the user entered
   // keyword mode.

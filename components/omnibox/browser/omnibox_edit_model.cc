@@ -708,6 +708,12 @@ void OmniboxEditModel::OpenMatch(AutocompleteMatch match,
     client_->OnBookmarkLaunched();
 }
 
+void OmniboxEditModel::HandleOnKeywordEntered() {
+  omnibox_controller_->autocomplete_controller()
+      ->keyword_provider()
+      ->OnKeywordEntered();
+}
+
 bool OmniboxEditModel::AcceptKeyword(
       KeywordModeEntryMethod entry_method) {
   DCHECK(is_keyword_hint_ && !keyword_.empty());
@@ -751,6 +757,10 @@ bool OmniboxEditModel::AcceptKeyword(
     view_->OnTemporaryTextMaybeChanged(
         MaybeStripKeyword(match.fill_into_edit), save_original_selection,
         true);
+    HandleOnKeywordEntered();
+  } else if (entry_method == KeywordModeEntryMethod::SPACE_AT_END) {
+    HandleOnKeywordEntered();
+    view_->OnTemporaryTextMaybeChanged(user_text_, false, true);
   } else {
     view_->OnTemporaryTextMaybeChanged(user_text_, false, true);
   }

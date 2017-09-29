@@ -146,3 +146,75 @@ IN_PROC_BROWSER_TEST_F(OmniboxApiTest, DeleteOmniboxSuggestionResult) {
   EXPECT_EQ(base::ASCIIToUTF16("kw d"), result.match_at(2).fill_into_edit);
 #endif
 }
+
+// If an extension implements the onKeywordEntered() event to display suggest
+// results, this test verifies that when a user inputs and accepts the
+// extension's keyword, the suggest results specified in onKeywordEntered()
+// are displayed.
+IN_PROC_BROWSER_TEST_F(OmniboxApiTest, OnKeywordEntered) {
+  ASSERT_TRUE(RunExtensionTest("omnibox")) << message_;
+
+  // The results depend on the TemplateURLService being loaded. Make sure it is
+  // loaded so that the autocomplete results are consistent.
+  Profile* profile = browser()->profile();
+  search_test_utils::WaitForTemplateURLServiceToLoad(
+      TemplateURLServiceFactory::GetForProfile(profile));
+
+  AutocompleteController* autocomplete_controller =
+      GetAutocompleteController(browser());
+
+  chrome::FocusLocationBar(browser());
+  ASSERT_TRUE(ui_test_utils::IsViewFocused(browser(), VIEW_ID_OMNIBOX));
+
+  ExtensionTestMessageListener keyword_entered_listener("onKeywordEntered",
+                                                        false);
+
+  // Input and trigger the extension keyword.
+  InputKeys(browser(), {ui::VKEY_K, ui::VKEY_W, ui::VKEY_SPACE});
+  WaitForAutocompleteDone(autocomplete_controller);
+  EXPECT_TRUE(autocomplete_controller->done());
+
+  // Verify that the onDeleteSuggestion event was fired.
+  ASSERT_TRUE(keyword_entered_listener.WaitUntilSatisfied());
+  keyword_entered_listener.Reset();
+
+  // Peek into the controller to see if it has the results we expect. The
+  // suggestion results for onKeywordEntered should be displayed.
+  const AutocompleteResult& result = autocomplete_controller->result();
+  ASSERT_EQ(3U, result.size()) << AutocompleteResultAsString(result);
+
+  EXPECT_EQ(base::ASCIIToUTF16("kw"), result.match_at(0).fill_into_edit);
+  EXPECT_EQ(AutocompleteProvider::TYPE_SEARCH,
+            result.match_at(0).provider->type());
+
+  EXPECT_EQ(base::ASCIIToUTF16("kw entered 1"),
+            result.match_at(1).fill_into_edit);
+  EXPECT_EQ(AutocompleteProvider::TYPE_KEYWORD,
+            result.match_at(1).provider->type());
+
+  EXPECT_EQ(base::ASCIIToUTF16("kw entered 2"),
+            result.match_at(2).fill_into_edit);
+  EXPECT_EQ(AutocompleteProvider::TYPE_KEYWORD,
+            result.match_at(2).provider->type());
+
+  // Input another key to trigger onInputEntered.
+  InputKeys(browser(), {ui::VKEY_P});
+  WaitForAutocompleteDone(autocomplete_controller);
+  EXPECT_TRUE(autocomplete_controller->done());
+
+  // Ensure that the matches for onKeywordEntered are not displayed, and instead
+  // only the onInputEntered suggestion results are shown.
+  ASSERT_EQ(3U, result.size());
+
+  EXPECT_EQ(base::ASCIIToUTF16("kw p"), result.match_at(0).fill_into_edit);
+  EXPECT_EQ(AutocompleteProvider::TYPE_KEYWORD,
+            result.match_at(0).provider->type());
+
+  EXPECT_EQ(base::ASCIIToUTF16("kw p 1"), result.match_at(1).fill_into_edit);
+  EXPECT_EQ(AutocompleteProvider::TYPE_KEYWORD,
+            result.match_at(1).provider->type());
+
+  EXPECT_EQ(base::ASCIIToUTF16("kw p"), result.match_at(2).fill_into_edit);
+  EXPECT_EQ(AutocompleteProvider::TYPE_SEARCH,
+            result.match_at(2).provider->type());
+}
