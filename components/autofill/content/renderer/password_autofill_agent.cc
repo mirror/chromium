@@ -1309,6 +1309,14 @@ void PasswordAutofillAgent::SendPasswordForms(bool only_visible) {
       GetPasswordManagerDriver()->PasswordFormsParsed(password_forms);
     }
   }
+
+#if !defined(OS_ANDROID) && !defined(OS_IOS)
+  // Provide warnings about the accessibility of password forms on the page.
+  if (!password_forms.empty() &&
+      (frame->GetDocument().Url().ProtocolIs(url::kHttpScheme) ||
+       frame->GetDocument().Url().ProtocolIs(url::kHttpsScheme)))
+    page_passwords_analyser_.AnalyseDocumentDOM(frame);
+#endif
 }
 
 void PasswordAutofillAgent::DidFinishDocumentLoad() {
