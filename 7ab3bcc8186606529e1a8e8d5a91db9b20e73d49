@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4c6c40e6_e90ad53e",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-29T20:55:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0deb9b91_4a4c3a67",
+      "revId": "7ab3bcc8186606529e1a8e8d5a91db9b20e73d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d3e94d2_03164321",
         "filename": "cc/animation/animation_host.cc",
         "patchSetId": 19
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "07def5fa_0a765662",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-29T20:55:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d3e94d2_03164321",
+      "range": {
+        "startLine": 628,
+        "startChar": 17,
+        "endLine": 628,
+        "endChar": 47
+      },
+      "revId": "7ab3bcc8186606529e1a8e8d5a91db9b20e73d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ec94eb5_550766d1",
         "filename": "cc/animation/animation_player.cc",
         "patchSetId": 19
@@ -56,6 +98,24 @@
       "revId": "7ab3bcc8186606529e1a8e8d5a91db9b20e73d49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a710f654_3052423f",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-29T20:55:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ec94eb5_550766d1",
+      "revId": "7ab3bcc8186606529e1a8e8d5a91db9b20e73d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "5aabe13a_479d7b3d",
+        "filename": "cc/trees/layer_tree_mutator.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-29T20:55:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "924d1691_d451a96f",
+      "revId": "7ab3bcc8186606529e1a8e8d5a91db9b20e73d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "181e8c47_c174c03e",
         "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.cpp",
         "patchSetId": 19
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "5cb8d609_50d6622c",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-29T20:55:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "181e8c47_c174c03e",
+      "revId": "7ab3bcc8186606529e1a8e8d5a91db9b20e73d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43cb3aa2_1882b97d",
         "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.cpp",
         "patchSetId": 19
@@ -104,6 +200,24 @@
       "writtenOn": "2017-09-27T15:31:31Z",
       "side": 1,
       "message": "How about we add a bit which gets set when we call Animate from Mutate and then sweep (i.e. remove_if) all animators which don\u0027t have this bit set?",
+      "revId": "7ab3bcc8186606529e1a8e8d5a91db9b20e73d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "199060bf_a976bca1",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-29T20:55:09Z",
+      "side": 1,
+      "message": "Done. I created a new ScopeAnimatorsSweeper which takes care of this.",
+      "parentUuid": "43cb3aa2_1882b97d",
       "revId": "7ab3bcc8186606529e1a8e8d5a91db9b20e73d49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
