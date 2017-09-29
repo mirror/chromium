@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "250b86e4_66a5eb5d",
+        "filename": "remoting/protocol/sdp_message.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-09-29T20:34:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94df4b30_d5ae8f5d",
+      "revId": "2a4f88c9841c05352782f04c725e2027080d206c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ef27c6b_3cc6006d",
         "filename": "remoting/protocol/sdp_message.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2144eec1_cbcdcbd5",
+        "filename": "remoting/protocol/sdp_message.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-09-29T20:34:43Z",
+      "side": 1,
+      "message": "I believe const in function should not use camel-naming. But I should use static const here.\nDone",
+      "parentUuid": "9ef27c6b_3cc6006d",
+      "revId": "2a4f88c9841c05352782f04c725e2027080d206c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b9dabc9_797e2829",
         "filename": "remoting/protocol/sdp_message.cc",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-29T02:25:53Z",
       "side": 1,
       "message": "I don\u0027t really understand this well. Should a lot of these \"return false\" simply \"continue\" the for-loop instead?",
+      "revId": "2a4f88c9841c05352782f04c725e2027080d206c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac3ae28b_0f533657",
+        "filename": "remoting/protocol/sdp_message.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-09-29T20:34:43Z",
+      "side": 1,
+      "message": "An SDP should have only one \"m\u003dvideo\" line. So if it\u0027s invalid, we should return false instead of continually searching in next lines.",
+      "parentUuid": "4b9dabc9_797e2829",
       "revId": "2a4f88c9841c05352782f04c725e2027080d206c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "4d1d7e44_858838bd",
+        "filename": "remoting/protocol/sdp_message.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-09-29T20:34:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74fc7219_ebb0ae26",
+      "range": {
+        "startLine": 68,
+        "startChar": 27,
+        "endLine": 68,
+        "endChar": 55
+      },
+      "revId": "2a4f88c9841c05352782f04c725e2027080d206c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0beef491_cbb3c048",
         "filename": "remoting/protocol/sdp_message.cc",
         "patchSetId": 3
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "fc73c7ba_1ece6de9",
+        "filename": "remoting/protocol/sdp_message.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-09-29T20:34:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0beef491_cbb3c048",
+      "revId": "2a4f88c9841c05352782f04c725e2027080d206c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba1856d9_94694ff1",
         "filename": "remoting/protocol/sdp_message.cc",
         "patchSetId": 3
@@ -107,6 +203,24 @@
       "revId": "2a4f88c9841c05352782f04c725e2027080d206c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e68741d_8520fdad",
+        "filename": "remoting/protocol/sdp_message.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-09-29T20:34:43Z",
+      "side": 1,
+      "message": "I did not know this function before.\nDone",
+      "parentUuid": "ba1856d9_94694ff1",
+      "revId": "2a4f88c9841c05352782f04c725e2027080d206c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -133,6 +247,30 @@
     },
     {
       "key": {
+        "uuid": "aadad5bc_fd283816",
+        "filename": "remoting/protocol/sdp_message.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-09-29T20:34:43Z",
+      "side": 1,
+      "message": "If has_video_ is true (tested at the very beginning of the function), we should always return within the for-loop above.",
+      "parentUuid": "fccfb2c0_30efbe73",
+      "range": {
+        "startLine": 89,
+        "startChar": 2,
+        "endLine": 89,
+        "endChar": 12
+      },
+      "revId": "2a4f88c9841c05352782f04c725e2027080d206c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "edbbcfc3_fbfa9fbd",
         "filename": "remoting/protocol/sdp_message_unittest.cc",
         "patchSetId": 3
@@ -147,6 +285,24 @@
       "revId": "2a4f88c9841c05352782f04c725e2027080d206c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfdb9c44_f37ad3be",
+        "filename": "remoting/protocol/sdp_message_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-09-29T20:34:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edbbcfc3_fbfa9fbd",
+      "revId": "2a4f88c9841c05352782f04c725e2027080d206c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
