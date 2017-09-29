@@ -1583,13 +1583,7 @@ void V4L2VideoDecodeAccelerator::FlushTask() {
   TRACE_EVENT0("Video Decoder", "V4L2VDA::FlushTask");
 
   // Flush outstanding buffers.
-  if (decoder_state_ == kInitialized) {
-    // There's nothing in the pipe, so return done immediately.
-    VLOGF(2) << "returning flush";
-    child_task_runner_->PostTask(FROM_HERE,
-                                 base::Bind(&Client::NotifyFlushDone, client_));
-    return;
-  } else if (decoder_state_ == kError) {
+  if (decoder_state_ == kError) {
     VLOGF(2) << "early out: kError state";
     return;
   }
