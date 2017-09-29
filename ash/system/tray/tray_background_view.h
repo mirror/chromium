@@ -130,6 +130,11 @@ class ASH_EXPORT TrayBackgroundView : public ActionableView,
   // based on background insets returned from GetBackgroundInsets().
   gfx::Rect GetBackgroundBounds() const;
 
+  void set_show_bubble_by_click(bool show_bubble_by_click) {
+    show_bubble_by_click_ = show_bubble_by_click;
+  }
+  bool show_bubble_by_click() const { return show_bubble_by_click_; }
+
  protected:
   // ActionableView:
   std::unique_ptr<views::InkDropMask> CreateInkDropMask() const override;
@@ -176,6 +181,10 @@ class ASH_EXPORT TrayBackgroundView : public ActionableView,
   // Visibility of this tray's separator which is a line of 1x32px and 4px to
   // right of tray.
   bool separator_visible_;
+
+  // Sets to true if PerformAction() will show bubble, and resets to false once
+  // tray bubble view is created.
+  bool show_bubble_by_click_ = false;
 
   // Handles touch drag gestures on the tray area and its associated bubble.
   std::unique_ptr<TrayDragController> drag_controller_;
