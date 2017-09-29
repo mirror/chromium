@@ -46,6 +46,81 @@
       "revId": "299d6d43370ccd9db0d80430c9164c28372921cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef744a9c_9d333aa1",
+        "filename": "ash/system/ime_menu/ime_menu_tray.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-29T18:19:04Z",
+      "side": 1,
+      "message": "ditto. I think you can open all these menus with keyboard shortcuts.",
+      "parentUuid": "67db601a_2656470c",
+      "range": {
+        "startLine": 452,
+        "startChar": 29,
+        "endLine": 452,
+        "endChar": 33
+      },
+      "revId": "299d6d43370ccd9db0d80430c9164c28372921cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbbf200f_2e7f8060",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-29T18:19:04Z",
+      "side": 1,
+      "message": "This set_show_bubble_by_click() thing seems fragile -- it seems easy that someone would forget to reset the state. I think it would be better to add a boolean parameter (or an Event) to TrayBackgroundView::ShowBubble(). That way you\u0027ll be forced to examine all Show...() codepaths for opening, and you won\u0027t have to remember to reset the state.",
+      "revId": "299d6d43370ccd9db0d80430c9164c28372921cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc4c66a9_9211815b",
+        "filename": "ui/views/bubble/tray_bubble_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-29T18:19:04Z",
+      "side": 1,
+      "message": "Document what this means.",
+      "revId": "299d6d43370ccd9db0d80430c9164c28372921cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f751b036_b125f3f7",
+        "filename": "ui/views/bubble/tray_bubble_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-29T18:19:04Z",
+      "side": 1,
+      "message": "You already have a copy of this boolean in params_. Don\u0027t store it twice.",
+      "revId": "299d6d43370ccd9db0d80430c9164c28372921cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
