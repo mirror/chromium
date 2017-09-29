@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7bf19795_8f80d185",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-29T09:55:15Z",
+      "side": 1,
+      "message": "I think I do not understand this test. Could you explain it live?",
+      "range": {
+        "startLine": 551,
+        "startChar": 24,
+        "endLine": 551,
+        "endChar": 34
+      },
+      "revId": "04a26763ccaf3c7d356faa6181a1ccb53df1e007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
