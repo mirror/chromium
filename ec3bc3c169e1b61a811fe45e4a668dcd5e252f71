@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c0bf05f_085e7c47",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-29T15:35:39Z",
+      "side": 1,
+      "message": "optional: {} not needed",
+      "revId": "ec3bc3c169e1b61a811fe45e4a668dcd5e252f71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebacdbd3_cd3b3a4a",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-29T15:35:39Z",
+      "side": 1,
+      "message": "Not for this CL: This function is kind of long, does several different things, and has a lot of nesting. It would be nice if it could be broken into parts, for example to separate out the pieces that record statistics from the other parts, or to find ways to early-exit to reduce nesting.",
+      "revId": "ec3bc3c169e1b61a811fe45e4a668dcd5e252f71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1d8b6d7_051a6a53",
+        "filename": "ash/highlighter/highlighter_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-29T15:35:39Z",
+      "side": 1,
+      "message": "Hooray for table-driven tests!",
+      "revId": "ec3bc3c169e1b61a811fe45e4a668dcd5e252f71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21e249d1_e1cd54e6",
+        "filename": "ash/highlighter/highlighter_selection_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-29T15:35:39Z",
+      "side": 1,
+      "message": "Hooray for documented interfaces!\n\noptional: Document dips vs. pixels, screen coords vs. display-local coords.",
+      "revId": "ec3bc3c169e1b61a811fe45e4a668dcd5e252f71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
