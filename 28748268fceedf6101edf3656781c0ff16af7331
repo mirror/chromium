@@ -2,6 +2,142 @@
   "comments": [
     {
       "key": {
+        "uuid": "88ef9a82_abf602b3",
+        "filename": "media/mojo/services/media_capabilities_leveldb.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T19:16:06Z",
+      "side": 1,
+      "message": "I believe Chrome prefers base/format_macros.h",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb7d48bd_51b81f43",
+        "filename": "media/mojo/services/media_capabilities_leveldb.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T19:16:06Z",
+      "side": 1,
+      "message": "Can be std::make_unique if you want.",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b550298_ebcd3217",
+        "filename": "media/mojo/services/media_capabilities_leveldb.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T19:16:06Z",
+      "side": 1,
+      "message": "Careful handing out pointers to this here, this call must be the last in the constructor, so I\u0027d add a note about that. Otherwise someone may add something below this and you\u0027ll have construction races if the db issues a callback on the given task runner.",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "597f7179_6db380de",
+        "filename": "media/mojo/services/media_capabilities_leveldb.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T19:16:06Z",
+      "side": 1,
+      "message": "I believe std::tie is preferred here now.",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9642ca28_05638829",
+        "filename": "media/mojo/services/media_capabilities_leveldb.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T19:16:06Z",
+      "side": 1,
+      "message": "Move below comment?",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75afaa70_cd5b9db5",
+        "filename": "media/mojo/services/media_capabilities_leveldb.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T19:16:06Z",
+      "side": 1,
+      "message": "std::make_unique if you want.",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f23210a2_a902dd2e",
+        "filename": "media/mojo/services/media_capabilities_leveldb.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T19:16:06Z",
+      "side": 1,
+      "message": "Worth providing a constructor? As a plain struct you might be able to just do std::make_unique\u003cCapabilitiesInfo\u003e({kDatabaseVersion, decoded, dropped });",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "187df12b_b9534239",
+        "filename": "media/mojo/services/media_capabilities_leveldb.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T19:16:06Z",
+      "side": 1,
+      "message": "std::make_unique now.",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d8135d5_29929d61",
         "filename": "media/mojo/services/media_capabilities_leveldb.cc",
         "patchSetId": 2
@@ -25,6 +161,40 @@
     },
     {
       "key": {
+        "uuid": "e7f6a93c_b49a9484",
+        "filename": "media/mojo/services/media_capabilities_leveldb.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T19:16:06Z",
+      "side": 1,
+      "message": "Ditto on {} syntax.",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8080ae1_d325b304",
+        "filename": "media/mojo/services/media_capabilities_leveldb.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T19:16:06Z",
+      "side": 1,
+      "message": "Spelling.",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6fe9d7ca_be9be8dd",
         "filename": "media/mojo/services/media_capabilities_leveldb.cc",
         "patchSetId": 2
@@ -42,6 +212,244 @@
         "endLine": 189,
         "endChar": 9
       },
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40dea65b_0ef587e1",
+        "filename": "media/mojo/services/media_capabilities_leveldb.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T19:16:06Z",
+      "side": 1,
+      "message": "Yuck, some aliases might help here.",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02bdb3eb_f55664d1",
+        "filename": "media/mojo/services/media_capabilities_leveldb.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T19:16:06Z",
+      "side": 1,
+      "message": "emplace back?",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4db7a5df_a94c0aa1",
+        "filename": "media/mojo/services/media_capabilities_leveldb.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T19:16:06Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61b73f42_c6cc2301",
+        "filename": "media/mojo/services/media_capabilities_leveldb.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T19:16:06Z",
+      "side": 1,
+      "message": "This drops the callback, is this what you want? Comment on why if so.",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bdd5c26_00cba298",
+        "filename": "media/mojo/services/media_capabilities_leveldb.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T19:16:06Z",
+      "side": 1,
+      "message": "String is wrong.",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9f65c09_7e4558c1",
+        "filename": "media/mojo/services/media_capabilities_leveldb.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T19:16:06Z",
+      "side": 1,
+      "message": "Do we really need LevelDB in the name or should this just be MediaCapabilitiesDatabaseImpl? Do we only have one impl? If so why bother separating the impl from the interface?",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26669bc7_d4a0e8c1",
+        "filename": "media/mojo/services/media_capabilities_leveldb.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T19:16:06Z",
+      "side": 1,
+      "message": "Feel like this is too generic of a name, but up to you.",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5b859b3_904d628e",
+        "filename": "media/mojo/services/media_capabilities_leveldb.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T19:16:06Z",
+      "side": 1,
+      "message": "const\u0026 ?",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9295e2db_3b980b66",
+        "filename": "media/mojo/services/media_capabilities_leveldb_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T19:16:06Z",
+      "side": 1,
+      "message": "std::make_unique.",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e087daa7_a8a8ccaa",
+        "filename": "media/mojo/services/media_capabilities_leveldb_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T19:16:06Z",
+      "side": 1,
+      "message": "Does this delete your temp file?",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "418399ec_8429d84a",
+        "filename": "media/mojo/services/media_capabilities_leveldb_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T19:16:06Z",
+      "side": 1,
+      "message": "Should take a RunLoop quit closure here instead of relying on RunUntilIdle; calls to RunUntilIdle will just be RunLoop().Run() then. It causes flakiness if any calls are delayed; which very well may happen in the depths of leveldb.",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d54e816d_a8963b8c",
+        "filename": "media/mojo/services/media_capabilities_leveldb_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T19:16:06Z",
+      "side": 1,
+      "message": "No need for media:: anywhere in this file.",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4832f69b_7fc7eca6",
+        "filename": "media/mojo/services/media_capabilities_leveldb_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T19:16:06Z",
+      "side": 1,
+      "message": "DISALLOW...",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38eb5dbe_e823ee35",
+        "filename": "media/mojo/services/video_decode_perf_history.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T19:16:06Z",
+      "side": 1,
+      "message": "I believe Chrome prefers base/format_macros.h",
       "revId": "28748268fceedf6101edf3656781c0ff16af7331",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
