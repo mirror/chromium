@@ -10,10 +10,11 @@
 #include "base/message_loop/message_loop.h"
 #include "base/synchronization/waitable_event.h"
 #include "base/threading/thread.h"
-#include "mojo/edk/embedder/embedder.h"
 #include "mojo/edk/embedder/incoming_broker_client_invitation.h"
 #include "mojo/edk/embedder/scoped_ipc_support.h"
+#include "mojo/edk/embedder/transport_protocol.h"
 #include "mojo/public/cpp/system/message_pipe.h"
+#include "services/service_manager/public/cpp/mojo_init.h"
 #include "services/service_manager/public/cpp/service_context.h"
 #include "services/service_manager/runner/common/client_util.h"
 #include "services/service_manager/runner/common/switches.h"
@@ -73,7 +74,7 @@ void RunStandaloneService(const StandaloneServiceCallback& callback) {
     sandbox = InitializeSandbox();
 #endif
 
-  mojo::edk::Init();
+  InitializeMojo();
 
   base::Thread io_thread("io_thread");
   io_thread.StartWithOptions(

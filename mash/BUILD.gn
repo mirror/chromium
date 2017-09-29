@@ -118,6 +118,7 @@ if (is_chromeos) {
       "//components/viz/service",
       "//mojo/edk/system",
       "//services/catalog:lib",
+      "//services/service_manager/public/cpp",
       "//ui/aura",
       "//ui/base",
       "//ui/compositor:test_support",

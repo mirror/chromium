@@ -64,6 +64,7 @@ static_library("service") {
     "//mojo/edk/system",
     "//net",
     "//printing",
+    "//services/service_manager/public/cpp",
     "//skia",
     "//third_party/webrtc_overrides",
   ]
