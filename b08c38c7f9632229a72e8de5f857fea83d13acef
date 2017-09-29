@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cda133a4_4768c9c8",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-29T08:30:49Z",
+      "side": 1,
+      "message": "I guess this is okay for now, but later we\u0027ll probably want to explicity control when the \"fresh\" callback gets called - WDYT?",
+      "range": {
+        "startLine": 724,
+        "startChar": 41,
+        "endLine": 724,
+        "endChar": 0
+      },
+      "revId": "b08c38c7f9632229a72e8de5f857fea83d13acef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a391723_64afe168",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-29T08:30:49Z",
+      "side": 1,
+      "message": "nit: NOTREACHED()?",
+      "range": {
+        "startLine": 728,
+        "startChar": 50,
+        "endLine": 728,
+        "endChar": 0
+      },
+      "revId": "b08c38c7f9632229a72e8de5f857fea83d13acef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41c1a7f0_8ef807ec",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-29T08:30:49Z",
+      "side": 1,
+      "message": "Isn\u0027t this just beautiful :D",
+      "revId": "b08c38c7f9632229a72e8de5f857fea83d13acef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aae5022b_597031fe",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-29T08:30:49Z",
+      "side": 1,
+      "message": "Arguably, these tests are already too elaborate to be called \"smoke tests\" :)",
+      "range": {
+        "startLine": 830,
+        "startChar": 23,
+        "endLine": 830,
+        "endChar": 46
+      },
+      "revId": "b08c38c7f9632229a72e8de5f857fea83d13acef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4e976ce3_62e3c29f",
+        "filename": "components/search_provider_logos/logo_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-29T08:30:49Z",
+      "side": 1,
+      "message": "Why include logo_tracker.h?",
+      "range": {
+        "startLine": 10,
+        "startChar": 58,
+        "endLine": 10,
+        "endChar": 0
+      },
+      "revId": "b08c38c7f9632229a72e8de5f857fea83d13acef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75957b4a_9a001d76",
+        "filename": "components/search_provider_logos/logo_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-29T08:30:49Z",
+      "side": 1,
+      "message": "virtual dtor? (\u003d default)",
+      "range": {
+        "startLine": 47,
+        "startChar": 16,
+        "endLine": 47,
+        "endChar": 0
+      },
+      "revId": "b08c38c7f9632229a72e8de5f857fea83d13acef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
