@@ -205,7 +205,7 @@ views::StyledLabel::RangeStyleInfo GetLinkStyle() {
   return result;
 }
 
-std::unique_ptr<views::ToggleImageButton> GeneratePasswordViewButton(
+std::unique_ptr<views::ToggleImageButton> CreatePasswordViewButton(
     views::ButtonListener* listener) {
   std::unique_ptr<views::ToggleImageButton> button(
       new views::ToggleImageButton(listener));
@@ -234,7 +234,7 @@ std::unique_ptr<views::ToggleImageButton> GeneratePasswordViewButton(
 
 // Creates a dropdown from the other possible passwords.
 // The items are made of '*'s if not visible.
-std::unique_ptr<views::Combobox> GeneratePasswordDropdownView(
+std::unique_ptr<views::Combobox> CreatePasswordDropdownView(
     const autofill::PasswordForm& form,
     bool visible) {
   DCHECK(!form.other_possible_passwords.empty());
@@ -463,16 +463,16 @@ ManagePasswordsBubbleView::PendingView::PendingView(
       parent_->model()->pending_password();
   if (base::FeatureList::IsEnabled(
           password_manager::features::kEnableUsernameCorrection)) {
-    username_field_ = GenerateUsernameEditable(password_form).release();
+    username_field_ = CreateUsernameEditable(password_form).release();
   } else {
-    username_field_ = GenerateUsernameLabel(password_form).release();
+    username_field_ = CreateUsernameLabel(password_form).release();
   }
 
   CreatePasswordField();
 
   if (base::FeatureList::IsEnabled(
           password_manager::features::kEnablePasswordSelection)) {
-    password_view_button_ = GeneratePasswordViewButton(this).release();
+    password_view_button_ = CreatePasswordViewButton(this).release();
   }
 
   // Create buttons.
@@ -542,9 +542,9 @@ void ManagePasswordsBubbleView::PendingView::CreatePasswordField() {
   if (enable_password_selection &&
       password_form.other_possible_passwords.size() > 1) {
     password_field_ =
-        GeneratePasswordDropdownView(password_form, password_visible_);
+        CreatePasswordDropdownView(password_form, password_visible_);
   } else {
-    password_field_ = GeneratePasswordLabel(password_form, password_visible_);
+    password_field_ = CreatePasswordLabel(password_form, password_visible_);
   }
   password_field_->set_owned_by_client();
 }
@@ -856,8 +856,8 @@ ManagePasswordsBubbleView::UpdatePendingView::UpdatePendingView(
   } else {
     const autofill::PasswordForm& password_form =
         parent_->model()->pending_password();
-    BuildCredentialRow(layout, GenerateUsernameLabel(password_form).release(),
-                       GeneratePasswordLabel(password_form, false).release(),
+    BuildCredentialRow(layout, CreateUsernameLabel(password_form).release(),
+                       CreatePasswordLabel(password_form, false).release(),
                        nullptr);
   }
   layout->AddPaddingRow(
