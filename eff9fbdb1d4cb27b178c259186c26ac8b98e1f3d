@@ -220,6 +220,30 @@
     },
     {
       "key": {
+        "uuid": "bd250668_70fff2f8",
+        "filename": "third_party/WebKit/Source/core/page/SpatialNavigation.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-09-29T13:44:54Z",
+      "side": 1,
+      "message": "Right, with || !CanScroll the loop continues up to the next parent and thus misses the overflow \u003cdiv\u003e...",
+      "parentUuid": "1789d3c7_aae05bc3",
+      "range": {
+        "startLine": 320,
+        "startChar": 0,
+        "endLine": 320,
+        "endChar": 3
+      },
+      "revId": "eff9fbdb1d4cb27b178c259186c26ac8b98e1f3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8711eee2_de3862a2",
         "filename": "third_party/WebKit/Source/core/page/SpatialNavigation.cpp",
         "patchSetId": 1
@@ -353,6 +377,29 @@
       "revId": "eff9fbdb1d4cb27b178c259186c26ac8b98e1f3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "762901b4_4e9525fd",
+        "filename": "third_party/WebKit/Source/core/page/SpatialNavigation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-09-29T13:44:54Z",
+      "side": 1,
+      "message": "By the way, should we try to use const refs instead? Maybe that could reduce risk of future null pointer crashes here...",
+      "range": {
+        "startLine": 134,
+        "startChar": 5,
+        "endLine": 134,
+        "endChar": 27
+      },
+      "revId": "eff9fbdb1d4cb27b178c259186c26ac8b98e1f3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
