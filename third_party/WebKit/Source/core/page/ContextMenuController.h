@@ -73,7 +73,7 @@ class CORE_EXPORT ContextMenuController final
 
   std::unique_ptr<ContextMenu> CreateContextMenu(MouseEvent*);
   std::unique_ptr<ContextMenu> CreateContextMenu(LocalFrame*,
-                                                 const LayoutPoint&);
+                                                 const FloatPoint&);
   void ShowContextMenu(MouseEvent*);
 
   ContextMenuClient* client_;

@@ -243,7 +243,7 @@ void EventHandler::StartMiddleClickAutoscroll(LayoutObject* layout_object) {
 }
 
 HitTestResult EventHandler::HitTestResultAtPoint(
-    const LayoutPoint& point,
+    const FloatPoint& point,
     HitTestRequest::HitTestRequestType hit_type,
     const LayoutSize& padding) {
   TRACE_EVENT0("blink", "EventHandler::hitTestResultAtPoint");
@@ -258,8 +258,8 @@ HitTestResult EventHandler::HitTestResultAtPoint(
       LocalFrameView* frame_view = frame_->View();
       LocalFrameView* main_view = main_frame.View();
       if (frame_view && main_view) {
-        IntPoint main_frame_point = main_view->RootFrameToContents(
-            frame_view->ContentsToRootFrame(RoundedIntPoint(point)));
+        FloatPoint main_frame_point = main_view->RootFrameToContents(
+            frame_view->ContentsToRootFrame(point));
         return main_frame.GetEventHandler().HitTestResultAtPoint(
             main_frame_point, hit_type, padding);
       }
@@ -269,10 +269,10 @@ HitTestResult EventHandler::HitTestResultAtPoint(
   // hitTestResultAtPoint is specifically used to hitTest into all frames, thus
   // it always allows child frame content.
   HitTestRequest request(hit_type | HitTestRequest::kAllowChildFrameContent);
-  HitTestResult result(request, point, padding.Height().ToUnsigned(),
-                       padding.Width().ToUnsigned(),
-                       padding.Height().ToUnsigned(),
-                       padding.Width().ToUnsigned());
+  HitTestResult result(
+      request, LayoutPoint(point), padding.Height().ToUnsigned(),
+      padding.Width().ToUnsigned(), padding.Height().ToUnsigned(),
+      padding.Width().ToUnsigned());
 
   // LayoutView::hitTest causes a layout, and we don't want to hit that until
   // the first layout because until then, there is nothing shown on the screen -
