@@ -1529,8 +1529,6 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kSpuriousPowerButtonLidAngleChangeName,
      flag_descriptions::kSpuriousPowerButtonLidAngleChangeDescription, kOsCrOS,
      MULTI_VALUE_TYPE(kSpuriousPowerButtonLidAngleChangeChoices)},
-#endif  // OS_CHROMEOS
-#if defined(USE_ASH)
     {"ash-enable-night-light", flag_descriptions::kEnableNightLightName,
      flag_descriptions::kEnableNightLightDescription, kOsAll,
      SINGLE_VALUE_TYPE(ash::switches::kAshEnableNightLight)},
@@ -1543,8 +1541,6 @@ const FeatureEntry kFeatureEntries[] = {
         ENABLE_DISABLE_VALUE_TYPE(switches::kEnablePinch,
                                   switches::kDisablePinch),
     },
-#endif  // USE_ASH
-#if defined(OS_CHROMEOS)
     {
         "disable-boot-animation", flag_descriptions::kBootAnimationName,
         flag_descriptions::kBootAnimationDescription, kOsCrOSOwnerOnly,
@@ -3118,14 +3114,11 @@ const FeatureEntry kFeatureEntries[] = {
                                     "PauseBackgroundTabs")},
 #endif
 
-#if defined(USE_ASH)
+#if defined(OS_CHROMEOS)
     {"ash-disable-smooth-screen-rotation",
      flag_descriptions::kAshDisableSmoothScreenRotationName,
      flag_descriptions::kAshDisableSmoothScreenRotationDescription, kOsCrOS,
      SINGLE_DISABLE_VALUE_TYPE(ash::switches::kAshDisableSmoothScreenRotation)},
-#endif  // defined(USE_ASH)
-
-#if defined(OS_CHROMEOS)
     {"enable-zip-archiver-on-file-manager",
      flag_descriptions::kEnableZipArchiverOnFileManagerName,
      flag_descriptions::kEnableZipArchiverOnFileManagerDescription, kOsCrOS,

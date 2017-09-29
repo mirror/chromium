@@ -69,8 +69,8 @@
 #include "ui/gfx/image/image_skia.h"
 #include "ui/gfx/image/image_util.h"
 
-#if defined(USE_ASH)
-#include "ash/shell.h"  // nogncheck
+#if defined(OS_CHROMEOS)
+#include "ash/shell.h"
 #endif
 
 namespace {
@@ -860,7 +860,8 @@ void UserManagerScreenHandler::SendUserList() {
 
   // Profile deletion is not allowed in Metro mode.
   bool can_remove = true;
-#if defined(USE_ASH)
+#if defined(OS_CHROMEOS)
+  // TODO(mash): Is this still needed, or is it left over from Windows Ash?
   can_remove = !ash::Shell::HasInstance();
 #endif
 
