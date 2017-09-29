@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d0d2537_74b52239",
+        "filename": "media/base/BUILD.gn",
+        "patchSetId": 19
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T01:16:50Z",
+      "side": 1,
+      "message": "This won\u0027t work, no external targets should depend on this. That target must depend on //media.\n\nI\u0027ll add a better message here. The ones which say not to do this are too far away, see l.362 for a variant of the message; https://cs.chromium.org/chromium/src/media/media_options.gni?l\u003d14 or https://cs.chromium.org/chromium/src/media/audio/BUILD.gn?l\u003d53\n\nAlso in general, you shouldn\u0027t have a //third_party target depending on any non-third_party targets. There may be a few rare exceptions, but generally this shouldn\u0027t happen.",
+      "revId": "f6a40b2f5869652077c0228257b4223d47e30638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4626b144_f1629f16",
+        "filename": "media/base/context_provider_callback.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T01:16:50Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be in media/base, but instead in media/video. media/base shouldn\u0027t take deps on anything, even though you\u0027ve used a forward declaration to avoid taking the //viz dep.",
+      "revId": "f6a40b2f5869652077c0228257b4223d47e30638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccd3d8f7_693438ab",
+        "filename": "media/base/context_provider_callback.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T01:16:50Z",
+      "side": 1,
+      "message": "using ContextProviderCB \u003d base::RepeatingCallback\u003c...\u003e",
+      "revId": "f6a40b2f5869652077c0228257b4223d47e30638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04b33e37_b366810f",
+        "filename": "third_party/WebKit/public/BUILD.gn",
+        "patchSetId": 19
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T01:16:50Z",
+      "side": 1,
+      "message": "This should just be //media.",
+      "revId": "f6a40b2f5869652077c0228257b4223d47e30638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
