@@ -16,6 +16,24 @@
       "revId": "2df07d3cf8e9a402fb6215e88f9927f80fec9bb4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6265dd68_f0613e42",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 3183,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-29T16:55:12Z",
+      "side": 1,
+      "message": "tonikitoo: I ended up trying it locally rather than eyeballing it. Going to land the next patch set. Please take a look and let me know if you have any comments.",
+      "parentUuid": "cd9dd4de_5fc62e58",
+      "revId": "2df07d3cf8e9a402fb6215e88f9927f80fec9bb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
