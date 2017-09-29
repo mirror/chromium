@@ -88,8 +88,9 @@ TEST_F(CastSocketServiceTest, TestOpenChannel) {
   EXPECT_CALL(mock_on_open_callback_, Run(mock_socket));
   EXPECT_CALL(*mock_socket, AddObserver(_));
 
-  cast_socket_service_->OpenSocket(ip_endpoint, nullptr /* net_log */,
-                                   mock_on_open_callback_.Get(),
+  CastSocketOpenParams open_param(ip_endpoint, nullptr /* net_log */,
+                                  base::TimeDelta::FromSeconds(20));
+  cast_socket_service_->OpenSocket(open_param, mock_on_open_callback_.Get(),
                                    &mock_observer_);
 }
 

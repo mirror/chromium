@@ -70,14 +70,13 @@ class MockCastSocketService : public CastSocketService {
   MockCastSocketService();
   ~MockCastSocketService() override;
 
-  int OpenSocket(const net::IPEndPoint& ip_endpoint,
-                 net::NetLog* net_log,
+  int OpenSocket(const CastSocketOpenParams& open_params,
                  CastSocket::OnOpenCallback open_cb,
                  CastSocket::Observer* observer) override {
     // Unit test should not call |open_cb| more than once. Just use
     // base::AdaptCallbackForRepeating to pass |open_cb| to a mock method.
     return OpenSocketInternal(
-        ip_endpoint, net_log,
+        open_params.ip_endpoint, open_params.net_log,
         base::AdaptCallbackForRepeating(std::move(open_cb)), observer);
   }
 
