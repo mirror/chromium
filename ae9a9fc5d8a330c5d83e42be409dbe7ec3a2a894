@@ -22,6 +22,30 @@
       "revId": "ae9a9fc5d8a330c5d83e42be409dbe7ec3a2a894",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7f4227e_6665782f",
+        "filename": "extensions/browser/external_install_info.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-29T16:45:23Z",
+      "side": 1,
+      "message": "Whoops!  Thought I caught all of these, apparently not. :)  And yes, Version will not get an implicit move ctor since it has other defined ctors.  Even if it did, this wouldn\u0027t work, because std::move()\u0027ing a const T\u0026 results in a const T\u0026\u0026, and the move ctor requires a T\u0026\u0026.  I\u0027ve been wondering if it would be handy to have a clang plugin detect std::move(const T\u0026) and const T\u0026\u0026 and throw a warning that it will convert to const T\u0026, but I haven\u0027t had time to pursue.",
+      "parentUuid": "0656ed44_7be7606a",
+      "range": {
+        "startLine": 25,
+        "startChar": 19,
+        "endLine": 25,
+        "endChar": 23
+      },
+      "revId": "ae9a9fc5d8a330c5d83e42be409dbe7ec3a2a894",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
