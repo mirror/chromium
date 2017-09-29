@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbfbece0_fa792ab3",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 1194,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-29T17:28:10Z",
+      "side": 1,
+      "message": "I worry a bit about this because a lot of our tests add extensions that are just stored on disk (or dynamically created), and obviously don\u0027t have hashes to retrieve from the store.  I wonder if this would cause us to see a ton of flaky failures where content verification kicks in and disables the test extension, and I don\u0027t see anything that would prevent that.\n\nOn the other hand, this has presumably been running on official bots for some time (otherwise, we wouldn\u0027t see failures from proberge\u0027s last patch), so I\u0027m probably just missing something.  But I\u0027d like to know what it is that makes this safe. :)\n\n+lazyboy@, any ideas?",
+      "revId": "11853ac7a666f1851e454641361bdc6b49bf9bd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
