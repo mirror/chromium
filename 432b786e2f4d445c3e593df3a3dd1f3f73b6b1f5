@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "83c71d60_f13df57d",
+        "filename": "content/browser/bluetooth/bluetooth_device_chooser_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-09-29T17:45:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acc8fee3_deb4b456",
+      "revId": "432b786e2f4d445c3e593df3a3dd1f3f73b6b1f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eea2a5d3_4fe8a35a",
         "filename": "content/browser/bluetooth/bluetooth_device_chooser_controller.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-29T00:24:22Z",
       "side": 1,
       "message": "Since we are already checking this on the renderer side I would change this to:\n\nif (!render_frame_host_-\u003eIsFeatureEnabled(...)) {\n  web_bluetooth_service_-\u003eCrashRendererAndClosePipe(\n      bad_message::BDH_INVALID_OPTIONS);\n  return;\n}\n\nThen we won\u0027t have to change BluetoothError and web_bluetooth.mojom :)",
+      "revId": "432b786e2f4d445c3e593df3a3dd1f3f73b6b1f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df9b8f68_d91dd9f9",
+        "filename": "content/browser/bluetooth/bluetooth_device_chooser_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-09-29T17:45:37Z",
+      "side": 1,
+      "message": "Good point, thanks :)",
+      "parentUuid": "eea2a5d3_4fe8a35a",
       "revId": "432b786e2f4d445c3e593df3a3dd1f3f73b6b1f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +101,24 @@
       "side": 1,
       "message": "[1] https://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/bluetooth/requestDevice/acceptAllDevices/device-with-name.html",
       "parentUuid": "1ceb26bd_d0b17489",
+      "revId": "432b786e2f4d445c3e593df3a3dd1f3f73b6b1f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "486c43de_815e9efb",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/bluetooth-default-feature-policy.https.sub.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-09-29T17:45:37Z",
+      "side": 1,
+      "message": "I\u0027ve changed this to match the existing test in http/tests/bluetooth/https/requestDevice, since it depends on the ability to load from distinct origins. I\u0027ve added specific tests for loading cross-origin with allow\u003d\"bluetooth\" (which should succeed), and for loading same-origin with allow\u003d\"bluetooth none\" (which should fail).\n\nI\u0027d like eventually to use a framework like what we have in wpt to test multiple scenarios in a single test, but that can wait for a future revision.\n\nThis doesn\u0027t need to be upstreamed yet -- and actually probably shouldn\u0027t be, until there is spec language in https://webbluetoothcg.github.io/web-bluetooth to mention feature policy.",
+      "parentUuid": "34a75da6_ba646aeb",
       "revId": "432b786e2f4d445c3e593df3a3dd1f3f73b6b1f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
