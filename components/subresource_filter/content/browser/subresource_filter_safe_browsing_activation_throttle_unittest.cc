@@ -408,7 +408,7 @@ class SubresourceFilterSafeBrowsingActivationThrottleParamTest
 class SubresourceFilterSafeBrowsingActivationThrottleTestWithCancelling
     : public SubresourceFilterSafeBrowsingActivationThrottleTest,
       public ::testing::WithParamInterface<
-          std::tuple<content::CancellingNavigationThrottle::CancelTime,
+          std::tuple<content::CancellingNavigationThrottle::ThrottleMethod,
                      content::CancellingNavigationThrottle::ResultSynchrony>> {
  public:
   SubresourceFilterSafeBrowsingActivationThrottleTestWithCancelling() {
@@ -418,14 +418,16 @@ class SubresourceFilterSafeBrowsingActivationThrottleTestWithCancelling
       override {}
 
   void DidStartNavigation(content::NavigationHandle* handle) override {
-    handle->RegisterThrottleForTesting(
-        base::MakeUnique<content::CancellingNavigationThrottle>(
-            handle, cancel_time_, result_sync_));
+    std::unique_ptr<content::CancellingNavigationThrottle> throttle =
+        base::MakeUnique<content::CancellingNavigationThrottle>(handle,
+                                                                result_sync_);
+    throttle->SetCancelTime(cancel_time_);
+    handle->RegisterThrottleForTesting(std::move(throttle));
     SubresourceFilterSafeBrowsingActivationThrottleTest::DidStartNavigation(
         handle);
   }
 
-  content::CancellingNavigationThrottle::CancelTime cancel_time() {
+  content::CancellingNavigationThrottle::ThrottleMethod cancel_time() {
     return cancel_time_;
   }
 
@@ -434,7 +436,7 @@ class SubresourceFilterSafeBrowsingActivationThrottleTestWithCancelling
   }
 
  private:
-  content::CancellingNavigationThrottle::CancelTime cancel_time_;
+  content::CancellingNavigationThrottle::ThrottleMethod cancel_time_;
   content::CancellingNavigationThrottle::ResultSynchrony result_sync_;
 
   DISALLOW_COPY_AND_ASSIGN(

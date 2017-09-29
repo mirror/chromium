@@ -7,7 +7,6 @@
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
-#include "base/optional.h"
 #include "content/public/browser/navigation_throttle.h"
 
 namespace content {
@@ -35,6 +34,7 @@ class CancellingNavigationThrottle : public NavigationThrottle {
   };
 
   CancellingNavigationThrottle(NavigationHandle* handle,
+                               CancelTime cancel_time,
                                ResultSynchrony sync);
   ~CancellingNavigationThrottle() override;
 
@@ -44,24 +44,25 @@ class CancellingNavigationThrottle : public NavigationThrottle {
   NavigationThrottle::ThrottleCheckResult WillProcessResponse() override;
   const char* GetNameForLogging() override;
 
-  // Specify a throttle method when the throttle should cancel.
-  // base::nullopt can be used to specify "never cancel" (which is also the
-  // default behaviour).
-  void SetCancelTime(base::Optional<ThrottleMethod> method);
-  int GetCallCount(ThrottleMethod method);
+  void SetResult(ThrottleMethod method,
+                 NavigationThrottle::ThrottleCheckResult result)
 
- protected:
-  // Will be called before the navigation is cancelled.
-  virtual void OnWillCancel();
+      protected :
+      // Will be called before the navigation is cancelled.
+      virtual void OnWillCancel();
 
  private:
-  NavigationThrottle::ThrottleCheckResult ProcessMethod(ThrottleMethod method);
+  NavigationThrottle::ThrottleCheckResult ProcessState(bool should_cancel);
   void MaybeCancel(bool cancel);
 
  private:
+  const CancelTime cancel_time_;
   const ResultSynchrony sync_;
-  base::Optional<ThrottleMethod> cancel_time_;
-  int call_counts_[NUM_THROTTLE_METHODS];
+  const base::RepeatingCallback<void(CancelTime)> method_called_callback;
+  const base::Callback<void(CancelTime)> method_will_cancel_callback;
+
+  NavigationThrottle::ThrottleCheckResult[NUM_THROTTLE_METHODS] results_;
+  NavigationThrottle::ThrottleCheckResult[NUM_THROTTLE_METHODS] call_counts_;
 
   base::WeakPtrFactory<CancellingNavigationThrottle> weak_ptr_factory_;
 

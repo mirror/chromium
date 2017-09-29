@@ -27,9 +27,9 @@ namespace content {
 class NavigationSimulatorTest
     : public RenderViewHostImplTestHarness,
       public WebContentsObserver,
-      public testing::WithParamInterface<
-          std::tuple<CancellingNavigationThrottle::CancelTime,
-                     CancellingNavigationThrottle::ResultSynchrony>> {
+      public testing::WithParamInterface<std::tuple<
+          base::Optional<CancellingNavigationThrottle::ThrottleMethod>,
+          CancellingNavigationThrottle::ResultSynchrony>> {
  public:
   NavigationSimulatorTest() {}
   ~NavigationSimulatorTest() override {}
@@ -49,16 +49,17 @@ class NavigationSimulatorTest
   }
 
   void DidStartNavigation(content::NavigationHandle* handle) override {
-    handle->RegisterThrottleForTesting(
-        base::MakeUnique<CancellingNavigationThrottle>(handle, cancel_time_,
-                                                       sync_));
+    std::unique_ptr<CancellingNavigationThrottle> throttle =
+        base::MakeUnique<CancellingNavigationThrottle>(handle, sync_);
+    throttle->SetCancelTime(cancel_time_);
+    handle->RegisterThrottleForTesting(std::move(throttle));
   }
 
   void DidFinishNavigation(content::NavigationHandle* handle) override {
     did_finish_navigation_ = true;
   }
 
-  CancellingNavigationThrottle::CancelTime cancel_time_;
+  base::Optional<CancellingNavigationThrottle::ThrottleMethod> cancel_time_;
   CancellingNavigationThrottle::ResultSynchrony sync_;
   std::unique_ptr<NavigationSimulator> simulator_;
   bool did_finish_navigation_ = false;
@@ -71,10 +72,14 @@ class NavigationSimulatorTest
 // the navigation at various points in the flow, both synchronously and
 // asynchronously.
 TEST_P(NavigationSimulatorTest, Cancel) {
-  SCOPED_TRACE(::testing::Message() << "CancelTime: " << cancel_time_
-                                    << " ResultSynchrony: " << sync_);
+  SCOPED_TRACE(::testing::Message()
+               << "CancelTime: "
+               << (cancel_time_.has_value() ? cancel_time_.value() : -1)
+               << " ResultSynchrony: " << sync_);
   simulator_->Start();
-  if (cancel_time_ == CancellingNavigationThrottle::WILL_START_REQUEST) {
+  if (cancel_time_.has_value() &&
+      cancel_time_.value() ==
+          CancellingNavigationThrottle::WILL_START_REQUEST) {
     EXPECT_EQ(NavigationThrottle::CANCEL,
               simulator_->GetLastThrottleCheckResult());
     return;
@@ -82,7 +87,9 @@ TEST_P(NavigationSimulatorTest, Cancel) {
   EXPECT_EQ(NavigationThrottle::PROCEED,
             simulator_->GetLastThrottleCheckResult());
   simulator_->Redirect(GURL("https://example.redirect"));
-  if (cancel_time_ == CancellingNavigationThrottle::WILL_REDIRECT_REQUEST) {
+  if (cancel_time_.has_value() &&
+      cancel_time_.value() ==
+          CancellingNavigationThrottle::WILL_REDIRECT_REQUEST) {
     EXPECT_EQ(NavigationThrottle::CANCEL,
               simulator_->GetLastThrottleCheckResult());
     return;
@@ -90,7 +97,9 @@ TEST_P(NavigationSimulatorTest, Cancel) {
   EXPECT_EQ(NavigationThrottle::PROCEED,
             simulator_->GetLastThrottleCheckResult());
   simulator_->Commit();
-  if (cancel_time_ == CancellingNavigationThrottle::WILL_PROCESS_RESPONSE) {
+  if (cancel_time_.has_value() &&
+      cancel_time_.value() ==
+          CancellingNavigationThrottle::WILL_PROCESS_RESPONSE) {
     EXPECT_EQ(NavigationThrottle::CANCEL,
               simulator_->GetLastThrottleCheckResult());
     return;
@@ -106,7 +115,7 @@ INSTANTIATE_TEST_CASE_P(
         ::testing::Values(CancellingNavigationThrottle::WILL_START_REQUEST,
                           CancellingNavigationThrottle::WILL_REDIRECT_REQUEST,
                           CancellingNavigationThrottle::WILL_PROCESS_RESPONSE,
-                          CancellingNavigationThrottle::NEVER),
+                          base::nullopt),
         ::testing::Values(CancellingNavigationThrottle::SYNCHRONOUS,
                           CancellingNavigationThrottle::ASYNCHRONOUS)));
 

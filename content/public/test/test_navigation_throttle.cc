@@ -12,54 +12,38 @@ namespace content {
 
 CancellingNavigationThrottle::CancellingNavigationThrottle(
     NavigationHandle* handle,
+    CancelTime cancel_time,
     ResultSynchrony sync)
-    : NavigationThrottle(handle), sync_(sync), weak_ptr_factory_(this) {
-  for (size_t i = 0; i < NUM_THROTTLE_METHODS; i++) {
-    call_counts_[i] = 0;
-  }
-}
+    : NavigationThrottle(handle),
+      cancel_time_(cancel_time),
+      sync_(sync),
+      results_({PROCEED, PROCEED, PROCEED}),
+      results_({PROCEED, PROCEED, PROCEED}),
+      will_redirect_request_calls_(0),
+      will_process_response_calls_(0),
+      weak_ptr_factory_(this) {}
 
 CancellingNavigationThrottle::~CancellingNavigationThrottle() {}
 
 NavigationThrottle::ThrottleCheckResult
 CancellingNavigationThrottle::WillStartRequest() {
-  return ProcessMethod(WILL_START_REQUEST);
+  return ProcessState(cancel_time_ == WILL_START_REQUEST);
 }
 
 NavigationThrottle::ThrottleCheckResult
 CancellingNavigationThrottle::WillRedirectRequest() {
-  return ProcessMethod(WILL_REDIRECT_REQUEST);
+  return ProcessState(cancel_time_ == WILL_REDIRECT_REQUEST);
 }
 
 NavigationThrottle::ThrottleCheckResult
 CancellingNavigationThrottle::WillProcessResponse() {
-  return ProcessMethod(WILL_PROCESS_RESPONSE);
-}
-
-const char* CancellingNavigationThrottle::GetNameForLogging() {
-  return "CancellingNavigationThrottle";
-}
-
-void CancellingNavigationThrottle::SetCancelTime(
-    base::Optional<ThrottleMethod> method) {
-  if (method.has_value()) {
-    CHECK_LE(method.value(), NUM_THROTTLE_METHODS) << "Invalid throttle method";
-  }
-  cancel_time_ = method;
-}
-
-int CancellingNavigationThrottle::GetCallCount(ThrottleMethod method) {
-  CHECK_LE(method, NUM_THROTTLE_METHODS) << "Invalid throttle method";
-  return call_counts_[method];
+  return ProcessState(cancel_time_ == WILL_PROCESS_RESPONSE);
 }
 
 void CancellingNavigationThrottle::OnWillCancel() {}
 
 NavigationThrottle::ThrottleCheckResult
-CancellingNavigationThrottle::ProcessMethod(ThrottleMethod method) {
-  call_counts_[method]++;
-  bool should_cancel =
-      cancel_time_.has_value() && cancel_time_.value() == method;
+CancellingNavigationThrottle::ProcessState(bool should_cancel) {
   if (sync_ == ASYNCHRONOUS) {
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
@@ -72,6 +56,10 @@ CancellingNavigationThrottle::ProcessMethod(ThrottleMethod method) {
     return NavigationThrottle::CANCEL;
   }
   return NavigationThrottle::PROCEED;
+}
+
+const char* CancellingNavigationThrottle::GetNameForLogging() {
+  return "CancellingNavigationThrottle";
 }
 
 void CancellingNavigationThrottle::MaybeCancel(bool cancel) {

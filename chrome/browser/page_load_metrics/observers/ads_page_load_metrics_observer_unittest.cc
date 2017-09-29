@@ -78,8 +78,9 @@ class ResourceLoadingCancellingThrottle
       content::NavigationHandle* navigation_handle)
       : content::CancellingNavigationThrottle(
             navigation_handle,
-            CancellingNavigationThrottle::WILL_PROCESS_RESPONSE,
-            CancellingNavigationThrottle::ASYNCHRONOUS) {}
+            CancellingNavigationThrottle::ASYNCHRONOUS) {
+    SetCancelTime(CancellingNavigationThrottle::WILL_PROCESS_RESPONSE);
+  }
 
  private:
   // content::CancellingNavigationThrottle:
