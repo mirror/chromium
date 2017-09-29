@@ -12,6 +12,12 @@ declare_args() {
   # with typemapping disabled, so it is never valid to set this to |false| in
   # any Chromium build configuration.
   enable_mojom_typemapping = true
+
+  # Indicates a salt to use for scrambled message IDs. If empty, message IDs
+  # will never be scrambled. Note that even with this set, a mojom target may
+  # explicitly set |scramble_message_ids| to |false| in order to use zero-based
+  # sequential IDs.
+  mojom_message_id_salt = ""
 }
 
 mojom_generator_root = "//mojo/public/tools/bindings"
@@ -184,6 +190,10 @@ if (enable_mojom_typemapping) {
 #       be serialized and deserialized using a legacy IPC::ParamTraits
 #       specialization.
 #
+#   scramble_message_ids (optional)
+#       If set to |true| (the default), generated mojom interfaces will use
+#       scrambled ordinal identifiers in encoded messages.
+#
 #   component_output_prefix (optional)
 #       The prefix to use for the output_name of any component library emitted
 #       for generated C++ bindings. If this is omitted, C++ bindings targets are
@@ -322,6 +332,20 @@ template("mojom") {
       "--bytecode_path",
       rebase_path("$root_gen_dir/mojo/public/tools/bindings", root_build_dir),
     ]
+
+    # If we have a salt, scramble message IDs unless the target has explicitly
+    # opted out.
+    if ((!defined(invoker.scramble_message_ids) ||
+         invoker.scramble_message_ids) && mojom_message_id_salt != "") {
+      # NOTE: We would like to avoid scrambling IDs where it doesn't add value,
+      # so we limit availability of this feature to Mac and Windows desktop
+      # builds.
+      assert(is_mac || is_win)
+      common_generator_args += [
+        "--scrambled_message_id_salt",
+        mojom_message_id_salt,
+      ]
+    }
 
     if (!defined(invoker.allow_native_structs) || invoker.allow_native_structs) {
       common_generator_args += [ "--allow_native_structs" ]
