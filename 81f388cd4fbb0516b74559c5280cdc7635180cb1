@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab9277af_6f94e151",
+        "filename": "ash/login/ui/lock_debug_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-29T18:16:20Z",
+      "side": 1,
+      "message": "Move above \"Add or remove user\", add a return, ie,\n\n  if (...) {\n    ...\n    return;\n  }",
+      "revId": "81f388cd4fbb0516b74559c5280cdc7635180cb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fd1b915_bc6f15c2",
+        "filename": "ash/login/ui/login_data_dispatcher.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-29T18:16:20Z",
+      "side": 1,
+      "message": "LoginDataDispatcher really should not have any state associated with it. Since this is only being used to hide/show the button on initialization lets just hide by default and call SetLockScreenNoteState very shortly after initialization.\n\nIf there are visual glitches with that approach I\u0027d prefer to pass this state in the initialization path (ie, LockContentsView constructor) as that reduces potential for abuse. I\u0027m thinking having a LoginInitData (or a similar name) type for passing in initialization data, since I suspect that will be a common use-case.",
+      "revId": "81f388cd4fbb0516b74559c5280cdc7635180cb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3a7b954_5e763406",
+        "filename": "ash/login/ui/note_action_launch_button.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-29T18:16:20Z",
+      "side": 1,
+      "message": "Update comment",
+      "revId": "81f388cd4fbb0516b74559c5280cdc7635180cb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "869ffcc3_2e38b7ef",
+        "filename": "ash/login/ui/note_action_launch_button.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-29T18:16:20Z",
+      "side": 1,
+      "message": "Use a TestApi class.",
+      "revId": "81f388cd4fbb0516b74559c5280cdc7635180cb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40a90855_e8c676cb",
+        "filename": "ash/login/ui/note_action_launch_button_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-29T18:16:20Z",
+      "side": 1,
+      "message": "This should already be in ash::LoginTestBase().\n\nConsider extending ash::LoginTestBase with a CreateDataDispatcher() virtual if you need to customize its creation.",
+      "revId": "81f388cd4fbb0516b74559c5280cdc7635180cb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42d12294_5a61b8e7",
+        "filename": "ash/login/ui/note_action_launch_button_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-29T18:16:20Z",
+      "side": 1,
+      "message": "nit: Wrapp -\u003e Wrap",
+      "revId": "81f388cd4fbb0516b74559c5280cdc7635180cb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d69ab848_06b68594",
+        "filename": "ash/login/ui/note_action_launch_button_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-29T18:16:20Z",
+      "side": 1,
+      "message": "Can you extract lock_debug_view.cc/WrapViewForPreferredSize and use that instead? Maybe to a ash/login/ui/layout_utils.h file?",
+      "revId": "81f388cd4fbb0516b74559c5280cdc7635180cb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae479a7e_0ffdc50e",
+        "filename": "ash/login/ui/note_action_launch_button_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-29T18:16:20Z",
+      "side": 1,
+      "message": "Please add high-level test-flow comments like below :)",
+      "revId": "81f388cd4fbb0516b74559c5280cdc7635180cb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcacb9c3_ecb69c6b",
+        "filename": "ash/login/ui/note_action_launch_button_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-29T18:16:20Z",
+      "side": 1,
+      "message": "Why use make_unique if we\u0027re immediately releasing it?",
+      "revId": "81f388cd4fbb0516b74559c5280cdc7635180cb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d5a598c_5403f740",
+        "filename": "ash/login/ui/note_action_launch_button_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-29T18:16:20Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "81f388cd4fbb0516b74559c5280cdc7635180cb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
