@@ -1,0 +1,463 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2bb1b2f8_37689ee1",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-09-29T15:04:54Z",
+      "side": 1,
+      "message": "We\u0027re going to have to talk to folks (like nasko@) about parsing JSON in the broweser process. It\u0027s not unheard of, but it\u0027s also not something folks are stunningly excited about.",
+      "revId": "d54ac232577866be660827256c1c2dbb7672ce2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "432e5fc9_41fdb09e",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-09-29T15:04:54Z",
+      "side": 1,
+      "message": "It surprises me that you\u0027re using the Mojo object here rather than creating an OriginManifest object that implements the mojo interface. That limits the kind of work `OriginManifest` can do, and I think will end up complicating your code.",
+      "revId": "d54ac232577866be660827256c1c2dbb7672ce2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c668716_c6eef58f",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-09-29T15:04:54Z",
+      "side": 1,
+      "message": "I agree. We need to ensure that the policy is extensible, so we should be lax in our validation here.",
+      "revId": "d54ac232577866be660827256c1c2dbb7672ce2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcadb6fd_eae84083",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-09-29T15:04:54Z",
+      "side": 1,
+      "message": "Let\u0027s not be lenient about case, here or elsewhere: \"enforce\" !\u003d \"eNfOrCe\".",
+      "revId": "d54ac232577866be660827256c1c2dbb7672ce2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "737dfc7d_89eedcb6",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-09-29T15:04:54Z",
+      "side": 1,
+      "message": "I\u0027d suggest parsing this via `url::Origin`.",
+      "revId": "d54ac232577866be660827256c1c2dbb7672ce2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec5d30b8_f07d5204",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-09-29T15:04:54Z",
+      "side": 1,
+      "message": "But it will...",
+      "revId": "d54ac232577866be660827256c1c2dbb7672ce2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6ba7b05_4d0d6950",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-09-29T15:04:54Z",
+      "side": 1,
+      "message": "I\u0027d prefer for this to just be an array of `url::Origin` objects.",
+      "revId": "d54ac232577866be660827256c1c2dbb7672ce2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "800bf06f_1b290c3c",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-09-29T15:04:54Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "d54ac232577866be660827256c1c2dbb7672ce2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e21274e_f8641984",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-09-29T15:04:54Z",
+      "side": 1,
+      "message": "Why does the parser take an origin and a version? It seems like you should just need JSON to generate the manifest, right?",
+      "revId": "d54ac232577866be660827256c1c2dbb7672ce2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f826ed7_1594411c",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-09-29T15:04:54Z",
+      "side": 1,
+      "message": "Why are these enums private inside the parser? Shouldn\u0027t we use whatever we\u0027re going to expose on `OriginManifest`?",
+      "revId": "d54ac232577866be660827256c1c2dbb7672ce2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd9e2fb0_22636807",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-09-29T15:04:54Z",
+      "side": 1,
+      "message": "Do you ever instantiate this? If not, `\u003d delete` is better. We have a `STATIC_ONLY` macro in Blink, not sure if the same exists in //content.\n\nAn alternative would be to make parsing into a static method on `OriginManifest` that acts as a constructor. That might be simpler?",
+      "revId": "d54ac232577866be660827256c1c2dbb7672ce2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b77e1dab_e1d4d1ac",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-09-29T15:04:54Z",
+      "side": 1,
+      "message": "It would be nice to write unit tests for these methods as well.",
+      "revId": "d54ac232577866be660827256c1c2dbb7672ce2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77784f75_25a4e420",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-09-29T15:04:54Z",
+      "side": 1,
+      "message": "We\u0027ll want to set up a fuzzer for this as well. Something like https://cs.chromium.org/chromium/src/content/test/fuzzer/clear_site_data_fuzzer.cc and the seed dictionaries at https://cs.chromium.org/chromium/src/content/test/data/fuzzer_corpus/clear_site_data/ should be a good model for you.",
+      "revId": "d54ac232577866be660827256c1c2dbb7672ce2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62a4e659_c9ec9208",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-09-29T15:04:54Z",
+      "side": 1,
+      "message": "I\u0027d like to see some more tests here. For instance, what happens if you don\u0027t get a valid JSON object? What happens if the JSON object is valid but doesn\u0027t contain any known keys? What happens if the JSON object is valid and contains both known and unknown keys? What happens if the known keys contain invalid contents (e.g. strings instead of booleans, numbers instead of strings, etc).",
+      "revId": "d54ac232577866be660827256c1c2dbb7672ce2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cf41d96_317e3ed1",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-09-29T15:04:54Z",
+      "side": 1,
+      "message": "I\u0027d suggest extending this test a bit using something like the following pattern:\n\n```\nstruct TestCase {\n  std::string policy;\n  std::string disposition;\n  std::string override;\n  std::string expected_policy;\n  Disposition expected_disposition;\n  Override expected_override;\n} cases[] \u003d {\n  { \"default-src \u0027none\u0027\", \"report-only\", \"true\",\n    \"default-src \u0027none\u0027\", REPORT_ONLY, OVERRIDEABLE },\n  { \"default-src \u0027none\u0027\", \"report-only\", \"false\",\n    \"default-src \u0027none\u0027\", REPORT_ONLY, NOT_OVERRIDEABLE },\n};\n\nfor (const auto\u0026 test : cases) {\n  // Do some sprintf magic to put the |policy|, |disposition|, and \n  // |override| bits into some JSON.\n  blink::mojom::OriginManifestPtr om \u003d\n      OriginManifestParser::Parse(...);\n  ASSERT_FALSE(om.Equals(nullptr));\n  EXPECT_EQ(om-\u003ecsps[0]-\u003epolicy, expected_policy);\n  EXPECT_EQ(om-\u003ecsps[0]-\u003edisposition, expected_disposition);\n  EXPECT_EQ(om-\u003ecsps[0]-\u003eallowOverride, expected_override);\n\n  // Do the same sprintf stuff to put the data into some JSON that\n  // defines another policy in the array. Maybe one before! Maybe\n  // one after! Maybe more!\n  // etc.\n}\n```",
+      "revId": "d54ac232577866be660827256c1c2dbb7672ce2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ab90a9a_b7d01dfb",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-09-29T15:04:54Z",
+      "side": 1,
+      "message": "I\u0027d suggest using the same pattern as above to add some cases to this test.",
+      "revId": "d54ac232577866be660827256c1c2dbb7672ce2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de660e0b_cd68dc6f",
+        "filename": "content/browser/origin_manifest/origin_manifest_parser_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-09-29T15:04:54Z",
+      "side": 1,
+      "message": "What happens if you get an empty array? What happens if you get a single origin in the array? What happens if the developer passes a single origin in as a string without wrapping it in an array?",
+      "revId": "d54ac232577866be660827256c1c2dbb7672ce2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68da3986_e3c7e843",
+        "filename": "third_party/WebKit/public/platform/origin_manifest.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-09-29T15:04:54Z",
+      "side": 1,
+      "message": "Instead of defining something CSP-specific here, I\u0027d suggest reusing https://cs.chromium.org/chromium/src/third_party/WebKit/public/platform/content_security_policy.mojom?rcl\u003d2c50d00bd5f2508adfe594f65edaaafd581318dd\u0026l\u003d10.",
+      "revId": "d54ac232577866be660827256c1c2dbb7672ce2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb3e3376_2184e46c",
+        "filename": "third_party/WebKit/public/platform/origin_manifest.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-09-29T15:04:54Z",
+      "side": 1,
+      "message": "Please put `OriginManifest` and its direct descendents into `origin_manifest.mojom`, and `OriginManifestStore` into `origin_manifest_store.mojom`. Just like `.h` files, we\u0027re trying to define one thing per file.",
+      "revId": "d54ac232577866be660827256c1c2dbb7672ce2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbf0235d_e32d55f9",
+        "filename": "third_party/WebKit/public/platform/origin_manifest.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-09-29T15:04:54Z",
+      "side": 1,
+      "message": "Please prefer `url.mojom.Origin` from `url/mojo/origin.mojom`.",
+      "revId": "d54ac232577866be660827256c1c2dbb7672ce2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "347f8bdf_e9289708",
+        "filename": "third_party/WebKit/public/platform/origin_manifest.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-09-29T15:04:54Z",
+      "side": 1,
+      "message": "Hrm. This worries me a bit. Why do you want to keep the JSON string around? Shouldn\u0027t we discard it after we parse the manifest?",
+      "revId": "d54ac232577866be660827256c1c2dbb7672ce2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91c99a6d_d02c143b",
+        "filename": "third_party/WebKit/public/platform/origin_manifest.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-09-29T15:04:54Z",
+      "side": 1,
+      "message": "Nit: `ContentSecurityPolicy` \u003d\u003e `ManifestCSP`? We already have (several) \"ContentSecurityPolicy\" objects. Let\u0027s not add another with different characteristics. :)",
+      "revId": "d54ac232577866be660827256c1c2dbb7672ce2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a30de68_b9fbdd43",
+        "filename": "third_party/WebKit/public/platform/origin_manifest.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-09-29T15:04:54Z",
+      "side": 1,
+      "message": "I\u0027d prefer to avoid using a bool. Let\u0027s create an enum instead. Perhaps:\n\n```\nenum OverrideStatus {\n  OVERRIDEABLE,\n  NOT_OVERRIDEABLE\n};\n```\n\nThat\u0027s simpler to understand at the callsite than `true`.",
+      "revId": "d54ac232577866be660827256c1c2dbb7672ce2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c0b8179_efee54aa",
+        "filename": "third_party/WebKit/public/platform/origin_manifest.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-09-29T15:04:54Z",
+      "side": 1,
+      "message": "Nit: Likewise \"CORSPreflight\" \u003d\u003e \"ManifestPreflight\" or \"PreflightPolicy\" or something along those lines.",
+      "revId": "d54ac232577866be660827256c1c2dbb7672ce2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1851ac76_4885b9c7",
+        "filename": "third_party/WebKit/public/platform/origin_manifest.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-09-29T15:04:54Z",
+      "side": 1,
+      "message": "1. Why do you need two types here? This could just be `array\u003cstring\u003e nocredentials` and `array\u003cstring\u003e withcredentials`, right?\n2. As above, if these are origins, please prefer `array\u003curl.mojom.Origin\u003e`?",
+      "revId": "d54ac232577866be660827256c1c2dbb7672ce2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d763cc7_945b5e37",
+        "filename": "third_party/WebKit/public/platform/origin_manifest.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-09-29T15:04:54Z",
+      "side": 1,
+      "message": "As discussed elsewhere, the store should not be responsible for fetching the manifest.",
+      "revId": "d54ac232577866be660827256c1c2dbb7672ce2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05047bb3_eaca19c4",
+        "filename": "third_party/WebKit/public/platform/origin_manifest.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-09-29T15:04:54Z",
+      "side": 1,
+      "message": "Did you consider making this something more direct? That is, instead of passing a bunch of data down to the caller, perhaps the interface could be `ShouldWePreflightThisRequest(targetOrigin, withCredentials)`?\n\nI wonder if it actually makes more sense to put these getters on the `OriginManifest` itself. The store seems like a good place to obtain such an object, but I\u0027m not sure it makes sense to teach it to answer more detailed questions. I suppose you save a bit of inter-process bandwidth if you don\u0027t have to send a whole manifest down, so there might be good reason for this pattern, but it seems strange to me that you can\u0027t ask an `OriginManifest` similar questions.",
+      "revId": "d54ac232577866be660827256c1c2dbb7672ce2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
