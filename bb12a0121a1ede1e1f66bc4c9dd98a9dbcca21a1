@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "11636291_8b759469",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-09-29T22:40:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7eb15a70_c32fbd95",
+      "revId": "bb12a0121a1ede1e1f66bc4c9dd98a9dbcca21a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e1d3d23_371bbc15",
         "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "bb12a0121a1ede1e1f66bc4c9dd98a9dbcca21a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3720cf1_256099ae",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-09-29T22:40:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e1d3d23_371bbc15",
+      "revId": "bb12a0121a1ede1e1f66bc4c9dd98a9dbcca21a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9060cd8b_a4e17e36",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-09-29T22:40:35Z",
+      "side": 1,
+      "message": "That\u0027s nice in some ways, but the path of the handle becomes strange. Currently the browser makes a pipe and sends one end to each process. Whether a sandboxed process can make the pipe is complicated. If the profiling process called this, both ends would be sent to the profiling process, and then one end would get forwarded to the profiled process, and I think that operation would need to get brokered by the browser.\n\nI think I would prefer to leave it as-is.",
+      "parentUuid": "e27679bc_76a8d456",
+      "revId": "bb12a0121a1ede1e1f66bc4c9dd98a9dbcca21a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "931cfabf_d99f18f3",
         "filename": "chrome/common/profiling/memlog.mojom",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "bb12a0121a1ede1e1f66bc4c9dd98a9dbcca21a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a880bc28_0b2989a1",
+        "filename": "chrome/common/profiling/memlog.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-09-29T22:40:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "931cfabf_d99f18f3",
+      "revId": "bb12a0121a1ede1e1f66bc4c9dd98a9dbcca21a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -115,6 +187,24 @@
       "writtenOn": "2017-09-29T00:15:43Z",
       "side": 1,
       "message": "I think this is insufficient synchronization. Even if you copy AllocationEvents, they still contain raw pointers to Backtraces, which can be invalidated before they are used.",
+      "revId": "bb12a0121a1ede1e1f66bc4c9dd98a9dbcca21a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6221dec_795a82c1",
+        "filename": "chrome/profiling/allocation_tracker.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-09-29T22:40:35Z",
+      "side": 1,
+      "message": "Good catch!\n\nI added a backtrace storage lock mechanism. While a bit complicated, it allows us to remove the hacky connection locking code.",
+      "parentUuid": "93794b13_bcae5242",
       "revId": "bb12a0121a1ede1e1f66bc4c9dd98a9dbcca21a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
