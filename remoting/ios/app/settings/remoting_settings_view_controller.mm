@@ -127,6 +127,8 @@ static NSString* const kFeedbackContext = @"InSessionFeedbackContext";
   cell.detailTextLabel.textColor = RemotingTheme.menuTextColor;
   cell.detailTextLabel.numberOfLines = 1;
   cell.tintColor = RemotingTheme.menuBlueColor;
+  cell.isAccessibilityElement = YES;
+  cell.accessibilityLabel = setting.title;
 
   switch (setting.style) {
     case OptionCheckbox:
@@ -210,6 +212,8 @@ static NSString* const kFeedbackContext = @"InSessionFeedbackContext";
     supplementaryView.contentView.backgroundColor = RemotingTheme.menuBlueColor;
     supplementaryView.textLabel.text = _sections[(NSUInteger)indexPath.section];
     supplementaryView.textLabel.textColor = RemotingTheme.menuTextColor;
+    supplementaryView.isAccessibilityElement = YES;
+    supplementaryView.accessibilityLabel = supplementaryView.textLabel.text;
   }
   return supplementaryView;
 }
