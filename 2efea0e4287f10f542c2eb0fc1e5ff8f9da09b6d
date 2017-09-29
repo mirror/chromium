@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "74e9c029_e735c5a4",
+        "filename": "components/offline_pages/core/downloads/download_ui_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-09-29T22:28:25Z",
+      "side": 1,
+      "message": "Done. I feel having the bool is more readable...",
+      "parentUuid": "be14a548_1377f38d",
+      "range": {
+        "startLine": 192,
+        "startChar": 6,
+        "endLine": 192,
+        "endChar": 68
+      },
+      "revId": "2efea0e4287f10f542c2eb0fc1e5ff8f9da09b6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82330336_e17273e4",
         "filename": "components/offline_pages/core/downloads/download_ui_adapter.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "2efea0e4287f10f542c2eb0fc1e5ff8f9da09b6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e357910_b1a4822e",
+        "filename": "components/offline_pages/core/downloads/download_ui_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-09-29T22:28:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82330336_e17273e4",
+      "range": {
+        "startLine": 193,
+        "startChar": 6,
+        "endLine": 193,
+        "endChar": 24
+      },
+      "revId": "2efea0e4287f10f542c2eb0fc1e5ff8f9da09b6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
