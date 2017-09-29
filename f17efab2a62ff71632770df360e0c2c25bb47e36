@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ca356536_8e6f95ff",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1111839
+      },
+      "writtenOn": "2017-09-29T01:40:27Z",
+      "side": 1,
+      "message": "Correction:\n\"This adds a flag to guard SetPrimaryUserBluetoothPowerSetting if the power state change on adapter is initiated by Chrome in the first place, since the user preference has been saved. By SetPrimaryUserBluetoothPowerSetting, the following scenario can be prevented.\"",
+      "parentUuid": "e6f21a91_668550b8",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 8
+      },
+      "revId": "f17efab2a62ff71632770df360e0c2c25bb47e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a51532f3_ff0cfa36",
         "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.cc",
         "patchSetId": 2
