@@ -1159,9 +1159,11 @@ void RendererSchedulerImpl::UpdatePolicyLocked(UpdateType update_type) {
     if (RuntimeEnabledFeatures::StopLoadingInBackgroundAndroidEnabled())
       new_policy.loading_queue_policy().is_stopped = true;
   }
-  if (main_thread_only().renderer_paused) {
-    new_policy.loading_queue_policy().is_paused = true;
-    new_policy.timer_queue_policy().is_paused = true;
+}
+
+if (main_thread_only().renderer_paused) {
+  new_policy.loading_queue_policy().is_paused = true;
+  new_policy.timer_queue_policy().is_paused = true;
   }
 
   if (main_thread_only().renderer_backgrounded &&
@@ -1218,6 +1220,15 @@ void RendererSchedulerImpl::UpdatePolicyLocked(UpdateType update_type) {
       new_policy.rail_mode() != main_thread_only().current_policy.rail_mode()) {
     main_thread_only().rail_mode_observer->OnRAILModeChanged(
         new_policy.rail_mode());
+  }
+
+  // TODO(skyostil): send these notifications after releasing the scheduler
+  // lock.
+  if (new_policy.loading_queue_policy().is_stopped) {
+    for (WebViewSchedulerImpl* web_view_scheduler :
+         main_thread_only().web_view_schedulers) {
+      web_view_scheduler->OnStoppedInBackground();
+    }
   }
 
   if (new_policy.should_disable_throttling() !=
