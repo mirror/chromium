@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f9fd1c2_06d6cc54",
+        "filename": "ios/web_view/internal/signin/cwv_authentication_controller.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1160755
+      },
+      "writtenOn": "2017-09-29T09:58:22Z",
+      "side": 1,
+      "message": "Can be simplified to:\n[self tokenServiceProvider]-\u003eset_authentication_controller(self);",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 53
+      },
+      "revId": "acdbe348426b52b1509c0cd4e1fa60a1bb83d227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7956d65b_e6aaa48f",
+        "filename": "ios/web_view/internal/signin/cwv_authentication_controller.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1160755
+      },
+      "writtenOn": "2017-09-29T09:58:22Z",
+      "side": 1,
+      "message": "Do you mean !accountInfo.IsValid()?",
+      "range": {
+        "startLine": 62,
+        "startChar": 6,
+        "endLine": 62,
+        "endChar": 27
+      },
+      "revId": "acdbe348426b52b1509c0cd4e1fa60a1bb83d227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a89ca79_23975ad1",
+        "filename": "ios/web_view/internal/signin/cwv_authentication_controller.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1160755
+      },
+      "writtenOn": "2017-09-29T09:58:22Z",
+      "side": 1,
+      "message": "Can be simplified to:\n[self tokenServiceDelegate]-\u003eReloadCredentials(newAuthenticatedAccountID);",
+      "range": {
+        "startLine": 94,
+        "startChar": 2,
+        "endLine": 96,
+        "endChar": 69
+      },
+      "revId": "acdbe348426b52b1509c0cd4e1fa60a1bb83d227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ec81ee3_83afde0f",
+        "filename": "ios/web_view/internal/signin/cwv_authentication_controller.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1160755
+      },
+      "writtenOn": "2017-09-29T09:58:22Z",
+      "side": 1,
+      "message": "Can be simplified to:\nreturn static_cast\u003cWebViewProfileOAuth2TokenServiceIOSProviderImpl*\u003e(\n      [self tokenServiceDelegate]-\u003eGetProvider());",
+      "range": {
+        "startLine": 119,
+        "startChar": 2,
+        "endLine": 122,
+        "endChar": 43
+      },
+      "revId": "acdbe348426b52b1509c0cd4e1fa60a1bb83d227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5ece1d7_60b28ccc",
+        "filename": "ios/web_view/public/cwv_authentication_controller.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1160755
+      },
+      "writtenOn": "2017-09-29T09:58:22Z",
+      "side": 1,
+      "message": "Maybe clearer to say \"Causes an assertion failure\" or something? I rather thought this sentence means the opposite (it must be signed in as a different user).",
+      "range": {
+        "startLine": 31,
+        "startChar": 3,
+        "endLine": 31,
+        "endChar": 10
+      },
+      "revId": "acdbe348426b52b1509c0cd4e1fa60a1bb83d227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
