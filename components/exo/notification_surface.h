@@ -30,8 +30,8 @@ class NotificationSurface : public SurfaceTreeHost, public SurfaceObserver {
 
   const std::string& notification_key() const { return notification_key_; }
 
-  // Overridden from SurfaceDelegate:
-  void OnSurfaceCommit() override;
+  // Overridden from SurfaceTreeHost:
+  void OnSubmitCompositorFrame(bool has_contents) override;
 
   // Overridden from SurfaceObserver:
   void OnSurfaceDestroying(Surface* surface) override;

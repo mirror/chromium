@@ -152,13 +152,11 @@ gfx::NativeCursor Pointer::GetCursor() {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// SurfaceDelegate overrides:
+// SurfaceTreeHost overrides:
 
-void Pointer::OnSurfaceCommit() {
-  SurfaceTreeHost::OnSurfaceCommit();
-
+void Pointer::OnSubmitCompositorFrame(bool has_contents) {
   // Capture new cursor to reflect result of commit.
-  if (focus_surface_)
+  if (has_contents && focus_surface_)
     CaptureCursor(hotspot_);
 }
 

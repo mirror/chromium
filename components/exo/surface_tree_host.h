@@ -83,7 +83,6 @@ class SurfaceTreeHost : public SurfaceDelegate,
 
   // Overridden from SurfaceDelegate:
   void OnSurfaceCommit() override;
-  void OnSurfaceContentSizeChanged() override;
   bool IsSurfaceSynchronized() const override;
   void OnSetFrame(SurfaceFrameType type) override {}
 
@@ -103,6 +102,9 @@ class SurfaceTreeHost : public SurfaceDelegate,
 
   // Overridden from ui::ContextFactoryObserver:
   void OnLostResources() override;
+
+ protected:
+  virtual void OnSubmitCompositorFrame(bool has_contents) {}
 
  private:
   void SubmitCompositorFrame();

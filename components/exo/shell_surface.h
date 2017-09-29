@@ -228,7 +228,6 @@ class ShellSurface : public SurfaceTreeHost,
 
   // Overridden from SurfaceDelegate:
   void OnSurfaceCommit() override;
-  void OnSurfaceContentSizeChanged() override;
   void OnSetFrame(SurfaceFrameType type) override;
 
   // Overridden from SurfaceObserver:
@@ -307,6 +306,9 @@ class ShellSurface : public SurfaceTreeHost,
   struct Config;
   class ScopedConfigure;
   class ScopedAnimationsDisabled;
+
+  // Overridden from SurfaceTreeHost:
+  void OnSubmitCompositorFrame(bool has_contents) override;
 
   // Creates the |widget_| for |surface_|. |show_state| is the initial state
   // of the widget (e.g. maximized).
