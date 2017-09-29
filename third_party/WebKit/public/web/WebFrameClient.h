@@ -824,6 +824,25 @@ class BLINK_EXPORT WebFrameClient {
     return WebURL();
   }
 
+  // PluginController -----------------------------------------------------
+  // Creates a PluginController for the given HTMLPlugInElement.
+  virtual bool CreatePluginController(const WebElement&,
+                                      const WebURL&,
+                                      const WebString&) {
+    return false;
+  }
+
+  // Called to notify the controller when data is received in a PluginDocument.
+  virtual void DidReceiveDataInPluginDocument(const WebElement&,
+                                              const char*,
+                                              size_t) {}
+
+  // Returns a scriptable wrapper around the plugin element provided.
+  virtual v8::Local<v8::Object> V8ScriptableObject(const WebElement&,
+                                                   v8::Isolate*) {
+    return v8::Local<v8::Object>();
+  }
+
   // Loading --------------------------------------------------------------
 
   virtual std::unique_ptr<blink::WebURLLoader> CreateURLLoader(

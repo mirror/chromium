@@ -47,6 +47,7 @@
 #include "core/exported/WebDocumentLoaderImpl.h"
 #include "core/exported/WebPluginContainerImpl.h"
 #include "core/exported/WebViewImpl.h"
+#include "core/frame/Frame.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/frame/WebLocalFrameImpl.h"
@@ -88,6 +89,7 @@
 #include "public/web/WebAutofillClient.h"
 #include "public/web/WebDOMEvent.h"
 #include "public/web/WebDocument.h"
+#include "public/web/WebElement.h"
 #include "public/web/WebFormElement.h"
 #include "public/web/WebFrameClient.h"
 #include "public/web/WebNode.h"
@@ -1048,6 +1050,34 @@ void LocalFrameClientImpl::AnnotatedRegionsChanged() {
 
 void LocalFrameClientImpl::DidBlockFramebust(const KURL& url) {
   web_frame_->Client()->DidBlockFramebust(url);
+}
+
+bool LocalFrameClientImpl::CreatePluginFrame(HTMLPlugInElement* owner,
+                                             const KURL& completed_url,
+                                             const String& mime_type) {
+  LocalFrame* new_frame = web_frame_->CreateChildFrame("", owner);
+  if (!new_frame)
+    return false;
+
+  bool result = web_frame_->Client()->CreatePluginController(
+      owner, completed_url, mime_type);
+  if (!result)
+    new_frame->Detach(FrameDetachType::kRemove);
+
+  return result;
+}
+
+void LocalFrameClientImpl::DidReceiveDataInPluginDocument(
+    HTMLPlugInElement* owner,
+    const char* data,
+    size_t length) {
+  web_frame_->Client()->DidReceiveDataInPluginDocument(owner, data, length);
+}
+
+v8::Local<v8::Object> LocalFrameClientImpl::V8ScriptableObject(
+    HTMLPlugInElement* owner,
+    v8::Isolate* isolate) {
+  return web_frame_->Client()->V8ScriptableObject(owner, isolate);
 }
 
 }  // namespace blink

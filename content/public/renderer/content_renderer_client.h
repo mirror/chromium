@@ -37,12 +37,14 @@ namespace blink {
 class WebAudioDevice;
 class WebAudioLatencyHint;
 class WebClipboard;
+class WebElement;
 class WebFrame;
 class WebLocalFrame;
 class WebMIDIAccessor;
 class WebMIDIAccessorClient;
 class WebMediaStreamCenter;
 class WebMediaStreamCenterClient;
+class WebMimeHandlerViewManager;
 class WebPlugin;
 class WebPrescientNetworking;
 class WebRTCPeerConnectionHandler;
@@ -61,6 +63,13 @@ struct WebURLError;
 namespace media {
 class KeySystemProperties;
 }
+
+namespace v8 {
+class Isolate;
+template <class T>
+class Local;
+class Object;
+}  // namespace v8
 
 namespace content {
 class BrowserPluginDelegate;
@@ -97,6 +106,23 @@ class CONTENT_EXPORT ContentRendererClient {
       RenderFrame* render_frame,
       const blink::WebPluginParams& params,
       blink::WebPlugin** plugin);
+
+  // Creates a controller for the given plugin element. The controller will
+  // manage the frame owned by |plugin_element| to render the content in
+  // |completed_url|.
+  virtual bool CreatePluginController(const blink::WebElement& plugin_element,
+                                      const GURL& completed_url,
+                                      const std::string& mime_type);
+  // Called when a document of type PluginDocument receives data.
+  virtual void DidReceiveDataInPluginDocument(
+      const blink::WebElement& plugin_element,
+      const char* data,
+      size_t length) {}
+  // Returns a scrtipable object which wraps the required API for
+  // |plugin_element|.
+  virtual v8::Local<v8::Object> V8ScriptableObject(
+      const blink::WebElement& plugin_element,
+      v8::Isolate* isolate);
 
   // Creates a replacement plugin that is shown when the plugin at |file_path|
   // couldn't be loaded. This allows the embedder to show a custom placeholder.
@@ -374,6 +400,11 @@ class CONTENT_EXPORT ContentRendererClient {
   // Overwrites the given URL to use an HTML5 embed if possible.
   // An empty URL is returned if the URL is not overriden.
   virtual GURL OverrideFlashEmbedWithHTML(const GURL& url);
+
+  // Creates and returns a new instance of WebMimeHandlerViewManager for
+  // |render_frame|.
+  virtual blink::WebMimeHandlerViewManager* CreateMimeHandlerViewManager(
+      RenderFrame* render_frame) const;
 
   // Provides parameters for initializing the global task scheduler. Default
   // params are used if this returns nullptr.

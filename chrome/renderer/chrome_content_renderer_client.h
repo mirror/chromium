@@ -49,6 +49,10 @@ class SpellCheck;
 
 struct ChromeViewHostMsg_GetPluginInfo_Output;
 
+namespace blink {
+class WebElement;
+}
+
 namespace content {
 class BrowserPluginDelegate;
 struct WebPluginInfo;
@@ -77,6 +81,13 @@ class PhishingClassifierFilter;
 namespace subresource_filter {
 class UnverifiedRulesetDealer;
 }
+
+namespace v8 {
+class Isolate;
+template <class T>
+class Local;
+class Object;
+}  // namespace v8
 
 namespace web_cache {
 class WebCacheImpl;
@@ -119,6 +130,16 @@ class ChromeContentRendererClient : public content::ContentRendererClient {
   bool OverrideCreatePlugin(content::RenderFrame* render_frame,
                             const blink::WebPluginParams& params,
                             blink::WebPlugin** plugin) override;
+  bool CreatePluginController(const blink::WebElement& plugin_element,
+                              const GURL& completed_url,
+                              const std::string& mime_type) override;
+  void DidReceiveDataInPluginDocument(const blink::WebElement& plugin_element,
+                                      const char* data,
+                                      size_t length) override;
+  v8::Local<v8::Object> V8ScriptableObject(
+      const blink::WebElement& plugin_element,
+      v8::Isolate* isolate) override;
+
   blink::WebPlugin* CreatePluginReplacement(
       content::RenderFrame* render_frame,
       const base::FilePath& plugin_path) override;

@@ -431,6 +431,15 @@ class CONTENT_EXPORT RenderFrameImpl
                       const ContextMenuParams& params) override;
   void CancelContextMenu(int request_id) override;
   void BindToFrame(blink::WebLocalFrame* frame) override;
+  bool CreatePluginController(const blink::WebElement& owner_element,
+                              const blink::WebURL& completed_url,
+                              const blink::WebString& mime_type) override;
+  void DidReceiveDataInPluginDocument(const blink::WebElement& owner_element,
+                                      const char* data,
+                                      size_t length) override;
+  v8::Local<v8::Object> V8ScriptableObject(const blink::WebElement&,
+                                           v8::Isolate*) override;
+
   blink::WebPlugin* CreatePlugin(
       const WebPluginInfo& info,
       const blink::WebPluginParams& params,

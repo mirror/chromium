@@ -354,6 +354,30 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
   virtual void AnnotatedRegionsChanged() = 0;
 
   virtual void DidBlockFramebust(const KURL&) {}
+
+  // PluginFrames --------------------------------------------------------------
+
+  // Creates a plugin frame for the given HTMLPluginElement. The plugin frame
+  // will render the contents in the given URL using external handlers. Returns
+  // true if successful.
+  virtual bool CreatePluginFrame(HTMLPlugInElement*,
+                                 const KURL&,
+                                 const String&) {
+    return false;
+  }
+
+  // Called by the PluginDocument when it receives data. This data is forwarded
+  // to the controller for the plugin element's content frame.
+  virtual void DidReceiveDataInPluginDocument(HTMLPlugInElement*,
+                                              const char*,
+                                              size_t) {}
+
+  // Asks the controller for the plugin element for a wrapper object to provide
+  // custom scripting for the plugin.
+  virtual v8::Local<v8::Object> V8ScriptableObject(HTMLPlugInElement*,
+                                                   v8::Isolate*) {
+    return v8::Local<v8::Object>();
+  }
 };
 
 }  // namespace blink

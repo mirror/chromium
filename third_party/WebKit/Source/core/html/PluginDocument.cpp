@@ -149,8 +149,14 @@ void PluginDocumentParser::AppendBytes(const char* data, size_t length) {
 
   if (!length)
     return;
-  if (PluginView* view = GetPluginView())
+
+  if (embed_element_->ContentFrame() &&
+      embed_element_->ContentFrame()->IsPluginFrame()) {
+    GetDocument()->GetFrame()->Client()->DidReceiveDataInPluginDocument(
+        embed_element_, data, length);
+  } else if (PluginView* view = GetPluginView()) {
     view->DidReceiveData(data, length);
+  }
 }
 
 void PluginDocumentParser::Finish() {
