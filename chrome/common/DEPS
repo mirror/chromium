@@ -42,6 +42,7 @@ include_rules = [
   "+ppapi/shared_impl",
   "+ppapi/thunk",
   "+rlz/features/features.h",
+  "+services/service_manager",
   "+sandbox/linux/services/credentials.h",
   "+third_party/boringssl/src/include",
   "+third_party/WebKit/public/platform/web_client_hints_types.mojom.h",

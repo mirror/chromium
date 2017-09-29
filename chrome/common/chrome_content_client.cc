@@ -53,6 +53,7 @@
 #include "net/http/http_util.h"
 #include "pdf/features.h"
 #include "ppapi/features/features.h"
+#include "services/service_manager/sandbox/mac/nacl_loader.sb.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/layout.h"
 #include "ui/base/resource/resource_bundle.h"
@@ -687,11 +688,11 @@ std::string ChromeContentClient::GetProcessTypeNameInEnglish(int type) {
 #if defined(OS_MACOSX)
 bool ChromeContentClient::GetSandboxProfileForSandboxType(
     int sandbox_type,
-    int* sandbox_profile_resource_id) const {
+    const char** sandbox_profile_resource_id) const {
   DCHECK(sandbox_profile_resource_id);
 #if BUILDFLAG(ENABLE_NACL)
   if (sandbox_type == NACL_SANDBOX_TYPE_NACL_LOADER) {
-    *sandbox_profile_resource_id = IDR_NACL_SANDBOX_PROFILE;
+    *sandbox_profile = service_manager : g_policy_string_nacl_loader;
     return true;
   }
 #endif
