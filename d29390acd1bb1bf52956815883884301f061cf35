@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6687827d_bf561f4f",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-format-collections-expected.txt",
+        "patchSetId": 12
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-09-29T00:08:31Z",
+      "side": 1,
+      "message": "I think we should, too!  Such might even help reduce confusion from errors like \u0027document.body.childNodes.map\u0027.\n\ncrbug.com/769998",
+      "parentUuid": "4d4743d4_6ccd4286",
+      "range": {
+        "startLine": 5,
+        "startChar": 33,
+        "endLine": 5,
+        "endChar": 71
+      },
+      "revId": "d29390acd1bb1bf52956815883884301f061cf35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd7fc459_ef8d49d8",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-links-on-messages-before-inspection-expected.txt",
         "patchSetId": 12
