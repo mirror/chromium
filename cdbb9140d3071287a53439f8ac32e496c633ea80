@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b903c56_7e16850e",
+        "filename": "third_party/WebKit/Source/core/exported/WorkerShadowPage.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-29T23:09:00Z",
+      "side": 1,
+      "message": "Please remove this and the GetInterfaceProvider() override (and clean up any overrides that aren\u0027t needed now that we have it in the base impl)",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 48
+      },
+      "revId": "cdbb9140d3071287a53439f8ac32e496c633ea80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
