@@ -9,4 +9,5 @@ include_rules = [
   # available to code in content/public.
   "+content/common/content_export.h",
   "+content/public/common",
+  "+content/public/network/network_service.h"
 ]
