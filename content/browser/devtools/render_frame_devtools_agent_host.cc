@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 #include "content/browser/devtools/render_frame_devtools_agent_host.h"
-
+#include "base/debug/stack_trace.h"
 #include <tuple>
 #include <utility>
 
@@ -665,6 +665,7 @@ void RenderFrameDevToolsAgentHost::ReadyToCommitNavigation(
 
   // UpdateFrameHost may destruct |this|.
   scoped_refptr<RenderFrameDevToolsAgentHost> protect(this);
+  fprintf(stderr, "[%p / %p] ReadyToCommitNavigation: %p\n", this, frame_host_, handle->GetRenderFrameHost());
   UpdateFrameHost(handle->GetRenderFrameHost());
   DCHECK(CheckConsistency());
 }
@@ -698,8 +699,10 @@ void RenderFrameDevToolsAgentHost::DidFinishNavigation(
 
   // UpdateFrameHost may destruct |this|.
   scoped_refptr<RenderFrameDevToolsAgentHost> protect(this);
-  if (handle->HasCommitted() && !handle->IsErrorPage())
+  if (handle->HasCommitted() && !handle->IsErrorPage()) {
+    fprintf(stderr, "[%p / %p] DidFinishNavigation: %p\n", this, frame_host_, handle->GetRenderFrameHost());
     UpdateFrameHost(handle->GetRenderFrameHost());
+  }
   DCHECK(CheckConsistency());
   if (navigation_handles_.empty()) {
     for (auto& pair : suspended_messages_by_session_id_) {
@@ -725,6 +728,7 @@ void RenderFrameDevToolsAgentHost::DidFinishNavigation(
 
 void RenderFrameDevToolsAgentHost::UpdateFrameHost(
     RenderFrameHostImpl* frame_host) {
+  fprintf(stderr, "[%p / %p] UpdateFrameHost: %p\n", this, frame_host_, frame_host);
   if (frame_host == frame_host_) {
     if (frame_host && !render_frame_alive_) {
       render_frame_alive_ = true;
@@ -857,6 +861,7 @@ void RenderFrameDevToolsAgentHost::DidStartNavigation(
 void RenderFrameDevToolsAgentHost::RenderFrameHostChanged(
     RenderFrameHost* old_host,
     RenderFrameHost* new_host) {
+  fprintf(stderr, "[%p / %p] RenderFrameHostChanged: %p -> %p\n", this, frame_host_, old_host, new_host);
   for (auto* target : protocol::TargetHandler::ForAgentHost(this))
     target->RenderFrameHostChanged();
 
