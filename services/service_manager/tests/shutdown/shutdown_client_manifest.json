@@ -1,6 +1,7 @@
 {
   "name": "shutdown_client",
   "display_name": "Shutdown Client",
+  "sandbox_type": "none",
   "interface_provider_specs": {
     "service_manager:connector": {
       "provides": {

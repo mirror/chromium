@@ -1,6 +1,7 @@
 {
   "name": "media",
   "display_name": "Media Service",
+  "sandbox_type": "none",
   "interface_provider_specs": {
     "service_manager:connector": {
       "provides": {

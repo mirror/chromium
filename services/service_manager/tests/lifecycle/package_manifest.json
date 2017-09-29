@@ -1,6 +1,7 @@
 {
   "name": "lifecycle_unittest_package",
   "display_name": "Lifecycle Unittest Package",
+  "sandbox_type": "none",
   "interface_provider_specs": {
     "service_manager:connector": {
       "provides": {

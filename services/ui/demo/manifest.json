@@ -1,6 +1,7 @@
 {
   "name": "mus_demo",
   "display_name": "MUS Demo",
+  "sandbox_type": "none",
   "interface_provider_specs": {
     "service_manager:connector": {
       "requires": {

@@ -1,6 +1,7 @@
 {
   "name": "resource_coordinator",
   "display_name": "Global Resource Coordinator",
+  "sandbox_type": "none",
   "interface_provider_specs": {
     "service_manager:connector": {
       "provides": {
