@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8ec17702_aa4d8af7",
+        "filename": "net/tools/print_certificates.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-09-29T21:24:29Z",
+      "side": 1,
+      "message": "So confusing. I guess at this point the file is already at the \"maintain internal consistency\" point, unless someone cares to go through and fix all the names.",
+      "parentUuid": "a6bcbda4_6402bb9e",
+      "revId": "d2e4c07c219ae03254c7ee06185d63b8de38b8fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c8bdfc9b_c1dccaf4",
         "filename": "net/tools/print_certificates.py",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2b2bb2fb_8ae85da9",
+        "filename": "net/tools/print_certificates.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-09-29T21:24:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8bdfc9b_c1dccaf4",
+      "revId": "d2e4c07c219ae03254c7ee06185d63b8de38b8fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5602a2d7_78203df2",
         "filename": "net/tools/print_certificates.py",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-29T20:38:35Z",
       "side": 1,
       "message": "I didn\u0027t review the logic of this too carefully.\nWe may want to add unit-tests at some point for print_certificates.py",
+      "revId": "d2e4c07c219ae03254c7ee06185d63b8de38b8fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc7ad64e_a5ac90e3",
+        "filename": "net/tools/print_certificates.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-09-29T21:24:29Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s not a bad idea. May look into that at some point.",
+      "parentUuid": "5602a2d7_78203df2",
       "revId": "d2e4c07c219ae03254c7ee06185d63b8de38b8fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -73,6 +127,30 @@
       "revId": "d2e4c07c219ae03254c7ee06185d63b8de38b8fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "651cfcf1_b5cd77fd",
+        "filename": "net/tools/print_certificates.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-09-29T21:24:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0c2aadc_b04bb67c",
+      "range": {
+        "startLine": 275,
+        "startChar": 13,
+        "endLine": 275,
+        "endChar": 19
+      },
+      "revId": "d2e4c07c219ae03254c7ee06185d63b8de38b8fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
