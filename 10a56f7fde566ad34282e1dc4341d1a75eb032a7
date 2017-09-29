@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eab3cffe_d698a2fd",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-29T17:31:04Z",
+      "side": 1,
+      "message": "Seeding repeatedly is generally a bad idea, especially since this function is called many times within the same second (the seed value being in seconds) and so will generate the same random number.",
+      "revId": "10a56f7fde566ad34282e1dc4341d1a75eb032a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9800e0b8_38e21e67",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-29T17:31:04Z",
+      "side": 1,
+      "message": "I think you could allow including base/rand_util.h and use base::RandInt.",
+      "range": {
+        "startLine": 60,
+        "startChar": 28,
+        "endLine": 60,
+        "endChar": 58
+      },
+      "revId": "10a56f7fde566ad34282e1dc4341d1a75eb032a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8881308d_54147445",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-29T17:31:04Z",
+      "side": 1,
+      "message": "For subsequent frames it\u0027d be nice to re-use the number of expected paints from the previous frame. This way if we typically only have 5 paint calls we still switch and if we often have hundreds of paint calls we switch roughly half-way through them. I don\u0027t think it\u0027s necessary initially but can you leave a TODO for this?",
+      "range": {
+        "startLine": 66,
+        "startChar": 47,
+        "endLine": 66,
+        "endChar": 69
+      },
+      "revId": "10a56f7fde566ad34282e1dc4341d1a75eb032a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42aa5961_25bef1ca",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-29T17:31:04Z",
+      "side": 1,
+      "message": "Randomly choosing a new count to switch after every single time means that we will switch very quickly. I think you should set and save this once each new frame.",
+      "revId": "10a56f7fde566ad34282e1dc4341d1a75eb032a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df258e41_6d40eccd",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-29T17:31:04Z",
+      "side": 1,
+      "message": "Rather than have a separate bool and a counter of paints how about we have a number that we decrement towards 0 and when it first reaches 0 we switch, otherwise we keep it the same? Alternately, you are guaranteed to see every single integer so you don\u0027t need \u003e\u003d because the increment of paint count is within this function.",
+      "range": {
+        "startLine": 67,
+        "startChar": 9,
+        "endLine": 67,
+        "endChar": 33
+      },
+      "revId": "10a56f7fde566ad34282e1dc4341d1a75eb032a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dba4ec0_3ac28c00",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-29T17:31:04Z",
+      "side": 1,
+      "message": "We could just select randomly again. It will not always switch but will switch often enough to be unpredictable and extends to an arbitrary number of global scopes.",
+      "revId": "10a56f7fde566ad34282e1dc4341d1a75eb032a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52b9a391_83f152cb",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-29T17:31:04Z",
+      "side": 1,
+      "message": "It\u0027s not clear what this means. I\u0027d suggest a more descriptive name such as:\npaints_before_switching_global_scope_",
+      "revId": "10a56f7fde566ad34282e1dc4341d1a75eb032a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
