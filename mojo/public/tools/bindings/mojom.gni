@@ -14,6 +14,10 @@ declare_args() {
   enable_mojom_typemapping = true
 }
 
+# NOTE: We would like to avoid scrambling message IDs where it doesn't add
+# value, so we limit the behavior to Mac and Windows desktop builds for now.
+enable_scrambled_message_ids = is_mac || is_win
+
 mojom_generator_root = "//mojo/public/tools/bindings"
 mojom_generator_script = "$mojom_generator_root/mojom_bindings_generator.py"
 mojom_generator_sources = [
@@ -35,6 +39,12 @@ mojom_generator_sources = [
   "$mojom_generator_root/pylib/mojom/parse/parser.py",
   "$mojom_generator_script",
 ]
+
+if (enable_scrambled_message_ids) {
+  scrambled_message_id_salt_path = "//chrome/VERSION"
+
+  mojom_generator_sources += [ scrambled_message_id_salt_path ]
+}
 
 generate_export_header_script =
     "$mojom_generator_root/generate_export_header.py"
@@ -184,6 +194,10 @@ if (enable_mojom_typemapping) {
 #       be serialized and deserialized using a legacy IPC::ParamTraits
 #       specialization.
 #
+#   scramble_message_ids (optional)
+#       If set to |true| (the default), generated mojom interfaces will use
+#       scrambled ordinal identifiers in encoded messages.
+#
 #   component_output_prefix (optional)
 #       The prefix to use for the output_name of any component library emitted
 #       for generated C++ bindings. If this is omitted, C++ bindings targets are
@@ -322,6 +336,17 @@ template("mojom") {
       "--bytecode_path",
       rebase_path("$root_gen_dir/mojo/public/tools/bindings", root_build_dir),
     ]
+
+    if (!defined(invoker.scramble_message_ids) || invoker.scramble_message_ids) {
+      # Scramble message IDs if enabled, unless the target has explicitly opted
+      # out.
+      if (enable_scrambled_message_ids) {
+        common_generator_args += [
+          "--scrambled_message_id_salt_path",
+          rebase_path(scrambled_message_id_salt_path, root_build_dir),
+        ]
+      }
+    }
 
     if (!defined(invoker.allow_native_structs) || invoker.allow_native_structs) {
       common_generator_args += [ "--allow_native_structs" ]
