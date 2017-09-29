@@ -1649,6 +1649,11 @@ void TraceLog::UpdateETWCategoryGroupEnabledFlags() {
 }
 #endif  // defined(OS_WIN)
 
+void TraceLog::SetTraceBufferForTesting(
+    std::unique_ptr<TraceBuffer> trace_buffer) {
+  logged_events_ = std::move(trace_buffer);
+}
+
 void ConvertableToTraceFormat::EstimateTraceMemoryOverhead(
     TraceEventMemoryOverhead* overhead) {
   overhead->Add(TraceEventMemoryOverhead::kConvertableToTraceFormat,
