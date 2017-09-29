@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64890c5d_3c7099ae",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaStream.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-29T14:53:18Z",
+      "side": 1,
+      "message": "nit: Rename to TracksMatchDescriptor() or DescriptorMatchesTracks()",
+      "range": {
+        "startLine": 225,
+        "startChar": 18,
+        "endLine": 225,
+        "endChar": 41
+      },
+      "revId": "5114a7441db260022537d3dbe52b77555c4c9cc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9836919_e2443045",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1460,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-29T14:53:18Z",
+      "side": 1,
+      "message": "Add a comment here explaining why a MediaStream is not created directly from the WebMediaStream.\nFrom the CL description, it looks like there is a difference in the order events are triggered, so if that\u0027s true, mention it here and add a test that would fail with the old code and pass with the new one.\n\nIf there is really no difference, then I think it\u0027s better to revert to the old code for this particular function, and maybe just mention the corresponding follow-up CL that actually uses this in the description.",
+      "range": {
+        "startLine": 1460,
+        "startChar": 2,
+        "endLine": 1460,
+        "endChar": 11
+      },
+      "revId": "5114a7441db260022537d3dbe52b77555c4c9cc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
