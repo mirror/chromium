@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1c91071_c9231059",
+        "filename": "chrome/browser/policy/cloud/component_cloud_policy_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-09-29T19:12:28Z",
+      "side": 0,
+      "message": "Already called on line 125.",
+      "range": {
+        "startLine": 143,
+        "startChar": 46,
+        "endLine": 143,
+        "endChar": 0
+      },
+      "revId": "3caef7b900b16af22a5eba78a27aef5516011e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
