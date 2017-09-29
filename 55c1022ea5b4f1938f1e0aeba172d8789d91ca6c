@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7400ba69_6b80fc6c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T00:54:53Z",
+      "side": 1,
+      "message": "Instead of storing a local variable, you can create the controller and call init on it here.",
+      "range": {
+        "startLine": 499,
+        "startChar": 12,
+        "endLine": 499,
+        "endChar": 84
+      },
+      "revId": "55c1022ea5b4f1938f1e0aeba172d8789d91ca6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a4b14fb_ef605183",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T00:54:53Z",
+      "side": 1,
+      "message": "Instead of having a #kickoffSurveyProcess(), let\u0027s just do these things in the constructor.",
+      "range": {
+        "startLine": 26,
+        "startChar": 16,
+        "endLine": 26,
+        "endChar": 36
+      },
+      "revId": "55c1022ea5b4f1938f1e0aeba172d8789d91ca6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9611f944_6835d3ae",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T00:54:53Z",
+      "side": 1,
+      "message": "The command line flag typically takes precedence over the field trial. Let\u0027s put this in an else block:\n\nif (hasSwitch) {\n   surveyId \u003d getSwitchValue\n} else {\n   surveyId \u003d ..\n}",
+      "range": {
+        "startLine": 35,
+        "startChar": 12,
+        "endLine": 35,
+        "endChar": 95
+      },
+      "revId": "55c1022ea5b4f1938f1e0aeba172d8789d91ca6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83416edf_e516bdd7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T00:54:53Z",
+      "side": 1,
+      "message": "Is there ever a time where we\u0027d want to initialize the controller but not download the survey? If not, call #downloadSurvey from the initCont",
+      "range": {
+        "startLine": 39,
+        "startChar": 12,
+        "endLine": 39,
+        "endChar": 67
+      },
+      "revId": "55c1022ea5b4f1938f1e0aeba172d8789d91ca6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb4f04bc_cf51e1bd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T00:54:53Z",
+      "side": 1,
+      "message": "Is there ever a time where we\u0027d want to initialize the controller but not download the survey? If not, let\u0027s call #downloadSurvey from the initController().",
+      "range": {
+        "startLine": 39,
+        "startChar": 12,
+        "endLine": 39,
+        "endChar": 67
+      },
+      "revId": "55c1022ea5b4f1938f1e0aeba172d8789d91ca6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12c849ac_0201be15",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/SurveyController.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T00:54:53Z",
+      "side": 1,
+      "message": "The JavaDocs should say more about how to use this class e.g. method that are expected to be called, the order they need to called in.",
+      "range": {
+        "startLine": 15,
+        "startChar": 3,
+        "endLine": 15,
+        "endChar": 57
+      },
+      "revId": "55c1022ea5b4f1938f1e0aeba172d8789d91ca6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce863b53_0edd68f0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/SurveyController.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T00:54:53Z",
+      "side": 1,
+      "message": "While we currently only have one survey, and likely will only show one survey at a time, I think this could be architected a bit more clearly/cleanly. The SurveyController seems like a global class that facilitates hooking into our survey provider internally. In this regard, it seems odd for the SurveyController to be stateful. Currently it\u0027s possible for some one to call #initialize(), then another class to call #initialize() and trash the state from the previous call.\n\n\nWhat if we had all of the methods accept the parameters they need? This class would become:\n\npublic static SurveyController getInstance() {}\n\npublic void downloadSurvey(Context context, int surveyId, int advertisingId, Callback onSurveyAvailableCallback) {}\n\npublic void showSurveyIfAvailable(Activity activity, int surveyId, boolean showAsBottomSheet, int displayLogo) {}\n\npublic void clearCache(Context context) {}\n\n\nAlso, are there any parameters for showing/downloading the survey that are optional? If so, we should mention that in the JavaDoc and indicate what should be passed in if the user doesn\u0027t have an X to provide (e.g. 0 for displayLogo).",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 29
+      },
+      "revId": "55c1022ea5b4f1938f1e0aeba172d8789d91ca6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c2b216e_8a746a50",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/SurveyController.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T00:54:53Z",
+      "side": 1,
+      "message": "How about just initialize() for the method name? Or downloadSurvey(), since that\u0027s really what we\u0027re doing (setting things up and downloading the survey).",
+      "range": {
+        "startLine": 56,
+        "startChar": 16,
+        "endLine": 56,
+        "endChar": 30
+      },
+      "revId": "55c1022ea5b4f1938f1e0aeba172d8789d91ca6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
