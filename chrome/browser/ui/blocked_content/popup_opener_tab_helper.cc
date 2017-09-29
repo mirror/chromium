@@ -8,10 +8,9 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/time/default_tick_clock.h"
 #include "chrome/browser/ui/blocked_content/scoped_visibility_tracker.h"
+#include "chrome/browser/ui/blocked_content/tab_under_navigation_throttle.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/web_contents.h"
-#include "url/gurl.h"
-#include "url/origin.h"
 
 DEFINE_WEB_CONTENTS_USER_DATA_KEY(PopupOpenerTabHelper);
 
@@ -30,12 +29,16 @@ PopupOpenerTabHelper::~PopupOpenerTabHelper() {
 }
 
 void PopupOpenerTabHelper::OnOpenedPopup(PopupTracker* popup_tracker) {
-  if (!visibility_tracker_) {
-    // Should still have clock ownership, since it is passed to the visibility
-    // tracker when that is instantiated.
-    DCHECK(tick_clock_);
-    last_popup_open_time_before_redirect_ = tick_clock_->NowTicks();
-  }
+  last_popup_open_time_ = tick_clock_->NowTicks();
+  if (!visibility_tracker_)
+    last_popup_open_time_before_redirect_ = last_popup_open_time_;
+}
+
+base::Optional<base::TimeDelta> PopupOpenerTabHelper::TimeSinceLastPopup()
+    const {
+  if (last_popup_open_time_.is_null())
+    return base::Optional<base::TimeDelta>();
+  return tick_clock_->NowTicks() - last_popup_open_time_;
 }
 
 PopupOpenerTabHelper::PopupOpenerTabHelper(content::WebContents* web_contents)
@@ -59,25 +62,11 @@ void PopupOpenerTabHelper::DidFinishNavigation(
     return;
 
   size_t num_erased = pending_background_navigations_.erase(navigation_handle);
-  if (!num_erased || !navigation_handle->HasCommitted() ||
-      navigation_handle->IsErrorPage()) {
-    return;
-  }
-
-  // Only consider navigations without a user gesture.
-  if (navigation_handle->HasUserGesture())
+  if (!navigation_handle->HasCommitted() || navigation_handle->IsErrorPage())
     return;
 
-  // An empty previous URL indicates this was the first load. We filter these
-  // out because we're primarily interested in sites which navigate themselves
-  // away while in the background.
-  const GURL& previous_main_frame_url = navigation_handle->GetPreviousURL();
-  if (previous_main_frame_url.is_empty())
-    return;
-
-  // Only track cross-origin navigations.
-  if (url::Origin(previous_main_frame_url)
-          .IsSameOriginWith(url::Origin(navigation_handle->GetURL()))) {
+  if (!TabUnderNavigationThrottle::IsSuspiciousClientRedirect(
+          navigation_handle, num_erased != 0 /* started_in_background */)) {
     return;
   }
 
@@ -91,7 +80,7 @@ void PopupOpenerTabHelper::DidFinishNavigation(
   }
 
   visibility_tracker_ = base::MakeUnique<ScopedVisibilityTracker>(
-      std::move(tick_clock_), false /* is_visible */);
+      tick_clock_.get(), false /* is_visible */);
   pending_background_navigations_.clear();
 }
 
