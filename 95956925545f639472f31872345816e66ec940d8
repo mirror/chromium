@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b5df464_13ab3414",
+        "filename": "components/offline_pages/core/model/temporary_consistency_check_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-09-29T22:01:01Z",
+      "side": 1,
+      "message": "drive by:  A comment would be helpful here:\n// Delete any files that no longer have an entry in the offline pages database.",
+      "range": {
+        "startLine": 124,
+        "startChar": 34,
+        "endLine": 124,
+        "endChar": 47
+      },
+      "revId": "95956925545f639472f31872345816e66ec940d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
