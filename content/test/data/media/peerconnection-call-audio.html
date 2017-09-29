@@ -163,7 +163,7 @@
   }
 
   function createConnection(constraints, remoteView) {
-    var pc = new webkitRTCPeerConnection(null, constraints);
+    var pc = new RTCPeerConnection(null, constraints);
     pc.onaddstream = function(event) {
       onRemoteStream(event, remoteView);
     }
