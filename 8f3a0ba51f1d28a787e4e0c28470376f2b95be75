@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "db1240a0_ad81d34a",
+        "filename": "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-09-29T17:08:09Z",
+      "side": 1,
+      "message": "No, it\u0027s doing the same thing.",
+      "parentUuid": "295c1c92_a95cf194",
+      "revId": "8f3a0ba51f1d28a787e4e0c28470376f2b95be75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89e60342_38003153",
         "filename": "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_controller.h",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-28T19:24:43Z",
       "side": 1,
       "message": "I think this method needs a better name or a different argument. -invalidate* usually doesn\u0027t take an argument, or if it did, it would be \"YES, invalidate; or NO, do not invalidate.\"",
+      "revId": "8f3a0ba51f1d28a787e4e0c28470376f2b95be75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ec2949a_8e2a9089",
+        "filename": "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-09-29T17:08:09Z",
+      "side": 1,
+      "message": "How about now?",
+      "parentUuid": "89e60342_38003153",
       "revId": "8f3a0ba51f1d28a787e4e0c28470376f2b95be75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "8f3a0ba51f1d28a787e4e0c28470376f2b95be75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "329f1bc2_e37a19b7",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 29006,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-09-29T17:08:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3022620d_d9566e96",
+      "revId": "8f3a0ba51f1d28a787e4e0c28470376f2b95be75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
