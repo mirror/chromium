@@ -52,6 +52,24 @@
       "revId": "6697e3e061851d8fddbb48d3989c0349a648ffbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e3f0d309_0dc6b859",
+        "filename": "device/bluetooth/test/fake_central.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-09-29T17:20:27Z",
+      "side": 1,
+      "message": "(please add comments at all the static_cast points)",
+      "parentUuid": "00c3b9a5_4ea12357",
+      "revId": "6697e3e061851d8fddbb48d3989c0349a648ffbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
