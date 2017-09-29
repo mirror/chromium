@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fe7c52e_ad746c8b",
+        "filename": "ash/display/mirror_window_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-09-29T15:29:21Z",
+      "side": 1,
+      "message": "Can\u0027t the gfx::Point version of the code use the ::PointF version to avoid code duplication?",
+      "revId": "d55d4ffe77f0c038dfbcbc0a2d268963f98abb33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fd5cb3f_9530159c",
+        "filename": "ash/display/screen_position_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-09-29T15:29:21Z",
+      "side": 1,
+      "message": "Same here: calculate gfx::Point from ::PointF?",
+      "revId": "d55d4ffe77f0c038dfbcbc0a2d268963f98abb33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb1e94c7_1532e704",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1133,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-09-29T15:29:21Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "d55d4ffe77f0c038dfbcbc0a2d268963f98abb33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cefac173_4fa98f16",
+        "filename": "ui/wm/core/default_screen_position_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-09-29T15:29:21Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "d55d4ffe77f0c038dfbcbc0a2d268963f98abb33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
