@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3950051a_a6ef065b",
+        "filename": "net/tools/print_certificates.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-09-29T01:27:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf5ae035_60bb9bd2",
+      "revId": "4233d33d0dae3c6974c8702047fdc0781f92bb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54061ab7_04dc238c",
         "filename": "net/tools/print_certificates.py",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "3d888709_c50ef85c",
+        "filename": "net/tools/print_certificates.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-09-29T01:27:29Z",
+      "side": 1,
+      "message": "Done (though I ended up special casing the der output mode to avoid adding newlines, and to only output a single cert)",
+      "parentUuid": "54061ab7_04dc238c",
+      "range": {
+        "startLine": 144,
+        "startChar": 17,
+        "endLine": 144,
+        "endChar": 24
+      },
+      "revId": "4233d33d0dae3c6974c8702047fdc0781f92bb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76a7da36_cd713f54",
         "filename": "net/tools/print_certificates.py",
         "patchSetId": 2
@@ -56,6 +98,24 @@
       "revId": "4233d33d0dae3c6974c8702047fdc0781f92bb65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99dab454_3f25b691",
+        "filename": "net/tools/print_certificates.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-09-29T01:27:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76a7da36_cd713f54",
+      "revId": "4233d33d0dae3c6974c8702047fdc0781f92bb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
