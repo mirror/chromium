@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa97f838_55fad34b",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-29T19:41:24Z",
+      "side": 1,
+      "message": "Please add a comment to this factor to make clear what it does.",
+      "range": {
+        "startLine": 39,
+        "startChar": 16,
+        "endLine": 39,
+        "endChar": 42
+      },
+      "revId": "84bf39378f4c8cb0fda041f4b467f749db4ad4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf316843_b327a31f",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-29T19:41:24Z",
+      "side": 1,
+      "message": "Call this view_scale_factor_ to be in line with the kDefaultViewScaleFactor, etc.?",
+      "range": {
+        "startLine": 48,
+        "startChar": 6,
+        "endLine": 48,
+        "endChar": 24
+      },
+      "revId": "84bf39378f4c8cb0fda041f4b467f749db4ad4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "977d7d84_0a9b3e7d",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-29T19:41:24Z",
+      "side": 1,
+      "message": "Call this head_x_rotation_degrees_ to make clear what the unit is?",
+      "range": {
+        "startLine": 147,
+        "startChar": 6,
+        "endLine": 147,
+        "endChar": 19
+      },
+      "revId": "84bf39378f4c8cb0fda041f4b467f749db4ad4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2f3ce20_75b411d4",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-29T19:41:24Z",
+      "side": 1,
+      "message": "Why forward declare it if you include ui/gfx/transform.h?",
+      "revId": "84bf39378f4c8cb0fda041f4b467f749db4ad4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15a3374b_15094f87",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-29T19:41:24Z",
+      "side": 1,
+      "message": "Why remove the class comment?",
+      "revId": "84bf39378f4c8cb0fda041f4b467f749db4ad4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
