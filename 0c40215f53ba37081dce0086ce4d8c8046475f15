@@ -154,6 +154,24 @@
     },
     {
       "key": {
+        "uuid": "20de3405_e7b4cdc5",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-09-29T17:01:14Z",
+      "side": 1,
+      "message": "There is no bug for that. We can start with the mean/max/failureCount for now and add other stats later. My comment was more about\n// also: mean time, median ?, deviation, max, min, etc\nthat looked like a TODO. For every TODO we should have an associated bug. Just removing the line is good too.",
+      "parentUuid": "0cd04473_2ad7ab7c",
+      "revId": "0c40215f53ba37081dce0086ce4d8c8046475f15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "39d15c46_a0263895",
         "filename": "components/cronet/ios/test/cronet_performance_test.mm",
         "patchSetId": 5

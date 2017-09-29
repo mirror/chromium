@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82cc88c6_33aea393",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-09-29T17:01:14Z",
+      "side": 1,
+      "message": "Maybe we should rename it to \"number_of_failed_requests\" or \"failed_request_count\" to be more explicit.",
+      "range": {
+        "startLine": 34,
+        "startChar": 6,
+        "endLine": 34,
+        "endChar": 11
+      },
+      "revId": "eff61d508bcf83081fd422f4765b24f8b5ef4a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56d55ee9_74ae5b67",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-09-29T17:01:14Z",
+      "side": 1,
+      "message": "We also need to save the test result to a file. Could you include the timestamp in the file name?",
+      "revId": "eff61d508bcf83081fd422f4765b24f8b5ef4a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84b01701_5a3a5fb0",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-09-29T17:01:14Z",
+      "side": 1,
+      "message": "You can move this line inside \"if (GetParam().cronet)\" and uncomment. However, you should also add the \"else\" clause and call [Cronet unregisterHttpProtocolHandler] to avoid side effects between test runs.",
+      "revId": "eff61d508bcf83081fd422f4765b24f8b5ef4a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18c2c8e5_2285af8d",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-09-29T17:01:14Z",
+      "side": 1,
+      "message": "Can we move it to the top, so it is next to \n#define TEST_ITERATIONS 50?",
+      "revId": "eff61d508bcf83081fd422f4765b24f8b5ef4a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03182eed_52d5c001",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-09-29T17:01:14Z",
+      "side": 1,
+      "message": "It\u0027s okay to remove it.",
+      "revId": "eff61d508bcf83081fd422f4765b24f8b5ef4a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06d5299e_ab3f3bcf",
+        "filename": "components/cronet/ios/test/cronet_performance_test.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-09-29T17:01:14Z",
+      "side": 1,
+      "message": "Can we also print the reason of the failure?",
+      "revId": "eff61d508bcf83081fd422f4765b24f8b5ef4a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
