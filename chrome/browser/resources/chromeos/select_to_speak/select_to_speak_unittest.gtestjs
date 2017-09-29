@@ -59,7 +59,7 @@ TEST_F('SelectToSpeakUnitTest', 'GetNodeVisibilityState', function() {
   let nodeWithoutRoot2 = {root: null, state: {invisible: true}};
   assertEquals(getNodeState(nodeWithoutRoot1), NodeState.NODE_STATE_INVALID);
   assertEquals(getNodeState(nodeWithoutRoot2), NodeState.NODE_STATE_INVALID);
-    
+
   let invisibleNode1 = {root: {}, parent: {role: ''}, state: {invisible: true}};
   // Currently nodes aren't actually marked 'invisible', so we need to navigate up their tree.
   let invisibleNode2 = {root: {}, parent: {role: 'window', state: {invisible: true}}, state: {}};
@@ -73,4 +73,31 @@ TEST_F('SelectToSpeakUnitTest', 'GetNodeVisibilityState', function() {
   let normalNode2 = {root: {}, parent: {normalNode1}, state: {}};
   assertEquals(getNodeState(normalNode1), NodeState.NODE_STATE_NORMAL);
   assertEquals(getNodeState(normalNode2), NodeState.NODE_STATE_NORMAL);
+});
+
+TEST_F('SelectToSpeakUnitTest', 'GetNodeVisibilityStateWithRootWebArea', function() {
+  // Currently nodes aren't actually marked 'invisible', so we need to navigate up their tree.
+  let window = {root: {}, role: 'window', state: {invisible: true}};
+  let rootNode = {root: {}, parent: window, state: {}, role: 'rootWebArea'};
+  let container = {root: rootNode, parent: rootNode, state: {}};
+  let node = {root: rootNode, parent: container, state: {}};
+  assertEquals(getNodeState(window), NodeState.NODE_STATE_INVISIBLE);
+  assertEquals(getNodeState(container), NodeState.NODE_STATE_INVISIBLE);
+  assertEquals(getNodeState(node), NodeState.NODE_STATE_INVISIBLE);
+  
+  // Make a fake iframe in this invisible window by adding another RootWebArea.
+  // TODO: How to write this test to correctly reflect how iframes are parented?
+  let iframeRoot = {root: container, parent: container, state: {}, role: 'rootWebArea'};
+  let iframeContainer = {root: iframeRoot, parent: iframeRoot, state: {}};
+  let iframeNode = {root: iframeRoot, parent: iframeContainer, state: {}};
+  assertEquals(getNodeState(iframeContainer), NodeState.NODE_STATE_INVISIBLE);
+  assertEquals(getNodeState(iframeNode), NodeState.NODE_STATE_INVISIBLE);
+
+  // Make the window visible and try again.
+  window.state = {};
+  assertEquals(getNodeState(window), NodeState.NODE_STATE_NORMAL);
+  assertEquals(getNodeState(container), NodeState.NODE_STATE_NORMAL);
+  assertEquals(getNodeState(node), NodeState.NODE_STATE_NORMAL);
+  assertEquals(getNodeState(iframeContainer), NodeState.NODE_STATE_NORMAL);
+  assertEquals(getNodeState(iframeNode), NodeState.NODE_STATE_NORMAL);
 });
