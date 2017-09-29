@@ -113,6 +113,9 @@ DownloadTargetDeterminer::DownloadTargetDeterminer(
   DCHECK(delegate);
   download_->AddObserver(this);
 
+  LOG(ERROR) << "@@@ ctor, virtual_path_ = " << virtual_path_.value()
+             << " , conflict_action_ = " << static_cast<int>(conflict_action_);
+
   DoLoop();
 }
 
@@ -186,11 +189,24 @@ DownloadTargetDeterminer::Result
 
   next_state_ = STATE_NOTIFY_EXTENSIONS;
 
+  // Transient download should use the existing path.
+  DCHECK(!download_->IsTransient() ||
+         (is_forced_path || !virtual_path_.empty()));
+  if (download_->IsTransient() && (is_forced_path || !virtual_path_.empty())) {
+    if (is_forced_path)
+      virtual_path_ = download_->GetForcedFilePath();
+    conflict_action_ = DownloadPathReservationTracker::OVERWRITE;
+    DCHECK(virtual_path_.IsAbsolute());
+    return CONTINUE;
+  }
+
   if (!virtual_path_.empty() && HasPromptedForPath() && !is_forced_path) {
     // The download is being resumed and the user has already been prompted for
     // a path. Assume that it's okay to overwrite the file if there's a conflict
     // and reuse the selection.
     confirmation_reason_ = NeedsConfirmation(virtual_path_);
+    LOG(ERROR) << "@@@ NeedsConfirmation 1, confirmation_reason = "
+               << static_cast<int>(confirmation_reason_);
     conflict_action_ = DownloadPathReservationTracker::OVERWRITE;
   } else if (!is_forced_path) {
     // If we don't have a forced path, we should construct a path for the
@@ -214,6 +230,8 @@ DownloadTargetDeterminer::Result
         download_->GetMimeType(),
         default_filename);
     confirmation_reason_ = NeedsConfirmation(generated_filename);
+    LOG(ERROR) << "@@@ NeedsConfirmation 2, confirmation_reason = "
+               << static_cast<int>(confirmation_reason_);
     base::FilePath target_directory;
     if (confirmation_reason_ != DownloadConfirmationReason::NONE) {
       DCHECK(!download_prefs_->IsDownloadPathManaged());
@@ -224,7 +242,7 @@ DownloadTargetDeterminer::Result
       target_directory = download_prefs_->DownloadPath();
     }
     virtual_path_ = target_directory.Append(generated_filename);
-    should_notify_extensions_ = true;
+    should_notify_extensions_ = !download_->IsTransient();
   } else {
     conflict_action_ = DownloadPathReservationTracker::OVERWRITE;
     virtual_path_ = download_->GetForcedFilePath();
@@ -260,7 +278,8 @@ void DownloadTargetDeterminer::NotifyExtensionsDone(
     const base::FilePath& suggested_path,
     DownloadPathReservationTracker::FilenameConflictAction conflict_action) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DVLOG(20) << "Extension suggested path: " << suggested_path.AsUTF8Unsafe();
+  LOG(ERROR) << "Extension suggested path: " << suggested_path.AsUTF8Unsafe();
+  LOG(ERROR) << "@@@ conflict_action =  " << static_cast<int>(conflict_action);
 
   // Extensions should not call back here more than once.
   DCHECK_EQ(STATE_RESERVE_VIRTUAL_PATH, next_state_);
@@ -309,9 +328,22 @@ void DownloadTargetDeterminer::ReserveVirtualPathDone(
     PathValidationResult result,
     const base::FilePath& path) {
   DCHECK(BrowserThread::CurrentlyOn(BrowserThread::UI));
-  DVLOG(20) << "Reserved path: " << path.AsUTF8Unsafe()
-            << " Result:" << static_cast<int>(result);
+  LOG(ERROR) << "Reserved path: " << path.AsUTF8Unsafe()
+             << " Result:" << static_cast<int>(result);
   DCHECK_EQ(STATE_PROMPT_USER_FOR_DOWNLOAD_PATH, next_state_);
+
+  // For transient download, only check if the target is writable, but does not
+  // use the virtual path because it may change the directory.
+  if (download_->IsTransient()) {
+    DCHECK_EQ(DownloadConfirmationReason::NONE, confirmation_reason_);
+    if (result == PathValidationResult::PATH_NOT_WRITABLE) {
+      LOG(ERROR) << "@@@ Transient download path is not writable.";
+      ScheduleCallbackAndDeleteSelf(
+          content::DOWNLOAD_INTERRUPT_REASON_USER_CANCELED);
+      return;
+    }
+    DoLoop();
+  }
 
   virtual_path_ = path;
 
@@ -333,6 +365,9 @@ void DownloadTargetDeterminer::ReserveVirtualPathDone(
       confirmation_reason_ = DownloadConfirmationReason::TARGET_CONFLICT;
       break;
   }
+  LOG(ERROR) << "@@@ " << __func__ << " , result = " << static_cast<int>(result)
+             << " , confirmation_reason = "
+             << static_cast<int>(confirmation_reason_);
 
   DoLoop();
 }
@@ -341,6 +376,8 @@ DownloadTargetDeterminer::Result
 DownloadTargetDeterminer::DoRequestConfirmation() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK(!virtual_path_.empty());
+  DCHECK(!download_->IsTransient() ||
+         confirmation_reason_ == DownloadConfirmationReason::NONE);
 
   next_state_ = STATE_DETERMINE_LOCAL_PATH;
 
@@ -361,7 +398,11 @@ void DownloadTargetDeterminer::RequestConfirmationDone(
     DownloadConfirmationResult result,
     const base::FilePath& virtual_path) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DVLOG(20) << "User selected path:" << virtual_path.AsUTF8Unsafe();
+  DCHECK(!download_->IsTransient());
+  LOG(ERROR) << "User selected path:" << virtual_path.AsUTF8Unsafe();
+  LOG(ERROR) << "@@@ " << __func__ << " , result = " << static_cast<int>(result)
+             << ", virtual path = " << virtual_path.value();
+
   if (result == DownloadConfirmationResult::CANCELED) {
     ScheduleCallbackAndDeleteSelf(
         content::DOWNLOAD_INTERRUPT_REASON_USER_CANCELED);
@@ -400,7 +441,7 @@ DownloadTargetDeterminer::Result
 void DownloadTargetDeterminer::DetermineLocalPathDone(
     const base::FilePath& local_path) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DVLOG(20) << "Local path: " << local_path.AsUTF8Unsafe();
+  LOG(ERROR) << "Local path: " << local_path.AsUTF8Unsafe();
   if (local_path.empty()) {
     // Path subsitution failed. Usually caused by something going wrong with the
     // Google Drive logic (e.g. filesystem error while trying to create the
@@ -708,6 +749,13 @@ DownloadTargetDeterminer::Result
     return COMPLETE;
   }
 
+  // Transient downloads don't need to be renamed to intermediate file.
+  if (danger_type_ == content::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS &&
+      download_->IsTransient()) {
+    intermediate_path_ = local_path_;
+    return COMPLETE;
+  }
+
   // Other safe downloads get a .crdownload suffix for their intermediate name.
   if (danger_type_ == content::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS) {
     intermediate_path_ = GetCrDownloadPath(local_path_);
@@ -752,13 +800,14 @@ DownloadTargetDeterminer::Result
 void DownloadTargetDeterminer::ScheduleCallbackAndDeleteSelf(
     content::DownloadInterruptReason result) {
   DCHECK(download_);
-  DVLOG(20) << "Scheduling callback. Virtual:" << virtual_path_.AsUTF8Unsafe()
-            << " Local:" << local_path_.AsUTF8Unsafe()
-            << " Intermediate:" << intermediate_path_.AsUTF8Unsafe()
-            << " Confirmation reason:" << static_cast<int>(confirmation_reason_)
-            << " Danger type:" << danger_type_
-            << " Danger level:" << danger_level_
-            << " Result:" << static_cast<int>(result);
+  LOG(ERROR) << "Scheduling callback. Virtual:" << virtual_path_.AsUTF8Unsafe()
+             << " Local:" << local_path_.AsUTF8Unsafe()
+             << " Intermediate:" << intermediate_path_.AsUTF8Unsafe()
+             << " Confirmation reason:"
+             << static_cast<int>(confirmation_reason_)
+             << " Danger type:" << danger_type_
+             << " Danger level:" << danger_level_
+             << " Result:" << static_cast<int>(result);
   std::unique_ptr<DownloadTargetInfo> target_info(new DownloadTargetInfo);
 
   target_info->target_path = local_path_;
@@ -788,12 +837,18 @@ Profile* DownloadTargetDeterminer::GetProfile() const {
 
 DownloadConfirmationReason DownloadTargetDeterminer::NeedsConfirmation(
     const base::FilePath& filename) const {
+  LOG(ERROR) << "@@@ " << __func__ << " ,is_resumption_ = " << is_resumption_;
+  // Transient download never has user interaction.
+  if (download_->IsTransient())
+    return DownloadConfirmationReason::NONE;
+
   if (is_resumption_) {
     // For resumed downloads, if the target disposition or prefs require
     // prompting, the user has already been prompted. Try to respect the user's
     // selection, unless we've discovered that the target path cannot be used
     // for some reason.
     content::DownloadInterruptReason reason = download_->GetLastReason();
+    LOG(ERROR) << "@@@ " << __func__ << " ,reason = " << reason;
     switch (reason) {
       case content::DOWNLOAD_INTERRUPT_REASON_FILE_ACCESS_DENIED:
         return DownloadConfirmationReason::TARGET_PATH_NOT_WRITEABLE;

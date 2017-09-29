@@ -242,8 +242,10 @@ void DownloadDriverImpl::OnDownloadUpdated(content::DownloadManager* manager,
     client_->OnDownloadUpdated(entry);
   } else if (reason !=
              content::DownloadInterruptReason::DOWNLOAD_INTERRUPT_REASON_NONE) {
-    if (client_->IsTrackingDownload(item->GetGuid()))
+    if (client_->IsTrackingDownload(item->GetGuid())) {
+      LOG(ERROR) << "@@@ Interrupt reason = " << reason;
       LogDownloadInterruptReason(reason);
+    }
     client_->OnDownloadFailed(entry, FailureTypeFromInterruptReason(reason));
   }
 }
