@@ -1,0 +1,180 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0911397_fe8f82c0",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-29T08:57:59Z",
+      "side": 1,
+      "message": "wdyt of including ShellScalingAPI.h so that this can become:\n  declspec(\u0026::SetProcessDpiAwareness) set_process_dpi_awareness_func \u003d\n      reinterpret_cast\u003cdeclspec(\u0026::SetProcessDpiAwareness)\u003e(...);",
+      "revId": "cad36e09c3844ec80b6c2059364e83152e1f2ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3564b4f4_f39ae773",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-29T08:57:59Z",
+      "side": 1,
+      "message": "my guess is that using the ANSI version of this function means that Windows needs to do a string conversion. how about GetModuleHandle(L\"user32.dll\") instead?",
+      "revId": "cad36e09c3844ec80b6c2059364e83152e1f2ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a58f48c_3dd40ea9",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-29T08:57:59Z",
+      "side": 1,
+      "message": "is it really important to log this on every call? who\u0027s going to look at this?",
+      "revId": "cad36e09c3844ec80b6c2059364e83152e1f2ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2370bfbd_a0917e2e",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-29T08:57:59Z",
+      "side": 1,
+      "message": "no \"else\" after \"return\".\nwho will see this message? could it be DLOG? if it really is needed, it should look like this:\n    LOG_IF(ERROR, hr \u003d\u003d E_ACCESSDENIED) \u003c\u003c ...;",
+      "revId": "cad36e09c3844ec80b6c2059364e83152e1f2ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18f47fd6_b888b66b",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-29T08:57:59Z",
+      "side": 1,
+      "message": "nit: remove typedef in favor of declspec(\u0026::SetProcessDPIAware)",
+      "revId": "cad36e09c3844ec80b6c2059364e83152e1f2ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51a5ef38_2b036631",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-29T08:57:59Z",
+      "side": 1,
+      "message": "GetModuleHandle(L\"user32.dll\")",
+      "range": {
+        "startLine": 117,
+        "startChar": 25,
+        "endLine": 117,
+        "endChar": 55
+      },
+      "revId": "cad36e09c3844ec80b6c2059364e83152e1f2ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0657a0c0_1983e089",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-29T08:57:59Z",
+      "side": 1,
+      "message": "omit \"base::win::\"",
+      "revId": "cad36e09c3844ec80b6c2059364e83152e1f2ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9740d4b_e5a31d14",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-29T08:57:59Z",
+      "side": 1,
+      "message": "personally, i\u0027d nix |allowed_platform| and inline the version check here.",
+      "revId": "cad36e09c3844ec80b6c2059364e83152e1f2ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "115a0184_6033f715",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-29T08:57:59Z",
+      "side": 1,
+      "message": "nit: omit braces for single-line conditional",
+      "revId": "cad36e09c3844ec80b6c2059364e83152e1f2ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0343d7ca_47960648",
+        "filename": "chrome/app/chrome_exe_main_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-29T08:57:59Z",
+      "side": 1,
+      "message": "unused now?",
+      "revId": "cad36e09c3844ec80b6c2059364e83152e1f2ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
