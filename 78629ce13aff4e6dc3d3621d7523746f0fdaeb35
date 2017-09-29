@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6dd99ab2_135903a0",
+        "filename": "third_party/WebKit/Source/core/exported/WorkerShadowPage.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-29T18:53:54Z",
+      "side": 1,
+      "message": "Why does this need to move down? Is something making interface requests inside the constructor?",
+      "revId": "78629ce13aff4e6dc3d3621d7523746f0fdaeb35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38d815f8_d57d13c0",
+        "filename": "third_party/WebKit/public/web/WebFrameClient.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-29T18:53:54Z",
+      "side": 1,
+      "message": "We disallow non-POD variables of static storage duration.\n\nIt\u0027s a bit complicated, but what we\u0027ll need to do is:\n1. store a static non-const ref\n2. use a lambda to initialize it (the lambda will have to do auto* ip \u003d new InterfaceProvider; return *ip).\n3. In addition, the pipe binding will go in the lambda.\n\nThis will prevent the pipe from being rebound multiple times.",
+      "revId": "78629ce13aff4e6dc3d3621d7523746f0fdaeb35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
