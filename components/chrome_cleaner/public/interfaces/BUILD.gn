@@ -11,4 +11,5 @@ mojom("interfaces") {
   deps = [
     "//mojo/common:common_custom_types",
   ]
+  scramble_message_ids = false
 }
