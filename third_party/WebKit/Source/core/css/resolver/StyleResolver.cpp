@@ -598,7 +598,7 @@ RefPtr<ComputedStyle> StyleResolver::StyleForElement(
   // loading.
   if (!GetDocument().IsRenderingReady() && !element->GetLayoutObject()) {
     if (!style_not_yet_available_) {
-      style_not_yet_available_ = ComputedStyle::Create().LeakRef();
+      style_not_yet_available_ = LeakRef(ComputedStyle::Create());
       style_not_yet_available_->SetDisplay(EDisplay::kNone);
       style_not_yet_available_->GetFont().Update(
           GetDocument().GetStyleEngine().GetFontSelector());
