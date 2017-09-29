@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b381fcbd_31a2f16a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-09-29T22:51:26Z",
+      "side": 1,
+      "message": "Having a new but unassigned variable looks odd.\nHow would making ChromeHomeSurveyController()#initialize a static method look?",
+      "revId": "7ca9405c70f8b2ff8b8921aaa7297c8f4cee0f79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
