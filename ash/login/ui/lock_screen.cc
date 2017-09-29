@@ -4,6 +4,8 @@
 
 #include "ash/login/ui/lock_screen.h"
 
+#include <utility>
+
 #include "ash/login/ui/lock_contents_view.h"
 #include "ash/login/ui/lock_debug_view.h"
 #include "ash/login/ui/lock_window.h"
@@ -13,6 +15,7 @@
 #include "ash/root_window_controller.h"
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
+#include "ash/tray_action/tray_action.h"
 #include "ash/wallpaper/wallpaper_widget_controller.h"
 #include "base/command_line.h"
 #include "base/memory/ptr_util.h"
@@ -45,7 +48,9 @@ LockScreen* instance_ = nullptr;
 
 }  // namespace
 
-LockScreen::LockScreen() = default;
+LockScreen::LockScreen() : tray_action_observer_(this) {
+  tray_action_observer_.Add(ash::Shell::Get()->tray_action());
+}
 
 LockScreen::~LockScreen() = default;
 
@@ -60,7 +65,8 @@ void LockScreen::Show() {
   CHECK(!instance_);
   instance_ = new LockScreen();
 
-  auto data_dispatcher = base::MakeUnique<LoginDataDispatcher>();
+  auto data_dispatcher = base::MakeUnique<LoginDataDispatcher>(
+      ash::Shell::Get()->tray_action()->GetLockScreenNoteState());
   auto* contents = BuildContentsView(data_dispatcher.get());
 
   auto* window = instance_->window_ = new LockWindow(Shell::GetAshConfig());
@@ -102,6 +108,11 @@ void LockScreen::ToggleBlurForDebug() {
       layer->SetLayerBlur(login_constants::kBlurSigma);
     }
   }
+}
+
+void LockScreen::OnLockScreenNoteStateChanged(mojom::TrayActionState state) {
+  if (data_dispatcher())
+    data_dispatcher()->SetLockScreenNoteState(state);
 }
 
 LoginDataDispatcher* LockScreen::data_dispatcher() const {
