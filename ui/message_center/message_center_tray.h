@@ -33,7 +33,7 @@ class MESSAGE_CENTER_EXPORT MessageCenterTray : public MessageCenterObserver {
   // Shows or updates the message center bubble and hides the popup bubble.
   // Returns whether the message center is visible after the call, whether or
   // not it was visible before.
-  bool ShowMessageCenterBubble();
+  bool ShowMessageCenterBubble(bool show_by_click);
 
   // Hides the message center if visible and returns whether the message center
   // was visible before.
