@@ -84,8 +84,10 @@ class WebNotificationBubbleWrapper {
     init_params.max_width = width;
     init_params.max_height = bubble->max_height();
     init_params.bg_color = SkColorSetRGB(0xe7, 0xe7, 0xe7);
+    init_params.show_by_click = tray->show_bubble_by_click();
 
     views::TrayBubbleView* bubble_view = new views::TrayBubbleView(init_params);
+    tray->set_show_bubble_by_click(false);
     bubble_view->set_anchor_view_insets(anchor_tray->GetBubbleAnchorInsets());
     bubble_wrapper_.reset(new TrayBubbleWrapper(tray, bubble_view));
     bubble->InitializeContents(bubble_view);
@@ -576,10 +578,12 @@ void WebNotificationTray::ClickedOutsideBubble() {
 }
 
 bool WebNotificationTray::PerformAction(const ui::Event& event) {
-  if (message_center_bubble())
+  if (message_center_bubble()) {
     message_center_tray_->HideMessageCenterBubble();
-  else
+  } else {
+    set_show_bubble_by_click(true);
     message_center_tray_->ShowMessageCenterBubble();
+  }
   return true;
 }
 
