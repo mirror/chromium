@@ -86,20 +86,20 @@ class CONTENT_EXPORT FrameConnectorDelegate {
   // be in sibling surfaces, they must first be converted to the root
   // surface's coordinate space.
   virtual bool TransformPointToLocalCoordSpace(
-      const gfx::Point& point,
+      const gfx::PointF& point,
       const viz::SurfaceId& original_surface,
       const viz::SurfaceId& local_surface_id,
-      gfx::Point* transformed_point);
+      gfx::PointF* transformed_point);
 
   // Transform a point into the coordinate space of the root
   // RenderWidgetHostView, for the current view's coordinate space.
   // Returns false if |target_view| and |view_| do not have the same root
   // RenderWidgetHostView.
   virtual bool TransformPointToCoordSpaceForView(
-      const gfx::Point& point,
+      const gfx::PointF& point,
       RenderWidgetHostViewBase* target_view,
       const viz::SurfaceId& local_surface_id,
-      gfx::Point* transformed_point);
+      gfx::PointF* transformed_point);
 
   // Pass acked touch events to the root view for gesture processing.
   virtual void ForwardProcessAckedTouchEvent(
