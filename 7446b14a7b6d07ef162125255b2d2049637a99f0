@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7983794d_c0bcbf5b",
+        "filename": "chrome/browser/signin/process_dice_header_observer_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-29T14:48:00Z",
+      "side": 1,
+      "message": "Out of curiosity: why do you need to do this here instead of in DidFinishRefreshTokenFetch()?",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 20
+      },
+      "revId": "7446b14a7b6d07ef162125255b2d2049637a99f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e2c3019_db096366",
+        "filename": "chrome/browser/signin/process_dice_header_observer_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-29T14:48:00Z",
+      "side": 1,
+      "message": "Nit: remove \"this-\u003e\"",
+      "range": {
+        "startLine": 36,
+        "startChar": 39,
+        "endLine": 36,
+        "endChar": 45
+      },
+      "revId": "7446b14a7b6d07ef162125255b2d2049637a99f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
