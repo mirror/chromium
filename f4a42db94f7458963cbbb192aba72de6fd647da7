@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a8bc758_f0f01f01",
+        "filename": "chrome/common/profiling/memlog.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-29T06:28:51Z",
+      "side": 1,
+      "message": "I\u0027m a little amused that the Mojo abstractions for using shared memory directly don\u0027t require an external size to be plumbed while the Mojo internal ones do...",
+      "revId": "f4a42db94f7458963cbbb192aba72de6fd647da7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
