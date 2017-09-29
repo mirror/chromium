@@ -613,7 +613,8 @@ bool ThemePainterMac::PaintCheckbox(const LayoutObject& object,
                                     const IntRect& zoomed_rect) {
   BEGIN_BLOCK_OBJC_EXCEPTIONS
 
-  ControlStates states = LayoutTheme::ControlStatesForLayoutObject(object);
+  ControlStates states =
+      LayoutTheme::ControlStatesForNode(object.GetNode(), object.StyleRef());
   float zoom_factor = object.StyleRef().EffectiveZoom();
 
   // Determine the width and height needed for the control and prepare the cell
@@ -653,7 +654,8 @@ bool ThemePainterMac::PaintCheckbox(const LayoutObject& object,
 bool ThemePainterMac::PaintRadio(const LayoutObject& object,
                                  const PaintInfo& paint_info,
                                  const IntRect& zoomed_rect) {
-  ControlStates states = LayoutTheme::ControlStatesForLayoutObject(object);
+  ControlStates states =
+      LayoutTheme::ControlStatesForNode(object.GetNode(), object.StyleRef());
   float zoom_factor = object.StyleRef().EffectiveZoom();
 
   // Determine the width and height needed for the control and prepare the cell
@@ -695,7 +697,8 @@ bool ThemePainterMac::PaintButton(const LayoutObject& object,
                                   const IntRect& zoomed_rect) {
   BEGIN_BLOCK_OBJC_EXCEPTIONS
 
-  ControlStates states = LayoutTheme::ControlStatesForLayoutObject(object);
+  ControlStates states =
+      LayoutTheme::ControlStatesForNode(object.GetNode(), object.StyleRef());
   float zoom_factor = object.StyleRef().EffectiveZoom();
 
   // Determine the width and height needed for the control and prepare the cell
@@ -769,7 +772,8 @@ static ThemeDrawState ConvertControlStatesToThemeDrawState(
 bool ThemePainterMac::PaintInnerSpinButton(const LayoutObject& object,
                                            const PaintInfo& paint_info,
                                            const IntRect& zoomed_rect) {
-  ControlStates states = LayoutTheme::ControlStatesForLayoutObject(object);
+  ControlStates states =
+      LayoutTheme::ControlStatesForNode(object.GetNode(), object.StyleRef());
   float zoom_factor = object.StyleRef().EffectiveZoom();
 
   // We don't use NSStepperCell because there are no ways to draw an

@@ -553,7 +553,8 @@ void LayoutBlock::AddVisualOverflowFromTheme() {
     return;
 
   IntRect inflated_rect = PixelSnappedBorderBoxRect();
-  LayoutTheme::GetTheme().AddVisualOverflow(*this, inflated_rect);
+  LayoutTheme::GetTheme().AddVisualOverflow(GetNode(), StyleRef(),
+                                            inflated_rect);
   AddSelfVisualOverflow(LayoutRect(inflated_rect));
 }
 
