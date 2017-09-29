@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "628fab23_c6cb59e5",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_unittest_framebuffers.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1119849
+      },
+      "writtenOn": "2017-09-29T21:34:28Z",
+      "side": 1,
+      "message": "Done\n\nThis behavior is tested in the WebGL CTS and we have ANGLE end2end tests to check the out of bounds part of the read pixels are clipped, and that we produce an error if not enough memory is available.\n\nhttps://cs.chromium.org/chromium/src/third_party/angle/src/tests/gl_tests/ReadPixelsTest.cpp?sq\u003dpackage:chromium\u0026l\u003d36\n\nhttps://cs.chromium.org/chromium/src/third_party/angle/src/tests/gl_tests/RobustClientMemoryTest.cpp?sq\u003dpackage:chromium\u0026l\u003d354",
+      "parentUuid": "7494ffd2_3ec5b483",
+      "revId": "29345ad8e34821b450ba0a0bec930a92b265f4b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abbe3c0a_c23bee53",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_unittest_framebuffers.cc",
         "patchSetId": 6
