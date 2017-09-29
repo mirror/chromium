@@ -16,6 +16,24 @@
       "revId": "801a9f1f73817b19b5316250a880d5ed6cc62480",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9e381f6_a9345a08",
+        "filename": "third_party/closure_compiler/compiled_resources2.gyp",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-09-29T03:02:18Z",
+      "side": 1,
+      "message": "Is it necessary to add sys_internals/line_chart/compiled_resources2.gyp here?\nsys_internals/compiled_resources2.gyp:index depends on sys_internals/line_chart/compiled_resources2.gyp.",
+      "parentUuid": "7a2d9e08_65f87cd5",
+      "revId": "801a9f1f73817b19b5316250a880d5ed6cc62480",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
