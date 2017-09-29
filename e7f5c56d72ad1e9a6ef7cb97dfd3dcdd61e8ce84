@@ -16,6 +16,148 @@
       "revId": "e7f5c56d72ad1e9a6ef7cb97dfd3dcdd61e8ce84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d3180f7_bc702189",
+        "filename": "chrome/browser/apps/platform_app_url_redirector.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-29T20:40:22Z",
+      "side": 1,
+      "message": "This will actually not catch iframes on a page, it will only be true for webviews.",
+      "revId": "e7f5c56d72ad1e9a6ef7cb97dfd3dcdd61e8ce84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4a4f5fc_a404617f",
+        "filename": "chrome/browser/apps/platform_app_url_redirector.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-29T20:40:22Z",
+      "side": 1,
+      "message": "You probably don\u0027t want to monitor same-document navigations, correct? If so, this might be another check to add.",
+      "revId": "e7f5c56d72ad1e9a6ef7cb97dfd3dcdd61e8ce84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "110907d2_22ad5f3f",
+        "filename": "chrome/browser/apps/platform_app_url_redirector.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-29T20:40:22Z",
+      "side": 1,
+      "message": "This DCHECK isn\u0027t needed, as dereferencing nullptr will cause a crash anyway.",
+      "revId": "e7f5c56d72ad1e9a6ef7cb97dfd3dcdd61e8ce84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4cdc7e3_17de7b3c",
+        "filename": "chrome/browser/apps/platform_app_url_redirector.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-29T20:40:22Z",
+      "side": 1,
+      "message": "If you don\u0027t want to attach to subframes, this is the location to do it, since the NavigationHandle knows whether it is the main frame or not.",
+      "revId": "e7f5c56d72ad1e9a6ef7cb97dfd3dcdd61e8ce84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44ef6748_7ecba7bc",
+        "filename": "chrome/browser/apps/platform_app_url_redirector.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-29T20:40:22Z",
+      "side": 1,
+      "message": "nit: Should it not be PlatformAppNavigationRedirector? This code does not redirect all URLs, just navigations.",
+      "revId": "e7f5c56d72ad1e9a6ef7cb97dfd3dcdd61e8ce84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9716b155_b321c90d",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 3197,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-29T20:40:22Z",
+      "side": 1,
+      "message": "If this throttle is for PWAs, why is it named BookmarkApp..., it seems very misleading in its name.",
+      "revId": "e7f5c56d72ad1e9a6ef7cb97dfd3dcdd61e8ce84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "942e6917_9382995d",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-29T20:40:22Z",
+      "side": 1,
+      "message": "Just FYI, this won\u0027t handle all cases, for example \"about:blank\" will not give you the correct origin. You can get the correct origin by using source-\u003eGetMainFrame()-\u003eGetLastCommittedOrigin().",
+      "revId": "e7f5c56d72ad1e9a6ef7cb97dfd3dcdd61e8ce84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb14bb7e_e0cd2390",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-29T20:40:22Z",
+      "side": 1,
+      "message": "What does this do? Does it navigate in any way or shape in the |source| WebContents? If so, you should not be doing it here, but using a PostTask to ensure it happens on another iteration of the event loop.",
+      "range": {
+        "startLine": 132,
+        "startChar": 2,
+        "endLine": 132,
+        "endChar": 17
+      },
+      "revId": "e7f5c56d72ad1e9a6ef7cb97dfd3dcdd61e8ce84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
