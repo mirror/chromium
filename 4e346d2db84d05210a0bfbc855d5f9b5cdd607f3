@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cd2dbc3_72ed6d11",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T21:51:32Z",
+      "side": 1,
+      "message": "In the future this will be controlled by a feature flag, right? Can we just check the flag in this method rather than passing in a boolean from ChromeActivity?",
+      "range": {
+        "startLine": 717,
+        "startChar": 12,
+        "endLine": 717,
+        "endChar": 42
+      },
+      "revId": "4e346d2db84d05210a0bfbc855d5f9b5cdd607f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

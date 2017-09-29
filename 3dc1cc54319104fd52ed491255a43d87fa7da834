@@ -93,6 +93,30 @@
       "revId": "3dc1cc54319104fd52ed491255a43d87fa7da834",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f52683b8_32bf6bac",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T21:51:32Z",
+      "side": 1,
+      "message": "createAndCacheContentForId() isn\u0027t called for omnibox suggestions or the placeholder view (probably not an issue for the placeholder), and, in the future we may have other places that call BottomSheet#setContent() directly.\n\nFor now, I\u0027d be okay with exposing a public static method in BottomSheet, that can be called from here and from LocationBarLayout, but I think we need a better way to handle this automatically in the future.",
+      "parentUuid": "9ae30dfb_3ef365fc",
+      "range": {
+        "startLine": 408,
+        "startChar": 8,
+        "endLine": 411,
+        "endChar": 9
+      },
+      "revId": "3dc1cc54319104fd52ed491255a43d87fa7da834",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
