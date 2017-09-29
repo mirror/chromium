@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8e317d8_4c3214e5",
+        "filename": "chrome/browser/banners/app_banner_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-29T03:51:43Z",
+      "side": 1,
+      "message": "Does this still need to be virtual?",
+      "range": {
+        "startLine": 199,
+        "startChar": 2,
+        "endLine": 199,
+        "endChar": 9
+      },
+      "revId": "6df21f407c135e525ae14ae3c165dbca05cd740e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e76e2fb3_1a4213a7",
+        "filename": "chrome/browser/banners/app_banner_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-29T03:51:43Z",
+      "side": 1,
+      "message": "Nit: not sure the new bit of the comment is entirely necessary.",
+      "range": {
+        "startLine": 201,
+        "startChar": 5,
+        "endLine": 204,
+        "endChar": 41
+      },
+      "revId": "6df21f407c135e525ae14ae3c165dbca05cd740e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
