@@ -4,11 +4,15 @@
 
 package org.chromium.base.test.util;
 
+import org.chromium.base.BaseSwitches;
 import org.chromium.base.metrics.RecordHistogram;
 
 /**
  * Helpers for testing UMA metrics.
  */
+@CommandLineFlags.Add({
+        BaseSwitches.DISABLE_EXPIRING_HISTOGRAMS,
+})
 public class MetricsUtils {
     /**
      * Helper class that snapshots the given bucket of the given UMA histogram on its creation,

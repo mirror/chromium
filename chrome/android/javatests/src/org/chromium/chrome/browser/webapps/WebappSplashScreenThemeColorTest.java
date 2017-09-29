@@ -10,7 +10,6 @@ import android.os.Build;
 import android.support.test.filters.SmallTest;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,8 +34,10 @@ import java.util.concurrent.Callable;
  * Tests for splash screens with EXTRA_THEME_COLOR specified in the Intent.
  */
 @RunWith(ChromeJUnit4ClassRunner.class)
-@CommandLineFlags.Add({ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE,
-        ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG})
+@CommandLineFlags.Add({
+        ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE,
+        ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG
+})
 public class WebappSplashScreenThemeColorTest {
     @Rule
     public final WebappActivityTestRule mActivityTestRule = new WebappActivityTestRule();
@@ -49,6 +50,7 @@ public class WebappSplashScreenThemeColorTest {
                         // This is setting Color.Magenta with 50% opacity.
                         .putExtra(ShortcutHelper.EXTRA_THEME_COLOR, 0x80FF00FFL));
     }
+
 
     @Test
     @SmallTest

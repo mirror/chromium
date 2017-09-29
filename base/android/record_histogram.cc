@@ -42,6 +42,7 @@ class HistogramCache {
         break;
       }
       case SPARSE_HISTOGRAM:
+      case DUMMY_HISTOGRAM:
         break;
     }
     return params_str;
@@ -287,6 +288,13 @@ jlong RecordCustomTimesHistogramMilliseconds(
   histogram->AddTime(
       TimeDelta::FromMilliseconds(static_cast<int64_t>(j_duration)));
   return reinterpret_cast<jlong>(histogram);
+}
+
+void SetRecordCheckerEnabled(
+    JNIEnv* env,
+    const JavaParamRef<jclass>& clazz,
+    jboolean enabled) {
+  StatisticsRecorder::SetRecordCheckerEnabled(static_cast<bool>(enabled));
 }
 
 void Initialize(JNIEnv* env, const JavaParamRef<jclass>&) {

@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,20 +29,16 @@ import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
  * Tests for splash screens with EXTRA_ICON specified in the Intent.
  */
 @RunWith(ChromeJUnit4ClassRunner.class)
-@CommandLineFlags.Add({ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE,
-        ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG})
+@CommandLineFlags.Add({
+        ChromeSwitches.DISABLE_EXPIRING_HISTOGRAMS,
+        ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE,
+        ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG
+})
 public class WebappSplashScreenHomescreenIconTest {
     @Rule
     public final WebappActivityTestRule mActivityTestRule = new WebappActivityTestRule();
 
     private ViewGroup mSplashScreen;
-
-    @Before
-    public void setUp() throws Exception {
-        mSplashScreen = mActivityTestRule.startWebappActivityAndWaitForSplashScreen(
-                mActivityTestRule.createIntent().putExtra(
-                        ShortcutHelper.EXTRA_ICON, WebappActivityTestRule.TEST_ICON));
-    }
 
     @Test
     @SmallTest
