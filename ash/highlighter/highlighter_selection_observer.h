@@ -16,6 +16,7 @@ class HighlighterSelectionObserver {
  public:
   virtual ~HighlighterSelectionObserver() {}
 
+  // |rect| is the selected rectangle, clipped to screen bounds if necessary.
   virtual void HandleSelection(const gfx::Rect& rect) = 0;
   virtual void HandleFailedSelection() = 0;
 };
