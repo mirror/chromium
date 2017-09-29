@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0aab507f_65fa5978",
+        "filename": "components/arc/PRESUBMIT.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-29T07:09:26Z",
+      "side": 1,
+      "message": "Note: These rules are copied from cc/PRESBUMIT.py.",
+      "revId": "eaaa4358b093ea4e710032ca42c0a793bf9f841a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c76042a4_c15fb110",
+        "filename": "components/arc/PRESUBMIT.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-29T07:09:26Z",
+      "side": 1,
+      "message": "And this is added.\nNow we\u0027re replacing all MakeUnique with std::make_unique.",
+      "revId": "eaaa4358b093ea4e710032ca42c0a793bf9f841a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
