@@ -202,6 +202,24 @@
     },
     {
       "key": {
+        "uuid": "45d2406b_686aea06",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-29T21:04:43Z",
+      "side": 1,
+      "message": "Probably not. Switched to a singleton class with a thread checker to make sure it always runs on the same thread.",
+      "parentUuid": "e8d18736_aa3ff04f",
+      "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "328d3fa0_c84f981f",
         "filename": "chrome/browser/media/cdm_storage_impl.cc",
         "patchSetId": 2
@@ -1428,6 +1446,24 @@
       "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88e61787_0ee5ba8c",
+        "filename": "chrome/browser/media/cdm_storage_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-29T21:04:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3f8591f_aa085d05",
+      "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

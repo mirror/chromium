@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "49b0ce21_c9c63968",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-29T21:04:43Z",
+      "side": 1,
+      "message": "I guess OnFileOpened() will run on the same thread, so we don\u0027t need to worry about it getting called while we\u0027re releasing all outstanding locks.",
+      "parentUuid": "79bc2eea_38681d15",
+      "revId": "a3ab3f31b4da5211a400f4c9d7fbe0af68b9c940",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "010c1d3a_b0bbab0a",
         "filename": "chrome/browser/media/cdm_storage_impl.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "a3ab3f31b4da5211a400f4c9d7fbe0af68b9c940",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9ca3f40_be88736b",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-29T21:04:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "010c1d3a_b0bbab0a",
+      "revId": "a3ab3f31b4da5211a400f4c9d7fbe0af68b9c940",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
