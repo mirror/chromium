@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efb8d1a5_1901528d",
+        "filename": "third_party/WebKit/Source/platform/wtf/RefCounted.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-29T01:44:47Z",
+      "side": 0,
+      "message": "Do we have this security check in base::RefCounted?",
+      "revId": "e149f6b49a649274d89fb994e4eb55a4160a8202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "456cbd4d_4e20fc76",
+        "filename": "third_party/WebKit/Source/platform/wtf/RefCounted.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-29T01:44:47Z",
+      "side": 0,
+      "message": "Ditto.",
+      "revId": "e149f6b49a649274d89fb994e4eb55a4160a8202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0575adb_f2708424",
+        "filename": "third_party/WebKit/Source/platform/wtf/RefPtr.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-29T01:44:47Z",
+      "side": 0,
+      "message": "FYI this LIKELY was important for some micro-benchmarks like Dromaeo when I was working on it in the good old days.",
+      "revId": "e149f6b49a649274d89fb994e4eb55a4160a8202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
