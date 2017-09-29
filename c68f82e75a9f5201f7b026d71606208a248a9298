@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f73e818_4b0a98b8",
+        "filename": "content/child/dwrite_font_proxy/dwrite_font_proxy_init_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1134889
+      },
+      "writtenOn": "2017-09-29T03:10:04Z",
+      "side": 1,
+      "message": "There\u0027s SetDWriteFontProxySender() and UpdateDWriteFontProxySender(). Do we still need both APIs or can we consolidate them?",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 66
+      },
+      "revId": "c68f82e75a9f5201f7b026d71606208a248a9298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
