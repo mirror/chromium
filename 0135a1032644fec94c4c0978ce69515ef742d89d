@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8b87a56_498786a8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-29T05:25:06Z",
+      "side": 1,
+      "message": "Nit: newline after.",
+      "revId": "0135a1032644fec94c4c0978ce69515ef742d89d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5dc8e14_3690f4c4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-29T05:25:06Z",
+      "side": 1,
+      "message": "It would be useful to also document (either in the CL description and/or the functions that this publicly exposes) why the existing primitives are insufficient: for example, it\u0027s already possible to get a unique identifier for a frame via a combination of the routing ID + process ID. What does persistency provide above that?",
+      "revId": "0135a1032644fec94c4c0978ce69515ef742d89d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
