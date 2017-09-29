@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edf21eb1_e60c0050",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-29T17:03:05Z",
+      "side": 1,
+      "message": "DCHECK(!layer_list_mode) ?",
+      "revId": "bb0b7831090e59f5d4de10e182fe83b4a3c97b04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4de4ae7b_a6067ead",
+        "filename": "cc/trees/draw_property_utils.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-29T17:03:05Z",
+      "side": 1,
+      "message": "Does this add any value if the page scale layer is the root? It\u0027s no longer called\nin that case.",
+      "revId": "bb0b7831090e59f5d4de10e182fe83b4a3c97b04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
