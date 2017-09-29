@@ -863,7 +863,7 @@ void NavigationRequest::OnRequestFailedInternal(
     // The NavigationHandle shouldn't be notified about renderer-debug URLs.
     // They will be handled by the renderer process.
     navigation_handle_->set_render_frame_host(render_frame_host);
-    CommitErrorPage();
+    CommitErrorPage(base::nullopt);
   } else {
     // Check if the navigation should be allowed to proceed.
     navigation_handle_->WillFailRequest(
@@ -1040,7 +1040,7 @@ void NavigationRequest::OnFailureChecksComplete(
     return;
   }
 
-  CommitErrorPage();
+  CommitErrorPage(result.error_page_content());
   // DO NOT ADD CODE after this. The previous call to CommitErrorPage caused
   // the destruction of the NavigationRequest.
 }
@@ -1102,7 +1102,8 @@ void NavigationRequest::OnWillProcessResponseChecksComplete(
   // the destruction of the NavigationRequest.
 }
 
-void NavigationRequest::CommitErrorPage() {
+void NavigationRequest::CommitErrorPage(
+    base::Optional<std::string> error_page_content) {
   // Retrieve the RenderFrameHost that needs to commit the navigation.
   RenderFrameHostImpl* render_frame_host =
       navigation_handle_->GetRenderFrameHost();
@@ -1116,7 +1117,7 @@ void NavigationRequest::CommitErrorPage() {
       render_frame_host);
   render_frame_host->FailedNavigation(common_params_, begin_params_,
                                       request_params_, has_stale_copy_in_cache_,
-                                      net_error_);
+                                      net_error_, error_page_content);
 }
 
 void NavigationRequest::CommitNavigation() {
