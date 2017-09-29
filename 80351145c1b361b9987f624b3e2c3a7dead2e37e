@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c266b1e_cb12804c",
+        "filename": "third_party/WebKit/Source/core/paint/ViewPainterTest.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-09-29T16:21:17Z",
+      "side": 1,
+      "message": "nit: Just call it prefer_compositing_to_lcd_text? No need to conflate it with the reason it\u0027s set (dpi).",
+      "revId": "80351145c1b361b9987f624b3e2c3a7dead2e37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f09de29_0aae2dfe",
+        "filename": "third_party/WebKit/Source/core/paint/ViewPainterTest.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-09-29T16:21:17Z",
+      "side": 1,
+      "message": "Can you add a comment here describing the high dpi and rls calculation? I think it\u0027ll make this test easier to rewrite when rls goes away, and for folks not familiar with the highdpi difference.",
+      "revId": "80351145c1b361b9987f624b3e2c3a7dead2e37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06a0ef4a_89bbc86e",
+        "filename": "third_party/WebKit/Source/core/paint/ViewPainterTest.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-09-29T16:21:17Z",
+      "side": 1,
+      "message": "Is it possible to look at GetPaintRecordBounds or the visual rect of the display item instead of poking into the paint record itself?",
+      "revId": "80351145c1b361b9987f624b3e2c3a7dead2e37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
