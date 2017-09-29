@@ -22,6 +22,30 @@
       "revId": "f31755d8d0b5a7277eba9becea4a10287c260a67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfc234b9_d469f4c7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/LauncherShortcutActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T20:15:21Z",
+      "side": 1,
+      "message": "The rate limit is reset when the app comes to the foreground, and this is called onDeferredStartup(), so I don\u0027t think we\u0027ll run into any rate limit issues.",
+      "parentUuid": "9f1b6200_d20959d9",
+      "range": {
+        "startLine": 78,
+        "startChar": 55,
+        "endLine": 78,
+        "endChar": 83
+      },
+      "revId": "f31755d8d0b5a7277eba9becea4a10287c260a67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
