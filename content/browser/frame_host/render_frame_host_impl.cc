@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 #include "content/browser/frame_host/render_frame_host_impl.h"
-
+#include "base/debug/stack_trace.h"
 #include <algorithm>
 #include <utility>
 
@@ -511,6 +511,7 @@ RenderFrameHostImpl::RenderFrameHostImpl(SiteInstance* site_instance,
       waiting_for_init_(renderer_initiated_creation),
       has_focused_editable_element_(false),
       weak_ptr_factory_(this) {
+  fprintf(stderr, "RenderFrameHostImpl: %p\n", this);
   frame_tree_->AddRenderViewHostRef(render_view_host_);
   GetProcess()->AddRoute(routing_id_, this);
   g_routing_id_frame_map.Get().insert(std::make_pair(
@@ -576,6 +577,8 @@ RenderFrameHostImpl::RenderFrameHostImpl(SiteInstance* site_instance,
 }
 
 RenderFrameHostImpl::~RenderFrameHostImpl() {
+  fprintf(stderr, "~RenderFrameHostImpl: %p\n", this);
+  base::debug::StackTrace().Print();
   // Destroying navigation handle may call into delegates/observers,
   // so we do it early while |this| object is still in a sane state.
   navigation_handle_.reset();
