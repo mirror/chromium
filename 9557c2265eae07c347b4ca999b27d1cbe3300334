@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0823e829_6084fb0a",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-29T09:02:58Z",
+      "side": 1,
+      "message": "How about to pass aura::Window here rather than getting active window again? Active window might change between those 2 calls, and we might end up appending a tree to a wrong window.",
+      "range": {
+        "startLine": 242,
+        "startChar": 19,
+        "endLine": 242,
+        "endChar": 43
+      },
+      "revId": "9557c2265eae07c347b4ca999b27d1cbe3300334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
