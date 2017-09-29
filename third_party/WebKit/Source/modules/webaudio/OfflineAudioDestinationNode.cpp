@@ -29,6 +29,7 @@
 #include "core/dom/TaskRunnerHelper.h"
 #include "modules/webaudio/AudioNodeInput.h"
 #include "modules/webaudio/AudioNodeOutput.h"
+#include "modules/webaudio/AudioWorkletMessagingProxy.h"
 #include "modules/webaudio/AudioWorkletThread.h"
 #include "modules/webaudio/BaseAudioContext.h"
 #include "modules/webaudio/OfflineAudioContext.h"
@@ -141,9 +142,11 @@ void OfflineAudioDestinationHandler::InitializeOfflineRenderThread(
     AudioBuffer* render_target) {
   DCHECK(IsMainThread());
 
-  if (RuntimeEnabledFeatures::AudioWorkletEnabled()) {
-    AudioWorkletThread::EnsureSharedBackingThread();
-    worklet_backing_thread_ = AudioWorkletThread::GetSharedBackingThread();
+  if (RuntimeEnabledFeatures::AudioWorkletEnabled() &&
+      Context()->WorkletMessagingProxy()) {
+    DCHECK(Context()->WorkletMessagingProxy()->GetWorkletBackingThread());
+    worklet_backing_thread_ =
+        Context()->WorkletMessagingProxy()->GetWorkletBackingThread();
   } else {
     render_thread_ =
         Platform::Current()->CreateThread("offline audio renderer");

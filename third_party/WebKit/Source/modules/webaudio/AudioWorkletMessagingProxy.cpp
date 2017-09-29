@@ -15,7 +15,10 @@ AudioWorkletMessagingProxy::AudioWorkletMessagingProxy(
     WorkerClients* worker_clients)
     : ThreadedWorkletMessagingProxy(execution_context, worker_clients) {}
 
-AudioWorkletMessagingProxy::~AudioWorkletMessagingProxy() {}
+AudioWorkletMessagingProxy::~AudioWorkletMessagingProxy() {
+  auto worklet_thread = static_cast<AudioWorkletThread*>(GetWorkerThread());
+  worklet_thread->ClearWorkerBackingThread();
+}
 
 void AudioWorkletMessagingProxy::SynchronizeWorkletProcessorInfoList(
     std::unique_ptr<Vector<CrossThreadAudioWorkletProcessorInfo>> info_list) {
@@ -37,6 +40,11 @@ AudioWorkletMessagingProxy::GetParamInfoListForProcessor(
     const String& name) const {
   DCHECK(IsProcessorRegistered(name));
   return processor_info_map_.at(name);
+}
+
+WebThread* AudioWorkletMessagingProxy::GetWorkletBackingThread() {
+  auto worklet_thread = static_cast<AudioWorkletThread*>(GetWorkerThread());
+  return worklet_thread->GetSharedBackingThread();
 }
 
 std::unique_ptr<ThreadedWorkletObjectProxy>
