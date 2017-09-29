@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e4e564c_675c1368",
+        "filename": "chrome/browser/apps/app_url_redirector.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-29T21:23:42Z",
+      "side": 1,
+      "message": "Do you want also BACKGROUND_TAB? Ctrl+click I think causes that one.",
+      "revId": "73278c49b9d7cae744fa1d320cde4e9713c52706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "619d580a_0a5a7b82",
+        "filename": "components/navigation_interception/intercept_navigation_throttle.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-29T21:23:42Z",
+      "side": 1,
+      "message": "Don\u0027t you need to clone the NavUIData? It looks like for everything else we get a copy of the params, but for this one we will get a pointer, which differs in how this struct behaves.",
+      "revId": "73278c49b9d7cae744fa1d320cde4e9713c52706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e96273c5_624f5eba",
+        "filename": "ui/base/window_open_disposition.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-29T21:23:42Z",
+      "side": 1,
+      "message": "I\u0027d split that in a separate CL and land it on its own, as it seems useful function that others can use.",
+      "revId": "73278c49b9d7cae744fa1d320cde4e9713c52706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
