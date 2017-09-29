@@ -284,6 +284,7 @@ class ServiceWorkerContextClient : public blink::WebServiceWorkerContextClient,
       DispatchBackgroundFetchFailEventCallback callback) override;
   void DispatchBackgroundFetchedEvent(
       const std::string& tag,
+      const std::string& job_guid,
       const std::vector<BackgroundFetchSettledFetch>& fetches,
       DispatchBackgroundFetchedEventCallback callback) override;
   void DispatchExtendableMessageEvent(

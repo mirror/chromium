@@ -80,6 +80,7 @@ interface ServiceWorkerEventDispatcher {
       => (blink.mojom.ServiceWorkerEventStatus status,
           mojo.common.mojom.Time dispatch_event_time);
   DispatchBackgroundFetchedEvent(string id,
+                                 string job_guid,
                                  array<BackgroundFetchSettledFetch> fetches)
       => (blink.mojom.ServiceWorkerEventStatus status,
           mojo.common.mojom.Time dispatch_event_time);

@@ -7,6 +7,7 @@
 #include <stdint.h>
 #include <memory>
 
+#include "base/guid.h"
 #include "base/macros.h"
 #include "base/run_loop.h"
 #include "base/test/histogram_tester.h"
@@ -21,6 +22,8 @@ namespace {
 
 const char kExampleId[] = "my-id";
 const char kExampleId2[] = "my-second-id";
+const char kExampleJobGuid[] = "bb48a9fb-c01f-4ced-a9ae-58bd48a9fb53";
+const char kExampleJobGuid2[] = "fac63c4d-380c-45e8-b3f7-740237597ae1";
 
 class BackgroundFetchEventDispatcherTest : public BackgroundFetchTestBase {
  public:
@@ -37,7 +40,7 @@ class BackgroundFetchEventDispatcherTest : public BackgroundFetchTestBase {
 
 TEST_F(BackgroundFetchEventDispatcherTest, DispatchInvalidRegistration) {
   BackgroundFetchRegistrationId invalid_registration_id(
-      9042 /* random invalid id */, origin(), kExampleId);
+      9042 /* random invalid SW id */, origin(), kExampleId, kExampleJobGuid);
 
   base::RunLoop run_loop;
   event_dispatcher_.DispatchBackgroundFetchAbortEvent(invalid_registration_id,
@@ -54,8 +57,12 @@ TEST_F(BackgroundFetchEventDispatcherTest, DispatchInvalidRegistration) {
 }
 
 TEST_F(BackgroundFetchEventDispatcherTest, DispatchAbortEvent) {
-  BackgroundFetchRegistrationId registration_id;
-  ASSERT_TRUE(CreateRegistrationId(kExampleId, &registration_id));
+  int64_t service_worker_registration_id = RegisterServiceWorker();
+  ASSERT_NE(blink::mojom::kInvalidServiceWorkerRegistrationId,
+            service_worker_registration_id);
+
+  BackgroundFetchRegistrationId registration_id(
+      service_worker_registration_id, origin(), kExampleId, kExampleJobGuid);
 
   {
     base::RunLoop run_loop;
@@ -75,8 +82,7 @@ TEST_F(BackgroundFetchEventDispatcherTest, DispatchAbortEvent) {
   embedded_worker_test_helper()->set_fail_abort_event(true);
 
   BackgroundFetchRegistrationId second_registration_id(
-      registration_id.service_worker_registration_id(),
-      registration_id.origin(), kExampleId2);
+      service_worker_registration_id, origin(), kExampleId2, kExampleJobGuid2);
 
   {
     base::RunLoop run_loop;
@@ -101,8 +107,12 @@ TEST_F(BackgroundFetchEventDispatcherTest, DispatchAbortEvent) {
 }
 
 TEST_F(BackgroundFetchEventDispatcherTest, DispatchClickEvent) {
-  BackgroundFetchRegistrationId registration_id;
-  ASSERT_TRUE(CreateRegistrationId(kExampleId, &registration_id));
+  int64_t service_worker_registration_id = RegisterServiceWorker();
+  ASSERT_NE(blink::mojom::kInvalidServiceWorkerRegistrationId,
+            service_worker_registration_id);
+
+  BackgroundFetchRegistrationId registration_id(
+      service_worker_registration_id, origin(), kExampleId, kExampleJobGuid);
 
   {
     base::RunLoop run_loop;
@@ -127,8 +137,7 @@ TEST_F(BackgroundFetchEventDispatcherTest, DispatchClickEvent) {
   embedded_worker_test_helper()->set_fail_click_event(true);
 
   BackgroundFetchRegistrationId second_registration_id(
-      registration_id.service_worker_registration_id(),
-      registration_id.origin(), kExampleId2);
+      service_worker_registration_id, origin(), kExampleId2, kExampleJobGuid2);
 
   {
     base::RunLoop run_loop;
@@ -158,8 +167,12 @@ TEST_F(BackgroundFetchEventDispatcherTest, DispatchClickEvent) {
 }
 
 TEST_F(BackgroundFetchEventDispatcherTest, DispatchFailEvent) {
-  BackgroundFetchRegistrationId registration_id;
-  ASSERT_TRUE(CreateRegistrationId(kExampleId, &registration_id));
+  int64_t service_worker_registration_id = RegisterServiceWorker();
+  ASSERT_NE(blink::mojom::kInvalidServiceWorkerRegistrationId,
+            service_worker_registration_id);
+
+  BackgroundFetchRegistrationId registration_id(
+      service_worker_registration_id, origin(), kExampleId, kExampleJobGuid);
 
   std::vector<BackgroundFetchSettledFetch> fetches;
   fetches.push_back(BackgroundFetchSettledFetch());
@@ -188,8 +201,7 @@ TEST_F(BackgroundFetchEventDispatcherTest, DispatchFailEvent) {
   embedded_worker_test_helper()->set_fail_fetch_fail_event(true);
 
   BackgroundFetchRegistrationId second_registration_id(
-      registration_id.service_worker_registration_id(),
-      registration_id.origin(), kExampleId2);
+      service_worker_registration_id, origin(), kExampleId2, kExampleJobGuid2);
 
   {
     base::RunLoop run_loop;
@@ -218,8 +230,12 @@ TEST_F(BackgroundFetchEventDispatcherTest, DispatchFailEvent) {
 }
 
 TEST_F(BackgroundFetchEventDispatcherTest, DispatchFetchedEvent) {
-  BackgroundFetchRegistrationId registration_id;
-  ASSERT_TRUE(CreateRegistrationId(kExampleId, &registration_id));
+  int64_t service_worker_registration_id = RegisterServiceWorker();
+  ASSERT_NE(blink::mojom::kInvalidServiceWorkerRegistrationId,
+            service_worker_registration_id);
+
+  BackgroundFetchRegistrationId registration_id(
+      service_worker_registration_id, origin(), kExampleId, kExampleJobGuid);
 
   std::vector<BackgroundFetchSettledFetch> fetches;
   fetches.push_back(BackgroundFetchSettledFetch());
@@ -248,8 +264,7 @@ TEST_F(BackgroundFetchEventDispatcherTest, DispatchFetchedEvent) {
   embedded_worker_test_helper()->set_fail_fetched_event(true);
 
   BackgroundFetchRegistrationId second_registration_id(
-      registration_id.service_worker_registration_id(),
-      registration_id.origin(), kExampleId2);
+      service_worker_registration_id, origin(), kExampleId2, kExampleJobGuid2);
 
   {
     base::RunLoop run_loop;

@@ -82,7 +82,8 @@ void BackgroundFetchContext::DidCreateRegistration(
   // Create the BackgroundFetchRegistration the renderer process will receive,
   // which enables it to resolve the promise telling the developer it worked.
   BackgroundFetchRegistration registration;
-  registration.id = registration_id.id();
+  registration.id = registration_id.unsafe_id();
+  registration.job_guid = registration_id.job_guid();
   registration.icons = options.icons;
   registration.title = options.title;
   registration.total_download_size = options.total_download_size;

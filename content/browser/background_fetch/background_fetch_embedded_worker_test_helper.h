@@ -77,6 +77,7 @@ class BackgroundFetchEmbeddedWorkerTestHelper
           DispatchBackgroundFetchFailEventCallback callback) override;
   void OnBackgroundFetchedEvent(
       const std::string& id,
+      const std::string& job_guid,
       const std::vector<BackgroundFetchSettledFetch>& fetches,
       mojom::ServiceWorkerEventDispatcher::
           DispatchBackgroundFetchedEventCallback callback) override;
