@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d011387f_bafcaced",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-09-29T21:40:20Z",
+      "side": 1,
+      "message": "changed to base::RepeatingCallback, because these callbacks will be called more than once.",
+      "parentUuid": "1f982998_8f0d7316",
+      "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7da0565f_d487f345",
         "filename": "content/renderer/media/media_factory.cc",
         "patchSetId": 20
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-29T02:07:12Z",
       "side": 1,
       "message": "Ditto.",
+      "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4f3dc6d_7f069a92",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-09-29T21:40:20Z",
+      "side": 1,
+      "message": "changed to base::RepeatingCallback, because these callbacks will be called more than once.",
+      "parentUuid": "7da0565f_d487f345",
       "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "921e3609_4085ca1b",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-09-29T21:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fcc3f7b0_f38b3bff",
+      "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e74ba180_f55ef64b",
         "filename": "media/blink/video_frame_compositor.cc",
         "patchSetId": 20
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-29T02:07:12Z",
       "side": 1,
       "message": "no const\u0026 for new callbacks.",
+      "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "274ac082_312c2eae",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-09-29T21:40:20Z",
+      "side": 1,
+      "message": "Done. What do you mean by \"new callbacks\"?",
+      "parentUuid": "e74ba180_f55ef64b",
       "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "385fb0bc_dce5d3c2",
+        "filename": "media/blink/video_frame_compositor_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-09-29T21:40:20Z",
+      "side": 1,
+      "message": "Not the same thing. That would be base::Callback\u003cvoid \u003cbase::Callback \u003cvoid(viz::ContextProvider*)\u003e )\u003e",
+      "parentUuid": "92246b67_bcb6c63c",
+      "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54b1b720_3869c577",
         "filename": "media/blink/webmediaplayer_impl_unittest.cc",
         "patchSetId": 20
@@ -101,6 +191,24 @@
       "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03e9d44e_b052350b",
+        "filename": "media/blink/webmediaplayer_impl_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-09-29T21:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54b1b720_3869c577",
+      "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "a65da6ee_0d3c630c",
+        "filename": "media/blink/webmediaplayer_impl_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-09-29T21:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eda855bc_c5a828b4",
+      "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84e194dd_0b1c47a3",
         "filename": "third_party/WebKit/Source/platform/DEPS",
         "patchSetId": 20
@@ -135,6 +261,24 @@
       "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b205186b_678a3583",
+        "filename": "third_party/WebKit/Source/platform/DEPS",
+        "patchSetId": 20
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-09-29T21:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84e194dd_0b1c47a3",
+      "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "da5a420b_cedec82f",
+        "filename": "third_party/WebKit/Source/platform/exported/WebVideoFrameSubmitter.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-09-29T21:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8427d9a_38805c59",
+      "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "493c3bf7_7b4e8dbe",
         "filename": "third_party/WebKit/Source/platform/exported/WebVideoFrameSubmitter.cpp",
         "patchSetId": 20
@@ -169,6 +331,24 @@
       "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e777746e_c4484649",
+        "filename": "third_party/WebKit/Source/platform/exported/WebVideoFrameSubmitter.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-09-29T21:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "493c3bf7_7b4e8dbe",
+      "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "a6a89e57_5574760a",
+        "filename": "third_party/WebKit/Source/platform/graphics/DEPS",
+        "patchSetId": 20
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-09-29T21:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e1e398b_17939f51",
+      "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ee5629e_b285e8db",
         "filename": "third_party/WebKit/Source/platform/graphics/DEPS",
         "patchSetId": 20
@@ -203,6 +401,24 @@
       "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97ee2cf7_1b706ad7",
+        "filename": "third_party/WebKit/Source/platform/graphics/DEPS",
+        "patchSetId": 20
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-09-29T21:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ee5629e_b285e8db",
+      "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "a345f1ee_4e765a0c",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameResourceProvider.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-09-29T21:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12d53fc2_77141289",
+      "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c85b534_29906748",
         "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameResourceProvider.cpp",
         "patchSetId": 20
@@ -237,6 +471,24 @@
       "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81763842_f5123f84",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameResourceProvider.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-09-29T21:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c85b534_29906748",
+      "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "0056e784_42b873d4",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameResourceProvider.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-09-29T21:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0e376fa_269b7ea8",
+      "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06d2fb04_c5b34cab",
         "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameResourceProvider.h",
         "patchSetId": 20
@@ -271,6 +541,24 @@
       "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "889fbf64_66c2deb1",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameResourceProvider.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-09-29T21:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06d2fb04_c5b34cab",
+      "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -291,6 +579,24 @@
     },
     {
       "key": {
+        "uuid": "a14458d4_98c782d6",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameResourceProvider.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-09-29T21:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c224865_2f9ec29b",
+      "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc84f7d6_b43c9d6e",
         "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
         "patchSetId": 20
@@ -305,6 +611,24 @@
       "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a4efc1a_6aca39d4",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-09-29T21:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc84f7d6_b43c9d6e",
+      "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -325,6 +649,24 @@
     },
     {
       "key": {
+        "uuid": "cb5ec117_a2a6380f",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-09-29T21:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fba494f_d9a55363",
+      "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5db7352e_806b04f2",
         "filename": "third_party/WebKit/public/platform/DEPS",
         "patchSetId": 20
@@ -339,6 +681,24 @@
       "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d1a9f9c_e09ba3be",
+        "filename": "third_party/WebKit/public/platform/DEPS",
+        "patchSetId": 20
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-09-29T21:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5db7352e_806b04f2",
+      "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -359,6 +719,24 @@
     },
     {
       "key": {
+        "uuid": "d8b7331e_56e84ec3",
+        "filename": "third_party/WebKit/public/platform/WebVideoFrameSubmitter.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-09-29T21:40:20Z",
+      "side": 1,
+      "message": "I think both need to be Repeating.",
+      "parentUuid": "bd4f3ada_b520a191",
+      "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c73ee38_473bfd8d",
         "filename": "third_party/WebKit/public/platform/WebVideoFrameSubmitter.h",
         "patchSetId": 20
@@ -373,6 +751,24 @@
       "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6641aeb_fa93839a",
+        "filename": "third_party/WebKit/public/platform/WebVideoFrameSubmitter.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-09-29T21:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c73ee38_473bfd8d",
+      "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
