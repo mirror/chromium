@@ -16,6 +16,24 @@
       "revId": "eebf6166c7a9bd4c744bd4acd41db51f85d8c212",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17f9592d_f8d205f0",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-29T11:35:52Z",
+      "side": 1,
+      "message": "The values are not important, the important thing is to have them not null.\nI can add a comment but I plan to remove the scrollView and refactor much more the NTP once the new bookmarks are landed and the NTP is no longer scrollable left-right.",
+      "parentUuid": "da949dff_a28f88e2",
+      "revId": "eebf6166c7a9bd4c744bd4acd41db51f85d8c212",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
