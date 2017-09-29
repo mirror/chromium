@@ -49,6 +49,9 @@ buildflag_header("features") {
     "PGO_BUILD=$pgo_build",
     "OPTIMIZE_WEBUI=$optimize_webui",
   ]
+  if (is_android) {
+    flags += [ "ENABLE_DOWNLOADABLE_STRINGS=$enable_downloadable_strings" ]
+  }
 }
 
 source_set("channel_info") {

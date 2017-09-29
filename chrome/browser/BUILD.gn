@@ -1502,6 +1502,13 @@ split_static_library("browser") {
     "win/titlebar_config.h",
   ]
 
+  if (is_android && enable_downloadable_strings) {
+    sources += [
+      "component_updater/downloadable_strings_component_installer.cc",
+      "component_updater/downloadable_strings_component_installer.h",
+    ]
+  }
+
   if (!is_android) {
     sources += [
       "embedded_ui_service_info_factory.cc",
