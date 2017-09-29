@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "d55009ad_9cb838f8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-09-29T21:13:02Z",
+      "side": 1,
+      "message": "Made a change to ensure we don\u0027t attempt to parse a null URL in the first place.",
+      "parentUuid": "0bdcbf36_c6d1a35c",
+      "range": {
+        "startLine": 881,
+        "startChar": 12,
+        "endLine": 881,
+        "endChar": 62
+      },
+      "revId": "431bd0123be8b9047534a294379b9e4cd3d95d8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1326acaa_d8b648de",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
         "patchSetId": 1
