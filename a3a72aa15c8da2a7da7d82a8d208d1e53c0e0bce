@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50ffca3d_c9414d24",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2085,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-09-29T15:17:35Z",
+      "side": 1,
+      "message": "Nice job getting rid of StateTracer::Start!",
+      "range": {
+        "startLine": 2085,
+        "startChar": 37,
+        "endLine": 2085,
+        "endChar": 45
+      },
+      "revId": "a3a72aa15c8da2a7da7d82a8d208d1e53c0e0bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b01a42e6_cce98f83",
+        "filename": "third_party/WebKit/Source/platform/scheduler/util/tracing_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-09-29T15:17:35Z",
+      "side": 1,
+      "message": "Given that we can\u0027t pass different values to the same TRACE_EVENT calls, let\u0027s use string literals inside TRACE_EVENT macros instead of variables.",
+      "range": {
+        "startLine": 13,
+        "startChar": 11,
+        "endLine": 13,
+        "endChar": 31
+      },
+      "revId": "a3a72aa15c8da2a7da7d82a8d208d1e53c0e0bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04f798f9_2b66231e",
+        "filename": "third_party/WebKit/Source/platform/scheduler/util/tracing_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-09-29T15:17:35Z",
+      "side": 1,
+      "message": "First, let\u0027s keep helper IsEnabled method for better readability.\n\nSecond, let\u0027s keep this in two separate lines for readability.",
+      "range": {
+        "startLine": 57,
+        "startChar": 18,
+        "endLine": 57,
+        "endChar": 36
+      },
+      "revId": "a3a72aa15c8da2a7da7d82a8d208d1e53c0e0bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3481d91a_6d7a0de6",
+        "filename": "third_party/WebKit/Source/platform/scheduler/util/tracing_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-09-29T15:17:35Z",
+      "side": 1,
+      "message": "Unfortunatelely, this won\u0027t work - each TRACE_EVENT macro has a static variable inside, which means that category should be constant for each TRACE_EVENT call. \n\nThat\u0027s why we need template magic I\u0027ve been talking about.\n\nLet\u0027s keep it \"renderer.scheduler\" for now and change it when template magic arrives.",
+      "range": {
+        "startLine": 25,
+        "startChar": 14,
+        "endLine": 25,
+        "endChar": 34
+      },
+      "revId": "a3a72aa15c8da2a7da7d82a8d208d1e53c0e0bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

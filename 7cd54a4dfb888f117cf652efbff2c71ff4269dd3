@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa093f04_65c5dfb8",
+        "filename": "third_party/WebKit/Source/platform/scheduler/util/state_tracer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-09-29T15:17:35Z",
+      "side": 0,
+      "message": "Given that we\u0027ll need template magic for different categories (see my comment below), let\u0027s keep this in header-only file for now.",
+      "range": {
+        "startLine": 1,
+        "startChar": 3,
+        "endLine": 1,
+        "endChar": 12
+      },
+      "revId": "7cd54a4dfb888f117cf652efbff2c71ff4269dd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
