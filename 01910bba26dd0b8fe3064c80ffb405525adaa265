@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66dda913_df0bdbc5",
+        "filename": "net/log/trace_net_log_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-29T19:52:03Z",
+      "side": 1,
+      "message": "Why are these needed?  Maybe add a cmment?",
+      "range": {
+        "startLine": 100,
+        "startChar": 35,
+        "endLine": 100,
+        "endChar": 0
+      },
+      "revId": "01910bba26dd0b8fe3064c80ffb405525adaa265",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
