@@ -291,10 +291,11 @@ class PaletteTrayTestWithVoiceInteraction : public PaletteTrayTest {
                            expected_on_press);
   }
 
-  std::unique_ptr<HighlighterControllerTestApi> highlighter_test_api_;
+  void DestroyPointerView() { highlighter_test_api_->DestroyPointerView(); }
 
  private:
   std::unique_ptr<HighlighterController> highlighter_controller_;
+  std::unique_ptr<HighlighterControllerTestApi> highlighter_test_api_;
 
   // Owned by |ui|.
   base::SimpleTestTickClock* simulated_clock_ = nullptr;
@@ -333,33 +334,13 @@ TEST_F(PaletteTrayTestWithVoiceInteraction, MetalayerToolActivatesHighlighter) {
   EXPECT_FALSE(highlighter_showing());
 
   // Press/drag over a regular (non-palette) location. This should activate the
-  // highlighter. Note that a diagonal stroke does not create a valid selection.
-  highlighter_test_api_->ResetSelection();
+  // highlighter.
   DragAndAssertMetalayer("tool enabled", origin, ui::EF_NONE,
-                         true /* metalayer stays enabled after the press */,
+                         true /* enables metalayer */,
                          true /* highlighter shown on press */);
-  // When metalayer is entered normally (not via stylus button), a failed
-  // selection should not exit the mode.
-  // NOTE that this is not testing the real logic in PaletteDelegateChromeOS,
-  // but the logic in HighlighterControllerTestApi (which is mimicking
-  // PaletteDelegateChromeOS). Once PaletteDelegateChromeOS is refactored
-  // (crbug/761120) the assertions below become more useful.
-  EXPECT_TRUE(highlighter_test_api_->handle_failed_selection_called());
-  EXPECT_TRUE(metalayer_enabled());
-
-  // A successfull selection should exit the metalayer mode.
-  SCOPED_TRACE("horizontal stroke");
-  highlighter_test_api_->ResetSelection();
-  generator.MoveTouch(gfx::Point(100, 100));
-  generator.PressTouch();
-  EXPECT_TRUE(metalayer_enabled());
-  generator.MoveTouch(gfx::Point(300, 100));
-  generator.ReleaseTouch();
-  EXPECT_TRUE(highlighter_test_api_->handle_selection_called());
-  EXPECT_FALSE(metalayer_enabled());
 
   SCOPED_TRACE("drag over palette");
-  highlighter_test_api_->DestroyPointerView();
+  DestroyPointerView();
   // Press/drag over the palette button. This should not activate the
   // highlighter, but should disable the palette tool instead.
   gfx::Point palette_point = palette_tray_->GetBoundsInScreen().CenterPoint();
@@ -458,8 +439,6 @@ TEST_F(PaletteTrayTestWithVoiceInteraction,
   WaitDragAndAssertMetalayer("with button", origin, ui::EF_LEFT_MOUSE_BUTTON,
                              true /* enables metalayer */,
                              false /* no highlighter on press */);
-  // Metalayer mode entered via the stylus button should not be sticky.
-  EXPECT_FALSE(metalayer_enabled());
 
   // Repeat the previous step without a pause, make sure that the palette tool
   // is not toggled, and the highlighter is enabled immediately.
@@ -473,7 +452,7 @@ TEST_F(PaletteTrayTestWithVoiceInteraction,
       true /* enables metalayer */, true /* highlighter shown on press */);
 
   // The barrel button should not work on the lock screen.
-  highlighter_test_api_->DestroyPointerView();
+  DestroyPointerView();
   GetSessionControllerClient()->RequestLockScreen();
   EXPECT_FALSE(test_api_->GetPaletteToolManager()->IsToolActive(
       PaletteToolId::METALAYER));
@@ -493,7 +472,7 @@ TEST_F(PaletteTrayTestWithVoiceInteraction,
   EXPECT_FALSE(test_api_->GetPaletteToolManager()->IsToolActive(
       PaletteToolId::METALAYER));
 
-  highlighter_test_api_->DestroyPointerView();
+  DestroyPointerView();
   EXPECT_FALSE(highlighter_showing());
   DragAndAssertMetalayer("disabled", origin, ui::EF_LEFT_MOUSE_BUTTON,
                          false /* no metalayer */,
