@@ -56733,6 +56733,17 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="PasswordProtection.UserClickedThroughSafeBrowsingInterstitial"
+    enum="Boolean">
+  <owner>jialiul@chromium.org</owner>
+  <owner>nparker@chromium.org</owner>
+  <summary>
+    If user has clicked through Safe Browsing interstitial before the password
+    protection ping is triggered on the same page. Logged right before password
+    protection ping is sent.
+  </summary>
+</histogram>
+
 <histogram name="PasswordProtection.Verdict" enum="PasswordProtectionVerdict">
   <owner>jialiul@chromium.org</owner>
   <owner>nparker@chromium.org</owner>
@@ -101294,6 +101305,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
       name="PasswordProtection.NumberOfCachedVerdictBeforeShutdown"/>
   <affected-histogram name="PasswordProtection.PageInfoAction"/>
   <affected-histogram name="PasswordProtection.RequestOutcome"/>
+  <affected-histogram
+      name="PasswordProtection.UserClickedThroughSafeBrowsingInterstitial"/>
   <affected-histogram name="PasswordProtection.Verdict"/>
 </histogram_suffixes>
 
