@@ -48,6 +48,7 @@ class MediaStreamVideoSourceTest : public ::testing::Test {
                                       1000.0,
                                       media::PIXEL_FORMAT_I420),
             false)) {
+    mock_source_->DisableStopForRestart();
     media::VideoCaptureFormats formats;
     formats.push_back(media::VideoCaptureFormat(gfx::Size(1280, 720), 30,
                                                 media::PIXEL_FORMAT_I420));
@@ -109,8 +110,6 @@ class MediaStreamVideoSourceTest : public ::testing::Test {
 
     EXPECT_EQ(0, NumberOfSuccessConstraintsCallbacks());
     mock_source_->StartMockedSource();
-    // The mock source is not a capturer source.
-    EXPECT_FALSE(mock_source_->GetCurrentCaptureParams().has_value());
     // Once the source has started successfully we expect that the
     // ConstraintsCallback in MediaStreamSource::AddTrack completes.
     EXPECT_EQ(1, NumberOfSuccessConstraintsCallbacks());
