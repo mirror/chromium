@@ -47,6 +47,13 @@ class PLATFORM_EXPORT DisplayItemClient {
     return LayoutUnit();
   }
 
+  // If GetPaintInvalidationReason() is PaintInvalidationReason::kRectangle
+  // or kIncremental, this method returns the rect needs to be invalidated
+  // partially in this client. The rect is in the same coordinate space as
+  // VisualRect().
+  virtual LayoutRect PartialInvalidationRect() const { return LayoutRect(); }
+  virtual void ClearPartialInvalidationRect() const {}
+
   // This is declared here instead of in LayoutObject for verifying the
   // condition in DrawingRecorder.
   // Returns true if the object itself will not generate any effective painted
