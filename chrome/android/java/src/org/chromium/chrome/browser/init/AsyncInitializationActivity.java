@@ -28,6 +28,7 @@ import android.view.ViewTreeObserver.OnPreDrawListener;
 import android.view.WindowManager;
 
 import org.chromium.base.ApiCompatibilityUtils;
+import org.chromium.base.SysUtils;
 import org.chromium.base.TraceEvent;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.library_loader.LibraryLoader;
@@ -153,7 +154,7 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
     /** Controls the parameter of {@link NativeInitializationController#startBackgroundTasks()}.*/
     @VisibleForTesting
     public boolean shouldAllocateChildConnection() {
-        return true;
+        return !SysUtils.is512MBAndroidGoDevice();
     }
 
     @CallSuper
