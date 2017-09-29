@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8328c281_169beb7b",
+        "filename": "content/browser/accessibility/accessibility_tree_formatter_browser.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-29T04:24:19Z",
+      "side": 1,
+      "message": "Extra trailing whitespace or something? Looks weird in Gerrit.",
+      "revId": "aa69ab91a49122d0e07439bedcccee139bac0f1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93707d75_07bbf70c",
+        "filename": "content/browser/accessibility/accessibility_tree_formatter_browser.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-29T04:24:19Z",
+      "side": 1,
+      "message": "Nit: in Chrome comments like this more often go right above the\nclass rather than the top of the file.",
+      "revId": "aa69ab91a49122d0e07439bedcccee139bac0f1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d121184_52f00a2f",
+        "filename": "content/browser/accessibility/accessibility_tree_formatter_browser.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-29T04:24:19Z",
+      "side": 1,
+      "message": "The first 20 lines all seem to have something weird. Or maybe it\u0027s\nWindows line endings?",
+      "revId": "aa69ab91a49122d0e07439bedcccee139bac0f1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ce83571_efb0addf",
+        "filename": "content/browser/accessibility/accessibility_tree_formatter_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-29T04:24:19Z",
+      "side": 1,
+      "message": "Nit: Not critical, but the way \"clang-format indents these lines\nhurts readability. I might prefer like this, even though it\u0027s more\nlines of code, I think it\u0027s actually easier to read:\n\nHRESULT hr \u003d accessible-\u003eQueryInterface(service_provider.GetAddressOf());\nif (!SUCCEEDED(hr))\n  return hr;\n\nreturn service_provider-\u003eQueryService(IID_ISimpleDOMNode, simple_dom_node);",
+      "revId": "aa69ab91a49122d0e07439bedcccee139bac0f1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b98733c_a84b49b9",
+        "filename": "content/browser/accessibility/accessibility_tree_formatter_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-29T04:24:19Z",
+      "side": 1,
+      "message": "I guess you may want this to be a command-line flag for the\ncommand-line tool.",
+      "revId": "aa69ab91a49122d0e07439bedcccee139bac0f1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee057301_373875e2",
+        "filename": "content/browser/accessibility/accessibility_tree_formatter_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-29T04:24:19Z",
+      "side": 1,
+      "message": "I like this",
+      "revId": "aa69ab91a49122d0e07439bedcccee139bac0f1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49573834_f3527cce",
+        "filename": "content/browser/accessibility/accessibility_tree_formatter_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-29T04:24:19Z",
+      "side": 1,
+      "message": "I don\u0027t believe you need to do that. The whole base::Value\ntree is owned by the root object, you don\u0027t need to worry\nabout freeing anything other than that.",
+      "revId": "aa69ab91a49122d0e07439bedcccee139bac0f1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7b7e618_61cebd0e",
+        "filename": "content/browser/accessibility/accessibility_tree_formatter_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-29T04:24:19Z",
+      "side": 1,
+      "message": "I\u0027m okay with deleting this.",
+      "revId": "aa69ab91a49122d0e07439bedcccee139bac0f1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92bf09d1_696aee00",
+        "filename": "ui/accessibility/platform/ax_platform_node_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-29T04:24:19Z",
+      "side": 1,
+      "message": "Split into a different change, please.",
+      "revId": "aa69ab91a49122d0e07439bedcccee139bac0f1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
