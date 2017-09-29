@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "81005fdd_3b665a30",
+        "filename": "components/history/core/browser/typed_url_sync_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1142151
+      },
+      "writtenOn": "2017-09-29T15:59:05Z",
+      "side": 1,
+      "message": "For change_processor(), we just ignore the error and keep going.",
+      "parentUuid": "49f68dfb_f47f61f8",
+      "revId": "d96b89b0ad241d42f24dc7d6c261d9517fb278fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a621abd_df33302a",
         "filename": "components/sync/driver/model_type_controller.h",
         "patchSetId": 7
