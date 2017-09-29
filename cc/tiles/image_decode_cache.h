@@ -35,6 +35,7 @@ namespace cc {
 //    thread.
 class CC_EXPORT ImageDecodeCache {
  public:
+  class Manager;
   enum class TaskType { kInRaster, kOutOfRaster };
 
   // This information should be used strictly in tracing, UMA, and any other
@@ -72,7 +73,7 @@ class CC_EXPORT ImageDecodeCache {
     return ScopedTaskType::kInRaster;
   }
 
-  virtual ~ImageDecodeCache() {}
+  virtual ~ImageDecodeCache();
 
   struct CC_EXPORT TaskResult {
     explicit TaskResult(bool need_unref);
@@ -145,7 +146,18 @@ class CC_EXPORT ImageDecodeCache {
   virtual void NotifyImageUnused(const PaintImage::FrameKey& frame_key) = 0;
 
  protected:
+  ImageDecodeCache();
+
   void RecordImageMipLevelUMA(int mip_level);
+
+  void RegisterPurgeCallback(PaintImage::ContentId content_id,
+                             const PaintImage& paint_image);
+
+  virtual void OnPurgeDecodeForContentId(PaintImage::ContentId content_id) {}
+
+ private:
+  using CacheId = int;
+  const CacheId cache_id_;
 };
 
 }  // namespace cc

@@ -28,6 +28,7 @@
 
 #include <memory>
 #include "platform/PlatformExport.h"
+#include "platform/graphics/paint/PaintImage.h"
 #include "platform/image-decoders/ImageDecoder.h"
 #include "platform/image-decoders/SegmentReader.h"
 #include "platform/wtf/Allocator.h"
@@ -110,6 +111,12 @@ class PLATFORM_EXPORT ImageFrameGenerator final
   // decodeToYUV().
   bool GetYUVComponentSizes(SegmentReader*, SkYUVSizeInfo*);
 
+  PaintImage::ContentId complete_frame_content_id() const {
+    return complete_frame_content_id_;
+  }
+
+  void RegisterPurgeCallback(PaintImage::PurgeCallback);
+
  private:
   ImageFrameGenerator(const SkISize& full_size,
                       bool is_multi_frame,
@@ -145,6 +152,7 @@ class PLATFORM_EXPORT ImageFrameGenerator final
                      const SkISize& scaled_size,
                      bool& used_external_allocator);
 
+  const PaintImage::ContentId complete_frame_content_id_;
   const SkISize full_size_;
 
   // Parameters used to create internal ImageDecoder objects.
@@ -164,6 +172,9 @@ class PLATFORM_EXPORT ImageFrameGenerator final
 
   // Protect concurrent access to has_alpha_.
   Mutex alpha_mutex_;
+
+  Mutex callback_mutex_;
+  std::vector<PaintImage::PurgeCallback> purge_callbacks_;
 };
 
 }  // namespace blink

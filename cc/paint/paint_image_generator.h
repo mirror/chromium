@@ -72,6 +72,9 @@ class CC_PAINT_EXPORT PaintImageGenerator : public SkRefCnt {
   const SkImageInfo& GetSkImageInfo() const { return info_; }
   const std::vector<FrameMetadata>& GetFrameMetadata() const { return frames_; }
 
+  virtual void RegisterPurgeCallback(PaintImage::ContentId content_id,
+                                     PaintImage::PurgeCallback callback);
+
  protected:
   // |info| is the info for this paint image generator.
   PaintImageGenerator(const SkImageInfo& info,
@@ -81,6 +84,9 @@ class CC_PAINT_EXPORT PaintImageGenerator : public SkRefCnt {
   const SkImageInfo info_;
   const PaintImage::ContentId generator_content_id_;
   const std::vector<FrameMetadata> frames_;
+
+  base::Lock lock_;
+  std::vector<PaintImage::PurgeCallback> callbacks_;
 
   DISALLOW_COPY_AND_ASSIGN(PaintImageGenerator);
 };

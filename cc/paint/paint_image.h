@@ -7,6 +7,7 @@
 
 #include <vector>
 
+#include "base/callback.h"
 #include "base/gtest_prod_util.h"
 #include "base/logging.h"
 #include "cc/paint/frame_metadata.h"
@@ -36,6 +37,11 @@ class CC_PAINT_EXPORT PaintImage {
   // backing encoded data for this image changes. For instance, in the case of
   // images which can be progressively updated as more encoded data is received.
   using ContentId = int;
+
+  // For PaintImages that can lazily generate their content, keyed using the
+  // ContentId, a PurgeCallback can be registered to be notifed when that
+  // content will not be reused and it is safe to purge any cached data for it.
+  using PurgeCallback = base::OnceCallback<void(ContentId)>;
 
   // An id that can be used for all non-lazy images. Note that if an image is
   // not lazy, it does not mean that this id must be used; one can still use
@@ -154,6 +160,10 @@ class CC_PAINT_EXPORT PaintImage {
 
   // Returns an SkImage for the frame at |index|.
   sk_sp<SkImage> GetSkImageForFrame(size_t index) const;
+
+  // Registers a callback for the given ContentId.
+  void RegisterPurgeCallback(ContentId content_id,
+                             PurgeCallback callback) const;
 
   std::string ToString() const;
 

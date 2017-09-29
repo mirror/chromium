@@ -255,6 +255,15 @@ sk_sp<SkImage> PaintImage::GetSkImageForFrame(size_t index) const {
   return image;
 }
 
+void PaintImage::RegisterPurgeCallback(ContentId content_id,
+                                       PurgeCallback callback) const {
+  if (!paint_image_generator_)
+    return;
+
+  paint_image_generator_->RegisterPurgeCallback(content_id,
+                                                std::move(callback));
+}
+
 std::string PaintImage::ToString() const {
   std::ostringstream str;
   str << "sk_image_: " << sk_image_ << " paint_record_: " << paint_record_

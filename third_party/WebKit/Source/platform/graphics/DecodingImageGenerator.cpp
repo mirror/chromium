@@ -64,7 +64,7 @@ DecodingImageGenerator::CreateAsSkImageGenerator(sk_sp<SkData> data) {
   std::vector<FrameMetadata> frames = {FrameMetadata()};
   sk_sp<DecodingImageGenerator> generator = DecodingImageGenerator::Create(
       std::move(frame), info, std::move(segment_reader), std::move(frames),
-      PaintImage::GetNextContentId(), true);
+      true);
   return WTF::WrapUnique(new SkiaPaintImageGenerator(
       std::move(generator), PaintImage::kDefaultFrameIndex));
 }
@@ -75,11 +75,10 @@ sk_sp<DecodingImageGenerator> DecodingImageGenerator::Create(
     const SkImageInfo& info,
     RefPtr<SegmentReader> data,
     std::vector<FrameMetadata> frames,
-    PaintImage::ContentId content_id,
     bool all_data_received) {
   return sk_sp<DecodingImageGenerator>(new DecodingImageGenerator(
       std::move(frame_generator), info, std::move(data), std::move(frames),
-      content_id, all_data_received));
+      all_data_received));
 }
 
 DecodingImageGenerator::DecodingImageGenerator(
@@ -87,14 +86,12 @@ DecodingImageGenerator::DecodingImageGenerator(
     const SkImageInfo& info,
     RefPtr<SegmentReader> data,
     std::vector<FrameMetadata> frames,
-    PaintImage::ContentId complete_frame_content_id,
     bool all_data_received)
     : PaintImageGenerator(info, std::move(frames)),
       frame_generator_(std::move(frame_generator)),
       data_(std::move(data)),
       all_data_received_(all_data_received),
-      can_yuv_decode_(false),
-      complete_frame_content_id_(complete_frame_content_id) {}
+      can_yuv_decode_(false) {}
 
 DecodingImageGenerator::~DecodingImageGenerator() {}
 
@@ -212,9 +209,20 @@ PaintImage::ContentId DecodingImageGenerator::GetContentIdForFrame(
   // If we have all the data for the image, or this particular frame, we can
   // consider the decoded frame constant.
   if (all_data_received_ || GetFrameMetadata()[frame_index].complete)
-    return complete_frame_content_id_;
+    return frame_generator_->complete_frame_content_id();
 
   return PaintImageGenerator::GetContentIdForFrame(frame_index);
+}
+
+void DecodingImageGenerator::RegisterPurgeCallback(
+    PaintImage::ContentId content_id,
+    PaintImage::PurgeCallback callback) {
+  if (content_id == frame_generator_->complete_frame_content_id()) {
+    frame_generator_->RegisterPurgeCallback(std::move(callback));
+    return;
+  }
+
+  PaintImageGenerator::RegisterPurgeCallback(content_id, std::move(callback));
 }
 
 }  // namespace blink

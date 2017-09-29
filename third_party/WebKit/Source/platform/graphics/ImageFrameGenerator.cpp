@@ -113,7 +113,8 @@ ImageFrameGenerator::ImageFrameGenerator(const SkISize& full_size,
                                          bool is_multi_frame,
                                          const ColorBehavior& color_behavior,
                                          std::vector<SkISize> supported_sizes)
-    : full_size_(full_size),
+    : complete_frame_content_id_(PaintImage::GetNextContentId()),
+      full_size_(full_size),
       decoder_color_behavior_(color_behavior),
       is_multi_frame_(is_multi_frame),
       decode_failed_(false),
@@ -133,6 +134,9 @@ ImageFrameGenerator::ImageFrameGenerator(const SkISize& full_size,
 
 ImageFrameGenerator::~ImageFrameGenerator() {
   ImageDecodingStore::Instance().RemoveCacheIndexedByGenerator(this);
+  MutexLocker lock(callback_mutex_);
+  for (auto& cb : purge_callbacks_)
+    std::move(cb).Run(complete_frame_content_id_);
 }
 
 bool ImageFrameGenerator::DecodeAndScale(
@@ -431,6 +435,12 @@ SkISize ImageFrameGenerator::GetSupportedDecodeSize(
     }
   }
   return full_size_;
+}
+
+void ImageFrameGenerator::RegisterPurgeCallback(
+    PaintImage::PurgeCallback callback) {
+  MutexLocker lock(callback_mutex_);
+  purge_callbacks_.push_back(std::move(callback));
 }
 
 }  // namespace blink

@@ -19,7 +19,11 @@ PaintImageGenerator::PaintImageGenerator(const SkImageInfo& info,
       generator_content_id_(PaintImage::GetNextContentId()),
       frames_(std::move(frames)) {}
 
-PaintImageGenerator::~PaintImageGenerator() = default;
+PaintImageGenerator::~PaintImageGenerator() {
+  base::AutoLock lock(lock_);
+  for (auto& cb : callbacks_)
+    std::move(cb).Run(generator_content_id_);
+}
 
 PaintImage::ContentId PaintImageGenerator::GetContentIdForFrame(
     size_t frame_index) const {
@@ -31,6 +35,16 @@ SkISize PaintImageGenerator::GetSupportedDecodeSize(
   // The base class just returns the original size as the only supported decode
   // size.
   return info_.dimensions();
+}
+
+void PaintImageGenerator::RegisterPurgeCallback(
+    PaintImage::ContentId content_id,
+    PaintImage::PurgeCallback callback) {
+  if (content_id != generator_content_id_)
+    return;
+
+  base::AutoLock lock(lock_);
+  callbacks_.push_back(std::move(callback));
 }
 
 }  // namespace cc

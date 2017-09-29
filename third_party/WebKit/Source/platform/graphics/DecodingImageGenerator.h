@@ -59,7 +59,6 @@ class PLATFORM_EXPORT DecodingImageGenerator final
                                               const SkImageInfo&,
                                               RefPtr<SegmentReader>,
                                               std::vector<FrameMetadata>,
-                                              PaintImage::ContentId,
                                               bool all_data_received);
 
   ~DecodingImageGenerator() override;
@@ -80,20 +79,20 @@ class PLATFORM_EXPORT DecodingImageGenerator final
                      uint32_t lazy_pixel_ref) override;
   SkISize GetSupportedDecodeSize(const SkISize& requested_size) const override;
   PaintImage::ContentId GetContentIdForFrame(size_t frame_index) const override;
+  void RegisterPurgeCallback(PaintImage::ContentId,
+                             PaintImage::PurgeCallback) override;
 
  private:
   DecodingImageGenerator(RefPtr<ImageFrameGenerator>,
                          const SkImageInfo&,
                          RefPtr<SegmentReader>,
                          std::vector<FrameMetadata>,
-                         PaintImage::ContentId,
                          bool all_data_received);
 
   RefPtr<ImageFrameGenerator> frame_generator_;
   const RefPtr<SegmentReader> data_;  // Data source.
   const bool all_data_received_;
   bool can_yuv_decode_;
-  const PaintImage::ContentId complete_frame_content_id_;
 };
 
 }  // namespace blink

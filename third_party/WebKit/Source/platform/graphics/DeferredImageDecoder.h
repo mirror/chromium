@@ -106,7 +106,6 @@ class PLATFORM_EXPORT DeferredImageDecoder final {
   bool has_hot_spot_;
   sk_sp<SkColorSpace> color_space_for_sk_images_;
   IntPoint hot_spot_;
-  const PaintImage::ContentId complete_frame_content_id_;
 
   // Caches frame state information.
   Vector<DeferredFrameData> frame_data_;

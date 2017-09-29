@@ -83,8 +83,7 @@ DeferredImageDecoder::DeferredImageDecoder(
       repetition_count_(kAnimationNone),
       all_data_received_(false),
       can_yuv_decode_(false),
-      has_hot_spot_(false),
-      complete_frame_content_id_(PaintImage::GetNextContentId()) {}
+      has_hot_spot_(false) {}
 
 DeferredImageDecoder::~DeferredImageDecoder() {}
 
@@ -130,7 +129,7 @@ sk_sp<PaintImageGenerator> DeferredImageDecoder::CreateGenerator(size_t index) {
 
   auto generator = DecodingImageGenerator::Create(
       frame_generator_, info, std::move(segment_reader), std::move(frames),
-      complete_frame_content_id_, all_data_received_);
+      all_data_received_);
   generator->SetCanYUVDecode(can_yuv_decode_);
 
   return generator;
