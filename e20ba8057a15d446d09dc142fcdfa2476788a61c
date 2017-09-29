@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "caac18dd_fbb20772",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-09-29T21:36:07Z",
+      "side": 1,
+      "message": "I wish I knew. As mentioned in nglayout OOF doc, https://docs.google.com/document/d/1Qbgfx7vh2CTxa8CsYVS25tQWtkGdrN-D6TzPmYGZNtc/ this is what the spec says about static position: \n\nBlock layout algorithm defines static position as \"position out of flow block would have had if it was not out of flow + fudge factor\". What definition means by fudge factor is that computing exact \"position block would have had\" gets to be very complicated with floats and negative margins, so UAs are free to simplify the computation. CSS2 spec:\n\"But rather than actually calculating the dimensions of that hypothetical box, user agents are free to make a guess at its probable position.\"",
+      "parentUuid": "c53055ae_2938d5e0",
+      "revId": "e20ba8057a15d446d09dc142fcdfa2476788a61c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c17d88b1_6ff1c87a",
         "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
         "patchSetId": 8
@@ -30,6 +48,30 @@
       "writtenOn": "2017-09-29T20:51:17Z",
       "side": 1,
       "message": "Flex/grid containers have already set the static position?",
+      "range": {
+        "startLine": 116,
+        "startChar": 23,
+        "endLine": 116,
+        "endChar": 49
+      },
+      "revId": "e20ba8057a15d446d09dc142fcdfa2476788a61c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a321980e_fc5a25f0",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-09-29T21:36:07Z",
+      "side": 1,
+      "message": "Yes. The newer layout algorithms set the static position before calling UpdateBlockLayout. For older algorithms, position must be computed by calling ComputeInlineStaticDistance, and ComputeBlockStaticDistance.",
+      "parentUuid": "c17d88b1_6ff1c87a",
       "range": {
         "startLine": 116,
         "startChar": 23,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "fbfde8ad_0a72c24d",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-09-29T21:36:07Z",
+      "side": 1,
+      "message": "Flex and Grid boxes do have layers. In general, I am not familiar with Layer() lifecycle, but the Grid/Flex code that I borrowed this logic from called same routines without guards.",
+      "parentUuid": "76393ad5_44799344",
+      "range": {
+        "startLine": 117,
+        "startChar": 20,
+        "endLine": 117,
+        "endChar": 25
+      },
+      "revId": "e20ba8057a15d446d09dc142fcdfa2476788a61c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23927732_f23051c7",
         "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
         "patchSetId": 8
@@ -79,6 +145,24 @@
       "revId": "e20ba8057a15d446d09dc142fcdfa2476788a61c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5245c02e_7e975a9a",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-09-29T21:36:07Z",
+      "side": 1,
+      "message": "Yes, the whole concept of ContainingBlock() and Container() being different is confusing.\nHave you seen the comment about how they differ at LayoutObject::Container()\n\nContainingBlock() and Container() refer to LayoutObject methods.\n\nchanged the comment to:\n\n  // LayoutObject::ContainingBlock() is not equal to LayoutObject::Container()\n  //  when css container is inline. NG uses css container\u0027s style to determine\n  // whether containing block can contain the node, and therefore must use\n  // ::Container() because that object has the right Style().",
+      "parentUuid": "23927732_f23051c7",
+      "revId": "e20ba8057a15d446d09dc142fcdfa2476788a61c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
