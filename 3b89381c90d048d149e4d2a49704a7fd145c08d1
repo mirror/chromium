@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da4f4b8a_92fd319f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-09-29T12:05:09Z",
+      "side": 1,
+      "message": "Both I Am intending to add as fixes also on M63, just wanted to land the \"core\" usability if that makes sense.",
+      "parentUuid": "d3b87f44_5574ff34",
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b59cd11f_f89d1b3e",
         "filename": "chrome/browser/chromeos/arc/intent_helper/arc_external_protocol_dialog.cc",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e2267cc5_d1277ebc",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_external_protocol_dialog.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-09-29T12:05:09Z",
+      "side": 1,
+      "message": "Sure, but as you can see I need to create a way to inform the UI that we don\u0027t want to allow Chrome as an option, let me fix that and add a LOG here.",
+      "parentUuid": "b59cd11f_f89d1b3e",
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1aaed9c_0b3897e6",
         "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.h",
         "patchSetId": 9
@@ -47,6 +83,30 @@
       "writtenOn": "2017-09-28T20:34:37Z",
       "side": 1,
       "message": "What does this mean now?\n\nAccording to the UX doc, clicking [x], clicking outside the bubble, and clicking [Stay in Chrome] yield the same result. The first two are mapped to DIALOG_DEACTIVATED but the 3rd one is mapped to CHROME_PRESSED??",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 27
+      },
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f27d75b_e70c702a",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-09-29T12:05:09Z",
+      "side": 1,
+      "message": "Yeah we use those for basically the same, however pressing [Stay in Chrome] sounded to me like an explicit intent to keep navigating in Chrome, and so I decided to keep that case separated.",
+      "parentUuid": "d1aaed9c_0b3897e6",
       "range": {
         "startLine": 42,
         "startChar": 0,
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "99f6254f_6baaaae1",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-09-29T12:05:09Z",
+      "side": 1,
+      "message": "Exactly I didn\u0027t want to mess with UMA (append only). I Am OK with adding OBSOLETE_ to these 2 cases.",
+      "parentUuid": "d2736668_b9f9113f",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 26
+      },
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ecb0b35c_80e0c771",
         "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.h",
         "patchSetId": 9
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "ad5813b9_9fcfd592",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-09-29T12:05:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ecb0b35c_80e0c771",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 34
+      },
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "297db518_67fb41bd",
         "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.h",
         "patchSetId": 9
@@ -116,6 +224,24 @@
       "writtenOn": "2017-09-28T20:34:37Z",
       "side": 1,
       "message": "Can you remove this function? I\u0027d like you to modify the apk instead.",
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d44fe1a_c900878f",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-09-29T12:05:09Z",
+      "side": 1,
+      "message": "As we chatted offline, I will need to verify this is no impacting somebody else, will add a TODO for removing if possible.",
+      "parentUuid": "297db518_67fb41bd",
       "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -139,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "323eb46c_ee7d8a4b",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-09-29T12:05:09Z",
+      "side": 1,
+      "message": "It\u0027s not the first time that GURL is used in this file, however yes this needs to be added.",
+      "parentUuid": "b239d721_f9eb1071",
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01fb100b_531743d7",
         "filename": "chrome/browser/ui/browser_commands.h",
         "patchSetId": 9
@@ -156,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "ae5c5b8d_a89e7410",
+        "filename": "chrome/browser/ui/browser_commands.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-09-29T12:05:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01fb100b_531743d7",
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c88a7d2_d66ef777",
         "filename": "chrome/browser/ui/browser_dialogs.h",
         "patchSetId": 9
@@ -167,6 +329,24 @@
       "writtenOn": "2017-09-28T20:34:37Z",
       "side": 1,
       "message": "I forgot why you preferred a raw function pointer over base::Callback in the original intent picker CL, but can we switch to the latter?\n\nSince base::Callback is being deprecated, please use base::RepeatableCallback if you do so.",
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e500c2d9_818be5eb",
+        "filename": "chrome/browser/ui/browser_dialogs.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-09-29T12:05:09Z",
+      "side": 1,
+      "message": "I don\u0027t remember of a particular reason to keep this as a raw function pointer, let me evaluate modifying this and replacing line 284 (because of the deprecation you are talking about) in a follow up CL.",
+      "parentUuid": "2c88a7d2_d66ef777",
       "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -190,6 +370,24 @@
     },
     {
       "key": {
+        "uuid": "167f71e0_9e0aa3f9",
+        "filename": "chrome/browser/ui/views/intent_picker_bubble_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-09-29T12:05:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "652ff9eb_e578b09f",
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "816c8497_9752a5be",
         "filename": "chrome/browser/ui/views/intent_picker_bubble_view.cc",
         "patchSetId": 9
@@ -201,6 +399,24 @@
       "writtenOn": "2017-09-28T20:34:37Z",
       "side": 1,
       "message": "Can you elaborate which part is incorrect? (or can you just fix it now unless it takes time?)",
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47b32fae_dfd49735",
+        "filename": "chrome/browser/ui/views/intent_picker_bubble_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-09-29T12:05:09Z",
+      "side": 1,
+      "message": "We are not longer going to show 3.5 items as a limit, discussing offline.",
+      "parentUuid": "816c8497_9752a5be",
       "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -230,6 +446,30 @@
     },
     {
       "key": {
+        "uuid": "e7d114cb_1cd1b1f1",
+        "filename": "chrome/browser/ui/views/intent_picker_bubble_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-09-29T12:05:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d58d561c_d67eeb75",
+      "range": {
+        "startLine": 119,
+        "startChar": 20,
+        "endLine": 119,
+        "endChar": 26
+      },
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9cc50624_918635af",
         "filename": "chrome/browser/ui/views/intent_picker_bubble_view.cc",
         "patchSetId": 9
@@ -241,6 +481,24 @@
       "writtenOn": "2017-09-28T20:34:37Z",
       "side": 1,
       "message": "Since this won\u0027t actually launch the package, passing the package name seems like a hack. Can we instead define a constant for Chrome browser in arc::ArcNavigationThrottle and pass it instead?",
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2069ded2_3f491209",
+        "filename": "chrome/browser/ui/views/intent_picker_bubble_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-09-29T12:05:09Z",
+      "side": 1,
+      "message": "Well the package name may be used to save the preference and anyways I have to send back \"something\" here. I would prefer to keep it this way, WDYT?",
+      "parentUuid": "9cc50624_918635af",
       "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -264,6 +522,24 @@
     },
     {
       "key": {
+        "uuid": "cf15811c_5a17d8b3",
+        "filename": "chrome/browser/ui/views/intent_picker_bubble_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-09-29T12:05:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "65cfe067_8c0e950f",
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "907030d9_6ddd9030",
         "filename": "chrome/browser/ui/views/intent_picker_bubble_view.cc",
         "patchSetId": 9
@@ -278,6 +554,24 @@
       "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "056b10e7_9453669d",
+        "filename": "chrome/browser/ui/views/intent_picker_bubble_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-09-29T12:05:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "907030d9_6ddd9030",
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -298,6 +592,24 @@
     },
     {
       "key": {
+        "uuid": "fff2a022_43bcaee5",
+        "filename": "chrome/browser/ui/views/intent_picker_bubble_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-09-29T12:05:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f82348e_bbd8b667",
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63f5ed6a_1cf6f39b",
         "filename": "chrome/browser/ui/views/intent_picker_bubble_view_unittest.cc",
         "patchSetId": 9
@@ -312,6 +624,24 @@
       "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a375015a_86623572",
+        "filename": "chrome/browser/ui/views/intent_picker_bubble_view_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-09-29T12:05:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "63f5ed6a_1cf6f39b",
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -338,6 +668,30 @@
     },
     {
       "key": {
+        "uuid": "72c27e72_76bac1ce",
+        "filename": "chrome/browser/ui/views/intent_picker_bubble_view_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-09-29T12:05:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b2844bc_688e27e8",
+      "range": {
+        "startLine": 44,
+        "startChar": 27,
+        "endLine": 44,
+        "endChar": 35
+      },
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b39d50a2_4e0282c7",
         "filename": "chrome/browser/ui/views/location_bar/intent_picker_view.cc",
         "patchSetId": 9
@@ -349,6 +703,30 @@
       "writtenOn": "2017-09-28T20:34:37Z",
       "side": 1,
       "message": "what is this for? looks unused to me.",
+      "range": {
+        "startLine": 14,
+        "startChar": 35,
+        "endLine": 14,
+        "endChar": 66
+      },
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eece4711_38f3c727",
+        "filename": "chrome/browser/ui/views/location_bar/intent_picker_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-09-29T12:05:09Z",
+      "side": 1,
+      "message": "Forgot to delete it, modifying header also.",
+      "parentUuid": "b39d50a2_4e0282c7",
       "range": {
         "startLine": 14,
         "startChar": 35,
@@ -384,6 +762,30 @@
     },
     {
       "key": {
+        "uuid": "067ee0e9_f1ff83df",
+        "filename": "chrome/browser/ui/views/location_bar/intent_picker_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-09-29T12:05:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3de8d8b0_6a0c112f",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f73e6acb_cc3ea21b",
         "filename": "chrome/browser/ui/views/location_bar/intent_picker_view.h",
         "patchSetId": 9
@@ -398,6 +800,24 @@
       "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3ab35c5_2f1f17c4",
+        "filename": "chrome/browser/ui/views/location_bar/intent_picker_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-09-29T12:05:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f73e6acb_cc3ea21b",
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -418,6 +838,24 @@
     },
     {
       "key": {
+        "uuid": "e912e027_d6ebf0be",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-09-29T12:05:09Z",
+      "side": 1,
+      "message": "Refactoring l99 to include this as a complement.",
+      "parentUuid": "3221c57d_e9525d9a",
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "84d91868_24e6b53d",
         "filename": "chrome/browser/ui/views/toolbar/toolbar_view.cc",
         "patchSetId": 9
@@ -429,6 +867,24 @@
       "writtenOn": "2017-09-28T20:34:37Z",
       "side": 1,
       "message": "I guess we don\u0027t want to have very ARC specific code here. Also, the code below is very similar to the one in c/b/c/arc/intent_helper/arc_navigation_throttle.cc. Can\u0027t we just let ArcNavigationThrottle() do the job? I haven\u0027t taken a closer look at this yet, but the constructor seems to take a callback to show UI at least.",
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd6ef5a5_2eb469fe",
+        "filename": "chrome/browser/ui/views/toolbar/toolbar_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-09-29T12:05:09Z",
+      "side": 1,
+      "message": "cannot be done in a straightforward way, this is because this code depends on stuff hosted on c/b/ui/views/ and those includes will not be allowed on c/b/c/arc/intent/helper/ :( I actually tried, this is the output:\n\n** Presubmit ERRORS **\nYou added one or more #includes that violate checkdeps rules.\n  chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc\n      Illegal include: \"chrome/browser/ui/views/intent_picker_bubble_view.h\"\n    Because of \"-chrome/browser/ui/views\" from chrome/browser\u0027s include_rules. \\\n  chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc\n      Illegal include: \"chrome/browser/ui/views/location_bar/intent_picker_view.h\"\n    Because of \"-chrome/browser/ui/views\" from chrome/browser\u0027s include_rules. \\\n  chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc\n      Illegal include: \"chrome/browser/ui/views/location_bar/location_bar_view.h\"\n    Because of \"-chrome/browser/ui/views\" from chrome/browser\u0027s include_rules.\n\nI have the local patch for moving this if you want to take a look.",
+      "parentUuid": "84d91868_24e6b53d",
       "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
