@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "91cb0356_41b0c479",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-29T08:00:13Z",
+      "side": 1,
+      "message": "how about base::UmaHistogramEnumeration instead? this is only called once, so there\u0027s no need for the macro\u0027s optimization magic.",
+      "parentUuid": "ec86436c_cf991e85",
+      "revId": "638b2bfd516825b8691189bcf5b3b0e92104fc3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1cd34c1_0086fd4d",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 6

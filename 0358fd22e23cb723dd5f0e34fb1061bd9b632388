@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9973a8ab_f7845103",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-29T08:00:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "56dc7432_ee086f7e",
+      "revId": "0358fd22e23cb723dd5f0e34fb1061bd9b632388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46c6d9a7_4002690d",
         "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
         "patchSetId": 4
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Interesting - thanks for pointing that out (it\u0027s not a way of coding these kinds of conditionals that I had ever thought about).",
       "parentUuid": "46c6d9a7_4002690d",
+      "revId": "0358fd22e23cb723dd5f0e34fb1061bd9b632388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a9ee1cc2_1226f934",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-29T08:00:13Z",
+      "side": 1,
+      "message": "You bet. For future reference, it\u0027s in our style guide here: https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#code-formatting",
+      "parentUuid": "2870e4a1_41bd261c",
       "revId": "0358fd22e23cb723dd5f0e34fb1061bd9b632388",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
