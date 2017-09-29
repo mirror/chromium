@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4523f19_bd3de390",
+        "filename": "chrome/browser/ntp_snippets/download_suggestions_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-29T06:41:10Z",
+      "side": 1,
+      "message": "If this provider is the only reasons for altering the API, then I would not bother and delete these TODOs. The existing approach seems fine, moreover, the provider is disabled in Chrome Home, thus, this code won\u0027t be used soon.",
+      "range": {
+        "startLine": 490,
+        "startChar": 0,
+        "endLine": 491,
+        "endChar": 33
+      },
+      "revId": "4d956f1f4e81f295f598f727fdf32cc857ed507d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd2b1cd1_79205fe9",
+        "filename": "chrome/browser/ntp_snippets/download_suggestions_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1111,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-29T06:41:10Z",
+      "side": 1,
+      "message": "Could you please make a separate test? E.g. \"ShouldIgnoreSuggestedPages\".\nThis test is about recency, not type.",
+      "range": {
+        "startLine": 1107,
+        "startChar": 2,
+        "endLine": 1111,
+        "endChar": 69
+      },
+      "revId": "4d956f1f4e81f295f598f727fdf32cc857ed507d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
