@@ -3490,6 +3490,13 @@ const FeatureEntry kFeatureEntries[] = {
      FEATURE_VALUE_TYPE(
          password_manager::features::kEnableHtmlBasedUsernameDetector)},
 
+#if defined(OS_ANDROID)
+    {"allow-reader-for-accessibility",
+     flag_descriptions::kAllowReaderForAccessibilityName,
+     flag_descriptions::kAllowReaderForAccessibilityDescription, kOsAndroid,
+     FEATURE_VALUE_TYPE(chrome::android::kAllowReaderForAccessibility)},
+#endif  // defined(OS_ANDROID)
+
     // NOTE: Adding new command-line switches requires adding corresponding
     // entries to enum "LoginCustomFlags" in histograms/enums.xml. See note in
     // enums.xml and don't forget to run AboutFlagsHistogramTest unit test.
