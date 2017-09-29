@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3eb9f0c4_efd75c7e",
+        "filename": "net/tools/print_certificates.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-09-29T20:27:31Z",
+      "side": 1,
+      "message": "Optional:\n   \" \".join(command)\n\n(since there are multiple commands that will be just \"openssl\" otherwise).",
+      "range": {
+        "startLine": 111,
+        "startChar": 41,
+        "endLine": 111,
+        "endChar": 51
+      },
+      "revId": "a9f52a3d48d1fd6753daf4fbe8092889e545722f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
