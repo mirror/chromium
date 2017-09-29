@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e3177ed_a620fec7",
+        "filename": "ash/login/ui/lock_contents_view_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-29T21:39:22Z",
+      "side": 1,
+      "message": "Also test creating with kAvailable? Up to you.",
+      "revId": "e0bb8bf2934d0fd8b116cafe5c98382d6cc46d06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "079ac249_dcc92b78",
+        "filename": "ash/login/ui/lock_debug_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-29T21:39:22Z",
+      "side": 1,
+      "message": "nit: merge the two debug_dispatcher_ calls to the end of the if/else to \n\n  debug_dispatcher_.SetLockScreenNoteState(lock_screen_note_state_);",
+      "revId": "e0bb8bf2934d0fd8b116cafe5c98382d6cc46d06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d2da766_f5def70e",
+        "filename": "ash/login/ui/note_action_launch_button_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-29T21:39:22Z",
+      "side": 1,
+      "message": "nit: iirc login tests have all been going in ash namespace.",
+      "revId": "e0bb8bf2934d0fd8b116cafe5c98382d6cc46d06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9be57d7_99534e08",
+        "filename": "ash/login/ui/note_action_launch_button_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-29T21:39:22Z",
+      "side": 1,
+      "message": "Drop comment and remove variable, ie,\n\n  ShowWidgetWithContent(\n      login_layout_util::WrapViewForPreferredSize(note_action));",
+      "revId": "e0bb8bf2934d0fd8b116cafe5c98382d6cc46d06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "783e3df4_a0e6a69b",
+        "filename": "ash/login/ui/note_action_launch_button_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-29T21:39:22Z",
+      "side": 1,
+      "message": "Please add level flow for all of the new tests :)",
+      "revId": "e0bb8bf2934d0fd8b116cafe5c98382d6cc46d06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
