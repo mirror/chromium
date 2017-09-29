@@ -191,6 +191,7 @@
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/FrameFetchContext.h"
 #include "core/loader/FrameLoader.h"
+#include "core/loader/IdlenessDetector.h"
 #include "core/loader/NavigationScheduler.h"
 #include "core/loader/PrerendererClient.h"
 #include "core/loader/TextResourceDecoderBuilder.h"
@@ -5802,6 +5803,7 @@ void Document::FinishedParsing() {
                          TRACE_EVENT_SCOPE_THREAD, "data",
                          InspectorMarkLoadEvent::Data(frame));
     probe::domContentLoadedEventFired(frame);
+    IdlenessDetector::From(*this).DomContentLoadedEventFired();
   }
 
   // Schedule dropping of the ElementDataCache. We keep it alive for a while
