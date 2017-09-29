@@ -16,6 +16,24 @@
       "revId": "e50a6a6abeef9f7eb5d0ed54950d95d660f809f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28c25837_76f90d5b",
+        "filename": "DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1002100
+      },
+      "writtenOn": "2017-09-29T01:15:24Z",
+      "side": 1,
+      "message": "I\u0027d have a strong preference for sorting by name. In particular, in the cases where we have similar deps that vary by platform that would allow us to have the entries for \u0027src/third_party/some_lib_mac\u0027 and \u0027src/third_party/some_lib_android\u0027 right next to each other in the list.",
+      "parentUuid": "86131e5b_8429f6b6",
+      "revId": "e50a6a6abeef9f7eb5d0ed54950d95d660f809f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
