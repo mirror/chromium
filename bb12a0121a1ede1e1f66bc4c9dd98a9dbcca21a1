@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7eb15a70_c32fbd95",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-29T00:15:43Z",
+      "side": 1,
+      "message": "rename this method to be take()?",
+      "revId": "bb12a0121a1ede1e1f66bc4c9dd98a9dbcca21a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e1d3d23_371bbc15",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-29T00:15:43Z",
+      "side": 1,
+      "message": "remove? ah...rebase \u003dP",
+      "revId": "bb12a0121a1ede1e1f66bc4c9dd98a9dbcca21a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e27679bc_76a8d456",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-29T00:15:43Z",
+      "side": 1,
+      "message": "should we just have the profiling process call this?",
+      "revId": "bb12a0121a1ede1e1f66bc4c9dd98a9dbcca21a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "931cfabf_d99f18f3",
+        "filename": "chrome/common/profiling/memlog.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-29T00:15:43Z",
+      "side": 1,
+      "message": "Update the description to describe the intended purpose of |client|",
+      "revId": "bb12a0121a1ede1e1f66bc4c9dd98a9dbcca21a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48f5c4d5_147207d8",
+        "filename": "chrome/common/profiling/memlog_client.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-29T00:15:43Z",
+      "side": 1,
+      "message": "if all MemlogClient requests are sent through the profiling process, then you can also keep this a mojo::Binding. It seems slightly clearer to have all messages be sent from a single source, rather than having two sources, which implicitly decide between them which messages each will send.",
+      "revId": "bb12a0121a1ede1e1f66bc4c9dd98a9dbcca21a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2260df6d_8f1d3fe1",
+        "filename": "chrome/common/profiling/memlog_client.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-29T00:15:43Z",
+      "side": 1,
+      "message": "set/sent",
+      "revId": "bb12a0121a1ede1e1f66bc4c9dd98a9dbcca21a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93794b13_bcae5242",
+        "filename": "chrome/profiling/allocation_tracker.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-29T00:15:43Z",
+      "side": 1,
+      "message": "I think this is insufficient synchronization. Even if you copy AllocationEvents, they still contain raw pointers to Backtraces, which can be invalidated before they are used.",
+      "revId": "bb12a0121a1ede1e1f66bc4c9dd98a9dbcca21a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
