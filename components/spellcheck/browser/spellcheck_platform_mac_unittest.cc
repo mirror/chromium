@@ -241,7 +241,7 @@ TEST_F(SpellcheckPlatformMacTest, SpellCheckSuggestions_EN_US) {
     {"jellous", "jealous"},
     {"knowlege", "knowledge"},
     {"labratory", "laboratory"},
-    {"lenght", "length"},
+    {"length", "length"},
     {"liason", "liaison"},
     {"libary", "library"},
     {"lisence", "license"},

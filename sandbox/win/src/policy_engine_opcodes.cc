@@ -209,7 +209,7 @@ EvalResult OpcodeEval<OP_NUMBER_AND_MATCH>(PolicyOpcode* opcode,
 // Opcode OpWStringMatch:
 // Requires a wchar_t* in selected_param.
 // Argument 0 is the byte displacement of the stored string.
-// Argument 1 is the lenght in chars of the stored string.
+// Argument 1 is the length in chars of the stored string.
 // Argument 2 is the offset to apply on the input string. It has special values.
 // as noted in the header file.
 // Argument 3 is the string matching options.
@@ -226,7 +226,7 @@ PolicyOpcode* OpcodeFactory::MakeOpWStringMatch(int16_t selected_param,
     return NULL;
   }
 
-  int lenght = lstrlenW(match_str);
+  int length = lstrlenW(match_str);
 
   PolicyOpcode* opcode = MakeBase(OP_WSTRING_MATCH, options, selected_param);
   if (NULL == opcode) {
@@ -237,7 +237,7 @@ PolicyOpcode* OpcodeFactory::MakeOpWStringMatch(int16_t selected_param,
     return NULL;
   }
   opcode->SetArgument(0, delta_str);
-  opcode->SetArgument(1, lenght);
+  opcode->SetArgument(1, length);
   opcode->SetArgument(2, start_position);
   opcode->SetArgument(3, match_opts);
   return opcode;
@@ -286,8 +286,8 @@ EvalResult OpcodeEval<OP_WSTRING_MATCH>(PolicyOpcode* opcode,
   if (start_position >= 0) {
     if (kSeekToEnd == start_position) {
         start_position = source_len - match_len;
-    } else if (match_opts & EXACT_LENGHT) {
-        // A sub-case of case 3 is when the EXACT_LENGHT flag is on
+    } else if (match_opts & EXACT_LENGTH) {
+        // A sub-case of case 3 is when the EXACT_LENGTH flag is on
         // the match needs to be not just substring but full match.
         if ((match_len + start_position) != source_len) {
           return EVAL_FALSE;
@@ -360,8 +360,8 @@ PolicyOpcode* OpcodeFactory::MakeBase(OpcodeID opcode_id,
 }
 
 ptrdiff_t OpcodeFactory::AllocRelative(void* start, const wchar_t* str,
-                                       size_t lenght) {
-  size_t bytes = lenght * sizeof(wchar_t);
+                                       size_t length) {
+  size_t bytes = length * sizeof(wchar_t);
   if (memory_size() < bytes) {
     return 0;
   }
