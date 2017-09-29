@@ -46,6 +46,11 @@ class ASH_EXPORT SessionController : public mojom::SessionController {
   base::TimeDelta session_length_limit() const { return session_length_limit_; }
   base::TimeTicks session_start_time() const { return session_start_time_; }
 
+  base::TimeTicks policy_off_hours_end_time() const {
+    return policy_off_hours_end_time_;
+  }
+  bool policy_off_hours_mode() const { return policy_off_hours_mode_; }
+
   // Binds the mojom::SessionControllerRequest to this object.
   void BindRequest(mojom::SessionControllerRequest request);
 
@@ -191,6 +196,11 @@ class ASH_EXPORT SessionController : public mojom::SessionController {
   void ProvideUserPrefServiceForTest(const AccountId& account_id,
                                      std::unique_ptr<PrefService> pref_service);
 
+  // Update "OffHours" policy mode and set "OffHours" policy session end time.
+  void UpdatePolicyOffHoursMode(
+      bool policy_off_hours_mode,
+      base::TimeTicks policy_off_hours_end_time) override;
+
  private:
   void SetSessionState(session_manager::SessionState state);
   void AddUserSession(mojom::UserSessionPtr user_session);
@@ -263,6 +273,14 @@ class ASH_EXPORT SessionController : public mojom::SessionController {
   // null if there is no session length limit. This value is also stored in a
   // pref in case of a crash during the session.
   base::TimeTicks session_start_time_;
+
+  // Whether the "OffHours" policy mode is on.
+  bool policy_off_hours_mode_;
+
+  // "OffHours" policy mode end time. It is needed to show "OffHours" session
+  // limit notification. This value is set only when |policy_off_hours_mode_| is
+  // true, otherwise the value is null.
+  base::TimeTicks policy_off_hours_end_time_;
 
   base::ObserverList<ash::SessionObserver> observers_;
 
