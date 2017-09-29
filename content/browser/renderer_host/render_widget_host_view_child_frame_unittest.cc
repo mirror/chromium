@@ -196,7 +196,7 @@ TEST_F(RenderWidgetHostViewChildFrameTest, SwapCompositorFrame) {
 
   view_->SubmitCompositorFrame(
       local_surface_id,
-      CreateDelegatedFrame(scale_factor, view_size, view_rect));
+      CreateDelegatedFrame(scale_factor, view_size, view_rect), nullptr);
 
   viz::SurfaceId id = GetSurfaceId();
   if (id.is_valid()) {
@@ -228,7 +228,7 @@ TEST_F(RenderWidgetHostViewChildFrameTest, FrameEviction) {
   // Submit a frame.
   view_->SubmitCompositorFrame(
       kArbitraryLocalSurfaceId,
-      CreateDelegatedFrame(scale_factor, view_size, view_rect));
+      CreateDelegatedFrame(scale_factor, view_size, view_rect), nullptr);
 
   EXPECT_EQ(kArbitraryLocalSurfaceId, GetLocalSurfaceId());
   EXPECT_TRUE(view_->has_frame());
@@ -242,7 +242,7 @@ TEST_F(RenderWidgetHostViewChildFrameTest, FrameEviction) {
   // usable.
   view_->SubmitCompositorFrame(
       kArbitraryLocalSurfaceId,
-      CreateDelegatedFrame(scale_factor, view_size, view_rect));
+      CreateDelegatedFrame(scale_factor, view_size, view_rect), nullptr);
   EXPECT_EQ(kArbitraryLocalSurfaceId, GetLocalSurfaceId());
   EXPECT_TRUE(view_->has_frame());
 }
