@@ -35,7 +35,9 @@ function bluetooth_test(func, name, properties) {
       // Chromium Testing API
       if (window.chrome !== undefined) return loadChromiumResources();
     })
-    .then(() => promise_test(func, name, properties));
+    .then(() => promise_test(() => func()
+      .then(() => navigator.bluetooth.test.allResponsesConsumed())
+      .then(consumed => assert_true(consumed)), name, properties));
 }
 
 // HCI Error Codes. Used for simulateGATT[Dis]ConnectionResponse.
