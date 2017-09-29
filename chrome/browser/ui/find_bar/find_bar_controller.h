@@ -54,6 +54,9 @@ class FindBarController : public content::NotificationObserver {
   void EndFindSession(SelectionAction selection_action,
                       ResultAction results_action);
 
+  // The visiblity of the find bar view changed.
+  void FindBarVisiblityChanged();
+
   // Accessor for the attached WebContents.
   content::WebContents* web_contents() const { return web_contents_; }
 
