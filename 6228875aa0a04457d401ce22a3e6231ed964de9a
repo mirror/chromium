@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "bb6c8f6d_49acc73e",
+        "filename": "ash/system/ime_menu/ime_menu_tray.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-29T17:04:33Z",
+      "side": 1,
+      "message": "Please add a comment as to how you know this is only called from the keyboard. I would be inclined to have ShowImeMenuBubbleInternal() take a parameter to make that clear.",
+      "range": {
+        "startLine": 339,
+        "startChar": 2,
+        "endLine": 339,
+        "endChar": 34
+      },
+      "revId": "6228875aa0a04457d401ce22a3e6231ed964de9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b39c69a_27810896",
         "filename": "ash/system/web_notification/web_notification_tray.cc",
         "patchSetId": 8

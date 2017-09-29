@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67db601a_2656470c",
+        "filename": "ash/system/ime_menu/ime_menu_tray.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-29T17:04:33Z",
+      "side": 1,
+      "message": "Shouldn\u0027t you be looking at the event type in all of these?",
+      "range": {
+        "startLine": 452,
+        "startChar": 29,
+        "endLine": 452,
+        "endChar": 33
+      },
+      "revId": "299d6d43370ccd9db0d80430c9164c28372921cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
