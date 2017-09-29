@@ -1196,6 +1196,8 @@ void PasswordAutofillAgent::SendPasswordForms(bool only_visible) {
 
   blink::WebLocalFrame* frame = render_frame()->GetWebFrame();
 
+  page_passwords_analyser_.AnalyseDocumentDOM(frame);
+
   // Make sure that this security origin is allowed to use password manager.
   blink::WebSecurityOrigin origin = frame->GetDocument().GetSecurityOrigin();
   if (logger) {
