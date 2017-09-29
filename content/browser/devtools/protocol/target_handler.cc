@@ -292,6 +292,7 @@ Response TargetHandler::CreateTarget(const std::string& url,
                                      Maybe<int> width,
                                      Maybe<int> height,
                                      Maybe<std::string> context_id,
+                                     Maybe<bool> enableBeginFrameControl,
                                      std::string* out_target_id) {
   DevToolsManagerDelegate* delegate =
       DevToolsManager::GetInstance()->delegate();
