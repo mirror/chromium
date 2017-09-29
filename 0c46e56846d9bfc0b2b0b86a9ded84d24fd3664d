@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85830aad_9b1f52a3",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-29T12:32:14Z",
+      "side": 1,
+      "message": "nit: Not sure I understand the comment, but it seems suspicious that it\u0027s moved now from \"if (!ShouldArcAlwaysStart())\" to the opposite \"if (!ShouldArcAlwaysStart())\" branch.",
+      "range": {
+        "startLine": 106,
+        "startChar": 4,
+        "endLine": 106,
+        "endChar": 68
+      },
+      "revId": "0c46e56846d9bfc0b2b0b86a9ded84d24fd3664d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
