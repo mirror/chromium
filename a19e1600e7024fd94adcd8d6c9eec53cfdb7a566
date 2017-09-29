@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "63d0a8b8_c59d5f99",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwContents.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 1059,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-09-29T02:52:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d22f581_9b856cca",
+      "revId": "a19e1600e7024fd94adcd8d6c9eec53cfdb7a566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "136cc3f9_cbd79dc5",
         "filename": "android_webview/java/src/org/chromium/android_webview/AwContents.java",
         "patchSetId": 30
@@ -33,6 +51,24 @@
       "revId": "a19e1600e7024fd94adcd8d6c9eec53cfdb7a566",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "032be6a6_c2454520",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwContents.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 1082,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-09-29T02:52:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "136cc3f9_cbd79dc5",
+      "revId": "a19e1600e7024fd94adcd8d6c9eec53cfdb7a566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3f3ad51b_8047ff1a",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AndroidScrollIntegrationTest.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-09-29T02:52:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "935f3f85_7875c5b3",
+      "revId": "a19e1600e7024fd94adcd8d6c9eec53cfdb7a566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55c32636_8bfc635f",
         "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwJavaBridgeTest.java",
         "patchSetId": 30
@@ -67,6 +121,24 @@
       "revId": "a19e1600e7024fd94adcd8d6c9eec53cfdb7a566",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21ef8c89_62f40d9a",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwJavaBridgeTest.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-09-29T02:52:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55c32636_8bfc635f",
+      "revId": "a19e1600e7024fd94adcd8d6c9eec53cfdb7a566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "b635c33e_e59f3124",
+        "filename": "content/browser/web_contents/web_contents_android.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-09-29T02:52:09Z",
+      "side": 1,
+      "message": "Not confident if unique ptr can safely replace the way host objects are managed now. host is associated with a GinJavaBridgeMessageFilter that also references host via HostMap, And the filters are stored in RenderProcessHosts\u0027 user data. The suggested change may affect the lifetime of host currently based on ref counter.",
+      "parentUuid": "99355491_9ad26504",
+      "revId": "a19e1600e7024fd94adcd8d6c9eec53cfdb7a566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "159a6f2b_f169183e",
         "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
         "patchSetId": 30
@@ -101,6 +191,24 @@
       "revId": "a19e1600e7024fd94adcd8d6c9eec53cfdb7a566",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4cfcc58_63fc8622",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-09-29T02:52:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "159a6f2b_f169183e",
+      "revId": "a19e1600e7024fd94adcd8d6c9eec53cfdb7a566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "afc95bae_60e79e08",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-09-29T02:52:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19a65830_c7cd16d5",
+      "revId": "a19e1600e7024fd94adcd8d6c9eec53cfdb7a566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7895d883_e0df482b",
         "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContents.java",
         "patchSetId": 30
@@ -135,6 +261,24 @@
       "revId": "a19e1600e7024fd94adcd8d6c9eec53cfdb7a566",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2663b75b_df52e2ac",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContents.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-09-29T02:52:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7895d883_e0df482b",
+      "revId": "a19e1600e7024fd94adcd8d6c9eec53cfdb7a566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "124591c8_2ab91f68",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContents.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-09-29T02:52:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab6ad994_e9e0e728",
+      "revId": "a19e1600e7024fd94adcd8d6c9eec53cfdb7a566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6eb66254_5318030d",
         "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContents.java",
         "patchSetId": 30
@@ -166,6 +328,24 @@
       "writtenOn": "2017-09-28T20:54:52Z",
       "side": 1,
       "message": "does this need to be public?",
+      "revId": "a19e1600e7024fd94adcd8d6c9eec53cfdb7a566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afb66f01_6dbd2335",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContents.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-09-29T02:52:09Z",
+      "side": 1,
+      "message": "Looks like it\u0027s a convenience version of addPossiblyUnsafeJavascriptInterface. Formerly it was public, and its usage is verified in tests(JavaBridgeBasicTest). No need to keep it now, but let me know you prefer removing it.",
+      "parentUuid": "6eb66254_5318030d",
       "revId": "a19e1600e7024fd94adcd8d6c9eec53cfdb7a566",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -195,6 +375,30 @@
     },
     {
       "key": {
+        "uuid": "15c0d2f6_4dd29c8b",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContents.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-09-29T02:52:09Z",
+      "side": 1,
+      "message": "Done. Replaced the other appearances of CVC as well.",
+      "parentUuid": "8db54171_2eb05f84",
+      "range": {
+        "startLine": 538,
+        "startChar": 46,
+        "endLine": 538,
+        "endChar": 61
+      },
+      "revId": "a19e1600e7024fd94adcd8d6c9eec53cfdb7a566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a6fa6ad5_8f824e5b",
         "filename": "content/public/android/javatests/src/org/chromium/content/browser/JavaBridgeActivityTestRule.java",
         "patchSetId": 30
@@ -206,6 +410,24 @@
       "writtenOn": "2017-09-28T20:54:52Z",
       "side": 1,
       "message": "this should no longer be necessary in tests?",
+      "revId": "a19e1600e7024fd94adcd8d6c9eec53cfdb7a566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d399dc10_0ea466ca",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/JavaBridgeActivityTestRule.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-09-29T02:52:09Z",
+      "side": 1,
+      "message": "Correct. removed.",
+      "parentUuid": "a6fa6ad5_8f824e5b",
       "revId": "a19e1600e7024fd94adcd8d6c9eec53cfdb7a566",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -229,6 +451,24 @@
     },
     {
       "key": {
+        "uuid": "3aac3481_ea85074b",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/JavaBridgeBasicsTest.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-09-29T02:52:09Z",
+      "side": 1,
+      "message": "Removed. Tests pass without this.",
+      "parentUuid": "3635a9d4_43bbb9c2",
+      "revId": "a19e1600e7024fd94adcd8d6c9eec53cfdb7a566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac25b29f_47bca1b0",
         "filename": "content/public/android/javatests/src/org/chromium/content/browser/JavaBridgeTestCommon.java",
         "patchSetId": 30
@@ -240,6 +480,24 @@
       "writtenOn": "2017-09-28T20:54:52Z",
       "side": 1,
       "message": "ditto, this part should not need to exist at all in tests?",
+      "revId": "a19e1600e7024fd94adcd8d6c9eec53cfdb7a566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1de9522c_d20d55d1",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/JavaBridgeTestCommon.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-09-29T02:52:09Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "ac25b29f_47bca1b0",
       "revId": "a19e1600e7024fd94adcd8d6c9eec53cfdb7a566",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
