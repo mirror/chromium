@@ -38,39 +38,6 @@ if (is_android) {
 
 assert(!is_ios, "Chromium/iOS shouldn't use anything in //chrome")
 
-if (enable_resource_whitelist_generation) {
-  chrome_resource_whitelist = "$target_gen_dir/chrome_resource_whitelist.txt"
-}
-
-if (is_win) {
-  action("reorder_imports") {
-    script = "//build/win/reorder-imports.py"
-
-    # See comment in chrome_dll.gypi in the hardlink_to_output
-    # target for why this cannot be 'initial' like the DLL.
-    inputs = [
-      "$root_out_dir/initialexe/chrome.exe",
-    ]
-    outputs = [
-      "$root_out_dir/chrome.exe",
-    ]
-    if (symbol_level != 0) {
-      outputs += [ "$root_out_dir/chrome.exe.pdb" ]
-    }
-    args = [
-      "-i",
-      rebase_path("$root_out_dir/initialexe", root_build_dir),
-      "-o",
-      rebase_path("$root_out_dir", root_build_dir),
-      "-a",
-      current_cpu,
-    ]
-    deps = [
-      ":chrome_initial",
-    ]
-  }
-}
-
 # Dependencies which must accompany ChromeMainDelegate when embedded
 # Mash services are enabled.
 if (enable_package_mash_services) {
@@ -122,8 +89,36 @@ if (!is_android && !is_mac) {
       ":chrome_initial",
     ]
     if (is_win) {
+      action("reorder_imports") {
+        script = "//build/win/reorder-imports.py"
+
+        # See comment in chrome_dll.gypi in the hardlink_to_output
+        # target for why this cannot be 'initial' like the DLL.
+        inputs = [
+          "$root_out_dir/initialexe/chrome.exe",
+        ]
+        outputs = [
+          "$root_out_dir/chrome.exe",
+        ]
+        if (symbol_level != 0) {
+          outputs += [ "$root_out_dir/chrome.exe.pdb" ]
+        }
+        args = [
+          "-i",
+          rebase_path("$root_out_dir/initialexe", root_build_dir),
+          "-o",
+          rebase_path("$root_out_dir", root_build_dir),
+          "-a",
+          current_cpu,
+        ]
+        deps = [
+          ":chrome_initial",
+        ]
+      }
+
       public_deps += [ ":reorder_imports" ]
     }
+
     if (use_aura && (is_win || is_linux)) {
       data_deps += [ "//chrome/app:service_manifests" ]
     }
@@ -1621,6 +1616,18 @@ if (is_chrome_branded && !is_android) {
   }
 }
 
+if (enable_resource_whitelist_generation) {
+  chrome_resource_whitelist = "$target_gen_dir/chrome_resource_whitelist.txt"
+
+  generate_resource_whitelist("resource_whitelist") {
+    deps = [
+      "//chrome/android:libchrome",
+    ]
+    input = "$root_out_dir/libchrome$shlib_extension.whitelist"
+    output = chrome_resource_whitelist
+  }
+}
+
 chrome_paks("packed_resources") {
   if (is_mac) {
     output_dir = "$root_gen_dir/repack"
@@ -1765,23 +1772,13 @@ if (is_android) {
 
     # Explicit dependency required for JNI registration to be able to
     # find the native side functions.
-    if (is_android && is_component_build) {
+    if (is_component_build) {
       deps += [
         "//device/gamepad",
         "//device/sensors",
         "//ui/events/devices",
       ]
     }
-  }
-}
-
-if (enable_resource_whitelist_generation) {
-  generate_resource_whitelist("resource_whitelist") {
-    deps = [
-      "//chrome/android:libchrome",
-    ]
-    input = "$root_out_dir/libchrome$shlib_extension.whitelist"
-    output = chrome_resource_whitelist
   }
 }
 
