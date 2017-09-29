@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d539e63_40e9b3b4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/crash/LogcatExtractionRunnable.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-29T16:11:34Z",
+      "side": 1,
+      "message": "you should be able to merge this with the version below rather than copy/pasting code.\n\nif (!uploadNow \u0026\u0026 ...)",
+      "range": {
+        "startLine": 142,
+        "startChar": 33,
+        "endLine": 142,
+        "endChar": 41
+      },
+      "revId": "063b2dbd98e7252efc76ef7fded91aed4c8ae764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "310478e9_3707f197",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/crash/MinidumpUploadService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-29T16:11:34Z",
+      "side": 1,
+      "message": "add comment explaining difference from above (and hwo using above is perferable)",
+      "range": {
+        "startLine": 303,
+        "startChar": 0,
+        "endLine": 303,
+        "endChar": 83
+      },
+      "revId": "063b2dbd98e7252efc76ef7fded91aed4c8ae764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
