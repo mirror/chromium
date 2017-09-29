@@ -3654,8 +3654,13 @@ crbug.com/761891 [ Win7 Linux Debug ] virtual/threaded/animations/transition-and
 crbug.com/769879 [ Linux Debug ] virtual/threaded/transitions/transition-end-event-multiple-02.html [ Pass Failure ]
 crbug.com/769347 [ Mac ] fast/dom/inert/inert-node-is-uneditable.html [ Failure ]
 
+crbug.com/769056 fast/text/emoji-web-font.html [ Failure ]
+
 # Paint-timing tests timeout without threaded-compositing, so skip them.
 crbug.com/720047 external/wpt/paint-timing [ Skip ]
+
+crbug.com/770232 [ Win10 ] editing/selection/paint-hyphen.html [ Failure ]
+crbug.com/770232 [ Win10 ] fast/text/hyphenate-character.html [ Failure ]
 
 # Test flaky (crashing) on WebKit Android (Nexus4)
 crbug.com/762008 [ Android ] http/tests/appcache/abort-cache-onchecking-resource-404.html [ Pass Crash ]
