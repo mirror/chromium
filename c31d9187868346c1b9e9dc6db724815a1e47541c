@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b0f3a569_fe65d0fa",
+        "filename": "media/gpu/android/avda_codec_allocator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-29T19:51:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d213c47_948a43d2",
+      "revId": "c31d9187868346c1b9e9dc6db724815a1e47541c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "233456a7_d4fc3a57",
         "filename": "media/gpu/android/avda_codec_allocator.cc",
         "patchSetId": 7
@@ -30,6 +48,30 @@
       "writtenOn": "2017-09-25T08:42:10Z",
       "side": 1,
       "message": "s/StopThread/StartThread/",
+      "range": {
+        "startLine": 121,
+        "startChar": 59,
+        "endLine": 121,
+        "endChar": 69
+      },
+      "revId": "c31d9187868346c1b9e9dc6db724815a1e47541c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff140be8_90878a3b",
+        "filename": "media/gpu/android/avda_codec_allocator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-29T19:51:29Z",
+      "side": 1,
+      "message": "hrm, good catch.  methinks i need better tests.",
+      "parentUuid": "233456a7_d4fc3a57",
       "range": {
         "startLine": 121,
         "startChar": 59,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "9b90f104_95ca7aea",
+        "filename": "media/gpu/android/avda_codec_allocator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-29T19:51:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1535aa57_2bbbdbfa",
+      "revId": "c31d9187868346c1b9e9dc6db724815a1e47541c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7761f18_b330efc4",
         "filename": "media/gpu/android/avda_codec_allocator.cc",
         "patchSetId": 7
@@ -79,6 +139,30 @@
       "revId": "c31d9187868346c1b9e9dc6db724815a1e47541c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "468bf676_d9e9f819",
+        "filename": "media/gpu/android/avda_codec_allocator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-29T19:51:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7761f18_b330efc4",
+      "range": {
+        "startLine": 264,
+        "startChar": 0,
+        "endLine": 264,
+        "endChar": 3
+      },
+      "revId": "c31d9187868346c1b9e9dc6db724815a1e47541c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "9e40e700_74192c9a",
+        "filename": "media/gpu/android/avda_codec_allocator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-29T19:51:29Z",
+      "side": 1,
+      "message": "yikes.  what happened to this code?  i even removed the TODO from a previous PS...\n\ngood catch!",
+      "parentUuid": "09f0e6f7_86827c16",
+      "range": {
+        "startLine": 351,
+        "startChar": 0,
+        "endLine": 351,
+        "endChar": 53
+      },
+      "revId": "c31d9187868346c1b9e9dc6db724815a1e47541c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa65106f_2935c85b",
         "filename": "media/gpu/android/avda_codec_allocator.cc",
         "patchSetId": 7
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "b511ca8d_9dd83ff5",
+        "filename": "media/gpu/android/avda_codec_allocator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-29T19:51:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa65106f_2935c85b",
+      "range": {
+        "startLine": 419,
+        "startChar": 25,
+        "endLine": 419,
+        "endChar": 46
+      },
+      "revId": "c31d9187868346c1b9e9dc6db724815a1e47541c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d85cae4_ce326cd1",
         "filename": "media/gpu/android/avda_codec_allocator.h",
         "patchSetId": 7
@@ -148,6 +280,30 @@
       "revId": "c31d9187868346c1b9e9dc6db724815a1e47541c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5ac0174_7988005e",
+        "filename": "media/gpu/android/avda_codec_allocator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-29T19:51:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d85cae4_ce326cd1",
+      "range": {
+        "startLine": 176,
+        "startChar": 36,
+        "endLine": 176,
+        "endChar": 40
+      },
+      "revId": "c31d9187868346c1b9e9dc6db724815a1e47541c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
