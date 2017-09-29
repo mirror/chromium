@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cc0f679_e6737a98",
+        "filename": "skia/ext/skia_utils_base.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116011
+      },
+      "writtenOn": "2017-09-29T17:49:59Z",
+      "side": 1,
+      "message": "nit: this object disallows codecs / compressed-images, not Images per-se. CodecDisallowingPixelSerializer? (also don\u0027t care if you want to keep the current name)",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 37
+      },
+      "revId": "0c7a3c40f4da62bc22ceb105bec3c98516440105",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
