@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ae03b86_42970ba6",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-29T01:59:14Z",
+      "side": 1,
+      "message": "I\u0027d prefer to not add this function if possible. Can\u0027t the test just test the size used in production?",
+      "revId": "fd76e6e36da3948c3dd6df8c74779c44efffcdc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "473635b7_cabbb46c",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-29T01:59:14Z",
+      "side": 1,
+      "message": "chunked",
+      "revId": "fd76e6e36da3948c3dd6df8c74779c44efffcdc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
