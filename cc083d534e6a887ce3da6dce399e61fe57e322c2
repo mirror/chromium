@@ -16,6 +16,24 @@
       "revId": "cc083d534e6a887ce3da6dce399e61fe57e322c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "664ea570_894b0710",
+        "filename": "content/public/browser/network_connection_tracker_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-29T14:30:33Z",
+      "side": 1,
+      "message": "You can use NetworkService::Create() (See content/public/common/network_service.h).  It will create one without an NCN, so you can just create the test NCN first, and it will be used.",
+      "parentUuid": "3b6a9020_4e3cf659",
+      "revId": "cc083d534e6a887ce3da6dce399e61fe57e322c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
