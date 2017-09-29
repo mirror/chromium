@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e9aa722_541b913d",
+        "filename": "ios/web_view/internal/signin/cwv_identity.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-29T16:24:27Z",
+      "side": 1,
+      "message": "[email copy]\n\nSame comment for other strings",
+      "range": {
+        "startLine": 22,
+        "startChar": 13,
+        "endLine": 22,
+        "endChar": 18
+      },
+      "revId": "07c2bd3b06f860899b31e8ae13d513d6e3747948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cc1bd64_9192ae30",
+        "filename": "ios/web_view/internal/signin/web_view_profile_oauth2_token_service_ios_provider_impl.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-29T16:24:27Z",
+      "side": 1,
+      "message": "gaiaID is Objective-C variable name. C++ should use appropriate_c_plus_plus_case\n\nSame comment for other variables",
+      "range": {
+        "startLine": 34,
+        "startChar": 12,
+        "endLine": 34,
+        "endChar": 18
+      },
+      "revId": "07c2bd3b06f860899b31e8ae13d513d6e3747948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "261a3523_1c111389",
+        "filename": "ios/web_view/public/cwv_authentication_controller_delegate.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-29T16:24:27Z",
+      "side": 1,
+      "message": "Please document the arguments in the comments",
+      "range": {
+        "startLine": 14,
+        "startChar": 15,
+        "endLine": 14,
+        "endChar": 37
+      },
+      "revId": "07c2bd3b06f860899b31e8ae13d513d6e3747948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5838e5b8_fc9f57b7",
+        "filename": "ios/web_view/public/cwv_authentication_controller_delegate.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-29T16:24:27Z",
+      "side": 1,
+      "message": "Mention that result must contain identity which is currently signed in?",
+      "range": {
+        "startLine": 39,
+        "startChar": 34,
+        "endLine": 39,
+        "endChar": 37
+      },
+      "revId": "07c2bd3b06f860899b31e8ae13d513d6e3747948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a821fea8_5f19059a",
+        "filename": "ios/web_view/public/cwv_identity.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-29T16:24:27Z",
+      "side": 1,
+      "message": "Do we need both init and read write properties?",
+      "range": {
+        "startLine": 17,
+        "startChar": 16,
+        "endLine": 17,
+        "endChar": 29
+      },
+      "revId": "07c2bd3b06f860899b31e8ae13d513d6e3747948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c440c45c_730f0df0",
+        "filename": "ios/web_view/public/cwv_web_view_configuration+sync.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-29T16:24:27Z",
+      "side": 1,
+      "message": "Please document when this returns nil.",
+      "range": {
+        "startLine": 14,
+        "startChar": 33,
+        "endLine": 14,
+        "endChar": 47
+      },
+      "revId": "07c2bd3b06f860899b31e8ae13d513d6e3747948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

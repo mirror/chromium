@@ -213,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "ef8a9d5d_b3bf9d88",
+        "filename": "ios/web_view/public/cwv_authentication_controller_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-29T16:24:27Z",
+      "side": 1,
+      "message": "We can link go/ short links",
+      "parentUuid": "a0ef097c_eedc0008",
+      "revId": "cbbbf20c7e331317c55b36f24b1dfc4199d518ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "edd6366f_862b6e15",
         "filename": "ios/web_view/public/cwv_authentication_controller_delegate.h",
         "patchSetId": 5
@@ -401,6 +419,30 @@
     },
     {
       "key": {
+        "uuid": "39f16909_4f7bcc31",
+        "filename": "ios/web_view/public/cwv_authentication_controller_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-29T16:24:27Z",
+      "side": 1,
+      "message": "numberOfSectionsInTableView:",
+      "parentUuid": "106c5ec5_2e9b4c79",
+      "range": {
+        "startLine": 37,
+        "startChar": 26,
+        "endLine": 37,
+        "endChar": 66
+      },
+      "revId": "cbbbf20c7e331317c55b36f24b1dfc4199d518ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ba35923_bb5bec29",
         "filename": "ios/web_view/public/cwv_identity.h",
         "patchSetId": 5
@@ -471,6 +513,30 @@
       "side": 1,
       "message": "I may be wrong, but i think GAIA ID is an internal SSO concept. Is it OK to link internal docs here?",
       "parentUuid": "b776dd3f_15852a04",
+      "range": {
+        "startLine": 19,
+        "startChar": 18,
+        "endLine": 19,
+        "endChar": 19
+      },
+      "revId": "cbbbf20c7e331317c55b36f24b1dfc4199d518ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eab78d97_afd5ae0e",
+        "filename": "ios/web_view/public/cwv_identity.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-29T16:24:27Z",
+      "side": 1,
+      "message": "Oh, right. It\u0027s OK to use go/ short links.",
+      "parentUuid": "567519e1_f02eae8a",
       "range": {
         "startLine": 19,
         "startChar": 18,
