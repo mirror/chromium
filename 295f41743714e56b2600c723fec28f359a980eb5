@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08cb49dc_439de07a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/sources/js-sourcemaps-toggle-enabled-expected.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-29T18:35:00Z",
+      "side": 1,
+      "message": "Let\u0027s get rid of implicit helpers in navigator.",
+      "range": {
+        "startLine": 14,
+        "startChar": 4,
+        "endLine": 14,
+        "endChar": 27
+      },
+      "revId": "295f41743714e56b2600c723fec28f359a980eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ae7d219_bb318da6",
+        "filename": "third_party/WebKit/Source/devtools/front_end/integration_test_runner/IntegrationTestRunner.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-29T18:35:00Z",
+      "side": 1,
+      "message": "return new Promise(f \u003d\u003e script.onload \u003d f);",
+      "revId": "295f41743714e56b2600c723fec28f359a980eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f01111e6_499a4f41",
+        "filename": "third_party/WebKit/Source/devtools/front_end/services/module.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-29T18:35:00Z",
+      "side": 1,
+      "message": "Undo.",
+      "revId": "295f41743714e56b2600c723fec28f359a980eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
