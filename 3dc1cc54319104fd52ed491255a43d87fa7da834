@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d53476ed_45a978e7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T20:50:47Z",
+      "side": 1,
+      "message": "nit: Gets the list {@link View}s that need...\n\nand update the @return similarly",
+      "range": {
+        "startLine": 291,
+        "startChar": 20,
+        "endLine": 291,
+        "endChar": 32
+      },
+      "revId": "3dc1cc54319104fd52ed491255a43d87fa7da834",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bfdff49_29d7e9f8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T20:50:47Z",
+      "side": 1,
+      "message": "BottomSheet already does this in #showContent()\n\nI think this whole method should move to BottomSheet.java around line 1025 since content can be set directly via BottomSheet#showContents. e.g.\n\n            View contentView \u003d content.getContentView();\n            if (isBottomNavTransparent()) {\n                BottomSheetPaddingUtils.applyPaddingToViews(content.getViewsForPadding(),\n                        new Rect(0, 0, 0, (int) getBottomNavHeight()));\n            }\n            if (content.applyDefaultTopPadding()) {\n                // existing code\n            }\n            animators.add(getViewTransitionAnimator(\n                    contentView, oldContent, mBottomSheetContentContainer, true));",
+      "range": {
+        "startLine": 408,
+        "startChar": 8,
+        "endLine": 411,
+        "endChar": 9
+      },
+      "revId": "3dc1cc54319104fd52ed491255a43d87fa7da834",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
