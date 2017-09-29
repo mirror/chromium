@@ -1989,7 +1989,7 @@ TEST_F(LayerTreeHostImplTest, ImplPinchZoom) {
                             InputHandler::TOUCHSCREEN);
     host_impl_->PinchGestureBegin();
     host_impl_->PinchGestureUpdate(page_scale_delta, gfx::Point(50, 50));
-    host_impl_->PinchGestureEnd();
+    host_impl_->PinchGestureEnd(gfx::Point(50, 50));
     host_impl_->ScrollEnd(EndState().get());
     EXPECT_FALSE(did_request_next_frame_);
     EXPECT_TRUE(did_request_redraw_);
@@ -2017,7 +2017,7 @@ TEST_F(LayerTreeHostImplTest, ImplPinchZoom) {
                             InputHandler::TOUCHSCREEN);
     host_impl_->PinchGestureBegin();
     host_impl_->PinchGestureUpdate(page_scale_delta, gfx::Point());
-    host_impl_->PinchGestureEnd();
+    host_impl_->PinchGestureEnd(gfx::Point());
     host_impl_->ScrollEnd(EndState().get());
 
     gfx::Vector2d scroll_delta(0, 10);
@@ -2059,7 +2059,7 @@ TEST_F(LayerTreeHostImplTest, ViewportScrollOrder) {
                           InputHandler::TOUCHSCREEN);
   host_impl_->PinchGestureBegin();
   host_impl_->PinchGestureUpdate(2.f, gfx::Point(0, 0));
-  host_impl_->PinchGestureEnd();
+  host_impl_->PinchGestureEnd(gfx::Point(0, 0));
   host_impl_->ScrollEnd(EndState().get());
 
   // Sanity check - we're zoomed in, starting from the origin.
@@ -2192,7 +2192,7 @@ TEST_F(LayerTreeHostImplTest, ScrollDuringPinchGesture) {
   EXPECT_VECTOR_EQ(gfx::Vector2dF(250, 250),
                    inner_scroll_layer->CurrentScrollOffset());
 
-  host_impl_->PinchGestureEnd();
+  host_impl_->PinchGestureEnd(gfx::Point(250, 250));
   host_impl_->ScrollEnd(EndState().get());
 }
 
@@ -2217,7 +2217,7 @@ TEST_F(LayerTreeHostImplTest, PinchZoomSnapsToScreenEdge) {
   host_impl_->ScrollBegin(BeginState(anchor).get(), InputHandler::TOUCHSCREEN);
   host_impl_->PinchGestureBegin();
   host_impl_->PinchGestureUpdate(2, anchor);
-  host_impl_->PinchGestureEnd();
+  host_impl_->PinchGestureEnd(anchor);
   host_impl_->ScrollEnd(EndState().get());
 
   EXPECT_VECTOR_EQ(
@@ -2235,7 +2235,7 @@ TEST_F(LayerTreeHostImplTest, PinchZoomSnapsToScreenEdge) {
   host_impl_->ScrollBegin(BeginState(anchor).get(), InputHandler::TOUCHSCREEN);
   host_impl_->PinchGestureBegin();
   host_impl_->PinchGestureUpdate(2, anchor);
-  host_impl_->PinchGestureEnd();
+  host_impl_->PinchGestureEnd(anchor);
   host_impl_->ScrollEnd(EndState().get());
 
   EXPECT_VECTOR_EQ(
@@ -2253,7 +2253,7 @@ TEST_F(LayerTreeHostImplTest, PinchZoomSnapsToScreenEdge) {
   host_impl_->ScrollBegin(BeginState(anchor).get(), InputHandler::TOUCHSCREEN);
   host_impl_->PinchGestureBegin();
   host_impl_->PinchGestureUpdate(2, anchor);
-  host_impl_->PinchGestureEnd();
+  host_impl_->PinchGestureEnd(anchor);
   host_impl_->ScrollEnd(EndState().get());
 
   EXPECT_VECTOR_EQ(
@@ -2272,7 +2272,7 @@ TEST_F(LayerTreeHostImplTest, PinchZoomSnapsToScreenEdge) {
   host_impl_->ScrollBegin(BeginState(anchor).get(), InputHandler::TOUCHSCREEN);
   host_impl_->PinchGestureBegin();
   host_impl_->PinchGestureUpdate(2, anchor);
-  host_impl_->PinchGestureEnd();
+  host_impl_->PinchGestureEnd(anchor);
   host_impl_->ScrollEnd(EndState().get());
 
   EXPECT_VECTOR_EQ(
@@ -2465,7 +2465,7 @@ TEST_F(LayerTreeHostImplTest, PinchGesture) {
                             InputHandler::TOUCHSCREEN);
     host_impl_->PinchGestureBegin();
     host_impl_->PinchGestureUpdate(page_scale_delta, gfx::Point(50, 50));
-    host_impl_->PinchGestureEnd();
+    host_impl_->PinchGestureEnd(gfx::Point(50, 50));
     host_impl_->ScrollEnd(EndState().get());
     EXPECT_FALSE(did_request_next_frame_);
     EXPECT_TRUE(did_request_redraw_);
@@ -2487,7 +2487,7 @@ TEST_F(LayerTreeHostImplTest, PinchGesture) {
                             InputHandler::TOUCHSCREEN);
     host_impl_->PinchGestureBegin();
     host_impl_->PinchGestureUpdate(page_scale_delta, gfx::Point(50, 50));
-    host_impl_->PinchGestureEnd();
+    host_impl_->PinchGestureEnd(gfx::Point(50, 50));
     host_impl_->ScrollEnd(EndState().get());
 
     std::unique_ptr<ScrollAndScaleSet> scroll_info =
@@ -2513,7 +2513,7 @@ TEST_F(LayerTreeHostImplTest, PinchGesture) {
                             InputHandler::TOUCHSCREEN);
     host_impl_->PinchGestureBegin();
     host_impl_->PinchGestureUpdate(page_scale_delta, gfx::Point());
-    host_impl_->PinchGestureEnd();
+    host_impl_->PinchGestureEnd(gfx::Point());
     host_impl_->ScrollEnd(EndState().get());
 
     std::unique_ptr<ScrollAndScaleSet> scroll_info =
@@ -2542,7 +2542,7 @@ TEST_F(LayerTreeHostImplTest, PinchGesture) {
     host_impl_->PinchGestureBegin();
     host_impl_->PinchGestureUpdate(page_scale_delta, gfx::Point(10, 10));
     host_impl_->PinchGestureUpdate(page_scale_delta, gfx::Point(20, 20));
-    host_impl_->PinchGestureEnd();
+    host_impl_->PinchGestureEnd(gfx::Point(20, 20));
     host_impl_->ScrollEnd(EndState().get());
 
     std::unique_ptr<ScrollAndScaleSet> scroll_info =
@@ -2572,7 +2572,7 @@ TEST_F(LayerTreeHostImplTest, PinchGesture) {
     host_impl_->ScrollBy(
         UpdateState(gfx::Point(10, 10), gfx::Vector2d(-10, -10)).get());
     host_impl_->PinchGestureUpdate(page_scale_delta, gfx::Point(20, 20));
-    host_impl_->PinchGestureEnd();
+    host_impl_->PinchGestureEnd(gfx::Point(20, 20));
     host_impl_->ScrollEnd(EndState().get());
 
     std::unique_ptr<ScrollAndScaleSet> scroll_info =
@@ -2606,7 +2606,7 @@ TEST_F(LayerTreeHostImplTest, PinchGesture) {
     host_impl_->ScrollBy(
         UpdateState(gfx::Point(0, 0), gfx::Vector2d(10, 10)).get());
     host_impl_->PinchGestureUpdate(1.f, gfx::Point(10, 10));
-    host_impl_->PinchGestureEnd();
+    host_impl_->PinchGestureEnd(gfx::Point(10, 10));
     host_impl_->ScrollEnd(EndState().get());
 
     std::unique_ptr<ScrollAndScaleSet> scroll_info =
@@ -4063,7 +4063,7 @@ TEST_F(LayerTreeHostImplTest, CompositorFrameMetadata) {
                           InputHandler::TOUCHSCREEN);
   host_impl_->PinchGestureBegin();
   host_impl_->PinchGestureUpdate(2.f, gfx::Point());
-  host_impl_->PinchGestureEnd();
+  host_impl_->PinchGestureEnd(gfx::Point());
   host_impl_->ScrollEnd(EndState().get());
   {
     viz::CompositorFrameMetadata metadata =
@@ -5892,7 +5892,7 @@ TEST_F(LayerTreeHostImplTest, ScrollRootAndChangePageScaleOnImplThread) {
                           InputHandler::TOUCHSCREEN);
   host_impl_->PinchGestureBegin();
   host_impl_->PinchGestureUpdate(page_scale, gfx::Point());
-  host_impl_->PinchGestureEnd();
+  host_impl_->PinchGestureEnd(gfx::Point());
   host_impl_->ScrollEnd(EndState().get());
 
   DrawOneFrame();
@@ -5945,7 +5945,7 @@ TEST_F(LayerTreeHostImplTest, PageScaleDeltaAppliedToRootScrollLayerOnly) {
                           InputHandler::TOUCHSCREEN);
   host_impl_->PinchGestureBegin();
   host_impl_->PinchGestureUpdate(new_page_scale, gfx::Point());
-  host_impl_->PinchGestureEnd();
+  host_impl_->PinchGestureEnd(gfx::Point());
   host_impl_->ScrollEnd(EndState().get());
   DrawOneFrame();
 
@@ -6819,7 +6819,7 @@ TEST_F(LayerTreeHostImplTest, RootLayerScrollOffsetDelegation) {
   host_impl_->PinchGestureBegin();
   host_impl_->PinchGestureUpdate(2.f, gfx::Point());
   host_impl_->PinchGestureUpdate(.5f, gfx::Point());
-  host_impl_->PinchGestureEnd();
+  host_impl_->PinchGestureEnd(gfx::Point());
   host_impl_->ScrollEnd(EndState().get());
 
   // Scrolling should be relative to the offset as given by the delegate.
@@ -7631,7 +7631,7 @@ TEST_F(LayerTreeHostImplTest, RootScrollerScrollNonDescendant) {
                             InputHandler::TOUCHSCREEN);
     host_impl_->PinchGestureBegin();
     host_impl_->PinchGestureUpdate(page_scale_factor, anchor);
-    host_impl_->PinchGestureEnd();
+    host_impl_->PinchGestureEnd(anchor);
 
     EXPECT_VECTOR_EQ(gfx::Vector2dF(anchor.x() / 2, anchor.y() / 2),
                      inner_scroll_layer->CurrentScrollOffset());
@@ -11972,7 +11972,7 @@ TEST_F(LayerTreeHostImplTest, WheelScrollWithPageScaleFactorOnInnerLayer) {
                             InputHandler::TOUCHSCREEN);
     host_impl_->PinchGestureBegin();
     host_impl_->PinchGestureUpdate(page_scale_delta, gfx::Point());
-    host_impl_->PinchGestureEnd();
+    host_impl_->PinchGestureEnd(gfx::Point());
     host_impl_->ScrollEnd(EndState().get());
 
     gfx::Vector2dF scroll_delta(0, 5);

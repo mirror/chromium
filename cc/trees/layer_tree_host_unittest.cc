@@ -2765,7 +2765,7 @@ class ViewportDeltasAppliedDuringPinch : public LayerTreeHostTest {
     if (!sent_gesture_) {
       host_impl->PinchGestureBegin();
       host_impl->PinchGestureUpdate(2, gfx::Point(100, 100));
-      host_impl->PinchGestureEnd();
+      host_impl->PinchGestureEnd(gfx::Point(100, 100));
       sent_gesture_ = true;
     }
   }
@@ -6433,7 +6433,7 @@ class LayerTreeHostTestCrispUpAfterPinchEnds : public LayerTreeHostTest {
         // Pinch zoom in.
         host_impl->PinchGestureBegin();
         host_impl->PinchGestureUpdate(1.5f, gfx::Point(100, 100));
-        host_impl->PinchGestureEnd();
+        host_impl->PinchGestureEnd(gfx::Point(100, 100));
         break;
       case 3:
         // Pinch zoom back to 1.f but don't end it.
@@ -6443,7 +6443,7 @@ class LayerTreeHostTestCrispUpAfterPinchEnds : public LayerTreeHostTest {
       case 4:
         // End the pinch, but delay tile production.
         playback_allowed_event_.Reset();
-        host_impl->PinchGestureEnd();
+        host_impl->PinchGestureEnd(gfx::Point(100, 100));
         break;
       case 5:
         // Let tiles complete.
@@ -6716,7 +6716,7 @@ class LayerTreeHostTestContinuousDrawWhenCreatingVisibleTiles
         // Pinch zoom in to cause new tiles to be required.
         host_impl->PinchGestureBegin();
         host_impl->PinchGestureUpdate(1.5f, gfx::Point(100, 100));
-        host_impl->PinchGestureEnd();
+        host_impl->PinchGestureEnd(gfx::Point(100, 100));
         ++step_;
         break;
       case 2:
