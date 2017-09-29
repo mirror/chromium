@@ -24,15 +24,23 @@
         storage.zeta = "gamma";
 
         var enumeratedArray = new Array();
-        for (var n in storage)
+        for (var n in storage) {
+            if (!storage.hasOwnProperty(n))
+                continue;
             enumeratedArray.push(n);
+        }
 
         // Sort the array, since the storage order isn't guaranteed
         enumeratedArray.sort();
 
-        var expectArray = ["alpha", "bar", "batman", "foo", "fu", "prototypeTestKey", "zeta"];
+        var expectArray = ["alpha", "bar", "batman", "foo", "fu", "zeta"];
         assert_array_equals(enumeratedArray, expectArray);
 
+        // 'prototypeTestKey' is not an actual storage key, it is just a
+        // property set on Storage's prototype object.
+        assert_equals(storage.length, 6);
+        assert_equals(storage.getItem('prototypeTestKey'), null);
+        assert_equals(storage.prototypeTestKey, "prototypeTestValue");
     }, name + ": enumerate a Storage object and get only the keys as a result and the built-in properties of the Storage object should be ignored");
 
     test(function() {
