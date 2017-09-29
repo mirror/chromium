@@ -65,7 +65,6 @@ aggregate_vector_icons("chrome_vector_icons") {
     "navigate_stop.icon",
     "notification_download.icon",
     "notification_end_of_support.icon",
-    "notification_image.1x.icon",
     "notification_image.icon",
     "notification_installed.icon",
     "overflow_chevron.1x.icon",
@@ -130,7 +129,6 @@ aggregate_vector_icons("chrome_vector_icons") {
       "notification_printing_warning.icon",
       "notification_storage_full.icon",
       "notification_warning.icon",
-      "warning_badge_circle.1x.icon",
       "warning_badge_circle.icon",
     ]
   }
