@@ -95,11 +95,8 @@ MessageCenterView::MessageCenterView(MessageCenter* message_center,
   set_notify_enter_exit_on_child(true);
   SetBackground(views::CreateSolidBackground(kBackgroundColor));
 
-  message_center::NotifierSettingsProvider* notifier_settings_provider =
-      message_center_->GetNotifierSettingsProvider();
   button_bar_ = new MessageCenterButtonBar(
-      this, message_center, notifier_settings_provider,
-      initially_settings_visible, GetButtonBarTitle());
+      this, message_center, initially_settings_visible, GetButtonBarTitle());
   button_bar_->SetCloseAllButtonEnabled(false);
 
   const int button_height = button_bar_->GetPreferredSize().height();
@@ -126,13 +123,13 @@ MessageCenterView::MessageCenterView(MessageCenter* message_center,
   scroller_contents->AddChildView(message_list_view_.get());
   scroller_->SetContents(scroller_contents);
 
-  settings_view_ = new NotifierSettingsView(notifier_settings_provider);
-
   scroller_->SetVisible(false);  // Because it has no notifications at first.
-  settings_view_->SetVisible(mode_ == Mode::SETTINGS);
+  if (mode_ == Mode::SETTINGS) {
+    EnsureSettingsView();
+    settings_view_->SetVisible(mode_ == Mode::SETTINGS);
+  }
 
   AddChildView(scroller_);
-  AddChildView(settings_view_);
   AddChildView(button_bar_);
 }
 
@@ -252,12 +249,13 @@ void MessageCenterView::Layout() {
   }
 
   scroller_->SetBounds(0, 0, width(), height() - button_height);
-  settings_view_->SetBounds(0, 0, width(), height() - button_height);
+  if (settings_view_)
+    settings_view_->SetBounds(0, 0, width(), height() - button_height);
 
   bool is_scrollable = false;
   if (scroller_->visible())
     is_scrollable = scroller_->height() < message_list_view_->height();
-  else if (settings_view_->visible())
+  else if (settings_view_ && settings_view_->visible())
     is_scrollable = settings_view_->IsScrollable();
 
   if (!animating) {
@@ -312,7 +310,7 @@ int MessageCenterView::GetHeightForWidth(int width) const {
   int content_height = 0;
   if (scroller_->visible())
     content_height += scroller_->GetHeightForWidth(width);
-  else if (settings_view_->visible())
+  else if (settings_view_ && settings_view_->visible())
     content_height += settings_view_->GetHeightForWidth(width);
   return button_bar_->GetHeightForWidth(width) + content_height +
          (button_border ? button_border->GetInsets().height() : 0);
@@ -520,6 +518,14 @@ void MessageCenterView::AnimationCanceled(const gfx::Animation* animation) {
   AnimationEnded(animation);
 }
 
+void MessageCenterView::EnsureSettingsView() {
+  if (settings_view_)
+    return;
+  settings_view_ =
+      new NotifierSettingsView(message_center_->GetNotifierSettingsProvider());
+  AddChildView(settings_view_);
+}
+
 void MessageCenterView::AddNotificationAt(const Notification& notification,
                                           int index) {
   MessageView* view = message_center::MessageViewFactory::Create(
@@ -581,6 +587,10 @@ void MessageCenterView::SetVisibilityMode(Mode mode, bool animate) {
 
   if (mode == mode_)
     return;
+
+  // If the next mode is settings, ensure the settings view is created.
+  if (mode == Mode::SETTINGS)
+    EnsureSettingsView();
 
   if (mode_ == Mode::NOTIFICATIONS)
     source_view_ = scroller_;

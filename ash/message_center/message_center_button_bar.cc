@@ -72,7 +72,6 @@ views::ToggleImageButton* CreateNotificationCenterButton(
 MessageCenterButtonBar::MessageCenterButtonBar(
     MessageCenterView* message_center_view,
     MessageCenter* message_center,
-    NotifierSettingsProvider* notifier_settings_provider,
     bool settings_initially_visible,
     const base::string16& title)
     : message_center_view_(message_center_view),

@@ -122,6 +122,9 @@ class ASH_EXPORT MessageCenterView
 
   static bool disable_animation_for_testing;
 
+  // Create |settings_view_| if the view is not yet created.
+  void EnsureSettingsView();
+
   void AddNotificationAt(const message_center::Notification& notification,
                          int index);
   base::string16 GetButtonBarTitle() const;
