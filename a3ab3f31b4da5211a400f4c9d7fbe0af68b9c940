@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79bc2eea_38681d15",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-29T05:18:34Z",
+      "side": 1,
+      "message": "Not needed as we are already in the dtor, after which all weak ptrs will be automatically invalidated.",
+      "revId": "a3ab3f31b4da5211a400f4c9d7fbe0af68b9c940",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "010c1d3a_b0bbab0a",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-29T05:18:34Z",
+      "side": 1,
+      "message": "we don\u0027t like magic string, use kPluginPrivateRootName?",
+      "revId": "a3ab3f31b4da5211a400f4c9d7fbe0af68b9c940",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

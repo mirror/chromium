@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "9a055fce_4f1220e2",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-29T05:18:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d45c350e_da251629",
+      "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47e944f2_a70e81af",
         "filename": "chrome/browser/media/cdm_storage_impl.cc",
         "patchSetId": 2
@@ -163,6 +181,24 @@
       "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e8d18736_aa3ff04f",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-29T05:18:34Z",
+      "side": 1,
+      "message": "Sorry I had a question here. Do we need the lock?",
+      "parentUuid": "424a10b1_f0b2504c",
+      "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -844,6 +880,24 @@
     },
     {
       "key": {
+        "uuid": "70875c75_795771cd",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-29T05:18:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c50a33cc_63087fa9",
+      "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38d395e2_d675584d",
         "filename": "chrome/browser/media/cdm_storage_impl.cc",
         "patchSetId": 2
@@ -1356,6 +1410,24 @@
       "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f3f8591f_aa085d05",
+        "filename": "chrome/browser/media/cdm_storage_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-29T05:18:34Z",
+      "side": 1,
+      "message": "Sorry, I meant the CdmStorage::Initialize() call.",
+      "parentUuid": "86f7b37a_ece67fef",
+      "revId": "3baa6c371fa83fdf5af2edd683038a45844fee93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
