@@ -3707,7 +3707,9 @@ void AXPlatformNodeWin::RemoveAlertTarget() {
 }
 
 base::string16 AXPlatformNodeWin::TextForIAccessibleText() {
-  if (GetData().role == AX_ROLE_TEXT_FIELD)
+  // Why do we want this? It doesn't seem like an optimization,
+  // and removing these 2 lines doesn't break any tests.
+  if (owner()->IsNativeTextControl())
     return GetString16Attribute(AX_ATTR_VALUE);
   return GetText();
 }
