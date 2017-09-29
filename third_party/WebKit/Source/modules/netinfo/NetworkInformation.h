@@ -35,6 +35,7 @@ class NetworkInformation final
   String effectiveType() const;
   unsigned long rtt() const;
   double downlink() const;
+  bool saveData() const;
 
   // NetworkStateObserver overrides.
   void ConnectionChange(WebConnectionType,
@@ -42,7 +43,8 @@ class NetworkInformation final
                         WebEffectiveConnectionType effective_type,
                         const Optional<TimeDelta>& http_rtt,
                         const Optional<TimeDelta>& transport_rtt,
-                        const Optional<double>& downlink_mbps) override;
+                        const Optional<double>& downlink_mbps,
+                        bool save_data) override;
 
   // EventTarget overrides.
   const AtomicString& InterfaceName() const override;
@@ -104,6 +106,8 @@ class NetworkInformation final
 
   // Whether this object is listening for events from NetworkStateNotifier.
   bool observing_;
+
+  bool save_data_;
 
   // Whether ContextLifecycleObserver::contextDestroyed has been called.
   bool context_stopped_;

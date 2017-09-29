@@ -11,7 +11,7 @@ async function test() {
   TestRunner.addResult('');
 
   TestRunner.addResult('Enabling data saver');
-  TestRunner.evaluateInPagePromise('window.internals.settings.setDataSaverEnabled(true)');
+  TestRunner.evaluateInPagePromise('window.internals.settings.SetDataSaverEnabled(true)');
   TestRunner.addResult('Reloading Page');
   await TestRunner.reloadPagePromise();
 

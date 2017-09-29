@@ -29,6 +29,7 @@
 #include <memory>
 
 #include "build/build_config.h"
+#include "platform/network/NetworkStateNotifier.h"
 #include "platform/scroll/ScrollbarTheme.h"
 #include "platform/wtf/PtrUtil.h"
 
@@ -62,7 +63,8 @@ static const bool kDefaultSelectTrailingWhitespaceEnabled = false;
 #endif
 
 Settings::Settings()
-    : text_autosizing_enabled_(false) SETTINGS_INITIALIZER_LIST {}
+    : text_autosizing_enabled_(false),
+      data_saver_enabled_(false) SETTINGS_INITIALIZER_LIST {}
 
 std::unique_ptr<Settings> Settings::Create() {
   return WTF::WrapUnique(new Settings);
@@ -104,6 +106,11 @@ void Settings::SetMockScrollbarsEnabled(bool flag) {
 
 bool Settings::MockScrollbarsEnabled() {
   return ScrollbarTheme::MockScrollbarsEnabled();
+}
+
+void Settings::SetDataSaverEnabled(bool data_saver_enabled) {
+  GetNetworkStateNotifier().SetSaveData(data_saver_enabled);
+  data_saver_enabled_ = data_saver_enabled;
 }
 
 }  // namespace blink

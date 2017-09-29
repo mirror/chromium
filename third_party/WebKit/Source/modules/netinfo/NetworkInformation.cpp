@@ -112,13 +112,21 @@ double NetworkInformation::downlink() const {
   return downlink_mbps_;
 }
 
+bool NetworkInformation::saveData() const {
+  if (!observing_)
+    return GetNetworkStateNotifier().SaveData();
+
+  return save_data_;
+}
+
 void NetworkInformation::ConnectionChange(
     WebConnectionType type,
     double downlink_max_mbps,
     WebEffectiveConnectionType effective_type,
     const Optional<TimeDelta>& http_rtt,
     const Optional<TimeDelta>& transport_rtt,
-    const Optional<double>& downlink_mbps) {
+    const Optional<double>& downlink_mbps,
+    bool save_data) {
   DCHECK(GetExecutionContext()->IsContextThread());
 
   unsigned long new_http_rtt_msec = RoundRtt(http_rtt);
@@ -130,14 +138,14 @@ void NetworkInformation::ConnectionChange(
   if (type_ == type && downlink_max_mbps_ == downlink_max_mbps &&
       effective_type_ == effective_type &&
       http_rtt_msec_ == new_http_rtt_msec &&
-      downlink_mbps_ == new_downlink_mbps) {
+      downlink_mbps_ == new_downlink_mbps && save_data_ == save_data) {
     return;
   }
 
   if (!RuntimeEnabledFeatures::NetInfoDownlinkMaxEnabled() &&
       effective_type_ == effective_type &&
       http_rtt_msec_ == new_http_rtt_msec &&
-      downlink_mbps_ == new_downlink_mbps) {
+      downlink_mbps_ == new_downlink_mbps && save_data_ == save_data) {
     return;
   }
 
@@ -150,6 +158,8 @@ void NetworkInformation::ConnectionChange(
   effective_type_ = effective_type;
   http_rtt_msec_ = new_http_rtt_msec;
   downlink_mbps_ = new_downlink_mbps;
+  save_data_ = save_data;
+
   if (type_changed)
     DispatchEvent(Event::Create(EventTypeNames::typechange));
   DispatchEvent(Event::Create(EventTypeNames::change));
@@ -226,6 +236,7 @@ NetworkInformation::NetworkInformation(ExecutionContext* context)
       downlink_mbps_(
           RoundMbps(GetNetworkStateNotifier().DownlinkThroughputMbps())),
       observing_(false),
+      save_data_(GetNetworkStateNotifier().SaveData()),
       context_stopped_(false) {
   DCHECK_LE(1u, GetNetworkStateNotifier().RandomizationSalt());
   DCHECK_GE(20u, GetNetworkStateNotifier().RandomizationSalt());
