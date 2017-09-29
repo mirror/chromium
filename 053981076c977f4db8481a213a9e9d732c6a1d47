@@ -22,6 +22,30 @@
       "revId": "053981076c977f4db8481a213a9e9d732c6a1d47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97bdd844_6cd94d4e",
+        "filename": "ios/chrome/browser/ui/settings/accounts_collection_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-09-29T20:15:22Z",
+      "side": 1,
+      "message": "Yep, I tested it and the error came up successfully. \n\nShould not make a difference since top_view_controller (used inside the interaction controller) will get the top VC of the presentation chain, and by definition, presentingViewController is part of that chain.",
+      "parentUuid": "bc134da7_120d1fa2",
+      "range": {
+        "startLine": 496,
+        "startChar": 36,
+        "endLine": 496,
+        "endChar": 56
+      },
+      "revId": "053981076c977f4db8481a213a9e9d732c6a1d47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
