@@ -2605,7 +2605,6 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     switches::kPassiveListenersDefault,
     switches::kPpapiInProcess,
     switches::kReducedReferrerGranularity,
-    switches::kReduceSecurityForTesting,
     switches::kRegisterPepperPlugins,
     switches::kRendererStartupDialog,
     switches::kRootLayerScrolls,
