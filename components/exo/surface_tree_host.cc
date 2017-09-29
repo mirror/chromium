@@ -198,13 +198,58 @@ void SurfaceTreeHost::UpdateNeedsBeginFrame() {
     begin_frame_source_->RemoveObserver(this);
 }
 
+void SurfaceTreeHost::SubmitCompositorFrame() {
+  DCHECK(root_surface_);
+  viz::CompositorFrame frame;
+  // If we commit while we don't have an active BeginFrame, we acknowledge a
+  // manual one.
+  if (current_begin_frame_ack_.sequence_number ==
+      viz::BeginFrameArgs::kInvalidFrameNumber) {
+    current_begin_frame_ack_ = viz::BeginFrameAck::CreateManualAckWithDamage();
+  } else {
+    current_begin_frame_ack_.has_damage = true;
+  }
+  frame.metadata.begin_frame_ack = current_begin_frame_ack_;
+  const int kRenderPassId = 1;
+  std::unique_ptr<viz::RenderPass> render_pass = viz::RenderPass::Create();
+  render_pass->SetNew(kRenderPassId, gfx::Rect(), gfx::Rect(),
+                      gfx::Transform());
+  frame.render_pass_list.push_back(std::move(render_pass));
+  float device_scale_factor = host_window()->layer()->device_scale_factor();
+  root_surface_->AppendSurfaceHierarchyContentsToFrame(
+      gfx::Point(), device_scale_factor, layer_tree_frame_sink_holder_.get(),
+      &frame);
+  // Surface uses DIP, but the |output_rect| uses pixels, so we need
+  // scale it beased on the |device_scale_factor|.
+  frame.render_pass_list.back()->output_rect =
+      gfx::Rect(gfx::ConvertSizeToPixel(device_scale_factor,
+                                        root_surface_->content_size()));
+
+  host_window_->layer()->SetFillsBoundsOpaquely(
+      root_surface_->FillsBoundsOpaquely());
+  frame.metadata.device_scale_factor = device_scale_factor;
+  layer_tree_frame_sink_holder_->frame_sink()->SubmitCompositorFrame(
+      std::move(frame));
+
+  if (current_begin_frame_ack_.sequence_number !=
+      viz::BeginFrameArgs::kInvalidFrameNumber) {
+    if (!current_begin_frame_ack_.has_damage) {
+      layer_tree_frame_sink_holder_->frame_sink()->DidNotProduceFrame(
+          current_begin_frame_ack_);
+    }
+    current_begin_frame_ack_.sequence_number =
+        viz::BeginFrameArgs::kInvalidFrameNumber;
+    if (begin_frame_source_)
+      begin_frame_source_->DidFinishFrame(this);
+  }
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // SurfaceDelegate overrides:
 
 void SurfaceTreeHost::OnSurfaceCommit() {
   root_surface_->CommitSurfaceHierarchy(gfx::Point(), &frame_callbacks_,
                                         &presentation_callbacks_);
-  SubmitCompositorFrame();
 }
 
 void SurfaceTreeHost::OnSurfaceContentSizeChanged() {
@@ -291,52 +336,6 @@ void SurfaceTreeHost::OnLostResources() {
     return;
   root_surface_->SurfaceHierarchyResourcesLost();
   SubmitCompositorFrame();
-}
-
-void SurfaceTreeHost::SubmitCompositorFrame() {
-  DCHECK(root_surface_);
-  viz::CompositorFrame frame;
-  // If we commit while we don't have an active BeginFrame, we acknowledge a
-  // manual one.
-  if (current_begin_frame_ack_.sequence_number ==
-      viz::BeginFrameArgs::kInvalidFrameNumber) {
-    current_begin_frame_ack_ = viz::BeginFrameAck::CreateManualAckWithDamage();
-  } else {
-    current_begin_frame_ack_.has_damage = true;
-  }
-  frame.metadata.begin_frame_ack = current_begin_frame_ack_;
-  const int kRenderPassId = 1;
-  std::unique_ptr<viz::RenderPass> render_pass = viz::RenderPass::Create();
-  render_pass->SetNew(kRenderPassId, gfx::Rect(), gfx::Rect(),
-                      gfx::Transform());
-  frame.render_pass_list.push_back(std::move(render_pass));
-  float device_scale_factor = host_window()->layer()->device_scale_factor();
-  root_surface_->AppendSurfaceHierarchyContentsToFrame(
-      gfx::Point(), device_scale_factor, layer_tree_frame_sink_holder_.get(),
-      &frame);
-  // Surface uses DIP, but the |output_rect| uses pixels, so we need
-  // scale it beased on the |device_scale_factor|.
-  frame.render_pass_list.back()->output_rect =
-      gfx::Rect(gfx::ConvertSizeToPixel(device_scale_factor,
-                                        root_surface_->content_size()));
-
-  host_window_->layer()->SetFillsBoundsOpaquely(
-      root_surface_->FillsBoundsOpaquely());
-  frame.metadata.device_scale_factor = device_scale_factor;
-  layer_tree_frame_sink_holder_->frame_sink()->SubmitCompositorFrame(
-      std::move(frame));
-
-  if (current_begin_frame_ack_.sequence_number !=
-      viz::BeginFrameArgs::kInvalidFrameNumber) {
-    if (!current_begin_frame_ack_.has_damage) {
-      layer_tree_frame_sink_holder_->frame_sink()->DidNotProduceFrame(
-          current_begin_frame_ack_);
-    }
-    current_begin_frame_ack_.sequence_number =
-        viz::BeginFrameArgs::kInvalidFrameNumber;
-    if (begin_frame_source_)
-      begin_frame_source_->DidFinishFrame(this);
-  }
 }
 
 }  // namespace exo

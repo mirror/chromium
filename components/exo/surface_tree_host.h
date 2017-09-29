@@ -71,6 +71,9 @@ class SurfaceTreeHost : public SurfaceDelegate,
   // Adds/Removes begin frame observer based on state.
   void UpdateNeedsBeginFrame();
 
+  // Call this to submit a compositor frame.
+  void SubmitCompositorFrame();
+
   aura::Window* host_window() { return host_window_.get(); }
   const aura::Window* host_window() const { return host_window_.get(); }
 
@@ -105,8 +108,6 @@ class SurfaceTreeHost : public SurfaceDelegate,
   void OnLostResources() override;
 
  private:
-  void SubmitCompositorFrame();
-
   Surface* root_surface_ = nullptr;
   std::unique_ptr<aura::Window> host_window_;
   std::unique_ptr<LayerTreeFrameSinkHolder> layer_tree_frame_sink_holder_;
