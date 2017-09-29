@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c25b8817_b7eb17c1",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 1234,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-09-29T23:58:02Z",
+      "side": 1,
+      "message": "BackgroundTracingManager::SetActiveScenario does try to deal with this case, by doing a delayed initialization by PostTask in the cases where it needs the profile to be loaded to be able to start (see the checks for this in chrome_tracing_delegate).\n\nThe reason for this is that we wanted the background tracing to handle logging things like slow Chrome startup, which profile loads is a large part of.\n\nIt\u0027s not a super important use-case right now, but it\u0027d be nice to preserve if possible (or at least as close as possible to when BackgroundTracingManager gets constructed, but before the full profile load). If this would add a lot of complexity to the CL, maybe at least preserve the early-entry point rather than PostProfileInit() and delay as long as you need but add a TODO to fix this if we need it again.",
+      "revId": "a4a9fc3bf70dfa1b05d13ce7c28ebed5ab12f2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7687d4c_2ca57383",
+        "filename": "content/browser/tracing/background_tracing_manager_impl.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-09-29T23:58:02Z",
+      "side": 1,
+      "message": "This basically means the constructor can fail, which is a little iffy. Maybe this should be a separate initialization step?",
+      "revId": "a4a9fc3bf70dfa1b05d13ce7c28ebed5ab12f2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "024649ef_00d6c009",
+        "filename": "content/browser/tracing/background_tracing_manager_impl.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-09-29T23:58:02Z",
+      "side": 1,
+      "message": "nit: newline before",
+      "revId": "a4a9fc3bf70dfa1b05d13ce7c28ebed5ab12f2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17031808_401640bd",
+        "filename": "content/browser/tracing/etw_tracing_agent_win.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-09-29T23:58:02Z",
+      "side": 1,
+      "message": "spelling nit: /s/Connecto/Connect to/",
+      "revId": "a4a9fc3bf70dfa1b05d13ce7c28ebed5ab12f2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b042ed87_964b890d",
+        "filename": "content/browser/tracing/etw_tracing_agent_win.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-09-29T23:58:02Z",
+      "side": 1,
+      "message": "Accidental word change? (Deactivate -\u003e Deactive)",
+      "revId": "a4a9fc3bf70dfa1b05d13ce7c28ebed5ab12f2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34e0ef20_7029ab16",
+        "filename": "content/browser/tracing/etw_tracing_agent_win.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-09-29T23:58:02Z",
+      "side": 1,
+      "message": "Is there a specific reason for dropping base::Singleton? (new style discussions etc)",
+      "revId": "a4a9fc3bf70dfa1b05d13ce7c28ebed5ab12f2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80fdea99_01102a8e",
+        "filename": "content/browser/tracing/tracing_controller_impl.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-09-29T23:58:02Z",
+      "side": 1,
+      "message": "Curious, what\u0027s the situation where we can have multiple tracing UIs?",
+      "revId": "a4a9fc3bf70dfa1b05d13ce7c28ebed5ab12f2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "091b8ad0_6878e48a",
+        "filename": "content/public/browser/tracing_delegate.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-09-29T23:58:02Z",
+      "side": 1,
+      "message": "Remind me: Do we actually set a default delegate in the BackgroundTracingManager in any situations (like unit tests). If not, should this have a NOTREACHED(), and if we do, maybe it\u0027d be nicer to return an empty dict rather than a null, to be consistent with the other metadata generators.",
+      "revId": "a4a9fc3bf70dfa1b05d13ce7c28ebed5ab12f2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
