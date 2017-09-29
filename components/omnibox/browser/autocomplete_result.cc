@@ -44,14 +44,14 @@ AutocompleteResult::~AutocompleteResult() {}
 
 void AutocompleteResult::CopyOldMatches(
     const AutocompleteInput& input,
-    const AutocompleteResult& old_matches,
+    AutocompleteResult* old_matches,
     TemplateURLService* template_url_service) {
-  if (old_matches.empty())
+  if (old_matches->empty())
     return;
 
   if (empty()) {
     // If we've got no matches we can copy everything from the last result.
-    CopyFrom(old_matches);
+    Swap(old_matches);
     for (ACMatches::iterator i(begin()); i != end(); ++i)
       i->from_previous = true;
     return;
@@ -74,7 +74,7 @@ void AutocompleteResult::CopyOldMatches(
   // anything permanently.
   ProviderToMatches matches_per_provider, old_matches_per_provider;
   BuildProviderToMatches(&matches_per_provider);
-  old_matches.BuildProviderToMatches(&old_matches_per_provider);
+  old_matches->BuildProviderToMatches(&old_matches_per_provider);
   for (ProviderToMatches::const_iterator i(old_matches_per_provider.begin());
        i != old_matches_per_provider.end(); ++i) {
     MergeMatchesByProvider(input.current_page_classification(),
