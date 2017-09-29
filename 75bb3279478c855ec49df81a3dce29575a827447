@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "246f2006_d71b1ade",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak_unittest.gtestjs",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-29T19:47:04Z",
+      "side": 1,
+      "message": "nit: wrap function() to next line, indenting 4 spaces",
+      "revId": "75bb3279478c855ec49df81a3dce29575a827447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfefbee4_8496d09a",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak_unittest.gtestjs",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-29T19:47:04Z",
+      "side": 1,
+      "message": "nit: wrap\n\n(I think the auto code formatters miss this because the suffix is\n.gtestjs)",
+      "revId": "75bb3279478c855ec49df81a3dce29575a827447",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
