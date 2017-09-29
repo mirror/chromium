@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94df4b30_d5ae8f5d",
+        "filename": "remoting/protocol/sdp_message.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-09-29T02:25:53Z",
+      "side": 1,
+      "message": "Maybe reverse the test and \"continue\", would be more readable?",
+      "revId": "2a4f88c9841c05352782f04c725e2027080d206c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ef27c6b_3cc6006d",
+        "filename": "remoting/protocol/sdp_message.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-09-29T02:25:53Z",
+      "side": 1,
+      "message": "kSkipFields",
+      "revId": "2a4f88c9841c05352782f04c725e2027080d206c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b9dabc9_797e2829",
+        "filename": "remoting/protocol/sdp_message.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-09-29T02:25:53Z",
+      "side": 1,
+      "message": "I don\u0027t really understand this well. Should a lot of these \"return false\" simply \"continue\" the for-loop instead?",
+      "revId": "2a4f88c9841c05352782f04c725e2027080d206c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74fc7219_ebb0ae26",
+        "filename": "remoting/protocol/sdp_message.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-09-29T02:25:53Z",
+      "side": 1,
+      "message": "This appears 4 times. Assign it to a temp variable?",
+      "range": {
+        "startLine": 68,
+        "startChar": 27,
+        "endLine": 68,
+        "endChar": 55
+      },
+      "revId": "2a4f88c9841c05352782f04c725e2027080d206c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0beef491_cbb3c048",
+        "filename": "remoting/protocol/sdp_message.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-09-29T02:25:53Z",
+      "side": 1,
+      "message": "Reverse the test and early-return false here?",
+      "revId": "2a4f88c9841c05352782f04c725e2027080d206c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba1856d9_94694ff1",
+        "filename": "remoting/protocol/sdp_message.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-09-29T02:25:53Z",
+      "side": 1,
+      "message": "Please use something from \u003calgorithm\u003e here, such as std::remove, instead of writing out an explicit loop?\nIsn\u0027t this whole thing just std::rotate?",
+      "revId": "2a4f88c9841c05352782f04c725e2027080d206c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fccfb2c0_30efbe73",
+        "filename": "remoting/protocol/sdp_message.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-09-29T02:25:53Z",
+      "side": 1,
+      "message": "Why is this impossible to reach?",
+      "range": {
+        "startLine": 89,
+        "startChar": 2,
+        "endLine": 89,
+        "endChar": 12
+      },
+      "revId": "2a4f88c9841c05352782f04c725e2027080d206c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edbbcfc3_fbfa9fbd",
+        "filename": "remoting/protocol/sdp_message_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-09-29T02:25:53Z",
+      "side": 1,
+      "message": "Maybe split this up into isolated tests that each verify a single \"behavior\"?\nI suggest naming each test as\nSomeAction_ExpectedResult \nFor example:\nPreferVideoCodecWithValidCodec_ReturnsTrue\nPreferVideoCodecWithInvalidCodec_ReturnsFalse\nPreferVideoCodecWithInvalidCodec_SdpIsUnchanged\nPreferVideoCodec_MovesToTheStartOfTheList\nPreferVideoCodecAlreadyPreferred_SdpIsUnchanged\n.. and so on ..\n\nSee Episode 322 of our Testing-on-the-Toilet series :)",
+      "revId": "2a4f88c9841c05352782f04c725e2027080d206c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
