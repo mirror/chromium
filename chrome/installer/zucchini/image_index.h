@@ -12,10 +12,11 @@
 #include <vector>
 
 #include "base/logging.h"
-#include "base/optional.h"
+#include "base/macros.h"
 #include "chrome/installer/zucchini/buffer_view.h"
 #include "chrome/installer/zucchini/image_utils.h"
-#include "chrome/installer/zucchini/label_manager.h"
+#include "chrome/installer/zucchini/reference_set.h"
+#include "chrome/installer/zucchini/target_pool.h"
 
 namespace zucchini {
 
@@ -37,26 +38,13 @@ class ImageIndex {
   // true.
   // TODO(huangs): Refactor ReaderFactory and WriterFactory so
   // |const Disassembler&| can be used here.
-  bool Initialize(Disassembler* disasm);
+  bool Initialize(Disassembler* disassembler);
 
   // Returns the number of reference type the index holds.
-  size_t TypeCount() const { return types_.size(); }
+  size_t TypeCount() const { return reference_sets_.size(); }
 
   // Returns the number of target pool discovered.
-  size_t PoolCount() const { return pools_.size(); }
-
-  size_t LabelBound(PoolTag pool) const { return pools_.at(pool).label_bound; }
-
-  // Returns traits describing references of type |type|.
-  const ReferenceTypeTraits& GetTraits(TypeTag type) const {
-    return types_.at(type).traits;
-  }
-
-  PoolTag GetPoolTag(TypeTag type) const { return GetTraits(type).pool_tag; }
-
-  const std::vector<TypeTag>& GetTypeTags(PoolTag pool) const {
-    return pools_.at(pool).types;
-  }
+  size_t PoolCount() const { return target_pools_.size(); }
 
   // Returns true if |image_[location]| is either:
   // - A raw value.
@@ -81,78 +69,39 @@ class ImageIndex {
     return image_[location];
   }
 
-  // Assumes that a reference of given |type| covers |location|, and returns the
-  // reference.
-  Reference FindReference(TypeTag type, offset_t location) const;
-
-  // Returns a vector of references of type |type|, where references are sorted
-  // by their location.
-  const std::vector<Reference>& GetReferences(TypeTag type) const {
-    return types_.at(type).references;
+  const std::map<PoolTag, TargetPool>& target_pools() const {
+    return target_pools_;
+  }
+  const std::map<TypeTag, ReferenceSet>& reference_sets() const {
+    return reference_sets_;
   }
 
-  // Creates and returns a vector of all targets in |pool|.
-  std::vector<offset_t> GetTargets(PoolTag pool) const;
+  const TargetPool& at(PoolTag pool_tag) const {
+    return target_pools_.at(pool_tag);
+  }
+  const ReferenceSet& at(TypeTag type_tag) const {
+    return reference_sets_.at(type_tag);
+  }
 
   // Returns the size of the image.
   size_t size() const { return image_.size(); }
 
-  // Replaces every target represented as offset whose Label is in
-  // |label_manager| by the index of this Label, and updates the Label bound
-  // associated with |pool|.
-  void LabelTargets(PoolTag pool, const BaseLabelManager& label_manager);
-
-  // Replaces every associated target represented as offset whose Label is in
-  // |label_manager| by the index of this Label, and updates the Label bound
-  // associated with |pool|. A target is associated iff its Label index is also
-  // used in |reference_label_manager|. All targets must have a Label in
-  // |label_manager|, and must be represented as offset when calling this
-  // function, implying it can only be called once for each |pool|, until
-  // UnlabelTargets() (below) is called.
-  void LabelAssociatedTargets(PoolTag pool,
-                              const BaseLabelManager& label_manager,
-                              const BaseLabelManager& reference_label_manager);
-
-  // Replaces every target represented as a Label index by its original offset,
-  // assuming that |label_manager| still holds the same Labels referered to by
-  // target indices. Resets Label bound associated with |pool| to 0.
-  void UnlabelTargets(PoolTag pool, const BaseLabelManager& label_manager);
-
  private:
-  // Information stored for every reference type.
-  struct TypeInfo {
-    explicit TypeInfo(ReferenceTypeTraits traits_in);
-    TypeInfo(TypeInfo&&);
-    ~TypeInfo();
-
-    ReferenceTypeTraits traits;
-    // List of Reference instances sorted by location (file offset).
-    std::vector<Reference> references;
-  };
-  // Information stored for every reference pool.
-  struct PoolInfo {
-    PoolInfo();
-    PoolInfo(PoolInfo&&);
-    ~PoolInfo();
-
-    std::vector<TypeTag> types;  // Enumerates type_tag for this pool.
-    size_t label_bound = 0;      // Upper bound on Label indices for this pool.
-  };
-
-  // Inserts to |*this| index, all references of type |type_tag| read from
+  // Inserts to |*this| index, all references described by |traits| read from
   // |ref_reader|, which gets consumed. This should be called exactly once for
   // each reference type. If overlap between any two references of any type is
   // encountered, returns false and leaves the object in an invalid state.
   // Otherwise, returns true.
-  bool InsertReferences(TypeTag type_tag, ReferenceReader&& ref_reader);
+  bool InsertReferences(const ReferenceTypeTraits& traits,
+                        ReferenceReader&& ref_reader);
 
   const ConstBufferView image_;
 
   // Used for random access lookup of reference type, for each byte in |image_|.
   std::vector<TypeTag> type_tags_;
 
-  std::map<TypeTag, TypeInfo> types_;
-  std::map<PoolTag, PoolInfo> pools_;
+  std::map<TypeTag, ReferenceSet> reference_sets_;
+  std::map<PoolTag, TargetPool> target_pools_;
 };
 
 }  // namespace zucchini

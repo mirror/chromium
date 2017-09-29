@@ -6,11 +6,13 @@
 
 #include <stdint.h>
 
+#include <utility>
 #include <vector>
 
 #include "chrome/installer/zucchini/equivalence_map.h"
 #include "chrome/installer/zucchini/image_index.h"
 #include "chrome/installer/zucchini/image_utils.h"
+#include "chrome/installer/zucchini/label_manager.h"
 #include "chrome/installer/zucchini/test_disassembler.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -21,33 +23,29 @@ namespace {
 constexpr auto BAD = kUnusedIndex;
 using OffsetVector = std::vector<offset_t>;
 
-// Make all references 2 bytes long.
-constexpr offset_t kReferenceSize = 2;
-
-// Creates and initialize an ImageIndex from |a| and with 2 types of references.
-// The result is populated with |refs0| and |refs1|. |a| is expected to be a
-// string literal valid for the lifetime of the object.
-ImageIndex MakeImageIndexForTesting(const char* a,
-                                    const std::vector<Reference>& refs0,
-                                    const std::vector<Reference>& refs1) {
-  TestDisassembler disasm({kReferenceSize, TypeTag(0), PoolTag(0)}, refs0,
-                          {kReferenceSize, TypeTag(1), PoolTag(0)}, refs1,
-                          {kReferenceSize, TypeTag(2), PoolTag(1)}, {});
-  ImageIndex image_index(
-      ConstBufferView(reinterpret_cast<const uint8_t*>(a), std::strlen(a)));
-
-  EXPECT_TRUE(image_index.Initialize(&disasm));
-  return image_index;
-}
-
 // Helper function wrapping GenerateReferencesDelta().
 std::vector<int32_t> GenerateReferencesDeltaTest(
-    const ImageIndex& old_index,
-    const ImageIndex& new_index,
+    const std::vector<Reference>& old_references,
+    const std::vector<Reference>& new_references,
+    std::vector<offset_t>&& new_labels,
     const EquivalenceMap& equivalence_map) {
   ReferenceDeltaSink reference_delta_sink;
-  GenerateReferencesDelta(old_index, new_index, equivalence_map,
-                          &reference_delta_sink);
+
+  TargetPool old_targets;
+  old_targets.InsertTargets(old_references);
+  ReferenceSet old_refs({1, TypeTag(0), PoolTag(0)});
+  old_refs.InsertReferences(old_references, old_targets);
+
+  TargetPool new_targets;
+  new_targets.InsertTargets(new_references);
+  ReferenceSet new_refs({1, TypeTag(0), PoolTag(0)});
+  new_refs.InsertReferences(new_references, new_targets);
+
+  UnorderedLabelManager label_manager;
+  label_manager.Init(std::move(new_labels));
+
+  GenerateReferencesDelta(old_refs, new_refs, new_targets, label_manager,
+                          equivalence_map, &reference_delta_sink);
 
   // Serialize |reference_delta_sink| to patch format, and read it back as
   // std::vector<int32_t>.
@@ -65,6 +63,22 @@ std::vector<int32_t> GenerateReferencesDeltaTest(
   }
   EXPECT_TRUE(reference_delta_source.Done());
   return delta_vec;
+}
+
+// Helper function wrapping FindExtraTargets().
+std::vector<offset_t> FindExtraTargetsTest(
+    std::vector<Reference>&& new_references,
+    std::vector<offset_t>&& new_labels,
+    EquivalenceMap&& equivalence_map) {
+  TargetPool new_targets;
+  new_targets.InsertTargets(new_references);
+  ReferenceSet reference_set({1, TypeTag(0), PoolTag(0)});
+  reference_set.InsertReferences(new_references, new_targets);
+
+  UnorderedLabelManager new_label_manager;
+  new_label_manager.Init(std::move(new_labels));
+  return FindExtraTargets(reference_set, new_targets, new_label_manager,
+                          equivalence_map);
 }
 
 }  // namespace
@@ -109,105 +123,95 @@ TEST(ZucchiniGenTest, FindExtraTargets) {
   // Note that |new_offsets| provided are sorted, and |equivalences| provided
   // are sorted by |dst_offset|.
 
-  EXPECT_EQ(OffsetVector(), FindExtraTargets({}, {}));
-  EXPECT_EQ(OffsetVector(), FindExtraTargets({{0, 0}}, {}));
-  EXPECT_EQ(OffsetVector(), FindExtraTargets({{0, IsMarked(0)}}, {}));
-
-  EXPECT_EQ(OffsetVector({0}),
-            FindExtraTargets({{0, 0}}, EquivalenceMap({{{0, 0, 2}, 0.0}})));
+  EXPECT_EQ(OffsetVector(), FindExtraTargetsTest({}, {}, {}));
+  EXPECT_EQ(OffsetVector(), FindExtraTargetsTest({}, {}, {}));
+  EXPECT_EQ(OffsetVector(), FindExtraTargetsTest({{0, 0}}, {}, {}));
+  EXPECT_EQ(OffsetVector(), FindExtraTargetsTest({{0, 0}}, {kUnusedIndex}, {}));
   EXPECT_EQ(OffsetVector(),
-            FindExtraTargets({{0, MarkIndex(0)}},
-                             EquivalenceMap({{{0, 0, 2}, 0.0}})));
+            FindExtraTargetsTest({{0, 0}, {3, 0}}, {},
+                                 EquivalenceMap({{{2, 1, 2}, 0.0}})));
+
+  EXPECT_EQ(
+      OffsetVector({1}),
+      FindExtraTargetsTest({{0, 1}}, {}, EquivalenceMap({{{0, 0, 2}, 0.0}})));
+  EXPECT_EQ(OffsetVector({1}),
+            FindExtraTargetsTest({{0, 1}}, {kUnusedIndex},
+                                 EquivalenceMap({{{0, 0, 2}, 0.0}})));
+  EXPECT_EQ(
+      OffsetVector({}),
+      FindExtraTargetsTest({{0, 1}}, {1}, EquivalenceMap({{{0, 0, 2}, 0.0}})));
 
   EXPECT_EQ(OffsetVector({1, 2}),
-            FindExtraTargets({{0, 0}, {1, 1}, {2, 2}, {3, 3}},
-                             EquivalenceMap({{{0, 1, 2}, 0.0}})));
-  EXPECT_EQ(OffsetVector({2}),
-            FindExtraTargets({{0, 0}, {1, MarkIndex(1)}, {2, 2}, {3, 3}},
-                             EquivalenceMap({{{0, 1, 2}, 0.0}})));
+            FindExtraTargetsTest({{0, 0}, {1, 1}, {2, 2}, {3, 3}}, {},
+                                 EquivalenceMap({{{0, 1, 2}, 0.0}})));
+  EXPECT_EQ(
+      OffsetVector({1, 2}),
+      FindExtraTargetsTest({{0, 0}, {1, 1}, {2, 2}, {3, 3}}, {kUnusedIndex, 11},
+                           EquivalenceMap({{{0, 1, 2}, 0.0}})));
 
-  EXPECT_EQ(
-      OffsetVector({1, 2, 4, 5}),
-      FindExtraTargets({{0, 0}, {1, 1}, {2, 2}, {3, 3}, {4, 4}, {5, 5}, {6, 6}},
-                       EquivalenceMap({{{0, 1, 2}, 0.0}, {{0, 4, 2}, 0.0}})));
-  EXPECT_EQ(
-      OffsetVector({4, 5}),
-      FindExtraTargets({{3, 3}, {4, 4}, {5, 5}, {6, 6}},
-                       EquivalenceMap({{{0, 1, 2}, 0.0}, {{0, 4, 2}, 0.0}})));
+  EXPECT_EQ(OffsetVector({1, 2, 4, 5}),
+            FindExtraTargetsTest(
+                {{0, 0}, {1, 1}, {2, 2}, {3, 3}, {4, 4}, {5, 5}, {6, 6}},
+                {kUnusedIndex},
+                EquivalenceMap({{{0, 1, 2}, 0.0}, {{0, 4, 2}, 0.0}})));
+  EXPECT_EQ(OffsetVector({2, 4}),
+            FindExtraTargetsTest(
+                {{0, 0}, {1, 1}, {2, 2}, {3, 3}, {4, 4}, {5, 5}, {6, 6}},
+                {5, kUnusedIndex, 1},
+                EquivalenceMap({{{0, 1, 2}, 0.0}, {{0, 4, 2}, 0.0}})));
+  EXPECT_EQ(OffsetVector({4, 5}),
+            FindExtraTargetsTest(
+                {{3, 3}, {4, 4}, {5, 5}, {6, 6}}, {},
+                EquivalenceMap({{{0, 1, 2}, 0.0}, {{0, 4, 2}, 0.0}})));
 }
 
 TEST(ZucchiniGenTest, GenerateReferencesDelta) {
   EXPECT_EQ(std::vector<int32_t>(),
-            GenerateReferencesDeltaTest(MakeImageIndexForTesting("", {}, {}),
-                                        MakeImageIndexForTesting("", {}, {}),
-                                        EquivalenceMap()));
+            GenerateReferencesDeltaTest({}, {}, {}, EquivalenceMap()));
 
-  EXPECT_EQ(std::vector<int32_t>(),
-            GenerateReferencesDeltaTest(
-                MakeImageIndexForTesting("XXYY", {{0, 0}}, {{2, 1}}),
-                MakeImageIndexForTesting("XXYY", {{0, 0}}, {{2, 1}}),
-                EquivalenceMap()));
+  EXPECT_EQ(
+      std::vector<int32_t>(),
+      GenerateReferencesDeltaTest({{0, 0}}, {{0, 0}}, {}, EquivalenceMap()));
+
+  EXPECT_EQ(std::vector<int32_t>({0}),
+            GenerateReferencesDeltaTest({{0, 0}}, {{0, 0}}, {0, 1},
+                                        EquivalenceMap({{{0, 0, 4}, 0.0}})));
+  EXPECT_EQ(std::vector<int32_t>({1}),
+            GenerateReferencesDeltaTest({{0, 0}}, {{0, 0}}, {1, 0},
+                                        EquivalenceMap({{{0, 0, 4}, 0.0}})));
+  EXPECT_EQ(
+      std::vector<int32_t>({2, -1}),
+      GenerateReferencesDeltaTest({{0, 0}, {1, 1}}, {{0, 0}, {1, 1}}, {1, 2, 0},
+                                  EquivalenceMap({{{0, 0, 4}, 0.0}})));
 
   EXPECT_EQ(std::vector<int32_t>({0, 0}),
-            GenerateReferencesDeltaTest(
-                MakeImageIndexForTesting("XXYY", {{0, MarkIndex(0)}},
-                                         {{2, MarkIndex(1)}}),
-                MakeImageIndexForTesting("XXYY", {{0, MarkIndex(0)}},
-                                         {{2, MarkIndex(1)}}),
-                EquivalenceMap({{{0, 0, 4}, 0.0}})));
-
-  EXPECT_EQ(std::vector<int32_t>({1, -1}),
-            GenerateReferencesDeltaTest(
-                MakeImageIndexForTesting("XXYY", {{0, MarkIndex(0)}},
-                                         {{2, MarkIndex(1)}}),
-                MakeImageIndexForTesting("XXYY", {{0, MarkIndex(1)}},
-                                         {{2, MarkIndex(0)}}),
-                EquivalenceMap({{{0, 0, 4}, 0.0}})));
-
-  EXPECT_EQ(std::vector<int32_t>({1, -1}),
-            GenerateReferencesDeltaTest(
-                MakeImageIndexForTesting(
-                    "aXXbYYc", {{1, MarkIndex(0)}, {4, MarkIndex(1)}}, {}),
-                MakeImageIndexForTesting(
-                    "aXXbYYc", {{1, MarkIndex(1)}, {4, MarkIndex(0)}}, {}),
-                EquivalenceMap({{{0, 0, 7}, 0.0}})));
+            GenerateReferencesDeltaTest({{0, 0}, {1, 1}, {2, 2}, {3, 3}},
+                                        {{0, 0}, {1, 1}, {2, 2}, {3, 3}},
+                                        {0, 1, 2, 3},
+                                        EquivalenceMap({{{1, 1, 2}, 0.0}})));
 
   EXPECT_EQ(std::vector<int32_t>({-1, 1}),
             GenerateReferencesDeltaTest(
-                MakeImageIndexForTesting(
-                    "XXYY", {{0, MarkIndex(0)}, {2, MarkIndex(1)}}, {}),
-                MakeImageIndexForTesting(
-                    "XXYY", {{0, MarkIndex(0)}, {2, MarkIndex(1)}}, {}),
+                {{0, 0}, {2, 1}}, {{0, 0}, {2, 1}}, {0, 1},
                 EquivalenceMap({{{2, 0, 2}, 0.0}, {{0, 2, 2}, 0.0}})));
-
-  EXPECT_EQ(
-      std::vector<int32_t>({-2, 2}),
-      GenerateReferencesDeltaTest(
-          MakeImageIndexForTesting(
-              "XXYYZZ",
-              {{0, MarkIndex(0)}, {2, MarkIndex(1)}, {4, MarkIndex(2)}}, {}),
-          MakeImageIndexForTesting(
-              "XXYYZZ",
-              {{0, MarkIndex(0)}, {2, MarkIndex(1)}, {4, MarkIndex(2)}}, {}),
-          EquivalenceMap({{{4, 0, 2}, 0.0}, {{0, 4, 2}, 0.0}})));
-
-  EXPECT_EQ(
-      std::vector<int32_t>({-2, 2}),
-      GenerateReferencesDeltaTest(
-          MakeImageIndexForTesting(
-              "aXXbYYcZZd",
-              {{1, MarkIndex(0)}, {4, MarkIndex(1)}, {7, MarkIndex(2)}}, {}),
-          MakeImageIndexForTesting(
-              "aXXbYYcZZd",
-              {{1, MarkIndex(0)}, {4, MarkIndex(1)}, {7, MarkIndex(2)}}, {}),
-          EquivalenceMap({{{6, 0, 3}, 0.0}, {{0, 6, 3}, 0.0}})));
+  EXPECT_EQ(std::vector<int32_t>({0, 0}),
+            GenerateReferencesDeltaTest(
+                {{0, 0}, {2, 1}}, {{0, 0}, {2, 1}}, {1, 0},
+                EquivalenceMap({{{2, 0, 2}, 0.0}, {{0, 2, 2}, 0.0}})));
 
   EXPECT_EQ(std::vector<int32_t>({-2, 2}),
             GenerateReferencesDeltaTest(
-                MakeImageIndexForTesting(
-                    "XXabZZ", {{0, MarkIndex(0)}, {4, MarkIndex(2)}}, {}),
-                MakeImageIndexForTesting(
-                    "XXabZZ", {{0, MarkIndex(0)}, {4, MarkIndex(2)}}, {}),
+                {{0, 0}, {2, 1}, {4, 2}}, {{0, 0}, {2, 1}, {4, 2}}, {0, 1, 2},
+                EquivalenceMap({{{4, 0, 2}, 0.0}, {{0, 4, 2}, 0.0}})));
+
+  EXPECT_EQ(std::vector<int32_t>({-2, 2}),
+            GenerateReferencesDeltaTest(
+                {{1, 0}, {4, 1}, {7, 2}}, {{1, 0}, {4, 1}, {7, 2}}, {0, 1, 2},
+                EquivalenceMap({{{6, 0, 3}, 0.0}, {{0, 6, 3}, 0.0}})));
+
+  EXPECT_EQ(std::vector<int32_t>({-2, 2}),
+            GenerateReferencesDeltaTest(
+                {{0, 0}, {4, 2}, {6, 1}}, {{0, 0}, {4, 2}}, {0, 1, 2},
                 EquivalenceMap(
                     {{{4, 0, 2}, 0.0}, {{2, 2, 2}, 0.0}, {{0, 4, 2}, 0.0}})));
 }
