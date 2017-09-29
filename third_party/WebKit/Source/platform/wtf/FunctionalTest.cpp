@@ -318,6 +318,7 @@ TEST(FunctionalTest, MemberFunctionBindByPassedUniquePtr) {
 
 class Number {
  public:
+  REQUIRE_ADOPTION_FOR_REFCOUNTED_TYPE();
   static RefPtr<Number> Create(int value) {
     return WTF::AdoptRef(new Number(value));
   }
@@ -325,11 +326,14 @@ class Number {
   ~Number() { value_ = 0; }
 
   int Value() const { return value_; }
-  int RefCount() const { return ref_count_; }
 
+  int RefCount() const { return ref_count_; }
   bool HasOneRef() const { return ref_count_ == 1; }
-  void Ref() const { ++ref_count_; }
-  void Deref() const {
+
+  // For RefPtr support.
+  void Adopted() const {}
+  void AddRef() const { ++ref_count_; }
+  void Release() const {
     if (--ref_count_ == 0)
       delete this;
   }
