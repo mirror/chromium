@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "47d32fe2_746114be",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-29T22:56:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02f95187_2e1bdfda",
+      "revId": "2ad6baa1d82cde54f5edc41c24f4460c9cba8c59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b665dfc5_d57c8260",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-29T21:29:04Z",
       "side": 1,
       "message": "This needs to call:\n\n  // Signal to the manager that we\u0027re closed and can be removed.\n  // This should be the last call in the function as it deletes \"this\".\n  manager_-\u003eReleaseOutputStream(this);",
+      "revId": "2ad6baa1d82cde54f5edc41c24f4460c9cba8c59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29e3750b_6bcd9e25",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-29T22:56:34Z",
+      "side": 1,
+      "message": "Done. It looks wrong that destructor is public in AudioOutputStream interface. \nIs it possible to avoid this pattern? Can we remove Close() and make all callers use destructor to destroy the stream?",
+      "parentUuid": "b665dfc5_d57c8260",
       "revId": "2ad6baa1d82cde54f5edc41c24f4460c9cba8c59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

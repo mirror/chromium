@@ -161,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "7ae42079_fde18921",
+        "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-29T22:56:34Z",
+      "side": 1,
+      "message": "That would require 2 calls to the function instead of one in the most common case when there are just a few devices. Given that each call will require round-trip to the media service it\u0027s better to limit how often this function is called.",
+      "parentUuid": "dbfe7bca_da051338",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1507ae6_5f0f745e",
         "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
         "patchSetId": 3
@@ -584,6 +602,24 @@
     },
     {
       "key": {
+        "uuid": "a049c48f_888907c2",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-29T22:56:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9d7e9aa_d02f5d12",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "082709e2_fdbd7129",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
         "patchSetId": 3
@@ -631,6 +667,24 @@
       "side": 1,
       "message": "I think you missed my point. I meant that Fuschia needs to implement a callback based API which provides a thread. It should then drive those callbacks with that internal OS level thread that guarantees the highest priority and scheduling. Generally this is functionality that may not be available at the application level. I.e. CoreAudio and Pulse will have root level permissions that allow configuration of real time priorities. So (1) is different then Chrome handling the threading itself. Even if Fuschia does this differently, I would not count on the PostTask system as being sufficient for the precise scheduling required here. \n\nI guarantee you will have scheduling issues with this approach. Looking over the audio API you linked leaves me a bit worried. Please chat with dgreid@ from the libcras team to understand sound server design better and the solutions they created for the ChromeOS audio server. I recommend you have him review any API and mixer development you do for Fuschia, so we don\u0027t repeat any mistakes and benefit from the knowledge his team has.\n\nI\u0027m less worried about (2), but it is very tricky to get right, so again please make sure dgreid@ looks over the audio driver.\n\nIt\u0027s funny that you mention the ALSA driver, because that\u0027s used almost nowhere for precisely the reason that it glitches constantly :) We were unable to take advantage of more modern ALSA features due to the library requirements for Chrome at the time, so we switched to Pulse Audio which provides a callback driven API and no (less? :) glitching.\n\nI absolutely welcome disagreement and questioning here, but keep in mind I\u0027m speaking from the experience of having owned the audio drivers on all platforms for the better part of 6 years now :)",
       "parentUuid": "f0363930_ee329d53",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a10e2b6_522a6880",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-29T22:56:34Z",
+      "side": 1,
+      "message": "I agree that it\u0027s possible that we will see some issues with scheduling and will need to figure out how to solve them, e.g. bumping priority of this thread and use other fuchsia-specific features (e.g. specify slack, see https://github.com/fuchsia-mirror/zircon/blob/master/docs/syscalls/timer_set.md). But I don\u0027t think we need to do it now.\n\nIf we did have a separate real-time thread here (with callbacks), the audio source in the renderer process would still run without real-time priority. How is it solved on other platforms? I think for real-time scheduling to be effective we would need some form of priority inheritance implemented in the kernel. Do other platforms provide such mechanism?\n\nRe pulseaudio: AFAICT it doesn\u0027t use realtime scheduling by default. I think on most systems its configured to run with user permissions (I don\u0027t see SUID bit set for /usr/bin/pulseaudio on my system), so it\u0027s not allowed to use real-time priority priority, but I may be missing something.",
+      "parentUuid": "01ab3d26_a4ce4549",
       "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -795,6 +849,24 @@
     },
     {
       "key": {
+        "uuid": "d5cc8d84_3448ce9a",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-29T22:56:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f2f9c978_b6081328",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "056c6751_fb16cbb0",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
         "patchSetId": 3
@@ -841,6 +913,24 @@
       "writtenOn": "2017-09-29T20:24:31Z",
       "side": 1,
       "message": "Keep in mind you can get massive jumps here upon suspend resume.",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fda58d0_7319a227",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-29T22:56:34Z",
+      "side": 1,
+      "message": "This is a good point. Added a check for this now, resetting the stream if the timer misses the target time by more than parameters_.GetBufferDuration(). Also added parameters_.GetBufferDuration() to presentation_delay_.",
+      "parentUuid": "13cf970b_bcf6d8e2",
       "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -988,6 +1078,24 @@
     },
     {
       "key": {
+        "uuid": "6f4e5297_fa0a8913",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-29T22:56:34Z",
+      "side": 1,
+      "message": "What\u0027s the right thing to do when OnMoreData() returns 0? Replaced this delay with parameters_.GetBufferDuration() , so we keep calling OnMoreData() at the same rate, but I don\u0027t think the exact delay is particularly important here.",
+      "parentUuid": "52f67ff9_6b6d18c1",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1940e558_6744babe",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
         "patchSetId": 3
@@ -1111,6 +1219,24 @@
     },
     {
       "key": {
+        "uuid": "36c78249_45d674d7",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-29T22:56:34Z",
+      "side": 1,
+      "message": "Yes, I know I could do this, but it looks like a hack. IMO it\u0027s broken that TimeTicks allows any operations with null values.",
+      "parentUuid": "85c64e2a_3c73d75c",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e97b6b1_ffca8656",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
         "patchSetId": 3
@@ -1158,6 +1284,24 @@
       "side": 1,
       "message": "Up to you. (1) never happens, OnMoreData should always fill completely or nothing at all. The frames filled value is a bit of a deprecated relic. I don\u0027t think 2 is true in the general case either. Buffers tend to be nice round millisecond values.",
       "parentUuid": "6e0178f5_8707d976",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66788e2b_08e69e19",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-29T22:56:34Z",
+      "side": 1,
+      "message": "Good to know. Added DCHECK to verify that OnMoreData() fills whole buffer.",
+      "parentUuid": "01397540_fa069b58",
       "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
