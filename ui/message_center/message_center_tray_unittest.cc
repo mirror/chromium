@@ -29,7 +29,9 @@ class MockDelegate : public MessageCenterTrayDelegate {
   void OnMessageCenterTrayChanged() override {}
   bool ShowPopups() override { return show_message_center_success_; }
   void HidePopups() override {}
-  bool ShowMessageCenter() override { return show_popups_success_; }
+  bool ShowMessageCenter(bool show_by_click) override {
+    return show_popups_success_;
+  }
   void HideMessageCenter() override {}
   bool ShowNotifierSettings() override { return true; }
   bool IsContextMenuEnabled() const override { return enable_context_menu_; }
