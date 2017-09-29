@@ -129,6 +129,9 @@
 
     // Returns true if there are no pending responses.
     async allResponsesConsumed() {
+      await setBluetoothFakeAdapter('');
+      await this.initFakeBluetoothInterfacePtr_();
+      await this.setLESupported(true);
       let {consumed} = await this.fake_bluetooth_ptr_.allResponsesConsumed();
       return consumed;
     }
