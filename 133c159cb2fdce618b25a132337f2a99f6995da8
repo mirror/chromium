@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6e81c820_c2596755",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browser_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-29T06:02:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "719cd050_0a103bff",
+      "revId": "133c159cb2fdce618b25a132337f2a99f6995da8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5dbb78fa_8f610b6f",
         "filename": "chrome/browser/ui/extensions/hosted_app_browser_controller.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-28T13:24:13Z",
       "side": 1,
       "message": "hmm... I know that other code in this file also uses ExtensionRegistry::EVERYTHING, but I wouldn\u0027t think we\u0027d care about anything but enabled extensions.  Looks like Ben wrote most of this file; Ben, was this intentional?",
+      "revId": "133c159cb2fdce618b25a132337f2a99f6995da8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d35e62de_96a5bae8",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browser_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-29T06:02:47Z",
+      "side": 1,
+      "message": "Yeah, I was wondering about this too. I would think that ENABLED would be more appropriate. FYI, Ben won\u0027t be back for a week.",
+      "parentUuid": "5dbb78fa_8f610b6f",
       "revId": "133c159cb2fdce618b25a132337f2a99f6995da8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1eb34e52_80d6e73c",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-29T06:02:47Z",
+      "side": 1,
+      "message": "It doesn\u0027t really make sense for anyone to use a transparent value, although it _is_ possible. I\u0027ve changed this all to store an int instead of a string so that we store this information correctly inside the extension. If someday we decide to support this, the data will be there.",
+      "parentUuid": "2a924aed_91659c2d",
+      "revId": "133c159cb2fdce618b25a132337f2a99f6995da8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2898c6b_e2e28ad9",
         "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "133c159cb2fdce618b25a132337f2a99f6995da8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "001038e4_1e02ab81",
+        "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-29T06:02:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2898c6b_e2e28ad9",
+      "revId": "133c159cb2fdce618b25a132337f2a99f6995da8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "10999a91_c8d23fc2",
+        "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-29T06:02:47Z",
+      "side": 1,
+      "message": "NA",
+      "parentUuid": "a31d42d4_b5f4eaaa",
+      "revId": "133c159cb2fdce618b25a132337f2a99f6995da8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a62e5729_c7f075fc",
         "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
         "patchSetId": 5
@@ -101,6 +191,24 @@
       "revId": "133c159cb2fdce618b25a132337f2a99f6995da8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a6e9dad_a6146ced",
+        "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-29T06:02:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a62e5729_c7f075fc",
+      "revId": "133c159cb2fdce618b25a132337f2a99f6995da8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +235,30 @@
     },
     {
       "key": {
+        "uuid": "d698383a_7d1fcfba",
+        "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-29T06:02:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13e8dd9e_b7b75419",
+      "range": {
+        "startLine": 24,
+        "startChar": 21,
+        "endLine": 24,
+        "endChar": 22
+      },
+      "revId": "133c159cb2fdce618b25a132337f2a99f6995da8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a4b9bc0_1f93d2bc",
         "filename": "components/sync/protocol/app_specifics.proto",
         "patchSetId": 5
@@ -141,6 +273,24 @@
       "revId": "133c159cb2fdce618b25a132337f2a99f6995da8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c1473e3_b3bea917",
+        "filename": "components/sync/protocol/app_specifics.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-29T06:02:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a4b9bc0_1f93d2bc",
+      "revId": "133c159cb2fdce618b25a132337f2a99f6995da8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
