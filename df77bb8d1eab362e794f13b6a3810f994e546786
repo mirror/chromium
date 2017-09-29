@@ -1,0 +1,278 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83135bac_5c3db2f5",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-29T14:25:38Z",
+      "side": 1,
+      "message": "AutofillManager is getting big. We should move Form importing functions (including uploading) to another file. What do you think?",
+      "revId": "df77bb8d1eab362e794f13b6a3810f994e546786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "467161ab_2530d7f5",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1106,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-29T14:25:38Z",
+      "side": 1,
+      "message": "Looking at line 1317, we could be here because the experiment to request CVC is disabled, which doesn\u0027t appear to be in the condition?",
+      "revId": "df77bb8d1eab362e794f13b6a3810f994e546786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9bc78c2_0a1a4963",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1166,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-29T14:25:38Z",
+      "side": 1,
+      "message": "no curlies?",
+      "revId": "df77bb8d1eab362e794f13b6a3810f994e546786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06cbf251_9c68e797",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1176,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-29T14:25:38Z",
+      "side": 1,
+      "message": "was this a bug? Is it necessary?",
+      "revId": "df77bb8d1eab362e794f13b6a3810f994e546786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47091157_5c2ccacb",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1260,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-29T14:25:38Z",
+      "side": 1,
+      "message": "return here and avoid the huge else?",
+      "range": {
+        "startLine": 1260,
+        "startChar": 8,
+        "endLine": 1260,
+        "endChar": 9
+      },
+      "revId": "df77bb8d1eab362e794f13b6a3810f994e546786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89e47cf1_62480937",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1318,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-29T14:25:38Z",
+      "side": 1,
+      "message": "It\u0027s not obvious why |upload_decision_metrics_| would be 0 here. Can you make it clearer by perhaps bringing your comment from 1328",
+      "revId": "df77bb8d1eab362e794f13b6a3810f994e546786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ae12af6_568a2086",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1370,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-29T14:25:38Z",
+      "side": 1,
+      "message": "do you need this line?",
+      "range": {
+        "startLine": 1370,
+        "startChar": 6,
+        "endLine": 1370,
+        "endChar": 60
+      },
+      "revId": "df77bb8d1eab362e794f13b6a3810f994e546786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7348724_d1524fa9",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1395,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-29T14:25:38Z",
+      "side": 1,
+      "message": "In your model, is it ok to have different profiles contribute to detected_values? I\u0027m not entirely sure I know why we send many |profiles|, so I\u0027m curious.",
+      "revId": "df77bb8d1eab362e794f13b6a3810f994e546786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bc06e62_e33d9cce",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1436,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-29T14:25:38Z",
+      "side": 1,
+      "message": "why not upload_decision_metrics_?",
+      "range": {
+        "startLine": 1436,
+        "startChar": 6,
+        "endLine": 1436,
+        "endChar": 29
+      },
+      "revId": "df77bb8d1eab362e794f13b6a3810f994e546786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "522704f7_d5d2caf1",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1600,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-29T14:25:38Z",
+      "side": 1,
+      "message": "Why is this here, gated by |upload_decision_metrics|?",
+      "range": {
+        "startLine": 1600,
+        "startChar": 13,
+        "endLine": 1600,
+        "endChar": 14
+      },
+      "revId": "df77bb8d1eab362e794f13b6a3810f994e546786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0265d76_a8b0ef2a",
+        "filename": "components/autofill/core/browser/autofill_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-29T14:25:38Z",
+      "side": 1,
+      "message": "nit: I would avoid function names in comments, because things can change.\n\n\"Analyzes the decisions made in importing form data and blah...\"",
+      "range": {
+        "startLine": 466,
+        "startChar": 36,
+        "endLine": 466,
+        "endChar": 50
+      },
+      "revId": "df77bb8d1eab362e794f13b6a3810f994e546786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cd9e0bc_b96f9132",
+        "filename": "components/autofill/core/browser/autofill_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-29T14:25:38Z",
+      "side": 1,
+      "message": "Looks like it\u0027s credit card specific, so should have a credit card specific name",
+      "range": {
+        "startLine": 469,
+        "startChar": 6,
+        "endLine": 469,
+        "endChar": 33
+      },
+      "revId": "df77bb8d1eab362e794f13b6a3810f994e546786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdefb4da_77f65469",
+        "filename": "components/autofill/core/browser/payments/payments_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-29T14:25:38Z",
+      "side": 1,
+      "message": "was this a bug? Should this be a separate change?",
+      "revId": "df77bb8d1eab362e794f13b6a3810f994e546786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ae81dc0_0afb179a",
+        "filename": "components/autofill/core/browser/payments/payments_client.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-29T14:25:38Z",
+      "side": 1,
+      "message": "mention detected_values and its \"type\"",
+      "revId": "df77bb8d1eab362e794f13b6a3810f994e546786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
