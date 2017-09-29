@@ -2,6 +2,167 @@
   "comments": [
     {
       "key": {
+        "uuid": "ea0caff5_1e389684",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/AppHooks.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T17:33:43Z",
+      "side": 1,
+      "message": "nit: capitalize \"the\"",
+      "range": {
+        "startLine": 127,
+        "startChar": 15,
+        "endLine": 127,
+        "endChar": 18
+      },
+      "revId": "32b9cb19b52c10920470190b232440b9e12504d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae934089_3bbb6120",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T17:33:43Z",
+      "side": 1,
+      "message": "nit: add blank spaces before this block and after this block",
+      "range": {
+        "startLine": 496,
+        "startChar": 12,
+        "endLine": 498,
+        "endChar": 87
+      },
+      "revId": "32b9cb19b52c10920470190b232440b9e12504d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd2910eb_1c7fd782",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T17:33:43Z",
+      "side": 1,
+      "message": "nit: these can all be final",
+      "range": {
+        "startLine": 26,
+        "startChar": 3,
+        "endLine": 28,
+        "endChar": 29
+      },
+      "revId": "32b9cb19b52c10920470190b232440b9e12504d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56090669_f5af6a5e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T17:33:43Z",
+      "side": 1,
+      "message": "Add JavaDocs for the params",
+      "range": {
+        "startLine": 31,
+        "startChar": 1,
+        "endLine": 32,
+        "endChar": 7
+      },
+      "revId": "32b9cb19b52c10920470190b232440b9e12504d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fc2acc5_8aeff16d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T17:33:43Z",
+      "side": 1,
+      "message": "nit: add a blank line before this one",
+      "range": {
+        "startLine": 35,
+        "startChar": 7,
+        "endLine": 35,
+        "endChar": 29
+      },
+      "revId": "32b9cb19b52c10920470190b232440b9e12504d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68f97eb9_9d9009a2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T17:33:43Z",
+      "side": 1,
+      "message": "nit: put this public static method above the other methods",
+      "range": {
+        "startLine": 80,
+        "startChar": 3,
+        "endLine": 88,
+        "endChar": 5
+      },
+      "revId": "32b9cb19b52c10920470190b232440b9e12504d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5d25a73_ee53ff52",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/privacy/ClearBrowsingDataPreferences.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T17:33:43Z",
+      "side": 1,
+      "message": "Let\u0027s put this down below by AppIndexReporter and add a comment.\n\nWhy is this tied to the CLEAR_COOKIES_AND_SITE_DATA option?",
+      "range": {
+        "startLine": 330,
+        "startChar": 0,
+        "endLine": 332,
+        "endChar": 9
+      },
+      "revId": "32b9cb19b52c10920470190b232440b9e12504d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58ebec02_6c5d42b1",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
         "patchSetId": 12
@@ -13,6 +174,75 @@
       "writtenOn": "2017-09-29T15:28:24Z",
       "side": 1,
       "message": "Let\u0027s call this #initialize(), and pass in the TabModelSelector here as well.\n\nThis public method needs a JavaDoc",
+      "revId": "32b9cb19b52c10920470190b232440b9e12504d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c68f7d80_3fe76559",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T17:33:43Z",
+      "side": 1,
+      "message": "Let\u0027s use TextUtils.isEmpty(surveyId) instead of a null check.",
+      "range": {
+        "startLine": 47,
+        "startChar": 16,
+        "endLine": 47,
+        "endChar": 32
+      },
+      "revId": "32b9cb19b52c10920470190b232440b9e12504d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d360af9_4518ef30",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T17:33:43Z",
+      "side": 1,
+      "message": "Should we be pulling an advertising id from the field trial as well?",
+      "range": {
+        "startLine": 48,
+        "startChar": 59,
+        "endLine": 48,
+        "endChar": 60
+      },
+      "revId": "32b9cb19b52c10920470190b232440b9e12504d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a186c0b_cc4f7e5b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T17:33:43Z",
+      "side": 1,
+      "message": "nit: doesUserQualifyForSurvey()",
+      "range": {
+        "startLine": 53,
+        "startChar": 20,
+        "endLine": 53,
+        "endChar": 42
+      },
       "revId": "32b9cb19b52c10920470190b232440b9e12504d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "c7be3fb5_585b777d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T17:33:43Z",
+      "side": 1,
+      "message": "I think we can actually get rid of this internal class all together. The code currently in #onResult can move to a ChromeHomeSurveController#onSurveyAvailable() method, and near line 48 above where we call SurveyController#initialize() we can make a simple callback, e.g.\n\nCallback\u003cVoid\u003e surveyAvailableCallback \u003d new Callback\u003c\u003e {\n    @Override\n    public void onResult(Void result) {\n        onSurveyAvailable();\n    }\n}",
+      "parentUuid": "0dcbe702_f70d3e42",
+      "range": {
+        "startLine": 67,
+        "startChar": 4,
+        "endLine": 67,
+        "endChar": 16
+      },
+      "revId": "32b9cb19b52c10920470190b232440b9e12504d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3bb7317b_087fa45f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
         "patchSetId": 12
@@ -81,6 +335,29 @@
         "startChar": 8,
         "endLine": 96,
         "endChar": 9
+      },
+      "revId": "32b9cb19b52c10920470190b232440b9e12504d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cd35459_87e14959",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/SurveyController.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T17:33:43Z",
+      "side": 1,
+      "message": "Formatting nit: indent the second line so it aligns with the description in the first (e.g. add about 20 more spaces before \"string for no...\")",
+      "range": {
+        "startLine": 47,
+        "startChar": 6,
+        "endLine": 48,
+        "endChar": 36
       },
       "revId": "32b9cb19b52c10920470190b232440b9e12504d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
