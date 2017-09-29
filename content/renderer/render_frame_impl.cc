@@ -2029,6 +2029,12 @@ void RenderFrameImpl::OnAdjustSelectionByCharacterOffset(
                       WebLocalFrame::kPreserveHandleVisibility,
                       show_selection_menu ? SelectionMenuBehavior::kShow
                                           : SelectionMenuBehavior::kHide);
+  // frame_->SelectRange(
+  //     WebRange(range.StartOffset() + start_adjust,
+  //              range.length() + end_adjust - start_adjust),
+  //     WebLocalFrame::kPreserveHandleVisibility,
+  //     // TODO: get it from parameter to not interfere with contextual search.
+  //     blink::WebLocalFrame::kSelectClosestWord);
 }
 
 void RenderFrameImpl::OnCollapseSelection() {

@@ -204,7 +204,8 @@ WebInputEventResult MouseEventManager::DispatchMouseEvent(
     const WebMouseEvent& mouse_event,
     const String& canvas_region_id,
     EventTarget* related_target,
-    bool check_for_listener) {
+    bool check_for_listener,
+    unsigned event_data) {
   if (target && target->ToNode() &&
       (!check_for_listener || target->HasEventListeners(mouse_event_type))) {
     Node* target_node = target->ToNode();
@@ -219,7 +220,8 @@ WebInputEventResult MouseEventManager::DispatchMouseEvent(
     MouseEvent* event = MouseEvent::Create(
         mouse_event_type, target_node->GetDocument().domWindow(), mouse_event,
         click_count, canvas_region_id,
-        related_target ? related_target->ToNode() : nullptr);
+        related_target ? related_target->ToNode() : nullptr, event_data);
+
     DispatchEventResult dispatch_result = target->DispatchEvent(event);
     return EventHandlingUtil::ToWebInputEventResult(dispatch_result);
   }

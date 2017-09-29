@@ -132,6 +132,8 @@ int ContextMenuClient::ComputeEditFlags(Document& selected_document,
     edit_flags |= WebContextMenuData::kCanEditRichly;
   if (selected_document.queryCommandEnabled("selectAll", ASSERT_NO_EXCEPTION))
     edit_flags |= WebContextMenuData::kCanSelectAll;
+  if (editor.DoClassificationOnly())
+    edit_flags |= WebContextMenuData::kSmartSelectionReset;
   return edit_flags;
 }
 

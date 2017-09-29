@@ -192,6 +192,8 @@ class CORE_EXPORT WebLocalFrameImpl final
   void SelectRange(const WebRange&,
                    HandleVisibilityBehavior,
                    blink::mojom::SelectionMenuBehavior) override;
+  // HandleVisibilityBehavior = kHideSelectionHandle,
+  // SelectionTapBehavior = kClearSelection) override;
   WebString RangeAsText(const WebRange&) override;
   void MoveRangeSelectionExtent(const WebPoint&) override;
   void MoveRangeSelection(

@@ -329,6 +329,9 @@ void FrameInputHandlerImpl::AdjustSelectionByCharacterOffset(
       blink::WebRange(range.StartOffset() + start,
                       range.length() + end - start),
       blink::WebLocalFrame::kPreserveHandleVisibility, selection_menu_behavior);
+  // blink::WebLocalFrame::kPreserveHandleVisibility,
+  // // TODO: get it from parameter to not interfere with contextual search.
+  // blink::WebLocalFrame::kSelectClosestWord);
 }
 
 void FrameInputHandlerImpl::MoveRangeSelectionExtent(const gfx::Point& extent) {
