@@ -132,8 +132,8 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
                           TaskTracker* task_tracker,
                           DelayedTaskManager* delayed_task_manager);
 
-  // SchedulerWorkerPool:
-  void ScheduleSequence(scoped_refptr<Sequence> sequence) override;
+  // CanDispatchSequenceObserver:
+  void OnCanDispatchSequence(scoped_refptr<Sequence> sequence) override;
 
   // Waits until at least |n| workers are idle. |lock_| must be held to call
   // this function.

@@ -61,6 +61,9 @@ class SchedulerWorkerDefaultDelegate : public SchedulerWorker::Delegate {
     ADD_FAILURE() << "Unexpected call to ReEnqueueSequence()";
   }
   TimeDelta GetSleepTimeout() override { return TimeDelta::Max(); }
+  void OnCanDispatchSequence(scoped_refptr<Sequence> sequence) override {
+    ADD_FAILURE() << "Unexpected call to OnCanDispatchSequence().";
+  }
 
  private:
   DISALLOW_COPY_AND_ASSIGN(SchedulerWorkerDefaultDelegate);
@@ -190,6 +193,9 @@ class TaskSchedulerWorkerTest : public testing::TestWithParam<size_t> {
         outer_->created_sequences_.push_back(sequence);
       }
 
+      sequence = outer_->task_tracker_.WillDispatchSequence(std::move(sequence),
+                                                            nullptr);
+      EXPECT_TRUE(sequence);
       return sequence;
     }
 
@@ -453,6 +459,9 @@ class ControllableCleanupDelegate : public SchedulerWorkerDefaultDelegate {
         TimeDelta()));
     EXPECT_TRUE(task_tracker_->WillPostTask(task.get()));
     sequence->PushTask(std::move(task));
+    sequence =
+        task_tracker_->WillDispatchSequence(std::move(sequence), nullptr);
+    EXPECT_TRUE(sequence);
     return sequence;
   }
 
