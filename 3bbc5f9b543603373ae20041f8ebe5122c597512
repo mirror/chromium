@@ -70,6 +70,30 @@
       "revId": "3bbc5f9b543603373ae20041f8ebe5122c597512",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b653f756_63fc053a",
+        "filename": "chrome/browser/android/banners/app_banner_manager_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-29T06:06:06Z",
+      "side": 1,
+      "message": "SGTM",
+      "parentUuid": "0529e63b_fc37e5d2",
+      "range": {
+        "startLine": 282,
+        "startChar": 4,
+        "endLine": 282,
+        "endChar": 51
+      },
+      "revId": "3bbc5f9b543603373ae20041f8ebe5122c597512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
