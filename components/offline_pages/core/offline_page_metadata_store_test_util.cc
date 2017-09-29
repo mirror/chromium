@@ -6,6 +6,8 @@
 
 #include "base/bind.h"
 #include "base/callback_forward.h"
+#include "base/memory/ptr_util.h"
+#include "components/offline_pages/core/model/add_page_task.h"
 #include "components/offline_pages/core/model/get_pages_task.h"
 #include "components/offline_pages/core/offline_page_types.h"
 #include "sql/connection.h"
@@ -58,13 +60,21 @@ OfflinePageMetadataStoreTestUtil::ReleaseStore() {
 }
 
 void OfflinePageMetadataStoreTestUtil::InsertItem(const OfflinePageItem& page) {
-  ItemActionStatus status;
-  store_->AddOfflinePage(
-      page, base::Bind([](ItemActionStatus* out_status,
-                          ItemActionStatus status) { *out_status = status; },
-                       &status));
+  AddPageResult out_result;
+  OfflinePageItem out_page;
+  auto task = base::MakeUnique<AddPageTask>(
+      store(), page,
+      base::Bind(
+          [](AddPageResult* out_result, OfflinePageItem* out_page,
+             AddPageResult cb_result, const OfflinePageItem& cb_page) {
+            *out_result = cb_result;
+            *out_page = cb_page;
+          },
+          &out_result, &out_page));
+  task->Run();
   task_runner_->RunUntilIdle();
-  EXPECT_EQ(ItemActionStatus::SUCCESS, status);
+  EXPECT_EQ(AddPageResult::SUCCESS, out_result);
+  EXPECT_EQ(page, out_page);
 }
 
 int64_t OfflinePageMetadataStoreTestUtil::GetPageCount() {
