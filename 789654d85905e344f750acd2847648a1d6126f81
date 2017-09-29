@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "666a0cf9_bf2d1afc",
+        "filename": "ash/ash_switches.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-29T02:49:16Z",
+      "side": 1,
+      "message": "nit: I think this needs a more descriptive comment. Why would I ever want to not keep my data in sync? :-)  See below.",
+      "revId": "789654d85905e344f750acd2847648a1d6126f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "906ce6ff_475ffc4e",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2738,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-29T02:49:16Z",
+      "side": 1,
+      "message": "nit: This reads kind of strangely. I think it would be better to say something like \"Use a single in-process shelf data model shared between Chrome and Ash. This only applies...\"",
+      "revId": "789654d85905e344f750acd2847648a1d6126f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
