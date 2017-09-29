@@ -1202,7 +1202,7 @@ bool AutofillManager::IsCreditCardUploadEnabled() {
 bool AutofillManager::ShouldUploadForm(const FormStructure& form) {
   return IsAutofillEnabled() && !driver()->IsIncognito() &&
          form.ShouldBeParsed() &&
-         (form.active_field_count() >= kRequiredFieldsForUpload ||
+         (form.active_field_count() >= MinRequiredFieldsForUpload() ||
           (form.all_fields_are_passwords() &&
            form.active_field_count() >=
                kRequiredFieldsForFormsWithOnlyPasswordFields));
