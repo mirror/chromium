@@ -115,10 +115,9 @@ TEST_F(MAYBE_OneShotAccessibilityTreeSearchTest, BackwardsWithStartNode) {
   OneShotAccessibilityTreeSearch search(tree_->GetRoot());
   search.SetStartNode(tree_->GetFromID(4));
   search.SetDirection(OneShotAccessibilityTreeSearch::BACKWARDS);
-  ASSERT_EQ(3U, search.CountMatches());
+  ASSERT_EQ(2U, search.CountMatches());
   EXPECT_EQ(3, search.GetMatchAtIndex(0)->GetId());
   EXPECT_EQ(2, search.GetMatchAtIndex(1)->GetId());
-  EXPECT_EQ(1, search.GetMatchAtIndex(2)->GetId());
 }
 
 TEST_F(MAYBE_OneShotAccessibilityTreeSearchTest,
