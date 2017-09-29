@@ -16,6 +16,7 @@
 #include "build/build_config.h"
 #include "cc/paint/paint_flags.h"
 #include "components/viz/client/client_shared_bitmap_manager.h"
+#include "components/viz/common/gpu/context_provider.h"
 #include "components/viz/common/quads/shared_bitmap.h"
 #include "components/viz/common/quads/texture_mailbox.h"
 #include "content/public/renderer/render_thread.h"
@@ -25,6 +26,7 @@
 #include "content/renderer/pepper/plugin_instance_throttler_impl.h"
 #include "content/renderer/pepper/ppb_image_data_impl.h"
 #include "content/renderer/render_thread_impl.h"
+#include "gpu/command_buffer/client/gles2_interface.h"
 #include "ppapi/c/pp_bool.h"
 #include "ppapi/c/pp_errors.h"
 #include "ppapi/c/pp_rect.h"
@@ -35,6 +37,7 @@
 #include "ppapi/proxy/ppapi_messages.h"
 #include "ppapi/shared_impl/ppb_view_shared.h"
 #include "ppapi/thunk/enter.h"
+#include "services/ui/public/cpp/gpu/context_provider_command_buffer.h"
 #include "skia/ext/platform_canvas.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "third_party/skia/include/core/SkSwizzle.h"
@@ -189,6 +192,14 @@ PepperGraphics2DHost::PepperGraphics2DHost(RendererPpapiHost* host,
       texture_mailbox_modified_(true) {}
 
 PepperGraphics2DHost::~PepperGraphics2DHost() {
+  // Delete textures owned by PepperGraphics2DHost, but not those sent to the
+  // compositor, since those will be deleted by the ReleaseCallback when it
+  // runs.
+  if (main_thread_context_ && !recycled_texture_copies_.empty()) {
+    main_thread_context_->ContextGL()->DeleteTextures(
+        recycled_texture_copies_.size(), recycled_texture_copies_.data());
+  }
+
   // Unbind from the instance when destroyed if we're still bound.
   if (bound_instance_)
     bound_instance_->BindGraphics(bound_instance_->pp_instance(), 0);
@@ -558,11 +569,103 @@ void PepperGraphics2DHost::ReleaseCallback(
   cached_bitmap_size_ = bitmap_size;
 }
 
+// Grabs the main thread shared context provider, if the compositor will be
+// expecting gpu inputs.
+scoped_refptr<viz::ContextProvider> GetContextProviderIfGpuCompositing() {
+  RenderThreadImpl* rti = RenderThreadImpl::current();
+
+  scoped_refptr<viz::ContextProvider> context_provider =
+      rti->SharedMainThreadContextProvider();
+  // If no context then we're not using gpu compositing, or waiting for a
+  // connection to the GpuChannel still.
+  if (!context_provider)
+    return nullptr;
+  gpu::GpuChannelHost* gpu_channel_host = rti->GetGpuChannel();
+  // If GpuChannel was lost, then we'll have to wait for a connection again
+  // before we can tell what's going on.
+  if (!gpu_channel_host)
+    return nullptr;
+  // If the GpuChannel is present but emulating hardware, it will not be used
+  // for gpu compositing.
+  if (gpu_channel_host->gpu_info().software_rendering)
+    return nullptr;
+
+  // Otherwise, we have a connection to the GpuChannel, which the compositor
+  // will use also since it is not lost, so the compositor will be using gpu,
+  // at least until this context becomes lost.
+  return context_provider;
+}
+
+static void ReleaseTextureCallback(base::WeakPtr<PepperGraphics2DHost> host,
+                                   scoped_refptr<viz::ContextProvider> context,
+                                   uint32_t id,
+                                   const gpu::SyncToken& sync_token,
+                                   bool lost) {
+  if (sync_token.HasData())
+    context->ContextGL()->WaitSyncTokenCHROMIUM(sync_token.GetConstData());
+  if (host && !lost)
+    host->RecycleTexture(id);
+  else
+    context->ContextGL()->DeleteTextures(1, &id);
+}
+
 bool PepperGraphics2DHost::PrepareTextureMailbox(
     viz::TextureMailbox* mailbox,
     std::unique_ptr<viz::SingleReleaseCallback>* release_callback) {
   if (!texture_mailbox_modified_)
     return false;
+
+  // Reuse the |main_thread_context_| if it is not lost. If it is lost, we
+  // can't reuse the texture ids, they are invalid.
+  if (!main_thread_context_ ||
+      main_thread_context_->ContextGL()->GetGraphicsResetStatusKHR() !=
+          GL_NO_ERROR) {
+    texture_copies_.clear();
+    recycled_texture_copies_.clear();
+    main_thread_context_ = GetContextProviderIfGpuCompositing();
+  }
+
+  // If the |main_thread_context_| is not null, the compositor is expecting
+  // gpu resources, so we copy the |image_data_| into a texture.
+  if (main_thread_context_) {
+    auto* gl = main_thread_context_->ContextGL();
+    uint32_t texture_id;
+    if (!recycled_texture_copies_.empty()) {
+      texture_id = recycled_texture_copies_.back();
+      recycled_texture_copies_.pop_back();
+      gl->BindTexture(GL_TEXTURE_2D, texture_id);
+    } else {
+      gl->GenTextures(1, &texture_id);
+      gl->BindTexture(GL_TEXTURE_2D, texture_id);
+      gl->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+      gl->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+      gl->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+      gl->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    }
+
+    void* src = image_data_->Map();
+    gl->TexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image_data_->width(),
+                   image_data_->height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, src);
+    image_data_->Unmap();
+    texture_copies_.push_back(texture_id);
+
+    gpu::Mailbox gpu_mailbox;
+    gl->GenMailboxCHROMIUM(gpu_mailbox.name);
+    gl->ProduceTextureCHROMIUM(GL_TEXTURE_2D, gpu_mailbox.name);
+    gpu::SyncToken sync_token;
+    uint64_t fence_sync = gl->InsertFenceSyncCHROMIUM();
+    gl->OrderingBarrierCHROMIUM();
+    gl->GenUnverifiedSyncTokenCHROMIUM(fence_sync, sync_token.GetData());
+
+    gl->BindTexture(GL_TEXTURE_2D, 0);
+
+    *mailbox = viz::TextureMailbox(gpu_mailbox, sync_token, GL_TEXTURE_2D);
+    *release_callback = viz::SingleReleaseCallback::Create(
+        base::Bind(&ReleaseTextureCallback, this->AsWeakPtr(),
+                   main_thread_context_, texture_id));
+    return true;
+  }
+
   // TODO(jbauman): Send image_data_ through mailbox to avoid copy.
   gfx::Size pixel_image_size(image_data_->width(), image_data_->height());
   std::unique_ptr<viz::SharedBitmap> shared_bitmap;

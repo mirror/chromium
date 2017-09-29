@@ -30,6 +30,7 @@ struct SyncToken;
 }
 
 namespace viz {
+class ContextProvider;
 class SharedBitmap;
 class SingleReleaseCallback;
 class TextureMailbox;
@@ -92,6 +93,17 @@ class CONTENT_EXPORT PepperGraphics2DHost
   void set_viewport_to_dip_scale(float viewport_to_dip_scale) {
     DCHECK_LT(0, viewport_to_dip_scale_);
     viewport_to_dip_scale_ = viewport_to_dip_scale;
+  }
+
+  void RecycleTexture(uint32_t id) {
+    auto it = texture_copies_.begin();
+    for (; it != texture_copies_.end(); ++it) {
+      if (*it == id) {
+        recycled_texture_copies_.push_back(*it);
+        texture_copies_.erase(it);
+        break;
+      }
+    }
   }
 
  private:
@@ -213,6 +225,16 @@ class CONTENT_EXPORT PepperGraphics2DHost
   bool is_running_in_process_;
 
   bool texture_mailbox_modified_;
+
+  // The shared main thread context provider, used to upload 2d pepper frames
+  // if the compositor is expecting gpu content.
+  scoped_refptr<viz::ContextProvider> main_thread_context_;
+  // The ids of textures holding the copied contents of software frames to
+  // give to the compositor via GL.
+  std::vector<uint32_t> texture_copies_;
+  // Texture ids move from |texture_copies_| to here once they are available for
+  // reuse.
+  std::vector<uint32_t> recycled_texture_copies_;
 
   // This is a bitmap that was recently released by the compositor and may be
   // used to transfer bytes to the compositor again.
