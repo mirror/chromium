@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9a3f781_f513540e",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-29T21:53:57Z",
+      "side": 1,
+      "message": "nit: store BrowserContext* here, and pass Profile::FromBrowserContext(browser_context)-\u003eGetRequestContext() to CastMediaSinkServiceImpl ctor? Do not feel strong about that.",
+      "revId": "a0ba1b5d31722e2466b47bd6f280032dfaa1c1ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e090431_aea0c05a",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-29T21:53:57Z",
+      "side": 1,
+      "message": "This needs to be invoked on the IO thread, and that is why we cannot pass in net::NetLog* in CastMediaSinkServiceImpl ctor, right?",
+      "range": {
+        "startLine": 265,
+        "startChar": 41,
+        "endLine": 265,
+        "endChar": 74
+      },
+      "revId": "a0ba1b5d31722e2466b47bd6f280032dfaa1c1ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
