@@ -15,11 +15,13 @@
 #include "chrome/browser/ui/views/bookmarks/bookmark_bar_view.h"
 #include "chrome/browser/ui/views/download/download_shelf_view.h"
 #include "chrome/browser/ui/views/exclusive_access_bubble_views.h"
+#include "chrome/browser/ui/views/frame/browser_view.h"
 #include "chrome/browser/ui/views/frame/browser_view_layout_delegate.h"
 #include "chrome/browser/ui/views/frame/contents_layout_manager.h"
 #include "chrome/browser/ui/views/frame/immersive_mode_controller.h"
 #include "chrome/browser/ui/views/frame/top_container_view.h"
 #include "chrome/browser/ui/views/infobars/infobar_container_view.h"
+#include "chrome/browser/ui/views/location_bar/location_bar_view.h"
 #include "chrome/browser/ui/views/tabs/tab_strip.h"
 #include "components/web_modal/web_contents_modal_dialog_host.h"
 #include "ui/base/hit_test.h"
@@ -202,13 +204,20 @@ gfx::Rect BrowserViewLayout::GetFindBarBoundingBox() const {
   // excludes the detached bookmark bar (in the New Tab case) and any infobars
   // since they are not _visually_ connected to the Toolbar.
 
+  const bool has_location_bar =
+      browser_->SupportsWindowFeature(Browser::FEATURE_LOCATIONBAR);
+  BrowserView* browser_view = BrowserView::GetBrowserViewForBrowser(browser_);
+  LocationBarView* location_bar_view = browser_view->GetLocationBarView();
   // First determine the bounding box of the content area in Widget
   // coordinates.
   gfx::Rect bounding_box = contents_container_->ConvertRectToWidget(
       contents_container_->GetLocalBounds());
 
-  gfx::Rect top_container_bounds = top_container_->ConvertRectToWidget(
-      top_container_->GetLocalBounds());
+  gfx::Rect top_container_bounds =
+      has_location_bar ? location_bar_view->ConvertRectToWidget(
+                             location_bar_view->GetLocalBounds())
+                       : top_container_->ConvertRectToWidget(
+                             top_container_->GetLocalBounds());
 
   int find_bar_y = 0;
   if (immersive_mode_controller_->IsEnabled() &&
@@ -219,8 +228,8 @@ gfx::Rect BrowserViewLayout::GetFindBarBoundingBox() const {
     // find bar and the tab strip.
     find_bar_y = top_container_bounds.bottom();
   } else {
-    // Overlap the find bar atop |top_container_|.
-    const int kTopOverlap = 6;
+    // Overlap the find bar atop |top_container_| or |location_bar_view|.
+    const int kTopOverlap = has_location_bar ? 4 : 6;
     find_bar_y = top_container_bounds.bottom() - kTopOverlap;
   }
 
@@ -231,12 +240,15 @@ gfx::Rect BrowserViewLayout::GetFindBarBoundingBox() const {
   bounding_box.set_y(find_bar_y);
   bounding_box.set_height(std::max(0, bounding_box.height() + height_delta));
 
+  int right_padding =
+      has_location_bar ? bounding_box.right() - top_container_bounds.right() - 5
+                       : gfx::scrollbar_size();
   // Finally decrease the width of the bounding box by the width of
-  // the vertical scroll bar.
-  int scrollbar_width = gfx::scrollbar_size();
-  bounding_box.set_width(std::max(0, bounding_box.width() - scrollbar_width));
+  // the vertical scroll bar or by the distance from the location bar right edge
+  // to the right edge of the bounding_box.
+  bounding_box.set_width(std::max(0, bounding_box.width() - right_padding));
   if (base::i18n::IsRTL())
-    bounding_box.set_x(bounding_box.x() + scrollbar_width);
+    bounding_box.set_x(bounding_box.x() + right_padding);
 
   return bounding_box;
 }
