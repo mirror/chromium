@@ -929,6 +929,9 @@ extern const char kWebrtcStunOriginDescription[];
 extern const char kWebvrName[];
 extern const char kWebvrDescription[];
 
+extern const char kWebvr2Name[];
+extern const char kWebvr2Description[];
+
 extern const char kWifiCredentialSyncName[];
 extern const char kWifiCredentialSyncDescription[];
 

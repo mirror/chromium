@@ -194,6 +194,9 @@ class PLATFORM_EXPORT DrawingBuffer : public cc::TextureLayerClient,
   gpu::gles2::GLES2Interface* ContextGL();
   WebGraphicsContext3DProvider* ContextProvider();
 
+  // TODO(bajones): NOOOOOOOOOPPPPPE. Nope nope nope nope.
+  base::WeakPtr<WebGraphicsContext3DProviderWrapper> ContextProviderWeakPtr();
+
   // cc::TextureLayerClient implementation.
   bool PrepareTextureMailbox(viz::TextureMailbox* out_mailbox,
                              std::unique_ptr<viz::SingleReleaseCallback>*
@@ -465,8 +468,8 @@ class PLATFORM_EXPORT DrawingBuffer : public cc::TextureLayerClient,
 
   const PreserveDrawingBuffer preserve_drawing_buffer_;
   const WebGLVersion webgl_version_;
-
   std::unique_ptr<WebGraphicsContext3DProviderWrapper> context_provider_;
+
   // Lifetime is tied to the m_contextProvider.
   gpu::gles2::GLES2Interface* gl_;
   std::unique_ptr<Extensions3DUtil> extensions_util_;

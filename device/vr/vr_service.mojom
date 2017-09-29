@@ -106,6 +106,9 @@ interface VRPresentationProvider {
   SubmitFrame(int16 frame_id, gpu.mojom.MailboxHolder mailbox_holder);
   UpdateLayerBounds(int16 frame_id, gfx.mojom.RectF left_bounds,
                     gfx.mojom.RectF right_bounds, gfx.mojom.Size source_size);
+
+  // Sort-of WebVR 2.0
+  SetSessionClient(VRSessionClient session_client);
 };
 
 interface VRDisplayClient {
@@ -115,4 +118,50 @@ interface VRDisplayClient {
   OnFocus();
   OnActivate(VRDisplayEventReason reason) => (bool will_not_present);
   OnDeactivate(VRDisplayEventReason reason);
+};
+
+// === WebVR 2.0 ===
+
+enum VRControllerHandedness {
+  NONE = 0,
+  LEFT = 1,
+  RIGHT = 2
+};
+
+struct VRControllerElementInfo {
+  string name;
+  bool hasXAxis;
+  bool hasYAxis;
+  VRControllerElementState? initialState;
+};
+
+struct VRControllerInfo {
+  uint32 index;
+  bool gazeCursor;
+  VRControllerHandedness handedness;
+  array<VRControllerElementInfo> elements;
+  array<float, 16>? pointerTransform;
+};
+
+struct VRControllerElementState {
+  string name;
+  bool pressed;
+  bool touched;
+  double value;
+  double xAxis;
+  double yAxis;
+};
+
+struct VRControllerState {
+  uint32 index;
+  VRControllerHandedness handedness;
+  array<VRControllerElementState> elements;
+  array<float, 16>? poseMatrix;
+};
+
+interface VRSessionClient {
+  OnControllerConnected(VRControllerInfo controller);
+  OnControllerDisconnected(uint32 index);
+  OnControllerStateChange(VRControllerState controller);
+  OnControllerSelectGesture(VRControllerState controller);
 };

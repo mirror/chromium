@@ -346,6 +346,11 @@ void VrShell::OnTriggerEvent(JNIEnv* env,
     if (cardboard_gamepad_data_fetcher_) {
       cardboard_gamepad_data_fetcher_->SetGamepadData(pad);
     }
+
+    if (touched) {
+      PostToGlThread(FROM_HERE, base::Bind(&VrShellGl::OnTriggerEvent,
+                                           gl_thread_->GetVrShellGl()));
+    }
   } else {
     pending_cardboard_trigger_ = touched;
   }

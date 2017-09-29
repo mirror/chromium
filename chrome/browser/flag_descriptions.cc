@@ -1507,6 +1507,11 @@ const char kWebvrDescription[] =
     "Enabling this option allows web applications to access experimental "
     "Virtual Reality APIs.";
 
+const char kWebvr2Name[] = "WebVR 2";
+const char kWebvr2Description[] =
+    "Enabling this option allows web applications to access to the latest "
+    "version of experimental Virtual Reality APIs.";
+
 const char kWifiCredentialSyncName[] = "WiFi credential sync";
 const char kWifiCredentialSyncDescription[] =
     "Enables synchronizing WiFi network settings across devices. When enabled, "

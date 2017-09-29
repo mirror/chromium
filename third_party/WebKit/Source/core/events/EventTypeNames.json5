@@ -95,6 +95,7 @@
     "display",
     "downloading",
     "dataavailable",
+    "deactivate",
     "drag",
     "dragend",
     "dragenter",

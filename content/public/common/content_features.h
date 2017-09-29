@@ -100,6 +100,7 @@ CONTENT_EXPORT extern const base::Feature kWebRtcScreenshareSwEncoding;
 CONTENT_EXPORT extern const base::Feature kWebRtcUseEchoCanceller3;
 CONTENT_EXPORT extern const base::Feature kWebRtcUseGpuMemoryBufferVideoFrames;
 CONTENT_EXPORT extern const base::Feature kWebUsb;
+CONTENT_EXPORT extern const base::Feature kWebVR2;
 CONTENT_EXPORT extern const base::Feature kWebVRExperimentalRendering;
 
 #if defined(OS_ANDROID)

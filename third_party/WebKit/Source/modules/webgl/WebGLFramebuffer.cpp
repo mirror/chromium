@@ -200,14 +200,22 @@ void WebGLTextureAttachment::Unattach(gpu::gles2::GLES2Interface* gl,
 WebGLFramebuffer::WebGLAttachment::WebGLAttachment() {}
 
 WebGLFramebuffer* WebGLFramebuffer::Create(WebGLRenderingContextBase* ctx) {
-  return new WebGLFramebuffer(ctx);
+  return new WebGLFramebuffer(ctx, false);
 }
 
-WebGLFramebuffer::WebGLFramebuffer(WebGLRenderingContextBase* ctx)
+// An opaque framebuffer is one who's attachements cannot be inspected. This is
+// primarily used for VRWebGLLayers.
+WebGLFramebuffer* WebGLFramebuffer::CreateOpaque(
+    WebGLRenderingContextBase* ctx) {
+  return new WebGLFramebuffer(ctx, true);
+}
+
+WebGLFramebuffer::WebGLFramebuffer(WebGLRenderingContextBase* ctx, bool opaque)
     : WebGLContextObject(ctx),
       object_(0),
       has_ever_been_bound_(false),
       web_gl1_depth_stencil_consistent_(true),
+      is_opaque_(opaque),
       read_buffer_(GL_COLOR_ATTACHMENT0) {
   ctx->ContextGL()->GenFramebuffers(1, &object_);
 }
@@ -358,6 +366,12 @@ void WebGLFramebuffer::RemoveAttachmentFromBoundFramebuffer(
 }
 
 GLenum WebGLFramebuffer::CheckDepthStencilStatus(const char** reason) const {
+  // TODO(bajones): For the moment just assume that an opaque framebuffer is
+  // complete. This is obviously not the best of ideas, so lets replace it with
+  // a better validation soon.
+  if (is_opaque_)
+    return GL_FRAMEBUFFER_COMPLETE;
+
   if (Context()->IsWebGL2OrHigher() || web_gl1_depth_stencil_consistent_)
     return GL_FRAMEBUFFER_COMPLETE;
   *reason = "conflicting DEPTH/STENCIL/DEPTH_STENCIL attachments";

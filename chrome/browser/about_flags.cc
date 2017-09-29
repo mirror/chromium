@@ -2221,6 +2221,9 @@ const FeatureEntry kFeatureEntries[] = {
     {"enable-webvr", flag_descriptions::kWebvrName,
      flag_descriptions::kWebvrDescription, kOsAll,
      SINGLE_VALUE_TYPE(switches::kEnableWebVR)},
+    {"enable-webvr-2", flag_descriptions::kWebvr2Name,
+     flag_descriptions::kWebvr2Description, kOsAll,
+     FEATURE_VALUE_TYPE(features::kWebVR2)},
 #if BUILDFLAG(ENABLE_VR)
     {"enable-webvr-experimental-rendering",
      flag_descriptions::kWebvrExperimentalRenderingName,

@@ -7,4 +7,5 @@
     SecureContext
 ] dictionary VRSessionCreationOptions {
   boolean exclusive = false;
+  VRPresentationContext outputContext;
 };
