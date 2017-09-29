@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a02c6403_16177488",
+        "filename": "content/common/view_messages.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-29T18:47:08Z",
+      "side": 1,
+      "message": "TBH, it is \"resize\" or \"repaint\" ack, we still have both flags (even though \"repaint\" is seldom used). Ideally we would have that in the name?",
+      "revId": "282047d74af3421721e23c3a3e883b717de2069e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
