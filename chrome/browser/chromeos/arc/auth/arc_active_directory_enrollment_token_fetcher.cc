@@ -9,7 +9,6 @@
 #include "base/bind.h"
 #include "base/callback_helpers.h"
 #include "base/logging.h"
-#include "base/memory/ptr_util.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chromeos/arc/arc_optin_uma.h"
 #include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
@@ -62,7 +61,7 @@ void ArcActiveDirectoryEnrollmentTokenFetcher::Fetch(FetchCallback callback) {
   DCHECK(callback_.is_null());
   DCHECK(auth_session_id_.empty());
   callback_ = std::move(callback);
-  dm_token_storage_ = base::MakeUnique<policy::DMTokenStorage>(
+  dm_token_storage_ = std::make_unique<policy::DMTokenStorage>(
       g_browser_process->local_state());
   dm_token_storage_->RetrieveDMToken(base::BindOnce(
       &ArcActiveDirectoryEnrollmentTokenFetcher::OnDMTokenAvailable,

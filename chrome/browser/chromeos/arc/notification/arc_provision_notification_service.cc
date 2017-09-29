@@ -6,7 +6,6 @@
 
 #include <utility>
 
-#include "base/memory/ptr_util.h"
 #include "base/memory/singleton.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/chromeos/arc/arc_util.h"
@@ -52,7 +51,7 @@ void DelegateImpl::ShowManagedProvisionNotification() {
   optional_fields.never_timeout = true;
 
   message_center::MessageCenter::Get()->AddNotification(
-      base::MakeUnique<message_center::Notification>(
+      std::make_unique<message_center::Notification>(
           message_center::NOTIFICATION_TYPE_SIMPLE,
           kManagedProvisionNotificationId,
           l10n_util::GetStringUTF16(
@@ -107,7 +106,7 @@ ArcProvisionNotificationService::ArcProvisionNotificationService(
     content::BrowserContext* context,
     ArcBridgeService* bridge_service)
     : ArcProvisionNotificationService(context,
-                                      base::MakeUnique<DelegateImpl>()) {}
+                                      std::make_unique<DelegateImpl>()) {}
 
 ArcProvisionNotificationService::~ArcProvisionNotificationService() {
   // Make sure no notification is left being shown.

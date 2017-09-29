@@ -296,7 +296,7 @@ void ArcDownloadsWatcherService::DownloadsWatcher::Start() {
   last_notify_time_ = base::TimeTicks::Now();
   last_timestamp_map_ = BuildTimestampMap(downloads_dir_);
 
-  watcher_ = base::MakeUnique<base::FilePathWatcher>();
+  watcher_ = std::make_unique<base::FilePathWatcher>();
   // On Linux, base::FilePathWatcher::Watch() always returns true.
   watcher_->Watch(downloads_dir_, true,
                   base::Bind(&DownloadsWatcher::OnFilePathChanged,
@@ -396,7 +396,7 @@ void ArcDownloadsWatcherService::StartWatchingDownloads() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   StopWatchingDownloads();
   DCHECK(!watcher_);
-  watcher_ = base::MakeUnique<DownloadsWatcher>(
+  watcher_ = std::make_unique<DownloadsWatcher>(
       context_, base::Bind(&ArcDownloadsWatcherService::OnDownloadsChanged,
                            weak_ptr_factory_.GetWeakPtr()));
   file_task_runner_->PostTask(FROM_HERE,

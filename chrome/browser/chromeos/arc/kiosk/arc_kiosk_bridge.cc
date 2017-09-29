@@ -60,7 +60,7 @@ ArcKioskBridge* ArcKioskBridge::GetForBrowserContext(
 std::unique_ptr<ArcKioskBridge> ArcKioskBridge::CreateForTesting(
     ArcBridgeService* arc_bridge_service,
     Delegate* delegate) {
-  // MakeUnique cannot be used because the ctor is private.
+  // std::make_unique() cannot be used because the ctor is private.
   return base::WrapUnique(new ArcKioskBridge(arc_bridge_service, delegate));
 }
 

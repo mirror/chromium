@@ -7,7 +7,6 @@
 #include <utility>
 
 #include "base/command_line.h"
-#include "base/memory/ptr_util.h"
 #include "base/memory/singleton.h"
 #include "base/time/time.h"
 #include "chrome/browser/chromeos/arc/arc_optin_uma.h"
@@ -202,7 +201,7 @@ void ArcAuthService::OnSignInFailed(mojom::ArcSignInFailureReason reason) {
 
 void ArcAuthService::RequestAccountInfo() {
   RequestAccountInfoInternal(
-      base::MakeUnique<ArcAuthService::AccountInfoNotifier>(
+      std::make_unique<ArcAuthService::AccountInfoNotifier>(
           base::Bind(&ArcAuthService::OnAccountInfoReady,
                      weak_ptr_factory_.GetWeakPtr())));
 }
@@ -257,14 +256,14 @@ void ArcAuthService::GetAuthCodeDeprecated(
   // to specify account type.
   DCHECK(!IsArcKioskMode());
   RequestAccountInfoInternal(
-      base::MakeUnique<ArcAuthService::AccountInfoNotifier>(
+      std::make_unique<ArcAuthService::AccountInfoNotifier>(
           std::move(callback)));
 }
 
 void ArcAuthService::GetAuthCodeAndAccountTypeDeprecated(
     GetAuthCodeAndAccountTypeDeprecatedCallback callback) {
   RequestAccountInfoInternal(
-      base::MakeUnique<ArcAuthService::AccountInfoNotifier>(
+      std::make_unique<ArcAuthService::AccountInfoNotifier>(
           std::move(callback)));
 }
 
@@ -295,7 +294,7 @@ void ArcAuthService::RequestAccountInfoInternal(
     // For Active Directory enrolled devices, we get an enrollment token for a
     // managed Google Play account from DMServer.
     auto enrollment_token_fetcher =
-        base::MakeUnique<ArcActiveDirectoryEnrollmentTokenFetcher>(
+        std::make_unique<ArcActiveDirectoryEnrollmentTokenFetcher>(
             ArcSessionManager::Get()->support_host());
     enrollment_token_fetcher->Fetch(
         base::Bind(&ArcAuthService::OnEnrollmentTokenFetched,
@@ -307,10 +306,10 @@ void ArcAuthService::RequestAccountInfoInternal(
   std::unique_ptr<ArcAuthCodeFetcher> auth_code_fetcher;
   if (IsArcKioskMode()) {
     // In Kiosk mode, use Robot auth code fetching.
-    auth_code_fetcher = base::MakeUnique<ArcRobotAuthCodeFetcher>();
+    auth_code_fetcher = std::make_unique<ArcRobotAuthCodeFetcher>();
   } else {
     // Optionally retrieve auth code in silent mode.
-    auth_code_fetcher = base::MakeUnique<ArcBackgroundAuthCodeFetcher>(
+    auth_code_fetcher = std::make_unique<ArcBackgroundAuthCodeFetcher>(
         profile_, ArcSessionManager::Get()->auth_context());
   }
   auth_code_fetcher->Fetch(base::Bind(&ArcAuthService::OnAuthCodeFetched,
