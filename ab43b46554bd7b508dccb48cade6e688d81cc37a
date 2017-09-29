@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79943e9e_c256e576",
+        "filename": "chrome/profiling/backtrace_storage.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-29T23:23:18Z",
+      "side": 1,
+      "message": "This works. I\u0027m surprised we can\u0027t use base::AutoLock - I guess that doesn\u0027t support moving. Maybe we should have base::MoveableAutoLock?",
+      "revId": "ab43b46554bd7b508dccb48cade6e688d81cc37a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebb685ba_b954802e",
+        "filename": "chrome/profiling/backtrace_storage.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-29T23:23:18Z",
+      "side": 1,
+      "message": "Unfortunately, this doesn\u0027t work. Any modification to backtraces_ will invalidate all pointers into the container.\n\nIf you added a layer of indirection, you could make backtraces_ hold on to pointers allocated from a heap, etc. etc.\n\nI think it\u0027s much easier to use a Read/Write lock, which captures the semantics you\u0027re after anyways, and don\u0027t bother with attempting to optimize the case of concurrent inserts/frees during a heap dump",
+      "revId": "ab43b46554bd7b508dccb48cade6e688d81cc37a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cac92ddb_e4633712",
+        "filename": "chrome/profiling/backtrace_storage.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-29T23:23:18Z",
+      "side": 1,
+      "message": "Document this member? Something like:\n\nProtected by the lock_. This semaphore indicates the number of consumers that have raw Backtrace pointers owned by backtraces_. As long as this count is non-zero, Backtraces owned by backtraces_ cannot be modified or destroyed.\n\nAlso, initialize to 0.",
+      "revId": "ab43b46554bd7b508dccb48cade6e688d81cc37a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
