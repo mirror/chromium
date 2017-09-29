@@ -118,6 +118,31 @@
       "revId": "19ade2d129df2e3c5fc83ade655d7c8089c02bd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e27e996_f51150e0",
+        "filename": "mojo/public/tools/bindings/mojom.gni",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-09-29T21:28:49Z",
+      "side": 1,
+      "message": "There are two separate constraints the salt should ultimately meet: 1) having a different salt per version, and 2) having an unguessable salt\n\nVERSION solves the first part of the problem but not the second. Meanwhile, maintaining a second VERSION (or VERSION-derived) file in src-internal would be extra infrastructure overhead.\n\nWith the concatenation solution we meet both constraints without the need for additional infrastructure support.",
+      "parentUuid": "a28122d0_5a6075b6",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 32
+      },
+      "tag": "mailMessageId\u003d\u003cCA+apAgG_ZbcMVjPnrgPpGAeXyDU2G0-GnnO4qtPyewCbpQXukQ@mail.gmail.com\u003e",
+      "revId": "19ade2d129df2e3c5fc83ade655d7c8089c02bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
