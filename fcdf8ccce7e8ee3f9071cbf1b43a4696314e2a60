@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b038fc3e_4b76f368",
+        "filename": "sandbox/mac/sandbox_logging.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-09-29T21:16:06Z",
+      "side": 1,
+      "message": "Using untrusted things like whatever strerror returns as a format string is dangerous. Let’s keep that stuff protected, maybe by passing strerror(errno) to DoLogging (and passing nullptr when you don’t have an errno?), or by passing a bool to DoLogging telling it whether you want to append strerror(errno) itself.",
+      "revId": "fcdf8ccce7e8ee3f9071cbf1b43a4696314e2a60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
