@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// Next MinVersion: 7
+// Next MinVersion: 8
 
 module arc.mojom;
 
@@ -272,8 +272,10 @@ enum BluetoothSdpAttributeType {
 struct BluetoothSdpAttribute {
   BluetoothSdpAttributeType type;
   uint32 type_size;
-  mojo.common.mojom.LegacyListValue value;
   array<BluetoothSdpAttribute> sequence;
+  // TODO(crbug.com/767313): Use values.mojom, when new libmojo is rolled
+  // to ARC repository.
+  [MinVersion=7] string? value;
 };
 
 struct BluetoothSdpRecord {
