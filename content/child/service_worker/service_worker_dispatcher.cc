@@ -69,7 +69,6 @@ void ServiceWorkerDispatcher::OnMessageReceived(const IPC::Message& msg) {
   // handler in ServiceWorkerMessageFilter to release references passed from
   // the browser process in case we fail to post task to the thread.
   IPC_BEGIN_MESSAGE_MAP(ServiceWorkerDispatcher, msg)
-    IPC_MESSAGE_HANDLER(ServiceWorkerMsg_ServiceWorkerUpdated, OnUpdated)
     IPC_MESSAGE_HANDLER(ServiceWorkerMsg_ServiceWorkerUnregistered,
                         OnUnregistered)
     IPC_MESSAGE_HANDLER(ServiceWorkerMsg_DidEnableNavigationPreload,
@@ -78,8 +77,6 @@ void ServiceWorkerDispatcher::OnMessageReceived(const IPC::Message& msg) {
                         OnDidGetNavigationPreloadState)
     IPC_MESSAGE_HANDLER(ServiceWorkerMsg_DidSetNavigationPreloadHeader,
                         OnDidSetNavigationPreloadHeader)
-    IPC_MESSAGE_HANDLER(ServiceWorkerMsg_ServiceWorkerUpdateError,
-                        OnUpdateError)
     IPC_MESSAGE_HANDLER(ServiceWorkerMsg_ServiceWorkerUnregistrationError,
                         OnUnregistrationError)
     IPC_MESSAGE_HANDLER(ServiceWorkerMsg_EnableNavigationPreloadError,
@@ -102,16 +99,6 @@ void ServiceWorkerDispatcher::OnMessageReceived(const IPC::Message& msg) {
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
   DCHECK(handled) << "Unhandled message:" << msg.type();
-}
-
-void ServiceWorkerDispatcher::UpdateServiceWorker(
-    int provider_id,
-    int64_t registration_id,
-    std::unique_ptr<WebServiceWorkerUpdateCallbacks> callbacks) {
-  DCHECK(callbacks);
-  int request_id = pending_update_callbacks_.Add(std::move(callbacks));
-  thread_safe_sender_->Send(new ServiceWorkerHostMsg_UpdateServiceWorker(
-      CurrentWorkerId(), request_id, provider_id, registration_id));
 }
 
 void ServiceWorkerDispatcher::UnregisterServiceWorker(
@@ -292,23 +279,6 @@ ServiceWorkerDispatcher::GetOrAdoptRegistration(
   return registration;
 }
 
-void ServiceWorkerDispatcher::OnUpdated(int thread_id, int request_id) {
-  TRACE_EVENT_ASYNC_STEP_INTO0("ServiceWorker",
-                               "ServiceWorkerDispatcher::UpdateServiceWorker",
-                               request_id, "OnUpdated");
-  TRACE_EVENT_ASYNC_END0("ServiceWorker",
-                         "ServiceWorkerDispatcher::UpdateServiceWorker",
-                         request_id);
-  WebServiceWorkerUpdateCallbacks* callbacks =
-      pending_update_callbacks_.Lookup(request_id);
-  DCHECK(callbacks);
-  if (!callbacks)
-    return;
-
-  callbacks->OnSuccess();
-  pending_update_callbacks_.Remove(request_id);
-}
-
 void ServiceWorkerDispatcher::OnUnregistered(int thread_id,
                                              int request_id,
                                              bool is_success) {
@@ -363,28 +333,6 @@ void ServiceWorkerDispatcher::OnDidSetNavigationPreloadHeader(int thread_id,
     return;
   callbacks->OnSuccess();
   set_navigation_preload_header_callbacks_.Remove(request_id);
-}
-
-void ServiceWorkerDispatcher::OnUpdateError(
-    int thread_id,
-    int request_id,
-    blink::mojom::ServiceWorkerErrorType error_type,
-    const base::string16& message) {
-  TRACE_EVENT_ASYNC_STEP_INTO0("ServiceWorker",
-                               "ServiceWorkerDispatcher::UpdateServiceWorker",
-                               request_id, "OnUpdateError");
-  TRACE_EVENT_ASYNC_END0("ServiceWorker",
-                         "ServiceWorkerDispatcher::UpdateServiceWorker",
-                         request_id);
-  WebServiceWorkerUpdateCallbacks* callbacks =
-      pending_update_callbacks_.Lookup(request_id);
-  DCHECK(callbacks);
-  if (!callbacks)
-    return;
-
-  callbacks->OnError(
-      WebServiceWorkerError(error_type, blink::WebString::FromUTF16(message)));
-  pending_update_callbacks_.Remove(request_id);
 }
 
 void ServiceWorkerDispatcher::OnUnregistrationError(

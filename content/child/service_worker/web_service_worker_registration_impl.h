@@ -15,6 +15,7 @@
 #include "base/memory/ref_counted.h"
 #include "content/common/content_export.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerRegistration.h"
+#include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_error_type.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom.h"
 
 namespace blink {
@@ -101,8 +102,15 @@ class CONTENT_EXPORT WebServiceWorkerRegistrationImpl
 
   void RunQueuedTasks();
 
+  void OnUpdated(std::unique_ptr<WebServiceWorkerUpdateCallbacks> callbacks,
+                 blink::mojom::ServiceWorkerErrorType error,
+                 const base::Optional<std::string>& error_msg);
+
   blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info_;
   blink::WebServiceWorkerRegistrationProxy* proxy_;
+
+  blink::mojom::ServiceWorkerRegistrationObjectHostAssociatedPtr
+      registration_object_host_;
 
   std::vector<QueuedTask> queued_tasks_;
 
