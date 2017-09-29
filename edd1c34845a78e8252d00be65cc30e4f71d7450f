@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e6ac4d90_e96fc6f0",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2082,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-29T18:19:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b62a5fe2_62028144",
+      "revId": "edd1c34845a78e8252d00be65cc30e4f71d7450f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d54edf60_1417dbdd",
         "filename": "components/autofill/core/browser/autofill_metrics.cc",
         "patchSetId": 3
@@ -107,6 +125,30 @@
       "side": 1,
       "message": "Prefer to use a bool. Reason:\nIf use form type, we need to extract form type from a FormStructure. It is hard because a form can have several FieldTypeGroup.",
       "parentUuid": "539a88a8_b324f3d1",
+      "range": {
+        "startLine": 688,
+        "startChar": 37,
+        "endLine": 688,
+        "endChar": 41
+      },
+      "revId": "edd1c34845a78e8252d00be65cc30e4f71d7450f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "090ced32_6b0dbcb1",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-29T18:19:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfaf8342_a994d703",
       "range": {
         "startLine": 688,
         "startChar": 37,

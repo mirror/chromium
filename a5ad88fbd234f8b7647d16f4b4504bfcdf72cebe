@@ -46,6 +46,30 @@
       "revId": "a5ad88fbd234f8b7647d16f4b4504bfcdf72cebe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1bb3cfc_3c34d8f9",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-09-29T18:19:38Z",
+      "side": 1,
+      "message": "Yeah. I found this bug when doing unit tests :)",
+      "parentUuid": "544f96a1_6d6ded61",
+      "range": {
+        "startLine": 725,
+        "startChar": 58,
+        "endLine": 725,
+        "endChar": 65
+      },
+      "revId": "a5ad88fbd234f8b7647d16f4b4504bfcdf72cebe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
