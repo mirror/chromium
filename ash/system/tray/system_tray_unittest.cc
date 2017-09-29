@@ -963,8 +963,8 @@ TEST_F(SystemTrayTest, SeparatorThickness) {
   EXPECT_EQ(kSeparatorWidth, views::Separator::kThickness);
 }
 
-// System tray is not activated by default. But it should be activated when user
-// presses tab key.
+// System tray is not activated by default. If it is opened by user click on
+// system tray, it should be activated when user presses tab key.
 TEST_F(SystemTrayTest, KeyboardNavigationWithOtherWindow) {
   std::unique_ptr<views::Widget> widget(CreateTestWidget(
       nullptr, kShellWindowId_DefaultContainer, gfx::Rect(0, 0, 100, 100)));
@@ -978,9 +978,11 @@ TEST_F(SystemTrayTest, KeyboardNavigationWithOtherWindow) {
   EXPECT_EQ(&key_event_consumer_view,
             key_event_consumer_view.GetFocusManager()->GetFocusedView());
 
-  // Show system tray.
+  // Show system tray by performing a gesture tap at tray.
   SystemTray* tray = GetPrimarySystemTray();
-  tray->ShowDefaultView(BUBBLE_CREATE_NEW);
+  ui::GestureEvent tap(0, 0, 0, base::TimeTicks(),
+                       ui::GestureEventDetails(ui::ET_GESTURE_TAP));
+  tray->PerformAction(tap);
   ASSERT_TRUE(tray->GetWidget());
 
   // Confirms that system tray is not activated at this time.
@@ -1010,10 +1012,24 @@ TEST_F(SystemTrayTest, KeyboardNavigationWithOtherWindow) {
   EXPECT_FALSE(widget->IsActive());
   EXPECT_EQ(number_of_consumed_key_events,
             key_event_consumer_view.number_of_consumed_key_events());
+
+  // Close system tray and reopen it by not explicit user click.
+  tray->CloseBubble();
+  ASSERT_FALSE(tray->IsSystemBubbleVisible());
+  tray->ShowDefaultView(BUBBLE_CREATE_NEW);
+  ASSERT_TRUE(tray->GetWidget());
+
+  // Confirms that system tray is not activated by tab key event to verify that
+  // RerouteEventHandler is not installed in this case.
+  event_generator.PressKey(ui::VKEY_TAB, ui::EF_NONE);
+  event_generator.ReleaseKey(ui::VKEY_TAB, ui::EF_NONE);
+  EXPECT_FALSE(tray->GetSystemBubble()->bubble_view()->GetWidget()->IsActive());
+  EXPECT_TRUE(widget->IsActive());
 }
 
-// System tray passes a key event to ViewsDelegate if it's not handled by the
-// tray. It closes the tray if ViewsDelegate returns CLOSE_MENU.
+// When System tray is opened by explicit user click, it passes a key event to
+// ViewsDelegate if it's not handled by the tray. It closes the tray if
+// ViewsDelegate returns CLOSE_MENU.
 TEST_F(SystemTrayTest, AcceleratorController) {
   // Register A key as an accelerator which closes the menu.
   ui::Accelerator accelerator(ui::VKEY_A, ui::EF_NONE);
@@ -1021,9 +1037,11 @@ TEST_F(SystemTrayTest, AcceleratorController) {
       ash_test_helper()->test_views_delegate();
   views_delegate->set_close_menu_accelerator(accelerator);
 
-  // Show system tray.
+  // Show system tray by performing a gesture tap at tray.
   SystemTray* tray = GetPrimarySystemTray();
-  tray->ShowDefaultView(BUBBLE_CREATE_NEW);
+  ui::GestureEvent tap(0, 0, 0, base::TimeTicks(),
+                       ui::GestureEventDetails(ui::ET_GESTURE_TAP));
+  tray->PerformAction(tap);
   ASSERT_TRUE(tray->GetWidget());
   ASSERT_TRUE(tray->IsSystemBubbleVisible());
 
