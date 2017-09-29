@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
+import android.graphics.Rect;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -214,15 +215,17 @@ public class BottomSheetContentController extends BottomNavigationView
      * @param activity The {@link ChromeActivity} that owns the BottomSheet.
      */
     public void init(BottomSheet bottomSheet, int controlContainerHeight,
-            TabModelSelector tabModelSelector, ChromeActivity activity) {
+            TabModelSelector tabModelSelector, ChromeActivity activity,
+            boolean bottomNavIsTransparent) {
         mBottomSheet = bottomSheet;
         mBottomSheet.addObserver(mBottomSheetObserver);
         mActivity = activity;
         mTabModelSelector = tabModelSelector;
+
         mTabModelSelectorObserver = new EmptyTabModelSelectorObserver() {
             @Override
             public void onTabModelSelected(TabModel newModel, TabModel oldModel) {
-                updateVisuals(newModel.isIncognito());
+                updateVisuals(newModel.isIncognito(), bottomNavIsTransparent);
                 showBottomSheetContent(R.id.action_home);
                 mPlaceholderContent.setIsIncognito(newModel.isIncognito());
 
@@ -263,6 +266,10 @@ public class BottomSheetContentController extends BottomNavigationView
                 updateMenuItemSpacing();
             }
         });
+
+        // Update colors in the bottom navigation menu right away, to properly set it to either
+        // opaque or translucent.
+        updateVisuals(mTabModelSelector.isIncognitoSelected(), bottomNavIsTransparent);
     }
 
     /**
@@ -383,8 +390,29 @@ public class BottomSheetContentController extends BottomNavigationView
             content = new IncognitoBottomSheetContent(mActivity);
         }
 
+        // Call this only after it's created to avoid adding an infinite amount of additional
+        // padding.
+        applyPaddingToContent(content);
+
         mBottomSheetContents.put(navItemId, content);
         return content;
+    }
+
+    /**
+     * Applies padding to the bottom sheet content after, to be used after its creation. This should
+     * only be called once for every new {@link BottomSheetContent} creation.
+     * @param content The {@link BottomSheetContent} in need of additional padding.
+     */
+    private void applyPaddingToContent(BottomSheetContent content) {
+        View contentView = content.getContentView();
+        if (content.applyDefaultTopPadding()) {
+            BottomSheetPaddingUtils.applyPaddingToView(
+                    contentView, new Rect(0, mBottomSheet.getToolbarContainerHeight(), 0, 0));
+        }
+        if (mBottomSheet.isBottomNavTransparent()) {
+            BottomSheetPaddingUtils.applyPaddingToViews(content.getViewsForPadding(),
+                    new Rect(0, 0, 0, (int) mBottomSheet.getBottomNavHeight()));
+        }
     }
 
     private void showBottomSheetContent(int navItemId) {
@@ -411,10 +439,16 @@ public class BottomSheetContentController extends BottomNavigationView
         }
     }
 
-    private void updateVisuals(boolean isIncognitoTabModelSelected) {
-        setBackgroundColor(ApiCompatibilityUtils.getColor(getResources(),
-                isIncognitoTabModelSelected ? R.color.incognito_primary_color
-                                            : R.color.modern_primary_color));
+    private void updateVisuals(
+            boolean isIncognitoTabModelSelected, boolean bottomNavIsTransparent) {
+        if (bottomNavIsTransparent) {
+            setBackgroundResource(isIncognitoTabModelSelected
+                            ? R.color.incognito_primary_color_home_bottom_nav
+                            : R.color.primary_color_home_bottom_nav);
+        } else {
+            setBackgroundResource(isIncognitoTabModelSelected ? R.color.incognito_primary_color
+                                                              : R.color.modern_primary_color);
+        }
 
         ColorStateList tint = ApiCompatibilityUtils.getColorStateList(getResources(),
                 isIncognitoTabModelSelected ? R.color.bottom_nav_tint_incognito
