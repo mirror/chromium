@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b43cf767_a56b410c",
+        "filename": "third_party/WebKit/PerformanceTests/Canvas/draw-video-to-hw-accelerated-canvas-2d.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-09-29T17:00:20Z",
+      "side": 0,
+      "message": "Should we remove \"resources/bear-1280x720.mp4\"?",
+      "revId": "9c019ef5873a68f8a168e769097d3c93f87516e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
