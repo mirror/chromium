@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4ded93d6_bc14b479",
+        "filename": "chrome/browser/chromeos/arc/arc_play_store_enabled_preference_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-29T17:03:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aaa26208_c4f3a9f7",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 33
+      },
+      "revId": "8adebbf345f949e30e84bb5d411dc8e5f2cad89b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9bd32b8e_0a344045",
         "filename": "chrome/browser/chromeos/arc/auth/arc_auth_service_browsertest.cc",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "3725e768_cefee50d",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_auth_service_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-29T17:03:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bd32b8e_0a344045",
+      "revId": "8adebbf345f949e30e84bb5d411dc8e5f2cad89b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d1890da_d3878828",
         "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge_unittest.cc",
         "patchSetId": 1
@@ -53,6 +95,24 @@
       "writtenOn": "2017-09-29T15:48:38Z",
       "side": 1,
       "message": "In another _unittest.cc you relied on the fact that the header imported \u003cmemory\u003e. What\u0027s the rule here?",
+      "revId": "8adebbf345f949e30e84bb5d411dc8e5f2cad89b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "730deacd_90675b86",
+        "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-29T17:03:24Z",
+      "side": 1,
+      "message": "The rule was;\n\nIn .h, include \u003cmemory\u003e if used.\nIn non-test .cc, include \u003cmemory\u003e if used but its corresponding .h does not include it yet.\nIn test .cc, include \u003cmemory\u003e if used.\n\nAs for base/memory/ptr_util.h, include it if base::WrapUnique is used. Should be in .cc (either test or non-test) only for c/b/c/arc case, as we do not expect it in inline functions in .h.",
+      "parentUuid": "1d1890da_d3878828",
       "revId": "8adebbf345f949e30e84bb5d411dc8e5f2cad89b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "d1258391_f7a76a16",
+        "filename": "chrome/browser/chromeos/arc/downloads_watcher/arc_downloads_watcher_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-29T17:03:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e44b78b_49842bc3",
+      "revId": "8adebbf345f949e30e84bb5d411dc8e5f2cad89b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22358206_bfa99172",
         "filename": "chrome/browser/chromeos/arc/kiosk/arc_kiosk_bridge.cc",
         "patchSetId": 1
@@ -96,6 +174,30 @@
       "revId": "8adebbf345f949e30e84bb5d411dc8e5f2cad89b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a99aaeb0_e5b03d9e",
+        "filename": "chrome/browser/chromeos/arc/kiosk/arc_kiosk_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-29T17:03:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22358206_bfa99172",
+      "range": {
+        "startLine": 64,
+        "startChar": 15,
+        "endLine": 64,
+        "endChar": 25
+      },
+      "revId": "8adebbf345f949e30e84bb5d411dc8e5f2cad89b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
