@@ -25,7 +25,7 @@
 
 namespace {
 
-// Width matches the Settings UI, height is sized to match the content.
+// Width matches the Settings UI, height will be resized to match the content.
 const int kInternetDetailDialogWidth = 640;
 const int kInternetDetailDialogHeight = 480;
 
@@ -74,6 +74,10 @@ void InternetDetailDialog::OnDialogClosed(const std::string& json_retval) {
       chrome::NOTIFICATION_LOGIN_PROXY_CHANGED,
       content::NotificationService::AllSources(),
       content::NotificationService::NoDetails());
+}
+
+bool InternetDetailDialog::ShouldShowDialogTitle() const {
+  return true;
 }
 
 bool InternetDetailDialog::IsShown() {

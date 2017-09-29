@@ -4,25 +4,26 @@
 
 /**
  * @fileoverview
- * 'settings-internet-config' is a Settings wrapper for network-config.
+ * 'internet-config-dialog' is used to configure a new or existing network
+ * outside of settings (e.g. from the login screen or when configuring a
+ * new network from the system tray).
  */
 Polymer({
-  is: 'settings-internet-config',
+  is: 'internet-config-dialog',
 
-  behaviors: [settings.RouteObserverBehavior, I18nBehavior],
+  behaviors: [I18nBehavior],
 
   properties: {
     /**
-     * Interface for networkingPrivate calls, passed from internet_page.
+     * Interface for networkingPrivate calls.
      * @type {NetworkingPrivate}
      */
-    networkingPrivate: Object,
+    networkingPrivate: {
+      type: Object,
+      value: chrome.networkingPrivate,
+    },
 
-    /**
-     * The GUID when an existing network is being configured. This will be
-     * empty when configuring a new network.
-     * @private
-     */
+    /** The network GUID to configure for (empty if for a new network). */
     guid_: String,
 
     /**
@@ -35,7 +36,10 @@ Polymer({
      * The network of the network being configured (set by network-config).
      * @private
      */
-    name_: String,
+    name_: {
+      type: String,
+      value: '',
+    },
 
     /** @private */
     enableConnect_: String,
@@ -46,30 +50,20 @@ Polymer({
     /**
      * The current properties if an existing network being configured, or
      * a minimal subset for a new network.
-     * @private {!chrome.networkingPrivate.NetworkProperties|undefined}
+     * @type {!CrOnc.NetworkProperties|undefined}
      */
     networkProperties_: Object,
   },
 
-  /**
-   * settings.RouteObserverBehavior
-   * @param {!settings.Route} route
-   * @protected
-   */
-  currentRouteChanged: function(route) {
-    if (route != settings.routes.NETWORK_CONFIG)
-      return;
+  /** @override */
+  attached: function() {
+    var dialogArgs = chrome.getVariableValue('dialogArguments');
+    assert(dialogArgs);
+    var args = JSON.parse(dialogArgs);
+    this.type_ = args.type;
+    assert(this.type_);
+    this.guid_ = args.guid;
 
-    var queryParams = settings.getQueryParameters();
-    this.guid_ = queryParams.get('guid') || '';
-
-    // Set networkProperties for new configurations and for existing
-    // configurations until the current properties are loaded.
-    this.name_ = queryParams.get('name') || '';
-    var typeParam = queryParams.get('type');
-    this.type_ =
-        (typeParam && CrOnc.getValidType(typeParam)) || CrOnc.Type.WI_FI;
-    assert(this.type_ && this.type_ != CrOnc.Type.ALL);
     this.networkProperties_ = {
       GUID: this.guid_,
       Name: this.name_,
@@ -81,8 +75,7 @@ Polymer({
 
   /** @private */
   close_: function() {
-    if (settings.getCurrentRoute() == settings.routes.NETWORK_CONFIG)
-      settings.navigateToPreviousRoute();
+    chrome.send('dialogClose');
   },
 
   /**
