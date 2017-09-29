@@ -191,6 +191,24 @@
     },
     {
       "key": {
+        "uuid": "4b62f037_2d8fe631",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-29T19:15:42Z",
+      "side": 1,
+      "message": "\u003e I had trouble instantiating base::UmaHistogramEnumeration so I\u0027m thinking we\u0027re only to add histograms through the macros? Switching it to UMA_HISTOGRAM_SPARSE_SLOWLY. mpearson@ - please let me know if there\u0027s anything else I need to do for this change, or if changing the macro is all that\u0027s needed.\n\nChanging the macro is all that is needed.\n\nIn this case, the buckets currently in use appear to line up perfectly (each covering only a single number) in both the existing histogram macro and the new one.  No need to change names.\n\nPlease, as with all histogram changes, remember to test your change interactively using about:histograms.",
+      "parentUuid": "099c1ad8_5364e0b3",
+      "revId": "638b2bfd516825b8691189bcf5b3b0e92104fc3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1cd34c1_0086fd4d",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 6
