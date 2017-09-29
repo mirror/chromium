@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0726fafa_533690bc",
+        "filename": "ui/gfx/image/image.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-29T15:29:31Z",
+      "side": 1,
+      "message": "When iOS fully converts to ARC, will the #else get removed?",
+      "revId": "d3cd704effbbb1c394072fea01d73f923ce398a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e959a125_4e5eac84",
+        "filename": "ui/gfx/image/image.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-29T15:29:31Z",
+      "side": 1,
+      "message": "Why is this needed on macOS? We don\u0027t use ARC anywhere.",
+      "revId": "d3cd704effbbb1c394072fea01d73f923ce398a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
