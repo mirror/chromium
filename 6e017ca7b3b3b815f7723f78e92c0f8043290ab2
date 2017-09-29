@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7e9e5ba5_61bb5868",
+        "filename": "content/network/network_change_manager_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-29T20:36:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa596613_6bef348e",
+      "range": {
+        "startLine": 81,
+        "startChar": 36,
+        "endLine": 81,
+        "endChar": 0
+      },
+      "revId": "6e017ca7b3b3b815f7723f78e92c0f8043290ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a1c2f0c_90432485",
         "filename": "content/network/network_change_manager_impl_unittest.cc",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "6e017ca7b3b3b815f7723f78e92c0f8043290ab2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "709569c5_ccb7c234",
+        "filename": "content/network/network_change_manager_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-29T20:36:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a1c2f0c_90432485",
+      "range": {
+        "startLine": 90,
+        "startChar": 49,
+        "endLine": 90,
+        "endChar": 65
+      },
+      "revId": "6e017ca7b3b3b815f7723f78e92c0f8043290ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d0c78838_0ed275e5",
+        "filename": "content/network/network_change_manager_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-29T20:36:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2136b838_2a9e9bf6",
+      "range": {
+        "startLine": 102,
+        "startChar": 18,
+        "endLine": 102,
+        "endChar": 19
+      },
+      "revId": "6e017ca7b3b3b815f7723f78e92c0f8043290ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8849a1d1_92a67f1b",
         "filename": "content/public/DEPS",
         "patchSetId": 10
@@ -91,6 +163,30 @@
       "revId": "6e017ca7b3b3b815f7723f78e92c0f8043290ab2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2234bdd_fec6156c",
+        "filename": "content/public/DEPS",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-29T20:36:57Z",
+      "side": 1,
+      "message": "That still gives me the same error:\n\nYou added one or more #includes that violate checkdeps rules.\n  content/public/common/network_connection_tracker_unittest.cc\n      Illegal include: \"content/public/network/network_service.h\"\n    Because of \"-content\" from content/public\u0027s include_rules.",
+      "parentUuid": "8849a1d1_92a67f1b",
+      "range": {
+        "startLine": 12,
+        "startChar": 45,
+        "endLine": 12,
+        "endChar": 0
+      },
+      "revId": "6e017ca7b3b3b815f7723f78e92c0f8043290ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "f00045d7_12d7b4bc",
+        "filename": "content/public/browser/network_connection_tracker_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-29T20:36:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6aa9ae73_5a662f0a",
+      "range": {
+        "startLine": 37,
+        "startChar": 28,
+        "endLine": 37,
+        "endChar": 0
+      },
+      "revId": "6e017ca7b3b3b815f7723f78e92c0f8043290ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "136bb9d8_d7be3680",
         "filename": "content/public/browser/network_connection_tracker_unittest.cc",
         "patchSetId": 10
@@ -137,6 +257,30 @@
       "revId": "6e017ca7b3b3b815f7723f78e92c0f8043290ab2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fee8ea7b_e78facee",
+        "filename": "content/public/browser/network_connection_tracker_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-29T20:36:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "136bb9d8_d7be3680",
+      "range": {
+        "startLine": 65,
+        "startChar": 28,
+        "endLine": 65,
+        "endChar": 29
+      },
+      "revId": "6e017ca7b3b3b815f7723f78e92c0f8043290ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "afc8a5b2_f7f1c9e5",
+        "filename": "content/public/browser/network_connection_tracker_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-29T20:36:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bcc473f_fd6f5c48",
+      "range": {
+        "startLine": 68,
+        "startChar": 16,
+        "endLine": 68,
+        "endChar": 43
+      },
+      "revId": "6e017ca7b3b3b815f7723f78e92c0f8043290ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb027084_52dd3ace",
         "filename": "content/public/browser/network_connection_tracker_unittest.cc",
         "patchSetId": 10
@@ -174,6 +342,30 @@
       "writtenOn": "2017-09-29T18:54:06Z",
       "side": 1,
       "message": "nit:  This and the next one should probably be const.",
+      "range": {
+        "startLine": 72,
+        "startChar": 58,
+        "endLine": 72,
+        "endChar": 0
+      },
+      "revId": "6e017ca7b3b3b815f7723f78e92c0f8043290ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53326fd3_1ecb1e29",
+        "filename": "content/public/browser/network_connection_tracker_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-29T20:36:57Z",
+      "side": 1,
+      "message": "network_connection_tracker() can\u0027t because in the second test we are adding a new observer to the tracker.\n\nnetwork_connection_observer()-\u003eWaitForNotification() isn\u0027t a const method.",
+      "parentUuid": "eb027084_52dd3ace",
       "range": {
         "startLine": 72,
         "startChar": 58,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "319ead3e_b495896f",
+        "filename": "content/public/browser/network_connection_tracker_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-29T20:36:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8385568_cb2a3e53",
+      "range": {
+        "startLine": 97,
+        "startChar": 12,
+        "endLine": 97,
+        "endChar": 39
+      },
+      "revId": "6e017ca7b3b3b815f7723f78e92c0f8043290ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbaadc44_bc781931",
         "filename": "content/public/browser/network_connection_tracker_unittest.cc",
         "patchSetId": 10
@@ -220,6 +436,30 @@
       "writtenOn": "2017-09-29T18:54:06Z",
       "side": 1,
       "message": "Should we have a test with a subtype?  May need to modify the mock class to do that.",
+      "range": {
+        "startLine": 101,
+        "startChar": 34,
+        "endLine": 101,
+        "endChar": 48
+      },
+      "revId": "6e017ca7b3b3b815f7723f78e92c0f8043290ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f737245_28ac7141",
+        "filename": "content/public/browser/network_connection_tracker_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-29T20:36:57Z",
+      "side": 1,
+      "message": "I decided to remove the subtype from mojo interface. It\u0027s unclear if any client uses that. \nThere is only one test-only consumer of static ConnectionSubtype GetConnectionSubtype().",
+      "parentUuid": "fbaadc44_bc781931",
       "range": {
         "startLine": 101,
         "startChar": 34,
@@ -252,6 +492,30 @@
       "revId": "6e017ca7b3b3b815f7723f78e92c0f8043290ab2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8122f69f_0b16ff5f",
+        "filename": "content/public/browser/network_connection_tracker_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-29T20:36:57Z",
+      "side": 1,
+      "message": "Done. Sorry, that is not needed.",
+      "parentUuid": "a9bcf1f0_121bce77",
+      "range": {
+        "startLine": 104,
+        "startChar": 33,
+        "endLine": 104,
+        "endChar": 0
+      },
+      "revId": "6e017ca7b3b3b815f7723f78e92c0f8043290ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
