@@ -22,6 +22,30 @@
       "revId": "6228875aa0a04457d401ce22a3e6231ed964de9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13d030e3_492f01a1",
+        "filename": "ash/system/web_notification/web_notification_tray.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-29T06:39:46Z",
+      "side": 1,
+      "message": "The show_by_click info is passed from TrayBackgroundView to TrayBubbleView. SystemTray, web notification tray, ime tray are all subclasses of TrayBackgroundView.",
+      "parentUuid": "2b39c69a_27810896",
+      "range": {
+        "startLine": 89,
+        "startChar": 4,
+        "endLine": 89,
+        "endChar": 41
+      },
+      "revId": "6228875aa0a04457d401ce22a3e6231ed964de9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
