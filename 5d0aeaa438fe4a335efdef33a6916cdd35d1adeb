@@ -62,6 +62,30 @@
       "revId": "5d0aeaa438fe4a335efdef33a6916cdd35d1adeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b34960f5_58f78f81",
+        "filename": "components/arc/common/bluetooth.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-29T15:54:16Z",
+      "side": 1,
+      "message": "Ah yes, and also make this json_value and document this is a JSON-serialized string.",
+      "parentUuid": "40318bc5_8853957c",
+      "range": {
+        "startLine": 278,
+        "startChar": 25,
+        "endLine": 278,
+        "endChar": 30
+      },
+      "revId": "5d0aeaa438fe4a335efdef33a6916cdd35d1adeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
