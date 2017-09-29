@@ -32,6 +32,11 @@ CancellingNavigationThrottle::WillRedirectRequest() {
 }
 
 NavigationThrottle::ThrottleCheckResult
+CancellingNavigationThrottle::WillFailRequest() {
+  return ProcessState(cancel_time_ == WILL_FAIL_REQUEST);
+}
+
+NavigationThrottle::ThrottleCheckResult
 CancellingNavigationThrottle::WillProcessResponse() {
   return ProcessState(cancel_time_ == WILL_PROCESS_RESPONSE);
 }
