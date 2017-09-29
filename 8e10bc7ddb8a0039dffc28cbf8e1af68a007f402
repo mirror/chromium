@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23be04c0_32a751a8",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2528,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-29T18:45:13Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand this TODO.  What will let us remove this block?\n\nIf all types of blocked navigations will end up showing error pages, then maybe we\u0027ll be safe?  The error page case doesn\u0027t seem to have the same problem, even for blocked navigations like web-accessible-resources (BLOCKED_BY_CLIENT).  Is that the plan for XFO?",
+      "revId": "8e10bc7ddb8a0039dffc28cbf8e1af68a007f402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f687b83_4b660b1d",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2537,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-29T18:45:13Z",
+      "side": 1,
+      "message": "I thought about putting this up in OnFailedNavigation when the |entry| is computed, but I didn\u0027t want to copy/paste the error.reason check in case we need to expand this to cover more cases later.",
+      "revId": "8e10bc7ddb8a0039dffc28cbf8e1af68a007f402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
