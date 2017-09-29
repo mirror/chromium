@@ -118,6 +118,7 @@ void FrameConsole::ReportResourceResponseReceived(
     const ResourceResponse& response) {
   if (!loader)
     return;
+
   if (response.HttpStatusCode() < 400)
     return;
   if (response.WasFallbackRequiredByServiceWorker())

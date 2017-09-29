@@ -2110,6 +2110,7 @@ bool ConsoleObserverDelegate::DidAddMessageToConsole(
     const base::string16& message,
     int32_t line_no,
     const base::string16& source_id) {
+  LOG(ERROR) << message;
   DCHECK(source == web_contents_);
 
   std::string ascii_message = base::UTF16ToASCII(message);
