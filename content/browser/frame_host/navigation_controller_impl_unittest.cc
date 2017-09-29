@@ -1647,7 +1647,7 @@ TEST_F(NavigationControllerTest, RedirectsAreNotResetByCommit) {
 
   // Normal navigation will preserve redirects in the committed entry.
   main_test_rfh()->PrepareForCommitWithServerRedirect(url2);
-  main_test_rfh()->SendNavigateWithModificationCallback(entry_id, true, url1,
+  main_test_rfh()->SendNavigateWithModificationCallback(entry_id, true, url2,
                                                         set_redirects_callback);
   NavigationEntryImpl* committed_entry = controller.GetLastCommittedEntry();
   ASSERT_EQ(1U, committed_entry->GetRedirectChain().size());
@@ -1737,7 +1737,7 @@ TEST_F(NavigationControllerTest, Back) {
                                             ? contents()->GetPendingMainFrame()
                                             : contents()->GetMainFrame();
   navigating_rfh->PrepareForCommit();
-  navigating_rfh->SendNavigate(entry_id, false, url2);
+  navigating_rfh->SendNavigate(entry_id, false, url1);
   EXPECT_EQ(1U, navigation_entry_committed_counter_);
   navigation_entry_committed_counter_ = 0;
 
@@ -1961,7 +1961,7 @@ TEST_F(NavigationControllerTest, Forward_GeneratesNewPage) {
   EXPECT_FALSE(controller.CanGoForward());
 
   main_test_rfh()->PrepareForCommit();
-  main_test_rfh()->SendNavigate(entry2->GetUniqueID(), true, url3);
+  main_test_rfh()->SendNavigate(entry2->GetUniqueID(), true, url2);
   EXPECT_EQ(1U, navigation_entry_committed_counter_);
   navigation_entry_committed_counter_ = 0;
   EXPECT_EQ(1U, navigation_list_pruned_counter_);
