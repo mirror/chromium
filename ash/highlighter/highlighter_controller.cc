@@ -59,6 +59,12 @@ void HighlighterController::SetObserver(
   observer_ = observer;
 }
 
+void HighlighterController::SetExitCallback(base::OnceClosure exit_callback,
+                                            bool allow_retries) {
+  exit_callback_ = std::move(exit_callback);
+  allow_retries_ = allow_retries;
+}
+
 void HighlighterController::SetEnabled(bool enabled) {
   FastInkPointerController::SetEnabled(enabled);
   if (enabled) {
@@ -78,6 +84,8 @@ void HighlighterController::SetEnabled(bool enabled) {
     if (highlighter_view_ && !highlighter_view_->animating())
       DestroyPointerView();
   }
+  if (observer_)
+    observer_->HandleEnabledStateChange(enabled);
 }
 
 views::View* HighlighterController::GetPointerView() const {
@@ -168,8 +176,12 @@ void HighlighterController::RecognizeGesture() {
                                      base::Unretained(this)));
 
     recognized_gesture_counter_++;
-  } else if (observer_) {
-    observer_->HandleFailedSelection();
+    CallExitCallback();
+  } else {
+    if (observer_)
+      observer_->HandleFailedSelection();
+    if (!allow_retries_)
+      CallExitCallback();
   }
 
   gesture_counter_++;
@@ -210,6 +222,11 @@ void HighlighterController::DestroyHighlighterView() {
 
 void HighlighterController::DestroyResultView() {
   result_view_.reset();
+}
+
+void HighlighterController::CallExitCallback() {
+  if (!exit_callback_.is_null())
+    std::move(exit_callback_).Run();
 }
 
 }  // namespace ash

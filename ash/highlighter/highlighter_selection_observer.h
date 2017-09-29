@@ -18,6 +18,7 @@ class HighlighterSelectionObserver {
 
   virtual void HandleSelection(const gfx::Rect& rect) = 0;
   virtual void HandleFailedSelection() = 0;
+  virtual void HandleEnabledStateChange(bool enabled) = 0;
 };
 
 }  // namespace ash
