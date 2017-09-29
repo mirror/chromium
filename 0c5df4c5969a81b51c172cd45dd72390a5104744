@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecd2a316_db54ab1d",
+        "filename": "DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-09-29T18:42:25Z",
+      "side": 1,
+      "message": "This is incorrect. If orderfiles are needed depends on if we\u0027re building for Windows, not if we\u0027re building on Windows (i.e. you need to check target_os, not host_os)",
+      "revId": "0c5df4c5969a81b51c172cd45dd72390a5104744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
