@@ -95,6 +95,7 @@ static_library("vr_common") {
     "font_fallback.h",
     "fps_meter.cc",
     "fps_meter.h",
+    "frame_lifecycle_phase.h",
     "gltf_asset.cc",
     "gltf_asset.h",
     "gltf_parser.cc",

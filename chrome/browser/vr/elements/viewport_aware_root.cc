@@ -40,6 +40,12 @@ ViewportAwareRoot::ViewportAwareRoot() {
 
 ViewportAwareRoot::~ViewportAwareRoot() = default;
 
+void ViewportAwareRoot::OnBeginFrame(const base::TimeTicks& time,
+                                     const gfx::Vector3dF& pose) {
+  UiElement::OnBeginFrame(time, pose);
+  AdjustRotationForHeadPose(pose);
+}
+
 void ViewportAwareRoot::AdjustRotationForHeadPose(
     const gfx::Vector3dF& look_at) {
   DCHECK(!look_at.IsZero());

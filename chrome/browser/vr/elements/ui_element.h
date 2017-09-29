@@ -65,7 +65,8 @@ class UiElement : public cc::AnimationTarget {
 
   virtual void PrepareToDraw();
 
-  virtual void OnBeginFrame(const base::TimeTicks& time);
+  virtual void OnBeginFrame(const base::TimeTicks& time,
+                            const gfx::Vector3dF& pose);
 
   // Indicates whether the element should be tested for cursor input.
   bool IsHitTestable() const;
@@ -125,7 +126,7 @@ class UiElement : public cc::AnimationTarget {
   bool scrollable() const { return scrollable_; }
   void set_scrollable(bool scrollable) { scrollable_ = scrollable; }
 
-  gfx::SizeF size() const { return size_; }
+  gfx::SizeF size() const;
   void SetSize(float width, float hight);
 
   // It is assumed that operations is of size 4 with a component for layout
@@ -155,7 +156,7 @@ class UiElement : public cc::AnimationTarget {
     corner_radius_ = corner_radius;
   }
 
-  float computed_opacity() const { return computed_opacity_; }
+  float computed_opacity() const;
   void set_computed_opacity(float computed_opacity) {
     computed_opacity_ = computed_opacity;
   }
@@ -182,9 +183,7 @@ class UiElement : public cc::AnimationTarget {
   void SetMode(ColorScheme::Mode mode);
   ColorScheme::Mode mode() const { return mode_; }
 
-  const gfx::Transform& world_space_transform() const {
-    return world_space_transform_;
-  }
+  const gfx::Transform& world_space_transform() const;
   void set_world_space_transform(const gfx::Transform& transform) {
     world_space_transform_ = transform;
   }
@@ -244,12 +243,6 @@ class UiElement : public cc::AnimationTarget {
   virtual void LayOutChildren();
 
   virtual gfx::Transform LocalTransform() const;
-
-  // Handles positioning adjustment for element which may reposition itself
-  // automatically under certain circumstances. For example, viewport aware
-  // element needs to reposition itself when the element is too far to the left
-  // or right where the head is pointing.
-  virtual void AdjustRotationForHeadPose(const gfx::Vector3dF& look_at);
 
   void UpdateInheritedProperties();
 

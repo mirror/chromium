@@ -11,6 +11,7 @@
 #include "base/stl_util.h"
 #include "base/time/time.h"
 #include "chrome/browser/vr/elements/ui_element_transform_operations.h"
+#include "chrome/browser/vr/ui_scene.h"
 #include "ui/gfx/geometry/angle_conversions.h"
 
 namespace vr {
@@ -84,7 +85,8 @@ void UiElement::OnScrollEnd(std::unique_ptr<blink::WebGestureEvent> gesture,
 
 void UiElement::PrepareToDraw() {}
 
-void UiElement::OnBeginFrame(const base::TimeTicks& time) {
+void UiElement::OnBeginFrame(const base::TimeTicks& time,
+                             const gfx::Vector3dF& look_at) {
   animation_player_.Tick(time);
   last_frame_time_ = time;
 }
@@ -107,7 +109,13 @@ void UiElement::SetVisibleImmediately(bool visible) {
 }
 
 bool UiElement::IsVisible() const {
+  DCHECK_EQ(kClean, UiScene::CurrentPhase());
   return opacity_ > 0.0f && computed_opacity_ > 0.0f;
+}
+
+gfx::SizeF UiElement::size() const {
+  DCHECK_LE(kTexturesAndSizesClean, UiScene::CurrentPhase());
+  return size_;
 }
 
 void UiElement::SetTransformOperations(
@@ -173,6 +181,11 @@ float UiElement::GetTargetOpacity() const {
                                                opacity_);
 }
 
+float UiElement::computed_opacity() const {
+  DCHECK_LE(kLayoutClean, UiScene::CurrentPhase());
+  return computed_opacity_;
+}
+
 bool UiElement::HitTest(const gfx::PointF& point) const {
   return point.x() >= 0.0f && point.x() <= 1.0f && point.y() >= 0.0f &&
          point.y() <= 1.0f;
@@ -186,6 +199,11 @@ void UiElement::SetMode(ColorScheme::Mode mode) {
     return;
   mode_ = mode;
   OnSetMode();
+}
+
+const gfx::Transform& UiElement::world_space_transform() const {
+  DCHECK_LE(kLayoutClean, UiScene::CurrentPhase());
+  return world_space_transform_;
 }
 
 void UiElement::OnSetMode() {}
@@ -295,6 +313,7 @@ bool UiElement::IsAnimatingProperty(TargetProperty property) const {
 }
 
 void UiElement::LayOutChildren() {
+  DCHECK_EQ(kTexturesAndSizesClean, UiScene::CurrentPhase());
   for (auto& child : children_) {
     // To anchor a child, use the parent's size to find its edge.
     float x_offset;
@@ -325,9 +344,8 @@ void UiElement::LayOutChildren() {
   }
 }
 
-void UiElement::AdjustRotationForHeadPose(const gfx::Vector3dF& look_at) {}
-
 void UiElement::UpdateInheritedProperties() {
+  DCHECK_LE(kLayoutClean, UiScene::CurrentPhase());
   gfx::Transform transform;
   transform.Scale(size_.width(), size_.height());
   set_computed_opacity(opacity_);

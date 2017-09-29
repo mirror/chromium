@@ -14,6 +14,7 @@
 #include "chrome/browser/vr/elements/ui_element.h"
 #include "chrome/browser/vr/elements/ui_element_iterator.h"
 #include "chrome/browser/vr/elements/ui_element_name.h"
+#include "chrome/browser/vr/frame_lifecycle_phase.h"
 #include "third_party/skia/include/core/SkColor.h"
 
 namespace base {
@@ -53,10 +54,6 @@ class UiScene {
   void OnBeginFrame(const base::TimeTicks& current_time,
                     const gfx::Vector3dF& look_at);
 
-  // This function gets called just before rendering the elements in the
-  // frame lifecycle. After this function, no element should be dirtied.
-  void PrepareToDraw();
-
   UiElement& root_element();
 
   UiElement* GetUiElementById(int element_id) const;
@@ -91,8 +88,16 @@ class UiScene {
 
   void OnGlInitialized();
 
+  // TODO(vollick): the sequence of operations for frame production (i.e.,
+  // OnBeginFrame) is central to the UI design and should be hoisted into a
+  // class responsible solely for scheduling. This getter, naturally, should
+  // move as well.
+  static FrameLifecyclePhase CurrentPhase() { return g_current_phase_; }
+
  private:
   void Animate(const base::TimeTicks& current_time);
+
+  static FrameLifecyclePhase g_current_phase_;
 
   std::unique_ptr<UiElement> root_element_;
   ColorScheme::Mode mode_ = ColorScheme::kModeNormal;
