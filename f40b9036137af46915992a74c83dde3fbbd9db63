@@ -2,6 +2,165 @@
   "comments": [
     {
       "key": {
+        "uuid": "93342c66_48ede67f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-29T19:21:53Z",
+      "side": 1,
+      "message": "nit: wrap commit message to 80 characters",
+      "revId": "f40b9036137af46915992a74c83dde3fbbd9db63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c0d7cdd_ab1dee1e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-29T19:21:53Z",
+      "side": 1,
+      "message": "nit: typo - contextMenu",
+      "range": {
+        "startLine": 11,
+        "startChar": 64,
+        "endLine": 11,
+        "endChar": 74
+      },
+      "revId": "f40b9036137af46915992a74c83dde3fbbd9db63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8c3b3d6_ffc7edb8",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/background.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-29T19:21:53Z",
+      "side": 1,
+      "message": "Sync storage is synced between different devices.  If this is an extension being synced to a new device, this will clear all the user\u0027s settings from their other device, which is probably not what we want.  We should either use chrome.storage.local (if we want device-specific settings) or respect the values from chrome.storage.sync.",
+      "revId": "f40b9036137af46915992a74c83dde3fbbd9db63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8fcea29_12d84128",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/background.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-29T19:21:53Z",
+      "side": 1,
+      "message": "Let\u0027s see if we can\u0027t factor out some of this duplicate code.  What if we add a separate file called locales.js and do the following:\n\n// A map between locale TLD and readable name.\nconst locales \u003d {\n  \u0027com.au\u0027: \u0027Australia\u0027,\n  \u0027com.br\u0027: \u0027Brazil\u0027,\n  \u0027ca\u0027: \u0027Canada\u0027,\n  ...\n};\n\nThen here:\n\nfor (let key of Object.keys(locales)) {\n  chrome.contextMenus.create({\n    id: key,\n    title: locales[key],\n    type: \u0027normal\u0027,\n    contexts: [\u0027selection\u0027],\n  });\n}",
+      "revId": "f40b9036137af46915992a74c83dde3fbbd9db63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3631b6d9_88bfd363",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/background.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-29T19:21:53Z",
+      "side": 1,
+      "message": "We don\u0027t support users adding new context menu options, right (i.e., I can\u0027t add \u0027Germany\u0027, \u0027de\u0027)?  In that case, I don\u0027t think we need to store contextMenuItems, but rather *only* the removed ones.",
+      "revId": "f40b9036137af46915992a74c83dde3fbbd9db63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d21d4d0_650d6c72",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/background.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-29T19:21:53Z",
+      "side": 1,
+      "message": "For the removed items, we could store only the id or only the title, rather than the entire object.",
+      "revId": "f40b9036137af46915992a74c83dde3fbbd9db63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c3f4070_1d76a9f9",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/background.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-29T19:21:53Z",
+      "side": 1,
+      "message": "nit: remove debugging logs",
+      "revId": "f40b9036137af46915992a74c83dde3fbbd9db63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50d42d36_f6f06102",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/background.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-29T19:21:53Z",
+      "side": 1,
+      "message": "prefer single quotes in js",
+      "revId": "f40b9036137af46915992a74c83dde3fbbd9db63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31ebfdad_586abf40",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/manifest.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-29T19:21:53Z",
+      "side": 1,
+      "message": "\"search a different country\u0027s Google\", maybe?",
+      "revId": "f40b9036137af46915992a74c83dde3fbbd9db63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2edef85b_cbecd255",
         "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/manifest.json",
         "patchSetId": 2
@@ -13,6 +172,75 @@
       "writtenOn": "2017-09-26T17:58:35Z",
       "side": 1,
       "message": "currently uses options as the popup - not sure if this is considered bad practice or not?",
+      "revId": "f40b9036137af46915992a74c83dde3fbbd9db63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a2f6e37_52e3ada4",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/manifest.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-29T19:21:53Z",
+      "side": 1,
+      "message": "If it makes sense (and it does here), I think it\u0027s fine.  I\u0027ve seen other extensions do it, too.",
+      "parentUuid": "2edef85b_cbecd255",
+      "revId": "f40b9036137af46915992a74c83dde3fbbd9db63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "240dfa9a_69524729",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/options.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-29T19:21:53Z",
+      "side": 1,
+      "message": "no need for \u003d\"checked\", just having checked is sufficient.",
+      "revId": "f40b9036137af46915992a74c83dde3fbbd9db63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f344b83b_f18529ea",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/options.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-29T19:21:53Z",
+      "side": 1,
+      "message": "Since we have to update these checkboxes anyway, we could construct the dom dynamically:\n\nchrome.storage.sync.get([\u0027removedContextMenuItems\u0027], function(removedList) {\n  let form \u003d document.getElementById(\u0027form\u0027);\n  for (let key of Object.keys(locales)) {\n    let div \u003d document.createElement(\u0027div\u0027);\n    let checkbox \u003d document.createElement(\u0027input\u0027);\n    checkbox.type \u003d \u0027checkbox\u0027;\n    checkbox.checked \u003d removedList.includes(key);\n    checkbox.name \u003d key;\n    checkbox.value \u003d locales[key];\n    let span \u003d document.createElement(\u0027span\u0027);\n    span.textContent \u003d key;\n    div.appendChild(checkbox);\n    div.appendChild(span);\n    form.appendChild(div);\n  }\n});\n\nThen, the HTML body just needs:\n\u003cbody\u003e\n  \u003ch2\u003e...\u003c/h2\u003e\n  \u003ch3\u003e...\u003c/h3\u003e\n  \u003cform id\u003d\"form\"\u003e\n  \u003c/form\u003e\n\u003c/body\u003e\n\n(Also, if we added more locales, we\u0027d only have to update the locales constant)",
+      "revId": "f40b9036137af46915992a74c83dde3fbbd9db63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c1596c8_22f67dfc",
+        "filename": "chrome/common/extensions/docs/examples/api/contextMenus/global_context_search/options.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-29T19:21:53Z",
+      "side": 1,
+      "message": "If we only have to store the removed locales, this could just be:\n\nlet checkboxes \u003d document.getElementsByTagName(\u0027input\u0027);\nlet removed \u003d [];\nfor (let checkbox of checkboxes) {\n  if (!checkbox.checked)\n    removed.append(checkbox.name);\n}\n\nchrome.storage.sync.set({removedContextMenuItems: removed});",
       "revId": "f40b9036137af46915992a74c83dde3fbbd9db63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
