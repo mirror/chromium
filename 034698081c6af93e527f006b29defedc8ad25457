@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00b0bd20_5ecc7dd0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-29T00:04:28Z",
+      "side": 1,
+      "message": "I think the api might be a bit nicer if it were to only take activity here and otherwise pass in Intent to dispatch calls.  Right now, you have to call the constructor and dispatch and then throw it away, which is sad to me.\n\nIf we do need to keep it that way, I\u0027d probably have two static methods:\n\npublic static @Action int dispatchNonLauncherIntent(Activity activity, Intent intent) {\n    new LaunchIntentDispatcher(activity, intent).doYourThings();\n}\n\nThen you would prevent construction of this and people from calling the public methods that you have to expose as implementing an interface.\n\nNot critical...just some thoughts here.",
+      "range": {
+        "startLine": 91,
+        "startChar": 11,
+        "endLine": 91,
+        "endChar": 33
+      },
+      "revId": "034698081c6af93e527f006b29defedc8ad25457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
