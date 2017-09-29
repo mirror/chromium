@@ -64,12 +64,17 @@ const char kChromeProxyActionFingerprintContentLength[] = "fcl";
 const int kShortBypassMaxSeconds = 59;
 const int kMediumBypassMaxSeconds = 300;
 
+base::TimeDelta GetRandomBypassTime(base::TimeDelta min_time,
+                                    base::TimeDelta max_time) {
+  const int64_t delta_ms =
+      base::RandInt(min_time.InMilliseconds(), max_time.InMilliseconds());
+  return TimeDelta::FromMilliseconds(delta_ms);
+}
+
 // Returns a random bypass duration between 1 and 5 minutes.
 base::TimeDelta GetDefaultBypassDuration() {
-  const int64_t delta_ms =
-      base::RandInt(base::TimeDelta::FromMinutes(1).InMilliseconds(),
-                    base::TimeDelta::FromMinutes(5).InMilliseconds());
-  return TimeDelta::FromMilliseconds(delta_ms);
+  return GetRandomBypassTime(base::TimeDelta::FromMinutes(1),
+                             base::TimeDelta::FromMinutes(5));
 }
 
 bool StartsWithActionPrefix(base::StringPiece header_value,
@@ -445,6 +450,18 @@ DataReductionProxyBypassType GetDataReductionProxyBypassType(
       return BYPASS_EVENT_TYPE_MISSING_VIA_HEADER_4XX;
     }
 
+    bool connection_is_cellular =
+        net::NetworkChangeNotifier::IsConnectionCellular(
+            net::NetworkChangeNotifier::GetConnectionType());
+    data_reduction_proxy_info->mark_proxies_as_bad =
+        params::ShouldBypassMissingViaHeader(connection_is_cellular);
+
+    std::pair<base::TimeDelta, base::TimeDelta> bypass_range =
+        params::GetMissingViaHeaderBypassDurationRange(connection_is_cellular);
+    if (data_reduction_proxy_info->mark_proxies_as_bad) {
+      data_reduction_proxy_info->bypass_duration =
+          GetRandomBypassTime(bypass_range.first, bypass_range.second);
+    }
     return BYPASS_EVENT_TYPE_MISSING_VIA_HEADER_OTHER;
   }
   // There is no bypass event.
