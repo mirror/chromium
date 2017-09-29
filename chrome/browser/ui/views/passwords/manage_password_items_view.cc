@@ -9,6 +9,7 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "chrome/app/vector_icons/vector_icons.h"
 #include "chrome/browser/ui/passwords/manage_passwords_bubble_model.h"
 #include "chrome/browser/ui/passwords/manage_passwords_view_utils.h"
 #include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
@@ -20,6 +21,7 @@
 #include "ui/resources/grit/ui_resources.h"
 #include "ui/views/controls/button/button.h"
 #include "ui/views/controls/button/image_button.h"
+#include "ui/views/controls/button/image_button_factory.h"
 #include "ui/views/controls/label.h"
 #include "ui/views/controls/link.h"
 #include "ui/views/controls/link_listener.h"
@@ -74,14 +76,20 @@ void BuildColumnSetIfNeeded(views::GridLayout* layout, int column_set_id) {
 
 std::unique_ptr<views::ImageButton> GenerateDeleteButton(
     views::ButtonListener* listener) {
-  ui::ResourceBundle* rb = &ui::ResourceBundle::GetSharedInstance();
-  std::unique_ptr<views::ImageButton> button(new views::ImageButton(listener));
-  button->SetImage(views::ImageButton::STATE_NORMAL,
-                   rb->GetImageNamed(IDR_CLOSE_2).ToImageSkia());
-  button->SetImage(views::ImageButton::STATE_HOVERED,
-                   rb->GetImageNamed(IDR_CLOSE_2_H).ToImageSkia());
-  button->SetImage(views::ImageButton::STATE_PRESSED,
-                   rb->GetImageNamed(IDR_CLOSE_2_P).ToImageSkia());
+  std::unique_ptr<views::ImageButton> button;
+  if (ChromeLayoutProvider::Get()->IsHarmonyMode()) {
+    button.reset(views::CreateVectorImageButton(listener));
+    views::SetImageFromVectorIcon(button.get(), kTrashIcon);
+  } else {
+    ui::ResourceBundle* rb = &ui::ResourceBundle::GetSharedInstance();
+    button = base::MakeUnique<views::ImageButton>(listener);
+    button->SetImage(views::ImageButton::STATE_NORMAL,
+                     rb->GetImageNamed(IDR_CLOSE_2).ToImageSkia());
+    button->SetImage(views::ImageButton::STATE_HOVERED,
+                     rb->GetImageNamed(IDR_CLOSE_2_H).ToImageSkia());
+    button->SetImage(views::ImageButton::STATE_PRESSED,
+                     rb->GetImageNamed(IDR_CLOSE_2_P).ToImageSkia());
+  }
   button->SetFocusForPlatform();
   button->SetTooltipText(
       l10n_util::GetStringUTF16(IDS_MANAGE_PASSWORDS_DELETE));
