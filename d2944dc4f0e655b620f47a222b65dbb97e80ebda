@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e69b3dbd_b94bbee7",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBObjectStore.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-29T20:52:22Z",
+      "side": 1,
+      "message": "yup, this is a much nicer looking change :)",
+      "revId": "d2944dc4f0e655b620f47a222b65dbb97e80ebda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b75a6a0_506af057",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBObjectStore.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-29T20:52:22Z",
+      "side": 1,
+      "message": "nit: add \u0027internally\u0027 to the comment",
+      "revId": "d2944dc4f0e655b620f47a222b65dbb97e80ebda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
