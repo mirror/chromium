@@ -121,14 +121,28 @@ void ProgressBar::SetValue(double value) {
 }
 
 SkColor ProgressBar::GetForegroundColor() const {
-  return GetNativeTheme()->GetSystemColor(
-      ui::NativeTheme::kColorId_ProminentButtonColor);
+  if (foreground_color_) {
+    return foreground_color_.value();
+  } else {
+    return GetNativeTheme()->GetSystemColor(
+        ui::NativeTheme::kColorId_ProminentButtonColor);
+  }
+}
+
+void ProgressBar::SetForegroundColor(SkColor color) {
+  foreground_color_ = color;
 }
 
 SkColor ProgressBar::GetBackgroundColor() const {
-  // The default foreground is GoogleBlue500, and the default background is
-  // that color but 80% lighter.
-  return color_utils::BlendTowardOppositeLuma(GetForegroundColor(), 0xCC);
+  if (background_color_) {
+    return background_color_.value();
+  } else {
+    return color_utils::BlendTowardOppositeLuma(GetForegroundColor(), 0xCC);
+  }
+}
+
+void ProgressBar::SetBackgroundColor(SkColor color) {
+  background_color_ = color;
 }
 
 void ProgressBar::AnimationProgressed(const gfx::Animation* animation) {
