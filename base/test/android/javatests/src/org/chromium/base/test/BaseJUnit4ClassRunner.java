@@ -17,6 +17,7 @@ import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.InitializationError;
 import org.junit.runners.model.Statement;
 
+import org.chromium.base.BaseChromiumApplication;
 import org.chromium.base.CollectionUtil;
 import org.chromium.base.test.BaseTestResult.PreTestHook;
 import org.chromium.base.test.util.DisableIfSkipCheck;
@@ -161,8 +162,16 @@ public class BaseJUnit4ClassRunner extends AndroidJUnit4ClassRunner {
                 notifier.fireTestFinished(child);
             }
         } else {
+            initCommandLineForTest();
             super.run(notifier);
         }
+    }
+
+    /**
+     * Override this method to change how test class runner initiate commandline flags
+     */
+    protected void initCommandLineForTest() {
+        BaseChromiumApplication.initCommandLine(InstrumentationRegistry.getTargetContext());
     }
 
     @Override
