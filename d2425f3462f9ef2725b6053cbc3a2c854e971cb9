@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "9b1486a3_6c88b0d4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-09-29T18:56:27Z",
+      "side": 1,
+      "message": "I will just leave as it is to avoid taking the risk :) I think it\u0027s also a good practice not to break TOT as mentioned in the guide.\n\n\"Two sided patches should be avoided if at all possible. E.g.:\nUse GN group() or java_group() to alias GN targets needed by downstream (and then remove them afterwards).\nUse empty subclasses to alias Java classes used downstream (and then remove them afterwards)\"\n\nhttps://sites.google.com/a/google.com/clank/engineering/noogler-guide/05-working-with-the-source-tree#TOC-Upstream-changes-can-break-dowstream-clank-tip-of-tree-ToT-",
+      "parentUuid": "e2217ed8_c1b9dad5",
+      "range": {
+        "startLine": 159,
+        "startChar": 23,
+        "endLine": 159,
+        "endChar": 63
+      },
+      "revId": "d2425f3462f9ef2725b6053cbc3a2c854e971cb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b88edfc7_c7ba3453",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
         "patchSetId": 6
