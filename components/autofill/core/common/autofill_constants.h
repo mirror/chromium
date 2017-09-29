@@ -9,7 +9,11 @@
 
 #include <stddef.h>         // For size_t
 
+#include "base/feature_list.h"  // For base::Feature
+
 namespace autofill {
+
+extern const base::Feature kAutofillEnforceMinRequiredFields;
 
 // Help URL for the Autofill dialog.
 extern const char kHelpURL[];
@@ -22,11 +26,11 @@ extern const char kSettingsOrigin[];
 // matter how many fields are in the forms; however, finding the label for each
 // field is a costly operation and we can't spare the cycles if it's not
 // necessary.
-const size_t kRequiredFieldsForPredictionRoutines = 3;
+size_t MinRequiredFieldsForPredictionRoutines();
 
 // The minimum number of fields required to upload a form to the Autofill
 // servers.
-const size_t kRequiredFieldsForUpload = 3;
+size_t MinRequiredFieldsForUpload();
 
 // The minimum number of fields in a form that contains only password fields to
 // upload the form to and request predictions from the Autofill servers.
