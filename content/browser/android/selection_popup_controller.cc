@@ -146,14 +146,18 @@ bool SelectionPopupController::ShowSelectionMenu(
   const bool can_select_all =
       !!(params.edit_flags & WebContextMenuData::kCanSelectAll);
   const bool can_edit_richly =
-      !!(params.edit_flags & blink::WebContextMenuData::kCanEditRichly);
+      !!(params.edit_flags & WebContextMenuData::kCanEditRichly);
+  const bool can_not_suggest =
+      !!(params.edit_flags & WebContextMenuData::kCanNotSuggest);
   const bool is_password_type =
       params.input_field_type ==
       blink::WebContextMenuData::kInputFieldTypePassword;
   const ScopedJavaLocalRef<jstring> jselected_text =
       ConvertUTF16ToJavaString(env, params.selection_text);
-  const bool should_suggest = params.source_type == ui::MENU_SOURCE_TOUCH ||
-                              params.source_type == ui::MENU_SOURCE_LONG_PRESS;
+  bool should_suggest = (params.source_type == ui::MENU_SOURCE_TOUCH ||
+                         params.source_type == ui::MENU_SOURCE_LONG_PRESS);
+  if (can_not_suggest && params.source_type == ui::MENU_SOURCE_TOUCH)
+    should_suggest = false;
 
   Java_SelectionPopupController_showSelectionMenu(
       env, obj, params.selection_rect.x(), params.selection_rect.y(),

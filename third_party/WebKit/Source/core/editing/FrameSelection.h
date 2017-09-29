@@ -61,6 +61,11 @@ enum class CaretVisibility;
 
 enum class HandleVisibility { kNotVisible, kVisible };
 
+enum SelectionShrink {
+  kPrevious = 0x01,
+  kCurrent = 0x02,
+};
+
 class CORE_EXPORT FrameSelection final
     : public GarbageCollectedFinalized<FrameSelection>,
       public SynchronousMutationObserver {
@@ -177,6 +182,7 @@ class CORE_EXPORT FrameSelection final
   void SetUseSecureKeyboardEntryWhenActive(bool);
 
   bool IsHandleVisible() const { return is_handle_visible_; }
+  int GetShouldShrinkNextTap() const { return should_shrink_next_tap_; }
 
   void UpdateSecureKeyboardEntryIfActive();
 
@@ -269,6 +275,7 @@ class CORE_EXPORT FrameSelection final
 
   bool focused_ : 1;
   bool is_handle_visible_ = false;
+  int should_shrink_next_tap_ = 0;
 
   // Controls text granularity used to adjust the selection's extent in
   // moveRangeSelectionExtent.
