@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49df9651_e4bc3a95",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 5618,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-09-29T23:08:35Z",
+      "side": 1,
+      "message": "These descriptions are really too generic.  You should actually describe what the action is/how it is different from all of the other actions that currently have the exact same description.",
+      "range": {
+        "startLine": 5618,
+        "startChar": 4,
+        "endLine": 5618,
+        "endChar": 68
+      },
+      "revId": "4ab8aba8d101a73449aeb49e4be8b6c231669e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
