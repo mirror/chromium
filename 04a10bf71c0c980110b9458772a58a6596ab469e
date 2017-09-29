@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "311070df_9acc8427",
+        "filename": "content/renderer/pepper/pepper_graphics_2d_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-29T23:04:59Z",
+      "side": 1,
+      "message": "My concern was like.. what if the context isn\u0027t there but then it\u0027s there later? I think it\u0027s okay tho because this is in the TextureLayerClient for 2d, which means the compositor has chosen it\u0027s mode when it gets here. So if the context isn\u0027t there, then that means the compositor won\u0027t try to show anything and will reboot itself too.\n\nBut maybe we need to not early out in PepperGraphics2DHost::PrepareTextureMailbox if !texture_mailbox_modified_ ?",
+      "revId": "04a10bf71c0c980110b9458772a58a6596ab469e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
