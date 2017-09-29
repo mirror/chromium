@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41b08fa3_5cddddc7",
+        "filename": "ui/webui/resources/cr_elements/cr_link_row/cr_link_row.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-29T20:46:14Z",
+      "side": 0,
+      "message": "The line at [1] can also be removed now.\n\n[1] https://cs.chromium.org/chromium/src/ui/webui/resources/cr_elements/cr_link_row/compiled_resources2.gyp?q\u003dcr_link_row+file:%5Esrc/ui/webui/resources/cr_elements/+package:%5Echromium$\u0026dr\u003dC\u0026l\u003d9",
+      "revId": "e0c29fc72930dddd0055ce2a696520ff2c3bb8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
