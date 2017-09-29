@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c94539b6_975d6f16",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 3429,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-29T17:39:30Z",
+      "side": 1,
+      "message": "For now I still use V2 because for now raster-invalidation-after-paint works for V2 only. Will change V2 to V175 if needed when working on V175 raster invalidation.",
+      "parentUuid": "8dc50db6_e4448439",
+      "revId": "faed1a8a34b3c3293d90bb0c2ed90beb805f7040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "78427bcf_6b07323e",
         "filename": "third_party/WebKit/Source/core/paint/ObjectPaintInvalidator.cpp",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "35592823_94089377",
+        "filename": "third_party/WebKit/Source/core/paint/ObjectPaintInvalidator.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-29T17:39:30Z",
+      "side": 1,
+      "message": "Ditto.",
+      "parentUuid": "78427bcf_6b07323e",
+      "revId": "faed1a8a34b3c3293d90bb0c2ed90beb805f7040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "979ada59_ea16c7ef",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/DisplayItemClient.h",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-29T17:19:19Z",
       "side": 1,
       "message": "Does any code clear the partial rect if a full invalidation is issued? A reasonable\noptimization? Regardless, this comment is not quite accurate without clearing it\nin that case.",
+      "revId": "faed1a8a34b3c3293d90bb0c2ed90beb805f7040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a70eb2d5_341e4ac9",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/DisplayItemClient.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-29T17:39:30Z",
+      "side": 1,
+      "message": "Changed this comment to:\n  // The rect that needs to be invalidated partially in this client. It\u0027s in the same\n  // coordinate space as VisualRect().\n\nAdded comment before ClearPartialInvalidationRect():\n  // Called by PaintController::CommitNewDisplayItems() for all clients\n  // after painting.\n\nPartial rect is cleared regardless of paint invalidation reason.",
+      "parentUuid": "979ada59_ea16c7ef",
       "revId": "faed1a8a34b3c3293d90bb0c2ed90beb805f7040",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +138,24 @@
       "revId": "faed1a8a34b3c3293d90bb0c2ed90beb805f7040",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fe026ed_d3ab2636",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintControllerTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2245,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-29T17:39:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eea2ae83_c86ebac9",
+      "revId": "faed1a8a34b3c3293d90bb0c2ed90beb805f7040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
