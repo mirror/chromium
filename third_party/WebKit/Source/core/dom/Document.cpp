@@ -3155,14 +3155,30 @@ void Document::close() {
   CheckCompleted();
 }
 
-void Document::ImplicitClose() {
+bool Document::MaybeFireLoadCompletionEvents() {
   DCHECK(!InStyleRecalc());
-  DCHECK(parser_);
+  DCHECK_EQ(load_event_progress_, kLoadEventNotRun);
+
+  if (!ShouldComplete())
+    return false;
+
+  if (frame_) {
+    frame_->Client()->RunScriptsAtDocumentIdle();
+    // Injected scripts may have disconnected this frame or re-delayed the load
+    // event.
+    if (!frame_ || !ShouldComplete())
+      return false;
+  }
+
+  SetReadyState(kComplete);
+  if (load_event_progress_ != kLoadEventNotRun)
+    return true;
 
   load_event_progress_ = kLoadEventInProgress;
 
   // We have to clear the parser, in case someone document.write()s from the
-  // onLoad event handler, as in Radar 3206524.
+  // onLoad event handler.
+  DCHECK(parser_);
   DetachParser();
 
   // JS running below could remove the frame or destroy the LayoutView so we
@@ -3184,7 +3200,7 @@ void Document::ImplicitClose() {
 
   if (!GetFrame()) {
     load_event_progress_ = kLoadEventCompleted;
-    return;
+    return true;
   }
 
   // Make sure both the initial layout and reflow happen after the onload
@@ -3197,7 +3213,7 @@ void Document::ImplicitClose() {
     // page.  The old i-Bench suite does this. When this happens don't bother
     // painting or laying out.
     load_event_progress_ = kLoadEventCompleted;
-    return;
+    return true;
   }
 
   // We used to force a synchronous display and flush here.  This really isn't
@@ -3215,6 +3231,12 @@ void Document::ImplicitClose() {
       View()->UpdateLayout();
   }
 
+  if (GetSettings()->GetSavePreviousDocumentResources() ==
+      SavePreviousDocumentResources::kUntilOnLoad) {
+    fetcher_->ClearResourcesFromPreviousFetcher();
+  }
+  View()->HandleLoadCompleted();
+
   load_event_progress_ = kLoadEventCompleted;
 
   if (GetFrame() && !GetLayoutViewItem().IsNull() &&
@@ -3229,6 +3251,7 @@ void Document::ImplicitClose() {
 
   if (SvgExtensions())
     AccessSVGExtensions().StartAnimations();
+  return true;
 }
 
 static bool AllDescendantsAreComplete(Frame* frame) {
@@ -3245,41 +3268,18 @@ static bool AllDescendantsAreComplete(Frame* frame) {
 bool Document::ShouldComplete() {
   return parsing_state_ == kFinishedParsing && HaveImportsLoaded() &&
          !fetcher_->BlockingRequestCount() && !IsDelayingLoadEvent() &&
-         load_event_progress_ != kLoadEventInProgress &&
          AllDescendantsAreComplete(frame_);
 }
 
 void Document::CheckCompleted() {
-  if (!ShouldComplete())
+  if (load_event_progress_ == kLoadEventInProgress)
     return;
-
-  if (frame_) {
-    frame_->Client()->RunScriptsAtDocumentIdle();
-
-    // Injected scripts may have disconnected this frame.
-    if (!frame_)
-      return;
-
-    // Check again, because runScriptsAtDocumentIdle() may have delayed the load
-    // event.
-    if (!ShouldComplete())
-      return;
-  }
-
-  // OK, completed. Fire load completion events as needed.
-  SetReadyState(kComplete);
-  if (LoadEventStillNeeded())
-    ImplicitClose();
-
-  // The readystatechanged or load event may have disconnected this frame.
+  if (LoadEventStillNeeded() && !MaybeFireLoadCompletionEvents())
+    return;
+  DCHECK(LoadEventFinished());
   if (!frame_ || !frame_->IsAttached())
     return;
-  if (frame_->GetSettings()->GetSavePreviousDocumentResources() ==
-      SavePreviousDocumentResources::kUntilOnLoad) {
-    fetcher_->ClearResourcesFromPreviousFetcher();
-  }
   frame_->GetNavigationScheduler().StartTimer();
-  View()->HandleLoadCompleted();
   // The document itself is complete, but if a child frame was restarted due to
   // an event, this document is still considered to be in progress.
   if (!AllDescendantsAreComplete(frame_))
@@ -5017,7 +5017,7 @@ HTMLFrameOwnerElement* Document::LocalOwner() const {
   if (!GetFrame())
     return 0;
   // FIXME: This probably breaks the attempts to layout after a load is finished
-  // in implicitClose(), and probably tons of other things...
+  // in MaybeFireLoadCompletionEvents(), and probably tons of other things...
   return GetFrame()->DeprecatedLocalOwner();
 }
 
@@ -5783,7 +5783,7 @@ void Document::FinishedParsing() {
         frame->Loader().StateMachine()->CommittedFirstRealDocumentLoad();
 
     // FrameLoader::finishedParsing() might end up calling
-    // Document::implicitClose() if all resource loads are
+    // Document::MaybeFireLoadCompletionEvents() if all resource loads are
     // complete. HTMLObjectElements can start loading their resources from post
     // attach callbacks triggered by recalcStyle().  This means if we parse out
     // an <object> tag and then reach the end of the document without updating

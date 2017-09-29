@@ -1422,8 +1422,7 @@ class CORE_EXPORT Document : public ContainerNode,
   void UpdateStyle();
   void NotifyLayoutTreeOfSubtreeChanges();
 
-  // ImplicitClose() actually does the work of closing the input stream.
-  void ImplicitClose();
+  bool MaybeFireLoadCompletionEvents();
   bool ShouldComplete();
 
   void DetachParser();
