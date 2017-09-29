@@ -6,7 +6,6 @@
 
 #include "ash/highlighter/highlighter_gesture_util.h"
 #include "ash/highlighter/highlighter_result_view.h"
-#include "ash/highlighter/highlighter_selection_observer.h"
 #include "ash/highlighter/highlighter_view.h"
 #include "ash/public/cpp/scale_utility.h"
 #include "base/metrics/histogram_macros.h"
@@ -54,11 +53,6 @@ HighlighterController::HighlighterController() {}
 
 HighlighterController::~HighlighterController() {}
 
-void HighlighterController::SetObserver(
-    HighlighterSelectionObserver* observer) {
-  observer_ = observer;
-}
-
 void HighlighterController::SetExitCallback(base::OnceClosure exit_callback,
                                             bool allow_retries) {
   exit_callback_ = std::move(exit_callback);
@@ -84,8 +78,22 @@ void HighlighterController::SetEnabled(bool enabled) {
     if (highlighter_view_ && !highlighter_view_->animating())
       DestroyPointerView();
   }
-  if (observer_)
-    observer_->HandleEnabledStateChange(enabled);
+  if (client_)
+    client_->HandleEnabledStateChange(enabled);
+}
+
+void HighlighterController::BindRequest(
+    mojom::HighlighterControllerRequest request) {
+  bindings_.AddBinding(this, std::move(request));
+}
+
+void HighlighterController::SetClient(
+    mojom::HighlighterControllerClientPtr client) {
+  client_ = std::move(client);
+}
+
+void HighlighterController::FlushMojoForTesting() {
+  client_.FlushForTesting();
 }
 
 views::View* HighlighterController::GetPointerView() const {
@@ -172,8 +180,8 @@ void HighlighterController::RecognizeGesture() {
 
   if (!box.IsEmpty() &&
       gesture_type != HighlighterGestureType::kNotRecognized) {
-    if (observer_) {
-      observer_->HandleSelection(gfx::ToEnclosingRect(
+    if (client_) {
+      client_->HandleSelection(gfx::ToEnclosingRect(
           gfx::ScaleRect(box, GetScreenshotScale(current_window))));
     }
 
@@ -185,8 +193,8 @@ void HighlighterController::RecognizeGesture() {
     recognized_gesture_counter_++;
     CallExitCallback();
   } else {
-    if (observer_)
-      observer_->HandleFailedSelection();
+    if (client_)
+      client_->HandleFailedSelection();
     if (!allow_retries_)
       CallExitCallback();
   }

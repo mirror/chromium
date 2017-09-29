@@ -273,6 +273,7 @@ class PaletteTrayTestWithVoiceInteraction : public PaletteTrayTest {
     EXPECT_EQ(expected, highlighter_showing());
     EXPECT_EQ(expected, metalayer_enabled());
     generator.ReleaseTouch();
+    highlighter_test_api_->FlushMojoForTesting();
   }
 
   void WaitDragAndAssertMetalayer(const std::string& context,
@@ -348,6 +349,7 @@ TEST_F(PaletteTrayTestWithVoiceInteraction, MetalayerToolActivatesHighlighter) {
   EXPECT_TRUE(metalayer_enabled());
   generator.MoveTouch(gfx::Point(300, 100));
   generator.ReleaseTouch();
+  highlighter_test_api_->FlushMojoForTesting();
   EXPECT_TRUE(highlighter_test_api_->handle_selection_called());
   EXPECT_FALSE(metalayer_enabled());
 
@@ -365,6 +367,7 @@ TEST_F(PaletteTrayTestWithVoiceInteraction, MetalayerToolActivatesHighlighter) {
   generator.MoveTouch(palette_point);
   EXPECT_FALSE(highlighter_showing());
   generator.ReleaseTouch();
+  highlighter_test_api_->FlushMojoForTesting();
   EXPECT_FALSE(metalayer_enabled());
 
   // Disabling metalayer support in the delegate should disable the palette

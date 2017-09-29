@@ -5,8 +5,9 @@
 #ifndef ASH_HIGHLIGHTER_HIGHLIGHTER_CONTROLLER_TEST_API_H_
 #define ASH_HIGHLIGHTER_HIGHLIGHTER_CONTROLLER_TEST_API_H_
 
-#include "ash/highlighter/highlighter_selection_observer.h"
+#include "ash/public/interfaces/highlighter_controller.mojom.h"
 #include "base/macros.h"
+#include "mojo/public/cpp/bindings/binding.h"
 #include "ui/gfx/geometry/rect.h"
 
 namespace ash {
@@ -17,7 +18,8 @@ class HighlighterController;
 // An api for testing the HighlighterController class.
 // Inheriting from HighlighterSelectionObserver to provide the tests
 // with access to gesture recognition results.
-class HighlighterControllerTestApi : public HighlighterSelectionObserver {
+class HighlighterControllerTestApi
+    : public ash::mojom::HighlighterControllerClient {
  public:
   explicit HighlighterControllerTestApi(HighlighterController* instance);
   ~HighlighterControllerTestApi() override;
@@ -49,11 +51,16 @@ class HighlighterControllerTestApi : public HighlighterSelectionObserver {
   }
   const gfx::Rect& selection() const { return selection_; }
 
+  void FlushMojoForTesting();
+
  private:
   // HighlighterSelectionObserver:
   void HandleSelection(const gfx::Rect& rect) override;
   void HandleFailedSelection() override;
   void HandleEnabledStateChange(bool enabled) override;
+
+  // Binds to the client interface.
+  mojo::Binding<ash::mojom::HighlighterControllerClient> binding_;
 
   HighlighterController* instance_;
 

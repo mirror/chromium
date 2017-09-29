@@ -42,6 +42,7 @@ class HighlighterControllerTest : public AshTestBase {
     GetEventGenerator().MoveTouch(gfx::Point(rect.x(), rect.bottom()));
     GetEventGenerator().MoveTouch(gfx::Point(rect.x(), rect.y()));
     GetEventGenerator().ReleaseTouch();
+    controller_test_api_->FlushMojoForTesting();
   }
 
   std::unique_ptr<HighlighterControllerTestApi> controller_test_api_;
@@ -164,6 +165,7 @@ TEST_F(HighlighterControllerTest, HighlighterGestures) {
   GetEventGenerator().PressTouch();
   GetEventGenerator().MoveTouch(gfx::Point(200, 200));
   GetEventGenerator().ReleaseTouch();
+  controller_test_api_->FlushMojoForTesting();
   EXPECT_FALSE(controller_test_api_->handle_selection_called());
   EXPECT_TRUE(controller_test_api_->handle_failed_selection_called());
 
@@ -173,6 +175,7 @@ TEST_F(HighlighterControllerTest, HighlighterGestures) {
   GetEventGenerator().PressTouch();
   GetEventGenerator().MoveTouch(gfx::Point(300, 102));
   GetEventGenerator().ReleaseTouch();
+  controller_test_api_->FlushMojoForTesting();
   EXPECT_TRUE(controller_test_api_->handle_selection_called());
   EXPECT_FALSE(controller_test_api_->handle_failed_selection_called());
 
@@ -190,6 +193,7 @@ TEST_F(HighlighterControllerTest, HighlighterGestures) {
   GetEventGenerator().MoveTouch(gfx::Point(0, 100));
   GetEventGenerator().MoveTouch(gfx::Point(100, 100));
   GetEventGenerator().ReleaseTouch();
+  controller_test_api_->FlushMojoForTesting();
   EXPECT_FALSE(controller_test_api_->handle_selection_called());
   EXPECT_TRUE(controller_test_api_->handle_failed_selection_called());
 
@@ -202,6 +206,7 @@ TEST_F(HighlighterControllerTest, HighlighterGestures) {
   GetEventGenerator().MoveTouch(gfx::Point(200, 100));
   GetEventGenerator().MoveTouch(gfx::Point(200, 20));
   GetEventGenerator().ReleaseTouch();
+  controller_test_api_->FlushMojoForTesting();
   EXPECT_TRUE(controller_test_api_->handle_selection_called());
   EXPECT_FALSE(controller_test_api_->handle_failed_selection_called());
   EXPECT_EQ("0,0 200x100", controller_test_api_->selection().ToString());
@@ -215,6 +220,7 @@ TEST_F(HighlighterControllerTest, HighlighterGestures) {
   GetEventGenerator().MoveTouch(gfx::Point(0, 150));
   GetEventGenerator().MoveTouch(gfx::Point(100, 50));
   GetEventGenerator().ReleaseTouch();
+  controller_test_api_->FlushMojoForTesting();
   EXPECT_TRUE(controller_test_api_->handle_selection_called());
   EXPECT_FALSE(controller_test_api_->handle_failed_selection_called());
   EXPECT_EQ("0,50 200x200", controller_test_api_->selection().ToString());
@@ -312,6 +318,7 @@ TEST_F(HighlighterControllerTest, InterruptedStroke) {
   GetEventGenerator().PressTouch();
   GetEventGenerator().MoveTouch(gfx::Point(0, 100));
   GetEventGenerator().ReleaseTouch();
+  controller_test_api_->FlushMojoForTesting();
   EXPECT_TRUE(controller_test_api_->IsWaitingToResumeStroke());
   EXPECT_FALSE(controller_test_api_->handle_selection_called());
   EXPECT_FALSE(controller_test_api_->handle_failed_selection_called());
@@ -321,6 +328,7 @@ TEST_F(HighlighterControllerTest, InterruptedStroke) {
   GetEventGenerator().PressTouch();
   GetEventGenerator().MoveTouch(gfx::Point(300, 200));
   GetEventGenerator().ReleaseTouch();
+  controller_test_api_->FlushMojoForTesting();
   EXPECT_FALSE(controller_test_api_->IsWaitingToResumeStroke());
   EXPECT_TRUE(controller_test_api_->handle_selection_called());
   EXPECT_FALSE(controller_test_api_->handle_failed_selection_called());
@@ -333,12 +341,14 @@ TEST_F(HighlighterControllerTest, InterruptedStroke) {
   GetEventGenerator().PressTouch();
   GetEventGenerator().MoveTouch(gfx::Point(0, 100));
   GetEventGenerator().ReleaseTouch();
+  controller_test_api_->FlushMojoForTesting();
   EXPECT_TRUE(controller_test_api_->IsWaitingToResumeStroke());
   EXPECT_FALSE(controller_test_api_->handle_selection_called());
   EXPECT_FALSE(controller_test_api_->handle_failed_selection_called());
   EXPECT_FALSE(controller_test_api_->IsFadingAway());
 
   controller_test_api_->SimulateInterruptedStrokeTimeout();
+  controller_test_api_->FlushMojoForTesting();
   EXPECT_FALSE(controller_test_api_->IsWaitingToResumeStroke());
   EXPECT_TRUE(controller_test_api_->handle_selection_called());
   EXPECT_FALSE(controller_test_api_->handle_failed_selection_called());
@@ -364,12 +374,14 @@ TEST_F(HighlighterControllerTest, SelectionInsideScreen) {
     controller_test_api_->ResetSelection();
     TraceRect(gfx::Rect(-100, -100, 10, 10));
     controller_test_api_->SimulateInterruptedStrokeTimeout();
+    controller_test_api_->FlushMojoForTesting();
     EXPECT_TRUE(controller_test_api_->handle_failed_selection_called());
 
     // Rectangle crossing the left edge.
     controller_test_api_->ResetSelection();
     TraceRect(gfx::Rect(-100, 100, 200, 200));
     controller_test_api_->SimulateInterruptedStrokeTimeout();
+    controller_test_api_->FlushMojoForTesting();
     EXPECT_TRUE(controller_test_api_->handle_selection_called());
     EXPECT_TRUE(screen.Contains(controller_test_api_->selection()));
 
@@ -377,6 +389,7 @@ TEST_F(HighlighterControllerTest, SelectionInsideScreen) {
     controller_test_api_->ResetSelection();
     TraceRect(gfx::Rect(100, -100, 200, 200));
     controller_test_api_->SimulateInterruptedStrokeTimeout();
+    controller_test_api_->FlushMojoForTesting();
     EXPECT_TRUE(controller_test_api_->handle_selection_called());
     EXPECT_TRUE(screen.Contains(controller_test_api_->selection()));
 
@@ -384,6 +397,7 @@ TEST_F(HighlighterControllerTest, SelectionInsideScreen) {
     controller_test_api_->ResetSelection();
     TraceRect(gfx::Rect(900, 100, 200, 200));
     controller_test_api_->SimulateInterruptedStrokeTimeout();
+    controller_test_api_->FlushMojoForTesting();
     EXPECT_TRUE(controller_test_api_->handle_selection_called());
     EXPECT_TRUE(screen.Contains(controller_test_api_->selection()));
 
@@ -391,6 +405,7 @@ TEST_F(HighlighterControllerTest, SelectionInsideScreen) {
     controller_test_api_->ResetSelection();
     TraceRect(gfx::Rect(100, 900, 200, 200));
     controller_test_api_->SimulateInterruptedStrokeTimeout();
+    controller_test_api_->FlushMojoForTesting();
     EXPECT_TRUE(controller_test_api_->handle_selection_called());
     EXPECT_TRUE(screen.Contains(controller_test_api_->selection()));
 
@@ -401,6 +416,7 @@ TEST_F(HighlighterControllerTest, SelectionInsideScreen) {
     GetEventGenerator().MoveTouch(gfx::Point(1000, -100));
     GetEventGenerator().ReleaseTouch();
     controller_test_api_->SimulateInterruptedStrokeTimeout();
+    controller_test_api_->FlushMojoForTesting();
     EXPECT_TRUE(controller_test_api_->handle_failed_selection_called());
 
     // Horizontal stroke along the top edge of the screen.
@@ -410,6 +426,7 @@ TEST_F(HighlighterControllerTest, SelectionInsideScreen) {
     GetEventGenerator().MoveTouch(gfx::Point(1000, 0));
     GetEventGenerator().ReleaseTouch();
     controller_test_api_->SimulateInterruptedStrokeTimeout();
+    controller_test_api_->FlushMojoForTesting();
     EXPECT_TRUE(controller_test_api_->handle_selection_called());
     EXPECT_TRUE(screen.Contains(controller_test_api_->selection()));
 
@@ -420,6 +437,7 @@ TEST_F(HighlighterControllerTest, SelectionInsideScreen) {
     GetEventGenerator().MoveTouch(gfx::Point(1000, 999));
     GetEventGenerator().ReleaseTouch();
     controller_test_api_->SimulateInterruptedStrokeTimeout();
+    controller_test_api_->FlushMojoForTesting();
     EXPECT_TRUE(controller_test_api_->handle_selection_called());
     EXPECT_TRUE(screen.Contains(controller_test_api_->selection()));
   }

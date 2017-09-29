@@ -12,12 +12,14 @@ namespace ash {
 
 HighlighterControllerTestApi::HighlighterControllerTestApi(
     HighlighterController* instance)
-    : instance_(instance) {
-  instance_->SetObserver(this);
+    : binding_(this), instance_(instance) {
+  ash::mojom::HighlighterControllerClientPtr client;
+  binding_.Bind(mojo::MakeRequest(&client));
+  instance_->SetClient(std::move(client));
 }
 
 HighlighterControllerTestApi::~HighlighterControllerTestApi() {
-  instance_->SetObserver(nullptr);
+  instance_->SetClient(nullptr);
   if (enabled_)
     instance_->SetEnabled(false);
   instance_->DestroyPointerView();
@@ -65,6 +67,10 @@ const FastInkPoints& HighlighterControllerTestApi::points() const {
 
 const FastInkPoints& HighlighterControllerTestApi::predicted_points() const {
   return instance_->highlighter_view_->predicted_points_;
+}
+
+void HighlighterControllerTestApi::FlushMojoForTesting() {
+  instance_->FlushMojoForTesting();
 }
 
 void HighlighterControllerTestApi::HandleSelection(const gfx::Rect& rect) {

@@ -9,6 +9,7 @@
 #include "ash/accelerators/accelerator_controller.h"
 #include "ash/cast_config_controller.h"
 #include "ash/display/ash_display_controller.h"
+#include "ash/highlighter/highlighter_controller.h"
 #include "ash/ime/ime_controller.h"
 #include "ash/login/lock_screen_controller.h"
 #include "ash/media_controller.h"
@@ -117,6 +118,11 @@ void BindWallpaperRequestOnMainThread(
   Shell::Get()->wallpaper_controller()->BindRequest(std::move(request));
 }
 
+void BindHighlighterControllerRequestOnMainThread(
+    mojom::HighlighterControllerRequest request) {
+  Shell::Get()->highlighter_controller()->BindRequest(std::move(request));
+}
+
 }  // namespace
 
 namespace mojo_interface_factory {
@@ -167,6 +173,9 @@ void RegisterInterfaces(
                          main_thread_task_runner);
   registry->AddInterface(base::Bind(&BindWallpaperRequestOnMainThread),
                          main_thread_task_runner);
+  registry->AddInterface(
+      base::Bind(&BindHighlighterControllerRequestOnMainThread),
+      main_thread_task_runner);
 }
 
 }  // namespace mojo_interface_factory

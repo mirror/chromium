@@ -4,10 +4,11 @@
 
 #include "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_highlighter_client.h"
 
-#include "ash/highlighter/highlighter_controller.h"
-#include "ash/highlighter/highlighter_selection_observer.h"
-#include "ash/shell.h"
+#include "ash/public/interfaces/constants.mojom.h"
 #include "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.h"
+#include "content/public/common/service_manager_connection.h"
+#include "mojo/public/cpp/bindings/binding.h"
+#include "services/service_manager/public/cpp/connector.h"
 
 namespace arc {
 
@@ -17,16 +18,16 @@ constexpr int kSelectionReportDelayMs = 600;
 
 ArcVoiceInteractionHighlighterClient::ArcVoiceInteractionHighlighterClient(
     ArcVoiceInteractionFrameworkService* service)
-    : service_(service) {
-  ash::Shell::Get()->highlighter_controller()->SetObserver(this);
+    : binding_(this), service_(service) {
+  content::ServiceManagerConnection::GetForProcess()
+      ->GetConnector()
+      ->BindInterface(ash::mojom::kServiceName, &highlighter_controller_);
+  ash::mojom::HighlighterControllerClientPtr client;
+  binding_.Bind(mojo::MakeRequest(&client));
+  highlighter_controller_->SetClient(std::move(client));
 }
 
-ArcVoiceInteractionHighlighterClient::~ArcVoiceInteractionHighlighterClient() {
-  if (ash::Shell::HasInstance() &&
-      ash::Shell::Get()->highlighter_controller()) {
-    ash::Shell::Get()->highlighter_controller()->SetObserver(nullptr);
-  }
-}
+ArcVoiceInteractionHighlighterClient::~ArcVoiceInteractionHighlighterClient() {}
 
 void ArcVoiceInteractionHighlighterClient::HandleSelection(
     const gfx::Rect& rect) {

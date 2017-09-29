@@ -107,6 +107,7 @@ TEST_F(MetalayerToolTest, EnablingDisablingMetalayerEnablesDisablesController) {
   EXPECT_CALL(*palette_tool_delegate_.get(), HidePalette());
   highlighter_test_api_->ResetEnabledState();
   tool_->OnEnable();
+  highlighter_test_api_->FlushMojoForTesting();
   EXPECT_TRUE(highlighter_test_api_->handle_enabled_state_changed_called());
   EXPECT_TRUE(highlighter_test_api_->enabled());
   testing::Mock::VerifyAndClearExpectations(palette_tool_delegate_.get());
@@ -114,6 +115,7 @@ TEST_F(MetalayerToolTest, EnablingDisablingMetalayerEnablesDisablesController) {
   // Disabling the metalayer tool disables the highlighter controller.
   highlighter_test_api_->ResetEnabledState();
   tool_->OnDisable();
+  highlighter_test_api_->FlushMojoForTesting();
   EXPECT_TRUE(highlighter_test_api_->handle_enabled_state_changed_called());
   EXPECT_FALSE(highlighter_test_api_->enabled());
   testing::Mock::VerifyAndClearExpectations(palette_tool_delegate_.get());
