@@ -311,6 +311,20 @@ void RenderWidgetHostInputEventRouter::RouteMouseWheelEvent(
         transformed_point = gfx::Point(event->PositionInWidget().x,
                                        event->PositionInWidget().y) +
                             wheel_target_.delta;
+      } else if ((event->phase == blink::WebMouseWheelEvent::kPhaseEnded ||
+                  event->momentum_phase ==
+                      blink::WebMouseWheelEvent::kPhaseEnded) &&
+                 bubbling_gesture_scroll_target_.target) {
+        // Send a GSE to the bubbling target and cancel scroll bubbling since
+        // the wheel target view is destroyed and the wheel end event won't get
+        // processed.
+        blink::WebGestureEvent dummy_event =
+            DummyGestureScrollUpdate(event->TimeStampSeconds());
+        dummy_event.source_device = blink::kWebGestureDeviceTouchpad;
+        SendGestureScrollEnd(bubbling_gesture_scroll_target_.target,
+                             dummy_event);
+        bubbling_gesture_scroll_target_.target = nullptr;
+        first_bubbling_scroll_target_.target = nullptr;
       }
     }
 
