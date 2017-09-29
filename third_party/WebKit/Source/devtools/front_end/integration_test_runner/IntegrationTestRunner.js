@@ -158,13 +158,10 @@ TestRunner.loadHTML = function(html) {
  * @return {!Promise<!SDK.RemoteObject>}
  */
 TestRunner.addScriptTag = function(path) {
-  var testScriptURL = /** @type {string} */ (Runtime.queryParam('test'));
-  var resolvedPath = testScriptURL + '/../' + path;
-
   return TestRunner.evaluateInPagePromise(`
     (function(){
       var script = document.createElement('script');
-      script.src = '${resolvedPath}';
+      script.src = '${TestRunner.url(path)}';
       document.head.append(script);
     })();
   `);
@@ -175,15 +172,12 @@ TestRunner.addScriptTag = function(path) {
  * @return {!Promise<!SDK.RemoteObject|undefined>}
  */
 TestRunner.addStylesheetTag = function(path) {
-  var testScriptURL = /** @type {string} */ (Runtime.queryParam('test'));
-  var resolvedPath = testScriptURL + '/../' + path;
-
   return TestRunner.evaluateInPageAsync(`
     (function(){
       var link = document.createElement('link');
       link.rel = 'stylesheet';
       link.type = 'text/css';
-      link.href = '${resolvedPath}';
+      link.href = '${TestRunner.url(path)}';
       link.onload = onload;
       document.head.append(link);
       var resolve;
@@ -203,13 +197,10 @@ TestRunner.addStylesheetTag = function(path) {
  * @return {!Promise<!SDK.RemoteObject|undefined>}
  */
 TestRunner.addIframe = function(path) {
-  var testScriptURL = /** @type {string} */ (Runtime.queryParam('test'));
-  var resolvedPath = testScriptURL + '/../' + path;
-
   return TestRunner.evaluateInPageAsync(`
     (function(){
       var iframe = document.createElement('iframe');
-      iframe.src = '${resolvedPath}';
+      iframe.src = '${TestRunner.url(path)}';
       iframe.onload = onload;
       document.body.appendChild(iframe);
 
@@ -824,6 +815,15 @@ TestRunner.waitForUISourceCodeRemoved = function(callback) {
   Workspace.workspace.once(Workspace.Workspace.Events.UISourceCodeRemoved).then(callback);
 };
 
+/**
+ * @param {string} relativeURL
+ * @return {string}
+ */
+TestRunner.url = function(relativeURL) {
+  var testScriptURL = /** @type {string} */ (Runtime.queryParam('test'));
+  return testScriptURL + '/../' + relativeURL;
+};
+
 /** @type {boolean} */
 IntegrationTestRunner._startedTest = false;
 
@@ -852,8 +852,7 @@ IntegrationTestRunner.TestObserver = class {
 };
 
 IntegrationTestRunner.runTest = async function() {
-  var testScriptURL = /** @type {string} */ (Runtime.queryParam('test'));
-  var basePath = testScriptURL + '/../';
+  var basePath = TestRunner.url('');
   await TestRunner.evaluateInPagePromise(`
     function relativeToTest(relativePath) {
       return '${basePath}' + relativePath;
