@@ -197,10 +197,11 @@ InspectorTest.makeFetchInWorker = function(url, requestInitializer, callback)
  */
 InspectorTest.clearNetworkCache = function()
 {
-    // This turns cache off and then on, effectively clearning the cache.
+    // This turns cache off and then on, effectively clearning the memory cache.
     var networkAgent = InspectorTest.NetworkAgent;
-    var promise = networkAgent.setCacheDisabled(true);
-    return promise.then(() => networkAgent.setCacheDisabled(false));
+    return Promise.all([
+        networkAgent.clearBrowserCache(),
+        networkAgent.setCacheDisabled(true).then(() => networkAgent.setCacheDisabled(false))]);
 }
 
 InspectorTest.HARPropertyFormatters = {
