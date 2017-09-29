@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5f1b0ee3_26ff86e9",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-29T21:07:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6058580d_1759ec0e",
+      "revId": "8ed60af08f7c93ec1a147d89cb85d90b023e8df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df8d1f0e_d0143494",
         "filename": "chrome/browser/resources/md_extensions/error_page.js",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "8ed60af08f7c93ec1a147d89cb85d90b023e8df5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "780cbe7e_eec3d085",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-29T21:07:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df8d1f0e_d0143494",
+      "revId": "8ed60af08f7c93ec1a147d89cb85d90b023e8df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a800ecf6_c4c7342f",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-29T21:07:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f7093c4_9cbd57c6",
+      "revId": "8ed60af08f7c93ec1a147d89cb85d90b023e8df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef5daa95_d18eb034",
         "filename": "chrome/browser/resources/md_extensions/error_page.js",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-29T19:10:01Z",
       "side": 1,
       "message": "We don\u0027t internationalize the errors themselves (e.g., a js error will always say \"Unexpected token\" in English).  I\u0027m not sure if it\u0027s the right choice to internationalize \"anonymous function\".  WDYT?",
+      "revId": "8ed60af08f7c93ec1a147d89cb85d90b023e8df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf9f81a5_5d9efe16",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-29T21:07:40Z",
+      "side": 1,
+      "message": "I just copied the functionName logic and the loc string directly from the old extensions page. I also thought it was a bit weird to localize code errors, since I believe all programming languages error in English? not sure who we could ask to confirm.",
+      "parentUuid": "ef5daa95_d18eb034",
       "revId": "8ed60af08f7c93ec1a147d89cb85d90b023e8df5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "45016cf3_bcd7403b",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-29T21:07:40Z",
+      "side": 1,
+      "message": "added more comments to clearly explain what this function is for.",
+      "parentUuid": "aa913887_844ac3a6",
+      "revId": "8ed60af08f7c93ec1a147d89cb85d90b023e8df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b5e1cca_e80bd187",
         "filename": "chrome/browser/resources/md_extensions/error_page.js",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "8ed60af08f7c93ec1a147d89cb85d90b023e8df5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f8fd4ff_739f75c0",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-29T21:07:40Z",
+      "side": 1,
+      "message": "based on offline discussion, I added an assert to check that the selectedError_ is always type RUNTIME, which is guaranteed to have renderProcess/ViewId, and removed the fallback value.",
+      "parentUuid": "6b5e1cca_e80bd187",
+      "revId": "8ed60af08f7c93ec1a147d89cb85d90b023e8df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
