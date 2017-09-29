@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "aae289be_3f0e8511",
+        "filename": "net/socket/udp_socket_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 940,
+      "author": {
+        "id": 1132136
+      },
+      "writtenOn": "2017-09-29T01:50:12Z",
+      "side": 1,
+      "message": "Yep, that\u0027s what I was thinking.",
+      "parentUuid": "0806fb5b_62071871",
+      "revId": "a35e01d048185afb0189e224d9a39d4ee4d90e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "30a34e38_60e7a632",
         "filename": "net/socket/udp_socket_unittest.cc",
         "patchSetId": 1
@@ -107,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "efa7992b_fb4c54b2",
+        "filename": "net/socket/udp_socket_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 991,
+      "author": {
+        "id": 1132136
+      },
+      "writtenOn": "2017-09-29T01:50:12Z",
+      "side": 1,
+      "message": "Just to clarify, this wasn\u0027t meant as a nit. See: https://engdoc.corp.google.com/eng/doc/devguide/coding/testing/unit-testing-best-practices.md?cl\u003dhead#behavior-testing",
+      "parentUuid": "958c1083_c75c6e89",
+      "revId": "a35e01d048185afb0189e224d9a39d4ee4d90e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2540ce3_1cce4b1a",
         "filename": "net/socket/udp_socket_win.cc",
         "patchSetId": 1
@@ -136,6 +172,24 @@
       "side": 1,
       "message": "I don\u0027t think it is necessary given the perf numbers I have seen, so I wasn\u0027t planning on it.",
       "parentUuid": "f2540ce3_1cce4b1a",
+      "revId": "a35e01d048185afb0189e224d9a39d4ee4d90e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63a264ee_a05beb78",
+        "filename": "net/socket/udp_socket_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1255,
+      "author": {
+        "id": 1132136
+      },
+      "writtenOn": "2017-09-29T01:50:12Z",
+      "side": 1,
+      "message": "How do you define necessary? Does it hurt anything or is it just more code to maintain?",
+      "parentUuid": "3c326930_87b28b30",
       "revId": "a35e01d048185afb0189e224d9a39d4ee4d90e25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -186,6 +240,30 @@
       "revId": "a35e01d048185afb0189e224d9a39d4ee4d90e25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "717c2228_28878c03",
+        "filename": "net/socket/udp_socket_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1288,
+      "author": {
+        "id": 1132136
+      },
+      "writtenOn": "2017-09-29T01:50:12Z",
+      "side": 1,
+      "message": "Ack. Since the MSDN documentation isn\u0027t great can you add a comment describing what you\u0027ve learned about flow IDs?",
+      "parentUuid": "e4879b67_339aa585",
+      "range": {
+        "startLine": 1288,
+        "startChar": 51,
+        "endLine": 1288,
+        "endChar": 59
+      },
+      "revId": "a35e01d048185afb0189e224d9a39d4ee4d90e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -252,6 +330,24 @@
       "side": 1,
       "message": "The connected case doesn\u0027t need to make the call on every send (since the destination is known when SetDiffServCodePoint is called). The connected case could probably be refactored to just call DscpManager::Set and DscpManager::PrepareForSend once from SetDiffServCodePoint. I was just trying to minimize churn.",
       "parentUuid": "cbb8d5c1_15a9ed81",
+      "revId": "a35e01d048185afb0189e224d9a39d4ee4d90e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76f48cae_f71b6372",
+        "filename": "net/socket/udp_socket_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1132136
+      },
+      "writtenOn": "2017-09-29T01:50:12Z",
+      "side": 1,
+      "message": "\u003e The connected case doesn\u0027t need to make the call on every send \n\nThen SendTo can check \"if (!remote_address_)\", right?\n\n\u003e The connected case could probably be refactored to just call DscpManager::Set and DscpManager::PrepareForSend once from SetDiffServCodePoint\n\nRight, that\u0027s what I was thinking.",
+      "parentUuid": "0828ffe0_1206d81e",
       "revId": "a35e01d048185afb0189e224d9a39d4ee4d90e25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
