@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4eddbc93_17f78eb4",
+        "filename": "media/blink/multibuffer_data_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-09-29T17:48:47Z",
+      "side": 1,
+      "message": "Yes, and?",
+      "parentUuid": "e20477b5_99f26b76",
+      "revId": "73f37e9952eb73b336f7fc007eb1b2e3d5648b93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4384cd51_1e218051",
         "filename": "media/blink/multibuffer_data_source.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "81238542_cc97da96",
+        "filename": "media/blink/multibuffer_data_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-09-29T17:48:47Z",
+      "side": 1,
+      "message": "Not currently possible. If a Read() call doesn\u0027t complete immediately, no more Read() calls can occur until we get here. Which means that you can\u0027t have a SeekTask queued after a ReadTask. (But you can have a ReadTask queued after a SeekTask.)\n\nHowever, I\u0027m going to change it so SeekTask_Locked() doesn\u0027t do anything if read_op_ is set.\nBut I don\u0027t want this to clear the seek positions either. Once the read task complets, I want SeekTask_Locked() to evaluate all seek position and pick the one with the least buffer.",
+      "parentUuid": "4384cd51_1e218051",
+      "revId": "73f37e9952eb73b336f7fc007eb1b2e3d5648b93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "90cc96e1_d1e5b8f7",
         "filename": "media/blink/multibuffer_data_source.cc",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-29T15:31:48Z",
       "side": 1,
       "message": "what if more than one have |!available|?  how often does that happen?",
+      "revId": "73f37e9952eb73b336f7fc007eb1b2e3d5648b93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ab9fbd1_4065047f",
+        "filename": "media/blink/multibuffer_data_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-09-29T17:48:47Z",
+      "side": 1,
+      "message": "Shouldn\u0027t happen often, but should probably pick the last position rather than the first..\nFixed.",
+      "parentUuid": "90cc96e1_d1e5b8f7",
       "revId": "73f37e9952eb73b336f7fc007eb1b2e3d5648b93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -73,6 +127,30 @@
       "revId": "73f37e9952eb73b336f7fc007eb1b2e3d5648b93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62b9ae1b_50e9fa4f",
+        "filename": "media/blink/multibuffer_data_source.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-09-29T17:48:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ba636a7_05a35918",
+      "range": {
+        "startLine": 133,
+        "startChar": 25,
+        "endLine": 133,
+        "endChar": 26
+      },
+      "revId": "73f37e9952eb73b336f7fc007eb1b2e3d5648b93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
