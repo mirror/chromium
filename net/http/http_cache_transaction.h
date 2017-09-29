@@ -186,6 +186,11 @@ class NET_EXPORT_PRIVATE HttpCache::Transaction : public HttpTransaction {
   // If result is an error code, a future Read should fail with |result|.
   void AboutToBeRemovedFromWriters(int result);
 
+  // Returns true if this transaction can participate in shared writing along
+  // with other transactions. Currently shared writing is not supported for
+  // transactions with range requests.
+  bool CanDoSharedWriting() const;
+
  private:
   static const size_t kNumValidationHeaders = 2;
   // Helper struct to pair a header name with its value, for

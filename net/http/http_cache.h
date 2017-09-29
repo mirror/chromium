@@ -406,10 +406,12 @@ class NET_EXPORT HttpCache : public HttpTransactionFactory {
   // it becomes the writer and returns OK. In other cases ERR_IO_PENDING is
   // returned and the transaction will be notified about completion via its
   // IO callback. In a failure case, the callback will be invoked with
-  // ERR_CACHE_RACE.
+  // ERR_CACHE_RACE. |can_do_shared_writing| is true if transaction can
+  // participate in writing to the cache along with other transactions.
   int DoneWithResponseHeaders(ActiveEntry* entry,
                               Transaction* transaction,
-                              bool is_partial);
+                              bool is_partial,
+                              bool can_do_shared_writing);
 
   // Called when the transaction has finished working with this entry.
   // |entry_is_complete| is true if the transaction finished reading/writing
@@ -475,7 +477,9 @@ class NET_EXPORT HttpCache : public HttpTransactionFactory {
   void ProcessDoneHeadersQueue(ActiveEntry* entry);
 
   // Adds a transaction to writers.
-  void AddTransactionToWriters(ActiveEntry* entry, Transaction* transaction);
+  void AddTransactionToWriters(ActiveEntry* entry,
+                               Transaction* transaction,
+                               bool can_do_shared_writing);
 
   // Returns true if this transaction can write headers to the entry.
   bool CanTransactionWriteResponseHeaders(ActiveEntry* entry,

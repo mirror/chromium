@@ -818,7 +818,8 @@ int HttpCache::AddTransactionToEntry(ActiveEntry* entry,
 
 int HttpCache::DoneWithResponseHeaders(ActiveEntry* entry,
                                        Transaction* transaction,
-                                       bool is_partial) {
+                                       bool is_partial,
+                                       bool can_do_shared_writing) {
   // If |transaction| is the current writer, do nothing. This can happen for
   // range requests since they can go back to headers phase after starting to
   // write.
@@ -846,7 +847,7 @@ int HttpCache::DoneWithResponseHeaders(ActiveEntry* entry,
     }
 
     if (entry->writers->CanAddWriters() && entry->writers->IsEmpty()) {
-      AddTransactionToWriters(entry, transaction);
+      AddTransactionToWriters(entry, transaction, can_do_shared_writing);
       ProcessQueuedTransactions(entry);
       return OK;
     }
@@ -1054,14 +1055,17 @@ void HttpCache::ProcessDoneHeadersQueue(ActiveEntry* entry) {
   DCHECK(!entry->done_headers_queue.empty());
 
   Transaction* transaction = entry->done_headers_queue.front();
+  bool can_do_shared_writing = transaction->CanDoSharedWriting();
 
-  // If this transaction is responsible for writing the response body.
-  if (transaction->mode() & Transaction::WRITE) {
-    AddTransactionToWriters(entry, transaction);
+  if (IsWritingInProgress(entry) && !can_do_shared_writing)
+    return;
+
+  if (IsWritingInProgress(entry) || transaction->mode() & Transaction::WRITE) {
+    AddTransactionToWriters(entry, transaction, can_do_shared_writing);
   } else {
-    // If a transaction is in front of this queue with only read mode set and
-    // there is no writer, it implies response body is already written, convert
-    // to a reader.
+    // If a transaction is has only read mode set and there is no writing in
+    // progress, it implies response body is already written, add it to
+    // readers.
     auto return_val = entry->readers.insert(transaction);
     DCHECK_EQ(return_val.second, true);
   }
@@ -1075,13 +1079,13 @@ void HttpCache::ProcessDoneHeadersQueue(ActiveEntry* entry) {
 }
 
 void HttpCache::AddTransactionToWriters(ActiveEntry* entry,
-                                        Transaction* transaction) {
-  // TODO(shivanisha), is_exclusive should be set conditionally. Currently
-  // setting it for all cases to test the reduced case of at most 1 writer.
+                                        Transaction* transaction,
+                                        bool can_do_shared_writing) {
   Writers::TransactionInfo info(transaction->partial(),
                                 transaction->is_truncated(),
                                 *(transaction->GetResponseInfo()));
-  entry->writers->AddTransaction(transaction, true /* is_exclusive */,
+  entry->writers->AddTransaction(transaction,
+                                 !can_do_shared_writing /* is_exclusive */,
                                  transaction->priority(), info);
 }
 
