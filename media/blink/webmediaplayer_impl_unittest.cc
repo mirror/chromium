@@ -241,6 +241,7 @@ class WebMediaPlayerImplTest : public testing::Test {
                                                   &web_frame_client_,
                                                   nullptr,
                                                   nullptr)),
+        context_provider_(cc::TestContextProvider::Create()),
         audio_parameters_(TestAudioParameters::Normal()) {
     media_thread_.StartAndWaitForTesting();
   }
@@ -274,6 +275,8 @@ class WebMediaPlayerImplTest : public testing::Test {
             provider_.get(), base::Bind(&CreateCapabilitiesRecorder),
             base::Bind(&WebMediaPlayerImplTest::CreateMockSurfaceLayerBridge,
                        base::Unretained(this)),
+            base::Bind(&WebMediaPlayerImplTest::ProvideContext,
+                       base::Unretained(this)),
             cc::TestContextProvider::Create()));
 }
 
@@ -288,6 +291,12 @@ class WebMediaPlayerImplTest : public testing::Test {
     base::RunLoop().RunUntilIdle();
 
     web_view_->Close();
+  }
+
+  void ProvideContext(base::Callback<void(viz::ContextProvider*)> callback) {
+    media_thread_.task_runner()->PostTask(
+        FROM_HERE,
+        base::Bind(callback, base::Unretained(context_provider_.get())));
   }
 
  protected:
@@ -444,6 +453,8 @@ class WebMediaPlayerImplTest : public testing::Test {
   blink::WebFrameClient web_frame_client_;
   blink::WebView* web_view_;
   blink::WebLocalFrame* web_local_frame_;
+
+  scoped_refptr<cc::TestContextProvider> context_provider_;
 
   std::unique_ptr<media::UrlIndex> url_index_;
 
