@@ -208,6 +208,23 @@ AutocompleteMatch KeywordProvider::CreateVerbatimMatch(
       SplitReplacementStringFromInput(text, true), true, 0, false);
 }
 
+void KeywordProvider::OnKeywordEntered() {
+  base::string16 keyword, remaining_input;
+  if (!KeywordProvider::ExtractKeywordFromInput(keyword_input_, model_,
+                                                &keyword, &remaining_input))
+    return;
+  extensions_delegate_->SetInput(keyword_input_);
+  const TemplateURL* const template_url =
+      GetTemplateURLService()->GetTemplateURLForKeyword(keyword);
+
+  if ((template_url->type() == TemplateURL::OMNIBOX_API_EXTENSION) &&
+      extensions_delegate_ &&
+      extensions_delegate_->IsEnabledExtension(
+          template_url->GetExtensionId())) {
+    extensions_delegate_->OnKeywordEntered(template_url);
+  }
+}
+
 void KeywordProvider::DeleteMatch(const AutocompleteMatch& match) {
   const base::string16& suggestion_text = match.contents;
 

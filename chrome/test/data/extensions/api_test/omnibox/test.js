@@ -17,7 +17,7 @@ chrome.omnibox.onInputChanged.addListener(
         {content: text + "n2", description: "description2"},
         {content: text + "n3" + incognitoSuffix, description: "description3"},
       ]);
-    } else if("d") {
+    } else if(text == "d") {
       suggest([
         {content: "n1", description: "des1", deletable: true},
         {content: "n2", description: "des2", deletable: false},
@@ -42,6 +42,16 @@ chrome.omnibox.onInputEntered.addListener(
 chrome.omnibox.onDeleteSuggestion.addListener(
   function(text) {
     chrome.test.sendMessage("onDeleteSuggestion: " + text);
+  });
+
+chrome.omnibox.onKeywordEntered.addListener(
+  function(suggest) {
+    var resultText = "entered ";
+    suggest([
+      {content: resultText + "1", description: resultText + "1"},
+      {content: resultText + "2", description: resultText + "2"}
+    ]);
+    chrome.test.sendMessage("onKeywordEntered");
   });
 
 // Now we wait for the input events to fire.
