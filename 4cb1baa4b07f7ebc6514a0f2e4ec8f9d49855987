@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "383657f6_565d2855",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThreadTestHelper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-29T04:58:18Z",
+      "side": 1,
+      "message": "This function is called only from the base WorkerThread class, so we could also make the base virtual function private. I\u0027ll make a follow-up patch.",
+      "parentUuid": "0b2f64b2_19e363d1",
+      "range": {
+        "startLine": 126,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 11
+      },
+      "revId": "4cb1baa4b07f7ebc6514a0f2e4ec8f9d49855987",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "88fe7f4d_eb98e37b",
         "filename": "third_party/WebKit/Source/core/workers/WorkerThreadTestHelper.h",
         "patchSetId": 1
@@ -172,6 +196,24 @@
       "side": 1,
       "message": "this is not a constructor.",
       "parentUuid": "88fe7f4d_eb98e37b",
+      "revId": "4cb1baa4b07f7ebc6514a0f2e4ec8f9d49855987",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b46e29d5_b6d75663",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThreadTestHelper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-29T04:58:18Z",
+      "side": 1,
+      "message": "Oh, sorry!",
+      "parentUuid": "06420655_8f26a23e",
       "revId": "4cb1baa4b07f7ebc6514a0f2e4ec8f9d49855987",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
