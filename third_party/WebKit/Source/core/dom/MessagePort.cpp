@@ -125,7 +125,7 @@ void MessagePort::MessageAvailable() {
 
   task_runner_->PostTask(BLINK_FROM_HERE,
                          CrossThreadBind(&MessagePort::DispatchMessages,
-                                         WrapCrossThreadWeakPersistent(this)));
+                                         WrapCrossThreadPersistent(this)));
 }
 
 void MessagePort::start() {
@@ -198,31 +198,35 @@ void MessagePort::DispatchMessages() {
   if (!Started())
     return;
 
-  while (true) {
-    // Because close() doesn't cancel any in flight calls to dispatchMessages(),
-    // and can be triggered by the onmessage event handler, we need to check if
-    // the port is still open before each dispatch.
-    if (closed_)
-      break;
+  // Because close() doesn't cancel any in flight calls to dispatchMessages(),
+  // and can be triggered by the onmessage event handler, we need to check if
+  // the port is still open before each dispatch.
+  if (closed_)
+    return;
 
-    // WorkerGlobalScope::close() in Worker onmessage handler should prevent
-    // the next message from dispatching.
-    if (GetExecutionContext()->IsWorkerGlobalScope() &&
-        ToWorkerGlobalScope(GetExecutionContext())->IsClosing()) {
-      break;
-    }
+  // WorkerGlobalScope::close() in Worker onmessage handler should prevent
+  // the next message from dispatching.
+  if (GetExecutionContext()->IsWorkerGlobalScope() &&
+      ToWorkerGlobalScope(GetExecutionContext())->IsClosing())
+    return;
 
-    RefPtr<SerializedScriptValue> message;
-    MessagePortChannelArray channels;
-    if (!TryGetMessage(message, channels))
-      break;
+  RefPtr<SerializedScriptValue> message;
+  MessagePortChannelArray channels;
+  if (!TryGetMessage(message, channels))
+    return;
 
-    MessagePortArray* ports =
-        MessagePort::EntanglePorts(*GetExecutionContext(), std::move(channels));
-    Event* evt = MessageEvent::Create(ports, std::move(message));
+  MessagePortArray* ports =
+      MessagePort::EntanglePorts(*GetExecutionContext(), std::move(channels));
+  Event* evt = MessageEvent::Create(ports, std::move(message));
 
-    DispatchEvent(evt);
-  }
+  DispatchEvent(evt);
+
+  // Don't post another task if there's an identical one pending.
+  if (AtomicTestAndSetToOne(&pending_dispatch_task_))
+    return;
+  task_runner_->PostTask(
+      BLINK_FROM_HERE,
+      WTF::Bind(&MessagePort::DispatchMessages, WrapPersistent(this)));
 }
 
 bool MessagePort::HasPendingActivity() const {
