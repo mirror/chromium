@@ -22,6 +22,30 @@
       "revId": "c8e126f3ba3a53259ad86a018ecf994e9406d341",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30a3143f_c6c28390",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-09-29T17:41:27Z",
+      "side": 1,
+      "message": "|enabled| comes from a service, ArcAccessibilityHelperBridgeService|, which we own, so we control both ends of the call. We also compute |enabled| in the service.",
+      "parentUuid": "0eb070d3_1bbcfc6f",
+      "range": {
+        "startLine": 185,
+        "startChar": 6,
+        "endLine": 185,
+        "endChar": 13
+      },
+      "revId": "c8e126f3ba3a53259ad86a018ecf994e9406d341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
