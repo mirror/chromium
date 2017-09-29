@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5013889c_4d6696d8",
+        "filename": "third_party/WebKit/Source/core/paint/ViewPainterTest.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-09-29T19:04:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c266b1e_cb12804c",
+      "revId": "80351145c1b361b9987f624b3e2c3a7dead2e37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f09de29_0aae2dfe",
         "filename": "third_party/WebKit/Source/core/paint/ViewPainterTest.cpp",
         "patchSetId": 12
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "49df7cc5_061613be",
+        "filename": "third_party/WebKit/Source/core/paint/ViewPainterTest.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-09-29T19:04:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f09de29_0aae2dfe",
+      "revId": "80351145c1b361b9987f624b3e2c3a7dead2e37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06a0ef4a_89bbc86e",
         "filename": "third_party/WebKit/Source/core/paint/ViewPainterTest.cpp",
         "patchSetId": 12
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-29T16:21:17Z",
       "side": 1,
       "message": "Is it possible to look at GetPaintRecordBounds or the visual rect of the display item instead of poking into the paint record itself?",
+      "revId": "80351145c1b361b9987f624b3e2c3a7dead2e37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea1dd5b0_58189204",
+        "filename": "third_party/WebKit/Source/core/paint/ViewPainterTest.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-09-29T19:04:49Z",
+      "side": 1,
+      "message": "Those don\u0027t actually reflect the rect calculated by BackgroundImageGeometry.  The changes there are rather subtle so I want to make sure they\u0027re tested.",
+      "parentUuid": "06a0ef4a_89bbc86e",
       "revId": "80351145c1b361b9987f624b3e2c3a7dead2e37e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
