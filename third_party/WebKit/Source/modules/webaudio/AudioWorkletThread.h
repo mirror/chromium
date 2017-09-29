@@ -17,7 +17,8 @@ class WorkerReportingProxy;
 
 // AudioWorkletThread is a per-frame singleton object that represents the
 // backing thread for the processing of AudioWorkletNode/AudioWorkletProcessor.
-// It is supposed to run an instance of V8 isolate.
+// It is supposed to run an instance of V8 isolate. The life cycle of this
+// object is managed by the reference counting of the static backing thread.
 
 class MODULES_EXPORT AudioWorkletThread final : public WorkerThread {
  public:
@@ -27,8 +28,10 @@ class MODULES_EXPORT AudioWorkletThread final : public WorkerThread {
 
   WorkerBackingThread& GetWorkerBackingThread() override;
 
-  // The backing thread is cleared by clearSharedBackingThread().
-  void ClearWorkerBackingThread() override {}
+  // Invoked by WorkerThread::TerminateAllWorkersForTesting(). Decrements the
+  // reference count on the static backing thread. When the count reaches to 0,
+  // it calls ClearSharedBackingThread().
+  void ClearWorkerBackingThread() override;
 
   // This may block the main thread.
   static void CollectAllGarbage();
@@ -55,6 +58,10 @@ class MODULES_EXPORT AudioWorkletThread final : public WorkerThread {
   // This raw pointer gets assigned in EnsureSharedBackingThread() and manually
   // released by ClearSharedBackingThread().
   static WebThread* s_backing_thread_;
+
+  // This is only accessed by the main thread, so an atomic counter is not
+  // necessary.
+  static unsigned s_ref_count_;
 };
 
 }  // namespace blink
