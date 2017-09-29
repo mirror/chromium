@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "f786e89f_93b30319",
+        "filename": "gpu/command_buffer/service/create_gr_gl_interface.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-29T18:43:20Z",
+      "side": 1,
+      "message": "nit: I don\u0027t feel like the name \"versions_gles3\" carries the right meaning. How about \"need_fake_gl_version\"?",
+      "revId": "7076cad7f696edcdbfbed82b78d5950ddc21cb82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ccf1982_aa8a8168",
         "filename": "gpu/command_buffer/service/create_gr_gl_interface.cc",
         "patchSetId": 3
@@ -13,6 +30,23 @@
       "writtenOn": "2017-09-29T17:09:47Z",
       "side": 1,
       "message": "Not sure if this is the right way. The func ptr casting was getting little messy. So waiting for your comments on this.",
+      "revId": "7076cad7f696edcdbfbed82b78d5950ddc21cb82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be8cab93_6068f614",
+        "filename": "gpu/command_buffer/service/create_gr_gl_interface.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-29T18:43:20Z",
+      "side": 1,
+      "message": "nit: rather than having 2 variables, and having to test version_gles3 everywhere, we should be able to do like previously, a single variable that takes a different value?",
       "revId": "7076cad7f696edcdbfbed82b78d5950ddc21cb82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
