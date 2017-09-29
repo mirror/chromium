@@ -34,6 +34,24 @@
       "revId": "a15684ceeadfae99d1352d8c3d0a83ebe2905e5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6c803ae6_7df97786",
+        "filename": "components/safe_browsing/proto/csd.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-29T09:10:11Z",
+      "side": 1,
+      "message": "do you plan to remove these (leaving comments behind) and use \"reserved\" as per other discussion? thanks.",
+      "parentUuid": "24b9f255_a3742022",
+      "revId": "a15684ceeadfae99d1352d8c3d0a83ebe2905e5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
