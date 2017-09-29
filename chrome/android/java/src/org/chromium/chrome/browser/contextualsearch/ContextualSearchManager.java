@@ -64,10 +64,9 @@ import javax.annotation.Nullable;
  * Manager for the Contextual Search feature. This class keeps track of the status of Contextual
  * Search and coordinates the control with the layout.
  */
-public class ContextualSearchManager implements ContextualSearchManagementDelegate,
-                                                ContextualSearchTranslateInterface,
-                                                ContextualSearchNetworkCommunicator,
-                                                ContextualSearchSelectionHandler, SelectionClient {
+public class ContextualSearchManager
+        implements ContextualSearchManagementDelegate, ContextualSearchTranslateInterface,
+                   ContextualSearchNetworkCommunicator, ContextualSearchSelectionHandler {
     // TODO(donnd): provide an inner class that implements some of these interfaces (like the
     // ContextualSearchTranslateInterface) rather than having the manager itself implement the
     // interface because that exposes all the public methods of that interface at the manager level.
@@ -180,6 +179,9 @@ public class ContextualSearchManager implements ContextualSearchManagementDelega
     // Counter for how many times we've called SelectWordAroundCaret without an ACK returned.
     // TODO(donnd): replace with a more systematic approach using the InternalStateController.
     private int mSelectWordAroundCaretCounter;
+
+    /** Whether handling of events is operating cooperatively with Smart Select through a bridge. */
+    private boolean mIsSelectionClientBridgedWithSmartSelect;
 
     /**
      * The delegate that is responsible for promoting a {@link ContentViewCore} to a {@link Tab}
@@ -1212,65 +1214,93 @@ public class ContextualSearchManager implements ContextualSearchManagementDelega
     // SelectionClient -- interface used by ContentViewCore.
     // ============================================================================================
 
-    @Override
-    public void onSelectionChanged(String selection) {
-        if (!isOverlayVideoMode() && mSearchPanel != null) {
-            mSelectionController.handleSelectionChanged(selection);
-            mSearchPanel.updateBrowserControlsState(BrowserControlsState.BOTH, true);
-        }
-    }
-
-    @Override
-    public void onSelectionEvent(int eventType, float posXPix, float posYPix) {
-        if (!isOverlayVideoMode()) {
-            mSelectionController.handleSelectionEvent(eventType, posXPix, posYPix);
-        }
-    }
-
-    @Override
-    public void showUnhandledTapUIIfNeeded(final int x, final int y) {
-        if (!isOverlayVideoMode()) {
-            mSelectionController.handleShowUnhandledTapUIIfNeeded(x, y);
-        }
-    }
-
-    @Override
-    public void selectWordAroundCaretAck(boolean didSelect, int startAdjust, int endAdjust) {
-        if (mSelectWordAroundCaretCounter > 0) mSelectWordAroundCaretCounter--;
-        if (mSelectWordAroundCaretCounter > 0
-                || !mInternalStateController.isStillWorkingOn(InternalState.START_SHOWING_TAP_UI)) {
-            return;
-        }
-
-        if (didSelect) {
-            assert mContext != null;
-            mContext.onSelectionAdjusted(startAdjust, endAdjust);
-            showSelectionAsSearchInBar(mSelectionController.getSelectedText());
-            mInternalStateController.notifyFinishedWorkOn(InternalState.START_SHOWING_TAP_UI);
+    /**
+     * Creates and returns a {@link SelectionClient} that can handle the current platform's
+     * selection logic (if any) in addition to ContextualSearch. On some versions of Android the
+     * platform's Smart-Selection client is available so we create a {@link SelectionClientBridge}
+     * to allow them to coexist.
+     * @param platformSelectionClient The {@link SelectionClient} that's platform-dependent, which
+     *        will be connected to the {@link SelectionClientBridge}, or {@code null} if none set.
+     * @return A new {@link SelectionClient} that the caller can use to handle selections.
+     */
+    SelectionClient createSelectionClient(@Nullable SelectionClient platformSelectionClient) {
+        SelectionClient contextualSearchSelectionClient = new ContextualSearchSelectionClient();
+        mIsSelectionClientBridgedWithSmartSelect = platformSelectionClient != null;
+        if (mIsSelectionClientBridgedWithSmartSelect) {
+            return new SelectionClientBridge(
+                    platformSelectionClient, contextualSearchSelectionClient);
         } else {
-            hideContextualSearch(StateChangeReason.UNKNOWN);
+            return contextualSearchSelectionClient;
         }
     }
 
-    @Override
-    public boolean requestSelectionPopupUpdates(boolean shouldSuggest) {
-        return false;
-    }
+    /**
+     * Implements the {@link SelectionClient} interface for Contextual Search.
+     * Handles messages from Content about selection changes.  These are the key drivers of
+     * Contextual Search logic.
+     */
+    private class ContextualSearchSelectionClient implements SelectionClient {
+        @Override
+        public void onSelectionChanged(String selection) {
+            if (!isOverlayVideoMode() && mSearchPanel != null) {
+                mSelectionController.handleSelectionChanged(selection);
+                mSearchPanel.updateBrowserControlsState(BrowserControlsState.BOTH, true);
+            }
+        }
 
-    @Override
-    public void cancelAllRequests() {}
+        @Override
+        public void onSelectionEvent(int eventType, float posXPix, float posYPix) {
+            if (!isOverlayVideoMode()) {
+                mSelectionController.handleSelectionEvent(eventType, posXPix, posYPix);
+            }
+        }
 
-    @Override
-    public void setTextClassifier(TextClassifier textClassifier) {}
+        @Override
+        public void showUnhandledTapUIIfNeeded(final int x, final int y) {
+            if (!isOverlayVideoMode()) {
+                mSelectionController.handleShowUnhandledTapUIIfNeeded(x, y);
+            }
+        }
 
-    @Override
-    public TextClassifier getTextClassifier() {
-        return null;
-    }
+        @Override
+        public void selectWordAroundCaretAck(boolean didSelect, int startAdjust, int endAdjust) {
+            if (mSelectWordAroundCaretCounter > 0) mSelectWordAroundCaretCounter--;
+            if (mSelectWordAroundCaretCounter > 0
+                    || !mInternalStateController.isStillWorkingOn(
+                               InternalState.START_SHOWING_TAP_UI)) {
+                return;
+            }
 
-    @Override
-    public TextClassifier getCustomTextClassifier() {
-        return null;
+            if (didSelect) {
+                assert mContext != null;
+                mContext.onSelectionAdjusted(startAdjust, endAdjust);
+                showSelectionAsSearchInBar(mSelectionController.getSelectedText());
+                mInternalStateController.notifyFinishedWorkOn(InternalState.START_SHOWING_TAP_UI);
+            } else {
+                hideContextualSearch(StateChangeReason.UNKNOWN);
+            }
+        }
+
+        @Override
+        public boolean requestSelectionPopupUpdates(boolean shouldSuggest) {
+            return false;
+        }
+
+        @Override
+        public void cancelAllRequests() {}
+
+        @Override
+        public void setTextClassifier(TextClassifier textClassifier) {}
+
+        @Override
+        public TextClassifier getTextClassifier() {
+            return null;
+        }
+
+        @Override
+        public TextClassifier getCustomTextClassifier() {
+            return null;
+        }
     }
 
     /**
@@ -1597,7 +1627,18 @@ public class ContextualSearchManager implements ContextualSearchManagementDelega
             public void showContextualSearchLongpressUi() {
                 mInternalStateController.notifyStartingWorkOn(
                         InternalState.SHOWING_LONGPRESS_SEARCH);
-                showContextualSearch(StateChangeReason.TEXT_SELECT_LONG_PRESS);
+                boolean isSmartSelectActive = mIsSelectionClientBridgedWithSmartSelect
+                        && !ContextualSearchFieldTrial.isSuppressForSmartSelectDisabled();
+                if (isSmartSelectActive) {
+                    // Make sure we close any existing UX since Smart Select has taken this action.
+                    // Specifically, this happens when the user taps on an existing tap-selection
+                    // and the selection-pins show: The original tap processing may still be in
+                    // progress or may have completed and the Bar is being shown.
+                    hideContextualSearch(StateChangeReason.UNKNOWN);
+                    RecordUserAction.record("ContextualSearch.SmartSelectSuppressed");
+                } else {
+                    showContextualSearch(StateChangeReason.TEXT_SELECT_LONG_PRESS);
+                }
                 mInternalStateController.notifyFinishedWorkOn(
                         InternalState.SHOWING_LONGPRESS_SEARCH);
             }

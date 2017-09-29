@@ -1159,7 +1159,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
                 PackageManager.MATCH_DEFAULT_ONLY).size() > 0;
     }
 
-    // The callback class that delivers result from a SmartSelectionClient.
+    // The callback class that delivers the result from a SmartSelectionClient.
     private class SmartSelectionCallback implements SelectionClient.ResultCallback {
         @Override
         public void onClassified(SelectionClient.Result result) {

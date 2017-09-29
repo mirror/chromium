@@ -19,6 +19,7 @@ import org.chromium.chrome.browser.search_engines.TemplateUrlService.TemplateUrl
 import org.chromium.chrome.browser.tab.EmptyTabObserver;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.content.browser.ContentViewCore;
+import org.chromium.content.browser.SelectionClient;
 import org.chromium.content_public.browser.GestureStateListener;
 import org.chromium.net.NetworkChangeNotifier;
 
@@ -36,6 +37,11 @@ public class ContextualSearchTabHelper
      * The current ContentViewCore for the Tab which this helper is monitoring.
      */
     private ContentViewCore mBaseContentViewCore;
+
+    /**
+     * The {@link SelectionClient} that uses platform features on the base page (e.g. Smart Select).
+     */
+    private SelectionClient mBasePagePlatformSelectionClient;
 
     /**
      * The GestureListener used for handling events from the current ContentViewCore.
@@ -75,6 +81,7 @@ public class ContextualSearchTabHelper
         }
 
         mBaseContentViewCore = tab.getContentViewCore();
+        mBasePagePlatformSelectionClient = mBaseContentViewCore.getSelectionClient();
         // Add Contextual Search here in case it couldn't get added in onContentChanged() due to
         // being too early in initialization of Chrome (ContextualSearchManager being null).
         updateContextualSearchHooks(mBaseContentViewCore);
@@ -124,6 +131,7 @@ public class ContextualSearchTabHelper
         }
         removeContextualSearchHooks(mBaseContentViewCore);
         mBaseContentViewCore = null;
+        mBasePagePlatformSelectionClient = null;
     }
 
     @Override
@@ -168,6 +176,8 @@ public class ContextualSearchTabHelper
     private void updateHooksForNewContentViewCore(Tab tab) {
         removeContextualSearchHooks(mBaseContentViewCore);
         mBaseContentViewCore = tab.getContentViewCore();
+        mBasePagePlatformSelectionClient =
+                mBaseContentViewCore == null ? null : mBaseContentViewCore.getSelectionClient();
         updateContextualSearchHooks(mBaseContentViewCore);
     }
 
@@ -195,7 +205,7 @@ public class ContextualSearchTabHelper
         if (mGestureStateListener == null && manager != null) {
             mGestureStateListener = manager.getGestureStateListener();
             cvc.addGestureStateListener(mGestureStateListener);
-            cvc.setSelectionClient(manager);
+            cvc.setSelectionClient(manager.createSelectionClient(mBasePagePlatformSelectionClient));
         }
     }
 
@@ -209,7 +219,7 @@ public class ContextualSearchTabHelper
         if (mGestureStateListener != null) {
             cvc.removeGestureStateListener(mGestureStateListener);
             mGestureStateListener = null;
-            cvc.setSelectionClient(null);
+            cvc.setSelectionClient(mBasePagePlatformSelectionClient);
         }
     }
 

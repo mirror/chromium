@@ -74,6 +74,7 @@ import org.chromium.chrome.test.util.MenuUtils;
 import org.chromium.chrome.test.util.OmniboxTestUtils;
 import org.chromium.components.navigation_interception.NavigationParams;
 import org.chromium.content.browser.ContentViewCore;
+import org.chromium.content.browser.SelectionClient;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content.browser.test.util.DOMUtils;
@@ -2237,9 +2238,10 @@ public class ContextualSearchManagerTest {
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
-                mManager.onSelectionEvent(
+                SelectionClient selectionClient = mManager.createSelectionClient(null);
+                selectionClient.onSelectionEvent(
                         SelectionEventType.SELECTION_HANDLE_DRAG_STARTED, 333, 450);
-                mManager.onSelectionEvent(
+                selectionClient.onSelectionEvent(
                         SelectionEventType.SELECTION_HANDLE_DRAG_STOPPED, 303, 450);
             }
         });
