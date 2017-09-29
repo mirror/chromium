@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "13afa358_8a2f86f0",
+        "filename": "third_party/WebKit/Source/core/loader/resource/CSSStyleSheetResource.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-09-29T09:06:55Z",
+      "side": 1,
+      "message": "Well, it might look a bit hacky because it is. :-)\n\nThe problem I had is that the decoded size is a member in the super class, but is modified in several subclasses. For CSSStyleSheetResource, this used to be in one place, but now - with the text decoding logic moved \u0027up\u0027 - it ends up being in two. So I changed it that either place that updates a member that changes the decoded size would do so by computing the size different and adding it.\n\nIt would probably be easier \u0026 cleaner if I just made DecodedSize() a virtual method, and then each subclass would have their own instance, taking into account its own members. I didn\u0027t initially do that because I wanted to keep the existing logic as much as possible. I\u0027ll try if it looks nicer...",
+      "parentUuid": "4640f315_13f591be",
+      "revId": "29696709fb18d5918fb751d4df883490bc6c021a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a9e1d29_590c7e56",
         "filename": "third_party/WebKit/Source/core/loader/resource/TextResource.h",
         "patchSetId": 9
