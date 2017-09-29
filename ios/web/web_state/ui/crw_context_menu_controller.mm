@@ -344,4 +344,9 @@ void CancelTouches(UIGestureRecognizer* gesture_recognizer) {
         }];
 }
 
+- (void)peekActionPerformed {
+  _contextMenuRecognizer.enabled = NO;
+  _contextMenuRecognizer.enabled = YES;
+}
+
 @end
