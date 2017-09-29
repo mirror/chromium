@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f86b23d5_0fee9cde",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2017-09-29T19:05:32Z",
+      "side": 1,
+      "message": "It\u0027s a personal preference, please feel free to keep it as is. I think only the first sentence should be here, and you can move the rest to the commit msg.",
+      "range": {
+        "startLine": 626,
+        "startChar": 0,
+        "endLine": 629,
+        "endChar": 38
+      },
+      "revId": "49df0d5f0f5d1df9370bdfc025219c25bbc610f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
