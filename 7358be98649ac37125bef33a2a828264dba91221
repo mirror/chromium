@@ -16,6 +16,24 @@
       "revId": "7358be98649ac37125bef33a2a828264dba91221",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82d24779_bedd45fc",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1172235
+      },
+      "writtenOn": "2017-09-29T22:34:49Z",
+      "side": 1,
+      "message": "It looks like that actually does work (at least it passes tests). I think I had trouble with that approach before but it must have been a slightly different/incorrect solution.\n\nI thought that it actually behaved incorrectly for the other callers of RestoreStateForAttrib but I think it ought to work fine for them.",
+      "parentUuid": "f5f0adc2_6a7b50ca",
+      "revId": "7358be98649ac37125bef33a2a828264dba91221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
