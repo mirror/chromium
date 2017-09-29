@@ -13,6 +13,7 @@
 #include "base/location.h"
 #include "base/macros.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "content/child/child_thread_impl.h"
 #include "content/public/common/media_stream_request.h"
 #include "content/public/common/service_names.mojom.h"
@@ -136,7 +137,8 @@ void LocalVideoCapturerSource::OnStateUpdate(VideoCaptureState state) {
     return;
   switch (state) {
     case VIDEO_CAPTURE_STATE_STARTED:
-      running_callback_.Run(true);
+      base::ThreadTaskRunnerHandle::Get()->PostTask(
+          FROM_HERE, base::Bind(running_callback_, true));
       break;
 
     case VIDEO_CAPTURE_STATE_STOPPING:
@@ -145,7 +147,8 @@ void LocalVideoCapturerSource::OnStateUpdate(VideoCaptureState state) {
     case VIDEO_CAPTURE_STATE_ENDED:
       release_device_cb_.Run();
       release_device_cb_ = manager_->UseDevice(session_id_);
-      running_callback_.Run(false);
+      base::ThreadTaskRunnerHandle::Get()->PostTask(
+          FROM_HERE, base::Bind(running_callback_, false));
       break;
 
     case VIDEO_CAPTURE_STATE_STARTING:
