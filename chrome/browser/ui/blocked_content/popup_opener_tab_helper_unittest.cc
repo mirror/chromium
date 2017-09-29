@@ -8,17 +8,24 @@
 #include <utility>
 #include <vector>
 
+#include "base/bind.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/strings/stringprintf.h"
 #include "base/test/histogram_tester.h"
+#include "base/test/scoped_feature_list.h"
 #include "base/test/simple_test_tick_clock.h"
 #include "base/time/time.h"
 #include "chrome/browser/ui/blocked_content/popup_tracker.h"
+#include "chrome/browser/ui/blocked_content/tab_under_navigation_throttle.h"
 #include "chrome/test/base/chrome_render_view_host_test_harness.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/browser/web_contents_delegate.h"
 #include "content/public/test/navigation_simulator.h"
+#include "content/public/test/test_navigation_throttle_inserter.h"
 #include "content/public/test/test_utils.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "url/gurl.h"
 
 constexpr char kTabVisibleTimeAfterRedirect[] =
     "Tab.VisibleTimeAfterCrossOriginRedirect";
@@ -53,11 +60,17 @@ class PopupOpenerTabHelperTest : public ChromeRenderViewHostTestHarness {
     ChromeRenderViewHostTestHarness::TearDown();
   }
 
-  void NavigateAndCommitWithoutGesture(const GURL& url) {
+  // Returns the RenderFrameHost the navigation commit in, or nullptr if the
+  // navigation failed.
+  content::RenderFrameHost* NavigateAndCommitWithoutGesture(const GURL& url) {
     std::unique_ptr<content::NavigationSimulator> simulator =
         content::NavigationSimulator::CreateRendererInitiated(url, main_rfh());
     simulator->SetHasUserGesture(false);
     simulator->Commit();
+    return simulator->GetLastThrottleCheckResult().action() ==
+                   content::NavigationThrottle::PROCEED
+               ? simulator->GetFinalRenderFrameHost()
+               : nullptr;
   }
 
   // Simulates a popup opened by |web_contents()|.
@@ -70,6 +83,15 @@ class PopupOpenerTabHelperTest : public ChromeRenderViewHostTestHarness {
     web_contents()->WasHidden();
     raw_popup->WasShown();
     return raw_popup;
+  }
+
+  // This object inserts the tab under navigation throttle into every main frame
+  // navigation.
+  std::unique_ptr<content::TestNavigationThrottleInserter>
+  MakeTabUnderInserter() {
+    return base::MakeUnique<content::TestNavigationThrottleInserter>(
+        web_contents(),
+        base::BindRepeating(&TabUnderNavigationThrottle::MaybeCreate));
   }
 
   base::SimpleTestTickClock* raw_clock() { return raw_clock_; }
@@ -229,4 +251,179 @@ TEST_F(PopupOpenerTabHelperTest, SimulateTabUnderNavBeforePopup_LogsMetrics) {
   histogram_tester()->ExpectTotalCount(kTabVisibleTimeAfterRedirect, 0);
   histogram_tester()->ExpectTotalCount(kTabVisibleTimeAfterRedirectPopup, 0);
   histogram_tester()->ExpectTotalCount(kPopupToRedirect, 0);
+}
+
+class BlockTabUnderTest : public PopupOpenerTabHelperTest,
+                          public content::WebContentsDelegate {
+ public:
+  BlockTabUnderTest() : content::WebContentsDelegate() {}
+  ~BlockTabUnderTest() override {}
+
+  void SetUp() override {
+    PopupOpenerTabHelperTest::SetUp();
+    SetFeatureEnabled(true, 0);
+    web_contents()->SetDelegate(this);
+  }
+
+  void TearDown() override {
+    web_contents()->SetDelegate(nullptr);
+    PopupOpenerTabHelperTest::TearDown();
+  }
+
+  // content::WebContentsDelegate:
+  void OnDidBlockFramebust(content::WebContents* web_contents,
+                           const GURL& url) override {
+    blocked_urls_.push_back(url);
+  }
+
+  void SetFeatureEnabled(bool enabled, int threshold_ms) {
+    scoped_feature_list_ = base::MakeUnique<base::test::ScopedFeatureList>();
+    if (enabled) {
+      scoped_feature_list_->InitAndEnableFeatureWithParameters(
+          TabUnderNavigationThrottle::kBlockTabUnders,
+          {{"tab_under_popup_threshold_ms",
+            base::StringPrintf("%d", threshold_ms)}});
+    } else {
+      scoped_feature_list_->InitAndDisableFeature(
+          TabUnderNavigationThrottle::kBlockTabUnders);
+    }
+  }
+
+  const std::vector<GURL>& blocked_urls() { return blocked_urls_; }
+
+ private:
+  std::vector<GURL> blocked_urls_;
+  std::unique_ptr<base::test::ScopedFeatureList> scoped_feature_list_;
+
+  DISALLOW_COPY_AND_ASSIGN(BlockTabUnderTest);
+};
+
+// Tab-under blocking tests
+TEST_F(BlockTabUnderTest, NoFeature_NoBlocking) {
+  SetFeatureEnabled(false, 0 /* threshold_ms */);
+  auto tab_under_inserter = MakeTabUnderInserter();
+  EXPECT_TRUE(NavigateAndCommitWithoutGesture(GURL("https://first.test/")));
+  SimulatePopup();
+  EXPECT_TRUE(NavigateAndCommitWithoutGesture(GURL("https://example.test/")));
+  EXPECT_TRUE(blocked_urls().empty());
+}
+
+TEST_F(BlockTabUnderTest, NoPopup_NoBlocking) {
+  auto tab_under_inserter = MakeTabUnderInserter();
+  EXPECT_TRUE(NavigateAndCommitWithoutGesture(GURL("https://first.test/")));
+  web_contents()->WasHidden();
+  EXPECT_TRUE(NavigateAndCommitWithoutGesture(GURL("https://example.test/")));
+  EXPECT_TRUE(blocked_urls().empty());
+}
+
+TEST_F(BlockTabUnderTest, SameOriginRedirect_NoBlocking) {
+  auto tab_under_inserter = MakeTabUnderInserter();
+  EXPECT_TRUE(NavigateAndCommitWithoutGesture(GURL("https://first.test/")));
+  SimulatePopup();
+  EXPECT_TRUE(NavigateAndCommitWithoutGesture(GURL("https://first.test/path")));
+  EXPECT_TRUE(blocked_urls().empty());
+}
+
+TEST_F(BlockTabUnderTest, SimpleTabUnder_IsBlocked) {
+  auto tab_under_inserter = MakeTabUnderInserter();
+  EXPECT_TRUE(NavigateAndCommitWithoutGesture(GURL("https://first.test/")));
+  SimulatePopup();
+
+  const GURL blocked_url("https://example.test/");
+  EXPECT_FALSE(NavigateAndCommitWithoutGesture(blocked_url));
+  EXPECT_EQ(blocked_url, blocked_urls().back());
+}
+
+TEST_F(BlockTabUnderTest, TabUnderCrossOriginRedirect_IsBlocked) {
+  auto tab_under_inserter = MakeTabUnderInserter();
+  EXPECT_TRUE(NavigateAndCommitWithoutGesture(GURL("https://first.test/")));
+  SimulatePopup();
+
+  // Navigate to a same-origin URL that redirects cross origin.
+  const GURL same_origin("https://first.test/path");
+  const GURL blocked_url("https://example.test/");
+  std::unique_ptr<content::NavigationSimulator> simulator =
+      content::NavigationSimulator::CreateRendererInitiated(same_origin,
+                                                            main_rfh());
+  simulator->SetHasUserGesture(false);
+  simulator->Start();
+  EXPECT_EQ(content::NavigationThrottle::PROCEED,
+            simulator->GetLastThrottleCheckResult());
+  simulator->Redirect(blocked_url);
+  EXPECT_EQ(content::NavigationThrottle::CANCEL,
+            simulator->GetLastThrottleCheckResult());
+  EXPECT_EQ(blocked_url, blocked_urls().back());
+}
+
+// Ensure that even though the *redirect* occurred in the background, if the
+// navigation started in the foreground there is no blocking.
+TEST_F(BlockTabUnderTest,
+       TabUnderCrossOriginRedirectFromForeground_IsNotBlocked) {
+  auto tab_under_inserter = MakeTabUnderInserter();
+  EXPECT_TRUE(NavigateAndCommitWithoutGesture(GURL("https://first.test/")));
+  SimulatePopup();
+
+  web_contents()->WasShown();
+
+  // Navigate to a same-origin URL that redirects cross origin.
+  const GURL same_origin("https://first.test/path");
+  const GURL cross_origin("https://example.test/");
+  std::unique_ptr<content::NavigationSimulator> simulator =
+      content::NavigationSimulator::CreateRendererInitiated(same_origin,
+                                                            main_rfh());
+  simulator->SetHasUserGesture(false);
+  simulator->Start();
+  EXPECT_EQ(content::NavigationThrottle::PROCEED,
+            simulator->GetLastThrottleCheckResult());
+
+  web_contents()->WasHidden();
+
+  simulator->Redirect(cross_origin);
+  EXPECT_EQ(content::NavigationThrottle::PROCEED,
+            simulator->GetLastThrottleCheckResult());
+  simulator->Commit();
+  EXPECT_TRUE(blocked_urls().empty());
+}
+
+TEST_F(BlockTabUnderTest, TabUnderBeforeThreshold_IsBlocked) {
+  SetFeatureEnabled(true, 100 /* threshold_ms */);
+  auto tab_under_inserter = MakeTabUnderInserter();
+  EXPECT_TRUE(NavigateAndCommitWithoutGesture(GURL("https://first.test/")));
+  SimulatePopup();
+
+  // Delay before navigating the opener.
+  raw_clock()->Advance(base::TimeDelta::FromMilliseconds(50));
+
+  const GURL blocked_url("https://example.test/");
+  EXPECT_FALSE(NavigateAndCommitWithoutGesture(blocked_url));
+  EXPECT_EQ(blocked_url, blocked_urls().back());
+}
+
+TEST_F(BlockTabUnderTest, TabUnderAfterThreshold_IsNotBlocked) {
+  SetFeatureEnabled(true, 100 /* threshold_ms */);
+  auto tab_under_inserter = MakeTabUnderInserter();
+  EXPECT_TRUE(NavigateAndCommitWithoutGesture(GURL("https://first.test/")));
+  SimulatePopup();
+
+  // Delay before navigating the opener.
+  raw_clock()->Advance(base::TimeDelta::FromMilliseconds(101));
+
+  const GURL blocked_url("https://example.test/");
+  EXPECT_TRUE(NavigateAndCommitWithoutGesture(blocked_url));
+  EXPECT_TRUE(blocked_urls().empty());
+}
+
+TEST_F(BlockTabUnderTest, TabUnderNoThreshold_IsBlocked) {
+  SetFeatureEnabled(true, 0 /* threshold_ms */);
+  auto tab_under_inserter = MakeTabUnderInserter();
+  EXPECT_TRUE(NavigateAndCommitWithoutGesture(GURL("https://first.test/")));
+  SimulatePopup();
+
+  // Delay a long time before navigating the opener. Since there is no threshold
+  // we always classify as a tab-under.
+  raw_clock()->Advance(base::TimeDelta::FromDays(10));
+
+  const GURL blocked_url("https://example.test/");
+  EXPECT_FALSE(NavigateAndCommitWithoutGesture(blocked_url));
+  EXPECT_EQ(blocked_url, blocked_urls().back());
 }

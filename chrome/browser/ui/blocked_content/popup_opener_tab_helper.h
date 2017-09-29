@@ -37,6 +37,8 @@ class PopupOpenerTabHelper
 
   void OnOpenedPopup(PopupTracker* popup_tracker);
 
+  base::Optional<base::TimeDelta> TimeSinceLastPopup() const;
+
  private:
   friend class content::WebContentsUserData<PopupOpenerTabHelper>;
 
@@ -54,7 +56,6 @@ class PopupOpenerTabHelper
   // WebContents is not visible.
   base::flat_set<content::NavigationHandle*> pending_background_navigations_;
 
-  // The clock which gets passed to the |visibility_tracker_|.
   std::unique_ptr<base::TickClock> tick_clock_;
 
   // The |visibility_tracker| tracks the time this WebContents is in the
@@ -65,6 +66,7 @@ class PopupOpenerTabHelper
   // Measures the time this WebContents opened a popup before
   // |visibility_tracker_| is instantiated.
   base::TimeTicks last_popup_open_time_before_redirect_;
+  base::TimeTicks last_popup_open_time_;
 
   DISALLOW_COPY_AND_ASSIGN(PopupOpenerTabHelper);
 };

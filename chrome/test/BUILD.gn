@@ -3726,6 +3726,7 @@ test("unit_tests") {
       "../browser/ui/autofill/autofill_popup_controller_unittest.cc",
       "../browser/ui/blocked_content/popup_opener_tab_helper_unittest.cc",
       "../browser/ui/blocked_content/scoped_visibility_tracker_unittest.cc",
+      "../browser/ui/blocked_content/tab_under_navigation_throttle_unittest.cc",
       "../browser/ui/bookmarks/bookmark_context_menu_controller_unittest.cc",
       "../browser/ui/bookmarks/bookmark_unittest.cc",
       "../browser/ui/browser_close_unittest.cc",
