@@ -185,6 +185,7 @@ void OfflineAudioDestinationHandler::StartOfflineRendering() {
 
 void OfflineAudioDestinationHandler::DoOfflineRendering() {
   DCHECK(!IsMainThread());
+  DCHECK(!IsInitialized());
 
   unsigned number_of_channels;
   Vector<float*> destinations;
@@ -214,9 +215,15 @@ void OfflineAudioDestinationHandler::DoOfflineRendering() {
   // do continue to render quanta. Then calling OfflineAudioContext.resume()
   // will pick up the render loop again from where it was suspended.
   while (frames_to_process_ > 0) {
+    // The rendering thread can be interfered by the sudden shut-down. So check
+    // |render_bus_| if it is still valid.
+    DCHECK(render_bus_.get());
+    if (!render_bus_.get())
+      return;
+
     // Suspend the rendering if a scheduled suspend found at the current
     // sample frame. Otherwise render one quantum.
-    if (RenderIfNotSuspended(0, render_bus_.get(),
+    if (RenderIfNotSuspended(nullptr, render_bus_.get(),
                              AudioUtilities::kRenderQuantumFrames))
       return;
 
