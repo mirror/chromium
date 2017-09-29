@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69ca082b_c5240c01",
+        "filename": "content/renderer/shared_worker/embedded_shared_worker_stub.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-29T21:59:20Z",
+      "side": 1,
+      "message": "Shouldn\u0027t emplace_back obviate the need to explicitly call std::make_pair here?",
+      "revId": "ff4e6412dbdcc3cdd37fd3a381c89309a4d218ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "438dd48c_f66c01c7",
+        "filename": "third_party/WebKit/Source/core/dom/MessagePort.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-29T21:59:20Z",
+      "side": 1,
+      "message": "Shouldn\u0027t these be Vector instead of std::vector?\nAh I guess it\u0027s because MessagePortChannel is in common now, but this is kind of sad (we\u0027ve tried to keep STL containers out of core... though somewhat unsuccessfully it seems: https://cs.chromium.org/search/?q\u003dfile:Source/core+%22std::vector%22\u0026sq\u003dpackage:chromium\u0026type\u003dcs).",
+      "revId": "ff4e6412dbdcc3cdd37fd3a381c89309a4d218ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb985335_c6f99a41",
+        "filename": "third_party/WebKit/public/platform/WebVector.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-29T21:59:20Z",
+      "side": 1,
+      "message": "I would have personally preferred a more explicit name for this, i.e. TakeVector (it looks like jbroman thought so well. Another issue is that the Google C++ style guide currently disallows ref qualifiers (https://google.github.io/styleguide/cppguide.html#C++11).",
+      "revId": "ff4e6412dbdcc3cdd37fd3a381c89309a4d218ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
