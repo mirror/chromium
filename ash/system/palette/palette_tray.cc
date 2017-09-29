@@ -417,11 +417,13 @@ bool PaletteTray::PerformAction(const ui::Event& event) {
     return true;
   }
 
+  set_show_bubble_by_click(true);
   ShowBubble();
   return true;
 }
 
 void PaletteTray::CloseBubble() {
+  set_show_bubble_by_click(false);
   HidePalette();
 }
 

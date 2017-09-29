@@ -213,6 +213,7 @@ TrayBubbleView::TrayBubbleView(const InitParams& init_params)
   set_can_activate(false);
   set_notify_enter_exit_on_child(true);
   set_close_on_deactivate(init_params.close_on_deactivate);
+  set_show_by_click(init_params.show_by_click);
   set_margins(gfx::Insets());
   SetPaintToLayer();
 
@@ -248,7 +249,7 @@ void TrayBubbleView::InitializeAndShowBubble() {
 
   // If TrayBubbleView cannot be activated, register pre target event handler to
   // reroute key events to the widget for activating the view or closing it.
-  if (!CanActivate()) {
+  if (!CanActivate() && show_by_click()) {
     reroute_event_handler_ = base::MakeUnique<RerouteEventHandler>(this);
   }
 }

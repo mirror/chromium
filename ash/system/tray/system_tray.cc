@@ -515,6 +515,7 @@ void SystemTray::ShowItems(const std::vector<SystemTrayItem*>& items,
     // the user presses Tab. For behavioral consistency with the non-activatable
     // scenario, don't close on deactivation after Tab either.
     init_params.close_on_deactivate = false;
+    init_params.show_by_click = show_bubble_by_click();
     if (detailed) {
       // This is the case where a volume control or brightness control bubble
       // is created.
@@ -626,6 +627,7 @@ bool SystemTray::PerformAction(const ui::Event& event) {
   if (HasSystemBubble() && full_system_tray_menu_) {
     system_bubble_->bubble()->Close();
   } else {
+    set_show_bubble_by_click(true);
     ShowDefaultView(BUBBLE_CREATE_NEW);
     if (event.IsKeyEvent() || (event.flags() & ui::EF_TOUCH_ACCESSIBILITY))
       ActivateBubble();

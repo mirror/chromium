@@ -446,12 +446,15 @@ void ImeMenuTray::ClickedOutsideBubble() {
 bool ImeMenuTray::PerformAction(const ui::Event& event) {
   if (bubble_)
     CloseBubble();
-  else
+  else {
+    set_show_bubble_by_click(true);
     ShowBubble();
+  }
   return true;
 }
 
 void ImeMenuTray::CloseBubble() {
+  set_show_bubble_by_click(false);
   bubble_.reset();
   ime_list_view_ = nullptr;
   SetIsActive(false);
