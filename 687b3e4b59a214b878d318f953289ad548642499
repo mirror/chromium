@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "231c688c_901a6ec1",
+        "filename": "chrome/browser/chromeos/login/active_directory_login_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-09-29T18:25:08Z",
+      "side": 1,
+      "message": "Add fn comment",
+      "revId": "687b3e4b59a214b878d318f953289ad548642499",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e1c9724_5a2682fe",
+        "filename": "chrome/browser/chromeos/login/active_directory_login_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-09-29T18:25:08Z",
+      "side": 1,
+      "message": "add fn comment",
+      "revId": "687b3e4b59a214b878d318f953289ad548642499",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd2da999_2c30a4b8",
+        "filename": "chrome/browser/chromeos/login/active_directory_login_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-09-29T18:25:08Z",
+      "side": 1,
+      "message": "Add a function comment",
+      "revId": "687b3e4b59a214b878d318f953289ad548642499",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5d52170_cdff7bab",
+        "filename": "chrome/browser/chromeos/login/active_directory_login_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-09-29T18:25:08Z",
+      "side": 1,
+      "message": "Why do you need this?",
+      "revId": "687b3e4b59a214b878d318f953289ad548642499",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
