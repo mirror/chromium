@@ -20,6 +20,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "base/trace_event/trace_event.h"
+#include "media/audio/power_observer_helper.h"
 #include "media/base/user_input_monitor.h"
 
 namespace media {
@@ -169,6 +170,119 @@ class AudioInputController::AudioCallback
   bool error_during_callback_ = false;
 };
 
+// Handles suspend and resume notifications. Closes stream at suspend, restarts
+// at resume. The AudioInputController updates the state it's in so that
+// restarting can be done according to the current state.
+class AudioInputController::SuspendNotificationHandler {
+ public:
+  explicit SuspendNotificationHandler(
+      AudioManager* audio_manager,
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+      const AudioParameters& params,
+      const std::string& device_id,
+      bool enable_agc)
+      : audio_manager_(audio_manager),
+        task_runner_(std::move(task_runner)),
+        params_(params),
+        device_id_(device_id),
+        enable_agc_(enable_agc),
+        weak_ptr_factory_(this) {}
+
+  ~SuspendNotificationHandler() { DCHECK_EQ(state_, kClosed); }
+
+  void Initialize(AudioInputController* controller) {
+    DCHECK(controller);
+    if (!task_runner_->BelongsToCurrentThread()) {
+      task_runner_->PostTask(
+          FROM_HERE, base::BindOnce(&SuspendNotificationHandler::Initialize,
+                                    weak_ptr_factory_.GetWeakPtr(),
+                                    base::Unretained(controller)));
+      return;
+    }
+
+    controller_ = controller;
+
+    // Creating the observer will start notifications, so we do it here instead
+    // of in constructor to ensure we have set the controller.
+    power_observer_ = std::make_unique<PowerObserverHelper>(
+        task_runner_,
+        base::BindRepeating(&SuspendNotificationHandler::OnSuspend,
+                            base::Unretained(this)),
+        base::BindRepeating(&SuspendNotificationHandler::OnResume,
+                            base::Unretained(this)));
+  }
+
+  State GetState() {
+    DCHECK(task_runner_->BelongsToCurrentThread());
+    return state_;
+  }
+
+  void SetState(State state) {
+    DCHECK(task_runner_->BelongsToCurrentThread());
+    state_ = state;
+  }
+
+  void SetVolumeAtResume(double volume) {
+    DCHECK(task_runner_->BelongsToCurrentThread());
+    DCHECK_GE(volume, 0.0);
+    DCHECK_LE(volume, 1.0);
+    volume_at_resume_ = volume;
+  }
+
+  bool IsSuspending() {
+    DCHECK(task_runner_->BelongsToCurrentThread());
+    return power_observer_ && power_observer_->IsSuspending();
+  }
+
+ private:
+  void OnSuspend() {
+    DCHECK(task_runner_->BelongsToCurrentThread());
+
+    // TODO: Log via the controller?
+    //    handler_->OnLog(this, "AIC::OnSuspend");
+    printf("*********** Suspending. Bliss.\n");
+
+    // We can always call CloseStream(), it will do nothing if already closed.
+    controller_->CloseStream();
+  }
+
+  void OnResume() {
+    DCHECK(task_runner_->BelongsToCurrentThread());
+
+    // TODO: Log?
+    printf("*********** Resuming. Oh joy.\n");
+
+    if (state_ == kCreated || state_ == kRecording)
+      controller_->DoCreate(audio_manager_, params_, device_id_, enable_agc_);
+    if (state_ == kRecording)
+      controller_->DoRecord();
+    if (volume_at_resume_ >= 0.0) {
+      controller_->DoSetVolume(volume_at_resume_);
+      volume_at_resume_ = -1.0;
+    }
+  }
+
+  AudioInputController* controller_ = nullptr;
+  AudioManager* const audio_manager_ = nullptr;
+
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
+
+  const AudioParameters params_;
+  const std::string device_id_;
+  const bool enable_agc_ = false;
+
+  std::unique_ptr<PowerObserverHelper> power_observer_;
+  State state_ = kEmpty;
+
+  // The volume to set at resume. A negative value means that the volume should
+  // not be set.
+  double volume_at_resume_ = -1.0;
+
+  base::WeakPtrFactory<SuspendNotificationHandler> weak_ptr_factory_;
+
+  DISALLOW_COPY_AND_ASSIGN(SuspendNotificationHandler);
+};
+
 // static
 AudioInputController::Factory* AudioInputController::factory_ = nullptr;
 
@@ -178,7 +292,8 @@ AudioInputController::AudioInputController(
     SyncWriter* sync_writer,
     UserInputMonitor* user_input_monitor,
     const AudioParameters& params,
-    StreamType type)
+    StreamType type,
+    std::unique_ptr<SuspendNotificationHandler> suspend_notification_handler)
     : creator_task_runner_(base::ThreadTaskRunnerHandle::Get()),
       task_runner_(std::move(task_runner)),
       handler_(handler),
@@ -189,6 +304,7 @@ AudioInputController::AudioInputController(
 #if BUILDFLAG(ENABLE_WEBRTC)
       debug_recording_helper_(params, task_runner_, base::OnceClosure()),
 #endif
+      suspend_notification_handler_(std::move(suspend_notification_handler)),
       weak_ptr_factory_(this) {
   DCHECK(creator_task_runner_.get());
   DCHECK(handler_);
@@ -223,11 +339,18 @@ scoped_refptr<AudioInputController> AudioInputController::Create(
                             user_input_monitor, ParamsToStreamType(params));
   }
 
+  std::unique_ptr<SuspendNotificationHandler> suspend_handler =
+      std::make_unique<SuspendNotificationHandler>(
+          audio_manager, audio_manager->GetTaskRunner(), params, device_id,
+          enable_agc);
+  SuspendNotificationHandler* suspend_handler_ptr = suspend_handler.get();
+
   // Create the AudioInputController object and ensure that it runs on
   // the audio-manager thread.
   scoped_refptr<AudioInputController> controller(new AudioInputController(
       audio_manager->GetTaskRunner(), event_handler, sync_writer,
-      user_input_monitor, params, ParamsToStreamType(params)));
+      user_input_monitor, params, ParamsToStreamType(params),
+      std::move(suspend_handler)));
 
   // Create and open a new audio input stream from the existing
   // audio-device thread. Use the provided audio-input device.
@@ -236,6 +359,10 @@ scoped_refptr<AudioInputController> AudioInputController::Create(
                                     base::Unretained(audio_manager), params,
                                     device_id, enable_agc))) {
     controller = nullptr;
+  } else {
+    // Initialize after posting to DoCreate() to ensure that the stream is
+    // created before any suspend or resume notifications come in.
+    suspend_handler_ptr->Initialize(controller.get());
   }
 
   return controller;
@@ -264,7 +391,7 @@ scoped_refptr<AudioInputController> AudioInputController::CreateForStream(
   // the audio-manager thread.
   scoped_refptr<AudioInputController> controller(
       new AudioInputController(task_runner, event_handler, sync_writer,
-                               user_input_monitor, params, VIRTUAL));
+                               user_input_monitor, params, VIRTUAL, nullptr));
 
   if (!controller->task_runner_->PostTask(
           FROM_HERE,
@@ -366,12 +493,22 @@ void AudioInputController::DoCreateForStream(
       FROM_HERE, base::TimeDelta::FromSeconds(kCheckMutedStateIntervalSeconds),
       this, &AudioInputController::CheckMutedState);
   DCHECK(check_muted_state_timer_.IsRunning());
+
+  SetState(kCreated);
 }
 
 void AudioInputController::DoRecord() {
   DCHECK(task_runner_->BelongsToCurrentThread());
   SCOPED_UMA_HISTOGRAM_TIMER("Media.AudioInputController.RecordTime");
 
+  if (suspend_notification_handler_ &&
+      suspend_notification_handler_->IsSuspending()) {
+    SetState(kRecording);
+    return;
+  }
+
+  // This must be checked after checking if suspended, since if suspended
+  // |stream_| will be null.
   if (!stream_ || audio_callback_)
     return;
 
@@ -386,11 +523,37 @@ void AudioInputController::DoRecord() {
 
   audio_callback_.reset(new AudioCallback(this));
   stream_->Start(audio_callback_.get());
+
+  SetState(kRecording);
 }
 
 void AudioInputController::DoClose() {
   DCHECK(task_runner_->BelongsToCurrentThread());
   SCOPED_UMA_HISTOGRAM_TIMER("Media.AudioInputController.CloseTime");
+
+  if (suspend_notification_handler_ &&
+      suspend_notification_handler_->GetState() == kClosed) {
+    return;
+  }
+
+  CloseStream();
+
+  sync_writer_->Close();
+
+#if BUILDFLAG(ENABLE_WEBRTC)
+  debug_recording_helper_.DisableDebugRecording();
+#endif
+
+  max_volume_ = 0.0;
+
+  // After we have set the state to closed, the suspend notification handler
+  // effectively does nothing.
+  SetState(kClosed);
+}
+
+void AudioInputController::CloseStream() {
+  DCHECK(task_runner_->BelongsToCurrentThread());
+  SCOPED_UMA_HISTOGRAM_TIMER("Media.AudioInputController.CloseStreamTime");
 
   if (!stream_)
     return;
@@ -446,19 +609,12 @@ void AudioInputController::DoClose() {
   stream_->Close();
   stream_ = nullptr;
 
-  sync_writer_->Close();
-
 #if defined(AUDIO_POWER_MONITORING)
   // Send UMA stats if enabled.
   if (power_measurement_is_enabled_)
     LogSilenceState(silence_state_);
 #endif
 
-#if BUILDFLAG(ENABLE_WEBRTC)
-  debug_recording_helper_.DisableDebugRecording();
-#endif
-
-  max_volume_ = 0.0;
   weak_ptr_factory_.InvalidateWeakPtrs();
 }
 
@@ -471,6 +627,12 @@ void AudioInputController::DoSetVolume(double volume) {
   DCHECK(task_runner_->BelongsToCurrentThread());
   DCHECK_GE(volume, 0);
   DCHECK_LE(volume, 1.0);
+
+  if (suspend_notification_handler_ &&
+      suspend_notification_handler_->IsSuspending()) {
+    suspend_notification_handler_->SetVolumeAtResume(volume);
+    return;
+  }
 
   if (!stream_)
     return;
@@ -685,6 +847,12 @@ void AudioInputController::CheckMutedState() {
     // We don't log OnMuted here, but leave that for AudioInputRendererHost.
     handler_->OnMuted(this, is_muted_);
   }
+}
+
+void AudioInputController::SetState(State state) {
+  DCHECK(task_runner_->BelongsToCurrentThread());
+  if (suspend_notification_handler_)
+    suspend_notification_handler_->SetState(state);
 }
 
 // static
