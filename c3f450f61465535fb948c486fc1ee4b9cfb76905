@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fcf0dcf2_de92bdae",
+        "filename": "chromeos/tpm/tpm_token_info_getter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-29T22:05:59Z",
+      "side": 1,
+      "message": "Can we rename or namespace this to make it a bit clear? The distinction between \u0027TPMTokenInfo\u0027 and \u0027CryptohomeClient::TpmTokenInfo\u0027 is a bit subtle.",
+      "revId": "c3f450f61465535fb948c486fc1ee4b9cfb76905",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
