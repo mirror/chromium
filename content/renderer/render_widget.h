@@ -680,7 +680,7 @@ class CONTENT_EXPORT RenderWidget
   // The size of the visible viewport in DPI-adjusted pixels.
   gfx::Size visible_viewport_size_;
 
-  // Flags for the next ViewHostMsg_UpdateRect message.
+  // Flags for the next ViewHostMsg_Resize_ACK message.
   int next_paint_flags_;
 
   // Whether the WebWidget is in auto resize mode, which is used for example

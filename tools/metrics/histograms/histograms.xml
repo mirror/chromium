@@ -36399,17 +36399,17 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>The time spent inside RenderWidgetHost::OnMsgPaintRect.</summary>
 </histogram>
 
+<histogram name="MPArch.RWH_OnMsgResizeACK">
+  <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
+  <summary>TBD</summary>
+</histogram>
+
 <histogram name="MPArch.RWH_OnMsgScrollRect" units="ms">
   <obsolete>
     Deprecated 04/2016 as doesn't have data nor owner.
   </obsolete>
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <summary>The time spent inside RenderWidgetHost::OnMsgScrollRect.</summary>
-</histogram>
-
-<histogram name="MPArch.RWH_OnMsgUpdateRect">
-  <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
-  <summary>TBD</summary>
 </histogram>
 
 <histogram name="MPArch.RWH_RepaintDelta">
