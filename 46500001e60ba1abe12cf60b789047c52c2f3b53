@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1492db38_aa3eddf0",
+        "filename": "ash/system/tray/system_tray.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-29T21:36:18Z",
+      "side": 1,
+      "message": "Not for this CL: This parameter is unused and should be removed. Can you do that in a follow up?",
+      "revId": "46500001e60ba1abe12cf60b789047c52c2f3b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bc287f2_4b32795b",
+        "filename": "ash/wm/lock_state_controller_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1188,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-29T21:36:18Z",
+      "side": 1,
+      "message": "Thanks for adding a regression test.",
+      "revId": "46500001e60ba1abe12cf60b789047c52c2f3b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
