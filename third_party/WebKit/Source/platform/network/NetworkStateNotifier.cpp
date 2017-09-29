@@ -62,7 +62,8 @@ NetworkStateNotifier::ScopedNotifier::~ScopedNotifier() {
        after.effective_type != before_.effective_type ||
        after.http_rtt != before_.http_rtt ||
        after.transport_rtt != before_.transport_rtt ||
-       after.downlink_throughput_mbps != before_.downlink_throughput_mbps) &&
+       after.downlink_throughput_mbps != before_.downlink_throughput_mbps ||
+       after.save_data != before_.save_data) &&
       before_.connection_initialized) {
     notifier_.NotifyObservers(notifier_.connection_observers_,
                               ObserverType::CONNECTION_TYPE, after);
@@ -119,6 +120,15 @@ void NetworkStateNotifier::SetNetworkQuality(WebEffectiveConnectionType type,
       state_.downlink_throughput_mbps =
           static_cast<double>(downlink_throughput_kbps) / 1000;
     }
+  }
+}
+
+void NetworkStateNotifier::SetSaveData(bool save_data) {
+  DCHECK(IsMainThread());
+  ScopedNotifier notifier(*this);
+  {
+    MutexLocker locker(mutex_);
+    state_.save_data = save_data;
   }
 }
 
@@ -233,8 +243,8 @@ void NetworkStateNotifier::NotifyObserversOnTaskRunner(
       case ObserverType::CONNECTION_TYPE:
         observer_list->observers[i]->ConnectionChange(
             state.type, state.max_bandwidth_mbps, state.effective_type,
-            state.http_rtt, state.transport_rtt,
-            state.downlink_throughput_mbps);
+            state.http_rtt, state.transport_rtt, state.downlink_throughput_mbps,
+            state.save_data);
         continue;
     }
     NOTREACHED();

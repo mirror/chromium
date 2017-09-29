@@ -553,4 +553,10 @@ void InternalSettings::setAutoplayPolicy(const String& policy_str,
   GetSettings()->SetAutoplayPolicy(policy);
 }
 
+void InternalSettings::setDataSaverEnabled(bool enabled,
+                                           ExceptionState& exception_state) {
+  InternalSettingsGuardForSettings();
+  GetSettings()->SetDataSaverEnabled(enabled);
+}
+
 }  // namespace blink
