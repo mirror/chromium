@@ -551,9 +551,9 @@ void ChromeContentClient::AddContentDecryptionModules(
       // same directory as the installed adapter.
       const base::Version version(WIDEVINE_CDM_VERSION_STRING);
       DCHECK(version.IsValid());
-      cdms->push_back(content::CdmInfo(kWidevineCdmType, version, cdm_path,
-                                       codecs_supported, kWidevineKeySystem,
-                                       false));
+      cdms->push_back(content::CdmInfo(
+          kWidevineCdmType, version, cdm_path, kWidevineCdmPluginFileSystemId,
+          codecs_supported, kWidevineKeySystem, false));
     }
 #endif  // defined(WIDEVINE_CDM_AVAILABLE_NOT_COMPONENT)
 
@@ -570,7 +570,8 @@ void ChromeContentClient::AddContentDecryptionModules(
       cdms->push_back(
           content::CdmInfo(media::kClearKeyCdmType, base::Version("0.1.0.0"),
                            base::FilePath::FromUTF8Unsafe(clear_key_cdm_path),
-                           {}, kExternalClearKeyKeySystem, true));
+                           media::kClearKeyCdmPluginFileSystemId, {},
+                           kExternalClearKeyKeySystem, true));
     }
 #endif  // BUILDFLAG(ENABLE_LIBRARY_CDMS)
   }

@@ -26,6 +26,7 @@ const char kVersion2[] = "1.1.1.2";
 const char kTestCodecs[] = "vp9,avc1";
 const char kCodecDelimiter[] = ",";
 const char kTestKeySystem[] = "com.example.somesystem";
+const char kTestPluginFileSystemId[] = "plugin_id";
 
 // For simplicity and to make failures easier to diagnose, this test uses
 // std::string instead of base::FilePath and std::vector<std::string>.
@@ -44,9 +45,10 @@ class CdmRegistryImplTest : public testing::Test {
     const std::vector<std::string> codecs =
         base::SplitString(supported_codecs, kCodecDelimiter,
                           base::KEEP_WHITESPACE, base::SPLIT_WANT_ALL);
-    cdm_registry_.RegisterCdm(CdmInfo(
-        type, base::Version(version), base::FilePath::FromUTF8Unsafe(path),
-        codecs, supported_key_system, supports_sub_key_systems));
+    cdm_registry_.RegisterCdm(
+        CdmInfo(type, base::Version(version),
+                base::FilePath::FromUTF8Unsafe(path), kTestPluginFileSystemId,
+                codecs, supported_key_system, supports_sub_key_systems));
   }
 
   bool IsRegistered(const std::string& type, const std::string& version) {
@@ -79,6 +81,7 @@ TEST_F(CdmRegistryImplTest, Register) {
   EXPECT_EQ(kTestCdmType, cdm.type);
   EXPECT_EQ(kVersion1, cdm.version.GetString());
   EXPECT_EQ(kTestPath, cdm.path.MaybeAsASCII());
+  EXPECT_EQ(kTestPluginFileSystemId, cdm.filesystem_plugin_id);
   EXPECT_EQ(2u, cdm.supported_codecs.size());
   EXPECT_EQ("vp9", cdm.supported_codecs[0]);
   EXPECT_EQ("avc1", cdm.supported_codecs[1]);

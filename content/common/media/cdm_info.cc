@@ -9,12 +9,14 @@ namespace content {
 CdmInfo::CdmInfo(const std::string& type,
                  const base::Version& version,
                  const base::FilePath& path,
+                 const std::string& filesystem_plugin_id,
                  const std::vector<std::string>& supported_codecs,
                  const std::string& supported_key_system,
                  bool supports_sub_key_systems)
     : type(type),
       version(version),
       path(path),
+      filesystem_plugin_id(filesystem_plugin_id),
       supported_codecs(supported_codecs),
       supported_key_system(supported_key_system),
       supports_sub_key_systems(supports_sub_key_systems) {}

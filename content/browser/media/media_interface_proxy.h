@@ -58,7 +58,8 @@ class MediaInterfaceProxy : public media::mojom::InterfaceFactory {
   void OnMediaServiceConnectionError();
   void OnCdmServiceConnectionError();
 
-  service_manager::mojom::InterfaceProviderPtr GetFrameServices();
+  service_manager::mojom::InterfaceProviderPtr GetFrameServices(
+      const std::string& plugin_id);
 
   void ConnectToMediaService();
   void ConnectToCdmService(const std::string& key_system);
