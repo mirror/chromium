@@ -344,7 +344,8 @@ public class ClearBrowsingDataPreferences extends PreferenceFragment
         }
 
         // Clear all reported entities.
-        AppIndexingReporter.getInstance().clearHistory();
+        AppIndexingReporter.getInstance().clearHistory(
+                options.contains(DialogOption.CLEAR_COOKIES_AND_SITE_DATA));
     }
 
     private void dismissProgressDialog() {

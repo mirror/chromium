@@ -41,8 +41,9 @@ public class AppIndexingReporter {
      * Clears history of reported entities.
      * Currently, we do not support clearing only a subset of history. Base class does not implement
      * any reporting, and call is a no-op. Child classes should implement this functionality.
+     * @param clearSurveyCache Whether the survey cache should be cleared.
      */
-    public void clearHistory() {
+    public void clearHistory(boolean clearSurveyCache) {
         // Overriden by private class. Base class does nothing.
     }
 }
