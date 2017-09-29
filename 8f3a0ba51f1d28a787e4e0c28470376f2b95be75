@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "6b06b8b8_23c8f371",
+        "filename": "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-29T19:26:48Z",
+      "side": 1,
+      "message": "\u003e Ah, I got rid of that because when I was looking into my old code, I thought the method is only used when the we\u0027re exiting fullscreen. It took me a closer look to realized that wasn\u0027t the case.\n\u003e \n\u003e What are your thoughts on these?\n\u003e -(void)updateLayoutToolbarStyleIsExitingTabFullscreen\n\u003e -(void)updateLayoutToolbarStyleWithExitingTabFullscreen\n\u003e -(void)layoutToolbarStyleIsExitingTabFullscreen\n\u003e -(void)layoutToolbarStyleWithExitingTabFullscreen\n\u003e \n\u003e They\u0027re quite a mouthful. I\u0027m casting my vote for the last one\n\nYeah they\u0027re long, but that\u0027s OK in Obj-C :). I think either of the last two are good.",
+      "parentUuid": "4c2e3865_f868863c",
+      "revId": "8f3a0ba51f1d28a787e4e0c28470376f2b95be75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3022620d_d9566e96",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 6
