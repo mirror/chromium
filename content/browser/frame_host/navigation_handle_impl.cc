@@ -46,7 +46,7 @@ namespace {
 
 // Use this to get a new unique ID for a NavigationHandle during construction.
 // The returned ID is guaranteed to be nonzero (zero is the "no ID" indicator).
-int64_t GetUniqueIDInConstructor() {
+int64_t GetUniqueHandleIDInConstructor() {
   static int64_t unique_id_counter = 0;
   return ++unique_id_counter;
 }
@@ -118,7 +118,7 @@ NavigationHandleImpl::NavigationHandleImpl(
       request_context_type_(REQUEST_CONTEXT_TYPE_UNSPECIFIED),
       mixed_content_context_type_(
           blink::WebMixedContentContextType::kBlockable),
-      navigation_id_(GetUniqueIDInConstructor()),
+      navigation_id_(GetUniqueHandleIDInConstructor()),
       should_replace_current_entry_(false),
       redirect_chain_(redirect_chain),
       is_download_(false),

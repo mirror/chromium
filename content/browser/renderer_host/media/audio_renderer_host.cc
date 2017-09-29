@@ -35,7 +35,7 @@ namespace content {
 
 namespace {
 
-void UMALogDeviceAuthorizationTime(base::TimeTicks auth_start_time) {
+void UMALogAudioDeviceAuthorizationTime(base::TimeTicks auth_start_time) {
   UMA_HISTOGRAM_CUSTOM_TIMES("Media.Audio.OutputDeviceAuthorizationTime",
                              base::TimeTicks::Now() - auth_start_time,
                              base::TimeDelta::FromMilliseconds(1),
@@ -201,7 +201,7 @@ void AudioRendererHost::AuthorizationCompleted(
     const std::string& device_id_for_renderer) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-  UMALogDeviceAuthorizationTime(auth_start_time);
+  UMALogAudioDeviceAuthorizationTime(auth_start_time);
 
   auto auth_data = authorizations_.find(stream_id);
   if (auth_data == authorizations_.end())
