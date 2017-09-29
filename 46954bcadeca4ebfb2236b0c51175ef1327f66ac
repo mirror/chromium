@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b34e20ff_8b5ee6b7",
+        "filename": "chromeos/network/geolocation_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1164094
+      },
+      "writtenOn": "2017-09-29T23:39:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "760f39ac_b3db96fa",
+      "revId": "46954bcadeca4ebfb2236b0c51175ef1327f66ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "652d49be_b3f6c9c0",
         "filename": "chromeos/network/geolocation_handler.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "46954bcadeca4ebfb2236b0c51175ef1327f66ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98d60a79_13d94f61",
+        "filename": "chromeos/network/geolocation_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1164094
+      },
+      "writtenOn": "2017-09-29T23:39:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "652d49be_b3f6c9c0",
+      "revId": "46954bcadeca4ebfb2236b0c51175ef1327f66ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
