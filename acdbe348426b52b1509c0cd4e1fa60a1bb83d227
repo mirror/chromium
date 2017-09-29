@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3f19b014_273ea642",
+        "filename": "ios/web_view/internal/signin/cwv_authentication_controller.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-29T10:12:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f9fd1c2_06d6cc54",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 53
+      },
+      "revId": "acdbe348426b52b1509c0cd4e1fa60a1bb83d227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7956d65b_e6aaa48f",
         "filename": "ios/web_view/internal/signin/cwv_authentication_controller.mm",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "acdbe348426b52b1509c0cd4e1fa60a1bb83d227",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8754bf46_9feb488a",
+        "filename": "ios/web_view/internal/signin/cwv_authentication_controller.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-29T10:12:35Z",
+      "side": 1,
+      "message": "Oops!",
+      "parentUuid": "7956d65b_e6aaa48f",
+      "range": {
+        "startLine": 62,
+        "startChar": 6,
+        "endLine": 62,
+        "endChar": 27
+      },
+      "revId": "acdbe348426b52b1509c0cd4e1fa60a1bb83d227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0d4a98b6_b581d39f",
+        "filename": "ios/web_view/internal/signin/cwv_authentication_controller.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-29T10:12:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a89ca79_23975ad1",
+      "range": {
+        "startLine": 94,
+        "startChar": 2,
+        "endLine": 96,
+        "endChar": 69
+      },
+      "revId": "acdbe348426b52b1509c0cd4e1fa60a1bb83d227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ec81ee3_83afde0f",
         "filename": "ios/web_view/internal/signin/cwv_authentication_controller.mm",
         "patchSetId": 9
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "5fbbe18d_ac2bd71d",
+        "filename": "ios/web_view/internal/signin/cwv_authentication_controller.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-29T10:12:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ec81ee3_83afde0f",
+      "range": {
+        "startLine": 119,
+        "startChar": 2,
+        "endLine": 122,
+        "endChar": 43
+      },
+      "revId": "acdbe348426b52b1509c0cd4e1fa60a1bb83d227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5ece1d7_60b28ccc",
         "filename": "ios/web_view/public/cwv_authentication_controller.h",
         "patchSetId": 9
@@ -114,6 +210,30 @@
       "revId": "acdbe348426b52b1509c0cd4e1fa60a1bb83d227",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc6e095c_bb281324",
+        "filename": "ios/web_view/public/cwv_authentication_controller.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-29T10:12:35Z",
+      "side": 1,
+      "message": "Reworded",
+      "parentUuid": "b5ece1d7_60b28ccc",
+      "range": {
+        "startLine": 31,
+        "startChar": 3,
+        "endLine": 31,
+        "endChar": 10
+      },
+      "revId": "acdbe348426b52b1509c0cd4e1fa60a1bb83d227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
