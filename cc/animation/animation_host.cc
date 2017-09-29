@@ -45,7 +45,6 @@ AnimationHost::AnimationHost(ThreadInstance thread_instance)
       thread_instance_(thread_instance),
       supports_scroll_animations_(false),
       needs_push_properties_(false),
-      mutator_needs_mutate_(false),
       mutator_(nullptr) {
   if (thread_instance_ == ThreadInstance::IMPL) {
     scroll_offset_animations_impl_ =
@@ -574,11 +573,6 @@ void AnimationHost::SetLayerTreeMutator(
   if (mutator == mutator_)
     return;
   mutator_ = std::move(mutator);
-  mutator_->SetClient(this);
-}
-
-void AnimationHost::SetNeedsMutate() {
-  mutator_needs_mutate_ = true;
 }
 
 }  // namespace cc

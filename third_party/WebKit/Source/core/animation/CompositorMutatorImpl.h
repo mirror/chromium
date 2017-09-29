@@ -37,8 +37,6 @@ class CORE_EXPORT CompositorMutatorImpl final : public CompositorMutator {
   void RegisterCompositorAnimator(CompositorAnimator*);
   void UnregisterCompositorAnimator(CompositorAnimator*);
 
-  void SetNeedsMutate();
-
   void SetClient(CompositorMutatorClient* client) { client_ = client; }
 
  private:
