@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e142ef72_8a86d23d",
+        "filename": "components/security_state/content/content_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-29T16:55:21Z",
+      "side": 1,
+      "message": "I honestly don\u0027t remember why we have these initialized things, but I filed a bug against myself a long time ago to look into them, not that I\u0027ve done anything about it: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d655220\n\nI put the is_error_page thing here because it\u0027s not technically, directly connection info (rather a property of the navigation/page).",
+      "parentUuid": "26fc9cc0_e1ff9e98",
+      "range": {
+        "startLine": 367,
+        "startChar": 33,
+        "endLine": 367,
+        "endChar": 44
+      },
+      "revId": "ad60c64e0ee4a7d0486db47280e8bb4d951c4cbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d37e70f_d833546c",
         "filename": "components/security_state/core/security_state.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "ad60c64e0ee4a7d0486db47280e8bb4d951c4cbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a30006ec_646b8075",
+        "filename": "components/security_state/core/security_state.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-29T16:55:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6d37e70f_d833546c",
+      "range": {
+        "startLine": 39,
+        "startChar": 9,
+        "endLine": 39,
+        "endChar": 33
+      },
+      "revId": "ad60c64e0ee4a7d0486db47280e8bb4d951c4cbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d3003e93_c81106ff",
+        "filename": "components/security_state/core/security_state.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-29T16:55:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "40a30a50_00c320c5",
+      "range": {
+        "startLine": 69,
+        "startChar": 6,
+        "endLine": 69,
+        "endChar": 34
+      },
+      "revId": "ad60c64e0ee4a7d0486db47280e8bb4d951c4cbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2ad718c_8ce308da",
         "filename": "components/security_state/core/security_state.cc",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "ad60c64e0ee4a7d0486db47280e8bb4d951c4cbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a8e5903_9168bb5e",
+        "filename": "components/security_state/core/security_state.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-29T16:55:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2ad718c_8ce308da",
+      "range": {
+        "startLine": 167,
+        "startChar": 0,
+        "endLine": 167,
+        "endChar": 63
+      },
+      "revId": "ad60c64e0ee4a7d0486db47280e8bb4d951c4cbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
