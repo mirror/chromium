@@ -122,6 +122,12 @@ Resources.IDBDataView = class extends UI.SimpleView {
     this._clearButton = new UI.ToolbarButton(Common.UIString('Clear object store'), 'largeicon-clear');
     this._clearButton.addEventListener(UI.ToolbarButton.Events.Click, this._clearButtonClicked, this);
 
+    this._toolbarSpacer = new UI.ToolbarSeparator(true);
+
+    this._needsRefresh = new UI.ToolbarItem(UI.createLabel(Common.UIString('Data may be stale'), 'smallicon-warning'));
+    this._needsRefresh.setVisible(false);
+    this._needsRefresh.setTitle(Common.UIString('Some entries may have been modified'));
+
     this._pageSize = 50;
     this._skipCount = 0;
 
@@ -308,6 +314,7 @@ Resources.IDBDataView = class extends UI.SimpleView {
 
       this._pageBackButton.setEnabled(!!skipCount);
       this._pageForwardButton.setEnabled(hasMore);
+      this._needsRefresh.setVisible(false);
       this._updatedDataForTests();
     }
 
@@ -343,12 +350,16 @@ Resources.IDBDataView = class extends UI.SimpleView {
     this._updateData(true);
   }
 
+  markNeedsRefresh() {
+    this._needsRefresh.setVisible(true);
+  }
+
   /**
    * @override
    * @return {!Array.<!UI.ToolbarItem>}
    */
   syncToolbarItems() {
-    return [this._refreshButton, this._clearButton];
+    return [this._refreshButton, this._clearButton, this._toolbarSpacer, this._needsRefresh];
   }
 
   clear() {

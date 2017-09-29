@@ -83,3 +83,7 @@
     white-space: pre-wrap;
     unicode-bidi: -webkit-isolate;
 }
+
+.resources-toolbar {
+    padding-right: 10px;
+}
