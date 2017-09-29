@@ -418,6 +418,24 @@
     },
     {
       "key": {
+        "uuid": "a389bcb7_b22d4f59",
+        "filename": "ios/web_view/public/cwv_identity.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-29T08:42:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ba35923_bb5bec29",
+      "revId": "cbbbf20c7e331317c55b36f24b1dfc4199d518ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b776dd3f_15852a04",
         "filename": "ios/web_view/public/cwv_identity.h",
         "patchSetId": 5
@@ -429,6 +447,30 @@
       "writtenOn": "2017-09-28T17:01:40Z",
       "side": 1,
       "message": "Is there an online doc for GAIA ID? F.e. how do I know gaia id for my eugenebut@chromium.org email?",
+      "range": {
+        "startLine": 19,
+        "startChar": 18,
+        "endLine": 19,
+        "endChar": 19
+      },
+      "revId": "cbbbf20c7e331317c55b36f24b1dfc4199d518ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "567519e1_f02eae8a",
+        "filename": "ios/web_view/public/cwv_identity.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-29T08:42:29Z",
+      "side": 1,
+      "message": "I may be wrong, but i think GAIA ID is an internal SSO concept. Is it OK to link internal docs here?",
+      "parentUuid": "b776dd3f_15852a04",
       "range": {
         "startLine": 19,
         "startChar": 18,
@@ -464,6 +506,30 @@
     },
     {
       "key": {
+        "uuid": "64d56e6e_fb20e1fd",
+        "filename": "ios/web_view/public/cwv_identity.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-29T08:42:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9b3ff28_4e0c31b0",
+      "range": {
+        "startLine": 20,
+        "startChar": 7,
+        "endLine": 20,
+        "endChar": 10
+      },
+      "revId": "cbbbf20c7e331317c55b36f24b1dfc4199d518ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0803a5b2_6acdc629",
         "filename": "ios/web_view/public/cwv_identity.h",
         "patchSetId": 5
@@ -487,6 +553,30 @@
     },
     {
       "key": {
+        "uuid": "78808958_2d044c68",
+        "filename": "ios/web_view/public/cwv_identity.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-29T08:42:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0803a5b2_6acdc629",
+      "range": {
+        "startLine": 25,
+        "startChar": 18,
+        "endLine": 25,
+        "endChar": 27
+      },
+      "revId": "cbbbf20c7e331317c55b36f24b1dfc4199d518ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbbf0d48_350c6caa",
         "filename": "ios/web_view/public/cwv_web_view_configuration+sync.h",
         "patchSetId": 5
@@ -501,6 +591,24 @@
       "revId": "cbbbf20c7e331317c55b36f24b1dfc4199d518ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c3d8898_82e92046",
+        "filename": "ios/web_view/public/cwv_web_view_configuration+sync.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-29T08:42:29Z",
+      "side": 1,
+      "message": "I added it directly on authenticationController",
+      "parentUuid": "bbbf0d48_350c6caa",
+      "revId": "cbbbf20c7e331317c55b36f24b1dfc4199d518ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
