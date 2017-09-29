@@ -52,6 +52,24 @@
       "revId": "a15684ceeadfae99d1352d8c3d0a83ebe2905e5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36423501_c0c0a491",
+        "filename": "components/safe_browsing/proto/csd.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-09-29T17:26:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c803ae6_7df97786",
+      "revId": "a15684ceeadfae99d1352d8c3d0a83ebe2905e5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
