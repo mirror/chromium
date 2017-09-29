@@ -23,6 +23,7 @@
 
 @synthesize error = _error;
 @synthesize totalBytesReceived = _totalBytesReceived;
+@synthesize expectedContentLength = _expectedContentLength;
 
 NSMutableArray<NSData*>* _responseData;
 
@@ -37,6 +38,7 @@ NSMutableArray<NSData*>* _responseData;
   _responseData = nil;
   _error = nil;
   _totalBytesReceived = 0;
+  _expectedContentLength = 0;
 }
 
 - (NSString*)responseBody {
@@ -66,7 +68,8 @@ NSMutableArray<NSData*>* _responseData;
 - (void)URLSession:(NSURLSession*)session
                     task:(NSURLSessionTask*)task
     didCompleteWithError:(NSError*)error {
-  [self setError:error];
+  if (error)
+    [self setError:error];
   dispatch_semaphore_signal(_semaphore);
 }
 
@@ -84,6 +87,7 @@ NSMutableArray<NSData*>* _responseData;
     didReceiveResponse:(NSURLResponse*)response
      completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))
                            completionHandler {
+  _expectedContentLength = [response expectedContentLength];
   completionHandler(NSURLSessionResponseAllow);
 }
 
