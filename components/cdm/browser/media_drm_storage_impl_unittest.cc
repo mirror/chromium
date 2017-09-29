@@ -54,8 +54,7 @@ class MediaDrmStorageImplTest : public ::testing::Test {
 
     // The created object will be destroyed on connection error.
     new MediaDrmStorageImpl(nullptr,  // Use null RenderFrameHost for testing.
-                            pref_service_.get(), url::Origin(GURL(kTestOrigin)),
-                            std::move(request));
+                            pref_service_.get(), std::move(request));
 
     media_drm_storage->Initialize(base::BindOnce(
         [](base::UnguessableToken* out_origin_id,

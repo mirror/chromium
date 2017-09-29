@@ -23,18 +23,24 @@ void PlatformVerificationImpl::Create(
   DVLOG(2) << __FUNCTION__;
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   DCHECK(render_frame_host);
-  mojo::MakeStrongBinding(
-      base::MakeUnique<PlatformVerificationImpl>(render_frame_host),
-      std::move(request));
+
+  // The object is bound to the lifetime of |render_frame_host| and the mojo
+  // connection. See FrameServiceBase for details.
+  new PlatformVerificationImpl(render_frame_host, std::move(request));
 }
 
 PlatformVerificationImpl::PlatformVerificationImpl(
-    content::RenderFrameHost* render_frame_host)
-    : render_frame_host_(render_frame_host), weak_factory_(this) {
-  DCHECK(render_frame_host);
+    content::RenderFrameHost* render_frame_host,
+    media::mojom::PlatformVerificationRequest request)
+    : FrameServiceBase(render_frame_host, std::move(request)),
+      web_contents_(
+          content::WebContents::FromRenderFrameHost(render_frame_host)),
+      weak_factory_(this) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 }
 
 PlatformVerificationImpl::~PlatformVerificationImpl() {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 }
 
 void PlatformVerificationImpl::ChallengePlatform(
@@ -48,8 +54,7 @@ void PlatformVerificationImpl::ChallengePlatform(
     platform_verification_flow_ = new PlatformVerificationFlow();
 
   platform_verification_flow_->ChallengePlatformKey(
-      content::WebContents::FromRenderFrameHost(render_frame_host_), service_id,
-      challenge,
+      web_contents_, service_id, challenge,
       base::Bind(&PlatformVerificationImpl::OnPlatformChallenged,
                  weak_factory_.GetWeakPtr(), base::Passed(&callback)));
 }
