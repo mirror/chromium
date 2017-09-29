@@ -16,6 +16,24 @@
       "revId": "1ef7ab5042d07173050cf7f9581c3627b0633852",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42a58c70_683047f5",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/BaseJUnit4ClassRunner.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-09-29T21:31:00Z",
+      "side": 1,
+      "message": "CommandLineInitUtilTest can get around that by using a different class runner. The reason for this is there are a lot of tests and test framework features that would depends on command line (e.g. Skip check that checks if test should be running on low end devices)",
+      "parentUuid": "f609e7cd_d6d88c41",
+      "revId": "1ef7ab5042d07173050cf7f9581c3627b0633852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
