@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf9a30a4_8b0e4e78",
+        "filename": "chrome/browser/chromeos/arc/arc_util_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-29T16:08:41Z",
+      "side": 1,
+      "message": "nit: Could you use std::make_unique instead of base::MakeUnique? Ditto for below.\n\ncf) It\u0027ll be checked by PRESUBMIT.\nhttps://chromium-review.googlesource.com/c/chromium/src/+/691754",
+      "revId": "8a61d31b16d003fc55fe5f97721edf2b19defb8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc0cb311_1fa649fa",
+        "filename": "chrome/browser/chromeos/arc/arc_util_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-29T16:08:41Z",
+      "side": 1,
+      "message": "Could you comment something like:\n\nThe value of IsArcMigrationAllowedByPolicyForProfile() should be cached.\nSo, even if the policy is set after the first call, the returned value should not be changed.\n\nor something?",
+      "revId": "8a61d31b16d003fc55fe5f97721edf2b19defb8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
