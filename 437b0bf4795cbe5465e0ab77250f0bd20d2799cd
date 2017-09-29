@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2814a0ca_c628eee2",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 5807,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-29T20:45:27Z",
+      "side": 1,
+      "message": "Did not spot it earlier - this is a layering violation. The purpose of the Supplements is for Supplementable to not depend on them. Either this becomes a field on document or this call is moved elsewhere. Either is fine, field on document is more straightforward.",
+      "revId": "437b0bf4795cbe5465e0ab77250f0bd20d2799cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cee869b7_abdd6933",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-29T20:45:27Z",
+      "side": 1,
+      "message": "drop {}",
+      "revId": "437b0bf4795cbe5465e0ab77250f0bd20d2799cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "691a168e_788ccd61",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-29T20:45:27Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "437b0bf4795cbe5465e0ab77250f0bd20d2799cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "758a76d2_0d402151",
+        "filename": "third_party/WebKit/Source/core/loader/IdlenessDetector.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-29T20:45:27Z",
+      "side": 1,
+      "message": "Each document is now unconditionally listening to the tasks. Would be nice to narrow it down in order to minimize impact. Add a TODO and follow up on removing yourself from the list of observers as agreed offline.",
+      "revId": "437b0bf4795cbe5465e0ab77250f0bd20d2799cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06bf73b9_8c376f92",
+        "filename": "third_party/WebKit/Source/core/loader/IdlenessDetector.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-29T20:45:27Z",
+      "side": 1,
+      "message": "We will have excessive timers (one per frame) which is not necessary. Mark with TODO?",
+      "revId": "437b0bf4795cbe5465e0ab77250f0bd20d2799cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
