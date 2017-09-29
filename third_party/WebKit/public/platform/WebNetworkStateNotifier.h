@@ -49,6 +49,8 @@ class WebNetworkStateNotifier {
       base::TimeDelta transport_rtt,
       int downlink_throughput_kbps);
 
+  BLINK_PLATFORM_EXPORT static void SetSaveData(bool save_data);
+
  private:
   WebNetworkStateNotifier();
 };
