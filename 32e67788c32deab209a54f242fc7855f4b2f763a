@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2b54ce12_4ea8bd7c",
+        "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-29T17:13:36Z",
+      "side": 1,
+      "message": "\u003e Put this in the category below?\n\nDid you want to do this too? (optional)",
+      "parentUuid": "f42bf1b9_66fb8122",
+      "revId": "32e67788c32deab209a54f242fc7855f4b2f763a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "00a305d3_08b472da",
         "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar_browsertest.mm",
         "patchSetId": 5
