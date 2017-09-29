@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c8c4f8b_df4de6b8",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/web-bluetooth-test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-09-29T18:54:00Z",
+      "side": 1,
+      "message": "Missing call to \"setBluetoothFakeAdapter() to clean up...\" that some tests\nmay need, e.g. bluetooth/requestDevice/le-not-supported.html",
+      "revId": "611f663f747f0481162f36f96eb67cf3aeb88a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f68a89c9_59f324a2",
+        "filename": "third_party/WebKit/LayoutTests/resources/testharness.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-09-29T18:54:00Z",
+      "side": 1,
+      "message": "Blank lines?",
+      "revId": "611f663f747f0481162f36f96eb67cf3aeb88a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
