@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a71c732_62c905f7",
+        "filename": "ui/gl/gl_surface_egl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 959,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-09-29T03:31:58Z",
+      "side": 1,
+      "message": "if (!egl...) instead of \u003d\u003d 0?",
+      "range": {
+        "startLine": 959,
+        "startChar": 60,
+        "endLine": 959,
+        "endChar": 64
+      },
+      "revId": "d9646ae941fa6f6a37359fd162fbadd54ec47de5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23d78536_f59a068a",
+        "filename": "ui/gl/gl_surface_egl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 963,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-09-29T03:31:58Z",
+      "side": 1,
+      "message": "Can we include this comment in the header as well?",
+      "range": {
+        "startLine": 962,
+        "startChar": 6,
+        "endLine": 963,
+        "endChar": 39
+      },
+      "revId": "d9646ae941fa6f6a37359fd162fbadd54ec47de5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69335c9d_c6b07623",
+        "filename": "ui/gl/gl_surface_egl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1073,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-09-29T03:31:58Z",
+      "side": 1,
+      "message": "Do we have compiler support for vector::data at this point?",
+      "range": {
+        "startLine": 1073,
+        "startChar": 10,
+        "endLine": 1073,
+        "endChar": 39
+      },
+      "revId": "d9646ae941fa6f6a37359fd162fbadd54ec47de5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54e3558d_0df57b73",
+        "filename": "ui/gl/gl_surface_egl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1074,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-09-29T03:31:58Z",
+      "side": 1,
+      "message": "Woah - I didn\u0027t know you can put a space in a slice name. I think we probably shouldn\u0027t though, I don\u0027t see much precedent.",
+      "range": {
+        "startLine": 1074,
+        "startChar": 25,
+        "endLine": 1074,
+        "endChar": 53
+      },
+      "revId": "d9646ae941fa6f6a37359fd162fbadd54ec47de5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
