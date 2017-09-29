@@ -101,14 +101,8 @@ class PrefServiceAdapter
   ~PrefServiceAdapter() override {}
 
   // PrefDelegate implementation.
-  bool HasServerProperties() override {
-    return pref_service_->HasPrefPath(path_);
-  }
-
-  const base::DictionaryValue& GetServerProperties() const override {
-    // Guaranteed not to return null when the pref is registered
-    // (RegisterProfilePrefs was called).
-    return *pref_service_->GetDictionary(path_);
+  const base::DictionaryValue* GetServerProperties() const override {
+    return pref_service_->GetDictionary(path_);
   }
 
   void SetServerProperties(const base::DictionaryValue& value) override {
@@ -117,10 +111,6 @@ class PrefServiceAdapter
 
   void StartListeningForUpdates(const base::Closure& callback) override {
     pref_change_registrar_.Add(path_, callback);
-  }
-
-  void StopListeningForUpdates() override {
-    pref_change_registrar_.RemoveAll();
   }
 
  private:
@@ -245,9 +235,7 @@ CronetPrefsManager::CronetPrefsManager(
   }
 
   http_server_properties_manager_ = new net::HttpServerPropertiesManager(
-      new PrefServiceAdapter(pref_service_.get()), network_task_runner,
-      network_task_runner, net_log);
-  http_server_properties_manager_->InitializeOnNetworkSequence();
+      new PrefServiceAdapter(pref_service_.get()), net_log);
 
   // Passes |http_server_properties_manager_| ownership to |context_builder|.
   // The ownership will be subsequently passed to UrlRequestContext.
@@ -289,7 +277,6 @@ void CronetPrefsManager::PrepareForShutdown() {
     pref_service_->CommitPendingWrite();
 
   // Shutdown managers on the Pref sequence.
-  http_server_properties_manager_->ShutdownOnPrefSequence();
   if (network_qualities_prefs_manager_)
     network_qualities_prefs_manager_->ShutdownOnPrefSequence();
 }
