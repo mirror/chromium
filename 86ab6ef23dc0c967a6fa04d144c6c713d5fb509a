@@ -22,6 +22,30 @@
       "revId": "86ab6ef23dc0c967a6fa04d144c6c713d5fb509a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e21e5ea5_4af3c690",
+        "filename": "chrome/browser/ui/webui/chromeos/sys_internals/sys_internals_message_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-29T03:33:54Z",
+      "side": 1,
+      "message": "Thanks for pointing that out. I missed the memo. Will put it back.",
+      "parentUuid": "2cb1e7ae_88657027",
+      "range": {
+        "startLine": 113,
+        "startChar": 4,
+        "endLine": 113,
+        "endChar": 37
+      },
+      "revId": "86ab6ef23dc0c967a6fa04d144c6c713d5fb509a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
