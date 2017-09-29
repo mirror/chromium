@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df08b8e3_9b02eb5e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-09-29T20:26:19Z",
+      "side": 1,
+      "message": "s/support/reliably report the status of/ (along those lines; the key point isn\u0027t that some platforms don\u0027t support NumLock, they just don\u0027t accurately report its state in key events).",
+      "range": {
+        "startLine": 10,
+        "startChar": 41,
+        "endLine": 10,
+        "endChar": 48
+      },
+      "revId": "f916eb0f0a7cd15e15ccc65b4fbbe8e18031bed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15a00de1_b0f277d0",
+        "filename": "remoting/client/input/normalizing_input_filter_cros.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-09-29T20:26:19Z",
+      "side": 1,
+      "message": "ChromeOS",
+      "range": {
+        "startLine": 104,
+        "startChar": 5,
+        "endLine": 104,
+        "endChar": 12
+      },
+      "revId": "f916eb0f0a7cd15e15ccc65b4fbbe8e18031bed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52639df4_9652d016",
+        "filename": "remoting/client/plugin/pepper_input_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-09-29T20:26:19Z",
+      "side": 1,
+      "message": "I think it\u0027s worth adding a comment here explaining why you\u0027re setting the same information twice (basically so that old hosts can be supported).",
+      "range": {
+        "startLine": 82,
+        "startChar": 2,
+        "endLine": 82,
+        "endChar": 10
+      },
+      "revId": "f916eb0f0a7cd15e15ccc65b4fbbe8e18031bed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c23b7ccc_d732a7ab",
+        "filename": "remoting/host/input_injector_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-09-29T20:26:19Z",
+      "side": 1,
+      "message": "s/it/if/",
+      "range": {
+        "startLine": 49,
+        "startChar": 9,
+        "endLine": 49,
+        "endChar": 11
+      },
+      "revId": "f916eb0f0a7cd15e15ccc65b4fbbe8e18031bed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96c41b66_69945796",
+        "filename": "remoting/host/input_injector_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-09-29T20:26:19Z",
+      "side": 1,
+      "message": "Maybe call this SetCapsLockState, since that\u0027s all it does.",
+      "range": {
+        "startLine": 71,
+        "startChar": 5,
+        "endLine": 71,
+        "endChar": 17
+      },
+      "revId": "f916eb0f0a7cd15e15ccc65b4fbbe8e18031bed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc4e43ac_bd47657b",
+        "filename": "remoting/host/input_injector_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-09-29T20:26:19Z",
+      "side": 1,
+      "message": "You could use a simple bool and call SetLockState with an appropriate value in both branches. You call though, as this approach is consistent with what you do on platforms that support NumLock, where it would be less elegant not to use base::Optional.",
+      "range": {
+        "startLine": 127,
+        "startChar": 35,
+        "endLine": 127,
+        "endChar": 0
+      },
+      "revId": "f916eb0f0a7cd15e15ccc65b4fbbe8e18031bed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
