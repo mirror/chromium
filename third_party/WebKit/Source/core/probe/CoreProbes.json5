@@ -155,11 +155,7 @@
         "UpdateLayout",
         "UserCallback",
         "V8Compile",
-        "didFailLoading",
-        "didFinishLoading",
         "documentWriteFetchScript",
-        "domContentLoadedEventFired",
-        "willSendRequest",
       ]
     },
     PerformanceMetrics: {
