@@ -300,6 +300,10 @@ void AnimationPlayer::NotifyAnimationTakeoverByMain(
   }
 }
 
+size_t AnimationPlayer::TickingAnimationsCount() const {
+  return animation_ticker_->TickingAnimationsCount();
+}
+
 void AnimationPlayer::SetNeedsCommit() {
   DCHECK(animation_host_);
   animation_host_->SetNeedsCommit();

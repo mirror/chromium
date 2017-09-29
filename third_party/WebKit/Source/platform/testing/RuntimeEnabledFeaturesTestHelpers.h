@@ -72,6 +72,10 @@ typedef ScopedRuntimeEnabledFeatureForTest<
     RuntimeEnabledFeatures::CompositeOpaqueScrollersEnabled,
     RuntimeEnabledFeatures::SetCompositeOpaqueScrollersEnabled>
     ScopedCompositeOpaqueScrollersForTest;
+typedef ScopedRuntimeEnabledFeatureForTest<
+    RuntimeEnabledFeatures::TurnOff2DAndOpacityCompositorAnimationsEnabled,
+    RuntimeEnabledFeatures::SetTurnOff2DAndOpacityCompositorAnimationsEnabled>
+    ScopedTurnOff2DAndOpacityCompositorAnimationForTest;
 
 }  // namespace blink
 
