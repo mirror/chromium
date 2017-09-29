@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ec4b964_a600dfd9",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwAutofillTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-09-29T23:03:43Z",
+      "side": 1,
+      "message": "We\u0027re currently testing what\u0027s been called, but I wonder if there is a good way to also test what\u0027s not called - does submit also call notifyViewExited() or focus change triggers notifyViewEntered(), etc? Something like the following structure:\n\nAt the beginning, all the counts should be 0.\n\nThen after each operation, check whether certain callbacks were called.\n\nAt the end, make sure that the counts did not increase for the rest of the callbacks.\n\nWDYT?",
+      "range": {
+        "startLine": 704,
+        "startChar": 12,
+        "endLine": 704,
+        "endChar": 56
+      },
+      "revId": "f99744ad085f5f292ef2b6c318aebed744455641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
