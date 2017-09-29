@@ -531,7 +531,7 @@ deps_os = {
 
     # Chrome OS touchpad gestures library.
     'src/third_party/gestures/gestures':
-      Var('chromium_git') + '/chromiumos/platform/gestures.git' + '@' + '5a656849c7d2b0d0ddbe0ac6d300c1e2fada0bb4',
+      Var('chromium_git') + '/chromiumos/platform/gestures.git' + '@' + '74f55100df966280d305d5d5ada824605f875839',
 
     # Wireless Display Software. Used on Chrome OS.
     'src/third_party/wds/src':
