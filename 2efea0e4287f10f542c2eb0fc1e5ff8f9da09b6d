@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be14a548_1377f38d",
+        "filename": "components/offline_pages/core/downloads/download_ui_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-29T17:45:52Z",
+      "side": 1,
+      "message": "This can be inlined I think and a more explanatory comment could be added on top:\n\n// There is a chance that when OnChange comes from RequestCoordinator,\n// the item has already been downloaded and this update would cause an\n// incorrect \"in progress\" state to be shown in UI.",
+      "range": {
+        "startLine": 192,
+        "startChar": 6,
+        "endLine": 192,
+        "endChar": 68
+      },
+      "revId": "2efea0e4287f10f542c2eb0fc1e5ff8f9da09b6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82330336_e17273e4",
+        "filename": "components/offline_pages/core/downloads/download_ui_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-29T17:45:52Z",
+      "side": 1,
+      "message": "Bonus points opportunity.\nCould you ask a test for this, please?\nI just realized we don\u0027t have one for this method, hence this is a big favor.",
+      "range": {
+        "startLine": 193,
+        "startChar": 6,
+        "endLine": 193,
+        "endChar": 24
+      },
+      "revId": "2efea0e4287f10f542c2eb0fc1e5ff8f9da09b6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
