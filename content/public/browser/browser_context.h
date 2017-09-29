@@ -63,6 +63,7 @@ class BrowsingDataRemover;
 class BrowsingDataRemoverDelegate;
 class DownloadManager;
 class DownloadManagerDelegate;
+class OriginManifestStore;
 class PermissionManager;
 struct PushEventPayload;
 class PushMessagingService;
@@ -293,6 +294,8 @@ class CONTENT_EXPORT BrowserContext : public base::SupportsUserData {
   // Returns a random string by default.
   virtual std::string GetMediaDeviceIDSalt();
 
+  virtual OriginManifestStore* GetOriginManifestStore();
+
   // Utility function useful for embedders. Only needs to be called if
   // 1) The embedder needs to use a new salt, and
   // 2) The embedder saves its salt across restarts.
@@ -300,6 +303,7 @@ class CONTENT_EXPORT BrowserContext : public base::SupportsUserData {
 
  private:
   const std::string media_device_id_salt_;
+  std::unique_ptr<content::OriginManifestStore> origin_manifest_store_;
 };
 
 }  // namespace content

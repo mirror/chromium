@@ -21,7 +21,7 @@ TEST_F(OriginManifestParserTest, ParseEmptyOriginManifest) {
       OriginManifestParser::Parse(origin, version, json).Equals(nullptr));
 
   json = "{ }";
-  blink::mojom::OriginManifestPtr om =
+  mojom::OriginManifestPtr om =
       OriginManifestParser::Parse(origin, version, json);
   ASSERT_FALSE(om.Equals(nullptr));
   EXPECT_TRUE(om->origin == origin);
@@ -55,22 +55,21 @@ TEST_F(OriginManifestParserTest, ParseOriginManifestWithCSPs) {
       "],"
       "}";
 
-  blink::mojom::OriginManifestPtr om =
+  mojom::OriginManifestPtr om =
       OriginManifestParser::Parse(origin, version, json);
   ASSERT_FALSE(om.Equals(nullptr));
   ASSERT_EQ(om->csps.size(), 3ul);
 
   EXPECT_TRUE(om->csps[0]->policy == policy0);
-  EXPECT_TRUE(om->csps[0]->disposition == blink::mojom::Disposition::ENFORCE);
+  EXPECT_TRUE(om->csps[0]->disposition == mojom::Disposition::ENFORCE);
   EXPECT_FALSE(om->csps[0]->allowOverride);
 
   EXPECT_TRUE(om->csps[1]->policy == policy1);
-  EXPECT_TRUE(om->csps[1]->disposition ==
-              blink::mojom::Disposition::REPORT_ONLY);
+  EXPECT_TRUE(om->csps[1]->disposition == mojom::Disposition::REPORT_ONLY);
   EXPECT_TRUE(om->csps[1]->allowOverride);
 
   EXPECT_TRUE(om->csps[2]->policy == policy2);
-  EXPECT_TRUE(om->csps[2]->disposition == blink::mojom::Disposition::ENFORCE);
+  EXPECT_TRUE(om->csps[2]->disposition == mojom::Disposition::ENFORCE);
   EXPECT_FALSE(om->csps[2]->allowOverride);
 }
 
@@ -93,7 +92,7 @@ TEST_F(OriginManifestParserTest, ParseOriginManifestWithCORSPreflights) {
       "},"
       "}";
 
-  blink::mojom::OriginManifestPtr om =
+  mojom::OriginManifestPtr om =
       OriginManifestParser::Parse(origin, version, json);
   ASSERT_FALSE(om.Equals(nullptr));
   ASSERT_FALSE(om->corspreflights.Equals(nullptr));

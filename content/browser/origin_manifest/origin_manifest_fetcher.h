@@ -7,9 +7,9 @@
 
 #include <string>
 
+#include "content/public/common/origin_manifest.mojom.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "net/url_request/url_fetcher_delegate.h"
-#include "third_party/WebKit/public/platform/origin_manifest.mojom.h"
 
 namespace net {
 class URLFetcher;
@@ -24,8 +24,7 @@ class OriginManifestFetcher : public net::URLFetcherDelegate {
                         const std::string version,
                         net::URLRequestContextGetter* getter);
 
-  void Fetch(
-      base::OnceCallback<void(blink::mojom::OriginManifestPtr)> callback);
+  void Fetch(base::OnceCallback<void(mojom::OriginManifestPtr)> callback);
 
   const char* GetNameForLogging();
 
@@ -38,7 +37,7 @@ class OriginManifestFetcher : public net::URLFetcherDelegate {
   const std::string version_;
   net::URLRequestContextGetter* url_request_context_getter_;
 
-  base::OnceCallback<void(blink::mojom::OriginManifestPtr)> callback_;
+  base::OnceCallback<void(mojom::OriginManifestPtr)> callback_;
   std::unique_ptr<net::URLFetcher> url_fetcher_;
 
   DISALLOW_COPY_AND_ASSIGN(OriginManifestFetcher);

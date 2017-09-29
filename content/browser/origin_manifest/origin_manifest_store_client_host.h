@@ -8,8 +8,8 @@
 #include <map>
 #include <string>
 
+#include "content/public/common/origin_manifest.mojom.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
-#include "third_party/WebKit/public/platform/origin_manifest.mojom.h"
 
 namespace net {
 class URLRequestContextGetter;
@@ -19,28 +19,27 @@ namespace content {
 
 class OriginManifestStoreImpl;
 
-class OriginManifestStoreClientHost : public blink::mojom::OriginManifestStore {
+class OriginManifestStoreClientHost : public mojom::OriginManifestStore {
  public:
   OriginManifestStoreClientHost(OriginManifestStoreImpl* store,
                                 net::URLRequestContextGetter* getter);
   ~OriginManifestStoreClientHost() override;
 
-  // blink::mojom::OriginManfiestStore implementation: async
+  // mojom::OriginManfiestStore implementation: async
   void Get(const std::string& origin, GetCallback callback) override;
   void GetOrFetch(const std::string& origin,
                   const std::string& version,
                   GetCallback callback) override;
   void Remove(const std::string& origin, RemoveCallback callback) override;
 
-  // blink::mojom::OriginManfiestStore implementation: sync
+  // mojom::OriginManfiestStore implementation: sync
   void GetCORSPreflight(const std::string& origin,
                         GetCORSPreflightCallback callback) override;
   void GetContentSecurityPolicies(
       const std::string& origin,
       GetContentSecurityPoliciesCallback callback) override;
 
-  void OnFetchComplete(GetCallback callback,
-                       blink::mojom::OriginManifestPtr om);
+  void OnFetchComplete(GetCallback callback, mojom::OriginManifestPtr om);
 
   const char* GetNameForLogging();
 

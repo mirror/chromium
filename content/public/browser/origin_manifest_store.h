@@ -5,7 +5,7 @@
 #ifndef CONTENT_PUBLIC_ORIGIN_MANIFEST_STORE_H_
 #define CONTENT_PUBLIC_ORIGIN_MANIFEST_STORE_H_
 
-#include "third_party/WebKit/public/platform/origin_manifest.mojom.h"
+#include "content/public/common/origin_manifest.mojom.h"
 
 namespace net {
 class URLRequestContextGetter;
@@ -18,7 +18,7 @@ class OriginManifestStore {
   OriginManifestStore(){};
   virtual ~OriginManifestStore(){};
 
-  virtual void BindRequest(blink::mojom::OriginManifestStoreRequest request,
+  virtual void BindRequest(mojom::OriginManifestStoreRequest request,
                            net::URLRequestContextGetter* getter) = 0;
 };
 

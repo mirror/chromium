@@ -9,9 +9,9 @@
 
 namespace content {
 
-blink::mojom::OriginManifestPtr OriginManifestParser::Parse(std::string origin,
-                                                            std::string version,
-                                                            std::string json) {
+mojom::OriginManifestPtr OriginManifestParser::Parse(std::string origin,
+                                                     std::string version,
+                                                     std::string json) {
   // TODO throw some meaningful errors when parsing does not go well
   std::unique_ptr<base::DictionaryValue> directives_dict =
       base::DictionaryValue::From(
@@ -20,7 +20,7 @@ blink::mojom::OriginManifestPtr OriginManifestParser::Parse(std::string origin,
   if (directives_dict == nullptr)
     return nullptr;
 
-  blink::mojom::OriginManifestPtr om = blink::mojom::OriginManifest::New();
+  mojom::OriginManifestPtr om = mojom::OriginManifest::New();
   om->origin = origin;
   om->version = version;
   om->json = json;
@@ -96,32 +96,30 @@ OriginManifestParser::ToCORSPreflightsToken(std::string value) {
   return CORS_UNKNOWN;
 }
 
-blink::mojom::Disposition OriginManifestParser::ParseDisposition(
-    base::Value* value) {
+mojom::Disposition OriginManifestParser::ParseDisposition(base::Value* value) {
   std::string disposition;
   if (value->GetAsString(&disposition)) {
     switch (ToDispositionToken(disposition)) {
       case DISPOSITION_ENFORCE:
       case DISPOSITION_UNKNOWN:
-        return blink::mojom::Disposition::ENFORCE;
+        return mojom::Disposition::ENFORCE;
       case DISPOSITION_REPORT_ONLY:
-        return blink::mojom::Disposition::REPORT_ONLY;
+        return mojom::Disposition::REPORT_ONLY;
     }
   }
-  return blink::mojom::Disposition::ENFORCE;
+  return mojom::Disposition::ENFORCE;
 }
 
-std::vector<blink::mojom::ContentSecurityPolicyPtr>
+std::vector<mojom::ContentSecurityPolicyPtr>
 OriginManifestParser::ParseContentSecurityPolicies(
     std::vector<base::Value> list) {
   // TODO throw some meaningful errors when parsing does not go well
-  std::vector<blink::mojom::ContentSecurityPolicyPtr> csps =
-      std::vector<blink::mojom::ContentSecurityPolicyPtr>();
+  std::vector<mojom::ContentSecurityPolicyPtr> csps =
+      std::vector<mojom::ContentSecurityPolicyPtr>();
 
   for (std::vector<base::Value>::iterator l_it = list.begin();
        l_it != list.end(); ++l_it) {
-    blink::mojom::ContentSecurityPolicyPtr csp =
-        blink::mojom::ContentSecurityPolicy::New();
+    mojom::ContentSecurityPolicyPtr csp = mojom::ContentSecurityPolicy::New();
     base::DictionaryValue* dict;
     if (l_it->GetAsDictionary(&dict)) {
       for (base::detail::dict_iterator_proxy::iterator d_it =
@@ -178,18 +176,17 @@ std::vector<std::string> OriginManifestParser::ParseCORSOrigins(
   return origins;
 }
 
-blink::mojom::CORSPreflightPtr OriginManifestParser::ParseCORSPreflight(
+mojom::CORSPreflightPtr OriginManifestParser::ParseCORSPreflight(
     base::DictionaryValue* dict) {
   // TODO throw some meaningful errors when parsing does not go well
-  blink::mojom::CORSPreflightPtr corspreflights =
-      blink::mojom::CORSPreflight::New();
+  mojom::CORSPreflightPtr corspreflights = mojom::CORSPreflight::New();
 
   for (base::detail::dict_iterator_proxy::iterator it =
            dict->DictItems().begin();
        it != dict->DictItems().end(); ++it) {
     switch (ToCORSPreflightsToken(it->first)) {
       case CORS_NO_CREDENTIALS: {
-        corspreflights->nocredentials = blink::mojom::CORSNoCredentials::New();
+        corspreflights->nocredentials = mojom::CORSNoCredentials::New();
         base::DictionaryValue* no_creds_dict;
         if (it->second.GetAsDictionary(&no_creds_dict)) {
           for (base::detail::dict_iterator_proxy::iterator d_it =
@@ -206,8 +203,7 @@ blink::mojom::CORSPreflightPtr OriginManifestParser::ParseCORSPreflight(
       // Should I go nuts when this happens?
       break;
       case CORS_UNSAFE_INCLUDE_CREDENTIALS: {
-        corspreflights->withcredentials =
-            blink::mojom::CORSWithCredentials::New();
+        corspreflights->withcredentials = mojom::CORSWithCredentials::New();
         base::DictionaryValue* with_creds_dict;
         if (it->second.GetAsDictionary(&with_creds_dict)) {
           for (base::detail::dict_iterator_proxy::iterator d_it =

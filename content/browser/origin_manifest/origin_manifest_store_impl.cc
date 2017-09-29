@@ -19,16 +19,16 @@ OriginManifestStoreImpl::OriginManifestStoreImpl() : OriginManifestStore() {}
 OriginManifestStoreImpl::~OriginManifestStoreImpl() {}
 
 void OriginManifestStoreImpl::BindRequest(
-    blink::mojom::OriginManifestStoreRequest request,
+    mojom::OriginManifestStoreRequest request,
     net::URLRequestContextGetter* getter) {
   mojo::MakeStrongBinding(
       std::make_unique<OriginManifestStoreClientHost>(this, getter),
       std::move(request));
 }
 
-blink::mojom::OriginManifestPtr OriginManifestStoreImpl::Get(
+mojom::OriginManifestPtr OriginManifestStoreImpl::Get(
     const url::Origin& origin) {
-  blink::mojom::OriginManifestPtr om(nullptr);
+  mojom::OriginManifestPtr om(nullptr);
 
   OriginManifestMap::iterator it = origin_manifest_map.find(origin);
   if (it != origin_manifest_map.end()) {
@@ -40,10 +40,10 @@ blink::mojom::OriginManifestPtr OriginManifestStoreImpl::Get(
 
 void OriginManifestStoreImpl::GetCORSPreflight(
     const url::Origin& origin,
-    base::OnceCallback<void(blink::mojom::CORSPreflightPtr)> callback) {
-  blink::mojom::CORSPreflightPtr corspreflights;
+    base::OnceCallback<void(mojom::CORSPreflightPtr)> callback) {
+  mojom::CORSPreflightPtr corspreflights;
 
-  blink::mojom::OriginManifestPtr om = Get(origin);
+  mojom::OriginManifestPtr om = Get(origin);
   if (!om.Equals(nullptr))
     corspreflights = om->corspreflights.Clone();
 
@@ -52,11 +52,11 @@ void OriginManifestStoreImpl::GetCORSPreflight(
 
 void OriginManifestStoreImpl::GetContentSecurityPolicies(
     const url::Origin& origin,
-    base::OnceCallback<
-        void(std::vector<blink::mojom::ContentSecurityPolicyPtr>)> callback) {
-  std::vector<blink::mojom::ContentSecurityPolicyPtr> csps;
+    base::OnceCallback<void(std::vector<mojom::ContentSecurityPolicyPtr>)>
+        callback) {
+  std::vector<mojom::ContentSecurityPolicyPtr> csps;
 
-  blink::mojom::OriginManifestPtr om = Get(origin);
+  mojom::OriginManifestPtr om = Get(origin);
   if (!om.Equals(nullptr)) {
     for (auto const& csp : om->csps)
       csps.push_back(csp.Clone());
@@ -65,7 +65,7 @@ void OriginManifestStoreImpl::GetContentSecurityPolicies(
   std::move(callback).Run(std::move(csps));
 }
 
-void OriginManifestStoreImpl::Add(blink::mojom::OriginManifestPtr om,
+void OriginManifestStoreImpl::Add(mojom::OriginManifestPtr om,
                                   base::OnceCallback<void()> callback) {
   DCHECK(!om.Equals(nullptr));
 
@@ -84,7 +84,7 @@ void OriginManifestStoreImpl::Add(blink::mojom::OriginManifestPtr om,
 
 void OriginManifestStoreImpl::Remove(const url::Origin origin,
                                      base::OnceCallback<void()> callback) {
-  blink::mojom::OriginManifestPtr om(nullptr);
+  mojom::OriginManifestPtr om(nullptr);
 
   OriginManifestMap::iterator it = origin_manifest_map.find(origin);
   if (it != origin_manifest_map.end()) {

@@ -9,7 +9,7 @@
 
 #include "base/values.h"
 #include "content/common/content_export.h"
-#include "third_party/WebKit/public/platform/origin_manifest.mojom.h"
+#include "content/public/common/origin_manifest.mojom.h"
 
 namespace base {
 class DictionaryValue;
@@ -19,9 +19,9 @@ namespace content {
 
 class CONTENT_EXPORT OriginManifestParser {
  public:
-  static blink::mojom::OriginManifestPtr Parse(std::string origin,
-                                               std::string version,
-                                               std::string json);
+  static mojom::OriginManifestPtr Parse(std::string origin,
+                                        std::string version,
+                                        std::string json);
 
  private:
   enum DispositionToken {
@@ -53,10 +53,10 @@ class CONTENT_EXPORT OriginManifestParser {
   static CSPToken ToCSPToken(std::string value);
   static CORSPreflightsToken ToCORSPreflightsToken(std::string value);
 
-  static blink::mojom::Disposition ParseDisposition(base::Value* value);
-  static std::vector<blink::mojom::ContentSecurityPolicyPtr>
+  static mojom::Disposition ParseDisposition(base::Value* value);
+  static std::vector<mojom::ContentSecurityPolicyPtr>
   ParseContentSecurityPolicies(std::vector<base::Value> list);
-  static blink::mojom::CORSPreflightPtr ParseCORSPreflight(
+  static mojom::CORSPreflightPtr ParseCORSPreflight(
       base::DictionaryValue* dict);
 
   static std::vector<std::string> ParseCORSOrigins(base::Value* value);

@@ -26,7 +26,7 @@ OriginManifestFetcher::OriginManifestFetcher(
 OriginManifestFetcher::~OriginManifestFetcher() {}
 
 void OriginManifestFetcher::Fetch(
-    base::OnceCallback<void(blink::mojom::OriginManifestPtr)> callback) {
+    base::OnceCallback<void(mojom::OriginManifestPtr)> callback) {
   // Check if origin is Secure Context
   if (!IsOriginSecure(GURL(origin_))) {
     std::move(callback).Run(nullptr);

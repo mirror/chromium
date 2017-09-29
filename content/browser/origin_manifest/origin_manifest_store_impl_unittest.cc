@@ -13,6 +13,8 @@
 namespace content {
 
 class OriginManifestStoreImplTest : public testing::Test {
+  // This is black magic, voodoo, call it what you want
+  // https://cs.chromium.org/chromium/src/base/test/scoped_task_environment.h?l=26
   base::test::ScopedTaskEnvironment scoped_task_environment_;
 };
 
@@ -21,7 +23,7 @@ class OriginManifestStoreImplTest : public testing::Test {
 
 TEST_F(OriginManifestStoreImplTest, QueryOriginManifest) {
   OriginManifestStoreImpl store(nullptr);
-  blink::mojom::OriginManifestPtr om = blink::mojom::OriginManifest::New();
+  mojom::OriginManifestPtr om = mojom::OriginManifest::New();
   om->origin = "https://a.com";
   om->version = "version1";
   url::Origin origin(GURL(om->origin));
@@ -34,7 +36,7 @@ TEST_F(OriginManifestStoreImplTest, QueryOriginManifest) {
   run_loop.Run();
 
   // get with same origin -> the equivalent OM
-  blink::mojom::OriginManifestPtr om2 = store.Get(origin);
+  mojom::OriginManifestPtr om2 = store.Get(origin);
   EXPECT_FALSE(om2.Equals(nullptr));
   EXPECT_TRUE(om->version == om2->version);
 
@@ -55,13 +57,13 @@ TEST_F(OriginManifestStoreImplTest, QueryOriginManifest) {
 namespace {
 
 void CheckEmptyCORSPreflights(base::Closure quit_closure,
-                              blink::mojom::CORSPreflightPtr corspreflights) {
+                              mojom::CORSPreflightPtr corspreflights) {
   EXPECT_TRUE(corspreflights.Equals(nullptr));
   std::move(quit_closure).Run();
 }
 
 void CheckHasCORSPreflights(base::Closure quit_closure,
-                            blink::mojom::CORSPreflightPtr corspreflights) {
+                            mojom::CORSPreflightPtr corspreflights) {
   EXPECT_FALSE(corspreflights.Equals(nullptr));
 
   EXPECT_EQ(corspreflights->nocredentials->origins.size(), 1ul);
@@ -77,15 +79,15 @@ void CheckHasCORSPreflights(base::Closure quit_closure,
 
 TEST_F(OriginManifestStoreImplTest, QueryCORSPreflight) {
   OriginManifestStoreImpl store(nullptr);
-  blink::mojom::OriginManifestPtr om = blink::mojom::OriginManifest::New();
+  mojom::OriginManifestPtr om = mojom::OriginManifest::New();
   om->origin = "https://a.com";
   std::vector<std::string> nocredentials;
   nocredentials.push_back("https://a.com");
   std::vector<std::string> withcredentials;
   withcredentials.push_back("https://b.com");
-  om->corspreflights = blink::mojom::CORSPreflight::New(
-      blink::mojom::CORSNoCredentials::New(nocredentials),
-      blink::mojom::CORSWithCredentials::New(withcredentials));
+  om->corspreflights = mojom::CORSPreflight::New(
+      mojom::CORSNoCredentials::New(nocredentials),
+      mojom::CORSWithCredentials::New(withcredentials));
   url::Origin origin(GURL(om->origin));
 
   // get on empty store -> nothing
@@ -129,18 +131,18 @@ namespace {
 
 void CheckEmptyContentSecurityPolicies(
     base::Closure quit_closure,
-    std::vector<blink::mojom::ContentSecurityPolicyPtr> csps) {
+    std::vector<mojom::ContentSecurityPolicyPtr> csps) {
   ASSERT_EQ(csps.size(), 0ul);
   std::move(quit_closure).Run();
 }
 
 void CheckHasContentSecurityPolicies(
     base::Closure quit_closure,
-    std::vector<blink::mojom::ContentSecurityPolicyPtr> csps) {
+    std::vector<mojom::ContentSecurityPolicyPtr> csps) {
   ASSERT_EQ(csps.size(), 1ul);
 
   EXPECT_TRUE(csps[0]->policy == "default-src 'none'");
-  EXPECT_EQ(csps[0]->disposition, blink::mojom::Disposition::REPORT_ONLY);
+  EXPECT_EQ(csps[0]->disposition, mojom::Disposition::REPORT_ONLY);
   EXPECT_TRUE(csps[0]->allowOverride);
 
   std::move(quit_closure).Run();
@@ -150,10 +152,10 @@ void CheckHasContentSecurityPolicies(
 
 TEST_F(OriginManifestStoreImplTest, QueryContentSecurityPolicies) {
   OriginManifestStoreImpl store(nullptr);
-  blink::mojom::OriginManifestPtr om = blink::mojom::OriginManifest::New();
+  mojom::OriginManifestPtr om = mojom::OriginManifest::New();
   om->origin = "https://a.com";
-  om->csps.push_back(blink::mojom::ContentSecurityPolicy::New(
-      "default-src 'none'", blink::mojom::Disposition::REPORT_ONLY, true));
+  om->csps.push_back(mojom::ContentSecurityPolicy::New(
+      "default-src 'none'", mojom::Disposition::REPORT_ONLY, true));
   url::Origin origin(GURL(om->origin));
 
   // get on empty store -> nothing

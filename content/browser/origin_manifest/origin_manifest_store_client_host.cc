@@ -31,7 +31,7 @@ void OriginManifestStoreClientHost::Get(const std::string& origin,
 void OriginManifestStoreClientHost::GetOrFetch(const std::string& origin,
                                                const std::string& version,
                                                GetCallback callback) {
-  blink::mojom::OriginManifestPtr om =
+  mojom::OriginManifestPtr om =
       origin_manifest_store_impl_->Get(url::Origin(GURL(origin)));
 
   if (getter_ && (om.Equals(nullptr) || (om->version != version))) {
@@ -52,7 +52,7 @@ void OriginManifestStoreClientHost::GetOrFetch(const std::string& origin,
 
 void OriginManifestStoreClientHost::OnFetchComplete(
     GetCallback callback,
-    blink::mojom::OriginManifestPtr om) {
+    mojom::OriginManifestPtr om) {
   if (om.Equals(nullptr)) {
     std::move(callback).Run(std::move(om));
     return;
@@ -77,8 +77,8 @@ void OriginManifestStoreClientHost::GetCORSPreflight(
 
 void OriginManifestStoreClientHost::GetContentSecurityPolicies(
     const std::string& origin,
-    base::OnceCallback<
-        void(std::vector<blink::mojom::ContentSecurityPolicyPtr>)> callback) {
+    base::OnceCallback<void(std::vector<mojom::ContentSecurityPolicyPtr>)>
+        callback) {
   origin_manifest_store_impl_->GetContentSecurityPolicies(
       url::Origin(GURL(origin)), std::move(callback));
 }

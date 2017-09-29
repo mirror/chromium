@@ -29,6 +29,7 @@
 #include "content/browser/download/download_manager_impl.h"
 #include "content/browser/indexed_db/indexed_db_context_impl.h"
 #include "content/browser/loader/resource_dispatcher_host_impl.h"
+#include "content/browser/origin_manifest/origin_manifest_store_impl.h"
 #include "content/browser/push_messaging/push_messaging_router.h"
 #include "content/browser/service_manager/common_browser_interfaces.h"
 #include "content/browser/storage_partition_impl_map.h"
@@ -546,7 +547,8 @@ ServiceManagerConnection* BrowserContext::GetServiceManagerConnectionFor(
 }
 
 BrowserContext::BrowserContext()
-    : media_device_id_salt_(CreateRandomMediaDeviceIDSalt()) {}
+    : media_device_id_salt_(CreateRandomMediaDeviceIDSalt()),
+      origin_manifest_store_(new content::OriginManifestStoreImpl()) {}
 
 BrowserContext::~BrowserContext() {
   CHECK(GetUserData(kMojoWasInitialized))
@@ -577,6 +579,10 @@ std::string BrowserContext::CreateRandomMediaDeviceIDSalt() {
   base::Base64Encode(base::RandBytesAsString(16), &salt);
   DCHECK(!salt.empty());
   return salt;
+}
+
+OriginManifestStore* BrowserContext::GetOriginManifestStore() {
+  return origin_manifest_store_.get();
 }
 
 }  // namespace content

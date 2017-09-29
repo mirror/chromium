@@ -9,8 +9,8 @@
 
 #include "content/common/content_export.h"
 #include "content/public/browser/origin_manifest_store.h"
+#include "content/public/common/origin_manifest.mojom.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
-#include "third_party/WebKit/public/platform/origin_manifest.mojom.h"
 
 namespace url {
 class Origin;
@@ -24,30 +24,28 @@ class CONTENT_EXPORT OriginManifestStoreImpl : public OriginManifestStore {
   ~OriginManifestStoreImpl() override;
 
   // OriginManifestStore implementation
-  void BindRequest(blink::mojom::OriginManifestStoreRequest request,
+  void BindRequest(mojom::OriginManifestStoreRequest request,
                    net::URLRequestContextGetter* getter) override;
 
-  // blink::mojom::OriginManfiestStore implementation.
-  blink::mojom::OriginManifestPtr Get(const url::Origin& origin);
+  // mojom::OriginManfiestStore implementation.
+  mojom::OriginManifestPtr Get(const url::Origin& origin);
   void GetCORSPreflight(
       const url::Origin& origin,
-      base::OnceCallback<void(blink::mojom::CORSPreflightPtr)> callback);
+      base::OnceCallback<void(mojom::CORSPreflightPtr)> callback);
   void GetContentSecurityPolicies(
       const url::Origin& origin,
-      base::OnceCallback<
-          void(std::vector<blink::mojom::ContentSecurityPolicyPtr>)> callback);
+      base::OnceCallback<void(std::vector<mojom::ContentSecurityPolicyPtr>)>
+          callback);
 
-  void OnInitialLoad(std::vector<blink::mojom::OriginManifestPtr> oms);
+  void OnInitialLoad(std::vector<mojom::OriginManifestPtr> oms);
 
-  void Add(blink::mojom::OriginManifestPtr om,
-           base::OnceCallback<void()> callback);
+  void Add(mojom::OriginManifestPtr om, base::OnceCallback<void()> callback);
   void Remove(const url::Origin origin, base::OnceCallback<void()> callback);
 
   const char* GetNameForLogging();
 
  private:
-  typedef std::map<url::Origin, blink::mojom::OriginManifestPtr>
-      OriginManifestMap;
+  typedef std::map<url::Origin, mojom::OriginManifestPtr> OriginManifestMap;
 
   OriginManifestMap origin_manifest_map;
 
