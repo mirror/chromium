@@ -59,7 +59,7 @@ struct UCharBufferTranslator {
   static void Translate(StringImpl*& location,
                         const UCharBuffer& buf,
                         unsigned hash) {
-    location = StringImpl::Create8BitIfPossible(buf.s, buf.length).LeakRef();
+    location = LeakRef(StringImpl::Create8BitIfPossible(buf.s, buf.length));
     location->SetHash(hash);
     location->SetIsAtomic(true);
   }
@@ -137,7 +137,7 @@ struct HashAndUTF8CharactersTranslator {
     if (is_all_ascii)
       new_string = StringImpl::Create(buffer.characters, buffer.length);
 
-    location = new_string.LeakRef();
+    location = LeakRef(std::move(new_string));
     location->SetHash(hash);
     location->SetIsAtomic(true);
   }
@@ -167,7 +167,7 @@ struct LCharBufferTranslator {
   static void Translate(StringImpl*& location,
                         const LCharBuffer& buf,
                         unsigned hash) {
-    location = StringImpl::Create(buf.s, buf.length).LeakRef();
+    location = LeakRef(StringImpl::Create(buf.s, buf.length));
     location->SetHash(hash);
     location->SetIsAtomic(true);
   }

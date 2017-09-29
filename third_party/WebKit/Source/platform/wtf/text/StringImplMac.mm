@@ -39,7 +39,7 @@ static inline id HardAutorelease(CFTypeRef object) {
 }
 
 StringImpl::operator NSString*() {
-  return HardAutorelease(CreateCFString().LeakRef());
+  return LeakRef(HardAutorelease(CreateCFString());
 }
 
 }  // namespace WTF
