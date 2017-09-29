@@ -6,6 +6,7 @@
 #define ASH_DISPLAY_TOUCH_CALIBRATOR_TOUCH_CALIBRATOR_CONTROLLER_H_
 
 #include <map>
+#include <unordered_set>
 
 #include "ash/ash_export.h"
 #include "ash/display/window_tree_host_manager.h"
