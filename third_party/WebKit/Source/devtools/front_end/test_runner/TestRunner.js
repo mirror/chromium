@@ -2,6 +2,11 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+/**
+ * @fileoverview using private properties isn't a Closure violation in tests.
+ * @suppress {accessControls}
+ */
+
 /* eslint-disable no-console */
 
 /** @type {!{logToStderr: function(), notifyDone: function()}|undefined} */
@@ -290,6 +295,14 @@ TestRunner.textContentWithoutStyles = function(node) {
       currentNode = currentNode.traverseNextNode(node);
   }
   return buffer;
+};
+
+/**
+ * @param {string} experiment
+ */
+TestRunner.enableExperiment = function(experiment) {
+  Runtime.experiments.enableForTest(experiment);
+  UI.viewManager._generateViews();
 };
 
 (function() {

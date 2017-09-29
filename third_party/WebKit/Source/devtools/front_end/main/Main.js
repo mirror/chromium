@@ -147,14 +147,8 @@ Main.Main = class {
     if (Host.isUnderTest(prefs)) {
       var testPath = JSON.parse(prefs['testPath'] || '""');
       // Enable experiments for testing.
-      if (testPath.indexOf('accessibility/') !== -1)
-        Runtime.experiments.enableForTest('accessibilityInspection');
       if (testPath.indexOf('audits2/') !== -1)
         Runtime.experiments.enableForTest('audits2');
-      if (testPath.indexOf('coverage/') !== -1)
-        Runtime.experiments.enableForTest('cssTrackerPanel');
-      if (testPath.indexOf('changes/') !== -1)
-        Runtime.experiments.enableForTest('changesDrawer');
       if (testPath.indexOf('sass/') !== -1)
         Runtime.experiments.enableForTest('liveSASS');
     }

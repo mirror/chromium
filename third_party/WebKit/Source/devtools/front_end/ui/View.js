@@ -294,11 +294,7 @@ UI.ViewManager = class {
     /** @type {!Map<string, string>} */
     this._locationNameByViewId = new Map();
 
-    for (var extension of self.runtime.extensions('view')) {
-      var descriptor = extension.descriptor();
-      this._views.set(descriptor['id'], new UI.ProvidedView(extension));
-      this._locationNameByViewId.set(descriptor['id'], descriptor['location']);
-    }
+    this._generateViews();
   }
 
   /**
@@ -423,6 +419,17 @@ UI.ViewManager = class {
         result.push(this._views.get(id));
     }
     return result;
+  }
+
+  /**
+   * Needed by tests to regenerate views after an experiment is enabled
+   */
+  _generateViews() {
+    for (var extension of self.runtime.extensions('view')) {
+      var descriptor = extension.descriptor();
+      this._views.set(descriptor['id'], new UI.ProvidedView(extension));
+      this._locationNameByViewId.set(descriptor['id'], descriptor['location']);
+    }
   }
 };
 
