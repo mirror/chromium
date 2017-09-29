@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f040c1a5_49f3d3db",
+        "filename": "chrome/android/java/res/layout/offline_download_header.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T18:07:34Z",
+      "side": 1,
+      "message": "nit: please remove this extra blank space",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 4
+      },
+      "revId": "1af79c27bedf0d01b44df87cc8bbe68aaed18f6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5691dbba_e2d7e464",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/OfflineGroupHeaderView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T18:07:34Z",
+      "side": 1,
+      "message": "Can this share some logic with SelectableItemView?",
+      "revId": "1af79c27bedf0d01b44df87cc8bbe68aaed18f6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
