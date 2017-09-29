@@ -58,7 +58,7 @@ class NGPaintFragment : public DisplayItemClient, public ImageResourceObserver {
  private:
   void SetVisualRect(const LayoutRect& rect) { visual_rect_ = rect; }
 
-  void PopulateDescendants();
+  void PopulateDescendants(LayoutPoint paint_offset);
 
   RefPtr<const NGPhysicalFragment> physical_fragment_;
   LayoutRect visual_rect_;
