@@ -2,6 +2,257 @@
   "comments": [
     {
       "key": {
+        "uuid": "9f1c4c67_ca8fd95a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-29T22:43:34Z",
+      "side": 1,
+      "message": "TemporaryPagesConsistencyCheckTask\n\nI think we need to be clearer about what is temporary in that sense:\n* not temporary consistency, and\n* not temporary check, but\n* temporary pages",
+      "revId": "95956925545f639472f31872345816e66ec940d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bf44957_9141f92c",
+        "filename": "components/offline_pages/core/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-29T22:43:34Z",
+      "side": 1,
+      "message": "please rename all 3 files according to the comment on the CL description.",
+      "revId": "95956925545f639472f31872345816e66ec940d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4be6d3aa_20ee8741",
+        "filename": "components/offline_pages/core/model/mark_page_accessed_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-29T22:43:34Z",
+      "side": 1,
+      "message": "Good catch!!!\n\nWas this covered by a test before?\n\nYou would have caught it earlier if the test not only included TestTaskRunner, but also used it. Please kindly update the test ;)\n\nhttps://cs.chromium.org/chromium/src/components/offline_pages/core/model/mark_page_accessed_task_unittest.cc?rcl\u003da3c7642c49f2145ae41c040a02d1e0570798a000\u0026l\u003d15\n\nThese calls:\n  std::move(task)-\u003eRun();\n\nShould be replaced.",
+      "revId": "95956925545f639472f31872345816e66ec940d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82db3b0c_e86d5c33",
+        "filename": "components/offline_pages/core/model/temporary_consistency_check_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-29T22:43:34Z",
+      "side": 1,
+      "message": "string, memory, stdint.h too",
+      "revId": "95956925545f639472f31872345816e66ec940d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44ad50c4_0f936598",
+        "filename": "components/offline_pages/core/model/temporary_consistency_check_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-29T22:43:34Z",
+      "side": 1,
+      "message": "I have an idea for you to think about:\nIt is great that we found this function, but I have a feeling that this is implementation details and does not really reflect what we are doing. It also makes it hard to make sure that there is a symmetry between serialization of path and deserialization.\n\nHow about we combine it with the old idea we had of:\nstd::string OfflineStoreUtils::PathToDbColumn(base::Path)\nbase::Path OfflineStoreUtils::DbColumnToPath(std::string)\n\nNames are highly negotiable, but this would be like:\nToDatabaseTime\nFromDatabaseTime\nFor handling paths.\n\nThat way we have conversion both ways in a single file and we can reason about that much simpler.\n\nThis is definitely idea for a separate patch, just wanted to put it out there and hear your thoughts about it.",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 65
+      },
+      "revId": "95956925545f639472f31872345816e66ec940d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "687da4af_70bb617b",
+        "filename": "components/offline_pages/core/model/temporary_consistency_check_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-29T22:43:34Z",
+      "side": 1,
+      "message": "not sure why you need a unique_ptr here.\nstd::vector should be movable here as well.",
+      "range": {
+        "startLine": 42,
+        "startChar": 16,
+        "endLine": 42,
+        "endChar": 58
+      },
+      "revId": "95956925545f639472f31872345816e66ec940d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "908c6c62_d7700b24",
+        "filename": "components/offline_pages/core/model/temporary_consistency_check_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-29T22:43:34Z",
+      "side": 1,
+      "message": "... read this after the next comment:\n\nAnd this result is not used on top of everything else I said.",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 4
+      },
+      "revId": "95956925545f639472f31872345816e66ec940d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c5454bb_f79412e1",
+        "filename": "components/offline_pages/core/model/temporary_consistency_check_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-29T22:43:34Z",
+      "side": 1,
+      "message": "Please revisit this with the following in mind:\n\n1. Let\u0027s never use |\u003d to bools, as it is a bitwise OR, even if it works.\n2. Let\u0027s not assign a value to result, without later checking it. This code can commit the transaction and return false, which is likely not what you want.\n\nDepending on your goal, I think the safest thing is to:\ndrop result from this function\nreplace this line with:\n\nif (!statement.Run())\n  return;\n\nIf your intention is to fail when delete fails.\nRun() will return false here if SQL store didn\u0027t work.\nIf there was nothing to delete (doubtful) it will be OK.",
+      "range": {
+        "startLine": 86,
+        "startChar": 4,
+        "endLine": 86,
+        "endChar": 30
+      },
+      "revId": "95956925545f639472f31872345816e66ec940d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "695a2efd_9eb0b0fd",
+        "filename": "components/offline_pages/core/model/temporary_consistency_check_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-29T22:43:34Z",
+      "side": 1,
+      "message": "as I said earlier, please don\u0027t!\nRewrite it in a not so clever way, that will not fail you.\n\nAlso similarly to the method above, if you care about returning result, please verify that result once returned, or abandon the idea of returning result.",
+      "range": {
+        "startLine": 97,
+        "startChar": 11,
+        "endLine": 97,
+        "endChar": 14
+      },
+      "revId": "95956925545f639472f31872345816e66ec940d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86015f83_304b6d3d",
+        "filename": "components/offline_pages/core/model/temporary_consistency_check_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-29T22:43:34Z",
+      "side": 1,
+      "message": "This is your entry point on IO thread.\nBy convention we are using *Sync naming here.",
+      "revId": "95956925545f639472f31872345816e66ec940d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50711389_212ec42d",
+        "filename": "components/offline_pages/core/model/temporary_consistency_check_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-29T22:43:34Z",
+      "side": 1,
+      "message": "I expect a one large transaction for all db operations here.\nMore specifically:\n* I don\u0027t want this code to read stuff in one transaction \n* And then delete in the other, where in normal circumstances you can expect the data to be different. (Not in our case, per TaskQueue, but in general).\n\nPlease update that accordingly.\n\nFiles deletion will of course happen outside of transaction.",
+      "revId": "95956925545f639472f31872345816e66ec940d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65942c0a_44348a89",
+        "filename": "components/offline_pages/core/model/temporary_consistency_check_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-29T22:43:34Z",
+      "side": 1,
+      "message": "2 issues with this one.\n1. It is not needed until 124, move it there, please, unless you want to do it before you open a DB transaction (which would be OK to keep here in that case).\n2. You make a promise to \"drain the swamp\" in abandoned dir, which is not happening, and you leave files with no offline pages lingering there... think about how to fix that.",
+      "revId": "95956925545f639472f31872345816e66ec940d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3d89c26_64d7ee89",
+        "filename": "components/offline_pages/core/model/temporary_consistency_check_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-29T22:43:34Z",
+      "side": 1,
+      "message": "Do we have a separate task to move the files?\nIs the idea that we just kill all the files and wipe the cache?\nWould it not make sense to simply let the pages expire and only delete the files that cannot be matched to an existing page at the time?",
+      "revId": "95956925545f639472f31872345816e66ec940d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b5df464_13ab3414",
         "filename": "components/offline_pages/core/model/temporary_consistency_check_task.cc",
         "patchSetId": 2
@@ -18,6 +269,92 @@
         "startChar": 34,
         "endLine": 124,
         "endChar": 47
+      },
+      "revId": "95956925545f639472f31872345816e66ec940d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a6c3d50_22c5bc1b",
+        "filename": "components/offline_pages/core/model/temporary_consistency_check_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-29T22:43:34Z",
+      "side": 1,
+      "message": "All that work (that might fail) and we always return true, huh?\n\nPlease rethink this.",
+      "revId": "95956925545f639472f31872345816e66ec940d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6e624ed_fa235bb9",
+        "filename": "components/offline_pages/core/model/temporary_consistency_check_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-29T22:43:34Z",
+      "side": 1,
+      "message": "I wonder if that is not a separate task... It sounds like an upgrade, which we don\u0027t want to run periodically when Chrome is running, but rather on a startup, or maybe only in case we discovered that upgrade is not finished yet.\n\nIt can stay here for now, but I\u0027d consider a todo, that clearly states it could be separate from this task and triggered when we detect the need for update.\n\nWDYT?",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 22,
+        "endChar": 66
+      },
+      "revId": "95956925545f639472f31872345816e66ec940d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86626cc2_280911c4",
+        "filename": "components/offline_pages/core/model/temporary_consistency_check_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-29T22:43:34Z",
+      "side": 1,
+      "message": "Which is another way of supporting my point above.",
+      "range": {
+        "startLine": 27,
+        "startChar": 3,
+        "endLine": 28,
+        "endChar": 12
+      },
+      "revId": "95956925545f639472f31872345816e66ec940d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5b75835_4a62737c",
+        "filename": "components/offline_pages/core/model/temporary_consistency_check_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-29T22:43:34Z",
+      "side": 1,
+      "message": "This problem goes away if we don\u0027t delete non-expired pages from abandoned dir...",
+      "range": {
+        "startLine": 122,
+        "startChar": 28,
+        "endLine": 122,
+        "endChar": 52
       },
       "revId": "95956925545f639472f31872345816e66ec940d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
