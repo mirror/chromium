@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecfc9e82_93cb2e03",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-29T09:27:41Z",
+      "side": 1,
+      "message": "Chatted with Yutaka offline. In the new code now we pass this at loader creation time, which means when the cancel timer fires the frame might be already detached and therefore it doesn\u0027t run. In most cases it\u0027s fine as loader\u0027s prefinalizer will take care of it, while for keep-alive requests the cancellation will be delayed possibly more than desirable.\n\nOne way Yutaka suggested in the previous comment is to use WebURLLoader(Impl)\u0027s loader, which is set to the right one-- I think it makes sense (at least for the time being), maybe we could just simply do that?  To be more concrete: we can add WebURLLoader::GetTaskRunner() and can just use it here.  Wdyt?",
+      "revId": "4cd61020a476a84c01ebd5a05f6c2a6aa1a148dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
