@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26fc9cc0_e1ff9e98",
+        "filename": "components/security_state/content/content_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-09-29T15:21:04Z",
+      "side": 1,
+      "message": "I see you put your new code above this exit and I recently found myself wondering about this early exit... Should other lines (e.g. setting of state-\u003eurl) also live above the check of the SSLStatus?",
+      "range": {
+        "startLine": 367,
+        "startChar": 33,
+        "endLine": 367,
+        "endChar": 44
+      },
+      "revId": "ad60c64e0ee4a7d0486db47280e8bb4d951c4cbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d37e70f_d833546c",
+        "filename": "components/security_state/core/security_state.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-09-29T15:21:04Z",
+      "side": 1,
+      "message": "The word |normal| seems ambiguous. Maybe |is_incognito_non_error_page|?  Or a comment somewhere? (Alternatively, see proposal below)",
+      "range": {
+        "startLine": 39,
+        "startChar": 9,
+        "endLine": 39,
+        "endChar": 33
+      },
+      "revId": "ad60c64e0ee4a7d0486db47280e8bb4d951c4cbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40a30a50_00c320c5",
+        "filename": "components/security_state/core/security_state.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-09-29T15:21:04Z",
+      "side": 1,
+      "message": "Presumably, we\u0027d want to protect this case too?\n\n(Alternatively, see proposal below)",
+      "range": {
+        "startLine": 69,
+        "startChar": 6,
+        "endLine": 69,
+        "endChar": 34
+      },
+      "revId": "ad60c64e0ee4a7d0486db47280e8bb4d951c4cbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2ad718c_8ce308da",
+        "filename": "components/security_state/core/security_state.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-09-29T15:21:04Z",
+      "side": 1,
+      "message": "Is there any case where we\u0027d want an error page\u0027s security info to be impacted by MarkHTTPAs?\n\nWould it be simpler to just add (!visible_security_state.is_error_page) to the clauses required to enter this block?",
+      "range": {
+        "startLine": 167,
+        "startChar": 0,
+        "endLine": 167,
+        "endChar": 63
+      },
+      "revId": "ad60c64e0ee4a7d0486db47280e8bb4d951c4cbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
