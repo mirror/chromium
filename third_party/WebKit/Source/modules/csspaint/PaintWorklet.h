@@ -56,9 +56,14 @@ class MODULES_EXPORT PaintWorklet final : public Worklet,
 
   // Since paint worklet has more than one global scope, we MUST override this
   // function and provide our own selection logic.
-  size_t SelectGlobalScope() const final;
+  size_t SelectGlobalScope() final;
   Member<PaintWorkletPendingGeneratorRegistry> pending_generator_registry_;
   DocumentDefinitionMap document_definition_map_;
+
+  size_t previous_paint_frame_cnt_ = 0u;
+  size_t previously_selected_global_scope_ = 0u;
+  size_t paint_cnt_within_frame_ = 0u;
+  bool did_switch_within_frame_ = false;
 
   static const char* SupplementName();
 };

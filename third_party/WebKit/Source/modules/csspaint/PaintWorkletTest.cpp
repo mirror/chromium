@@ -84,27 +84,24 @@ TEST_F(PaintWorkletTest, GarbageCollectionOfCSSPaintDefinition) {
 
 TEST_F(PaintWorkletTest, GlobalScopeSelection) {
   PaintWorklet* paint_worklet = GetPaintWorklet();
-  const size_t update_life_cycle_count = 500u;
-  size_t global_scope_switch_count = 0u;
-  size_t previous_selected_global_scope = 0u;
-  Vector<size_t> selected_global_scope_count(PaintWorklet::kNumGlobalScopes, 0);
+  const size_t update_life_cycle_count = 100u;
   for (size_t i = 0; i < update_life_cycle_count; i++) {
     paint_worklet->GetFrame()->View()->UpdateAllLifecyclePhases();
-    size_t selected_global_scope = SelectGlobalScope(paint_worklet);
-    DCHECK_LT(selected_global_scope, PaintWorklet::kNumGlobalScopes);
-    selected_global_scope_count[selected_global_scope]++;
-    if (selected_global_scope != previous_selected_global_scope) {
-      previous_selected_global_scope = selected_global_scope;
-      global_scope_switch_count++;
+    size_t paint_cnt_within_frame = i + 1;
+    size_t previously_selected_global_scope = 0u;
+    size_t global_scope_switch_count = 0u;
+    for (size_t j = 0; j < paint_cnt_within_frame; j++) {
+      size_t selected_global_scope = SelectGlobalScope(paint_worklet);
+      if (selected_global_scope != previously_selected_global_scope) {
+        previously_selected_global_scope = selected_global_scope;
+        // The first call to paint in this frame should not count as a global
+        // scope switching.
+        if (j != 0)
+          global_scope_switch_count++;
+      }
     }
+    EXPECT_LT(global_scope_switch_count, 2u);
   }
-  EXPECT_EQ(PaintWorklet::kNumGlobalScopes, 2u);
-  // The following numbers depends on the number of paint worklet global scopes,
-  // which is why we check |kNumGlobalScopes| before.
-  EXPECT_EQ(selected_global_scope_count[0], 260u);
-  EXPECT_EQ(selected_global_scope_count[1], 240u);
-  EXPECT_EQ(global_scope_switch_count, 4u);
-
   // Delete the page & associated objects.
   Terminate();
 }

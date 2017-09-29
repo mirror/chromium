@@ -15,9 +15,8 @@
 namespace blink {
 
 const size_t PaintWorklet::kNumGlobalScopes = 2u;
+const size_t kMaxPaintCountToSwitch = 30;
 DocumentPaintDefinition* const kInvalidDocumentDefinition = nullptr;
-// We use each global scope for many frames to try to maximize cache hits.
-const size_t kFrameCountToSwitch = 120u;
 
 // static
 PaintWorklet* PaintWorklet::From(LocalDOMWindow& window) {
@@ -47,13 +46,33 @@ void PaintWorklet::AddPendingGenerator(const String& name,
   pending_generator_registry_->AddPendingGenerator(name, generator);
 }
 
-// For this document, we try to check how many times there is a repaint, which
-// represents how many frames have executed this paint function. Then for every
-// 120 frames, we switch to another global scope, to enforce the constraint that
-// we can't rely on the state of the paint worklet global scope.
-size_t PaintWorklet::SelectGlobalScope() const {
+// We start with a random global scope when a new frame starts. Then within this
+// frame, we switch to the other global scope after certain amount of paint
+// calls (rand(30)).
+// This approach ensures non-deterministic of global scope selecting, and that
+// there is a max of one switching within one frame.
+size_t PaintWorklet::SelectGlobalScope() {
   size_t current_paint_frame_count = GetFrame()->View()->PaintFrameCount();
-  return (current_paint_frame_count / kFrameCountToSwitch) % kNumGlobalScopes;
+  size_t selected_global_scope = previously_selected_global_scope_;
+  std::srand(std::time(0));
+  // A new frame starts.
+  if (current_paint_frame_count != previous_paint_frame_cnt_) {
+    selected_global_scope = std::rand() % kNumGlobalScopes;
+    previous_paint_frame_cnt_ = current_paint_frame_count;
+    previously_selected_global_scope_ = selected_global_scope;
+    paint_cnt_within_frame_ = 1;
+    did_switch_within_frame_ = false;
+  } else {
+    size_t paint_cnt_to_switch = std::rand() % kMaxPaintCountToSwitch;
+    if (!did_switch_within_frame_ &&
+        paint_cnt_within_frame_ >= paint_cnt_to_switch) {
+      selected_global_scope = 1 - previously_selected_global_scope_;
+      previously_selected_global_scope_ = selected_global_scope;
+      did_switch_within_frame_ = true;
+    }
+    paint_cnt_within_frame_++;
+  }
+  return selected_global_scope;
 }
 
 RefPtr<Image> PaintWorklet::Paint(const String& name,
