@@ -295,8 +295,8 @@ void WebrtcFrameSchedulerSimple::ScheduleNextFrame(base::TimeTicks now) {
         target_capture_time, last_capture_started_time_ + kTargetFrameInterval);
   }
 
-  if (target_capture_time < now) {
-    target_capture_time = now;
+  if (target_capture_time < now + kTargetFrameInterval) {
+    target_capture_time = now + kTargetFrameInterval;
   }
 
   capture_timer_.Start(FROM_HERE, target_capture_time - now,
