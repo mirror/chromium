@@ -9,6 +9,7 @@
 #include "ash/login/ui/login_display_style.h"
 #include "ash/login/ui/login_test_base.h"
 #include "ash/login/ui/login_user_view.h"
+#include "ash/public/interfaces/tray_action.mojom.h"
 #include "ash/shell.h"
 #include "base/strings/utf_string_conversions.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -206,6 +207,28 @@ TEST_F(LockContentsViewUnitTest, SwapUserListToPrimaryAuthUser) {
       EXPECT_TRUE(emails.insert(email).second);
     }
   }
+}
+
+// Verifies note action view bounds,
+TEST_F(LockContentsViewUnitTest, NoteActionButtonBounds) {
+  auto* contents = new LockContentsView(data_dispatcher());
+  SetUserCount(1);
+  ShowWidgetWithContent(contents);
+
+  data_dispatcher()->SetLockScreenNoteState(mojom::TrayActionState::kAvailable);
+
+  LockContentsView::TestApi test_api(contents);
+  views::View* note_action = test_api.note_action();
+
+  EXPECT_TRUE(note_action->visible());
+
+  gfx::Rect widget_bounds = widget()->GetWindowBoundsInScreen();
+  gfx::Size note_action_size = note_action->GetPreferredSize();
+
+  EXPECT_EQ(gfx::Rect(widget_bounds.top_right() -
+                          gfx::Vector2d(note_action_size.width(), 0),
+                      note_action_size),
+            note_action->GetBoundsInScreen());
 }
 
 }  // namespace ash
