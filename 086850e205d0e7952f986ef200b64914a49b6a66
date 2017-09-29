@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce5b22eb_93844325",
+        "filename": "components/offline_pages/core/model/add_page_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-29T21:49:49Z",
+      "side": 1,
+      "message": "include string as well.\nand stdint.h",
+      "range": {
+        "startLine": 7,
+        "startChar": 16,
+        "endLine": 7,
+        "endChar": 17
+      },
+      "revId": "086850e205d0e7952f986ef200b64914a49b6a66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "429b27d8_89166aa8",
+        "filename": "components/offline_pages/core/model/add_page_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-29T21:49:49Z",
+      "side": 1,
+      "message": "This should not be necessary if DeleteStore is implemented properly.",
+      "range": {
+        "startLine": 96,
+        "startChar": 16,
+        "endLine": 96,
+        "endChar": 28
+      },
+      "revId": "086850e205d0e7952f986ef200b64914a49b6a66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f8c364e_85d54c95",
+        "filename": "components/offline_pages/core/model/add_page_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-29T21:49:49Z",
+      "side": 1,
+      "message": "Perhaps unique_ptr would simplify things?",
+      "range": {
+        "startLine": 101,
+        "startChar": 2,
+        "endLine": 101,
+        "endChar": 18
+      },
+      "revId": "086850e205d0e7952f986ef200b64914a49b6a66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18a30ce9_b36b7f47",
+        "filename": "components/offline_pages/core/model/add_page_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-29T21:49:49Z",
+      "side": 1,
+      "message": "What does this return when the page is not there?\nI think it would be better to have a unique_ptr as a result here as well.",
+      "range": {
+        "startLine": 121,
+        "startChar": 6,
+        "endLine": 121,
+        "endChar": 43
+      },
+      "revId": "086850e205d0e7952f986ef200b64914a49b6a66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64106ec0_ee7d628e",
+        "filename": "components/offline_pages/core/model/add_page_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-29T21:49:49Z",
+      "side": 1,
+      "message": "this does not make sense from the semantics standpoint",
+      "range": {
+        "startLine": 194,
+        "startChar": 2,
+        "endLine": 194,
+        "endChar": 37
+      },
+      "revId": "086850e205d0e7952f986ef200b64914a49b6a66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b4b7dc8_e3d4a39b",
+        "filename": "components/offline_pages/core/model/add_page_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-29T21:49:49Z",
+      "side": 1,
+      "message": "same here.\n\nname implied that the page was added.\nTest says otherwise.",
+      "range": {
+        "startLine": 207,
+        "startChar": 1,
+        "endLine": 207,
+        "endChar": 37
+      },
+      "revId": "086850e205d0e7952f986ef200b64914a49b6a66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "785a5a44_466c740f",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_test_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-29T21:49:49Z",
+      "side": 1,
+      "message": "just result and page,\nsince out_result and out_page are used in closure.\n\nI thing it is cleaner that way.",
+      "range": {
+        "startLine": 63,
+        "startChar": 16,
+        "endLine": 63,
+        "endChar": 26
+      },
+      "revId": "086850e205d0e7952f986ef200b64914a49b6a66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
