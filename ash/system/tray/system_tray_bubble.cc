@@ -250,6 +250,7 @@ void SystemTrayBubble::RestartAutoCloseTimer() {
 }
 
 void SystemTrayBubble::Close() {
+  tray_->set_show_bubble_by_click(false);
   tray_->HideBubbleWithView(bubble_view());
 }
 

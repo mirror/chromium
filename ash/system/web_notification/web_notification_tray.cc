@@ -399,7 +399,7 @@ void WebNotificationTray::UpdateAfterLoginStatusChange(
 void WebNotificationTray::UpdateAfterShelfAlignmentChange() {
   TrayBackgroundView::UpdateAfterShelfAlignmentChange();
   // Destroy any existing bubble so that it will be rebuilt correctly.
-  message_center_tray_->HideMessageCenterBubble();
+  CloseBubble();
   message_center_tray_->HidePopupBubble();
 }
 
@@ -426,7 +426,7 @@ void WebNotificationTray::HideBubbleWithView(
     const views::TrayBubbleView* bubble_view) {
   if (message_center_bubble() &&
       bubble_view == message_center_bubble()->bubble_view()) {
-    message_center_tray_->HideMessageCenterBubble();
+    CloseBubble();
   } else if (popup_collection_.get()) {
     message_center_tray_->HidePopupBubble();
   }
@@ -572,18 +572,21 @@ void WebNotificationTray::ClickedOutsideBubble() {
   if (!message_center_bubble())
     return;
 
-  message_center_tray_->HideMessageCenterBubble();
+  CloseBubble();
 }
 
 bool WebNotificationTray::PerformAction(const ui::Event& event) {
-  if (message_center_bubble())
-    message_center_tray_->HideMessageCenterBubble();
-  else
+  if (message_center_bubble()) {
+    CloseBubble();
+  } else {
+    set_show_bubble_by_click(true);
     message_center_tray_->ShowMessageCenterBubble();
+  }
   return true;
 }
 
 void WebNotificationTray::CloseBubble() {
+  set_show_bubble_by_click(false);
   message_center_tray_->HideMessageCenterBubble();
 }
 

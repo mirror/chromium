@@ -1021,9 +1021,12 @@ TEST_F(SystemTrayTest, AcceleratorController) {
       ash_test_helper()->test_views_delegate();
   views_delegate->set_close_menu_accelerator(accelerator);
 
-  // Show system tray.
+  // Show system tray by performing a gesture tap at tray.
   SystemTray* tray = GetPrimarySystemTray();
-  tray->ShowDefaultView(BUBBLE_CREATE_NEW);
+  ui::GestureEvent tap(0, 0, 0, base::TimeTicks(),
+                       ui::GestureEventDetails(ui::ET_GESTURE_TAP));
+  tray->PerformAction(tap);
+  EXPECT_TRUE(tray->show_bubble_by_click());
   ASSERT_TRUE(tray->GetWidget());
   ASSERT_TRUE(tray->IsSystemBubbleVisible());
 
@@ -1038,6 +1041,8 @@ TEST_F(SystemTrayTest, AcceleratorController) {
   event_generator.PressKey(ui::VKEY_A, ui::EF_NONE);
   event_generator.ReleaseKey(ui::VKEY_A, ui::EF_NONE);
   EXPECT_FALSE(tray->IsSystemBubbleVisible());
+  // Tests that after tray bubble closing, |show_bubble_by_click()| gets reset.
+  EXPECT_FALSE(tray->show_bubble_by_click());
 }
 
 }  // namespace ash
