@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e1ef4e7_8935ac84",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-09-29T20:45:36Z",
+      "side": 1,
+      "message": "would a test for wrapper-\u003eempty() suffice here?",
+      "revId": "2b3eb4de38f33187c958e4486f2edf1327947415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
