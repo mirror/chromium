@@ -1,6 +1,7 @@
 {
   "name": "connect_test_package",
   "display_name": "Connect Test Package",
+  "sandbox_type": "none",
   "interface_provider_specs": {
     "service_manager:connector": {
       "provides": {
