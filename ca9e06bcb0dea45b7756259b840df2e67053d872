@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "c69137b2_3e0d3604",
+        "filename": "content/browser/devtools/protocol/service_worker_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-29T18:51:32Z",
+      "side": 1,
+      "message": "state",
+      "range": {
+        "startLine": 179,
+        "startChar": 47,
+        "endLine": 179,
+        "endChar": 48
+      },
+      "revId": "ca9e06bcb0dea45b7756259b840df2e67053d872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f386248a_8d7c7657",
         "filename": "content/browser/devtools/protocol/service_worker_handler.cc",
         "patchSetId": 2
@@ -81,6 +104,57 @@
       "writtenOn": "2017-09-22T05:09:00Z",
       "side": 1,
       "message": "drop this!",
+      "revId": "ca9e06bcb0dea45b7756259b840df2e67053d872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48656b5c_84c19f26",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 4055,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-29T18:51:32Z",
+      "side": 1,
+      "message": "Are we going to use all of these?\nI\u0027d say getSyncTags which returns an array of strings is easier :)",
+      "revId": "ca9e06bcb0dea45b7756259b840df2e67053d872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8805d21b_29690810",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 4068,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-29T18:51:32Z",
+      "side": 1,
+      "message": "\"registration\" means something different in SW world. Let\u0027s call it tags.",
+      "revId": "ca9e06bcb0dea45b7756259b840df2e67053d872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea84fb7a_e0763aca",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 4147,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-29T18:51:32Z",
+      "side": 1,
+      "message": "I\u0027d inline the type here to avoid status.status. It\u0027s fine to return two fields (status and registrations).",
       "revId": "ca9e06bcb0dea45b7756259b840df2e67053d872",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
