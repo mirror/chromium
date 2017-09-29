@@ -283,7 +283,6 @@ TEST_F(ArcSessionManagerTest, BaseWorkflow) {
   EXPECT_FALSE(arc_session_manager()->arc_start_time().is_null());
 
   ASSERT_EQ(ArcSessionManager::State::ACTIVE, arc_session_manager()->state());
-  ASSERT_TRUE(arc_session_manager()->IsSessionRunning());
 
   arc_session_manager()->Shutdown();
 }
@@ -394,7 +393,6 @@ TEST_F(ArcSessionManagerTest, Provisioning_Success) {
             arc_session_manager()->state());
   arc_session_manager()->StartArcForTesting();
   EXPECT_EQ(ArcSessionManager::State::ACTIVE, arc_session_manager()->state());
-  EXPECT_TRUE(arc_session_manager()->IsSessionRunning());
 
   // Here, provisining is not yet completed, so kArcSignedIn should be false.
   EXPECT_FALSE(prefs->GetBoolean(prefs::kArcSignedIn));
@@ -405,7 +403,6 @@ TEST_F(ArcSessionManagerTest, Provisioning_Success) {
   arc_session_manager()->OnProvisioningFinished(ProvisioningResult::SUCCESS);
   EXPECT_TRUE(prefs->GetBoolean(prefs::kArcSignedIn));
   EXPECT_EQ(ArcSessionManager::State::ACTIVE, arc_session_manager()->state());
-  EXPECT_TRUE(arc_session_manager()->IsSessionRunning());
   EXPECT_TRUE(arc_session_manager()->sign_in_start_time().is_null());
   EXPECT_TRUE(arc_session_manager()->IsPlaystoreLaunchRequestedForTesting());
 }
@@ -423,7 +420,6 @@ TEST_F(ArcSessionManagerTest, Provisioning_Restart) {
 
   // Second start, no fetching code is expected.
   EXPECT_EQ(ArcSessionManager::State::ACTIVE, arc_session_manager()->state());
-  EXPECT_TRUE(arc_session_manager()->IsSessionRunning());
 
   // Report failure.
   arc_session_manager()->OnProvisioningFinished(
@@ -432,7 +428,6 @@ TEST_F(ArcSessionManagerTest, Provisioning_Restart) {
   // the ARC is still necessary to run on background for gathering the logs.
   EXPECT_TRUE(prefs->GetBoolean(prefs::kArcSignedIn));
   EXPECT_EQ(ArcSessionManager::State::ACTIVE, arc_session_manager()->state());
-  EXPECT_TRUE(arc_session_manager()->IsSessionRunning());
 
   // Correctly stop service.
   arc_session_manager()->Shutdown();
@@ -618,7 +613,6 @@ TEST_F(ArcSessionManagerArcAlwaysStartTest, BaseWorkflow) {
   base::RunLoop().RunUntilIdle();
   ASSERT_EQ(ArcSessionManager::State::ACTIVE, arc_session_manager()->state());
   EXPECT_FALSE(arc_session_manager()->arc_start_time().is_null());
-  ASSERT_TRUE(arc_session_manager()->IsSessionRunning());
 
   arc_session_manager()->Shutdown();
 }
