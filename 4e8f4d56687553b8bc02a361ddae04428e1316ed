@@ -52,6 +52,24 @@
       "revId": "4e8f4d56687553b8bc02a361ddae04428e1316ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0d6c70e_0738e775",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1147,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-09-29T23:12:09Z",
+      "side": 1,
+      "message": "No, because we only want this to happen when the mru window list is empty and we\u0027re performing an action that needs a window. Please read the prior call site for the alert. I can explain in person if it will help.",
+      "parentUuid": "5df3b73f_beb40161",
+      "revId": "4e8f4d56687553b8bc02a361ddae04428e1316ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
