@@ -1,0 +1,188 @@
+// Copyright 2014 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include "ash/system/tray_limited_session.h"
+
+#include <algorithm>
+#include <memory>
+#include <utility>
+
+#include "ash/resources/vector_icons/vector_icons.h"
+#include "ash/strings/grit/ash_strings.h"
+#include "ash/system/system_notifier.h"
+#include "ash/system/tray/label_tray_view.h"
+#include "ash/system/tray/system_tray.h"
+#include "ash/system/tray/system_tray_notifier.h"
+#include "ash/system/tray/tray_constants.h"
+#include "base/logging.h"
+#include "base/strings/utf_string_conversions.h"
+#include "ui/base/l10n/l10n_util.h"
+#include "ui/base/l10n/time_format.h"
+#include "ui/gfx/paint_vector_icon.h"
+#include "ui/message_center/message_center.h"
+#include "ui/message_center/notification.h"
+#include "ui/views/view.h"
+
+namespace ash {
+namespace {
+
+// If the remaining session time falls below this threshold, the user should be
+// informed that the session is about to expire.
+const int kExpiringSoonThresholdInMinutes = 5;
+
+// Use 500ms interval for updates to notification and tray bubble to reduce the
+// likelihood of a user-visible skip in high load situations (as might happen
+// with 1000ms).
+const int kTimerIntervalInMilliseconds = 500;
+
+}  // namespace
+
+// static
+const char TrayLimitedSession::kNotificationId[] = "chrome://session/timeout";
+
+TrayLimitedSession::TrayLimitedSession(SystemTray* system_tray)
+    : SystemTrayItem(system_tray, UMA_SESSION_LENGTH_LIMIT),
+      limit_state_(LIMIT_NONE),
+      last_limit_state_(LIMIT_NONE),
+      tray_bubble_view_(nullptr) {
+  Update();
+}
+
+TrayLimitedSession::~TrayLimitedSession() {}
+
+// Add view to tray bubble.
+views::View* TrayLimitedSession::CreateDefaultView(LoginStatus status) {
+  CHECK(!tray_bubble_view_);
+  UpdateState();
+  if (limit_state_ == LIMIT_NONE)
+    return nullptr;
+  tray_bubble_view_ = new LabelTrayView(nullptr, kSystemMenuTimerIcon);
+  tray_bubble_view_->SetMessage(ComposeTrayBubbleMessage());
+  return tray_bubble_view_;
+}
+
+// View has been removed from tray bubble.
+void TrayLimitedSession::OnDefaultViewDestroyed() {
+  tray_bubble_view_ = nullptr;
+}
+
+bool TrayLimitedSession::IsSessionStarted() {
+  return false;
+}
+
+base::TimeDelta TrayLimitedSession::UpdateRemainingSessionTime() {
+  return base::TimeDelta();
+}
+
+void TrayLimitedSession::Update() {
+  if (limit_state_ == LIMIT_NONE && !IsSessionStarted())
+    return;
+  UpdateState();
+  UpdateNotification();
+  UpdateTrayBubbleView();
+}
+
+void TrayLimitedSession::UpdateState() {
+  UpdateRemainingSessionTime();
+  if (IsSessionStarted() && !remaining_session_time_.is_zero()) {
+    const base::TimeDelta expiring_soon_threshold(
+        base::TimeDelta::FromMinutes(kExpiringSoonThresholdInMinutes));
+    limit_state_ = remaining_session_time_ <= expiring_soon_threshold
+                       ? LIMIT_EXPIRING_SOON
+                       : LIMIT_SET;
+    if (!timer_)
+      timer_.reset(new base::RepeatingTimer);
+    if (!timer_->IsRunning()) {
+      timer_->Start(
+          FROM_HERE,
+          base::TimeDelta::FromMilliseconds(kTimerIntervalInMilliseconds), this,
+          &TrayLimitedSession::Update);
+    }
+  } else {
+    remaining_session_time_ = base::TimeDelta();
+    limit_state_ = LIMIT_NONE;
+    timer_.reset();
+  }
+}
+
+void TrayLimitedSession::UpdateNotification() {
+  message_center::MessageCenter* message_center =
+      message_center::MessageCenter::Get();
+
+  // If state hasn't changed and the notification has already been acknowledged,
+  // we won't re-create it.
+  if (limit_state_ == last_limit_state_ &&
+      !message_center->FindVisibleNotificationById(kNotificationId)) {
+    return;
+  }
+
+  // After state change, any possibly existing notification is removed to make
+  // sure it is re-shown even if it had been acknowledged by the user before
+  // (and in the rare case of state change towards LIMIT_NONE to make the
+  // notification disappear).
+  if (limit_state_ != last_limit_state_ &&
+      message_center->FindVisibleNotificationById(kNotificationId)) {
+    message_center::MessageCenter::Get()->RemoveNotification(
+        kNotificationId, false /* by_user */);
+  }
+
+  // For LIMIT_NONE, there's nothing more to do.
+  if (limit_state_ == LIMIT_NONE) {
+    last_limit_state_ = limit_state_;
+    return;
+  }
+
+  message_center::RichNotificationData data;
+  data.should_make_spoken_feedback_for_popup_updates =
+      (limit_state_ != last_limit_state_);
+  std::unique_ptr<message_center::Notification> notification =
+      system_notifier::CreateSystemNotification(
+          message_center::NOTIFICATION_TYPE_SIMPLE, kNotificationId,
+          base::string16() /* title */,
+          ComposeNotificationMessage() /* message */,
+          gfx::Image(
+              gfx::CreateVectorIcon(kSystemMenuTimerIcon, kMenuIconColor)),
+          base::string16() /* display_source */, GURL(),
+          message_center::NotifierId(
+              message_center::NotifierId::SYSTEM_COMPONENT,
+              system_notifier::kNotifierSessionLengthTimeout),
+          data, nullptr /* delegate */, kNotificationTimerIcon,
+          message_center::SystemNotificationWarningLevel::NORMAL);
+  notification->SetSystemPriority();
+  if (message_center->FindVisibleNotificationById(kNotificationId)) {
+    message_center->UpdateNotification(kNotificationId,
+                                       std::move(notification));
+  } else {
+    message_center->AddNotification(std::move(notification));
+  }
+  last_limit_state_ = limit_state_;
+}
+
+void TrayLimitedSession::UpdateTrayBubbleView() const {
+  if (!tray_bubble_view_)
+    return;
+  if (limit_state_ == LIMIT_NONE)
+    tray_bubble_view_->SetMessage(base::string16());
+  else
+    tray_bubble_view_->SetMessage(ComposeTrayBubbleMessage());
+  tray_bubble_view_->Layout();
+}
+
+base::string16 TrayLimitedSession::ComposeNotificationMessage() const {
+  return l10n_util::GetStringFUTF16(
+      IDS_ASH_STATUS_TRAY_NOTIFICATION_SESSION_LENGTH_LIMIT,
+      ui::TimeFormat::Detailed(ui::TimeFormat::FORMAT_DURATION,
+                               ui::TimeFormat::LENGTH_LONG, 10,
+                               remaining_session_time_));
+}
+
+base::string16 TrayLimitedSession::ComposeTrayBubbleMessage() const {
+  return l10n_util::GetStringFUTF16(
+      IDS_ASH_STATUS_TRAY_BUBBLE_SESSION_LENGTH_LIMIT,
+      ui::TimeFormat::Detailed(ui::TimeFormat::FORMAT_DURATION,
+                               ui::TimeFormat::LENGTH_LONG, 10,
+                               remaining_session_time_));
+}
+
+}  // namespace ash

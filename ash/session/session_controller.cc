@@ -636,4 +636,13 @@ void SessionController::OnProfilePrefServiceInitialized(
   }
 }
 
+void SessionController::UpdatePolicyOffHoursMode(
+    bool policy_off_hours_mode,
+    base::TimeTicks policy_off_hours_end_time) {
+  policy_off_hours_mode_ = policy_off_hours_mode;
+  policy_off_hours_end_time_ = policy_off_hours_end_time;
+  for (auto& observer : observers_)
+    observer.OnPolicyOffHoursModeChanged();
+}
+
 }  // namespace ash
