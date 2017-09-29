@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef1e5682_8ac08fbe",
+        "filename": "components/policy/core/common/policy_loader_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-29T08:35:40Z",
+      "side": 1,
+      "message": "these function names don\u0027t comply with style. please make them camel case",
+      "revId": "e07dfff7ed61d8b3e43ac855df9b2783080fff6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ddc46ab_8081c233",
+        "filename": "components/policy/core/common/policy_loader_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-29T08:35:40Z",
+      "side": 1,
+      "message": "this needs to happen after calling through to the functions. consider a ScopedClosureRunner in the outer scope that you set up in here. maybe:\n\n{\n  base::ScopedClosureRunner free_library;\n  ...\n  if (...) {\n    if (net_api_library) {\n      free_library.ReplaceClosure(base::BindOnce(\u0026::FreeLibrary, net_api_library));\n      ...\n\nthis will guarantee a call to FreeLibrary when the function exits.",
+      "revId": "e07dfff7ed61d8b3e43ac855df9b2783080fff6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
