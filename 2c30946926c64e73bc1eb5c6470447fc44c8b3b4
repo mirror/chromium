@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da5ee9fd_d624bba2",
+        "filename": "cc/layers/texture_layer_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-29T19:04:03Z",
+      "side": 1,
+      "message": "Is own_resource_ exactly !!release_callback_? (modulo clearing it in WillDraw after the move)",
+      "revId": "2c30946926c64e73bc1eb5c6470447fc44c8b3b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da0a0cf8_b1882061",
+        "filename": "cc/layers/texture_layer_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-29T19:04:03Z",
+      "side": 1,
+      "message": "nit: same as in LRTP, we could keep the resource_id_ inside the TransferableResource, save a field?",
+      "revId": "2c30946926c64e73bc1eb5c6470447fc44c8b3b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
