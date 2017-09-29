@@ -113,13 +113,13 @@ def ScrambleMethodOrdinals(interfaces, salt):
         i = i + 1
         if i == 1000000:
           raise Exception("Could not generate %d method ordinals for %s" %
-              (len(interface.methods), interface.name))
+              (len(interface.methods), interface.mojom_name))
         # Generate a scrambled method.ordinal value. The algorithm doesn't have
         # to be very strong, cryptographically. It just needs to be non-trivial
         # to guess the results without the secret salt, in order to make it
         # harder for a compromised process to send fake Mojo messages.
         sha256 = hashlib.sha256(salt)
-        sha256.update(interface.name)
+        sha256.update(interface.mojom_name)
         sha256.update(str(i))
         # Take the first 4 bytes as a little-endian uint32.
         ordinal = struct.unpack('<L', sha256.digest()[:4])[0]
@@ -131,7 +131,7 @@ def ScrambleMethodOrdinals(interfaces, salt):
         method.ordinal = ordinal
         method.ordinal_comment = (
             'The %s value is based on sha256(salt + "%s%d").' %
-            (ordinal, interface.name, i))
+            (ordinal, interface.mojom_name, i))
         break
 
 
@@ -193,8 +193,9 @@ class MojomProcessor(object):
 
     module = translate.OrderedModule(tree, module_path, imports)
 
-    if args.scrambled_message_id_salt:
-      ScrambleMethodOrdinals(module.interfaces, args.scrambled_message_id_salt)
+    if args.scrambled_message_id_salt_path:
+      with open(args.scrambled_message_id_salt_path) as f:
+        ScrambleMethodOrdinals(module.interfaces, f.read())
 
     if self._should_generate(rel_filename.path):
       AddComputedData(module)
@@ -362,8 +363,9 @@ def main():
       "--depfile_target",
       help="The target name to use in the depfile.")
   generate_parser.add_argument(
-      "--scrambled_message_id_salt",
-      help="If non-empty, the salt for generating scrambled message IDs.")
+      "--scrambled_message_id_salt_path",
+      help="If non-empty, the path to a file whose contents should be used as"
+      "a salt for generating scrambled message IDs.")
   generate_parser.add_argument(
       "--support_lazy_serialization",
       help="If set, generated bindings will serialize lazily when possible.",
