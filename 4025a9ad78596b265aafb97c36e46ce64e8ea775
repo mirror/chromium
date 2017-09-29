@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6148ba3a_11fc70f9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/textbubble/TextBubble.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-09-29T04:24:53Z",
+      "side": 1,
+      "message": "Verified on KK, N and O. So far it is working nicely and fixed the previous issues.",
+      "parentUuid": "48f5cbe9_19027dc3",
+      "range": {
+        "startLine": 289,
+        "startChar": 8,
+        "endLine": 291,
+        "endChar": 75
+      },
+      "revId": "4025a9ad78596b265aafb97c36e46ce64e8ea775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af0b625d_5a86d006",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/textbubble/ViewAnchoredTextBubble.java",
         "patchSetId": 3
