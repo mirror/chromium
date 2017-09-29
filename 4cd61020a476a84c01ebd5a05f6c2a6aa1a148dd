@@ -16,6 +16,24 @@
       "revId": "4cd61020a476a84c01ebd5a05f6c2a6aa1a148dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7ffa53d_04ab2f19",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-09-29T23:08:08Z",
+      "side": 1,
+      "message": "How does cancel_timer_ start for a keepalive request? As far as I can tell, a keepalive request never has a client or observer added, so Resource::AllClientsAndObserversRemoved() is never called, and therefore the timer never starts. Combine that with the fact that we never reuse keepalive requests, and I don\u0027t see how that case would ever get triggered.\n\nIs the ability to register ResourceClients for keepalive requests something we will want to do eventually? If so, another option would be to have ClearContext() iterate over loaders_ and non_blocking_loaders_ and have them reinitialize their timers?",
+      "parentUuid": "ecfc9e82_93cb2e03",
+      "revId": "4cd61020a476a84c01ebd5a05f6c2a6aa1a148dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
