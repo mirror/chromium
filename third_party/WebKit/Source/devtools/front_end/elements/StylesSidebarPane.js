@@ -2111,19 +2111,12 @@ Elements.StylePropertyTreeElement = class extends UI.TreeElement {
     swatch.setFormat(Common.Color.detectColorFormat(swatch.color()));
     var swatchIcon = new Elements.ColorSwatchPopoverIcon(this, swatchPopoverHelper, swatch);
 
-    /**
-     * @param {?SDK.CSSModel.ContrastInfo} contrastInfo
-     */
-    function computedCallback(contrastInfo) {
-      swatchIcon.setContrastInfo(contrastInfo);
-    }
-
-    if (Runtime.experiments.isEnabled('colorContrastRatio') && this.property.name === 'color' &&
-        this._parentPane.cssModel() && this.node()) {
+    // If the contrast line may be desired at some point, allow the popover to request background colors.
+    if (this.property.name === 'color' && this._parentPane.cssModel() && this.node()) {
       var cssModel = this._parentPane.cssModel();
-      cssModel.backgroundColorsPromise(this.node().id).then(computedCallback);
+      var backgroundColorsPromise = cssModel.backgroundColorsPromise.bind(cssModel, this.node().id);
+      swatchIcon.setContrastInfoPromise(backgroundColorsPromise);
     }
-
     return swatch;
   }
 

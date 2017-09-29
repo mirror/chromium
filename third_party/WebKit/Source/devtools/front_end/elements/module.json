@@ -133,6 +133,16 @@
         },
         {
             "type": "setting",
+            "category": "Elements",
+            "order": 5,
+            "title": "Show contrast ratio line",
+            "settingName": "showContrastLine",
+            "settingType": "boolean",
+            "defaultValue": true,
+            "experiment": "colorContrastRatio"
+        },
+        {
+            "type": "setting",
             "settingName": "showEventListenersForAncestors",
             "settingType": "boolean",
             "defaultValue": true

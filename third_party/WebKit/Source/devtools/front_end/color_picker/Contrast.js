@@ -488,7 +488,7 @@ ColorPicker.ContrastDetails = class {
     this._backgroundColorPickedCallback = backgroundColorPickedCallback;
 
     this._contrastDetails = contentElement.createChild('div', 'spectrum-contrast-details');
-    var contrastValueRow = this._contrastDetails.createChild('div');
+    var contrastValueRow = this._contrastDetails.createChild('div', 'contrast-value');
     contrastValueRow.createTextChild(Common.UIString('Contrast Ratio'));
 
     var contrastLink = contrastValueRow.appendChild(UI.createExternalLink(

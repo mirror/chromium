@@ -55,7 +55,7 @@ ColorPicker.Spectrum = class extends UI.VBox {
     this._dragX = 0;
     this._dragY = 0;
 
-    if (Runtime.experiments.isEnabled('colorContrastRatio')) {
+    if (Common.moduleSetting('showContrastLine').get()) {
       var boundToggleColorPicker = this._toggleColorPicker.bind(this);
       this._contrastOverlay =
           new ColorPicker.ContrastOverlay(this._colorElement, this.contentElement, boundToggleColorPicker);
@@ -569,8 +569,10 @@ ColorPicker.Spectrum = class extends UI.VBox {
    * @param {?SDK.CSSModel.ContrastInfo} contrastInfo
    */
   setContrastInfo(contrastInfo) {
-    if (this._contrastOverlay)
-      this._contrastOverlay.setContrastInfo(contrastInfo);
+    if (!this._contrastOverlay)
+      return;
+    this._contrastOverlay.setContrastInfo(contrastInfo);
+    this._updateUI();
   }
 
   /**
