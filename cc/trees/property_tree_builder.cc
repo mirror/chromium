@@ -1332,17 +1332,30 @@ void PropertyTreeBuilderContext<LayerType>::BuildPropertyTrees(
   scroll_tree_.set_needs_update(false);
 }
 
-#if DCHECK_IS_ON()
+void ResetDanglingScrollParentInternal(Layer* layer) {
+  layer->ResetDanglingScrollParentInternal();
+}
+void ResetDanglingScrollParentInternal(LayerImpl*) {}
 template <typename LayerType>
 static void CheckDanglingScrollParent(LayerType* root_layer) {
   std::unordered_set<const LayerType*> layers;
   for (const auto* layer : AllLayerRange(root_layer))
     layers.insert(layer);
-  for (auto* layer : AllLayerRange(root_layer))
+  for (auto* layer : AllLayerRange(root_layer)) {
     DCHECK(!ScrollParent(layer) ||
            layers.find(ScrollParent(layer)) != layers.end());
+
+    // TODO(crbug.com/769185): Speculative fix. We should find out why there
+    // are dangling pointers and make this function DCHECK_IS_ON() only.
+    if (!ScrollParent(layer) ||
+        layers.find(ScrollParent(layer)) != layers.end()) {
+      continue;
+    }
+    ResetDanglingScrollParentInternal(layer);
+  }
 }
 
+#if DCHECK_IS_ON()
 static void CheckClipPointersForLayer(Layer* layer) {
   if (!layer)
     return;
@@ -1358,9 +1371,8 @@ static void CheckClipPointersForLayer(Layer* layer) {
 
 template <typename LayerType>
 void PropertyTreeBuilderContext<LayerType>::InitializeScrollChildrenMap() {
-#if DCHECK_IS_ON()
+  // TODO(crbug.com/769185): Make sanity check DCHEK_IS_ON() only.
   CheckDanglingScrollParent(root_layer_);
-#endif
   for (auto* layer : AllLayerRange(root_layer_)) {
     if (ScrollParent(layer))
       scroll_children_map_.emplace(ScrollParent(layer), layer);
