@@ -177,8 +177,7 @@ class NET_EXPORT_PRIVATE SimpleBackendImpl : public Backend,
   // relevant to |entry_hash|, and, as appropriate, either returns a valid entry
   // matching |entry_hash| and |key|, or returns nullptr and sets |*post_doom|
   // to point to a vector of closures which will be invoked when it's an
-  // appropriate time to try again.  The caller is expected to append its retry
-  // closure to that vector.
+  // appropriate time to try again.
   scoped_refptr<SimpleEntryImpl> CreateOrFindActiveOrDoomedEntry(
       uint64_t entry_hash,
       const std::string& key,

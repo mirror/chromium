@@ -4381,7 +4381,7 @@ TEST_F(DiskCacheEntryTest, SimpleCacheSparseErrorHandling) {
   // Re-trying should still fail. Not DCHECK-fail.
   EXPECT_EQ(net::ERR_FAILED, ReadSparseData(entry, 0, buffer.get(), kSize));
 
-  // Similarly for other ops.
+  // Similarly for other ops.net/disk_cache/entry_unittest.cc
   EXPECT_EQ(net::ERR_FAILED, WriteSparseData(entry, 0, buffer.get(), kSize));
   net::TestCompletionCallback cb;
   int64_t start;
@@ -4405,11 +4405,8 @@ TEST_F(DiskCacheEntryTest, SimpleCacheCreateCollision) {
       "\xbc\x60\x64\x92\xbc\xa0\x5c\x15\x17\x93\x29\x2d\xe4\x21\xbd\x03";
 
   const int kSize = 256;
-  scoped_refptr<net::IOBuffer> buffer1(new net::IOBuffer(kSize));
-  scoped_refptr<net::IOBuffer> buffer2(new net::IOBuffer(kSize));
-  scoped_refptr<net::IOBuffer> read_buffer(new net::IOBuffer(kSize));
-  CacheTestFillBuffer(buffer1->data(), kSize, false);
-  CacheTestFillBuffer(buffer2->data(), kSize, false);
+  scoped_refptr<net::IOBuffer> buffer(new net::IOBuffer(kSize));
+  CacheTestFillBuffer(buffer->data(), kSize, false);
 
   SetSimpleCacheMode();
   InitCache();
@@ -4423,16 +4420,7 @@ TEST_F(DiskCacheEntryTest, SimpleCacheCreateCollision) {
   // Make sure that entry was actually created and we didn't just succeed
   // optimistically. (Oddly I can't seem to hit the sequence of events required
   // for the bug that used to be here if I just set this to APP_CACHE).
-  EXPECT_EQ(kSize, WriteData(entry2, 0, 0, buffer2.get(), kSize, false));
-
-  // entry1 is still usable, though, and distinct (we just won't be able to
-  // re-open it).
-  EXPECT_EQ(kSize, WriteData(entry1, 0, 0, buffer1.get(), kSize, false));
-  EXPECT_EQ(kSize, ReadData(entry1, 0, 0, read_buffer.get(), kSize));
-  EXPECT_EQ(0, memcmp(buffer1->data(), read_buffer->data(), kSize));
-
-  EXPECT_EQ(kSize, ReadData(entry2, 0, 0, read_buffer.get(), kSize));
-  EXPECT_EQ(0, memcmp(buffer2->data(), read_buffer->data(), kSize));
+  EXPECT_EQ(kSize, WriteData(entry2, 0, 0, buffer.get(), kSize, false));
 
   entry1->Close();
   entry2->Close();

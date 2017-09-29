@@ -185,6 +185,7 @@ SimpleEntryImpl::SimpleEntryImpl(
       sparse_data_size_(0),
       open_count_(0),
       doomed_(false),
+      optimistic_create_pending_doom_state_(CREATE_NORMAL),
       state_(STATE_UNINITIALIZED),
       synchronous_entry_(NULL),
       net_log_(
@@ -266,6 +267,14 @@ int SimpleEntryImpl::CreateEntry(Entry** out_entry,
     pending_operations_.push(SimpleEntryOperation::CreateOperation(
         this, have_index, CompletionCallback(), static_cast<Entry**>(NULL)));
     ret_value = net::OK;
+
+    // If we are optimistically returning before a preceeding doom, we need to
+    // wait for that IO, about which we will be notified externally.
+    if (optimistic_create_pending_doom_state_ != CREATE_NORMAL) {
+      DCHECK_EQ(CREATE_OPTIMISTIC_PENDING_DOOM,
+                optimistic_create_pending_doom_state_);
+      state_ = STATE_IO_PENDING;
+    }
   } else {
     pending_operations_.push(SimpleEntryOperation::CreateOperation(
         this, have_index, callback, out_entry));
@@ -284,17 +293,57 @@ int SimpleEntryImpl::CreateEntry(Entry** out_entry,
 }
 
 int SimpleEntryImpl::DoomEntry(const CompletionCallback& callback) {
+  LOG(ERROR) << this
+             << " DoomEntry, ocs:" << optimistic_create_pending_doom_state_;
   if (doomed_)
     return net::OK;
   net_log_.AddEvent(net::NetLogEventType::SIMPLE_CACHE_ENTRY_DOOM_CALL);
   net_log_.AddEvent(net::NetLogEventType::SIMPLE_CACHE_ENTRY_DOOM_BEGIN);
 
   MarkAsDoomed();
-  if (backend_.get())
-    backend_->OnDoomStart(entry_hash_);
+  if (backend_.get()) {
+    if (optimistic_create_pending_doom_state_ == CREATE_NORMAL) {
+      backend_->OnDoomStart(entry_hash_);
+    } else {
+      DCHECK_EQ(STATE_IO_PENDING, state_);
+      DCHECK_EQ(CREATE_OPTIMISTIC_PENDING_DOOM,
+                optimistic_create_pending_doom_state_);
+      // If we are in this state, we went ahead with making the entry even
+      // though the backend was already keeping track of a doom, so it can't
+      // keep track of ours. So we delay notifying it until
+      // NotifyDoomBeforeCreateComplete is called.  Since this path is invoked
+      // only when the queue of post-doom callbacks was previously empty, while
+      // the CompletionCallback for the op is posted,
+      // NotifyDoomBeforeCreateComplete()  will be the first thing running after
+      // the previous doom completes, so at that point we can immediately grab
+      // a spot in entries_pending_doom_.
+      optimistic_create_pending_doom_state_ =
+          CREATE_OPTIMISTIC_PENDING_DOOM_FOLLOWED_BY_DOOM;
+    }
+  }
   pending_operations_.push(SimpleEntryOperation::DoomOperation(this, callback));
   RunNextOperationIfNeeded();
   return net::ERR_IO_PENDING;
+}
+
+void SimpleEntryImpl::SetCreatePendingDoom() {
+  LOG(ERROR) << this << " SetCreatePendingDoom";
+  DCHECK_EQ(CREATE_NORMAL, optimistic_create_pending_doom_state_);
+  optimistic_create_pending_doom_state_ = CREATE_OPTIMISTIC_PENDING_DOOM;
+}
+
+void SimpleEntryImpl::NotifyDoomBeforeCreateComplete() {
+  LOG(ERROR) << this << " NotifyDoomBeforeCreateComplete, ocs:"
+             << optimistic_create_pending_doom_state_;
+  DCHECK_EQ(STATE_IO_PENDING, state_);
+  DCHECK_NE(CREATE_NORMAL, optimistic_create_pending_doom_state_);
+  if (backend_.get() && optimistic_create_pending_doom_state_ ==
+                            CREATE_OPTIMISTIC_PENDING_DOOM_FOLLOWED_BY_DOOM)
+    backend_->OnDoomStart(entry_hash_);
+
+  state_ = STATE_UNINITIALIZED;
+  optimistic_create_pending_doom_state_ = CREATE_NORMAL;
+  RunNextOperationIfNeeded();
 }
 
 void SimpleEntryImpl::SetKey(const std::string& key) {
