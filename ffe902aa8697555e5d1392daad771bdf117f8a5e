@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef8dd691_5262382c",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-29T14:46:17Z",
+      "side": 1,
+      "message": "Clarification: is there a chance that the value can be changed while a session running...? What\u0027s such a situation...?\n\nnit: s/an user/a user/ IIUC?",
+      "range": {
+        "startLine": 45,
+        "startChar": 54,
+        "endLine": 46,
+        "endChar": 41
+      },
+      "revId": "ffe902aa8697555e5d1392daad771bdf117f8a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a7604fd_b21833a7",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-29T14:46:17Z",
+      "side": 1,
+      "message": "POD is only allowed for global vars.\nCould you use base::LazyInstance, like above?\n\ncf) https://google.github.io/styleguide/cppguide.html#Static_and_Global_Variables",
+      "revId": "ffe902aa8697555e5d1392daad771bdf117f8a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47d8532d_32d9793c",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-29T14:46:17Z",
+      "side": 1,
+      "message": "As this becoming helper method, could you move it to anonymous namespace above?",
+      "revId": "ffe902aa8697555e5d1392daad771bdf117f8a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "718f7922_095b570f",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-29T14:46:17Z",
+      "side": 1,
+      "message": "Clarification:\nIs it safe to use user_name for non-login cases, like public session / kiosk etc.?\nIf so, could you comment the reason?",
+      "revId": "ffe902aa8697555e5d1392daad771bdf117f8a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85d54a12_5e931b7d",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-29T14:46:17Z",
+      "side": 1,
+      "message": "optional:\nYou can avoid searching twice, if the value is already cached.\n\nauto iter \u003d g_is_..._allowed.find(user_name);\nif (iter \u003d\u003d g_is_..._allowed.end())\n  iter \u003d g_is_..._allowed.emplace(user_name, ...).first;\n\nreturn iter-\u003esecond;",
+      "revId": "ffe902aa8697555e5d1392daad771bdf117f8a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
