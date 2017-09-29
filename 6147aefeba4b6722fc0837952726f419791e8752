@@ -22,6 +22,30 @@
       "revId": "6147aefeba4b6722fc0837952726f419791e8752",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "05336c89_bbeb3855",
+        "filename": "chrome/android/java/res/layout/personalized_signin_promo_view_footer.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-29T15:14:57Z",
+      "side": 0,
+      "message": "I agree with you, but in this case we\u0027re not going above that limit, so I prefer XML over code. Maybe we\u0027ll have to move this logic to Java one day, but for now XML approach looks better to me.",
+      "parentUuid": "289b798a_f7f83adc",
+      "range": {
+        "startLine": 10,
+        "startChar": 5,
+        "endLine": 10,
+        "endChar": 16
+      },
+      "revId": "6147aefeba4b6722fc0837952726f419791e8752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
