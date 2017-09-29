@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "75e427c2_1fbc52c4",
+        "filename": "chrome/browser/signin/process_dice_header_observer_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-29T15:20:03Z",
+      "side": 1,
+      "message": "We basically need this when the auth code is received (before the page navigates). At the end of the web sign-in flow, the page navigates to myaccount.google.com which is out of the accounts.google.com.",
+      "parentUuid": "7983794d_c0bcbf5b",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 20
+      },
+      "revId": "7446b14a7b6d07ef162125255b2d2049637a99f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6e2c3019_db096366",
         "filename": "chrome/browser/signin/process_dice_header_observer_impl.cc",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-29T14:48:00Z",
       "side": 1,
       "message": "Nit: remove \"this-\u003e\"",
+      "range": {
+        "startLine": 36,
+        "startChar": 39,
+        "endLine": 36,
+        "endChar": 45
+      },
+      "revId": "7446b14a7b6d07ef162125255b2d2049637a99f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e97f253_47c79735",
+        "filename": "chrome/browser/signin/process_dice_header_observer_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-29T15:20:03Z",
+      "side": 1,
+      "message": "Compile complains as there is a name conflict between local variable web_contents and function web_contents();",
+      "parentUuid": "6e2c3019_db096366",
       "range": {
         "startLine": 36,
         "startChar": 39,
