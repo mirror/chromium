@@ -23,6 +23,11 @@ class NavigationHandle;
 class WebContents;
 }  // namespace content
 
+namespace views {
+class View;
+class Widget;
+}  // namespace views
+
 namespace arc {
 
 // A class that allow us to retrieve ARC app's information and handle URL
@@ -35,9 +40,17 @@ class ArcNavigationThrottle : public content::NavigationThrottle {
   enum class CloseReason : int {
     ERROR = 0,
     DIALOG_DEACTIVATED = 1,
-    ALWAYS_PRESSED = 2,
-    JUST_ONCE_PRESSED = 3,
+    OBSOLETE_ALWAYS_PRESSED = 2,
+    OBSOLETE_JUST_ONCE_PRESSED = 3,
     PREFERRED_ACTIVITY_FOUND = 4,
+    // The preffix "CHROME"/"ARC_APP" determines whether the user pressed [Stay
+    // in Chrome] or [Use app] at IntentPickerBubbleView respectively.
+    // "PREFERRED" denotes when the user decides to save this selection, whether
+    // an app or Chrome was selected.
+    CHROME_PRESSED = 5,
+    CHROME_PREFERRED_PRESSED = 6,
+    ARC_APP_PRESSED = 7,
+    ARC_APP_PREFERRED_PRESSED = 8,
     SIZE,
     INVALID = SIZE,
   };
@@ -63,7 +76,8 @@ class ArcNavigationThrottle : public content::NavigationThrottle {
     std::string activity_name;
   };
 
-  using ShowIntentPickerCallback = base::Callback<void(
+  using ShowIntentPickerCallback = base::Callback<views::Widget*(
+      views::View* anchor_view,
       content::WebContents* web_contents,
       const std::vector<AppInfo>& app_info,
       const base::Callback<void(const std::string&, CloseReason)>& cb)>;
@@ -89,6 +103,13 @@ class ArcNavigationThrottle : public content::NavigationThrottle {
   // Records intent picker usage statistics as well as whether navigations are
   // continued or redirected to Chrome or ARC respectively, via UMA histograms.
   static void RecordUma(CloseReason close_reason, Platform platform);
+  // TODO(djacobo): Remove this function and instead stop ARC from returning
+  // Chrome as a valid app candidate.
+  // Records true if |handlers| contain one or more apps. When this function is
+  // called from OnAppCandidatesReceived, |handlers| always contain Chrome (aka
+  // intent helper), but the same function doesn't treat this as an app.
+  static bool IsAppAvailable(
+      const std::vector<mojom::IntentHandlerInfoPtr>& handlers);
 
   // Swaps Chrome app with any app in row |kMaxAppResults-1| iff its index is
   // bigger, thus ensuring the user can always see Chrome without scrolling.
@@ -117,9 +138,7 @@ class ArcNavigationThrottle : public content::NavigationThrottle {
   void OnAppIconsReceived(
       std::vector<mojom::IntentHandlerInfoPtr> handlers,
       std::unique_ptr<ArcIntentHelperBridge::ActivityToIconsMap> icons);
-  void OnIntentPickerClosed(std::vector<mojom::IntentHandlerInfoPtr> handlers,
-                            const std::string& selected_app_package,
-                            CloseReason close_reason);
+  void DisplayArcApps() const;
   GURL GetStartingGURL() const;
   // A callback object that allow us to display an IntentPicker when Run() is
   // executed, it also allow us to report the user's selection back to
@@ -134,6 +153,9 @@ class ArcNavigationThrottle : public content::NavigationThrottle {
 
   // Keeps a referrence to the starting GURL.
   GURL starting_gurl_;
+
+  // Keeps track of whether we already shown the UI or preferred app.
+  bool ui_displayed_;
 
   // This has to be the last member of the class.
   base::WeakPtrFactory<ArcNavigationThrottle> weak_ptr_factory_;

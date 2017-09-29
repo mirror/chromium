@@ -87,6 +87,7 @@
 #include "printing/features/features.h"
 #include "rlz/features/features.h"
 #include "ui/events/keycodes/keyboard_codes.h"
+#include "url/gurl.h"
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
 #include "chrome/browser/extensions/api/commands/command_service.h"
@@ -1287,5 +1288,11 @@ bool CanCreateBookmarkApp(const Browser* browser) {
       ->CanCreateBookmarkApp();
 }
 #endif  // BUILDFLAG(ENABLE_EXTENSIONS)
+
+#if defined(OS_CHROMEOS)
+void QueryAndDisplayArcApps(Browser* browser, const GURL& url) {
+  browser->window()->ShowIntentPickerBubble(url);
+}
+#endif  // defined(OS_CHROMEOS)
 
 }  // namespace chrome
