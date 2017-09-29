@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1cace1f7_7f9c581c",
+        "filename": "extensions/common/features/simple_feature.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-29T00:42:15Z",
+      "side": 1,
+      "message": "Good idea; done.",
+      "parentUuid": "90c73d77_459e7c2b",
+      "range": {
+        "startLine": 318,
+        "startChar": 11,
+        "endLine": 318,
+        "endChar": 32
+      },
+      "revId": "ef94f5b1a0b6de2927f04b9f6f842507329ba11a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f07ddd8c_7a7abae3",
         "filename": "extensions/common/features/simple_feature.h",
         "patchSetId": 4
