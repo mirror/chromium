@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eca4e0f9_7d846d51",
+        "filename": "chrome/browser/ui/webui/interstitials/interstitial_ui.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-29T23:39:31Z",
+      "side": 1,
+      "message": "Hard-coding the URL makes me a little nervous, because it would be a little annoying to have to update multiple places if we ever changed the URL.\n\nIt looks to me like the problem is that web_contents-\u003eGetURL() uses the virtual URL. In the view-source case, the virtual URL of the navigation entry is view-source:chrome://interstitials/... and the actual URL is chrome://interstitials/..., so I guess the problem is that in the view-source case, when we get to this point, web_contents-\u003eGetURL() is view-source:chrome://interstitials... ?\n\nI think maybe try this instead:\n\ncontent::NavigationEntry* entry \u003d web_contents-\u003eGetController().GetLastCommittedEntry();\nDCHECK(entry);\nGURL url \u003d entry-\u003eGetURL().GetWithEmptyPath().Resolve(path);\n\nThat way we\u0027re looking at the actual URL of the navigation entry, not the virtual URL.",
+      "range": {
+        "startLine": 447,
+        "startChar": 13,
+        "endLine": 447,
+        "endChar": 44
+      },
+      "revId": "70ae7275d9172f6907d17654a1c3a8b10fc1811d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
