@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9c3d9a6c_c9e8ecc7",
+        "filename": "tools/binary_size/libsupersize/describe.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-09-29T15:13:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ab306fc_45509d04",
+      "revId": "e6c7a05b6ce70ec0806caabdc4d8bd7efb362a75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac2803fd_328d391c",
         "filename": "tools/binary_size/libsupersize/describe.py",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "e6c7a05b6ce70ec0806caabdc4d8bd7efb362a75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d272ecea_52a55d22",
+        "filename": "tools/binary_size/libsupersize/describe.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-09-29T15:13:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac2803fd_328d391c",
+      "revId": "e6c7a05b6ce70ec0806caabdc4d8bd7efb362a75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "314a33d9_fb13c676",
+        "filename": "tools/binary_size/libsupersize/describe.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-09-29T15:13:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8e8c4c4_24b8da65",
+      "revId": "e6c7a05b6ce70ec0806caabdc4d8bd7efb362a75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b722b9bd_e8d9b62c",
         "filename": "tools/binary_size/libsupersize/describe.py",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "e6c7a05b6ce70ec0806caabdc4d8bd7efb362a75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cd98162_8c7fc5b4",
+        "filename": "tools/binary_size/libsupersize/describe.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-09-29T15:13:56Z",
+      "side": 1,
+      "message": "Done (I though Python 3 still have % ??).",
+      "parentUuid": "b722b9bd_e8d9b62c",
+      "revId": "e6c7a05b6ce70ec0806caabdc4d8bd7efb362a75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "e64dae63_a7dc3771",
+        "filename": "tools/binary_size/libsupersize/describe.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-09-29T15:13:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebaadb9b_dbdbc726",
+      "revId": "e6c7a05b6ce70ec0806caabdc4d8bd7efb362a75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2e76fe1_99c402eb",
         "filename": "tools/binary_size/libsupersize/describe.py",
         "patchSetId": 2
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "63216414_3ab62d91",
+        "filename": "tools/binary_size/libsupersize/describe.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-09-29T15:13:56Z",
+      "side": 1,
+      "message": "Done (pss -\u003e PSS).",
+      "parentUuid": "b2e76fe1_99c402eb",
+      "revId": "e6c7a05b6ce70ec0806caabdc4d8bd7efb362a75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4c901b5_0a834395",
         "filename": "tools/binary_size/libsupersize/describe.py",
         "patchSetId": 2
@@ -118,6 +226,24 @@
       "revId": "e6c7a05b6ce70ec0806caabdc4d8bd7efb362a75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd9605d9_e2258a68",
+        "filename": "tools/binary_size/libsupersize/describe.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-09-29T15:13:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4c901b5_0a834395",
+      "revId": "e6c7a05b6ce70ec0806caabdc4d8bd7efb362a75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
