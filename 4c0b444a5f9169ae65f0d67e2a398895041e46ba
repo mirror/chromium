@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8afb9c89_344d6a5b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/VerticallyFixedEditText.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-09-29T22:47:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44270a1c_cd84b7be",
+      "range": {
+        "startLine": 50,
+        "startChar": 4,
+        "endLine": 50,
+        "endChar": 34
+      },
+      "revId": "4c0b444a5f9169ae65f0d67e2a398895041e46ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71b7f95e_edfcd21b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/VerticallyFixedEditText.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "4c0b444a5f9169ae65f0d67e2a398895041e46ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "067ae600_58d249a7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/VerticallyFixedEditText.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-09-29T22:47:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71b7f95e_edfcd21b",
+      "range": {
+        "startLine": 52,
+        "startChar": 3,
+        "endLine": 54,
+        "endChar": 5
+      },
+      "revId": "4c0b444a5f9169ae65f0d67e2a398895041e46ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
