@@ -8,6 +8,7 @@
 #include "base/macros.h"
 #include "chrome/browser/vr/content_input_delegate.h"
 #include "chrome/browser/vr/elements/ui_element.h"
+#include "chrome/browser/vr/ui_element_renderer.h"
 
 namespace vr {
 
@@ -38,10 +39,15 @@ class ContentElement : public UiElement {
               const gfx::Transform& model_view_proj_matrix) const final;
 
   void set_texture_id(unsigned int texture_id) { texture_id_ = texture_id; }
+  void set_texture_location(UiElementRenderer::TextureLocation location) {
+    texture_location_ = location;
+  }
 
  private:
   ContentInputDelegate* delegate_ = nullptr;
   unsigned int texture_id_ = 0;
+  UiElementRenderer::TextureLocation texture_location_ =
+      UiElementRenderer::kTextureLocationExternal;
 };
 
 }  // namespace vr

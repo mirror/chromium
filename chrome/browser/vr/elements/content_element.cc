@@ -24,8 +24,7 @@ void ContentElement::Render(
   if (!texture_id_)
     return;
   gfx::RectF copy_rect(0, 0, 1, 1);
-  renderer->DrawTexturedQuad(texture_id_,
-                             UiElementRenderer::kTextureLocationExternal,
+  renderer->DrawTexturedQuad(texture_id_, texture_location_,
                              model_view_proj_matrix, copy_rect,
                              computed_opacity(), size(), corner_radius());
 }
