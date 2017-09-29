@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b3839c9a_e2055f02",
+        "filename": "base/numerics/clamped_math_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002378
+      },
+      "writtenOn": "2017-09-29T19:10:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a4484f85_3059b274",
+      "range": {
+        "startLine": 86,
+        "startChar": 22,
+        "endLine": 86,
+        "endChar": 47
+      },
+      "revId": "c01272c06989ca0f5aa8ae98efbf69403c8d79c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65298eb9_9f6f767e",
         "filename": "base/numerics/clamped_math_impl.h",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "40a649a4_56d692f7",
+        "filename": "base/numerics/clamped_math_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002378
+      },
+      "writtenOn": "2017-09-29T19:10:06Z",
+      "side": 1,
+      "message": "Because I handle that logic in the default return case at the very bottom, and doing it this way produces smaller code when the out-of-range type is a compile-time constant (which is very common for e.g. size_t math).",
+      "parentUuid": "65298eb9_9f6f767e",
+      "range": {
+        "startLine": 87,
+        "startChar": 49,
+        "endLine": 87,
+        "endChar": 51
+      },
+      "revId": "c01272c06989ca0f5aa8ae98efbf69403c8d79c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9131b3c8_da8646d1",
         "filename": "base/numerics/clamped_math_impl.h",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-29T18:17:35Z",
       "side": 1,
       "message": "Perhaps just use LIKELY from compiler_specific.h directly in a followup?\n\nAlso, we shouldn\u0027t need the nested parens unless the macro forgets to use them.",
+      "range": {
+        "startLine": 91,
+        "startChar": 8,
+        "endLine": 91,
+        "endChar": 28
+      },
+      "revId": "c01272c06989ca0f5aa8ae98efbf69403c8d79c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c22e0501_901cf84b",
+        "filename": "base/numerics/clamped_math_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002378
+      },
+      "writtenOn": "2017-09-29T19:10:06Z",
+      "side": 1,
+      "message": "This code can\u0027t have any base dependencies, and the nested parens are because the parser treats the template declaration as a comparison followed by a comma.",
+      "parentUuid": "9131b3c8_da8646d1",
       "range": {
         "startLine": 91,
         "startChar": 8,
