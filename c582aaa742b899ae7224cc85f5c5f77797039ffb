@@ -19,6 +19,41 @@
     },
     {
       "key": {
+        "uuid": "5a34cf10_ba53f4a6",
+        "filename": "gpu/command_buffer/client/gpu_control.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-29T20:39:45Z",
+      "side": 1,
+      "message": "I think it can be. I left some notes where we can turn it into const. There\u0027s always the option of marking the field mutable in various implementations - since it\u0027s just a cache.",
+      "parentUuid": "8086c5ba_fcd832b5",
+      "revId": "c582aaa742b899ae7224cc85f5c5f77797039ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66067400_ac274400",
+        "filename": "gpu/command_buffer/tests/gl_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-29T20:39:45Z",
+      "side": 1,
+      "message": "nit: maybe just grab capabilities_ when we create the decoder, so that you can make this method const?",
+      "revId": "c582aaa742b899ae7224cc85f5c5f77797039ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "204df0aa_21db2846",
         "filename": "gpu/config/gpu_util.cc",
         "patchSetId": 7
@@ -53,6 +88,23 @@
     },
     {
       "key": {
+        "uuid": "c8fcc522_3412ddd5",
+        "filename": "gpu/gles2_conform_support/egl/context.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-29T20:39:45Z",
+      "side": 1,
+      "message": "nit: Ditto, grab this when you create the decoder",
+      "revId": "c582aaa742b899ae7224cc85f5c5f77797039ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "784e38d2_8e900437",
         "filename": "gpu/ipc/gl_in_process_context.cc",
         "patchSetId": 7
@@ -81,6 +133,23 @@
       "writtenOn": "2017-09-29T01:40:15Z",
       "side": 1,
       "message": "Is it feasible to make this method const too?",
+      "revId": "c582aaa742b899ae7224cc85f5c5f77797039ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "854672c2_0ae1b426",
+        "filename": "services/ui/public/cpp/gpu/context_provider_command_buffer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-29T20:39:45Z",
+      "side": 1,
+      "message": "This DCHECK is not valid, because CommandBufferProxyImpl\u0027s channel_ gets reset in case of channel errors and things.\nI also don\u0027t think we should have these 2 paths... we shouldn\u0027t call this before BindToCurrentThread failed or hasn\u0027t been called yet. - I would strongly recommend adding DCHECKs for bind_succeeded_ and context_thread_checker_.CalledOnValidThread().\n\nI think the key question is what we would want to return here after a channel error. The GpuFeatureInfo would be out-of-date because the next time we try to create one it could be different (e.g. too many crashes, or driver update or these things). So one option is to return an empty one. If we want to return the original one from the channel, I think the best suggestion is to cache the GpuFeatureInfo in the constructor. Another possibility may be to keep a reference to the GpuChannelHost to avoid an extra copy, but I\u0027m not sure if that might cause problems.",
       "revId": "c582aaa742b899ae7224cc85f5c5f77797039ffb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
