@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34fe3e99_ea3e6343",
+        "filename": "remoting/ios/client_gestures.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-29T20:29:18Z",
+      "side": 1,
+      "message": "do you also need a menuShouldHide?",
+      "range": {
+        "startLine": 16,
+        "startChar": 8,
+        "endLine": 16,
+        "endChar": 22
+      },
+      "revId": "0776bcabeed09dc1e3549631f1eef50bdea617d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
