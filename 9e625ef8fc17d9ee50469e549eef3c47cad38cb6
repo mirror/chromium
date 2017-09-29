@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33b569e1_2483221b",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerObjectProxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-29T01:45:24Z",
+      "side": 1,
+      "message": "Can this comment be less abstract now that the class is called DedicatedWorker*? E.g., What is the \"parent worker object\" in this case? The base class comment is similarly abstract: \"A proxy to talk to the parent object.\"",
+      "revId": "9e625ef8fc17d9ee50469e549eef3c47cad38cb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
