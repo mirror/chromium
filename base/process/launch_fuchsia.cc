@@ -4,11 +4,14 @@
 
 #include "base/process/launch.h"
 
+#include <fdio/private.h>
+#include <zircon/process.h>
+#include <zircon/processargs.h>
+#include <zircon/syscalls.h>
+
 #include <launchpad/launchpad.h>
 #include <stdint.h>
 #include <unistd.h>
-#include <zircon/process.h>
-#include <zircon/processargs.h>
 
 #include "base/command_line.h"
 #include "base/fuchsia/default_job.h"
@@ -134,7 +137,12 @@ Process LaunchProcess(const std::vector<std::string>& argv,
         arraysize(stdio_already_mapped)) {
       stdio_already_mapped[src_target.second] = true;
     }
-    launchpad_clone_fd(lp, src_target.first, src_target.second);
+
+    zx_status_t result =
+        launchpad_clone_fd(lp, src_target.first, src_target.second);
+    DCHECK_EQ(ZX_OK, result);
+
+    LOG(ERROR) << "Checking src FD";
   }
   if (to_clone & LP_CLONE_FDIO_STDIO) {
     for (size_t stdio_fd = 0; stdio_fd < arraysize(stdio_already_mapped);

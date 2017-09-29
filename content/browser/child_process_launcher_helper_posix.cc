@@ -4,11 +4,15 @@
 
 #include "content/browser/child_process_launcher_helper_posix.h"
 
+#include <zircon/status.h>
+#include <zircon/syscalls.h>
+
 #include "base/command_line.h"
 #include "base/metrics/field_trial.h"
 #include "base/posix/global_descriptors.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
+#include "build/build_config.h"
 #include "content/browser/posix_file_descriptor_info_impl.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/common/content_client.h"
@@ -65,6 +69,8 @@ base::PlatformFile OpenFileIfNecessary(const base::FilePath& path,
   }
   // g_opened_files becomes the owner of the file descriptor.
   base::PlatformFile fd = file.TakePlatformFile();
+  LOG(ERROR) << "I opened " << path.value() << " and got FD " << fd;
+
   (*opened_files)[path] = std::make_pair(fd, *region);
   return fd;
 }
@@ -80,6 +86,7 @@ std::unique_ptr<PosixFileDescriptorInfo> CreateDefaultPosixFilesToMap(
   std::unique_ptr<PosixFileDescriptorInfo> files_to_register(
       PosixFileDescriptorInfoImpl::Create());
 
+#if !defined(OS_FUCHSIA)
   base::SharedMemoryHandle shm = base::FieldTrialList::GetFieldTrialHandle();
   if (shm.IsValid()) {
     files_to_register->Share(
@@ -89,9 +96,10 @@ std::unique_ptr<PosixFileDescriptorInfo> CreateDefaultPosixFilesToMap(
 
   DCHECK(mojo_client_handle.is_valid());
   files_to_register->Share(kMojoIPCChannel, mojo_client_handle.handle);
+#endif
 
-  // TODO(jcivelli): remove this "if defined" by making
-  // GetAdditionalMappedFilesForChildProcess a no op on Mac.
+// TODO(jcivelli): remove this "if defined" by making
+// GetAdditionalMappedFilesForChildProcess a no op on Mac.
 #if !defined(OS_MACOSX)
   GetContentClient()->browser()->GetAdditionalMappedFilesForChildProcess(
       *command_line, child_process_id, files_to_register.get());

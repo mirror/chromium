@@ -4,6 +4,10 @@
 
 #include "services/service_manager/embedder/main.h"
 
+// remove
+#include <zircon/status.h>
+#include <zircon/syscalls.h>
+
 #include "base/allocator/features.h"
 #include "base/at_exit.h"
 #include "base/base_switches.h"
@@ -106,8 +110,8 @@ class ServiceProcessLauncherDelegateImpl
   DISALLOW_COPY_AND_ASSIGN(ServiceProcessLauncherDelegateImpl);
 };
 
-#if defined(OS_POSIX) && !defined(OS_ANDROID) && !defined(OS_FUCHSIA)
-
+#if defined(OS_POSIX) && !defined(OS_ANDROID)
+#if !defined(OS_FUCHSIA)
 // Setup signal-handling state: resanitize most signals, ignore SIGPIPE.
 void SetupSignalHandlers() {
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
@@ -135,11 +139,13 @@ void SetupSignalHandlers() {
   // Always ignore SIGPIPE.  We check the return value of write().
   CHECK_NE(SIG_ERR, signal(SIGPIPE, SIG_IGN));
 }
+#endif
 
 void PopulateFDsFromCommandLine() {
   const std::string& shared_file_param =
       base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
           switches::kSharedFiles);
+  LOG(ERROR) << "Switch parameter: " << shared_file_param;
   if (shared_file_param.empty())
     return;
 
@@ -150,10 +156,26 @@ void PopulateFDsFromCommandLine() {
 
   for (const auto& descriptor : *shared_file_descriptors) {
     base::MemoryMappedFile::Region region;
+    base::PlatformFile fd = descriptor.first;
     const std::string& key = descriptor.second;
-    base::ScopedFD fd = base::GlobalDescriptors::GetInstance()->TakeFD(
-        descriptor.first, &region);
-    base::FileDescriptorStore::GetInstance().Set(key, std::move(fd), region);
+
+    base::ScopedFD scoped_fd =
+        base::GlobalDescriptors::GetInstance()->TakeFD(fd, &region);
+    if (!scoped_fd.is_valid()) {
+      LOG(ERROR) << "Getting IO for fd " << fd;
+      auto io = __fdio_fd_to_io(fd);
+      DCHECK(io);
+      LOG(ERROR) << "IO is " << io;
+
+      // The FD isn't already registered in GlobalDescriptors.
+      // Register it in FileDescriptorStore with its string ID anyway.
+      scoped_fd = base::ScopedFD(fd);
+
+      region = base::MemoryMappedFile::Region::kWholeFile;
+    }
+
+    base::FileDescriptorStore::GetInstance().Set(key, std::move(scoped_fd),
+                                                 region);
   }
 }
 
@@ -363,7 +385,7 @@ int Main(const MainParams& params) {
 
   base::CommandLine::Init(argc, argv);
 
-#if defined(OS_POSIX) && !defined(OS_FUCHSIA)
+#if defined(OS_POSIX)
   PopulateFDsFromCommandLine();
 #endif
 
@@ -383,6 +405,7 @@ int Main(const MainParams& params) {
 #endif
 
   const auto& command_line = *base::CommandLine::ForCurrentProcess();
+  LOG(ERROR) << "Command line: " << command_line.GetArgumentsString();
 
 #if defined(OS_WIN)
   base::win::SetupCRT(command_line);

@@ -49,8 +49,9 @@ struct MOJO_SYSTEM_IMPL_EXPORT PlatformHandle {
   bool is_valid_fd() const { return fd >= 0 && handle == ZX_HANDLE_INVALID; }
   int as_fd() const { return fd; }
 
- private:
   zx_handle_t handle = ZX_HANDLE_INVALID;
+
+ private:
   int fd = -1;
 };
 #elif defined(OS_POSIX)

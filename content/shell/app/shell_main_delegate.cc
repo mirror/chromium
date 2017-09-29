@@ -81,6 +81,10 @@
 #include "components/crash/content/app/breakpad_linux.h"
 #endif
 
+#if defined(OS_FUCHSIA)
+#include "base/file_descriptor_store.h"
+#endif
+
 namespace {
 
 #if !defined(OS_FUCHSIA)
@@ -364,7 +368,22 @@ void ShellMainDelegate::InitializeResourceBundle() {
                                                           pak_region);
   ui::ResourceBundle::GetSharedInstance().AddDataPackFromFileRegion(
       base::File(pak_fd), pak_region, ui::SCALE_FACTOR_100P);
-#else  // defined(OS_ANDROID)
+  return;
+#elif defined(OS_FUCHSIA)
+  // See if the resource file is available to us using ServiceManager's shared
+  // files mechanism.
+  base::MemoryMappedFile::Region pak_region;
+  base::ScopedFD fd = base::FileDescriptorStore::GetInstance().MaybeTakeFD(
+      "content_pak", &pak_region);
+  if (fd.is_valid()) {
+    LOG(ERROR) << "Using FD " << fd.get() << " for the resource.";
+    base::File pak_file = base::File(fd.release());
+    ui::ResourceBundle::InitSharedInstanceWithPakFileRegion(std::move(pak_file),
+                                                            pak_region);
+    return;
+  }
+#endif
+
 #if defined(OS_MACOSX)
   base::FilePath pak_file = GetResourcesPakFilePath();
 #else
@@ -374,7 +393,6 @@ void ShellMainDelegate::InitializeResourceBundle() {
   pak_file = pak_file.Append(FILE_PATH_LITERAL("content_shell.pak"));
 #endif  // defined(OS_MACOSX)
   ui::ResourceBundle::InitSharedInstanceWithPakPath(pak_file);
-#endif  // defined(OS_ANDROID)
 }
 
 ContentBrowserClient* ShellMainDelegate::CreateContentBrowserClient() {

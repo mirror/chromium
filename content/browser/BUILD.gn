@@ -1671,7 +1671,9 @@ source_set("browser") {
       "child_process_launcher_helper_fuchsia.cc",
       "memory/memory_monitor_fuchsia.cc",
     ]
-  } else if (is_posix) {
+  }
+
+  if (is_posix) {
     sources += [
       "child_process_launcher_helper_posix.cc",
       "child_process_launcher_helper_posix.h",

@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "base/base_paths.h"
+#include "base/file_descriptor_store.h"
 #include "base/files/file_path.h"
 #include "base/logging.h"
 #include "base/path_service.h"
@@ -18,6 +19,9 @@
 #endif
 
 namespace content {
+namespace {
+const char kContentPakId[] = "content_pak";
+}
 
 TestContentClient::TestContentClient()
     : data_pack_(ui::SCALE_FACTOR_100P) {
@@ -35,6 +39,11 @@ TestContentClient::TestContentClient()
   PathService::Get(base::DIR_ANDROID_APP_DATA, &content_shell_pack_path);
   content_shell_pack_path = content_shell_pack_path.Append(
       FILE_PATH_LITERAL("paks"));
+#elif defined(OS_FUCHSIA)
+  base::ScopedFD fd = base::FileDescriptorStore::GetInstance().TakeFD(
+      kContentPakId, &pak_region);
+  pak_file = base::File(fd.release());
+  DCHECK(pak_file.IsValid());
 #else
   PathService::Get(base::DIR_MODULE, &content_shell_pack_path);
 #endif  // defined(OS_ANDROID)
@@ -58,6 +67,7 @@ std::string TestContentClient::GetUserAgent() const {
 base::StringPiece TestContentClient::GetDataResource(
     int resource_id,
     ui::ScaleFactor scale_factor) const {
+  LOG(FATAL) << "GetDataResource";
   base::StringPiece resource;
   data_pack_.GetStringPiece(resource_id, &resource);
   return resource;
