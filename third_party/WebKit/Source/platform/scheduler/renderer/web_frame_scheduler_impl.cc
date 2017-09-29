@@ -388,6 +388,11 @@ void WebFrameSchedulerImpl::SetPaused(bool frame_paused) {
     pausable_queue_enabled_voter_->SetQueueEnabled(!frame_paused);
 }
 
+void WebFrameSchedulerImpl::OnStoppedInBackground() {
+  for (auto observer : loader_observers_)
+    observer->OnThrottlingStateChanged(ThrottlingState::kStopped);
+}
+
 void WebFrameSchedulerImpl::OnFirstMeaningfulPaint() {
   renderer_scheduler_->OnFirstMeaningfulPaint();
 }

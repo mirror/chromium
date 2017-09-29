@@ -25,6 +25,7 @@ class WebFrameScheduler {
   enum class ThrottlingState {
     kThrottled,
     kNotThrottled,
+    kStopped,
   };
 
   class ActiveConnectionHandle {
@@ -62,6 +63,9 @@ class WebFrameScheduler {
   // Set whether this frame is suspended. Only unthrottledTaskRunner tasks are
   // allowed to run on a suspended frame.
   virtual void SetPaused(bool) {}
+
+  // Notifies observers of transitioning to STOPPED state in background.
+  virtual void OnStoppedInBackground() {}
 
   // Set whether this frame is cross origin w.r.t. the top level frame. Cross
   // origin frames may use a different scheduling policy from same origin
