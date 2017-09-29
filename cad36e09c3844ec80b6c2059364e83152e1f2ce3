@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6d9fbd23_c8d66e0c",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-09-29T18:54:23Z",
+      "side": 1,
+      "message": "decltype done",
+      "parentUuid": "e0911397_fe8f82c0",
+      "revId": "cad36e09c3844ec80b6c2059364e83152e1f2ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3564b4f4_f39ae773",
         "filename": "base/win/win_util.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "cad36e09c3844ec80b6c2059364e83152e1f2ce3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90e01004_8a0ac441",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-09-29T18:54:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3564b4f4_f39ae773",
+      "revId": "cad36e09c3844ec80b6c2059364e83152e1f2ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8d34be27_3b455d13",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-09-29T18:54:23Z",
+      "side": 1,
+      "message": "Every call here is once per process, this can only be called once and permanently sets the DPI mode. Agreed that this might not be super interesting anyway, removing.",
+      "parentUuid": "9a58f48c_3dd40ea9",
+      "revId": "cad36e09c3844ec80b6c2059364e83152e1f2ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2370bfbd_a0917e2e",
         "filename": "base/win/win_util.cc",
         "patchSetId": 7
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "1b87affe_da37341b",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-09-29T18:54:23Z",
+      "side": 1,
+      "message": "Made into DLOG_IF.",
+      "parentUuid": "2370bfbd_a0917e2e",
+      "revId": "cad36e09c3844ec80b6c2059364e83152e1f2ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18f47fd6_b888b66b",
         "filename": "base/win/win_util.cc",
         "patchSetId": 7
@@ -84,6 +156,24 @@
       "revId": "cad36e09c3844ec80b6c2059364e83152e1f2ce3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17bf4d17_f55982bb",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-09-29T18:54:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18f47fd6_b888b66b",
+      "revId": "cad36e09c3844ec80b6c2059364e83152e1f2ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +200,30 @@
     },
     {
       "key": {
+        "uuid": "c1570d1a_ea6d759e",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-09-29T18:54:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51a5ef38_2b036631",
+      "range": {
+        "startLine": 117,
+        "startChar": 25,
+        "endLine": 117,
+        "endChar": 55
+      },
+      "revId": "cad36e09c3844ec80b6c2059364e83152e1f2ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0657a0c0_1983e089",
         "filename": "base/win/win_util.cc",
         "patchSetId": 7
@@ -124,6 +238,24 @@
       "revId": "cad36e09c3844ec80b6c2059364e83152e1f2ce3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf84fcc9_029d55c9",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-09-29T18:54:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0657a0c0_1983e089",
+      "revId": "cad36e09c3844ec80b6c2059364e83152e1f2ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "3ecd4e92_a19bfa1e",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-09-29T18:54:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9740d4b_e5a31d14",
+      "revId": "cad36e09c3844ec80b6c2059364e83152e1f2ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "115a0184_6033f715",
         "filename": "base/win/win_util.cc",
         "patchSetId": 7
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "04aafaba_f6aeafd7",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-09-29T18:54:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "115a0184_6033f715",
+      "revId": "cad36e09c3844ec80b6c2059364e83152e1f2ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0343d7ca_47960648",
         "filename": "chrome/app/chrome_exe_main_win.cc",
         "patchSetId": 7
@@ -175,6 +343,24 @@
       "revId": "cad36e09c3844ec80b6c2059364e83152e1f2ce3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9059e55f_2774f197",
+        "filename": "chrome/app/chrome_exe_main_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-09-29T18:54:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0343d7ca_47960648",
+      "revId": "cad36e09c3844ec80b6c2059364e83152e1f2ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
