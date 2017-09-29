@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0430550_27dd4eb8",
+        "filename": "chrome/app/theme/theme_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-29T17:23:15Z",
+      "side": 0,
+      "message": "Is this change needed?",
+      "range": {
+        "startLine": 502,
+        "startChar": 16,
+        "endLine": 502,
+        "endChar": 25
+      },
+      "revId": "90d05e08a3f97289971e1d54f488287a42e3942b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99794b9a_febcb97c",
+        "filename": "chrome/app/theme/theme_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-29T17:23:15Z",
+      "side": 0,
+      "message": "ditto",
+      "range": {
+        "startLine": 505,
+        "startChar": 16,
+        "endLine": 505,
+        "endChar": 25
+      },
+      "revId": "90d05e08a3f97289971e1d54f488287a42e3942b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
