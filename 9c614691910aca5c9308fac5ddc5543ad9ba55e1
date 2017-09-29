@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb0baa71_3fa89046",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 7585,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-29T20:50:42Z",
+      "side": 1,
+      "message": "nit: \"user\"\n\noptional: edit description to be more idiomatic english, since I find it confusing as is.",
+      "range": {
+        "startLine": 7585,
+        "startChar": 95,
+        "endLine": 7585,
+        "endChar": 99
+      },
+      "revId": "9c614691910aca5c9308fac5ddc5543ad9ba55e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec15f726_e768c0eb",
+        "filename": "chrome/browser/ui/views/collected_cookies_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-29T20:50:42Z",
+      "side": 1,
+      "message": "I believe the superclass does the right thing here.",
+      "range": {
+        "startLine": 275,
+        "startChar": 27,
+        "endLine": 275,
+        "endChar": 49
+      },
+      "revId": "9c614691910aca5c9308fac5ddc5543ad9ba55e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f20fe5fb_d5c99dec",
+        "filename": "chrome/browser/ui/views/collected_cookies_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-29T20:50:42Z",
+      "side": 1,
+      "message": "Change to Accept, otherwise this won\u0027t be called.",
+      "range": {
+        "startLine": 288,
+        "startChar": 28,
+        "endLine": 288,
+        "endChar": 34
+      },
+      "revId": "9c614691910aca5c9308fac5ddc5543ad9ba55e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "769fd436_61f7d728",
+        "filename": "chrome/browser/ui/views/collected_cookies_views.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-29T20:50:42Z",
+      "side": 1,
+      "message": "nit/optional: I\u0027ve been lumping overrides under the direct superclass, because I\u0027ve noticed they tend to rot otherwise (if a method moves or the hierarchy is changed).",
+      "range": {
+        "startLine": 48,
+        "startChar": 12,
+        "endLine": 48,
+        "endChar": 26
+      },
+      "revId": "9c614691910aca5c9308fac5ddc5543ad9ba55e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
