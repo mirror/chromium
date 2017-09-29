@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c2402fc2_de8d1631",
+        "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-29T18:28:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f98b3223_3faab1ca",
+      "revId": "301619d119aeaa6868109a1f238639d92157dd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da279882_cfcf2738",
         "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-29T02:18:06Z",
       "side": 1,
       "message": "When can event_router be null?",
+      "revId": "301619d119aeaa6868109a1f238639d92157dd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d504f5a_b8234dac",
+        "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-29T18:28:33Z",
+      "side": 1,
+      "message": "Not sure...Change it to DCHECk if event_router cannot be null?",
+      "parentUuid": "da279882_cfcf2738",
       "revId": "301619d119aeaa6868109a1f238639d92157dd7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "740992db_fc2577e8",
+        "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-29T18:28:33Z",
+      "side": 1,
+      "message": "|observer_| is marked as DeleteOnIOThread..make_unique\u003c\u003e does not work...",
+      "parentUuid": "540eef91_5d70d057",
+      "revId": "301619d119aeaa6868109a1f238639d92157dd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "abc2db45_cd371d92",
         "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
         "patchSetId": 7
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "1d8e3f3d_d18abc39",
+        "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-29T18:28:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abc2db45_cd371d92",
+      "revId": "301619d119aeaa6868109a1f238639d92157dd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "367ac73d_1fa130a5",
         "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
         "patchSetId": 7
@@ -81,6 +153,24 @@
       "writtenOn": "2017-09-29T02:18:06Z",
       "side": 1,
       "message": "Couldn\u0027t we just do this with a call to EventRouter::HasEventListener()?\n\n(Just mentioning in case the TODO is easier than you thought)",
+      "revId": "301619d119aeaa6868109a1f238639d92157dd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0357b21_c13a558e",
+        "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-29T18:28:33Z",
+      "side": 1,
+      "message": "When extension suspends, would EventRouter::HasEventListener() return true?\n\nWe tried to use a simple count to record number of listeners instead of using EventRouter::HasEventListner(). We did +1 in OnListenerAdded() and -1 in OnListenerRemoved. Saw  the number becomes 0 when extension suspends. That is unexpected as we think the number should be 0 only if cast.channel.onMessage listener is explicitly removed. So we added a TODO here..\n\nThat would be great if EventRouter::HasEventListener() is what we are looking for.",
+      "parentUuid": "367ac73d_1fa130a5",
       "revId": "301619d119aeaa6868109a1f238639d92157dd7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
