@@ -104,6 +104,24 @@
     },
     {
       "key": {
+        "uuid": "ba58e51f_27518a8c",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 982,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-09-29T15:03:12Z",
+      "side": 1,
+      "message": "This check belongs in ShouldAccelerate()",
+      "parentUuid": "4d2079bd_aaa7f2a1",
+      "revId": "c582aaa742b899ae7224cc85f5c5f77797039ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3c422956_206a18fa",
         "filename": "third_party/WebKit/Source/platform/graphics/gpu/AcceleratedImageBufferSurface.cpp",
         "patchSetId": 7
@@ -115,6 +133,24 @@
       "writtenOn": "2017-09-29T01:40:15Z",
       "side": 1,
       "message": "How did you figure out that it\u0027s appropriate to do this check here? It seems a little disconnected from the accelerated 2D canvas implementation. I thought that this class was also used to represent ImageBitmaps that are taken from OffscreenCanvases that might be rendered via WebGL rather than 2D canvas.",
+      "revId": "c582aaa742b899ae7224cc85f5c5f77797039ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc8b4fca_7aa7fb3f",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/AcceleratedImageBufferSurface.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-09-29T15:03:12Z",
+      "side": 1,
+      "message": "+1 This check should not be here.",
+      "parentUuid": "3c422956_206a18fa",
       "revId": "c582aaa742b899ae7224cc85f5c5f77797039ffb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
