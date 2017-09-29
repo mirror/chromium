@@ -22,6 +22,30 @@
       "revId": "79b151ccf20babb890ccfb2a5a9a61d2cffeb200",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ccca12e_b26e9644",
+        "filename": "google_apis/gaia/fake_gaia.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-29T16:00:10Z",
+      "side": 1,
+      "message": "Style guide prefers to NOT inlining ctor/dtor. See \"Stop inlining constructors and destructors\" in https://www.chromium.org/developers/coding-style/cpp-dos-and-donts\n\nAnd chromium clang plug-in would complain something like this:\n../../google_apis/gaia/fake_gaia.h:38:3: error: [chromium-style] Complex class/struct needs an explicit out-of-line constructor.\n  struct AccessTokenInfo {\n  ^\n../../google_apis/gaia/fake_gaia.h:38:3: error: [chromium-style] Complex class/struct needs an explicit out-of-line destructor.",
+      "parentUuid": "836de16f_ea46b6b0",
+      "range": {
+        "startLine": 128,
+        "startChar": 27,
+        "endLine": 128,
+        "endChar": 42
+      },
+      "revId": "79b151ccf20babb890ccfb2a5a9a61d2cffeb200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
