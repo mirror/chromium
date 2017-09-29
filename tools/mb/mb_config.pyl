@@ -98,12 +98,24 @@
       'Linux ChromiumOS Full': 'chromeos_with_codecs_release_bot',
     },
 
+    'chromium.clang': {
+      'ClangToTAndroid': 'android_clang_tot_release',
+      'ClangToTAndroid64': 'android_clang_tot_release_arm64',
+      'ClangToTLinux': 'clang_tot_linux_full_symbols_shared_release',
+      'ClangToTLinux (dbg)': 'clang_tot_shared_debug',
+      'ClangToTLinuxASan': 'clang_tot_asan_lsan_static_release',
+      'ClangToTLinuxMSan': 'clang_tot_msan_release_bot',
+      'ClangToTLinuxLLD': 'clang_tot_lld_release_shared',
+      'ClangToTLinuxThinLTO': 'clang_tot_release_full_symbols_thin_lto_static_use_lld',
+      'ClangToTLinuxUBSanVptr': 'clang_tot_edge_ubsan_no_recover_hack_static_release',
+    },
+
     'chromium.fyi': {
       'Afl Upload Linux ASan': 'release_afl_asan',
       'Android Builder (dbg)': 'android_debug_static_bot_vrdata',
       'Android Builder Goma Canary (dbg)': 'android_debug_bot',
       'Android deterministic': 'android_without_codecs_release_bot_minimal_symbols',
-      'Android deterministic (dbg)': 'android_debug_bot',
+      'Android deterministic (dbg)': 'android_debug_bot',
       'Browser Side Navigation Linux': 'release_bot',
       'CFI Linux CF': 'cfi_full_cfi_diag_recover_release_static',
       'CFI Linux ToT': 'clang_tot_cfi_full_cfi_diag_thin_lto_release_static_dcheck_always_on',
