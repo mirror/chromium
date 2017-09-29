@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.support.test.filters.SmallTest;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -35,8 +36,10 @@ import java.util.concurrent.Callable;
  * Tests for splash screens with EXTRA_THEME_COLOR specified in the Intent.
  */
 @RunWith(ChromeJUnit4ClassRunner.class)
-@CommandLineFlags.Add({ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE,
-        ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG})
+@CommandLineFlags.Add({
+        ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE,
+        ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG
+})
 public class WebappSplashScreenThemeColorTest {
     @Rule
     public final WebappActivityTestRule mActivityTestRule = new WebappActivityTestRule();
@@ -48,6 +51,12 @@ public class WebappSplashScreenThemeColorTest {
                         .createIntent()
                         // This is setting Color.Magenta with 50% opacity.
                         .putExtra(ShortcutHelper.EXTRA_THEME_COLOR, 0x80FF00FFL));
+        RecordHistogram.setRecordCheckerEnabledForTesting(false);
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        RecordHistogram.setRecordCheckerEnabledForTesting(true);
     }
 
     @Test

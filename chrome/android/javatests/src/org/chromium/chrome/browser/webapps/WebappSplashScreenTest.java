@@ -17,7 +17,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,8 +42,10 @@ import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
  * Tests for splash screens.
  */
 @RunWith(ChromeJUnit4ClassRunner.class)
-@CommandLineFlags.Add({ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE,
-        ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG})
+@CommandLineFlags.Add({
+        ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE,
+        ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG
+})
 public class WebappSplashScreenTest {
     @Rule
     public final WebappActivityTestRule mActivityTestRule = new WebappActivityTestRule();
@@ -63,6 +67,16 @@ public class WebappSplashScreenTest {
             }
         }
         return false;
+    }
+
+    @Before
+    public void setUp() throws Exception {
+        RecordHistogram.setRecordCheckerEnabledForTesting(false);
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        RecordHistogram.setRecordCheckerEnabledForTesting(true);
     }
 
     @Test

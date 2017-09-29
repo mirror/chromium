@@ -10,7 +10,9 @@ import static org.chromium.chrome.browser.payments.PaymentRequestTestRule.IMMEDI
 import android.content.DialogInterface;
 import android.support.test.filters.MediumTest;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -50,6 +52,16 @@ public class PaymentRequestCanMakePaymentMetricsTest implements MainActivityStar
         helper.setProfile(new AutofillProfile("", "https://example.com", true, "Jon Doe", "Google",
                 "340 Main St", "CA", "Los Angeles", "", "90291", "", "US", "310-310-6000",
                 "jon.doe@gmail.com", "en-US"));
+    }
+
+    @Before
+    public void setUp() throws Exception {
+        RecordHistogram.setRecordCheckerEnabledForTesting(false);
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        RecordHistogram.setRecordCheckerEnabledForTesting(true);
     }
 
     /**

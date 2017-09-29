@@ -30,8 +30,10 @@ import java.util.concurrent.TimeoutException;
 
 /** Tests for the SearchGeolocationDisclosureInfobar. */
 @RunWith(ChromeJUnit4ClassRunner.class)
-@CommandLineFlags.Add({ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE,
-        ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG})
+@CommandLineFlags.Add({
+        ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE,
+        ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG
+})
 public class SearchGeolocationDisclosureInfoBarTest {
     private static final String SEARCH_PAGE = "/chrome/test/data/android/google.html";
 
@@ -47,10 +49,12 @@ public class SearchGeolocationDisclosureInfoBarTest {
         mActivityTestRule.startMainActivityOnBlankPage();
         mTestServer = EmbeddedTestServer.createAndStartServer(
                 InstrumentationRegistry.getInstrumentation().getContext());
+        RecordHistogram.setRecordCheckerEnabledForTesting(false);
     }
 
     @After
     public void tearDown() throws Exception {
+        RecordHistogram.setRecordCheckerEnabledForTesting(true);
         if (mTestServer != null) mTestServer.stopAndDestroyServer();
     }
 

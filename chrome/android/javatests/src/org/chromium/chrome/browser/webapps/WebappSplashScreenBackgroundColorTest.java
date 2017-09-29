@@ -9,7 +9,9 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.test.filters.SmallTest;
 import android.view.ViewGroup;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,11 +29,23 @@ import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
  * Tests for splash screens with EXTRA_BACKGROND_COLOR specified in the Intent.
  */
 @RunWith(ChromeJUnit4ClassRunner.class)
-@CommandLineFlags.Add({ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE,
-        ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG})
+@CommandLineFlags.Add({
+        ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE,
+        ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG
+})
 public class WebappSplashScreenBackgroundColorTest {
     @Rule
     public final WebappActivityTestRule mActivityTestRule = new WebappActivityTestRule();
+
+    @Before
+    public void setUp() throws Exception {
+        RecordHistogram.setRecordCheckerEnabledForTesting(false);
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        RecordHistogram.setRecordCheckerEnabledForTesting(true);
+    }
 
     @Test
     @SmallTest

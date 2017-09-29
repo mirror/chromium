@@ -34,6 +34,8 @@ std::string HistogramTypeToString(HistogramType type) {
       return "CUSTOM_HISTOGRAM";
     case SPARSE_HISTOGRAM:
       return "SPARSE_HISTOGRAM";
+    case DUMMY_HISTOGRAM:
+      return "DUMMY_HISTOGRAM";
   }
   NOTREACHED();
   return "UNKNOWN";
@@ -214,6 +216,8 @@ void HistogramBase::ReportHistogramActivity(const HistogramBase& histogram,
           break;
         case SPARSE_HISTOGRAM:
           report_type = HISTOGRAM_REPORT_TYPE_SPARSE;
+          break;
+        case DUMMY_HISTOGRAM:
           break;
       }
       report_histogram_->Add(report_type);

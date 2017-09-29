@@ -10,6 +10,7 @@ import android.support.test.filters.SmallTest;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -30,8 +31,10 @@ import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
  * Tests for splash screens with EXTRA_ICON specified in the Intent.
  */
 @RunWith(ChromeJUnit4ClassRunner.class)
-@CommandLineFlags.Add({ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE,
-        ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG})
+@CommandLineFlags.Add({
+        ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE,
+        ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG
+})
 public class WebappSplashScreenHomescreenIconTest {
     @Rule
     public final WebappActivityTestRule mActivityTestRule = new WebappActivityTestRule();
@@ -43,6 +46,12 @@ public class WebappSplashScreenHomescreenIconTest {
         mSplashScreen = mActivityTestRule.startWebappActivityAndWaitForSplashScreen(
                 mActivityTestRule.createIntent().putExtra(
                         ShortcutHelper.EXTRA_ICON, WebappActivityTestRule.TEST_ICON));
+        RecordHistogram.setRecordCheckerEnabledForTesting(false);
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        RecordHistogram.setRecordCheckerEnabledForTesting(true);
     }
 
     @Test

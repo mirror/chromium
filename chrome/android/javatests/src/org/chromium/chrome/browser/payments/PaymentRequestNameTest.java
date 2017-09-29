@@ -7,7 +7,9 @@ package org.chromium.chrome.browser.payments;
 import android.content.DialogInterface;
 import android.support.test.filters.MediumTest;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -72,6 +74,16 @@ public class PaymentRequestNameTest implements MainActivityStartCallback {
         helper.setProfile(new AutofillProfile("" /* name */, "https://example.com", true, "",
                 "Google", "340 Main St", "CA", "Los Angeles", "", "90291", "", "US", "555-555-5555",
                 "jon.doe@google.com", "en-US"));
+    }
+
+    @Before
+    public void setUp() throws Exception {
+        RecordHistogram.setRecordCheckerEnabledForTesting(false);
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        RecordHistogram.setRecordCheckerEnabledForTesting(true);
     }
 
     /** Provide the existing valid payer name to the merchant. */

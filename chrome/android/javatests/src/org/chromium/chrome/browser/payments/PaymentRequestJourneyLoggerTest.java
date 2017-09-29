@@ -12,7 +12,9 @@ import static org.chromium.chrome.browser.payments.PaymentRequestTestRule.NO_INS
 import android.content.DialogInterface;
 import android.support.test.filters.MediumTest;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -67,6 +69,16 @@ public class PaymentRequestJourneyLoggerTest implements MainActivityStartCallbac
         mHelper.setCreditCard(new CreditCard("", "https://example.com", true, true, "",
                 "4111111111111111", "1111", "18", "2075", "visa", R.drawable.visa_card,
                 CardType.UNKNOWN, mIncompleteAddressId, "" /* serverId */));
+    }
+
+    @Before
+    public void setUp() throws Exception {
+        RecordHistogram.setRecordCheckerEnabledForTesting(false);
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        RecordHistogram.setRecordCheckerEnabledForTesting(true);
     }
 
     /**

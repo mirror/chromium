@@ -9,7 +9,9 @@ import static org.chromium.chrome.browser.payments.PaymentRequestTestRule.IMMEDI
 
 import android.support.test.filters.MediumTest;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -71,6 +73,16 @@ public class PaymentRequestEmailAndPhoneTest implements MainActivityStartCallbac
                 "jon.doe@google.com", "en-US"));
 
         mPaymentRequestTestRule.installPaymentApp(HAVE_INSTRUMENTS, IMMEDIATE_RESPONSE);
+    }
+
+    @Before
+    public void setUp() throws Exception {
+        RecordHistogram.setRecordCheckerEnabledForTesting(false);
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        RecordHistogram.setRecordCheckerEnabledForTesting(true);
     }
 
     /** Provide the existing valid email address and phone number to the merchant. */
