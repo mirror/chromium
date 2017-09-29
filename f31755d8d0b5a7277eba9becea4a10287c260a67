@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f1b6200_d20959d9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/LauncherShortcutActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-29T18:30:40Z",
+      "side": 1,
+      "message": "will this run into any throttling issues with the android framework?\n\nWe \"could\" save the locale of the launcher shortcuts previously added and compare, but that runs into issues where the string itself changed.  And then we\u0027d have to save the string as a shared pref which seems quite wasteful.\n\nShip it :-)",
+      "range": {
+        "startLine": 78,
+        "startChar": 55,
+        "endLine": 78,
+        "endChar": 83
+      },
+      "revId": "f31755d8d0b5a7277eba9becea4a10287c260a67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
