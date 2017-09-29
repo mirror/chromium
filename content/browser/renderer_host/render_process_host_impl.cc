@@ -407,6 +407,40 @@ SiteProcessMap* GetSiteProcessMapForBrowserContext(BrowserContext* context) {
   return map;
 }
 
+#if defined(OS_WIN)
+
+// Looks for the largest contiguous unallocated region of address space and
+// returns it via |*out_addr| and |*out_size|.
+void FindAddressSpace(base::ProcessHandle process,
+                      char** out_addr,
+                      size_t* out_size) {
+  *out_addr = nullptr;
+  *out_size = 0;
+  char* addr = nullptr;
+  while (true) {
+    MEMORY_BASIC_INFORMATION info;
+    size_t result =
+        VirtualQueryEx(process, static_cast<void*>(addr), &info, sizeof(info));
+    if (result < sizeof(info))
+      break;
+    if (info.State == MEM_FREE && info.RegionSize > *out_size) {
+      *out_addr = addr;
+      *out_size = info.RegionSize;
+    }
+    addr += info.RegionSize;
+  }
+}
+
+void* TryReserveAddressSpace(base::ProcessHandle process, size_t size) {
+  char* addr;
+  size_t avail_size;
+  FindAddressSpace(process, &addr, &avail_size);
+  if (avail_size < size)
+    return nullptr;
+  return VirtualAllocEx(process, addr, size, MEM_RESERVE, PAGE_NOACCESS);
+}
+#endif  // defined(OS_WIN)
+
 // NOTE: changes to this class need to be reviewed by the security team.
 class RendererSandboxedProcessLauncherDelegate
     : public SandboxedProcessLauncherDelegate {
@@ -426,6 +460,19 @@ class RendererSandboxedProcessLauncherDelegate
       AddAppContainerPolicy(policy, sid.c_str());
 
     return GetContentClient()->browser()->PreSpawnRenderer(policy);
+  }
+
+  void PostSpawnTarget(base::ProcessHandle process) override {
+    // On 32 bit Windows systems, try to reserve a contiguous region of 512 MB.
+    // During Blink initialization, we look for this reservation and try to take
+    // it so large contiguous allocations will be more likely to succeed.
+    if (base::win::OSInfo::GetInstance()->wow64_status() !=
+        base::win::OSInfo::WOW64_ENABLED) {
+      const size_t kReservationSize = 512 * 1024 * 1024;
+      if (TryReserveAddressSpace(process, kReservationSize) == nullptr) {
+        DLOG(WARNING) << "Failed to reserve address space";
+      }
+    }
   }
 
 #elif defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_ANDROID) && \
