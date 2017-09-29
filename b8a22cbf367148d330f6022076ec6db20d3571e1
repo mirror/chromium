@@ -1,0 +1,446 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd7d708b_09581ee0",
+        "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T00:57:49Z",
+      "side": 1,
+      "message": "What does the timing look like for this function? We\u0027ve had issues in the past with delayed browser startup due to warmup calls like this; remember this call happens on BrowserMainLoop.\n\nIf it is expensive you might consider moving the initialization to the audio thread itself.",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf643ab2_e4b20134",
+        "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T00:57:49Z",
+      "side": 1,
+      "message": "Also, wow these are really verbose function names.. no fuschia_audio_manager_-\u003eget_output_devices() type calling?\n\nAgain if this is expensive you may want to consider caching the value and listening for device changes to update the counts.",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35be979f_d9953054",
+        "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T00:57:49Z",
+      "side": 1,
+      "message": "Hmm, this is an odd workflow. macOS usually handles this by having you a XXXGetInfo() type call which returns the size information. It seems result is the size of descriptions available, so maybe just make a call upfront like:\n\nvector.resize(fuchsia_audio_manager_get_output_devices(fuchsia_audio_manager_, nullptr, 0)) ?",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1507ae6_5f0f745e",
+        "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T00:57:49Z",
+      "side": 1,
+      "message": "DLOG?",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9250c588_0fd6aaf2",
+        "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T00:57:49Z",
+      "side": 1,
+      "message": "If !empty, no {} required for one line conditionals if you want",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3bb4e43_459fddd8",
+        "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T00:57:49Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b63e2782_6d9adb74",
+        "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T00:57:49Z",
+      "side": 1,
+      "message": "DLOG?",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a210ef94_feb76015",
+        "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T00:57:49Z",
+      "side": 1,
+      "message": "There\u0027s a GuessChannelLayout function that you can use from media/base/channel_layout. Long term fuschia will need to return the actual layout or allow the output stream to specify it.",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7a42d4c_cf639a63",
+        "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T00:57:49Z",
+      "side": 1,
+      "message": "Use PCM_LOW_LATENCY",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "202e3455_ed8d339d",
+        "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T00:57:49Z",
+      "side": 1,
+      "message": "Probably you can just have NOTIMPLEMENTED() here, or if something fails just forward to the low latency one. For Fuschia there should be no way for this function to be called. I think Flash and audio fallback (Disabled off windows) are the only callers.",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bac024c_f12e8329",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T00:57:49Z",
+      "side": 1,
+      "message": "As mentioned earlier Fuschia needs to get a channel layout API; or ability to individually tag output channels.",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9d7e9aa_d02f5d12",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T00:57:49Z",
+      "side": 1,
+      "message": "DLOG",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "082709e2_fdbd7129",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T00:57:49Z",
+      "side": 1,
+      "message": "This is likely to be insufficient for a low latency audio API. Fuschia needs to implement a callback based API where samples are requested as necessary. All streams which use a push based API like this tend to have glitching over the long run. We used to have more, but have since converted them all to pull based with the OS driving.\n\nGlitching will be an artifact or irregular scheduling which leads to buffer misses generally. We may block for up to buffer_size / 2 ms to wait for renderer process to provide audio. If we\u0027re pushing audio we can\u0027t be sure the clock we use and the clock used for audio align.",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec9994b8_48fce016",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T00:57:49Z",
+      "side": 1,
+      "message": "Split out so you get useful logs from the DCHECK if it fails.",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fc1b284_0d84cb24",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T00:57:49Z",
+      "side": 1,
+      "message": "Use AudioTimestampHelper instead.",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f455a0af_95373c11",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T00:57:49Z",
+      "side": 1,
+      "message": "Does this work correctly in the case of devices like bluetooth where some samples may be lost?",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2f9c978_b6081328",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T00:57:49Z",
+      "side": 1,
+      "message": "Again this api is a bit lacking,",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "056c6751_fb16cbb0",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T00:57:49Z",
+      "side": 1,
+      "message": "DLOG?",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a23f8e28_cc5e73cf",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T00:57:49Z",
+      "side": 1,
+      "message": "Do you know what clock this is in? Can we safely combine this value with base::TimeTicks?",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95ecea6c_ce68c355",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T00:57:49Z",
+      "side": 1,
+      "message": "Do once during construction.",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd4c577e_575ad4fb",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T00:57:49Z",
+      "side": 1,
+      "message": "As noted above, this is insufficient for accurate audio delivery. Our MessagePump system provides no guarantees about that 10ms value.",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1940e558_6744babe",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T00:57:49Z",
+      "side": 1,
+      "message": "Allocate during construction once.",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32496134_0fc89d15",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T00:57:49Z",
+      "side": 1,
+      "message": "DLOG",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdd002b2_eec25768",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T00:57:49Z",
+      "side": 1,
+      "message": "Instead of tracking samples manually check out the AudioTimestampHelper",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e97b6b1_ffca8656",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T00:57:49Z",
+      "side": 1,
+      "message": "You might consider using FakeAudioWorker instead to drive this loop. It\u0027s better tested for this type of PostTask delivery system. We use it for routing audio to null, but despite its name it is used for similar circumstances to this.",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "864a4ea0_d26f33d2",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T00:57:49Z",
+      "side": 1,
+      "message": "Feel free to use a less verbose name like fuschia_output_stream or something similar. Up to you.",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
