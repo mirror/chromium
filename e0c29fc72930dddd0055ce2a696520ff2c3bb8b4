@@ -16,6 +16,24 @@
       "revId": "e0c29fc72930dddd0055ce2a696520ff2c3bb8b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b80669e_7ef91ab1",
+        "filename": "ui/webui/resources/cr_elements/cr_link_row/cr_link_row.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-29T20:49:38Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "41b08fa3_5cddddc7",
+      "revId": "e0c29fc72930dddd0055ce2a696520ff2c3bb8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
