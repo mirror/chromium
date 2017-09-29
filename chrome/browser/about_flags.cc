@@ -454,6 +454,10 @@ const FeatureEntry::Choice kTopChromeMaterialDesignChoices[] = {
      switches::kTopChromeMDMaterial},
     {flag_descriptions::kTopChromeMdMaterialHybrid, switches::kTopChromeMD,
      switches::kTopChromeMDMaterialHybrid},
+#if defined(OS_WIN)
+    {flag_descriptions::kTopChromeMdMaterialAuto, switches::kTopChromeMD,
+     switches::kTopChromeMDMaterialAuto},
+#endif  // OS_WIN
 };
 
 #if defined(OS_CHROMEOS)

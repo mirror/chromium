@@ -89,6 +89,32 @@ POWER_PLATFORM_ROLE GetPlatformRole() {
   return PowerDeterminePlatformRoleEx(POWER_PLATFORM_ROLE_V2);
 }
 
+struct EnumWindowParms {
+  DWORD proc_id;
+  HWND hwnd;
+};
+
+BOOL EnumWindowCallback(HWND hwnd, LPARAM p) {
+  EnumWindowParms* parms = reinterpret_cast<EnumWindowParms*>(p);
+  DWORD proc_id = 0;
+  ::GetWindowThreadProcessId(hwnd, &proc_id);
+  if (proc_id == parms->proc_id) {
+    parms->hwnd = hwnd;
+    return FALSE;
+  }
+  return TRUE;
+}
+
+// Helper function to find the application's HWND, if any.
+HWND GetProcessTopmostWindow() {
+  EnumWindowParms result = {::GetCurrentProcessId(), NULL};
+  ::EnumWindows(EnumWindowCallback, (LPARAM)&result);
+  // Failing this DCHECK means our process has no HWND's - possibly the app is
+  // still starting?
+  DCHECK(result.hwnd != NULL);
+  return result.hwnd;
+}
+
 }  // namespace
 
 // Uses the Windows 10 WRL API's to query the current system state. The API's
@@ -149,9 +175,6 @@ bool IsWindows10TabletMode(HWND hwnd) {
 
   base::win::ScopedComPtr<ABI::Windows::UI::ViewManagement::IUIViewSettings>
       view_settings;
-  // TODO(ananta)
-  // Avoid using GetForegroundWindow here and pass in the HWND of the window
-  // intiating the request to display the keyboard.
   hr = view_settings_interop->GetForWindow(hwnd, IID_PPV_ARGS(&view_settings));
   if (FAILED(hr))
     return false;
@@ -445,7 +468,7 @@ bool IsTabletDevice(std::string* reason) {
     return false;
   }
 
-  if (IsWindows10TabletMode(::GetForegroundWindow()))
+  if (IsWindows10TabletMode(GetProcessTopmostWindow()))
     return true;
 
   if (GetSystemMetrics(SM_MAXIMUMTOUCHES) == 0) {
