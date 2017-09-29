@@ -5,11 +5,19 @@
 <dom-module id="network-shared">
   <template>
     <style include="cr-shared-style">
+      :root {
+        --network-control-width: 250px;
+      }
+
       .property-box {
         @apply(--cr-section);
         border-top: none;
         min-height: var(--cr-section-two-line-min-height);
         padding: 0;
+      }
+
+      .property-box.hr {
+        border-top: var(--cr-separator-line);
       }
 
       .property-box.indented {
@@ -45,6 +53,7 @@
         };
         margin-bottom: 0;
         margin-top: -9px;
+        width: var(--network-control-width);
       }
     </style>
   </template>
