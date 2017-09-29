@@ -50,6 +50,24 @@
       "revId": "2f5b14f8d764e5d1677e659740339a3cdc97bb35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e014a14_c93c9473",
+        "filename": "third_party/WebKit/Source/core/page/SpatialNavigation.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2017-09-29T10:16:15Z",
+      "side": 1,
+      "message": "Maybe you already know, SpatialNavigation is not a class. It just a set of static functions.",
+      "parentUuid": "a39b151f_393841ff",
+      "revId": "2f5b14f8d764e5d1677e659740339a3cdc97bb35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
