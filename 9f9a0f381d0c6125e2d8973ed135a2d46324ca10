@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "41892e7a_d2c797b6",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-09-29T09:57:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47a16e87_96aefea2",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 11
+      },
+      "revId": "9f9a0f381d0c6125e2d8973ed135a2d46324ca10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ede36f5e_9b99d25d",
         "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
         "patchSetId": 20
@@ -45,6 +69,30 @@
       "revId": "9f9a0f381d0c6125e2d8973ed135a2d46324ca10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab528367_867e86ce",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-09-29T09:57:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ede36f5e_9b99d25d",
+      "range": {
+        "startLine": 85,
+        "startChar": 37,
+        "endLine": 85,
+        "endChar": 44
+      },
+      "revId": "9f9a0f381d0c6125e2d8973ed135a2d46324ca10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "aa16db51_003a87e4",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-09-29T09:57:26Z",
+      "side": 1,
+      "message": "|all_nodes_| is used. Any nodes on a path which aren\u0027t in the map (i.e. don\u0027t have a GUID won\u0027t appear in the map but will appear here.",
+      "parentUuid": "3182748e_5e52d729",
+      "range": {
+        "startLine": 132,
+        "startChar": 26,
+        "endLine": 132,
+        "endChar": 36
+      },
+      "revId": "9f9a0f381d0c6125e2d8973ed135a2d46324ca10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ac4a882_af9843a7",
         "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
         "patchSetId": 20
@@ -85,6 +157,24 @@
       "revId": "9f9a0f381d0c6125e2d8973ed135a2d46324ca10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70410a1f_ae9af40f",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-09-29T09:57:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ac4a882_af9843a7",
+      "revId": "9f9a0f381d0c6125e2d8973ed135a2d46324ca10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
