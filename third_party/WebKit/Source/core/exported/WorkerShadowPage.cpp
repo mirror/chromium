@@ -15,19 +15,8 @@ namespace blink {
 
 WorkerShadowPage::WorkerShadowPage(Client* client)
     : web_view_(WebViewImpl::Create(nullptr, kWebPageVisibilityStateVisible)),
-      main_frame_(WebLocalFrameImpl::CreateMainFrame(web_view_,
-                                                     this,
-                                                     nullptr,
-                                                     nullptr,
-                                                     g_empty_atom,
-                                                     WebSandboxFlags::kNone)),
       client_(client) {
   DCHECK(IsMainThread());
-  // TODO(http://crbug.com/363843): This needs to find a better way to
-  // not create graphics layers.
-  web_view_->GetSettings()->SetAcceleratedCompositingEnabled(false);
-
-  main_frame_->SetDevToolsAgentClient(client_);
 
   // Create an empty InterfaceProvider because WebFrameClient subclasses are
   // required to do it even if it's not used.
@@ -35,6 +24,15 @@ WorkerShadowPage::WorkerShadowPage(Client* client)
   service_manager::mojom::InterfaceProviderPtr provider;
   mojo::MakeRequest(&provider);
   interface_provider_.Bind(std::move(provider));
+
+  main_frame_ = WebLocalFrameImpl::CreateMainFrame(
+      web_view_, this, nullptr, nullptr, g_empty_atom, WebSandboxFlags::kNone);
+
+  // TODO(http://crbug.com/363843): This needs to find a better way to
+  // not create graphics layers.
+  web_view_->GetSettings()->SetAcceleratedCompositingEnabled(false);
+
+  main_frame_->SetDevToolsAgentClient(client_);
 }
 
 WorkerShadowPage::~WorkerShadowPage() {

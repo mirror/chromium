@@ -521,6 +521,7 @@ source_set("blink_headers") {
     "web/WebFormControlElement.h",
     "web/WebFormElement.h",
     "web/WebFrame.h",
+    "web/WebFrameClient.cpp",
     "web/WebFrameClient.h",
     "web/WebFrameContentDumper.h",
     "web/WebFrameLoadType.h",
@@ -667,6 +668,7 @@ source_set("blink_headers") {
     "//mojo/public/cpp/bindings:bindings",
     "//mojo/public/cpp/system:system",
     "//services/network/public/interfaces:interfaces",
+    "//services/service_manager/public/cpp:cpp",
     "//v8:v8_headers",
   ]
 }
