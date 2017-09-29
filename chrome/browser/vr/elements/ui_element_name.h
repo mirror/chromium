@@ -22,6 +22,7 @@ enum UiElementName {
   kWebVrHttpSecurityWarning,
   kWebVrViewportAwareRoot,
   kContentQuad,
+  kUiQuad,
   kBackplane,
   kCeiling,
   kFloor,

@@ -457,6 +457,18 @@ void VrShell::SetWebVRSecureOrigin(bool secure_origin) {
   ui_->SetWebVrSecureOrigin(secure_origin);
 }
 
+void VrShell::ShowAlertDialog(long icon,
+                              base::string16 title_text,
+                              base::string16 toggle_text,
+                              int b_positive,
+                              base::string16 b_positive_text,
+                              int b_negative,
+                              base::string16 b_negative_text) {
+  LOG(ERROR) << "VRSHELL: VRP = show alert dialog";
+//  ui_->SetAlertContent(icon, title_text, toggle_text, b_positive,
+//                       b_positive_text, b_negative, b_negative_text);
+}
+
 void VrShell::ConnectPresentingService(
     device::mojom::VRSubmitFrameClientPtr submit_client,
     device::mojom::VRPresentationProviderRequest request,
@@ -479,6 +491,17 @@ base::android::ScopedJavaGlobalRef<jobject> VrShell::TakeContentSurface(
   compositor_->SurfaceChanged(nullptr);
   base::android::ScopedJavaGlobalRef<jobject> surface(env, content_surface_);
   content_surface_ = nullptr;
+  return surface;
+}
+
+base::android::ScopedJavaGlobalRef<jobject> VrShell::TakeUiSurface(
+    JNIEnv* env,
+    const JavaParamRef<jobject>& obj) {
+  if (!ui_surface_) {
+    return base::android::ScopedJavaGlobalRef<jobject>(env, nullptr);
+  }
+  base::android::ScopedJavaGlobalRef<jobject> surface(env, ui_surface_);
+  ui_surface_ = nullptr;
   return surface;
 }
 
@@ -510,6 +533,16 @@ void VrShell::ContentSurfaceChanged(jobject surface) {
   JNIEnv* env = base::android::AttachCurrentThread();
   Java_VrShellImpl_contentSurfaceChanged(env, j_vr_shell_);
   compositor_->SurfaceChanged(content_surface_);
+}
+
+void VrShell::UiSurfaceChanged(jobject surface) {
+  ui_surface_ = surface;
+  JNIEnv* env = base::android::AttachCurrentThread();
+  base::android::ScopedJavaGlobalRef<jobject> ref(env, surface);
+  Java_VrShellImpl_UiSurfaceChanged(env, j_vr_shell_, ref);
+  //  JNIEnv* env = base::android::AttachCurrentThread();
+  //  Java_VrShellImpl_contentSurfaceChanged(env, j_vr_shell_);
+  //  compositor_->SurfaceChanged(content_surface_);
 }
 
 void VrShell::GvrDelegateReady(gvr::ViewerType viewer_type) {
@@ -715,6 +748,7 @@ void VrShell::OnContentScreenBoundsChanged(const gfx::SizeF& bounds) {
 void VrShell::PollMediaAccessFlag() {
   poll_capturing_media_task_.Cancel();
 
+  //  LOG(ERROR) << "VRP: ==> Poll media flags";
   poll_capturing_media_task_.Reset(
       base::Bind(&VrShell::PollMediaAccessFlag, base::Unretained(this)));
   main_thread_task_runner_->PostDelayedTask(
@@ -763,6 +797,9 @@ void VrShell::PollMediaAccessFlag() {
   bool is_capturing_video = num_tabs_capturing_video > 0;
   bool is_capturing_screen = num_tabs_capturing_screen > 0;
   bool is_bluetooth_connected = num_tabs_bluetooth_connected > 0;
+
+  //  LOG(ERROR) << "VRP: ==> new flags: " << is_capturing_screen << ", "
+  //             << is_capturing_audio;
   if (is_capturing_audio != is_capturing_audio_) {
     ui_->SetAudioCapturingIndicator(is_capturing_audio);
     is_capturing_audio_ = is_capturing_audio;

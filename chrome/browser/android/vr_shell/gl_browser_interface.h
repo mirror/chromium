@@ -27,6 +27,7 @@ class GlBrowserInterface {
   virtual ~GlBrowserInterface() = default;
 
   virtual void ContentSurfaceChanged(jobject surface) = 0;
+  virtual void UiSurfaceChanged(jobject surface) = 0;
   virtual void GvrDelegateReady(gvr::ViewerType viewer_type) = 0;
   virtual void UpdateGamepadData(device::GvrGamepadData) = 0;
   virtual void ProcessContentGesture(
@@ -34,6 +35,10 @@ class GlBrowserInterface {
   virtual void ForceExitVr() = 0;
   virtual void OnContentPaused(bool enabled) = 0;
   virtual void ToggleCardboardGamepad(bool enabled) = 0;
+//=======
+//  virtual void OnGlInitialized(unsigned int content_texture_id,
+//                               unsigned int ui_texture_id) = 0;
+//>>>>>>> NOT FOR REVIEW
 };
 
 }  // namespace vr_shell

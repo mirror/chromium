@@ -181,6 +181,7 @@ class PermissionRequestManager
   // prevent tab switching.
   std::unique_ptr<PermissionPrompt> view_;
   // We only show new prompts when both of these are true.
+  bool has_been_init;
   bool main_frame_has_fully_loaded_;
   bool tab_is_visible_;
 

@@ -10,6 +10,7 @@
 #include "base/values.h"
 #include "chrome/browser/vr/browser_ui_interface.h"
 #include "chrome/browser/vr/color_scheme.h"
+#include "chrome/browser/vr/elements/alert_dialog.h"
 #include "chrome/browser/vr/elements/simple_textured_element.h"
 #include "chrome/browser/vr/ui_interface.h"
 #include "chrome/browser/vr/ui_unsupported_mode.h"
@@ -104,6 +105,14 @@ class UiSceneManager : public UiInterface, public BrowserUiInterface {
   void SetAudioCapturingIndicator(bool enabled) override;
   void SetLocationAccessIndicator(bool enabled) override;
   void SetBluetoothConnectedIndicator(bool enabled) override;
+  void SetAlertContent(long icon,
+                       base::string16 title_text,
+                       base::string16 toggle_text,
+                       int b_positive,
+                       base::string16 b_positive_text,
+                       int b_negative,
+                       base::string16 b_negative_text);
+
   void SetHistoryButtonsEnabled(bool can_go_back, bool can_go_forward) override;
 
   // TODO(vollick): once we have migrated to a model, these methods can be
@@ -114,7 +123,8 @@ class UiSceneManager : public UiInterface, public BrowserUiInterface {
 
   // UiInterface.
   bool ShouldRenderWebVr() override;
-  void OnGlInitialized(unsigned int content_texture_id) override;
+  void OnGlInitialized(unsigned int content_texture_id,
+                       unsigned int ui_texture_id) override;
   void OnAppButtonClicked() override;
   void OnAppButtonGesturePerformed(UiInterface::Direction direction) override;
   void OnProjMatrixChanged(const gfx::Transform& proj_matrix) override;
@@ -139,6 +149,7 @@ class UiSceneManager : public UiInterface, public BrowserUiInterface {
   void CreateContentQuad(ContentInputDelegate* delegate);
   void CreateSplashScreen();
   void CreateUnderDevelopmentNotice();
+  void CreateAlertDialog();
   void CreateBackground();
   void CreateViewportAwareRoot();
   void CreateUrlBar(Model* model);
@@ -152,6 +163,7 @@ class UiSceneManager : public UiInterface, public BrowserUiInterface {
   void ConfigureExclusiveScreenToast();
   void ConfigureIndicators();
   void ConfigureBackgroundColor();
+  void ConfigureAlertDialog();
   void OnBackButtonClicked();
   void OnSecurityIconClicked();
   void OnExitPromptChoice(bool chose_exit);
@@ -179,12 +191,15 @@ class UiSceneManager : public UiInterface, public BrowserUiInterface {
   UiElement* exit_prompt_backplane_ = nullptr;
   UiElement* exit_warning_ = nullptr;
   ContentElement* main_content_ = nullptr;
+  ContentElement* ui_dialog_ = nullptr;
   UiElement* audio_capture_indicator_ = nullptr;
   UiElement* bluetooth_connected_indicator_ = nullptr;
   UiElement* video_capture_indicator_ = nullptr;
   UiElement* screen_capture_indicator_ = nullptr;
   UiElement* location_access_indicator_ = nullptr;
   UiElement* screen_dimmer_ = nullptr;
+  AlertDialog* alert_dialog_ = nullptr;
+  bool dialog_is_up_ = false;
   Rect* ceiling_ = nullptr;
   Grid* floor_ = nullptr;
   UiElement* close_button_ = nullptr;

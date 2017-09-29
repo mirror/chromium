@@ -5,6 +5,7 @@
 package org.chromium.chrome.browser.vr_shell;
 
 import android.widget.FrameLayout;
+import android.view.View;
 
 import org.chromium.chrome.browser.tab.Tab;
 
@@ -34,6 +35,7 @@ public interface VrShell {
      */
     void teardown();
 
+    void setDialogView(View view, String s);
     /**
      * Sets whether we're presenting WebVR content or not.
      */

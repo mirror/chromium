@@ -118,6 +118,12 @@ static constexpr float kUnderDevelopmentNoticeVerticalOffsetM =
     0.5f * kUnderDevelopmentNoticeHeightM + kUrlBarHeight;
 static constexpr float kUnderDevelopmentNoticeRotationRad = -0.19;
 
+static constexpr float kAlertDialogHeightM = 0.2f * kUrlBarDistance;
+static constexpr float kAlertDialogWidthM = 0.64f * kUrlBarDistance;
+
+static constexpr float kAlertDialogVerticalOffsetM =
+    0.5f * kAlertDialogHeightM + kUrlBarHeight;
+
 // If the screen space bounds or the aspect ratio of the content quad change
 // beyond these thresholds we propagate the new content bounds so that the
 // content's resolution can be adjusted.

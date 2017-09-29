@@ -37,8 +37,10 @@ static jlong Init(JNIEnv* env,
   // reprojection video surface.
   RenderWidgetHostViewBase* rwhvb =
       static_cast<RenderWidgetHostViewBase*>(rfhi->GetView());
-  if (rwhvb->IsInVR())
+  if (rwhvb->IsInVR()) {
+    LOG(ERROR) << "VR We shouldn't be here!";
     return 0;
+  }
 
   WebContentsImpl* web_contents_impl = static_cast<WebContentsImpl*>(
       content::WebContents::FromRenderFrameHost(rfhi));

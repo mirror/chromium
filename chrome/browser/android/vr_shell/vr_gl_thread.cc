@@ -70,6 +70,12 @@ void VrGLThread::ContentSurfaceChanged(jobject surface) {
       base::Bind(&VrShell::ContentSurfaceChanged, weak_vr_shell_, surface));
 }
 
+void VrGLThread::UiSurfaceChanged(jobject surface) {
+  main_thread_task_runner_->PostTask(
+      FROM_HERE,
+      base::Bind(&VrShell::UiSurfaceChanged, weak_vr_shell_, surface));
+}
+
 void VrGLThread::GvrDelegateReady(gvr::ViewerType viewer_type) {
   DCHECK(OnGlThread());
   main_thread_task_runner_->PostTask(
@@ -135,6 +141,16 @@ void VrGLThread::ToggleCardboardGamepad(bool enabled) {
       base::Bind(&VrShell::ToggleCardboardGamepad, weak_vr_shell_, enabled));
 }
 
+/*=======
+void VrGLThread::OnGlInitialized(unsigned int content_texture_id,
+                                 unsigned int ui_texture_id) {
+  task_runner()->PostTask(
+      FROM_HERE,
+      base::Bind(&vr::UiSceneManager::OnGlInitialized, weak_scene_manager_,
+                 content_texture_id, ui_texture_id));
+}
+
+//>>>>>>> NOT FOR REVIEW*/
 void VrGLThread::OnUnsupportedMode(vr::UiUnsupportedMode mode) {
   DCHECK(OnGlThread());
   main_thread_task_runner_->PostTask(
@@ -249,6 +265,20 @@ void VrGLThread::SetBluetoothConnectedIndicator(bool enabled) {
       base::Bind(&vr::BrowserUiInterface::SetBluetoothConnectedIndicator,
                  browser_ui_, enabled));
 }
+
+/*void VrGLThread::SetAlertContent(long icon,
+                                 base::string16 title_text,
+                                 base::string16 toggle_text,
+                                 int b_positive,
+                                 base::string16 b_positive_text,
+                                 int b_negative,
+                                 base::string16 b_negative_text) {
+  task_runner()->PostTask(
+      FROM_HERE,
+      base::Bind(&vr::UiSceneManager::SetAlertContent, weak_scene_manager_,
+                 icon, title_text, toggle_text, b_positive, b_positive_text,
+                 b_negative, b_negative_text));
+}*/
 
 void VrGLThread::SetIsExiting() {
   DCHECK(OnMainThread());

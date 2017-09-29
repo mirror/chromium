@@ -64,6 +64,9 @@ import java.lang.ref.WeakReference;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
+import org.chromium.chrome.browser.ChromeAlertDialog;
+import org.chromium.chrome.browser.vr_shell.VrAlertDialog;
+
 /**
  * Manages interactions with the VR Shell.
  */
@@ -292,6 +295,11 @@ public class VrShellDelegate
     public static boolean isInVr() {
         if (sInstance == null) return false;
         return sInstance.mInVr;
+    }
+
+    public static void setDialogView(View view, String s) {
+        if (sInstance == null) return;
+        sInstance.mVrShell.setDialogView(view, s);
     }
 
     /**
@@ -785,6 +793,8 @@ public class VrShellDelegate
             mVrDaydreamApi.launchVrHomescreen();
             return;
         }
+
+        ChromeAlertDialog.setDialogHandler(new VrAlertDialog(mNativeVrShellDelegate));
         mExitedDueToUnsupportedMode = false;
 
         addVrViews();

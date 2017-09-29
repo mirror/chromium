@@ -131,6 +131,7 @@ void MediaStreamDevicesController::RequestPermissions(
   // Show a prompt if needed.
   bool is_asking_for_audio = controller->IsAskingForAudio();
   bool is_asking_for_video = controller->IsAskingForVideo();
+
   if (is_asking_for_audio || is_asking_for_video) {
     Profile* profile =
         Profile::FromBrowserContext(web_contents->GetBrowserContext());
@@ -174,6 +175,7 @@ void MediaStreamDevicesController::RequestPermissions(
 #endif
 
   // If we reach here, no prompt needed to be shown.
+
   controller->RequestFinishedNoPrompt();
 }
 

@@ -17,8 +17,10 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.chromium.chrome.browser.ChromeAlertDialog;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.chrome.R;
@@ -27,6 +29,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.LinkedList;
 import java.util.List;
+import android.util.Log;
 
 /**
  * Singleton instance which controls the display of modal permission dialogs. This class is lazily
@@ -46,7 +49,7 @@ public class PermissionDialogController implements AndroidPermissionRequester.Re
     @IntDef({NOT_DECIDED, ACCEPTED, CANCELED})
     private @interface Decision {}
 
-    private AlertDialog mDialog;
+    private ChromeAlertDialog mDialog;
     private SwitchCompat mSwitchView;
     private PermissionDialogDelegate mDialogDelegate;
     private List<PermissionDialogDelegate> mRequestQueue;
@@ -143,9 +146,12 @@ public class PermissionDialogController implements AndroidPermissionRequester.Re
 
         LayoutInflater inflater = LayoutInflater.from(activity);
         View view = inflater.inflate(R.layout.permission_dialog, null);
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity, R.style.AlertDialogTheme);
 
-        mDialog = builder.create();
+        // AlertDialog.Builder builder = new AlertDialog.Builder(activity,
+        // R.style.AlertDialogTheme);
+
+        mDialog = ChromeAlertDialog.GetInstance(
+                activity, R.style.AlertDialogTheme); // builder.create();
         mDialog.getDelegate().setHandleNativeActionModesEnabled(false);
         mDialog.setCanceledOnTouchOutside(false);
 
@@ -200,6 +206,7 @@ public class PermissionDialogController implements AndroidPermissionRequester.Re
             @Override
             public void onDismiss(DialogInterface dialog) {
                 // Null if dismiss initiated by C++, or for some unknown reason (crbug.com/708562).
+
                 if (mDialogDelegate == null) {
                     scheduleDisplay();
                     return;

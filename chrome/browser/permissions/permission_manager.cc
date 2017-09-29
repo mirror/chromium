@@ -337,6 +337,7 @@ int PermissionManager::RequestPermissions(
     bool user_gesture,
     const base::Callback<void(const std::vector<ContentSetting>&)>& callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
   if (permissions.empty()) {
     callback.Run(std::vector<ContentSetting>());
     return kNoPendingOperation;
@@ -345,12 +346,12 @@ int PermissionManager::RequestPermissions(
   content::WebContents* web_contents =
       content::WebContents::FromRenderFrameHost(render_frame_host);
 
-  if (vr::VrTabHelper::IsInVr(web_contents)) {
-    vr::VrTabHelper::UISuppressed(vr::UiSuppressedElement::kPermissionRequest);
-    callback.Run(
-        std::vector<ContentSetting>(permissions.size(), CONTENT_SETTING_BLOCK));
-    return kNoPendingOperation;
-  }
+  /*  if (vr::VrTabHelper::IsInVr(web_contents)) {
+      vr::VrTabHelper::UISuppressed(vr::UiSuppressedElement::kPermissionRequest);
+      callback.Run(
+          std::vector<ContentSetting>(permissions.size(),
+    CONTENT_SETTING_BLOCK)); return kNoPendingOperation;
+    }*/
 
   GURL embedding_origin = web_contents->GetLastCommittedURL().GetOrigin();
   GURL canonical_requesting_origin = GetCanonicalOrigin(requesting_origin);

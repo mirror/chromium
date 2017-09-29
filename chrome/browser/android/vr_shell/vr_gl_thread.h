@@ -42,6 +42,7 @@ class VrGLThread : public base::android::JavaHandlerThread,
 
   // vr::GlBrowserInterface implementation (GL calling to VrShell).
   void ContentSurfaceChanged(jobject surface) override;
+  void UiSurfaceChanged(jobject surface) override;
   void GvrDelegateReady(gvr::ViewerType viewer_type) override;
   void UpdateGamepadData(device::GvrGamepadData) override;
   void ProcessContentGesture(
@@ -49,6 +50,10 @@ class VrGLThread : public base::android::JavaHandlerThread,
   void ForceExitVr() override;
   void OnContentPaused(bool enabled) override;
   void ToggleCardboardGamepad(bool enabled) override;
+//=======
+//  void OnGlInitialized(unsigned int content_texture_id,
+//                       unsigned int ui_texture_id) override;
+//>>>>>>> NOT FOR REVIEW
 
   // vr::UiBrowserInterface implementation (UI calling to VrShell).
   void ExitPresent() override;
@@ -74,6 +79,13 @@ class VrGLThread : public base::android::JavaHandlerThread,
   void SetScreenCapturingIndicator(bool enabled) override;
   void SetAudioCapturingIndicator(bool enabled) override;
   void SetBluetoothConnectedIndicator(bool enabled) override;
+/*  void SetAlertContent(long icon,
+                       base::string16 title_text,
+                       base::string16 toggle_text,
+                       int b_positive,
+                       base::string16 b_positive_text,
+                       int b_negative,
+                       base::string16 b_negative_text);*/
   void SetLocationAccessIndicator(bool enabled) override;
   void SetExitVrPromptEnabled(bool enabled,
                               vr::UiUnsupportedMode reason) override;
