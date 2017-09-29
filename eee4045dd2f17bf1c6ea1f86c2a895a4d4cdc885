@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e35a3cf5_64f924d9",
+        "filename": "sandbox/mac/mojo/seatbelt_extension_token.typemap",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-09-29T16:13:36Z",
+      "side": 1,
+      "message": "Can this be put on two lines so it\u0027s 80 char?",
+      "revId": "eee4045dd2f17bf1c6ea1f86c2a895a4d4cdc885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27984ade_fd5b15dc",
+        "filename": "sandbox/mac/mojo/struct_traits_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-09-29T16:13:36Z",
+      "side": 1,
+      "message": "Why does this pass in a sandbox::SeatbeltExtensionToken address as a callback?",
+      "revId": "eee4045dd2f17bf1c6ea1f86c2a895a4d4cdc885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74d8e391_3983cb6f",
+        "filename": "sandbox/mac/seatbelt_extension.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-09-29T16:13:36Z",
+      "side": 1,
+      "message": "Can you add a comment explaining what a token is? Is it just a randomly generated string that the kernel uses to globally track the extension?",
+      "revId": "eee4045dd2f17bf1c6ea1f86c2a895a4d4cdc885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca5cf809_b0b32e99",
+        "filename": "sandbox/mac/seatbelt_extension.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-09-29T16:13:36Z",
+      "side": 1,
+      "message": "Is std::make_unique\u003c\u003e the preferred way now?",
+      "revId": "eee4045dd2f17bf1c6ea1f86c2a895a4d4cdc885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac821c6b_c246b620",
+        "filename": "sandbox/mac/seatbelt_extension_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-09-29T16:13:36Z",
+      "side": 1,
+      "message": "We need to add this to common.sb to use tokens, right?",
+      "revId": "eee4045dd2f17bf1c6ea1f86c2a895a4d4cdc885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
