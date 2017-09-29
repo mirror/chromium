@@ -16,6 +16,24 @@
       "revId": "d2bb78e9f5ce931dff002c06b33c1965f90d0692",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a55d9160_6317915e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/pointerevents/pointerevent_touch-adjustment_click_target-manual.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-09-29T15:11:01Z",
+      "side": 1,
+      "message": "The agreement was that if something is not specced and it is just a behavior in Chrome and maybe other browsers by chance we should have them in a folder called de-facto or something like that. But if it is not specced nor a common behavior between browsers not sure where it belongs. Either way the root folder of these folders (e.g. pointerevents) are for the ones that are for the tests that are aligned with the specification. Maybe if it is a Chrome only behavior letting it stay in the our layout tests is fine? foolip@ is that alright?",
+      "parentUuid": "9fc0dea9_51f82507",
+      "revId": "d2bb78e9f5ce931dff002c06b33c1965f90d0692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
