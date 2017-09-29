@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "1515b22a_c18e67d9",
+        "filename": "content/public/DEPS",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-29T20:50:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05f3729a_e60de95c",
+      "range": {
+        "startLine": 12,
+        "startChar": 45,
+        "endLine": 12,
+        "endChar": 0
+      },
+      "revId": "6e017ca7b3b3b815f7723f78e92c0f8043290ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6aa9ae73_5a662f0a",
         "filename": "content/public/browser/network_connection_tracker_unittest.cc",
         "patchSetId": 10
