@@ -235,7 +235,8 @@ RefPtr<StaticBitmapImage> GetImageWithAlphaDisposition(
 
   SkImageInfo info = GetSkImageInfo(image.get());
   info = info.makeAlphaType(alpha_type);
-  RefPtr<Uint8Array> dst_pixels = CopyImageData(image, info);
+  RefPtr<Uint8Array> dst_pixels =
+      CopyImageData(image, info.makeColorSpace(nullptr));
   if (!dst_pixels)
     return nullptr;
   return NewImageFromRaster(info, std::move(dst_pixels));
@@ -401,6 +402,7 @@ ImageBitmap::ImageBitmap(ImageElementBase* image,
                          Document* document,
                          const ImageBitmapOptions& options) {
   RefPtr<Image> input = image->CachedImage()->GetImage();
+  DCHECK(input->PaintImageForCurrentFrame().GetSkImage()->colorSpace());
   ParsedOptions parsed_options =
       ParseOptions(options, crop_rect, image->BitmapSourceSize());
   if (DstBufferSizeHasOverflow(parsed_options))
@@ -452,9 +454,10 @@ ImageBitmap::ImageBitmap(HTMLVideoElement* video,
   if (DstBufferSizeHasOverflow(parsed_options))
     return;
 
-  std::unique_ptr<ImageBuffer> buffer =
-      ImageBuffer::Create(IntSize(video->videoWidth(), video->videoHeight()),
-                          kNonOpaque, kDoNotInitializeImagePixels);
+  std::unique_ptr<ImageBuffer> buffer = ImageBuffer::Create(
+      IntSize(video->videoWidth(), video->videoHeight()), kNonOpaque,
+      kDoNotInitializeImagePixels,
+      CanvasColorParams(kSRGBCanvasColorSpace, kRGBA8CanvasPixelFormat));
   if (!buffer)
     return;
 
@@ -463,6 +466,12 @@ ImageBitmap::ImageBitmap(HTMLVideoElement* video,
       IntRect(IntPoint(), IntSize(video->videoWidth(), video->videoHeight())),
       nullptr);
   RefPtr<StaticBitmapImage> input = buffer->NewImageSnapshot();
+
+  // The DCHECK fails here because even though we are passing the sRGB color
+  // space to the ImageBuffer, the ImageBufferSurface used in ImageBuffer
+  // ignores the color space and leaves the proper conversion to XformCanvas.
+  // DCHECK(input->PaintImageForCurrentFrame().GetSkImage()->colorSpace());
+
   image_ = CropImageAndApplyColorSpaceConversion(input, parsed_options);
   if (!image_)
     return;
@@ -483,6 +492,11 @@ ImageBitmap::ImageBitmap(HTMLCanvasElement* canvas,
   DCHECK(image_input->IsStaticBitmapImage());
   RefPtr<StaticBitmapImage> input =
       static_cast<StaticBitmapImage*>(image_input.get());
+
+  // The DCHECK fails here because even when canvas is sRGB, the
+  // ImageBufferSurface ignores the color space and leaves the proper conversion
+  // to XformCanvas.
+  // DCHECK(input->PaintImageForCurrentFrame().GetSkImage()->colorSpace());
 
   ParsedOptions parsed_options = ParseOptions(
       options, crop_rect, IntSize(input->width(), input->height()));
@@ -509,6 +523,11 @@ ImageBitmap::ImageBitmap(OffscreenCanvas* offscreen_canvas,
       static_cast<StaticBitmapImage*>(raw_input.get());
   raw_input = nullptr;
 
+  // The DCHECK fails here because even when the OffscreenCanvas canvas is sRGB,
+  // the ImageBufferSurface ignores the color space and leaves the proper
+  // conversion to XformCanvas.
+  // DCHECK(input->PaintImageForCurrentFrame().GetSkImage()->colorSpace());
+
   if (status != kNormalSourceImageStatus)
     return;
 
@@ -534,11 +553,12 @@ ImageBitmap::ImageBitmap(const void* pixel_data,
       SkImageInfo::Make(width, height, color_params.GetSkColorType(),
                         is_image_bitmap_premultiplied ? kPremul_SkAlphaType
                                                       : kUnpremul_SkAlphaType,
-                        color_params.GetSkColorSpaceForSkSurfaces());
+                        color_params.GetSkColorSpace());
   SkPixmap pixmap(info, pixel_data, info.bytesPerPixel() * width);
   image_ = StaticBitmapImage::Create(SkImage::MakeRasterCopy(pixmap));
   if (!image_)
     return;
+  DCHECK(image_->PaintImageForCurrentFrame().GetSkImage()->colorSpace());
   image_->SetOriginClean(is_image_bitmap_origin_clean);
 }
 
@@ -605,15 +625,9 @@ ImageBitmap::ImageBitmap(ImageData* data,
   SkImageInfo info =
       SkImageInfo::Make(cropped_data->width(), cropped_data->height(),
                         color_params.GetSkColorType(), kUnpremul_SkAlphaType,
-                        color_params.GetSkColorSpaceForSkSurfaces());
-
-  // If we are in color correct rendering mode but we only color correct to
-  // SRGB, we don't do any color conversion when transferring the pixels from
-  // ImageData to ImageBitmap to avoid double gamma correction. We tag the
-  // image with SRGB color space later in ApplyColorSpaceConversion().
-  if (!RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled())
-    info = info.makeColorSpace(nullptr);
+                        color_params.GetSkColorSpace());
   image_ = NewImageFromRaster(info, std::move(image_pixels));
+  DCHECK(image_->PaintImageForCurrentFrame().GetSkImage()->colorSpace());
 
   // swizzle back
   SwizzleImageDataIfNeeded(cropped_data);
@@ -639,6 +653,10 @@ ImageBitmap::ImageBitmap(ImageBitmap* bitmap,
   RefPtr<StaticBitmapImage> input = bitmap->BitmapImage();
   if (!input)
     return;
+  // The DCHECK fails here as the presence of color space in the input
+  // ImageBitmap depends on how it is created and if its source was allowing
+  // that for SRGB.
+  // DCHECK(input->PaintImageForCurrentFrame().GetSkImage()->colorSpace());
   ParsedOptions parsed_options =
       ParseOptions(options, crop_rect, input->Size());
   if (DstBufferSizeHasOverflow(parsed_options))
@@ -655,6 +673,10 @@ ImageBitmap::ImageBitmap(ImageBitmap* bitmap,
 ImageBitmap::ImageBitmap(RefPtr<StaticBitmapImage> image,
                          Optional<IntRect> crop_rect,
                          const ImageBitmapOptions& options) {
+  // The DCHECK fails here as the presence of color space in the input
+  // StaticBitmapImage depends on how it is created and if its source was
+  // allowing that for SRGB.
+  // DCHECK(image->PaintImageForCurrentFrame().GetSkImage()->colorSpace());
   bool origin_clean = image->OriginClean();
   ParsedOptions parsed_options =
       ParseOptions(options, crop_rect, image->Size());
@@ -670,6 +692,10 @@ ImageBitmap::ImageBitmap(RefPtr<StaticBitmapImage> image,
 }
 
 ImageBitmap::ImageBitmap(RefPtr<StaticBitmapImage> image) {
+  // The DCHECK fails here as the presence of color space in the input
+  // StaticBitmapImage depends on how it is created and if its source was
+  // allowing that for SRGB.
+  // DCHECK(image->PaintImageForCurrentFrame().GetSkImage()->colorSpace());
   image_ = std::move(image);
 }
 
