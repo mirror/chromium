@@ -349,6 +349,11 @@ Workspace.UISourceCode = class extends Common.Object {
       if (!saveResponse.success)
         return;
       this._contentCommitted(this.workingCopy(), true);
+
+      var interceptionFilesMapSetting = Common.settings.createSetting('network_file_server.interception-files-map', {});
+      var interceptionFilesMap = interceptionFilesMapSetting.get();
+      interceptionFilesMap[this._url] = saveResponse.fileSystemPath;
+      interceptionFilesMapSetting.set(interceptionFilesMap);
     });
     Workspace.fileManager.close(this._url);
   }

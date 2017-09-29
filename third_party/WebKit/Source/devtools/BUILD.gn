@@ -402,6 +402,7 @@ all_devtools_files = [
   "front_end/network/RequestTimingView.js",
   "front_end/network/ResourceWebSocketFrameView.js",
   "front_end/network/webSocketFrameView.css",
+  "front_end/network_file_server/Interceptor.js",
   "front_end/network_log/HAREntry.js",
   "front_end/network_log/module.json",
   "front_end/network_log/NetworkLog.js",
