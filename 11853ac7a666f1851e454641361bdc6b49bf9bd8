@@ -70,6 +70,24 @@
       "revId": "11853ac7a666f1851e454641361bdc6b49bf9bd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "831f8083_3b5be9bf",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 1194,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-29T18:51:48Z",
+      "side": 1,
+      "message": "\u003e Could you explain what the flake risks are? Bots sometimes being unable to fetch hashes from the CWS?\nBots/tests don\u0027t (and shouldn\u0027t) fetch anything from CWS. The tests that rely on content verification provides verified_contests.json in them, e.g.\nhttps://cs.chromium.org/chromium/src/chrome/test/data/extensions/content_verifier/content_script.crx\n\n\u003e \n\u003e \u003e Maybe we can add a check in CrxInstaller somehow to make sure we do not install crx with content verification turned on in tests, unless specifically requested?\n\u003e \u003e We can do a sweep on existing tests this way by running them on bots, but we also need to add some test only sanity check so new tests being added  are guarded.\n\u003e \n\u003e Newly added tests would fail with a meaningful error message:\n\u003e DLOG(WARNING) \u003c\u003c \"Disabling extension \" \u003c\u003c extension_id \u003c\u003c \" (\u0027\"\n\u003e               \u003c\u003c extension-\u003ename()\n\u003e               \u003c\u003c \"\u0027) due to content verification failure. In tests you \"\n\u003e               \u003c\u003c \"might want to use a ScopedIgnoreContentVerifierForTest \"\n\u003e               \u003c\u003c \"instance to prevent this.\";\nCorrect me if I\u0027m wrong: the worry here is that a test might have already passed before we get to this part, and in some runs they would fail b/c we\u0027d hit this before the test finishes. This is due to the async nature of content-verification.\n\n\u003e \n\u003e This won\u0027t happen for tests which are based on ExtensionBrowserTest if https://chromium-review.googlesource.com/c/chromium/src/+/692718 lands.\n\u003e \n\u003e Should I just put all of these into a single CL?\n\u003e * fieldtrial_testing_config (this CL)\n\u003e * Ignore content verifier by default (https://chromium-review.googlesource.com/c/chromium/src/+/692718)\n\u003e * Content verifier uses IsFromStore (https://chromium-review.googlesource.com/c/chromium/src/+/677403)\n\nI\u0027d suggest 1 and 2 together (after making sure there isn\u0027t any flakiness introduced) and 3 separately.",
+      "parentUuid": "aeafe57a_eae7fabe",
+      "revId": "11853ac7a666f1851e454641361bdc6b49bf9bd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
