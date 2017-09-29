@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9dc5b41c_575550f9",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/selection-events.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-29T02:07:08Z",
+      "side": 1,
+      "message": "optional nit: s/function(t)/() \u003d\u003e/\nSince we don\u0027t use |t|.",
+      "revId": "b33492756c52b05045439f6e7dc7ea8c2d6a2fcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "804c721b_db8b5fe1",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/selection-events.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-29T02:07:08Z",
+      "side": 1,
+      "message": "optional nit: s/function(e)/(e) \u003d\u003e/",
+      "revId": "b33492756c52b05045439f6e7dc7ea8c2d6a2fcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80d5c8e4_7f5a431c",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/selection-events.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-29T02:07:08Z",
+      "side": 1,
+      "message": "nit: s/\u003d\u003d/\u003d\u003d\u003d/",
+      "revId": "b33492756c52b05045439f6e7dc7ea8c2d6a2fcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
