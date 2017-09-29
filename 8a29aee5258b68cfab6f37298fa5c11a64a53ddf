@@ -95,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "7131bae3_5d058263",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1275,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-29T17:23:59Z",
+      "side": 1,
+      "message": "The raster queue internally checks whether a tile needs raster, which is some variation of !IsReadyToDraw(), so this function is equivalent to checking every single tile that matches the requested type whether it is ready to draw. I\u0027m not really sure what the name AreRasterQueueTilesReadyToDraw is meant to convey? What are the raster queue tiles (as contrasted with all tiles or required tiles for a given type)?",
+      "parentUuid": "9f734069_1d6f9678",
+      "range": {
+        "startLine": 1275,
+        "startChar": 19,
+        "endLine": 1275,
+        "endChar": 32
+      },
+      "revId": "8a29aee5258b68cfab6f37298fa5c11a64a53ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18bd19bc_9d7b3f46",
         "filename": "cc/tiles/tile_manager.cc",
         "patchSetId": 2
@@ -147,6 +171,24 @@
       "side": 1,
       "message": "This path is only reached from CheckAndIssueSignals, before issuing so I think we\u0027re OK. I do wonder if \"issue_signals\" is the right name for the var though, as we don\u0027t issue anything here? Maybe \"update_signals\"?",
       "parentUuid": "10d3c6a5_1d2f37ba",
+      "revId": "8a29aee5258b68cfab6f37298fa5c11a64a53ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f83ba51b_90a23b97",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1576,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-29T17:23:59Z",
+      "side": 1,
+      "message": "In that case we should break this function into two (named appropriately for what they do), instead of having a bool that earlies out half way through. AFAICT the callsites all specify a literal value, so they can either call or not call the second function out of the two.",
+      "parentUuid": "b408ba84_62bc0891",
       "revId": "8a29aee5258b68cfab6f37298fa5c11a64a53ddf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
