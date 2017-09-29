@@ -16,6 +16,24 @@
       "revId": "5fbec9e02ea15afb5339f427cac94c9760ec6590",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f69f6681_8ea7e71b",
+        "filename": "device/usb/public/interfaces/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-09-29T21:00:49Z",
+      "side": 1,
+      "message": "They are not automatically copied if the build changes them. These files specifically:\n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/external/wpt/resources/chromium/\n\nNot sure if we want to sustain this kind of practice indefinitely, but that\u0027s what we have for now, only for USB bindings :)",
+      "parentUuid": "9cbbdb85_175b381b",
+      "revId": "5fbec9e02ea15afb5339f427cac94c9760ec6590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
