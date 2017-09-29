@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4848f82a_75272abe",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-29T22:54:12Z",
+      "side": 1,
+      "message": "what if there were no targets?",
+      "range": {
+        "startLine": 237,
+        "startChar": 44,
+        "endLine": 237,
+        "endChar": 56
+      },
+      "revId": "a07adafe6bfcf1ea0ec8aa04b5c8fd11ebccdbf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eda36842_cb9109ae",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-29T22:54:12Z",
+      "side": 1,
+      "message": "[\u0027-object\u003d\u0027 + binary_path for binary_path in binary_paths]",
+      "range": {
+        "startLine": 238,
+        "startChar": 41,
+        "endLine": 238,
+        "endChar": 42
+      },
+      "revId": "a07adafe6bfcf1ea0ec8aa04b5c8fd11ebccdbf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85bbe5f5_6daf8f06",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-29T22:54:12Z",
+      "side": 1,
+      "message": "This looks like code duplication",
+      "range": {
+        "startLine": 305,
+        "startChar": 23,
+        "endLine": 305,
+        "endChar": 24
+      },
+      "revId": "a07adafe6bfcf1ea0ec8aa04b5c8fd11ebccdbf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46a58a80_bf254db7",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-29T22:54:12Z",
+      "side": 1,
+      "message": "profile_raw_paths ?",
+      "range": {
+        "startLine": 399,
+        "startChar": 2,
+        "endLine": 399,
+        "endChar": 15
+      },
+      "revId": "a07adafe6bfcf1ea0ec8aa04b5c8fd11ebccdbf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e748beef_32eb2c45",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-29T22:54:12Z",
+      "side": 1,
+      "message": "I don\u0027t understand what does this variable mean. Can you think of a better name?",
+      "range": {
+        "startLine": 403,
+        "startChar": 4,
+        "endLine": 403,
+        "endChar": 17
+      },
+      "revId": "a07adafe6bfcf1ea0ec8aa04b5c8fd11ebccdbf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
