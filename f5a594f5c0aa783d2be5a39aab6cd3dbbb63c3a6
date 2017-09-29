@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd383c02_dee3d891",
+        "filename": "components/history/content/browser/web_contents_top_sites_observer.cc",
+        "patchSetId": 43
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-29T00:06:43Z",
+      "side": 1,
+      "message": "I think we also only care about load_details.is_main_frame.",
+      "range": {
+        "startLine": 44,
+        "startChar": 6,
+        "endLine": 44,
+        "endChar": 23
+      },
+      "revId": "f5a594f5c0aa783d2be5a39aab6cd3dbbb63c3a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "347b3bae_cbf0c5ff",
+        "filename": "components/history/core/browser/top_sites_impl.cc",
+        "patchSetId": 43
+      },
+      "lineNbr": 919,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-29T00:06:43Z",
+      "side": 1,
+      "message": "If we get here it means some of the top sites are no longer valid. Delaying the query means it\u0027s possible for the user to quickly create a new tab page and see stale results. How come you want to delay this?",
+      "range": {
+        "startLine": 919,
+        "startChar": 2,
+        "endLine": 919,
+        "endChar": 17
+      },
+      "revId": "f5a594f5c0aa783d2be5a39aab6cd3dbbb63c3a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
