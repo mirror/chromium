@@ -352,6 +352,24 @@
     },
     {
       "key": {
+        "uuid": "e2cd7f6e_4c98d614",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContents.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-29T05:19:50Z",
+      "side": 1,
+      "message": "\u003e Looks like it\u0027s a convenience version of addPossiblyUnsafeJavascriptInterface. Formerly it was public, and its usage is verified in tests(JavaBridgeBasicTest). No need to keep it now, but let me know you prefer removing it.\n\nremove it",
+      "parentUuid": "afb66f01_6dbd2335",
+      "revId": "a19e1600e7024fd94adcd8d6c9eec53cfdb7a566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8db54171_2eb05f84",
         "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContents.java",
         "patchSetId": 30
