@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "eed2973f_8198158c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 878,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-29T20:49:38Z",
+      "side": 1,
+      "message": "As discussed offline, NativePageFactory doesn\u0027t really provide the api we want here. We can attack this issue later.",
+      "parentUuid": "60891096_10bbd992",
+      "range": {
+        "startLine": 874,
+        "startChar": 8,
+        "endLine": 878,
+        "endChar": 0
+      },
+      "revId": "431bd0123be8b9047534a294379b9e4cd3d95d8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b9c045d_a0a14657",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
         "patchSetId": 1
@@ -141,6 +165,29 @@
       "revId": "431bd0123be8b9047534a294379b9e4cd3d95d8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0bdcbf36_c6d1a35c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-29T20:49:38Z",
+      "side": 1,
+      "message": "nit: possible npe from Uri.parse?",
+      "range": {
+        "startLine": 881,
+        "startChar": 12,
+        "endLine": 881,
+        "endChar": 62
+      },
+      "revId": "431bd0123be8b9047534a294379b9e4cd3d95d8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
