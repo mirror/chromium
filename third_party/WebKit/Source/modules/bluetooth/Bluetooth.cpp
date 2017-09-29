@@ -23,6 +23,7 @@
 #include "modules/bluetooth/BluetoothUUID.h"
 #include "modules/bluetooth/RequestDeviceOptions.h"
 #include "public/platform/Platform.h"
+#include "public/platform/WebFeaturePolicyFeature.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace blink {
@@ -34,6 +35,8 @@ namespace {
 const size_t kMaxDeviceNameLength = 248;
 const char kDeviceNameTooLong[] =
     "A device name can't be longer than 248 bytes.";
+const char kFeaturePolicyBlocked[] =
+    "Access to the Web Bluetooth API is disallowed by feature policy.";
 }  // namespace
 
 static void CanonicalizeFilter(
@@ -163,6 +166,16 @@ ScriptPromise Bluetooth::requestDevice(ScriptState* script_state,
       "https://github.com/WebBluetoothCG/web-bluetooth/blob/gh-pages/"
       "implementation-status.md"));
 #endif
+
+  // If bluetooth is disallowed by feature policy, reject promise with a
+  // NotSupported error and abort these steps.
+  if (context->IsDocument() &&
+      !ToDocument(context)->GetFrame()->IsFeatureEnabled(
+          WebFeaturePolicyFeature::kBluetooth)) {
+    return ScriptPromise::RejectWithDOMException(
+        script_state,
+        DOMException::Create(kSecurityError, kFeaturePolicyBlocked));
+  }
 
   // If the Relevant settings object is not a secure context, reject promise
   // with a SecurityError and abort these steps.

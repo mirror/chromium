@@ -175,6 +175,9 @@ DOMException* BluetoothError::CreateDOMException(
                 "UUID. https://goo.gl/4NeimX");
       MAP_ERROR(REQUEST_DEVICE_FROM_CROSS_ORIGIN_IFRAME, kSecurityError,
                 "requestDevice() called from cross-origin iframe.");
+      MAP_ERROR(REQUEST_DEVICE_BLOCKED_BY_POLICY, kSecurityError,
+                "Access to the WebBluetooth API is disallowed by feature "
+                "policy.");
 
 #undef MAP_ERROR
   }

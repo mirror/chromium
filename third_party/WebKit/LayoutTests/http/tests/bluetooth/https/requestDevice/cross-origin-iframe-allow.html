@@ -13,9 +13,7 @@
           iframe.contentWindow.postMessage('Go', '*');
         });
       } else {
-        assert_equals(messageEvent.data, 'SecurityError: Access to the Web ' +
-                                         'Bluetooth API is disallowed by ' +
-                                         'feature policy.');
+        assert_equals(messageEvent.data, 'Success');
         test.done();
       }
     });
@@ -23,8 +21,9 @@
       .then(() => {
         let iframe = document.createElement('iframe');
         iframe.src = 'https://localhost:8443/js-test-resources/bluetooth/requestDevice-in-iframe.html';
+        iframe.allow = "bluetooth";
         document.body.appendChild(iframe);
       });
-  }, 'Request device from a unique origin. Should reject with SecurityError.');
+  }, 'Request device from a different origin with allow=bluetooth. Should succeed.');
   </script>
 </body>

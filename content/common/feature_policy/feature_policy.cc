@@ -206,7 +206,9 @@ void FeaturePolicy::AddContainerPolicy(
 // features (in spec, implemented, etc).
 const FeaturePolicy::FeatureList& FeaturePolicy::GetDefaultFeatureList() {
   CR_DEFINE_STATIC_LOCAL(FeatureList, default_feature_list,
-                         ({{blink::WebFeaturePolicyFeature::kCamera,
+                         ({{blink::WebFeaturePolicyFeature::kBluetooth,
+                            FeaturePolicy::FeatureDefault::EnableForSelf},
+                           {blink::WebFeaturePolicyFeature::kCamera,
                             FeaturePolicy::FeatureDefault::EnableForSelf},
                            {blink::WebFeaturePolicyFeature::kEme,
                             FeaturePolicy::FeatureDefault::EnableForSelf},
