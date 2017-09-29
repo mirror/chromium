@@ -15,6 +15,32 @@
 #include "ui/events/event_constants.h"
 
 namespace ash {
+namespace {
+
+void PopulateInternalTouchDeviceIds(std::unordered_set<int>& touch_device_ids) {
+  DCHECK(ui::DeviceDataManager::HasInstance());
+  DCHECK(ui::DeviceDataManager::GetInstance()
+             ->AreTouchscreenTargetDisplaysValid());
+
+  // Clear any previous touch ids that are stored.
+  touch_device_ids.clear();
+
+  // If the device has no internal displays, then it can have no touch devices
+  // associated to the internal display.
+  if (!display::Display::HasInternalDisplay())
+    return;
+
+  int64_t internal_display_id = display::Display::InternalDisplayId();
+
+  const std::vector<ui::TouchscreenDevice>& touchscreen_devices =
+      ui::DeviceDataManager::GetInstance()->GetTouchscreenDevices();
+
+  for (const auto& touchscreen_device : touchscreen_devices)
+    if (touchscreen_device.target_display_id == internal_display_id)
+      touch_device_ids.insert(touchscreen_device.id);
+}
+
+}  // namespace
 
 // Time interval after a touch event during which all other touch events are
 // ignored during calibration.
@@ -51,6 +77,10 @@ void TouchCalibratorController::StartCalibration(
 
   // Set the touch device id as invalid so it can be set during calibration.
   touch_device_id_ = ui::InputDevice::kInvalidId;
+
+  // Populate the ids for touch devices that are associated with the internal
+  // display.
+  PopulateInternalTouchDeviceIds(internal_touch_device_ids_);
 
   // If this is a native touch calibration, then initialize the UX for it.
   if (state_ == CalibrationState::kNativeCalibration) {
@@ -105,6 +135,13 @@ void TouchCalibratorController::StopCalibrationAndResetParams() {
 void TouchCalibratorController::CompleteCalibration(
     const CalibrationPointPairQuad& pairs,
     const gfx::Size& display_size) {
+  if (touch_device_id_ == ui::InputDevice::kInvalidId ||
+      internal_touch_device_ids_.count(touch_device_id_) == 0UL) {
+    LOG(ERROR) << "Touchdevice associated with the internal display cannot be "
+               << "calibrated.";
+    return;
+  }
+
   bool did_find_touch_device = false;
   uint32_t touch_device_identifier =
       display::TouchCalibrationData::GetFallbackTouchDeviceIdentifier();
@@ -169,6 +206,12 @@ void TouchCalibratorController::OnTouchEvent(ui::TouchEvent* touch) {
   if (base::Time::Now() - last_touch_timestamp_ < kTouchIntervalThreshold)
     return;
   last_touch_timestamp_ = base::Time::Now();
+
+  // If the touch is originating from a touch device associated with the
+  // internal display, then do nothing. We do not want to modify internal touch
+  // devices.
+  if (internal_touch_device_ids_.count(touch->source_device_id()))
+    return;
 
   if (touch_device_id_ == ui::InputDevice::kInvalidId)
     touch_device_id_ = touch->source_device_id();

@@ -1046,6 +1046,19 @@ void DisplayManager::SetTouchCalibrationData(
     const TouchCalibrationData::CalibrationPointPairQuad& point_pair_quad,
     const gfx::Size& display_bounds,
     uint32_t touch_device_identifier) {
+  if (Display::HasInternalDisplay()) {
+    // Make sure we do not modify any touch calibration for internal display.
+    if (display_id == Display::InternalDisplayId())
+      return;
+
+    // If the touch device identified by |touch_device_identifier| is associated
+    // with the internal display then we cannot proceed with the calibration.
+    const ManagedDisplayInfo& internal_display_info =
+        GetDisplayInfo(Display::InternalDisplayId());
+    if (internal_display_info.HasTouchDevice(touch_device_identifier))
+      return;
+  }
+
   bool update = false;
   TouchCalibrationData calibration_data(point_pair_quad, display_bounds);
 

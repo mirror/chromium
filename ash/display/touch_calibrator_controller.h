@@ -6,6 +6,7 @@
 #define ASH_DISPLAY_TOUCH_CALIBRATOR_TOUCH_CALIBRATOR_CONTROLLER_H_
 
 #include <map>
+#include <unordered_set>
 
 #include "ash/ash_export.h"
 #include "ash/display/window_tree_host_manager.h"
@@ -111,6 +112,9 @@ class ASH_EXPORT TouchCalibratorController
   // This is populated during calibration, based on the source id of the device
   // the events are originating from.
   int touch_device_id_ = ui::InputDevice::kInvalidId;
+
+  // The ids for touch devices that are associated with the internal display.
+  std::unordered_set<int> internal_touch_device_ids_;
 
   // An array of Calibration point pairs. This stores all the 4 display and
   // touch input point pairs that will be used for calibration.
