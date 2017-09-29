@@ -39,6 +39,19 @@ AnimationWorkletThread::AnimationWorkletThread(
 
 AnimationWorkletThread::~AnimationWorkletThread() {}
 
+WebThread* AnimationWorkletThread::GetSharedBackingThread() {
+  DCHECK(IsMainThread());
+  auto* instance = WorkletThreadHolder<AnimationWorkletThread>::GetInstance();
+  if (!instance)
+    return nullptr;
+  return &(instance->GetThread()->BackingThread().PlatformThread());
+}
+
+void AnimationWorkletThread::CreateSharedBackingThreadForTest() {
+  WorkletThreadHolder<AnimationWorkletThread>::CreateForTest(
+      "AnimationWorkletThread");
+}
+
 WorkerOrWorkletGlobalScope* AnimationWorkletThread::CreateWorkerGlobalScope(
     std::unique_ptr<GlobalScopeCreationParams> creation_params) {
   TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("animation-worklet"),
@@ -88,11 +101,6 @@ void AnimationWorkletThread::EnsureSharedBackingThread() {
 void AnimationWorkletThread::ClearSharedBackingThread() {
   DCHECK(IsMainThread());
   WorkletThreadHolder<AnimationWorkletThread>::ClearInstance();
-}
-
-void AnimationWorkletThread::CreateSharedBackingThreadForTest() {
-  WorkletThreadHolder<AnimationWorkletThread>::CreateForTest(
-      Platform::Current()->CompositorThread());
 }
 
 }  // namespace blink
