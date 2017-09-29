@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de3e1de9_16d97541",
+        "filename": "net/socket/client_socket_pool_base_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3703,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-29T15:01:58Z",
+      "side": 1,
+      "message": "Should we check that it doesn\u0027t change motivation on existing sockets, too?\n\nMaybe Preconnect 1 socket with HttpRequestInfo::NORMAL_MOTIVATION, preconnect 2 with  HttpRequestInfo::PRECONNECT_MOTIVATED, and preconnect 3 with HttpRequestInfo::OMNIBOX_MOTIVATED, and make sure that when you grab three sockets from the pool, you get one with each motivation?",
+      "range": {
+        "startLine": 3703,
+        "startChar": 7,
+        "endLine": 3703,
+        "endChar": 31
+      },
+      "revId": "e28f3ac8972881817c9da20ed91b799691a72a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
