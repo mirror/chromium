@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "d98c8c8b_f50d3eba",
+        "filename": "third_party/WebKit/Source/core/exported/WebAssociatedURLLoaderImplTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-09-29T11:57:22Z",
+      "side": 1,
+      "message": "I think what we need to do is to include CrossThreadCopier.h from public/web/WebAssociatedURLLoaderOptions.h.\nWe can do that in INSIDE_BLINK.\n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/public/web/DEPS?q\u003dpublic/web/DEPS\u0026sq\u003dpackage:chromium\u0026l\u003d1",
+      "parentUuid": "ec60a9a1_8166c67c",
+      "revId": "9436b4067239b65dd3dc0965ad1d6b6ed43985ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18a3dc42_072ad176",
         "filename": "third_party/WebKit/Source/core/exported/WebAssociatedURLLoaderImplTest.cpp",
         "patchSetId": 6
@@ -142,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "0f76df6d_dc069687",
+        "filename": "third_party/WebKit/Source/core/exported/WebAssociatedURLLoaderImplTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-09-29T11:57:22Z",
+      "side": 1,
+      "message": "It\u0027s OK but then please do that in a separate CL.",
+      "parentUuid": "e9fc909f_be869b70",
+      "revId": "9436b4067239b65dd3dc0965ad1d6b6ed43985ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b447b8bc_97508699",
         "filename": "third_party/WebKit/Source/core/exported/WebAssociatedURLLoaderImplTest.cpp",
         "patchSetId": 6
@@ -206,6 +242,24 @@
       "side": 1,
       "message": "I do not need to keep a reference though. Do we always need to use RefPtr?",
       "parentUuid": "123f8bbd_fec39cf2",
+      "revId": "9436b4067239b65dd3dc0965ad1d6b6ed43985ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68c23543_05dd2013",
+        "filename": "third_party/WebKit/Source/core/exported/WebAssociatedURLLoaderImplTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-09-29T11:57:22Z",
+      "side": 1,
+      "message": "Yes I do think having RefPtr is better. If you want to store a raw pointer to a refcounted object, you need to explain why it\u0027s safe.",
+      "parentUuid": "6e5175a0_b2f3f29b",
       "revId": "9436b4067239b65dd3dc0965ad1d6b6ed43985ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -399,6 +453,24 @@
     },
     {
       "key": {
+        "uuid": "2575b7f8_9d660dfa",
+        "filename": "third_party/WebKit/Source/core/exported/WebAssociatedURLLoaderImplTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-09-29T11:57:22Z",
+      "side": 1,
+      "message": "I see, thanks.",
+      "parentUuid": "4713adc6_ecf41227",
+      "revId": "9436b4067239b65dd3dc0965ad1d6b6ed43985ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f6a2846_32bd656f",
         "filename": "third_party/WebKit/Source/core/exported/WebAssociatedURLLoaderImplTest.cpp",
         "patchSetId": 6
@@ -498,6 +570,24 @@
       "side": 1,
       "message": "Then all subclasses would need to unnecessarily write stub member functions. I do not mind that but it seems unnecessary.",
       "parentUuid": "ec2120a2_a2f4948d",
+      "revId": "9436b4067239b65dd3dc0965ad1d6b6ed43985ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e60f10cb_339d69a8",
+        "filename": "third_party/WebKit/Source/core/frame/FrameTestHelpers.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-09-29T11:57:22Z",
+      "side": 1,
+      "message": "When we add a new virtual function to a base class we need to care about all subclasses. I think having pure virtual functions is a good habit to ensure it. So I want them to be pure.",
+      "parentUuid": "ece3d898_953cdb21",
       "revId": "9436b4067239b65dd3dc0965ad1d6b6ed43985ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
