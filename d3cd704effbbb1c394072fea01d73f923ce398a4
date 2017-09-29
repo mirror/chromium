@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "41c9ef7a_a3ba831a",
+        "filename": "ui/gfx/image/image.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-29T15:50:11Z",
+      "side": 1,
+      "message": "iOS is already fully converted to ARC. This annotation can only be attached to a function/method that returns an Objective-C object but this file (ui/gfx/image/image.h) is included from pure C++ files (for example ui/gfx/image/image_unittest_util.cc) that forward declare UIImage as \"class UIImage;\" (see ui/gfx/native_widget_types.h).\n\nSo the check need to stay there, otherwise the compilation fails with the following error:\n\nIn file included from ../../ui/gfx/image/image_unittest_util.cc:8:\nIn file included from ../../ui/gfx/image/image_unittest_util.h:13:\n../../ui/gfx/image/image.h:165:47: error: \u0027ns_returns_retained\u0027 attribute only applies to functions that return an Objective-C object [-Werror,-Wignored-attributes]\n  UIImage* CopyUIImage() const __attribute__((ns_returns_retained));\n                                              ^\n\nSo the #if/#else has to stay to support the fact that image.h can be included from .cc and .mm files. This is not a problem because the annotation is not part of the function type and is only used to generate correct code at the call-site.\n\nAnother option is to not add the annotation, create a image_ios.mm file, move the implementation of CopyUIImage() there and compile the file with ARC (but then the function will not return a retained object, so it will do the same thing as ToUIImage).\n\nOr a last alternative is to just remove CopyUIImage().",
+      "parentUuid": "0726fafa_533690bc",
+      "revId": "d3cd704effbbb1c394072fea01d73f923ce398a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e959a125_4e5eac84",
         "filename": "ui/gfx/image/image.h",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-29T15:29:31Z",
       "side": 1,
       "message": "Why is this needed on macOS? We don\u0027t use ARC anywhere.",
+      "revId": "d3cd704effbbb1c394072fea01d73f923ce398a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b533288b_10bb89f5",
+        "filename": "ui/gfx/image/image.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-29T15:50:11Z",
+      "side": 1,
+      "message": "It is not necessary, but if we ever decide to use ARC for macOS, then it will become necessary. Until then, it does not cause any harm (it is ignored if the file is not compiled with ARC).",
+      "parentUuid": "e959a125_4e5eac84",
       "revId": "d3cd704effbbb1c394072fea01d73f923ce398a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
