@@ -92,6 +92,7 @@ class CookieStoreIOSTest : public testing::Test {
         kTestCookieURL3("http://foo.google.com"),
         kTestCookieURL4("http://bar.google.com/bar"),
         backend_(new TestPersistentCookieStore) {
+    ClearCookies();
     std::unique_ptr<NSHTTPSystemCookieStore> system_store(
         base::MakeUnique<NSHTTPSystemCookieStore>());
     // |system_store_| doesn't own the NSHTTPSystemCookieStore object, the

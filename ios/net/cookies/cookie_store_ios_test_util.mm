@@ -132,6 +132,7 @@ void SetCookie(const std::string& cookie_line,
   options.set_include_httponly();
   store->SetCookieWithOptionsAsync(url, cookie_line, options,
                                    base::Bind(&IgnoreBoolean));
+  base::RunLoop().RunUntilIdle();
   net::CookieStoreIOS::NotifySystemCookiesChanged();
   // Wait until the flush is posted.
   base::RunLoop().RunUntilIdle();
