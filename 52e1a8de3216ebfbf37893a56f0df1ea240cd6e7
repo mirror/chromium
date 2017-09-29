@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "596bdd4e_093384e9",
+        "filename": "third_party/WebKit/Source/platform/blob/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-29T05:31:58Z",
+      "side": 1,
+      "message": "BlobBytesProvider was missed?",
+      "revId": "52e1a8de3216ebfbf37893a56f0df1ea240cd6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5cd1919_478dcb90",
+        "filename": "third_party/WebKit/Source/platform/network/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-29T05:31:58Z",
+      "side": 1,
+      "message": "Do you know how this line work?\nI\u0027m actually not sure if this empty assignment is really needed, and I didn\u0027t put it in platform/loader/BUILD.gn.\n\nditto here and there.",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 49
+      },
+      "revId": "52e1a8de3216ebfbf37893a56f0df1ea240cd6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47f8e218_33c79b08",
+        "filename": "third_party/WebKit/Source/platform/network/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-29T05:31:58Z",
+      "side": 1,
+      "message": "this line seems to be redundant.\n\"test_support\" will be used both webkit_unit_tests, and blink_unit_tests (\u003d\u003d \"unit_tests\" here)",
+      "range": {
+        "startLine": 108,
+        "startChar": 4,
+        "endLine": 108,
+        "endChar": 30
+      },
+      "revId": "52e1a8de3216ebfbf37893a56f0df1ea240cd6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
