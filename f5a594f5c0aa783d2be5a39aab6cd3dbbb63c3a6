@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cbe103ef_d470cf6a",
+        "filename": "components/history/content/browser/web_contents_top_sites_observer.cc",
+        "patchSetId": 43
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-09-29T00:53:49Z",
+      "side": 1,
+      "message": "You are right. I\u0027ve made this method conditional on load_details.is_main_frame in the new patch set. Thanks.",
+      "parentUuid": "cd383c02_dee3d891",
+      "range": {
+        "startLine": 44,
+        "startChar": 6,
+        "endLine": 44,
+        "endChar": 23
+      },
+      "revId": "f5a594f5c0aa783d2be5a39aab6cd3dbbb63c3a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "347b3bae_cbf0c5ff",
         "filename": "components/history/core/browser/top_sites_impl.cc",
         "patchSetId": 43
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-29T00:06:43Z",
       "side": 1,
       "message": "If we get here it means some of the top sites are no longer valid. Delaying the query means it\u0027s possible for the user to quickly create a new tab page and see stale results. How come you want to delay this?",
+      "range": {
+        "startLine": 919,
+        "startChar": 2,
+        "endLine": 919,
+        "endChar": 17
+      },
+      "revId": "f5a594f5c0aa783d2be5a39aab6cd3dbbb63c3a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32cdfa74_d11b7f3b",
+        "filename": "components/history/core/browser/top_sites_impl.cc",
+        "patchSetId": 43
+      },
+      "lineNbr": 919,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-09-29T00:53:49Z",
+      "side": 1,
+      "message": "There is no delay here. What SyncWithHistory does is 1) stop the timer, and 2) StartQueryForMostVisited.\n\nI think stopping the timer is needed here, as this ensures that there won\u0027t be another redundant query if there is no user activity after this.",
+      "parentUuid": "347b3bae_cbf0c5ff",
       "range": {
         "startLine": 919,
         "startChar": 2,
