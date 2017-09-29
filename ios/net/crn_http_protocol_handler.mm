@@ -27,7 +27,6 @@
 #import "ios/net/http_protocol_logging.h"
 #include "ios/net/nsurlrequest_util.h"
 #import "ios/net/protocol_handler_util.h"
-#include "ios/net/request_tracker.h"
 #include "net/base/auth.h"
 #include "net/base/elements_upload_data_stream.h"
 #include "net/base/io_buffer.h"
@@ -59,9 +58,6 @@ const int kIOBufferMaxSize = 16 * kIOBufferMinSize;  // 1MB
 
 // Global instance of the HTTPProtocolHandlerDelegate.
 net::HTTPProtocolHandlerDelegate* g_protocol_handler_delegate = nullptr;
-
-// Empty callback.
-void DoNothing(bool flag) {}
 
 }  // namespace
 
@@ -208,8 +204,6 @@ class HttpProtocolHandlerCore
   // thread.
   URLRequest* net_request_;
 
-  base::WeakPtr<RequestTracker> tracker_;
-
   DISALLOW_COPY_AND_ASSIGN(HttpProtocolHandlerCore);
 };
 
@@ -253,8 +247,6 @@ void HttpProtocolHandlerCore::HandleStreamEvent(NSStream* stream,
         DCHECK(post_data_readers_.empty());
       }
       net_request_->Start();
-      if (tracker_)
-        tracker_->StartRequest(net_request_);
       break;
     case NSStreamEventHasBytesAvailable: {
       NSInteger length;
@@ -347,8 +339,6 @@ void HttpProtocolHandlerCore::OnReceivedRedirect(
   DVLOG(2) << "Redirect, to client:";
   LogNSURLRequest(request_);
 #endif  // !defined(NDEBUG)
-  if (tracker_)
-    tracker_->StopRedirectedRequest(request);
 
   [client_ wasRedirectedToRequest:request_
                     nativeRequest:request
@@ -366,19 +356,7 @@ void HttpProtocolHandlerCore::OnAuthRequired(URLRequest* request,
                                              AuthChallengeInfo* auth_info) {
   DCHECK(thread_checker_.CalledOnValidThread());
   // A request with no tab ID should not hit HTTP authentication.
-  if (tracker_) {
-    // UIWebView does not handle authentication, so there is no point in calling
-    // the protocol method didReceiveAuthenticationChallenge.
-    // Instead, clients may handle proxy auth or display a UI to handle the
-    // challenge.
-    // Pass a weak reference, to avoid retain cycles.
-    network_client::AuthCallback callback =
-        base::Bind(&HttpProtocolHandlerCore::CompleteAuthentication,
-                   base::Unretained(this));
-    [client_ didRecieveAuthChallenge:auth_info
-                       nativeRequest:*request
-                            callback:callback];
-  } else if (net_request_ != nullptr) {
+  if (net_request_ != nullptr) {
     net_request_->CancelAuth();
   }
 }
@@ -437,12 +415,8 @@ void HttpProtocolHandlerCore::OnSSLCertificateError(URLRequest* request,
   DCHECK(thread_checker_.CalledOnValidThread());
 
   if (fatal) {
-    if (tracker_) {
-      tracker_->OnSSLCertificateError(request, ssl_info, false,
-                                      base::Bind(&DoNothing));
-    }
     CancelAfterSSLError();  // High security host do not tolerate any issue.
-  } else if (!tracker_) {
+  } else {
     // No tracker, this is a request outside the context of a tab. There is no
     // way to present anything to the user so only allow trivial errors.
     // See ssl_cert_error_handler upstream.
@@ -450,13 +424,6 @@ void HttpProtocolHandlerCore::OnSSLCertificateError(URLRequest* request,
       ContinueAfterSSLError();
     else
       CancelAfterSSLError();
-  } else {
-    // The tracker will decide, eventually asking the user, and will invoke the
-    // callback.
-    RequestTracker::SSLCallback callback =
-        base::Bind(&HttpProtocolHandlerCore::SSLErrorCallback, this);
-    DCHECK(tracker_);
-    tracker_->OnSSLCertificateError(request, ssl_info, !fatal, callback);
   }
 }
 
@@ -473,18 +440,6 @@ void HttpProtocolHandlerCore::OnResponseStarted(URLRequest* request,
     return;
   }
 
-  if (tracker_ && IsCertStatusError(request->ssl_info().cert_status) &&
-      !request->context()->GetNetworkSessionParams()->
-          ignore_certificate_errors) {
-    // The certificate policy cache is captured here because SSL errors do not
-    // always trigger OnSSLCertificateError (this is the case when a page comes
-    // from the HTTP cache).
-    RequestTracker::SSLCallback callback =
-        base::Bind(&HttpProtocolHandlerCore::HostStateCallback, this);
-    tracker_->CaptureCertificatePolicyCache(request, callback);
-    return;
-  }
-
   StartReading();
 }
 
@@ -498,13 +453,6 @@ void HttpProtocolHandlerCore::StartReading() {
   DVLOG(2) << "To client:";
   LogNSURLResponse(response);
 #endif  // !defined(NDEBUG)
-
-  if (tracker_) {
-    tracker_->CaptureHeaders(net_request_);
-    long long expectedContentLength = [response expectedContentLength];
-    if (expectedContentLength > 0)
-      tracker_->CaptureExpectedLength(net_request_, expectedContentLength);
-  }
 
   // Don't call any function on the response from now on, as the client may be
   // using it and the object is not re-entrant.
@@ -552,9 +500,6 @@ void HttpProtocolHandlerCore::OnReadCompleted(URLRequest* request,
     AllocateReadBuffer(bytes_read);
     bytes_read = request->Read(read_buffer_wrapper_.get(), read_buffer_size_);
   }
-
-  if (tracker_)
-    tracker_->CaptureReceivedBytes(request, total_bytes_read);
 
   if (bytes_read == net::OK) {
     // If there is nothing more to read.
@@ -610,26 +555,24 @@ void HttpProtocolHandlerCore::SetLoadFlags() {
 
   // If a RequestTracker is defined, always use normal load, otherwise
   // respect the cache policy from the request.
-  if (!tracker_) {
-    switch ([request_ cachePolicy]) {
-      case NSURLRequestReloadIgnoringLocalAndRemoteCacheData:
-        load_flags |= LOAD_BYPASS_CACHE;
-      case NSURLRequestReloadIgnoringLocalCacheData:
-        load_flags |= LOAD_DISABLE_CACHE;
-        break;
-      case NSURLRequestReturnCacheDataElseLoad:
-        load_flags |= LOAD_SKIP_CACHE_VALIDATION;
-        break;
-      case NSURLRequestReturnCacheDataDontLoad:
-        load_flags |= LOAD_ONLY_FROM_CACHE | LOAD_SKIP_CACHE_VALIDATION;
-        break;
-      case NSURLRequestReloadRevalidatingCacheData:
-        load_flags |= LOAD_VALIDATE_CACHE;
-        break;
-      case NSURLRequestUseProtocolCachePolicy:
-        // Do nothing, normal load.
-        break;
-    }
+  switch ([request_ cachePolicy]) {
+    case NSURLRequestReloadIgnoringLocalAndRemoteCacheData:
+      load_flags |= LOAD_BYPASS_CACHE;
+    case NSURLRequestReloadIgnoringLocalCacheData:
+      load_flags |= LOAD_DISABLE_CACHE;
+      break;
+    case NSURLRequestReturnCacheDataElseLoad:
+      load_flags |= LOAD_SKIP_CACHE_VALIDATION;
+      break;
+    case NSURLRequestReturnCacheDataDontLoad:
+      load_flags |= LOAD_ONLY_FROM_CACHE | LOAD_SKIP_CACHE_VALIDATION;
+      break;
+    case NSURLRequestReloadRevalidatingCacheData:
+      load_flags |= LOAD_VALIDATE_CACHE;
+      break;
+    case NSURLRequestUseProtocolCachePolicy:
+      // Do nothing, normal load.
+      break;
   }
   net_request_->SetLoadFlags(load_flags);
 }
@@ -640,15 +583,6 @@ void HttpProtocolHandlerCore::Start(id<CRNNetworkClientProtocol> base_client) {
   DCHECK(base_client);
   client_ = base_client;
   GURL url = GURLWithNSURL([request_ URL]);
-
-  bool valid_tracker = RequestTracker::GetRequestTracker(request_, &tracker_);
-  if (!valid_tracker) {
-    // The request is associated with a tracker that does not exist, cancel it.
-    // NSURLErrorCancelled avoids triggering any error page.
-    [client_ didFailWithNSErrorCode:NSURLErrorCancelled
-                       netErrorCode:ERR_ABORTED];
-    return;
-  }
 
   // Now that all of the network clients are set up, if there was an error with
   // the URL, it can be raised and all of the clients will have a chance to
@@ -662,9 +596,8 @@ void HttpProtocolHandlerCore::Start(id<CRNNetworkClientProtocol> base_client) {
   }
 
   const URLRequestContext* context =
-      tracker_ ? tracker_->GetRequestContext()
-               : g_protocol_handler_delegate->GetDefaultURLRequestContext()
-                     ->GetURLRequestContext();
+      g_protocol_handler_delegate->GetDefaultURLRequestContext()
+          ->GetURLRequestContext();
   DCHECK(context);
 
   net_request_ =
@@ -707,8 +640,6 @@ void HttpProtocolHandlerCore::Start(id<CRNNetworkClientProtocol> base_client) {
   }
 
   net_request_->Start();
-  if (tracker_)
-    tracker_->StartRequest(net_request_);
 }
 
 void HttpProtocolHandlerCore::Cancel() {
@@ -723,8 +654,6 @@ void HttpProtocolHandlerCore::Cancel() {
 
 void HttpProtocolHandlerCore::StopNetRequest() {
   DCHECK(thread_checker_.CalledOnValidThread());
-  if (tracker_)
-    tracker_->StopRequest(net_request_);
   delete net_request_;
   net_request_ = nullptr;
   if (stream_delegate_.get())
