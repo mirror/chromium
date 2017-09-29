@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3094dcbf_b0bc4e2b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T23:18:16Z",
+      "side": 1,
+      "message": "The ApplicationContext can be retrieved from ContextUtils#getApplicationContext(). I think this should be the activity context, though, rather than the application context. You can just pass in \"this\"",
+      "range": {
+        "startLine": 498,
+        "startChar": 20,
+        "endLine": 498,
+        "endChar": 43
+      },
+      "revId": "5083263ffab0ada41f6bcf439bcac216a7644fe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca33d308_214b4d5a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/privacy/ClearBrowsingDataPreferences.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T23:18:16Z",
+      "side": 1,
+      "message": "Sorry I wasn\u0027t super clear about this. I just meant that the new code block should move down here, e.g.\n\nAppIndexingReporter.getInstance().clearHistory();\n\nif (options.contains(DialogOption.CLEAR_COOKIES_AND_SITE_DATA)) {\n    SurveyController.getInstance().clearCache(ContextUtils.getApplicationContext());\n}",
+      "range": {
+        "startLine": 348,
+        "startChar": 16,
+        "endLine": 348,
+        "endChar": 74
+      },
+      "revId": "5083263ffab0ada41f6bcf439bcac216a7644fe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19ebebb1_c57d4505",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T23:18:16Z",
+      "side": 1,
+      "message": "nit: Let\u0027s do an early return at the top of the method:\n\nif (context \u003d\u003d null || !doesUserQualifyForSurvey()) return;\n\n\nIt\u0027s technically OK if the tab is null now as long as it\u0027s not null when we\u0027re tying to show the survey.",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 47,
+        "endChar": 75
+      },
+      "revId": "5083263ffab0ada41f6bcf439bcac216a7644fe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ef7aad8_36e40dc2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T23:18:16Z",
+      "side": 1,
+      "message": "nit: add a blank line above and after this early return",
+      "range": {
+        "startLine": 55,
+        "startChar": 12,
+        "endLine": 55,
+        "endChar": 50
+      },
+      "revId": "5083263ffab0ada41f6bcf439bcac216a7644fe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2b2ef6c_71961328",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T23:18:16Z",
+      "side": 1,
+      "message": "nit: Let\u0027s early return here too to avoid some indenting",
+      "range": {
+        "startLine": 81,
+        "startChar": 9,
+        "endLine": 81,
+        "endChar": 58
+      },
+      "revId": "5083263ffab0ada41f6bcf439bcac216a7644fe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18c3b45b_c46cc825",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/SurveyController.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T23:18:16Z",
+      "side": 1,
+      "message": ".. and can be shown via a call to {@link #showSurveyIfAvaible()}.",
+      "range": {
+        "startLine": 15,
+        "startChar": 34,
+        "endLine": 15,
+        "endChar": 41
+      },
+      "revId": "5083263ffab0ada41f6bcf439bcac216a7644fe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b95ff259_dec28318",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/SurveyController.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T23:18:16Z",
+      "side": 1,
+      "message": "Let\u0027s add a second sentence that says something like. \"If no survey is available, the callback will not be called.\"",
+      "range": {
+        "startLine": 49,
+        "startChar": 40,
+        "endLine": 49,
+        "endChar": 86
+      },
+      "revId": "5083263ffab0ada41f6bcf439bcac216a7644fe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7558aaa3_124f880c",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 14
+      },
+      "lineNbr": 2656,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T23:18:16Z",
+      "side": 1,
+      "message": "Have we consulted Shimi on strings? She provides fantastic descriptions along with the string text.",
+      "range": {
+        "startLine": 2656,
+        "startChar": 46,
+        "endLine": 2656,
+        "endChar": 117
+      },
+      "revId": "5083263ffab0ada41f6bcf439bcac216a7644fe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
