@@ -474,6 +474,17 @@ TEST(LayerImplTest, PerspectiveTransformHasReasonableScale) {
     ASSERT_TRUE(layer->ScreenSpaceTransform().HasPerspective());
     EXPECT_FLOAT_EQ(127.f, layer->GetIdealContentsScale());
   }
+  // Test case from crbug.com/766021.
+  {
+    gfx::Transform transform(-0.9397, -0.7019, 0.2796, 2383.4521,   // row 1
+                             -0.0038, 0.0785, 1.0613, 1876.4553,    // row 2
+                             -0.0835, 0.9081, -0.4105, -2208.3035,  // row 3
+                             0.0001, -0.0008, 0.0003, 2.8435);      // row 4
+    layer->draw_properties().screen_space_transform = transform;
+
+    ASSERT_TRUE(layer->ScreenSpaceTransform().HasPerspective());
+    EXPECT_FLOAT_EQ(1.f, layer->GetIdealContentsScale());
+  }
 }
 
 class LayerImplScrollTest : public testing::Test {
