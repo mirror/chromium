@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "1879e3b5_419fdb08",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-29T09:11:53Z",
+      "side": 1,
+      "message": "I think it\u0027s nice to have proper end-to-end tests, and here it seems fairly easy to do. Anyway, a question for another day!",
+      "parentUuid": "bcf8a798_16ce2ea6",
+      "range": {
+        "startLine": 724,
+        "startChar": 41,
+        "endLine": 724,
+        "endChar": 0
+      },
+      "revId": "b08c38c7f9632229a72e8de5f857fea83d13acef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a391723_64afe168",
         "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
         "patchSetId": 3
@@ -125,6 +149,24 @@
       "side": 1,
       "message": "\u003e Isn\u0027t this just beautiful :D\n\nI think I\u0027ve seen other factories provide a \"SetInstanceForTesting()\" method (or something like that), which is also an option. I just copied this from the OGB test.",
       "parentUuid": "41c1a7f0_8ef807ec",
+      "revId": "b08c38c7f9632229a72e8de5f857fea83d13acef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9d7babc5_d4729121",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-29T09:11:53Z",
+      "side": 1,
+      "message": "FTR, I think this is the proper way to do it, I was just marveling once more at the succinctness and sheer beauty.\nThe problem with SetInstanceForTesting is that it can\u0027t possibly happen at the correct time: You can only call it either before the Profile even exists, which doesn\u0027t work for most cases, or after the regular service has already been constructed, which tends to break things in fun and interesting ways.",
+      "parentUuid": "dc8b1f76_eadc0049",
       "revId": "b08c38c7f9632229a72e8de5f857fea83d13acef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
