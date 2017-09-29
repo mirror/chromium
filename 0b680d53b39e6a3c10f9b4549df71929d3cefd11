@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "382cc61f_99f0016b",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-29T19:06:54Z",
+      "side": 1,
+      "message": "Again, we don\u0027t actually need this change, right?  If so, please revert",
+      "range": {
+        "startLine": 176,
+        "startChar": 32,
+        "endLine": 176,
+        "endChar": 40
+      },
+      "revId": "0b680d53b39e6a3c10f9b4549df71929d3cefd11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
