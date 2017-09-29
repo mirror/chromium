@@ -137,6 +137,12 @@ class MODULES_EXPORT IDBObjectStore final
       WebIDBTaskType = kWebIDBTaskTypeNormal,
       IDBRequest::AsyncTraceState = IDBRequest::AsyncTraceState());
 
+  // Used by InspectorIndexedDBAgent:
+  IDBRequest* deleteFunction(
+      ScriptState*,
+      IDBKeyRange*,
+      IDBRequest::AsyncTraceState = IDBRequest::AsyncTraceState());
+
   void MarkDeleted();
   bool IsDeleted() const { return deleted_; }
 
