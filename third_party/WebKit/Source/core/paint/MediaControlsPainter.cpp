@@ -85,7 +85,7 @@ static Image* PlatformResource(const char* name) {
     g_media_control_image_map = new MediaControlImageMap();
   if (Image* image = g_media_control_image_map->at(name))
     return image;
-  if (Image* image = Image::LoadPlatformResource(name).LeakRef()) {
+  if (Image* image = LeakRef(Image::LoadPlatformResource(name))) {
     g_media_control_image_map->Set(name, image);
     return image;
   }
