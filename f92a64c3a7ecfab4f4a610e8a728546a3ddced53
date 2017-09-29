@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db51d4f7_07f53b23",
+        "filename": "ash/display/touch_calibrator_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-29T23:35:50Z",
+      "side": 1,
+      "message": "do you need this change?",
+      "revId": "f92a64c3a7ecfab4f4a610e8a728546a3ddced53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc985258_cda36a37",
+        "filename": "ui/display/manager/chromeos/touch_transform_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-29T23:35:50Z",
+      "side": 1,
+      "message": "how about defining GenerateTouchDeviceIdentifier(TouchscreenDevoice\u0026) ?",
+      "revId": "f92a64c3a7ecfab4f4a610e8a728546a3ddced53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e7dd07f_7e6398e5",
+        "filename": "ui/display/manager/chromeos/touch_transform_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-29T23:35:50Z",
+      "side": 1,
+      "message": "emplace",
+      "revId": "f92a64c3a7ecfab4f4a610e8a728546a3ddced53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3e936d4_5c2cbe8a",
+        "filename": "ui/display/manager/managed_display_info.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-29T23:35:50Z",
+      "side": 1,
+      "message": "since the size is small, std::set is more efficient.",
+      "revId": "f92a64c3a7ecfab4f4a610e8a728546a3ddced53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
