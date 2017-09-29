@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1daace69_a65481c2",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 5807,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-29T19:14:16Z",
+      "side": 1,
+      "message": "Drop \"Page\" - you are actually making it work for each frame. I\u0027m alsi adding per-frame detection in https://chromium-review.googlesource.com/c/chromium/src/+/682999, but I can merge my changes post you CL.",
+      "revId": "47aaacd9c1a3cf415ff8b67cdde40d57f261268e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "651280be_7c2db71c",
+        "filename": "third_party/WebKit/Source/core/loader/PageIdlenessDetector.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-29T19:14:16Z",
+      "side": 1,
+      "message": "You can\u0027t make this logic work without WillSendRequest. Currently, any number of requests can be in flight and you will report network idle.",
+      "revId": "47aaacd9c1a3cf415ff8b67cdde40d57f261268e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
