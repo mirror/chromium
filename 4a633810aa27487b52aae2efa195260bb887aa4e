@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9215096b_e6657726",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1303,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-29T01:07:56Z",
+      "side": 1,
+      "message": "Add\n  string_builder.Append(\u0027\\n\u0027);\nbecause WTFLogAlways() appends a line break to the specified message.",
+      "revId": "4a633810aa27487b52aae2efa195260bb887aa4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
