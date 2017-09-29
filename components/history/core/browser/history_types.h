@@ -297,6 +297,9 @@ struct MostVisitedURL {
   MostVisitedURL(const GURL& url,
                  const base::string16& title,
                  base::Time last_forced_time = base::Time());
+  MostVisitedURL(const GURL& url,
+                 const base::string16& title,
+                 const RedirectList& redirects_from);
   MostVisitedURL(const MostVisitedURL& other);
   MostVisitedURL(MostVisitedURL&& other) noexcept;
   ~MostVisitedURL();
@@ -310,6 +313,8 @@ struct MostVisitedURL {
   base::Time last_forced_time;
 
   RedirectList redirects;
+
+  void InitRedirects(const RedirectList& redirects_from);
 
   MostVisitedURL& operator=(const MostVisitedURL&);
 

@@ -145,7 +145,7 @@ class ExpireHistoryTest : public testing::Test, public HistoryBackendNotifier {
     TopSitesImpl::RegisterPrefs(pref_service_->registry());
 
     expirer_.SetDatabases(main_db_.get(), thumb_db_.get());
-    top_sites_ = new TopSitesImpl(pref_service_.get(), nullptr,
+    top_sites_ = new TopSitesImpl(pref_service_.get(), nullptr, nullptr,
                                   PrepopulatedPageList(),
                                   base::Bind(MockCanAddURLToHistory));
     WaitTopSitesLoadedObserver wait_top_sites_observer(top_sites_);
