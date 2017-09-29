@@ -1,0 +1,158 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5328f9f_e6c4e59b",
+        "filename": "chrome_elf/nt_registry/nt_registry.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 811,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-29T08:23:44Z",
+      "side": 1,
+      "message": "can this be zero now that you\u0027re using data() below? it\u0027ll avoid a tiny alloc before the real one, right?",
+      "range": {
+        "startLine": 811,
+        "startChar": 22,
+        "endLine": 811,
+        "endChar": 23
+      },
+      "revId": "ee5c90bc5008926fbaa03339aecc59d2ce68d0b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47ebc038_1d18cc39",
+        "filename": "chrome_elf/nt_registry/nt_registry.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1107,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-29T08:23:44Z",
+      "side": 1,
+      "message": "the \"!out_subjey_count\" part of this feels like it should be a debug assert (programmer error). wdyt? checking for !key and returning false makes sense since it could simplify use of the api -- no need to check the result of a create/open.\n\n(same comment in QueryRegSubkey)",
+      "range": {
+        "startLine": 1107,
+        "startChar": 15,
+        "endLine": 1107,
+        "endChar": 31
+      },
+      "revId": "ee5c90bc5008926fbaa03339aecc59d2ce68d0b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74fb1a53_bb2a754c",
+        "filename": "chrome_elf/nt_registry/nt_registry_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-29T08:23:44Z",
+      "side": 1,
+      "message": "compare the objects directly! let Google Test be magical!\n  EXPECT_EQ(get_sz, sz_val);\n:-)",
+      "revId": "ee5c90bc5008926fbaa03339aecc59d2ce68d0b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47566248_bba0f15b",
+        "filename": "chrome_elf/nt_registry/nt_registry_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-29T08:23:44Z",
+      "side": 1,
+      "message": "nit:\n    ADD_FAILURE();\n(elsewhere, too)\n\non second thought, how about putting the results of the query into a different variable and comparing the containers directly rather than going piecemeal like this:\n  EXPECT_EQ(multisz_val_queried, multi_sz_val);\ni\u0027m pretty sure Google Test will emit the vectors in a pretty way if they\u0027re not equal.\n\nmany of the expectations below can be simplified in a similar way.",
+      "revId": "ee5c90bc5008926fbaa03339aecc59d2ce68d0b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7ee7f15_0db59a03",
+        "filename": "chrome_elf/nt_registry/nt_registry_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-29T08:23:44Z",
+      "side": 1,
+      "message": "maybe EXPECT_EQ(multisz_value, std::wstring()); so that a failure will print the string? might make it easier to diagnose without using a debugger.",
+      "revId": "ee5c90bc5008926fbaa03339aecc59d2ce68d0b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "496a439e_5ca4e0bd",
+        "filename": "chrome_elf/nt_registry/nt_registry_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-29T08:23:44Z",
+      "side": 1,
+      "message": "API_ENUMERATION -\u003e ApiEnumeration or something",
+      "range": {
+        "startLine": 579,
+        "startChar": 23,
+        "endLine": 579,
+        "endChar": 38
+      },
+      "revId": "ee5c90bc5008926fbaa03339aecc59d2ce68d0b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67d8d07d_42be0d96",
+        "filename": "chrome_elf/nt_registry/nt_registry_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-29T08:23:44Z",
+      "side": 1,
+      "message": "nit: \"static constexpr wchar_t kKey[] \u003d ...\"\n(likewise below)",
+      "revId": "ee5c90bc5008926fbaa03339aecc59d2ce68d0b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "256735bb_0e50b71b",
+        "filename": "chrome_elf/nt_registry/nt_registry_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-29T08:23:44Z",
+      "side": 1,
+      "message": "nit: \"static constexpr const wchar_t* kChecknames[] \u003d ...",
+      "revId": "ee5c90bc5008926fbaa03339aecc59d2ce68d0b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
