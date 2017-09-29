@@ -65,25 +65,27 @@ cr.define('object_fieldset', function() {
       Object.keys(this.value).forEach(function(propName) {
         var name = this.nameMap_[propName] || propName;
         var value = this.value[propName];
-        var newField = document.createElement('div');
-        newField.classList.add('status');
+        if (value) {
+          var newField = document.createElement('div');
+          newField.classList.add('status');
 
-        var nameDiv = document.createElement('div');
-        nameDiv.textContent = name + ':';
-        newField.appendChild(nameDiv);
+          var nameDiv = document.createElement('div');
+          nameDiv.textContent = name + ':';
+          newField.appendChild(nameDiv);
 
-        var valueDiv = document.createElement('div');
-        valueDiv.dataset.field = propName;
+          var valueDiv = document.createElement('div');
+          valueDiv.dataset.field = propName;
 
-        if (typeof(value) === 'boolean') {
-          valueDiv.classList.add('toggle-status');
-          valueDiv.classList.toggle('checked', value);
-        } else {
-          valueDiv.textContent = String(value);
+          if (typeof(value) === 'boolean') {
+            valueDiv.classList.add('toggle-status');
+            valueDiv.classList.toggle('checked', value);
+          } else {
+            valueDiv.textContent = String(value);
+          }
+
+          newField.appendChild(valueDiv);
+          this.appendChild(newField);
         }
-
-        newField.appendChild(valueDiv);
-        this.appendChild(newField);
       }, this);
     },
   };
