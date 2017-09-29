@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f07f600d_027bf72c",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-29T16:54:24Z",
+      "side": 1,
+      "message": "Python has constant for .. in path. Don\u0027t remember the name of it, but it should be a part of os module.",
+      "range": {
+        "startLine": 43,
+        "startChar": 19,
+        "endLine": 43,
+        "endChar": 23
+      },
+      "revId": "d4f18a17960d3b4fe92c5b6da0427de1fe90a089",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7629e75_01a92d41",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-29T16:54:24Z",
+      "side": 1,
+      "message": "Per Python Style Guide avoid executing code outside of main:\nhttps://engdoc.corp.google.com/eng/doc/devguide/py/styleguide.shtml?cl\u003dhead#main",
+      "range": {
+        "startLine": 43,
+        "startChar": 29,
+        "endLine": 43,
+        "endChar": 31
+      },
+      "revId": "d4f18a17960d3b4fe92c5b6da0427de1fe90a089",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5a4c05b_1a39abbf",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-29T16:54:24Z",
+      "side": 1,
+      "message": "It\u0027s not immediately clear from the code what _entries is",
+      "range": {
+        "startLine": 90,
+        "startChar": 9,
+        "endLine": 90,
+        "endChar": 17
+      },
+      "revId": "d4f18a17960d3b4fe92c5b6da0427de1fe90a089",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6298976f_54e657b7",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-29T16:54:24Z",
+      "side": 1,
+      "message": "Use os.path API for appending extension",
+      "range": {
+        "startLine": 430,
+        "startChar": 11,
+        "endLine": 430,
+        "endChar": 20
+      },
+      "revId": "d4f18a17960d3b4fe92c5b6da0427de1fe90a089",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
