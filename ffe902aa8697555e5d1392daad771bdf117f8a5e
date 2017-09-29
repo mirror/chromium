@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "58c7fafc_dbb1683a",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1144419
+      },
+      "writtenOn": "2017-09-29T15:33:32Z",
+      "side": 1,
+      "message": "Can\u0027t think of any such situation. Migration required sign out and sign in, so during a session we don\u0027t want to change the value.",
+      "parentUuid": "ef8dd691_5262382c",
+      "range": {
+        "startLine": 45,
+        "startChar": 54,
+        "endLine": 46,
+        "endChar": 41
+      },
+      "revId": "ffe902aa8697555e5d1392daad771bdf117f8a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a7604fd_b21833a7",
         "filename": "chrome/browser/chromeos/arc/arc_util.cc",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "ffe902aa8697555e5d1392daad771bdf117f8a5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44bf9ee2_a515123d",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1144419
+      },
+      "writtenOn": "2017-09-29T15:33:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a7604fd_b21833a7",
+      "revId": "ffe902aa8697555e5d1392daad771bdf117f8a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "63964f66_9308454f",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1144419
+      },
+      "writtenOn": "2017-09-29T15:33:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47d8532d_32d9793c",
+      "revId": "ffe902aa8697555e5d1392daad771bdf117f8a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "718f7922_095b570f",
         "filename": "chrome/browser/chromeos/arc/arc_util.cc",
         "patchSetId": 3
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "7c033d9d_aae18af5",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1144419
+      },
+      "writtenOn": "2017-09-29T15:33:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "718f7922_095b570f",
+      "revId": "ffe902aa8697555e5d1392daad771bdf117f8a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85d54a12_5e931b7d",
         "filename": "chrome/browser/chromeos/arc/arc_util.cc",
         "patchSetId": 3
@@ -90,6 +168,24 @@
       "revId": "ffe902aa8697555e5d1392daad771bdf117f8a5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8967b03c_55dd2111",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1144419
+      },
+      "writtenOn": "2017-09-29T15:33:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85d54a12_5e931b7d",
+      "revId": "ffe902aa8697555e5d1392daad771bdf117f8a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
