@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2416be8_b96b8fdd",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1170419
+      },
+      "writtenOn": "2017-09-29T17:13:06Z",
+      "side": 1,
+      "message": "delete the space?",
+      "range": {
+        "startLine": 118,
+        "startChar": 7,
+        "endLine": 118,
+        "endChar": 8
+      },
+      "revId": "95e55612ceba3ffcced99cfefd8365f27b820733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
