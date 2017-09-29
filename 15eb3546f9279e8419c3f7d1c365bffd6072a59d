@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "248f7db8_a588a148",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-29T00:04:37Z",
+      "side": 1,
+      "message": "Neat! Is it available in RHEL 7?",
+      "revId": "15eb3546f9279e8419c3f7d1c365bffd6072a59d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e11c4e2_8a5749c5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-29T00:04:37Z",
+      "side": 1,
+      "message": "Not in RHEL 7 though.",
+      "revId": "15eb3546f9279e8419c3f7d1c365bffd6072a59d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
