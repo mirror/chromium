@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "6e236b66_28296f3e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/workspace/FileManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-09-29T20:45:41Z",
+      "side": 1,
+      "message": "nit: we could rather return !Promise\u003c?{fileSystemPath: (string|undefined)}\u003e and expect it to resolve to null when cancaled and to {fileSystemPath: undefined} (or just {}) for older versions.",
+      "revId": "7b99e418bf7c885f41e8c68394c546f0b28819e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b45a48ee_02e0bcfe",
         "filename": "third_party/WebKit/Source/devtools/front_end/workspace/FileManager.js",
         "patchSetId": 3
@@ -42,6 +59,23 @@
         "endLine": 85,
         "endChar": 27
       },
+      "revId": "7b99e418bf7c885f41e8c68394c546f0b28819e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61339e59_45c2cc08",
+        "filename": "third_party/WebKit/Source/devtools/front_end/workspace/FileManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-09-29T20:45:41Z",
+      "side": 1,
+      "message": "Is anyone even using these? Let\u0027s nuke them!",
       "revId": "7b99e418bf7c885f41e8c68394c546f0b28819e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
