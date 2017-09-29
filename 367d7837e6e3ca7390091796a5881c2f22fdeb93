@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34c63182_42e39fce",
+        "filename": "chrome/test/chromedriver/chrome/mobile_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002882
+      },
+      "writtenOn": "2017-09-29T00:10:30Z",
+      "side": 1,
+      "message": "I feel a better solution is to fix the script that generates the mobile device list in kMobileDevices, and ensure that a Chrome version is added there. After re-generating the list, no change here is needed.\n\nWDYT?",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 71
+      },
+      "revId": "367d7837e6e3ca7390091796a5881c2f22fdeb93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
