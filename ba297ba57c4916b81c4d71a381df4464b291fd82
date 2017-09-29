@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "713b4f25_f1f19ac0",
+        "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T23:27:31Z",
+      "side": 1,
+      "message": "Do you want to avoid resampling when possible? I.e. can we construct a fuschia audio stream at any sample rate and it\u0027ll handle resampling? We do this on CrOS and Android for power saving reasons. If so you should check the input params and use that sample rate.\n\nDitto on buffer size. If fuschia doesn\u0027t care, prefer the input params one (if it\u0027s valid). See what AudioManagerWin does here. You may want to carry over other values (like effects) from the input params if they\u0027re valid too.\n\nThere\u0027s also a GetUserBufferSize() override that may be useful to plumb if you want.",
+      "revId": "ba297ba57c4916b81c4d71a381df4464b291fd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92e2540c_d1e2b9d3",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T23:27:31Z",
+      "side": 1,
+      "message": "Just due to the nature of scheduling this may happen under load I suspect. To tie this explicitly to suspend resume you\u0027d need to list to base::PowerObserver callbacks. But see my comment below to if we even need this.",
+      "revId": "ba297ba57c4916b81c4d71a381df4464b291fd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "254041d1_fa4bde3e",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T23:27:31Z",
+      "side": 1,
+      "message": "This can also be affected by internal buffering on the OS side, so you may need to call it for every callback (it\u0027s what we do on most other platforms).",
+      "revId": "ba297ba57c4916b81c4d71a381df4464b291fd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24f40eb5_afbb1b4d",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T23:27:31Z",
+      "side": 1,
+      "message": "Is this even really needed after my suggestion below?",
+      "revId": "ba297ba57c4916b81c4d71a381df4464b291fd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b69667ba_0fed3971",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T23:27:31Z",
+      "side": 1,
+      "message": "Why add buffer duration here?",
+      "revId": "ba297ba57c4916b81c4d71a381df4464b291fd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "554cf5b7_e19270e1",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T23:27:31Z",
+      "side": 1,
+      "message": "Ditto, why are you adding in buffer duration here?",
+      "revId": "ba297ba57c4916b81c4d71a381df4464b291fd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27d0e248_eff428d4",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T23:27:31Z",
+      "side": 1,
+      "message": "I think instead of GetCurrentStreamTime() you just want base::TimeTicks::Now() here. It\u0027s meant to be the time at which delay is calculated. I.e., if data is provided now, you can expect it to be played at timestamp + delay.",
+      "revId": "ba297ba57c4916b81c4d71a381df4464b291fd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9637fde9_8c45ae21",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T23:27:31Z",
+      "side": 1,
+      "message": "Probably can delete and just have the DCHECK_EQ below.",
+      "revId": "ba297ba57c4916b81c4d71a381df4464b291fd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8af4195_d502855e",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T23:27:31Z",
+      "side": 1,
+      "message": "DCHECK_EQ",
+      "revId": "ba297ba57c4916b81c4d71a381df4464b291fd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce6c1a99_5b6a4ae4",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T23:27:31Z",
+      "side": 1,
+      "message": "With the removal of start time, using an AudioTimestampHelper will be sufficient here.",
+      "revId": "ba297ba57c4916b81c4d71a381df4464b291fd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4987bae0_17639225",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T23:27:31Z",
+      "side": 1,
+      "message": "Why not just Now() + BufferDuration? Or something like Now() + BufferDuration *.75 if you want to try to ensure this doesn\u0027t glitch.",
+      "revId": "ba297ba57c4916b81c4d71a381df4464b291fd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a8e2d53_c7512615",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T23:27:31Z",
+      "side": 1,
+      "message": "Can this be private? The caller is actually AudioManager I thought?",
+      "revId": "ba297ba57c4916b81c4d71a381df4464b291fd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -691,6 +691,24 @@
     },
     {
       "key": {
+        "uuid": "3838f593_48ae46e3",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T23:27:31Z",
+      "side": 1,
+      "message": "So long as you\u0027re aware, I agree you don\u0027t need it now. Render threads actually run at realtime audio priority as well where possible:\n\nhttps://cs.chromium.org/chromium/src/media/audio/audio_device_thread.cc?l\u003d14\n\nYes, by default Pulse won\u0027t do much special besides having a thread which is dedicated to this type of work (versus one that acts instead as a message pump and control channel). There are options to change this, but I\u0027m unfamiliar with how they work.\n\nAll other platforms increase the priority to some extent though. macOS and CrOS do this implicitly for the generated thread while there are some additional avrt calls on Windows. The lack of this for PulseAudio is one reason why it has the largest minimum buffer size of all platforms.",
+      "parentUuid": "7a10e2b6_522a6880",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec9994b8_48fce016",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
         "patchSetId": 3
@@ -1096,6 +1114,24 @@
     },
     {
       "key": {
+        "uuid": "ce3a3421_8ce8e1df",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T23:27:31Z",
+      "side": 1,
+      "message": "You should probably write silence if it returns zero or let the output driver do that implicitly. Otherwise just scheduling another call will trigger the blocking render/browser synchronization mechanism. See AudioSyncReader.",
+      "parentUuid": "6f4e5297_fa0a8913",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1940e558_6744babe",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
         "patchSetId": 3
@@ -1237,6 +1273,24 @@
     },
     {
       "key": {
+        "uuid": "d84202bb_da568904",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T23:27:31Z",
+      "side": 1,
+      "message": "Per miu@ (base/time owner) this is the preferred way of handling wrapping and unwrapping.",
+      "parentUuid": "36c78249_45d674d7",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e97b6b1_ffca8656",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
         "patchSetId": 3
@@ -1305,6 +1359,24 @@
       "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b02c77e_6f2d8bb6",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T23:27:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "66788e2b_08e69e19",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

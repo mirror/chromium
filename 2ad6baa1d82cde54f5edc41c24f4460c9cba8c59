@@ -69,6 +69,24 @@
       "revId": "2ad6baa1d82cde54f5edc41c24f4460c9cba8c59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f46fc90b_58520874",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T23:27:31Z",
+      "side": 1,
+      "message": "I wish, not presently, maxmorin has a tracking bug here, http://crbug.com/768515. We definitely want to move to a model where AudioManager owns all the streams, but it\u0027s not an easy switch.",
+      "parentUuid": "29e3750b_6bcd9e25",
+      "revId": "2ad6baa1d82cde54f5edc41c24f4460c9cba8c59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
