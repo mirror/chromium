@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef8383ea_1e8031e1",
+        "filename": "cc/resources/layer_tree_resource_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-29T15:48:06Z",
+      "side": 1,
+      "message": "This is where things get interesting.\n\nhttps://cs.chromium.org/chromium/src/cc/resources/resource_provider.cc?rcl\u003d6eb43dc33551cb24c7f94e9c8e42ac45d8169fa7\u0026l\u003d1389\n\nResourceProvider will not report GL resources unless there is a texture id (ie it is \"mapped\" into the resource provider. So there should be nothing to do here to match that behaviour for mailbox resources.\n\nHowever https://cs.chromium.org/chromium/src/cc/resources/resource_provider.cc?rcl\u003d6eb43dc33551cb24c7f94e9c8e42ac45d8169fa7\u0026l\u003d1393 for software resources it reports them if there is a *shared bitmap id*:\n- Even if not mapped into the pixels pointer, it counts it.\n- Non-shared-memory software resources are not counted.\n\nSo I think that\u0027s a bug and we shouldn\u0027t count shared memory resources if they aren\u0027t mapped to |pixels| but I\u0027m not 100%. +ericrk",
+      "revId": "ea5216b4cc767c42dfd543d8b7f8a86867de85cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

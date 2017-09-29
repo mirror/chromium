@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "478c9ab3_ae92c0ba",
+        "filename": "cc/resources/layer_tree_resource_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-29T15:48:06Z",
+      "side": 1,
+      "message": "Oh I had already found a way to avoid having this here, so removed, but also yes.",
+      "parentUuid": "d17042df_82c4e374",
+      "revId": "914821532a8c5ec3dd59f2451b3bef3715562ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "73b2a00c_24b510a5",
         "filename": "cc/resources/layer_tree_resource_provider.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-29T00:28:01Z",
       "side": 1,
       "message": "nit: DCHECK?",
+      "revId": "914821532a8c5ec3dd59f2451b3bef3715562ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e02780d7_e72abbf5",
+        "filename": "cc/resources/layer_tree_resource_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-29T15:48:06Z",
+      "side": 1,
+      "message": "Ye.. I\u0027ll reverse cargo cult this to the one below.",
+      "parentUuid": "73b2a00c_24b510a5",
       "revId": "914821532a8c5ec3dd59f2451b3bef3715562ddf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +101,24 @@
       "side": 1,
       "message": "How about ImportedResource? Also renaming AddTransferrableResource -\u003e ImportResource for consistency?\nI guess the fact that it\u0027s exportable is kinda implicit - all resources in LTRP are, but ImportedResource clarifies that it comes from outside,a s opposed to the ones created by the RP.",
       "parentUuid": "90d26cf5_0cc23bde",
+      "revId": "914821532a8c5ec3dd59f2451b3bef3715562ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9edbe3f_0d6e0741",
+        "filename": "cc/resources/layer_tree_resource_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-29T15:48:06Z",
+      "side": 1,
+      "message": "Thanks, I like it.",
+      "parentUuid": "2bba5fb7_4a65e988",
       "revId": "914821532a8c5ec3dd59f2451b3bef3715562ddf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
