@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8001b489_f8c14a7a",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_external_protocol_dialog.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-29T22:27:11Z",
+      "side": 1,
+      "message": "nit: as you renamed the enums, you can remove the comment now.",
+      "revId": "f21fbffbe9c4a66f82cf18be3c86ade2143698d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ec4ce52_cfa44587",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-29T22:27:11Z",
+      "side": 1,
+      "message": "I guess\n\n    case CloseReason::DIALOG_DEACTIVATED:\n    case CloseReason::CHROME_PRESSED:\n    case CloseReason::CHROME_PREFERRED_PRESSED:\n\nmay hit NOTREACHED() if the following happens:\n\n1) the user clicks a URL\n2) the bubble is shown\n3) before HTTP redirect happens, the user quickly clicks [Stay in Chrome] or just dismiss the bubble.\n4) this function is called.\n\nIf my guess is correct, these 3 cases shouldn\u0027t have NOTREACHED() and should just break;. WDYT?",
+      "revId": "f21fbffbe9c4a66f82cf18be3c86ade2143698d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98832f8a_11b82033",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-29T22:27:11Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be in the else block at L258?",
+      "revId": "f21fbffbe9c4a66f82cf18be3c86ade2143698d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85921a03_4ef19f3c",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-29T22:27:11Z",
+      "side": 1,
+      "message": "You can\u0027t do this when instance is nullptr.",
+      "revId": "f21fbffbe9c4a66f82cf18be3c86ade2143698d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "139f83f1_ba2ca26a",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-29T22:27:11Z",
+      "side": 1,
+      "message": "Can you add code to delete the toolbar icon when another ArcNavigationThrottle is created? Also, please add a TODO to remove the icon when the user switches tabs.",
+      "revId": "f21fbffbe9c4a66f82cf18be3c86ade2143698d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b9662ca_24bc094b",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-29T22:27:11Z",
+      "side": 1,
+      "message": "nit: please add a comment for this too since as I mentioned earlier it\u0027s a little bit complicated now.",
+      "revId": "f21fbffbe9c4a66f82cf18be3c86ade2143698d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

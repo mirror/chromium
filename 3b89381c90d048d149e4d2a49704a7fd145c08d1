@@ -891,6 +891,24 @@
     },
     {
       "key": {
+        "uuid": "b7916722_4a0ce3b3",
+        "filename": "chrome/browser/ui/views/toolbar/toolbar_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-29T22:27:11Z",
+      "side": 1,
+      "message": "As chatted offline, you don\u0027t really have to do the mojo IPC here. You can do them in the throttle class, and pass the results to chrome::QueryAndDisplayArcApps(). Please note that querying icons does not always require mojo IPC because often times all icons are locally cached.\n\nYou could also pass a callback object (bound to a static member function in the throttle class) to do the same as ToolbarView::OnIntentPickerClosed().",
+      "parentUuid": "bd6ef5a5_2eb469fe",
+      "revId": "3b89381c90d048d149e4d2a49704a7fd145c08d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb63148b_445fa8d9",
         "filename": "chrome/browser/ui/views/toolbar/toolbar_view.h",
         "patchSetId": 9
