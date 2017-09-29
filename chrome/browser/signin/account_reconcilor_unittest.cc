@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <cstring>
 #include <memory>
 #include <utility>
 
@@ -420,11 +421,9 @@ const AccountReconcilorTestDiceParam kDiceParams[] = {
     {  "*xAB",  "",       false,      "B",         "B",            "*xAB"},
     // Sync enabled, token error on secondary.
     {  "*AxB",  "AB",     false,      "XA",        "A",            "*AxB"},
-    // TODO(droger): consider doing XA:
-    {  "*AxB",  "BA",     false,      "X",         "",             "*AxB"},
+    {  "*AxB",  "BA",     false,      "XA",        "A",            "*AxB"},
     {  "*AxB",  "A",      false,      "",          "A",            "*AxB"},
-    // TODO(droger): consider doing XA:
-    {  "*AxB",  "B",      false,      "X",         "",             "*AxB"},
+    {  "*AxB",  "B",      false,      "XA",        "A",            "*AxB"},
     {  "*AxB",  "",       false,      "A",         "A",            "*AxB"},
     // Sync enabled, token error on both accounts.
     {  "*xAxB", "AB",     false,      "X",         "",             "*xAxB"},
@@ -466,6 +465,14 @@ const AccountReconcilorTestDiceParam kDiceParams[] = {
     // Check that Gaia default account is kept in first position.
     {  "AB",    "BC",     true,       "XBA",       "BA",           "AB"},
     {  "AB",    "BC",     false,      "XBA",       "BA",           "AB"},
+    // Required for idempotency check.
+    {  "",      "",       false,      "",          "",             ""},
+    {  "*A",    "A",      false,      "",          "A",            "*A"},
+    {  "xB",    "",       false,      "",          "",             "xB"},
+    {  "xA",    "",       false,      "",          "",             "xA"},
+    {  "*xA",   "",       false,      "",          "",             "*xA"},
+    {  "*xAB",  "B",      false,      "",          "B",            "*xAB"},
+
 };
 // clang-format on
 
@@ -536,6 +543,25 @@ class AccountReconcilorTestDice
       EXPECT_EQ("", signin_manager()->GetAuthenticatedAccountId());
   }
 
+  // Checks that reconcile is idempotent, except on first run.
+  void CheckReconcileIdempotent(const AccountReconcilorTestDiceParam& param) {
+    // Simulate another reconcile based on the results of this one: find the
+    // corresponding row in the table and check that it does nothing.
+    for (const AccountReconcilorTestDiceParam& row : kDiceParams) {
+      if (row.is_first_reconcile)
+        continue;
+      if (strcmp(row.tokens, param.tokens_after_reconcile) != 0)
+        continue;
+      if (strcmp(row.cookies, param.cookies_after_reconcile) != 0)
+        continue;
+      EXPECT_STREQ(row.tokens, row.tokens_after_reconcile);
+      EXPECT_STREQ(row.cookies, row.cookies_after_reconcile);
+      return;
+    }
+
+    ADD_FAILURE() << "Could not check that reconcile is idempotent.";
+  }
+
   std::map<char, Account> accounts_;
 };
 
@@ -543,6 +569,10 @@ class AccountReconcilorTestDice
 TEST_P(AccountReconcilorTestDice, TableRowTest) {
   // Enable Dice.
   signin::ScopedAccountConsistencyDice scoped_dice;
+
+  // Check that reconcile is idempotent: when called twice in a row it should do
+  // nothing on the second call.
+  CheckReconcileIdempotent(GetParam());
 
   // Setup tokens.
   std::vector<Token> tokens_before_reconcile =
