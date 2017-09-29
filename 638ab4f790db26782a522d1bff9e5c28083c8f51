@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b77ebae9_e379914e",
+        "filename": "chrome/common/chrome_content_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-09-29T19:03:44Z",
+      "side": 1,
+      "message": "nit: Why use the unsafe version? This comes from command line, which should be properly formatted, no?",
+      "range": {
+        "startLine": 566,
+        "startChar": 24,
+        "endLine": 566,
+        "endChar": 38
+      },
+      "revId": "638ab4f790db26782a522d1bff9e5c28083c8f51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
