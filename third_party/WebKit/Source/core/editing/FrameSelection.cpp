@@ -226,6 +226,8 @@ bool FrameSelection::SetSelectionDeprecated(
     return false;
   if (is_changed)
     selection_editor_->SetSelection(new_selection);
+  should_shrink_next_tap_ =
+      should_shrink_next_tap_ << 1 | options.ShouldShrinkNextTap();
   is_handle_visible_ = should_show_handle;
   ScheduleVisualUpdateForPaintInvalidationIfNeeded();
 

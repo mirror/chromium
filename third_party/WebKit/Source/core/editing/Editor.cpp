@@ -386,6 +386,11 @@ bool Editor::CanSmartCopyOrDelete() const {
          GetFrameSelection().Granularity() == TextGranularity::kWord;
 }
 
+bool Editor::CanNotSuggest() const {
+  return !!(GetFrameSelection().GetShouldShrinkNextTap() &
+            SelectionShrink::kCurrent);
+}
+
 bool Editor::IsSelectTrailingWhitespaceEnabled() const {
   if (Settings* settings = GetFrame().GetSettings())
     return settings->GetSelectTrailingWhitespaceEnabled();
