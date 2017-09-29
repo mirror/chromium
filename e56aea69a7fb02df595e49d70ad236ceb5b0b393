@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49d67914_f4cb08bd",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_benchmarks.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-29T20:23:28Z",
+      "side": 1,
+      "message": "Nit: I think we generally spell this VSync.",
+      "range": {
+        "startLine": 66,
+        "startChar": 60,
+        "endLine": 66,
+        "endChar": 65
+      },
+      "revId": "e56aea69a7fb02df595e49d70ad236ceb5b0b393",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ccff3f9_145a916a",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_benchmarks.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-29T20:23:28Z",
+      "side": 1,
+      "message": "Are you planning on standardizing other parameters as well? If not, call this .standard_size?",
+      "range": {
+        "startLine": 79,
+        "startChar": 28,
+        "endLine": 79,
+        "endChar": 40
+      },
+      "revId": "e56aea69a7fb02df595e49d70ad236ceb5b0b393",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
