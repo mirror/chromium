@@ -1,0 +1,367 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "882c0a6c_e35b420c",
+        "filename": "components/previews/core/previews_io_data_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-29T18:07:05Z",
+      "side": 1,
+      "message": "This file\u0027s test harness already creates a UIService, youshould replace that with this TestPreviewsUIService instead, and all the initialization should already happen in the harness. I think you would make that replacement and call InitializeUIService from the test to avoid extra initialization steps. also move this class above the test harness code.",
+      "revId": "1407c1d2577c263b101ebf1a861ae3c7bd3ab663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c1ee8da_1b246477",
+        "filename": "components/previews/core/previews_io_data_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-29T18:07:05Z",
+      "side": 1,
+      "message": "Don\u0027t need to explicitly initialize url_",
+      "revId": "1407c1d2577c263b101ebf1a861ae3c7bd3ab663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9cd2012_a8a12a61",
+        "filename": "components/previews/core/previews_io_data_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-29T18:07:05Z",
+      "side": 1,
+      "message": "You can just do base::Time::Now() for this.",
+      "revId": "1407c1d2577c263b101ebf1a861ae3c7bd3ab663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cef11409_af7c408f",
+        "filename": "components/previews/core/previews_log.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-29T18:07:05Z",
+      "side": 1,
+      "message": "I believe this method can be in the header as is (constructor definitions are only disallowed there if they are \"complex\", but this doesn\u0027t have anything in the body or any method calls in the initializers.",
+      "revId": "1407c1d2577c263b101ebf1a861ae3c7bd3ab663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "850ef145_d6086253",
+        "filename": "components/previews/core/previews_log.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-29T18:07:05Z",
+      "side": 1,
+      "message": "same as above",
+      "revId": "1407c1d2577c263b101ebf1a861ae3c7bd3ab663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bba2032_7f6c24e5",
+        "filename": "components/previews/core/previews_log.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-29T18:07:05Z",
+      "side": 1,
+      "message": "All of these should be const members",
+      "revId": "1407c1d2577c263b101ebf1a861ae3c7bd3ab663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83651c95_0b1a255a",
+        "filename": "components/previews/core/previews_log.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-29T18:07:05Z",
+      "side": 1,
+      "message": "Move this above class members",
+      "revId": "1407c1d2577c263b101ebf1a861ae3c7bd3ab663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2174e2fe_dcb24282",
+        "filename": "components/previews/core/previews_log.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-29T18:07:05Z",
+      "side": 1,
+      "message": "Don\u0027t pass base::Time by const ref, style for it in particular is that it is passed by value/copy",
+      "revId": "1407c1d2577c263b101ebf1a861ae3c7bd3ab663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ca57873_9085dace",
+        "filename": "components/previews/core/previews_log.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-29T18:07:05Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be necessary as it will get it by default sicne you don\u0027t use DISALLOW macros (which is what structs style is)",
+      "revId": "1407c1d2577c263b101ebf1a861ae3c7bd3ab663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "088e97e9_f039fcb1",
+        "filename": "components/previews/core/previews_log.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-29T18:07:05Z",
+      "side": 1,
+      "message": "all of these should be const members",
+      "revId": "1407c1d2577c263b101ebf1a861ae3c7bd3ab663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f35ae242_504c68ac",
+        "filename": "components/previews/core/previews_log.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-29T18:07:05Z",
+      "side": 1,
+      "message": "Move this above class members",
+      "revId": "1407c1d2577c263b101ebf1a861ae3c7bd3ab663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c21ddbab_f6c3a560",
+        "filename": "components/previews/core/previews_log.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-29T18:07:05Z",
+      "side": 1,
+      "message": "Don\u0027t need this, it is generated when you don\u0027t use macros.",
+      "revId": "1407c1d2577c263b101ebf1a861ae3c7bd3ab663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5555ec1_76a95059",
+        "filename": "components/previews/core/previews_log.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-29T18:07:05Z",
+      "side": 1,
+      "message": "This feels like it should be a private method on PreviewsLog instead called GetPreviewsNavigationDescription(const PreviewsNavigation\u0026)\", as it is really the log converting it to a logging message, as opposed to a property of PreviewNavigation.",
+      "revId": "1407c1d2577c263b101ebf1a861ae3c7bd3ab663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae73d96f_6e1c0784",
+        "filename": "components/previews/core/previews_log.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-29T18:07:05Z",
+      "side": 1,
+      "message": "clas comment -- Records information about previews and interventions events.",
+      "revId": "1407c1d2577c263b101ebf1a861ae3c7bd3ab663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b7f07d9_c7cba437",
+        "filename": "components/previews/core/previews_log_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-29T18:07:05Z",
+      "side": 1,
+      "message": "no test clock needed just use base::Time::Now()",
+      "revId": "1407c1d2577c263b101ebf1a861ae3c7bd3ab663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d40cd498_2d07b6e4",
+        "filename": "components/previews/core/previews_log_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-29T18:07:05Z",
+      "side": 1,
+      "message": "this is a lot of variables, it might be nicer to have an array of MessageLog objects like:\n\nconst MessageLog expected_log_messages[] \u003d { {\"event_a\", \"event_description_a\", GURL(\"a\"), base::Time::Now()} ,{...}, {...}}\n\nand below\n\nfor (auto message : expected_log_mesages) {\n  logger-\u003eLogMessage(message.event_type,...);\n}\n\nSimilarly, you could iterate through the actual output like\n\nEXPECT_EQ(expect.size, actual.size);\nfor (size_t i \u003d 0; i\u003cactual.size(), i++) {\n  EXPECT_EQ(expected[i].event_type, actual[i].event_type);\n  ...\n}",
+      "revId": "1407c1d2577c263b101ebf1a861ae3c7bd3ab663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44d81a2d_bd060c44",
+        "filename": "components/previews/core/previews_ui_service.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-29T18:07:05Z",
+      "side": 1,
+      "message": "Remove this method and pass in PreviewsLog into the constructor. This method would need ForTesting at the end as is, but I\u0027d rather just inject the PreviewsLog.",
+      "revId": "1407c1d2577c263b101ebf1a861ae3c7bd3ab663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "927fd5b0_b65b3d99",
+        "filename": "components/previews/core/previews_ui_service_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-29T18:07:05Z",
+      "side": 1,
+      "message": "s/parameteres/parameters/",
+      "range": {
+        "startLine": 91,
+        "startChar": 52,
+        "endLine": 91,
+        "endChar": 63
+      },
+      "revId": "1407c1d2577c263b101ebf1a861ae3c7bd3ab663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86bb8e6b_a0d04c96",
+        "filename": "components/previews/core/previews_ui_service_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-29T18:07:05Z",
+      "side": 1,
+      "message": "s/GURL(\"\")/GURL()/\n\ns/false/false /* opt_out *//   \u003c- make sure that comment matches the variable name.",
+      "revId": "1407c1d2577c263b101ebf1a861ae3c7bd3ab663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b07b1547_c468f900",
+        "filename": "components/previews/core/previews_ui_service_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-29T18:07:05Z",
+      "side": 1,
+      "message": "replace mathod name with navigation()",
+      "revId": "1407c1d2577c263b101ebf1a861ae3c7bd3ab663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c398edf_f1c9423b",
+        "filename": "components/previews/core/previews_ui_service_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-29T18:07:05Z",
+      "side": 1,
+      "message": "Ideally, you pass this into the constructor in the harness code.",
+      "revId": "1407c1d2577c263b101ebf1a861ae3c7bd3ab663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

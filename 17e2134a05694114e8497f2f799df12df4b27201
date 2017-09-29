@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "620e9f1a_e53215b6",
+        "filename": "components/previews/core/previews_io_data_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-29T18:07:05Z",
+      "side": 1,
+      "message": "nit: you can just do \" //PreviewsUIService:\"",
+      "revId": "17e2134a05694114e8497f2f799df12df4b27201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d24f3a2d_cb6b92a1",
+        "filename": "components/previews/core/previews_io_data_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-29T18:07:05Z",
+      "side": 1,
+      "message": "these can just be of the form url(), opt_out() type(), and add a comment to the variables about what they represent.",
+      "revId": "17e2134a05694114e8497f2f799df12df4b27201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
