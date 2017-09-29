@@ -17,11 +17,13 @@ import android.os.Build;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
@@ -29,6 +31,7 @@ import android.widget.PopupWindow.OnDismissListener;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.Callback;
+import org.chromium.base.ContextUtils;
 import org.chromium.base.ObserverList;
 import org.chromium.base.SysUtils;
 import org.chromium.base.VisibleForTesting;
@@ -147,6 +150,11 @@ public class BottomSheet
     /** The fraction of the width of the screen that, when swiped, will cause the sheet to move. */
     private static final float SWIPE_ALLOWED_FRACTION = 0.2f;
 
+    /** The threshold of application screen height that a tall bottom navigation bar should be used
+     * for any larger value.
+     */
+    private static final float TALL_BOTTOM_NAV_THRESHOLD_DP = 683.0f;
+
     /**
      * Information about the different scroll states of the sheet. Order is important for these,
      * they go from smallest to largest.
@@ -174,7 +182,10 @@ public class BottomSheet
     private final int mToolbarShadowHeight;
 
     /** The height of the bottom navigation bar that appears when the bottom sheet is expanded. */
-    private final float mBottomNavHeight;
+    private final int mBottomNavHeight;
+
+    /** Whether a tall bottom navigation bar should be used */
+    private final boolean mUseTallBottomNav;
 
     /** The {@link BottomSheetMetrics} used to record user actions and histograms. */
     private final BottomSheetMetrics mMetrics;
@@ -490,7 +501,17 @@ public class BottomSheet
         mToolbarShadowHeight =
                 getResources().getDimensionPixelOffset(R.dimen.toolbar_shadow_height);
 
-        mBottomNavHeight = getResources().getDimensionPixelSize(R.dimen.bottom_nav_height);
+        DisplayMetrics metrics = new DisplayMetrics();
+        ((WindowManager) ContextUtils.getApplicationContext().getSystemService(
+                 Context.WINDOW_SERVICE))
+                .getDefaultDisplay()
+                .getMetrics(metrics);
+        mUseTallBottomNav =
+                Float.compare(Math.max(metrics.heightPixels, metrics.widthPixels) / metrics.density,
+                        TALL_BOTTOM_NAV_THRESHOLD_DP)
+                >= 0;
+        mBottomNavHeight = getResources().getDimensionPixelSize(
+                mUseTallBottomNav ? R.dimen.bottom_nav_height_tall : R.dimen.bottom_nav_height);
 
         mVelocityTracker = VelocityTracker.obtain();
 
@@ -707,8 +728,7 @@ public class BottomSheet
         getLayoutParams().height = ViewGroup.LayoutParams.MATCH_PARENT;
 
         mBottomSheetContentContainer = (FrameLayout) findViewById(R.id.bottom_sheet_content);
-        mBottomSheetContentContainer.setPadding(
-                0, 0, 0, (int) mBottomNavHeight - mToolbarShadowHeight);
+        mBottomSheetContentContainer.setPadding(0, 0, 0, mBottomNavHeight - mToolbarShadowHeight);
 
         // Listen to height changes on the root.
         root.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
@@ -756,7 +776,7 @@ public class BottomSheet
                     // Setting the padding is posted in a runnable for the sake of Android J.
                     // See crbug.com/751013.
                     final int finalPadding =
-                            keyboardHeight + ((int) mBottomNavHeight - mToolbarShadowHeight);
+                            keyboardHeight + (mBottomNavHeight - mToolbarShadowHeight);
                     post(new Runnable() {
                         @Override
                         public void run() {
@@ -1624,6 +1644,20 @@ public class BottomSheet
      */
     public boolean shouldShowGoogleGInLocationBar() {
         return mNtpController.shouldShowGoogleGInLocationBar();
+    }
+
+    /**
+     * @return Whether a tall bottom navigation bar should be used.
+     */
+    public boolean useTallBottomNav() {
+        return mUseTallBottomNav;
+    }
+
+    /**
+     * @return The height of the bottom navigation bar.
+     */
+    public int getBottomNavHeight() {
+        return mBottomNavHeight;
     }
 
     /**
