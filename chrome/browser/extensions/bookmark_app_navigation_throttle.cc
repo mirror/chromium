@@ -6,14 +6,17 @@
 
 #include <memory>
 
+#include "base/bind.h"
 #include "base/logging.h"
 #include "base/memory/ref_counted.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/prerender/prerender_contents.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/extensions/app_launch_params.h"
 #include "chrome/browser/ui/extensions/application_launch.h"
 #include "chrome/common/extensions/api/url_handlers/url_handlers_parser.h"
 #include "content/public/browser/browser_context.h"
+#include "content/public/browser/browser_thread.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/navigation_throttle.h"
 #include "content/public/browser/web_contents.h"
@@ -24,12 +27,16 @@
 #include "ui/base/window_open_disposition.h"
 #include "url/gurl.h"
 
+using content::BrowserThread;
+
 namespace extensions {
 
 // static
 std::unique_ptr<content::NavigationThrottle>
 BookmarkAppNavigationThrottle::MaybeCreateThrottleFor(
     content::NavigationHandle* navigation_handle) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
   DVLOG(1) << "Considering URL for interception: "
            << navigation_handle->GetURL().spec();
   if (!navigation_handle->IsInMainFrame()) {
@@ -58,7 +65,7 @@ BookmarkAppNavigationThrottle::MaybeCreateThrottleFor(
 
 BookmarkAppNavigationThrottle::BookmarkAppNavigationThrottle(
     content::NavigationHandle* navigation_handle)
-    : content::NavigationThrottle(navigation_handle) {}
+    : content::NavigationThrottle(navigation_handle), weak_ptr_factory_(this) {}
 
 BookmarkAppNavigationThrottle::~BookmarkAppNavigationThrottle() {}
 
@@ -73,6 +80,8 @@ BookmarkAppNavigationThrottle::WillStartRequest() {
 
 content::NavigationThrottle::ThrottleCheckResult
 BookmarkAppNavigationThrottle::CheckNavigation() {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
   content::WebContents* source = navigation_handle()->GetWebContents();
   ui::PageTransition transition_type = navigation_handle()->GetPageTransition();
   if (!(PageTransitionCoreTypeIs(transition_type, ui::PAGE_TRANSITION_LINK))) {
@@ -129,12 +138,18 @@ BookmarkAppNavigationThrottle::CheckNavigation() {
     return content::NavigationThrottle::CANCEL_AND_IGNORE;
   }
 
-  OpenBookmarkApp(matching_app);
-  return content::NavigationThrottle::CANCEL_AND_IGNORE;
+  // Post a task to avoid opening the app and closing the WebContents while the
+  // it's being created.
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::Bind(&BookmarkAppNavigationThrottle::OpenBookmarkApp,
+                            weak_ptr_factory_.GetWeakPtr(), matching_app));
+  return content::NavigationThrottle::DEFER;
 }
 
 void BookmarkAppNavigationThrottle::OpenBookmarkApp(
     scoped_refptr<const Extension> bookmark_app) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
   content::WebContents* source = navigation_handle()->GetWebContents();
   content::BrowserContext* browser_context = source->GetBrowserContext();
   DCHECK(browser_context);
@@ -144,6 +159,14 @@ void BookmarkAppNavigationThrottle::OpenBookmarkApp(
       WindowOpenDisposition::CURRENT_TAB, extensions::SOURCE_URL_HANDLER);
   launch_params.override_url = navigation_handle()->GetURL();
   OpenApplication(launch_params);
+
+  if (!source->GetController().CanGoBack() &&
+      source->GetLastCommittedURL() == GURL()) {
+    DVLOG(1) << "Closing empty tab.";
+    source->Close();
+  } else {
+    CancelDeferredNavigation(content::NavigationThrottle::CANCEL_AND_IGNORE);
+  }
 }
 
 }  // namespace extensions
