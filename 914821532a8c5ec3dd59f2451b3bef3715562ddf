@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "d17042df_82c4e374",
+        "filename": "cc/resources/layer_tree_resource_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-29T00:28:01Z",
+      "side": 1,
+      "message": "Should we just patch transferable.id in the constructor? I don\u0027t think we ever need the original id, do we?",
+      "revId": "914821532a8c5ec3dd59f2451b3bef3715562ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73b2a00c_24b510a5",
+        "filename": "cc/resources/layer_tree_resource_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-29T00:28:01Z",
+      "side": 1,
+      "message": "nit: DCHECK?",
+      "revId": "914821532a8c5ec3dd59f2451b3bef3715562ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "90d26cf5_0cc23bde",
         "filename": "cc/resources/layer_tree_resource_provider.h",
         "patchSetId": 3
@@ -13,6 +47,24 @@
       "writtenOn": "2017-09-28T22:02:09Z",
       "side": 1,
       "message": "I think some of the names in here are just attrocious but also idk how many ways to say transferable in the same type.. pls halp",
+      "revId": "914821532a8c5ec3dd59f2451b3bef3715562ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bba5fb7_4a65e988",
+        "filename": "cc/resources/layer_tree_resource_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-29T00:28:01Z",
+      "side": 1,
+      "message": "How about ImportedResource? Also renaming AddTransferrableResource -\u003e ImportResource for consistency?\nI guess the fact that it\u0027s exportable is kinda implicit - all resources in LTRP are, but ImportedResource clarifies that it comes from outside,a s opposed to the ones created by the RP.",
+      "parentUuid": "90d26cf5_0cc23bde",
       "revId": "914821532a8c5ec3dd59f2451b3bef3715562ddf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
