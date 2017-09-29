@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa596613_6bef348e",
+        "filename": "content/network/network_change_manager_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-29T18:54:06Z",
+      "side": 1,
+      "message": "think this can just be in the initializer list, as a non-unique_ptr.",
+      "range": {
+        "startLine": 81,
+        "startChar": 36,
+        "endLine": 81,
+        "endChar": 0
+      },
+      "revId": "6e017ca7b3b3b815f7723f78e92c0f8043290ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a1c2f0c_90432485",
+        "filename": "content/network/network_change_manager_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-29T18:54:06Z",
+      "side": 1,
+      "message": "nit:  These methods should probably be const.",
+      "range": {
+        "startLine": 90,
+        "startChar": 49,
+        "endLine": 90,
+        "endChar": 65
+      },
+      "revId": "6e017ca7b3b3b815f7723f78e92c0f8043290ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2136b838_2a9e9bf6",
+        "filename": "content/network/network_change_manager_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-29T18:54:06Z",
+      "side": 1,
+      "message": "This these call can be EXPECTs.",
+      "range": {
+        "startLine": 102,
+        "startChar": 18,
+        "endLine": 102,
+        "endChar": 19
+      },
+      "revId": "6e017ca7b3b3b815f7723f78e92c0f8043290ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8849a1d1_92a67f1b",
+        "filename": "content/public/DEPS",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-29T18:54:06Z",
+      "side": 1,
+      "message": "Hrm...Should network_conntection_tracker be in public/common instead?  There\u0027s nothing stopping it from being used in other processes, and it will end up in network/service/public/cpp, anyways, which can be included by any process.",
+      "range": {
+        "startLine": 12,
+        "startChar": 45,
+        "endLine": 12,
+        "endChar": 0
+      },
+      "revId": "6e017ca7b3b3b815f7723f78e92c0f8043290ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aa9ae73_5a662f0a",
+        "filename": "content/public/browser/network_connection_tracker_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-29T18:54:06Z",
+      "side": 1,
+      "message": "Check that the tracker\u0027s connection type has been updated to be |type| during the callback?",
+      "range": {
+        "startLine": 37,
+        "startChar": 28,
+        "endLine": 37,
+        "endChar": 0
+      },
+      "revId": "6e017ca7b3b3b815f7723f78e92c0f8043290ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "136bb9d8_d7be3680",
+        "filename": "content/public/browser/network_connection_tracker_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-29T18:54:06Z",
+      "side": 1,
+      "message": "Does this need to be a unique_ptr?",
+      "range": {
+        "startLine": 65,
+        "startChar": 28,
+        "endLine": 65,
+        "endChar": 29
+      },
+      "revId": "6e017ca7b3b3b815f7723f78e92c0f8043290ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bcc473f_fd6f5c48",
+        "filename": "content/public/browser/network_connection_tracker_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-29T18:54:06Z",
+      "side": 1,
+      "message": "Same here - I dont think this need to be a unique_ptr.",
+      "range": {
+        "startLine": 68,
+        "startChar": 16,
+        "endLine": 68,
+        "endChar": 43
+      },
+      "revId": "6e017ca7b3b3b815f7723f78e92c0f8043290ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb027084_52dd3ace",
+        "filename": "content/public/browser/network_connection_tracker_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-29T18:54:06Z",
+      "side": 1,
+      "message": "nit:  This and the next one should probably be const.",
+      "range": {
+        "startLine": 72,
+        "startChar": 58,
+        "endLine": 72,
+        "endChar": 0
+      },
+      "revId": "6e017ca7b3b3b815f7723f78e92c0f8043290ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8385568_cb2a3e53",
+        "filename": "content/public/browser/network_connection_tracker_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-29T18:54:06Z",
+      "side": 1,
+      "message": "This these call can be EXPECTs.",
+      "range": {
+        "startLine": 97,
+        "startChar": 12,
+        "endLine": 97,
+        "endChar": 39
+      },
+      "revId": "6e017ca7b3b3b815f7723f78e92c0f8043290ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbaadc44_bc781931",
+        "filename": "content/public/browser/network_connection_tracker_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-29T18:54:06Z",
+      "side": 1,
+      "message": "Should we have a test with a subtype?  May need to modify the mock class to do that.",
+      "range": {
+        "startLine": 101,
+        "startChar": 34,
+        "endLine": 101,
+        "endChar": 48
+      },
+      "revId": "6e017ca7b3b3b815f7723f78e92c0f8043290ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9bcf1f0_121bce77",
+        "filename": "content/public/browser/network_connection_tracker_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-29T18:54:06Z",
+      "side": 1,
+      "message": "Why is this needed?  Are you worried about other notifications or something?  If so, it\u0027s best to do this after the check num_notifications check at the end, and then check ConnectionType and num_notifications again.",
+      "range": {
+        "startLine": 104,
+        "startChar": 33,
+        "endLine": 104,
+        "endChar": 0
+      },
+      "revId": "6e017ca7b3b3b815f7723f78e92c0f8043290ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
