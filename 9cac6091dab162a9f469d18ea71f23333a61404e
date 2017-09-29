@@ -323,6 +323,24 @@
     },
     {
       "key": {
+        "uuid": "ad1ed8ed_c3ad33da",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 16
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-09-29T05:34:18Z",
+      "side": 1,
+      "message": "I spoke with our open source lawyers and was advised that the current version in this patch (with only the Chromium Authors copyright notice) is fine and we can continue with this.",
+      "parentUuid": "e9675fd0_cf5a4a92",
+      "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97702a1c_7079702a",
         "filename": "third_party/zlib/adler32_simd.c",
         "patchSetId": 16
