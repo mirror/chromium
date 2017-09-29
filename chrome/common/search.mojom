@@ -119,6 +119,5 @@ interface EmbeddedSearchClient {
 interface SearchBouncer {
   // Sets the URLs that the renderer should send back to the browser process for
   // reassignment to an Instant renderer.
-  SetSearchURLs(array<url.mojom.Url> search_urls,
-                url.mojom.Url new_tab_page_url);
+  SetSearchURLs(url.mojom.Url new_tab_page_url);
 };
