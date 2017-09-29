@@ -47,6 +47,7 @@ bool D3D11PictureBuffer::Init(
   view_desc.DecodeProfile = decoder_guid;
   view_desc.ViewDimension = D3D11_VDOV_DIMENSION_TEXTURE2D;
   view_desc.Texture2D.ArraySlice = (UINT)level_;
+  LOG(ERROR) << "AVDA: " << __func__ << " level == " << level_;
 
   HRESULT hr = video_device->CreateVideoDecoderOutputView(
       texture.Get(), &view_desc, output_view_.GetAddressOf());
@@ -159,9 +160,19 @@ bool D3D11H264Accelerator::SubmitFrameMetadata(
       static_cast<D3D11H264Picture*>(pic.get()));
 
   HRESULT hr;
-  hr = video_context_->DecoderBeginFrame(
-      video_decoder_.Get(), our_pic->picture->output_view_.Get(), 0, nullptr);
-  CHECK(SUCCEEDED(hr));
+  for (;;) {
+    hr = video_context_->DecoderBeginFrame(
+        video_decoder_.Get(), our_pic->picture->output_view_.Get(), 0, nullptr);
+
+    if (hr == E_PENDING || hr == D3DERR_WASSTILLDRAWING) {
+      // Hardware is busy.  We should make the call again.
+      // TODO(liberato): For now, just busy wait.
+      ;
+    } else {
+      CHECK(SUCCEEDED(hr));
+      break;
+    }
+  }
 
   sps_ = *sps;
   for (size_t i = 0; i < 16; i++) {
@@ -188,7 +199,7 @@ bool D3D11H264Accelerator::SubmitFrameMetadata(
     field_order_cnt_list_[i][1] = our_ref_pic->bottom_field_order_cnt;
     frame_num_list_[i] = ref_frame_list_[i].AssociatedFlag
                              ? our_ref_pic->long_term_pic_num
-                             : our_ref_pic->pic_num;
+                             : our_ref_pic->frame_num;
     int ref = 3;
     used_for_reference_flags_ |= ref << (2 * i);
     non_existing_frame_flags_ |= (our_ref_pic->nonexisting) << i;
@@ -220,9 +231,7 @@ bool D3D11H264Accelerator::SubmitSlice(const H264PPS* pps,
                                        size_t size) {
   scoped_refptr<D3D11H264Picture> our_pic(
       static_cast<D3D11H264Picture*>(pic.get()));
-
   DXVA_PicParams_H264 pic_param = {};
-
 #define FROM_SPS_TO_PP(a) pic_param.a = sps_.a
 #define FROM_SPS_TO_PP2(a, b) pic_param.a = sps_.b
 #define FROM_PPS_TO_PP(a) pic_param.a = pps->a
@@ -232,7 +241,7 @@ bool D3D11H264Accelerator::SubmitSlice(const H264PPS* pps,
   FROM_SPS_TO_PP2(wFrameWidthInMbsMinus1, pic_width_in_mbs_minus1);
   FROM_SPS_TO_PP2(wFrameHeightInMbsMinus1, pic_height_in_map_units_minus1);
   pic_param.CurrPic.Index7Bits = our_pic->level_;
-  // UNUSED: pic_param.CurrPic.AssociatedFlag = slide_hdr->field_pic_flag
+  pic_param.CurrPic.AssociatedFlag = slice_hdr->bottom_field_flag;
   FROM_SPS_TO_PP2(num_ref_frames, max_num_ref_frames);
 
   FROM_SLICE_TO_PP(field_pic_flag);
@@ -248,10 +257,13 @@ bool D3D11H264Accelerator::SubmitSlice(const H264PPS* pps,
   pic_param.MbsConsecutiveFlag = 1;
   FROM_SPS_TO_PP(frame_mbs_only_flag);
   FROM_PPS_TO_PP(transform_8x8_mode_flag);
-  // UNUSED: Minlumabipredsize
-  // UNUSED: pic_param.IntraPicFlag = slice_hdr->IsISlice();
+  pic_param.MinLumaBipredSize8x8Flag = 1;
+  pic_param.IntraPicFlag = slice_hdr->IsISlice();
   FROM_SPS_TO_PP(bit_depth_luma_minus8);
   FROM_SPS_TO_PP(bit_depth_chroma_minus8);
+  // The latest DXVA decoding guide says to set this to 3 if the software
+  // decoder (this class) is following the guide.
+  pic_param.Reserved16Bits = 3;
   memcpy(pic_param.RefFrameList, ref_frame_list_,
          sizeof pic_param.RefFrameList);
   if (pic_param.field_pic_flag && pic_param.CurrPic.AssociatedFlag) {
@@ -436,6 +448,8 @@ void D3D11H264Accelerator::SubmitSliceData() {
   hr = video_context_->SubmitDecoderBuffers(video_decoder_.Get(), 4, buffers);
   current_offset_ = 0;
   slice_info_.clear();
+  bitstream_buffer_bytes_ = nullptr;
+  bitstream_buffer_size_ = 0;
 }
 
 bool D3D11H264Accelerator::SubmitDecode(const scoped_refptr<H264Picture>& pic) {
@@ -445,6 +459,18 @@ bool D3D11H264Accelerator::SubmitDecode(const scoped_refptr<H264Picture>& pic) {
   CHECK(SUCCEEDED(hr));
 
   return true;
+}
+
+void D3D11H264Accelerator::Reset() {
+  if (bitstream_buffer_bytes_) {
+    HRESULT hr = video_context_->ReleaseDecoderBuffer(
+        video_decoder_.Get(), D3D11_VIDEO_DECODER_BUFFER_BITSTREAM);
+
+    bitstream_buffer_bytes_ = nullptr;
+    bitstream_buffer_size_ = 0;
+    current_offset_ = 0;
+    CHECK(SUCCEEDED(hr));
+  }
 }
 
 bool D3D11H264Accelerator::OutputPicture(

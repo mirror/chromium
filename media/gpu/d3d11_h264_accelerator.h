@@ -12,6 +12,8 @@
 #include <vector>
 
 #include "base/win/scoped_comptr.h"
+#include "gpu/command_buffer/service/texture_manager.h"
+#include "media/base/video_frame.h"
 #include "media/gpu/h264_decoder.h"
 #include "media/gpu/h264_dpb.h"
 #include "media/video/picture.h"
@@ -22,6 +24,25 @@
 namespace media {
 class D3D11H264Accelerator;
 
+// TODO(liberato): D3D11PictureBuffer might just be VideoFrame, or a thin
+// wrapper around it.  i suspect that we just need to make it a VideoFrame
+// that the H264Picture holds a reference to.  or, alternatively, we might
+// just make the VideoFrame when we output it.
+// we still need a set of pictures, one each for the texture array elements.
+// the picture will have an output_view_, which we will need when we start the
+// frame.  we'll need to maintain a list of which ones are in use by the
+// decoder (in_picture_use_) and the renderer (in_client_use_).  i don't think
+// that we'll picture buffers themselves; we can just have a set of pictures.
+// actually, we probably want them to be separate.  the 264decoder doesn't
+// tell us when it's done with them, so we find out when it drops its ref to
+// them.  so, that picture needs to notify us on destruction.
+// actually, should we just re-use all of the accelerator, and have the
+// d3d11 decoder just make up picture buffers?  seems easier.
+// eventually, we'll want to remove PictureBuffer and have D3D11PictureBuffer
+// hold a ref to the Texture etc. directly.  maybe we just do that as part of
+// this, and not try to keep the vda version running.
+// no, then we have to do it atomically.  i don't want to break the almost-
+// working version.
 class D3D11PictureBuffer {
  public:
   D3D11PictureBuffer(PictureBuffer picture_buffer, size_t level);
@@ -40,6 +61,13 @@ class D3D11PictureBuffer {
   void set_in_client_use(bool use) { in_client_use_ = use; }
   void set_in_picture_use(bool use) { in_picture_use_ = use; }
   scoped_refptr<gl::GLImage> gl_image() const { return gl_image_; }
+
+  // For D3D11VideoDecoder
+  // TODO(liberato): accessors
+  std::vector<scoped_refptr<gpu::gles2::TextureRef>> texture_refs_;
+  gpu::MailboxHolder mailbox_holders_[VideoFrame::kMaxPlanes];
+  // shouldn't be here, since it's mutable, but makes it very easy.
+  base::TimeDelta timestamp_;
 
  private:
   friend class D3D11H264Accelerator;
@@ -90,7 +118,7 @@ class D3D11H264Accelerator : public H264Decoder::H264Accelerator {
                    const uint8_t* data,
                    size_t size) override;
   bool SubmitDecode(const scoped_refptr<H264Picture>& pic) override;
-  void Reset() override {}
+  void Reset() override;
   bool OutputPicture(const scoped_refptr<H264Picture>& pic) override;
 
  private:
@@ -115,8 +143,8 @@ class D3D11H264Accelerator : public H264Decoder::H264Accelerator {
   // Information that's accumulated during slices and submitted at the end
   std::vector<DXVA_Slice_H264_Short> slice_info_;
   size_t current_offset_ = 0;
-  size_t bitstream_buffer_size_;
-  uint8_t* bitstream_buffer_bytes_;
+  size_t bitstream_buffer_size_ = 0;
+  uint8_t* bitstream_buffer_bytes_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(D3D11H264Accelerator);
 };
