@@ -2192,7 +2192,7 @@ VisiblePosition AXLayoutObject::VisiblePositionForIndex(int index) const {
     return VisiblePosition();
 
   if (index <= 0)
-    return CreateVisiblePosition(FirstPositionInOrBeforeNode(node));
+    return CreateVisiblePosition(FirstPositionInOrBeforeNodeDeprecated(node));
 
   Position start, end;
   bool selected = Range::selectNodeContents(node, start, end);
