@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1de6ff86_df77d3b9",
+        "filename": "gpu/ipc/service/gpu_vsync_provider_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1117489
+      },
+      "writtenOn": "2017-09-29T18:15:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1d144ca_9d575260",
+      "revId": "8242b373be801cabf21d25e81f00923415d0412f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a713e342_e2b44823",
         "filename": "gpu/ipc/service/gpu_vsync_provider_win.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "8242b373be801cabf21d25e81f00923415d0412f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60839d57_c70d42a9",
+        "filename": "gpu/ipc/service/gpu_vsync_provider_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1117489
+      },
+      "writtenOn": "2017-09-29T18:15:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a713e342_e2b44823",
+      "revId": "8242b373be801cabf21d25e81f00923415d0412f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "38323211_d4869eb2",
+        "filename": "gpu/ipc/service/gpu_vsync_provider_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1117489
+      },
+      "writtenOn": "2017-09-29T18:15:31Z",
+      "side": 1,
+      "message": "I am not sure how useful this is. Typically adjustment is in -100 to 300 us range, but occasionally it can get to 1000 us or more. Using zero would probably be OK. That would cause v-sync timing to shift forward by 100-200 us and make the latency look smaller.\nI decided to keep track of the adjustment for the following two reasons:\n1) I suspect the adjustment may depend a bit on the machine class. It may be a bit higher on slower machines with a small number of cores. I didn\u0027t want to guess and thought it would be safer to use the historical average.\n2) I wanted UMA histograms to be more consistent and avoid skewing latency distribution towards a smaller range. 100-200 us difference would have a noticeable impact on the distribution.",
+      "parentUuid": "4bb6a5a1_aae3ad6c",
+      "revId": "8242b373be801cabf21d25e81f00923415d0412f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "377e7b83_e09615ec",
         "filename": "gpu/ipc/service/gpu_vsync_provider_win.cc",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-29T00:06:26Z",
       "side": 1,
       "message": "I wonder why the recommend formula uses interval / 8? When dividing (including modulo) by \u0027n\u0027 it is common to add n / 2 first to turn truncation into round-to-nearest. Adding interval / 8 seems to implement a very weird rounding rule where 0.875 to 1.875 (7/8 to 1+7/8) are rounded to 1.0. At least I think that is what it does.\n\nBut, no matter.",
+      "revId": "8242b373be801cabf21d25e81f00923415d0412f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8d0a944_f3fb4303",
+        "filename": "gpu/ipc/service/gpu_vsync_provider_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1117489
+      },
+      "writtenOn": "2017-09-29T18:15:31Z",
+      "side": 1,
+      "message": "Yeah, this is tricky. DWM timestamps are weird and sometimes can be slightly ahead of a \u0027now\u0027 timestamp which results in now - timestamp being a small negative number - typically in -50 to 0 range. Without adding a small value that would be translated to something like 16,600 us. Similarly, timestamp can sometimes be almost a full frame behind, and we don\u0027t want to translate that to 16,600 us adjustment. 1/8 is arguably a too large value. It could probably be something like 1/20 of interval or a constant like 100 or 200 us.",
+      "parentUuid": "377e7b83_e09615ec",
       "revId": "8242b373be801cabf21d25e81f00923415d0412f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
