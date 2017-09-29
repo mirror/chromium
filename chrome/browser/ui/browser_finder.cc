@@ -200,11 +200,6 @@ Browser* FindBrowserWithWindow(gfx::NativeWindow window) {
   return NULL;
 }
 
-Browser* FindBrowserWithActiveWindow() {
-  Browser* browser = BrowserList::GetInstance()->GetLastActive();
-  return browser && browser->window()->IsActive() ? browser : nullptr;
-}
-
 Browser* FindBrowserWithWebContents(const WebContents* web_contents) {
   DCHECK(web_contents);
   for (TabContentsIterator it; !it.done(); it.Next()) {

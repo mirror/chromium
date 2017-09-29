@@ -42,7 +42,6 @@
 #include "chrome/browser/ui/ash/session_controller_client.h"
 #include "chrome/browser/ui/ash/session_util.h"
 #include "chrome/browser/ui/browser.h"
-#include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_list.h"
 #include "chrome/test/base/test_browser_window_aura.h"
 #include "chrome/test/base/testing_browser_process.h"
@@ -1603,10 +1602,10 @@ TEST_F(MultiUserWindowManagerChromeOSTest, WindowsOrderPreservedTests) {
   EXPECT_EQ(mru_list[2], window(2));
 }
 
-// Tests that chrome::FindBrowserWithActiveWindow works properly in
+// Tests that ChromeNewWindowClient::GetActiveBrowser works properly in
 // multi-user scenario, that is it should return the browser with active window
 // associated with it (crbug.com/675265).
-TEST_F(MultiUserWindowManagerChromeOSTest, FindBrowserWithActiveWindow) {
+TEST_F(MultiUserWindowManagerChromeOSTest, GetActiveBrowserTest) {
   SetUpForThisManyWindows(1);
 
   const AccountId account_id_A(AccountId::FromUserEmail("A"));
@@ -1617,25 +1616,28 @@ TEST_F(MultiUserWindowManagerChromeOSTest, FindBrowserWithActiveWindow) {
   multi_user_window_manager()->ActiveUserChanged(
       user_manager()->FindUser(account_id_A));
 
+  ::wm::ActivationClient* activation_client =
+      ::wm::GetActivationClient(window(0)->GetRootWindow());
   multi_user_window_manager()->SetWindowOwner(window(0), account_id_A);
   Profile* profile = multi_user_util::GetProfileFromAccountId(account_id_A);
   Browser::CreateParams params(profile, true);
   std::unique_ptr<Browser> browser(CreateTestBrowser(
       CreateTestWindowInShellWithId(0), gfx::Rect(16, 32, 640, 320), &params));
-  browser->window()->Activate();
+  aura::Window* browser_native_window = browser->window()->GetNativeWindow();
+  activation_client->ActivateWindow(browser_native_window);
   // Manually set last active browser in BrowserList for testing.
   BrowserList::GetInstance()->SetLastActive(browser.get());
   EXPECT_EQ(browser.get(), BrowserList::GetInstance()->GetLastActive());
-  EXPECT_TRUE(browser->window()->IsActive());
-  EXPECT_EQ(browser.get(), chrome::FindBrowserWithActiveWindow());
+  EXPECT_EQ(browser_native_window, wm::GetActiveWindow());
+  EXPECT_EQ(browser.get(), ChromeNewWindowClient::GetActiveBrowser());
 
   // Switch to another user's desktop with no active window.
   user_manager()->SwitchActiveUser(account_id_B);
   multi_user_window_manager()->ActiveUserChanged(
       user_manager()->FindUser(account_id_B));
   EXPECT_EQ(browser.get(), BrowserList::GetInstance()->GetLastActive());
-  EXPECT_FALSE(browser->window()->IsActive());
-  EXPECT_EQ(nullptr, chrome::FindBrowserWithActiveWindow());
+  EXPECT_EQ(nullptr, wm::GetActiveWindow());
+  EXPECT_EQ(nullptr, ChromeNewWindowClient::GetActiveBrowser());
 }
 
 }  // namespace ash

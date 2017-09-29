@@ -19,8 +19,6 @@ class TestBrowserWindowAura : public TestBrowserWindow {
   gfx::NativeWindow GetNativeWindow() const override;
   void Show() override;
   void Hide() override;
-  void Activate() override;
-  bool IsActive() const override;
   gfx::Rect GetBounds() const override;
 
   std::unique_ptr<Browser> CreateBrowser(Browser::CreateParams* params);

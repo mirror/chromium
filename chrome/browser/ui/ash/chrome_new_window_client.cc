@@ -17,6 +17,7 @@
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_commands.h"
 #include "chrome/browser/ui/browser_finder.h"
+#include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/chrome_pages.h"
 #include "chrome/browser/ui/extensions/app_launch_params.h"
@@ -32,6 +33,7 @@
 #include "extensions/common/constants.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "ui/base/window_open_disposition.h"
+#include "ui/wm/public/activation_client.h"
 
 namespace {
 
@@ -42,6 +44,19 @@ void RestoreTabUsingProfile(Profile* profile) {
 }
 
 }  // namespace
+
+// static
+Browser* ChromeNewWindowClient::GetActiveBrowser() {
+  Browser* browser = BrowserList::GetInstance()->GetLastActive();
+  if (browser) {
+    aura::Window* window = browser->window()->GetNativeWindow();
+    wm::ActivationClient* client =
+        wm::GetActivationClient(window->GetRootWindow());
+    if (client->GetActiveWindow() == window)
+      return browser;
+  }
+  return nullptr;
+}
 
 ChromeNewWindowClient::ChromeNewWindowClient() : binding_(this) {
   service_manager::Connector* connector =
@@ -100,7 +115,7 @@ class ChromeNewWindowClient::TabRestoreHelper
 };
 
 void ChromeNewWindowClient::NewTab() {
-  Browser* browser = chrome::FindBrowserWithActiveWindow();
+  Browser* browser = GetActiveBrowser();
   if (browser && browser->is_type_tabbed()) {
     chrome::NewTab(browser);
     return;
@@ -118,7 +133,7 @@ void ChromeNewWindowClient::NewTab() {
 }
 
 void ChromeNewWindowClient::NewWindow(bool is_incognito) {
-  Browser* browser = chrome::FindBrowserWithActiveWindow();
+  Browser* browser = GetActiveBrowser();
   Profile* profile = (browser && browser->profile())
                          ? browser->profile()->GetOriginalProfile()
                          : ProfileManager::GetActiveUserProfile();
@@ -171,7 +186,7 @@ void ChromeNewWindowClient::RestoreTab() {
     return;
   }
 
-  Browser* browser = chrome::FindBrowserWithActiveWindow();
+  Browser* browser = GetActiveBrowser();
   Profile* profile = browser ? browser->profile() : nullptr;
   if (!profile)
     profile = ProfileManager::GetActiveUserProfile();
@@ -203,6 +218,5 @@ void ChromeNewWindowClient::ShowTaskManager() {
 }
 
 void ChromeNewWindowClient::OpenFeedbackPage() {
-  chrome::OpenFeedbackDialog(chrome::FindBrowserWithActiveWindow(),
-                             chrome::kFeedbackSourceAsh);
+  chrome::OpenFeedbackDialog(GetActiveBrowser(), chrome::kFeedbackSourceAsh);
 }
