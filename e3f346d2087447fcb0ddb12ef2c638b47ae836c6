@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34e3ad51_7afe0e0a",
+        "filename": "chrome/browser/resources/md_extensions/manager.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-29T18:15:13Z",
+      "side": 1,
+      "message": "do we need height: 100% here? not sure how else viewManager\u0027s height is determined (IIRC column flex:1 only makes it 100% wide).",
+      "revId": "e3f346d2087447fcb0ddb12ef2c638b47ae836c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
