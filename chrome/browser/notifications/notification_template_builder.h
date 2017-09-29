@@ -23,11 +23,7 @@ class Notification;
 // Builds XML-based notification templates for displaying a given notification
 // in the Windows Action Center.
 //
-// https://docs.microsoft.com/en-us/uwp/schemas/tiles/toastschema/schema-root
-// https://msdn.microsoft.com/library/1a437614-4259-426b-8e3f-ca57368b2e7a
-//
-// The current builder is a best-effort implementation that supports the title
-// body text and attribution of a notification.
+// https://docs.microsoft.com/en-us/windows/uwp/controls-and-patterns/tiles-and-notifications-adaptive-interactive-toasts
 //
 // libXml was preferred (over WinXml, which the samples tend to use) because it
 // is used frequently in Chrome, is nicer to use and has already been vetted.
@@ -52,26 +48,25 @@ class NotificationTemplateBuilder {
 
   // Writes the <toast> element with the |notification_id| as the launch string.
   // Also closes the |xml_writer_| for writing as the toast is now complete.
-  // https://docs.microsoft.com/en-us/uwp/schemas/tiles/toastschema/element-toast
+  // https://docs.microsoft.com/en-us/windows/uwp/controls-and-patterns/tiles-and-notifications-adaptive-interactive-toasts#toast-notification-structure
   void StartToastElement(const std::string& notification_id);
   void EndToastElement();
 
   // Writes the <visual> element.
-  // https://docs.microsoft.com/en-us/uwp/schemas/tiles/toastschema/element-visual
+  // https://docs.microsoft.com/en-us/windows/uwp/controls-and-patterns/tiles-and-notifications-adaptive-interactive-toasts#visual
   void StartVisualElement();
   void EndVisualElement();
 
   // Writes the <binding> element with the given |template_name|.
-  // https://docs.microsoft.com/en-us/uwp/schemas/tiles/toastschema/element-binding
   void StartBindingElement(const std::string& template_name);
   void EndBindingElement();
 
   // Writes the <text> element with the given |id| and |content|.
-  // https://docs.microsoft.com/en-us/uwp/schemas/tiles/toastschema/element-text
+  // https://docs.microsoft.com/en-us/windows/uwp/controls-and-patterns/tiles-and-notifications-adaptive-interactive-toasts#text-elements
   void WriteTextElement(const std::string& id, const std::string& content);
 
   // Writes the <actions> element.
-  // TODO(finnur): Add link to doc, once it becomes available.
+  // https://docs.microsoft.com/en-us/windows/uwp/controls-and-patterns/tiles-and-notifications-adaptive-interactive-toasts#buttons
   void StartActionsElement();
   void EndActionsElement();
 
