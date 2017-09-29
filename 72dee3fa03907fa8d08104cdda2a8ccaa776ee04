@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "441be26c_e570c7fa",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1307,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-09-29T19:24:36Z",
+      "side": 1,
+      "message": "Assumption here is that *there are no other potential events can happen*, So we need to be careful interpreting the data (If this slice is significant, it means unknown cards or other potential reasons.",
+      "range": {
+        "startLine": 1307,
+        "startChar": 7,
+        "endLine": 1307,
+        "endChar": 8
+      },
+      "revId": "72dee3fa03907fa8d08104cdda2a8ccaa776ee04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32a2e9d0_4ccf5a43",
+        "filename": "components/autofill/core/browser/personal_data_manager.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-09-29T19:24:36Z",
+      "side": 1,
+      "message": "\"This function allows for duplicated field types in the form\" -\u003e what does this mean ?",
+      "range": {
+        "startLine": 311,
+        "startChar": 0,
+        "endLine": 311,
+        "endChar": 74
+      },
+      "revId": "72dee3fa03907fa8d08104cdda2a8ccaa776ee04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
