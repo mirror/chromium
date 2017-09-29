@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c307a4e_db8431fd",
+        "filename": "ash/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 923,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-29T23:32:07Z",
+      "side": 1,
+      "message": "Is this just for types? Who uses this?\n\nNow that I think about it, it\u0027s pretty confusing that we use SessionManager types in ash, but not SessionManager. What\u0027s the long-term plan for types here? Will ash have its own types (like LoginStatus, yuck), or will SessionManager move into ... ash? chrome?",
+      "revId": "ffa5fb4f07cb2e26caeaccfcfb16a9d4291b58b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
