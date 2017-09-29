@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "826ab7d2_f7ccad15",
+        "filename": "components/autofill/core/browser/autofill_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-09-29T23:07:46Z",
+      "side": 1,
+      "message": "For my knowledge : Are all existing autofill forms are either cc or address ? \n\nI see you are splitting existing counter into two. Not sure whether that is right ?",
+      "range": {
+        "startLine": 651,
+        "startChar": 3,
+        "endLine": 651,
+        "endChar": 4
+      },
+      "revId": "1610bd0877327d723d0f8d955a51953880a6d6cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d66b4772_b892dde8",
         "filename": "components/autofill/core/browser/autofill_metrics.cc",
         "patchSetId": 7

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9c32f4f_c4849687",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-09-29T23:07:46Z",
+      "side": 1,
+      "message": "Are you adding UMA counters for password form ?",
+      "range": {
+        "startLine": 726,
+        "startChar": 3,
+        "endLine": 726,
+        "endChar": 4
+      },
+      "revId": "5d0b81022319f6346f0443b16c89bf3cbe6c3500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
