@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d510838_26931ed4",
+        "filename": "chrome/browser/ui/views/location_bar/location_icon_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-29T17:02:42Z",
+      "side": 1,
+      "message": "Move the second sentence into the impl and change it to explain why.",
+      "revId": "a6c63c945e3593b66431b02ccadfaeaa02d09d3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
