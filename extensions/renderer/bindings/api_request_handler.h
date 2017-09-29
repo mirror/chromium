@@ -82,6 +82,9 @@ class APIRequestHandler {
   void CompleteRequest(int request_id,
                        const base::ListValue& response,
                        const std::string& error);
+  void CompleteRequest(int request_id,
+                       const std::vector<v8::Local<v8::Value>>& response,
+                       const std::string& error);
 
   // Invalidates any requests that are associated with |context|.
   void InvalidateContext(v8::Local<v8::Context> context);
@@ -107,6 +110,10 @@ class APIRequestHandler {
     std::vector<v8::Global<v8::Value>> callback_arguments;
     blink::WebUserGestureToken user_gesture_token;
   };
+
+  void CompleteRequestImpl(PendingRequest* request,
+                           const std::vector<v8::Local<v8::Value>>& response,
+                           const std::string& error);
 
   // The next available request identifier.
   int next_request_id_ = 0;
