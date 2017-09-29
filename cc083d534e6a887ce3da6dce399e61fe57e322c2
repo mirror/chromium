@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b6a9020_4e3cf659",
+        "filename": "content/public/browser/network_connection_tracker_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-29T13:54:20Z",
+      "side": 1,
+      "message": "Matt, this class\u0027s unittest can\u0027t depend on network_service_impl.h. \nIt doesn\u0027t seem that I can use content::GetNetworkService() either.\n\nShould I move this file somewhere else?\n\nHere\u0027s the warning message on the dependency:\n\nYou added one or more #includes that violate checkdeps rules.\n  content/public/browser/network_connection_tracker_unittest.cc\n      Illegal include: \"content/network/network_service_impl.h\"\n    Because of \"-content\" from content/public\u0027s include_rules.",
+      "revId": "cc083d534e6a887ce3da6dce399e61fe57e322c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

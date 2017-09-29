@@ -732,6 +732,30 @@
     },
     {
       "key": {
+        "uuid": "a903d0b3_8458377f",
+        "filename": "content/public/browser/network_change_manager_client_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-29T13:54:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d633f42e_19105a40",
+      "range": {
+        "startLine": 25,
+        "startChar": 6,
+        "endLine": 25,
+        "endChar": 21
+      },
+      "revId": "5b1e4852d2256e7d9ead815af311aff3aec0d474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "334fea84_f4dfa232",
         "filename": "content/public/browser/network_change_manager_client_impl.h",
         "patchSetId": 6
