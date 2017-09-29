@@ -21,6 +21,7 @@
 #include "net/ssl/openssl_ssl_util.h"
 #include "net/ssl/ssl_connection_status_flags.h"
 #include "net/ssl/ssl_info.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "third_party/boringssl/src/include/openssl/err.h"
 #include "third_party/boringssl/src/include/openssl/pool.h"
 #include "third_party/boringssl/src/include/openssl/ssl.h"
@@ -50,7 +51,8 @@ class SSLServerContextImpl::SocketImpl : public SSLServerSocket,
   int Read(IOBuffer* buf,
            int buf_len,
            const CompletionCallback& callback) override;
-  int Write(IOBuffer* buf,
+  int Write(const net::NetworkTrafficAnnotationTag& traffic_annotation,
+            net::IOBuffer* buf,
             int buf_len,
             const CompletionCallback& callback) override;
   int SetReceiveBufferSize(int32_t size) override;
@@ -234,6 +236,7 @@ int SSLServerContextImpl::SocketImpl::Read(IOBuffer* buf,
 }
 
 int SSLServerContextImpl::SocketImpl::Write(
+    const net::NetworkTrafficAnnotationTag& traffic_annotation,
     IOBuffer* buf,
     int buf_len,
     const CompletionCallback& callback) {

@@ -5,6 +5,7 @@
 #include "net/quic/core/quic_crypto_handshaker.h"
 
 #include "net/quic/core/quic_session.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -28,7 +29,9 @@ void QuicCryptoHandshaker::SendHandshakeMessage(
   session()->connection()->NeuterUnencryptedPackets();
   session()->OnCryptoHandshakeMessageSent(message);
   const QuicData& data = message.GetSerialized(session()->perspective());
-  stream_->WriteOrBufferData(QuicStringPiece(data.data(), data.length()), false,
+  // TODO(rhalavati): Annotation Origin?
+  stream_->WriteOrBufferData(NO_TRAFFIC_ANNOTATION_YET,
+                             QuicStringPiece(data.data(), data.length()), false,
                              nullptr);
 }
 

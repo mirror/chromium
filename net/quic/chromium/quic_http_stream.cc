@@ -27,6 +27,7 @@
 #include "net/spdy/core/spdy_frame_builder.h"
 #include "net/spdy/core/spdy_framer.h"
 #include "net/ssl/ssl_info.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -174,9 +175,11 @@ int QuicHttpStream::DoHandlePromiseComplete(int rv) {
   return OK;
 }
 
-int QuicHttpStream::SendRequest(const HttpRequestHeaders& request_headers,
-                                HttpResponseInfo* response,
-                                const CompletionCallback& callback) {
+int QuicHttpStream::SendRequest(
+    const HttpRequestHeaders& request_headers,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation,
+    HttpResponseInfo* response,
+    const CompletionCallback& callback) {
   CHECK(!request_body_stream_);
   CHECK(!response_info_);
   CHECK(callback_.is_null());
@@ -613,8 +616,9 @@ int QuicHttpStream::DoSendBody() {
   if (len > 0 || eof) {
     next_state_ = STATE_SEND_BODY_COMPLETE;
     QuicStringPiece data(request_body_buf_->data(), len);
+    // TODO(rhalavati): Store annotation from Send Request and use here.
     return stream_->WriteStreamData(
-        data, eof,
+        NO_TRAFFIC_ANNOTATION_YET, data, eof,
         base::Bind(&QuicHttpStream::OnIOComplete, weak_factory_.GetWeakPtr()));
   }
 

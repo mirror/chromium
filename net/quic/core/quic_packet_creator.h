@@ -21,6 +21,7 @@
 #include "net/quic/core/quic_packets.h"
 #include "net/quic/core/quic_pending_retransmission.h"
 #include "net/quic/platform/api/quic_export.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 namespace test {
@@ -87,7 +88,8 @@ class QUIC_EXPORT_PRIVATE QuicPacketCreator {
   // If current packet is not full, converts a raw payload into a stream frame
   // that fits into the open packet and adds it to the packet.
   // The payload begins at |iov_offset| into the |iov|.
-  bool ConsumeData(QuicStreamId id,
+  bool ConsumeData(const net::NetworkTrafficAnnotationTag& traffic_annotation,
+                   QuicStreamId id,
                    QuicIOVector iov,
                    size_t iov_offset,
                    QuicStreamOffset offset,
@@ -114,6 +116,7 @@ class QUIC_EXPORT_PRIVATE QuicPacketCreator {
   // |num_bytes_consumed| to the number of bytes consumed to create the
   // QuicStreamFrame.
   void CreateAndSerializeStreamFrame(
+      const net::NetworkTrafficAnnotationTag& traffic_annotation,
       QuicStreamId id,
       const QuicIOVector& iov,
       QuicStreamOffset iov_offset,
@@ -221,12 +224,14 @@ class QUIC_EXPORT_PRIVATE QuicPacketCreator {
   // If data is empty and fin is true, the expected behavior is to consume the
   // fin but return 0.  If any data is consumed, it will be copied into a
   // new buffer that |frame| will point to and own.
-  void CreateStreamFrame(QuicStreamId id,
-                         QuicIOVector iov,
-                         size_t iov_offset,
-                         QuicStreamOffset offset,
-                         bool fin,
-                         QuicFrame* frame);
+  void CreateStreamFrame(
+      const net::NetworkTrafficAnnotationTag& traffic_annotation,
+      QuicStreamId id,
+      QuicIOVector iov,
+      size_t iov_offset,
+      QuicStreamOffset offset,
+      bool fin,
+      QuicFrame* frame);
 
   void FillPacketHeader(QuicPacketHeader* header);
 
@@ -243,7 +248,10 @@ class QUIC_EXPORT_PRIVATE QuicPacketCreator {
   // retransmitted to packet_.retransmittable_frames. All frames must fit into
   // a single packet.
   // Fails if |buffer_len| isn't long enough for the encrypted packet.
-  void SerializePacket(char* encrypted_buffer, size_t buffer_len);
+  void SerializePacket(
+      const net::NetworkTrafficAnnotationTag& traffic_annotation,
+      char* encrypted_buffer,
+      size_t buffer_len);
 
   // Called after a new SerialiedPacket is created to call the delegate's
   // OnSerializedPacket and reset state.

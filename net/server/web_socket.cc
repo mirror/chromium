@@ -17,6 +17,7 @@
 #include "net/server/http_server_request_info.h"
 #include "net/server/http_server_response_info.h"
 #include "net/server/web_socket_encoder.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/websockets/websocket_deflate_parameters.h"
 #include "net/websockets/websocket_extension.h"
 #include "net/websockets/websocket_handshake_constants.h"
@@ -48,6 +49,10 @@ std::string ValidResponseString(
       "\r\n",
       accept_hash.c_str(), ExtensionsHeaderString(extensions).c_str());
 }
+
+// TODO(rhalavati): Update, just use for internals.
+NetworkTrafficAnnotationTag kTrafficAnnotationWebSocketInternals =
+    NO_TRAFFIC_ANNOTATION_YET;
 
 }  // namespace
 
@@ -91,7 +96,8 @@ void WebSocket::Accept(const HttpServerRequestInfo& request) {
     }
   }
   server_->SendRaw(connection_->id(),
-                   ValidResponseString(encoded_hash, response_extensions));
+                   ValidResponseString(encoded_hash, response_extensions),
+                   kTrafficAnnotationWebSocketInternals);
 }
 
 WebSocket::ParseResult WebSocket::Read(std::string* message) {
@@ -120,12 +126,14 @@ WebSocket::ParseResult WebSocket::Read(std::string* message) {
   return result;
 }
 
-void WebSocket::Send(const std::string& message) {
+void WebSocket::Send(
+    const std::string& message,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation) {
   if (closed_)
     return;
   std::string encoded;
   encoder_->EncodeFrame(message, 0, &encoded);
-  server_->SendRaw(connection_->id(), encoded);
+  server_->SendRaw(connection_->id(), encoded, traffic_annotation);
 }
 
 void WebSocket::Fail() {
@@ -138,7 +146,8 @@ void WebSocket::SendErrorResponse(const std::string& message) {
   if (closed_)
     return;
   closed_ = true;
-  server_->Send500(connection_->id(), message);
+  server_->Send500(connection_->id(), message,
+                   kTrafficAnnotationWebSocketInternals);
 }
 
 }  // namespace net

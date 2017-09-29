@@ -12,6 +12,7 @@
 #include "net/base/net_errors.h"
 #include "net/base/sockaddr_storage.h"
 #include "net/socket/socket_posix.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -160,10 +161,13 @@ int UnixDomainClientSocket::Read(IOBuffer* buf, int buf_len,
   return socket_->Read(buf, buf_len, callback);
 }
 
-int UnixDomainClientSocket::Write(IOBuffer* buf, int buf_len,
-                                  const CompletionCallback& callback) {
+int UnixDomainClientSocket::Write(
+    const net::NetworkTrafficAnnotationTag& traffic_annotation,
+    IOBuffer* buf,
+    int buf_len,
+    const CompletionCallback& callback) {
   DCHECK(socket_);
-  return socket_->Write(buf, buf_len, callback);
+  return socket_->Write(traffic_annotation, buf, buf_len, callback);
 }
 
 int UnixDomainClientSocket::SetReceiveBufferSize(int32_t size) {

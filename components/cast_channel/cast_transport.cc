@@ -23,6 +23,7 @@
 #include "components/cast_channel/proto/cast_channel.pb.h"
 #include "net/base/net_errors.h"
 #include "net/socket/socket.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 #define VLOG_WITH_CONNECTION(level) \
   VLOG(level) << "[" << ip_endpoint_.ToString() << ", auth=SSL_VERIFIED] "
@@ -197,7 +198,8 @@ int CastTransportImpl::DoWrite() {
   SetWriteState(WriteState::WRITE_COMPLETE);
 
   int rv = socket_->Write(
-      request.io_buffer.get(), request.io_buffer->BytesRemaining(),
+      NO_TRAFFIC_ANNOTATION_YET, request.io_buffer.get(),
+      request.io_buffer->BytesRemaining(),
       base::Bind(&CastTransportImpl::OnWriteResult, base::Unretained(this)));
   return rv;
 }

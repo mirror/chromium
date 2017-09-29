@@ -28,6 +28,7 @@
 #include "net/spdy/core/spdy_header_block.h"
 #include "net/spdy/core/spdy_protocol.h"
 #include "net/spdy/platform/api/spdy_string.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -215,9 +216,11 @@ bool SpdyHttpStream::GetLoadTimingInfo(LoadTimingInfo* load_timing_info) const {
   return stream_->GetLoadTimingInfo(load_timing_info);
 }
 
-int SpdyHttpStream::SendRequest(const HttpRequestHeaders& request_headers,
-                                HttpResponseInfo* response,
-                                const CompletionCallback& callback) {
+int SpdyHttpStream::SendRequest(
+    const HttpRequestHeaders& request_headers,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation,
+    HttpResponseInfo* response,
+    const CompletionCallback& callback) {
   if (stream_closed_) {
     return closed_stream_status_;
   }

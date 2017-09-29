@@ -284,8 +284,9 @@ void RenderMessageFilter::OnCacheableMetadataAvailable(
   scoped_refptr<net::IOBuffer> buf(new net::IOBuffer(data.size()));
   if (!data.empty())
     memcpy(buf->data(), &data.front(), data.size());
+  // TODO(rhalavati): Annotation will originate from here.
   cache->WriteMetadata(url, kPriority, expected_response_time, buf.get(),
-                       data.size());
+                       data.size(), NO_TRAFFIC_ANNOTATION_YET);
 }
 
 void RenderMessageFilter::OnCacheableMetadataAvailableForCacheStorage(

@@ -35,6 +35,7 @@
 #include "net/http/http_stream_parser.h"
 #include "net/socket/client_socket_handle.h"
 #include "net/socket/websocket_transport_client_socket_pool.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/websockets/websocket_basic_stream.h"
 #include "net/websockets/websocket_deflate_parameters.h"
 #include "net/websockets/websocket_deflate_predictor.h"
@@ -321,6 +322,7 @@ int WebSocketBasicHandshakeStream::InitializeStream(
 
 int WebSocketBasicHandshakeStream::SendRequest(
     const HttpRequestHeaders& headers,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation,
     HttpResponseInfo* response,
     const CompletionCallback& callback) {
   DCHECK(!headers.HasHeader(websockets::kSecWebSocketKey));
@@ -363,8 +365,8 @@ int WebSocketBasicHandshakeStream::SendRequest(
   request->headers.CopyFrom(enriched_headers);
   connect_delegate_->OnStartOpeningHandshake(std::move(request));
 
-  return parser()->SendRequest(
-      state_.GenerateRequestLine(), enriched_headers, response, callback);
+  return parser()->SendRequest(state_.GenerateRequestLine(), enriched_headers,
+                               traffic_annotation, response, callback);
 }
 
 int WebSocketBasicHandshakeStream::ReadResponseHeaders(

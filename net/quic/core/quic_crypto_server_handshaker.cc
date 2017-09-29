@@ -315,7 +315,9 @@ void QuicCryptoServerHandshaker::FinishSendServerConfigUpdate(
   QUIC_DVLOG(1) << "Server: Sending server config update: "
                 << message.DebugString(Perspective::IS_SERVER);
   const QuicData& data = message.GetSerialized(Perspective::IS_SERVER);
-  stream_->WriteOrBufferData(QuicStringPiece(data.data(), data.length()), false,
+  // TODO(rhalavati): Annotation Origin?
+  stream_->WriteOrBufferData(NO_TRAFFIC_ANNOTATION_YET,
+                             QuicStringPiece(data.data(), data.length()), false,
                              nullptr);
 
   ++num_server_config_update_messages_sent_;

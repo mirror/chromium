@@ -217,7 +217,8 @@ class HttpCache::MetadataWriter {
   void Write(const GURL& url,
              base::Time expected_response_time,
              IOBuffer* buf,
-             int buf_len);
+             int buf_len,
+             const net::NetworkTrafficAnnotationTag& traffic_annotation);
 
  private:
   void VerifyResponse(int result);
@@ -236,10 +237,12 @@ class HttpCache::MetadataWriter {
   DISALLOW_COPY_AND_ASSIGN(MetadataWriter);
 };
 
-void HttpCache::MetadataWriter::Write(const GURL& url,
-                                      base::Time expected_response_time,
-                                      IOBuffer* buf,
-                                      int buf_len) {
+void HttpCache::MetadataWriter::Write(
+    const GURL& url,
+    base::Time expected_response_time,
+    IOBuffer* buf,
+    int buf_len,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation) {
   DCHECK_GT(buf_len, 0);
   DCHECK(buf);
   DCHECK(buf->data());
@@ -256,7 +259,7 @@ void HttpCache::MetadataWriter::Write(const GURL& url,
   verified_ = false;
 
   int rv = transaction_->Start(
-      &request_info_,
+      &request_info_, traffic_annotation,
       base::Bind(&MetadataWriter::OnIOComplete, base::Unretained(this)),
       NetLogWithSource());
   if (rv != ERR_IO_PENDING)
@@ -402,11 +405,13 @@ bool HttpCache::ParseResponseInfo(const char* data, int len,
   return response_info->InitFromPickle(pickle, response_truncated);
 }
 
-void HttpCache::WriteMetadata(const GURL& url,
-                              RequestPriority priority,
-                              base::Time expected_response_time,
-                              IOBuffer* buf,
-                              int buf_len) {
+void HttpCache::WriteMetadata(
+    const GURL& url,
+    RequestPriority priority,
+    base::Time expected_response_time,
+    IOBuffer* buf,
+    int buf_len,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation) {
   if (!buf_len)
     return;
 
@@ -421,7 +426,7 @@ void HttpCache::WriteMetadata(const GURL& url,
   MetadataWriter* writer = new MetadataWriter(trans);
 
   // The writer will self destruct when done.
-  writer->Write(url, expected_response_time, buf, buf_len);
+  writer->Write(url, expected_response_time, buf, buf_len, traffic_annotation);
 }
 
 void HttpCache::CloseAllConnections() {

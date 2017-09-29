@@ -29,6 +29,7 @@
 #include "net/socket/connection_attempts.h"
 #include "net/ssl/channel_id_service.h"
 #include "net/ssl/ssl_config_service.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/websockets/websocket_handshake_stream_base.h"
 
 namespace crypto {
@@ -59,6 +60,7 @@ class NET_EXPORT_PRIVATE HttpNetworkTransaction
 
   // HttpTransaction methods:
   int Start(const HttpRequestInfo* request_info,
+            const net::NetworkTrafficAnnotationTag& traffic_annotation,
             const CompletionCallback& callback,
             const NetLogWithSource& net_log) override;
   int RestartIgnoringLastError(const CompletionCallback& callback) override;
@@ -419,6 +421,7 @@ class NET_EXPORT_PRIVATE HttpNetworkTransaction
   // of times we can retry a request on reused sockets is limited.
   size_t retry_attempts_;
 
+  net::MutableNetworkTrafficAnnotationTag traffic_annotation_;
   DISALLOW_COPY_AND_ASSIGN(HttpNetworkTransaction);
 };
 

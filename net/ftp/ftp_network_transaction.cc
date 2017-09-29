@@ -26,6 +26,7 @@
 #include "net/log/net_log_source.h"
 #include "net/socket/client_socket_factory.h"
 #include "net/socket/stream_socket.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "url/url_constants.h"
 
 namespace net {
@@ -737,8 +738,8 @@ int FtpNetworkTransaction::DoCtrlReadComplete(int result) {
 int FtpNetworkTransaction::DoCtrlWrite() {
   next_state_ = STATE_CTRL_WRITE_COMPLETE;
 
-  return ctrl_socket_->Write(
-      write_buf_.get(), write_buf_->BytesRemaining(), io_callback_);
+  return ctrl_socket_->Write(NO_TRAFFIC_ANNOTATION_YET, write_buf_.get(),
+                             write_buf_->BytesRemaining(), io_callback_);
 }
 
 int FtpNetworkTransaction::DoCtrlWriteComplete(int result) {

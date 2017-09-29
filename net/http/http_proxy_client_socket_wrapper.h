@@ -25,6 +25,7 @@
 #include "net/socket/ssl_client_socket_pool.h"
 #include "net/socket/transport_client_socket_pool.h"
 #include "net/spdy/chromium/spdy_session.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -109,7 +110,8 @@ class HttpProxyClientSocketWrapper : public ProxyClientSocket {
   int Read(IOBuffer* buf,
            int buf_len,
            const CompletionCallback& callback) override;
-  int Write(IOBuffer* buf,
+  int Write(const net::NetworkTrafficAnnotationTag& traffic_annotation,
+            IOBuffer* buf,
             int buf_len,
             const CompletionCallback& callback) override;
   int SetReceiveBufferSize(int32_t size) override;

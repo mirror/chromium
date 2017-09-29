@@ -15,6 +15,7 @@
 #include "base/memory/ref_counted.h"
 #include "net/base/net_export.h"
 #include "net/http/http_basic_state.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/websockets/websocket_handshake_stream_base.h"
 #include "url/gurl.h"
 
@@ -48,6 +49,7 @@ class NET_EXPORT_PRIVATE WebSocketBasicHandshakeStream
                        const NetLogWithSource& net_log,
                        const CompletionCallback& callback) override;
   int SendRequest(const HttpRequestHeaders& request_headers,
+                  const net::NetworkTrafficAnnotationTag& traffic_annotation,
                   HttpResponseInfo* response,
                   const CompletionCallback& callback) override;
   int ReadResponseHeaders(const CompletionCallback& callback) override;

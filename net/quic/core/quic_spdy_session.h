@@ -16,6 +16,7 @@
 #include "net/quic/platform/api/quic_export.h"
 #include "net/quic/platform/api/quic_string_piece.h"
 #include "net/spdy/core/http2_frame_decoder_adapter.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
