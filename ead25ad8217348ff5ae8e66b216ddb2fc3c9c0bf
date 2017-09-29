@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "bb979cd6_035c1bf4",
+        "filename": "net/http/transport_security_state.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1499,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-09-29T19:04:15Z",
+      "side": 1,
+      "message": "I was just thinking of the histogram guidelines https://chromium.googlesource.com/chromium/src.git/+/HEAD/tools/metrics/histograms/README.md#Directly-Measure-What-You-Want which says to \"Directly measure what you care about; don\u0027t try to derive it from other data.\"\n\nThough the example is about more complicated measurements, I\u0027m not sure there\u0027s actually any problem with just looking at the ratio of some counts. So I guess this is probably fine.",
+      "parentUuid": "c19ff832_081355e3",
+      "revId": "ead25ad8217348ff5ae8e66b216ddb2fc3c9c0bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a236880_708d9779",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
