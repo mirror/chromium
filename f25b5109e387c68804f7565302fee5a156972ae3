@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd6ce469_a45bc0d4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T18:12:16Z",
+      "side": 1,
+      "message": "nit: The first line should blank (see the sStates JavaDoc below for formatting)\n\nThis reads a little oddly to me - maybe something like \"The threshold of application screen height for showing a tall bottom navigation bar.\"?",
+      "range": {
+        "startLine": 152,
+        "startChar": 0,
+        "endLine": 154,
+        "endChar": 7
+      },
+      "revId": "f25b5109e387c68804f7565302fee5a156972ae3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6669e39e_167f49ca",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T18:12:16Z",
+      "side": 1,
+      "message": "Does ContextUtils#getApplicationContext()#getResources()#getConfiguration()#screenHeightDp and #screenWidthDp return the same dp value as heightPixels/density and widthPixels/density.",
+      "range": {
+        "startLine": 509,
+        "startChar": 39,
+        "endLine": 509,
+        "endChar": 99
+      },
+      "revId": "f25b5109e387c68804f7565302fee5a156972ae3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
