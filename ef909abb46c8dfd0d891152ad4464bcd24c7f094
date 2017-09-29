@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5d1e10e2_3bb5e302",
+        "filename": "chrome/browser/chromeos/attestation/platform_verification_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-29T22:01:32Z",
+      "side": 1,
+      "message": "Mostly done. I leave the one in Create() as is, because PlatformverificationFlow() explicitly requires to run on the UI thread. Added a comment there as well.",
+      "parentUuid": "ec803fd9_535440e5",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 21
+      },
+      "revId": "ef909abb46c8dfd0d891152ad4464bcd24c7f094",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cfcf926c_44595588",
         "filename": "chrome/browser/chromeos/attestation/platform_verification_impl.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "ef909abb46c8dfd0d891152ad4464bcd24c7f094",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86a18a29_436bac95",
+        "filename": "chrome/browser/chromeos/attestation/platform_verification_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-29T22:01:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfcf926c_44595588",
+      "range": {
+        "startLine": 52,
+        "startChar": 11,
+        "endLine": 52,
+        "endChar": 22
+      },
+      "revId": "ef909abb46c8dfd0d891152ad4464bcd24c7f094",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d6f6ba81_1f918017",
+        "filename": "chrome/browser/media/output_protection_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-29T22:01:32Z",
+      "side": 1,
+      "message": "ditto, Done",
+      "parentUuid": "4929e70f_3fedea29",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 21
+      },
+      "revId": "ef909abb46c8dfd0d891152ad4464bcd24c7f094",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0e10cb4_e399568c",
         "filename": "content/public/browser/frame_service_base.h",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-09-23T01:25:19Z",
       "side": 1,
       "message": "Will this name cause problems if the Interface class wants to use Close() itself?",
+      "range": {
+        "startLine": 75,
+        "startChar": 7,
+        "endLine": 75,
+        "endChar": 12
+      },
+      "revId": "ef909abb46c8dfd0d891152ad4464bcd24c7f094",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a73c6c9_4a6fb299",
+        "filename": "content/public/browser/frame_service_base.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-29T22:01:32Z",
+      "side": 1,
+      "message": "This is private so that should not be a problem.",
+      "parentUuid": "b0e10cb4_e399568c",
       "range": {
         "startLine": 75,
         "startChar": 7,
