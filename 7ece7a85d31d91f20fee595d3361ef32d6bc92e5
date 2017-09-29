@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6154e96f_3f872a9a",
+        "filename": "ash/display/screen_position_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-29T21:54:04Z",
+      "side": 1,
+      "message": "qq. How hard to eliminate non fractional version of these methods (by rounding on caller side when necessary)?",
+      "revId": "7ece7a85d31d91f20fee595d3361ef32d6bc92e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
