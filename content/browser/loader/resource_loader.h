@@ -61,7 +61,8 @@ class CONTENT_EXPORT ResourceLoader : public net::URLRequest::Delegate,
   void OutOfBandCancel(int error_code, bool tell_renderer) override;
 
   // CHECKs that the associated URLRequest is still present on its context.
-  // Added for http://crbug.com/754704; remove when that bug is resolved.
+  // Added for http://crbug.com/754704 and http://crbug.com/756668; remove
+  // when those bugs are resolved.
   void AssertURLRequestPresent() const;
 
  private:
@@ -190,8 +191,13 @@ class CONTENT_EXPORT ResourceLoader : public net::URLRequest::Delegate,
   scoped_refptr<const net::HttpResponseHeaders> raw_response_headers_;
 
   // URLRequestContext of the associated URLRequest.
-  // Added for http://crbug.com/754704; remove when that bug is resolved.
+  // Added for http://crbug.com/754704 and http://crbug.com/756668; remove
+  // when those bugs are resolved.
   const net::URLRequestContext* request_context_;
+
+  // Use-after-free test for http://crbug.com/754704; remove when that
+  // bug is resolved.
+  uint32_t liveness_check_;
 
   base::ThreadChecker thread_checker_;
 

@@ -49,6 +49,8 @@ using base::TimeTicks;
 namespace content {
 namespace {
 
+static const uint32_t kLivenessValue = 0xdef0feed;
+
 void PopulateResourceResponse(
     ResourceRequestInfoImpl* info,
     net::URLRequest* request,
@@ -227,15 +229,23 @@ ResourceLoader::ResourceLoader(std::unique_ptr<net::URLRequest> request,
       started_request_(false),
       times_cancelled_after_request_start_(0),
       request_context_(request_->context()),
+      liveness_check_(kLivenessValue),
       weak_ptr_factory_(this) {
   request_->set_delegate(this);
   handler_->SetDelegate(this);
-  // Added for http://crbug.com/754704; remove when that bug is resolved.
+  // Added for http://crbug.com/754704 and http://crbug.com/756668; remove
+  // when those bugs are resolved.
   if (!GetRequestInfo())
     base::debug::DumpWithoutCrashing();
 }
 
 ResourceLoader::~ResourceLoader() {
+  // Added for http://crbug.com/754704 and http://crbug.com/756668; remove
+  // when those bugs are resolved.
+  liveness_check_ = 0x0;
+  if (!GetRequestInfo())
+    base::debug::DumpWithoutCrashing();
+
   if (login_delegate_.get())
     login_delegate_->OnRequestCancelled();
   ssl_client_auth_handler_.reset();
@@ -654,6 +664,10 @@ void ResourceLoader::FollowDeferredRedirectInternal() {
 }
 
 void ResourceLoader::CompleteResponseStarted() {
+  // Added for http://crbug.com/754704 and http://crbug.com/756668; remove
+  // when those bugs are resolved.
+  CHECK_EQ(kLivenessValue, liveness_check_);
+
   ResourceRequestInfoImpl* info = GetRequestInfo();
   scoped_refptr<ResourceResponse> response = new ResourceResponse();
   PopulateResourceResponse(info, request_.get(), response.get(),
