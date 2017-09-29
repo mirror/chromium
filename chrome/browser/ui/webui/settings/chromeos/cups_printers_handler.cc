@@ -295,6 +295,14 @@ void CupsPrintersHandler::RegisterMessages() {
                  base::Unretained(this)));
 }
 
+void CupsPrintersHandler::OnJavascriptAllowed() {
+  printers_manager_->Start();
+}
+
+void CupsPrintersHandler::OnJavascriptDisallowed() {
+  printers_manager_->RemoveObserver(this);
+}
+
 void CupsPrintersHandler::HandleGetCupsPrintersList(
     const base::ListValue* args) {
   AllowJavascript();
