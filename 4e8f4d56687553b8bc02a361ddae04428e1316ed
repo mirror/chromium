@@ -34,6 +34,24 @@
       "revId": "4e8f4d56687553b8bc02a361ddae04428e1316ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5df3b73f_beb40161",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1147,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-29T22:48:45Z",
+      "side": 1,
+      "message": "What I was suggesting is doing this here:\n\nif (reason \u003d\u003d RESTRICTION_PREVENT_PROCESSING_ANDPROPAGATION) {\n   Shell::Get()-\u003eaccessibility_delegate()-\u003eTriggerAccessibilityAlert(\n        A11Y_ALERT_WINDOW_NEEDED);\n}\n\ndoesn\u0027t this still work?",
+      "parentUuid": "65081a2c_1b468966",
+      "revId": "4e8f4d56687553b8bc02a361ddae04428e1316ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
