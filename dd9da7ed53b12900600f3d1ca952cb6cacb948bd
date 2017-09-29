@@ -96,6 +96,139 @@
     },
     {
       "key": {
+        "uuid": "6b6b64b4_9802d550",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-29T16:05:52Z",
+      "side": 1,
+      "message": "A bit more detail on the scenario Shivani is describing:\n\n1) Active writer calls Read(), the rest of the writers are idle\n2) Active writer goes away mid-read\n3) The network read fails\n4) The HC::W doesn\u0027t have any callbacks to run\n\nNow we\u0027re left in an error state, and we need to doom the entry ASAP so that existing transactions can restart and new transactions can join the new entry. But until an idle writer calls Read(), no transaction will call DoneWithEntry there we won\u0027t doom. This leaves future transactions waiting on an idle writer, which may be controlled by script.\n\nWe concluded that it\u0027s best to leave the code as is.",
+      "parentUuid": "6d8969d7_d8935582",
+      "range": {
+        "startLine": 440,
+        "startChar": 15,
+        "endLine": 440,
+        "endChar": 40
+      },
+      "revId": "dd9da7ed53b12900600f3d1ca952cb6cacb948bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6b48ccd8_b904d337",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-29T16:05:52Z",
+      "side": 1,
+      "message": "suggest reversing order of these arguments as this is a function on an active entry and in this file those functions have the entry first.",
+      "range": {
+        "startLine": 484,
+        "startChar": 31,
+        "endLine": 484,
+        "endChar": 75
+      },
+      "revId": "dd9da7ed53b12900600f3d1ca952cb6cacb948bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5c6d25a_5961bde1",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-29T16:05:52Z",
+      "side": 1,
+      "message": "We may call this twice for the same entry_ right? We call this here. And we may call again if we\u0027re in the middle of a network read when StopCaching is called.",
+      "range": {
+        "startLine": 104,
+        "startChar": 10,
+        "endLine": 104,
+        "endChar": 35
+      },
+      "revId": "dd9da7ed53b12900600f3d1ca952cb6cacb948bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a582371d_cc8d892e",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-29T16:05:52Z",
+      "side": 1,
+      "message": "What is this about?",
+      "range": {
+        "startLine": 119,
+        "startChar": 18,
+        "endLine": 120,
+        "endChar": 19
+      },
+      "revId": "dd9da7ed53b12900600f3d1ca952cb6cacb948bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "807a8473_4bb52977",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-29T16:05:52Z",
+      "side": 1,
+      "message": "DCHECK(!network_transaction_)?",
+      "revId": "dd9da7ed53b12900600f3d1ca952cb6cacb948bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4698f64_3d481333",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-29T16:05:52Z",
+      "side": 1,
+      "message": "We may call this (WritersDoneWritingToEntry) twice for the same entry_ right? We call this here. And we may call again if we\u0027re in the middle of a network read when StopCaching is called. Is that expected?",
+      "range": {
+        "startLine": 162,
+        "startChar": 12,
+        "endLine": 162,
+        "endChar": 37
+      },
+      "revId": "dd9da7ed53b12900600f3d1ca952cb6cacb948bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0225ba9_a0126043",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 46
@@ -119,6 +252,29 @@
     },
     {
       "key": {
+        "uuid": "85c6266e_8c68f898",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-29T16:05:52Z",
+      "side": 1,
+      "message": "This can create a nested do loop right? Doesn\u0027t that overwrite next_state_ and io_callback_ etc? What makes this safe?",
+      "range": {
+        "startLine": 177,
+        "startChar": 6,
+        "endLine": 177,
+        "endChar": 12
+      },
+      "revId": "dd9da7ed53b12900600f3d1ca952cb6cacb948bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "14a3ea12_0c9b8c2e",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 46
@@ -135,6 +291,213 @@
         "startChar": 0,
         "endLine": 180,
         "endChar": 18
+      },
+      "revId": "dd9da7ed53b12900600f3d1ca952cb6cacb948bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed0498b6_bd5c268a",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-29T16:05:52Z",
+      "side": 1,
+      "message": "Isn\u0027t it already guaranteed to be true?",
+      "range": {
+        "startLine": 265,
+        "startChar": 0,
+        "endLine": 268,
+        "endChar": 28
+      },
+      "revId": "dd9da7ed53b12900600f3d1ca952cb6cacb948bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c697455a_9aa06f9c",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-29T16:05:52Z",
+      "side": 1,
+      "message": "Is a partial request guaranteed to use a sparse entry? Asking because I honestly have no idea, but I could imagine if starting at byte 0 that it may not be sparse?",
+      "range": {
+        "startLine": 270,
+        "startChar": 23,
+        "endLine": 270,
+        "endChar": 43
+      },
+      "revId": "dd9da7ed53b12900600f3d1ca952cb6cacb948bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42b7ac09_528fab12",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-29T16:05:52Z",
+      "side": 1,
+      "message": "I\u0027m not a big fan of putting testing code like this in production. Is this bool really necessary to test?",
+      "range": {
+        "startLine": 275,
+        "startChar": 4,
+        "endLine": 275,
+        "endChar": 33
+      },
+      "revId": "dd9da7ed53b12900600f3d1ca952cb6cacb948bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48f1d7ac_f15e11be",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-29T16:05:52Z",
+      "side": 1,
+      "message": "|truncated| is a pass-by-value bool, what do you mean it\u0027s owned by the transaction?",
+      "range": {
+        "startLine": 33,
+        "startChar": 19,
+        "endLine": 33,
+        "endChar": 40
+      },
+      "revId": "dd9da7ed53b12900600f3d1ca952cb6cacb948bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f47bf993_5be86952",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-29T16:05:52Z",
+      "side": 1,
+      "message": "nit: \"it is ensured\" is correct today, but if someone changes the code it may not remain so.\n\nsuggest either \"it must be ensured ...\" or simply \"|partial| must outlive this object\".",
+      "range": {
+        "startLine": 33,
+        "startChar": 60,
+        "endLine": 36,
+        "endChar": 28
+      },
+      "revId": "dd9da7ed53b12900600f3d1ca952cb6cacb948bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12b27e3d_7ac97e5e",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-29T16:05:52Z",
+      "side": 1,
+      "message": "If you create a copy constructor (below) you need to also define the assignment constructor according to style guide.",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 42,
+        "endChar": 60
+      },
+      "revId": "dd9da7ed53b12900600f3d1ca952cb6cacb948bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "761ba42b_a796512c",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-29T16:05:52Z",
+      "side": 1,
+      "message": "Unclear what you mean by \"ok to keep a copy\". Do you mean because the headers might change, or because the copy is expensive, or what?\n\nIf it\u0027s about the cost of the copy, I\u0027d just remove the comment.",
+      "range": {
+        "startLine": 47,
+        "startChar": 21,
+        "endLine": 47,
+        "endChar": 56
+      },
+      "revId": "dd9da7ed53b12900600f3d1ca952cb6cacb948bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "440b6c5c_c83d196a",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-29T16:05:52Z",
+      "side": 1,
+      "message": "nit: nullptr",
+      "range": {
+        "startLine": 125,
+        "startChar": 50,
+        "endLine": 125,
+        "endChar": 54
+      },
+      "revId": "dd9da7ed53b12900600f3d1ca952cb6cacb948bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e0fa549_939b2791",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-29T16:05:52Z",
+      "side": 1,
+      "message": "nit: nullptr",
+      "range": {
+        "startLine": 140,
+        "startChar": 39,
+        "endLine": 140,
+        "endChar": 43
       },
       "revId": "dd9da7ed53b12900600f3d1ca952cb6cacb948bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
