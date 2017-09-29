@@ -41,6 +41,7 @@
 #include "dbus/message.h"
 #include "dbus/object_proxy.h"
 #include "net/base/escape.h"
+#include "net/base/registry_controlled_domains/registry_controlled_domain.h"
 #include "skia/ext/image_operations.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
@@ -539,9 +540,16 @@ class NotificationPlatformBridgeLinuxImpl
 
       if (notification->UseOriginAsContextMessage()) {
         std::string url_display_text =
-            base::UTF16ToUTF8(url_formatter::FormatUrlForSecurityDisplay(
+            net::registry_controlled_domains::GetDomainAndRegistry(
                 notification->origin_url(),
-                url_formatter::SchemeDisplay::OMIT_HTTP_AND_HTTPS));
+                net::registry_controlled_domains::INCLUDE_PRIVATE_REGISTRIES);
+        // localhost, raw IPs etc. are not handled by GetDomainAndRegistry.
+        if (url_display_text.empty()) {
+          url_display_text =
+              base::UTF16ToUTF8(url_formatter::FormatUrlForSecurityDisplay(
+                  notification->origin_url(),
+                  url_formatter::SchemeDisplay::OMIT_HTTP_AND_HTTPS));
+        }
         EscapeUnsafeCharacters(&url_display_text);
         if (body_markup &&
             base::ContainsKey(capabilities_, kCapabilityBodyHyperlinks)) {
@@ -562,9 +570,11 @@ class NotificationPlatformBridgeLinuxImpl
       std::string message = base::UTF16ToUTF8(notification->message());
       if (body_markup)
         EscapeUnsafeCharacters(&message);
-      if (body.tellp())
-        body << "\n";
-      body << message;
+      if (!message.empty()) {
+        if (body.tellp())
+          body << "\n";
+        body << message;
+      }
 
       if (notification->type() == message_center::NOTIFICATION_TYPE_MULTIPLE) {
         for (const auto& item : notification->items()) {
