@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "2e35a417_4382c225",
+        "filename": "remoting/protocol/sdp_message.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-09-29T21:06:35Z",
+      "side": 1,
+      "message": "I guess we should use \"constexpr\" these days?\nFeel free to ignore :)",
+      "parentUuid": "2144eec1_cbcdcbd5",
+      "revId": "2a4f88c9841c05352782f04c725e2027080d206c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b9dabc9_797e2829",
         "filename": "remoting/protocol/sdp_message.cc",
         "patchSetId": 3
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "An SDP should have only one \"m\u003dvideo\" line. So if it\u0027s invalid, we should return false instead of continually searching in next lines.",
       "parentUuid": "4b9dabc9_797e2829",
+      "revId": "2a4f88c9841c05352782f04c725e2027080d206c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf2d6ccb_2a2ae1c4",
+        "filename": "remoting/protocol/sdp_message.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-09-29T21:06:35Z",
+      "side": 1,
+      "message": "Ok, maybe add this as a code comment?",
+      "parentUuid": "ac3ae28b_0f533657",
       "revId": "2a4f88c9841c05352782f04c725e2027080d206c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -259,6 +295,30 @@
       "side": 1,
       "message": "If has_video_ is true (tested at the very beginning of the function), we should always return within the for-loop above.",
       "parentUuid": "fccfb2c0_30efbe73",
+      "range": {
+        "startLine": 89,
+        "startChar": 2,
+        "endLine": 89,
+        "endChar": 12
+      },
+      "revId": "2a4f88c9841c05352782f04c725e2027080d206c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f38204b8_23c6572c",
+        "filename": "remoting/protocol/sdp_message.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-09-29T21:06:35Z",
+      "side": 1,
+      "message": "Add a code comment?",
+      "parentUuid": "aadad5bc_fd283816",
       "range": {
         "startLine": 89,
         "startChar": 2,
