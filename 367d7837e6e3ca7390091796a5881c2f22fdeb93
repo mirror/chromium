@@ -22,6 +22,30 @@
       "revId": "367d7837e6e3ca7390091796a5881c2f22fdeb93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30a061a1_3ccc6a3f",
+        "filename": "chrome/test/chromedriver/chrome/mobile_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-09-29T03:32:20Z",
+      "side": 1,
+      "message": "Sounds good.",
+      "parentUuid": "34c63182_42e39fce",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 71
+      },
+      "revId": "367d7837e6e3ca7390091796a5881c2f22fdeb93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
