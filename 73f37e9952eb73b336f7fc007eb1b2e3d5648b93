@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "885eac18_757a044c",
+        "filename": "media/blink/multibuffer_data_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-29T19:56:25Z",
+      "side": 1,
+      "message": "summarize offline conversation: because adding \"eof\" to |seek_positions_| isn\u0027t desirable.",
+      "parentUuid": "4eddbc93_17f78eb4",
+      "revId": "73f37e9952eb73b336f7fc007eb1b2e3d5648b93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4384cd51_1e218051",
         "filename": "media/blink/multibuffer_data_source.cc",
         "patchSetId": 1
@@ -69,6 +87,24 @@
       "revId": "73f37e9952eb73b336f7fc007eb1b2e3d5648b93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b9fb7a1_1bfa16a5",
+        "filename": "media/blink/multibuffer_data_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-29T19:56:25Z",
+      "side": 1,
+      "message": "summary of offline conversation: it was PostDelayed, but probably doesn\u0027t matter anyway.",
+      "parentUuid": "81238542_cc97da96",
+      "revId": "73f37e9952eb73b336f7fc007eb1b2e3d5648b93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
