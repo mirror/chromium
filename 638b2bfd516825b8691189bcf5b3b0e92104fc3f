@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "82d876fb_6f3b004e",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-09-29T16:24:58Z",
+      "side": 1,
+      "message": "Yes, not ready to upload yet.",
+      "parentUuid": "40e18273_7c1124a8",
+      "revId": "638b2bfd516825b8691189bcf5b3b0e92104fc3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0285b1bb_af60b66e",
         "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
         "patchSetId": 6
@@ -137,6 +155,24 @@
     },
     {
       "key": {
+        "uuid": "85f5f7b4_8b1686a6",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-09-29T16:24:58Z",
+      "side": 1,
+      "message": "\u003e Oh jeez.  This should not be using a UMA_HISTOGRAM_COUNTS_100 histogram\n\nFor the record, I didn\u0027t implement this originally.\n\nIf I change the type to UMA_HISTOGRAM_SPARSE_SLOWLY (or base::UmaHistogramEnumeration) is there anything else I need to do? I.e. I\u0027m switching histogram types mid-flight and I don\u0027t know if the server is going to like that. Should it be renamed?",
+      "parentUuid": "91cb0356_41b0c479",
+      "revId": "638b2bfd516825b8691189bcf5b3b0e92104fc3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1cd34c1_0086fd4d",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 6
@@ -205,6 +241,30 @@
       "revId": "638b2bfd516825b8691189bcf5b3b0e92104fc3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6e91200_516ddf9c",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 22606,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-09-29T16:24:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ee6e9953_85381f89",
+      "range": {
+        "startLine": 22604,
+        "startChar": 2,
+        "endLine": 22606,
+        "endChar": 8
+      },
+      "revId": "638b2bfd516825b8691189bcf5b3b0e92104fc3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

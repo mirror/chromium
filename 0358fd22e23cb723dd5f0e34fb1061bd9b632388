@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "00c33791_1548ad0a",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-09-29T16:24:58Z",
+      "side": 1,
+      "message": "Thank you. I wanted to understand if this was optional or required but couldn\u0027t find the reference to this rule.",
+      "parentUuid": "a9ee1cc2_1226f934",
+      "revId": "0358fd22e23cb723dd5f0e34fb1061bd9b632388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40a1e80c_6bba2ce2",
         "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
         "patchSetId": 4
