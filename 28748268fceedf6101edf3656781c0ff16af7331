@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d8135d5_29929d61",
+        "filename": "media/mojo/services/media_capabilities_leveldb.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-09-29T17:30:09Z",
+      "side": 1,
+      "message": "Tommy - I find that if the entry is not present in the DB, the API behaves as expected (succes \u003d true, info \u003d null), but I see some error logs from leveldb/proto classes:\n\n[libprotobuf ERROR ../../third_party/protobuf/src/google/protobuf/message_lite.cc:121] Can\u0027t parse message of type \"media.CapabilitiesInfo\" because it is missing required fields: (cannot determine missing fields for lite message)\n[5440:5443:0929/102655.932225:1921092541334:WARNING:proto_database_impl.h(203)] Unable to parse leveldb_proto entry\n\n\nYou can see this in the unit tests I added as well. If the entry *is* found in the DB, no error logs are emitted. \n\nAre the errors noise or am I holding it wrong?",
+      "range": {
+        "startLine": 149,
+        "startChar": 7,
+        "endLine": 149,
+        "endChar": 15
+      },
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
