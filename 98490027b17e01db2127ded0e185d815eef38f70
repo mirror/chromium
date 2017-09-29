@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c3a1417b_9c32d636",
+        "filename": "chrome/browser/signin/dice_response_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-29T10:49:32Z",
+      "side": 1,
+      "message": "Optional:\n\nI think there was an issue in this code before your CL: |result| typically dies before the end of the function, and I think this is a bit dangerous.\nCould we change the function to pass result by copy (or just the refresh token)?",
+      "parentUuid": "82ed18d2_1ef5924c",
+      "range": {
+        "startLine": 373,
+        "startChar": 14,
+        "endLine": 373,
+        "endChar": 27
+      },
+      "revId": "98490027b17e01db2127ded0e185d815eef38f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba7a4e40_1f6b8a64",
         "filename": "chrome/browser/signin/dice_response_handler.h",
         "patchSetId": 3

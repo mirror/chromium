@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51fbcae5_4d461346",
+        "filename": "chrome/browser/signin/dice_response_handler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-29T10:49:32Z",
+      "side": 1,
+      "message": "Nit: find better name for this class. E.g. TestProcessDiceHeaderObserver",
+      "range": {
+        "startLine": 183,
+        "startChar": 6,
+        "endLine": 183,
+        "endChar": 21
+      },
+      "revId": "77652564acfb45abb5b54fc1a23f5b1f75305771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8293c673_eedc4abc",
+        "filename": "chrome/browser/signin/dice_response_handler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-29T10:49:32Z",
+      "side": 1,
+      "message": "Do we really need Create()? What about base::MakeUnique\u003cProcessDelegate\u003e(this)",
+      "range": {
+        "startLine": 214,
+        "startChar": 60,
+        "endLine": 214,
+        "endChar": 66
+      },
+      "revId": "77652564acfb45abb5b54fc1a23f5b1f75305771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
