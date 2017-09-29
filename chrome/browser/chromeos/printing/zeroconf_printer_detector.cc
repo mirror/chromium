@@ -24,9 +24,26 @@ using local_discovery::ServiceDescription;
 using local_discovery::ServiceDiscoveryDeviceLister;
 using local_discovery::ServiceDiscoverySharedClient;
 
-// Supported service names for printers.
-const char* kIppServiceName = "_ipp._tcp.local";
-const char* kIppsServiceName = "_ipps._tcp.local";
+// Identifiers for the service names we listen on.  This also defines the
+// *priority* of a service.  If we find that the same printer advertises for
+// multiple of these service names, we'll use the lowest numbered service name.
+//
+// As we use these as indices, they must be contiguously numbered starting from
+// 0.
+enum ServiceType { kIppsService, kIppService, kNumServiceTypes };
+
+// These must be kept in a 1:1 correspondence with ServiceType entries.
+const char* kServiceNames[] = {"_ipps._tcp.local", "_ipp._tcp.local"};
+
+static_assert(arraysize(kServiceNames) == kNumServiceTypes,
+              "ServiceNames aren't in sync with ServiceTypes");
+
+// A DetectedPrinter bundled with extra information needed to manage it within
+// the zeroconf detector.
+struct AugmentedDetectedPrinter {
+  PrinterDetector::DetectedPrinter detected_printer;
+  ServiceType service_type;
+};
 
 // These (including the default values) come from section 9.2 of the Bonjour
 // Printing Spec v1.2, and the field names follow the spec definitions instead
@@ -120,7 +137,8 @@ std::string ZeroconfPrinterId(const ServiceDescription& service,
 // failure.
 bool ConvertToPrinter(const ServiceDescription& service_description,
                       const ParsedMetadata& metadata,
-                      PrinterDetector::DetectedPrinter* detected_printer) {
+                      ServiceType service_type,
+                      AugmentedDetectedPrinter* augmented_printer) {
   // If we don't have the minimum information needed to attempt a setup, fail.
   // Also fail on a port of 0, as this is used to indicate that the service
   // doesn't *actually* exist, the device just wants to guard the name.
@@ -129,8 +147,11 @@ bool ConvertToPrinter(const ServiceDescription& service_description,
       (service_description.address.port() == 0)) {
     return false;
   }
+  augmented_printer->service_type = service_type;
 
-  Printer& printer = detected_printer->printer;
+  PrinterDetector::DetectedPrinter& detected_printer =
+      augmented_printer->detected_printer;
+  Printer& printer = detected_printer.printer;
   printer.set_id(ZeroconfPrinterId(service_description, metadata));
   printer.set_uuid(metadata.UUID);
   printer.set_display_name(metadata.ty);
@@ -138,10 +159,10 @@ bool ConvertToPrinter(const ServiceDescription& service_description,
   printer.set_make_and_model(metadata.product);
   const char* uri_protocol;
   if (service_description.service_type() ==
-      base::StringPiece(kIppServiceName)) {
+      base::StringPiece(kServiceNames[kIppService])) {
     uri_protocol = "ipp";
   } else if (service_description.service_type() ==
-             base::StringPiece(kIppsServiceName)) {
+             base::StringPiece(kServiceNames[kIppsService])) {
     uri_protocol = "ipps";
   } else {
     // Since we only register for these services, we should never get back
@@ -163,45 +184,55 @@ bool ConvertToPrinter(const ServiceDescription& service_description,
 
   // gather ppd identification candidates.
   if (!metadata.ty.empty()) {
-    detected_printer->ppd_search_data.make_and_model.push_back(metadata.ty);
+    detected_printer.ppd_search_data.make_and_model.push_back(metadata.ty);
   }
   if (!metadata.product.empty()) {
-    detected_printer->ppd_search_data.make_and_model.push_back(
-        metadata.product);
+    detected_printer.ppd_search_data.make_and_model.push_back(metadata.product);
   }
   if (!metadata.usb_MFG.empty() && !metadata.usb_MDL.empty()) {
-    detected_printer->ppd_search_data.make_and_model.push_back(
+    detected_printer.ppd_search_data.make_and_model.push_back(
         base::StringPrintf("%s %s", metadata.usb_MFG.c_str(),
                            metadata.usb_MDL.c_str()));
   }
   return true;
 }
 
-// Given two printers which are actually the same printer advertised two
-// different ways (e.g. ipp vs ipps), return true if the candidate record
-// should replace the existing record.
-bool ShouldReplaceRecord(const PrinterDetector::DetectedPrinter& existing,
-                         const PrinterDetector::DetectedPrinter& candidate) {
-  // Right now the only time this should happen is for ipp vs ipps.
-  return (base::StringPiece(existing.printer.uri()).starts_with("ipp://") &&
-          base::StringPiece(candidate.printer.uri()).starts_with("ipps://"));
-}
+class ZeroconfPrinterDetectorImpl;
 
-class ZeroconfPrinterDetectorImpl
-    : public ZeroconfPrinterDetector,
-      public ServiceDiscoveryDeviceLister::Delegate {
+// Frustratingly, we don't have a good way in the Delegate interface to
+// distinguish between the sources of cache flush calls if we're listening
+// on multiple services.  This wrapper's sole purpose is to make it possible
+// to determine the source of a given flush call.
+class DelegateWrapper : public ServiceDiscoveryDeviceLister::Delegate {
+ public:
+  DelegateWrapper(ZeroconfPrinterDetectorImpl* parent, ServiceType service_type)
+      : parent_(parent), service_type_(service_type) {}
+  virtual ~DelegateWrapper() = default;
+
+  // Delegate implementations.  These cannot be defined inline because they
+  // need the ZeroconfPrinterDetectorImpl implementation.
+  void OnDeviceChanged(bool added,
+                       const ServiceDescription& service_description) override;
+  void OnDeviceRemoved(const std::string& service_name) override;
+  void OnDeviceCacheFlushed() override;
+
+ private:
+  ZeroconfPrinterDetectorImpl* parent_;
+  ServiceType service_type_;
+};
+
+class ZeroconfPrinterDetectorImpl : public ZeroconfPrinterDetector {
  public:
   explicit ZeroconfPrinterDetectorImpl(Profile* profile)
       : discovery_client_(ServiceDiscoverySharedClient::GetInstance()),
         observer_list_(new base::ObserverListThreadSafe<Observer>()) {
-    std::array<const char*, 2> services{{kIppServiceName, kIppsServiceName}};
-
-    // Since we start the discoverers immediately, this must come last in the
-    // constructor.
-    for (const char* service : services) {
+    for (int i = 0; i < kNumServiceTypes; ++i) {
+      device_lister_delegate_wrappers_.emplace_back(
+          this, static_cast<ServiceType>(i));
       device_listers_.emplace_back(
           base::MakeUnique<ServiceDiscoveryDeviceLister>(
-              this, discovery_client_.get(), service));
+              &device_lister_delegate_wrappers_.back(), discovery_client_.get(),
+              kServiceNames[i]));
       device_listers_.back()->Start();
       device_listers_.back()->DiscoverNewDevices();
     }
@@ -232,34 +263,43 @@ class ZeroconfPrinterDetectorImpl
     observer_list_->RemoveObserver(observer);
   }
 
-  // ServiceDiscoveryDeviceLister::Delegate implementation
-  void OnDeviceChanged(bool added,
-                       const ServiceDescription& service_description) override {
+  // ServiceDiscoveryDeviceLister::Delegate pseudo-implementations -- these
+  // are the Delegate implementations with an additional ServiceType parameter
+  // which is provided by DelegateWrapper.
+  void OnDeviceChanged(ServiceType service_type,
+                       bool added,
+                       const ServiceDescription& service_description) {
     // We don't care if it was added or not; we generate an update either way.
     ParsedMetadata metadata(service_description);
-    DetectedPrinter printer;
-    if (!ConvertToPrinter(service_description, metadata, &printer)) {
+    AugmentedDetectedPrinter printer;
+    if (!ConvertToPrinter(service_description, metadata, service_type,
+                          &printer)) {
       return;
     }
-    base::AutoLock auto_lock(printers_lock_);
 
-    auto existing = printers_.find(service_description.instance_name());
+    std::string instance_name = service_description.instance_name();
+    base::AutoLock auto_lock(printers_lock_);
+    auto existing = printers_.find(instance_name);
+    // Add it to our printers if it's new, or it's at least as high
+    // a priority as the existing entry.
     if (existing == printers_.end() ||
-        ShouldReplaceRecord(existing->second, printer)) {
-      printers_[service_description.instance_name()] = printer;
+        printer.service_type <= existing->second.service_type) {
+      printers_[instance_name] = printer;
       observer_list_->Notify(FROM_HERE,
                              &PrinterDetector::Observer::OnPrintersFound,
                              GetPrintersLocked());
     }
   }
 
-  void OnDeviceRemoved(const std::string& service_name) override {
+  void OnDeviceRemoved(ServiceType service_type,
+                       const std::string& service_name) {
     // Leverage ServiceDescription parsing to pull out the instance name.
     ServiceDescription service_description;
     service_description.service_name = service_name;
+    std::string instance_name = service_description.instance_name();
     base::AutoLock auto_lock(printers_lock_);
-    auto it = printers_.find(service_description.instance_name());
-    if (it != printers_.end()) {
+    auto it = printers_.find(instance_name);
+    if (it != printers_.end() && it->second.service_type == service_type) {
       printers_.erase(it);
       observer_list_->Notify(FROM_HERE,
                              &PrinterDetector::Observer::OnPrintersFound,
@@ -267,33 +307,65 @@ class ZeroconfPrinterDetectorImpl
     }
   }
 
-  // Don't need to do anything here.
-  void OnDeviceCacheFlushed() override {}
+  // Clear out existing entries for this device, request a new discovery round.
+  void OnDeviceCacheFlushed(ServiceType service_type) {
+    base::AutoLock auto_lock(printers_lock_);
+    // Selectively remove those printers that match service_type.
+    for (auto it = printers_.begin(); it != printers_.end();) {
+      if (it->second.service_type == service_type) {
+        auto next = it;
+        ++next;
+        printers_.erase(it);
+        it = next;
+      } else {
+        ++it;
+      }
+    }
+    observer_list_->Notify(FROM_HERE,
+                           &PrinterDetector::Observer::OnPrintersFound,
+                           GetPrintersLocked());
+    device_listers_[service_type]->DiscoverNewDevices();
+  }
 
  private:
-  // Requires that printers_lock_ be held.
+  // Gets the current canonical list of DetectedPrinters.  Requires
+  // that printers_lock_ be held.
   std::vector<DetectedPrinter> GetPrintersLocked() {
     printers_lock_.AssertAcquired();
     std::vector<DetectedPrinter> ret;
     ret.reserve(printers_.size());
     for (const auto& entry : printers_) {
-      ret.push_back(entry.second);
+      ret.push_back(entry.second.detected_printer);
     }
     return ret;
   }
 
-  // Map from service name to associated known printer, and associated lock.
-  std::map<std::string, DetectedPrinter> printers_;
+  // Map from instance name to augmented detected printer info.
+  std::map<std::string, AugmentedDetectedPrinter> printers_;
   base::Lock printers_lock_;
 
   // Keep a reference to the shared device client around for the lifetime of
   // this object.
   scoped_refptr<ServiceDiscoverySharedClient> discovery_client_;
+  std::vector<DelegateWrapper> device_lister_delegate_wrappers_;
   std::vector<std::unique_ptr<ServiceDiscoveryDeviceLister>> device_listers_;
 
   // Observers of this object.
   scoped_refptr<base::ObserverListThreadSafe<Observer>> observer_list_;
 };
+
+void DelegateWrapper::OnDeviceChanged(
+    bool added,
+    const ServiceDescription& service_description) {
+  parent_->OnDeviceChanged(service_type_, added, service_description);
+}
+void DelegateWrapper::OnDeviceRemoved(const std::string& service_name) {
+  parent_->OnDeviceRemoved(service_type_, service_name);
+}
+
+void DelegateWrapper::OnDeviceCacheFlushed() {
+  parent_->OnDeviceCacheFlushed(service_type_);
+}
 
 }  // namespace
 
