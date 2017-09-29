@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41998f9b_791870ae",
+        "filename": "content/common/background_fetch/background_fetch_types.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-29T14:41:05Z",
+      "side": 1,
+      "message": "Add a TODO to initialize these values in BackgroundFetchContext::DidCreateRegistration and BackgroundFetchDataManager::GetRegistration? Though I guess your next patch will deal with this.",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 26
+      },
+      "revId": "aa4f6651dd59540c48e63b75c161ea03242496ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5297ccbb_7ea7db28",
+        "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchOptions.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-29T14:41:05Z",
+      "side": 1,
+      "message": "I\u0027m surprised that using ImplementedAs and giving this a default value don\u0027t conflict?",
+      "range": {
+        "startLine": 10,
+        "startChar": 4,
+        "endLine": 10,
+        "endChar": 60
+      },
+      "revId": "aa4f6651dd59540c48e63b75c161ea03242496ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10cbfe4f_57a9fcae",
+        "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchOptions.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-29T14:41:05Z",
+      "side": 1,
+      "message": "unsigned long long",
+      "range": {
+        "startLine": 11,
+        "startChar": 4,
+        "endLine": 11,
+        "endChar": 8
+      },
+      "revId": "aa4f6651dd59540c48e63b75c161ea03242496ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

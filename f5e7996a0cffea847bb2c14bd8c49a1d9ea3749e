@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e622f0d_99540bc8",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/background-fetch/interfaces.worker-expected.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-29T14:41:05Z",
+      "side": 0,
+      "message": "How come this -expected.txt (for interfaces.worker.js) can go away? Did all the failures get fixed in the meantime?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 36
+      },
+      "revId": "f5e7996a0cffea847bb2c14bd8c49a1d9ea3749e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
