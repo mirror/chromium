@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8491a597_40beac94",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller_private.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-29T22:38:45Z",
+      "side": 1,
+      "message": "nit: Please document that this enum\u0027s values are persisted to logs, and should therefore not be renumbered.",
+      "range": {
+        "startLine": 28,
+        "startChar": 61,
+        "endLine": 28,
+        "endChar": 0
+      },
+      "revId": "e1a5072ff283b6dda431c63eebbde623060095d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df15b09a_1417759a",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller_private.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-29T22:38:45Z",
+      "side": 1,
+      "message": "nit: Could this be an enum class?",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 4
+      },
+      "revId": "e1a5072ff283b6dda431c63eebbde623060095d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d114119f_b9034d9d",
+        "filename": "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_controller.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-29T22:38:45Z",
+      "side": 1,
+      "message": "nit: UMA_HISTOGRAM_* macros expand to a fair bit of code, so please create a small wrapper, e.g. [self recordToolbarStyleMetric];",
+      "range": {
+        "startLine": 178,
+        "startChar": 0,
+        "endLine": 179,
+        "endChar": 60
+      },
+      "revId": "e1a5072ff283b6dda431c63eebbde623060095d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
