@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "822c069c_b8fd9f8c",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-29T23:26:54Z",
+      "side": 0,
+      "message": "Just to double-check, this isn\u0027t clickable anymore? I had a hard time telling from the bug/mocks.",
+      "revId": "4177a8cdba1622571f0cf117dfe7bae3a5be7f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

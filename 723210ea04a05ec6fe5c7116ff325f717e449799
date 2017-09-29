@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae1b1792_3d4e2a29",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-29T23:26:54Z",
+      "side": 1,
+      "message": "Since this class isn\u0027t used many places, I would eliminate the default parameter value.\n\nAlternately, can you eliminate |subtitle_id| entirely and just call UpdateSubtitle() when needed? Or pass |subtitle_id| through init?",
+      "revId": "723210ea04a05ec6fe5c7116ff325f717e449799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b78db0d4_8d446c17",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-29T23:26:54Z",
+      "side": 1,
+      "message": "It\u0027s a bit confusing that this doesn\u0027t update |subtitle_id_|. It would be nice to eliminate |subtitle_id_| per above.",
+      "revId": "723210ea04a05ec6fe5c7116ff325f717e449799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e22e7669_4cd58b20",
+        "filename": "ash/system/network/network_row_title_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-29T23:26:54Z",
+      "side": 1,
+      "message": "for example, you could default to not visible, then let SetSubtitle() do the right thing",
+      "revId": "723210ea04a05ec6fe5c7116ff325f717e449799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0c79dba_14570c2d",
+        "filename": "ash/system/network/network_row_title_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-29T23:26:54Z",
+      "side": 1,
+      "message": "Nice docs.",
+      "revId": "723210ea04a05ec6fe5c7116ff325f717e449799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fe6ec89_142c4780",
+        "filename": "ash/system/network/network_row_title_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-29T23:26:54Z",
+      "side": 1,
+      "message": "I think you still need explicit here, since there is a valid one-param constructor. Or just make subtitle_message_id mandatory, or provide two constructors.\n\nOr you could change UpdateSubtitle() to SetSubtitle() and make the user call the method.",
+      "revId": "723210ea04a05ec6fe5c7116ff325f717e449799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7513dee2_c16f2b8b",
+        "filename": "ash/system/tray/tray_info_label.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-29T23:26:54Z",
+      "side": 1,
+      "message": "Thanks for cleaning this up.",
+      "revId": "723210ea04a05ec6fe5c7116ff325f717e449799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
