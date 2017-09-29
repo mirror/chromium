@@ -34,6 +34,24 @@
       "revId": "6c2ec121af8f2abec744903c6bbd00c994a31f20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e68c2a8_21ec4e5e",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 10124,
+      "author": {
+        "id": 1172235
+      },
+      "writtenOn": "2017-09-29T20:20:10Z",
+      "side": 0,
+      "message": "I added the same code to RestoreVertexAttribArray and the tests still pass. However I can\u0027t find any tests that test ScopedVertexAttribArray directly, do you know of any?\n\nMy instinct of course is to block this patch and the merge. But the M62 stable cut is not that far out, I\u0027m not sure how long we want to push back the merge. What\u0027s your opinion?",
+      "parentUuid": "31539d26_b4743e65",
+      "revId": "6c2ec121af8f2abec744903c6bbd00c994a31f20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
