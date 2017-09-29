@@ -117,6 +117,30 @@
     },
     {
       "key": {
+        "uuid": "5c3d48d5_19b161db",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-29T10:52:58Z",
+      "side": 1,
+      "message": "This precise issue is addressed in the followup CL:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/691662",
+      "parentUuid": "eddfe19f_2ed3d3e9",
+      "range": {
+        "startLine": 424,
+        "startChar": 20,
+        "endLine": 424,
+        "endChar": 21
+      },
+      "revId": "3ffbfd3216152dbc0aa2f763355a177db500d2d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae864f87_a023f7c6",
         "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
         "patchSetId": 5
