@@ -22,11 +22,13 @@
 
 #if defined(OS_MACOSX)
 #include "chrome/app/chrome_main_mac.h"
+#include "chrome/app/profiler/main_process_stack_sampling_profiler.h"
 #endif
 
 #if defined(OS_WIN)
 #include "base/debug/dump_without_crashing.h"
 #include "base/win/win_util.h"
+#include "chrome/app/profiler/main_process_stack_sampling_profiler.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/install_static/initialize_from_primary_module.h"
 #include "chrome/install_static/install_details.h"
@@ -92,7 +94,13 @@ int ChromeMain(int argc, const char** argv) {
   const base::CommandLine* command_line(base::CommandLine::ForCurrentProcess());
   ALLOW_UNUSED_LOCAL(command_line);
 
-  // Chrome-specific process modes.
+#if defined(OS_WIN) || defined(OS_MACOSX)
+  // Start the sampling profiler as early as possible – namely, once the
+  // command line data is available.
+  StartMainProcessStackSamplingProfilerIfEnabled();
+#endif  // defined(OS_WIN) || defined(OS_MACOSX)
+
+// Chrome-specific process modes.
 #if defined(OS_LINUX) || defined(OS_MACOSX) || defined(OS_WIN)
   if (command_line->HasSwitch(switches::kHeadless)) {
 #if defined(OS_MACOSX)
