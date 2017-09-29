@@ -22,6 +22,30 @@
       "revId": "49df0d5f0f5d1df9370bdfc025219c25bbc610f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca31f35f_7b3118a7",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-29T20:35:35Z",
+      "side": 1,
+      "message": "I am trying to explain why do we need an out of bounds point as it is not very obvious. This provides more context to whoever read the code. If I move it to commit message, the same person would have to check my commit (which needs a few more steps) to understand the context. I think it would make our code easier to understand. So I would prefer to keep them here. However, I do like your suggestion about adding them to commit message. will copy the string to commit message. Thanks for suggestion!",
+      "parentUuid": "f86b23d5_0fee9cde",
+      "range": {
+        "startLine": 626,
+        "startChar": 0,
+        "endLine": 629,
+        "endChar": 38
+      },
+      "revId": "49df0d5f0f5d1df9370bdfc025219c25bbc610f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
