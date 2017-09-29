@@ -34,14 +34,22 @@ bool MarkPageAccessedSync(const base::Time& last_access_time,
 MarkPageAccessedTask::MarkPageAccessedTask(OfflinePageMetadataStoreSQL* store,
                                            int64_t offline_id,
                                            const base::Time& access_time)
-    : store_(store), offline_id_(offline_id), access_time_(access_time) {}
+    : store_(store),
+      offline_id_(offline_id),
+      access_time_(access_time),
+      weak_ptr_factory_(this) {}
 
 MarkPageAccessedTask::~MarkPageAccessedTask(){};
 
 void MarkPageAccessedTask::Run() {
   store_->Execute(
       base::BindOnce(&MarkPageAccessedSync, access_time_, offline_id_),
-      base::BindOnce([](bool success) {}));
+      base::BindOnce(&MarkPageAccessedTask::OnMarkPageAccessedDone,
+                     weak_ptr_factory_.GetWeakPtr()));
+}
+
+void MarkPageAccessedTask::OnMarkPageAccessedDone(bool result) {
+  TaskComplete();
 }
 
 }  // namespace offline_pages
