@@ -12,6 +12,7 @@
 #include "core/layout/ng/ng_block_break_token.h"
 #include "core/layout/ng/ng_constraint_space_builder.h"
 #include "core/layout/ng/ng_layout_result.h"
+#include "core/paint/ng/ng_paint_fragment.h"
 
 namespace blink {
 namespace {
@@ -382,7 +383,9 @@ TEST_F(NGInlineLayoutAlgorithmTest, VisualRect) {
 
   EXPECT_EQ(LayoutUnit(10), box_fragment->Size().height);
 
-  LayoutRect visual_rect = box_fragment->LocalVisualRect();
+  auto paint_fragment = WTF::MakeUnique<NGPaintFragment>(box_fragment);
+  paint_fragment->PopulateDescendants();
+  LayoutRect visual_rect = paint_fragment->VisualRect();
   EXPECT_EQ(LayoutUnit(-5), visual_rect.Y());
   EXPECT_EQ(LayoutUnit(20), visual_rect.Height());
 }

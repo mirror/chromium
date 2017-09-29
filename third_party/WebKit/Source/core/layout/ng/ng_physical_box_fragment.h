@@ -29,7 +29,9 @@ class CORE_EXPORT NGPhysicalBoxFragment final
 
   const NGBaseline* Baseline(const NGBaselineRequest&) const;
 
-  void UpdateVisualRect() const override;
+  // Visual rect of this fragment in the local coordinates.
+  // This does not include visual overflows from descendants.
+  LayoutRect LocalVisualRectForSelf() const;
 
   RefPtr<NGPhysicalFragment> CloneWithoutOffset() const;
 
