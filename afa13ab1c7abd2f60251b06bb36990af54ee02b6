@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c8664da_5af9bda0",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 2421,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-29T01:19:49Z",
+      "side": 1,
+      "message": "at first glance this looks weird here.. (i.e. does it belong on ChromeOS?), but it does appear that chromeos currently does have this dependency.",
+      "revId": "afa13ab1c7abd2f60251b06bb36990af54ee02b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08668bac_0f0a3c7f",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 2927,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-29T01:19:49Z",
+      "side": 1,
+      "message": "well.. this probably doesn\u0027t belong on chromeos - the whole file guarded by\n\n#if !defined(OS_CHROMEOS)\n...\n#else\nStatusTray* StatusTray::Create() {\n  return nullptr;\n}\n#endif\n\n\nI\u0027d say the call site should be guarded instead.. but I guess this is the right place for it.",
+      "revId": "afa13ab1c7abd2f60251b06bb36990af54ee02b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
