@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02f95187_2e1bdfda",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T21:29:04Z",
+      "side": 1,
+      "message": "Remove, see comments on Close.",
+      "revId": "2ad6baa1d82cde54f5edc41c24f4460c9cba8c59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b665dfc5_d57c8260",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T21:29:04Z",
+      "side": 1,
+      "message": "This needs to call:\n\n  // Signal to the manager that we\u0027re closed and can be removed.\n  // This should be the last call in the function as it deletes \"this\".\n  manager_-\u003eReleaseOutputStream(this);",
+      "revId": "2ad6baa1d82cde54f5edc41c24f4460c9cba8c59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
