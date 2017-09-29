@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee1799eb_59780ee0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-09-29T18:01:55Z",
+      "side": 1,
+      "message": "\"shut\" -\u003e \"shutdown\"?",
+      "revId": "866ec9433a7eeddb271196b25d1e05f289c80ce1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c358a887_7044d30e",
+        "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioDestinationNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-09-29T18:01:55Z",
+      "side": 1,
+      "message": "!IsInitialized() or IsInitialized()?\n\nAren\u0027t you expecting the handler to be initialized by the time we get here?",
+      "revId": "866ec9433a7eeddb271196b25d1e05f289c80ce1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e8206a5_2691c322",
+        "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioDestinationNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-09-29T18:01:55Z",
+      "side": 1,
+      "message": "How is this check fail?  render_bus_ is a member of OfflineAudioDestinationHandler so it should always be valid, right?",
+      "revId": "866ec9433a7eeddb271196b25d1e05f289c80ce1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bb866e6_2fb8b01d",
+        "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioDestinationNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-09-29T18:01:55Z",
+      "side": 1,
+      "message": "This isn\u0027t really relevant to this CL, is it?\n\nIt seems RenderIfNotSuspended is only called here.  Maybe the first arg should be removed (in a different CL)?",
+      "revId": "866ec9433a7eeddb271196b25d1e05f289c80ce1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
