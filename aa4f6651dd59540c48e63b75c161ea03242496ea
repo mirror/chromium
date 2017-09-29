@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "28a9e688_ffdced17",
+        "filename": "content/common/background_fetch/background_fetch_types.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-29T15:05:50Z",
+      "side": 1,
+      "message": "Yeah, that\u0027ll come in time.",
+      "parentUuid": "41998f9b_791870ae",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 26
+      },
+      "revId": "aa4f6651dd59540c48e63b75c161ea03242496ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5297ccbb_7ea7db28",
         "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchOptions.idl",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "feac0a6c_9fcf7c58",
+        "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchOptions.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-29T15:05:50Z",
+      "side": 1,
+      "message": "`downloadTotal` will probably be leading. It\u0027s the same value in either case.",
+      "parentUuid": "5297ccbb_7ea7db28",
+      "range": {
+        "startLine": 10,
+        "startChar": 4,
+        "endLine": 10,
+        "endChar": 60
+      },
+      "revId": "aa4f6651dd59540c48e63b75c161ea03242496ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10cbfe4f_57a9fcae",
         "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchOptions.idl",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "aa4f6651dd59540c48e63b75c161ea03242496ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "140a67de_8f70f2df",
+        "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchOptions.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-29T15:05:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10cbfe4f_57a9fcae",
+      "range": {
+        "startLine": 11,
+        "startChar": 4,
+        "endLine": 11,
+        "endChar": 8
+      },
+      "revId": "aa4f6651dd59540c48e63b75c161ea03242496ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -22,6 +22,30 @@
       "revId": "f5e7996a0cffea847bb2c14bd8c49a1d9ea3749e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeec501e_5418964d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/background-fetch/interfaces.worker-expected.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-29T15:05:50Z",
+      "side": 0,
+      "message": "This test was renamed to include \".https\" in its filename, so the expectations were stray.",
+      "parentUuid": "5e622f0d_99540bc8",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 36
+      },
+      "revId": "f5e7996a0cffea847bb2c14bd8c49a1d9ea3749e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
