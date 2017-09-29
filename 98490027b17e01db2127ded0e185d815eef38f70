@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "82ed18d2_1ef5924c",
+        "filename": "chrome/browser/signin/dice_response_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-29T09:30:56Z",
+      "side": 1,
+      "message": "This is why I\u0027m copying all string here: gaia_id, email and refresh_token. We could also pass only the refresh token to this method if you believe that is better.",
+      "parentUuid": "fbc3dff8_0b0fb060",
+      "range": {
+        "startLine": 373,
+        "startChar": 14,
+        "endLine": 373,
+        "endChar": 27
+      },
+      "revId": "98490027b17e01db2127ded0e185d815eef38f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba7a4e40_1f6b8a64",
         "filename": "chrome/browser/signin/dice_response_handler.h",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ab81e9b6_bd24ae91",
+        "filename": "chrome/browser/signin/dice_response_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-29T09:30:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba7a4e40_1f6b8a64",
+      "range": {
+        "startLine": 38,
+        "startChar": 6,
+        "endLine": 38,
+        "endChar": 31
+      },
+      "revId": "98490027b17e01db2127ded0e185d815eef38f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "397a5e96_af8e7f49",
         "filename": "chrome/browser/signin/dice_response_handler.h",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-21T08:18:00Z",
       "side": 1,
       "message": "Optional: Should this be a raw pointer here? I\u0027m not sure we need to transfer ownership at this point.\nNote: if you do this, make sure you don\u0027t use the delegate after it is deleted.",
+      "range": {
+        "startLine": 139,
+        "startChar": 11,
+        "endLine": 139,
+        "endChar": 21
+      },
+      "revId": "98490027b17e01db2127ded0e185d815eef38f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4262217f_0e103a7e",
+        "filename": "chrome/browser/signin/dice_response_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-29T09:30:56Z",
+      "side": 1,
+      "message": "I wanted to pass the unique_ptr here to call the delegate after the fetcher is deleted. Do you see any issue with the current implementation?",
+      "parentUuid": "397a5e96_af8e7f49",
       "range": {
         "startLine": 139,
         "startChar": 11,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "d5d17c5f_8e5ee670",
+        "filename": "chrome/browser/signin/process_dice_header_delegate_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-29T09:30:56Z",
+      "side": 1,
+      "message": "The presubmit bots looks happy so this should be fine. If this is not acceptable, then I can I do is to pass a callback to the DiceTabHelper that will then be called from |ProcessDiceHeaderDelegateImpl::DidFinishRefreshTokenFetch|.",
+      "parentUuid": "7e1dcda6_c6c36c67",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 65
+      },
+      "revId": "98490027b17e01db2127ded0e185d815eef38f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a1a3706_94d9e57a",
         "filename": "chrome/browser/ui/webui/signin/signin_dice_internals_handler.h",
         "patchSetId": 3
@@ -108,6 +204,24 @@
       "revId": "98490027b17e01db2127ded0e185d815eef38f70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "203d7f7c_2ce7bb2e",
+        "filename": "chrome/browser/ui/webui/signin/signin_dice_internals_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-29T09:30:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a1a3706_94d9e57a",
+      "revId": "98490027b17e01db2127ded0e185d815eef38f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
