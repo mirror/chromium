@@ -45,6 +45,9 @@ void PolicyToolUIHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(
       "updateSession", base::Bind(&PolicyToolUIHandler::HandleUpdateSession,
                                   base::Unretained(this)));
+  web_ui()->RegisterMessageCallback(
+      "enableLogging", base::Bind(&PolicyToolUIHandler::HandleEnableLogging,
+                                  base::Unretained(this)));
 }
 
 void PolicyToolUIHandler::OnJavascriptDisallowed() {
@@ -101,8 +104,9 @@ std::string PolicyToolUIHandler::ReadOrCreateFileCallback() {
   // indicating that logging was unsuccessful.
   // TODO(urusant): add a possibility to disable logging to disk in similar
   // cases.
-  if (!base::CreateDirectory(sessions_dir_))
-    return "{\"logged\": false}";
+  if (!base::CreateDirectory(sessions_dir_)) {
+    is_logging_enabled_ = false;
+  }
 
   // Initialize session name if it is not initialized yet.
   if (session_name_.empty())
@@ -126,9 +130,9 @@ std::string PolicyToolUIHandler::ReadOrCreateFileCallback() {
   // one of the filesystem operations wasn't successful. In this case, return
   // a dictionary indicating that logging was unsuccessful. Potentially this can
   // also be the place to disable logging to disk.
-  if (!PathExists(session_path)) {
-    return "{\"logged\": false}";
-  }
+  if (!PathExists(session_path))
+    is_logging_enabled_ = false;
+
   // Read file contents.
   std::string contents;
   base::ReadFileToString(session_path, &contents);
@@ -142,30 +146,27 @@ std::string PolicyToolUIHandler::ReadOrCreateFileCallback() {
 }
 
 void PolicyToolUIHandler::OnFileRead(const std::string& contents) {
-  std::unique_ptr<base::DictionaryValue> value =
-      base::DictionaryValue::From(base::JSONReader::Read(contents));
-
-  // If contents is not a properly formed JSON string, we alert the user about
-  // it and send an empty dictionary instead. Note that the broken session file
-  // would be overrided when the user edits something, so any manual changes
-  // that made it invalid will be lost.
-  // TODO(urusant): do it in a smarter way, e.g. revert to a previous session or
-  // a new session with a generated name.
-  if (!value) {
-    value = base::MakeUnique<base::DictionaryValue>();
-    ShowErrorMessageToUser("errorFileCorrupted");
+  // If the logging is disabled, send a message about that to the UI.
+  if (!is_logging_enabled_) {
+    CallJavascriptFunction("policy.Page.disableLogging");
   } else {
-    bool logged;
-    if (value->GetBoolean("logged", &logged)) {
-      if (!logged) {
-        ShowErrorMessageToUser("errorLoggingDisabled");
-      }
-      value->Remove("logged", nullptr);
+    std::unique_ptr<base::DictionaryValue> value =
+        base::DictionaryValue::From(base::JSONReader::Read(contents));
+
+    // If contents is not a properly formed JSON string, we alert the user about
+    // it and send an empty dictionary instead. Note that the broken session
+    // file would be overrided when the user edits something, so any manual
+    // changes that made it invalid will be lost.
+    // TODO(urusant): do it in a smarter way, e.g. revert to a previous session
+    // or a new session with a generated name.
+    if (!value) {
+      value = base::MakeUnique<base::DictionaryValue>();
+      ShowErrorMessageToUser("errorFileCorrupted");
     }
+    // TODO(urusant): convert the policy values so that the types are consistent
+    // with actual policy types.
+    CallJavascriptFunction("policy.Page.setPolicyValues", *value);
   }
-  // TODO(urusant): convert the policy values so that the types are consistent
-  // with actual policy types.
-  CallJavascriptFunction("policy.Page.setPolicyValues", *value);
 }
 
 void PolicyToolUIHandler::ImportFile() {
@@ -180,6 +181,7 @@ void PolicyToolUIHandler::ImportFile() {
 void PolicyToolUIHandler::HandleInitializedAdmin(const base::ListValue* args) {
   DCHECK_EQ(0U, args->GetSize());
   AllowJavascript();
+  is_logging_enabled_ = true;
   SendPolicyNames();
   ImportFile();
 }
@@ -204,14 +206,22 @@ void PolicyToolUIHandler::HandleLoadSession(const base::ListValue* args) {
   ImportFile();
 }
 
-void PolicyToolUIHandler::DoUpdateSession(const std::string& contents) {
-  if (base::WriteFile(GetSessionPath(session_name_), contents.c_str(),
-                      contents.size()) < static_cast<int>(contents.size())) {
-    ShowErrorMessageToUser("errorLoggingDisabled");
+bool PolicyToolUIHandler::DoUpdateSession(const std::string& contents) {
+  return base::WriteFile(sessions_dir_.Append(session_name_)
+                             .AddExtension(FILE_PATH_LITERAL(".json")),
+                         contents.c_str(),
+                         contents.size()) == static_cast<int>(contents.size());
+}
+
+void PolicyToolUIHandler::OnSessionUpdated(bool is_successful) {
+  if (!is_successful) {
+    is_logging_enabled_ = false;
+    CallJavascriptFunction("policy.Page.disableLogging");
   }
 }
 
 void PolicyToolUIHandler::HandleUpdateSession(const base::ListValue* args) {
+  DCHECK(is_logging_enabled_);
   DCHECK_EQ(1U, args->GetSize());
 
   const base::DictionaryValue* policy_values = nullptr;
@@ -219,11 +229,16 @@ void PolicyToolUIHandler::HandleUpdateSession(const base::ListValue* args) {
   DCHECK(policy_values);
   std::string converted_values;
   base::JSONWriter::Write(*policy_values, &converted_values);
-  base::PostTaskWithTraits(
+  base::PostTaskWithTraitsAndReplyWithResult(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
       base::BindOnce(&PolicyToolUIHandler::DoUpdateSession,
-                     callback_weak_ptr_factory_.GetWeakPtr(),
-                     converted_values));
+                     base::Unretained(this), converted_values),
+      base::BindOnce(&PolicyToolUIHandler::OnSessionUpdated,
+                     callback_weak_ptr_factory_.GetWeakPtr()));
+}
+
+void PolicyToolUIHandler::HandleEnableLogging(const base::ListValue* args) {
+  is_logging_enabled_ = true;
 }
 
 void PolicyToolUIHandler::ShowErrorMessageToUser(

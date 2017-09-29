@@ -4,6 +4,10 @@
 
 @import 'policy_common.css';
 
+.disabled {
+  display: none;
+}
+
 .edit-button {
   float: right;
   margin: 0;

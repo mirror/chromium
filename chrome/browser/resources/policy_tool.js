@@ -4,6 +4,15 @@
 
 // Override some methods of policy.Page.
 
+/**
+ * Disables saving to disk by hiding the 'load session' form and showing an
+ * error message instead.
+ */
+policy.Page.disableLogging = function() {
+  $('logging').classList.remove('disabled');
+  $('session-choice').classList.add('disabled');
+};
+
 /** @override */
 policy.Page.setPolicyValues = function(values) {
   var page = this.getInstance();
@@ -56,6 +65,12 @@ policy.Page.prototype.initialize = function() {
     for (policyTable in this.policyTables) {
       this.policyTables[policyTable].filter();
     }
+  };
+
+  $('enable-logging').onclick = function() {
+    $('logging').classList.remove('logging-disabled');
+    $('session-choice').classList.remove('logging-disabled');
+    chrome.send('enableLogging');
   };
 
   // Notify the browser that the page has loaded, causing it to send the
