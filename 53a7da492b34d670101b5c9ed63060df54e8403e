@@ -16,6 +16,24 @@
       "revId": "53a7da492b34d670101b5c9ed63060df54e8403e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a7d80bc_9bc06a5c",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-29T19:20:44Z",
+      "side": 1,
+      "message": "I am unsure whether this code is necessary. This change LGTM for the sake of expediency",
+      "parentUuid": "bb71a2d8_a805d70d",
+      "revId": "53a7da492b34d670101b5c9ed63060df54e8403e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
