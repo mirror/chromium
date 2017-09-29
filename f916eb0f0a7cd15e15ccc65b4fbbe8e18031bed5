@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e98f479d_4a60c62c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-09-29T20:54:29Z",
+      "side": 1,
+      "message": "My understanding was that ChromeOS and OS X both completely lack the concept of num lock altogether. The num lock key does nothing, the num lock light stays off, and the keypad always generates numbers.",
+      "parentUuid": "df08b8e3_9b02eb5e",
+      "range": {
+        "startLine": 10,
+        "startChar": 41,
+        "endLine": 10,
+        "endChar": 48
+      },
+      "revId": "f916eb0f0a7cd15e15ccc65b4fbbe8e18031bed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15a00de1_b0f277d0",
         "filename": "remoting/client/input/normalizing_input_filter_cros.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "f916eb0f0a7cd15e15ccc65b4fbbe8e18031bed5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c244031_ba6fca8d",
+        "filename": "remoting/client/input/normalizing_input_filter_cros.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-09-29T20:54:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15a00de1_b0f277d0",
+      "range": {
+        "startLine": 104,
+        "startChar": 5,
+        "endLine": 104,
+        "endChar": 12
+      },
+      "revId": "f916eb0f0a7cd15e15ccc65b4fbbe8e18031bed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "de441500_d7cf4bfd",
+        "filename": "remoting/client/plugin/pepper_input_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-09-29T20:54:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52639df4_9652d016",
+      "range": {
+        "startLine": 82,
+        "startChar": 2,
+        "endLine": 82,
+        "endChar": 10
+      },
+      "revId": "f916eb0f0a7cd15e15ccc65b4fbbe8e18031bed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c23b7ccc_d732a7ab",
         "filename": "remoting/host/input_injector_chromeos.cc",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "f916eb0f0a7cd15e15ccc65b4fbbe8e18031bed5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd96db9d_31d6d825",
+        "filename": "remoting/host/input_injector_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-09-29T20:54:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c23b7ccc_d732a7ab",
+      "range": {
+        "startLine": 49,
+        "startChar": 9,
+        "endLine": 49,
+        "endChar": 11
+      },
+      "revId": "f916eb0f0a7cd15e15ccc65b4fbbe8e18031bed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "8feaa00d_8d834e9b",
+        "filename": "remoting/host/input_injector_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-09-29T20:54:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96c41b66_69945796",
+      "range": {
+        "startLine": 71,
+        "startChar": 5,
+        "endLine": 71,
+        "endChar": 17
+      },
+      "revId": "f916eb0f0a7cd15e15ccc65b4fbbe8e18031bed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc4e43ac_bd47657b",
         "filename": "remoting/host/input_injector_chromeos.cc",
         "patchSetId": 2
@@ -128,6 +248,30 @@
       "writtenOn": "2017-09-29T20:26:19Z",
       "side": 1,
       "message": "You could use a simple bool and call SetLockState with an appropriate value in both branches. You call though, as this approach is consistent with what you do on platforms that support NumLock, where it would be less elegant not to use base::Optional.",
+      "range": {
+        "startLine": 127,
+        "startChar": 35,
+        "endLine": 127,
+        "endChar": 0
+      },
+      "revId": "f916eb0f0a7cd15e15ccc65b4fbbe8e18031bed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37c9cec3_fa7342d3",
+        "filename": "remoting/host/input_injector_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-09-29T20:54:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc4e43ac_bd47657b",
       "range": {
         "startLine": 127,
         "startChar": 35,
