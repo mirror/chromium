@@ -198,9 +198,12 @@ void HTMLOptionElement::ParseAttribute(
     if (params.old_value.IsNull() != params.new_value.IsNull()) {
       PseudoStateChanged(CSSSelector::kPseudoDisabled);
       PseudoStateChanged(CSSSelector::kPseudoEnabled);
-      if (GetLayoutObject())
-        LayoutTheme::GetTheme().ControlStateChanged(*GetLayoutObject(),
-                                                    kEnabledControlState);
+      if (LayoutObject* o = GetLayoutObject()) {
+        if (LayoutTheme::GetTheme().ControlStateChanged(
+                o->GetNode(), o->StyleRef(), kEnabledControlState)) {
+          o->SetShouldDoFullPaintInvalidationIncludingNonCompositingDescendants();
+        }
+      }
     }
   } else if (name == selectedAttr) {
     if (params.old_value.IsNull() != params.new_value.IsNull() && !is_dirty_)
