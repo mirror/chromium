@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6b11f71_2963e8e7",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletThread.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-29T15:23:30Z",
+      "side": 1,
+      "message": "TODO(petermayo): Use a dedicated thread: https://crbug.com/731727\nShould help ensure this comment gets updated to reflect the change.",
+      "revId": "a30ebbc308aef59b7e58970eda161dc23dd6f181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
