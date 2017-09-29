@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab306fc_45509d04",
+        "filename": "tools/binary_size/libsupersize/describe.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-29T03:42:33Z",
+      "side": 1,
+      "message": "nit: push abs(v) into a variable since it\u0027s used again below.",
+      "revId": "e6c7a05b6ce70ec0806caabdc4d8bd7efb362a75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac2803fd_328d391c",
+        "filename": "tools/binary_size/libsupersize/describe.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-29T03:42:33Z",
+      "side": 1,
+      "message": "nit: I think the floor here is redundant. int() will floor for you.",
+      "revId": "e6c7a05b6ce70ec0806caabdc4d8bd7efb362a75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8e8c4c4_24b8da65",
+        "filename": "tools/binary_size/libsupersize/describe.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-29T03:42:33Z",
+      "side": 1,
+      "message": "nit: move this list to a constant (avoid re-allocating each call... assuming interpreter isn\u0027t smart enough to do that anyways)",
+      "revId": "e6c7a05b6ce70ec0806caabdc4d8bd7efb362a75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b722b9bd_e8d9b62c",
+        "filename": "tools/binary_size/libsupersize/describe.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-29T03:42:33Z",
+      "side": 1,
+      "message": "nit: prefer \u0027{}\u0027.format() to % since % is gone in python3",
+      "revId": "e6c7a05b6ce70ec0806caabdc4d8bd7efb362a75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebaadb9b_dbdbc726",
+        "filename": "tools/binary_size/libsupersize/describe.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-29T03:42:33Z",
+      "side": 1,
+      "message": "nit: use better names rather than commenting the names.\n\nitems1 -\u003e bucket_names\nitems2 -\u003e bucket_values\nn -\u003e num_items\nw -\u003e num_columns\nh -\u003e num_rows\nsp1 -\u003e name_column_widths\nsp2 -\u003e value_column_widths",
+      "revId": "e6c7a05b6ce70ec0806caabdc4d8bd7efb362a75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2e76fe1_99c402eb",
+        "filename": "tools/binary_size/libsupersize/describe.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-29T03:42:33Z",
+      "side": 1,
+      "message": "Nit: now that I see this in the goldens, I think it might be more clear to call this:\n\"Histogram of symbols based on pss:\"",
+      "revId": "e6c7a05b6ce70ec0806caabdc4d8bd7efb362a75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4c901b5_0a834395",
+        "filename": "tools/binary_size/libsupersize/describe.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-29T03:42:33Z",
+      "side": 1,
+      "message": "The data in the histogram object is never cleared, so wouldn\u0027t you want to create a new object for each SymbolGroup rather than have it as a field?",
+      "revId": "e6c7a05b6ce70ec0806caabdc4d8bd7efb362a75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
