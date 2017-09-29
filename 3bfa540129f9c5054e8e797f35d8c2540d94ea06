@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "534447ae_23fd58a2",
+        "filename": "components/chrome_cleaner/public/interfaces/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-09-29T20:16:42Z",
+      "side": 1,
+      "message": "This could use a comment explaining why the ID\u0027s can\u0027t be scrambled (used for IPC with an external program built from a different source tree with no access to the salt).",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 22
+      },
+      "revId": "3bfa540129f9c5054e8e797f35d8c2540d94ea06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
