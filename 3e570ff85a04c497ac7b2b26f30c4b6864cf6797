@@ -16,6 +16,24 @@
       "revId": "3e570ff85a04c497ac7b2b26f30c4b6864cf6797",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be9d37ce_abfc32ff",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-29T05:23:08Z",
+      "side": 0,
+      "message": "Yeah - I don\u0027t have mocks for non-Harmony Page Info though, so I thought I shouldn\u0027t make any changes other than a vanilla reorder to non-Harmony. ainslie@ and emilyschechter@ have given their OK (including padding changes). But yes I will be adding them to the Harmony Page Info.",
+      "parentUuid": "4cc25fbe_16d76ba9",
+      "revId": "3e570ff85a04c497ac7b2b26f30c4b6864cf6797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
