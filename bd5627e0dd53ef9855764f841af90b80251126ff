@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6a4c1f8_e7dcb3b9",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-29T00:17:55Z",
+      "side": 1,
+      "message": "button \u003d base::MakeUnique\u003cviews::ImageButton\u003e(listener);",
+      "range": {
+        "startLine": 85,
+        "startChar": 11,
+        "endLine": 85,
+        "endChar": 16
+      },
+      "revId": "bd5627e0dd53ef9855764f841af90b80251126ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "578fce7f_a2999c2a",
+        "filename": "ui/views/vector_icons/trash.icon",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-09-29T00:17:55Z",
+      "side": 1,
+      "message": "Put in chrome/app/vector_icons, and add copyright header.",
+      "revId": "bd5627e0dd53ef9855764f841af90b80251126ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
