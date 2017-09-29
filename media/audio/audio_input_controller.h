@@ -81,6 +81,8 @@ class UserInputMonitor;
 class MEDIA_EXPORT AudioInputController
     : public base::RefCountedThreadSafe<AudioInputController> {
  public:
+  class SuspendNotificationHandler;
+
   // Error codes to make native logging more clear. These error codes are added
   // to generic error strings to provide a higher degree of details.
   // Changing these values can lead to problems when matching native debug
@@ -263,12 +265,14 @@ class MEDIA_EXPORT AudioInputController
   };
 #endif
 
-  AudioInputController(scoped_refptr<base::SingleThreadTaskRunner> task_runner,
-                       EventHandler* handler,
-                       SyncWriter* sync_writer,
-                       UserInputMonitor* user_input_monitor,
-                       const AudioParameters& params,
-                       StreamType type);
+  AudioInputController(
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+      EventHandler* handler,
+      SyncWriter* sync_writer,
+      UserInputMonitor* user_input_monitor,
+      const AudioParameters& params,
+      StreamType type,
+      std::unique_ptr<SuspendNotificationHandler> suspend_notification_handler);
   virtual ~AudioInputController();
 
   const scoped_refptr<base::SingleThreadTaskRunner>& GetTaskRunnerForTesting()
@@ -279,6 +283,13 @@ class MEDIA_EXPORT AudioInputController
   EventHandler* GetHandlerForTesting() const { return handler_; }
 
  private:
+  enum State {
+    kEmpty,
+    kCreated,
+    kRecording,
+    kClosed,
+  };
+
   // Methods called on the audio thread (owned by the AudioManager).
   void DoCreate(AudioManager* audio_manager,
                 const AudioParameters& params,
@@ -287,6 +298,7 @@ class MEDIA_EXPORT AudioInputController
   void DoCreateForStream(AudioInputStream* stream_to_control, bool enable_agc);
   void DoRecord();
   void DoClose();
+  void CloseStream();
   void DoReportError();
   void DoSetVolume(double volume);
   void DoLogAudioLevels(float level_dbfs, int microphone_volume_percent);
@@ -332,6 +344,10 @@ class MEDIA_EXPORT AudioInputController
                        int* mic_volume_percent);
 
   void CheckMutedState();
+
+  // Helper function that sets the state on |suspend_notification_handler_| if
+  // it exists.
+  void SetState(State state);
 
   static StreamType ParamsToStreamType(const AudioParameters& params);
 
@@ -393,6 +409,11 @@ class MEDIA_EXPORT AudioInputController
   // the callbacks themselves occur on the hw callback thread. More details
   // in the AudioCallback class in the cc file.
   std::unique_ptr<AudioCallback> audio_callback_;
+
+  // Handles suspend and resume notification - closing the stream and restarting
+  // it, respectively. Exists if the stream is created in this class, i.e. not
+  // injected, and the user is in a certain experiment group.
+  std::unique_ptr<SuspendNotificationHandler> suspend_notification_handler_;
 
   // A weak pointer factory that we use when posting tasks to the audio thread
   // that we want to be automatically discarded after Close() has been called
