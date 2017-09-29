@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "1705b92e_22227699",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-29T20:51:51Z",
+      "side": 1,
+      "message": "Maybe add a comment above this about assuming it\u0027s an address form by process of elimination?  Might be a big nit, but if we ever added a new form type, this will break, so it\u0027s good to call that out.",
+      "range": {
+        "startLine": 729,
+        "startChar": 4,
+        "endLine": 729,
+        "endChar": 29
+      },
+      "revId": "1610bd0877327d723d0f8d955a51953880a6d6cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff236042_ab906ee3",
         "filename": "components/autofill/core/browser/autofill_metrics.cc",
         "patchSetId": 7
@@ -30,6 +53,52 @@
       "writtenOn": "2017-09-29T20:40:58Z",
       "side": 1,
       "message": "should this just be an if?",
+      "revId": "1610bd0877327d723d0f8d955a51953880a6d6cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a638fd0d_ffc03764",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-29T20:51:51Z",
+      "side": 1,
+      "message": "nit: Add blank line after",
+      "range": {
+        "startLine": 693,
+        "startChar": 54,
+        "endLine": 693,
+        "endChar": 0
+      },
+      "revId": "1610bd0877327d723d0f8d955a51953880a6d6cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96d5dd60_0d89abbe",
+        "filename": "components/autofill/core/browser/form_types.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-09-29T20:51:51Z",
+      "side": 1,
+      "message": "Alpha ordering?",
+      "range": {
+        "startLine": 11,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 15
+      },
       "revId": "1610bd0877327d723d0f8d955a51953880a6d6cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
