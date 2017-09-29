@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4675c34_e7f7f976",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/ProbeSink.h.tmpl",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-09-29T01:58:48Z",
+      "side": 1,
+      "message": "I hope compiler will be able to shout when the number of agents exceeds 32.",
+      "revId": "608d49e61385dd9afa6d6160bfe8ef16554bb889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59aa059e_834f6402",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/ProbeSink.h.tmpl",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-09-29T01:58:48Z",
+      "side": 1,
+      "message": "Can we now remove these m_has* caches? I think they won\u0027t give any extra speed boost.",
+      "revId": "608d49e61385dd9afa6d6160bfe8ef16554bb889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
