@@ -8,6 +8,7 @@
 #include "base/metrics/user_metrics.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/timer/timer.h"
+#include "build/build_config.h"
 #include "chrome/browser/platform_util.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
@@ -57,7 +58,14 @@
 #include "chrome/browser/ui/views/desktop_ios_promotion/desktop_ios_promotion_bubble_view.h"
 #endif
 
+#if defined(OS_WIN)
+#include "chrome/browser/password_manager/password_manager_util_win.h"
+#elif defined(OS_MACOSX)
+#include "chrome/browser/password_manager/password_manager_util_mac.h"
+#endif
+
 int ManagePasswordsBubbleView::auto_signin_toast_timeout_ = 3;
+int ManagePasswordsBubbleView::password_view_button_timeout_ = 3;
 
 // Helpers --------------------------------------------------------------------
 
@@ -343,7 +351,7 @@ class ManagePasswordsBubbleView::AutoSigninView
   void OnWidgetClosing(views::Widget* widget) override;
 
   void OnTimer();
-  static base::TimeDelta GetTimeout() {
+  static base::TimeDelta GetTimeoutForToast() {
     return base::TimeDelta::FromSeconds(
         ManagePasswordsBubbleView::auto_signin_toast_timeout_);
   }
@@ -389,7 +397,8 @@ ManagePasswordsBubbleView::AutoSigninView::AutoSigninView(
   observed_browser_.Add(browser_view->GetWidget());
 #endif
   if (browser->window()->IsActive())
-    timer_.Start(FROM_HERE, GetTimeout(), this, &AutoSigninView::OnTimer);
+    timer_.Start(FROM_HERE, GetTimeoutForToast(), this,
+                 &AutoSigninView::OnTimer);
 }
 
 void ManagePasswordsBubbleView::AutoSigninView::ButtonPressed(
@@ -400,7 +409,8 @@ void ManagePasswordsBubbleView::AutoSigninView::ButtonPressed(
 void ManagePasswordsBubbleView::AutoSigninView::OnWidgetActivationChanged(
     views::Widget* widget, bool active) {
   if (active && !timer_.IsRunning())
-    timer_.Start(FROM_HERE, GetTimeout(), this, &AutoSigninView::OnTimer);
+    timer_.Start(FROM_HERE, GetTimeoutForToast(), this,
+                 &AutoSigninView::OnTimer);
 }
 
 void ManagePasswordsBubbleView::AutoSigninView::OnWidgetClosing(
@@ -435,6 +445,9 @@ class ManagePasswordsBubbleView::PendingView : public views::View,
   void CreatePasswordField();
   void TogglePasswordVisibility();
   void UpdateUsernameAndPasswordInModel();
+  void OnLockPasswordShow();
+
+  static base::TimeDelta GetTimeoutForPasswordView();
 
   ManagePasswordsBubbleView* parent_;
 
@@ -446,6 +459,9 @@ class ManagePasswordsBubbleView::PendingView : public views::View,
   std::unique_ptr<views::View> password_field_;
 
   bool password_visible_;
+
+  // Timer to disable eye icon after 90 seconds.
+  base::OneShotTimer password_view_button_timer_;
 
   DISALLOW_COPY_AND_ASSIGN(PendingView);
 };
@@ -473,6 +489,9 @@ ManagePasswordsBubbleView::PendingView::PendingView(
   if (base::FeatureList::IsEnabled(
           password_manager::features::kEnablePasswordSelection)) {
     password_view_button_ = GeneratePasswordViewButton(this).release();
+    password_view_button_timer_.Start(
+        FROM_HERE, GetTimeoutForPasswordView(), this,
+        &ManagePasswordsBubbleView::PendingView::OnLockPasswordShow);
   }
 
   // Create buttons.
@@ -550,6 +569,21 @@ void ManagePasswordsBubbleView::PendingView::CreatePasswordField() {
 }
 
 void ManagePasswordsBubbleView::PendingView::TogglePasswordVisibility() {
+  if (!password_visible_) {
+    if (password_view_button_timer_.IsRunning()) {
+      password_view_button_timer_.Reset();
+    } else {
+      bool authenticated = true;
+#if defined(OS_WIN)
+      authenticated = password_manager_util_win::AuthenticateUser(
+          password_view_->GetNativeWindow());
+#elif defined(OS_MACOSX)
+      authenticated = password_manager_util_mac::AuthenticateUser();
+#endif
+      if (!authenticated)
+        return;
+    }
+  }
   UpdateUsernameAndPasswordInModel();
   password_visible_ = !password_visible_;
   password_view_button_->SetToggled(password_visible_);
@@ -584,6 +618,17 @@ void ManagePasswordsBubbleView::PendingView::
                 ->selected_index());
   }
   parent_->model()->OnCredentialEdited(new_username, new_password);
+}
+
+void ManagePasswordsBubbleView::PendingView::OnLockPasswordShow() {
+  if (password_visible_)
+    TogglePasswordVisibility();
+}
+
+base::TimeDelta
+ManagePasswordsBubbleView::PendingView::GetTimeoutForPasswordView() {
+  return base::TimeDelta::FromSeconds(
+      ManagePasswordsBubbleView::password_view_button_timeout_);
 }
 
 // ManagePasswordsBubbleView::ManageView --------------------------------------
