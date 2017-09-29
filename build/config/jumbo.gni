@@ -6,8 +6,9 @@ import("//build/split_static_library.gni")  # When someone uses that target_type
 
 declare_args() {
   # If true, use a jumbo build (files compiled together) to speed up
-  # compilation.
-  use_jumbo_build = false
+  # compilation. Enabled by default for everything official builds and
+  # Android+gcc builds because of a warning that prevents builds.
+  use_jumbo_build = !is_official_build && !(is_android && !is_clang)
 
   # A target to exclude from jumbo builds, for optimal round trip time
   # when frequently changing a single cpp file.
