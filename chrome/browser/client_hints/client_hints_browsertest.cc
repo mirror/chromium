@@ -5,6 +5,7 @@
 #include "base/command_line.h"
 #include "base/run_loop.h"
 #include "base/test/histogram_tester.h"
+#include "chrome/browser/content_settings/cookie_settings_factory.h"
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/metrics/subprocess_metrics_provider.h"
 #include "chrome/browser/net/url_request_mock_util.h"
@@ -12,6 +13,7 @@
 #include "chrome/browser/ui/browser.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/ui_test_utils.h"
+#include "components/content_settings/core/browser/cookie_settings.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/common/browser_side_navigation_policy.h"
@@ -199,6 +201,113 @@ IN_PROC_BROWSER_TEST_F(ClientHintsBrowserTest,
     // attached to both the HTML and the image requests.
     EXPECT_EQ(4u, count_client_hints_headers_seen());
   }
+}
+
+// Ensure that when cookies are blocked, client hints are not persisted.
+IN_PROC_BROWSER_TEST_F(ClientHintsBrowserTest,
+                       ClientHintsLifetimeCookiesBlocked) {
+  scoped_refptr<content_settings::CookieSettings> cookie_settings_ =
+      CookieSettingsFactory::GetForProfile(browser()->profile());
+  cookie_settings_->SetCookieSetting(accept_ch_without_lifetime_url(),
+                                     CONTENT_SETTING_BLOCK);
+
+  base::HistogramTester histogram_tester;
+  ContentSettingsForOneType host_settings;
+
+  HostContentSettingsMapFactory::GetForProfile(browser()->profile())
+      ->GetSettingsForOneType(CONTENT_SETTINGS_TYPE_CLIENT_HINTS, std::string(),
+                              &host_settings);
+  EXPECT_EQ(0u, host_settings.size());
+
+  // Fetching accept_ch_with_lifetime_url() should persist the request for
+  // client hints.
+  ui_test_utils::NavigateToURL(browser(), accept_ch_with_lifetime_url());
+
+  histogram_tester.ExpectTotalCount("ClientHints.UpdateEventCount", 0);
+
+  content::FetchHistogramsFromChildProcesses();
+  SubprocessMetricsProvider::MergeHistogramDeltasForTesting();
+
+  // client_hints_url() sets two client hints.
+  histogram_tester.ExpectUniqueSample("ClientHints.UpdateSize", 2, 1);
+  // accept_ch_with_lifetime_url() sets client hints persist duration to 3600
+  // seconds.
+  histogram_tester.ExpectUniqueSample("ClientHints.PersistDuration",
+                                      3600 * 1000, 1);
+  base::RunLoop().RunUntilIdle();
+
+  // Clients hints preferences for one origin should be persisted.
+  HostContentSettingsMapFactory::GetForProfile(browser()->profile())
+      ->GetSettingsForOneType(CONTENT_SETTINGS_TYPE_CLIENT_HINTS, std::string(),
+                              &host_settings);
+  EXPECT_EQ(0u, host_settings.size());
+
+  ui_test_utils::NavigateToURL(browser(),
+                               without_accept_ch_without_lifetime_url());
+  EXPECT_EQ(0u, count_client_hints_headers_seen());
+}
+
+IN_PROC_BROWSER_TEST_F(ClientHintsBrowserTest,
+                       ClientHintsLifetimeJavascriptBlocked) {
+  base::HistogramTester histogram_tester;
+  ContentSettingsForOneType host_settings;
+
+  HostContentSettingsMapFactory::GetForProfile(browser()->profile())
+      ->GetSettingsForOneType(CONTENT_SETTINGS_TYPE_CLIENT_HINTS, std::string(),
+                              &host_settings);
+  EXPECT_EQ(0u, host_settings.size());
+
+  // Fetching accept_ch_with_lifetime_url() should persist the request for
+  // client hints.
+  ui_test_utils::NavigateToURL(browser(), accept_ch_with_lifetime_url());
+
+  histogram_tester.ExpectUniqueSample("ClientHints.UpdateEventCount", 1, 1);
+
+  content::FetchHistogramsFromChildProcesses();
+  SubprocessMetricsProvider::MergeHistogramDeltasForTesting();
+
+  // client_hints_url() sets two client hints.
+  histogram_tester.ExpectUniqueSample("ClientHints.UpdateSize", 2, 1);
+  // accept_ch_with_lifetime_url() sets client hints persist duration to 3600
+  // seconds.
+  histogram_tester.ExpectUniqueSample("ClientHints.PersistDuration",
+                                      3600 * 1000, 1);
+  base::RunLoop().RunUntilIdle();
+
+  // Clients hints preferences for one origin should be persisted.
+  HostContentSettingsMapFactory::GetForProfile(browser()->profile())
+      ->GetSettingsForOneType(CONTENT_SETTINGS_TYPE_CLIENT_HINTS, std::string(),
+                              &host_settings);
+  EXPECT_EQ(1u, host_settings.size());
+
+  HostContentSettingsMapFactory::GetForProfile(browser()->profile())
+      ->SetContentSettingDefaultScope(without_accept_ch_without_lifetime_url(),
+                                      GURL(), CONTENT_SETTINGS_TYPE_JAVASCRIPT,
+                                      std::string(), CONTENT_SETTING_BLOCK);
+  ui_test_utils::NavigateToURL(browser(),
+                               without_accept_ch_without_lifetime_url());
+  EXPECT_EQ(0u, count_client_hints_headers_seen());
+
+  HostContentSettingsMapFactory::GetForProfile(browser()->profile())
+      ->SetContentSettingDefaultScope(without_accept_ch_without_lifetime_url(),
+                                      GURL(), CONTENT_SETTINGS_TYPE_JAVASCRIPT,
+                                      std::string(), CONTENT_SETTING_ALLOW);
+
+  SetClientHintExpectations(true);
+  ui_test_utils::NavigateToURL(browser(),
+                               without_accept_ch_without_lifetime_url());
+  if (content::IsBrowserSideNavigationEnabled()) {
+    // When browser side navigation is enabled, two client hints are attached to
+    // the image request.
+    EXPECT_EQ(2u, count_client_hints_headers_seen());
+  } else {
+    // When browser side navigation is not enabled, two client hints are
+    // attached to both the HTML and the image requests.
+    EXPECT_EQ(4u, count_client_hints_headers_seen());
+  }
+  // Clear settings.
+  HostContentSettingsMapFactory::GetForProfile(browser()->profile())
+      ->ClearSettingsForOneType(CONTENT_SETTINGS_TYPE_JAVASCRIPT);
 }
 
 IN_PROC_BROWSER_TEST_F(ClientHintsBrowserTest,
