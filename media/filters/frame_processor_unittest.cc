@@ -93,7 +93,7 @@ class FrameProcessorTest
         base::Bind(
             &FrameProcessorTestCallbackHelper::OnPossibleDurationIncrease,
             base::Unretained(&callbacks_)),
-        &media_log_);
+        &media_log_, range_api_);
     frame_processor_->SetParseWarningCallback(
         base::Bind(&FrameProcessorTestCallbackHelper::OnParseWarning,
                    base::Unretained(&callbacks_)));
@@ -178,7 +178,8 @@ class FrameProcessorTest
   }
 
   void ProcessFrames(const std::string& audio_timestamps,
-                     const std::string& video_timestamps) {
+                     const std::string& video_timestamps,
+                     const bool expect_success = true) {
     StreamParser::BufferQueueMap buffer_queue_map;
     const auto& audio_buffers =
         StringToBufferQueue(audio_timestamps, audio_id_, DemuxerStream::AUDIO);
@@ -188,9 +189,10 @@ class FrameProcessorTest
         StringToBufferQueue(video_timestamps, video_id_, DemuxerStream::VIDEO);
     if (!video_buffers.empty())
       buffer_queue_map.insert(std::make_pair(video_id_, video_buffers));
-    ASSERT_TRUE(frame_processor_->ProcessFrames(
-        buffer_queue_map, append_window_start_, append_window_end_,
-        &timestamp_offset_));
+    bool process_frames_result =
+        frame_processor_->ProcessFrames(buffer_queue_map, append_window_start_,
+                                        append_window_end_, &timestamp_offset_);
+    ASSERT_EQ(expect_success, process_frames_result);
   }
 
   void CheckExpectedRangesByTimestamp(ChunkDemuxerStream* stream,
@@ -382,14 +384,8 @@ TEST_P(FrameProcessorTest, WrongTypeInAppendedBuffer) {
 TEST_P(FrameProcessorTest, NonMonotonicallyIncreasingTimestampInOneCall) {
   AddTestTracks(HAS_AUDIO);
 
-  StreamParser::BufferQueueMap buffer_queue_map;
-  const auto& audio_buffers =
-      StringToBufferQueue("10K 0K", audio_id_, DemuxerStream::AUDIO);
-  buffer_queue_map.insert(std::make_pair(audio_id_, audio_buffers));
   EXPECT_MEDIA_LOG(ParsedBuffersNotInDTSSequence());
-  ASSERT_FALSE(
-      frame_processor_->ProcessFrames(buffer_queue_map, append_window_start_,
-                                      append_window_end_, &timestamp_offset_));
+  ProcessFrames("10K 0K", "", false /* expect processing failure */);
   EXPECT_FALSE(in_coded_frame_group());
   EXPECT_EQ(base::TimeDelta(), timestamp_offset_);
   CheckExpectedRangesByTimestamp(audio_.get(), "{ }");
@@ -1151,6 +1147,33 @@ TEST_P(FrameProcessorTest, AudioNonKeyframeChangedToKeyframe) {
   CheckExpectedRangesByTimestamp(audio_.get(), "{ [0,30) }");
   SeekStream(audio_.get(), base::TimeDelta());
   CheckReadsThenReadStalls(audio_.get(), "0 10 20");
+}
+
+TEST_P(FrameProcessorTest, TimestampOffsetNegativeDts) {
+  // Shift a GOP earlier using timestampOffset such that the GOP has
+  // starts with negative DTS, but PTS 0. Expect ByDts parse error, ByPts
+  // success.
+  InSequence s;
+  AddTestTracks(HAS_VIDEO);
+  frame_processor_->SetSequenceMode(use_sequence_mode_);
+
+  if (!use_sequence_mode_) {
+    // Simulate the offset that sequence mode would apply, to make the results
+    // the same regardless of sequence vs segments mode.
+    SetTimestampOffset(frame_duration_ * -10);
+  }
+
+  if (range_api_ == ChunkDemuxerStream::RangeApi::kLegacyByDts) {
+    EXPECT_MEDIA_LOG(NegativeDtsFailureWhenByDts("video", 0, -30000));
+    ProcessFrames("", "100|70K 130|80", false /* expect processing failure */);
+  } else {
+    EXPECT_CALL(callbacks_, PossibleDurationIncrease(frame_duration_ * 4));
+    ProcessFrames("", "100|70K 130|80");
+    EXPECT_EQ(frame_duration_ * -10, timestamp_offset_);
+    CheckExpectedRangesByTimestamp(video_.get(), "{ [0,40) }");
+    SeekStream(video_.get(), base::TimeDelta());
+    CheckReadsThenReadStalls(video_.get(), "0:100 30:130");
+  }
 }
 
 INSTANTIATE_TEST_CASE_P(SequenceModeLegacyByDts,
