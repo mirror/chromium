@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6aee558_d172191f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T00:00:50Z",
+      "side": 1,
+      "message": "Let\u0027s call this TALL_BOTTOM_NAV_THRESHOLD_DP.",
+      "range": {
+        "startLine": 510,
+        "startChar": 24,
+        "endLine": 510,
+        "endChar": 53
+      },
+      "revId": "ece7019ec162e8f8dbb011955c36f8ca9856fc03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
