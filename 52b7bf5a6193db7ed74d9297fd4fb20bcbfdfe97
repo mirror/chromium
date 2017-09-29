@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9cca9923_9712609d",
+        "filename": "chrome/browser/ui/webui/interstitials/interstitial_ui_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-29T17:48:18Z",
+      "side": 1,
+      "message": "Nit: InterstitialWithPathViewSource",
+      "revId": "52b7bf5a6193db7ed74d9297fd4fb20bcbfdfe97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
