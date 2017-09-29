@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4149f2df_4e2f68c8",
+        "filename": "components/arc/PRESUBMIT.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-29T15:30:45Z",
+      "side": 1,
+      "message": "I\u0027m okay with this as-is, but can we try to get it in depot_tools or some other place where it can be import-ed to avoid proliferation of slightly modified flavors of such checks? Alternatively, can we import cc/PRESUBMIT.py? The global presubmit uses such tricks: https://cs.chromium.org/chromium/src/PRESUBMIT.py?l\u003d828",
+      "parentUuid": "0aab507f_65fa5978",
+      "revId": "eaaa4358b093ea4e710032ca42c0a793bf9f841a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c76042a4_c15fb110",
         "filename": "components/arc/PRESUBMIT.py",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-29T07:09:26Z",
       "side": 1,
       "message": "And this is added.\nNow we\u0027re replacing all MakeUnique with std::make_unique.",
+      "revId": "eaaa4358b093ea4e710032ca42c0a793bf9f841a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfa0983e_a790197c",
+        "filename": "components/arc/PRESUBMIT.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-29T15:30:45Z",
+      "side": 1,
+      "message": "Could it be possible to split this off to a separate check? That\u0027ll improve our chances of using the original check as-is.",
+      "parentUuid": "c76042a4_c15fb110",
       "revId": "eaaa4358b093ea4e710032ca42c0a793bf9f841a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
