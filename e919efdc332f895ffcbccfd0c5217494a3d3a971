@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "bab4d0db_bb518ad2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchBarControl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T22:34:01Z",
+      "side": 1,
+      "message": "Great!",
+      "parentUuid": "f37087df_d1984ae8",
+      "revId": "e919efdc332f895ffcbccfd0c5217494a3d3a971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d844ba67_9754071f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchBarControl.java",
         "patchSetId": 11
@@ -128,6 +146,30 @@
       "revId": "e919efdc332f895ffcbccfd0c5217494a3d3a971",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b43f0ac_1f1412ea",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchBarControl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T22:34:01Z",
+      "side": 1,
+      "message": "This is fine, since it\u0027s consistent throughout the file.",
+      "parentUuid": "5fbac14a_ad61b5c0",
+      "range": {
+        "startLine": 542,
+        "startChar": 8,
+        "endLine": 542,
+        "endChar": 42
+      },
+      "revId": "e919efdc332f895ffcbccfd0c5217494a3d3a971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -222,6 +264,30 @@
       "revId": "e919efdc332f895ffcbccfd0c5217494a3d3a971",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be2959f9_bcdd7aff",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchBarControl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T22:34:01Z",
+      "side": 1,
+      "message": "I\u0027m okay with it is as is.",
+      "parentUuid": "6f42d332_c7edc6a6",
+      "range": {
+        "startLine": 584,
+        "startChar": 12,
+        "endLine": 584,
+        "endChar": 41
+      },
+      "revId": "e919efdc332f895ffcbccfd0c5217494a3d3a971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
