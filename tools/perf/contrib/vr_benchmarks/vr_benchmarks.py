@@ -61,6 +61,24 @@ class XrWebVrStatic(_BaseVRBenchmark):
     return memory.DefaultValueCanBeAddedPredicateForMemoryMeasurement(value)
 
 
+@benchmark.Owner(emails=['bsheedy@chromium.org'])
+class XrWebVrStaticStandardized(XrWebVrStatic):
+  """XrWebVrStatic w/ standardized render resolution and no vsync alignment."""
+
+  def CreateStorySet(self, options):
+    return webvr_sample_pages.WebVrSamplePageSet(use_standard_size=True)
+
+  def SetExtraBrowserOptions(self, options):
+    super(XrWebVrStaticStandardized, self).SetExtraBrowserOptions(options)
+    options.AppendExtraBrowserArgs([
+        '--disable-features=WebVrVsyncAlign',
+    ])
+
+  @classmethod
+  def Name(cls):
+    return 'xr.webvr.static.standardized'
+
+
 @benchmark.Owner(emails=['tiborg@chromium.org'])
 class XrBrowsingStatic(_BaseVRBenchmark):
   """Benchmark for testing the VR performance in VR Browsing Mode."""
