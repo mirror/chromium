@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e2217ed8_c1b9dad5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-09-29T14:48:54Z",
+      "side": 1,
+      "message": "It is fine to remove this, as long as you land the downstream CL right after this CL is landed, and let sheriffs know when you begin to land this CL.",
+      "parentUuid": "3535279c_b8a2e34a",
+      "range": {
+        "startLine": 159,
+        "startChar": 23,
+        "endLine": 159,
+        "endChar": 63
+      },
+      "revId": "d2425f3462f9ef2725b6053cbc3a2c854e971cb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b88edfc7_c7ba3453",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
         "patchSetId": 6
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "We can remove it when we have enough data. For now I slight prefer to leave it for a while just to get an idea about the user cache size.",
       "parentUuid": "b88edfc7_c7ba3453",
+      "range": {
+        "startLine": 181,
+        "startChar": 16,
+        "endLine": 181,
+        "endChar": 33
+      },
+      "revId": "d2425f3462f9ef2725b6053cbc3a2c854e971cb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7ca2d668_3f5c3ab1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-09-29T14:48:54Z",
+      "side": 1,
+      "message": "I am fine to keep it:)",
+      "parentUuid": "1702be28_2f9752ec",
       "range": {
         "startLine": 181,
         "startChar": 16,
