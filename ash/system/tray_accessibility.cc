@@ -111,6 +111,11 @@ const gfx::VectorIcon& GetNotificationIcon(uint32_t enabled_accessibility) {
              : kSystemMenuAccessibilityChromevoxIcon;
 }
 
+void UpdateCheckMark(views::View* view, bool enabled) {
+  TrayPopupUtils::UpdateCheckMarkVisibility(
+      static_cast<HoverHighlightView*>(view), enabled);
+}
+
 }  // namespace
 
 namespace tray {
@@ -150,6 +155,52 @@ AccessibilityDetailedView::AccessibilityDetailedView(SystemTrayItem* owner)
   AppendAccessibilityList();
   CreateTitleRow(IDS_ASH_STATUS_TRAY_ACCESSIBILITY_TITLE);
   Layout();
+}
+
+void AccessibilityDetailedView::OnAccessibilityStatusChanged() {
+  AccessibilityDelegate* delegate = Shell::Get()->accessibility_delegate();
+  AccessibilityController* controller =
+      Shell::Get()->accessibility_controller();
+
+  spoken_feedback_enabled_ = delegate->IsSpokenFeedbackEnabled();
+  UpdateCheckMark(spoken_feedback_view_, spoken_feedback_enabled_);
+
+  high_contrast_enabled_ = controller->IsHighContrastEnabled();
+  UpdateCheckMark(high_contrast_view_, high_contrast_enabled_);
+
+  screen_magnifier_enabled_ = delegate->IsMagnifierEnabled();
+  UpdateCheckMark(screen_magnifier_view_, screen_magnifier_enabled_);
+
+  autoclick_enabled_ = delegate->IsAutoclickEnabled();
+  UpdateCheckMark(autoclick_view_, autoclick_enabled_);
+
+  virtual_keyboard_enabled_ = delegate->IsVirtualKeyboardEnabled();
+  UpdateCheckMark(virtual_keyboard_view_, virtual_keyboard_enabled_);
+
+  large_cursor_enabled_ = controller->IsLargeCursorEnabled();
+  UpdateCheckMark(large_cursor_view_, large_cursor_enabled_);
+
+  mono_audio_enabled_ = delegate->IsMonoAudioEnabled();
+  UpdateCheckMark(mono_audio_view_, mono_audio_enabled_);
+
+  caret_highlight_enabled_ = delegate->IsCaretHighlightEnabled();
+  UpdateCheckMark(caret_highlight_view_, caret_highlight_enabled_);
+
+  highlight_mouse_cursor_enabled_ = delegate->IsCursorHighlightEnabled();
+  UpdateCheckMark(highlight_mouse_cursor_view_,
+                  highlight_mouse_cursor_enabled_);
+
+  if (highlight_keyboard_focus_view_) {
+    highlight_keyboard_focus_enabled_ = delegate->IsFocusHighlightEnabled();
+    UpdateCheckMark(highlight_keyboard_focus_view_,
+                    highlight_keyboard_focus_enabled_);
+  }
+
+  sticky_keys_enabled_ = delegate->IsStickyKeysEnabled();
+  UpdateCheckMark(sticky_keys_view_, sticky_keys_enabled_);
+
+  tap_dragging_enabled_ = delegate->IsTapDraggingEnabled();
+  UpdateCheckMark(tap_dragging_view_, tap_dragging_enabled_);
 }
 
 void AccessibilityDetailedView::AppendAccessibilityList() {
@@ -451,7 +502,7 @@ void TrayAccessibility::OnAccessibilityStatusChanged(
     return;
 
   if (detailed_menu_)
-    detailed_menu_->GetWidget()->Close();
+    detailed_menu_->OnAccessibilityStatusChanged();
 
   message_center::MessageCenter* message_center =
       message_center::MessageCenter::Get();

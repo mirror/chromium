@@ -167,7 +167,11 @@ class TrayAccessibilityTest
 
   bool CreateDetailedMenu() {
     tray()->ShowDetailedView(0, false);
-    return tray()->detailed_menu_ != NULL;
+    return tray()->detailed_menu_ != nullptr;
+  }
+
+  ash::tray::AccessibilityDetailedView* GetDetailedMenu() {
+    return tray()->detailed_menu_;
   }
 
   void CloseDetailMenu() {
@@ -1706,6 +1710,29 @@ IN_PROC_BROWSER_TEST_P(TrayAccessibilityTest, CheckMenuVisibilityOnDetailMenu) {
   EXPECT_TRUE(IsStickyKeysMenuShownOnDetailMenu());
   EXPECT_TRUE(IsTapDraggingMenuShownOnDetailMenu());
   CloseDetailMenu();
+}
+
+// Verify that the accessiblity system detailed menu remains open when an item
+// is selected or deselected.
+IN_PROC_BROWSER_TEST_P(TrayAccessibilityTest, DetailMenuRemainsOpen) {
+  EXPECT_TRUE(CreateDetailedMenu());
+  ASSERT_TRUE(IsAutoclickMenuShownOnDetailMenu());
+
+  ClickAutoclickOnDetailMenu();
+  EXPECT_TRUE(IsAutoclickEnabledOnDetailMenu());
+  {
+    base::RunLoop run_loop;
+    run_loop.RunUntilIdle();
+  }
+  EXPECT_TRUE(GetDetailedMenu());
+
+  ClickAutoclickOnDetailMenu();
+  EXPECT_FALSE(IsAutoclickEnabledOnDetailMenu());
+  {
+    base::RunLoop run_loop;
+    run_loop.RunUntilIdle();
+  }
+  EXPECT_TRUE(GetDetailedMenu());
 }
 
 INSTANTIATE_TEST_CASE_P(TrayAccessibilityTestInstance,

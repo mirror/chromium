@@ -37,6 +37,8 @@ class AccessibilityDetailedView : public TrayDetailsView {
   explicit AccessibilityDetailedView(SystemTrayItem* owner);
   ~AccessibilityDetailedView() override {}
 
+  void OnAccessibilityStatusChanged();
+
  private:
   friend class chromeos::TrayAccessibilityTest;
 
