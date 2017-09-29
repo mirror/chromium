@@ -230,7 +230,7 @@ void DoElevatedInstallRecoveryComponent(const base::FilePath& path) {
       FROM_HERE,
       {base::WithBaseSyncPrimitives(), base::TaskPriority::BACKGROUND,
        base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
-      base::Bind(&WaitForElevatedInstallToComplete, base::Passed(&process)));
+      base::BindOnce(&WaitForElevatedInstallToComplete, base::Passed(&process)));
 }
 
 void ElevatedInstallRecoveryComponent(const base::FilePath& installer_path) {
@@ -238,7 +238,7 @@ void ElevatedInstallRecoveryComponent(const base::FilePath& installer_path) {
       FROM_HERE,
       {base::MayBlock(), base::TaskPriority::BACKGROUND,
        base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
-      base::Bind(&DoElevatedInstallRecoveryComponent, installer_path));
+      base::BindOnce(&DoElevatedInstallRecoveryComponent, installer_path));
 }
 
 }  // namespace
@@ -259,9 +259,9 @@ class RecoveryComponentInstaller : public update_client::CrxInstaller {
   // ComponentInstaller implementation:
   void OnUpdateError(int error) override;
 
-  update_client::CrxInstaller::Result Install(
-      std::unique_ptr<base::DictionaryValue> manifest,
-      const base::FilePath& unpack_path) override;
+  void Install(std::unique_ptr<base::DictionaryValue> manifest,
+               const base::FilePath& unpack_path,
+               const Callback& callback) override;
 
   bool GetInstalledFile(const std::string& file,
                         base::FilePath* installed_file) override;
@@ -340,7 +340,7 @@ void WaitForInstallToComplete(base::Process process,
       BrowserThread::PostTask(
           BrowserThread::UI,
           FROM_HERE,
-          base::Bind(&SetPrefsForElevatedRecoveryInstall,
+          base::BindOnce(&SetPrefsForElevatedRecoveryInstall,
                      installer_folder,
                      prefs));
     } else if (installer_exit_code == EXIT_CODE_RECOVERY_SUCCEEDED) {
@@ -372,7 +372,7 @@ bool RecoveryComponentInstaller::RunInstallCommand(
       FROM_HERE,
       {base::WithBaseSyncPrimitives(), base::TaskPriority::BACKGROUND,
        base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
-      base::Bind(&WaitForInstallToComplete, base::Passed(&process),
+      base::BindOnce(&WaitForInstallToComplete, base::Passed(&process),
                  installer_folder, prefs_));
 
   // Returns true regardless of install result since from updater service
@@ -396,12 +396,20 @@ bool SetPosixExecutablePermission(const base::FilePath& path) {
 }
 #endif  // defined(OS_POSIX)
 
-update_client::CrxInstaller::Result RecoveryComponentInstaller::Install(
+void RecoveryComponentInstaller::Install(
     std::unique_ptr<base::DictionaryValue> manifest,
-    const base::FilePath& unpack_path) {
-  return update_client::InstallFunctionWrapper(base::Bind(
+    const base::FilePath& unpack_path,
+    const update_client::CrxInstaller::Callback& callback) {
+
+  auto result = update_client::InstallFunctionWrapper(base::Bind(
       &RecoveryComponentInstaller::DoInstall, base::Unretained(this),
       base::ConstRef(*manifest), base::ConstRef(unpack_path)));
+
+  base::PostTaskWithTraits(
+      FROM_HERE,
+      {base::MayBlock(), base::TaskPriority::BACKGROUND,
+       base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN},
+      base::BindOnce(callback, result));
 }
 
 bool RecoveryComponentInstaller::DoInstall(
@@ -462,7 +470,7 @@ bool RecoveryComponentInstaller::DoInstall(
     BrowserThread::PostTask(
         BrowserThread::UI,
         FROM_HERE,
-        base::Bind(&RecoveryUpdateVersionHelper, version, prefs_));
+        base::BindOnce(&RecoveryUpdateVersionHelper, version, prefs_));
   }
   return true;
 }
@@ -488,7 +496,7 @@ void RegisterRecoveryComponent(ComponentUpdateService* cus,
     BrowserThread::PostTask(
         BrowserThread::UI,
         FROM_HERE,
-        base::Bind(&SimulateElevatedRecoveryHelper, prefs));
+        base::BindOnce(&SimulateElevatedRecoveryHelper, prefs));
   }
 
   // We delay execute the registration because we are not required in
@@ -496,7 +504,7 @@ void RegisterRecoveryComponent(ComponentUpdateService* cus,
   BrowserThread::PostDelayedTask(
       BrowserThread::UI,
       FROM_HERE,
-      base::Bind(&RecoveryRegisterHelper, cus, prefs),
+      base::BindOnce(&RecoveryRegisterHelper, cus, prefs),
       base::TimeDelta::FromSeconds(6));
 #endif
 #endif

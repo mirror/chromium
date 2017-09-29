@@ -116,9 +116,11 @@ class ComponentInstaller : public update_client::CrxInstaller {
 
   // Overridden from ComponentInstaller:
   void OnUpdateError(int error) override;
-  update_client::CrxInstaller::Result Install(
-      std::unique_ptr<base::DictionaryValue> manifest,
-      const base::FilePath& unpack_path) override;
+
+  void Install(std::unique_ptr<base::DictionaryValue> manifest,
+               const base::FilePath& unpack_path,
+               const Callback& callback) override;
+
   bool GetInstalledFile(const std::string& file,
                         base::FilePath* installed_file) override;
   // Only user-level component installations can be uninstalled.
@@ -150,10 +152,11 @@ class ComponentInstaller : public update_client::CrxInstaller {
   bool FindPreinstallation(
       const base::FilePath& root,
       const scoped_refptr<RegistrationInfo>& registration_info);
-  update_client::CrxInstaller::Result InstallHelper(
+  update_client::CrxInstaller::Result ComponentInstaller::InstallHelper(
       const base::DictionaryValue& manifest,
       const base::FilePath& unpack_path,
-      const base::FilePath& install_path);
+      base::Version* version,
+      base::FilePath* install_path);
   void StartRegistration(
       const scoped_refptr<RegistrationInfo>& registration_info,
       ComponentUpdateService* cus);

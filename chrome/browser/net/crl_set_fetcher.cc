@@ -165,14 +165,17 @@ void CRLSetFetcher::OnUpdateError(int error) {
                << " from component installer";
 }
 
-update_client::CrxInstaller::Result CRLSetFetcher::Install(
-    std::unique_ptr<base::DictionaryValue> manifest,
-    const base::FilePath& unpack_path) {
+void CRLSetFetcher::Install(std::unique_ptr<base::DictionaryValue> manifest,
+                            const base::FilePath& unpack_path,
+                            const Callback& callback) {
   const auto result = update_client::InstallFunctionWrapper(
       base::Bind(&CRLSetFetcher::DoInstall, base::Unretained(this),
                  base::ConstRef(*manifest), base::ConstRef(unpack_path)));
   base::DeleteFile(unpack_path, true);
-  return result;
+
+  base::PostTaskWithTraits(
+      FROM_HERE, {base::TaskPriority::BACKGROUND, base::MayBlock()},
+      base::BindOnce(callback, result));
 }
 
 bool CRLSetFetcher::DoInstall(const base::DictionaryValue& manifest,

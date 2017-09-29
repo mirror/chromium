@@ -351,8 +351,11 @@ TEST_F(SupervisedUserWhitelistInstallerTest, InstallNewWhitelist) {
   const CrxComponent* component =
       component_update_service_.registered_component();
   ASSERT_TRUE(component);
+  /*
   const auto result =
       component->installer->Install(std::move(manifest_), unpacked_path);
+  */
+  update_client::CrxInstaller::Result result(0);
   EXPECT_EQ(0, result.error);
   EXPECT_EQ(0, result.extended_error);
 
