@@ -139,10 +139,12 @@ CA
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="452"/>
-                            <menuItem title="^IDS_EMAIL_PAGE_LOCATION_MAC" tag="35006" keyEquivalent="I" id="451">
-                                <connections>
-                                    <action selector="commandDispatch:" target="-1" id="668"/>
-                                </connections>
+                            <menuItem title="^IDS_SHARE_MAC" id="L1I-I9-Q7f">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Share" id="T9x-6Q-SHx">
+                                    <items>
+                                    </items>
+                                </menu>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="74"/>
                             <menuItem title="^IDS_PRINT" tag="35003" keyEquivalent="p" id="78">

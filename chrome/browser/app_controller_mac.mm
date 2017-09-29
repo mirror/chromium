@@ -72,6 +72,7 @@
 #import "chrome/browser/ui/cocoa/history_menu_bridge.h"
 #include "chrome/browser/ui/cocoa/last_active_browser_cocoa.h"
 #import "chrome/browser/ui/cocoa/profiles/profile_menu_controller.h"
+#import "chrome/browser/ui/cocoa/share_menu_controller.h"
 #include "chrome/browser/ui/extensions/application_launch.h"
 #include "chrome/browser/ui/startup/startup_browser_creator.h"
 #include "chrome/browser/ui/startup/startup_browser_creator_impl.h"
@@ -375,6 +376,21 @@ static base::mac::ScopedObjCClassSwizzler* g_swizzle_imk_input_session;
 
   // Initialize the Profile menu.
   [self initProfileMenu];
+
+  // Initialize the share menu.
+  [self initShareMenu];
+
+  // If the OSX version supports this method, the system will automatically
+  // hide the item if there's no touch bar. However, for unsupported versions,
+  // we'll have to manually remove the item from the menu.
+  if (![NSApp
+          respondsToSelector:@selector(toggleTouchBarCustomizationPalette:)]) {
+    NSMenu* mainMenu = [NSApp mainMenu];
+    NSMenu* viewMenu = [[mainMenu itemWithTag:IDC_VIEW_MENU] submenu];
+    NSMenuItem* customizeItem = [viewMenu itemWithTag:IDC_CUSTOMIZE_TOUCH_BAR];
+    if (customizeItem)
+      [viewMenu removeItem:customizeItem];
+  }
 }
 
 - (void)unregisterEventHandlers {
@@ -1259,6 +1275,15 @@ static base::mac::ScopedObjCClassSwizzler* g_swizzle_imk_input_session;
 
   profileMenuController_.reset(
       [[ProfileMenuController alloc] initWithMainMenuItem:profileMenu]);
+}
+
+- (void)initShareMenu {
+  shareMenuController_.reset([[ShareMenuController alloc] init]);
+  NSMenu* mainMenu = [NSApp mainMenu];
+  NSMenu* fileMenu = [[mainMenu itemWithTag:IDC_FILE_MENU] submenu];
+  NSMenuItem* shareMenuItem =
+      [fileMenu itemWithTitle:l10n_util::GetNSString(IDS_SHARE_MAC)];
+  [[shareMenuItem submenu] setDelegate:shareMenuController_.get()];
 }
 
 // The Confirm to Quit preference is atypical in that the preference lives in
