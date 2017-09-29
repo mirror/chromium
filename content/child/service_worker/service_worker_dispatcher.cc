@@ -94,8 +94,6 @@ void ServiceWorkerDispatcher::OnMessageReceived(const IPC::Message& msg) {
                         OnSetVersionAttributes)
     IPC_MESSAGE_HANDLER(ServiceWorkerMsg_UpdateFound,
                         OnUpdateFound)
-    IPC_MESSAGE_HANDLER(ServiceWorkerMsg_SetControllerServiceWorker,
-                        OnSetControllerServiceWorker)
     IPC_MESSAGE_HANDLER(ServiceWorkerMsg_MessageToDocument,
                         OnPostMessage)
     IPC_MESSAGE_HANDLER(ServiceWorkerMsg_CountFeature, OnCountFeature)
@@ -192,6 +190,13 @@ void ServiceWorkerDispatcher::RemoveProviderClient(int provider_id) {
     provider_clients_.erase(provider_id);
 }
 
+blink::WebServiceWorkerProviderClient*
+ServiceWorkerDispatcher::GetProviderClient(int provider_id) {
+  if (base::ContainsKey(provider_clients_, provider_id))
+    return provider_clients_[provider_id];
+  return nullptr;
+}
+
 ServiceWorkerDispatcher*
 ServiceWorkerDispatcher::GetOrCreateThreadSpecificInstance(
     ThreadSafeSender* thread_safe_sender,
@@ -216,6 +221,18 @@ ServiceWorkerDispatcher* ServiceWorkerDispatcher::GetThreadSpecificInstance() {
     return NULL;
   return static_cast<ServiceWorkerDispatcher*>(
       g_dispatcher_tls.Pointer()->Get());
+}
+
+std::unique_ptr<ServiceWorkerRegistrationHandleReference>
+ServiceWorkerDispatcher::Adopt(
+    blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info) {
+  return ServiceWorkerRegistrationHandleReference::Adopt(
+      std::move(info), thread_safe_sender_.get());
+}
+
+std::unique_ptr<ServiceWorkerHandleReference> ServiceWorkerDispatcher::Adopt(
+    const ServiceWorkerObjectInfo& info) {
+  return ServiceWorkerHandleReference::Adopt(info, thread_safe_sender_.get());
 }
 
 void ServiceWorkerDispatcher::WillStopCurrentWorkerThread() {
@@ -515,43 +532,6 @@ void ServiceWorkerDispatcher::OnUpdateFound(
     found->second->OnUpdateFound();
 }
 
-void ServiceWorkerDispatcher::OnSetControllerServiceWorker(
-    const ServiceWorkerMsg_SetControllerServiceWorker_Params& params) {
-  TRACE_EVENT2(
-      "ServiceWorker", "ServiceWorkerDispatcher::OnSetControllerServiceWorker",
-      "Thread ID", params.thread_id, "Provider ID", params.provider_id);
-
-  // Adopt the reference sent from the browser process and pass it to the
-  // provider context if it exists.
-  std::unique_ptr<ServiceWorkerHandleReference> handle_ref =
-      Adopt(params.object_info);
-  ProviderContextMap::iterator provider =
-      provider_contexts_.find(params.provider_id);
-  if (provider != provider_contexts_.end()) {
-    provider->second->SetController(std::move(handle_ref),
-                                    params.used_features);
-  }
-
-  ProviderClientMap::iterator found =
-      provider_clients_.find(params.provider_id);
-  if (found != provider_clients_.end()) {
-    // Sync the controllee's use counter with the service worker's one.
-    for (uint32_t feature : params.used_features)
-      found->second->CountFeature(feature);
-
-    // Get the existing worker object or create a new one with a new reference
-    // to populate the .controller field.
-    scoped_refptr<WebServiceWorkerImpl> worker =
-        GetOrCreateServiceWorker(ServiceWorkerHandleReference::Create(
-            params.object_info, thread_safe_sender_.get()));
-    found->second->SetController(WebServiceWorkerImpl::CreateHandle(worker),
-                                 params.should_notify_controllerchange);
-    // You must not access |found| after setController() because it may fire the
-    // controllerchange event that may remove the provider client, for example,
-    // by detaching an iframe.
-  }
-}
-
 void ServiceWorkerDispatcher::OnPostMessage(
     const ServiceWorkerMsg_MessageToDocument_Params& params) {
   // Make sure we're on the main document thread. (That must be the only
@@ -616,18 +596,6 @@ void ServiceWorkerDispatcher::RemoveServiceWorkerRegistration(
     int registration_handle_id) {
   DCHECK(base::ContainsKey(registrations_, registration_handle_id));
   registrations_.erase(registration_handle_id);
-}
-
-std::unique_ptr<ServiceWorkerRegistrationHandleReference>
-ServiceWorkerDispatcher::Adopt(
-    blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info) {
-  return ServiceWorkerRegistrationHandleReference::Adopt(
-      std::move(info), thread_safe_sender_.get());
-}
-
-std::unique_ptr<ServiceWorkerHandleReference> ServiceWorkerDispatcher::Adopt(
-    const ServiceWorkerObjectInfo& info) {
-  return ServiceWorkerHandleReference::Adopt(info, thread_safe_sender_.get());
 }
 
 }  // namespace content
