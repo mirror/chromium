@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec0cbb38_a832f78c",
+        "filename": "ui/aura/window_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-29T13:43:35Z",
+      "side": 1,
+      "message": "Document that this is only called if we are explicitly tracking occlusion for this window using the WindowOcclusionTracker.",
+      "revId": "3fa72420a66d7d765ee69a10a1c86d3a7ea7e3f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "433aef31_5bcfe5f9",
+        "filename": "ui/aura/window_occlusion_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-29T13:43:35Z",
+      "side": 1,
+      "message": "Looks like GetCombinedOpacity() looks at Layer::opacity(). Would using Layer::GetTargetOpacity() be a better option?\n\nor, should this also check that the window opacity is not being animated?",
+      "revId": "3fa72420a66d7d765ee69a10a1c86d3a7ea7e3f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b043819e_16bc1985",
+        "filename": "ui/aura/window_occlusion_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-29T13:43:35Z",
+      "side": 1,
+      "message": "When can find() return end()? Should this be a DCHECK instead? (same Q for the rest of the cases below)",
+      "revId": "3fa72420a66d7d765ee69a10a1c86d3a7ea7e3f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd459ab7_340d891c",
+        "filename": "ui/aura/window_occlusion_tracker_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-29T13:43:35Z",
+      "side": 1,
+      "message": "EXPECT_FALSE(delegate_b-\u003eis_expecting_call());\n\n(this should happen at the end of the rest of the tests here too)",
+      "revId": "3fa72420a66d7d765ee69a10a1c86d3a7ea7e3f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
