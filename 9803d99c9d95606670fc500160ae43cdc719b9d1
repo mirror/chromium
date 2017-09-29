@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b13ae994_d2e60ef9",
+        "filename": "services/resource_coordinator/tracing/recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-09-29T21:08:49Z",
+      "side": 1,
+      "message": "Is seems a little odd to me that this is a property of the recorder, rather than being set per chunk. Is that to keep the merging simpler?",
+      "revId": "9803d99c9d95606670fc500160ae43cdc719b9d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
