@@ -22,6 +22,30 @@
       "revId": "95e55612ceba3ffcced99cfefd8365f27b820733",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76adce9e_f7ed58b0",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-09-29T20:12:27Z",
+      "side": 1,
+      "message": "Good catch. Done.",
+      "parentUuid": "d2416be8_b96b8fdd",
+      "range": {
+        "startLine": 118,
+        "startChar": 7,
+        "endLine": 118,
+        "endChar": 8
+      },
+      "revId": "95e55612ceba3ffcced99cfefd8365f27b820733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
