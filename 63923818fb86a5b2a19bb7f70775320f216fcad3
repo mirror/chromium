@@ -446,6 +446,24 @@
     },
     {
       "key": {
+        "uuid": "e8982202_0797c26d",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-29T08:54:02Z",
+      "side": 1,
+      "message": "Not done yet.\nASSERT in ImportCerts() just returns from the function.\n\ncf) https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md#asserting-on-subroutines",
+      "parentUuid": "e0bf07e9_a43a1324",
+      "revId": "63923818fb86a5b2a19bb7f70775320f216fcad3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a02f3ca_c79f0624",
         "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
         "patchSetId": 21
@@ -478,6 +496,24 @@
       "revId": "63923818fb86a5b2a19bb7f70775320f216fcad3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2710f9a_5776d8cb",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-29T08:54:02Z",
+      "side": 1,
+      "message": "Maybe miscommunication?\nI meant, you don\u0027t need emplac_back.\n\nstd::vector\u003c...\u003e expected_certs \u003d { ... };",
+      "parentUuid": "277facac_e9094805",
+      "revId": "63923818fb86a5b2a19bb7f70775320f216fcad3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

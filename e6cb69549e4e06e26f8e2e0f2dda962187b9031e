@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d20f2f73_bfd67a96",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-29T08:54:02Z",
+      "side": 1,
+      "message": "You don\u0027t need field.\n\nstd::vector\u003cmojom::CeertificatePtr\u003e ListCertificates(...) {\n  std::vector\u003cmojom::CertificatePtr\u003e result;\n  base::RunLoop loop;\n  cert_store_bridge-\u003eListCeritifcates(\n     base::BindOnce([](base::RunLoop* loop, std::vector\u003c...\u003e* result,\n                       std::vector\u003c...\u003e certs) {\n         *result \u003d std::move(certs);\n         loop-\u003eQuit();\n       },\n       \u0026loop, \u0026result);\n   loop.Run();\n   return result;\n}",
+      "revId": "e6cb69549e4e06e26f8e2e0f2dda962187b9031e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71faaf1c_1c6edfb6",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-29T08:54:02Z",
+      "side": 1,
+      "message": "Please remove.",
+      "revId": "e6cb69549e4e06e26f8e2e0f2dda962187b9031e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
