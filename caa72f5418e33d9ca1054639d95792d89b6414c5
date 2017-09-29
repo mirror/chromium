@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b98893b_bb091c7b",
+        "filename": "ui/gl/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-09-29T20:27:50Z",
+      "side": 1,
+      "message": "Would this be defined on cros as well?",
+      "revId": "caa72f5418e33d9ca1054639d95792d89b6414c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dcebf2c_5443cbb1",
+        "filename": "ui/gl/gl_image_native_pixmap_dmabuf_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-09-29T20:27:50Z",
+      "side": 1,
+      "message": "I don\u0027t think we want any X dependency here.",
+      "revId": "caa72f5418e33d9ca1054639d95792d89b6414c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
