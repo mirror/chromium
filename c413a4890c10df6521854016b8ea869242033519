@@ -70,6 +70,40 @@
     },
     {
       "key": {
+        "uuid": "0d74be70_12131762",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-29T04:25:34Z",
+      "side": 1,
+      "message": "What is ProviderName?  I think this should just be an enum since the set of possible providers is known in advance.",
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52d638fa_c4b23184",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-29T04:25:34Z",
+      "side": 1,
+      "message": "Should RegisterMediaRouteProvider be public if registrations are done by this method?  Or is registration something different?",
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "03d79850_42a6600e",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
         "patchSetId": 10
@@ -412,6 +446,24 @@
     },
     {
       "key": {
+        "uuid": "9009e0a9_1cb59d5c",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-29T04:25:34Z",
+      "side": 1,
+      "message": "Might it be simpler to track MediaQueries on a per-provider basis?",
+      "parentUuid": "a5fb2075_adaeb617",
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "491065dd_ee92b694",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
         "patchSetId": 10
@@ -600,6 +652,57 @@
     },
     {
       "key": {
+        "uuid": "e9576431_b8097784",
+        "filename": "chrome/common/media_router/mojo/media_router.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-29T04:25:34Z",
+      "side": 1,
+      "message": "Can this be an enum?",
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8468ff8d_c7e63108",
+        "filename": "chrome/common/media_router/mojo/media_router.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-29T04:25:34Z",
+      "side": 1,
+      "message": "Is the assumption that the sinks come from only one provider?  It would make more sense (to me) for the provider to be a property of the MediaSink.",
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8317ba85_d661875d",
+        "filename": "chrome/common/media_router/mojo/media_router.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-29T04:25:34Z",
+      "side": 1,
+      "message": "Similar comment here.",
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "191c90cf_ecc45cd6",
         "filename": "chrome/renderer/resources/extensions/media_router_bindings.js",
         "patchSetId": 10
@@ -611,6 +714,24 @@
       "writtenOn": "2017-09-28T23:27:32Z",
       "side": 1,
       "message": "define a string const for this?",
+      "revId": "c413a4890c10df6521854016b8ea869242033519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05dce6bf_fc158630",
+        "filename": "chrome/renderer/resources/extensions/media_router_bindings.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-29T04:25:34Z",
+      "side": 1,
+      "message": "Also, media_router_component to be more specific?",
+      "parentUuid": "191c90cf_ecc45cd6",
       "revId": "c413a4890c10df6521854016b8ea869242033519",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
