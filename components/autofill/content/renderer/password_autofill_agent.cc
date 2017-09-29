@@ -1814,6 +1814,9 @@ void PasswordAutofillAgent::FrameClosing() {
   sent_request_to_store_ = false;
   checked_safe_browsing_reputation_ = false;
   blacklisted_form_found_ = false;
+#if !defined(OS_ANDROID) && !defined(OS_IOS)
+  page_passwords_analyser_.Reset();
+#endif
 }
 
 void PasswordAutofillAgent::ClearPreview(
