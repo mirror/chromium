@@ -602,11 +602,11 @@ SDK.ServiceWorkerContextNamer = class {
    */
   _updateContextLabel(context, version) {
     if (!version) {
-      context.setLabel('');
+      context.setLabel('', '');
       return;
     }
     var parsedUrl = context.origin.asParsedURL();
     var label = parsedUrl ? parsedUrl.lastPathComponentWithFragment() : context.name;
-    context.setLabel(label + ' #' + version.id + ' (' + version.status + ')');
+    context.setLabel(label + ' #' + version.id, version.status);
   }
 };
