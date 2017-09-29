@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "306f8de8_be14e3b6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T00:17:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "62353922_141cd9bc",
+      "range": {
+        "startLine": 382,
+        "startChar": 12,
+        "endLine": 382,
+        "endChar": 57
+      },
+      "revId": "964fe9439c3a29a73febc9e4e9907070ef26bd3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa65bdf1_dfe6746c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
         "patchSetId": 13
@@ -187,6 +211,30 @@
       "revId": "964fe9439c3a29a73febc9e4e9907070ef26bd3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26148988_66f2c120",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 2128,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T00:17:03Z",
+      "side": 1,
+      "message": "Ack. I guess if it uses the activity instead the alias name the next block will catch it anyway.",
+      "parentUuid": "bee1d1e4_03c6353a",
+      "range": {
+        "startLine": 2126,
+        "startChar": 12,
+        "endLine": 2128,
+        "endChar": 52
+      },
+      "revId": "964fe9439c3a29a73febc9e4e9907070ef26bd3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -321,6 +369,30 @@
       "revId": "964fe9439c3a29a73febc9e4e9907070ef26bd3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42180da8_23a9b3c9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/LaunchIntentDispatcher.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T00:17:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7b8feeca_954fa11d",
+      "range": {
+        "startLine": 122,
+        "startChar": 8,
+        "endLine": 123,
+        "endChar": 37
+      },
+      "revId": "964fe9439c3a29a73febc9e4e9907070ef26bd3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
