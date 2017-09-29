@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "795e3975_136cc298",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 9816,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-09-29T15:40:16Z",
+      "side": 1,
+      "message": "hoisted by my own copy-pasted petard! :) fixed.",
+      "parentUuid": "42b9f211_85df5faa",
+      "range": {
+        "startLine": 9816,
+        "startChar": 114,
+        "endLine": 9816,
+        "endChar": 120
+      },
+      "revId": "a641e3e939cf8a6531b06414584b4934e6a6cb77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "424c4c27_97c67ae8",
         "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "a641e3e939cf8a6531b06414584b4934e6a6cb77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d1e79d3_ca800408",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-09-29T15:40:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "424c4c27_97c67ae8",
+      "range": {
+        "startLine": 397,
+        "startChar": 8,
+        "endLine": 397,
+        "endChar": 19
+      },
+      "revId": "a641e3e939cf8a6531b06414584b4934e6a6cb77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c6e67ab4_10aa7d1d",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-09-29T15:40:16Z",
+      "side": 1,
+      "message": "Okay - in that case I\u0027ll just use the style and context directly here, and add a DCHECK that the title really isn\u0027t empty.",
+      "parentUuid": "17155333_5a47f8f4",
+      "range": {
+        "startLine": 400,
+        "startChar": 43,
+        "endLine": 400,
+        "endChar": 63
+      },
+      "revId": "a641e3e939cf8a6531b06414584b4934e6a6cb77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29f3b23c_2ea169df",
         "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "37b5a306_be733ec1",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-09-29T15:40:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29f3b23c_2ea169df",
+      "range": {
+        "startLine": 404,
+        "startChar": 17,
+        "endLine": 404,
+        "endChar": 18
+      },
+      "revId": "a641e3e939cf8a6531b06414584b4934e6a6cb77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17d18622_d12a4d2f",
         "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
         "patchSetId": 1
@@ -114,6 +210,30 @@
       "revId": "a641e3e939cf8a6531b06414584b4934e6a6cb77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05a914e5_c93b33c4",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-09-29T15:40:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17d18622_d12a4d2f",
+      "range": {
+        "startLine": 405,
+        "startChar": 40,
+        "endLine": 405,
+        "endChar": 0
+      },
+      "revId": "a641e3e939cf8a6531b06414584b4934e6a6cb77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
