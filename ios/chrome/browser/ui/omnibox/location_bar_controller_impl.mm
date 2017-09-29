@@ -21,6 +21,7 @@
 #include "ios/chrome/browser/experimental_flags.h"
 #import "ios/chrome/browser/ui/commands/browser_commands.h"
 #include "ios/chrome/browser/ui/omnibox/location_bar_delegate.h"
+#include "ios/chrome/browser/ui/omnibox/omnibox_popup_view_ios.h"
 #import "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.h"
 #include "ios/chrome/browser/ui/omnibox/omnibox_view_ios.h"
 #include "ios/chrome/browser/ui/ui_util.h"
@@ -151,7 +152,8 @@ LocationBarControllerImpl::LocationBarControllerImpl(
                                                   positioner)),
       field_(field),
       delegate_(delegate),
-      dispatcher_(dispatcher) {
+      dispatcher_(dispatcher),
+      positioner_(positioner) {
   DCHECK([delegate_ toolbarModel]);
   show_hint_text_ = true;
 
@@ -160,6 +162,19 @@ LocationBarControllerImpl::LocationBarControllerImpl(
 }
 
 LocationBarControllerImpl::~LocationBarControllerImpl() {}
+
+std::unique_ptr<OmniboxPopupViewIOS>
+LocationBarControllerImpl::CreatePopupView() {
+  std::unique_ptr<OmniboxPopupViewIOS> popup_view =
+      base::MakeUnique<OmniboxPopupViewIOS>(edit_view_->browser_state(),
+                                            edit_view_->model(),
+                                            edit_view_.get(), positioner_);
+
+  edit_view_->model()->set_popup_model(popup_view->model());
+  edit_view_->SetPopupProvider(popup_view.get());
+
+  return popup_view;
+}
 
 void LocationBarControllerImpl::HideKeyboardAndEndEditing() {
   edit_view_->HideKeyboardAndEndEditing();
