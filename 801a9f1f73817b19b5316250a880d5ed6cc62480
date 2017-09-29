@@ -52,6 +52,24 @@
       "revId": "801a9f1f73817b19b5316250a880d5ed6cc62480",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b13fba7_8ad432bd",
+        "filename": "third_party/closure_compiler/compiled_resources2.gyp",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-09-29T04:12:57Z",
+      "side": 1,
+      "message": "You don\u0027t need to include line_chart/compiled_resources2.gyp as it is compiled as dependencies.",
+      "parentUuid": "8f5db3c6_65205cd1",
+      "revId": "801a9f1f73817b19b5316250a880d5ed6cc62480",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
