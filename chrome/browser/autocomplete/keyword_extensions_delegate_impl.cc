@@ -25,7 +25,8 @@ KeywordExtensionsDelegateImpl::KeywordExtensionsDelegateImpl(
     KeywordProvider* provider)
     : KeywordExtensionsDelegate(provider),
       profile_(profile),
-      provider_(provider) {
+      provider_(provider),
+      on_keyword_entered(false) {
   DCHECK(provider_);
 
   current_input_id_ = 0;
@@ -42,9 +43,16 @@ KeywordExtensionsDelegateImpl::KeywordExtensionsDelegateImpl(
   registrar_.Add(this,
                  extensions::NOTIFICATION_EXTENSION_OMNIBOX_INPUT_ENTERED,
                  content::Source<Profile>(profile_));
+  registrar_.Add(this,
+                 extensions::NOTIFICATION_EXTENSION_OMNIBOX_KEYWORD_ENTERED,
+                 content::Source<Profile>(profile_));
 }
 
 KeywordExtensionsDelegateImpl::~KeywordExtensionsDelegateImpl() {
+}
+
+void KeywordExtensionsDelegateImpl::SetInput(const AutocompleteInput& input) {
+  extension_suggest_last_input_ = input;
 }
 
 void KeywordExtensionsDelegateImpl::DeleteSuggestion(
@@ -55,7 +63,15 @@ void KeywordExtensionsDelegateImpl::DeleteSuggestion(
       base::UTF16ToUTF8(suggestion_text));
 }
 
-void  KeywordExtensionsDelegateImpl::IncrementInputId() {
+void KeywordExtensionsDelegateImpl::OnKeywordEntered(
+    const TemplateURL* template_url) {
+  extension_suggest_matches_.clear();
+  if (extensions::ExtensionOmniboxEventRouter::OnKeywordEntered(
+          profile_, template_url->GetExtensionId(), current_input_id_))
+    set_done(false);
+}
+
+void KeywordExtensionsDelegateImpl::IncrementInputId() {
   current_input_id_ = ++global_input_uid_;
 }
 
@@ -137,14 +153,21 @@ void KeywordExtensionsDelegateImpl::Observe(
   const AutocompleteInput& input = extension_suggest_last_input_;
 
   switch (type) {
-    case extensions::NOTIFICATION_EXTENSION_OMNIBOX_INPUT_ENTERED:
+    case extensions::NOTIFICATION_EXTENSION_OMNIBOX_KEYWORD_ENTERED: {
+      on_keyword_entered = true;
+      base::string16 keyword, remaining_input;
+      KeywordProvider::ExtractKeywordFromInput(input, model, &keyword,
+                                               &remaining_input);
+      return;
+    }
+    case extensions::NOTIFICATION_EXTENSION_OMNIBOX_INPUT_ENTERED: {
       // Input has been accepted, so we're done with this input session. Ensure
       // we don't send the OnInputCancelled event, or handle any more stray
       // suggestions_ready events.
       current_keyword_extension_id_.clear();
       IncrementInputId();
       return;
-
+    }
     case extensions::NOTIFICATION_EXTENSION_OMNIBOX_DEFAULT_SUGGESTION_CHANGED
         : {
       // It's possible to change the default suggestion while not in an editing
@@ -169,14 +192,15 @@ void KeywordExtensionsDelegateImpl::Observe(
               omnibox_api::SendSuggestions::Params>(details).ptr();
       if (suggestions.request_id != current_input_id_)
         return;  // This is an old result. Just ignore.
-
       // ExtractKeywordFromInput() can fail if e.g. this code is triggered by
       // direct calls from the development console, outside the normal flow of
       // user input.
       base::string16 keyword, remaining_input;
       if (!KeywordProvider::ExtractKeywordFromInput(input, model, &keyword,
-                                                    &remaining_input))
+                                                    &remaining_input) &&
+          !on_keyword_entered)
         return;
+      on_keyword_entered = false;
       const TemplateURL* template_url =
           model->GetTemplateURLForKeyword(keyword);
 

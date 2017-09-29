@@ -430,6 +430,7 @@ enum HistogramValue {
   AUTOMATION_INTERNAL_ON_ACTION_RESULT,
   OMNIBOX_ON_DELETE_SUGGESTION,
   PASSWORDS_PRIVATE_ON_SHOW_IMPORT_EXPORT_BUTTONS,
+  OMNIBOX_ON_KEYWORD_ENTERED,
   // Last entry: Add new entries above, then run:
   // python tools/metrics/histograms/update_extension_histograms.py
   ENUM_BOUNDARY

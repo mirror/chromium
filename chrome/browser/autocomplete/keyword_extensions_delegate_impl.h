@@ -36,6 +36,9 @@ class KeywordExtensionsDelegateImpl : public KeywordExtensionsDelegate,
   // KeywordExtensionsDelegate:
   void DeleteSuggestion(const TemplateURL* template_url,
                         const base::string16& suggestion_text) override;
+  void OnKeywordEntered(const TemplateURL* template_url) override;
+
+  void SetInput(const AutocompleteInput& input) override;
 
  private:
   // KeywordExtensionsDelegate:
@@ -84,6 +87,8 @@ class KeywordExtensionsDelegateImpl : public KeywordExtensionsDelegate,
   KeywordProvider* provider_;
 
   content::NotificationRegistrar registrar_;
+
+  bool on_keyword_entered;
 
   // We need our input IDs to be unique across all profiles, so we keep a global
   // UID that each provider uses.

@@ -146,6 +146,10 @@ enum NotificationType {
   // session. The source is the BrowserContext*.
   NOTIFICATION_EXTENSION_OMNIBOX_INPUT_ENTERED,
 
+  // Sent when the user inputs and activates the extension omnibox keyword. The
+  // source is the BrowserContext*.
+  NOTIFICATION_EXTENSION_OMNIBOX_KEYWORD_ENTERED,
+
   // Sent when an omnibox extension has updated the default suggestion. The
   // source is the BrowserContext*.
   NOTIFICATION_EXTENSION_OMNIBOX_DEFAULT_SUGGESTION_CHANGED,
