@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "d969ab2f_28c97eab",
+        "filename": "headless/lib/browser/headless_browser_context_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-29T21:49:12Z",
+      "side": 0,
+      "message": "I love that we\u0027re getting rid of the old ID string.  Where\u0027s the place in the headless code where it was used before and is now presumably switched to the new GUID?  (I think I see where the DevTools code switches over in Blink, but I didn\u0027t see how headless was converted.)",
+      "revId": "0988f9b7b96d1246759811923a824b87591512c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b4d41336_646929fd",
         "filename": "headless/lib/browser/headless_tab_socket_impl.h",
         "patchSetId": 6

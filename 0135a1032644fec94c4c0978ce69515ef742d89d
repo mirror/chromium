@@ -51,6 +51,336 @@
       "revId": "0135a1032644fec94c4c0978ce69515ef742d89d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3c41e38_c869f113",
+        "filename": "content/browser/frame_host/frame_tree_node.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-29T21:49:12Z",
+      "side": 1,
+      "message": "I wondered if it was worth enforcing uniqueness here, but as long as it\u0027s defined in the browser process, that probably isn\u0027t necessary.  Even better if we can\u0027t look up a FTN using it.",
+      "revId": "0135a1032644fec94c4c0978ce69515ef742d89d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcbebf35_32c2e200",
+        "filename": "content/browser/frame_host/frame_tree_node.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-29T21:49:12Z",
+      "side": 1,
+      "message": "This needs a descriptive comment about what it\u0027s for and how to use it safely.  Also worth mentioning that it\u0027s set by the browser process, passed to the renderer, and never expected to be received back.",
+      "revId": "0135a1032644fec94c4c0978ce69515ef742d89d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d19f5034_36829487",
+        "filename": "content/browser/frame_host/frame_tree_node.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-29T21:49:12Z",
+      "side": 1,
+      "message": "nit: Split into two sentences, or use a semicolon.",
+      "range": {
+        "startLine": 440,
+        "startChar": 44,
+        "endLine": 440,
+        "endChar": 45
+      },
+      "revId": "0135a1032644fec94c4c0978ce69515ef742d89d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cea12ea_ea264a45",
+        "filename": "content/browser/frame_host/frame_tree_node_blame_context_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-29T21:49:12Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this use base::GenerateGUID()?  That will help avoid having the unit test diverge from real behavior.\n\nSame in all the unit tests.  Or maybe AddFrame should notice empty string parameters and generate a GUID in that case?  (It looks like we never pass an empty string in practice, right?)",
+      "revId": "0135a1032644fec94c4c0978ce69515ef742d89d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55b45d85_6fe48ba4",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1360,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-29T21:49:12Z",
+      "side": 1,
+      "message": "Let\u0027s add a comment clarifying that new_routing_id and devtools_frame_guid are generated on the browser\u0027s IO thread, and not taken from the renderer process.  (I missed that on my first pass.)",
+      "revId": "0135a1032644fec94c4c0978ce69515ef742d89d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07058f5b_f290c44d",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-29T21:49:12Z",
+      "side": 1,
+      "message": "and |devtools_frame_guid|",
+      "range": {
+        "startLine": 268,
+        "startChar": 50,
+        "endLine": 268,
+        "endChar": 78
+      },
+      "revId": "0135a1032644fec94c4c0978ce69515ef742d89d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac9f2ba1_e6a4823c",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-29T21:49:12Z",
+      "side": 1,
+      "message": "s/|new_routing_id|/the specified ID values/",
+      "range": {
+        "startLine": 270,
+        "startChar": 22,
+        "endLine": 270,
+        "endChar": 38
+      },
+      "revId": "0135a1032644fec94c4c0978ce69515ef742d89d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58f37880_c0d4adad",
+        "filename": "content/browser/frame_host/render_frame_message_filter.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-29T21:49:12Z",
+      "side": 1,
+      "message": "Again, worth adding a comment that the parameters are out parameters, where the browser process defines them for the renderer process.",
+      "revId": "0135a1032644fec94c4c0978ce69515ef742d89d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9737d7af_36639804",
+        "filename": "content/browser/frame_host/render_frame_message_filter.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-29T21:49:12Z",
+      "side": 1,
+      "message": "_guid, right?",
+      "range": {
+        "startLine": 93,
+        "startChar": 39,
+        "endLine": 93,
+        "endChar": 56
+      },
+      "revId": "0135a1032644fec94c4c0978ce69515ef742d89d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d328894_0a8f3d66",
+        "filename": "content/browser/renderer_host/render_view_host_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-29T21:49:12Z",
+      "side": 1,
+      "message": "Please document the new parameter.",
+      "revId": "0135a1032644fec94c4c0978ce69515ef742d89d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e5c23ee_f18c0ca3",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 1094,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-29T21:49:12Z",
+      "side": 1,
+      "message": "Let\u0027s clarify that these are *out* parameters, provided by the browser to the renderer (and not vice versa).",
+      "revId": "0135a1032644fec94c4c0978ce69515ef742d89d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdad3119_d29f9819",
+        "filename": "content/common/renderer.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-29T21:49:12Z",
+      "side": 1,
+      "message": "nit: Rewrap.",
+      "revId": "0135a1032644fec94c4c0978ce69515ef742d89d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abb1e775_a89113d6",
+        "filename": "content/common/renderer.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-29T21:49:12Z",
+      "side": 1,
+      "message": "We should have more discussion of this.  Why is it needed?  Who defines it (i.e., browser process)?  Also mention that the renderer should not send it back to the browser.",
+      "revId": "0135a1032644fec94c4c0978ce69515ef742d89d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23239670_7cf50102",
+        "filename": "content/common/renderer.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-29T21:49:12Z",
+      "side": 1,
+      "message": "Same.",
+      "revId": "0135a1032644fec94c4c0978ce69515ef742d89d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f33f42f_d82d93b2",
+        "filename": "content/public/test/mock_render_thread.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-29T21:49:12Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we write a GUID into it here?",
+      "revId": "0135a1032644fec94c4c0978ce69515ef742d89d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d7ca313_994d982f",
+        "filename": "content/renderer/render_frame_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 1512,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-29T21:49:12Z",
+      "side": 1,
+      "message": "Please document what this is for, that it\u0027s set by the browser, and should not be sent back to the browser.",
+      "revId": "0135a1032644fec94c4c0978ce69515ef742d89d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aa2f928_76189842",
+        "filename": "third_party/WebKit/Source/core/inspector/IdentifiersFactory.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-29T21:49:12Z",
+      "side": 1,
+      "message": "Maybe this sort of function should be more explicit (in parameter name and/or comment) about this using the DevTools frame GUID?",
+      "revId": "0135a1032644fec94c4c0978ce69515ef742d89d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66427322_d5717f67",
+        "filename": "third_party/WebKit/public/web/WebFrameClient.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-29T21:49:12Z",
+      "side": 1,
+      "message": "We should have more explanation here, as in the other places.",
+      "revId": "0135a1032644fec94c4c0978ce69515ef742d89d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
