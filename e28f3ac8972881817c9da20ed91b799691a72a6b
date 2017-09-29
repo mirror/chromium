@@ -22,6 +22,30 @@
       "revId": "e28f3ac8972881817c9da20ed91b799691a72a6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16f69770_4a7ea5b6",
+        "filename": "net/socket/client_socket_pool_base_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3703,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-09-29T17:01:26Z",
+      "side": 1,
+      "message": "Yes, it works!\nDone",
+      "parentUuid": "de3e1de9_16d97541",
+      "range": {
+        "startLine": 3703,
+        "startChar": 7,
+        "endLine": 3703,
+        "endChar": 31
+      },
+      "revId": "e28f3ac8972881817c9da20ed91b799691a72a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
