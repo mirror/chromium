@@ -134,11 +134,11 @@ class CORE_EXPORT MouseEvent : public UIEventWithKeyState {
   // values exposed via DOM APIs are invariant under zooming.
   // TODO(mustaq): Remove the PointerEvent specific code when mouse has
   // fractional coordinates. See crbug.com/655786.
-  double screenX() const { return static_cast<int>(screen_location_.X()); }
-  double screenY() const { return static_cast<int>(screen_location_.Y()); }
+  double screenX() const { return screen_location_.X(); }
+  double screenY() const { return screen_location_.Y(); }
 
-  double clientX() const { return static_cast<int>(client_location_.X()); }
-  double clientY() const { return static_cast<int>(client_location_.Y()); }
+  double clientX() const { return client_location_.X(); }
+  double clientY() const { return client_location_.Y(); }
 
   int movementX() const { return movement_delta_.X(); }
   int movementY() const { return movement_delta_.Y(); }
@@ -149,8 +149,8 @@ class CORE_EXPORT MouseEvent : public UIEventWithKeyState {
   int offsetX();
   int offsetY();
 
-  double pageX() const { return static_cast<int>(page_location_.X()); }
-  double pageY() const { return static_cast<int>(page_location_.Y()); }
+  double pageX() const { return page_location_.X(); }
+  double pageY() const { return page_location_.Y(); }
 
   double x() const { return clientX(); }
   double y() const { return clientY(); }
