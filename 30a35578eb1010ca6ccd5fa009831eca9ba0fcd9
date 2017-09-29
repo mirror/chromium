@@ -317,6 +317,24 @@
     },
     {
       "key": {
+        "uuid": "6b7dcb8a_e9cb4472",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-29T00:49:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d916dd1b_bc7eced7",
+      "revId": "30a35578eb1010ca6ccd5fa009831eca9ba0fcd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30c10aca_1f3f6c62",
         "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
         "patchSetId": 5
@@ -346,6 +364,24 @@
       "side": 1,
       "message": "So two things:\n\n1. I don\u0027t think this is changing the behavior. AppUrlRedirector does this already[1].\n2. I actually added a bunch of tests, including one for prerender, before this patch to make sure the behavior is not changing[2]. The patch got reverted, but it landed again.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/apps/app_url_redirector.cc?q\u003dapp_url_redirector\u0026sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d80\n[2] https://chromium-review.googlesource.com/c/chromium/src/+/661998/9/chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc#533",
       "parentUuid": "30c10aca_1f3f6c62",
+      "revId": "30a35578eb1010ca6ccd5fa009831eca9ba0fcd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "048cf38d_2eb55986",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-29T00:49:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "90f1700a_fbb43a0c",
       "revId": "30a35578eb1010ca6ccd5fa009831eca9ba0fcd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -384,6 +420,24 @@
       "revId": "30a35578eb1010ca6ccd5fa009831eca9ba0fcd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "566b84de_e3b04b94",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-29T00:49:28Z",
+      "side": 1,
+      "message": "Ack (I think WrapUnique is acceptable for this use case - I\u0027ve seen it in a few places - but it\u0027s not a major issue)",
+      "parentUuid": "0b0ce4e0_ac5beb1e",
+      "revId": "30a35578eb1010ca6ccd5fa009831eca9ba0fcd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -451,6 +505,24 @@
       "side": 1,
       "message": "A follow up patch changes CheckNavigation to post a task to run this function and the function should only run if the throttle is still alive. So I could move it but then I would have move it back in the follow up patch.",
       "parentUuid": "a5adc937_9bcfb825",
+      "revId": "30a35578eb1010ca6ccd5fa009831eca9ba0fcd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "72c8cd10_34ed92fc",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-29T00:49:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e3568dd3_ae6f06fb",
       "revId": "30a35578eb1010ca6ccd5fa009831eca9ba0fcd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

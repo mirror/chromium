@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1bac4f86_0f3acdc4",
+        "filename": "chrome/browser/apps/platform_app_url_redirector.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-29T00:49:28Z",
+      "side": 1,
+      "message": "ugh. gerrit\u0027s copy detection is still busted - https://bugs.chromium.org/p/gerrit/issues/detail?id\u003d6441 . Weirdly, diffing this file to \u0027initial upload\u0027 shows a rename, but diffing to \u0027base\u0027 does not.",
+      "revId": "e7f5c56d72ad1e9a6ef7cb97dfd3dcdd61e8ce84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
