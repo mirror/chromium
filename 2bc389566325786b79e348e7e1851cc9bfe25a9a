@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5631559_aad5788a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/SelectionClientBridge.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-29T22:36:06Z",
+      "side": 1,
+      "message": "so where are the null checks and the conditional dismissing contextual search that we talked about?",
+      "revId": "2bc389566325786b79e348e7e1851cc9bfe25a9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43e7a7bd_54767a9b",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2140,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-29T22:36:06Z",
+      "side": 1,
+      "message": "please move SelectionClient to content_public package",
+      "range": {
+        "startLine": 2140,
+        "startChar": 11,
+        "endLine": 2140,
+        "endChar": 26
+      },
+      "revId": "2bc389566325786b79e348e7e1851cc9bfe25a9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
