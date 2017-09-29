@@ -51,7 +51,6 @@
 #include "core/svg/SVGGraphicsElement.h"
 #include "core/svg/SVGSVGElement.h"
 #include "core/svg/SVGTitleElement.h"
-#include "core/svg/SVGTreeScopeResources.h"
 #include "core/svg/SVGUseElement.h"
 #include "core/svg/properties/SVGProperty.h"
 #include "platform/wtf/AutoReset.h"
@@ -109,13 +108,6 @@ void SVGElement::WillRecalcStyle(StyleRecalcChange change) {
   // properties", so the base value change gets reflected.
   if (change > kNoChange || NeedsStyleRecalc())
     SvgRareData()->SetNeedsOverrideComputedStyleUpdate();
-}
-
-void SVGElement::BuildPendingResourcesIfNeeded() {
-  if (!NeedsPendingResourceHandling() || !isConnected() || InUseShadowTree())
-    return;
-  GetTreeScope().EnsureSVGTreeScopedResources().NotifyResourceAvailable(
-      GetIdAttribute());
 }
 
 SVGElementRareData* SVGElement::EnsureSVGRareData() {
@@ -408,7 +400,6 @@ Node::InsertionNotificationRequest SVGElement::InsertedInto(
     ContainerNode* root_parent) {
   Element::InsertedInto(root_parent);
   UpdateRelativeLengthsInformation();
-  BuildPendingResourcesIfNeeded();
 
   if (hasAttribute(nonceAttr) && getAttribute(nonceAttr) != g_empty_atom) {
     setNonce(getAttribute(nonceAttr));
@@ -418,7 +409,6 @@ Node::InsertionNotificationRequest SVGElement::InsertedInto(
       setAttribute(nonceAttr, g_empty_atom);
     }
   }
-
   return kInsertionDone;
 }
 
@@ -980,16 +970,6 @@ void SVGElement::AttributeChanged(const AttributeModificationParams& params) {
 
   if (params.name == HTMLNames::idAttr) {
     RebuildAllIncomingReferences();
-
-    LayoutObject* object = GetLayoutObject();
-    // Notify resources about id changes, this is important as we cache
-    // resources by id in SVGDocumentExtensions
-    if (object && object->IsSVGResourceContainer()) {
-      ToLayoutSVGResourceContainer(object)->IdChanged(params.old_value,
-                                                      params.new_value);
-    }
-    if (isConnected())
-      BuildPendingResourcesIfNeeded();
     InvalidateInstances();
     return;
   }
