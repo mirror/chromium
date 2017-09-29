@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de33a985_7629e7b7",
+        "filename": "chrome/browser/ui/webui/chromeos/sys_internals/sys_internals_ui.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-29T22:40:43Z",
+      "side": 1,
+      "message": "Can we move kChromeUISysInternals(Host|URL) to with #if defined(OS_CHROMEOS) in chrome/common/url_constants.(cpp|h)?",
+      "revId": "ee78e18d5f27936bd3775c02d63404f4db3194a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
