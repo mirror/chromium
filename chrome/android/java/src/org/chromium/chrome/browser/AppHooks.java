@@ -5,6 +5,7 @@
 package org.chromium.chrome.browser;
 
 import android.app.Notification;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
@@ -12,6 +13,7 @@ import android.os.Looper;
 import org.chromium.base.BuildInfo;
 import org.chromium.base.Callback;
 import org.chromium.base.ContextUtils;
+import org.chromium.base.Log;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.chrome.browser.banners.AppDetailsDelegate;
@@ -46,6 +48,8 @@ import org.chromium.components.signin.SystemAccountManagerDelegate;
 import org.chromium.policy.AppRestrictionsProvider;
 import org.chromium.policy.CombinedPolicyProvider;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.List;
 
@@ -55,6 +59,7 @@ import java.util.List;
  * See http://crbug/560466.
  */
 public abstract class AppHooks {
+    private static final String TAG = "AppHooks";
     private static AppHooksImpl sInstance;
 
     /**
@@ -272,6 +277,21 @@ public abstract class AppHooks {
      */
     @SuppressWarnings("Unused")
     public void startForegroundService(Intent intent) {
+        if (BuildInfo.isAtLeastO()) {
+            try {
+                Context context = ContextUtils.getApplicationContext();
+                Method method = context.getClass().getMethod(
+                        "startForegroundService", new Class[] {Intent.class});
+                method.invoke(context, new Object[] {intent});
+                return;
+            } catch (InvocationTargetException | IllegalAccessException | IllegalArgumentException
+                    | NoSuchMethodException | SecurityException e) {
+                Log.d(TAG, "Unable to start service in the foreground.");
+                // Fall through below to handle the call via the traditional service start
+                // mechanism.
+            }
+        }
+
         ContextUtils.getApplicationContext().startService(intent);
     }
 
