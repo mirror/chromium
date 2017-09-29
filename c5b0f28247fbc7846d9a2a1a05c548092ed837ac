@@ -16,6 +16,24 @@
       "revId": "c5b0f28247fbc7846d9a2a1a05c548092ed837ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd2dce10_edd6503d",
+        "filename": "extensions/browser/api/declarative_net_request/utils.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-29T05:57:40Z",
+      "side": 1,
+      "message": "Just thought the ForTesting annotation should be fine for now, since it will be used subsequently. Have moved it to a test only target now.",
+      "parentUuid": "2ee4a516_b19aec27",
+      "revId": "c5b0f28247fbc7846d9a2a1a05c548092ed837ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
