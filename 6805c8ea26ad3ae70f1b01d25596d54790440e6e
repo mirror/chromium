@@ -22,6 +22,30 @@
       "revId": "6805c8ea26ad3ae70f1b01d25596d54790440e6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18dce3d2_1b8f211e",
+        "filename": "media/cdm/cdm_host_file.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-29T19:29:35Z",
+      "side": 1,
+      "message": "I tried it again, the problem is that we have two call sites of this Create() and 2 of them doesn\u0027t take a CdmHostFilePath, so it seems the current one is actually easier.",
+      "parentUuid": "090c424d_7241e90c",
+      "range": {
+        "startLine": 41,
+        "startChar": 38,
+        "endLine": 41,
+        "endChar": 44
+      },
+      "revId": "6805c8ea26ad3ae70f1b01d25596d54790440e6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
