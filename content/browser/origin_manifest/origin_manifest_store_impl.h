@@ -26,6 +26,7 @@ class CONTENT_EXPORT OriginManifestStoreImpl : public OriginManifestStore {
   // OriginManifestStore implementation
   void BindRequest(mojom::OriginManifestStoreRequest request,
                    net::URLRequestContextGetter* getter) override;
+  void Init(SQLitePersistentOriginManifestStore* persistent) override;
 
   // mojom::OriginManfiestStore implementation.
   mojom::OriginManifestPtr Get(const url::Origin& origin);
@@ -48,6 +49,7 @@ class CONTENT_EXPORT OriginManifestStoreImpl : public OriginManifestStore {
   typedef std::map<url::Origin, mojom::OriginManifestPtr> OriginManifestMap;
 
   OriginManifestMap origin_manifest_map;
+  scoped_refptr<SQLitePersistentOriginManifestStore> persistent_;
 
   DISALLOW_COPY_AND_ASSIGN(OriginManifestStoreImpl);
 };

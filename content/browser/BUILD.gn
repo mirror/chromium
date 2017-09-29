@@ -1131,6 +1131,8 @@ source_set("browser") {
     "origin_manifest/origin_manifest_store_client_host.h",
     "origin_manifest/origin_manifest_store_impl.cc",
     "origin_manifest/origin_manifest_store_impl.h",
+    "origin_manifest/sqlite_persistent_origin_manifest_store.cc",
+    "origin_manifest/sqlite_persistent_origin_manifest_store.h",
     "payments/payment_app_context_impl.cc",
     "payments/payment_app_context_impl.h",
     "payments/payment_app_database.cc",

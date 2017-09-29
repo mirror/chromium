@@ -13,6 +13,8 @@ class URLRequestContextGetter;
 
 namespace content {
 
+class SQLitePersistentOriginManifestStore;
+
 class OriginManifestStore {
  public:
   OriginManifestStore(){};
@@ -20,6 +22,7 @@ class OriginManifestStore {
 
   virtual void BindRequest(mojom::OriginManifestStoreRequest request,
                            net::URLRequestContextGetter* getter) = 0;
+  virtual void Init(SQLitePersistentOriginManifestStore* persistent) = 0;
 };
 
 }  // namespace content

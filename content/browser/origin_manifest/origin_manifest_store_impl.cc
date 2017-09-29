@@ -8,6 +8,7 @@
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "content/browser/origin_manifest/origin_manifest_store_client_host.h"
+#include "content/browser/origin_manifest/sqlite_persistent_origin_manifest_store.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "url/gurl.h"
 #include "url/origin.h"
@@ -24,6 +25,27 @@ void OriginManifestStoreImpl::BindRequest(
   mojo::MakeStrongBinding(
       std::make_unique<OriginManifestStoreClientHost>(this, getter),
       std::move(request));
+}
+
+void OriginManifestStoreImpl::Init(
+    SQLitePersistentOriginManifestStore* persistent) {
+  persistent_ = persistent;
+
+  if (persistent_) {
+    persistent_->Load(base::BindRepeating(
+        &OriginManifestStoreImpl::OnInitialLoad, base::Unretained(this)));
+  }
+}
+
+void OriginManifestStoreImpl::OnInitialLoad(
+    std::vector<mojom::OriginManifestPtr> oms) {
+  for (std::vector<mojom::OriginManifestPtr>::iterator it = oms.begin();
+       it != oms.end(); ++it) {
+    GURL url((*it)->origin);
+    DCHECK(url.is_valid());
+
+    origin_manifest_map[url::Origin(url)] = std::move(*it);
+  }
 }
 
 mojom::OriginManifestPtr OriginManifestStoreImpl::Get(
@@ -79,6 +101,10 @@ void OriginManifestStoreImpl::Add(mojom::OriginManifestPtr om,
   url::Origin origin(url);
   origin_manifest_map[origin] = std::move(om);
 
+  if (persistent_) {
+    persistent_->AddOriginManifest(origin_manifest_map[origin]);
+  }
+
   std::move(callback).Run();
 }
 
@@ -90,6 +116,9 @@ void OriginManifestStoreImpl::Remove(const url::Origin origin,
   if (it != origin_manifest_map.end()) {
     om = std::move(it->second);
     origin_manifest_map.erase(it);
+    if (persistent_) {
+      persistent_->DeleteOriginManifest(om);
+    }
   }
 
   std::move(callback).Run();
