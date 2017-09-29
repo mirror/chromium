@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "5cd5fd2a_cb656c62",
+        "filename": "chrome_elf/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-09-29T20:21:13Z",
+      "side": 1,
+      "message": "Do you know if there\u0027s a reason we can\u0027t use //base/test:run_all_unittests (to get the full test launcher in base, rather than the vanilla gtest launch) here and in chrome_elf_unittests? I think that\u0027s the same reason they\u0027re marked as \"raw\" and not \"console_test_launcher\" in gn_isolate_map.pyl, and we generally want things to be using the base test launcher.",
+      "revId": "6fb36c3070714fcffcfa448d8486fda7f40933f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1e7096d_7b3f0e58",
         "filename": "chrome_elf/elf_imports_unittest.cc",
         "patchSetId": 2
