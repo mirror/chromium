@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc597315_4538c143",
+        "filename": "net/quic/chromium/quic_http_utils_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-09-29T22:36:14Z",
+      "side": 1,
+      "message": "nit: FilterSupportedAltSvcVersionsSingleVersionIetf",
+      "range": {
+        "startLine": 79,
+        "startChar": 74,
+        "endLine": 79,
+        "endChar": 0
+      },
+      "revId": "aa1808d2605df4dd752ffe506838dd32cd206611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e5bc2cb_624384a4",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3000,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-09-29T22:36:14Z",
+      "side": 1,
+      "message": "Cool, this is neat!",
+      "revId": "aa1808d2605df4dd752ffe506838dd32cd206611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
