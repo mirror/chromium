@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "409858a3_59a92dd8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/crash/LogcatExtractionRunnable.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-09-29T19:02:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d539e63_40e9b3b4",
+      "range": {
+        "startLine": 142,
+        "startChar": 33,
+        "endLine": 142,
+        "endChar": 41
+      },
+      "revId": "063b2dbd98e7252efc76ef7fded91aed4c8ae764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "310478e9_3707f197",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/crash/MinidumpUploadService.java",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "063b2dbd98e7252efc76ef7fded91aed4c8ae764",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28a7adf0_6c5305ee",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/crash/MinidumpUploadService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-09-29T19:02:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "310478e9_3707f197",
+      "range": {
+        "startLine": 303,
+        "startChar": 0,
+        "endLine": 303,
+        "endChar": 83
+      },
+      "revId": "063b2dbd98e7252efc76ef7fded91aed4c8ae764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
