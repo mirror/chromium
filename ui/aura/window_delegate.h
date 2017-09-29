@@ -89,6 +89,12 @@ class AURA_EXPORT WindowDelegate : public ui::EventHandler {
   // Window::TargetVisibility() for details.
   virtual void OnWindowTargetVisibilityChanged(bool visible) = 0;
 
+  // Called when the occlusion state of the Window is tracked and changes (see
+  // WindowOcclusionTracker::Track). The occlusion state of a Window doesn't
+  // change when it is removed from its parent. |is_occluded| indicates whether
+  // the Window is occluded.
+  virtual void OnWindowOcclusionChanged(bool is_occluded) {}
+
   // Called from Window::HitTest to check if the window has a custom hit test
   // mask. It works similar to the views counterparts. That is, if the function
   // returns true, GetHitTestMask below will be called to get the mask.
