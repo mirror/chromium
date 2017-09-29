@@ -22,6 +22,30 @@
       "revId": "2bf2eb00ed910bb82e5a8d250ce6416df3a870d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03336870_bcab9acc",
+        "filename": "ui/views/controls/progress_bar.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1230791
+      },
+      "writtenOn": "2017-09-29T21:56:32Z",
+      "side": 1,
+      "message": "New approach with base::Optional should fix this issue, and I added tests.\n\nI took a look at NativeTheme after reading this and I guess since my issue is actually with the background color, I still want to be able to override the default behavior of blending toward the opposite luma, rather than simply change the foreground color.",
+      "parentUuid": "38c90db3_ec411f40",
+      "range": {
+        "startLine": 51,
+        "startChar": 21,
+        "endLine": 51,
+        "endChar": 37
+      },
+      "revId": "2bf2eb00ed910bb82e5a8d250ce6416df3a870d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
