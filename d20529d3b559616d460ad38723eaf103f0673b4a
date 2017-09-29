@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "67e92a6a_9f163814",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_migration.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-09-29T20:52:04Z",
+      "side": 1,
+      "message": "I don\u0027t believe there is a clear set order, as not all steps would relevant to all extensions, but I think the updated order would be the proper steps if all applied to someones extension.",
+      "parentUuid": "8f0dfa8f_ff8b3fb0",
+      "revId": "d20529d3b559616d460ad38723eaf103f0673b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1a29b95_b4709fe1",
         "filename": "chrome/common/extensions/docs/templates/articles/background_pages.html",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "d20529d3b559616d460ad38723eaf103f0673b4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b069ee1_1c1f9661",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_pages.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-09-29T20:52:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1a29b95_b4709fe1",
+      "revId": "d20529d3b559616d460ad38723eaf103f0673b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9845960b_e32d20d8",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_pages.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-09-29T20:52:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e050b64a_8d4757db",
+      "revId": "d20529d3b559616d460ad38723eaf103f0673b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1830ba7_eb263606",
         "filename": "chrome/common/extensions/docs/templates/articles/background_pages.html",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "d20529d3b559616d460ad38723eaf103f0673b4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb2051a0_1d6e2178",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_pages.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-09-29T20:52:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1830ba7_eb263606",
+      "revId": "d20529d3b559616d460ad38723eaf103f0673b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "d95d3e2e_d5cc341c",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_pages.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-09-29T20:52:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd6f72b0_ae9a7bd3",
+      "revId": "d20529d3b559616d460ad38723eaf103f0673b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d10c424_9b2e20ca",
         "filename": "chrome/common/extensions/docs/templates/articles/background_pages.html",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "d20529d3b559616d460ad38723eaf103f0673b4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c48dd234_ca866231",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_pages.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-09-29T20:52:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d10c424_9b2e20ca",
+      "revId": "d20529d3b559616d460ad38723eaf103f0673b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "f859fdc9_1f7c0a62",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_pages.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-09-29T20:52:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0459476_7df5a682",
+      "revId": "d20529d3b559616d460ad38723eaf103f0673b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8eca6b43_5de0c9ee",
         "filename": "chrome/common/extensions/docs/templates/articles/background_pages.html",
         "patchSetId": 4
@@ -135,6 +261,24 @@
       "revId": "d20529d3b559616d460ad38723eaf103f0673b4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba9385f4_cdc75002",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_pages.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-09-29T20:52:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8eca6b43_5de0c9ee",
+      "revId": "d20529d3b559616d460ad38723eaf103f0673b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "503ddbc4_68b13573",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_pages.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-09-29T20:52:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f1511fb_e9030884",
+      "revId": "d20529d3b559616d460ad38723eaf103f0673b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9edc9fa_c5d4a0c9",
         "filename": "chrome/common/extensions/docs/templates/articles/background_pages.html",
         "patchSetId": 4
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "69d73621_a7474c2c",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_pages.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-09-29T20:52:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9edc9fa_c5d4a0c9",
+      "revId": "d20529d3b559616d460ad38723eaf103f0673b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87425db4_0a6ea4c0",
         "filename": "chrome/common/extensions/docs/templates/articles/background_pages.html",
         "patchSetId": 4
@@ -186,6 +366,24 @@
       "revId": "d20529d3b559616d460ad38723eaf103f0673b4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c0d1c3d_40350a6b",
+        "filename": "chrome/common/extensions/docs/templates/articles/background_pages.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-09-29T20:52:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87425db4_0a6ea4c0",
+      "revId": "d20529d3b559616d460ad38723eaf103f0673b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
