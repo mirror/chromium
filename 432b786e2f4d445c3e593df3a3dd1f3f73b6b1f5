@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "acc8fee3_deb4b456",
+        "filename": "content/browser/bluetooth/bluetooth_device_chooser_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-29T00:24:22Z",
+      "side": 1,
+      "message": "I think you can remove this TODO as well since this patch would fix it.",
+      "revId": "432b786e2f4d445c3e593df3a3dd1f3f73b6b1f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eea2a5d3_4fe8a35a",
+        "filename": "content/browser/bluetooth/bluetooth_device_chooser_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-29T00:24:22Z",
+      "side": 1,
+      "message": "Since we are already checking this on the renderer side I would change this to:\n\nif (!render_frame_host_-\u003eIsFeatureEnabled(...)) {\n  web_bluetooth_service_-\u003eCrashRendererAndClosePipe(\n      bad_message::BDH_INVALID_OPTIONS);\n  return;\n}\n\nThen we won\u0027t have to change BluetoothError and web_bluetooth.mojom :)",
+      "revId": "432b786e2f4d445c3e593df3a3dd1f3f73b6b1f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ceb26bd_d0b17489",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/bluetooth/bluetooth-default-feature-policy.https.sub.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-09-29T00:24:22Z",
+      "side": 1,
+      "message": "It would be nice if this matched other bluetooth tests. As is we don\u0027t ever reach the browser process. Does this have to be upstream? If not then we can use our test framework to write a test that would reach the browser process and we can upstream it when we upstream the rest of our tests. See [1] for a simple test. If this has to be upstream then please open a new issue blocking https://crbug.com/509038 and add a TODO here.",
+      "revId": "432b786e2f4d445c3e593df3a3dd1f3f73b6b1f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
