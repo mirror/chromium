@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d63dd2de_f9464dd2",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1573,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T19:51:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d01f58c_653ef6c8",
+      "revId": "9fa0f34872e0ad11ebc5d6921e624ca21e5e1a8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ace6884_71ffca16",
         "filename": "components/omnibox/browser/omnibox_field_trial.cc",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "9fa0f34872e0ad11ebc5d6921e624ca21e5e1a8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c9fece1_04f9b70c",
+        "filename": "components/omnibox/browser/omnibox_field_trial.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T19:51:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ace6884_71ffca16",
+      "revId": "9fa0f34872e0ad11ebc5d6921e624ca21e5e1a8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c56e5bcc_1f50c1bd",
+        "filename": "components/omnibox/browser/omnibox_field_trial.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T19:51:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f08a983_0278c1c7",
+      "revId": "9fa0f34872e0ad11ebc5d6921e624ca21e5e1a8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6e09172_505b6fec",
         "filename": "components/omnibox/browser/omnibox_pref_names.cc",
         "patchSetId": 11
@@ -67,6 +121,24 @@
       "revId": "9fa0f34872e0ad11ebc5d6921e624ca21e5e1a8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41f3fba3_7cbf2de7",
+        "filename": "components/omnibox/browser/omnibox_pref_names.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T19:51:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6e09172_505b6fec",
+      "revId": "9fa0f34872e0ad11ebc5d6921e624ca21e5e1a8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -114,6 +186,30 @@
       "revId": "9fa0f34872e0ad11ebc5d6921e624ca21e5e1a8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c45f88af_6626fcfb",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T19:51:56Z",
+      "side": 1,
+      "message": "Done. That\u0027s correct, the omnibox field trial code does not actually modify prefs or anything else.",
+      "parentUuid": "ad2eed1e_5db3840d",
+      "range": {
+        "startLine": 521,
+        "startChar": 10,
+        "endLine": 521,
+        "endChar": 49
+      },
+      "revId": "9fa0f34872e0ad11ebc5d6921e624ca21e5e1a8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
