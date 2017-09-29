@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d1414adc_73ec7f26",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/preferences/PasswordViewingTypeTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-29T14:28:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d9208855_07a75a68",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 88
+      },
+      "revId": "431f968093cd8558bb2129c6eea0e0e9e0fed797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7793bdca_4f873ba9",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/signin/OAuth2TokenServiceIntegrationTest.java",
         "patchSetId": 12
@@ -69,6 +93,30 @@
       "revId": "431f968093cd8558bb2129c6eea0e0e9e0fed797",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0758a501_591cd968",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/signin/OAuth2TokenServiceIntegrationTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-29T14:28:04Z",
+      "side": 1,
+      "message": "Yes, sure. Thanks!",
+      "parentUuid": "266b9ef0_f8c292dc",
+      "range": {
+        "startLine": 368,
+        "startChar": 40,
+        "endLine": 370,
+        "endChar": 29
+      },
+      "revId": "431f968093cd8558bb2129c6eea0e0e9e0fed797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -154,6 +202,30 @@
       "side": 1,
       "message": "You\u0027re right, it is called from UI thread in production, but this function should work correctly from any thread. Should I put @MainThread here? IUUC, annotations should describe the class itself, not the way it is used.",
       "parentUuid": "f9114ccb_4e7e11da",
+      "range": {
+        "startLine": 128,
+        "startChar": 4,
+        "endLine": 128,
+        "endChar": 14
+      },
+      "revId": "431f968093cd8558bb2129c6eea0e0e9e0fed797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb85ee01_2dbd2a7b",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-29T14:28:04Z",
+      "side": 1,
+      "message": "Actually, is this even still called on a background thread? If not, we could legitimately make it @MainThread. And I get the feeling we could also get rid of the lock if we ensure that the ...forTests() method only access this on the UI thread (either by requiring it, or by wrapping the code in here in runOnUiThreadBlocking()).",
+      "parentUuid": "50e04ede_134c1b72",
       "range": {
         "startLine": 128,
         "startChar": 4,
@@ -260,6 +332,30 @@
     },
     {
       "key": {
+        "uuid": "b900d516_558e860f",
+        "filename": "components/signin/core/browser/android/javatests/src/org/chromium/components/signin/test/util/FakeAccountManagerDelegate.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-29T14:28:04Z",
+      "side": 1,
+      "message": "Ugh, spurious wakeups :-(\n\nOkay, could you use a CountDownLatch? That at least still has the semantics of \"wait for an event to happen\".\n\nCompletableFuture has a _lot_ more features (and in particular ties into a whole bunch of Java 8 functional stuff), so we\u0027d have to backport only a subset or something. But really, if it\u0027s just passing a value from one thread to another, we could also use a concurrent collection, like an ArrayBlockingQueue with capacity 1.",
+      "parentUuid": "dd4f309b_6ac7db18",
+      "range": {
+        "startLine": 216,
+        "startChar": 8,
+        "endLine": 216,
+        "endChar": 26
+      },
+      "revId": "431f968093cd8558bb2129c6eea0e0e9e0fed797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23ab6dd2_b7194bab",
         "filename": "components/signin/core/browser/android/javatests/src/org/chromium/components/signin/test/util/FakeAccountManagerDelegate.java",
         "patchSetId": 12
@@ -295,6 +391,30 @@
       "side": 1,
       "message": "Theoretically, we might have several changes to account list happening at the same time. For example, if we call addAccountHolderExplicitly(account1) and then addAccountHolderBlocking(account2), first notification will be for the account1, before account2 is in the cache. This observer waits before account is actually in the cache. Since this class is intended for tests only, this relies on timeout in SimpleFuture or timeout for the whole test that uses this method.\nTBH, I don\u0027t see any better way to wait until the cache is updated. Propagating callbacks on every change to accounts would require huge changes to both FakeAccountManagerDelegate and AccountManagerFacade without any reasonable benefit for production code.",
       "parentUuid": "23ab6dd2_b7194bab",
+      "range": {
+        "startLine": 218,
+        "startChar": 16,
+        "endLine": 218,
+        "endChar": 93
+      },
+      "revId": "431f968093cd8558bb2129c6eea0e0e9e0fed797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3091810_1bcef9e2",
+        "filename": "components/signin/core/browser/android/javatests/src/org/chromium/components/signin/test/util/FakeAccountManagerDelegate.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-29T14:28:04Z",
+      "side": 1,
+      "message": "Hm, are there even going to be calls to addAccountHolderExplicitly() left? If not, we could just inline it and we would be guaranteed that the cache is always going to be up to date.",
+      "parentUuid": "ca7b360c_5fc8d451",
       "range": {
         "startLine": 218,
         "startChar": 16,
