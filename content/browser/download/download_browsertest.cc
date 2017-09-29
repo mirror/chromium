@@ -39,6 +39,7 @@
 #include "content/browser/download/download_resource_handler.h"
 #include "content/browser/download/download_task_runner.h"
 #include "content/browser/download/parallel_download_utils.h"
+#include "content/browser/download/slow_download_http_response.h"
 #include "content/browser/loader/resource_dispatcher_host_impl.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/public/browser/download_danger_type.h"
@@ -63,7 +64,6 @@
 #include "net/test/embedded_test_server/http_request.h"
 #include "net/test/embedded_test_server/http_response.h"
 #include "net/test/url_request/url_request_mock_http_job.h"
-#include "net/test/url_request/url_request_slow_download_job.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "ppapi/features/features.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -575,18 +575,19 @@ class DownloadContentTest : public ContentBrowserTest {
     manager->SetDelegate(test_delegate_.get());
     test_delegate_->SetDownloadManager(manager);
 
-    BrowserThread::PostTask(
-        BrowserThread::IO, FROM_HERE,
-        base::BindOnce(&net::URLRequestSlowDownloadJob::AddUrlHandler));
     base::FilePath mock_base(GetTestFilePath("download", ""));
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
         base::BindOnce(&net::URLRequestMockHTTPJob::AddUrlHandlers, mock_base));
+    embedded_test_server()->RegisterRequestHandler(
+        base::Bind(&SlowDownloadHttpResponse::HandleSlowDownloadRequest));
     ASSERT_TRUE(embedded_test_server()->Start());
     const std::string real_host =
         embedded_test_server()->host_port_pair().host();
     host_resolver()->AddRule(kOriginOne, real_host);
     host_resolver()->AddRule(kOriginTwo, real_host);
+    host_resolver()->AddRule(SlowDownloadHttpResponse::kSlowDownloadHostName,
+                             real_host);
   }
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
@@ -642,13 +643,7 @@ class DownloadContentTest : public ContentBrowserTest {
   }
 
   bool EnsureNoPendingDownloads() {
-    bool result = true;
-    BrowserThread::PostTask(
-        BrowserThread::IO, FROM_HERE,
-        base::BindOnce(&EnsureNoPendingDownloadJobsOnIO, &result));
-    base::RunLoop().Run();
-    return result &&
-           (CountingDownloadFile::GetNumberActiveFilesFromFileThread() == 0);
+    return CountingDownloadFile::GetNumberActiveFilesFromFileThread() == 0;
   }
 
   void NavigateToURLAndWaitForDownload(
@@ -736,7 +731,7 @@ class DownloadContentTest : public ContentBrowserTest {
 
  private:
   static void EnsureNoPendingDownloadJobsOnIO(bool* result) {
-    if (net::URLRequestSlowDownloadJob::NumberOutstandingRequests())
+    if (SlowDownloadHttpResponse::NumberOutstandingRequests())
       *result = false;
     BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
                             base::MessageLoop::QuitWhenIdleClosure());
@@ -800,7 +795,9 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest, MAYBE_DownloadCancelled) {
   // Create a download, wait until it's started, and confirm
   // we're in the expected state.
   DownloadItem* download = StartDownloadAndReturnItem(
-      shell(), GURL(net::URLRequestSlowDownloadJob::kUnknownSizeUrl));
+      shell(), embedded_test_server()->GetURL(
+                   SlowDownloadHttpResponse::kSlowDownloadHostName,
+                   SlowDownloadHttpResponse::kUnknownSizeUrl));
   ASSERT_EQ(DownloadItem::IN_PROGRESS, download->GetState());
 
   // Cancel the download and wait for download system quiesce.
@@ -821,7 +818,9 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest, MultiDownload) {
   // Create a download, wait until it's started, and confirm
   // we're in the expected state.
   DownloadItem* download1 = StartDownloadAndReturnItem(
-      shell(), GURL(net::URLRequestSlowDownloadJob::kUnknownSizeUrl));
+      shell(), embedded_test_server()->GetURL(
+                   SlowDownloadHttpResponse::kSlowDownloadHostName,
+                   SlowDownloadHttpResponse::kUnknownSizeUrl));
   ASSERT_EQ(DownloadItem::IN_PROGRESS, download1->GetState());
 
   // Start the second download and wait until it's done.
@@ -834,9 +833,11 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest, MultiDownload) {
 
   // Allow the first request to finish.
   std::unique_ptr<DownloadTestObserver> observer2(CreateWaiter(shell(), 1));
-  NavigateToURL(shell(),
-                GURL(net::URLRequestSlowDownloadJob::kFinishDownloadUrl));
+  NavigateToURL(shell(), embedded_test_server()->GetURL(
+                             SlowDownloadHttpResponse::kSlowDownloadHostName,
+                             SlowDownloadHttpResponse::kFinishDownloadUrl));
   observer2->WaitForFinished();  // Wait for the third request.
+
   EXPECT_EQ(1u, observer2->NumDownloadsSeenInState(DownloadItem::COMPLETE));
 
   // Get the important info from other threads and check it.
@@ -847,8 +848,8 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest, MultiDownload) {
   // |file1| should be full of '*'s, and |file2| should be the same as the
   // source file.
   base::FilePath file1(download1->GetTargetFilePath());
-  size_t file_size1 = net::URLRequestSlowDownloadJob::kFirstDownloadSize +
-                      net::URLRequestSlowDownloadJob::kSecondDownloadSize;
+  size_t file_size1 = SlowDownloadHttpResponse::kFirstDownloadSize +
+                      SlowDownloadHttpResponse::kSecondDownloadSize;
   std::string expected_contents(file_size1, '*');
   ASSERT_TRUE(VerifyFile(file1, expected_contents, file_size1));
 
@@ -992,7 +993,9 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest, CancelAtRelease) {
 IN_PROC_BROWSER_TEST_F(DownloadContentTest, MAYBE_ShutdownInProgress) {
   // Create a download that won't complete.
   DownloadItem* download = StartDownloadAndReturnItem(
-      shell(), GURL(net::URLRequestSlowDownloadJob::kUnknownSizeUrl));
+      shell(), embedded_test_server()->GetURL(
+                   SlowDownloadHttpResponse::kSlowDownloadHostName,
+                   SlowDownloadHttpResponse::kUnknownSizeUrl));
 
   EXPECT_EQ(DownloadItem::IN_PROGRESS, download->GetState());
 
