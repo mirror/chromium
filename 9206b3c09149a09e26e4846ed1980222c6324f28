@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f87db8ba_f78b4e17",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_headers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-29T23:11:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5a22fc94_74016626",
+      "range": {
+        "startLine": 464,
+        "startChar": 33,
+        "endLine": 464,
+        "endChar": 48
+      },
+      "revId": "9206b3c09149a09e26e4846ed1980222c6324f28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57710aba_ce002067",
         "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_params.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7e44d76b_cfbf85fc",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_params.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-29T23:11:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57710aba_ce002067",
+      "range": {
+        "startLine": 181,
+        "startChar": 9,
+        "endLine": 181,
+        "endChar": 37
+      },
+      "revId": "9206b3c09149a09e26e4846ed1980222c6324f28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b292e2d_3796e70a",
         "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_params.cc",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "9206b3c09149a09e26e4846ed1980222c6324f28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11b34fd9_c8bc7fda",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_params.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-29T23:11:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b292e2d_3796e70a",
+      "range": {
+        "startLine": 193,
+        "startChar": 9,
+        "endLine": 193,
+        "endChar": 37
+      },
+      "revId": "9206b3c09149a09e26e4846ed1980222c6324f28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
