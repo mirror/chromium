@@ -22,6 +22,30 @@
       "revId": "01910bba26dd0b8fe3064c80ffb405525adaa265",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1cfa7d2_d8acec03",
+        "filename": "net/log/trace_net_log_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-29T19:55:55Z",
+      "side": 1,
+      "message": "Done. Thanks. That was because AsyncEnabledStateObserver will only receive the notification asynchronously and this is to make sure TraceNetLogObserver is turned on/off before test assertions.",
+      "parentUuid": "66dda913_df0bdbc5",
+      "range": {
+        "startLine": 100,
+        "startChar": 35,
+        "endLine": 100,
+        "endChar": 0
+      },
+      "revId": "01910bba26dd0b8fe3064c80ffb405525adaa265",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
