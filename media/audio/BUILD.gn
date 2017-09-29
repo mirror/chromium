@@ -132,6 +132,8 @@ source_set("audio") {
     "fake_audio_output_stream.h",
     "null_audio_sink.cc",
     "null_audio_sink.h",
+    "power_observer_helper.cc",
+    "power_observer_helper.h",
     "scoped_task_runner_observer.cc",
     "scoped_task_runner_observer.h",
     "simple_sources.cc",
