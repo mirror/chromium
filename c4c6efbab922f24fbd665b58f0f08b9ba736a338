@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "800ca54c_589a38dd",
+        "filename": "base/allocator/partition_allocator/address_space_randomization.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-09-29T19:44:30Z",
+      "side": 1,
+      "message": "This should have been 47.",
+      "range": {
+        "startLine": 197,
+        "startChar": 33,
+        "endLine": 197,
+        "endChar": 35
+      },
+      "revId": "c4c6efbab922f24fbd665b58f0f08b9ba736a338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "47c012b6_1d34d40f",
         "filename": "base/allocator/partition_allocator/address_space_randomization_unittest.cc",
         "patchSetId": 8
@@ -16,6 +39,24 @@
       "revId": "c4c6efbab922f24fbd665b58f0f08b9ba736a338",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa19089a_38a97af3",
+        "filename": "base/allocator/partition_allocator/address_space_randomization_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-09-29T19:44:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47c012b6_1d34d40f",
+      "revId": "c4c6efbab922f24fbd665b58f0f08b9ba736a338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
