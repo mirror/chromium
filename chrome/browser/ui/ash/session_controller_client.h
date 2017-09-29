@@ -12,6 +12,7 @@
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "chrome/browser/chromeos/policy/device_off_hours_controller.h"
 #include "chrome/browser/supervised_user/supervised_user_service_observer.h"
 #include "components/session_manager/core/session_manager_observer.h"
 #include "components/user_manager/user_manager.h"
@@ -39,7 +40,8 @@ class SessionControllerClient
       public user_manager::UserManager::Observer,
       public session_manager::SessionManagerObserver,
       public SupervisedUserServiceObserver,
-      public content::NotificationObserver {
+      public content::NotificationObserver,
+      public policy::DeviceOffHoursController::Observer {
  public:
   SessionControllerClient();
   ~SessionControllerClient() override;
@@ -98,6 +100,10 @@ class SessionControllerClient
                const content::NotificationSource& source,
                const content::NotificationDetails& details) override;
 
+  // DeviceOffHoursController::Observer:
+  void OnOffHoursModeChanged() override;
+  void OnOffHoursEndTimeChanged() override;
+
   // TODO(xiyuan): Remove after SessionStateDelegateChromeOS is gone.
   static bool CanLockScreen();
   static bool ShouldLockScreenAutomatically();
@@ -137,6 +143,9 @@ class SessionControllerClient
   // Sends the session length time limit to ash.
   void SendSessionLengthLimit();
 
+  // Sends "OffHours" policy session end time to ash.
+  void SendOffHoursEndTime();
+
   // Binds to the client interface.
   mojo::Binding<ash::mojom::SessionControllerClient> binding_;
 
@@ -164,6 +173,12 @@ class SessionControllerClient
   // Used to suppress duplicate IPCs to ash.
   ash::mojom::SessionInfoPtr last_sent_session_info_;
   ash::mojom::UserSessionPtr last_sent_user_session_;
+
+  // SessionLengthLimit policy.
+  base::TimeTicks session_end_time_;
+
+  // DeviceOffHours policy.
+  base::TimeTicks policy_off_hours_session_end_time_;
 
   base::WeakPtrFactory<SessionControllerClient> weak_ptr_factory_;
 

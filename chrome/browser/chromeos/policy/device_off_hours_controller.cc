@@ -213,6 +213,42 @@ void DeviceOffHoursController::SuspendDone(
   UpdateOffHoursMode();
 }
 
+// Observer
+DeviceOffHoursController::Observer::~Observer() {}
+
+void DeviceOffHoursController::Observer::OnOffHoursModeChanged() {}
+
+void DeviceOffHoursController::Observer::OnOffHoursEndTimeChanged() {}
+
+void DeviceOffHoursController::AddObserver(Observer* observer) {
+  observers_.AddObserver(observer);
+}
+
+void DeviceOffHoursController::RemoveObserver(Observer* observer) {
+  observers_.RemoveObserver(observer);
+}
+
+void DeviceOffHoursController::NotifyOffHoursEndTimeChanged() const {
+  VLOG(1) << "OffHours end time is changed.";
+  for (auto& observer : observers_)
+    observer.OnOffHoursEndTimeChanged();
+}
+
+void DeviceOffHoursController::NotifyOffHoursModeChanged() const {
+  VLOG(1) << "OffHours mode is changed.";
+  chromeos::DeviceSettingsService::Get()->Load();
+  for (auto& observer : observers_)
+    observer.OnOffHoursModeChanged();
+}
+
+void DeviceOffHoursController::SetOffHoursEndTime(
+    base::TimeTicks off_hours_end_time) {
+  if (off_hours_end_time == off_hours_end_time_)
+    return;
+  off_hours_end_time_ = off_hours_end_time;
+  NotifyOffHoursEndTimeChanged();
+}
+
 void DeviceOffHoursController::UpdateOffHoursMode() {
   if (off_hours_intervals_.empty()) {
     StopOffHoursTimer();
@@ -223,8 +259,11 @@ void DeviceOffHoursController::UpdateOffHoursMode() {
       off_hours::WeeklyTime::GetCurrentWeeklyTime();
   for (const auto& interval : off_hours_intervals_) {
     if (interval.Contains(current_time)) {
+      base::TimeDelta remaining_off_hours_duration =
+          current_time.GetDurationTo(interval.end());
+      SetOffHoursEndTime(base::TimeTicks::Now() + remaining_off_hours_duration);
+      StartOffHoursTimer(remaining_off_hours_duration);
       SetOffHoursMode(true);
-      StartOffHoursTimer(current_time.GetDurationTo(interval.end()));
       return;
     }
   }
@@ -238,7 +277,9 @@ void DeviceOffHoursController::SetOffHoursMode(bool off_hours_enabled) {
     return;
   off_hours_mode_ = off_hours_enabled;
   DVLOG(1) << "OffHours mode: " << off_hours_mode_;
-  OffHoursModeIsChanged();
+  if (!off_hours_mode_)
+    SetOffHoursEndTime(base::TimeTicks());
+  NotifyOffHoursModeChanged();
 }
 
 void DeviceOffHoursController::StartOffHoursTimer(base::TimeDelta delay) {
@@ -251,13 +292,6 @@ void DeviceOffHoursController::StartOffHoursTimer(base::TimeDelta delay) {
 
 void DeviceOffHoursController::StopOffHoursTimer() {
   timer_.Stop();
-}
-
-void DeviceOffHoursController::OffHoursModeIsChanged() {
-  DVLOG(1) << "OffHours mode is changed.";
-  // TODO(yakovleva): Get discussion about what is better to user Load() or
-  // LoadImmediately().
-  chromeos::DeviceSettingsService::Get()->Load();
 }
 
 bool DeviceOffHoursController::IsOffHoursMode() {

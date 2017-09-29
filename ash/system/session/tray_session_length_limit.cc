@@ -84,7 +84,8 @@ void TraySessionLengthLimit::OnSessionLengthLimitChanged() {
 
 void TraySessionLengthLimit::Update() {
   // Don't show notification or tray item until the user is logged in.
-  if (!Shell::Get()->session_controller()->IsActiveUserSessionStarted())
+  if (limit_state_ == LIMIT_NONE &&
+      !Shell::Get()->session_controller()->IsActiveUserSessionStarted())
     return;
 
   UpdateState();
