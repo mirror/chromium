@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cc157cc_d8acc230",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/WebViewChromium.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1639,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-09-29T18:42:29Z",
+      "side": 1,
+      "message": "unnecessary comments",
+      "revId": "0883320425d8cbb3a12a0f079e5ead77b8c5b2b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
