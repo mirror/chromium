@@ -111,7 +111,6 @@ Main.Main = class {
     // Keep this sorted alphabetically: both keys and values.
     Runtime.experiments.register('accessibilityInspection', 'Accessibility Inspection');
     Runtime.experiments.register('applyCustomStylesheet', 'Allow custom UI themes');
-    Runtime.experiments.register('audits2', 'Audits 2.0');
     Runtime.experiments.register('autoAttachToCrossProcessSubframes', 'Auto-attach to cross-process subframes', true);
     Runtime.experiments.register('blackboxJSFramesOnTimeline', 'Blackbox JavaScript frames on Timeline', true);
     Runtime.experiments.register('changesDrawer', 'Changes drawer', true);
@@ -147,15 +146,13 @@ Main.Main = class {
     if (Host.isUnderTest(prefs)) {
       var testPath = JSON.parse(prefs['testPath'] || '""');
       // Enable experiments for testing.
-      if (testPath.indexOf('audits2/') !== -1)
-        Runtime.experiments.enableForTest('audits2');
       if (testPath.indexOf('sass/') !== -1)
         Runtime.experiments.enableForTest('liveSASS');
     }
 
     Runtime.experiments.setDefaultExperiments([
-      'continueToLocationMarkers', 'autoAttachToCrossProcessSubframes', 'objectPreviews', 'audits2',
-      'networkGroupingRequests', 'timelineColorByProduct'
+      'continueToLocationMarkers', 'autoAttachToCrossProcessSubframes', 'objectPreviews', 'networkGroupingRequests',
+      'timelineColorByProduct'
     ]);
   }
 
