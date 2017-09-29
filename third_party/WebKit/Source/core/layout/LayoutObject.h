@@ -442,7 +442,8 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   // We don't make stringBuilder an optional parameter so that
   // showLayoutObject can be called from gdb easily.
   void ShowLayoutObject(StringBuilder&) const;
-  void ShowLayoutTreeAndMark(const LayoutObject* marked_object1 = nullptr,
+  void ShowLayoutTreeAndMark(StringBuilder&,
+                             const LayoutObject* marked_object1 = nullptr,
                              const char* marked_label1 = nullptr,
                              const LayoutObject* marked_object2 = nullptr,
                              const char* marked_label2 = nullptr,
