@@ -16,6 +16,24 @@
       "revId": "a30ebbc308aef59b7e58970eda161dc23dd6f181",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "640d4a9b_809e19f8",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletThread.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-09-29T17:25:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6b11f71_2963e8e7",
+      "revId": "a30ebbc308aef59b7e58970eda161dc23dd6f181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
