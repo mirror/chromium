@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8847eaf8_b28a7397",
+        "filename": "chrome/browser/predictors/loading_predictor_config.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-09-29T13:30:11Z",
+      "side": 1,
+      "message": "Any reason not to just use Predictor::kMaxReferrers instead of a raw 100?",
+      "range": {
+        "startLine": 105,
+        "startChar": 25,
+        "endLine": 105,
+        "endChar": 28
+      },
+      "revId": "45bb97e98b82946a1c501ef432bd3296894e9658",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
