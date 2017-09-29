@@ -11,6 +11,11 @@
 
 #include "chrome/browser/vr/content_input_delegate.h"
 #include "chrome/browser/vr/ui_browser_interface.h"
+#include "ui/gfx/transform.h"
+
+namespace gfx {
+class Transform;
+}
 
 namespace ui {
 class Event;
@@ -21,8 +26,6 @@ namespace vr {
 struct ControllerInfo;
 class Ui;
 
-// This class provides a home for the VR UI in a testapp context, and
-// manipulates the UI according to user input.
 class VrTestContext : public vr::ContentInputDelegate,
                       public vr::UiBrowserInterface {
  public:
@@ -65,6 +68,17 @@ class VrTestContext : public vr::ContentInputDelegate,
   gfx::Size window_size_;
 
   std::unique_ptr<ControllerInfo> controller_info_;
+
+  gfx::Transform head_pose_;
+  float head_angle_x_ = 0;
+  float head_angle_y_ = 0;
+  int last_drag_x_ = 0;
+  int last_drag_y_ = 0;
+
+  float proj_scale_factor_ = 1.f;
+
+  bool fullscreen_ = false;
+  bool incognito_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(VrTestContext);
 };
