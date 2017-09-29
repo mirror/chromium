@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c8a9b7f_1d4d41f9",
+        "filename": "base/android/java/src/org/chromium/base/SysUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-29T03:09:46Z",
+      "side": 1,
+      "message": "This is used only alongside isAtLeastO(). Maybe we should call it \"isReallyLowEndDevice()\" and move the isAtLeastO() check into here.",
+      "revId": "04951365775d81a53b660e9f536fe558c6bc61eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6e9434f_d02ae4ca",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-29T03:09:46Z",
+      "side": 1,
+      "message": "nit: add a comment with crbug. and comment why not do this for isLowEndDevice()",
+      "revId": "04951365775d81a53b660e9f536fe558c6bc61eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5881307c_169dcbb2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-29T03:09:46Z",
+      "side": 1,
+      "message": "nit: add a comment with crbug. and comment why not do this for isLowEndDevice()",
+      "revId": "04951365775d81a53b660e9f536fe558c6bc61eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5409172_e25c3b1b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-29T03:09:46Z",
+      "side": 1,
+      "message": "nit: add a comment with crbug. and comment why not do this for isLowEndDevice()",
+      "revId": "04951365775d81a53b660e9f536fe558c6bc61eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
