@@ -8,8 +8,10 @@
 
 #include "base/metrics/histogram_macros.h"
 #include "base/values.h"
+#include "chrome/browser/content_settings/cookie_settings_factory.h"
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/profiles/profile.h"
+#include "components/content_settings/core/browser/cookie_settings.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "components/content_settings/core/common/content_settings_pattern.h"
 #include "components/content_settings/core/common/content_settings_types.h"
@@ -21,6 +23,19 @@
 #include "content/public/common/origin_util.h"
 #include "url/gurl.h"
 #include "url/origin.h"
+
+namespace {
+
+bool GetCookieAccessOnIOThread(Profile* profile, const GURL& url) {
+  //  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+  scoped_refptr<content_settings::CookieSettings> cookie_settings =
+      CookieSettingsFactory::GetForProfile(profile);
+
+  return cookie_settings->IsCookieAccessAllowed(url, url);
+}
+
+}  // namespace
 
 ClientHintsObserver::ClientHintsObserver(content::WebContents* tab)
     : binding_(tab, this) {}
@@ -56,6 +71,9 @@ void ClientHintsObserver::PersistClientHints(
       binding_.GetCurrentTargetFrame()->GetProcess();
   content::BrowserContext* browser_context = rph->GetBrowserContext();
   Profile* profile = Profile::FromBrowserContext(browser_context);
+
+  if (!GetCookieAccessOnIOThread(profile, primary_url))
+    return;
 
   HostContentSettingsMap* map =
       HostContentSettingsMapFactory::GetForProfile(profile);
