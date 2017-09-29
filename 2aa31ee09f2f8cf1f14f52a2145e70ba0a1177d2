@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "654101c8_4f69e45a",
+        "filename": "ios/web_view/internal/signin/cwv_authentication_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1230570
+      },
+      "writtenOn": "2017-09-29T05:22:38Z",
+      "side": 1,
+      "message": "How about extracting this as a helper function (which returns the token service delegate) because this is done multiple times in this class?",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 39
+      },
+      "revId": "2aa31ee09f2f8cf1f14f52a2145e70ba0a1177d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ec56c80_7bb19fb1",
+        "filename": "ios/web_view/internal/signin/cwv_authentication_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1230570
+      },
+      "writtenOn": "2017-09-29T05:22:38Z",
+      "side": 1,
+      "message": "How about extracting this as a helper function because this is repeatedly called in this class?",
+      "range": {
+        "startLine": 67,
+        "startChar": 6,
+        "endLine": 69,
+        "endChar": 40
+      },
+      "revId": "2aa31ee09f2f8cf1f14f52a2145e70ba0a1177d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a445bb98_911f4874",
+        "filename": "ios/web_view/internal/signin/cwv_authentication_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1230570
+      },
+      "writtenOn": "2017-09-29T05:22:38Z",
+      "side": 1,
+      "message": "s/Username/Email/?",
+      "range": {
+        "startLine": 107,
+        "startChar": 30,
+        "endLine": 107,
+        "endChar": 38
+      },
+      "revId": "2aa31ee09f2f8cf1f14f52a2145e70ba0a1177d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be0104bd_6cf7ddb0",
+        "filename": "ios/web_view/internal/signin/cwv_authentication_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1230570
+      },
+      "writtenOn": "2017-09-29T05:22:38Z",
+      "side": 1,
+      "message": "Just curious, what is \"the desktop model\"?",
+      "range": {
+        "startLine": 112,
+        "startChar": 37,
+        "endLine": 112,
+        "endChar": 54
+      },
+      "revId": "2aa31ee09f2f8cf1f14f52a2145e70ba0a1177d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cf991a3_e4ecd3cb",
+        "filename": "ios/web_view/public/cwv_authentication_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1230570
+      },
+      "writtenOn": "2017-09-29T05:22:38Z",
+      "side": 1,
+      "message": "Can you document the behavior when you call it while you have already signed in?",
+      "range": {
+        "startLine": 30,
+        "startChar": 46,
+        "endLine": 30,
+        "endChar": 0
+      },
+      "revId": "2aa31ee09f2f8cf1f14f52a2145e70ba0a1177d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df1a7a81_6552a6cc",
+        "filename": "ios/web_view/public/cwv_authentication_controller_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1230570
+      },
+      "writtenOn": "2017-09-29T05:22:38Z",
+      "side": 1,
+      "message": "It may be more readable if you write down parameter names here e.g., NSString* accessToken. You can use typedef if you think the type name becomes too long.",
+      "range": {
+        "startLine": 32,
+        "startChar": 29,
+        "endLine": 32,
+        "endChar": 57
+      },
+      "revId": "2aa31ee09f2f8cf1f14f52a2145e70ba0a1177d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72b5feb4_1574a65c",
+        "filename": "ios/web_view/public/cwv_identity.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1230570
+      },
+      "writtenOn": "2017-09-29T05:22:38Z",
+      "side": 1,
+      "message": "Add nullability annotation for this class.",
+      "range": {
+        "startLine": 13,
+        "startChar": 11,
+        "endLine": 13,
+        "endChar": 22
+      },
+      "revId": "2aa31ee09f2f8cf1f14f52a2145e70ba0a1177d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a7888cb_de6dc340",
+        "filename": "ios/web_view/public/cwv_identity.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1230570
+      },
+      "writtenOn": "2017-09-29T05:22:38Z",
+      "side": 1,
+      "message": "Just an idea, but maybe it\u0027s cleaner to make CWVIdentity class immutable, by making these properties readonly, and add an initializer which takes these parameters?",
+      "range": {
+        "startLine": 17,
+        "startChar": 49,
+        "endLine": 17,
+        "endChar": 0
+      },
+      "revId": "2aa31ee09f2f8cf1f14f52a2145e70ba0a1177d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
