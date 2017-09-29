@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88a36eec_749ffc29",
+        "filename": "chrome/app/chrome_main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2017-09-29T19:25:18Z",
+      "side": 1,
+      "message": "Can we make the use of StartMainProcessStackSamplingProfilerIfEnabled() platform independent? It would be best to maintain StackSamplingConfiguration as the sole authority for deciding which platforms run the profiler, if possible.",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 41
+      },
+      "revId": "0969ae96c942fbc3276f220e1cbd406e02d284d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
