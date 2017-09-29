@@ -53,6 +53,12 @@ public class TileGroup implements MostVisitedSites.Observer {
         void setMostVisitedSitesObserver(MostVisitedSites.Observer observer, int maxResults);
 
         /**
+         * Requests a refresh for the list of most visited sites. Notifies the observer set by
+         * |setMostVisitedSitesObserver| method.
+         */
+        void refresh();
+
+        /**
          * Called when the tile group has completely finished loading (all views will be inflated
          * and any dependent resources will have been loaded).
          * @param tiles The tiles owned by the {@link TileGroup}. Used to record metrics.
@@ -280,6 +286,14 @@ public class TileGroup implements MostVisitedSites.Observer {
     public void startObserving(int maxResults) {
         addTask(TileTask.FETCH_DATA);
         mTileGroupDelegate.setMostVisitedSitesObserver(this, maxResults);
+    }
+
+    /**
+     * Instructs this Instance to request fresh site data. The {@link TileGroup.Observer} may be
+     * is called when new data is received.
+     */
+    public void refresh() {
+        mTileGroupDelegate.refresh();
     }
 
     /**

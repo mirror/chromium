@@ -92,6 +92,11 @@ public class MostVisitedSitesBridge
     }
 
     @Override
+    public void refresh() {
+        nativeRefresh(mNativeMostVisitedSitesBridge);
+    }
+
+    @Override
     public void recordPageImpression(int tilesCount) {
         nativeRecordPageImpression(mNativeMostVisitedSitesBridge, tilesCount);
     }
@@ -188,6 +193,7 @@ public class MostVisitedSitesBridge
             long nativeMostVisitedSitesBridge, MostVisitedSites.HomePageClient homePageClient);
     private native void nativeAddOrRemoveBlacklistedUrl(
             long nativeMostVisitedSitesBridge, String url, boolean addUrl);
+    private native void nativeRefresh(long nativeMostVisitedSitesBridge);
     private native void nativeRecordPageImpression(
             long nativeMostVisitedSitesBridge, int tilesCount);
     private native void nativeRecordTileImpression(

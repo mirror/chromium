@@ -155,6 +155,7 @@ void MostVisitedSites::SetHomePageClient(
 
 void MostVisitedSites::SetMostVisitedURLsObserver(Observer* observer,
                                                   size_t num_sites) {
+  LOG(ERROR) << "DEBUG(fhorschig): MostVisitedSites::SetObserver called.";
   DCHECK(observer);
   observer_ = observer;
   num_sites_ = num_sites;
@@ -185,6 +186,8 @@ void MostVisitedSites::SetMostVisitedURLsObserver(Observer* observer,
 }
 
 void MostVisitedSites::Refresh() {
+  LOG(ERROR) << "DEBUG(fhorschig): MostVisitedSites::Refresh called.";
+
   if (top_sites_) {
     // TopSites updates itself after a delay. To ensure up-to-date results,
     // force an update now.
@@ -271,6 +274,8 @@ base::FilePath MostVisitedSites::GetWhitelistLargeIconPath(const GURL& url) {
 
 void MostVisitedSites::OnMostVisitedURLsAvailable(
     const history::MostVisitedURLList& visited_list) {
+  LOG(ERROR) << "DEBUG(fhorschig): OnMostVisitedURLsAvailable called.";
+
   // Ignore the event if tiles provided by the Suggestions Service, which take
   // precedence.
   if (mv_source_ == TileSource::SUGGESTIONS_SERVICE) {
@@ -301,6 +306,7 @@ void MostVisitedSites::OnMostVisitedURLsAvailable(
 
 void MostVisitedSites::OnSuggestionsProfileChanged(
     const SuggestionsProfile& suggestions_profile) {
+  LOG(ERROR) << "DEBUG(fhorschig): OnSuggestionsProfileChanged called.";
   if (suggestions_profile.suggestions_size() == 0 &&
       mv_source_ != TileSource::SUGGESTIONS_SERVICE) {
     return;

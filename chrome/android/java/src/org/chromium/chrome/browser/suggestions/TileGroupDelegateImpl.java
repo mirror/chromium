@@ -73,6 +73,13 @@ public class TileGroupDelegateImpl implements TileGroup.Delegate {
     }
 
     @Override
+    public void refresh() {
+        assert !mIsDestroyed;
+
+        mMostVisitedSites.refresh();
+    }
+
+    @Override
     public void onLoadingComplete(List<Tile> tiles) {
         // This method is called after network calls complete. It could happen after the suggestions
         // surface is destroyed.

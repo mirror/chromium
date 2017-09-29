@@ -234,6 +234,11 @@ void MostVisitedSitesBridge::AddOrRemoveBlacklistedUrl(
   most_visited_->AddOrRemoveBlacklistedUrl(url, add_url);
 }
 
+void MostVisitedSitesBridge::Refresh(JNIEnv* env,
+                                     const JavaParamRef<jobject>& obj) {
+  most_visited_->Refresh();
+}
+
 void MostVisitedSitesBridge::RecordPageImpression(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj,

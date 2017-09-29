@@ -37,6 +37,11 @@ public class FakeMostVisitedSites implements MostVisitedSites {
     }
 
     @Override
+    public void refresh() {
+        notifyTileSuggestionsAvailable();
+    }
+
+    @Override
     public void addBlacklistedUrl(String url) {
         mBlacklistedUrls.add(url);
     }

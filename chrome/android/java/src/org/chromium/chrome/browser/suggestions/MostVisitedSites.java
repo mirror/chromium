@@ -78,6 +78,12 @@ public interface MostVisitedSites {
     void removeBlacklistedUrl(String url);
 
     /**
+     * Issues a refresh for personalized tiles and notifies the observer set by |setObserver| about
+     * new sites.
+     */
+    void refresh();
+
+    /**
      * Records metrics about an impression of the surface with tiles.
      * @param tilesCount Count of tiles available on the surface at the moment.
      */

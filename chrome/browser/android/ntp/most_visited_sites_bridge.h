@@ -42,6 +42,9 @@ class MostVisitedSitesBridge {
       const base::android::JavaParamRef<jobject>& obj,
       const base::android::JavaParamRef<jstring>& j_url,
       jboolean add_url);
+
+  void Refresh(JNIEnv* env, const base::android::JavaParamRef<jobject>& obj);
+
   void RecordPageImpression(JNIEnv* env,
                             const base::android::JavaParamRef<jobject>& obj,
                             jint jtiles_count);
