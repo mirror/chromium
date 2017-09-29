@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cee0d2c6_7f703886",
+        "filename": "third_party/WebKit/Source/core/exported/WorkerShadowPage.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-09-29T19:05:32Z",
+      "side": 1,
+      "message": "In some browser tests, there are crashes, please see the stack trace below. When we create the main frame, Document::FinishedParsing() will be called eventually, and if we want to reset some states of resource coordinator, the interface provider hasn\u0027t been bound properly, thus it crashed.\n\n#0 0x000002f23a87 base::debug::StackTrace::StackTrace()\n#1 0x000002f3c621 logging::LogMessage::~LogMessage()\n#2 0x0000019a6f5f mojo::internal::InterfacePtrState\u003c\u003e::ConfigureProxyIfNecessary()\n#3 0x0000038b7a8b service_manager::InterfaceProvider::GetInterface()\n#4 0x000002d8aadd service_manager::InterfaceProvider::GetInterface\u003c\u003e()\n#5 0x000002d8a9d6 blink::BlinkResourceCoordinatorBase::BlinkResourceCoordinatorBase()\n#6 0x000002d8b10f blink::FrameResourceCoordinator::Create()\n#7 0x00000604f109 blink::LocalFrame::GetFrameResourceCoordinator()\n#8 0x000006080a29 blink::PerformanceMonitor::DomContentLoadedEventFired()\n#9 0x0000066bd3f7 blink::probe::domContentLoadedEventFired()\n#10 0x000005e0ec79 blink::Document::FinishedParsing()\n#11 0x000006291b06 blink::HTMLConstructionSite::FinishedParsing()\n#12 0x00000625ab2c blink::HTMLTreeBuilder::Finished()\n#13 0x00000622148e blink::HTMLDocumentParser::end()\n#14 0x00000621b690 blink::HTMLDocumentParser::AttemptToRunDeferredScriptsAndEnd()\n#15 0x00000621b46b blink::HTMLDocumentParser::PrepareToStopParsing()\n#16 0x0000062215e5 blink::HTMLDocumentParser::AttemptToEnd()\n#17 0x000006221964 blink::HTMLDocumentParser::Finish()\n#18 0x000006563bd2 blink::DocumentLoader::FinishedLoading()\n#19 0x000006565ef6 blink::DocumentLoader::MaybeLoadEmpty()\n#20 0x00000656600e blink::DocumentLoader::StartLoading()\n#21 0x00000657129f blink::FrameLoader::Init()\n#22 0x00000604af34 blink::LocalFrame::Init()\n#23 0x0000060b1953 blink::WebLocalFrameImpl::InitializeCoreFrame()\n#24 0x0000060b1371 blink::WebLocalFrameImpl::CreateMainFrame()\n#25 0x000007e2e160 blink::WorkerShadowPage::WorkerShadowPage()\n#26 0x000007ebce80 blink::WebEmbeddedWorkerImpl::StartWorkerContext()\n#27 0x000006ed6c5d content::EmbeddedWorkerInstanceClientImpl::StartWorkerContext()\n#28 0x000006ed658e content::EmbeddedWorkerInstanceClientImpl::StartWorker()\n#29 0x0000017b8dfe content::mojom::EmbeddedWorkerInstanceClientStubDispatch::Accept()\n#30 0x00000421aaff mojo::InterfaceEndpointClient::HandleValidatedMessage()\n#31 0x0000042300c6 mojo::FilterChain::Accept()\n#32 0x00000421beac mojo::InterfaceEndpointClient::HandleIncomingMessage()\n#33 0x000004244fab IPC::(anonymous namespace)::ChannelAssociatedGroupController::AcceptOnProxyThread()\n#34 0x000004243341 _ZN4base8internal7InvokerINS0_9BindStateIMN3IPC12_GLOBAL__N_132ChannelAssociatedGroupControllerEFvN4mojo7MessageEEJ13scoped_refptrIS5_ENS0_13PassedWrapperIS7_EEEEEFvvEE3RunEPNS0_13BindStateBaseE\n#35 0x000002f241e3 base::debug::TaskAnnotator::RunTask()\n#36 0x000002de4e73 blink::scheduler::TaskQueueManager::ProcessTaskFromWorkQueue()\n#37 0x000002de2b44 blink::scheduler::TaskQueueManager::DoWork()\n#38 0x0000015997d5 _ZN4base8internal7InvokerINS0_9BindStateIMN5media12PipelineImplEFvbEJNS_7WeakPtrIS4_EEbEEEFvvEE3RunEPNS0_13BindStateBaseE\n#39 0x000002f241e3 base::debug::TaskAnnotator::RunTask()\n#40 0x000002fdabe3 base::internal::IncomingTaskQueue::RunTask()\n#41 0x000002f433e7 base::MessageLoop::RunTask()\n#42 0x000002f43a2a base::MessageLoop::DoWork()\n#43 0x000002f45420 base::MessagePumpDefault::Run()\n#44 0x000002f42e8a base::MessageLoop::Run()\n#45 0x000002f6d4c7 base::RunLoop::Run()\n#46 0x000006ed17b3 content::RendererMain()\n#47 0x000002f03452 content::RunZygote()\n#48 0x000002f03d6f content::RunNamedProcessTypeMain()\n#49 0x000002f047d7 content::ContentMainRunnerImpl::Run()\n#50 0x0000049ff8d0 service_manager::Main()\n#51 0x000002f03102 content::ContentMain()\n#52 0x000003558983 content::LaunchTests()\n#53 0x000002f1758e LaunchChromeTests()\n#54 0x000002f17137 main\n#55 0x7f42460c3f45 __libc_start_main\n#56 0x000000575a60 \u003cunknown\u003e",
+      "parentUuid": "6dd99ab2_135903a0",
+      "revId": "78629ce13aff4e6dc3d3621d7523746f0fdaeb35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "38d815f8_d57d13c0",
         "filename": "third_party/WebKit/public/web/WebFrameClient.cpp",
         "patchSetId": 1
