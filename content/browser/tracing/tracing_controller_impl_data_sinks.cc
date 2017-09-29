@@ -18,7 +18,7 @@ namespace content {
 
 namespace {
 
-const char kChromeTraceLabel[] = "traceEvents";
+const char kChromeTraceLabelStr[] = "traceEvents";
 const char kMetadataTraceLabel[] = "metadata";
 
 class StringTraceDataEndpoint : public TraceDataEndpoint {
@@ -156,7 +156,7 @@ class JSONTraceDataSink : public TraceDataSinkImplBase {
     if (had_received_first_chunk_)
       trace_string = ",";
     else
-      trace_string = "{\"" + std::string(kChromeTraceLabel) + "\":[";
+      trace_string = "{\"" + std::string(kChromeTraceLabelStr) + "\":[";
     trace_string += chunk;
     had_received_first_chunk_ = true;
 

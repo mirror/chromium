@@ -78,7 +78,8 @@ leveldb::Slice MakeSlice(const StringPiece& s) {
   return leveldb::Slice(s.begin(), s.size());
 }
 
-StringPiece MakeStringPiece(const leveldb::Slice& s) {
+// Identical function in indexed_db/indexed_db_tombstone_sweeper.cc.
+StringPiece LevelDB_MakeStringPiece(const leveldb::Slice& s) {
   return StringPiece(s.data(), s.size());
 }
 
@@ -88,7 +89,8 @@ class ComparatorAdapter : public leveldb::Comparator {
       : comparator_(comparator) {}
 
   int Compare(const leveldb::Slice& a, const leveldb::Slice& b) const override {
-    return comparator_->Compare(MakeStringPiece(a), MakeStringPiece(b));
+    return comparator_->Compare(LevelDB_MakeStringPiece(a),
+                                LevelDB_MakeStringPiece(b));
   }
 
   const char* Name() const override { return comparator_->Name(); }
