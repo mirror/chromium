@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6058580d_1759ec0e",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-29T18:34:06Z",
+      "side": 1,
+      "message": "Should we convert this to ES6 syntax (and get rid of assertNotReached)?",
+      "revId": "8ed60af08f7c93ec1a147d89cb85d90b023e8df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df8d1f0e_d0143494",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-29T18:34:06Z",
+      "side": 1,
+      "message": "Equivalent to the following?\n\nthis.selectedError_ \u003d  this.data.manifestErrors[0] || this.data.runtimeErrors[0] || null;",
+      "revId": "8ed60af08f7c93ec1a147d89cb85d90b023e8df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f7093c4_9cbd57c6",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-29T18:34:06Z",
+      "side": 1,
+      "message": "!chrome.developerPrivate.StackFrame",
+      "revId": "8ed60af08f7c93ec1a147d89cb85d90b023e8df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa913887_844ac3a6",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-29T18:34:06Z",
+      "side": 1,
+      "message": "Syntax is a bit off?",
+      "revId": "8ed60af08f7c93ec1a147d89cb85d90b023e8df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
