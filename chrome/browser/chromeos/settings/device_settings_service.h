@@ -5,6 +5,7 @@
 #ifndef CHROME_BROWSER_CHROMEOS_SETTINGS_DEVICE_SETTINGS_SERVICE_H_
 #define CHROME_BROWSER_CHROMEOS_SETTINGS_DEVICE_SETTINGS_SERVICE_H_
 
+
 #include <memory>
 #include <string>
 #include <vector>
