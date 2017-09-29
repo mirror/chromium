@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f21d336d_e8ff9986",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-29T05:41:40Z",
+      "side": 1,
+      "message": "It\u0027s possible but we need to (1) implement chunked writes in MockNetworkURLLoaderFactory::CreateLoaderAndStart() or (2) lower the body size, because the pipe\u0027s buffer is 65536 (this is equals to kReadBufferSize*2).\n\n(1) would make the test code very complicated, so I chose (2).",
+      "parentUuid": "9ae03b86_42970ba6",
+      "revId": "fd76e6e36da3948c3dd6df8c74779c44efffcdc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "473635b7_cabbb46c",
         "filename": "content/browser/service_worker/service_worker_script_url_loader_unittest.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "fd76e6e36da3948c3dd6df8c74779c44efffcdc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87cfb012_d5b5b83b",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-29T05:41:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "473635b7_cabbb46c",
+      "revId": "fd76e6e36da3948c3dd6df8c74779c44efffcdc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
