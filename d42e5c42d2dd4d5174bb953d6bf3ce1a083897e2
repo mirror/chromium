@@ -22,6 +22,30 @@
       "revId": "d42e5c42d2dd4d5174bb953d6bf3ce1a083897e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fde9739_b7a94c10",
+        "filename": "media/gpu/android/android_video_surface_chooser_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-29T19:45:00Z",
+      "side": 0,
+      "message": "yeah, i think with the refactoring it\u0027s not useful anymore.  i don\u0027t remember why i added it.",
+      "parentUuid": "5b7ca7ae_4b230db7",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 24
+      },
+      "revId": "d42e5c42d2dd4d5174bb953d6bf3ce1a083897e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
