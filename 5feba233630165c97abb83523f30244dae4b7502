@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f838eee8_e9dadc68",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-29T01:51:54Z",
+      "side": 1,
+      "message": "nit: Please remove a trailing whitespace.",
+      "revId": "5feba233630165c97abb83523f30244dae4b7502",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ab05041_1a480841",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-29T01:51:54Z",
+      "side": 1,
+      "message": "Could you add CL which LayoutSelection.Start()/End() to return base::Optional\u003cint\u003e, as reference?",
+      "revId": "5feba233630165c97abb83523f30244dae4b7502",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
