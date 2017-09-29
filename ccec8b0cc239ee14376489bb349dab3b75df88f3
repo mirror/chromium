@@ -1,0 +1,378 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f982998_8f0d7316",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T02:07:12Z",
+      "side": 1,
+      "message": "This should be base::OnceCallback.",
+      "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7da0565f_d487f345",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T02:07:12Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcc3f7b0_f38b3bff",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T02:07:12Z",
+      "side": 1,
+      "message": "std::move for the callback?",
+      "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e74ba180_f55ef64b",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T02:07:12Z",
+      "side": 1,
+      "message": "no const\u0026 for new callbacks.",
+      "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92246b67_bcb6c63c",
+        "filename": "media/blink/video_frame_compositor_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T02:07:12Z",
+      "side": 1,
+      "message": "Should use the def from blink?",
+      "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54b1b720_3869c577",
+        "filename": "media/blink/webmediaplayer_impl_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T02:07:12Z",
+      "side": 1,
+      "message": "Should be something like ProvideContext, CB naming is reserved for variables generally.",
+      "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eda855bc_c5a828b4",
+        "filename": "media/blink/webmediaplayer_impl_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T02:07:12Z",
+      "side": 1,
+      "message": "Move above wmpi_ ? It\u0027s a refptr, but if it\u0027s ever changed its lifetime should outlive wmpi.",
+      "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84e194dd_0b1c47a3",
+        "filename": "third_party/WebKit/Source/platform/DEPS",
+        "patchSetId": 20
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T02:07:12Z",
+      "side": 1,
+      "message": "Remove",
+      "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8427d9a_38805c59",
+        "filename": "third_party/WebKit/Source/platform/exported/WebVideoFrameSubmitter.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T02:07:12Z",
+      "side": 1,
+      "message": "No const\u0026.",
+      "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "493c3bf7_7b4e8dbe",
+        "filename": "third_party/WebKit/Source/platform/exported/WebVideoFrameSubmitter.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T02:07:12Z",
+      "side": 1,
+      "message": "std::move probably.",
+      "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e1e398b_17939f51",
+        "filename": "third_party/WebKit/Source/platform/graphics/DEPS",
+        "patchSetId": 20
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T02:07:12Z",
+      "side": 1,
+      "message": "Remove",
+      "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ee5629e_b285e8db",
+        "filename": "third_party/WebKit/Source/platform/graphics/DEPS",
+        "patchSetId": 20
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T02:07:12Z",
+      "side": 1,
+      "message": "Remove",
+      "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12d53fc2_77141289",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameResourceProvider.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T02:07:12Z",
+      "side": 1,
+      "message": "std::move probably.",
+      "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c85b534_29906748",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameResourceProvider.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T02:07:12Z",
+      "side": 1,
+      "message": "if used only internally, just weak_factory_.GetWeakPtr().",
+      "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0e376fa_269b7ea8",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameResourceProvider.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T02:07:12Z",
+      "side": 1,
+      "message": "no const\u0026",
+      "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06d2fb04_c5b34cab",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameResourceProvider.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T02:07:12Z",
+      "side": 1,
+      "message": "Don\u0027t vend WeakPtrs external to a class. This is generally not what you want. Can you elaborate on the ownership model here?",
+      "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c224865_2f9ec29b",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameResourceProvider.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T02:07:12Z",
+      "side": 1,
+      "message": "WeakPtrFactory must always be the last member.",
+      "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc84f7d6_b43c9d6e",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T02:07:12Z",
+      "side": 1,
+      "message": "std::move",
+      "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fba494f_d9a55363",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T02:07:12Z",
+      "side": 1,
+      "message": "No const\u0026",
+      "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5db7352e_806b04f2",
+        "filename": "third_party/WebKit/public/platform/DEPS",
+        "patchSetId": 20
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T02:07:12Z",
+      "side": 1,
+      "message": "Delete?",
+      "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd4f3ada_b520a191",
+        "filename": "third_party/WebKit/public/platform/WebVideoFrameSubmitter.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T02:07:12Z",
+      "side": 1,
+      "message": "base::RepeatingCallback? OnceCallback?",
+      "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c73ee38_473bfd8d",
+        "filename": "third_party/WebKit/public/platform/WebVideoFrameSubmitter.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T02:07:12Z",
+      "side": 1,
+      "message": "No const\u0026 passage for callbacks anymore, pass by value and use std::move",
+      "revId": "ccec8b0cc239ee14376489bb349dab3b75df88f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
