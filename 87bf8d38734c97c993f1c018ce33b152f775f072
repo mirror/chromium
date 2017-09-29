@@ -1,0 +1,389 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fbeb061_352d720d",
+        "filename": "media/filters/frame_processor.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 866,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-09-29T23:55:20Z",
+      "side": 1,
+      "message": "This comment is pretty difficult to grok. \n\nIts hard to tell whether you\u0027re talking about just one track or two distinct tracks. I think its two distinct tracks... right? \n\nIts also hard to remember that last *processed* decode timestamp persists across discontinuities. \n\nTaking a stab at rewording\n(first block as-is)\n// \n\nIn muxed multi-track streams, it may occur that we already signaled a new CFG upon detecting a discontinuity in trackA, only to now find that frames in trackB actually have an earlier timestamp. If this is detected using last_processed_decode_timestamp() (which persists across discontinuity detection), re-signal trackB that a CFG is starting with its new earlier start time. Avoid re-signalling trackA, as it has already started processing frames for this CFG.\n\n--- \n\nShould probably mention PTS too...",
+      "range": {
+        "startLine": 866,
+        "startChar": 0,
+        "endLine": 866,
+        "endChar": 77
+      },
+      "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3f51a89_d199d91c",
+        "filename": "media/filters/frame_processor_unittest.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-09-29T23:55:20Z",
+      "side": 1,
+      "message": "Can you add a method comment on the formatting of expected?",
+      "range": {
+        "startLine": 196,
+        "startChar": 7,
+        "endLine": 196,
+        "endChar": 37
+      },
+      "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36fd5328_c6319541",
+        "filename": "media/filters/frame_processor_unittest.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 978,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-09-29T23:55:20Z",
+      "side": 1,
+      "message": "Can you add some comments for these 4 CheckExpected calls to describe why these are the expected values. For sequence mode I can get it if I stare for long enough. For segments mode I have no clue why.",
+      "range": {
+        "startLine": 978,
+        "startChar": 6,
+        "endLine": 978,
+        "endChar": 36
+      },
+      "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6181a0ad_3df490ac",
+        "filename": "media/filters/source_buffer_range_by_pts.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-09-29T23:55:20Z",
+      "side": 1,
+      "message": "nit: I\u0027d move this up so its under the method it overloads",
+      "range": {
+        "startLine": 86,
+        "startChar": 29,
+        "endLine": 86,
+        "endChar": 50
+      },
+      "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fb56624_8b8b7ee0",
+        "filename": "media/filters/source_buffer_range_by_pts.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-09-29T23:55:20Z",
+      "side": 1,
+      "message": "I\u0027m not sure that this impl (nor the dts version) will always return what we want. When we actually do the seek, we don\u0027t seem to make use of fudge room (and probably don\u0027t want to). We simply look for a key frame at/before the described timestamp, so I think this will wrongly return true for any time between fudge-room and the actual first key frame. I would make this impl match more closely to how seek is actually implemented.",
+      "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abba9b0f_f84eb1df",
+        "filename": "media/filters/source_buffer_range_by_pts.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-09-29T23:55:20Z",
+      "side": 1,
+      "message": "This should be subtracted rather than added right? Probably means we have a hole in test coverage?",
+      "range": {
+        "startLine": 517,
+        "startChar": 51,
+        "endLine": 517,
+        "endChar": 75
+      },
+      "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abb63263_b67fece6",
+        "filename": "media/filters/source_buffer_range_by_pts.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-09-29T23:55:20Z",
+      "side": 1,
+      "message": "IIUC this comment misleads a little. The function will return the index/itr of a buffer where timestamp would be inserted, even if no exact timestamp match is found. You only return end if that insertion would come at the end.",
+      "range": {
+        "startLine": 177,
+        "startChar": 68,
+        "endLine": 178,
+        "endChar": 16
+      },
+      "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83e2995c_5c72146a",
+        "filename": "media/filters/source_buffer_stream.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-09-29T23:55:20Z",
+      "side": 1,
+      "message": "nit: maybe shorten to pts-range and do same for dts-range above",
+      "range": {
+        "startLine": 154,
+        "startChar": 20,
+        "endLine": 154,
+        "endChar": 41
+      },
+      "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b244e74_18ec9ba0",
+        "filename": "media/filters/source_buffer_stream.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-09-29T23:55:20Z",
+      "side": 1,
+      "message": "Might be helpful to still do a debug log",
+      "range": {
+        "startLine": 288,
+        "startChar": 12,
+        "endLine": 288,
+        "endChar": 41
+      },
+      "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3debe080_2900c694",
+        "filename": "media/filters/source_buffer_stream.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 1290,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-09-29T23:55:20Z",
+      "side": 1,
+      "message": "nit: probably only need this dcheck. the previous one is implicitly true",
+      "range": {
+        "startLine": 1290,
+        "startChar": 4,
+        "endLine": 1290,
+        "endChar": 10
+      },
+      "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7480a3da_1c031465",
+        "filename": "media/filters/source_buffer_stream.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 1321,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-09-29T23:55:20Z",
+      "side": 1,
+      "message": "I\u0027m not able to completely vet this. AFAIK, this code  only targets vp9 and audio, which should not have out-of-order frames. But if this is quietly being used for some mp4/h264 case, I\u0027m not sure it will behave well if frames are out of order. \n\nE.g. - say the last_appended_buffer_ts !\u003d the highest_ts_in_seq_ ... but new_buffers.front() \u003d\u003d highest_ts_in_seq. In this case, you would decide not exclude the start and would end up removing the previously buffered highest_ts_in_seq, which could break your GOP. \n\nits all a bit hypothetical, but pls ponder (my brain is fried).",
+      "range": {
+        "startLine": 1321,
+        "startChar": 6,
+        "endLine": 1321,
+        "endChar": 37
+      },
+      "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a670df6_e1c270de",
+        "filename": "media/filters/source_buffer_stream.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 2349,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-09-29T23:55:20Z",
+      "side": 1,
+      "message": "BindRepeating",
+      "range": {
+        "startLine": 2349,
+        "startChar": 12,
+        "endLine": 2349,
+        "endChar": 16
+      },
+      "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df1ed5f8_77ddf4c8",
+        "filename": "media/filters/source_buffer_stream.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 2362,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-09-29T23:55:20Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 2362,
+        "startChar": 12,
+        "endLine": 2362,
+        "endChar": 16
+      },
+      "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e49f9c45_2fe86642",
+        "filename": "media/filters/source_buffer_stream.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-09-29T23:55:20Z",
+      "side": 1,
+      "message": "make this \"but before\", or \"that is before\"?",
+      "range": {
+        "startLine": 195,
+        "startChar": 47,
+        "endLine": 195,
+        "endChar": 53
+      },
+      "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d5fff94_0c990dbd",
+        "filename": "media/filters/source_buffer_stream.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-09-29T23:55:20Z",
+      "side": 1,
+      "message": "This comment doesn\u0027t explain why",
+      "range": {
+        "startLine": 233,
+        "startChar": 56,
+        "endLine": 233,
+        "endChar": 69
+      },
+      "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b1c0282_1ec4cf2b",
+        "filename": "media/filters/source_buffer_stream_unittest.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-09-29T23:55:20Z",
+      "side": 1,
+      "message": "This assert seems to just be checking the assignment on the previous line? If so, its probably not needed. Maybe just assert that buffers[0]-\u003etimestamp() \u003c\u003d coded_frame_group_timestamp (when cfg timestamp is provided)",
+      "range": {
+        "startLine": 763,
+        "startChar": 0,
+        "endLine": 763,
+        "endChar": 62
+      },
+      "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03cc46e1_3c97296a",
+        "filename": "media/filters/source_buffer_stream_unittest.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 937,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-09-29T23:55:20Z",
+      "side": 1,
+      "message": "We chatted - these tests are very hard to read. Next PS adds comments which unblock my review for this file",
+      "range": {
+        "startLine": 937,
+        "startChar": 2,
+        "endLine": 937,
+        "endChar": 26
+      },
+      "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
