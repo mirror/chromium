@@ -37,6 +37,8 @@ source_set("network_sources") {
     "cache_url_loader.h",
     "cookie_manager_impl.cc",
     "cookie_manager_impl.h",
+    "network_change_manager_impl.cc",
+    "network_change_manager_impl.h",
     "network_context.cc",
     "network_context.h",
     "network_service_impl.cc",

@@ -147,6 +147,11 @@ TestingBrowserProcess::system_network_context_manager() {
   return nullptr;
 }
 
+content::NetworkChangeManagerClientImpl*
+TestingBrowserProcess::network_change_manager_client() {
+  return nullptr;
+}
+
 WatchDogThread* TestingBrowserProcess::watchdog_thread() {
   return nullptr;
 }
