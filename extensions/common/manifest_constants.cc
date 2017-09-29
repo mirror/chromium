@@ -14,6 +14,7 @@ const char kAllFrames[] = "all_frames";
 const char kAltKey[] = "altKey";
 const char kApp[] = "app";
 const char kAppIconColor[] = "app.icon_color";
+const char kAppThemeColor[] = "app.theme_color";
 const char kAutomation[] = "automation";
 const char kBackgroundAllowJsAccess[] = "background.allow_js_access";
 const char kBackgroundPage[] = "background.page";

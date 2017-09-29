@@ -378,7 +378,7 @@ IN_PROC_BROWSER_TEST_F(TwoClientAppsSyncTest, BookmarkAppBasic) {
       GetExtensionRegistry(GetProfile(0))->enabled_extensions().size();
 
   WebApplicationInfo web_app_info;
-  web_app_info.app_url = GURL("http://www.chromium.org/");
+  web_app_info.app_url = GURL("http://www.chromium.org/path");
   web_app_info.scope = GURL("http://www.chromium.org/");
   web_app_info.title = base::UTF8ToUTF16("Test name");
   web_app_info.description = base::UTF8ToUTF16("Test description");

@@ -11,6 +11,7 @@
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/common/extensions/manifest_handlers/app_icon_color_info.h"
 #include "chrome/common/extensions/manifest_handlers/app_launch_info.h"
+#include "chrome/common/extensions/manifest_handlers/app_theme_color_info.h"
 #include "chrome/common/extensions/manifest_handlers/linked_app_icons.h"
 #include "components/crx_file/id_util.h"
 #include "components/sync/model/sync_data.h"
@@ -121,12 +122,18 @@ ExtensionSyncData::ExtensionSyncData(const Extension& extension,
       name_(extension.non_localized_name()),
       app_launch_ordinal_(app_launch_ordinal),
       page_ordinal_(page_ordinal),
-      launch_type_(launch_type) {
+      launch_type_(launch_type),
+      bookmark_app_theme_color_(AppThemeColorInfo::kInvalidAppThemeColorValue) {
   if (is_app_ && extension.from_bookmark()) {
     bookmark_app_description_ = extension.description();
     bookmark_app_url_ = AppLaunchInfo::GetLaunchWebURL(&extension).spec();
     bookmark_app_scope_ = GetScopeURLFromBookmarkApp(&extension).spec();
     bookmark_app_icon_color_ = AppIconColorInfo::GetIconColorString(&extension);
+
+    SkColor theme_color;
+    if (AppThemeColorInfo::GetThemeColor(&extension, &theme_color))
+      bookmark_app_theme_color_ = theme_color;
+
     extensions::LinkedAppIcons icons =
         LinkedAppIcons::GetLinkedAppIcons(&extension);
     for (const auto& icon : icons.icons) {
@@ -226,6 +233,11 @@ void ExtensionSyncData::ToAppSpecifics(sync_pb::AppSpecifics* specifics) const {
   if (!bookmark_app_icon_color_.empty())
     specifics->set_bookmark_app_icon_color(bookmark_app_icon_color_);
 
+  if (bookmark_app_theme_color_ !=
+      AppThemeColorInfo::kInvalidAppThemeColorValue) {
+    specifics->set_bookmark_app_theme_color(bookmark_app_theme_color_);
+  }
+
   for (const auto& linked_icon : linked_icons_) {
     sync_pb::LinkedAppIconInfo* linked_app_icon_info =
         specifics->add_linked_app_icons();
@@ -299,8 +311,9 @@ bool ExtensionSyncData::PopulateFromAppSpecifics(
 
   bookmark_app_url_ = specifics.bookmark_app_url();
   bookmark_app_description_ = specifics.bookmark_app_description();
-  bookmark_app_scope_ = specifics.bookmark_app_url();
+  bookmark_app_scope_ = specifics.bookmark_app_scope();
   bookmark_app_icon_color_ = specifics.bookmark_app_icon_color();
+  bookmark_app_theme_color_ = specifics.bookmark_app_theme_color();
 
   for (int i = 0; i < specifics.linked_app_icons_size(); ++i) {
     const sync_pb::LinkedAppIconInfo& linked_app_icon_info =
