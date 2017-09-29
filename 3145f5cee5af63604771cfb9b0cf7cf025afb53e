@@ -16,6 +16,24 @@
       "revId": "3145f5cee5af63604771cfb9b0cf7cf025afb53e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fd0c9d9_7a16094d",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 5170,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-09-29T06:44:01Z",
+      "side": 1,
+      "message": "Good suggestion. As far as I checked, RenderFrameImpl::SetHostZoomLevel() sets zoom_level only for non-Android platform and RenderFrameImpl::SendDidCommitProvisionalLoad() calls render_view_-\u003eSetZoomLevel() only when the host_zoom_levels_ has a zoom level for the URL. As a result, Aura calls render_view_-\u003eSetZoomLevel() and it updates DSF correctly, but Android does not call it.\n\nHere, an interesting thing is that the zoom level set by RenderFrameImpl::SetHostZoomLevel() is 0 when I checked it in Linux (i.e., not DSF). In addition, it is not easily realized that render_view_-\u003eSetZoomLevel() updates DSF (it updates both zoom level and DSF). An easy solution for this bug is just to change RenderFrameImpl::SetHostZoomLevel(), but I think is not intuitive. Why don\u0027t we just call render_view_-\u003eUpdateWebViewWithDeviceScaleFactor() in RenderFrameImpl::SwapIn()? It is more clear to understand.",
+      "parentUuid": "195b74a5_a1cb2298",
+      "revId": "3145f5cee5af63604771cfb9b0cf7cf025afb53e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
