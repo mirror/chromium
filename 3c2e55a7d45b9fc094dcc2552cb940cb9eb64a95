@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8cf1e9e3_8c3bb2a0",
+        "filename": "chrome/renderer/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-09-29T17:24:32Z",
+      "side": 1,
+      "message": "This is unused outside of automation internal custom bindings. I think it should stay local (e.g. defined as a nested class, or within anon namespace, etc).",
+      "revId": "3c2e55a7d45b9fc094dcc2552cb940cb9eb64a95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3abcb0c1_42283fc4",
+        "filename": "chrome/renderer/extensions/automation_ax_tree_wrapper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-09-29T17:24:32Z",
+      "side": 1,
+      "message": "Accidental includes here?",
+      "revId": "3c2e55a7d45b9fc094dcc2552cb940cb9eb64a95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "95d99ae5_204eeca1",
+        "filename": "chrome/renderer/extensions/automation_ax_tree_wrapper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-09-29T17:24:32Z",
+      "side": 1,
+      "message": "int32_t",
+      "revId": "3c2e55a7d45b9fc094dcc2552cb940cb9eb64a95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "707fc102_5c2ab238",
+        "filename": "chrome/renderer/extensions/automation_ax_tree_wrapper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-09-29T17:24:32Z",
+      "side": 1,
+      "message": "nit: new line below.",
+      "revId": "3c2e55a7d45b9fc094dcc2552cb940cb9eb64a95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fe6995a0_23f1dcf1",
+        "filename": "chrome/renderer/extensions/automation_ax_tree_wrapper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-09-29T17:24:32Z",
+      "side": 1,
+      "message": "\u003d default (in header).",
+      "revId": "3c2e55a7d45b9fc094dcc2552cb940cb9eb64a95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
