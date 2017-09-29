@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66482137_9e977240",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/extended_attribute.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-29T03:04:29Z",
+      "side": 1,
+      "message": "Need to fix this before landing.",
+      "revId": "6e60b3e01382421a92166aa7c349d9f41df10a9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

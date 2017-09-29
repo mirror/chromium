@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6bee8195_2c80f7a9",
+        "filename": "third_party/WebKit/Source/bindings/core/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-29T03:04:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09cb92d8_e1f1d088",
+      "revId": "9d7100f47fcfbfc02b0ec4f42fc579218ff93214",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c52a47c4_8699d079",
         "filename": "third_party/WebKit/Source/bindings/scripts/generate_web_idl_container.py",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "9d7100f47fcfbfc02b0ec4f42fc579218ff93214",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3d30945_e9446e26",
+        "filename": "third_party/WebKit/Source/bindings/scripts/generate_web_idl_container.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-29T03:04:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c52a47c4_8699d079",
+      "revId": "9d7100f47fcfbfc02b0ec4f42fc579218ff93214",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "6b3c0a13_0941b18c",
+        "filename": "third_party/WebKit/Source/bindings/scripts/generate_web_idl_container.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-29T03:04:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a2e269c_36cd2286",
+      "range": {
+        "startLine": 21,
+        "startChar": 25,
+        "endLine": 21,
+        "endChar": 39
+      },
+      "revId": "9d7100f47fcfbfc02b0ec4f42fc579218ff93214",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f9f1c61_e4fae12c",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/argument.py",
         "patchSetId": 8
@@ -70,6 +130,30 @@
       "writtenOn": "2017-09-25T14:22:36Z",
       "side": 1,
       "message": "Just a question.  Is it okay to follow PEP-8?\n\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/styleguide.md\nThe style guide seems saying that we should use CamelCase.  As long as it\u0027s consistent, I **personally** don\u0027t strongly stick to this rule, but we may need some consensus/agreement.\n\nAlso the guide says: two-space indentation",
+      "range": {
+        "startLine": 15,
+        "startChar": 8,
+        "endLine": 15,
+        "endChar": 14
+      },
+      "revId": "9d7100f47fcfbfc02b0ec4f42fc579218ff93214",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f659318_d3d891cc",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/argument.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-29T03:04:29Z",
+      "side": 1,
+      "message": "No, we can\u0027t follow Chromium style yet under third_party/WebKit.\nthird_party/WebKit/Tools/Scripts/check-webkit-style checks if all .py code follow Blink style.",
+      "parentUuid": "8f9f1c61_e4fae12c",
       "range": {
         "startLine": 15,
         "startChar": 8,
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "d5fbad47_02efea1a",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/argument.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-29T03:04:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f3272fca_778450e4",
+      "revId": "9d7100f47fcfbfc02b0ec4f42fc579218ff93214",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06887ee0_fb78f716",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/argument.py",
         "patchSetId": 8
@@ -110,6 +212,24 @@
       "writtenOn": "2017-09-25T14:41:50Z",
       "side": 1,
       "message": "Do we have any plans about immutability of the objects?\n\nDo we want to do something following for example?\n  def __init__(self):\n    self._type \u003d None\n\n  def type(self):\n    return self._type\n\n  # no setter for self._type\n\nOptionally, we can use \"property\".  In this way or some other ways, we can make it indistinguishable whether it\u0027s a real data member or it\u0027s a calculated value from some members.\n\n\nIf we\u0027re following a kind of builder pattern, then only builders need to modify these objects.  If we used a good builder pattern, then even builders don\u0027t need to modify the objects.\n\n  class SomethingBuilder:\n    def Build(node):\n      name \u003d ... get the name from |node| ...\n      type \u003d ... get the type from |node| ...\n      extended_attributes \u003d ... construct it from |node|! ...\n      return Something(name\u003dname, type\u003dtype, extended_attributes\u003dextended_attributes)\n\n  class Something:\n    def __init__(self, name\u003dNone, type\u003dNone, extended_attributes\u003dNone):\n      assert name\n      assert type\n      assert extended_attributes\n      self._name \u003d name\n      self._type \u003d type\n      self._extended_attributes \u003d extended_attributes\n      # only __init__ sets the fields.",
+      "revId": "9d7100f47fcfbfc02b0ec4f42fc579218ff93214",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9b3c981_39876dc8",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/argument.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-29T03:04:29Z",
+      "side": 1,
+      "message": "Hmm, it seems difficult to meet all our expectations, but makes sense.\nI\u0027ll try it.",
+      "parentUuid": "06887ee0_fb78f716",
       "revId": "9d7100f47fcfbfc02b0ec4f42fc579218ff93214",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -136,6 +256,30 @@
       "revId": "9d7100f47fcfbfc02b0ec4f42fc579218ff93214",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec5202e5_8cb994f9",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/argument.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-29T03:04:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e0d5a394_404da925",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 31
+      },
+      "revId": "9d7100f47fcfbfc02b0ec4f42fc579218ff93214",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
