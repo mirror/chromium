@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0939a507_8d6c4f77",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabBottomBarDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-09-29T21:10:56Z",
+      "side": 1,
+      "message": "Failed to inflate...",
+      "range": {
+        "startLine": 197,
+        "startChar": 24,
+        "endLine": 197,
+        "endChar": 28
+      },
+      "revId": "8413759df071fb74cfc9c929ad7a7916d1da2308",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
