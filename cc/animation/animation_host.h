@@ -177,6 +177,8 @@ class CC_ANIMATION_EXPORT AnimationHost : public MutatorHost,
   const ElementToAnimationsMap& element_animations_for_testing() const;
 
   // LayerTreeMutatorClient.
+  void SetMutationUpdate(
+      std::unique_ptr<MutatorOutputState> output_state) override;
   void SetNeedsMutate() override;
 
  private:
@@ -190,6 +192,10 @@ class CC_ANIMATION_EXPORT AnimationHost : public MutatorHost,
 
   bool NeedsTickAnimationPlayers() const;
   bool NeedsTickMutator() const;
+
+  // Return the animator state representing all ticking worklet animations.
+  std::unique_ptr<MutatorInputState> CollectAnimatorsState(
+      base::TimeTicks timeline_time);
 
   ElementToAnimationsMap element_to_animations_map_;
   PlayersList ticking_players_;

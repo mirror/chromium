@@ -8,7 +8,11 @@
 #include "platform/PlatformExport.h"
 #include "platform/heap/Handle.h"
 
+#include "platform/graphics/CompositorAnimatorsState.h"
+
 namespace blink {
+
+using CompositorMutatorInputState = cc::MutatorInputState;
 
 class PLATFORM_EXPORT CompositorMutator
     : public GarbageCollectedFinalized<CompositorMutator> {
@@ -21,7 +25,8 @@ class PLATFORM_EXPORT CompositorMutator
   // connected CompositorWorkers and AnimationWorklets.
   // Returns true if any animation callbacks requested an animation frame
   // (i.e. should be reinvoked next frame).
-  virtual bool Mutate(double monotonic_time_now) = 0;
+  virtual void Mutate(double monotonic_time_now,
+                      std::unique_ptr<CompositorMutatorInputState>) = 0;
 };
 
 }  // namespace blink

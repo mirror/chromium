@@ -54,19 +54,22 @@ void CompositorWorkerProxyClientImpl::RequestAnimationFrame() {
   mutator_->SetNeedsMutate();
 }
 
-bool CompositorWorkerProxyClientImpl::Mutate(double monotonic_time_now) {
+void CompositorWorkerProxyClientImpl::Mutate(
+    double monotonic_time_now,
+    const CompositorMutatorInputState& state) {
   DCHECK(!IsMainThread());
   if (!global_scope_)
-    return false;
+    return;
 
   TRACE_EVENT0("compositor-worker", "CompositorWorkerProxyClientImpl::mutate");
   if (!requested_animation_frame_callbacks_)
-    return false;
+    return;
 
   requested_animation_frame_callbacks_ =
       ExecuteAnimationFrameCallbacks(monotonic_time_now);
 
-  return requested_animation_frame_callbacks_;
+  if (requested_animation_frame_callbacks_)
+    mutator_->SetNeedsMutate();
 }
 
 bool CompositorWorkerProxyClientImpl::ExecuteAnimationFrameCallbacks(
