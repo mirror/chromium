@@ -52,6 +52,24 @@
       "revId": "0628c79023ccc2b494f447944ce50ae66bf0640c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7be2ed6b_b41fc502",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-09-29T17:05:48Z",
+      "side": 1,
+      "message": "+varkha@\n\nThe CacheRenderSurfaceObserver and DeferredPaintObserver are also subclass of LayerObserver, so it is easy to add the observer to current existing observer_list_ in ui::Layer.\n\nDo we also want to make current ScopedLayerAnimationSettings::AddObserver(ImplicitAnimationObserver* observer) to let the layer has the observers list? Then we might need to add a new observer_list_animation_ of type of base::ObserverList\u003cLayerAnimationObserver\u003e.\n\nAbout the ownership (unique_ptr), searching the code base, what I got is base::ObserverList\u003cObserverType\u003e. It seems all the ImplicitAnimationObserver will delete itself when the animation is finished. There is not usage of base::ObserverList\u003csdg::uqique_ptr\u003cObserverType\u003e\u003e, except this DelayedAnimationObserver [1], we use std::vector to maintain the list. But it is used for more complicated ownership concern [1]. It is also hard to track the when will it be called and maintain the observer list.\n\nWhat I can tell from the codebase is that OnImplicitAnimationsCompleted is guaranteed to be called. So the observer can delete itself. So the ownership is not required by design?\n\n[1] https://cs.chromium.org/chromium/src/ash/wm/overview/window_selector_controller.h?l\u003d78\u0026rcl\u003d3d27469c6dd35ec9a5a95702bc9158e1d5416062",
+      "parentUuid": "3f9e8b9c_c8569dde",
+      "revId": "0628c79023ccc2b494f447944ce50ae66bf0640c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
