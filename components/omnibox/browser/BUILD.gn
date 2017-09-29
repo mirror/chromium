@@ -118,6 +118,8 @@ static_library("browser") {
     "shortcuts_provider.h",
     "suggestion_answer.cc",
     "suggestion_answer.h",
+    "tab_search_provider.cc",
+    "tab_search_provider.h",
     "titled_url_match_utils.cc",
     "titled_url_match_utils.h",
     "url_index_private_data.cc",

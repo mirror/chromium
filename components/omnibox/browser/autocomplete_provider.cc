@@ -42,6 +42,8 @@ const char* AutocompleteProvider::TypeToString(Type type) {
       return "ClipboardURL";
     case TYPE_PHYSICAL_WEB:
       return "PhysicalWeb";
+    case TYPE_TAB_SEARCH:
+      return "TabSearch";
     default:
       NOTREACHED() << "Unhandled AutocompleteProvider::Type " << type;
       return "Unknown";
@@ -80,6 +82,8 @@ metrics::OmniboxEventProto_ProviderType AutocompleteProvider::
       return metrics::OmniboxEventProto::CLIPBOARD_URL;
     case TYPE_PHYSICAL_WEB:
       return metrics::OmniboxEventProto::PHYSICAL_WEB;
+    case TYPE_TAB_SEARCH:
+      return metrics::OmniboxEventProto::TAB_SEARCH;
     default:
       NOTREACHED() << "Unhandled AutocompleteProvider::Type " << type_;
       return metrics::OmniboxEventProto::UNKNOWN_PROVIDER;
