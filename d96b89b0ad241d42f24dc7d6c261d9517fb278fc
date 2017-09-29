@@ -143,6 +143,41 @@
     },
     {
       "key": {
+        "uuid": "16632047_d2017e17",
+        "filename": "components/history/core/browser/typed_url_sync_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-09-29T17:47:01Z",
+      "side": 1,
+      "message": "change_processor()-\u003eUpdateStorageKey() calls SyncMetadataStoreChangeList::UpdateMetadata() which in turn calls TypedURLSyncMetadataDatabase::UpdateSyncMetadata() which returns false in case of failure. This causes SyncMetadataStoreChangeList::UpdateMetadata to remember error in error_ field which can be later extracted with SyncMetadataStoreChangeList::TakeError().",
+      "parentUuid": "81005fdd_3b665a30",
+      "revId": "d96b89b0ad241d42f24dc7d6c261d9517fb278fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fbb6dfaa_82edeb69",
+        "filename": "components/history/core/browser/typed_url_sync_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-09-29T17:47:01Z",
+      "side": 1,
+      "message": "Replace it with:\n  return static_cast\u003csyncer::SyncMetadataStoreChangeList*\u003e(\n             metadata_change_list.get())\n      -\u003eTakeError();",
+      "revId": "d96b89b0ad241d42f24dc7d6c261d9517fb278fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a621abd_df33302a",
         "filename": "components/sync/driver/model_type_controller.h",
         "patchSetId": 7
