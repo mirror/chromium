@@ -2952,6 +2952,11 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kEnableAutofillCreditCardUploadNewUiName,
      flag_descriptions::kEnableAutofillCreditCardUploadNewUiDescription,
      kOsDesktop, FEATURE_VALUE_TYPE(autofill::kAutofillUpstreamShowNewUi)},
+    {"enable-autofill-credit-card-upload-send-detected-values",
+     flag_descriptions::kEnableAutofillCreditCardUploadSendDetectedValuesName,
+     flag_descriptions::
+         kEnableAutofillCreditCardUploadSendDetectedValuesDescription,
+     kOsAll, FEATURE_VALUE_TYPE(autofill::kAutofillUpstreamSendDetectedValues)},
     {"enable-autofill-credit-card-bank-name-display",
      flag_descriptions::kEnableAutofillCreditCardBankNameDisplayName,
      flag_descriptions::kEnableAutofillCreditCardBankNameDisplayDescription,

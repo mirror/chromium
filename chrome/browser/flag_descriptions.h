@@ -195,6 +195,10 @@ extern const char kEnableAutofillCreditCardUploadGoogleLogoDescription[];
 extern const char kEnableAutofillCreditCardUploadNewUiName[];
 extern const char kEnableAutofillCreditCardUploadNewUiDescription[];
 
+extern const char kEnableAutofillCreditCardUploadSendDetectedValuesName[];
+extern const char
+    kEnableAutofillCreditCardUploadSendDetectedValuesDescription[];
+
 extern const char kEnableBreakingNewsPushName[];
 extern const char kEnableBreakingNewsPushDescription[];
 
