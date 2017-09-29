@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86ae9a31_721569f8",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T22:27:03Z",
+      "side": 1,
+      "message": "I don\u0027t understand why this is a RepeatingCallback since you only use it once?",
+      "revId": "6272ad68a33582a583b941072294896c8d6a8003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a5f1052_d8352222",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T22:27:03Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "6272ad68a33582a583b941072294896c8d6a8003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9df0ca91_f3d1c2c2",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T22:27:03Z",
+      "side": 1,
+      "message": "Seems like this should be BindOnce if so.",
+      "revId": "6272ad68a33582a583b941072294896c8d6a8003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a7347f5_21f98f8d",
+        "filename": "media/blink/video_frame_compositor_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T22:27:03Z",
+      "side": 1,
+      "message": "Once or repeating.",
+      "revId": "6272ad68a33582a583b941072294896c8d6a8003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dee48cc0_51272864",
+        "filename": "media/blink/webmediaplayer_impl_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T22:27:03Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "6272ad68a33582a583b941072294896c8d6a8003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f1ae79c_19dcdf84",
+        "filename": "third_party/WebKit/Source/platform/exported/WebVideoFrameSubmitter.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T22:27:03Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "revId": "6272ad68a33582a583b941072294896c8d6a8003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b655093c_d5dc0333",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T22:27:03Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "revId": "6272ad68a33582a583b941072294896c8d6a8003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89ccf4e4_3749a429",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitterTest.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T22:27:03Z",
+      "side": 1,
+      "message": "BindRepeating, BindOnce.",
+      "revId": "6272ad68a33582a583b941072294896c8d6a8003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89b3abe0_4496489f",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitterTest.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T22:27:03Z",
+      "side": 1,
+      "message": "Repeating or Once.",
+      "revId": "6272ad68a33582a583b941072294896c8d6a8003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3be1710e_71514b6a",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitterTest.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T22:27:03Z",
+      "side": 1,
+      "message": "std::move?",
+      "revId": "6272ad68a33582a583b941072294896c8d6a8003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c1496e5_0f4fa89a",
+        "filename": "third_party/WebKit/public/platform/WebVideoFrameSubmitter.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T22:27:03Z",
+      "side": 1,
+      "message": "Blink doesn\u0027t know about the media thread, so this comment should be dropped or moved to the media/blink side of the code.",
+      "revId": "6272ad68a33582a583b941072294896c8d6a8003",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
