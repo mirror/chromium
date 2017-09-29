@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5e41c12a_b022d9d5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-09-29T21:53:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd6ce469_a45bc0d4",
+      "range": {
+        "startLine": 152,
+        "startChar": 0,
+        "endLine": 154,
+        "endChar": 7
+      },
+      "revId": "f25b5109e387c68804f7565302fee5a156972ae3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6669e39e_167f49ca",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-29T18:12:16Z",
       "side": 1,
       "message": "Does ContextUtils#getApplicationContext()#getResources()#getConfiguration()#screenHeightDp and #screenWidthDp return the same dp value as heightPixels/density and widthPixels/density.",
+      "range": {
+        "startLine": 509,
+        "startChar": 39,
+        "endLine": 509,
+        "endChar": 99
+      },
+      "revId": "f25b5109e387c68804f7565302fee5a156972ae3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcd42081_b354c4c8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-09-29T21:53:58Z",
+      "side": 1,
+      "message": "The ContextUtils#getApplicationContext()#getResources()#getConfiguration()#screenHeightDp on Nexus 6P is 659dp (actual usable height excluding status bar). \n\nThe ContextUtils#getApplicationContext()#getResources()#getDisplayMetrics() would have the same height as the window manager one, regardless of multiwindow  or not.",
+      "parentUuid": "6669e39e_167f49ca",
       "range": {
         "startLine": 509,
         "startChar": 39,
