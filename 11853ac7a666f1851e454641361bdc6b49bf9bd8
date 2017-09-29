@@ -88,6 +88,24 @@
       "revId": "11853ac7a666f1851e454641361bdc6b49bf9bd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "185b3773_33a127f3",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 1194,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-09-29T19:24:48Z",
+      "side": 1,
+      "message": "1 and 2 now together in this CL.\n\nIs there a way to verify there\u0027s no flakiness introduced? I know how to rerun specific tests, but in this case we don\u0027t know which test might be flaky and it would be quite long to rerun all browser tests a hundred times.",
+      "parentUuid": "831f8083_3b5be9bf",
+      "revId": "11853ac7a666f1851e454641361bdc6b49bf9bd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
