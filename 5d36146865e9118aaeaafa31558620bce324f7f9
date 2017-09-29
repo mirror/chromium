@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "ac307a2d_a7c87417",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-29T01:34:44Z",
+      "side": 1,
+      "message": "I see. I don\u0027t know about the edge case.. I guess if we do have a code path that enables the password view without going through LoginAuthUserView::SetAuthMethods, then we\u0027ll fix this part.",
+      "parentUuid": "b5b8bbc3_7d697d01",
+      "revId": "5d36146865e9118aaeaafa31558620bce324f7f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6bc39ee4_c9d5ea93",
         "filename": "ash/login/ui/login_password_view.cc",
         "patchSetId": 3
