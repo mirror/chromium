@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc06094c_1ccf96ea",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-09-29T21:20:24Z",
+      "side": 1,
+      "message": "Hang on, perhaps this should be a reject?",
+      "range": {
+        "startLine": 661,
+        "startChar": 10,
+        "endLine": 661,
+        "endChar": 17
+      },
+      "revId": "a48819f5c7723d45a9c2ef4becd40ec691e6a95d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
