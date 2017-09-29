@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8139855_571f6e2b",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2931,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-29T01:46:18Z",
+      "side": 1,
+      "message": "Note: I have been thinking to move Element::UpdateFocusAppearance()\nsomewhere,maybe FocusController. However, I\u0027ve not had concrete idea yet.\n\nElement should be independent from FrameSelection.",
+      "revId": "b543bedbea7b1d9ea8f20de8a4f35e4de77daecb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6fc330e_6fb1379f",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-29T01:46:18Z",
+      "side": 1,
+      "message": "nit: Could you add \"TODO(editing-dev):\"?",
+      "revId": "b543bedbea7b1d9ea8f20de8a4f35e4de77daecb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19bc1c41_bae09f1a",
+        "filename": "third_party/WebKit/Source/core/editing/serializers/StyledMarkupSerializer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-29T01:46:18Z",
+      "side": 1,
+      "message": "Note: I\u0027m dreaming about renaming one letter variables to proper name...",
+      "revId": "b543bedbea7b1d9ea8f20de8a4f35e4de77daecb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
