@@ -64,10 +64,6 @@ class LayoutItem {
 
   bool IsImage() const { return layout_object_->IsImage(); }
 
-  bool IsLayoutFullScreen() const {
-    return layout_object_->IsLayoutFullScreen();
-  }
-
   bool IsListItem() const { return layout_object_->IsListItem(); }
 
   bool IsMedia() const { return layout_object_->IsMedia(); }

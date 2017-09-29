@@ -9,7 +9,6 @@
 #include "core/dom/UserGestureIndicator.h"
 #include "core/fullscreen/Fullscreen.h"
 #include "core/html/HTMLDivElement.h"
-#include "core/layout/LayoutFullScreen.h"
 #include "core/loader/EmptyClients.h"
 #include "core/testing/DummyPageHolder.h"
 #include "platform/testing/UnitTestHelpers.h"
@@ -62,11 +61,11 @@ class HTMLVideoElementPersistentTest : public ::testing::Test {
   FullscreenMockChromeClient& GetMockChromeClient() { return *chrome_client_; }
 
   void SimulateDidEnterFullscreen() {
-    Fullscreen::FromIfExists(GetDocument())->DidEnterFullscreen();
+    Fullscreen::DidEnterFullscreen(GetDocument());
   }
 
   void SimulateDidExitFullscreen() {
-    Fullscreen::FromIfExists(GetDocument())->DidExitFullscreen();
+    Fullscreen::DidExitFullscreen(GetDocument());
   }
 
   void SimulateBecamePersistentVideo(bool value) {

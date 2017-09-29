@@ -67,13 +67,13 @@ class MockWebScreenOrientationClient final : public WebScreenOrientationClient {
 
 void DidEnterFullscreen(Document* document) {
   DCHECK(document);
-  Fullscreen::From(*document).DidEnterFullscreen();
+  Fullscreen::DidEnterFullscreen(*document);
   document->ServiceScriptedAnimations(WTF::MonotonicallyIncreasingTime());
 }
 
 void DidExitFullscreen(Document* document) {
   DCHECK(document);
-  Fullscreen::From(*document).DidExitFullscreen();
+  Fullscreen::DidExitFullscreen(*document);
   document->ServiceScriptedAnimations(WTF::MonotonicallyIncreasingTime());
 }
 

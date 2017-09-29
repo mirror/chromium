@@ -810,7 +810,11 @@ PseudoElement* StyleResolver::CreatePseudoElementIfNeeded(Element& parent,
        !FirstLetterPseudoElement::FirstLetterTextLayoutObject(parent)))
     return nullptr;
 
-  if (!CanHaveGeneratedChildren(*parent_layout_object))
+  // The backdrop pseudo element generates a new stacking context and its
+  // layout object does not become a child of |parentLayoutObject|. The
+  // exemption is needed so that replaced content also gets a backdrop.
+  if (pseudo_id != kPseudoIdBackdrop &&
+      !CanHaveGeneratedChildren(*parent_layout_object))
     return nullptr;
 
   if (ComputedStyle* cached_style =

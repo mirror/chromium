@@ -28,6 +28,7 @@
 
 #include "core/dom/FirstLetterPseudoElement.h"
 #include "core/frame/UseCounter.h"
+#include "core/layout/GeneratedChildren.h"
 #include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutQuote.h"
 #include "core/probe/CoreProbes.h"
@@ -127,6 +128,13 @@ void PseudoElement::AttachLayoutTree(AttachContext& context) {
   LayoutObject* layout_object = this->GetLayoutObject();
   if (!layout_object)
     return;
+
+  // This is to ensure that bypassing the canHaveGeneratedChildren check in
+  // StyleResolver::createPseudoElementIfNeeded does not result in the
+  // backdrop pseudo element's layout object becoming the child of a layout
+  // object that doesn't allow children.
+  DCHECK(layout_object->Parent());
+  DCHECK(CanHaveGeneratedChildren(*layout_object->Parent()));
 
   ComputedStyle& style = layout_object->MutableStyleRef();
   if (style.StyleType() != kPseudoIdBefore &&

@@ -159,7 +159,7 @@ TEST_F(HTMLMediaElementEventListenersTest,
   std::unique_ptr<UserGestureIndicator> gesture_indicator =
       LocalFrame::CreateUserGesture(GetDocument().GetFrame());
   Fullscreen::RequestFullscreen(*Video());
-  Fullscreen::From(GetDocument()).DidEnterFullscreen();
+  Fullscreen::DidEnterFullscreen(GetDocument());
 
   testing::RunPendingTasks();
 

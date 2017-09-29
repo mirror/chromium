@@ -545,8 +545,8 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
   // IE extensions. Used to calculate offsetWidth/Height. Overridden by inlines
   // (LayoutFlow) to return the remaining width on a given line (and the height
   // of a single line).
-  LayoutUnit OffsetWidth() const override { return frame_rect_.Width(); }
-  LayoutUnit OffsetHeight() const override { return frame_rect_.Height(); }
+  LayoutUnit OffsetWidth() const final { return frame_rect_.Width(); }
+  LayoutUnit OffsetHeight() const final { return frame_rect_.Height(); }
 
   int PixelSnappedOffsetWidth(const Element*) const final;
   int PixelSnappedOffsetHeight(const Element*) const final;
@@ -1140,8 +1140,8 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
       LineDirectionMode,
       LinePositionMode = kPositionOnContainingLine) const override;
 
-  LayoutUnit OffsetLeft(const Element*) const override;
-  LayoutUnit OffsetTop(const Element*) const override;
+  LayoutUnit OffsetLeft(const Element*) const final;
+  LayoutUnit OffsetTop(const Element*) const final;
 
   LayoutPoint FlipForWritingModeForChild(const LayoutBox* child,
                                          const LayoutPoint&) const;

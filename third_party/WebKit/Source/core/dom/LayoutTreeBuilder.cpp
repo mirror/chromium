@@ -35,8 +35,6 @@
 #include "core/dom/PseudoElement.h"
 #include "core/dom/Text.h"
 #include "core/dom/V0InsertionPoint.h"
-#include "core/fullscreen/Fullscreen.h"
-#include "core/layout/LayoutFullScreen.h"
 #include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutText.h"
 #include "core/layout/LayoutView.h"
@@ -130,13 +128,6 @@ void LayoutTreeBuilderForElement::CreateLayoutObject() {
   node_->SetLayoutObject(new_layout_object);
   new_layout_object->SetStyle(
       &style);  // setStyle() can depend on layoutObject() already being set.
-
-  if (Fullscreen::IsFullscreenElement(*node_)) {
-    new_layout_object = LayoutFullScreen::WrapLayoutObject(
-        new_layout_object, parent_layout_object, &node_->GetDocument());
-    if (!new_layout_object)
-      return;
-  }
 
   // Note: Adding newLayoutObject instead of layoutObject(). layoutObject() may
   // be a child of newLayoutObject.

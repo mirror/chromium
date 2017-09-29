@@ -38,7 +38,6 @@
 #include "core/frame/WebLocalFrameImpl.h"
 #include "core/fullscreen/Fullscreen.h"
 #include "core/html/HTMLVideoElement.h"
-#include "core/layout/LayoutFullScreen.h"
 #include "core/page/Page.h"
 #include "public/platform/WebLayerTreeView.h"
 #include "public/web/WebFrameClient.h"
@@ -84,10 +83,8 @@ void FullscreenController::DidEnterFullscreen() {
        frame = frame->Tree().TraverseNext()) {
     if (!frame->IsLocalFrame())
       continue;
-    if (Document* document = ToLocalFrame(frame)->GetDocument()) {
-      if (Fullscreen* fullscreen = Fullscreen::FromIfExists(*document))
-        fullscreen->DidEnterFullscreen();
-    }
+    if (Document* document = ToLocalFrame(frame)->GetDocument())
+      Fullscreen::DidEnterFullscreen(*document);
   }
 
   // TODO(foolip): If the top level browsing context (main frame) ends up with
@@ -120,10 +117,8 @@ void FullscreenController::DidExitFullscreen() {
     }
 
     DCHECK(frame->IsLocalRoot());
-    if (Document* document = ToLocalFrame(frame)->GetDocument()) {
-      if (Fullscreen* fullscreen = Fullscreen::FromIfExists(*document))
-        fullscreen->DidExitFullscreen();
-    }
+    if (Document* document = ToLocalFrame(frame)->GetDocument())
+      Fullscreen::DidExitFullscreen(*document);
 
     // Skip over all descendant frames.
     while (next_frame && next_frame->Tree().IsDescendantOf(frame))
@@ -239,20 +234,6 @@ void FullscreenController::UpdateSize() {
     return;
 
   UpdatePageScaleConstraints(false);
-
-  // Traverse all local frames and notify the LayoutFullScreen object, if any.
-  for (Frame* frame = web_view_base_->GetPage()->MainFrame(); frame;
-       frame = frame->Tree().TraverseNext()) {
-    if (!frame->IsLocalFrame())
-      continue;
-    if (Document* document = ToLocalFrame(frame)->GetDocument()) {
-      if (Fullscreen* fullscreen = Fullscreen::FromIfExists(*document)) {
-        if (LayoutFullScreen* layout_object =
-                fullscreen->FullScreenLayoutObject())
-          layout_object->UpdateStyle();
-      }
-    }
-  }
 }
 
 void FullscreenController::DidUpdateLayout() {
