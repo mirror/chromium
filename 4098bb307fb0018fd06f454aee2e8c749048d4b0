@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6f7395fa_1ac4fd75",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 45
+      },
+      "lineNbr": 892,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-29T15:54:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5a82004_ef0e2fcf",
+      "range": {
+        "startLine": 892,
+        "startChar": 27,
+        "endLine": 892,
+        "endChar": 34
+      },
+      "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1ad4089_c6b1dc98",
         "filename": "net/http/http_cache.cc",
         "patchSetId": 45
@@ -230,6 +254,30 @@
     },
     {
       "key": {
+        "uuid": "cf5a7df9_16d9a4d8",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 45
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-29T15:54:11Z",
+      "side": 1,
+      "message": "I understand your concerns here but since the interface of WritersDoneWritingToEntry explicitly mentions what paths it can take, I am kind of leaning towards deciding whether we should invoke it or not at this point based on whether we want or not to take any of those paths.",
+      "parentUuid": "bea736c7_84b39026",
+      "range": {
+        "startLine": 162,
+        "startChar": 12,
+        "endLine": 162,
+        "endChar": 37
+      },
+      "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df4694e9_9e801bfe",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 45
@@ -371,6 +419,30 @@
     },
     {
       "key": {
+        "uuid": "75cc286f_8ba6f182",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 45
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-29T15:54:11Z",
+      "side": 1,
+      "message": "I am now invoking AboutToBeRemovedFromWriters from all places except this one. This is special in a way that the transaction is still going to be a part of entry as readers and that would lead to invoke DoneWithEntry when its actually completed reading/destroyed. So in that case we will end up calling RecordHistograms twice.",
+      "parentUuid": "c4c8a3d2_a2f5908a",
+      "range": {
+        "startLine": 618,
+        "startChar": 20,
+        "endLine": 618,
+        "endChar": 52
+      },
+      "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "28431abd_5d211b21",
         "filename": "net/http/http_cache_writers.h",
         "patchSetId": 45
@@ -391,6 +463,30 @@
       "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88230b10_b64f06f6",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 45
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-29T15:54:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28431abd_5d211b21",
+      "range": {
+        "startLine": 83,
+        "startChar": 23,
+        "endLine": 83,
+        "endChar": 31
+      },
+      "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -417,6 +513,30 @@
     },
     {
       "key": {
+        "uuid": "4de4a3a8_47b05ca5",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 45
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-29T15:54:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14c27419_e75148ef",
+      "range": {
+        "startLine": 95,
+        "startChar": 15,
+        "endLine": 95,
+        "endChar": 18
+      },
+      "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9ef0797_892c23e9",
         "filename": "net/http/http_cache_writers.h",
         "patchSetId": 45
@@ -437,6 +557,30 @@
       "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a271cff_5a6992e7",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 45
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-29T15:54:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9ef0797_892c23e9",
+      "range": {
+        "startLine": 142,
+        "startChar": 30,
+        "endLine": 142,
+        "endChar": 37
+      },
+      "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -463,6 +607,30 @@
     },
     {
       "key": {
+        "uuid": "91b23f26_02425432",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 45
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-29T15:54:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c6a52ea_f63f6732",
+      "range": {
+        "startLine": 243,
+        "startChar": 24,
+        "endLine": 243,
+        "endChar": 29
+      },
+      "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6affda12_76946b1c",
         "filename": "net/http/http_cache_writers_unittest.cc",
         "patchSetId": 45
@@ -474,6 +642,30 @@
       "writtenOn": "2017-09-27T19:57:22Z",
       "side": 1,
       "message": "Test for failure if there are other transactions on writers?",
+      "range": {
+        "startLine": 637,
+        "startChar": 20,
+        "endLine": 637,
+        "endChar": 38
+      },
+      "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb31efc5_a0670bf8",
+        "filename": "net/http/http_cache_writers_unittest.cc",
+        "patchSetId": 45
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-29T15:54:11Z",
+      "side": 1,
+      "message": "There is a dcheck which forbids doing that.",
+      "parentUuid": "6affda12_76946b1c",
       "range": {
         "startLine": 637,
         "startChar": 20,
