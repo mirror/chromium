@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b39c69a_27810896",
+        "filename": "ash/system/web_notification/web_notification_tray.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-29T06:21:49Z",
+      "side": 1,
+      "message": "How this value is passed to TrayBubbleView? TrayBubbleView receives show_by_click via init_params. I may be missing something, but IIUC SystemTray is used only for the system menu, not for other trays, ime, notification, etc.",
+      "range": {
+        "startLine": 89,
+        "startChar": 4,
+        "endLine": 89,
+        "endChar": 41
+      },
+      "revId": "6228875aa0a04457d401ce22a3e6231ed964de9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
