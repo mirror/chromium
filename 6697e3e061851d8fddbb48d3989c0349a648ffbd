@@ -34,6 +34,24 @@
       "revId": "6697e3e061851d8fddbb48d3989c0349a648ffbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "00c3b9a5_4ea12357",
+        "filename": "device/bluetooth/test/fake_central.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-09-29T17:18:37Z",
+      "side": 1,
+      "message": "True.  Yes, it\u0027s a subjective call and OK with me to just go with a comment.  I think I particularly dislike static_casts vs the general population. ;)",
+      "parentUuid": "54949d58_88eeefeb",
+      "revId": "6697e3e061851d8fddbb48d3989c0349a648ffbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
