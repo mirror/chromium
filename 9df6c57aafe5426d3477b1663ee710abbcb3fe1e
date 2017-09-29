@@ -260,6 +260,30 @@
       "revId": "9df6c57aafe5426d3477b1663ee710abbcb3fe1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dc9f7cbc_42591037",
+        "filename": "chrome/installer/setup/user_experiment.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-09-29T18:17:41Z",
+      "side": 1,
+      "message": "OK, went over everything and see that this change is incorrect. kTryChromeAgain is not Windows-only but we are currently running a Windows-only \"try Chrome again\" user toast. I thought the Mac was receiving this flag which gets added to command line flags here, but this file is part of the Windows installer so it cannot be affecting the Mac.",
+      "parentUuid": "fcff3059_b211783d",
+      "range": {
+        "startLine": 530,
+        "startChar": 46,
+        "endLine": 530,
+        "endChar": 61
+      },
+      "revId": "9df6c57aafe5426d3477b1663ee710abbcb3fe1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
