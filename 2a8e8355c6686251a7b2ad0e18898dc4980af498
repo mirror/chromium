@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3439888d_85171180",
+        "filename": "chrome/test/chromedriver/server/http_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1002882
+      },
+      "writtenOn": "2017-09-29T00:05:45Z",
+      "side": 1,
+      "message": "You may shorten the code by grouping them. Separating like this is fine too.",
+      "range": {
+        "startLine": 706,
+        "startChar": 4,
+        "endLine": 723,
+        "endChar": 12
+      },
+      "revId": "2a8e8355c6686251a7b2ad0e18898dc4980af498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
