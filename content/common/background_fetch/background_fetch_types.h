@@ -53,6 +53,7 @@ struct CONTENT_EXPORT BackgroundFetchRegistration {
   ~BackgroundFetchRegistration();
 
   std::string id;
+  std::string job_guid;  // Not exposed to JavaScript.
   std::vector<IconDefinition> icons;
   std::string title;
   int64_t total_download_size = 0;

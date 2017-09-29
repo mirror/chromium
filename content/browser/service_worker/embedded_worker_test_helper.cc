@@ -203,11 +203,13 @@ class EmbeddedWorkerTestHelper::MockServiceWorkerEventDispatcher
 
   void DispatchBackgroundFetchedEvent(
       const std::string& tag,
+      const std::string& job_guid,
       const std::vector<BackgroundFetchSettledFetch>& fetches,
       DispatchBackgroundFetchedEventCallback callback) override {
     if (!helper_)
       return;
-    helper_->OnBackgroundFetchedEventStub(tag, fetches, std::move(callback));
+    helper_->OnBackgroundFetchedEventStub(tag, job_guid, fetches,
+                                          std::move(callback));
   }
 
   void DispatchFetchEvent(
@@ -565,6 +567,7 @@ void EmbeddedWorkerTestHelper::OnBackgroundFetchFailEvent(
 
 void EmbeddedWorkerTestHelper::OnBackgroundFetchedEvent(
     const std::string& tag,
+    const std::string& job_guid,
     const std::vector<BackgroundFetchSettledFetch>& fetches,
     mojom::ServiceWorkerEventDispatcher::DispatchBackgroundFetchedEventCallback
         callback) {
@@ -841,13 +844,15 @@ void EmbeddedWorkerTestHelper::OnBackgroundFetchFailEventStub(
 
 void EmbeddedWorkerTestHelper::OnBackgroundFetchedEventStub(
     const std::string& tag,
+    const std::string& job_guid,
     const std::vector<BackgroundFetchSettledFetch>& fetches,
     mojom::ServiceWorkerEventDispatcher::DispatchBackgroundFetchedEventCallback
         callback) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,
       base::BindOnce(&EmbeddedWorkerTestHelper::OnBackgroundFetchedEvent,
-                     AsWeakPtr(), tag, fetches, base::Passed(&callback)));
+                     AsWeakPtr(), tag, job_guid, fetches,
+                     base::Passed(&callback)));
 }
 
 void EmbeddedWorkerTestHelper::OnExtendableMessageEventStub(

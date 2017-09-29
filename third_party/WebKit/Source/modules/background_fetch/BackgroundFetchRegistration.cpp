@@ -14,10 +14,12 @@ namespace blink {
 
 BackgroundFetchRegistration::BackgroundFetchRegistration(
     String id,
+    String job_guid,
     HeapVector<IconDefinition> icons,
     long long total_download_size,
     String title)
     : id_(id),
+      job_guid_(job_guid),
       icons_(icons),
       total_download_size_(total_download_size),
       title_(title) {}
@@ -52,8 +54,9 @@ ScriptPromise BackgroundFetchRegistration::abort(ScriptState* script_state) {
 
   DCHECK(registration_);
   BackgroundFetchBridge::From(registration_)
-      ->Abort(id_, WTF::Bind(&BackgroundFetchRegistration::DidAbort,
-                             WrapPersistent(this), WrapPersistent(resolver)));
+      ->Abort(id_, job_guid_,
+              WTF::Bind(&BackgroundFetchRegistration::DidAbort,
+                        WrapPersistent(this), WrapPersistent(resolver)));
 
   return promise;
 }

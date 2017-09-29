@@ -8,6 +8,7 @@
 #include <map>
 #include <memory>
 #include <string>
+#include <tuple>
 
 #include "base/callback_forward.h"
 #include "base/containers/flat_map.h"
@@ -87,7 +88,9 @@ class CONTENT_EXPORT BackgroundFetchDataManager {
 
   // Get the BackgroundFetchOptions for a registration.
   void GetRegistration(
-      const BackgroundFetchRegistrationId& registration_id,
+      int64_t service_worker_registration_id,
+      const url::Origin& origin,
+      const std::string& unsafe_id,
       blink::mojom::BackgroundFetchService::GetRegistrationCallback callback);
 
   // Updates the UI values for a Background Fetch registration.
@@ -144,12 +147,20 @@ class CONTENT_EXPORT BackgroundFetchDataManager {
   // The blob storage request with which response information will be stored.
   scoped_refptr<ChromeBlobStorageContext> blob_storage_context_;
 
-  // Map of known background fetch registration ids to their associated data.
+  // Map from {service_worker_registration_id, origin, unsafe_id} to
+  // registration id. Only active registrations that have not completed/aborted
+  // are included (so there will never be more than one entry for a given key).
+  std::map<std::tuple<int64_t, url::Origin, std::string>,
+           BackgroundFetchRegistrationId>
+      active_registration_ids_;
+
+  // Map of known (but possibly inactive) background fetch registration ids to
+  // their associated data.
   std::map<BackgroundFetchRegistrationId, std::unique_ptr<RegistrationData>>
       registrations_;
 
-  // Map of known background fetch registration ids to the listener that needs
-  // to be notified about changes to the registration.
+  // Map of background fetch registration ids to the listener that needs to be
+  // notified about changes to the registration.
   base::flat_map<BackgroundFetchRegistrationId, RegistrationListener*>
       listeners_;
 

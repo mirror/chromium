@@ -76,6 +76,7 @@ void BackgroundFetchEmbeddedWorkerTestHelper::OnBackgroundFetchFailEvent(
 
 void BackgroundFetchEmbeddedWorkerTestHelper::OnBackgroundFetchedEvent(
     const std::string& id,
+    const std::string& job_guid,
     const std::vector<BackgroundFetchSettledFetch>& fetches,
     mojom::ServiceWorkerEventDispatcher::DispatchBackgroundFetchedEventCallback
         callback) {

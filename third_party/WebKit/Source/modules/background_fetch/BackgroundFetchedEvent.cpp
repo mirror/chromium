@@ -26,11 +26,13 @@ BackgroundFetchedEvent::BackgroundFetchedEvent(
 BackgroundFetchedEvent::BackgroundFetchedEvent(
     const AtomicString& type,
     const BackgroundFetchedEventInit& initializer,
+    const String& job_guid,
     const WebVector<WebBackgroundFetchSettledFetch>& fetches,
     ScriptState* script_state,
     WaitUntilObserver* observer,
     ServiceWorkerRegistration* registration)
     : BackgroundFetchEvent(type, initializer, observer),
+      job_guid_(job_guid),
       registration_(registration) {
   fetches_.ReserveInitialCapacity(fetches.size());
   for (const WebBackgroundFetchSettledFetch& fetch : fetches) {
@@ -51,17 +53,18 @@ BackgroundFetchedEvent::fetches() const {
 
 ScriptPromise BackgroundFetchedEvent::updateUI(ScriptState* script_state,
                                                const String& title) {
-  if (!registration_) {
+  if (job_guid_.IsEmpty()) {
     // Return a Promise that will never settle when a developer calls this
     // method on a BackgroundFetchedEvent instance they created themselves.
     return ScriptPromise();
   }
+  DCHECK(registration_);
 
   ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
   ScriptPromise promise = resolver->Promise();
 
   BackgroundFetchBridge::From(registration_)
-      ->UpdateUI(id(), title,
+      ->UpdateUI(id(), job_guid_, title,
                  WTF::Bind(&BackgroundFetchedEvent::DidUpdateUI,
                            WrapPersistent(this), WrapPersistent(resolver)));
 

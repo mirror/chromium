@@ -1476,6 +1476,7 @@ void ServiceWorkerContextClient::DispatchBackgroundFetchFailEvent(
 
 void ServiceWorkerContextClient::DispatchBackgroundFetchedEvent(
     const std::string& tag,
+    const std::string& job_guid,
     const std::vector<BackgroundFetchSettledFetch>& fetches,
     DispatchBackgroundFetchedEventCallback callback) {
   TRACE_EVENT0("ServiceWorker",
@@ -1492,7 +1493,8 @@ void ServiceWorkerContextClient::DispatchBackgroundFetchedEvent(
   }
 
   proxy_->DispatchBackgroundFetchedEvent(
-      request_id, blink::WebString::FromUTF8(tag), web_fetches);
+      request_id, blink::WebString::FromUTF8(tag),
+      blink::WebString::FromUTF8(job_guid), web_fetches);
 }
 
 void ServiceWorkerContextClient::DispatchInstallEvent(

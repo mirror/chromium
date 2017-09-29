@@ -60,6 +60,7 @@ TEST(BackgroundFetchStructTraitsTest, BackgroundFetchOptionsRoundtrip) {
 TEST(BackgroundFetchStructTraitsTest, BackgroundFetchRegistrationRoundTrip) {
   BackgroundFetchRegistration registration;
   registration.id = "my_id";
+  registration.job_guid = "bb48a9fb-c01f-4ced-a9ae-58bd48a9fb53";
   registration.icons = {
       CreateIconDefinition("my_icon.png", "256x256", "image/png"),
       CreateIconDefinition("my_small_icon.jpg", "128x128", "image/jpg")};
@@ -72,6 +73,7 @@ TEST(BackgroundFetchStructTraitsTest, BackgroundFetchRegistrationRoundTrip) {
       &roundtrip_registration));
 
   EXPECT_EQ(roundtrip_registration.id, registration.id);
+  EXPECT_EQ(roundtrip_registration.job_guid, registration.job_guid);
 
   ASSERT_EQ(roundtrip_registration.icons.size(), registration.icons.size());
   for (size_t i = 0; i < registration.icons.size(); ++i) {

@@ -76,6 +76,7 @@ class WebServiceWorkerContextProxy {
   virtual void DispatchBackgroundFetchedEvent(
       int event_id,
       const WebString& tag,
+      const WebString& job_guid,
       const WebVector<WebBackgroundFetchSettledFetch>& fetches) = 0;
   virtual void DispatchExtendableMessageEvent(
       int event_id,

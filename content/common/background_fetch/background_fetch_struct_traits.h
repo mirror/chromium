@@ -49,6 +49,10 @@ struct CONTENT_EXPORT
       const content::BackgroundFetchRegistration& registration) {
     return registration.id;
   }
+  static const std::string& job_guid(
+      const content::BackgroundFetchRegistration& registration) {
+    return registration.job_guid;
+  }
   static const std::vector<content::IconDefinition>& icons(
       const content::BackgroundFetchRegistration& registration) {
     return registration.icons;

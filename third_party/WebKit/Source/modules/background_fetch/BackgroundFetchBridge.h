@@ -50,15 +50,18 @@ class BackgroundFetchBridge final
              const BackgroundFetchOptions&,
              RegistrationCallback);
 
-  // Updates the user interface for the Background Fetch identified by |id|
-  // with the updated |title|. Will invoke the |callback| when the interface
-  // has been requested to update.
-  void UpdateUI(const String& id, const String& title, UpdateUICallback);
+  // Updates the user interface for the Background Fetch identified by
+  // |job_guid| with the updated |title|. Will invoke the |callback| when the
+  // interface has been requested to update.
+  void UpdateUI(const String& id,
+                const String& job_guid,
+                const String& title,
+                UpdateUICallback);
 
-  // Aborts the active Background Fetch for |id|. Will invoke the |callback|
-  // when the Background Fetch identified by |id| has been aborted, or could
-  // not be aborted for operational reasons.
-  void Abort(const String& id, AbortCallback);
+  // Aborts the active Background Fetch for |job_guid|. Will invoke the
+  // |callback| when the Background Fetch identified by |job_guid| has been
+  // aborted, or could not be aborted for operational reasons.
+  void Abort(const String& id, const String& job_guid, AbortCallback);
 
   // Gets the Background Fetch registration for the given |id|. Will invoke the
   // |callback| with the Background Fetch registration, which may be a nullptr

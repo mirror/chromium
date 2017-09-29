@@ -48,7 +48,14 @@ class BackgroundFetchJobControllerTest : public BackgroundFetchTestBase {
       std::map<GURL, std::string /* method */> request_data) {
     DCHECK(registration_id);
 
-    ASSERT_TRUE(CreateRegistrationId(kExampleTag, registration_id));
+    int64_t service_worker_registration_id = RegisterServiceWorker();
+    ASSERT_NE(blink::mojom::kInvalidServiceWorkerRegistrationId,
+              service_worker_registration_id);
+
+    // New |job_guid|, since this is a new Background Fetch registration.
+    *registration_id =
+        BackgroundFetchRegistrationId(service_worker_registration_id, origin(),
+                                      kExampleTag, base::GenerateGUID());
 
     std::vector<ServiceWorkerFetchRequest> requests;
     requests.reserve(request_data.size());

@@ -18,10 +18,16 @@ BackgroundFetchRegistrationId::BackgroundFetchRegistrationId()
 BackgroundFetchRegistrationId::BackgroundFetchRegistrationId(
     int64_t service_worker_registration_id,
     const url::Origin& origin,
-    const std::string& id)
+    const std::string& unsafe_id,
+    const std::string& job_guid)
     : service_worker_registration_id_(service_worker_registration_id),
       origin_(origin),
-      id_(id) {}
+      unsafe_id_(unsafe_id),
+      job_guid_(job_guid) {
+  DCHECK_NE(blink::mojom::kInvalidServiceWorkerRegistrationId,
+            service_worker_registration_id);
+  DCHECK(!job_guid_.empty());
+}
 
 BackgroundFetchRegistrationId::BackgroundFetchRegistrationId(
     const BackgroundFetchRegistrationId& other) = default;
@@ -29,33 +35,31 @@ BackgroundFetchRegistrationId::BackgroundFetchRegistrationId(
 BackgroundFetchRegistrationId::BackgroundFetchRegistrationId(
     BackgroundFetchRegistrationId&& other) = default;
 
-BackgroundFetchRegistrationId::~BackgroundFetchRegistrationId() = default;
-
 BackgroundFetchRegistrationId& BackgroundFetchRegistrationId::operator=(
     const BackgroundFetchRegistrationId& other) = default;
 
+BackgroundFetchRegistrationId& BackgroundFetchRegistrationId::operator=(
+    BackgroundFetchRegistrationId&& other) = default;
+
+BackgroundFetchRegistrationId::~BackgroundFetchRegistrationId() = default;
+
 bool BackgroundFetchRegistrationId::operator==(
     const BackgroundFetchRegistrationId& other) const {
-  return other.service_worker_registration_id_ ==
-             service_worker_registration_id_ &&
-         other.origin_ == origin_ && other.id_ == id_;
+  return job_guid_ == other.job_guid_;
 }
 
 bool BackgroundFetchRegistrationId::operator!=(
     const BackgroundFetchRegistrationId& other) const {
-  return !(*this == other);
+  return job_guid_ != other.job_guid_;
 }
 
 bool BackgroundFetchRegistrationId::operator<(
     const BackgroundFetchRegistrationId& other) const {
-  return std::tie(service_worker_registration_id_, origin_, id_) <
-         std::tie(other.service_worker_registration_id_, other.origin_,
-                  other.id_);
+  return job_guid_ < other.job_guid_;
 }
 
 bool BackgroundFetchRegistrationId::is_null() const {
-  return service_worker_registration_id_ ==
-         blink::mojom::kInvalidServiceWorkerRegistrationId;
+  return job_guid_.empty();
 }
 
 }  // namespace content

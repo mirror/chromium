@@ -221,6 +221,7 @@ class EmbeddedWorkerTestHelper : public IPC::Sender,
           DispatchBackgroundFetchFailEventCallback callback);
   virtual void OnBackgroundFetchedEvent(
       const std::string& tag,
+      const std::string& job_guid,
       const std::vector<BackgroundFetchSettledFetch>& fetches,
       mojom::ServiceWorkerEventDispatcher::
           DispatchBackgroundFetchedEventCallback callback);
@@ -315,6 +316,7 @@ class EmbeddedWorkerTestHelper : public IPC::Sender,
           DispatchBackgroundFetchFailEventCallback callback);
   void OnBackgroundFetchedEventStub(
       const std::string& tag,
+      const std::string& job_guid,
       const std::vector<BackgroundFetchSettledFetch>& fetches,
       mojom::ServiceWorkerEventDispatcher::
           DispatchBackgroundFetchedEventCallback callback);

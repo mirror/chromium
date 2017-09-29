@@ -28,6 +28,7 @@ class BackgroundFetchRegistration final
 
  public:
   BackgroundFetchRegistration(String id,
+                              String job_guid,
                               HeapVector<IconDefinition> icons,
                               long long total_download_size,
                               String title);
@@ -52,6 +53,7 @@ class BackgroundFetchRegistration final
   Member<ServiceWorkerRegistration> registration_;
 
   String id_;
+  String job_guid_;
   HeapVector<IconDefinition> icons_;
   long long total_download_size_;
   String title_;

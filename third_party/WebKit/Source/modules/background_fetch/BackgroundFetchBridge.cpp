@@ -58,18 +58,21 @@ void BackgroundFetchBridge::Fetch(const String& id,
                     WrapPersistent(this), WTF::Passed(std::move(callback)))));
 }
 
-void BackgroundFetchBridge::Abort(const String& id, AbortCallback callback) {
+void BackgroundFetchBridge::Abort(const String& id,
+                                  const String& job_guid,
+                                  AbortCallback callback) {
   GetService()->Abort(GetSupplementable()->WebRegistration()->RegistrationId(),
-                      GetSecurityOrigin(), id,
+                      GetSecurityOrigin(), id, job_guid,
                       ConvertToBaseCallback(std::move(callback)));
 }
 
 void BackgroundFetchBridge::UpdateUI(const String& id,
+                                     const String& job_guid,
                                      const String& title,
                                      UpdateUICallback callback) {
   GetService()->UpdateUI(
       GetSupplementable()->WebRegistration()->RegistrationId(),
-      GetSecurityOrigin(), id, title,
+      GetSecurityOrigin(), id, job_guid, title,
       ConvertToBaseCallback(std::move(callback)));
 }
 

@@ -90,6 +90,7 @@ class ServiceWorkerGlobalScopeProxy final
   void DispatchBackgroundFetchedEvent(
       int,
       const WebString& tag,
+      const WebString& job_guid,
       const WebVector<WebBackgroundFetchSettledFetch>& fetches) override;
   void DispatchExtendableMessageEvent(
       int event_id,
