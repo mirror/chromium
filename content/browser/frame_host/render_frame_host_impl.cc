@@ -1561,7 +1561,9 @@ void RenderFrameHostImpl::DidCommitProvisionalLoad(
 
   // Verify that the origin passed from the renderer process is valid and can
   // be allowed to commit in this RenderFrameHost.
-  if (!CanCommitOrigin(validated_params->origin, validated_params->url)) {
+  if (!CanCommitOrigin(validated_params->origin,
+                       navigation_handle_ ? navigation_handle_->GetURL()
+                                          : validated_params->url)) {
     bad_message::ReceivedBadMessage(GetProcess(),
                                     bad_message::RFH_INVALID_ORIGIN_ON_COMMIT);
     return;
@@ -3128,6 +3130,9 @@ bool RenderFrameHostImpl::CanCommitOrigin(
   // Standard URLs must match the reported origin.
   if (url.IsStandard() && !origin.IsSamePhysicalOriginWith(url::Origin(url)))
     return false;
+
+  // TODO(lukasza): Verify that if |url.IsAboutBlank()|, then the |origin|
+  // matches the origin of the initiator of the navigation.
 
   // A non-unique origin must be a valid URL, which allows us to safely do a
   // conversion to GURL.
