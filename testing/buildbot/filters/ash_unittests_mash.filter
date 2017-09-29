@@ -306,6 +306,8 @@
 -TrayRotationLockTest.TrayViewVisibilityChangesDuringTabletMode
 -TrayRotationockTest.CreateTrayViewuringTabletMode
 -UnifiedMouseWarpControllerTest.BoundaryTest
+-UnifiedMouseWarpControllerTest.BoundaryAndWarpSimpleTest
+-UnifiedMouseWarpControllerTest.BoundaryTestGrid
 -UnifiedMouseWarpControllerTest.WarpMouse
 -WindowScreenshotControllerTest.KeyboardOperation
 -WindowScreenshotControllerTest.MouseOperation

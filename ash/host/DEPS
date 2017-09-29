@@ -17,4 +17,9 @@ specific_include_rules = {
     # ozone.
     "+ui/events/ozone/chromeos/cursor_controller.h",
   ],
+  "ash_window_tree_host_unified.cc": [
+    "+ash/display/mirror_window_controller.h",
+    "+ash/display/window_tree_host_manager.h",
+    "+ash/shell.h",
+  ],
 }
