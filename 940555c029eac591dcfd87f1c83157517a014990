@@ -87,6 +87,24 @@
       "revId": "940555c029eac591dcfd87f1c83157517a014990",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c3cc40c_91cd1103",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 5307,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-29T17:35:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6bbf2b8_3a0aaf50",
+      "revId": "940555c029eac591dcfd87f1c83157517a014990",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
