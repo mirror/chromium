@@ -27,6 +27,15 @@ class PrefetchBackgroundTaskHandler {
   // Resets the backoff in case of a successful network attempt.
   virtual void ResetBackoff() = 0;
 
+  // Suspends the backoff when killed due to system constraint.
+  virtual void SuspendBackoff() = 0;
+
+  // Suspends scheduling the task for 1 day.
+  virtual void Suspend() = 0;
+
+  // Stops the suspension.
+  virtual void RemoveSuspension() = 0;
+
   // Returns the number of seconds beyond the normal scheduling interval that
   // the backoff should wait.
   virtual int GetAdditionalBackoffSeconds() const = 0;

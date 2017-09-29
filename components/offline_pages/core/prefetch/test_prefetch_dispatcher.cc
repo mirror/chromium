@@ -33,7 +33,7 @@ void TestPrefetchDispatcher::RemovePrefetchURLsByClientId(
 }
 
 void TestPrefetchDispatcher::BeginBackgroundTask(
-    std::unique_ptr<ScopedBackgroundTask> task) {}
+    std::unique_ptr<PrefetchBackgroundTask> task) {}
 
 void TestPrefetchDispatcher::StopBackgroundTask() {}
 
@@ -65,5 +65,4 @@ void TestPrefetchDispatcher::DownloadCompleted(
 void TestPrefetchDispatcher::ImportCompleted(int64_t offline_id, bool success) {
 }
 
-void TestPrefetchDispatcher::RequestFinishBackgroundTaskForTest() {}
 }  // namespace offline_pages
