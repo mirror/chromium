@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5953ca1b_e66020e3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-29T17:43:00Z",
+      "side": 1,
+      "message": "I have no inkling on what it could be...",
+      "parentUuid": "642435b3_e164e998",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 51
+      },
+      "revId": "a05a0f22660fc790b8e860f9e48ff59e59a0a63e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6cf6633_abddf4ad",
         "filename": "cc/raster/playback_image_provider.h",
         "patchSetId": 8
@@ -36,6 +60,24 @@
       "writtenOn": "2017-09-29T17:21:01Z",
       "side": 1,
       "message": "I think I weakly preferred when skip_all_images was an explicit boolean flag rather than a side effect of not passing settings, but I don\u0027t feel that strongly about it.",
+      "revId": "a05a0f22660fc790b8e860f9e48ff59e59a0a63e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07cd079a_3c1cea2c",
+        "filename": "cc/raster/playback_image_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-29T17:43:00Z",
+      "side": 1,
+      "message": "I figured making Settings optional makes it difficult to mess up. |skip_all_images| implies none of the other settings should exist.",
+      "parentUuid": "d6cf6633_abddf4ad",
       "revId": "a05a0f22660fc790b8e860f9e48ff59e59a0a63e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
