@@ -198,6 +198,8 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
   gfx::Point3F transform_origin() const { return inputs_.transform_origin; }
 
   void SetScrollParent(Layer* parent);
+  // TODO(crbug.com/769185): Remove this once we fixed dangling pointer bug.
+  void ResetDanglingScrollParentInternal() { inputs_.scroll_parent = nullptr; }
 
   Layer* scroll_parent() { return inputs_.scroll_parent; }
 
