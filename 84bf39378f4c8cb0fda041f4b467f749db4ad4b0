@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b1f4fa7b_a25034ab",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-29T21:43:34Z",
+      "side": 1,
+      "message": "Done, but on the block of variables.  It\u0027s easy to see where they\u0027re used individually.",
+      "parentUuid": "aa97f838_55fad34b",
+      "range": {
+        "startLine": 39,
+        "startChar": 16,
+        "endLine": 39,
+        "endChar": 42
+      },
+      "revId": "84bf39378f4c8cb0fda041f4b467f749db4ad4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf316843_b327a31f",
         "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d998e441_7bb0507a",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-29T21:43:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf316843_b327a31f",
+      "range": {
+        "startLine": 48,
+        "startChar": 6,
+        "endLine": 48,
+        "endChar": 24
+      },
+      "revId": "84bf39378f4c8cb0fda041f4b467f749db4ad4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "977d7d84_0a9b3e7d",
         "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-29T19:41:24Z",
       "side": 1,
       "message": "Call this head_x_rotation_degrees_ to make clear what the unit is?",
+      "range": {
+        "startLine": 147,
+        "startChar": 6,
+        "endLine": 147,
+        "endChar": 19
+      },
+      "revId": "84bf39378f4c8cb0fda041f4b467f749db4ad4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dbb8b32_67faa31e",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-29T21:43:34Z",
+      "side": 1,
+      "message": "Done.  Added degrees, but kept \u0027angle\u0027.  Also did last_drag_*.",
+      "parentUuid": "977d7d84_0a9b3e7d",
       "range": {
         "startLine": 147,
         "startChar": 6,
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "6dc8206a_05155ceb",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-29T21:43:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2f3ce20_75b411d4",
+      "revId": "84bf39378f4c8cb0fda041f4b467f749db4ad4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15a3374b_15094f87",
         "filename": "chrome/browser/vr/testapp/vr_test_context.h",
         "patchSetId": 1
@@ -99,6 +189,24 @@
       "writtenOn": "2017-09-29T19:41:24Z",
       "side": 1,
       "message": "Why remove the class comment?",
+      "revId": "84bf39378f4c8cb0fda041f4b467f749db4ad4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d28c0660_cbbd7df2",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-29T21:43:34Z",
+      "side": 1,
+      "message": "Done. That should not have happened.",
+      "parentUuid": "15a3374b_15094f87",
       "revId": "84bf39378f4c8cb0fda041f4b467f749db4ad4b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
