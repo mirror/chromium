@@ -46,6 +46,30 @@
       "revId": "19ade2d129df2e3c5fc83ade655d7c8089c02bd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65022506_de31f785",
+        "filename": "mojo/public/tools/bindings/mojom.gni",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-29T20:54:02Z",
+      "side": 1,
+      "message": "Is it a salt too easy to find out by third-party injectors in the field?\n\nI imagine they could find out the current version of chrome on the user\u0027s machine easily, and then apply the same scramble algorithm as our generator to figure out the IDs of messages they are interested in.\n\nMaybe we could use a file pulled from our Chrome internal repo?",
+      "parentUuid": "e18f47c2_cff8b69c",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 32
+      },
+      "revId": "19ade2d129df2e3c5fc83ade655d7c8089c02bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
