@@ -237,6 +237,7 @@ PathValidationResult ValidatePathAndResolveConflicts(
 
   switch (info.conflict_action) {
     case DownloadPathReservationTracker::UNIQUIFY:
+      LOG(ERROR) << "@@@ DownloadPathReservationTracker::UNIQUIFY, CONFLICT!";
       return CreateUniqueFilename(max_path_component_length, target_path)
                  ? PathValidationResult::SUCCESS
                  : PathValidationResult::CONFLICT;
@@ -245,6 +246,7 @@ PathValidationResult ValidatePathAndResolveConflicts(
       return PathValidationResult::SUCCESS;
 
     case DownloadPathReservationTracker::PROMPT:
+      LOG(ERROR) << "@@@ DownloadPathReservationTracker::PROMPT, CONFLICT!";
       return PathValidationResult::CONFLICT;
   }
   NOTREACHED();

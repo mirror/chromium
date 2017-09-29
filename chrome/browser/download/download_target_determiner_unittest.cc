@@ -111,7 +111,8 @@ ACTION_P2(ScheduleCallback2, result0, result1) {
 enum TestCaseType {
   SAVE_AS,
   AUTOMATIC,
-  FORCED  // Requires that forced_file_path be non-empty.
+  FORCED,  // Requires that forced_file_path be non-empty.
+  TRANSIENT,
 };
 
 // Used with DownloadTestCase. Type of intermediate filename to expect.
@@ -324,8 +325,7 @@ DownloadTargetDeterminerTest::CreateActiveDownloadItem(
       (test_case.test_type == SAVE_AS) ?
       DownloadItem::TARGET_DISPOSITION_PROMPT :
       DownloadItem::TARGET_DISPOSITION_OVERWRITE;
-  EXPECT_EQ(test_case.test_type == FORCED,
-            !forced_file_path.empty());
+  EXPECT_TRUE(!(test_case.test_type == FORCED) || !forced_file_path.empty());
 
   ON_CALL(*item, GetBrowserContext())
       .WillByDefault(Return(profile()));
@@ -365,6 +365,9 @@ DownloadTargetDeterminerTest::CreateActiveDownloadItem(
       .WillByDefault(Return(false));
   ON_CALL(*item, IsTemporary())
       .WillByDefault(Return(false));
+  ON_CALL(*item, IsTransient())
+      .WillByDefault(Return(test_case.test_type == TestCaseType::TRANSIENT));
+
   return item;
 }
 
@@ -2075,7 +2078,7 @@ TEST_F(DownloadTargetDeterminerTest, ResumedWithUserValidatedDownload) {
       FILE_PATH_LITERAL(""),
       FILE_PATH_LITERAL("foo.crx"),
       DownloadItem::TARGET_DISPOSITION_OVERWRITE,
-      EXPECT_CRDOWNLOAD};
+      EXPECT_LOCAL_PATH};
 
   const DownloadTestCase& test_case = kUserValidatedTestCase;
   std::unique_ptr<content::MockDownloadItem> item(
@@ -2094,6 +2097,57 @@ TEST_F(DownloadTargetDeterminerTest, ResumedWithUserValidatedDownload) {
   EXPECT_CALL(*delegate(), CheckDownloadUrl(_, expected_path, _)).Times(0);
   EXPECT_CALL(*delegate(), RequestConfirmation(_, _, _, _)).Times(0);
   RunTestCase(test_case, GetPathInDownloadDir(kInitialPath), item.get());
+}
+
+// Test that verifies transient download target determination.
+TEST_F(DownloadTargetDeterminerTest, TransientDownload) {
+  const base::FilePath::CharType kInitialPath[] =
+      FILE_PATH_LITERAL("some_path/bar.txt");
+
+  DownloadTestCase transient_test_case = {
+      TRANSIENT,
+      content::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS,
+      DownloadFileType::NOT_DANGEROUS,
+      "http://example.com/foo",
+      "",
+      FILE_PATH_LITERAL("12345"),
+      FILE_PATH_LITERAL("12345"),
+      DownloadItem::TARGET_DISPOSITION_OVERWRITE,
+      EXPECT_LOCAL_PATH};
+
+  std::unique_ptr<content::MockDownloadItem> item(
+      CreateActiveDownloadItem(0, transient_test_case));
+  base::FilePath expected_path =
+      GetPathInDownloadDir(transient_test_case.expected_local_path);
+  ON_CALL(*item.get(), GetDangerType())
+      .WillByDefault(Return(content::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS));
+  ON_CALL(*item.get(), GetLastReason())
+      .WillByDefault(Return(content::DOWNLOAD_INTERRUPT_REASON_NONE));
+
+  using ConflictAction = DownloadPathReservationTracker::FilenameConflictAction;
+
+  EXPECT_CALL(*delegate(), NotifyExtensions(_, _, _)).Times(0);
+  EXPECT_CALL(*delegate(), ReserveVirtualPath(_, expected_path, false,
+                                              ConflictAction::OVERWRITE, _))
+      .Times(1);
+  EXPECT_CALL(*delegate(), DetermineLocalPath(_, expected_path, _));
+  EXPECT_CALL(*delegate(), CheckDownloadUrl(_, expected_path, _)).Times(1);
+  EXPECT_CALL(*delegate(), RequestConfirmation(_, _, _, _)).Times(0);
+  RunTestCase(transient_test_case, GetPathInDownloadDir(kInitialPath),
+              item.get());
+
+  // Now feed current path and remove the force path to simulate resumption.
+  transient_test_case.forced_file_path = FILE_PATH_LITERAL("");
+  ON_CALL(*item.get(), GetFullPath())
+      .WillByDefault(ReturnRefOfCopy(expected_path));
+  ON_CALL(*item.get(), GetLastReason())
+      .WillByDefault(Return(content::DOWNLOAD_INTERRUPT_REASON_NETWORK_FAILED));
+
+  EXPECT_CALL(*delegate(), DetermineLocalPath(_, expected_path, _));
+  EXPECT_CALL(*delegate(), CheckDownloadUrl(_, expected_path, _)).Times(1);
+  EXPECT_CALL(*delegate(), RequestConfirmation(_, _, _, _)).Times(0);
+  RunTestCase(transient_test_case, GetPathInDownloadDir(kInitialPath),
+              item.get());
 }
 
 #if BUILDFLAG(ENABLE_PLUGINS)
