@@ -6,6 +6,7 @@
 
 #include <linux/magic.h>
 #include <sys/statfs.h>
+#include <map>
 #include <set>
 
 #include "base/callback.h"
@@ -40,6 +41,10 @@ constexpr char kAndroidMSdkVersion[] = "23";
 // Contains set of profiles for which decline reson was already reported.
 base::LazyInstance<std::set<base::FilePath>>::DestructorAtExit
     g_profile_declined_set = LAZY_INSTANCE_INITIALIZER;
+
+// The cached value of migration allowed for profile. It is necessary to use
+// the same value during an user session.
+std::map<std::string, base::Optional<bool>> g_is_arc_migration_allowed;
 
 // Let IsAllowedForProfile() return "false" for any profile.
 bool g_disallow_for_testing = false;
@@ -186,12 +191,7 @@ bool IsArcAllowedForProfile(const Profile* profile) {
   return true;
 }
 
-bool IsArcMigrationAllowedByPolicyForProfile(const Profile* profile) {
-  if (!profile || !profile->GetPrefs()->IsManagedPreference(
-                      prefs::kEcryptfsMigrationStrategy)) {
-    return true;
-  }
-
+bool IsArcMigrationAllowedInternal(const Profile* profile) {
   int migration_strategy =
       profile->GetPrefs()->GetInteger(prefs::kEcryptfsMigrationStrategy);
   // |kAskForEcryptfsArcUsers| value is received only if the device is in EDU
@@ -220,6 +220,21 @@ bool IsArcMigrationAllowedByPolicyForProfile(const Profile* profile) {
   return migration_strategy !=
          static_cast<int>(
              arc::policy_util::EcryptfsMigrationAction::kDisallowMigration);
+}
+
+bool IsArcMigrationAllowedByPolicyForProfile(const Profile* profile) {
+  if (!profile || !profile->GetPrefs()->IsManagedPreference(
+                      prefs::kEcryptfsMigrationStrategy)) {
+    return true;
+  }
+
+  const std::string user_name = profile->GetProfileUserName();
+  if (!g_is_arc_migration_allowed[user_name].has_value()) {
+    g_is_arc_migration_allowed[user_name] =
+        IsArcMigrationAllowedInternal(profile);
+  }
+
+  return g_is_arc_migration_allowed[user_name].value();
 }
 
 bool IsArcBlockedDueToIncompatibleFileSystem(const Profile* profile) {
