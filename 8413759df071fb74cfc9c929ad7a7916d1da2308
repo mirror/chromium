@@ -22,6 +22,30 @@
       "revId": "8413759df071fb74cfc9c929ad7a7916d1da2308",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5a280da_d9f9b5e7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabBottomBarDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-29T23:54:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0939a507_8d6c4f77",
+      "range": {
+        "startLine": 197,
+        "startChar": 24,
+        "endLine": 197,
+        "endChar": 28
+      },
+      "revId": "8413759df071fb74cfc9c929ad7a7916d1da2308",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
