@@ -37,10 +37,18 @@ DefaultGpuHost::DefaultGpuHost(GpuHostDelegate* delegate)
     : delegate_(delegate),
       next_client_id_(kInternalGpuChannelClientId + 1),
       main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
-      gpu_host_binding_(this) {
+      gpu_host_binding_(this),
+      gpu_thread_("GpuThread"),
+      gpu_main_wait_(base::WaitableEvent::ResetPolicy::MANUAL,
+                     base::WaitableEvent::InitialState::NOT_SIGNALED) {
   // TODO(sad): Once GPU process is split, this would look like:
   //   connector->BindInterface("gpu", &gpu_main_);
-  gpu_main_impl_ = base::MakeUnique<GpuMain>(MakeRequest(&gpu_main_));
+  gpu_thread_.Start();
+  auto request = MakeRequest(&gpu_main_);
+  gpu_thread_.task_runner()->PostTask(
+      FROM_HERE,
+      base::BindOnce(&DefaultGpuHost::InitializeGpuMain, base::Unretained(this),
+                     base::Passed(&request)));
 
   // TODO(sad): Correctly initialize gpu::GpuPreferences (like it is initialized
   // in GpuProcessHost::Init()).
@@ -55,7 +63,12 @@ DefaultGpuHost::DefaultGpuHost(GpuHostDelegate* delegate)
                                                           next_client_id_++);
 }
 
-DefaultGpuHost::~DefaultGpuHost() {}
+DefaultGpuHost::~DefaultGpuHost() {
+  gpu_main_wait_.Wait();
+  gpu_main_impl_->TearDown();
+  gpu_thread_.task_runner()->DeleteSoon(FROM_HERE, std::move(gpu_main_impl_));
+  gpu_thread_.Stop();
+}
 
 void DefaultGpuHost::Add(mojom::GpuRequest request) {
   AddInternal(std::move(request));
@@ -94,6 +107,11 @@ void DefaultGpuHost::OnBadMessageFromGpu() {
   // TODO(sad): Received some unexpected message from the gpu process. We
   // should kill the process and restart it.
   NOTIMPLEMENTED();
+}
+
+void DefaultGpuHost::InitializeGpuMain(mojom::GpuMainRequest request) {
+  gpu_main_impl_ = std::make_unique<GpuMain>(std::move(request));
+  gpu_main_wait_.Signal();
 }
 
 void DefaultGpuHost::DidInitialize(
