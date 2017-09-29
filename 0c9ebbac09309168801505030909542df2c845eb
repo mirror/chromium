@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "96ee4035_2db86635",
+        "filename": "third_party/WebKit/Source/platform/WebFrameScheduler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-09-29T18:54:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04474270_3304e492",
+      "range": {
+        "startLine": 49,
+        "startChar": 62,
+        "endLine": 49,
+        "endChar": 63
+      },
+      "revId": "0c9ebbac09309168801505030909542df2c845eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "642cdf81_ae202602",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "0c9ebbac09309168801505030909542df2c845eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e32aba2d_2fe8c2c7",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-09-29T18:54:29Z",
+      "side": 1,
+      "message": "We have metrics which are subdivided into different categories. For example, we have RendererScheduler.TaskDurationPerQueueType2 which is further subdivided into RendererScheduler.TaskDurationPerQueueType2.Foreground, RendererScheduler.TaskDurationPerQueueType2.Background and many more. We\u0027re using macros to have only one definition of the prefix to be able to bump versions easily.",
+      "parentUuid": "642cdf81_ae202602",
+      "range": {
+        "startLine": 21,
+        "startChar": 79,
+        "endLine": 21,
+        "endChar": 0
+      },
+      "revId": "0c9ebbac09309168801505030909542df2c845eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e98d4cd4_b9e9d77b",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-09-29T18:54:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c59c533d_d976d007",
+      "range": {
+        "startLine": 75,
+        "startChar": 9,
+        "endLine": 75,
+        "endChar": 24
+      },
+      "revId": "0c9ebbac09309168801505030909542df2c845eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f428d9a_8636994b",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper.h",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "c8077e0b_45fa4747",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-09-29T18:54:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f428d9a_8636994b",
+      "range": {
+        "startLine": 23,
+        "startChar": 25,
+        "endLine": 23,
+        "endChar": 34
+      },
+      "revId": "0c9ebbac09309168801505030909542df2c845eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d17cd1d9_94c52f8f",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper.h",
         "patchSetId": 2
@@ -114,6 +210,30 @@
       "revId": "0c9ebbac09309168801505030909542df2c845eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "228c0875_2805b217",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-09-29T18:54:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d17cd1d9_94c52f8f",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 21
+      },
+      "revId": "0c9ebbac09309168801505030909542df2c845eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
