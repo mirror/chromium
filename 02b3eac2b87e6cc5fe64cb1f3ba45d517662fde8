@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa54eb16_1cf6da46",
+        "filename": "media/blink/multibuffer_data_source.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T18:55:57Z",
+      "side": 1,
+      "message": "can just be constexpr base::TimeDelta kSeekDelay",
+      "revId": "02b3eac2b87e6cc5fe64cb1f3ba45d517662fde8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5bf0a57_de360571",
+        "filename": "media/blink/multibuffer_data_source.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T18:55:57Z",
+      "side": 1,
+      "message": "What does this look like where you have a lot at the current position but the required seek is far away?",
+      "revId": "02b3eac2b87e6cc5fe64cb1f3ba45d517662fde8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "952a65ec_1dfa47e6",
+        "filename": "media/blink/multibuffer_data_source.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-29T18:55:57Z",
+      "side": 1,
+      "message": "Add comment about why you\u0027re iterating in reverse. Also this is a OOB read, i \u003d seek_positions.size() to start which is OOB. Take care when subtracting one too since this is a size_t, so you\u0027ll want an empty check above.",
+      "revId": "02b3eac2b87e6cc5fe64cb1f3ba45d517662fde8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
