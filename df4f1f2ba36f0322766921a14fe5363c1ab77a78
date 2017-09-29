@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffce7152_d2910851",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/DEPS",
+        "patchSetId": 25
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-09-29T13:38:05Z",
+      "side": 1,
+      "message": "Is there a reason to be so specific? Maybe just +third_party/flatbuffers.",
+      "revId": "df4f1f2ba36f0322766921a14fe5363c1ab77a78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
