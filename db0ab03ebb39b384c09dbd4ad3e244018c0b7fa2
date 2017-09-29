@@ -16,6 +16,24 @@
       "revId": "db0ab03ebb39b384c09dbd4ad3e244018c0b7fa2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d20d8a9_1bfbeca3",
+        "filename": "third_party/WebKit/Source/core/page/ChromeClient.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-09-29T07:24:39Z",
+      "side": 1,
+      "message": "Most likely yes, at some point we\u0027ll need some extra information. However, current layering model is that WebFrameScheduler is in platform/ and can\u0027t depend on LocalFrame in core/. I suggest that in the next time we need to pass extra information here we add WebFrameScheduler::CreateParams struct.",
+      "parentUuid": "83ef9889_1e035c4c",
+      "revId": "db0ab03ebb39b384c09dbd4ad3e244018c0b7fa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
