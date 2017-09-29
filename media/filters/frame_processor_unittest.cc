@@ -93,7 +93,7 @@ class FrameProcessorTest
         base::Bind(
             &FrameProcessorTestCallbackHelper::OnPossibleDurationIncrease,
             base::Unretained(&callbacks_)),
-        &media_log_);
+        &media_log_, range_api_);
     frame_processor_->SetParseWarningCallback(
         base::Bind(&FrameProcessorTestCallbackHelper::OnParseWarning,
                    base::Unretained(&callbacks_)));
@@ -177,7 +177,7 @@ class FrameProcessorTest
     return buffers;
   }
 
-  void ProcessFrames(const std::string& audio_timestamps,
+  bool ProcessFrames(const std::string& audio_timestamps,
                      const std::string& video_timestamps) {
     StreamParser::BufferQueueMap buffer_queue_map;
     const auto& audio_buffers =
@@ -188,9 +188,9 @@ class FrameProcessorTest
         StringToBufferQueue(video_timestamps, video_id_, DemuxerStream::VIDEO);
     if (!video_buffers.empty())
       buffer_queue_map.insert(std::make_pair(video_id_, video_buffers));
-    ASSERT_TRUE(frame_processor_->ProcessFrames(
+    return frame_processor_->ProcessFrames(
         buffer_queue_map, append_window_start_, append_window_end_,
-        &timestamp_offset_));
+        &timestamp_offset_);
   }
 
   void CheckExpectedRangesByTimestamp(ChunkDemuxerStream* stream,
@@ -382,14 +382,8 @@ TEST_P(FrameProcessorTest, WrongTypeInAppendedBuffer) {
 TEST_P(FrameProcessorTest, NonMonotonicallyIncreasingTimestampInOneCall) {
   AddTestTracks(HAS_AUDIO);
 
-  StreamParser::BufferQueueMap buffer_queue_map;
-  const auto& audio_buffers =
-      StringToBufferQueue("10K 0K", audio_id_, DemuxerStream::AUDIO);
-  buffer_queue_map.insert(std::make_pair(audio_id_, audio_buffers));
   EXPECT_MEDIA_LOG(ParsedBuffersNotInDTSSequence());
-  ASSERT_FALSE(
-      frame_processor_->ProcessFrames(buffer_queue_map, append_window_start_,
-                                      append_window_end_, &timestamp_offset_));
+  EXPECT_FALSE(ProcessFrames("10K 0K", ""));
   EXPECT_FALSE(in_coded_frame_group());
   EXPECT_EQ(base::TimeDelta(), timestamp_offset_);
   CheckExpectedRangesByTimestamp(audio_.get(), "{ }");
@@ -404,7 +398,7 @@ TEST_P(FrameProcessorTest, AudioOnly_SingleFrame) {
     frame_processor_->SetSequenceMode(true);
 
   EXPECT_CALL(callbacks_, PossibleDurationIncrease(frame_duration_));
-  ProcessFrames("0K", "");
+  EXPECT_TRUE(ProcessFrames("0K", ""));
   EXPECT_TRUE(in_coded_frame_group());
   EXPECT_EQ(base::TimeDelta(), timestamp_offset_);
   CheckExpectedRangesByTimestamp(audio_.get(), "{ [0,10) }");
@@ -419,7 +413,7 @@ TEST_P(FrameProcessorTest, VideoOnly_SingleFrame) {
     frame_processor_->SetSequenceMode(true);
 
   EXPECT_CALL(callbacks_, PossibleDurationIncrease(frame_duration_));
-  ProcessFrames("", "0K");
+  EXPECT_TRUE(ProcessFrames("", "0K"));
   EXPECT_TRUE(in_coded_frame_group());
   EXPECT_EQ(base::TimeDelta(), timestamp_offset_);
   CheckExpectedRangesByTimestamp(video_.get(), "{ [0,10) }");
@@ -434,7 +428,7 @@ TEST_P(FrameProcessorTest, AudioOnly_TwoFrames) {
     frame_processor_->SetSequenceMode(true);
 
   EXPECT_CALL(callbacks_, PossibleDurationIncrease(frame_duration_ * 2));
-  ProcessFrames("0K 10K", "");
+  EXPECT_TRUE(ProcessFrames("0K 10K", ""));
   EXPECT_TRUE(in_coded_frame_group());
   EXPECT_EQ(base::TimeDelta(), timestamp_offset_);
   CheckExpectedRangesByTimestamp(audio_.get(), "{ [0,20) }");
@@ -451,7 +445,7 @@ TEST_P(FrameProcessorTest, AudioOnly_SetOffsetThenSingleFrame) {
   const base::TimeDelta fifty_ms = base::TimeDelta::FromMilliseconds(50);
   SetTimestampOffset(fifty_ms);
   EXPECT_CALL(callbacks_, PossibleDurationIncrease(frame_duration_ + fifty_ms));
-  ProcessFrames("0K", "");
+  EXPECT_TRUE(ProcessFrames("0K", ""));
   EXPECT_TRUE(in_coded_frame_group());
   EXPECT_EQ(fifty_ms, timestamp_offset_);
   CheckExpectedRangesByTimestamp(audio_.get(), "{ [50,60) }");
@@ -482,7 +476,7 @@ TEST_P(FrameProcessorTest, AudioOnly_SetOffsetThenFrameTimestampBelowOffset) {
         fifty_ms + twenty_ms + frame_duration_));
   }
 
-  ProcessFrames("20K", "");
+  EXPECT_TRUE(ProcessFrames("20K", ""));
   EXPECT_TRUE(in_coded_frame_group());
 
   // We do not stall on reading without seeking to 50ms / 70ms due to
@@ -506,13 +500,13 @@ TEST_P(FrameProcessorTest, AudioOnly_SequentialProcessFrames) {
     frame_processor_->SetSequenceMode(true);
 
   EXPECT_CALL(callbacks_, PossibleDurationIncrease(frame_duration_ * 2));
-  ProcessFrames("0K 10K", "");
+  EXPECT_TRUE(ProcessFrames("0K 10K", ""));
   EXPECT_TRUE(in_coded_frame_group());
   EXPECT_EQ(base::TimeDelta(), timestamp_offset_);
   CheckExpectedRangesByTimestamp(audio_.get(), "{ [0,20) }");
 
   EXPECT_CALL(callbacks_, PossibleDurationIncrease(frame_duration_ * 4));
-  ProcessFrames("20K 30K", "");
+  EXPECT_TRUE(ProcessFrames("20K 30K", ""));
   EXPECT_TRUE(in_coded_frame_group());
   EXPECT_EQ(base::TimeDelta(), timestamp_offset_);
   CheckExpectedRangesByTimestamp(audio_.get(), "{ [0,40) }");
@@ -534,7 +528,7 @@ TEST_P(FrameProcessorTest, AudioOnly_NonSequentialProcessFrames) {
     EXPECT_CALL(callbacks_, PossibleDurationIncrease(frame_duration_ * 4));
   }
 
-  ProcessFrames("20K 30K", "");
+  EXPECT_TRUE(ProcessFrames("20K 30K", ""));
   EXPECT_TRUE(in_coded_frame_group());
 
   if (use_sequence_mode_) {
@@ -547,7 +541,7 @@ TEST_P(FrameProcessorTest, AudioOnly_NonSequentialProcessFrames) {
     EXPECT_CALL(callbacks_, PossibleDurationIncrease(frame_duration_ * 2));
   }
 
-  ProcessFrames("0K 10K", "");
+  EXPECT_TRUE(ProcessFrames("0K 10K", ""));
   EXPECT_TRUE(in_coded_frame_group());
 
   if (use_sequence_mode_) {
@@ -577,14 +571,14 @@ TEST_P(FrameProcessorTest, AudioVideo_SequentialProcessFrames) {
   }
 
   EXPECT_CALL(callbacks_, PossibleDurationIncrease(frame_duration_ * 3));
-  ProcessFrames("0K 10K", "0K 10 20");
+  EXPECT_TRUE(ProcessFrames("0K 10K", "0K 10 20"));
   EXPECT_TRUE(in_coded_frame_group());
   EXPECT_EQ(base::TimeDelta(), timestamp_offset_);
   CheckExpectedRangesByTimestamp(audio_.get(), "{ [0,20) }");
   CheckExpectedRangesByTimestamp(video_.get(), "{ [0,30) }");
 
   EXPECT_CALL(callbacks_, PossibleDurationIncrease(frame_duration_ * 5));
-  ProcessFrames("20K 30K 40K", "30");
+  EXPECT_TRUE(ProcessFrames("20K 30K 40K", "30"));
   EXPECT_TRUE(in_coded_frame_group());
   EXPECT_EQ(base::TimeDelta(), timestamp_offset_);
   CheckExpectedRangesByTimestamp(audio_.get(), "{ [0,50) }");
@@ -612,7 +606,7 @@ TEST_P(FrameProcessorTest, AudioVideo_Discontinuity) {
     EXPECT_CALL(callbacks_, PossibleDurationIncrease(frame_duration_ * 6));
   }
 
-  ProcessFrames("0K 10K 30K 40K 50K", "0K 10 40 50K");
+  EXPECT_TRUE(ProcessFrames("0K 10K 30K 40K 50K", "0K 10 40 50K"));
   EXPECT_TRUE(in_coded_frame_group());
 
   if (use_sequence_mode_) {
@@ -651,7 +645,7 @@ TEST_P(FrameProcessorTest, AudioVideo_Discontinuity_TimestampOffset) {
   // the coded frame group's start time as the range start for both streams.
   EXPECT_CALL(callbacks_, PossibleDurationIncrease(frame_duration_ * 14));
   SetTimestampOffset(frame_duration_ * 10);
-  ProcessFrames("0K 10K 20K", "10K 20K 30K");
+  EXPECT_TRUE(ProcessFrames("0K 10K 20K", "10K 20K 30K"));
   EXPECT_EQ(frame_duration_ * 10, timestamp_offset_);
   EXPECT_TRUE(in_coded_frame_group());
   CheckExpectedRangesByTimestamp(audio_.get(), "{ [100,130) }");
@@ -662,7 +656,7 @@ TEST_P(FrameProcessorTest, AudioVideo_Discontinuity_TimestampOffset) {
   // threshold.
   EXPECT_CALL(callbacks_, PossibleDurationIncrease(frame_duration_ * 24));
   SetTimestampOffset(frame_duration_ * 20);
-  ProcessFrames("0K 10K 20K", "10K 20K 30K");
+  EXPECT_TRUE(ProcessFrames("0K 10K 20K", "10K 20K 30K"));
   EXPECT_EQ(frame_duration_ * 20, timestamp_offset_);
   EXPECT_TRUE(in_coded_frame_group());
   if (use_sequence_mode_) {
@@ -680,7 +674,7 @@ TEST_P(FrameProcessorTest, AudioVideo_Discontinuity_TimestampOffset) {
   EXPECT_CALL(callbacks_,
               PossibleDurationIncrease(fifty_five_ms + frame_duration_ * 4));
   SetTimestampOffset(fifty_five_ms);
-  ProcessFrames("0K 10K 20K", "10K 20K 30K");
+  EXPECT_TRUE(ProcessFrames("0K 10K 20K", "10K 20K 30K"));
   EXPECT_EQ(fifty_five_ms, timestamp_offset_);
   EXPECT_TRUE(in_coded_frame_group());
   // The new audio range is not within SourceBufferStream's coalescing threshold
@@ -769,7 +763,7 @@ TEST_P(FrameProcessorTest, AudioVideo_OutOfSequence_After_Discontinuity) {
     EXPECT_MEDIA_LOG(MuxedSequenceModeWarning());
   }
   EXPECT_CALL(callbacks_, PossibleDurationIncrease(frame_duration_ * 14));
-  ProcessFrames("100K 110K 120K", "110K 120K 130K");
+  EXPECT_TRUE(ProcessFrames("100K 110K 120K", "110K 120K 130K"));
   EXPECT_TRUE(in_coded_frame_group());
   EXPECT_EQ(base::TimeDelta(), timestamp_offset_);
   CheckExpectedRangesByTimestamp(audio_.get(), "{ [100,130) }");
@@ -781,7 +775,7 @@ TEST_P(FrameProcessorTest, AudioVideo_OutOfSequence_After_Discontinuity) {
   else
     EXPECT_CALL(callbacks_, PossibleDurationIncrease(frame_duration_ * 17));
 
-  ProcessFrames("", "160K");
+  EXPECT_TRUE(ProcessFrames("", "160K"));
   EXPECT_TRUE(in_coded_frame_group());
 
   if (use_sequence_mode_) {
@@ -805,7 +799,7 @@ TEST_P(FrameProcessorTest, AudioVideo_OutOfSequence_After_Discontinuity) {
   else
     EXPECT_CALL(callbacks_, PossibleDurationIncrease(frame_duration_ * 17));
 
-  ProcessFrames("50K", "");
+  EXPECT_TRUE(ProcessFrames("50K", ""));
   EXPECT_TRUE(in_coded_frame_group());
 
   // Because this is the first audio buffer appended following the discontinuity
@@ -830,7 +824,7 @@ TEST_P(FrameProcessorTest, AudioVideo_OutOfSequence_After_Discontinuity) {
   else
     EXPECT_CALL(callbacks_, PossibleDurationIncrease(frame_duration_ * 18));
 
-  ProcessFrames("", "170");
+  EXPECT_TRUE(ProcessFrames("", "170"));
   EXPECT_TRUE(in_coded_frame_group());
 
   // Verify the final buffers. First, re-seek audio since we appended data
@@ -870,7 +864,7 @@ TEST_P(FrameProcessorTest,
 
   SetTimestampOffset(frame_duration_ * -2);
   EXPECT_CALL(callbacks_, PossibleDurationIncrease(frame_duration_));
-  ProcessFrames("0K 10K 20K", "");
+  EXPECT_TRUE(ProcessFrames("0K 10K 20K", ""));
   EXPECT_TRUE(in_coded_frame_group());
   EXPECT_EQ(frame_duration_ * -2, timestamp_offset_);
   CheckExpectedRangesByTimestamp(audio_.get(), "{ [0,10) }");
@@ -884,7 +878,7 @@ TEST_P(FrameProcessorTest, AppendWindowFilterWithInexactPreroll) {
     frame_processor_->SetSequenceMode(true);
   SetTimestampOffset(-frame_duration_);
   EXPECT_CALL(callbacks_, PossibleDurationIncrease(frame_duration_ * 2));
-  ProcessFrames("0K 9.75K 20K", "");
+  EXPECT_TRUE(ProcessFrames("0K 9.75K 20K", ""));
   CheckExpectedRangesByTimestamp(audio_.get(), "{ [0,20) }");
   CheckReadsThenReadStalls(audio_.get(), "0P 0:9.75 10:20");
 }
@@ -896,7 +890,7 @@ TEST_P(FrameProcessorTest, AppendWindowFilterWithInexactPreroll_2) {
     frame_processor_->SetSequenceMode(true);
   SetTimestampOffset(-frame_duration_);
   EXPECT_CALL(callbacks_, PossibleDurationIncrease(frame_duration_ * 2));
-  ProcessFrames("0K 10.25K 20K", "");
+  EXPECT_TRUE(ProcessFrames("0K 10.25K 20K", ""));
   CheckExpectedRangesByTimestamp(audio_.get(), "{ [0,20) }");
   CheckReadsThenReadStalls(audio_.get(), "0P 0:10.25 10:20");
 }
@@ -912,7 +906,7 @@ TEST_P(FrameProcessorTest, AllowNegativeFramePTSAndDTSBeforeOffsetAdjustment) {
                 PossibleDurationIncrease((frame_duration_ * 5) / 2));
   }
 
-  ProcessFrames("-5K 5K 15K", "");
+  EXPECT_TRUE(ProcessFrames("-5K 5K 15K", ""));
 
   if (use_sequence_mode_) {
     EXPECT_EQ(frame_duration_ / 2, timestamp_offset_);
@@ -936,7 +930,7 @@ TEST_P(FrameProcessorTest, PartialAppendWindowFilterNoDiscontinuity) {
               PossibleDurationIncrease(base::TimeDelta::FromMilliseconds(29)));
 
   append_window_start_ = base::TimeDelta::FromMilliseconds(7);
-  ProcessFrames("0K 19K", "");
+  EXPECT_TRUE(ProcessFrames("0K 19K", ""));
 
   EXPECT_EQ(base::TimeDelta(), timestamp_offset_);
   CheckExpectedRangesByTimestamp(audio_.get(), "{ [7,29) }");
@@ -960,7 +954,7 @@ TEST_P(FrameProcessorTest,
                                 base::TimeDelta::FromMilliseconds(13)));
   }
 
-  ProcessFrames("-7|10K 3|20K", "");
+  EXPECT_TRUE(ProcessFrames("-7|10K 3|20K", ""));
 
   if (use_sequence_mode_) {
     EXPECT_EQ(base::TimeDelta::FromMilliseconds(7), timestamp_offset_);
@@ -997,11 +991,11 @@ TEST_P(FrameProcessorTest, PartialAppendWindowFilterNoNewMediaSegment) {
     EXPECT_MEDIA_LOG(MuxedSequenceModeWarning());
   }
   EXPECT_CALL(callbacks_, PossibleDurationIncrease(frame_duration_));
-  ProcessFrames("", "0K");
+  EXPECT_TRUE(ProcessFrames("", "0K"));
   EXPECT_CALL(callbacks_, PossibleDurationIncrease(frame_duration_));
-  ProcessFrames("-5K", "");
+  EXPECT_TRUE(ProcessFrames("-5K", ""));
   EXPECT_CALL(callbacks_, PossibleDurationIncrease(frame_duration_* 2));
-  ProcessFrames("", "10");
+  EXPECT_TRUE(ProcessFrames("", "10"));
 
   EXPECT_EQ(base::TimeDelta(), timestamp_offset_);
   EXPECT_TRUE(in_coded_frame_group());
@@ -1021,10 +1015,10 @@ TEST_P(FrameProcessorTest, AudioOnly_SequenceModeContinuityAcrossReset) {
   AddTestTracks(HAS_AUDIO);
   frame_processor_->SetSequenceMode(true);
   EXPECT_CALL(callbacks_, PossibleDurationIncrease(frame_duration_));
-  ProcessFrames("0K", "");
+  EXPECT_TRUE(ProcessFrames("0K", ""));
   frame_processor_->Reset();
   EXPECT_CALL(callbacks_, PossibleDurationIncrease(frame_duration_ * 2));
-  ProcessFrames("100K", "");
+  EXPECT_TRUE(ProcessFrames("100K", ""));
 
   EXPECT_EQ(frame_duration_ * -9, timestamp_offset_);
   EXPECT_TRUE(in_coded_frame_group());
@@ -1043,7 +1037,7 @@ TEST_P(FrameProcessorTest, PartialAppendWindowZeroDurationPreroll) {
   frame_duration_ = base::TimeDelta::FromMilliseconds(0);
   EXPECT_FALSE(in_coded_frame_group());
   EXPECT_CALL(callbacks_, PossibleDurationIncrease(frame_duration_));
-  ProcessFrames("4K", "");
+  EXPECT_TRUE(ProcessFrames("4K", ""));
   // Verify buffer is not part of ranges. It should be silently saved for
   // preroll for future append.
   CheckExpectedRangesByTimestamp(audio_.get(), "{ }");
@@ -1060,7 +1054,7 @@ TEST_P(FrameProcessorTest, PartialAppendWindowZeroDurationPreroll) {
       base::TimeDelta::FromMilliseconds(use_sequence_mode_ ? 10 : 14);
   EXPECT_CALL(callbacks_, PossibleDurationIncrease(expected_duration));
   frame_duration_ = base::TimeDelta::FromMilliseconds(10);
-  ProcessFrames("4K", "");
+  EXPECT_TRUE(ProcessFrames("4K", ""));
   EXPECT_TRUE(in_coded_frame_group());
 
   // Verify range updated to reflect last append was processed and trimmed, and
@@ -1099,7 +1093,7 @@ TEST_P(FrameProcessorTest,
   }
 
   EXPECT_CALL(callbacks_, PossibleDurationIncrease(frame_duration_ * 7));
-  ProcessFrames("", "50K 60");
+  EXPECT_TRUE(ProcessFrames("", "50K 60"));
 
   CheckExpectedRangesByTimestamp(video_.get(), "{ [50,70) }");
 
@@ -1109,7 +1103,7 @@ TEST_P(FrameProcessorTest,
                   SourceBufferParseWarning::kKeyframeTimeGreaterThanDependant));
   EXPECT_MEDIA_LOG(KeyframeTimeGreaterThanDependant("0.05", "0.04"));
   EXPECT_CALL(callbacks_, PossibleDurationIncrease(frame_duration_ * 7));
-  ProcessFrames("", "40|70");  // PTS=40, DTS=70
+  EXPECT_TRUE(ProcessFrames("", "40|70"));  // PTS=40, DTS=70
 
   if (range_api_ == ChunkDemuxerStream::RangeApi::kLegacyByDts) {
     // Verify DTS-based range is increased.
@@ -1140,17 +1134,44 @@ TEST_P(FrameProcessorTest, AudioNonKeyframeChangedToKeyframe) {
 
   EXPECT_MEDIA_LOG(AudioNonKeyframe(10000, 10000));
   EXPECT_CALL(callbacks_, PossibleDurationIncrease(frame_duration_ * 3));
-  ProcessFrames("0K 10 20K", "");
+  EXPECT_TRUE(ProcessFrames("0K 10 20K", ""));
 
   if (use_sequence_mode_)
     SetTimestampOffset(base::TimeDelta());
 
   EXPECT_CALL(callbacks_, PossibleDurationIncrease(frame_duration_));
-  ProcessFrames("0K", "");
+  EXPECT_TRUE(ProcessFrames("0K", ""));
 
   CheckExpectedRangesByTimestamp(audio_.get(), "{ [0,30) }");
   SeekStream(audio_.get(), base::TimeDelta());
   CheckReadsThenReadStalls(audio_.get(), "0 10 20");
+}
+
+TEST_P(FrameProcessorTest, TimestampOffsetNegativeDts) {
+  // Shift a GOP earlier using timestampOffset such that the GOP has
+  // starts with negative DTS, but PTS 0. Expect ByDts parse error, ByPts
+  // success.
+  InSequence s;
+  AddTestTracks(HAS_VIDEO);
+  frame_processor_->SetSequenceMode(use_sequence_mode_);
+
+  if (!use_sequence_mode_) {
+    // Simulate the offset that sequence mode would apply, to make the results
+    // the same regardless of sequence vs segments mode.
+    SetTimestampOffset(frame_duration_ * -10);
+  }
+
+  if (range_api_ == ChunkDemuxerStream::RangeApi::kLegacyByDts) {
+    EXPECT_MEDIA_LOG(NegativeDtsFailureWhenByDts("video", 0, -30000));
+    EXPECT_FALSE(ProcessFrames("", "100|70K 130|80"));
+  } else {
+    EXPECT_CALL(callbacks_, PossibleDurationIncrease(frame_duration_ * 4));
+    EXPECT_TRUE(ProcessFrames("", "100|70K 130|80"));
+    EXPECT_EQ(frame_duration_ * -10, timestamp_offset_);
+    CheckExpectedRangesByTimestamp(video_.get(), "{ [0,40) }");
+    SeekStream(video_.get(), base::TimeDelta());
+    CheckReadsThenReadStalls(video_.get(), "0:100 30:130");
+  }
 }
 
 INSTANTIATE_TEST_CASE_P(SequenceModeLegacyByDts,
