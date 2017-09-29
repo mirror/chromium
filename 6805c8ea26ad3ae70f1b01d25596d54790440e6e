@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "090c424d_7241e90c",
+        "filename": "media/cdm/cdm_host_file.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-09-29T18:19:56Z",
+      "side": 1,
+      "message": "Should this take a CdmHostFilePath instead of individual paths? Only caller in this CL has one, and it seems to line up with adding CdmHostFilePath above.",
+      "range": {
+        "startLine": 41,
+        "startChar": 38,
+        "endLine": 41,
+        "endChar": 44
+      },
+      "revId": "6805c8ea26ad3ae70f1b01d25596d54790440e6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
