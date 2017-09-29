@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "70e70c81_b1e23643",
+        "filename": "ui/gl/DEPS",
+        "patchSetId": 11
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-09-29T02:54:42Z",
+      "side": 1,
+      "message": "It seems OK. I can\u0027t imagine ui/latency depending on ui/gl.",
+      "parentUuid": "7c4fdd65_a09abaf2",
+      "revId": "80c23428f7a89ef3176bd7647a5a18bd6b5949cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b6171ec_d6431df5",
         "filename": "ui/gl/gl_surface.h",
         "patchSetId": 11
@@ -30,6 +48,41 @@
       "writtenOn": "2017-09-28T21:33:43Z",
       "side": 1,
       "message": "Forcing all SwapBuffers implementations to update LatencyInfo is a bit invasive, but is straightforward and makes it obvious when LatencyInfos are discarded by implementations and when they aren\u0027t available at call sites.\n\nAlternatively, this patch could add a separate method to add LatencyInfo before a swap and a way to get completed LatencyInfo (either through a callback or check), but it becomes less explicit where LatencyInfo is discarded or not available.\n\nA followup patch will add latency_info support to other flavors of swap buffers as needed, including Async, WithBounds, SubBuffer, etc.",
+      "revId": "80c23428f7a89ef3176bd7647a5a18bd6b5949cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e72d8d69_42941268",
+        "filename": "ui/gl/gl_surface.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-09-29T02:54:42Z",
+      "side": 1,
+      "message": "Agree that this touches a lot of code, and a lot of it seems duplicated and somewhat boilerplate.\n\nI agree that changing SwapBuffers\u0027 signature may be the best way to ensure this information is maintained correctly, but changing all of the GLSurface implementations is also fragile. How will regressions be avoided?\n\nIs it really better to change all of the SwapBuffers implementations than the (apparently relatively few) call sites of SwapBuffers to do a before/after call, and assert somewhere/somehow that these were called? (Same question for the other SwapBuffers variants.) Would this allow the implementation to be mostly shared, at least among the platforms that don\u0027t support the timestamps you have in mind to expose?",
+      "parentUuid": "9b6171ec_d6431df5",
+      "revId": "80c23428f7a89ef3176bd7647a5a18bd6b5949cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42e8af0c_b452be27",
+        "filename": "ui/gl/gl_surface_egl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 959,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-09-29T02:54:42Z",
+      "side": 1,
+      "message": "Does calling this helper in these three different places have a materially different effect than calling it once at the beginning of this method?",
       "revId": "80c23428f7a89ef3176bd7647a5a18bd6b5949cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
