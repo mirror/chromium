@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "60b66ee2_9027f8f1",
+        "filename": "chrome/renderer/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-29T20:34:42Z",
+      "side": 1,
+      "message": "Discussed offline, I think this will be a cleaner way\nto map events (specific to a single AXTree) into\nautomation events (global to the automation bindings).",
+      "parentUuid": "8cf1e9e3_8c3bb2a0",
+      "revId": "3c2e55a7d45b9fc094dcc2552cb940cb9eb64a95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3abcb0c1_42283fc4",
         "filename": "chrome/renderer/extensions/automation_ax_tree_wrapper.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-29T17:24:32Z",
       "side": 1,
       "message": "Accidental includes here?",
+      "revId": "3c2e55a7d45b9fc094dcc2552cb940cb9eb64a95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "927673ea_e0818b69",
+        "filename": "chrome/renderer/extensions/automation_ax_tree_wrapper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-29T20:34:42Z",
+      "side": 1,
+      "message": "Trimmed down.",
+      "parentUuid": "3abcb0c1_42283fc4",
       "revId": "3c2e55a7d45b9fc094dcc2552cb940cb9eb64a95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "74bc567f_9bb0df67",
+        "filename": "chrome/renderer/extensions/automation_ax_tree_wrapper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-29T20:34:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95d99ae5_204eeca1",
+      "revId": "3c2e55a7d45b9fc094dcc2552cb940cb9eb64a95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "707fc102_5c2ab238",
         "filename": "chrome/renderer/extensions/automation_ax_tree_wrapper.cc",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "5ca6403e_b7fb56ac",
+        "filename": "chrome/renderer/extensions/automation_ax_tree_wrapper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-29T20:34:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "707fc102_5c2ab238",
+      "revId": "3c2e55a7d45b9fc094dcc2552cb940cb9eb64a95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe6995a0_23f1dcf1",
         "filename": "chrome/renderer/extensions/automation_ax_tree_wrapper.cc",
         "patchSetId": 2
@@ -81,6 +153,24 @@
       "writtenOn": "2017-09-29T17:24:32Z",
       "side": 1,
       "message": "\u003d default (in header).",
+      "revId": "3c2e55a7d45b9fc094dcc2552cb940cb9eb64a95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d5287c1b_852c48e6",
+        "filename": "chrome/renderer/extensions/automation_ax_tree_wrapper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-29T20:34:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe6995a0_23f1dcf1",
       "revId": "3c2e55a7d45b9fc094dcc2552cb940cb9eb64a95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
