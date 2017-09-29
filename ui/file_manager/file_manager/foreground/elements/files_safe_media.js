@@ -39,6 +39,8 @@ var FilesSafeMedia = Polymer({
          return 'foreground/elements/files_safe_audio_webview_content.html';
       case 'video':
          return 'foreground/elements/files_safe_video_webview_content.html';
+      case 'html':
+        return 'foreground/elements/files_safe_html_webview_content.html';
       default:
         console.error('Unsupported type: ' + this.type);
         return '';
