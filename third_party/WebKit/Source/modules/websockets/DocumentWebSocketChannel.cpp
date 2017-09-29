@@ -162,6 +162,16 @@ DocumentWebSocketChannel* DocumentWebSocketChannel::CreateForTesting(
 
 // static
 DocumentWebSocketChannel* DocumentWebSocketChannel::Create(
+    Document* document,
+    WebSocketChannelClient* client,
+    std::unique_ptr<SourceLocation> location) {
+  DCHECK(document);
+  return Create(ThreadableLoadingContext::Create(*document), client,
+                std::move(location));
+}
+
+// static
+DocumentWebSocketChannel* DocumentWebSocketChannel::Create(
     ThreadableLoadingContext* loading_context,
     WebSocketChannelClient* client,
     std::unique_ptr<SourceLocation> location) {

@@ -31,6 +31,10 @@
 #ifndef WebAssociatedURLLoaderOptions_h
 #define WebAssociatedURLLoaderOptions_h
 
+#if INSIDE_BLINK
+#include "platform/CrossThreadCopier.h"
+#endif  // INSIDE_BLINK
+
 namespace blink {
 
 struct WebAssociatedURLLoaderOptions {
@@ -54,6 +58,17 @@ struct WebAssociatedURLLoaderOptions {
 
   PreflightPolicy preflight_policy;
 };
+
+#if INSIDE_BLINK
+template <>
+struct CrossThreadCopier<WebAssociatedURLLoaderOptions> {
+  STATIC_ONLY(CrossThreadCopier);
+  typedef WebAssociatedURLLoaderOptions Type;
+  static Type Copy(const WebAssociatedURLLoaderOptions& options) {
+    return WebAssociatedURLLoaderOptions(options);
+  }
+};
+#endif  // INSIDE_BLINK
 
 }  // namespace blink
 
