@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a94da12_4180a0ea",
+        "filename": "components/history/content/browser/web_contents_top_sites_observer.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-29T08:38:03Z",
+      "side": 1,
+      "message": "nit: no parens needed",
+      "range": {
+        "startLine": 45,
+        "startChar": 6,
+        "endLine": 45,
+        "endChar": 35
+      },
+      "revId": "812d44a1893dfcdf4e8589c5729f2f76756197ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "176947ca_d0b69f05",
+        "filename": "components/history/core/browser/top_sites_impl.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-29T08:38:03Z",
+      "side": 1,
+      "message": "Should you also check the |timer_|\u0027s delay here, and reduce it if |delta| is smaller?\nE.g. if this method is called to request an update in 10 seconds, then that probably shouldn\u0027t be ignored just because we have an update scheduled in an hour.",
+      "range": {
+        "startLine": 860,
+        "startChar": 25,
+        "endLine": 860,
+        "endChar": 0
+      },
+      "revId": "812d44a1893dfcdf4e8589c5729f2f76756197ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
