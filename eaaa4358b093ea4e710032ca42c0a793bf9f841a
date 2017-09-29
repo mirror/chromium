@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5cd007a3_9dea9065",
+        "filename": "components/arc/PRESUBMIT.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-29T18:26:09Z",
+      "side": 1,
+      "message": "Hmm, ok.\n\nI\u0027ll give it a try to put the check in depot_tools, or somewhere to be shared.\nMeantime, I\u0027d use cc/PRESUBMIT.py. Though I\u0027m not very sure it is ok to depend on other subdir\u0027s PRESUBMIT...\n\n\"import\" with modifying sys.path looks more danger, so instead, used exec().",
+      "parentUuid": "4149f2df_4e2f68c8",
+      "revId": "eaaa4358b093ea4e710032ca42c0a793bf9f841a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c76042a4_c15fb110",
         "filename": "components/arc/PRESUBMIT.py",
         "patchSetId": 1
@@ -69,6 +87,24 @@
       "revId": "eaaa4358b093ea4e710032ca42c0a793bf9f841a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "737db008_671dc59b",
+        "filename": "components/arc/PRESUBMIT.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-29T18:26:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfa0983e_a790197c",
+      "revId": "eaaa4358b093ea4e710032ca42c0a793bf9f841a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
