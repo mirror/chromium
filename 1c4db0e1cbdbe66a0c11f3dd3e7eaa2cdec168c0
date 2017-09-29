@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6e2d4bb6_22cd1229",
+        "filename": "ios/chrome/browser/net/http_server_properties_manager_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-29T14:41:38Z",
+      "side": 1,
+      "message": "components/cronet/ and content/network have similar classes (Though they\u0027re using PrefServices, like the old class that was here).  net/ can\u0027t depend on prefs, so we\u0027d have to make a component, and I suspect we\u0027d get pushback on a component with just this and maybe the NCN\u0027s similar class in it.\n\nI\u0027m hoping everything will eventually just switch to using the network service, solving the problem.",
+      "parentUuid": "9288d22f_1971f5a1",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 24
+      },
+      "revId": "1c4db0e1cbdbe66a0c11f3dd3e7eaa2cdec168c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4fd9fb9c_f580f8aa",
         "filename": "ios/chrome/browser/net/http_server_properties_manager_factory.cc",
         "patchSetId": 6
@@ -62,6 +86,30 @@
       "revId": "1c4db0e1cbdbe66a0c11f3dd3e7eaa2cdec168c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd461fba_448b3220",
+        "filename": "ios/chrome/browser/net/http_server_properties_manager_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-29T14:41:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3393765f_f63e3767",
+      "range": {
+        "startLine": 86,
+        "startChar": 54,
+        "endLine": 86,
+        "endChar": 77
+      },
+      "revId": "1c4db0e1cbdbe66a0c11f3dd3e7eaa2cdec168c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
