@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ff13970_8925684a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkConfigView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-29T20:55:15Z",
+      "side": 1,
+      "message": "Fetch settings from sdk.",
+      "revId": "d30abaaff2a9cbc1e3e60be6c1da79621d838cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c986fde7_05b3e181",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/networkConfigView.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-29T20:55:15Z",
+      "side": 1,
+      "message": "Everything above this line is properly prefixed with network-config",
+      "revId": "d30abaaff2a9cbc1e3e60be6c1da79621d838cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "893a6cb2_4a9ddb68",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network_file_server/Interceptor.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-29T20:55:15Z",
+      "side": 1,
+      "message": "No need for 38 line module, just keep this class in the main module.\nWhat are we inheriting from here any why?",
+      "revId": "d30abaaff2a9cbc1e3e60be6c1da79621d838cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91da37f9_eb29e6b3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network_file_server/Interceptor.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-29T20:55:15Z",
+      "side": 1,
+      "message": "Please don\u0027t use inheritance. Also, we are ok with creating / defining settings in sdk...",
+      "revId": "d30abaaff2a9cbc1e3e60be6c1da79621d838cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d170fe2c_d72b7c75",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network_file_server/Interceptor.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-29T20:55:15Z",
+      "side": 1,
+      "message": "You already pass the setting, why doesn\u0027t sdk listen to it? What is happening? :)",
+      "revId": "d30abaaff2a9cbc1e3e60be6c1da79621d838cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cf1c960_a2f48b03",
+        "filename": "third_party/WebKit/Source/devtools/front_end/workspace/UISourceCode.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-29T20:55:15Z",
+      "side": 1,
+      "message": "oh-ah, that\u0027s a no-go, you can\u0027t read someone\u0027s setting value. And workspace does not depend on sdk. You might need to emit and event here. You could emit one of the workspace.",
+      "revId": "d30abaaff2a9cbc1e3e60be6c1da79621d838cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
