@@ -89,6 +89,29 @@
     },
     {
       "key": {
+        "uuid": "8d1dbe9a_06acc30f",
+        "filename": "ui/latency/latency_info.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-09-29T03:43:04Z",
+      "side": 1,
+      "message": "I\u0027d prefer we pass the time in here. Otherwise, the contract for calling this method is a bit hairy, and we\u0027d need to call out explicitly the timing requirements for calling it.",
+      "range": {
+        "startLine": 166,
+        "startChar": 42,
+        "endLine": 167,
+        "endChar": 57
+      },
+      "revId": "80c23428f7a89ef3176bd7647a5a18bd6b5949cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f427f8c8_49189c18",
         "filename": "ui/latency/latency_info.h",
         "patchSetId": 11
@@ -100,6 +123,24 @@
       "writtenOn": "2017-09-28T21:33:43Z",
       "side": 1,
       "message": "@tdresser: Is this a good place to add a helper function like this, which is used by many implementations of SwapBuffers?",
+      "revId": "80c23428f7a89ef3176bd7647a5a18bd6b5949cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ec7ea9d_a5a8b0a2",
+        "filename": "ui/latency/latency_info.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-09-29T03:43:04Z",
+      "side": 1,
+      "message": "Yeah, this seems reasonable.",
+      "parentUuid": "f427f8c8_49189c18",
       "revId": "80c23428f7a89ef3176bd7647a5a18bd6b5949cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
