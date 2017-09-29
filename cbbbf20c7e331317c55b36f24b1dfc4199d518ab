@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "53caf9c0_b9b02104",
+        "filename": "ios/web_view/internal/signin/cwv_authentication_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-29T03:19:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "703a71ef_e5d81c6d",
+      "range": {
+        "startLine": 56,
+        "startChar": 14,
+        "endLine": 56,
+        "endChar": 36
+      },
+      "revId": "cbbbf20c7e331317c55b36f24b1dfc4199d518ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "418d91ef_95d831c8",
         "filename": "ios/web_view/internal/signin/cwv_authentication_controller_internal.h",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "cbbbf20c7e331317c55b36f24b1dfc4199d518ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78b77657_055ca658",
+        "filename": "ios/web_view/internal/signin/cwv_authentication_controller_internal.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-29T03:19:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "418d91ef_95d831c8",
+      "range": {
+        "startLine": 16,
+        "startChar": 26,
+        "endLine": 16,
+        "endChar": 27
+      },
+      "revId": "cbbbf20c7e331317c55b36f24b1dfc4199d518ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f0495ed6_4a9b6c9d",
+        "filename": "ios/web_view/internal/web_view_web_main_parts.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-29T03:19:54Z",
+      "side": 1,
+      "message": "I removed this and the related code. I copied bling when this broke the first time, but it appears that bling does it differently now (see change below).",
+      "parentUuid": "2309539e_5d7590cb",
+      "range": {
+        "startLine": 30,
+        "startChar": 11,
+        "endLine": 30,
+        "endChar": 32
+      },
+      "revId": "cbbbf20c7e331317c55b36f24b1dfc4199d518ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40964403_3bba9f57",
         "filename": "ios/web_view/public/cwv_authentication_controller.h",
         "patchSetId": 5
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "7f4fc1bd_f7cd99c5",
+        "filename": "ios/web_view/public/cwv_authentication_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-29T03:19:54Z",
+      "side": 1,
+      "message": "Done and added nullable for some properties.",
+      "parentUuid": "40964403_3bba9f57",
+      "revId": "cbbbf20c7e331317c55b36f24b1dfc4199d518ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3ebfd3b_82d6248a",
         "filename": "ios/web_view/public/cwv_authentication_controller_delegate.h",
         "patchSetId": 5
@@ -99,6 +189,24 @@
       "writtenOn": "2017-09-28T17:01:40Z",
       "side": 1,
       "message": "Is there any online documentation for these arguments? Someone who is not familiar with SignIn concepts will not be able to figure our what gaiaID is, where to get clientID and clientSecret and which scopes are valid for this method.",
+      "revId": "cbbbf20c7e331317c55b36f24b1dfc4199d518ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0ef097c_eedc0008",
+        "filename": "ios/web_view/public/cwv_authentication_controller_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-29T03:19:54Z",
+      "side": 1,
+      "message": "These concepts are the same as the ones in the internal iOS SSO Library, can we link internal documents here?",
+      "parentUuid": "c3ebfd3b_82d6248a",
       "revId": "cbbbf20c7e331317c55b36f24b1dfc4199d518ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "8ad4c54a_a4fceb00",
+        "filename": "ios/web_view/public/cwv_authentication_controller_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-29T03:19:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edd6366f_862b6e15",
+      "range": {
+        "startLine": 31,
+        "startChar": 24,
+        "endLine": 31,
+        "endChar": 32
+      },
+      "revId": "cbbbf20c7e331317c55b36f24b1dfc4199d518ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68f4ef63_50a89c1f",
         "filename": "ios/web_view/public/cwv_authentication_controller_delegate.h",
         "patchSetId": 5
@@ -148,6 +280,30 @@
       "revId": "cbbbf20c7e331317c55b36f24b1dfc4199d518ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0e4a822_df37dd38",
+        "filename": "ios/web_view/public/cwv_authentication_controller_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-29T03:19:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68f4ef63_50a89c1f",
+      "range": {
+        "startLine": 35,
+        "startChar": 18,
+        "endLine": 35,
+        "endChar": 21
+      },
+      "revId": "cbbbf20c7e331317c55b36f24b1dfc4199d518ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -174,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "4d34f3c3_3e3c8ffb",
+        "filename": "ios/web_view/public/cwv_authentication_controller_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-29T03:19:54Z",
+      "side": 1,
+      "message": "This won\u0027t be called unless logged in. I\u0027ll add that.",
+      "parentUuid": "aefc0fc5_bee86e21",
+      "range": {
+        "startLine": 36,
+        "startChar": 23,
+        "endLine": 36,
+        "endChar": 29
+      },
+      "revId": "cbbbf20c7e331317c55b36f24b1dfc4199d518ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7fe46a6_0a9682a1",
         "filename": "ios/web_view/public/cwv_authentication_controller_delegate.h",
         "patchSetId": 5
@@ -185,6 +365,30 @@
       "writtenOn": "2017-09-28T17:01:40Z",
       "side": 1,
       "message": "Maybe allIdentitiesForAuthenticationController: ?",
+      "range": {
+        "startLine": 37,
+        "startChar": 26,
+        "endLine": 37,
+        "endChar": 66
+      },
+      "revId": "cbbbf20c7e331317c55b36f24b1dfc4199d518ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "106c5ec5_2e9b4c79",
+        "filename": "ios/web_view/public/cwv_authentication_controller_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-29T03:19:54Z",
+      "side": 1,
+      "message": "Feels weird when delegate doesn\u0027t begin with the class though. Are there other examples of this?",
+      "parentUuid": "e7fe46a6_0a9682a1",
       "range": {
         "startLine": 37,
         "startChar": 26,
