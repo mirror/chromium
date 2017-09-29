@@ -1,9 +1,10 @@
 <link rel="import" href="chrome://resources/html/polymer.html">
 
+<link rel="import" href="chrome://resources/cr_elements/cr_container_shadow_behavior.html">
 <link rel="import" href="chrome://resources/cr_elements/cr_icons_css.html">
 <link rel="import" href="chrome://resources/cr_elements/cr_link_row/cr_link_row.html">
 <link rel="import" href="chrome://resources/cr_elements/cr_toggle/cr_toggle.html">
-<link rel="import" href="chrome://resources/cr_elements/hidden_style_css.html">
+<link rel="import" href="chrome://resources/cr_elements/shared_style_css.html">
 <link rel="import" href="chrome://resources/cr_elements/policy/cr_tooltip_icon.html">
 <link rel="import" href="chrome://resources/html/action_link.html">
 <link rel="import" href="chrome://resources/html/action_link_css.html">
@@ -18,12 +19,11 @@
 
 <dom-module id="extensions-detail-view">
   <template>
-    <style include="iron-flex cr-hidden-style cr-icons action-link">
+    <style include="iron-flex cr-shared-style cr-icons action-link">
       :host {
         --iron-icon-fill-color: var(--paper-grey-600);
         display: block;
         height: 100%;
-        overflow: auto;
       }
 
       #enable-section {
@@ -32,6 +32,11 @@
 
       #enable-section cr-tooltip-icon {
         -webkit-margin-end: 20px;
+      }
+
+      #container {
+        height: 100%;
+        overflow: overlay;
       }
 
       #main {
@@ -116,6 +121,7 @@
         margin: 0;
       }
     </style>
+    <div id="container">
     <div id="main">
       <div id="top-bar">
         <button id="close-button" is="paper-icon-button-light"
@@ -250,6 +256,7 @@
           [[computeSourceString_(data.*)]]
         </div>
       </div>
+    </div>
     </div>
   </template>
   <script src="chrome://extensions/detail_view.js"></script>
