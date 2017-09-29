@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1fe79272_3375a689",
+        "filename": "media/blink/multibuffer_data_source.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-09-29T21:01:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa54eb16_1cf6da46",
+      "revId": "02b3eac2b87e6cc5fe64cb1f3ba45d517662fde8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5bf0a57_de360571",
         "filename": "media/blink/multibuffer_data_source.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "59386e29_ded55a37",
+        "filename": "media/blink/multibuffer_data_source.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-09-29T21:01:58Z",
+      "side": 1,
+      "message": "It looks good?\nI don\u0027t really understand the question.",
+      "parentUuid": "f5bf0a57_de360571",
+      "revId": "02b3eac2b87e6cc5fe64cb1f3ba45d517662fde8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "952a65ec_1dfa47e6",
         "filename": "media/blink/multibuffer_data_source.cc",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-29T18:55:57Z",
       "side": 1,
       "message": "Add comment about why you\u0027re iterating in reverse. Also this is a OOB read, i \u003d seek_positions.size() to start which is OOB. Take care when subtracting one too since this is a size_t, so you\u0027ll want an empty check above.",
+      "revId": "02b3eac2b87e6cc5fe64cb1f3ba45d517662fde8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a379941f_5d3c4563",
+        "filename": "media/blink/multibuffer_data_source.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-09-29T21:01:58Z",
+      "side": 1,
+      "message": "Comment added.\nBleh, how about using rbegin() / rend() instead?",
+      "parentUuid": "952a65ec_1dfa47e6",
       "revId": "02b3eac2b87e6cc5fe64cb1f3ba45d517662fde8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

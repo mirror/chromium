@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "cdc2e7a2_825b73d6",
+        "filename": "media/blink/multibuffer_data_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-09-29T21:01:58Z",
+      "side": 1,
+      "message": "Agreed, I added a filter in SeekTask_Locked to deal with this.",
+      "parentUuid": "885eac18_757a044c",
+      "revId": "73f37e9952eb73b336f7fc007eb1b2e3d5648b93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4384cd51_1e218051",
         "filename": "media/blink/multibuffer_data_source.cc",
         "patchSetId": 1
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "summary of offline conversation: it was PostDelayed, but probably doesn\u0027t matter anyway.",
       "parentUuid": "81238542_cc97da96",
+      "revId": "73f37e9952eb73b336f7fc007eb1b2e3d5648b93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "34290ed1_010c4098",
+        "filename": "media/blink/multibuffer_data_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-09-29T21:01:58Z",
+      "side": 1,
+      "message": "I had forgotten that it was PostDelayed, but even with the events arriving in any order, it\u0027s still doing what I want.",
+      "parentUuid": "2b9fb7a1_1bfa16a5",
       "revId": "73f37e9952eb73b336f7fc007eb1b2e3d5648b93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
