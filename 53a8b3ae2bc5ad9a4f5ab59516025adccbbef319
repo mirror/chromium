@@ -88,6 +88,24 @@
       "revId": "53a8b3ae2bc5ad9a4f5ab59516025adccbbef319",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11718d0c_4c8fc507",
+        "filename": "third_party/WebKit/Source/platform/wtf/RefPtr.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-29T06:00:25Z",
+      "side": 1,
+      "message": "The two reason I\u0027ve pushed back against adding this is because shared_ptr (though it isn\u0027t quite the same as scoped_refptr) doesn\u0027t have a release() method. The other is because it seems like the usage of LeakRef() should be quite limited in general--and the places I do see it used generally seem to make the code harder to understand (for example, I don\u0027t think it\u0027s trivial to determine that https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/dom/QualifiedName.cpp?rcl\u003d59f941fd507f6a6d45cea7147f758c3ebe6bfae0\u0026l\u003d68 or https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp?rcl\u003d59f941fd507f6a6d45cea7147f758c3ebe6bfae0\u0026l\u003d601 don\u0027t end up leaking)\n\nDoes the compiler manage to generate optimal code for the implementation in this CL?",
+      "parentUuid": "1ddf9900_6c9f9f50",
+      "revId": "53a8b3ae2bc5ad9a4f5ab59516025adccbbef319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
