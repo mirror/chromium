@@ -167,9 +167,6 @@ size_t RegisterCrashKeysHelper() {
       // Temporary for https://crbug.com/685996.
       {"user-cloud-policy-manager-connect-trace", kMediumSize},
 
-      // TODO(asvitkine): Remove after fixing https://crbug.com/736675
-      {"bad_histogram", kMediumSize},
-
       // Temporary for https://crbug.com/752914.
       {"blink_scheduler_task_function_name", kMediumSize},
       {"blink_scheduler_task_file_name", kMediumSize},

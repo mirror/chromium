@@ -206,9 +206,6 @@ size_t RegisterChromeCrashKeys() {
     // Temporary for https://crbug.com/685996.
     {kUserCloudPolicyManagerConnectTrace, kMediumSize},
 
-    // TODO(asvitkine): Remove after fixing https://crbug.com/736675
-    {"bad_histogram", kMediumSize},
-
     // Temporary for https://crbug.com/752914.
     {"blink_scheduler_task_function_name", kMediumSize},
     {"blink_scheduler_task_file_name", kMediumSize},
