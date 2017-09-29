@@ -1,9 +1,8 @@
 <link rel="import" href="chrome://resources/html/polymer.html">
 
-<link rel="import" href="chrome://resources/cr_elements/cr_container_shadow_behavior.html">
 <link rel="import" href="chrome://resources/cr_elements/cr_drawer/cr_drawer.html">
 <link rel="import" href="chrome://resources/cr_elements/cr_toolbar/cr_toolbar.html">
-<link rel="import" href="chrome://resources/cr_elements/shared_style_css.html">
+<link rel="import" href="chrome://resources/cr_elements/hidden_style_css.html">
 <link rel="import" href="chrome://resources/html/assert.html">
 <link rel="import" href="chrome://resources/html/cr.html">
 <link rel="import" href="chrome://resources/html/i18n_behavior.html">
@@ -31,7 +30,7 @@
 
 <dom-module id="extensions-manager">
   <template>
-    <style include="cr-shared-style">
+    <style include="cr-hidden-style">
       :host {
         display: flex;
         flex-direction: column;
@@ -42,15 +41,9 @@
         flex-basis: 256px;
       }
 
-      #container {
-        flex: 1;
-        overflow: overlay;
-        position: relative;
-      }
-
       #viewManager {
-        flex-grow: 1;
-        overflow-y: auto;
+        flex: 1;
+        position: relative;
       }
 
       extensions-item {
@@ -78,7 +71,6 @@
         <extensions-sidebar id="sidebar"></extensions-sidebar>
       </div>
     </dialog>
-    <div id="container">
       <extensions-view-manager id="viewManager">
         <extensions-item-list id="items-list"
             items="[[itemsList_]]"
@@ -109,7 +101,6 @@
         </extensions-kiosk-dialog>
       </template>
 </if>
-    </div>
   </template>
   <script src="chrome://extensions/manager.js"></script>
 </dom-module>
