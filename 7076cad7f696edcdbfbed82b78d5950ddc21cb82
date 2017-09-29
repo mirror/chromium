@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ccf1982_aa8a8168",
+        "filename": "gpu/command_buffer/service/create_gr_gl_interface.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1231409
+      },
+      "writtenOn": "2017-09-29T17:09:47Z",
+      "side": 1,
+      "message": "Not sure if this is the right way. The func ptr casting was getting little messy. So waiting for your comments on this.",
+      "revId": "7076cad7f696edcdbfbed82b78d5950ddc21cb82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
