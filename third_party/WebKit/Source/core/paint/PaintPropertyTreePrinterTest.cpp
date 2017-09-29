@@ -85,7 +85,7 @@ TEST_P(PaintPropertyTreePrinterTest, SimpleTransformTreePath) {
   LayoutObject* transformed_object =
       GetDocument().getElementById("transform")->GetLayoutObject();
   const auto* transformed_object_properties =
-      transformed_object->FirstFragment()->PaintProperties();
+      transformed_object->FirstFragment().GetRarePaintData()->PaintProperties();
   String transform_path_as_string =
       transformed_object_properties->Transform()->ToTreeString();
   EXPECT_THAT(transform_path_as_string.Ascii().data(),
@@ -102,7 +102,7 @@ TEST_P(PaintPropertyTreePrinterTest, SimpleClipTreePath) {
   LayoutObject* clipped_object =
       GetDocument().getElementById("clip")->GetLayoutObject();
   const auto* clipped_object_properties =
-      clipped_object->FirstFragment()->PaintProperties();
+      clipped_object->FirstFragment().GetRarePaintData()->PaintProperties();
   String clip_path_as_string =
       clipped_object_properties->CssClip()->ToTreeString();
   EXPECT_THAT(clip_path_as_string.Ascii().data(),
@@ -116,7 +116,7 @@ TEST_P(PaintPropertyTreePrinterTest, SimpleEffectTreePath) {
   LayoutObject* effect_object =
       GetDocument().getElementById("effect")->GetLayoutObject();
   const auto* effect_object_properties =
-      effect_object->FirstFragment()->PaintProperties();
+      effect_object->FirstFragment().GetRarePaintData()->PaintProperties();
   String effect_path_as_string =
       effect_object_properties->Effect()->ToTreeString();
   EXPECT_THAT(effect_path_as_string.Ascii().data(),
@@ -132,7 +132,7 @@ TEST_P(PaintPropertyTreePrinterTest, SimpleScrollTreePath) {
   LayoutObject* scroll_object =
       GetDocument().getElementById("scroll")->GetLayoutObject();
   const auto* scroll_object_properties =
-      scroll_object->FirstFragment()->PaintProperties();
+      scroll_object->FirstFragment().GetRarePaintData()->PaintProperties();
   String scroll_path_as_string = scroll_object_properties->ScrollTranslation()
                                      ->ScrollNode()
                                      ->ToTreeString();

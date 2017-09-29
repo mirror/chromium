@@ -38,6 +38,7 @@ class PrePaintTreeWalkTest
     if (RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
       return frame_view->GetLayoutView()
           ->FirstFragment()
+          .GetRarePaintData()
           ->PaintProperties()
           ->PaintOffsetTranslation();
     }
@@ -49,6 +50,7 @@ class PrePaintTreeWalkTest
     if (RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
       return frame_view->GetLayoutView()
           ->FirstFragment()
+          .GetRarePaintData()
           ->PaintProperties()
           ->ScrollTranslation();
     }
@@ -97,6 +99,7 @@ TEST_P(PrePaintTreeWalkTest, PropertyTreesRebuiltWithBorderInvalidation) {
   auto* transformed_element = GetDocument().getElementById("transformed");
   const auto* transformed_properties = transformed_element->GetLayoutObject()
                                            ->FirstFragment()
+                                           .GetRarePaintData()
                                            ->PaintProperties();
   EXPECT_EQ(TransformationMatrix().Translate(100, 100),
             transformed_properties->Transform()->Matrix());
@@ -139,6 +142,7 @@ TEST_P(PrePaintTreeWalkTest, PropertyTreesRebuiltWithCSSTransformInvalidation) {
   auto* transformed_element = GetDocument().getElementById("transformed");
   const auto* transformed_properties = transformed_element->GetLayoutObject()
                                            ->FirstFragment()
+                                           .GetRarePaintData()
                                            ->PaintProperties();
   EXPECT_EQ(TransformationMatrix().Translate(100, 100),
             transformed_properties->Transform()->Matrix());
@@ -166,6 +170,7 @@ TEST_P(PrePaintTreeWalkTest, PropertyTreesRebuiltWithOpacityInvalidation) {
   auto* transparent_element = GetDocument().getElementById("transparent");
   const auto* transparent_properties = transparent_element->GetLayoutObject()
                                            ->FirstFragment()
+                                           .GetRarePaintData()
                                            ->PaintProperties();
   EXPECT_EQ(0.9f, transparent_properties->Effect()->Opacity());
 

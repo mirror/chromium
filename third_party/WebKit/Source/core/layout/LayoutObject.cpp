@@ -137,7 +137,8 @@ struct SameSizeAsLayoutObject : DisplayItemClient {
   unsigned bitfields2_;
   LayoutRect visual_rect_;
   LayoutPoint paint_offset_;
-  std::unique_ptr<void*> rare_paint_data_;
+  std::unique_ptr<RarePaintData> rare_paint_data_;
+  std::unique_ptr<FragmentData> next_fragment_;
 };
 
 static_assert(sizeof(LayoutObject) == sizeof(SameSizeAsLayoutObject),
@@ -1140,7 +1141,7 @@ void LayoutObject::InvalidatePaintRectangle(const LayoutRect& dirty_rect) {
   if (dirty_rect.IsEmpty())
     return;
 
-  auto& rare_paint_data = EnsureRarePaintData();
+  auto& rare_paint_data = fragment_.EnsureRarePaintData();
   rare_paint_data.SetPartialInvalidationRect(
       UnionRect(dirty_rect, rare_paint_data.PartialInvalidationRect()));
 
@@ -1184,10 +1185,10 @@ LayoutRect LayoutObject::VisualRectIncludingCompositedScrolling(
 }
 
 void LayoutObject::ClearPreviousVisualRects() {
-  SetVisualRect(LayoutRect());
-  if (rare_paint_data_) {
-    rare_paint_data_->SetLocationInBacking(LayoutPoint());
-    rare_paint_data_->SetSelectionVisualRect(LayoutRect());
+  fragment_.SetVisualRect(LayoutRect());
+  if (fragment_.GetRarePaintData()) {
+    fragment_.GetRarePaintData()->SetLocationInBacking(LayoutPoint());
+    fragment_.GetRarePaintData()->SetSelectionVisualRect(LayoutRect());
   }
   // Ensure check paint invalidation of subtree that would be triggered by
   // location change if we had valid previous location.
@@ -3431,8 +3432,8 @@ void LayoutObject::ClearPaintInvalidationFlags() {
 #if DCHECK_IS_ON()
   DCHECK(!ShouldCheckForPaintInvalidation() || PaintInvalidationStateIsDirty());
 #endif
-  if (rare_paint_data_)
-    rare_paint_data_->SetPartialInvalidationRect(LayoutRect());
+  if (fragment_.GetRarePaintData())
+    fragment_.GetRarePaintData()->SetPartialInvalidationRect(LayoutRect());
   ClearShouldDoFullPaintInvalidation();
   bitfields_.SetMayNeedPaintInvalidation(false);
   bitfields_.SetMayNeedPaintInvalidationSubtree(false);
@@ -3479,12 +3480,6 @@ void LayoutObject::SetIsBackgroundAttachmentFixedObject(
     GetFrameView()->RemoveBackgroundAttachmentFixedObject(this);
 }
 
-RarePaintData& LayoutObject::EnsureRarePaintData() {
-  if (!rare_paint_data_)
-    rare_paint_data_ = WTF::MakeUnique<RarePaintData>(visual_rect_.Location());
-  return *rare_paint_data_.get();
-}
-
 LayoutRect LayoutObject::DebugRect() const {
   LayoutRect rect;
   LayoutBlock* block = ContainingBlock();
@@ -3494,19 +3489,8 @@ LayoutRect LayoutObject::DebugRect() const {
   return rect;
 }
 
-FragmentData* LayoutObject::MutableForPainting::FirstFragment() {
-  if (auto* paint_data = layout_object_.GetRarePaintData())
-    return paint_data->Fragment();
-  return nullptr;
-}
-
-FragmentData& LayoutObject::MutableForPainting::EnsureFirstFragment() {
-  return layout_object_.EnsureRarePaintData().EnsureFragment();
-}
-
-void LayoutObject::MutableForPainting::ClearFirstFragment() {
-  if (auto* paint_data = layout_object_.GetRarePaintData())
-    paint_data->ClearFragment();
+FragmentData& LayoutObject::MutableForPainting::FirstFragment() {
+  return layout_object_.fragment_;
 }
 
 void LayoutObject::InvalidatePaintForSelection() {
