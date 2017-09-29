@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a74a827d_d9094330",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-09-29T00:52:18Z",
+      "side": 1,
+      "message": "Unfortunately there are other mousedown listeners which pre-empt it - in this case, mousedown moves the color selection before the click event gets to the toggle.",
+      "parentUuid": "f5113a5d_785cedb8",
+      "revId": "9a94fa781adb7548adfd9aaa3f7dfe4286474679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a4269b4_14786e4c",
         "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "9a94fa781adb7548adfd9aaa3f7dfe4286474679",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20cc5dd8_ab011bac",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-09-29T00:52:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a4269b4_14786e4c",
+      "revId": "9a94fa781adb7548adfd9aaa3f7dfe4286474679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2e3d7eee_35cbbba8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-09-29T00:52:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "344d6e7c_c3316b69",
+      "revId": "9a94fa781adb7548adfd9aaa3f7dfe4286474679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc218b04_500e69cb",
         "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "9a94fa781adb7548adfd9aaa3f7dfe4286474679",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8e5d812_10678f88",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-09-29T00:52:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc218b04_500e69cb",
+      "revId": "9a94fa781adb7548adfd9aaa3f7dfe4286474679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "41d8c91a_97ba693b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-09-29T00:52:18Z",
+      "side": 1,
+      "message": "Used now :)",
+      "parentUuid": "d0f47ae7_3e330fae",
+      "revId": "9a94fa781adb7548adfd9aaa3f7dfe4286474679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6fb126ac_828ad67f",
         "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
         "patchSetId": 5
@@ -98,6 +188,30 @@
       "writtenOn": "2017-09-28T23:49:55Z",
       "side": 1,
       "message": "textContent",
+      "range": {
+        "startLine": 733,
+        "startChar": 28,
+        "endLine": 733,
+        "endChar": 37
+      },
+      "revId": "9a94fa781adb7548adfd9aaa3f7dfe4286474679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f0f7f52_364ead18",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-09-29T00:52:18Z",
+      "side": 1,
+      "message": "Used aria-label instead.",
+      "parentUuid": "6fb126ac_828ad67f",
       "range": {
         "startLine": 733,
         "startChar": 28,
