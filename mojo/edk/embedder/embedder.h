@@ -39,6 +39,10 @@ MOJO_SYSTEM_IMPL_EXPORT void Init(const Configuration& configuration);
 // Like above but uses a default Configuration.
 MOJO_SYSTEM_IMPL_EXPORT void Init();
 
+// Sets this process as the broker process within its graph of interconnected
+// Mojo-embedder processes.
+MOJO_SYSTEM_IMPL_EXPORT void SetAsBrokerProcess();
+
 // Sets a default callback to invoke when an internal error is reported but
 // cannot be associated with a specific child process. Calling this is optional.
 MOJO_SYSTEM_IMPL_EXPORT void SetDefaultProcessErrorCallback(

@@ -6,7 +6,7 @@
 
 #include "base/lazy_instance.h"
 #include "base/path_service.h"
-#include "mojo/edk/embedder/embedder.h"
+#include "services/service_manager/public/cpp/mojo_init.h"
 #include "ui/aura/env.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/base/ui_base_paths.h"
@@ -18,7 +18,7 @@ namespace {
 
 class MojoInitializer {
  public:
-  MojoInitializer() { mojo::edk::Init(); }
+  MojoInitializer() { service_manager::InitializeMojo(); }
 };
 
 base::LazyInstance<MojoInitializer>::Leaky mojo_initializer;

@@ -2,18 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/app/mojo/mojo_init.h"
+#include "services/service_manager/public/cpp/mojo_init.h"
 
-#include <memory>
-
-#include "base/command_line.h"
 #include "base/lazy_instance.h"
-#include "content/public/common/content_switches.h"
 #include "ipc/ipc_channel.h"
 #include "mojo/edk/embedder/configuration.h"
 #include "mojo/edk/embedder/embedder.h"
 
-namespace content {
+namespace service_manager {
 
 namespace {
 
@@ -34,4 +30,4 @@ void InitializeMojo() {
   mojo_initializer.Get();
 }
 
-}  // namespace content
+}  // namespace service_manager

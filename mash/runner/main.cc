@@ -24,8 +24,8 @@
 #include "base/threading/platform_thread.h"
 #include "base/threading/thread.h"
 #include "build/build_config.h"
-#include "mojo/edk/embedder/embedder.h"
 #include "mojo/edk/embedder/scoped_ipc_support.h"
+#include "services/service_manager/public/cpp/mojo_init.h"
 #include "services/service_manager/runner/init.h"
 #include "services/service_manager/standalone/context.h"
 #include "services/service_manager/switches.h"
@@ -71,7 +71,7 @@ int main(int argc, char** argv) {
 
   base::i18n::InitializeICU();
 
-  mojo::edk::Init();
+  service_manager::InitializeMojo();
 
   base::Thread ipc_thread("IPC thread");
   ipc_thread.StartWithOptions(
