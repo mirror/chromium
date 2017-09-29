@@ -36,14 +36,14 @@ enum MarkHttpStatus {
 bool GetSecurityLevelAndHistogramValueForNonSecureFieldTrial(
     std::string switch_or_field_trial_group,
     bool displayed_sensitive_input_on_http,
-    bool is_incognito,
+    bool is_incognito_normal_page,
     const InsecureInputEventData* input_events,
     SecurityLevel* level,
     MarkHttpStatus* mark_http_as) {
   if (switch_or_field_trial_group ==
       switches::kMarkHttpAsNonSecureWhileIncognito) {
     *mark_http_as = NON_SECURE_WHILE_INCOGNITO;
-    *level = (is_incognito || displayed_sensitive_input_on_http)
+    *level = (is_incognito_normal_page || displayed_sensitive_input_on_http)
                  ? security_state::HTTP_SHOW_WARNING
                  : NONE;
     return true;
@@ -51,7 +51,7 @@ bool GetSecurityLevelAndHistogramValueForNonSecureFieldTrial(
   if (switch_or_field_trial_group ==
       switches::kMarkHttpAsNonSecureWhileIncognitoOrEditing) {
     *mark_http_as = NON_SECURE_WHILE_INCOGNITO_OR_EDITING;
-    *level = (is_incognito || displayed_sensitive_input_on_http ||
+    *level = (is_incognito_normal_page || displayed_sensitive_input_on_http ||
               (input_events && input_events->insecure_field_edited))
                  ? security_state::HTTP_SHOW_WARNING
                  : NONE;
@@ -77,7 +77,7 @@ bool GetSecurityLevelAndHistogramValueForNonSecureFieldTrial(
 
 SecurityLevel GetSecurityLevelForNonSecureFieldTrial(
     bool displayed_sensitive_input_on_http,
-    bool is_incognito,
+    bool is_incognito_normal_page,
     const InsecureInputEventData* input_events,
     MarkHttpStatus* mark_http_as) {
   std::string choice =
@@ -92,10 +92,10 @@ SecurityLevel GetSecurityLevelForNonSecureFieldTrial(
   // If the command-line switch is set, then it takes precedence over
   // the field trial group.
   if (!GetSecurityLevelAndHistogramValueForNonSecureFieldTrial(
-          choice, displayed_sensitive_input_on_http, is_incognito, input_events,
-          &level, mark_http_as)) {
+          choice, displayed_sensitive_input_on_http, is_incognito_normal_page,
+          input_events, &level, mark_http_as)) {
     if (!GetSecurityLevelAndHistogramValueForNonSecureFieldTrial(
-            group, displayed_sensitive_input_on_http, is_incognito,
+            group, displayed_sensitive_input_on_http, is_incognito_normal_page,
             input_events, &level, mark_http_as)) {
       *mark_http_as = HTTP_SHOW_WARNING_ON_SENSITIVE_FIELDS;
       level = displayed_sensitive_input_on_http
@@ -168,7 +168,8 @@ SecurityLevel GetSecurityLevelForRequest(
       return GetSecurityLevelForNonSecureFieldTrial(
           visible_security_state.displayed_password_field_on_http ||
               visible_security_state.displayed_credit_card_field_on_http,
-          visible_security_state.is_incognito,
+          visible_security_state.is_incognito &&
+              !visible_security_state.is_error_page,
           &visible_security_state.insecure_input_events, mark_http_as);
     }
     return NONE;
@@ -285,6 +286,7 @@ void SecurityInfoForRequest(
 
   security_info->incognito_downgraded_security_level =
       (visible_security_state.is_incognito &&
+       !visible_security_state.is_error_page &&
        security_info->security_level == HTTP_SHOW_WARNING &&
        (mark_http_as == NON_SECURE_WHILE_INCOGNITO ||
         mark_http_as == NON_SECURE_WHILE_INCOGNITO_OR_EDITING));
@@ -355,7 +357,8 @@ VisibleSecurityState::VisibleSecurityState()
       pkp_bypassed(false),
       displayed_password_field_on_http(false),
       displayed_credit_card_field_on_http(false),
-      is_incognito(false) {}
+      is_incognito(false),
+      is_error_page(false) {}
 
 VisibleSecurityState::~VisibleSecurityState() {}
 
