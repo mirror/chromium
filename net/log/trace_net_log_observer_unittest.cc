@@ -10,6 +10,7 @@
 
 #include "base/json/json_reader.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/ref_counted_memory.h"
 #include "base/run_loop.h"
@@ -83,7 +84,7 @@ class TraceNetLogObserverTest : public testing::Test {
         base::JSONReader::Read(json_output_.json_output, base::JSON_PARSE_RFC);
 
     ASSERT_TRUE(trace_value) << json_output_.json_output;
-    base::ListValue* trace_events = NULL;
+    base::ListValue* trace_events = nullptr;
     ASSERT_TRUE(trace_value->GetAsList(&trace_events));
 
     trace_events_ = FilterNetLogTraceEvents(*trace_events);
@@ -96,11 +97,13 @@ class TraceNetLogObserverTest : public testing::Test {
     TraceLog::GetInstance()->SetEnabled(
         base::trace_event::TraceConfig(kNetLogTracingCategory, ""),
         TraceLog::RECORDING_MODE);
+    base::RunLoop().RunUntilIdle();
   }
 
   void EndTraceAndFlush() {
     base::RunLoop run_loop;
     TraceLog::GetInstance()->SetDisabled();
+    base::RunLoop().RunUntilIdle();
     TraceLog::GetInstance()->Flush(
         base::Bind(&TraceNetLogObserverTest::OnTraceDataCollected,
                    base::Unretained(this), base::Unretained(&run_loop)));
@@ -116,7 +119,7 @@ class TraceNetLogObserverTest : public testing::Test {
     std::unique_ptr<base::ListValue> filtered_trace_events(
         new base::ListValue());
     for (size_t i = 0; i < trace_events.GetSize(); i++) {
-      const base::DictionaryValue* dict = NULL;
+      const base::DictionaryValue* dict = nullptr;
       if (!trace_events.GetDictionary(i, &dict)) {
         ADD_FAILURE() << "Unexpected non-dictionary event in trace_events";
         continue;
@@ -160,6 +163,25 @@ TEST_F(TraceNetLogObserverTest, TracingNotEnabled) {
   EXPECT_EQ(0u, trace_events()->GetSize());
 }
 
+// This test will result in a resource deadlock if EnabledStateObserver instead
+// of AsyncEnabledStateObserver is used. Regression test for crbug.com/760817.
+TEST_F(TraceNetLogObserverTest, TracingDisabledDuringOnAddEntry) {
+  trace_net_log_observer()->WatchForTraceStart(net_log());
+  TraceLog* trace_log = TraceLog::GetInstance();
+  trace_log->SetTraceBufferForTesting(base::WrapUnique(
+      base::trace_event::TraceBuffer::CreateTraceBufferVectorOfSize(1)));
+  EnableTraceLog();
+  // TraceLog will disable itself when an event makes the buffer full.
+  while (!trace_log->BufferIsFull()) {
+    net_log()->AddGlobalEntry(NetLogEventType::REQUEST_ALIVE);
+  }
+
+  base::RunLoop().RunUntilIdle();
+  ASSERT_FALSE(trace_log->IsEnabled());
+  ASSERT_FALSE(trace_net_log_observer()->net_log());
+  trace_net_log_observer()->StopWatchForTraceStart();
+}
+
 TEST_F(TraceNetLogObserverTest, TraceEventCaptured) {
   TestNetLogEntry::List entries;
   net_log()->GetEntries(&entries);
@@ -178,11 +200,11 @@ TEST_F(TraceNetLogObserverTest, TraceEventCaptured) {
   EndTraceAndFlush();
   trace_net_log_observer()->StopWatchForTraceStart();
   EXPECT_EQ(3u, trace_events()->GetSize());
-  const base::DictionaryValue* item1 = NULL;
+  const base::DictionaryValue* item1 = nullptr;
   ASSERT_TRUE(trace_events()->GetDictionary(0, &item1));
-  const base::DictionaryValue* item2 = NULL;
+  const base::DictionaryValue* item2 = nullptr;
   ASSERT_TRUE(trace_events()->GetDictionary(1, &item2));
-  const base::DictionaryValue* item3 = NULL;
+  const base::DictionaryValue* item3 = nullptr;
   ASSERT_TRUE(trace_events()->GetDictionary(2, &item3));
 
   TraceEntryInfo actual_item1 = GetTraceEntryInfoFromValue(*item1);
@@ -232,9 +254,9 @@ TEST_F(TraceNetLogObserverTest, EnableAndDisableTracing) {
   net_log()->GetEntries(&entries);
   EXPECT_EQ(3u, entries.size());
   EXPECT_EQ(2u, trace_events()->GetSize());
-  const base::DictionaryValue* item1 = NULL;
+  const base::DictionaryValue* item1 = nullptr;
   ASSERT_TRUE(trace_events()->GetDictionary(0, &item1));
-  const base::DictionaryValue* item2 = NULL;
+  const base::DictionaryValue* item2 = nullptr;
   ASSERT_TRUE(trace_events()->GetDictionary(1, &item2));
 
   TraceEntryInfo actual_item1 = GetTraceEntryInfoFromValue(*item1);
@@ -263,7 +285,7 @@ TEST_F(TraceNetLogObserverTest, DestroyObserverWhileTracing) {
   EnableTraceLog();
   net_log()->AddGlobalEntry(NetLogEventType::CANCELLED);
   trace_net_log_observer()->StopWatchForTraceStart();
-  set_trace_net_log_observer(NULL);
+  set_trace_net_log_observer(nullptr);
   net_log()->AddGlobalEntry(NetLogEventType::REQUEST_ALIVE);
 
   EndTraceAndFlush();
@@ -273,7 +295,7 @@ TEST_F(TraceNetLogObserverTest, DestroyObserverWhileTracing) {
   EXPECT_EQ(2u, entries.size());
   EXPECT_EQ(1u, trace_events()->GetSize());
 
-  const base::DictionaryValue* item1 = NULL;
+  const base::DictionaryValue* item1 = nullptr;
   ASSERT_TRUE(trace_events()->GetDictionary(0, &item1));
 
   TraceEntryInfo actual_item1 = GetTraceEntryInfoFromValue(*item1);
@@ -291,7 +313,7 @@ TEST_F(TraceNetLogObserverTest, DestroyObserverWhileNotTracing) {
   trace_net_log_observer()->WatchForTraceStart(net_log());
   net_log()->AddGlobalEntry(NetLogEventType::CANCELLED);
   trace_net_log_observer()->StopWatchForTraceStart();
-  set_trace_net_log_observer(NULL);
+  set_trace_net_log_observer(nullptr);
   net_log()->AddGlobalEntry(NetLogEventType::REQUEST_ALIVE);
   net_log()->AddGlobalEntry(NetLogEventType::URL_REQUEST_START_JOB);
 
@@ -304,7 +326,7 @@ TEST_F(TraceNetLogObserverTest, DestroyObserverWhileNotTracing) {
 }
 
 TEST_F(TraceNetLogObserverTest, CreateObserverAfterTracingStarts) {
-  set_trace_net_log_observer(NULL);
+  set_trace_net_log_observer(nullptr);
   EnableTraceLog();
   set_trace_net_log_observer(new TraceNetLogObserver());
   trace_net_log_observer()->WatchForTraceStart(net_log());
@@ -363,9 +385,9 @@ TEST_F(TraceNetLogObserverTest, EventsWithAndWithoutParameters) {
   net_log()->GetEntries(&entries);
   EXPECT_EQ(2u, entries.size());
   EXPECT_EQ(2u, trace_events()->GetSize());
-  const base::DictionaryValue* item1 = NULL;
+  const base::DictionaryValue* item1 = nullptr;
   ASSERT_TRUE(trace_events()->GetDictionary(0, &item1));
-  const base::DictionaryValue* item2 = NULL;
+  const base::DictionaryValue* item2 = nullptr;
   ASSERT_TRUE(trace_events()->GetDictionary(1, &item2));
 
   TraceEntryInfo actual_item1 = GetTraceEntryInfoFromValue(*item1);
