@@ -2448,6 +2448,12 @@ void RenderWidgetHostImpl::DelayedAutoResized() {
 
   if (delegate_)
     delegate_->ResizeDueToAutoResize(this, new_size);
+
+  viz::LocalSurfaceId local_surface_id(view_->GetLocalSurfaceId());
+  if (local_surface_id.is_valid()) {
+    Send(new ViewMsg_SetLocalSurfaceIdForAutoResize(routing_id_,
+                                                    local_surface_id));
+  }
 }
 
 void RenderWidgetHostImpl::DetachDelegate() {
