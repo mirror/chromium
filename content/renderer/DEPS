@@ -35,9 +35,6 @@ specific_include_rules = {
     "+content/public/browser",
     "+content/shell",
   ],
-  "render_thread_impl_browsertest\.cc": [
-    "+content/app/mojo/mojo_init.h",
-  ],
   "render_thread_impl_discardable_memory_browsertest\.cc": [
     "+components/discardable_memory/service",
     "+content/browser/browser_main_loop.h",

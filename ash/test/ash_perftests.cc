@@ -6,7 +6,7 @@
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/test/launcher/unit_test_launcher.h"
-#include "mojo/edk/embedder/embedder.h"
+#include "services/service_manager/public/cpp/mojo_init.h"
 #include "ui/gl/gl_switches.h"
 
 namespace {
@@ -24,7 +24,7 @@ int RunHelper(ash::AshTestSuite* test_suite) {
 int main(int argc, char** argv) {
   ash::AshTestSuite test_suite(argc, argv);
 
-  mojo::edk::Init();
+  service_manager::InitializeMojo();
   return base::LaunchUnitTestsSerially(
       argc, argv, base::Bind(&RunHelper, base::Unretained(&test_suite)));
 }

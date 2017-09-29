@@ -45,7 +45,6 @@
 #include "chrome/service/service_process_prefs.h"
 #include "components/network_session_configurator/common/network_switches.h"
 #include "components/prefs/json_pref_store.h"
-#include "mojo/edk/embedder/embedder.h"
 #include "mojo/edk/embedder/named_platform_handle.h"
 #include "mojo/edk/embedder/named_platform_handle_utils.h"
 #include "mojo/edk/embedder/peer_connection.h"
@@ -53,6 +52,7 @@
 #include "mojo/edk/embedder/scoped_ipc_support.h"
 #include "net/base/network_change_notifier.h"
 #include "net/url_request/url_fetcher.h"
+#include "services/service_manager/public/cpp/mojo_init.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/material_design/material_design_controller.h"
 #include "ui/base/resource/resource_bundle.h"
@@ -184,8 +184,7 @@ bool ServiceProcess::Initialize(base::MessageLoopForUI* message_loop,
     return false;
   }
 
-  // Initialize Mojo early so things can use it.
-  mojo::edk::Init();
+  service_manager::InitializeMojo();
   mojo_ipc_support_.reset(new mojo::edk::ScopedIPCSupport(
       io_thread_->task_runner(),
       mojo::edk::ScopedIPCSupport::ShutdownPolicy::FAST));
