@@ -22,6 +22,29 @@
       "revId": "28748268fceedf6101edf3656781c0ff16af7331",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fe9d7ca_be9be8dd",
+        "filename": "media/mojo/services/media_capabilities_leveldb.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-09-29T18:31:25Z",
+      "side": 1,
+      "message": "Tommy, is it recommended that we maintain our own cache outside of the db? I\u0027ve seen similar caching elsewhere in chromium, but I see from level db headers that it does its own caching - so this might be wasteful. I\u0027d like to just defer to level DB for caching if possible. \n\nhttps://cs.chromium.org/chromium/src/third_party/leveldatabase/src/include/leveldb/options.h?sq\u003dpackage:chromium\u0026l\u003d31\n\nLooks like the cache limit is 8MB - is that 8mb per db_ instance? Or are we sharing with other LevelDB users?",
+      "range": {
+        "startLine": 189,
+        "startChar": 8,
+        "endLine": 189,
+        "endChar": 9
+      },
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
