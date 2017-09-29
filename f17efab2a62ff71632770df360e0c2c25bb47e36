@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6f21a91_668550b8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1111839
+      },
+      "writtenOn": "2017-09-29T01:32:51Z",
+      "side": 1,
+      "message": "I think the commit title and message does not describe the fix precisely. It should be \n\narc/bluetooth: Prevent double-setting the user preference on power state\n\nThis adds a flag to guard SetPrimaryUserBluetoothPowerSetting if the power state change on adapter is initiated by Chrome in the first place, since the user preference has been saved. By SetPrimaryUserBluetoothPowerSetting, the the following scenario can be prevented.\n\nIssue:\nDouble-setting the user preference is OK in the normal case where it takes BlueZ \u003c 1 second to power on/off the adapter. In some cases, it takes BlueZ \u003e 3 seconds to finish powering off adapter. Within that \u003e 3 seconds window if an user turns on Bluetooth from Chrome Bluetooth setting, the power-on request will be fulfilled by BlueZ and enqueued to the to-be-send-to-android request queue while Android is still dealing with the previous power-off request. Afterward, Android gets back to Chrome about finishing power-off request, but since the current state is powered-on in preference on Chrome, the power-off state will be stored to preference again, which will then trigger a power-on request from Chrome. And this toggling will go on and on.",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 8
+      },
+      "revId": "f17efab2a62ff71632770df360e0c2c25bb47e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
