@@ -5,10 +5,9 @@
 #ifndef CHROME_BROWSER_SSL_CAPTIVE_PORTAL_HELPER_ANDROID_H_
 #define CHROME_BROWSER_SSL_CAPTIVE_PORTAL_HELPER_ANDROID_H_
 
-#include <jni.h>
-#include <stddef.h>
 #include <string>
 
+class JNIEnv;
 namespace chrome {
 namespace android {
 
