@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "5c8af5b8_71377a60",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-09-29T21:18:31Z",
+      "side": 1,
+      "message": "Because of the change below, could you please update this comment as well?",
+      "revId": "ac81fc0d56cfcd2482abae62927054116b566680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5092ec15_2b09758d",
         "filename": "components/policy_strings.grdp",
         "patchSetId": 6
