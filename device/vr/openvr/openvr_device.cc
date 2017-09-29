@@ -204,8 +204,9 @@ void OpenVRDevice::ExitPresent() {
   // We don't support presentation currently, so don't do anything.
 }
 
-void OpenVRDevice::GetNextMagicWindowPose(
-    mojom::VRDisplay::GetNextMagicWindowPoseCallback callback) {
+void OpenVRDevice::GetPose(
+    VRDisplayImpl* display,
+    mojom::VRMagicWindowProvider::GetPoseCallback callback) {
   std::move(callback).Run(nullptr);
 }
 

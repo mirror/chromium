@@ -24,6 +24,7 @@ class VRDevice final : public EventTargetWithInlineData,
 
  public:
   VRDevice(VR*,
+           device::mojom::blink::VRMagicWindowProviderPtr,
            device::mojom::blink::VRDisplayPtr,
            device::mojom::blink::VRDisplayClientRequest,
            device::mojom::blink::VRDisplayInfoPtr);
@@ -70,6 +71,7 @@ class VRDevice final : public EventTargetWithInlineData,
   bool is_external_;
   bool supports_exclusive_;
 
+  device::mojom::blink::VRMagicWindowProviderPtr magic_window_provider_;
   device::mojom::blink::VRDisplayPtr display_;
   device::mojom::blink::VRDisplayInfoPtr display_info_;
 
