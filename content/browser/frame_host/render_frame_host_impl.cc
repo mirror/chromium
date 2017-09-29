@@ -1554,6 +1554,12 @@ void RenderFrameHostImpl::DidCommitProvisionalLoad(
   bool is_blocked_navigation =
       navigation_handle_ &&
       navigation_handle_->GetNetErrorCode() == net::ERR_BLOCKED_BY_CLIENT;
+  if (is_blocked_navigation && !validated_params->origin.unique()) {
+    bad_message::ReceivedBadMessage(
+        GetProcess(),
+        bad_message::RFH_UNIQUE_ORIGIN_EXPECTED_FOR_BLOCKED_NAVIGATIONS);
+    return;
+  }
 
   // Attempts to commit certain off-limits URL should be caught more strictly
   // than our FilterURL checks below.  If a renderer violates this policy, it
