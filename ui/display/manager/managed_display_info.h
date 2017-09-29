@@ -10,6 +10,7 @@
 #include <array>
 #include <map>
 #include <string>
+#include <unordered_set>
 #include <vector>
 
 #include "base/files/file_path.h"
@@ -185,14 +186,21 @@ class DISPLAY_MANAGER_EXPORT ManagedDisplayInfo {
   }
   Display::TouchSupport touch_support() const { return touch_support_; }
 
-  // Associate the input device with identifier |id| with this display.
-  void AddInputDevice(int id);
+  // Associate the touch device with identifier |touch_device_identifier| with
+  // this display.
+  void AddTouchDevice(uint32_t touch_device_identifier);
 
-  // Clear the list of input devices associated with this display.
-  void ClearInputDevices();
+  // Clear the list of touch devices associated with this display.
+  void ClearTouchDevices();
 
-  // The input device ids that are associated with this display.
-  std::vector<int> input_devices() const { return input_devices_; }
+  // Returns true if the touch device with identifer |touch_device_identifier|
+  // is associated with this display.
+  bool HasTouchDevice(uint32_t touch_device_identifier) const;
+
+  // The identifiers of touch devices that are associated with this display.
+  std::unordered_set<uint32_t> touch_device_identifiers() const {
+    return touch_device_identifiers_;
+  }
 
   // Gets/Sets the device scale factor of the display.
   float device_scale_factor() const { return device_scale_factor_; }
@@ -336,8 +344,8 @@ class DISPLAY_MANAGER_EXPORT ManagedDisplayInfo {
   Display::RotationSource active_rotation_source_;
   Display::TouchSupport touch_support_;
 
-  // The set of input devices associated with this display.
-  std::vector<int> input_devices_;
+  // Identifiers for touch devices that are associated with this display.
+  std::unordered_set<uint32_t> touch_device_identifiers_;
 
   // This specifies the device's pixel density. (For example, a
   // display whose DPI is higher than the threshold is considered to have
