@@ -16,6 +16,24 @@
       "revId": "6c2ec121af8f2abec744903c6bbd00c994a31f20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31539d26_b4743e65",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 10124,
+      "author": {
+        "id": 1172235
+      },
+      "writtenOn": "2017-09-29T03:38:35Z",
+      "side": 0,
+      "message": "I\u0027m offline now, but now that you mention it I did forget to do anything in that path because I spent a few hours getting distracted by an issue that turned out to be unrelated. (I had experimented with inserting something there, but I took it out. I\u0027m sure this means that path is undertested.)\n\nIf I\u0027m reading code search correctly, RestoreVertexAttribArray is only used by ScopedVertexAttribArray, and only in the case where it has a state restorer, so I can understand how this would slip through.",
+      "parentUuid": "c2decfbb_8cc9bd8f",
+      "revId": "6c2ec121af8f2abec744903c6bbd00c994a31f20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
