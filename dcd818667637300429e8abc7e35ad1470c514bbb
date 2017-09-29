@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cad8c9e_07739a44",
+        "filename": "chrome/browser/extensions/api/language_settings_private/language_settings_private_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-09-29T05:56:56Z",
+      "side": 1,
+      "message": "You could const this right?",
+      "range": {
+        "startLine": 335,
+        "startChar": 77,
+        "endLine": 335,
+        "endChar": 0
+      },
+      "revId": "dcd818667637300429e8abc7e35ad1470c514bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "24e5838d_c7ae498c",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-09-29T05:56:56Z",
+      "side": 1,
+      "message": "How about\nconst bool should_block \u003d !base::FeatureList::IsEnabled(...) || !ContainsSameBaseLanugage(...);",
+      "range": {
+        "startLine": 225,
+        "startChar": 27,
+        "endLine": 225,
+        "endChar": 0
+      },
+      "revId": "dcd818667637300429e8abc7e35ad1470c514bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc3c82ce_ec31b8c0",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-09-29T05:56:56Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 261,
+        "startChar": 27,
+        "endLine": 261,
+        "endChar": 0
+      },
+      "revId": "dcd818667637300429e8abc7e35ad1470c514bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12a35b4c_33626e92",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-09-29T05:56:56Z",
+      "side": 1,
+      "message": "There are clients of this method (e.g. chrome/browser/ui/webui/translate_internals/translate_internals_handler.cc, ios/chrome/browser/translate/before_translate_infobar_controller.mm) that aren\u0027t touched in this change. Are you confident that they\u0027re unaffected by this behaviour change?",
+      "range": {
+        "startLine": 270,
+        "startChar": 71,
+        "endLine": 270,
+        "endChar": 0
+      },
+      "revId": "dcd818667637300429e8abc7e35ad1470c514bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90755db0_e341e2bf",
+        "filename": "components/translate/core/browser/translate_prefs.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-09-29T05:56:56Z",
+      "side": 1,
+      "message": "These two functions have more language blocking logic than mentioned in the comment (e.g. they block/unblock a language if it\u0027s the first/last of its family) - it might be worth specifying that here.",
+      "range": {
+        "startLine": 123,
+        "startChar": 20,
+        "endLine": 123,
+        "endChar": 0
+      },
+      "revId": "dcd818667637300429e8abc7e35ad1470c514bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8aaa5c80_028f34e0",
+        "filename": "components/translate/core/browser/translate_prefs_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-09-29T05:56:56Z",
+      "side": 1,
+      "message": "Did you want to double const this?",
+      "range": {
+        "startLine": 94,
+        "startChar": 38,
+        "endLine": 94,
+        "endChar": 0
+      },
+      "revId": "dcd818667637300429e8abc7e35ad1470c514bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7516012_be8b7cf2",
+        "filename": "components/translate/core/browser/translate_prefs_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-09-29T05:56:56Z",
+      "side": 1,
+      "message": "Could you use {} here and in the new tests below?",
+      "range": {
+        "startLine": 456,
+        "startChar": 53,
+        "endLine": 456,
+        "endChar": 0
+      },
+      "revId": "dcd818667637300429e8abc7e35ad1470c514bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c92c0497_9adb5837",
+        "filename": "components/translate/core/browser/translate_prefs_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-09-29T05:56:56Z",
+      "side": 1,
+      "message": "I think you either mean \"remove last language\" or \"don\u0027t unblock last language\". i.e. this comment is misleading. Same for some below (e.g. line 695).",
+      "range": {
+        "startLine": 666,
+        "startChar": 39,
+        "endLine": 666,
+        "endChar": 0
+      },
+      "revId": "dcd818667637300429e8abc7e35ad1470c514bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "03d09783_2035aa09",
+        "filename": "third_party/closure_compiler/externs/language_settings_private.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-09-29T05:56:56Z",
+      "side": 1,
+      "message": "In the past I have been asked to undo changes to header date - up to you.",
+      "range": {
+        "startLine": 1,
+        "startChar": 60,
+        "endLine": 1,
+        "endChar": 0
+      },
+      "revId": "dcd818667637300429e8abc7e35ad1470c514bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a4e2088c_fb5f8c49",
+        "filename": "third_party/closure_compiler/externs/language_settings_private.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-09-29T05:56:56Z",
+      "side": 1,
+      "message": "Is there any special process for committing to third_party?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 60
+      },
+      "revId": "dcd818667637300429e8abc7e35ad1470c514bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
