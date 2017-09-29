@@ -6,7 +6,10 @@
 
 #include <stddef.h>
 
+#include <memory>
 #include <set>
+#include <string>
+#include <vector>
 
 #include "base/command_line.h"
 #include "base/debug/alias.h"
@@ -18,6 +21,7 @@
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/extensions/extension_web_ui.h"
 #include "chrome/browser/extensions/extension_webkit_preferences.h"
+#include "chrome/browser/extensions/signin/gaia_auth_extension_loader.h"
 #include "chrome/browser/media_galleries/fileapi/media_file_system_backend.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_io_data.h"
@@ -41,6 +45,7 @@
 #include "content/public/browser/storage_partition.h"
 #include "content/public/browser/vpn_service_proxy.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/url_constants.h"
 #include "extensions/browser/api/web_request/web_request_api.h"
@@ -373,11 +378,6 @@ bool ChromeContentBrowserClientExtensionsPart::CanCommitURL(
     content::RenderProcessHost* process_host, const GURL& url) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  // We need to let most extension URLs commit in any process, since this can
-  // be allowed due to web_accessible_resources.  Most hosted app URLs may also
-  // load in any process (e.g., in an iframe).  However, the Chrome Web Store
-  // cannot be loaded in iframes and should never be requested outside its
-  // process.
   ExtensionRegistry* registry =
       ExtensionRegistry::Get(process_host->GetBrowserContext());
   if (!registry)
@@ -385,13 +385,33 @@ bool ChromeContentBrowserClientExtensionsPart::CanCommitURL(
 
   const Extension* new_extension =
       registry->enabled_extensions().GetExtensionOrAppByURL(url);
-  if (new_extension && new_extension->is_hosted_app() &&
-      new_extension->id() == kWebStoreAppId &&
-      !ProcessMap::Get(process_host->GetBrowserContext())
-           ->Contains(new_extension->id(), process_host->GetID())) {
-    return false;
+  if (!new_extension)
+    return true;
+
+  // The Chrome Web Store should never be requested outside of its process.
+  // Therefore - only consider the explicitly relaxed cases below if the
+  // |new_extension| is not the Chrome Web Store extension.
+  if (new_extension->id() != kWebStoreAppId) {
+    // Hosted app URLs may load in any process (e.g., in an iframe).
+    if (new_extension->is_hosted_app() && new_extension->id() != kWebStoreAppId)
+      return true;
+
+    // TODO(https://crbug.com/688565): Remove the check below once we fully
+    // deprecate the Gaia extension.  See also https://crbug.com/709117 for
+    // process allocation discussion related to this extension.
+    if (new_extension->id() == kGaiaAuthExtensionId)
+      return true;
+
+    // TODO(lukasza): Remove the if statement below after PlzNavigate ships.
+    // Without PlzNavigate we sometimes commit in an unexpected process.
+    if (!content::IsBrowserSideNavigationEnabled())
+      return true;
   }
-  return true;
+
+  // Do not allow committing the |url|, unless an earlier SiteInstanceGotProcess
+  // notification told us that the |process_host| can host the |new_extension|.
+  return ProcessMap::Get(process_host->GetBrowserContext())
+      ->Contains(new_extension->id(), process_host->GetID());
 }
 
 // static
