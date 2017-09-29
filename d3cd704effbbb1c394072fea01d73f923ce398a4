@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "70a1445f_25d514b5",
+        "filename": "ui/gfx/image/image.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-29T17:12:23Z",
+      "side": 1,
+      "message": "I think it\u0027s fine to remove CopyUIImage.",
+      "parentUuid": "41c9ef7a_a3ba831a",
+      "revId": "d3cd704effbbb1c394072fea01d73f923ce398a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e959a125_4e5eac84",
         "filename": "ui/gfx/image/image.h",
         "patchSetId": 6
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "It is not necessary, but if we ever decide to use ARC for macOS, then it will become necessary. Until then, it does not cause any harm (it is ignored if the file is not compiled with ARC).",
       "parentUuid": "e959a125_4e5eac84",
+      "revId": "d3cd704effbbb1c394072fea01d73f923ce398a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99ebcc49_c8fbb20f",
+        "filename": "ui/gfx/image/image.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-29T17:12:23Z",
+      "side": 1,
+      "message": "I don\u0027t think it makes sense to do this on Mac. There are no plans to switch to ARC, and we haven\u0027t proactively added support to anything except where shared with iOS.",
+      "parentUuid": "b533288b_10bb89f5",
       "revId": "d3cd704effbbb1c394072fea01d73f923ce398a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
