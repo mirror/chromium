@@ -121,12 +121,13 @@ TEST(TextureLayerImplTest, OutputIsSecure) {
       mailbox,
       gpu::SyncToken(gpu::CommandBufferNamespace::GPU_IO, 0x123,
                      gpu::CommandBufferId::FromUnsafeValue(0x234), 0x456),
-      GL_TEXTURE_2D, layer_size, false, true);
+      GL_TEXTURE_2D, layer_size, false);
 
   TextureLayerImpl* texture_layer_impl =
       impl.AddChildToRoot<TextureLayerImpl>();
   texture_layer_impl->SetBounds(layer_size);
   texture_layer_impl->SetDrawsContent(true);
+  texture_layer_impl->SetSecureOutputOnly(true);
   texture_layer_impl->SetTextureMailbox(
       texture_mailbox,
       viz::SingleReleaseCallback::Create(base::Bind(&IgnoreCallback)));
