@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dddfa6d2_eb2e8e35",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-29T23:14:47Z",
+      "side": 1,
+      "message": "don\u0027t you also have to update then the display size changes?",
+      "revId": "5113c785e8aac0cda5654b1cdf041a74d6d2eadc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cb86129_c6f838c0",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-29T23:14:47Z",
+      "side": 1,
+      "message": "!\u003d ?",
+      "revId": "5113c785e8aac0cda5654b1cdf041a74d6d2eadc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51c4cf36_565b00d4",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-29T23:14:47Z",
+      "side": 1,
+      "message": "display.work_area()",
+      "revId": "5113c785e8aac0cda5654b1cdf041a74d6d2eadc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c841deb7_419b5bc2",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-29T23:14:47Z",
+      "side": 1,
+      "message": "define GetDividerEndPosition() and use it here and other places.\nyou may also use std::max",
+      "range": {
+        "startLine": 445,
+        "startChar": 44,
+        "endLine": 445,
+        "endChar": 60
+      },
+      "revId": "5113c785e8aac0cda5654b1cdf041a74d6d2eadc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e94e0230_20f70ff5",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-29T23:14:47Z",
+      "side": 1,
+      "message": "bool activate_left \u003d\n\nthen\nif (activate_left) {\n    StackChildAbove(left, right);\n} else {\n    StackChildAbove(right, left);\n}",
+      "revId": "5113c785e8aac0cda5654b1cdf041a74d6d2eadc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

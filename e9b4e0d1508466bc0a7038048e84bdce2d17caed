@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a895dd9f_4ebc88e6",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-29T23:14:47Z",
+      "side": 1,
+      "message": "how about just use the same logic and flip left/right if it\u0027s secondary?",
+      "revId": "e9b4e0d1508466bc0a7038048e84bdce2d17caed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f25982bb_098bd9e8",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-29T23:14:47Z",
+      "side": 1,
+      "message": "if (screen_orientation_ \u003d\u003d default) {\n   screen_orientation_ \u003d GetCurrentOrientation();\n}",
+      "revId": "e9b4e0d1508466bc0a7038048e84bdce2d17caed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0451d84d_494f27d3",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-29T23:14:47Z",
+      "side": 1,
+      "message": "cleanup the comment",
+      "revId": "e9b4e0d1508466bc0a7038048e84bdce2d17caed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
