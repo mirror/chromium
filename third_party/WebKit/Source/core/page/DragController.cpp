@@ -266,7 +266,7 @@ void DragController::PerformDrag(DragData* drag_data, LocalFrame& local_root) {
       if (!prevented_default) {
         // When drop target is plugin element and it can process drag, we
         // should prevent default behavior.
-        const IntPoint point =
+        const FloatPoint point =
             local_root.View()->RootFrameToContents(drag_data->ClientPosition());
         const HitTestResult result = event_handler.HitTestResultAtPoint(point);
         prevented_default |=
@@ -352,9 +352,9 @@ static HTMLInputElement* AsFileInput(Node* node) {
 
 // This can return null if an empty document is loaded.
 static Element* ElementUnderMouse(Document* document_under_mouse,
-                                  const IntPoint& point) {
+                                  const FloatPoint& point) {
   HitTestRequest request(HitTestRequest::kReadOnly | HitTestRequest::kActive);
-  HitTestResult result(request, point);
+  HitTestResult result(request, LayoutPoint(point));
   document_under_mouse->GetLayoutViewItem().HitTest(result);
 
   Node* n = result.InnerNode();
@@ -405,7 +405,7 @@ bool DragController::TryDocumentDrag(DragData* drag_data,
 
   if ((action_mask & kDragDestinationActionEdit) &&
       CanProcessDrag(drag_data, local_root)) {
-    IntPoint point =
+    FloatPoint point =
         frame_view->RootFrameToContents(drag_data->ClientPosition());
     Element* element = ElementUnderMouse(document_under_mouse_.Get(), point);
     if (!element)
@@ -481,7 +481,7 @@ DragOperation DragController::OperationForLoad(DragData* drag_data,
 static bool SetSelectionToDragCaret(LocalFrame* frame,
                                     VisibleSelection& drag_caret,
                                     Range*& range,
-                                    const IntPoint& point) {
+                                    const FloatPoint& point) {
   frame->Selection().SetSelection(drag_caret.AsSelection());
   if (frame->Selection()
           .ComputeVisibleSelectionInDOMTreeDeprecated()
@@ -540,7 +540,7 @@ bool DragController::ConcludeEditDrag(DragData* drag_data) {
   if (!document_under_mouse_)
     return false;
 
-  IntPoint point = document_under_mouse_->View()->RootFrameToContents(
+  FloatPoint point = document_under_mouse_->View()->RootFrameToContents(
       drag_data->ClientPosition());
   Element* element = ElementUnderMouse(document_under_mouse_.Get(), point);
   if (!element)
@@ -702,7 +702,7 @@ bool DragController::CanProcessDrag(DragData* drag_data,
   if (local_root.ContentLayoutItem().IsNull())
     return false;
 
-  IntPoint point =
+  FloatPoint point =
       local_root.View()->RootFrameToContents(drag_data->ClientPosition());
 
   HitTestResult result =

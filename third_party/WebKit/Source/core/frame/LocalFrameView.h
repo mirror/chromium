@@ -356,6 +356,7 @@ class CORE_EXPORT LocalFrameView final
   IntRect ConvertToLayoutItem(const LayoutItem&, const IntRect&) const;
   IntPoint ConvertFromLayoutItem(const LayoutItem&, const IntPoint&) const;
   IntPoint ConvertToLayoutItem(const LayoutItem&, const IntPoint&) const;
+  FloatPoint ConvertFromLayoutItem(const LayoutItem&, const FloatPoint&) const;
 
   bool IsFrameViewScrollCorner(LayoutScrollbarPart* scroll_corner) const {
     return scroll_corner_ == scroll_corner;
@@ -616,12 +617,15 @@ class CORE_EXPORT LocalFrameView final
   FloatPoint RootFrameToContents(const FloatPoint&) const;
   IntRect RootFrameToContents(const IntRect&) const;
   IntPoint ContentsToRootFrame(const IntPoint&) const;
+  FloatPoint ContentsToRootFrame(const FloatPoint&) const;
   IntRect ContentsToRootFrame(const IntRect&) const;
 
   IntRect ViewportToContents(const IntRect&) const;
   IntRect ContentsToViewport(const IntRect&) const;
   IntPoint ContentsToViewport(const IntPoint&) const;
   IntPoint ViewportToContents(const IntPoint&) const;
+  FloatPoint ContentsToViewport(const FloatPoint&) const;
+  FloatPoint ViewportToContents(const FloatPoint&) const;
 
   // FIXME: Some external callers expect to get back a rect that's positioned
   // in viewport space, but sized in CSS pixels. This is an artifact of the
@@ -634,6 +638,7 @@ class CORE_EXPORT LocalFrameView final
   // frame and so they are affected by scroll offset. Content coordinates are
   // relative to the document's top left corner and thus are not affected by
   // scroll offset.
+  FloatPoint ContentsToFrame(const FloatPoint&) const;
   IntPoint ContentsToFrame(const IntPoint&) const;
   IntRect ContentsToFrame(const IntRect&) const;
   IntPoint FrameToContents(const IntPoint&) const;
@@ -649,6 +654,7 @@ class CORE_EXPORT LocalFrameView final
 
   IntRect ConvertToRootFrame(const IntRect&) const;
   IntPoint ConvertToRootFrame(const IntPoint&) const;
+  FloatPoint ConvertToRootFrame(const FloatPoint&) const;
   IntRect ConvertFromRootFrame(const IntRect&) const;
   IntPoint ConvertFromRootFrame(const IntPoint&) const override;
   FloatPoint ConvertFromRootFrame(const FloatPoint&) const;
@@ -982,6 +988,7 @@ class CORE_EXPORT LocalFrameView final
   // transforms into account.
   IntRect ConvertToContainingEmbeddedContentView(const IntRect&) const;
   IntPoint ConvertToContainingEmbeddedContentView(const IntPoint&) const;
+  FloatPoint ConvertToContainingEmbeddedContentView(const FloatPoint&) const;
   IntRect ConvertFromContainingEmbeddedContentView(const IntRect&) const;
   IntPoint ConvertFromContainingEmbeddedContentView(const IntPoint&) const;
 

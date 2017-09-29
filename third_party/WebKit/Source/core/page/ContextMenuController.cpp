@@ -91,7 +91,7 @@ void ContextMenuController::ShowContextMenuAtPoint(
     ContextMenuProvider* menu_provider) {
   menu_provider_ = menu_provider;
 
-  LayoutPoint location(x, y);
+  FloatPoint location(x, y);
   context_menu_ = CreateContextMenu(frame, location);
   if (!context_menu_) {
     ClearContextMenu();
@@ -108,15 +108,15 @@ std::unique_ptr<ContextMenu> ContextMenuController::CreateContextMenu(
 
   return CreateContextMenu(
       mouse_event->target()->ToNode()->GetDocument().GetFrame(),
-      LayoutPoint(mouse_event->AbsoluteLocation()));
+      FloatPoint(mouse_event->AbsoluteLocation()));
 }
 
 std::unique_ptr<ContextMenu> ContextMenuController::CreateContextMenu(
     LocalFrame* frame,
-    const LayoutPoint& location) {
+    const FloatPoint& location) {
   HitTestRequest::HitTestRequestType type =
       HitTestRequest::kReadOnly | HitTestRequest::kActive;
-  HitTestResult result(type, location);
+  HitTestResult result(type, LayoutPoint(location));
 
   if (frame)
     result = frame->GetEventHandler().HitTestResultAtPoint(location, type);

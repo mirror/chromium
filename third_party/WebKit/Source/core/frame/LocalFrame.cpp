@@ -639,7 +639,8 @@ String LocalFrame::SelectedTextForClipboard() const {
   return Selection().SelectedTextForClipboard();
 }
 
-PositionWithAffinity LocalFrame::PositionForPoint(const IntPoint& frame_point) {
+PositionWithAffinity LocalFrame::PositionForPoint(
+    const FloatPoint& frame_point) {
   HitTestResult result = GetEventHandler().HitTestResultAtPoint(frame_point);
   Node* node = result.InnerNodeOrImageMapImage();
   if (!node)
@@ -654,11 +655,11 @@ PositionWithAffinity LocalFrame::PositionForPoint(const IntPoint& frame_point) {
   return position;
 }
 
-Document* LocalFrame::DocumentAtPoint(const IntPoint& point_in_root_frame) {
+Document* LocalFrame::DocumentAtPoint(const FloatPoint& point_in_root_frame) {
   if (!View())
     return nullptr;
 
-  IntPoint pt = View()->RootFrameToContents(point_in_root_frame);
+  FloatPoint pt = View()->RootFrameToContents(point_in_root_frame);
 
   if (ContentLayoutItem().IsNull())
     return nullptr;
