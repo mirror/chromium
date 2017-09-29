@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75584a13_95800c36",
+        "filename": "chrome/browser/resources/md_extensions/item_list.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-29T21:41:59Z",
+      "side": 1,
+      "message": "Removed unneeded rules from here, as discussed offline.",
+      "revId": "eedd98eadf12ba3c97ccab4657a47215d4ac2c9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
