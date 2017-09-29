@@ -193,6 +193,11 @@ void ExtensionBrowserTest::SetUpOnMainThread() {
         test_extension_cache_.get());
   }
 
+  if (!ShouldEnableContentVerification()) {
+    ignore_content_verification_.reset(
+        new extensions::ScopedIgnoreContentVerifierForTest());
+  }
+
   // We don't use test_data_dir_ here because we want this to point to
   // chrome/test/data/extensions, and subclasses have a nasty habit of altering
   // the data dir in SetUpCommandLine().
