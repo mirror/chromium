@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b8584522_17da9942",
+        "filename": "sandbox/mac/mojo/seatbelt_extension_token.typemap",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-29T22:18:00Z",
+      "side": 1,
+      "message": "I did write it that way (though it still isn\u0027t 80chars), but git cl format undoes it.",
+      "parentUuid": "e35a3cf5_64f924d9",
+      "revId": "eee4045dd2f17bf1c6ea1f86c2a895a4d4cdc885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27984ade_fd5b15dc",
         "filename": "sandbox/mac/mojo/struct_traits_unittest.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "eee4045dd2f17bf1c6ea1f86c2a895a4d4cdc885",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd96b154_cfe0a61c",
+        "filename": "sandbox/mac/mojo/struct_traits_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-29T22:18:00Z",
+      "side": 1,
+      "message": "Because the EchoSeatbeltExtensionToken is marked [Sync] in the mojom, it\u0027s the out-param result rather than a callback (which would be the case for an async mojom).",
+      "parentUuid": "27984ade_fd5b15dc",
+      "revId": "eee4045dd2f17bf1c6ea1f86c2a895a4d4cdc885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2a02ec21_b1ecd0a4",
+        "filename": "sandbox/mac/seatbelt_extension.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-29T22:18:00Z",
+      "side": 1,
+      "message": "Done at IssueToken().",
+      "parentUuid": "74d8e391_3983cb6f",
+      "revId": "eee4045dd2f17bf1c6ea1f86c2a895a4d4cdc885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca5cf809_b0b32e99",
         "filename": "sandbox/mac/seatbelt_extension.cc",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "6bd98379_cd1f059b",
+        "filename": "sandbox/mac/seatbelt_extension.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-29T22:18:00Z",
+      "side": 1,
+      "message": "Yes, though std::make_unique\u003c\u003e doesn\u0027t work with private constructors, so base::WrapUnique is used here instead.",
+      "parentUuid": "ca5cf809_b0b32e99",
+      "revId": "eee4045dd2f17bf1c6ea1f86c2a895a4d4cdc885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac821c6b_c246b620",
         "filename": "sandbox/mac/seatbelt_extension_unittest.cc",
         "patchSetId": 4
@@ -81,6 +153,24 @@
       "writtenOn": "2017-09-29T16:13:36Z",
       "side": 1,
       "message": "We need to add this to common.sb to use tokens, right?",
+      "revId": "eee4045dd2f17bf1c6ea1f86c2a895a4d4cdc885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfdea30e_4190628b",
+        "filename": "sandbox/mac/seatbelt_extension_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-29T22:18:00Z",
+      "side": 1,
+      "message": "I don\u0027t know if we want to add it to common.sb or do it on a per-profile basis. I was thinking the latter just to keep things as limited as possible.",
+      "parentUuid": "ac821c6b_c246b620",
       "revId": "eee4045dd2f17bf1c6ea1f86c2a895a4d4cdc885",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
