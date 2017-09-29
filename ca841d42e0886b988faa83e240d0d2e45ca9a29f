@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab1833eb_aefa56b5",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-09-29T20:03:43Z",
+      "side": 1,
+      "message": "Does this deserve a comment so that no-one is going to move it back later?",
+      "revId": "ca841d42e0886b988faa83e240d0d2e45ca9a29f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
