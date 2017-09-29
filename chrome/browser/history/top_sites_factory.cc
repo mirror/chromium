@@ -8,12 +8,15 @@
 
 #include "base/bind.h"
 #include "base/command_line.h"
+#include "base/feature_list.h"
 #include "base/macros.h"
 #include "base/memory/singleton.h"
 #include "build/build_config.h"
+#include "chrome/browser/engagement/site_engagement_service.h"
 #include "chrome/browser/history/history_service_factory.h"
 #include "chrome/browser/history/history_utils.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/common/chrome_features.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/grit/locale_settings.h"
@@ -99,10 +102,16 @@ scoped_refptr<history::TopSites> TopSitesFactory::BuildTopSites(
     content::BrowserContext* context,
     const std::vector<history::PrepopulatedPage>& prepopulated_page_list) {
   Profile* profile = Profile::FromBrowserContext(context);
+  history::MostEngagedProvider* most_engaged_provider = nullptr;
+  if (base::FeatureList::IsEnabled(features::kTopSitesEngagementSorting))
+    most_engaged_provider = SiteEngagementService::Get(profile);
+
   scoped_refptr<history::TopSitesImpl> top_sites(new history::TopSitesImpl(
-      profile->GetPrefs(), HistoryServiceFactory::GetForProfile(
-                               profile, ServiceAccessType::EXPLICIT_ACCESS),
-      prepopulated_page_list, base::Bind(CanAddURLToHistory)));
+      profile->GetPrefs(),
+      HistoryServiceFactory::GetForProfile(profile,
+                                           ServiceAccessType::EXPLICIT_ACCESS),
+      most_engaged_provider, prepopulated_page_list,
+      base::Bind(CanAddURLToHistory)));
   top_sites->Init(context->GetPath().Append(history::kTopSitesFilename));
   return top_sites;
 }

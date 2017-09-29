@@ -286,6 +286,30 @@ double SiteEngagementService::GetTotalEngagementPoints() const {
   return total_score;
 }
 
+void SiteEngagementService::QueryMostEngagedURLs(
+    int result_count,
+    history::MostVisitedURLList* urls) {
+  std::vector<mojom::SiteEngagementDetails> details = GetAllDetails();
+  std::sort(details.begin(), details.end(),
+            [](const mojom::SiteEngagementDetails& lhs,
+               const mojom::SiteEngagementDetails& rhs) {
+              return lhs.total_score > rhs.total_score;
+            });
+
+  int num_results = result_count;
+  for (const auto& detail : details) {
+    if (num_results-- == 0)
+      return;
+    history::MostVisitedURL mv;
+    mv.url = detail.origin;
+    urls->push_back(mv);
+  }
+}
+
+bool SiteEngagementService::ProvidesMetadata() const {
+  return false;
+}
+
 #if defined(OS_ANDROID)
 SiteEngagementServiceAndroid* SiteEngagementService::GetAndroidService() const {
   return android_service_.get();

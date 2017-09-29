@@ -19,6 +19,7 @@
 #include "chrome/browser/engagement/site_engagement_metrics.h"
 #include "chrome/browser/engagement/site_engagement_observer.h"
 #include "components/history/core/browser/history_service_observer.h"
+#include "components/history/core/browser/top_sites_most_visited_provider.h"
 #include "components/keyed_service/core/keyed_service.h"
 #include "third_party/WebKit/public/platform/site_engagement.mojom.h"
 #include "ui/base/page_transition_types.h"
@@ -76,6 +77,7 @@ class SiteEngagementScoreProvider {
 // method is discouraged unless it is not possible to use the UI thread.
 class SiteEngagementService : public KeyedService,
                               public history::HistoryServiceObserver,
+                              public history::MostEngagedProvider,
                               public SiteEngagementScoreProvider {
  public:
   // WebContentsObserver that detects engagement triggering events and notifies
@@ -152,6 +154,12 @@ class SiteEngagementService : public KeyedService,
   // Overridden from SiteEngagementScoreProvider.
   double GetScore(const GURL& url) const override;
   double GetTotalEngagementPoints() const override;
+
+  // Overridden from MostEngagedProvider.
+  void QueryMostEngagedURLs(int result_count,
+                            history::MostVisitedURLList* urls) override;
+
+  bool ProvidesMetadata() const override;
 
  private:
   friend class SiteEngagementObserver;

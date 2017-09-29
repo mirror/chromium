@@ -2688,6 +2688,10 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kFullscreenToolbarRevealDescription, kOsMac,
      FEATURE_VALUE_TYPE(features::kFullscreenToolbarReveal)},
 #endif  // OS_MACOSX
+    {"top-sites-engagement-sorting",
+     flag_descriptions::kTopSitesEngagementSortingName,
+     flag_descriptions::kTopSitesEngagementSortingDescription, kOsAll,
+     FEATURE_VALUE_TYPE(features::kTopSitesEngagementSorting)},
     {"important-sites-in-cbd", flag_descriptions::kImportantSitesInCbdName,
      flag_descriptions::kImportantSitesInCbdDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kImportantSitesInCbd)},
