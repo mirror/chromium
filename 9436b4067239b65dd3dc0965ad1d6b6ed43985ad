@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "af25f824_1a4717be",
+        "filename": "third_party/WebKit/Source/core/exported/WebAssociatedURLLoaderImpl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1216499
+      },
+      "writtenOn": "2017-09-29T04:20:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f89079c_ee750ae9",
+      "revId": "9436b4067239b65dd3dc0965ad1d6b6ed43985ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94e66fd8_a473dc31",
         "filename": "third_party/WebKit/Source/core/exported/WebAssociatedURLLoaderImplTest.cpp",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-28T09:09:15Z",
       "side": 1,
       "message": "Why do you have this template here? We *may* implement the same copier at WebAssociatedURLLoaderOptions.h in the future and then we will have an ODR violation.",
+      "revId": "9436b4067239b65dd3dc0965ad1d6b6ed43985ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec60a9a1_8166c67c",
+        "filename": "third_party/WebKit/Source/core/exported/WebAssociatedURLLoaderImplTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1216499
+      },
+      "writtenOn": "2017-09-29T04:20:09Z",
+      "side": 1,
+      "message": "This is because platform/CrossThreadCopier.cpp is not allowed to include public/web/WebAssociatedURLLoaderOptions.h:\n\nWe currently only allow including public/web/WebKit.h.\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/DEPS?sq\u003dpackage:chromium\u0026l\u003d48\n\nSince we currently only need it for testing, I decided to simply implement it here.",
+      "parentUuid": "94e66fd8_a473dc31",
       "revId": "9436b4067239b65dd3dc0965ad1d6b6ed43985ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "236f1634_6090ba4a",
+        "filename": "third_party/WebKit/Source/core/exported/WebAssociatedURLLoaderImplTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1216499
+      },
+      "writtenOn": "2017-09-29T04:20:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18a3dc42_072ad176",
+      "revId": "9436b4067239b65dd3dc0965ad1d6b6ed43985ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab91c61e_da55bb64",
         "filename": "third_party/WebKit/Source/core/exported/WebAssociatedURLLoaderImplTest.cpp",
         "patchSetId": 6
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-28T09:09:15Z",
       "side": 1,
       "message": "The google code style says:\n\n - Data members of classes, both static and non-static, are named like ordinary nonmember variables, but with a trailing underscore.\n - Data members of structs, both static and non-static, are named like ordinary nonmember variables. They do not have the trailing underscores that data members in classes have.\n - Use a struct only for passive objects that carry data; everything else is a class.\n\nSo I think this should be class and member variable names should have trailing _. What do you think?",
+      "revId": "9436b4067239b65dd3dc0965ad1d6b6ed43985ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9fc909f_be869b70",
+        "filename": "third_party/WebKit/Source/core/exported/WebAssociatedURLLoaderImplTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1216499
+      },
+      "writtenOn": "2017-09-29T04:20:09Z",
+      "side": 1,
+      "message": "My understanding is that public members do not have trailing underscores. But I am not too sure.",
+      "parentUuid": "ab91c61e_da55bb64",
       "revId": "9436b4067239b65dd3dc0965ad1d6b6ed43985ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ab6757fc_1a6f169d",
+        "filename": "third_party/WebKit/Source/core/exported/WebAssociatedURLLoaderImplTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1216499
+      },
+      "writtenOn": "2017-09-29T04:20:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b447b8bc_97508699",
+      "revId": "9436b4067239b65dd3dc0965ad1d6b6ed43985ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "123f8bbd_fec39cf2",
         "filename": "third_party/WebKit/Source/core/exported/WebAssociatedURLLoaderImplTest.cpp",
         "patchSetId": 6
@@ -98,6 +188,24 @@
       "writtenOn": "2017-09-28T09:09:15Z",
       "side": 1,
       "message": "RefPtr?",
+      "revId": "9436b4067239b65dd3dc0965ad1d6b6ed43985ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e5175a0_b2f3f29b",
+        "filename": "third_party/WebKit/Source/core/exported/WebAssociatedURLLoaderImplTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1216499
+      },
+      "writtenOn": "2017-09-29T04:20:09Z",
+      "side": 1,
+      "message": "I do not need to keep a reference though. Do we always need to use RefPtr?",
+      "parentUuid": "123f8bbd_fec39cf2",
       "revId": "9436b4067239b65dd3dc0965ad1d6b6ed43985ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -127,6 +235,30 @@
     },
     {
       "key": {
+        "uuid": "07e672fc_04ed1d9a",
+        "filename": "third_party/WebKit/Source/core/exported/WebAssociatedURLLoaderImplTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1216499
+      },
+      "writtenOn": "2017-09-29T04:20:09Z",
+      "side": 1,
+      "message": "see above. Let me know if this should be RefPtr.",
+      "parentUuid": "66bd58e5_5e41b54c",
+      "range": {
+        "startLine": 261,
+        "startChar": 2,
+        "endLine": 261,
+        "endChar": 15
+      },
+      "revId": "9436b4067239b65dd3dc0965ad1d6b6ed43985ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc319577_7e3b9338",
         "filename": "third_party/WebKit/Source/core/exported/WebAssociatedURLLoaderImplTest.cpp",
         "patchSetId": 6
@@ -141,6 +273,24 @@
       "revId": "9436b4067239b65dd3dc0965ad1d6b6ed43985ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4de4d528_0028090b",
+        "filename": "third_party/WebKit/Source/core/exported/WebAssociatedURLLoaderImplTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1216499
+      },
+      "writtenOn": "2017-09-29T04:20:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc319577_7e3b9338",
+      "revId": "9436b4067239b65dd3dc0965ad1d6b6ed43985ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "62d1d7cc_205d60bf",
+        "filename": "third_party/WebKit/Source/core/exported/WebAssociatedURLLoaderImplTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1216499
+      },
+      "writtenOn": "2017-09-29T04:20:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5622d5e7_a68d8d21",
+      "revId": "9436b4067239b65dd3dc0965ad1d6b6ed43985ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7c8e35e_21347285",
         "filename": "third_party/WebKit/Source/core/exported/WebAssociatedURLLoaderImplTest.cpp",
         "patchSetId": 6
@@ -178,6 +346,24 @@
     },
     {
       "key": {
+        "uuid": "1b3473df_b7af9461",
+        "filename": "third_party/WebKit/Source/core/exported/WebAssociatedURLLoaderImplTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1216499
+      },
+      "writtenOn": "2017-09-29T04:20:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7c8e35e_21347285",
+      "revId": "9436b4067239b65dd3dc0965ad1d6b6ed43985ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a55a2762_4d681f05",
         "filename": "third_party/WebKit/Source/core/exported/WebAssociatedURLLoaderImplTest.cpp",
         "patchSetId": 6
@@ -189,6 +375,24 @@
       "writtenOn": "2017-09-28T09:09:15Z",
       "side": 1,
       "message": "Can you tell me why we need this struct?",
+      "revId": "9436b4067239b65dd3dc0965ad1d6b6ed43985ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4713adc6_ecf41227",
+        "filename": "third_party/WebKit/Source/core/exported/WebAssociatedURLLoaderImplTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1216499
+      },
+      "writtenOn": "2017-09-29T04:20:09Z",
+      "side": 1,
+      "message": "Because ResourceRequest cannot be created on the heap:\n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/exported/WebURLRequest.cpp?l\u003d68\n\nCopied comment.",
+      "parentUuid": "a55a2762_4d681f05",
       "revId": "9436b4067239b65dd3dc0965ad1d6b6ed43985ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -212,6 +416,24 @@
     },
     {
       "key": {
+        "uuid": "5881b46a_6dc69558",
+        "filename": "third_party/WebKit/Source/core/exported/WebAssociatedURLLoaderImplTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1216499
+      },
+      "writtenOn": "2017-09-29T04:20:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f6a2846_32bd656f",
+      "revId": "9436b4067239b65dd3dc0965ad1d6b6ed43985ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d50e8ec_60b0b1a4",
         "filename": "third_party/WebKit/Source/core/exported/WebAssociatedURLLoaderImplTest.cpp",
         "patchSetId": 6
@@ -223,6 +445,24 @@
       "writtenOn": "2017-09-28T09:09:15Z",
       "side": 1,
       "message": "Can you tell me why we need |this-\u003e|?",
+      "revId": "9436b4067239b65dd3dc0965ad1d6b6ed43985ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c285a26_f2e9d2db",
+        "filename": "third_party/WebKit/Source/core/exported/WebAssociatedURLLoaderImplTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1216499
+      },
+      "writtenOn": "2017-09-29T04:20:09Z",
+      "side": 1,
+      "message": "mass search-replace error. removed.",
+      "parentUuid": "2d50e8ec_60b0b1a4",
       "revId": "9436b4067239b65dd3dc0965ad1d6b6ed43985ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -246,6 +486,24 @@
     },
     {
       "key": {
+        "uuid": "ece3d898_953cdb21",
+        "filename": "third_party/WebKit/Source/core/frame/FrameTestHelpers.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1216499
+      },
+      "writtenOn": "2017-09-29T04:20:09Z",
+      "side": 1,
+      "message": "Then all subclasses would need to unnecessarily write stub member functions. I do not mind that but it seems unnecessary.",
+      "parentUuid": "ec2120a2_a2f4948d",
+      "revId": "9436b4067239b65dd3dc0965ad1d6b6ed43985ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b60ee63_39efc937",
         "filename": "third_party/WebKit/Source/core/workers/WorkerThreadTestHelper.h",
         "patchSetId": 6
@@ -263,6 +521,24 @@
     },
     {
       "key": {
+        "uuid": "17b6a38d_3d46a6ad",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThreadTestHelper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1216499
+      },
+      "writtenOn": "2017-09-29T04:20:09Z",
+      "side": 1,
+      "message": "Done here: https://chromium-review.googlesource.com/c/chromium/src/+/691301\n\nWill rebase before landing.",
+      "parentUuid": "0b60ee63_39efc937",
+      "revId": "9436b4067239b65dd3dc0965ad1d6b6ed43985ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "888bcd9f_1262e153",
         "filename": "third_party/WebKit/Source/modules/websockets/DocumentWebSocketChannel.h",
         "patchSetId": 6
@@ -274,6 +550,24 @@
       "writtenOn": "2017-09-28T09:09:15Z",
       "side": 1,
       "message": "Why do you need this change?",
+      "revId": "9436b4067239b65dd3dc0965ad1d6b6ed43985ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b142e0dd_78f4d9b1",
+        "filename": "third_party/WebKit/Source/modules/websockets/DocumentWebSocketChannel.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1216499
+      },
+      "writtenOn": "2017-09-29T04:20:09Z",
+      "side": 1,
+      "message": "Otherwise you would need to include Document.h in this header file so that compiler can verify that Document is a subclass of ExecutionContext.",
+      "parentUuid": "888bcd9f_1262e153",
       "revId": "9436b4067239b65dd3dc0965ad1d6b6ed43985ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
