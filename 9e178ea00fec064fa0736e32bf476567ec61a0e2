@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "564d7225_13d5a2ce",
+        "filename": "content/browser/android/tracing_controller_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-09-29T10:15:51Z",
+      "side": 1,
+      "message": "Could we fix this on the Java side instead? I think we ignore the return value of this function there, so it should be possible to write the code so that we don\u0027t need to lie to the caller at any point.",
+      "range": {
+        "startLine": 50,
+        "startChar": 17,
+        "endLine": 50,
+        "endChar": 25
+      },
+      "revId": "9e178ea00fec064fa0736e32bf476567ec61a0e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c3ae472_6a9e5a22",
+        "filename": "content/browser/android/tracing_controller_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-09-29T10:15:51Z",
+      "side": 1,
+      "message": "Not sure what deadlock this is referring to. Also, no need for an empty return.",
+      "range": {
+        "startLine": 80,
+        "startChar": 2,
+        "endLine": 80,
+        "endChar": 8
+      },
+      "revId": "9e178ea00fec064fa0736e32bf476567ec61a0e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
