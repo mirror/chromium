@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ad6cb3e_7d5b3249",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorker.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-29T01:39:31Z",
+      "side": 1,
+      "message": "does this TODO still make sense for DedicatedWorker?",
+      "revId": "300f063f6d3184b667a7f923adfe0c27b67a568f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce5e5c64_13af93f1",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-29T01:39:31Z",
+      "side": 1,
+      "message": "bug is about service worker. wrong bug link?\n\nI probably don\u0027t have context, but seems easy to add a class-level comment now that links to the dedicataed worker spec?",
+      "revId": "300f063f6d3184b667a7f923adfe0c27b67a568f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b38856a_4540009b",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-29T01:39:31Z",
+      "side": 1,
+      "message": "I don\u0027t see SuspendableObject as a base class of this class.",
+      "revId": "300f063f6d3184b667a7f923adfe0c27b67a568f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "224f242b_a4ae5564",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-29T01:39:31Z",
+      "side": 1,
+      "message": "I don\u0027t see ScriptWrappable as a base class of this class.",
+      "revId": "300f063f6d3184b667a7f923adfe0c27b67a568f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd803511_0885586e",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-29T01:39:31Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "300f063f6d3184b667a7f923adfe0c27b67a568f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
