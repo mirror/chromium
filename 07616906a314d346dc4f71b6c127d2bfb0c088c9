@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13a3f4b5_38eb8c40",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-29T16:59:27Z",
+      "side": 1,
+      "message": "0 is the default, so it is better to leave that off",
+      "range": {
+        "startLine": 78,
+        "startChar": 39,
+        "endLine": 78,
+        "endChar": 40
+      },
+      "revId": "07616906a314d346dc4f71b6c127d2bfb0c088c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fffa1910_07de5f4f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabCreatorManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-29T16:59:27Z",
+      "side": 1,
+      "message": "I think this should still be false.  All the methods return a tab value.  This is where they return null and defer (like if it needed to create another activity first).",
+      "range": {
+        "startLine": 39,
+        "startChar": 19,
+        "endLine": 39,
+        "endChar": 23
+      },
+      "revId": "07616906a314d346dc4f71b6c127d2bfb0c088c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
