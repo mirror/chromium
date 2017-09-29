@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c603e611_d1510619",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 3221,
+      "author": {
+        "id": 1235104
+      },
+      "writtenOn": "2017-09-29T20:03:01Z",
+      "side": 1,
+      "message": "UX recommends simplifying this label so it better matches patterns for toggle labels. New label would be: \"Use Chrome Home\"",
+      "range": {
+        "startLine": 3221,
+        "startChar": 8,
+        "endLine": 3221,
+        "endChar": 62
+      },
+      "revId": "1c64a84067a37a7c2dc0434fd211dced13ea51a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
