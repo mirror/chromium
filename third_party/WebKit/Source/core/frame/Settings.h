@@ -69,6 +69,9 @@ class CORE_EXPORT Settings {
   void SetTextAutosizingEnabled(bool);
   bool TextAutosizingEnabled() const { return text_autosizing_enabled_; }
 
+  void SetDataSaverEnabled(bool data_saver_enabled);
+  bool GetDataSaverEnabled() const { return data_saver_enabled_; }
+
   // Only set by Layout Tests, and only used if textAutosizingEnabled() returns
   // true.
   void SetTextAutosizingWindowSizeOverride(const IntSize&);
@@ -94,6 +97,7 @@ class CORE_EXPORT Settings {
   GenericFontFamilySettings generic_font_family_settings_;
   IntSize text_autosizing_window_size_override_;
   bool text_autosizing_enabled_ : 1;
+  bool data_saver_enabled_ : 1;
 
   SETTINGS_MEMBER_VARIABLES
 };
