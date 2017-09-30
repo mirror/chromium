@@ -188,10 +188,9 @@ def BuildBootfs(output_directory, runtime_deps, bin_name, child_args, dry_run,
     # TODO(scottmg): Passed through for https://crbug.com/755282.
     autorun_file.write('export CHROME_HEADLESS=1\n')
 
+  autorun_file.write('msleep 2000\n')
+
   if summary_output:
-    # Unfortunately, devmgr races with this autorun script. This delays long
-    # enough so that the block device is discovered before we try to mount it.
-    autorun_file.write('msleep 2000\n')
     autorun_file.write('mkdir /volume/results\n')
     autorun_file.write('mount /dev/class/block/000 /volume/results\n')
     child_args.append('--test-launcher-summary-output='

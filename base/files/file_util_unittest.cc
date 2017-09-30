@@ -2822,6 +2822,30 @@ TEST(ScopedFD, ScopedFDCrashesOnCloseFailure) {
 
 #endif  // defined(OS_POSIX)
 
+TEST(FileUtils, DirectoryExistsPerformance) {
+  TimeTicks s = TimeTicks::Now();
+
+  for (int i = 0; i < 1000; i++) {
+    DirectoryExists(FilePath("/tmp"));
+  }
+  auto delay = (TimeTicks::Now() - s) / 1000;
+
+  EXPECT_LT(delay, base::TimeDelta::FromMicroseconds(500));
+}
+
+TEST(FileUtils, CreateDirPerformance) {
+  TimeTicks s = TimeTicks::Now();
+
+  for (int i = 0; i < 1000; i++) {
+    ScopedTempDir temp_dir_;
+    ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
+  }
+  auto delay = (TimeTicks::Now() - s) / 1000;
+
+  EXPECT_LT(delay, base::TimeDelta::FromMicroseconds(500));
+}
+
+
 }  // namespace
 
 }  // namespace base
