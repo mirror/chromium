@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8eeb7ff9_5323e2c3",
+        "filename": "ash/display/touch_calibrator_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-30T00:53:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db51d4f7_07f53b23",
+      "revId": "f92a64c3a7ecfab4f4a610e8a728546a3ddced53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc985258_cda36a37",
         "filename": "ui/display/manager/chromeos/touch_transform_controller.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "f92a64c3a7ecfab4f4a610e8a728546a3ddced53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eef120e4_fbb80e76",
+        "filename": "ui/display/manager/chromeos/touch_transform_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-30T00:53:01Z",
+      "side": 1,
+      "message": "I was trying to avoid introducing TouchscreenDevice class to ManagedDisplayInfo, although it would indeed make things easier.",
+      "parentUuid": "cc985258_cda36a37",
+      "revId": "f92a64c3a7ecfab4f4a610e8a728546a3ddced53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5b99d43a_b9081021",
+        "filename": "ui/display/manager/chromeos/touch_transform_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-30T00:53:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e7dd07f_7e6398e5",
+      "revId": "f92a64c3a7ecfab4f4a610e8a728546a3ddced53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3e936d4_5c2cbe8a",
         "filename": "ui/display/manager/managed_display_info.h",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "f92a64c3a7ecfab4f4a610e8a728546a3ddced53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1978c2e4_57c0fd31",
+        "filename": "ui/display/manager/managed_display_info.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-30T00:53:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3e936d4_5c2cbe8a",
+      "revId": "f92a64c3a7ecfab4f4a610e8a728546a3ddced53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
