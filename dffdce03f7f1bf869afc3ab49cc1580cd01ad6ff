@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "850b363b_207dc496",
+        "filename": "chrome/browser/ssl/captive_portal_helper_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-09-30T17:59:07Z",
+      "side": 1,
+      "message": "After the latest revision, I don\u0027t see any way in which this method could return |true|. It\u0027s now basically \n\n  while (true) {\n    maybereturnfalse;\n  }\n   \n  return true;\n\n\nIs a test e.g. if (hr\u003d\u003dS_FALSE || items_returned\u003d\u003d0) { return found; } needed here?",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 19
+      },
+      "revId": "dffdce03f7f1bf869afc3ab49cc1580cd01ad6ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

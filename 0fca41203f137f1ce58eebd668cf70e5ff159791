@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "ef10d346_2ef15343",
+        "filename": "chrome/browser/ssl/captive_portal_helper_android.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-09-30T17:59:07Z",
+      "side": 1,
+      "message": "The current revision seems fine to me.",
+      "parentUuid": "af705950_ec3d457d",
+      "range": {
+        "startLine": 6,
+        "startChar": 10,
+        "endLine": 6,
+        "endChar": 16
+      },
+      "revId": "0fca41203f137f1ce58eebd668cf70e5ff159791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca6a141d_e77e2b73",
         "filename": "chrome/browser/ssl/captive_portal_helper_win.cc",
         "patchSetId": 8
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "\u003e Is there some reason not to accept with NLM_CONNECTIVITY_IPV6_LOCALNETWORK to match the ipv4 case?\n\nNope, corrected.\n\n\u003e Similarly, could there be a case where only NLM_CONNECTIVITY_*_SUBNET is set?\n\nHmm, it\u0027s not clear to me from the documentation when only NLM_CONNECTIVITY_*_SUBNET. Would that be a special case?",
       "parentUuid": "ca6a141d_e77e2b73",
+      "range": {
+        "startLine": 53,
+        "startChar": 6,
+        "endLine": 53,
+        "endChar": 36
+      },
+      "revId": "0fca41203f137f1ce58eebd668cf70e5ff159791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2575796d_499370c0",
+        "filename": "chrome/browser/ssl/captive_portal_helper_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-09-30T17:59:07Z",
+      "side": 1,
+      "message": "Yeah, I\u0027m not sure how captive portals really work in practice. \n\nIt seems conceivable that there might be a portal that only permits access to the subnet until authentication occurs and then grants upgrades to the network at large.",
+      "parentUuid": "f85d8f42_993bb103",
       "range": {
         "startLine": 53,
         "startChar": 6,
@@ -331,6 +379,30 @@
     },
     {
       "key": {
+        "uuid": "65c5e15a_231f5926",
+        "filename": "chrome/browser/ssl/captive_portal_helper_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-09-30T17:59:07Z",
+      "side": 1,
+      "message": "Yeah, the documentation seems wrong there and on the meaning of S_FALSE (which looks like a copy/paste from the Skip() method).",
+      "parentUuid": "560308f0_225e8685",
+      "range": {
+        "startLine": 90,
+        "startChar": 57,
+        "endLine": 90,
+        "endChar": 71
+      },
+      "revId": "0fca41203f137f1ce58eebd668cf70e5ff159791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf454a8a_ef0cba8b",
         "filename": "chrome/browser/ssl/captive_portal_helper_win.cc",
         "patchSetId": 8
@@ -375,6 +447,30 @@
       "revId": "0fca41203f137f1ce58eebd668cf70e5ff159791",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4961638c_7e3029db",
+        "filename": "chrome/browser/ssl/captive_portal_helper_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-09-30T17:59:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b300b8be_5ee5bf1b",
+      "range": {
+        "startLine": 91,
+        "startChar": 8,
+        "endLine": 91,
+        "endChar": 23
+      },
+      "revId": "0fca41203f137f1ce58eebd668cf70e5ff159791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -425,6 +521,30 @@
     },
     {
       "key": {
+        "uuid": "112aa8a7_b38c1677",
+        "filename": "chrome/browser/ssl/captive_portal_helper_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-09-30T17:59:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2937818b_0e565bb4",
+      "range": {
+        "startLine": 97,
+        "startChar": 8,
+        "endLine": 97,
+        "endChar": 16
+      },
+      "revId": "0fca41203f137f1ce58eebd668cf70e5ff159791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5316abd_81a1b868",
         "filename": "chrome/browser/ssl/ssl_error_handler.cc",
         "patchSetId": 8
@@ -469,6 +589,30 @@
       "revId": "0fca41203f137f1ce58eebd668cf70e5ff159791",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1e95989_4b7dfaec",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-09-30T17:59:07Z",
+      "side": 1,
+      "message": "TIL. C++ is weird.",
+      "parentUuid": "0064c774_4fdb78d5",
+      "range": {
+        "startLine": 641,
+        "startChar": 24,
+        "endLine": 641,
+        "endChar": 27
+      },
+      "revId": "0fca41203f137f1ce58eebd668cf70e5ff159791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
