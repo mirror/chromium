@@ -162,9 +162,12 @@ void HTMLFormControlElement::ParseAttribute(
       SetNeedsWillValidateCheck();
       PseudoStateChanged(CSSSelector::kPseudoReadOnly);
       PseudoStateChanged(CSSSelector::kPseudoReadWrite);
-      if (GetLayoutObject())
-        LayoutTheme::GetTheme().ControlStateChanged(*GetLayoutObject(),
-                                                    kReadOnlyControlState);
+      if (LayoutObject* o = GetLayoutObject()) {
+        if (LayoutTheme::GetTheme().ControlStateChanged(
+                o->GetNode(), o->StyleRef(), kReadOnlyControlState)) {
+          o->SetShouldDoFullPaintInvalidationIncludingNonCompositingDescendants();
+        }
+      }
     }
   } else if (name == requiredAttr) {
     if (params.old_value.IsNull() != params.new_value.IsNull())
@@ -186,9 +189,13 @@ void HTMLFormControlElement::DisabledAttributeChanged() {
   SetNeedsWillValidateCheck();
   PseudoStateChanged(CSSSelector::kPseudoDisabled);
   PseudoStateChanged(CSSSelector::kPseudoEnabled);
-  if (GetLayoutObject())
-    LayoutTheme::GetTheme().ControlStateChanged(*GetLayoutObject(),
-                                                kEnabledControlState);
+  if (LayoutObject* o = GetLayoutObject()) {
+    if (LayoutTheme::GetTheme().ControlStateChanged(o->GetNode(), o->StyleRef(),
+                                                    kEnabledControlState)) {
+      o->SetShouldDoFullPaintInvalidationIncludingNonCompositingDescendants();
+    }
+  }
+
   // TODO(dmazzoni): http://crbug.com/699438.
   // Replace |CheckedStateChanged| with a generic tree changed event.
   if (AXObjectCache* cache = GetDocument().ExistingAXObjectCache())
@@ -404,9 +411,13 @@ void HTMLFormControlElement::WillCallDefaultEventHandler(const Event& event) {
   // LayoutTheme::isFocused().  Inform LayoutTheme if
   // shouldHaveFocusAppearance() changes.
   if (old_should_have_focus_appearance != ShouldHaveFocusAppearance() &&
-      GetLayoutObject())
-    LayoutTheme::GetTheme().ControlStateChanged(*GetLayoutObject(),
-                                                kFocusControlState);
+      GetLayoutObject()) {
+    LayoutObject* o = GetLayoutObject();
+    if (LayoutTheme::GetTheme().ControlStateChanged(o->GetNode(), o->StyleRef(),
+                                                    kFocusControlState)) {
+      o->SetShouldDoFullPaintInvalidationIncludingNonCompositingDescendants();
+    }
+  }
 }
 
 int HTMLFormControlElement::tabIndex() const {
