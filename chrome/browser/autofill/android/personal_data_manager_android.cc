@@ -335,7 +335,7 @@ PersonalDataManagerAndroid::PersonalDataManagerAndroid(JNIEnv* env, jobject obj)
                   personal_data_manager_->GetURLRequestContextGetter())),
           ValidationRulesStorageFactory::CreateStorage()),
       subkey_requester_(
-          base::MakeUnique<autofill::ChromeMetadataSource>(
+          base::MakeUnique<ChromeMetadataSource>(
               I18N_ADDRESS_VALIDATION_DATA_URL,
               personal_data_manager_->GetURLRequestContextGetter()),
           ValidationRulesStorageFactory::CreateStorage()) {
