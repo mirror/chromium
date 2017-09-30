@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fb30831_9b93ce79",
+        "filename": "content/common/view_messages.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-09-30T04:17:06Z",
+      "side": 1,
+      "message": "Rollover?  can we at least make it unsigned if not uint64_t,just because?",
+      "range": {
+        "startLine": 312,
+        "startChar": 20,
+        "endLine": 312,
+        "endChar": 23
+      },
+      "revId": "c63af10ed30b4c8cbbd8097ce320f09a2b860657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
