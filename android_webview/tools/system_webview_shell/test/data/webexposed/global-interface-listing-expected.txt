@@ -5543,42 +5543,6 @@ interface webkitOfflineAudioContext : AudioContext
     method startRendering
     method suspend
     setter oncomplete
-interface webkitRTCPeerConnection : EventTarget
-    static method generateCertificate
-    getter iceConnectionState
-    getter iceGatheringState
-    getter localDescription
-    getter onaddstream
-    getter ondatachannel
-    getter onicecandidate
-    getter oniceconnectionstatechange
-    getter onnegotiationneeded
-    getter onremovestream
-    getter onsignalingstatechange
-    getter remoteDescription
-    getter signalingState
-    method addIceCandidate
-    method addStream
-    method close
-    method constructor
-    method createAnswer
-    method createDTMFSender
-    method createDataChannel
-    method createOffer
-    method getLocalStreams
-    method getRemoteStreams
-    method getStats
-    method removeStream
-    method setLocalDescription
-    method setRemoteDescription
-    method updateIce
-    setter onaddstream
-    setter ondatachannel
-    setter onicecandidate
-    setter oniceconnectionstatechange
-    setter onnegotiationneeded
-    setter onremovestream
-    setter onsignalingstatechange
 interface webkitURL
     static method createObjectURL
     static method revokeObjectURL

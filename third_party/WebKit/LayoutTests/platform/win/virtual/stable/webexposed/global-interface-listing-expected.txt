@@ -7744,46 +7744,6 @@ interface webkitMediaStream : EventTarget
     setter onaddtrack
     setter oninactive
     setter onremovetrack
-interface webkitRTCPeerConnection : EventTarget
-    static method generateCertificate
-    attribute @@toStringTag
-    getter iceConnectionState
-    getter iceGatheringState
-    getter localDescription
-    getter onaddstream
-    getter ondatachannel
-    getter onicecandidate
-    getter oniceconnectionstatechange
-    getter onicegatheringstatechange
-    getter onnegotiationneeded
-    getter onremovestream
-    getter onsignalingstatechange
-    getter remoteDescription
-    getter signalingState
-    method addIceCandidate
-    method addStream
-    method close
-    method constructor
-    method createAnswer
-    method createDTMFSender
-    method createDataChannel
-    method createOffer
-    method getLocalStreams
-    method getReceivers
-    method getRemoteStreams
-    method getStats
-    method removeStream
-    method setConfiguration
-    method setLocalDescription
-    method setRemoteDescription
-    setter onaddstream
-    setter ondatachannel
-    setter onicecandidate
-    setter oniceconnectionstatechange
-    setter onicegatheringstatechange
-    setter onnegotiationneeded
-    setter onremovestream
-    setter onsignalingstatechange
 interface webkitSpeechGrammar
     attribute @@toStringTag
     getter src
