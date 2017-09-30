@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10311d24_11c0155b",
+        "filename": "chrome/browser/resources/settings/device_page/night_light_slider.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-30T01:14:07Z",
+      "side": 0,
+      "message": "Sorry, I forgot that I added this here for a reason. The removal of this causes the slider knobs to be completely wrong the *first time* you load the display settings page. We need to add this back unless you know of a better solution.",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 7
+      },
+      "revId": "e3fb6f7e32a3386864627a23cb8a16e5dba48c29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
