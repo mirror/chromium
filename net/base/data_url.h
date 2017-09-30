@@ -7,7 +7,12 @@
 
 #include <string>
 
+#include "build/build_config.h"
 #include "net/base/net_export.h"
+
+#if defined(OS_ANDROID)
+#include "base/strings/string_piece.h"
+#endif  // defined(OS_ANDROID)
 
 class GURL;
 
@@ -60,6 +65,16 @@ class NET_EXPORT DataURL {
                     std::string* mime_type,
                     std::string* charset,
                     std::string* data);
+
+#if defined(OS_ANDROID)
+  // Android WebView exposes loadData() and loadDataWithBaseUrl(), which allow
+  // the embedder to pass in arbitrary amounts of data. This provides a helper
+  // on Android to bypass the URL max length limit...
+  static bool Parse(base::StringPiece data_url,
+                    std::string* mime_type,
+                    std::string* charset,
+                    std::string* data);
+#endif  // defined(OS_ANDROID)
 };
 
 }  // namespace net

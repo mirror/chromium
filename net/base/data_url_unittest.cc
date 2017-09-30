@@ -3,6 +3,8 @@
 // found in the LICENSE file.
 
 #include "net/base/data_url.h"
+
+#include "build/build_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 
@@ -244,6 +246,17 @@ TEST(DataURLTest, Parse) {
       EXPECT_EQ(tests[i].charset, charset);
       EXPECT_EQ(tests[i].data, data);
     }
+
+#if defined(OS_ANDROID)
+    // Test the StringPiece variant too on Android.
+    ok = DataURL::Parse(tests[i].url, &mime_type, &charset, &data);
+    EXPECT_EQ(ok, tests[i].is_valid);
+    if (tests[i].is_valid) {
+      EXPECT_EQ(tests[i].mime_type, mime_type);
+      EXPECT_EQ(tests[i].charset, charset);
+      EXPECT_EQ(tests[i].data, data);
+    }
+#endif
   }
 }
 
