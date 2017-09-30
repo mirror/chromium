@@ -27,6 +27,8 @@ Console.ConsoleSidebar = class extends UI.VBox {
     /** @type {!Set<!Console.ConsoleSidebar.GroupItem>} */
     this._pendingItemsToAdd = new Set();
     this._pendingClear = false;
+
+    this._enabled = Runtime.experiments.isEnabled('logManagement');
   }
 
   /**
@@ -56,7 +58,7 @@ Console.ConsoleSidebar = class extends UI.VBox {
    * @param {!ConsoleModel.ConsoleMessage} message
    */
   onMessageAdded(message) {
-    if (!Runtime.experiments.isEnabled('logManagement'))
+    if (!this._enabled)
       return;
     incrementCounters(this._allGroup, message.level);
     var context = message.context;
@@ -87,7 +89,7 @@ Console.ConsoleSidebar = class extends UI.VBox {
   }
 
   clear() {
-    if (!Runtime.experiments.isEnabled('logManagement'))
+    if (!this._enabled)
       return;
     this._contextToItem.clear();
     this._pendingItemsToAdd.clear();
@@ -95,7 +97,7 @@ Console.ConsoleSidebar = class extends UI.VBox {
   }
 
   refresh() {
-    if (!Runtime.experiments.isEnabled('logManagement'))
+    if (!this._enabled)
       return;
     if (this._pendingClear) {
       this._items.replaceAll([this._createAllGroup()]);
