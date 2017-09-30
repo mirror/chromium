@@ -127,6 +127,7 @@ class CONTENT_EXPORT FrameTree {
                 blink::WebTreeScopeType scope,
                 const std::string& frame_name,
                 const std::string& frame_unique_name,
+                const std::string& devtools_frame_guid,
                 blink::WebSandboxFlags sandbox_flags,
                 const ParsedFeaturePolicyHeader& container_policy,
                 const FrameOwnerProperties& frame_owner_properties);

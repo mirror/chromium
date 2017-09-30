@@ -1010,11 +1010,6 @@ void LocalFrameClientImpl::SetHasReceivedUserGesture(bool received_previously) {
     autofill_client->UserGestureObserved();
 }
 
-void LocalFrameClientImpl::SetDevToolsFrameId(const String& devtools_frame_id) {
-  if (web_frame_->Client())
-    web_frame_->Client()->SetDevToolsFrameId(devtools_frame_id);
-}
-
 void LocalFrameClientImpl::AbortClientNavigation() {
   if (web_frame_->Client())
     web_frame_->Client()->AbortClientNavigation();
@@ -1048,6 +1043,10 @@ void LocalFrameClientImpl::AnnotatedRegionsChanged() {
 
 void LocalFrameClientImpl::DidBlockFramebust(const KURL& url) {
   web_frame_->Client()->DidBlockFramebust(url);
+}
+
+String LocalFrameClientImpl::GetDevToolsFrameGUID() {
+  return web_frame_->Client()->GetDevToolsFrameGUID();
 }
 
 }  // namespace blink

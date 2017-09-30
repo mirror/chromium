@@ -4,6 +4,7 @@
 
 #include "content/public/test/mock_render_thread.h"
 
+#include "base/guid.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/single_thread_task_runner.h"
@@ -267,8 +268,10 @@ void MockRenderThread::OnCreateWidget(int opener_id,
 // The Frame expects to be returned a valid route_id different from its own.
 void MockRenderThread::OnCreateChildFrame(
     const FrameHostMsg_CreateChildFrame_Params& params,
-    int* new_render_frame_id) {
+    int* new_render_frame_id,
+    std::string* devtools_frame_guid) {
   *new_render_frame_id = new_frame_routing_id_++;
+  *devtools_frame_guid = base::GenerateGUID();
 }
 
 bool MockRenderThread::OnControlMessageReceived(const IPC::Message& msg) {
