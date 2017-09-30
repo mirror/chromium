@@ -94,6 +94,29 @@
     },
     {
       "key": {
+        "uuid": "a08c2b8e_e0e559fb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-30T00:24:23Z",
+      "side": 1,
+      "message": "We need some way to force on the survey even if the user doesn\u0027t pass the current doesUserQualifyForSurvey() check.  We could have another command line switch \u0027--force-enable-survey\" that we check for in this method.\n\ne.g. if (CommandLine.getInstance().hasSwitch(FORCE_ENABLE_SWITCH)) return true;\n\n\nI think we should also return true from this method if Chrome Home isn\u0027t enabled so that we can support survey\u0027s for folks not in the Chrome Home experiment.",
+      "range": {
+        "startLine": 69,
+        "startChar": 3,
+        "endLine": 69,
+        "endChar": 48
+      },
+      "revId": "5083263ffab0ada41f6bcf439bcac216a7644fe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2b2ef6c_71961328",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
         "patchSetId": 14
