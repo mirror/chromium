@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d675a73_e2a98268",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-30T00:32:52Z",
+      "side": 1,
+      "message": "BindRepeating?",
+      "revId": "0f3cd989f885bedc422b94935924a9bb5f9de81c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3de0f0c2_7a55d92c",
+        "filename": "media/blink/video_frame_compositor.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-30T00:32:52Z",
+      "side": 1,
+      "message": "Drop explicit now that there are two parameters.",
+      "revId": "0f3cd989f885bedc422b94935924a9bb5f9de81c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc4c5ddc_2df689f7",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameResourceProvider.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-30T00:32:52Z",
+      "side": 1,
+      "message": "BindOnce?",
+      "revId": "0f3cd989f885bedc422b94935924a9bb5f9de81c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
