@@ -115,8 +115,7 @@ bool LockScreenActionTray::IsStateVisible() const {
 
 void LockScreenActionTray::UpdateNewNoteIcon() {
   SetIsActive(new_note_state_ == mojom::TrayActionState::kLaunching ||
-              new_note_state_ == mojom::TrayActionState::kActive ||
-              new_note_state_ == mojom::TrayActionState::kBackground);
+              new_note_state_ == mojom::TrayActionState::kActive);
 
   if (!IsStateVisible()) {
     SetVisible(false);

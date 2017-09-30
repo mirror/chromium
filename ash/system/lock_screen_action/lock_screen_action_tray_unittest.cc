@@ -141,17 +141,6 @@ TEST_F(LockScreenActionTrayTest, ActionActiveState) {
   EXPECT_FALSE(GetTray()->visible());
 }
 
-TEST_F(LockScreenActionTrayTest, ActionBackgroundState) {
-  TrayAction* tray_action = Shell::Get()->tray_action();
-  TestTrayActionClient tray_action_client;
-  tray_action->SetClient(tray_action_client.CreateInterfacePtrAndBind(),
-                         mojom::TrayActionState::kNotAvailable);
-  GetSessionControllerClient()->SetSessionState(
-      session_manager::SessionState::LOCKED);
-  tray_action->UpdateLockScreenNoteState(mojom::TrayActionState::kBackground);
-  EXPECT_FALSE(GetTray()->visible());
-}
-
 TEST_F(LockScreenActionTrayTest, LaunchingState) {
   TrayAction* tray_action = Shell::Get()->tray_action();
   TestTrayActionClient tray_action_client;
@@ -219,9 +208,6 @@ TEST_F(LockScreenActionTrayWithoutMdLoginTest, NotVisible) {
   EXPECT_FALSE(GetTray()->visible());
 
   tray_action->UpdateLockScreenNoteState(mojom::TrayActionState::kActive);
-  EXPECT_FALSE(GetTray()->visible());
-
-  tray_action->UpdateLockScreenNoteState(mojom::TrayActionState::kBackground);
   EXPECT_FALSE(GetTray()->visible());
 }
 

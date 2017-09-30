@@ -190,10 +190,6 @@ TEST_F(LoginShelfViewTest, ShouldUpdateUiAfterLockScreenNoteState) {
   NotifyLockScreenNoteStateChanged(mojom::TrayActionState::kActive);
   EXPECT_TRUE(ShowsShelfButtons({LoginShelfView::kCloseNote}));
 
-  NotifyLockScreenNoteStateChanged(mojom::TrayActionState::kBackground);
-  EXPECT_TRUE(
-      ShowsShelfButtons({LoginShelfView::kShutdown, LoginShelfView::kSignOut}));
-
   NotifyLockScreenNoteStateChanged(mojom::TrayActionState::kNotAvailable);
   EXPECT_TRUE(
       ShowsShelfButtons({LoginShelfView::kShutdown, LoginShelfView::kSignOut}));
