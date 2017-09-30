@@ -22,6 +22,30 @@
       "revId": "c998692a2d9882fae601068eef798b0b03297306",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9089bdf_a85bb090",
+        "filename": "media/filters/source_buffer_stream_unittest.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-30T11:18:35Z",
+      "side": 0,
+      "message": "Correct. These comments were added when the SBR \"highest_frame_\" PTS logic was landed, but before the solution direction was clearer to me. SBRByPts reports highest_frame_ info now with GetBufferedEndTime(), and the ByPts version of these tests consume and verify that info.",
+      "parentUuid": "67b47926_2f3a2347",
+      "range": {
+        "startLine": 266,
+        "startChar": 0,
+        "endLine": 266,
+        "endChar": 79
+      },
+      "revId": "c998692a2d9882fae601068eef798b0b03297306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5e8db65a_c0b99dcb",
+        "filename": "media/filters/frame_processor.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 866,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-30T11:18:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fbeb061_352d720d",
+      "range": {
+        "startLine": 866,
+        "startChar": 0,
+        "endLine": 866,
+        "endChar": 77
+      },
+      "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3f51a89_d199d91c",
         "filename": "media/filters/frame_processor_unittest.cc",
         "patchSetId": 36
@@ -45,6 +69,30 @@
       "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "638ddf71_b3f7e44d",
+        "filename": "media/filters/frame_processor_unittest.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-30T11:18:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3f51a89_d199d91c",
+      "range": {
+        "startLine": 196,
+        "startChar": 7,
+        "endLine": 196,
+        "endChar": 37
+      },
+      "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d2b610cb_2a9ff61d",
+        "filename": "media/filters/frame_processor_unittest.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 978,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-30T11:18:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36fd5328_c6319541",
+      "range": {
+        "startLine": 978,
+        "startChar": 6,
+        "endLine": 978,
+        "endChar": 36
+      },
+      "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6181a0ad_3df490ac",
         "filename": "media/filters/source_buffer_range_by_pts.cc",
         "patchSetId": 36
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "f4d8e292_114ea209",
+        "filename": "media/filters/source_buffer_range_by_pts.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-30T11:18:35Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "6181a0ad_3df490ac",
+      "range": {
+        "startLine": 86,
+        "startChar": 29,
+        "endLine": 86,
+        "endChar": 50
+      },
+      "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0fb56624_8b8b7ee0",
         "filename": "media/filters/source_buffer_range_by_pts.cc",
         "patchSetId": 36
@@ -108,6 +204,24 @@
       "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1722a813_f4bc96cc",
+        "filename": "media/filters/source_buffer_range_by_pts.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-30T11:18:35Z",
+      "side": 1,
+      "message": "Interesting catch. This probably should be addressed in a separate CL if indeed it is regressing things. As it is, it\u0027s a bit more permissive around seeking to an unbuffered gap slightly before a range\u0027s start. Such unbuffered gaps are possibly more likely in muxed ByPts FrameProcessing due to trackB might need a resignalling on CFG start than what was told to trackA, so permitting seeks to fudge-room before trackA\u0027s CFG start time helps prevent regression.\n\nAlso, it dates back to (at least) faf4c029ac7bc (2012).\n\n(::Seek() *does* allow us to Seek to a time within fudge room before the beginning of a range; in such case, it returns the first frame in |buffers_| because GetFirstKeyframeAtOrBefore() on a non-empty range will return the first keyframe in the range if the searched-for-time is before the range\u0027s second GOP.)",
+      "parentUuid": "0fb56624_8b8b7ee0",
+      "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "5992766d_f62c10ed",
+        "filename": "media/filters/source_buffer_range_by_pts.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-30T11:18:35Z",
+      "side": 1,
+      "message": "Great catch! Interesting that none of the tests appear to trigger a problem with this.\nBefore fixing this, I did some surveying:\n* 73 cases in media_unittests execute the incorrect operation here.\n * 0 of those cases ever had (gop_iter-\u003esecond + keyframe_map_index_base_) \u003e\u003d static_cast\u003cint\u003e(buffers_.size()) here.\n * 0 of those cases ever had non-zero keyframe_map_index_base_ here.\n\nConclusion: Some test coverage indeed seems missing. DeleteGOPFromFront() (which is only called by GC) is the only updater of keyframe_map_index_base_.\n\nSo I added GCFromFrontThenExplicitRemoveFromMiddleToEnd to exercise this.\nWithout s/+/-/ the incorrect operation, above, the new test goes BOOM appropriately on a DEBUG build:\nFATAL:circular_deque.h(288)] Check failed: new_offset \u003e\u003d 0 \u0026\u0026 new_offset \u003c\u003d static_cast\u003cdifference_type\u003e(parent_deque_-\u003esize()).\n\nNote, this would have round-robin\u0027ed on a Release build, so indeed thank you for catching this err!",
+      "parentUuid": "abba9b0f_f84eb1df",
+      "range": {
+        "startLine": 517,
+        "startChar": 51,
+        "endLine": 517,
+        "endChar": 75
+      },
+      "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abb63263_b67fece6",
         "filename": "media/filters/source_buffer_range_by_pts.h",
         "patchSetId": 36
@@ -154,6 +292,30 @@
       "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92619272_4013914e",
+        "filename": "media/filters/source_buffer_range_by_pts.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-30T11:18:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abb63263_b67fece6",
+      "range": {
+        "startLine": 177,
+        "startChar": 68,
+        "endLine": 178,
+        "endChar": 16
+      },
+      "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "95a339dc_f48e4dda",
+        "filename": "media/filters/source_buffer_stream.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-30T11:18:35Z",
+      "side": 1,
+      "message": "I\u0027ve cleaned this up to use the ByPts GetTimestampInterval helper (now static, so ByDts logging can also use it).\nAn append of a video buffer with DTS 10ms, PTS 30ms and duration of 0 now looks like:\n\nAppend VIDEO: buffers dts\u003d[0.01;0.01(last frame dur\u003d0)], pts interval\u003d[0.03,0.030001)\n\nNote the 1 microsecond addition to the PTS interval is due to the logic in GetInterval when frame duration is 0 :)\nThis keeps the log format the same across ByDts and ByPts, while giving better PTS information (the actual PTS interval used internally in PrepareRangesForNextAppend in ByPts impl, not just the PTS of the first/last frames in the BufferQueue -- those aren\u0027t guaranteed to have the lowest/highest PTS respectively).",
+      "parentUuid": "83e2995c_5c72146a",
+      "range": {
+        "startLine": 154,
+        "startChar": 20,
+        "endLine": 154,
+        "endChar": 41
+      },
+      "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b244e74_18ec9ba0",
         "filename": "media/filters/source_buffer_stream.cc",
         "patchSetId": 36
@@ -200,6 +386,30 @@
       "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "954c7917_49a718d7",
+        "filename": "media/filters/source_buffer_stream.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-30T11:18:35Z",
+      "side": 1,
+      "message": "FrameProcessor does a LIMITED_MEDIA_LOG(DEBUG) for any GOP with a frame PTS before the GOP\u0027s keyframe PTS (which would log for at least the subset of those GOPs which are coded frame group starts, as well as any such GOP within a coded frame group). Point taken though - I\u0027ve added a ByPts DVLOG here.\nI\u0027ve also revived the ByDts version of the DCHECK.",
+      "parentUuid": "6b244e74_18ec9ba0",
+      "range": {
+        "startLine": 288,
+        "startChar": 12,
+        "endLine": 288,
+        "endChar": 41
+      },
+      "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -226,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "632aa592_c16ab734",
+        "filename": "media/filters/source_buffer_stream.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 1290,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-30T11:18:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3debe080_2900c694",
+      "range": {
+        "startLine": 1290,
+        "startChar": 4,
+        "endLine": 1290,
+        "endChar": 10
+      },
+      "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7480a3da_1c031465",
         "filename": "media/filters/source_buffer_stream.cc",
         "patchSetId": 36
@@ -246,6 +480,30 @@
       "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cad35bb4_179c9b64",
+        "filename": "media/filters/source_buffer_stream.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 1321,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-30T11:18:35Z",
+      "side": 1,
+      "message": "Great point. Using highest_timestamp_in_append_sequence_ here doesn\u0027t regress any existing tests.\nI\u0027ve added a new one for which last_appended_buffer_timestamp_ usage here would fail (SBSTest.OverlapSameTimestampWithinSameGOP).",
+      "parentUuid": "7480a3da_1c031465",
+      "range": {
+        "startLine": 1321,
+        "startChar": 6,
+        "endLine": 1321,
+        "endChar": 37
+      },
+      "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -272,6 +530,30 @@
     },
     {
       "key": {
+        "uuid": "2e9b6976_05a2bb32",
+        "filename": "media/filters/source_buffer_stream.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 2349,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-30T11:18:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a670df6_e1c270de",
+      "range": {
+        "startLine": 2349,
+        "startChar": 12,
+        "endLine": 2349,
+        "endChar": 16
+      },
+      "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df1ed5f8_77ddf4c8",
         "filename": "media/filters/source_buffer_stream.cc",
         "patchSetId": 36
@@ -292,6 +574,30 @@
       "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75875093_95d2d241",
+        "filename": "media/filters/source_buffer_stream.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 2362,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-30T11:18:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df1ed5f8_77ddf4c8",
+      "range": {
+        "startLine": 2362,
+        "startChar": 12,
+        "endLine": 2362,
+        "endChar": 16
+      },
+      "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -318,6 +624,30 @@
     },
     {
       "key": {
+        "uuid": "6e0d492d_aa44c645",
+        "filename": "media/filters/source_buffer_stream.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-30T11:18:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e49f9c45_2fe86642",
+      "range": {
+        "startLine": 195,
+        "startChar": 47,
+        "endLine": 195,
+        "endChar": 53
+      },
+      "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d5fff94_0c990dbd",
         "filename": "media/filters/source_buffer_stream.h",
         "patchSetId": 36
@@ -338,6 +668,30 @@
       "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3da27f6e_d89b4640",
+        "filename": "media/filters/source_buffer_stream.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-30T11:18:35Z",
+      "side": 1,
+      "message": "Renamed and refactored the method, and clarified comment for this single-use-method.",
+      "parentUuid": "6d5fff94_0c990dbd",
+      "range": {
+        "startLine": 233,
+        "startChar": 56,
+        "endLine": 233,
+        "endChar": 69
+      },
+      "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -364,6 +718,30 @@
     },
     {
       "key": {
+        "uuid": "42ab33c1_10a097a5",
+        "filename": "media/filters/source_buffer_stream_unittest.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-30T11:18:35Z",
+      "side": 1,
+      "message": "I\u0027ve now refactored common code into a temp, retaining the assert in an else clause.\n(The assert is to make sure that any provided coded_frame_group_start_timestamp (that isn\u0027t kNoTimestamp) is valid w.r.t. the beginning of buffers_to_append, so it\u0027s still needed.)",
+      "parentUuid": "5b1c0282_1ec4cf2b",
+      "range": {
+        "startLine": 763,
+        "startChar": 0,
+        "endLine": 763,
+        "endChar": 62
+      },
+      "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03cc46e1_3c97296a",
         "filename": "media/filters/source_buffer_stream_unittest.cc",
         "patchSetId": 36
@@ -384,6 +762,30 @@
       "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "940d7987_a4abbf0b",
+        "filename": "media/filters/source_buffer_stream_unittest.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 937,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-30T11:18:35Z",
+      "side": 1,
+      "message": "I\u0027ve now added verbose comments to the \"position based tests\" that this CL touches.\nI also went ahead and converted some of them to the new style.\nMain things to remember about the \"position based test API\" relative to ByDts vs ByPts is it simulates IPBBB BufferQueues aligned on a common frame duration. Every 5th position begins a new GOP. Within each GOP, PTS goes in sequence 04123, where DTS goes in sequence 01234. CheckExpectedRanges(...) is by the underlying timestamp format (since it\u0027s simply dividing the BufferRange start/end timestamps from the impl by the test\u0027s frame duration).\nNewCodedFrameGroupAppend params are (start position, number of frames to append), but CheckExpectedBuffers params are (expected first read result\u0027s position, read until and including this read result\u0027s position). Very confusing indeed -- hopefully my comments/conversions have unblocked your review.\nAlso, I\u0027ve filed https://crbug.com/770457 to do the remainder of the conversions away from position based test API in later CLs.",
+      "parentUuid": "03cc46e1_3c97296a",
+      "range": {
+        "startLine": 937,
+        "startChar": 2,
+        "endLine": 937,
+        "endChar": 26
+      },
+      "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
