@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "45521d87_3a39bc39",
+        "filename": "printing/metafile.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-30T19:25:27Z",
+      "side": 1,
+      "message": "I\u0027ll make another pass after this.",
+      "parentUuid": "e681baeb_c109b77c",
+      "range": {
+        "startLine": 77,
+        "startChar": 28,
+        "endLine": 77,
+        "endChar": 38
+      },
+      "revId": "c32e8ef036cb12e20477084afed7f56fc2c33a4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3459267b_e25a969f",
         "filename": "printing/native_drawing_context.h",
         "patchSetId": 3
@@ -64,6 +88,53 @@
         "startChar": 9,
         "endLine": 14,
         "endChar": 24
+      },
+      "revId": "c32e8ef036cb12e20477084afed7f56fc2c33a4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deeb44c6_bba8fd45",
+        "filename": "printing/native_drawing_context.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-30T19:25:27Z",
+      "side": 1,
+      "message": "Not sure. I guess not.",
+      "parentUuid": "3459267b_e25a969f",
+      "range": {
+        "startLine": 14,
+        "startChar": 9,
+        "endLine": 14,
+        "endChar": 24
+      },
+      "revId": "c32e8ef036cb12e20477084afed7f56fc2c33a4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8535d1e5_04a6c690",
+        "filename": "printing/native_drawing_context.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-30T19:25:27Z",
+      "side": 1,
+      "message": "One more place to change.",
+      "range": {
+        "startLine": 31,
+        "startChar": 16,
+        "endLine": 31,
+        "endChar": 20
       },
       "revId": "c32e8ef036cb12e20477084afed7f56fc2c33a4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
