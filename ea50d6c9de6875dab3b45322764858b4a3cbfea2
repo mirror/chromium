@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89c72b10_8270cf1b",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2093,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-30T01:26:01Z",
+      "side": 1,
+      "message": "lgtm unless these windows should be non-activatable? in that case we should just set that instead.\n\nhttps://cs.chromium.org/chromium/src/components/exo/shell_surface.cc?l\u003d1415",
+      "revId": "ea50d6c9de6875dab3b45322764858b4a3cbfea2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
