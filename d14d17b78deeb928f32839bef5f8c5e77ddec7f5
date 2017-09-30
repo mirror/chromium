@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd5f45ba_abffa402",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/scene_layer/TabListSceneLayer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-09-30T20:32:43Z",
+      "side": 1,
+      "message": "I am using the minimum here as described in the setAlpha() comment:\n\nhttps://codesearch.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/components/LayoutTab.java?q\u003dlayouttab%5C.java\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d556",
+      "range": {
+        "startLine": 77,
+        "startChar": 47,
+        "endLine": 77,
+        "endChar": 48
+      },
+      "revId": "d14d17b78deeb928f32839bef5f8c5e77ddec7f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
