@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "704eee6b_807d640c",
+        "filename": "chrome/browser/ui/ash/app_list/app_list_interactive_uitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-30T00:06:52Z",
+      "side": 1,
+      "message": "I think this would be clearer as two methods, WaitForOpen() and WaitForClose()",
+      "revId": "b4bc7a2bf9dee342ffa156f8adae1409f0c82ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
