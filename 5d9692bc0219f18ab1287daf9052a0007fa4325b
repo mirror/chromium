@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "171f60e4_ee53454e",
+        "filename": "third_party/WebKit/LayoutTests/fast/mediastream/MediaStreamTrack-applyConstraints.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-09-30T10:15:33Z",
+      "side": 1,
+      "message": "To the extent that different implementation actually do differ for good reasons, this seems fine. But I think we should expect that over time web developers come to depend on the implementation details and browsers are forced by compat bugs to converge. So, if there\u0027s anything that\u0027s left undefined in the spec that doesn\u0027t really need to be, it\u0027d be great to just define it and share the tests.\n\nNo action needed for this review.",
+      "parentUuid": "d59784ef_53ada28d",
+      "range": {
+        "startLine": 13,
+        "startChar": 19,
+        "endLine": 13,
+        "endChar": 31
+      },
+      "revId": "5d9692bc0219f18ab1287daf9052a0007fa4325b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e9d162e_4b2975c1",
         "filename": "third_party/WebKit/Source/modules/mediastream/OverconstrainedError.idl",
         "patchSetId": 4
