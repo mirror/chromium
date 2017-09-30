@@ -51,6 +51,7 @@
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/font.h"
 #include "ui/gfx/image/image_skia.h"
+#include "ui/gfx/image/image_skia_operations.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/gfx/text_constants.h"
 #include "ui/views/background.h"
@@ -491,6 +492,8 @@ void NetworkListView::UpdateNetworkIcons() {
         network, network_icon::ICON_TYPE_MENU_LIST);
     info->image =
         network_icon::GetImageForNetwork(network, network_icon::ICON_TYPE_LIST);
+    LOG(ERROR) << network->type() << " " << info->image.size().width() << " "
+               << info->image.size().height();
     info->disable =
         (network->activation_state() == shill::kActivationStateActivating) ||
         prohibited_by_policy;
@@ -694,7 +697,19 @@ bool NetworkListView::ShouldMobileDataSectionBeShown() {
 void NetworkListView::UpdateViewForNetwork(HoverHighlightView* view,
                                            const NetworkInfo& info) {
   view->Reset();
-  view->AddIconAndLabel(info.image, info.label);
+  gfx::ImageSkia network_image;
+  if (info.type == NetworkInfo::Type::MOBILE &&
+      (!info.connected && !info.connecting)) {
+    // Mobile icons which are not connecting or connected should display a small
+    // "X" icon superimposed so that it is clear that they are disconnected.
+    network_image = gfx::ImageSkiaOperations::CreateSuperimposedImage(
+        info.image, gfx::CreateVectorIcon(kNetworkMobileNotConnectedXIcon,
+                                          info.image.height(),
+                                          kMobileNotConnectedXIconColor));
+  } else {
+    network_image = info.image;
+  }
+  view->AddIconAndLabel(network_image, info.label);
   if (info.connected)
     SetupConnectedScrollListItem(view);
   else if (info.connecting)
