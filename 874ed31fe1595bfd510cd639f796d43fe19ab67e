@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0822bc74_ae8f8dac",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3234,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-30T00:24:47Z",
+      "side": 1,
+      "message": "FWIW, I think this will look really strange in the two-line suggestions used on mobile.\n\nNo change requested, just so you know and at this point only actively suggest people try it on desktop.",
+      "range": {
+        "startLine": 3234,
+        "startChar": 62,
+        "endLine": 3234,
+        "endChar": 72
+      },
+      "revId": "874ed31fe1595bfd510cd639f796d43fe19ab67e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
