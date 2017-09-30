@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fea12dde_5a9ad7e1",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRCoordinateSystem.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-30T04:06:29Z",
+      "side": 1,
+      "message": "nit: Leave this out for blink style? I don\u0027t really know in this case.",
+      "range": {
+        "startLine": 26,
+        "startChar": 54,
+        "endLine": 26,
+        "endChar": 59
+      },
+      "revId": "84db329a0f970fc0a44b24c7d5d0c5e2ec1bfccf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d17f8cba_d7d340fd",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRFrameOfReference.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-30T04:06:29Z",
+      "side": 1,
+      "message": "For my own knowledge, when should Member be used, and when should unique_ptr be used? Oilpan is confusing...",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 17
+      },
+      "revId": "84db329a0f970fc0a44b24c7d5d0c5e2ec1bfccf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14c655a6_eb7072b6",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRSession.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-30T04:06:29Z",
+      "side": 1,
+      "message": "Promise\u003cVRFrameOfReference\u003e?",
+      "range": {
+        "startLine": 20,
+        "startChar": 25,
+        "endLine": 20,
+        "endChar": 33
+      },
+      "revId": "84db329a0f970fc0a44b24c7d5d0c5e2ec1bfccf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "075c05bf_04f0e506",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRSession.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-30T04:06:29Z",
+      "side": 1,
+      "message": "Promise\u003cvoid\u003e?",
+      "range": {
+        "startLine": 22,
+        "startChar": 25,
+        "endLine": 22,
+        "endChar": 32
+      },
+      "revId": "84db329a0f970fc0a44b24c7d5d0c5e2ec1bfccf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13c1a62f_23968ff1",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRStageBounds.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-30T04:06:29Z",
+      "side": 1,
+      "message": "nit: \u003d default; and remove the def from the cc file.",
+      "range": {
+        "startLine": 20,
+        "startChar": 17,
+        "endLine": 20,
+        "endChar": 18
+      },
+      "revId": "84db329a0f970fc0a44b24c7d5d0c5e2ec1bfccf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
