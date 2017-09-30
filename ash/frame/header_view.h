@@ -22,6 +22,7 @@ class ImageSkia;
 
 namespace views {
 class ImageView;
+class ImageButton;
 class Widget;
 }
 
@@ -29,6 +30,7 @@ namespace ash {
 
 class DefaultHeaderPainter;
 class FrameCaptionButtonContainerView;
+class FrameCaptionButton;
 
 // View which paints the frame header (title, caption buttons...). It slides off
 // and on screen in immersive fullscreen.
@@ -66,6 +68,8 @@ class ASH_EXPORT HeaderView : public views::View,
 
   // Sets the avatar icon to be displayed on the frame header.
   void SetAvatarIcon(const gfx::ImageSkia& avatar);
+
+  void SetBackbuttonStatus(bool show, bool enabled);
 
   void SizeConstraintsChanged();
 
@@ -107,6 +111,8 @@ class ASH_EXPORT HeaderView : public views::View,
   std::unique_ptr<DefaultHeaderPainter> header_painter_;
 
   views::ImageView* avatar_icon_;
+
+  FrameCaptionButton* back_button_ = nullptr;
 
   // View which contains the window caption buttons.
   FrameCaptionButtonContainerView* caption_button_container_;
