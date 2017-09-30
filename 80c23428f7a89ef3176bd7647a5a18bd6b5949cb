@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "0c987012_6e472044",
+        "filename": "ui/gl/gl_surface.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-09-30T17:19:36Z",
+      "side": 1,
+      "message": "I\u0027m no expert this area but having this class optionally take ownership of the LatencyInfos sounds confusing and error-prone, especially since taking ownership of a std::vector leaves the source vector in an \"undefined but consistent state\" -- which you\u0027ve had to account for in one of your patches. It would be problematic if all callers, and subclasses of GLSurface, had to take that into consideration.\n\nAdding member variables to GLSurface sounds like a good idea to me, even if they aren\u0027t touched by most implementations. I don\u0027t understand all of the implications of this patch, but if GLSurface can just have mutable pointers to the LatencyInfo vector, and leave ownership up to the outside world, that might simplify things.",
+      "parentUuid": "f0b3c77f_9377e66c",
+      "revId": "80c23428f7a89ef3176bd7647a5a18bd6b5949cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42e8af0c_b452be27",
         "filename": "ui/gl/gl_surface_egl.cc",
         "patchSetId": 11
