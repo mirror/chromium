@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ceace681_f03261fd",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/networkConfigView.css",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-09-30T00:38:03Z",
+      "side": 1,
+      "message": "Note that most of these are in the ListView which is a shadow dom, so .network-config does not propagate down into it.",
+      "revId": "55da2dc93dc5d3978117cdc4254fc908c15edd34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
