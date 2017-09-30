@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "251ba16e_8d8111da",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/SelectionClientBridge.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-09-30T01:26:23Z",
+      "side": 1,
+      "message": "They are in the Contextual Search Manager, here: \nhttps://chromium-review.googlesource.com/c/chromium/src/+/679278/8/chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java#1228 \nand here:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/679278/8/chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java#1637\n\nThe bridge should just let all clients know about everything the user does, and leave it up to the individual clients to behave appropriately when working alone vs when working cooperatively.  The decision for what to do about long-press is in the manager and the bridge just broadcasts everything to all.\n\nIf you think it\u0027s important to move the logic here, let me know and I\u0027ll try to make that work.",
+      "parentUuid": "f5631559_aad5788a",
+      "revId": "2bc389566325786b79e348e7e1851cc9bfe25a9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "43e7a7bd_54767a9b",
         "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
         "patchSetId": 8
@@ -39,6 +57,30 @@
       "revId": "2bc389566325786b79e348e7e1851cc9bfe25a9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f108b627_6c6b7fcb",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2140,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-09-30T01:26:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43e7a7bd_54767a9b",
+      "range": {
+        "startLine": 2140,
+        "startChar": 11,
+        "endLine": 2140,
+        "endChar": 26
+      },
+      "revId": "2bc389566325786b79e348e7e1851cc9bfe25a9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
