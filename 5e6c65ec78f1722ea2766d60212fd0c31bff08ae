@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2335cba7_412475ac",
+        "filename": "third_party/WebKit/Source/core/dom/ContainerNode.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1192,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-09-30T03:19:53Z",
+      "side": 1,
+      "message": "nit: Can move this block into a static helper method like InvalidatePaintByControlState() or some similar name that takes the layout object and control state, and turn this and the two other similar bits below into one (or maybe two) lines each that call it.",
+      "range": {
+        "startLine": 1187,
+        "startChar": 2,
+        "endLine": 1192,
+        "endChar": 3
+      },
+      "revId": "5e6c65ec78f1722ea2766d60212fd0c31bff08ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "270d0444_9d62d826",
+        "filename": "third_party/WebKit/Source/core/html/HTMLFormControlElement.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-09-30T03:19:53Z",
+      "side": 1,
+      "message": "nit: (follow-up to my previous comment, and same for subsequent files with similar logic) well, we could use the same helper here and below as well, and in input/option classes, and potentially include the GetLayoutObject nullptr early-out to save another few lines at callsites.\n\nIs there a good place to put it as a static util type method for them all to use?",
+      "range": {
+        "startLine": 166,
+        "startChar": 8,
+        "endLine": 169,
+        "endChar": 9
+      },
+      "revId": "5e6c65ec78f1722ea2766d60212fd0c31bff08ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abc754e1_9c1248dd",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTheme.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-09-30T03:19:53Z",
+      "side": 1,
+      "message": "nit: move down for alpha-sort with the rest",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 11
+      },
+      "revId": "5e6c65ec78f1722ea2766d60212fd0c31bff08ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "583bde08_91e93cc3",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutThemeMac.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-09-30T03:19:53Z",
+      "side": 1,
+      "message": "IsActive already null-checks node, so I think can remove this",
+      "range": {
+        "startLine": 585,
+        "startChar": 17,
+        "endLine": 585,
+        "endChar": 25
+      },
+      "revId": "5e6c65ec78f1722ea2766d60212fd0c31bff08ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d90cf17c_ca75e468",
+        "filename": "third_party/WebKit/Source/core/paint/ThemePainter.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-09-30T03:19:53Z",
+      "side": 1,
+      "message": "It seems strange that some of these (also Paint above) still take LayoutObject and some don\u0027t. Can we switch these as well? Or, add a comment to class header explaining?\n\nMaybe you\u0027re just planning to do those in separate change?",
+      "range": {
+        "startLine": 113,
+        "startChar": 33,
+        "endLine": 113,
+        "endChar": 52
+      },
+      "revId": "5e6c65ec78f1722ea2766d60212fd0c31bff08ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "effb5ebb_d8567963",
+        "filename": "third_party/WebKit/Source/core/paint/ThemePainterDefault.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-09-30T03:19:53Z",
+      "side": 1,
+      "message": "Can we actually end up with a null node in this method? If we do, do we need to paint anything at all?\n\nWondering whether here (and previous ThemePainter.cpp) we could be null-checking node at callsites earlier and then we could use const\u0026 Node param here and in most/all of the other methods revised in this change, and avoid many of the other null-checks.",
+      "range": {
+        "startLine": 228,
+        "startChar": 46,
+        "endLine": 228,
+        "endChar": 68
+      },
+      "revId": "5e6c65ec78f1722ea2766d60212fd0c31bff08ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
