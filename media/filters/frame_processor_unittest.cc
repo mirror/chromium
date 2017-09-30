@@ -965,17 +965,19 @@ TEST_P(FrameProcessorTest,
   if (use_sequence_mode_) {
     EXPECT_EQ(base::TimeDelta::FromMilliseconds(7), timestamp_offset_);
 
-    // TODO(wolenetz): Adjust the following expectation to use PTS instead of
-    // DTS once https://crbug.com/398130 is fixed.
-    CheckExpectedRangesByTimestamp(audio_.get(), "{ [17,37) }");
+    if (range_api_ == ChunkDemuxerStream::RangeApi::kLegacyByDts)
+      CheckExpectedRangesByTimestamp(audio_.get(), "{ [17,37) }");
+    else
+      CheckExpectedRangesByTimestamp(audio_.get(), "{ [0,20) }");
 
     CheckReadsThenReadStalls(audio_.get(), "0:-7 10:3");
   } else {
     EXPECT_EQ(base::TimeDelta(), timestamp_offset_);
 
-    // TODO(wolenetz): Adjust the following expectation to use PTS instead of
-    // DTS once https://crbug.com/398130 is fixed.
-    CheckExpectedRangesByTimestamp(audio_.get(), "{ [17,30) }");
+    if (range_api_ == ChunkDemuxerStream::RangeApi::kLegacyByDts)
+      CheckExpectedRangesByTimestamp(audio_.get(), "{ [17,30) }");
+    else
+      CheckExpectedRangesByTimestamp(audio_.get(), "{ [0,13) }");
 
     CheckReadsThenReadStalls(audio_.get(), "0:-7 3");
   }
@@ -1109,15 +1111,18 @@ TEST_P(FrameProcessorTest,
   EXPECT_CALL(callbacks_, PossibleDurationIncrease(frame_duration_ * 7));
   ProcessFrames("", "40|70");  // PTS=40, DTS=70
 
-  // Verify DTS-based range is increased.
-  // TODO(wolenetz): Update this expectation to be { [50,70] } when switching to
-  // managing and reporting buffered ranges by PTS intervals instead of DTS
-  // intervals. This reflects the expectation that PTS start is not "pulled
-  // backward" for the new frame at PTS=40 because current spec text doesn't
-  // support SAP Type 2; it has no steps in the coded frame processing algorithm
-  // that would do that "pulling backward". See https://crbug.com/718641 and
-  // https://github.com/w3c/media-source/issues/187.
-  CheckExpectedRangesByTimestamp(video_.get(), "{ [50,80) }");
+  if (range_api_ == ChunkDemuxerStream::RangeApi::kLegacyByDts) {
+    // Verify DTS-based range is increased.
+    CheckExpectedRangesByTimestamp(video_.get(), "{ [50,80) }");
+  } else {
+    // This reflects the expectation that PTS start is not "pulled backward" for
+    // the new frame at PTS=40 because current spec text doesn't support SAP
+    // Type 2; it has no steps in the coded frame processing algorithm that
+    // would do that "pulling backward". See https://crbug.com/718641 and
+    // https://github.com/w3c/media-source/issues/187.
+    CheckExpectedRangesByTimestamp(video_.get(), "{ [50,70) }");
+  }
+
   SeekStream(video_.get(), base::TimeDelta());
   CheckReadsThenReadStalls(video_.get(), "50 60 40");
 }
