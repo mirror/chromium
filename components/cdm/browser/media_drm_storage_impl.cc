@@ -363,33 +363,29 @@ std::vector<base::UnguessableToken> MediaDrmStorageImpl::ClearMatchingLicenses(
   return ClearMatchingLicenseData(update.Get(), start, end, filter);
 }
 
+// MediaDrmStorageImpl
+
 MediaDrmStorageImpl::MediaDrmStorageImpl(
     content::RenderFrameHost* render_frame_host,
     PrefService* pref_service,
-    const url::Origin& origin,
     media::mojom::MediaDrmStorageRequest request)
-    : render_frame_host_(render_frame_host),
+    : FrameServiceBase(render_frame_host, std::move(request)),
       pref_service_(pref_service),
-      origin_string_(origin.Serialize()),
-      binding_(this, std::move(request)) {
-  DVLOG(1) << __func__ << ": origin = " << origin;
-  DCHECK(thread_checker_.CalledOnValidThread());
+      origin_string_(origin().Serialize()) {
+  DVLOG(1) << __func__ << ": origin = " << origin_string_;
+  DCHECK(CalledOnValidThread());
   DCHECK(pref_service_);
   DCHECK(!origin_string_.empty());
-
-  // |this| owns |binding_|, so unretained is safe.
-  binding_.set_connection_error_handler(
-      base::Bind(&MediaDrmStorageImpl::Close, base::Unretained(this)));
 }
 
 MediaDrmStorageImpl::~MediaDrmStorageImpl() {
   DVLOG(1) << __func__;
-  DCHECK(thread_checker_.CalledOnValidThread());
+  DCHECK(CalledOnValidThread());
 }
 
 void MediaDrmStorageImpl::Initialize(InitializeCallback callback) {
   DVLOG(1) << __func__ << ": origin = " << origin_string_;
-  DCHECK(thread_checker_.CalledOnValidThread());
+  DCHECK(CalledOnValidThread());
   DCHECK(!origin_id_);
 
   const base::DictionaryValue* storage_dict =
@@ -423,7 +419,7 @@ void MediaDrmStorageImpl::Initialize(InitializeCallback callback) {
 
 void MediaDrmStorageImpl::OnProvisioned(OnProvisionedCallback callback) {
   DVLOG(1) << __func__;
-  DCHECK(thread_checker_.CalledOnValidThread());
+  DCHECK(CalledOnValidThread());
 
   if (!IsInitialized()) {
     DVLOG(1) << __func__ << ": Not initialized.";
@@ -450,7 +446,7 @@ void MediaDrmStorageImpl::SavePersistentSession(
     media::mojom::SessionDataPtr session_data,
     SavePersistentSessionCallback callback) {
   DVLOG(2) << __func__;
-  DCHECK(thread_checker_.CalledOnValidThread());
+  DCHECK(CalledOnValidThread());
 
   if (!IsInitialized()) {
     DVLOG(1) << __func__ << ": Not initialized.";
@@ -491,7 +487,7 @@ void MediaDrmStorageImpl::LoadPersistentSession(
     const std::string& session_id,
     LoadPersistentSessionCallback callback) {
   DVLOG(2) << __func__;
-  DCHECK(thread_checker_.CalledOnValidThread());
+  DCHECK(CalledOnValidThread());
 
   if (!IsInitialized()) {
     DVLOG(1) << __func__ << ": Not initialized.";
@@ -531,7 +527,7 @@ void MediaDrmStorageImpl::RemovePersistentSession(
     const std::string& session_id,
     RemovePersistentSessionCallback callback) {
   DVLOG(2) << __func__;
-  DCHECK(thread_checker_.CalledOnValidThread());
+  DCHECK(CalledOnValidThread());
 
   if (!IsInitialized()) {
     DVLOG(1) << __func__ << ": Not initialized.";
@@ -552,33 +548,6 @@ void MediaDrmStorageImpl::RemovePersistentSession(
 
   sessions_dict->RemoveWithoutPathExpansion(session_id, nullptr);
   std::move(callback).Run(true);
-}
-
-void MediaDrmStorageImpl::RenderFrameDeleted(
-    content::RenderFrameHost* render_frame_host) {
-  DCHECK(thread_checker_.CalledOnValidThread());
-
-  if (render_frame_host == render_frame_host_) {
-    DVLOG(1) << __func__ << ": RenderFrame destroyed.";
-    Close();
-  }
-}
-
-void MediaDrmStorageImpl::DidFinishNavigation(
-    content::NavigationHandle* navigation_handle) {
-  DCHECK(thread_checker_.CalledOnValidThread());
-
-  if (navigation_handle->GetRenderFrameHost() == render_frame_host_) {
-    DVLOG(1) << __func__ << ": Close connection on navigation.";
-    Close();
-  }
-}
-
-void MediaDrmStorageImpl::Close() {
-  DVLOG(1) << __func__;
-  DCHECK(thread_checker_.CalledOnValidThread());
-
-  delete this;
 }
 
 }  // namespace cdm
