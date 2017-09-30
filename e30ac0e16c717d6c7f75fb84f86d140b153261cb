@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9203dbc_a3fd8ca8",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-30T01:41:03Z",
+      "side": 1,
+      "message": "Does this need to be static?",
+      "revId": "e30ac0e16c717d6c7f75fb84f86d140b153261cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c379933_132da0e9",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-30T01:41:03Z",
+      "side": 1,
+      "message": "Nit: You could use non-static member initialization in the .h which might save a little bit of typing.  I don\u0027t feel strongly though.\n\nhttp://en.cppreference.com/w/cpp/language/data_members",
+      "revId": "e30ac0e16c717d6c7f75fb84f86d140b153261cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4604ff21_30e64555",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-30T01:41:03Z",
+      "side": 1,
+      "message": "Similar comment as above - can this be a Validate() method?",
+      "revId": "e30ac0e16c717d6c7f75fb84f86d140b153261cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5ad6c66_cc26711a",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-30T01:41:03Z",
+      "side": 1,
+      "message": "FYI - based on discussion today with Cast, I opened crbug.com/770357 to add a random backoff before the first connection attempt was started, to prevent multiple Chrome browsers from flooding a device when it comes online.  Not necessary to address in this patch and happy to discuss further next week.",
+      "revId": "e30ac0e16c717d6c7f75fb84f86d140b153261cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
