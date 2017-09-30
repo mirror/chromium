@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "622cc8c7_ef66f7c9",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-30T05:43:30Z",
+      "side": 1,
+      "message": "Nit: this comment should also explain why it\u0027s necessary to use routing sometimes and why it\u0027s OK to send directly other times.",
+      "revId": "5c8cdd2326703a42ddc78076789d1ca9f17edabc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
