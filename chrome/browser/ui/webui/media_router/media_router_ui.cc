@@ -514,6 +514,7 @@ bool MediaRouterUI::CreateRoute(const MediaSink::Id& sink_id,
   }
 
   GetIssueManager()->ClearNonBlockingIssues();
+  LOG(ERROR) << "MRUI::CreateRoute() to MR::CreateRoute()";
   router_->CreateRoute(source_id, sink_id, origin, tab_contents,
                        std::move(route_response_callbacks), timeout, incognito);
   return true;

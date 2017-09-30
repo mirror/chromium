@@ -102,6 +102,12 @@ const MediaRoute* OffscreenPresentationManager::GetRoute(
              : nullptr;
 }
 
+bool OffscreenPresentationManager::HasControllerWindow(
+    int64_t display_id) const {
+  // TODO: implement
+  return false;
+}
+
 // OffscreenPresentation implementation.
 OffscreenPresentationManager::OffscreenPresentation::OffscreenPresentation(
     const content::PresentationInfo& presentation_info)

@@ -449,26 +449,33 @@ interface MediaRouter {
   // Registers a MediaRouteProvider with the MediaRouter.
   // Returns a string that uniquely identifies the Media Router browser
   // process.
-  RegisterMediaRouteProvider(MediaRouteProvider media_router_provider) =>
+  RegisterMediaRouteProvider(string provider_name,
+                             MediaRouteProvider media_router_provider) =>
       (string instance_id, MediaRouteProviderConfig config);
 
-  // Called when the Media Route Manager receives a new list of |sinks|
+  // Called when a MediaRouteProvider receives a new list of |sinks|
   // compatible with |media_source|. The result is only valid for |origins|. If
   // |origins| is empty, the result is valid for any origin.
-  OnSinksReceived(string media_source, array<MediaSink> sinks,
-      array<url.mojom.Origin> origins);
+  OnSinksReceived(string provider_name,
+                  string media_source,
+                  array<MediaSink> sinks,
+                  array<url.mojom.Origin> origins);
 
   // Called when issues are reported for media routes.
   OnIssue(Issue issue);
 
-  // Called when list of routes has been updated in the context of the
-  // calling |media_source|.  The array |joinable_route_ids| should
-  // contain route IDs of joinable routes found in the |routes| array.
-  OnRoutesUpdated(array<MediaRoute> routes, string media_source,
-      array<string> joinable_route_ids);
+  // Called when list of routes for a MediaRouteProvider has been updated in the
+  // context of the calling |media_source|.  The array |joinable_route_ids|
+  // should contain route IDs of joinable routes found in the |routes| array.
+  OnRoutesUpdated(string provider_name,
+                  array<MediaRoute> routes,
+                  string media_source,
+                  array<string> joinable_route_ids);
 
-  // Called when the overall availability of media sinks has been updated.
-  OnSinkAvailabilityUpdated(SinkAvailability availability);
+  // Called when the availability of media sinks for a MediaRouteProvider has
+  // been updated.
+  OnSinkAvailabilityUpdated(string provider_name,
+                            SinkAvailability availability);
 
   // Called when the state of presentation connected to route |route_id| has
   // changed to |state|.

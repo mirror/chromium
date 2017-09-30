@@ -32,6 +32,7 @@ namespace {
 
 const char kSource[] = "source1";
 const char kOrigin[] = "http://origin/";
+const char kTestProviderName[] = "test_provider";
 
 class NullMessageObserver : public RouteMessageObserver {
  public:
@@ -108,7 +109,7 @@ TEST_F(MediaRouterDesktopTest, SyncStateToMediaRouteProvider) {
   std::unique_ptr<NullMessageObserver> messages_observer;
 
   router()->OnSinkAvailabilityUpdated(
-      mojom::MediaRouter::SinkAvailability::PER_SOURCE);
+      kTestProviderName, mojom::MediaRouter::SinkAvailability::PER_SOURCE);
   EXPECT_CALL(mock_media_route_provider_,
               StartObservingMediaSinks(media_source.id()));
   sinks_observer = base::MakeUnique<MockMediaSinksObserver>(

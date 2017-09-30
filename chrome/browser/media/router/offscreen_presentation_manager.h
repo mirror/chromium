@@ -146,6 +146,8 @@ class OffscreenPresentationManager : public KeyedService {
   // presentation.
   virtual const MediaRoute* GetRoute(const std::string& presentation_id);
 
+  virtual bool HasControllerWindow(int64_t display_id) const;
+
  private:
   // Represents an offscreen presentation registered with
   // OffscreenPresentationManager. Contains callback to the receiver to inform

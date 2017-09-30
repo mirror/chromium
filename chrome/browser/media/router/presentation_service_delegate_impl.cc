@@ -235,6 +235,8 @@ void PresentationFrame::ConnectToPresentation(
     auto* offscreen_presentation_manager =
         OffscreenPresentationManagerFactory::GetOrCreateForWebContents(
             web_contents_);
+    LOG(ERROR) << "register offscreen presentation controller for "
+               << presentation_info.presentation_url;
     offscreen_presentation_manager->RegisterOffscreenPresentationController(
         presentation_info, render_frame_host_id_,
         std::move(controller_connection_ptr),
