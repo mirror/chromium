@@ -107,6 +107,9 @@ declare_args() {
   # necessary, overriding any other symbol level arguments that may be set.
   # Setting this to true prevents this.
   sanitizer_keep_symbols = false
+
+  # Enable Clang's Source-based Code Coverage.
+  use_clang_coverage = false
 }
 
 # Disable sanitizers for non-default toolchains.
@@ -139,8 +142,8 @@ if (current_toolchain != default_toolchain) {
 # declare_args block.
 declare_args() {
   # Enable -fsanitize-coverage.
-  use_sanitizer_coverage =
-      use_libfuzzer || use_afl || sanitizer_coverage_flags != ""
+  use_sanitizer_coverage = !use_clang_coverage &&
+      (use_libfuzzer || use_afl || sanitizer_coverage_flags != "")
 
   # Detect overflow/underflow for global objects.
   #
