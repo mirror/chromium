@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f2e6934f_0eb28210",
+        "filename": "chrome/android/java/res/layout/offline_download_header.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-09-30T04:15:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f040c1a5_49f3d3db",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 4
+      },
+      "revId": "1af79c27bedf0d01b44df87cc8bbe68aaed18f6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5691dbba_e2d7e464",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/OfflineGroupHeaderView.java",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2017-09-29T18:07:34Z",
       "side": 1,
       "message": "Can this share some logic with SelectableItemView?",
+      "revId": "1af79c27bedf0d01b44df87cc8bbe68aaed18f6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d8641a8_69a96224",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/OfflineGroupHeaderView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-09-30T04:15:30Z",
+      "side": 1,
+      "message": "We could, but for download home the icon (checked and non-checked state) looks much different in Chrome home and regular mode. This is different from history view etc where both modern and regular are very much similar. May be we can refactor this function here (and in DownloadItemView) if the UX gets converged. The spec for M63 is here\nhttps://docs.google.com/presentation/d/13k5aqrflvb6GohGd_xjM2JeSZtF3A665HgUn786Zi-o/edit#slide\u003did.g2771fe5465_0_20",
+      "parentUuid": "5691dbba_e2d7e464",
       "revId": "1af79c27bedf0d01b44df87cc8bbe68aaed18f6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
