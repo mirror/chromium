@@ -85,10 +85,6 @@ declare_args() {
   # the needed gcov profiling data.
   auto_profile_path = ""
 
-  # Optimize for coverage guided fuzzing (balance between speed and number of
-  # branches)
-  optimize_for_fuzzing = false
-
   # Optimize symbol files for maximizing goma cache hit rate. This isn't
   # on by default when goma is enabled because setting this to true may make
   # it harder to debug binaries.
@@ -265,8 +261,6 @@ config("compiler") {
     # and build system rebuild things when their commandline changes). Nothing
     # should ever read this define.
     defines += [ "CR_CLANG_REVISION=\"$clang_revision\"" ]
-
-    configs += [ "//build/config/coverage" ]
   }
 
   # Non-Mac Posix compiler flags setup.
