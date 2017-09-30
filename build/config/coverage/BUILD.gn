@@ -2,20 +2,29 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/sanitizers/sanitizers.gni")
+import("//build/config/compiler/compiler.gni")
 import("//build/toolchain/toolchain.gni")
-
-declare_args() {
-  # Enable Clang's source-based code coverage.
-  use_clang_coverage = false
-}
 
 config("coverage") {
   if (use_clang_coverage) {
+    assert(is_clang, "Clang Source-based Code Coverage requires clang.")
+    assert(!optimize_for_fuzzing,
+           "optimize_for_fuzzing=true is not compatible with " +
+           "use_clang_coverage=true.")
+    assert(!using_sanitizer,
+           "It is not recommended to use clang Source-based code coverage " +
+           "with sanitizers. It only adds unnecessary overhead.")
     cflags = [
       "-fprofile-instr-generate",
       "-fcoverage-mapping",
       "-fno-use-cxa-atexit",
     ]
     ldflags = [ "-fprofile-instr-generate" ]
+#    if (is_mac || is_ios) {
+#      ldflags += [ "-dead_strip" ]
+#    } else {
+#      ldflags += [ "-Wl,--gc-sections" ]
+#    }
   }
 }
