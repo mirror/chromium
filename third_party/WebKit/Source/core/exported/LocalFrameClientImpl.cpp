@@ -55,6 +55,7 @@
 #include "core/html/HTMLMediaElement.h"
 #include "core/html/HTMLPlugInElement.h"
 #include "core/input/EventHandler.h"
+#include "core/inspector/ConsoleMessage.h"
 #include "core/inspector/DevToolsEmulator.h"
 #include "core/layout/HitTestResult.h"
 #include "core/loader/DocumentLoader.h"
@@ -696,6 +697,27 @@ void LocalFrameClientImpl::DidDisplayContentWithCertificateErrors(
 void LocalFrameClientImpl::DidRunContentWithCertificateErrors(const KURL& url) {
   if (web_frame_->Client())
     web_frame_->Client()->DidRunContentWithCertificateErrors(url);
+}
+
+void LocalFrameClientImpl::ReportLegacySymantecCert(
+    const KURL& url,
+    const Time& cert_validity_start) {
+  WebString console_message;
+  if (!web_frame_->Client() ||
+      !web_frame_->Client()->OverrideLegacySymantecCertConsoleMessage(
+          url, cert_validity_start, &console_message)) {
+    console_message =
+        WebString(String("The certificate used to load " + url.GetString() +
+                         " uses an SSL certificate that will be "
+                         "distrusted in the future. "
+                         "Once distrusted, users will be prevented from "
+                         "loading this resource. See "
+                         "https://g.co/chrome/symantecpkicerts for "
+                         "more information."));
+  }
+  web_frame_->GetFrame()->GetDocument()->AddConsoleMessage(
+      ConsoleMessage::Create(kSecurityMessageSource, kWarningMessageLevel,
+                             console_message));
 }
 
 void LocalFrameClientImpl::DidChangePerformanceTiming() {
