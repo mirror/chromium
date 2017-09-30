@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "c6a7765e_005d3029",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-30T02:04:39Z",
+      "side": 1,
+      "message": "Huh, that\u0027s not a delay as Chrome is expecting it then unless there\u0027s some additional restrictions. I.e. time required to guarantee a gapless playout is not necessarily equivalent to the current delay. Will this return 10ms if there is 10ms of buffer remaining? Or is this returning |buffer_remaining| + |buffer_processing_time|? Delay as Chrome expects it should only be |buffer_remaining|.\n\nPer the docs I think you should only have pts \u003d zx_time_get() + min_delay_ns here. Otherwise you\u0027re baking in buffer_duration of delay until playback starts, which can be 20-500ms+ (BT) on other platforms. Which would be unfortunate given the importance of playback startup speed. Before ::Start() is called we request a buffer from the renderer, so the first fill should already be ready. The first call uses 0 for delay and delay timestamp.",
+      "parentUuid": "abe1f9ac_b306cec2",
+      "revId": "ba297ba57c4916b81c4d71a381df4464b291fd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "554cf5b7_e19270e1",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
         "patchSetId": 6
@@ -247,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "0d431534_02a4e75f",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-30T02:04:39Z",
+      "side": 1,
+      "message": "Hmm, delay_timestamp is not coded properly actually and I\u0027m not sure where it\u0027s being used. The computed value is wrong on Windows and is unused by the \u003cvideo\u003e/\u003caudio\u003e path. I guess WebAudio uses it, but no one has noticed it\u0027s wrong on the dominant platform; the FromQPCValue() calculation is incorrect. So I guess it doesn\u0027t matter what you put here :)\n\n\u003caudio\u003e definitely uses |delay| though; it requires that it mean that audio provided ::Now() will be heard after |delay| elapses. I\u0027m not sure that\u0027s what |min_delay| is actually returning though per my above comment, so we may have a problem here.\n\nplayout_time was proposed at one point, but it didn\u0027t seem to work for the WebAudio folk. I don\u0027t recall the exact details here, but you can see the proposal and changes here https://codereview.chromium.org/2101303004/#msg68\n\nIn any case, what you have here doesn\u0027t represent playout time, it is not accounting for elapsed time. Hence I think you want to use Now() and StreamTime + BufferDuration - Now() as your delay. Since per your above statement Now() and stream time are on the same clock, delay_timestamp should just be Now() and delay the time remaining until buffer exhaustion. If delay goes negative you\u0027ll have to reset your stream time as you\u0027re doing above.\n\nMissed callbacks should technically be filling in the frames_skipped field, but I don\u0027t think anything aside from ChromeCast uses that.\n\nTypically the platform exposes a get_pts type functionality (See Android, Windows) for facilitating this calculation. It will automatically fix this for suspend/resume jumps.",
+      "parentUuid": "2f4431fb_2cee55ae",
+      "revId": "ba297ba57c4916b81c4d71a381df4464b291fd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9637fde9_8c45ae21",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
         "patchSetId": 6
@@ -276,6 +312,24 @@
       "side": 1,
       "message": "Isn\u0027t OnMoreData() allowed to return 0?",
       "parentUuid": "9637fde9_8c45ae21",
+      "revId": "ba297ba57c4916b81c4d71a381df4464b291fd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c97e11e_7757e193",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-30T02:04:39Z",
+      "side": 1,
+      "message": "I took a look and I don\u0027t think anything returns zero for it actually. If we\u0027re unable to retrieve a full buffer AudioSyncReader return a full buffer of zeros. Ditto for AUdioOutputResampler. So probably we should just remove this return value nowadays.",
+      "parentUuid": "9f85bd49_d0e7e5d3",
       "revId": "ba297ba57c4916b81c4d71a381df4464b291fd82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
