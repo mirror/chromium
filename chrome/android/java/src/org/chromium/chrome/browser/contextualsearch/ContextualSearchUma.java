@@ -211,6 +211,11 @@ public class ContextualSearchUma {
     private static final int QUICK_ACTION_RESOLVE_MULTIPLE = 2;
     private static final int QUICK_ACTION_RESOLVE_BOUNDARY = 3;
 
+    // Constants used to log Long-press UX displays that may have been handled by Smart Select.
+    private static final int SMART_SELECT_HANDLED = 0;
+    private static final int CONTEXTUAL_SEARCH_HANDLED = 1;
+    private static final int HANDLED_BOUNDARY = 2;
+
     /**
      * Key used in maps from {state, reason} to state entry (exit) logging code.
      */

@@ -54,6 +54,7 @@ import org.chromium.content_public.browser.AccessibilitySnapshotNode;
 import org.chromium.content_public.browser.ActionModeCallbackHelper;
 import org.chromium.content_public.browser.GestureStateListener;
 import org.chromium.content_public.browser.ImeEventObserver;
+import org.chromium.content_public.browser.SelectionClient;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_public.browser.WebContentsObserver;
 import org.chromium.device.gamepad.GamepadList;
@@ -2132,6 +2133,13 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
      */
     public void setSelectionClient(SelectionClient selectionClient) {
         mSelectionPopupController.setSelectionClient(selectionClient);
+    }
+
+    /**
+     * @return The current {@link SelectionClient} that's handling selection event notifications.
+     */
+    public SelectionClient getSelectionClient() {
+        return mSelectionPopupController.getSelectionClient();
     }
 
     /**
