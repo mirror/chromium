@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
@@ -26,10 +27,12 @@ import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.browser.IntentHandler;
 import org.chromium.chrome.browser.browserservices.OriginVerifier;
 import org.chromium.chrome.browser.browserservices.PostMessageHandler;
+import org.chromium.chrome.browser.installedapp.InstalledAppProviderImpl;
 import org.chromium.chrome.browser.util.UrlUtilities;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_public.common.Referrer;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -125,6 +128,7 @@ class ClientManager {
         public final int uid;
         public final DisconnectCallback disconnectCallback;
         public final PostMessageHandler postMessageHandler;
+        public OriginVerifier originVerifier;
         public boolean mIgnoreFragments;
         public boolean lowConfidencePrediction;
         public boolean highConfidencePrediction;
@@ -247,6 +251,15 @@ class ClientManager {
         return params.postMessageHandler.postMessageFromClientApp(message);
     }
 
+    public synchronized boolean validateRelationship(
+            CustomTabsSessionToken session, int relation, Uri origin, Bundle extras) {
+        SessionParams params = mSessionParams.get(session);
+        if (params == null || TextUtils.isEmpty(params.getPackageName())) return false;
+        params.originVerifier = new OriginVerifier(null, params.getPackageName(), relation);
+        params.originVerifier.start(origin);
+        return true;
+    }
+
     /**
      * Records that {@link CustomTabsConnection#warmup(long)} has been called from the given uid.
      */
@@ -366,7 +379,41 @@ class ClientManager {
             CustomTabsSessionToken session, Uri origin, @Relation int relation) {
         SessionParams params = mSessionParams.get(session);
         if (params == null) return;
-        params.postMessageHandler.verifyAndInitializeWithOrigin(origin, relation);
+        params.originVerifier =
+                new OriginVerifier(params.postMessageHandler, params.getPackageName(), relation);
+        params.originVerifier.start(origin);
+    }
+
+    /**
+     * Whether we can verify that the app has declared a
+     * {@link CustomTabsService#RELATION_HANDLE_ALL_URLS} with the given origin. This is the initial
+     * requirement for launch. We also need the web->app verification which will be checked after
+     * the Activity has launched async.
+     * @param session The session attempting to launch the TrustedWebActivity.
+     * @param origin The origin that will load on the TrustedWebActivity.
+     * @return Whether the client for the session passes the initial requirements to launch a
+     *         TrustedWebActivity in the given origin.
+     */
+    public synchronized boolean canSessionLaunchInTrustedWebActivity(
+            CustomTabsSessionToken session, Uri origin) {
+        SessionParams params = mSessionParams.get(session);
+        if (params == null) return false;
+        String packageName = params.getPackageName();
+        if (TextUtils.isEmpty(packageName)) return false;
+        boolean isAppAssociatedWithOrigin =
+                InstalledAppProviderImpl.isAppInstalledAndAssociatedWithOrigin(
+                        packageName, URI.create(origin.toString()), mContext.getPackageManager());
+        if (!isAppAssociatedWithOrigin) return false;
+        if (OriginVerifier.isValidOrigin(
+                    packageName, origin, CustomTabsService.RELATION_HANDLE_ALL_URLS)) {
+            return true;
+        }
+        // This is an optimization to start the verification early. The launching Activity should
+        // run and listen on this verification as well.
+        params.originVerifier =
+                new OriginVerifier(null, packageName, CustomTabsService.RELATION_HANDLE_ALL_URLS);
+        params.originVerifier.start(origin);
+        return true;
     }
 
     /**
@@ -623,6 +670,9 @@ class ClientManager {
         mSessionParams.remove(session);
         if (params.postMessageHandler != null) {
             params.postMessageHandler.cleanup(mContext);
+        }
+        if (params.originVerifier != null) {
+            params.originVerifier.cleanUp();
         }
         if (params.disconnectCallback != null) params.disconnectCallback.run(session);
         mUidHasCalledWarmup.delete(params.uid);
