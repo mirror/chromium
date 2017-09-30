@@ -491,7 +491,7 @@ bool BlinkTestController::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_PrintMessage, OnPrintMessage)
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_PrintMessageToStderr,
                         OnPrintMessageToStderr)
-    IPC_MESSAGE_HANDLER(ShellViewHostMsg_TextDump, OnTextDump)
+    IPC_MESSAGE_HANDLER(ShellViewHostMsg_CustomTextDump, OnCustomTextDump)
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_InitiateLayoutDump,
                         OnInitiateLayoutDump)
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_ImageDump, OnImageDump)
@@ -510,8 +510,6 @@ bool BlinkTestController::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_GoToOffset, OnGoToOffset)
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_Reload, OnReload)
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_LoadURLForFrame, OnLoadURLForFrame)
-    IPC_MESSAGE_HANDLER(ShellViewHostMsg_CaptureSessionHistory,
-                        OnCaptureSessionHistory)
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_CloseRemainingWindows,
                         OnCloseRemainingWindows)
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_ResetDone, OnResetDone)
@@ -645,6 +643,14 @@ void BlinkTestController::DiscardMainWindow() {
   }
   main_window_ = NULL;
   current_pid_ = base::kNullProcessId;
+}
+
+void BlinkTestController::DumpText(const std::string& dump,
+                                   bool should_dump_history) {
+  printer_->PrintTextHeader();
+  printer_->PrintTextBlock(dump);
+  // TODO(dcheng): Need to dump history here as well.
+  printer_->PrintTextFooter();
 }
 
 void BlinkTestController::HandleNewRenderFrameHost(RenderFrameHost* frame) {
@@ -782,22 +788,25 @@ void BlinkTestController::OnAudioDump(const std::vector<unsigned char>& dump) {
   printer_->PrintAudioFooter();
 }
 
-void BlinkTestController::OnTextDump(const std::string& dump) {
-  printer_->PrintTextHeader();
-  printer_->PrintTextBlock(dump);
-  printer_->PrintTextFooter();
+void BlinkTestController::OnCustomTextDump(const std::string& dump) {
+  DumpText(dump, false /* should_dump_history */);
 }
 
-void BlinkTestController::OnInitiateLayoutDump() {
+void BlinkTestController::OnInitiateLayoutDump(bool should_dump_recursively,
+                                               bool should_dump_history) {
   int number_of_messages = 0;
   for (RenderFrameHost* rfh : main_window_->web_contents()->GetAllFrames()) {
     if (!rfh->IsRenderFrameLive())
       continue;
 
     ++number_of_messages;
-    GetLayoutTestControlPtr(rfh)->DumpFrameLayout(
-        base::BindOnce(&BlinkTestController::OnDumpFrameLayoutResponse,
-                       base::Unretained(this), rfh->GetFrameTreeNodeId()));
+    GetLayoutTestControlPtr(rfh)->DumpFrameLayout(base::BindOnce(
+        &BlinkTestController::OnDumpFrameLayoutResponse, base::Unretained(this),
+        rfh->GetFrameTreeNodeId(), should_dump_history));
+    if (!should_dump_recursively) {
+      DCHECK(!rfh->GetParent());
+      break;
+    }
   }
 
   pending_layout_dumps_ = number_of_messages;
@@ -824,10 +833,10 @@ void BlinkTestController::OnLayoutTestRuntimeFlagsChanged(
 }
 
 void BlinkTestController::OnDumpFrameLayoutResponse(int frame_tree_node_id,
+                                                    bool should_dump_history,
                                                     const std::string& dump) {
   // Store the result.
-  auto pair = frame_to_layout_dump_map_.insert(
-      std::make_pair(frame_tree_node_id, dump));
+  auto pair = frame_to_layout_dump_map_.emplace(frame_tree_node_id, dump);
   bool insertion_took_place = pair.second;
   DCHECK(insertion_took_place);
 
@@ -848,11 +857,13 @@ void BlinkTestController::OnDumpFrameLayoutResponse(int frame_tree_node_id,
     }
   }
 
+  DumpText(dump, should_dump_history);
+
   // Continue finishing the test.
   RenderViewHost* render_view_host =
       main_window_->web_contents()->GetRenderViewHost();
-  render_view_host->Send(new ShellViewMsg_LayoutDumpCompleted(
-      render_view_host->GetRoutingID(), stitched_layout_dump));
+  render_view_host->Send(
+      new ShellViewMsg_LayoutDumpCompleted(render_view_host->GetRoutingID()));
 }
 
 void BlinkTestController::OnPrintMessage(const std::string& message) {
@@ -922,46 +933,6 @@ void BlinkTestController::OnReload() {
 void BlinkTestController::OnLoadURLForFrame(const GURL& url,
                                             const std::string& frame_name) {
   main_window_->LoadURLForFrame(url, frame_name);
-}
-
-void BlinkTestController::OnCaptureSessionHistory() {
-  std::vector<int> routing_ids;
-  std::vector<std::vector<PageState> > session_histories;
-  std::vector<unsigned> current_entry_indexes;
-
-  RenderFrameHost* render_frame_host =
-      main_window_->web_contents()->GetMainFrame();
-
-  for (auto* window : Shell::windows()) {
-    WebContents* web_contents = window->web_contents();
-    // Only capture the history from windows in the same process as the main
-    // window. During layout tests, we only use two processes when an
-    // devtools window is open.
-    auto* process = web_contents->GetMainFrame()->GetProcess();
-    if (render_frame_host->GetProcess() != process)
-      continue;
-
-    routing_ids.push_back(web_contents->GetRenderViewHost()->GetRoutingID());
-    current_entry_indexes.push_back(
-        web_contents->GetController().GetCurrentEntryIndex());
-    std::vector<PageState> history;
-    for (int entry = 0; entry < web_contents->GetController().GetEntryCount();
-         ++entry) {
-      PageState state = web_contents->GetController().GetEntryAtIndex(entry)->
-          GetPageState();
-      if (!state.IsValid()) {
-        state = PageState::CreateFromURL(
-            web_contents->GetController().GetEntryAtIndex(entry)->GetURL());
-      }
-      history.push_back(state);
-    }
-    session_histories.push_back(history);
-  }
-
-  RenderViewHost* rvh = main_window_->web_contents()->GetRenderViewHost();
-  rvh->Send(new ShellViewMsg_SessionHistory(rvh->GetRoutingID(), routing_ids,
-                                            session_histories,
-                                            current_entry_indexes));
 }
 
 void BlinkTestController::OnCloseRemainingWindows() {

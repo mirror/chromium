@@ -206,7 +206,7 @@ class BlinkTestRunner : public RenderViewObserver,
   // After finishing the test, retrieves the audio, text, and pixel dumps from
   // the TestRunner library and sends them to the browser process.
   void CaptureDump();
-  void OnLayoutDumpCompleted(std::string completed_layout_dump);
+  void OnLayoutDumpCompleted();
   void CaptureDumpContinued();
   void OnPixelsDumpCompleted(const SkBitmap& snapshot);
   void CaptureDumpComplete();
@@ -219,10 +219,6 @@ class BlinkTestRunner : public RenderViewObserver,
   test_runner::TestPreferences prefs_;
 
   mojom::ShellTestConfigurationPtr test_config_;
-
-  std::vector<int> routing_ids_;
-  std::vector<std::vector<PageState> > session_histories_;
-  std::vector<unsigned> current_entry_indexes_;
 
   base::circular_deque<base::Callback<void(const std::vector<std::string>&)>>
       get_bluetooth_events_callbacks_;

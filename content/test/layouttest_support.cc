@@ -462,11 +462,6 @@ int GetLocalSessionHistoryLength(RenderView* render_view) {
       GetLocalSessionHistoryLengthForTesting();
 }
 
-void SyncNavigationState(RenderView* render_view) {
-  // TODO(creis): Add support for testing in OOPIF-enabled modes.
-  // See https://crbug.com/477150.
-}
-
 void SetFocusAndActivate(RenderView* render_view, bool enable) {
   static_cast<RenderViewImpl*>(render_view)->
       SetFocusAndActivateForTesting(enable);
@@ -580,22 +575,6 @@ std::string DumpHistoryItem(HistoryEntry::HistoryNode* node,
       result += DumpHistoryItem(children[i], indent + 4, false);
   }
 
-  return result;
-}
-
-std::string DumpBackForwardList(std::vector<PageState>& page_state,
-                                size_t current_index) {
-  std::string result;
-  result.append("\n============== Back Forward List ==============\n");
-  for (size_t index = 0; index < page_state.size(); ++index) {
-    std::unique_ptr<HistoryEntry> entry(
-        PageStateToHistoryEntry(page_state[index]));
-    result.append(
-        DumpHistoryItem(entry->root_history_node(),
-                        8,
-                        index == current_index));
-  }
-  result.append("===============================================\n");
   return result;
 }
 
