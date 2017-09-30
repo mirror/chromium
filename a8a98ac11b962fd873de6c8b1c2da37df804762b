@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c24d8a6d_b7c88af5",
+        "filename": "chrome/browser/previews/previews_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-30T16:40:53Z",
+      "side": 1,
+      "message": "This is for dependency injection later in the test. I initially created it inside PreviewsUIService, but after Ryan brought up the point, I think injecting it during the constructor seems cleaner.",
+      "parentUuid": "49922f6a_8c8f6d0a",
+      "range": {
+        "startLine": 113,
+        "startChar": 33,
+        "endLine": 113,
+        "endChar": 44
+      },
+      "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a1834f8_25407294",
         "filename": "components/previews/core/previews_black_list.h",
         "patchSetId": 12
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "adaf8ddc_abd06e20",
+        "filename": "components/previews/core/previews_black_list.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-30T16:40:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a1834f8_25407294",
+      "range": {
+        "startLine": 85,
+        "startChar": 2,
+        "endLine": 85,
+        "endChar": 12
+      },
+      "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7a2de4f_9ce23ca6",
         "filename": "components/previews/core/previews_black_list.h",
         "patchSetId": 12
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-30T01:24:54Z",
       "side": 1,
       "message": "This is slightly confusing. This method has a different signature than AddPreviewNavigation() method: Different number of arguments, different return type.",
+      "range": {
+        "startLine": 113,
+        "startChar": 5,
+        "endLine": 113,
+        "endChar": 48
+      },
+      "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceebb2bb_54701a46",
+        "filename": "components/previews/core/previews_black_list.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-30T16:40:53Z",
+      "side": 1,
+      "message": "I agree it can be confusing because the number of parameters are different. However, I think it is better to have the events and logs have a synchronized time value.",
+      "parentUuid": "b7a2de4f_9ce23ca6",
       "range": {
         "startLine": 113,
         "startChar": 5,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "78b3773d_21074070",
+        "filename": "components/previews/core/previews_io_data.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-30T16:40:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63ca66f6_419986c5",
+      "range": {
+        "startLine": 54,
+        "startChar": 40,
+        "endLine": 55,
+        "endChar": 58
+      },
+      "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c13cb27_4d28a7aa",
         "filename": "components/previews/core/previews_log.cc",
         "patchSetId": 12
@@ -114,6 +210,30 @@
       "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46a7f0cf_e96b7c54",
+        "filename": "components/previews/core/previews_log.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-30T16:40:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c13cb27_4d28a7aa",
+      "range": {
+        "startLine": 31,
+        "startChar": 6,
+        "endLine": 31,
+        "endChar": 27
+      },
+      "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +283,54 @@
     },
     {
       "key": {
+        "uuid": "9312b00c_dd80812d",
+        "filename": "components/previews/core/previews_log.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-30T16:40:53Z",
+      "side": 1,
+      "message": "Because we later need to convert it to a vector during interactions with Mojo, we will need to make copies eventually.",
+      "parentUuid": "3b484e9c_55f19da1",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 23
+      },
+      "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bc7c0d4_2b95f502",
+        "filename": "components/previews/core/previews_log.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-30T16:40:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c29f2416_28734159",
+      "range": {
+        "startLine": 38,
+        "startChar": 37,
+        "endLine": 38,
+        "endChar": 51
+      },
+      "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ebf83fe_ad15d68d",
         "filename": "components/previews/core/previews_log.cc",
         "patchSetId": 12
@@ -183,6 +351,30 @@
       "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b98c57b5_75270375",
+        "filename": "components/previews/core/previews_log.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-30T16:40:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ebf83fe_ad15d68d",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 4
+      },
+      "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "2f67f22d_42b7984e",
+        "filename": "components/previews/core/previews_log.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-30T16:40:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6fa5d65_91ec453e",
+      "range": {
+        "startLine": 55,
+        "startChar": 13,
+        "endLine": 55,
+        "endChar": 23
+      },
+      "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eda48e7c_051fa921",
         "filename": "components/previews/core/previews_log.cc",
         "patchSetId": 12
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "24119033_be569aa0",
+        "filename": "components/previews/core/previews_log.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-30T16:40:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eda48e7c_051fa921",
+      "range": {
+        "startLine": 59,
+        "startChar": 4,
+        "endLine": 59,
+        "endChar": 32
+      },
+      "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9336c429_71619c31",
         "filename": "components/previews/core/previews_log.h",
         "patchSetId": 12
@@ -243,6 +483,30 @@
       "writtenOn": "2017-09-30T01:24:54Z",
       "side": 1,
       "message": "Seems like this is not used outside of previews_log.h and previews_log.cc.\nSo, can this be declared as private member of PreviewsLog class?",
+      "range": {
+        "startLine": 20,
+        "startChar": 7,
+        "endLine": 20,
+        "endChar": 17
+      },
+      "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4386435a_843f8c5a",
+        "filename": "components/previews/core/previews_log.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-30T16:40:53Z",
+      "side": 1,
+      "message": "This will later be used in InterventionsInternalsPageHandler, as that class would be able to extract all available log messages and post it on chrome:// page.",
+      "parentUuid": "9336c429_71619c31",
       "range": {
         "startLine": 20,
         "startChar": 7,
@@ -278,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "84378ceb_d8490d27",
+        "filename": "components/previews/core/previews_log.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-30T16:40:53Z",
+      "side": 1,
+      "message": "PreviewsLogger seems like a good name.",
+      "parentUuid": "63c7e7fa_9606558d",
+      "range": {
+        "startLine": 49,
+        "startChar": 6,
+        "endLine": 49,
+        "endChar": 17
+      },
+      "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2eaa3bc9_f5cfbb33",
         "filename": "components/previews/core/previews_log.h",
         "patchSetId": 12
@@ -289,6 +577,30 @@
       "writtenOn": "2017-09-30T01:24:54Z",
       "side": 1,
       "message": "Can this be a private method?",
+      "range": {
+        "startLine": 58,
+        "startChar": 7,
+        "endLine": 58,
+        "endChar": 17
+      },
+      "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b64bb28f_f7709341",
+        "filename": "components/previews/core/previews_log.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-30T16:40:53Z",
+      "side": 1,
+      "message": "I put this as a public method because of the consideration of expanding this to more general interventions.",
+      "parentUuid": "2eaa3bc9_f5cfbb33",
       "range": {
         "startLine": 58,
         "startChar": 7,
@@ -324,6 +636,30 @@
     },
     {
       "key": {
+        "uuid": "f1b07aef_0ac48ffa",
+        "filename": "components/previews/core/previews_log.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-30T16:40:53Z",
+      "side": 1,
+      "message": "This is virtual because it is override later in ui_service_unittest.",
+      "parentUuid": "e634c209_5ab5dadc",
+      "range": {
+        "startLine": 65,
+        "startChar": 2,
+        "endLine": 65,
+        "endChar": 9
+      },
+      "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be675a0e_f70b853c",
         "filename": "components/previews/core/previews_ui_service.cc",
         "patchSetId": 12
@@ -338,6 +674,24 @@
       "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62525add_617b8f03",
+        "filename": "components/previews/core/previews_ui_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-09-30T16:40:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be675a0e_f70b853c",
+      "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
