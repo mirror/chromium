@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e92098e_7a5948b6",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2836,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-30T06:50:11Z",
+      "side": 1,
+      "message": "Can widget actually be null here?",
+      "revId": "ba9f3a942f03ba2425b8530ab14df456fb1132d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0255b88_cb87833f",
+        "filename": "content/common/widget_host.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-30T06:50:11Z",
+      "side": 1,
+      "message": "One thing I\u0027m not sure how to resolve is the fact that the method talks about \"document\", but a widget doesn\u0027t necessarily talk about just one document. Is this something you\u0027d expect subframes to be able to specify? Or are viewport attributes supposed to be main frame only?",
+      "revId": "ba9f3a942f03ba2425b8530ab14df456fb1132d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4cf1427_02e81852",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1110,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-30T06:50:11Z",
+      "side": 1,
+      "message": "Nit: DCHECK",
+      "revId": "ba9f3a942f03ba2425b8530ab14df456fb1132d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
