@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "base/macros.h"
+#include "base/time/tick_clock.h"
 #include "base/time/time.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_contents_user_data.h"
@@ -39,6 +40,9 @@ class PopupTracker : public content::WebContentsObserver,
       content::NavigationHandle* navigation_handle) override;
   void WasShown() override;
   void WasHidden() override;
+
+  // The clock the visibility tracker uses.
+  std::unique_ptr<base::TickClock> tick_clock_;
 
   // The |first_load_visibility_tracker_| tracks the time this WebContents is in
   // the foreground for the duration of the first page load.
