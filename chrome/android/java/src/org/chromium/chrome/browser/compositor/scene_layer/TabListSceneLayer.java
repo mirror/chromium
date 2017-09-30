@@ -68,8 +68,13 @@ public class TabListSceneLayer extends SceneLayer {
 
             boolean useModernDesign = FeatureUtilities.isChromeHomeEnabled();
 
+            float alpha = t.getAlpha();
+
             float shadowAlpha = decoration;
             if (useModernDesign) shadowAlpha /= 2;
+
+            float borderAlpha = Math.min(t.getBorderAlpha(), alpha);
+            float borderInnerShadowAlpha = Math.min(t.getBorderInnerShadowAlpha(), alpha);
 
             int defaultThemeColor =
                     ColorUtils.getDefaultThemeColor(res, useModernDesign, t.isIncognito());
@@ -107,8 +112,8 @@ public class TabListSceneLayer extends SceneLayer {
                     Math.min(t.getClippedWidth(), t.getScaledContentWidth()) * dpToPx,
                     Math.min(t.getClippedHeight(), t.getScaledContentHeight()) * dpToPx,
                     t.getTiltXPivotOffset() * dpToPx, t.getTiltYPivotOffset() * dpToPx,
-                    t.getTiltX(), t.getTiltY(), t.getAlpha(), t.getBorderAlpha() * decoration,
-                    t.getBorderInnerShadowAlpha() * decoration, decoration, shadowAlpha,
+                    t.getTiltX(), t.getTiltY(), alpha, borderAlpha * decoration,
+                    borderInnerShadowAlpha * decoration, decoration, shadowAlpha,
                     t.getBorderCloseButtonAlpha() * decoration,
                     LayoutTab.CLOSE_BUTTON_WIDTH_DP * dpToPx, t.getStaticToViewBlend(),
                     t.getBorderScale(), t.getSaturation(), t.getBrightness(), t.showToolbar(),
