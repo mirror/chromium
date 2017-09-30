@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4501afe_80404f63",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-09-30T00:13:15Z",
+      "side": 1,
+      "message": "Not sure if this kind of bitwise style was beloved..",
+      "range": {
+        "startLine": 230,
+        "startChar": 6,
+        "endLine": 230,
+        "endChar": 67
+      },
+      "revId": "a6b11414fc45c1289df3b5ac3f940d3e5c5956f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
