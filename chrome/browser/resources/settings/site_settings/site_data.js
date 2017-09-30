@@ -8,6 +8,24 @@
  */
 
 /**
+ * @typedef {{
+ *   site: string,
+ *   id: string,
+ *   localData: string,
+ * }}
+ */
+var CookieDataSummaryItem;
+
+/**
+ * @typedef {{
+ *   id: string,
+ *   start: number,
+ *   count: number,
+ * }}
+ */
+var CookieRemovePacket;
+
+/**
  * TODO(dbeam): upstream to polymer externs?
  * @constructor
  * @extends {Event}
@@ -21,7 +39,6 @@ Polymer({
   is: 'site-data',
 
   behaviors: [
-    CookieTreeBehavior,
     I18nBehavior,
   ],
 
@@ -36,9 +53,6 @@ Polymer({
       value: '',
     },
 
-    /** @private */
-    confirmationDeleteMsg_: String,
-
     /** @type {!Map<string, string>} */
     focusConfig: {
       type: Object,
@@ -47,8 +61,16 @@ Polymer({
   },
 
   /** @override */
-  ready: function() {
-    this.loadCookies();
+  attached: function() {
+    this.browserProxy_ = settings.LocalDataBrowserProxyImpl.getInstance();
+    cr.addWebUIListener(
+        'onTreeItemRemoved', this.onTreeItemRemoved_.bind(this));
+    this.browserProxy_.reloadCookies()
+        .then(this.browserProxy_.getDisplayList.bind(
+            this.browserProxy_, 0, 30, this.filter))
+        .then((listInfo) => {
+          this.sites = listInfo.items;
+        });
   },
 
   /**
@@ -60,7 +82,6 @@ Polymer({
   favicon_: function(url) {
     return cr.icon.getFavicon(url);
   },
-
 
   /**
    * @param {!Map<string, string>} newConfig
@@ -96,7 +117,22 @@ Polymer({
 
   /** @private */
   onSearchChanged_: function() {
-    this.$.list.render();
+    if (!this.browserProxy_)
+      return;
+    this.browserProxy_.getDisplayList(0, 30, this.filter).then((listInfo) => {
+      this.sites = listInfo.items;
+    });
+  },
+
+  /**
+   * Called when a single item has been removed (not during delete all).
+   * @param {!CookieRemovePacket} args The details about what to remove.
+   * @private
+   */
+  onTreeItemRemoved_: function(args) {
+    this.browserProxy_.getDisplayList(0, 30, this.filter).then((listInfo) => {
+      this.sites = listInfo.items;
+    });
   },
 
   /**
@@ -135,8 +171,6 @@ Polymer({
    */
   onRemoveShowingSitesTap_: function(e) {
     e.preventDefault();
-    this.confirmationDeleteMsg_ =
-        loadTimeData.getString('siteSettingsCookieRemoveMultipleConfirmation');
     this.$.confirmDeleteDialog.showModal();
   },
 
@@ -148,15 +182,11 @@ Polymer({
     this.$.confirmDeleteDialog.close();
 
     if (this.filter.length == 0) {
-      this.removeAllCookies();
+      this.browserProxy_.removeAll();
     } else {
-      var items = this.$.list.items;
-      for (var i = 0; i < items.length; ++i) {
-        if (this.showItem_(items[i]))
-          this.browserProxy_.removeCookie(items[i].id);
-      }
+      this.browserProxy_.removeByFilter(this.filter);
       // We just deleted all items found by the filter, let's reset the filter.
-      /** @type {SettingsSubpageSearchElement} */ (this.$.filter).setValue('');
+      this.fire('set-subpage-search', '');
     }
   },
 
@@ -167,7 +197,7 @@ Polymer({
    */
   onRemoveSiteTap_: function(e) {
     e.stopPropagation();
-    this.browserProxy_.removeCookie(e.model.item.id);
+    this.browserProxy_.removeItem(e.model.item.site);
   },
 
   /**
