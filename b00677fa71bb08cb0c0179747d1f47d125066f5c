@@ -16,6 +16,24 @@
       "revId": "b00677fa71bb08cb0c0179747d1f47d125066f5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76e1132a_eb62852d",
+        "filename": "chrome/browser/snapshot_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-09-30T18:05:23Z",
+      "side": 1,
+      "message": "Thanks for the tip. ResultCatcher\u0027s only available to extension tests. It looks like there are a bunch of different ways of signaling to browser tests that the test is complete or can move on to the next phase; this way looks like it\u0027s working portably.",
+      "parentUuid": "9c059851_818e9c14",
+      "revId": "b00677fa71bb08cb0c0179747d1f47d125066f5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
