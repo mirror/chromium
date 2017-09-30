@@ -709,6 +709,24 @@
     },
     {
       "key": {
+        "uuid": "e6659f7a_413b8081",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-30T00:42:53Z",
+      "side": 1,
+      "message": "I see. It looks like REALTIME_AUDIO doesn\u0027t provide real-time guarantees, it\u0027s just mapped to the highest thread priority that the platform allows. We can do the same on Fuchsia.",
+      "parentUuid": "3838f593_48ae46e3",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec9994b8_48fce016",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
         "patchSetId": 3
@@ -1132,6 +1150,24 @@
     },
     {
       "key": {
+        "uuid": "f878a2ff_17909616",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-30T00:42:53Z",
+      "side": 1,
+      "message": "The mixer will just play silence implicitly if we don\u0027t supply any samples for some time, so I think this core handle this case correctly.",
+      "parentUuid": "ce3a3421_8ce8e1df",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1940e558_6744babe",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
         "patchSetId": 3
@@ -1288,6 +1324,24 @@
       "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02e6333e_d17e9644",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-30T00:42:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d84202bb_da568904",
+      "revId": "b8a22cbf367148d330f6022076ec6db20d3571e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

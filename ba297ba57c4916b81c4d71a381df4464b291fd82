@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "635b1529_d83b4e62",
+        "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-30T00:42:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "713b4f25_f1f19ac0",
+      "revId": "ba297ba57c4916b81c4d71a381df4464b291fd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92e2540c_d1e2b9d3",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-29T23:27:31Z",
       "side": 1,
       "message": "Just due to the nature of scheduling this may happen under load I suspect. To tie this explicitly to suspend resume you\u0027d need to list to base::PowerObserver callbacks. But see my comment below to if we even need this.",
+      "revId": "ba297ba57c4916b81c4d71a381df4464b291fd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd9ef3b5_1a867f82",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-30T00:42:53Z",
+      "side": 1,
+      "message": "Yes, this would happen whenever the task is executed with a delay higher than buffer_duration.",
+      "parentUuid": "92e2540c_d1e2b9d3",
       "revId": "ba297ba57c4916b81c4d71a381df4464b291fd82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c083a9e0_088edd79",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-30T00:42:53Z",
+      "side": 1,
+      "message": "The value returned from this function isn\u0027t affected by how much data is buffered for that stream.",
+      "parentUuid": "254041d1_fa4bde3e",
+      "revId": "ba297ba57c4916b81c4d71a381df4464b291fd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24f40eb5_afbb1b4d",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
         "patchSetId": 6
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-29T23:27:31Z",
       "side": 1,
       "message": "Is this even really needed after my suggestion below?",
+      "revId": "ba297ba57c4916b81c4d71a381df4464b291fd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "442adc35_c02c7702",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-30T00:42:53Z",
+      "side": 1,
+      "message": "yes, I think we do need it.",
+      "parentUuid": "24f40eb5_afbb1b4d",
       "revId": "ba297ba57c4916b81c4d71a381df4464b291fd82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "abe1f9ac_b306cec2",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-30T00:42:53Z",
+      "side": 1,
+      "message": "fuchsia_audio_output_stream_get_min_delay() returns how far ahead we need to call fuchsia_audio_output_stream_write() to guarantee that this data is delivered to the mixer on time for the specified presentation_time. Some time may pass between zx_time_get() call here and fuchsia_audio_output_stream_write(), so we need to add some extra time to guarantee that the stream can still render that data on time.",
+      "parentUuid": "b69667ba_0fed3971",
+      "revId": "ba297ba57c4916b81c4d71a381df4464b291fd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "554cf5b7_e19270e1",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
         "patchSetId": 6
@@ -98,6 +188,24 @@
       "writtenOn": "2017-09-29T23:27:31Z",
       "side": 1,
       "message": "Ditto, why are you adding in buffer duration here?",
+      "revId": "ba297ba57c4916b81c4d71a381df4464b291fd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efed2d54_bb897935",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-30T00:42:53Z",
+      "side": 1,
+      "message": "same reason as above",
+      "parentUuid": "554cf5b7_e19270e1",
       "revId": "ba297ba57c4916b81c4d71a381df4464b291fd82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "2f4431fb_2cee55ae",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-30T00:42:53Z",
+      "side": 1,
+      "message": "If we use base::TimeTicks::Now() for delay_timestamp then presentation_delay_ would have to be adjusted by delta\u003d(GetCurrentStreamTime() - base::TimeTicks::Now()) to supply correct value for delay. In general that delta is expected to be always close to zero (because that\u0027s how timer_ is scheduled below).\n\nBTW, is there any reason we need to pass both |delay| and |delay_timestamp| to OnMoreData()? I think it should be possible to replace them with a single base::TimeTicks playout_time (which would be sum of delay and delay_timestamp) It also looks like delay_timestamp is not always used properly, see https://codesearch.chromium.org/chromium/src/content/renderer/media/track_audio_renderer.cc?sq\u003dpackage:chromium\u0026l\u003d58 . I\u0027ll send you a CL to remove that TODO.",
+      "parentUuid": "27d0e248_eff428d4",
+      "revId": "ba297ba57c4916b81c4d71a381df4464b291fd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9637fde9_8c45ae21",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
         "patchSetId": 6
@@ -132,6 +258,24 @@
       "writtenOn": "2017-09-29T23:27:31Z",
       "side": 1,
       "message": "Probably can delete and just have the DCHECK_EQ below.",
+      "revId": "ba297ba57c4916b81c4d71a381df4464b291fd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f85bd49_d0e7e5d3",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-30T00:42:53Z",
+      "side": 1,
+      "message": "Isn\u0027t OnMoreData() allowed to return 0?",
+      "parentUuid": "9637fde9_8c45ae21",
       "revId": "ba297ba57c4916b81c4d71a381df4464b291fd82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "20724212_6936a79b",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-30T00:42:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8af4195_d502855e",
+      "revId": "ba297ba57c4916b81c4d71a381df4464b291fd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce6c1a99_5b6a4ae4",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
         "patchSetId": 6
@@ -166,6 +328,24 @@
       "writtenOn": "2017-09-29T23:27:31Z",
       "side": 1,
       "message": "With the removal of start time, using an AudioTimestampHelper will be sufficient here.",
+      "revId": "ba297ba57c4916b81c4d71a381df4464b291fd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc024ce7_0185c659",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-30T00:42:53Z",
+      "side": 1,
+      "message": "I don\u0027t think we can remove start_time_, see my comment below.",
+      "parentUuid": "ce6c1a99_5b6a4ae4",
       "revId": "ba297ba57c4916b81c4d71a381df4464b291fd82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "d6523414_861ce525",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-30T00:42:53Z",
+      "side": 1,
+      "message": "Some amount time is spent  in this function. Now() + BufferDuration doesn\u0027t account for that time, and so PumpSamples() would be executed at a rate lower than the target.  With Now() + BufferDuration *.75 we would get PumpSamples() would be called at the rate that\u0027s 1.33 of the target, which means it would be pumping more data than necessary.",
+      "parentUuid": "4987bae0_17639225",
+      "revId": "ba297ba57c4916b81c4d71a381df4464b291fd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a8e2d53_c7512615",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.h",
         "patchSetId": 6
@@ -200,6 +398,24 @@
       "writtenOn": "2017-09-29T23:27:31Z",
       "side": 1,
       "message": "Can this be private? The caller is actually AudioManager I thought?",
+      "revId": "ba297ba57c4916b81c4d71a381df4464b291fd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58c4dae3_06df5fb1",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-30T00:42:53Z",
+      "side": 1,
+      "message": "AudioManagerBase calls AudioOutputStream::~AudioOutputStream(), which is not private. I think it would be great to make the destructor private in AudioOutputStream and then make AudioManagerBase a friend of AudioOutputStream. That\u0027s if we have to keep Close(). IMO it would be best to remove Close() completely as I suggested in my other comment. WDYT?",
+      "parentUuid": "4a8e2d53_c7512615",
       "revId": "ba297ba57c4916b81c4d71a381df4464b291fd82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
