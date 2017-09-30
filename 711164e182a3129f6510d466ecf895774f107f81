@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba4c1c33_104fdff0",
+        "filename": "chrome/browser/ui/ash/system_tray_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-30T00:15:34Z",
+      "side": 1,
+      "message": "should we allow this for secondary user, given that shill does not load their network profile, IIRC?\n\n(I guess it might be better to at least show a message explaining why they cannot configure a new network)",
+      "range": {
+        "startLine": 411,
+        "startChar": 24,
+        "endLine": 411,
+        "endChar": 44
+      },
+      "revId": "711164e182a3129f6510d466ecf895774f107f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
