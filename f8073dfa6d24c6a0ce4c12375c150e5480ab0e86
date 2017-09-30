@@ -16,6 +16,24 @@
       "revId": "f8073dfa6d24c6a0ce4c12375c150e5480ab0e86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d0ff80e_d81e3260",
+        "filename": "chrome/browser/data_saver/data_saver_holdback_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-30T00:35:14Z",
+      "side": 1,
+      "message": "Yes, the default behavior is tested in chrome/browser/data_saver/data_saver_browsertest.cc",
+      "parentUuid": "e99a132c_d1472c46",
+      "revId": "f8073dfa6d24c6a0ce4c12375c150e5480ab0e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
