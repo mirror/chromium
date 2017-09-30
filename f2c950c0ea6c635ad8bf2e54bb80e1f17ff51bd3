@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59ca3219_4aaf99b7",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_features.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-30T00:35:46Z",
+      "side": 1,
+      "message": "Add a 1-line comment describing what this feature does.",
+      "range": {
+        "startLine": 30,
+        "startChar": 20,
+        "endLine": 30,
+        "endChar": 50
+      },
+      "revId": "f2c950c0ea6c635ad8bf2e54bb80e1f17ff51bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1578af3b_5dca1fb7",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_headers.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-30T00:35:46Z",
+      "side": 1,
+      "message": "s/TimeDelta/base::TimeDelta/",
+      "range": {
+        "startLine": 71,
+        "startChar": 9,
+        "endLine": 71,
+        "endChar": 18
+      },
+      "revId": "f2c950c0ea6c635ad8bf2e54bb80e1f17ff51bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1e3dbf8_4698d700",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_params.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-30T00:35:46Z",
+      "side": 1,
+      "message": "directly call  GetFieldTrialParamByFeatureAsBool instead of storing the values first in the std::map?",
+      "range": {
+        "startLine": 181,
+        "startChar": 7,
+        "endLine": 181,
+        "endChar": 35
+      },
+      "revId": "f2c950c0ea6c635ad8bf2e54bb80e1f17ff51bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3c1f433_fb70d270",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_params.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-30T00:35:46Z",
+      "side": 1,
+      "message": "Call GetFieldTrialParamByFeatureAsInt?",
+      "range": {
+        "startLine": 196,
+        "startChar": 17,
+        "endLine": 196,
+        "endChar": 18
+      },
+      "revId": "f2c950c0ea6c635ad8bf2e54bb80e1f17ff51bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
