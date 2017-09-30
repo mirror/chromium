@@ -22,6 +22,30 @@
       "revId": "c63af10ed30b4c8cbbd8097ce320f09a2b860657",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d92554ad_f7be6e4a",
+        "filename": "content/common/view_messages.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-09-30T11:59:36Z",
+      "side": 1,
+      "message": "I don\u0027t think rollover really matters in this particular CL because we only check that it hasn\u0027t changed. With that said, I\u0027d rather not rely on that current behavior because now that this thing is in place, others may make that assumption and use it as a monotonically increasing number so I\u0027ve made it uint64_t.",
+      "parentUuid": "5fb30831_9b93ce79",
+      "range": {
+        "startLine": 312,
+        "startChar": 20,
+        "endLine": 312,
+        "endChar": 23
+      },
+      "revId": "c63af10ed30b4c8cbbd8097ce320f09a2b860657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
