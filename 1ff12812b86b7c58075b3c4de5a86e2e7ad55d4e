@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "f2e0bd10_2a0352bf",
+        "filename": "components/autofill/core/browser/autofill_profile.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-30T06:01:43Z",
+      "side": 1,
+      "message": "static assert that the number of supported types * bits per type doesn\u0027t exceed the width of the bitfield.\n\ni.e.,\n\nstatic const size_t kNumSupportedTypesForValidation \u003d\n    sizeof(kSupportedTypesForValidation) / sizeof(kSupportedTypesForValidation[0]);\n\nstatic_assert(kNumSupportedTypesForValidation * kValidityBitsPerType \u003c\u003d 64,\n              \"Not enough bits to encode profile validity information!\");",
+      "revId": "1ff12812b86b7c58075b3c4de5a86e2e7ad55d4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e2939e3_5f1678fb",
+        "filename": "components/autofill/core/browser/autofill_profile.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-30T06:01:43Z",
+      "side": 1,
+      "message": "DCHECK that the shift is still in range (at most 64 bits)",
+      "revId": "1ff12812b86b7c58075b3c4de5a86e2e7ad55d4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "752bb674_d1b3645a",
+        "filename": "components/autofill/core/browser/autofill_profile.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-30T06:01:43Z",
+      "side": 1,
+      "message": "nit: this code isn\u0027t reachable given kBitmask \u003d 3\n\ni.e., \u0027!if\u0027 is a tautology so not sure it\u0027s worth keeping it here as a run-time check. maybe this can be statically asserted?",
+      "revId": "1ff12812b86b7c58075b3c4de5a86e2e7ad55d4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba3ee6ba_baf2be84",
         "filename": "components/sync/protocol/autofill_specifics.proto",
         "patchSetId": 4
