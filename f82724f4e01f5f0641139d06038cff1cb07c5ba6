@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7393c98_782f1cf3",
+        "filename": "chrome/browser/resources/policy_tool.css",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-30T01:46:33Z",
+      "side": 1,
+      "message": "Maybe hidden instead of disabled?\n\nCould it be the attribute hidden rather than a class?",
+      "revId": "f82724f4e01f5f0641139d06038cff1cb07c5ba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
