@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b20ffcbd_d3d5c781",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/OverlayPanel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-09-30T02:26:58Z",
+      "side": 1,
+      "message": "It\u0027s not too clear what\u0027s going on here, maybe add a single-line comment?",
+      "range": {
+        "startLine": 764,
+        "startChar": 0,
+        "endLine": 764,
+        "endChar": 70
+      },
+      "revId": "9e982cc13c5216862a6ce9f36722f9ea6219ee07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "01618914_342b0290",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-09-30T02:26:58Z",
+      "side": 1,
+      "message": "This looks out of place, maybe accidental?  Or some cleanup leftover from another change?",
+      "range": {
+        "startLine": 217,
+        "startChar": 0,
+        "endLine": 217,
+        "endChar": 47
+      },
+      "revId": "9e982cc13c5216862a6ce9f36722f9ea6219ee07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
