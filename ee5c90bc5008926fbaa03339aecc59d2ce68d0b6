@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8462d2f8_e71e560a",
+        "filename": "chrome_elf/nt_registry/nt_registry.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 811,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-09-30T21:22:35Z",
+      "side": 1,
+      "message": "I actually considered that.  I decided it was safer to leave it at 1.  data() returns a valid pointer even if it\u0027s empty.  But I\u0027m not calling an API that deals with a std::vector.  In the normal sys api world, a buffer of size 0 would be a NULL ptr.  In some ways, it\u0027s more confusing to have a \"valid\" pointer returned for something of size 0.  And we don\u0027t control what the system api does, so I just don\u0027t want to risk it.\n\nI\u0027m willing to do \"((size_needed) ? buffer.data() : nullptr)\" if you prefer...",
+      "parentUuid": "f5328f9f_e6c4e59b",
+      "range": {
+        "startLine": 811,
+        "startChar": 22,
+        "endLine": 811,
+        "endChar": 23
+      },
+      "revId": "ee5c90bc5008926fbaa03339aecc59d2ce68d0b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "47ebc038_1d18cc39",
         "filename": "chrome_elf/nt_registry/nt_registry.cc",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-29T08:23:44Z",
       "side": 1,
       "message": "the \"!out_subjey_count\" part of this feels like it should be a debug assert (programmer error). wdyt? checking for !key and returning false makes sense since it could simplify use of the api -- no need to check the result of a create/open.\n\n(same comment in QueryRegSubkey)",
+      "range": {
+        "startLine": 1107,
+        "startChar": 15,
+        "endLine": 1107,
+        "endChar": 31
+      },
+      "revId": "ee5c90bc5008926fbaa03339aecc59d2ce68d0b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "985c385a_7805661e",
+        "filename": "chrome_elf/nt_registry/nt_registry.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1107,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-09-30T21:22:35Z",
+      "side": 1,
+      "message": "So my take on this is that these are exported APIs of a lib that can be called by any other code.  I would normally only use asserts in internal (private) function call argument checking, where something really shouldn\u0027t be happening and we control the call (see local functions above).  \n\nAny exported api I just use control flow.  There\u0027s nothing illegal about passing in a nullptr here (or for |key|), but caller just won\u0027t successfully get the \"EnumerationInfo\". \n\nIf the functions returned an error code instead of bools, I would be returning BAD_ARGUMENT here... but bools are better for this lib.",
+      "parentUuid": "47ebc038_1d18cc39",
       "range": {
         "startLine": 1107,
         "startChar": 15,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "c11d417a_edb0e13f",
+        "filename": "chrome_elf/nt_registry/nt_registry_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-09-30T21:22:35Z",
+      "side": 1,
+      "message": "WAAAAT!  EXPECT_EQ can compare string objects!?  I guess as long as there is an \"\u003d\u003d\" operator implementation in an object...",
+      "parentUuid": "74fb1a53_bb2a754c",
+      "revId": "ee5c90bc5008926fbaa03339aecc59d2ce68d0b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "47566248_bba0f15b",
         "filename": "chrome_elf/nt_registry/nt_registry_unittest.cc",
         "patchSetId": 7
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "e8c7caf3_0c2a825c",
+        "filename": "chrome_elf/nt_registry/nt_registry_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-09-30T21:22:35Z",
+      "side": 1,
+      "message": "I\u0027ve restructured the API_MULTISZ tests.  Now using the vector compare where it makes sense.",
+      "parentUuid": "47566248_bba0f15b",
+      "revId": "ee5c90bc5008926fbaa03339aecc59d2ce68d0b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7ee7f15_0db59a03",
         "filename": "chrome_elf/nt_registry/nt_registry_unittest.cc",
         "patchSetId": 7
@@ -93,6 +177,24 @@
       "writtenOn": "2017-09-29T08:23:44Z",
       "side": 1,
       "message": "maybe EXPECT_EQ(multisz_value, std::wstring()); so that a failure will print the string? might make it easier to diagnose without using a debugger.",
+      "revId": "ee5c90bc5008926fbaa03339aecc59d2ce68d0b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5d90062_168bf233",
+        "filename": "chrome_elf/nt_registry/nt_registry_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-09-30T21:22:35Z",
+      "side": 1,
+      "message": "It\u0027s actually an empty vector - not a string.  I\u0027ve adjusted to an empty vector compare though.",
+      "parentUuid": "d7ee7f15_0db59a03",
       "revId": "ee5c90bc5008926fbaa03339aecc59d2ce68d0b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "878f4929_38c004d2",
+        "filename": "chrome_elf/nt_registry/nt_registry_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-09-30T21:22:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "496a439e_5ca4e0bd",
+      "range": {
+        "startLine": 579,
+        "startChar": 23,
+        "endLine": 579,
+        "endChar": 38
+      },
+      "revId": "ee5c90bc5008926fbaa03339aecc59d2ce68d0b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67d8d07d_42be0d96",
         "filename": "chrome_elf/nt_registry/nt_registry_unittest.cc",
         "patchSetId": 7
@@ -139,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "6ff1448d_dab93ffe",
+        "filename": "chrome_elf/nt_registry/nt_registry_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-09-30T21:22:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67d8d07d_42be0d96",
+      "revId": "ee5c90bc5008926fbaa03339aecc59d2ce68d0b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "256735bb_0e50b71b",
         "filename": "chrome_elf/nt_registry/nt_registry_unittest.cc",
         "patchSetId": 7
@@ -153,6 +297,24 @@
       "revId": "ee5c90bc5008926fbaa03339aecc59d2ce68d0b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06520404_b6914c87",
+        "filename": "chrome_elf/nt_registry/nt_registry_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-09-30T21:22:35Z",
+      "side": 1,
+      "message": "Done.  Just curious... should every constant string in a function be static?",
+      "parentUuid": "256735bb_0e50b71b",
+      "revId": "ee5c90bc5008926fbaa03339aecc59d2ce68d0b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
