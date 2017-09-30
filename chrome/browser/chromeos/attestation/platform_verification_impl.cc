@@ -21,20 +21,27 @@ void PlatformVerificationImpl::Create(
     content::RenderFrameHost* render_frame_host,
     media::mojom::PlatformVerificationRequest request) {
   DVLOG(2) << __FUNCTION__;
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   DCHECK(render_frame_host);
-  mojo::MakeStrongBinding(
-      base::MakeUnique<PlatformVerificationImpl>(render_frame_host),
-      std::move(request));
+
+  // PlatformVerificationFlow requires to run on the UI thread. Remove this
+  // after PlatformVerificationFlow drops this requirement.
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  // The object is bound to the lifetime of |render_frame_host| and the mojo
+  // connection. See FrameServiceBase for details.
+  new PlatformVerificationImpl(render_frame_host, std::move(request));
 }
 
 PlatformVerificationImpl::PlatformVerificationImpl(
-    content::RenderFrameHost* render_frame_host)
-    : render_frame_host_(render_frame_host), weak_factory_(this) {
-  DCHECK(render_frame_host);
-}
+    content::RenderFrameHost* render_frame_host,
+    media::mojom::PlatformVerificationRequest request)
+    : FrameServiceBase(render_frame_host, std::move(request)),
+      web_contents_(
+          content::WebContents::FromRenderFrameHost(render_frame_host)),
+      weak_factory_(this) {}
 
 PlatformVerificationImpl::~PlatformVerificationImpl() {
+  DCHECK(CalledOnValidThread());
 }
 
 void PlatformVerificationImpl::ChallengePlatform(
@@ -42,14 +49,13 @@ void PlatformVerificationImpl::ChallengePlatform(
     const std::string& challenge,
     ChallengePlatformCallback callback) {
   DVLOG(2) << __FUNCTION__;
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  DCHECK(CalledOnValidThread());
 
   if (!platform_verification_flow_.get())
     platform_verification_flow_ = new PlatformVerificationFlow();
 
   platform_verification_flow_->ChallengePlatformKey(
-      content::WebContents::FromRenderFrameHost(render_frame_host_), service_id,
-      challenge,
+      web_contents_, service_id, challenge,
       base::Bind(&PlatformVerificationImpl::OnPlatformChallenged,
                  weak_factory_.GetWeakPtr(), base::Passed(&callback)));
 }
@@ -61,7 +67,7 @@ void PlatformVerificationImpl::OnPlatformChallenged(
     const std::string& signature,
     const std::string& platform_key_certificate) {
   DVLOG(2) << __FUNCTION__ << ": " << result;
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  DCHECK(CalledOnValidThread());
 
   if (result != PlatformVerificationFlow::SUCCESS) {
     DCHECK(signed_data.empty());
