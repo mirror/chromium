@@ -91,6 +91,10 @@ CONTENT_EXPORT int Compare(const base::StringPiece& a,
                            const base::StringPiece& b,
                            bool index_keys);
 
+int CompareKeys(const base::StringPiece& a, const base::StringPiece& b);
+
+int CompareIndexKeys(const base::StringPiece& a, const base::StringPiece& b);
+
 class KeyPrefix {
  public:
   // These are serialized to disk; any new items must be appended, and none can
