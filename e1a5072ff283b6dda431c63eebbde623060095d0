@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4be329db_94af0ab1",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller_private.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-09-30T00:32:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8491a597_40beac94",
+      "range": {
+        "startLine": 28,
+        "startChar": 61,
+        "endLine": 28,
+        "endChar": 0
+      },
+      "revId": "e1a5072ff283b6dda431c63eebbde623060095d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df15b09a_1417759a",
         "filename": "chrome/browser/ui/cocoa/browser_window_controller_private.h",
         "patchSetId": 10
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c7521393_0338a346",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller_private.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-09-30T00:32:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df15b09a_1417759a",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 4
+      },
+      "revId": "e1a5072ff283b6dda431c63eebbde623060095d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d114119f_b9034d9d",
         "filename": "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_controller.mm",
         "patchSetId": 10
@@ -68,6 +116,30 @@
       "revId": "e1a5072ff283b6dda431c63eebbde623060095d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bd44aa5_ebc1856e",
+        "filename": "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_controller.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-09-30T00:32:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d114119f_b9034d9d",
+      "range": {
+        "startLine": 178,
+        "startChar": 0,
+        "endLine": 179,
+        "endChar": 60
+      },
+      "revId": "e1a5072ff283b6dda431c63eebbde623060095d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
