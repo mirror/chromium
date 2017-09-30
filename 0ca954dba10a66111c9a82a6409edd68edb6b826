@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecdcf674_05a50bd7",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 2116,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-09-30T01:41:15Z",
+      "side": 1,
+      "message": "Why is this optional? What happens when it\u0027s not present?",
+      "revId": "0ca954dba10a66111c9a82a6409edd68edb6b826",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8bfd4df_fc7cd56a",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 2120,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-09-30T01:41:15Z",
+      "side": 1,
+      "message": "\"Deletes a range of entries ...\", perhaps, considering you pass keyRange? Also, deleteObjectStoreEntries may be?",
+      "revId": "0ca954dba10a66111c9a82a6409edd68edb6b826",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd6931de_5e90cf9a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ApplicationPanelSidebar.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1272,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-09-30T01:41:15Z",
+      "side": 1,
+      "message": "nit: please eventually change this to be a Map, not an Object (doing so in a follow-up is fine).",
+      "revId": "0ca954dba10a66111c9a82a6409edd68edb6b826",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da70fb78_35239928",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/IndexedDBViews.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-09-30T01:41:15Z",
+      "side": 1,
+      "message": "nit: this view is all about showing this DataGrid, and we create it in the constructor. It would be nice to be able to presume it always exists :-)",
+      "revId": "0ca954dba10a66111c9a82a6409edd68edb6b826",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "151c5eaf_0adffb56",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/IndexedDBViews.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-09-30T01:41:15Z",
+      "side": 1,
+      "message": "var key \u003d /** @type {!SDK.RemoteObject} */ (this._isIndex ? node.data.primaryKey : node.data.key);",
+      "revId": "0ca954dba10a66111c9a82a6409edd68edb6b826",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a068a5b3_e9ccb825",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/IndexedDBViews.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-09-30T01:41:15Z",
+      "side": 1,
+      "message": "did you mean to use await here?",
+      "revId": "0ca954dba10a66111c9a82a6409edd68edb6b826",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f42b4a49_c16dabee",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/IndexedDBViews.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-09-30T01:41:15Z",
+      "side": 1,
+      "message": "Don\u0027t we have one already in line 241?",
+      "revId": "0ca954dba10a66111c9a82a6409edd68edb6b826",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f5fcfeb_ba053076",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/indexedDBViews.css",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-09-30T01:41:15Z",
+      "side": 1,
+      "message": "Do you really need both lines? Thought first one should cut it.",
+      "revId": "0ca954dba10a66111c9a82a6409edd68edb6b826",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4ed6877_d951ac18",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/InspectorIndexedDBAgent.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-09-30T01:41:15Z",
+      "side": 1,
+      "message": "no punctuation in error messages, please!",
+      "revId": "0ca954dba10a66111c9a82a6409edd68edb6b826",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
