@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0cbd8ffa_435a5f7c",
+        "filename": "chrome/common/url_constants.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-09-30T09:28:20Z",
+      "side": 1,
+      "message": "can be moved to the following OS_CHROMEOS section.",
+      "range": {
+        "startLine": 97,
+        "startChar": 11,
+        "endLine": 97,
+        "endChar": 35
+      },
+      "revId": "3d29eca07dbb87d3dfd460c7a81b0195270dcd2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f1e8d0a_c148b921",
+        "filename": "chrome/common/url_constants.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-09-30T09:28:20Z",
+      "side": 1,
+      "message": "please help to put kChromeUISysInternalsURL definition here.",
+      "range": {
+        "startLine": 136,
+        "startChar": 0,
+        "endLine": 136,
+        "endChar": 49
+      },
+      "revId": "3d29eca07dbb87d3dfd460c7a81b0195270dcd2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "579b46a4_28c2c901",
+        "filename": "chrome/common/url_constants.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-09-30T09:28:20Z",
+      "side": 1,
+      "message": "it\u0027s better to put kChromeUISysInternalsHost definition after this line",
+      "range": {
+        "startLine": 326,
+        "startChar": 0,
+        "endLine": 326,
+        "endChar": 51
+      },
+      "revId": "3d29eca07dbb87d3dfd460c7a81b0195270dcd2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c888a14_b4fb6cb6",
+        "filename": "chrome/common/url_constants.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-09-30T09:28:20Z",
+      "side": 1,
+      "message": "can be moved to the following OS_CHROMEOS section.",
+      "range": {
+        "startLine": 89,
+        "startChar": 18,
+        "endLine": 89,
+        "endChar": 42
+      },
+      "revId": "3d29eca07dbb87d3dfd460c7a81b0195270dcd2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3137bf0e_052ee5d2",
+        "filename": "chrome/common/url_constants.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-09-30T09:28:20Z",
+      "side": 1,
+      "message": "please help to put kChromeUISysInternalsURL declaration after this line.",
+      "range": {
+        "startLine": 126,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 37
+      },
+      "revId": "3d29eca07dbb87d3dfd460c7a81b0195270dcd2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d9d7cde_3076cbe5",
+        "filename": "chrome/common/url_constants.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-09-30T09:28:20Z",
+      "side": 1,
+      "message": "it\u0027s better to put kChromeUISysInternalsHost declaration after this line.",
+      "range": {
+        "startLine": 310,
+        "startChar": 0,
+        "endLine": 310,
+        "endChar": 43
+      },
+      "revId": "3d29eca07dbb87d3dfd460c7a81b0195270dcd2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
