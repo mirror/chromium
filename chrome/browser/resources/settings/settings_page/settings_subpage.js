@@ -49,6 +49,19 @@ Polymer({
     },
   },
 
+  listeners: {
+    'set-subpage-search': 'onSetSubpageSearchTerm_',
+  },
+
+  /**
+   * Set the value of the search field.
+   * @param {!Event} e
+   */
+  onSetSubpageSearchTerm_: function(e) {
+    e.stopPropagation();
+    this.$$('settings-subpage-search').setValue(e.detail);
+  },
+
   /** @private */
   onTapBack_: function() {
     settings.navigateToPreviousRoute();
