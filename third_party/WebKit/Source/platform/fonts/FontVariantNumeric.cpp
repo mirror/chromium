@@ -3,12 +3,11 @@
 // found in the LICENSE file.
 
 #include "platform/fonts/FontVariantNumeric.h"
+#include "platform/fonts/FontVariantEastAsian.h"
 
 #include "platform/wtf/text/WTFString.h"
 
 namespace blink {
-
-static const char* kUnknownString = "Unknown";
 
 String FontVariantNumeric::ToString(NumericFigure figure) {
   switch (figure) {

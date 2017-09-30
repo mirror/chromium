@@ -80,6 +80,9 @@ class FontVariantEastAsian {
   // Used in setVariant to store the value in m_fields.m_variantNumeric;
   friend class FontDescription;
 };
+
+extern const char* kUnknownString;
+
 }  // namespace blink
 
 #endif  // FontVariantEastAsian_h

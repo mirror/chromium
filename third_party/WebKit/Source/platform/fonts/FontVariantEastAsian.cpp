@@ -8,7 +8,7 @@
 
 namespace blink {
 
-static const char* kUnknownString = "Unknown";
+const char* kUnknownString = "Unknown";
 
 String FontVariantEastAsian::ToString(EastAsianForm form) {
   switch (form) {
