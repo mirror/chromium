@@ -413,7 +413,7 @@ class _LogcatProcessor(object):
       style = colorama.Back.GREEN
     elif priority == 'D':
       style = colorama.Back.BLUE
-    return style + colorama.Style.BRIGHT + colorama.Fore.BLACK
+    return style + colorama.Fore.BLACK
 
   def _ParseLine(self, line):
     tokens = line.split(None, 6)
@@ -440,8 +440,14 @@ class _LogcatProcessor(object):
         date, invokation_time, pid, tid, priority, tag, original_message)
 
   def _PrintParsedLine(self, parsed_line, dim=False):
+    tid_style = ''
+    # Make the main thread bright.
+    if not dim and parsed_line.pid == parsed_line.tid:
+      tid_style = colorama.Style.BRIGHT
     pid_style = self._GetPidStyle(parsed_line.pid, dim)
     # We have to pad before adding color as that changes the width of the tag.
+    pid_str = _Colorize('{:5}'.format(parsed_line.pid), pid_style)
+    tid_str = _Colorize('{:5}'.format(parsed_line.tid), tid_style)
     tag = _Colorize('{:8}'.format(parsed_line.tag),
                     pid_style + ('' if dim else colorama.Style.BRIGHT))
     priority = _Colorize(parsed_line.priority,
@@ -451,34 +457,32 @@ class _LogcatProcessor(object):
       messages = self._deobfuscator.TransformLines(messages)
     for message in messages:
       message = _Colorize(message, pid_style)
-      sys.stdout.write('{} {} {:5} {:5} {} {}: {}\n'.format(
-          parsed_line.date, parsed_line.invokation_time, parsed_line.pid,
-          parsed_line.tid, priority, tag, message))
+      sys.stdout.write('{} {} {} {} {} {}: {}\n'.format(
+          parsed_line.date, parsed_line.invokation_time, pid_str, tid_str,
+          priority, tag, message))
 
   def ProcessLine(self, line, fast=False):
-    dim = False
     if not line or line.startswith('------'):
       return
     log = self._ParseLine(line)
-    if log.pid in self._my_pids or (not fast and
-        (log.priority == 'F' or  # Java crash dump
-         log.tag == 'ActivityManager' or  # Android system
-         log.tag == 'DEBUG')):  # Native crash dump
-      pass  # write
-    elif log.pid in self._not_my_pids:
-      dim = True
-    elif fast:
-      # Skip checking whether our package spawned new processes.
-      self._not_my_pids.add(log.pid)
-      dim = True
-    else:
+    if log.pid not in self._my_pids:
+      if fast:
+        # Skip checking whether our package spawned new processes.
+        self._not_my_pids.add(log.pid)
+        return
       # Check and add the pid if it is a new one from our package.
       self._UpdateMyPids()
       if log.pid not in self._my_pids:
         self._not_my_pids.add(log.pid)
-        dim = True
-    if (self._verbose and not fast) or not dim:
-      self._PrintParsedLine(log, dim)
+
+      if not self._verbose and log.pid not in self._my_pids and not (
+          log.priority == 'F' or  # Java crash dump
+          log.tag == 'ActivityManager' or  # Android system
+          log.tag == 'DEBUG'):  # Native crash dump
+        return
+
+    dim = log.pid not in self._my_pids
+    self._PrintParsedLine(log, dim)
 
 
 def _RunLogcat(device, package_name, mapping_path, verbose):
