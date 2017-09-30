@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "779ed1b3_7960c6a6",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2180,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-30T00:06:20Z",
+      "side": 1,
+      "message": "Are we going to have the same problem with expired_previous_decision, that we don\u0027t have access to the necessary information to compute it in SSLNavigationThrottle but SSLErrorHandler expects it?",
+      "range": {
+        "startLine": 2180,
+        "startChar": 6,
+        "endLine": 2180,
+        "endChar": 31
+      },
+      "revId": "6be0660ab9e13f838895b7acbb09206c279049c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38897c9e_e2baabd4",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-30T00:06:20Z",
+      "side": 1,
+      "message": "nit: there are so many tests in this file that it seems a little wasteful to do this on all of them when we only need it on a few. Could you subclass SSLUITest to set up HSTS for just the two tests you need?",
+      "range": {
+        "startLine": 479,
+        "startChar": 28,
+        "endLine": 479,
+        "endChar": 36
+      },
+      "revId": "6be0660ab9e13f838895b7acbb09206c279049c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e7f1dd2_ba86a562",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 3515,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-30T00:06:20Z",
+      "side": 1,
+      "message": "nit: comments needs to be updated, I think (and below)",
+      "range": {
+        "startLine": 3514,
+        "startChar": 45,
+        "endLine": 3515,
+        "endChar": 47
+      },
+      "revId": "6be0660ab9e13f838895b7acbb09206c279049c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
