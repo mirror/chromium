@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "949a7bd7_dbca0582",
+        "filename": "chrome/browser/resources/settings/settings_page/settings_subpage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-30T01:55:41Z",
+      "side": 1,
+      "message": "Can we make this event more restrictive for now by only allowing clearing and not passing anything as a payload (and renaming to clear-subpage-search)? We can add that if/when the need arises.",
+      "revId": "01ab0babb99bdbd778dbac0bf0af43b6dfb1fcaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3334cee_3a1d93e0",
+        "filename": "chrome/browser/resources/settings/settings_page/settings_subpage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-30T01:55:41Z",
+      "side": 1,
+      "message": "settings-subpage-search does not always exist. It exists only if a \u0027searchLabel\u0027 is specified. Can we do one of the following (preferably the 1st one):\n\n1) Only register the listener if |searchLabel| exists when this element is added to the DOM (in attached callback). \n2) Add an assertion here that the element actually exists.",
+      "revId": "01ab0babb99bdbd778dbac0bf0af43b6dfb1fcaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
