@@ -566,6 +566,30 @@
     },
     {
       "key": {
+        "uuid": "dc0f7082_86ef8442",
+        "filename": "chrome/installer/zucchini/targets_affinity.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-09-30T01:25:56Z",
+      "side": 1,
+      "message": "I decided to introduce and use key_t after all, and adjusted the follow up CL.",
+      "parentUuid": "3dd23be5_ed16d7fc",
+      "range": {
+        "startLine": 48,
+        "startChar": 4,
+        "endLine": 48,
+        "endChar": 12
+      },
+      "revId": "fd4276aa5e0492b75d675e806aa5f177340589b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1ed07bc_b4566cfa",
         "filename": "chrome/installer/zucchini/targets_affinity.h",
         "patchSetId": 8
