@@ -3228,6 +3228,13 @@ bool GLES2DecoderImpl::Initialize(
   lose_context_when_out_of_memory_ =
       attrib_helper.lose_context_when_out_of_memory;
 
+  if (attrib_helper.context_type == CONTEXT_TYPE_WEBGL1 ||
+      attrib_helper.context_type == CONTEXT_TYPE_WEBGL2) {
+    fprintf(stderr, "For WebGL %d context, lose_context_when_out_of_memory was %s\n",
+            (attrib_helper.context_type == CONTEXT_TYPE_WEBGL1 ? 1 : 2),
+            (attrib_helper.lose_context_when_out_of_memory ? "true" : "false"));
+  }
+
   // If the failIfMajorPerformanceCaveat context creation attribute was true
   // and we are using a software renderer, fail.
   if (attrib_helper.fail_if_major_perf_caveat &&

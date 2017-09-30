@@ -362,6 +362,12 @@ bool DrawingBuffer::FinishPrepareTextureMailboxGpu(
     // into the mailbox, and allocate (or recycle) a new backbuffer.
     color_buffer_for_mailbox = back_color_buffer_;
     back_color_buffer_ = CreateOrRecycleColorBuffer();
+    if (!back_color_buffer_) {
+      // Likely out of memory. We are deep within the compositing stack at
+      // this point so consider this error unrecoverable and lose the context.
+      client_->DrawingBufferClientForceLostContext();
+      return false;
+    }
     AttachColorBufferToReadFramebuffer();
 
     // Explicitly specify that m_fbo (which is now bound to the just-allocated
@@ -855,8 +861,17 @@ void DrawingBuffer::BeginDestruction() {
 
 bool DrawingBuffer::ResizeDefaultFramebuffer(const IntSize& size) {
   DCHECK(state_restorer_);
-  // Recreate m_backColorBuffer.
+  if (destruction_in_progress_)
+    return false;
+  DCHECK(client_);
+  // Recreate back_color_buffer_. Make sure we release the previous one
+  // eagerly in case it's huge.
+  back_color_buffer_ = nullptr;
   back_color_buffer_ = CreateColorBuffer(size);
+  if (!back_color_buffer_) {
+    // Allocation failed, probably due to out-of-memory.
+    return false;
+  }
 
   AttachColorBufferToReadFramebuffer();
 
@@ -865,6 +880,8 @@ bool DrawingBuffer::ResizeDefaultFramebuffer(const IntSize& size) {
     state_restorer_->SetRenderbufferBindingDirty();
     gl_->BindFramebuffer(GL_FRAMEBUFFER, multisample_fbo_);
     gl_->BindRenderbuffer(GL_RENDERBUFFER, multisample_renderbuffer_);
+    if (!client_->DrawingBufferClientCaptureGLErrorsFromContext())
+      return false;
     gl_->RenderbufferStorageMultisampleCHROMIUM(
         GL_RENDERBUFFER, sample_count_, GetMultisampledRenderbufferFormat(),
         size.Width(), size.Height());
@@ -1185,6 +1202,9 @@ RefPtr<DrawingBuffer::ColorBuffer> DrawingBuffer::CreateColorBuffer(
   DCHECK(state_restorer_);
   state_restorer_->SetFramebufferBindingDirty();
   state_restorer_->SetTextureBindingDirty();
+  if (destruction_in_progress_)
+    return nullptr;
+  DCHECK(client_);
 
   // Select the Parameters for the texture object. Allocate the backing
   // GpuMemoryBuffer and GLImage, if one is going to be used.
@@ -1208,6 +1228,7 @@ RefPtr<DrawingBuffer::ColorBuffer> DrawingBuffer::CreateColorBuffer(
         buffer_format = gfx::BufferFormat::BGRX_8888;
       gl_format = GL_RGB;
     }
+    LOG(ERROR) << "Creating GPU memory buffer " << size.Width() << " x " << size.Height();
     gpu_memory_buffer = gpu_memory_buffer_manager->CreateGpuMemoryBuffer(
         gfx::Size(size), buffer_format, gfx::BufferUsage::SCANOUT,
         gpu::kNullSurfaceHandle);
@@ -1239,6 +1260,7 @@ RefPtr<DrawingBuffer::ColorBuffer> DrawingBuffer::CreateColorBuffer(
   if (image_id) {
     gl_->BindTexImage2DCHROMIUM(parameters.target, image_id);
   } else {
+    client_->DrawingBufferClientCaptureGLErrorsFromContext();
     if (storage_texture_supported_) {
       GLenum internal_storage_format =
           parameters.allocate_alpha_channel ? GL_RGBA8 : GL_RGB8;
@@ -1248,6 +1270,11 @@ RefPtr<DrawingBuffer::ColorBuffer> DrawingBuffer::CreateColorBuffer(
       GLenum gl_format = parameters.allocate_alpha_channel ? GL_RGBA : GL_RGB;
       gl_->TexImage2D(parameters.target, 0, gl_format, size.Width(),
                       size.Height(), 0, gl_format, GL_UNSIGNED_BYTE, 0);
+    }
+    if (gl_->GetError() != GL_NO_ERROR) {
+      // Allocation of the texture failed, likely due to out-of-memory.
+      // The caller can attempt to retry with a smaller size.
+      return nullptr;
     }
   }
 
