@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d15334ab_d9865a08",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-30T09:14:04Z",
+      "side": 1,
+      "message": "The discussions about this is at https://groups.google.com/a/chromium.org/forum/#!topic/chromium-mojo/Ee20u9osnrs",
+      "range": {
+        "startLine": 123,
+        "startChar": 32,
+        "endLine": 126,
+        "endChar": 16
+      },
+      "revId": "3cf1107afc9175f13298beddec3c5f851e21e0d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
