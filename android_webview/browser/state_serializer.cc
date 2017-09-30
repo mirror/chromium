@@ -8,7 +8,6 @@
 
 #include "base/pickle.h"
 #include "base/time/time.h"
-#include "content/public/browser/child_process_security_policy.h"
 #include "content/public/browser/navigation_controller.h"
 #include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/render_process_host.h"
@@ -103,23 +102,6 @@ bool RestoreFromPickle(base::PickleIterator* iterator,
                      content::RestoreType::LAST_SESSION_EXITED_CLEANLY,
                      &entries);
   DCHECK_EQ(0u, entries.size());
-
-  if (controller.GetLastCommittedEntry()) {
-    // Set up the file access rights for the selected navigation entry.
-    // TODO(joth): This is duplicated from chrome/.../session_restore.cc and
-    // should be shared e.g. in  NavigationController. http://crbug.com/68222
-    const int id = web_contents->GetRenderProcessHost()->GetID();
-    const content::PageState& page_state =
-        controller.GetLastCommittedEntry()->GetPageState();
-    const std::vector<base::FilePath>& file_paths =
-        page_state.GetReferencedFiles();
-    for (std::vector<base::FilePath>::const_iterator file = file_paths.begin();
-         file != file_paths.end(); ++file) {
-      content::ChildProcessSecurityPolicy::GetInstance()->GrantReadFile(id,
-                                                                        *file);
-    }
-  }
-
   controller.LoadIfNecessary();
 
   return true;
