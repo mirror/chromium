@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8cb12ad_df850597",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 3955,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-30T05:54:41Z",
+      "side": 1,
+      "message": "Minor nit that cdms parses a bit confusingly (since someone who\u0027s not familiar could reason this as CDMs or CDMS).",
+      "range": {
+        "startLine": 3955,
+        "startChar": 6,
+        "endLine": 3955,
+        "endChar": 25
+      },
+      "revId": "ed400faf03f3ebcbbe866f10e63bc2b4a1a3ed00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3858263_fdaf154f",
+        "filename": "chrome/browser/chromeos/attestation/platform_verification_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-30T05:54:41Z",
+      "side": 1,
+      "message": "I\u0027m not sure that WebContentsObserver is safe for use on other threads (all the callbacks will be invoked on the UI thread, in any case, and we certainly can\u0027t register it from a non-UI thread). What\u0027s the future plan for this code?",
+      "revId": "ed400faf03f3ebcbbe866f10e63bc2b4a1a3ed00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9119e5b1_7c8ce45a",
+        "filename": "chrome/browser/chromeos/attestation/platform_verification_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-30T05:54:41Z",
+      "side": 1,
+      "message": "This feels redundant; the code can just use web_contents() from WebContentsObserver.",
+      "revId": "ed400faf03f3ebcbbe866f10e63bc2b4a1a3ed00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20f344f1_e1cb5ab9",
+        "filename": "chrome/browser/media/output_protection_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-30T05:54:41Z",
+      "side": 1,
+      "message": "I\u0027m wondering if we still need routing IDs, given that this observes the lifetime of the RFH now.",
+      "revId": "ed400faf03f3ebcbbe866f10e63bc2b4a1a3ed00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fa57639_63a5df43",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-30T05:54:41Z",
+      "side": 1,
+      "message": "Similarly, is it possible to rewrite the test so we can just use PrefService derived from the RFH?",
+      "revId": "ed400faf03f3ebcbbe866f10e63bc2b4a1a3ed00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "516dc941_42b34083",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-30T05:54:41Z",
+      "side": 1,
+      "message": "And can we also just use origin().Serialize() where it\u0027s needed, rather than doing this ahead of time?",
+      "revId": "ed400faf03f3ebcbbe866f10e63bc2b4a1a3ed00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17f998fb_e3d36dcf",
+        "filename": "content/public/browser/frame_service_base.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-30T05:54:41Z",
+      "side": 1,
+      "message": "I\u0027m not sure that this will work: thread_checker_ shouldn\u0027t even be defined in non-DCHECK builds now.",
+      "revId": "ed400faf03f3ebcbbe866f10e63bc2b4a1a3ed00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
