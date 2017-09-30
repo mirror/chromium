@@ -56,8 +56,8 @@ class Pointer : public SurfaceTreeHost,
   // Returns the current cursor for the pointer.
   gfx::NativeCursor GetCursor();
 
-  // Overridden from SurfaceDelegate:
-  void OnSurfaceCommit() override;
+  // Overridden from SurfaceTreeHost:
+  void OnSubmitCompositorFrame(bool has_contents) override;
 
   // Overriden from SurfaceObserver:
   void OnSurfaceDestroying(Surface* surface) override;

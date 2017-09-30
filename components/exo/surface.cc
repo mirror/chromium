@@ -4,6 +4,7 @@
 
 #include "components/exo/surface.h"
 
+#include <tuple>
 #include <utility>
 
 #include "base/callback_helpers.h"
@@ -13,6 +14,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/trace_event/trace_event.h"
 #include "base/trace_event/trace_event_argument.h"
+#include "cc/base/region.h"
 #include "cc/trees/layer_tree_frame_sink.h"
 #include "components/exo/buffer.h"
 #include "components/exo/pointer.h"
@@ -433,7 +435,7 @@ void Surface::Commit() {
     delegate_->OnSurfaceCommit();
 }
 
-void Surface::CommitSurfaceHierarchy(
+std::pair<gfx::Rect, bool> Surface::CommitSurfaceHierarchy(
     const gfx::Point& origin,
     std::list<FrameCallback>* frame_callbacks,
     std::list<PresentationCallback>* presentation_callbacks) {
@@ -517,16 +519,28 @@ void Surface::CommitSurfaceHierarchy(
     pending_damage_.setEmpty();
   }
 
+  gfx::Rect bounding_box(origin, content_size_);
+  cc::Region opaque_region(FillsBoundsOpaquely() ? bounding_box : gfx::Rect());
+
   // The top most sub-surface is at the front of the RenderPass's quad_list,
   // so we need composite sub-surface in reversed order.
   for (const auto& sub_surface_entry : base::Reversed(sub_surfaces_)) {
     auto* sub_surface = sub_surface_entry.first;
-    // Synchronsouly commit all pending state of the sub-surface and its
-    // decendents.
-    sub_surface->CommitSurfaceHierarchy(
+    gfx::Rect bounds;
+    bool opaque;
+
+    // Synchronously commit all pending state of the sub-surface and its
+    // descendants.
+    std::tie(bounds, opaque) = sub_surface->CommitSurfaceHierarchy(
         origin + sub_surface_entry.second.OffsetFromOrigin(), frame_callbacks,
         presentation_callbacks);
+
+    bounding_box.Union(bounds);
+    if (opaque)
+      opaque_region.Union(bounds);
   }
+
+  return {bounding_box, opaque_region.Contains(bounding_box)};
 }
 
 void Surface::AppendSurfaceHierarchyContentsToFrame(
@@ -762,12 +776,14 @@ void Surface::AppendContentsToFrame(const gfx::Point& origin,
   gfx::Rect output_rect(origin, content_size_);
   gfx::Rect quad_rect(0, 0, 1, 1);
 
-  // Surface uses DIP, but the |render_pass->damage_rect| uses pixels, so we
-  // need scale it beased on the |device_scale_factor|.
+  // Surface bounds are in DIPs, but |damage_rect| and |output_rect| are in
+  // pixels, so we need to scale by the |device_scale_factor|.
   gfx::Rect damage_rect = gfx::SkIRectToRect(damage_.getBounds());
   damage_rect.Offset(origin.x(), origin.y());
   render_pass->damage_rect.Union(
       gfx::ConvertRectToPixel(device_scale_factor, damage_rect));
+  render_pass->output_rect.Union(
+      gfx::ConvertRectToPixel(device_scale_factor, output_rect));
 
   // Compute the total transformation from post-transform buffer coordinates to
   // target coordinates.
@@ -791,8 +807,8 @@ void Surface::AppendContentsToFrame(const gfx::Point& origin,
   viz::SharedQuadState* quad_state =
       render_pass->CreateAndAppendSharedQuadState();
   quad_state->SetAll(
-      quad_to_target_transform, gfx::Rect(content_size_) /* quad_layer_rect */,
-      output_rect /* visible_quad_layer_rect */, gfx::Rect() /* clip_rect */,
+      quad_to_target_transform, quad_rect /* quad_layer_rect */,
+      quad_rect /* visible_quad_layer_rect */, gfx::Rect() /* clip_rect */,
       false /* is_clipped */, are_contents_opaque, state_.alpha /* opacity */,
       SkBlendMode::kSrcOver /* blend_mode */, 0 /* sorting_context_id */);
 
@@ -864,8 +880,6 @@ void Surface::UpdateContentSize() {
   if (content_size_ != content_size) {
     content_size_ = content_size;
     window_->SetBounds(gfx::Rect(window_->bounds().origin(), content_size_));
-    if (delegate_)
-      delegate_->OnSurfaceContentSizeChanged();
   }
 }
 

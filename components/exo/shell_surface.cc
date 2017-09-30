@@ -861,19 +861,6 @@ void ShellSurface::OnSurfaceCommit() {
   }
 }
 
-void ShellSurface::OnSurfaceContentSizeChanged() {
-  SurfaceTreeHost::OnSurfaceContentSizeChanged();
-  if (enabled() && !widget_) {
-    // Defer widget creation until surface contains some contents.
-    if (root_surface()->content_size().IsEmpty()) {
-      Configure();
-      return;
-    }
-
-    CreateShellSurfaceWidget(ui::SHOW_STATE_NORMAL);
-  }
-}
-
 void ShellSurface::OnSetFrame(SurfaceFrameType type) {
   // TODO(reveman): Allow frame to change after surface has been enabled.
   switch (type) {
@@ -1362,6 +1349,20 @@ void ShellSurface::CompositorLockTimedOut() {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// SurfaceTreeHost overrides:
+
+void ShellSurface::OnSubmitCompositorFrame(bool has_contents) {
+  if (enabled() && !widget_) {
+    // Defer widget creation until surface contains some contents.
+    if (has_contents) {
+      CreateShellSurfaceWidget(ui::SHOW_STATE_NORMAL);
+    } else {
+      Configure();
+    }
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
 // ShellSurface, private:
 
 void ShellSurface::CreateShellSurfaceWidget(ui::WindowShowState show_state) {
@@ -1640,8 +1641,11 @@ bool ShellSurface::IsResizing() const {
 
 gfx::Rect ShellSurface::GetVisibleBounds() const {
   // Use |geometry_| if set, otherwise use the visual bounds of the surface.
-  return geometry_.IsEmpty() ? gfx::Rect(host_window()->bounds().size())
-                             : geometry_;
+  if (!geometry_.IsEmpty())
+    return geometry_;
+
+  return root_surface() ? gfx::Rect(root_surface()->content_size())
+                        : gfx::Rect();
 }
 
 gfx::Point ShellSurface::GetSurfaceOrigin() const {
