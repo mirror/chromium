@@ -510,6 +510,11 @@ void FrameFetchContext::DispatchDidReceiveResponse(
                                                 frame_type, request_context);
   }
 
+  if (response.IsLegacySymantecCert()) {
+    GetLocalFrameClient()->ReportLegacySymantecCert(
+        response.Url(), response.CertValidityStart());
+  }
+
   GetFrame()->Loader().Progress().IncrementProgress(identifier, response);
   GetLocalFrameClient()->DispatchDidReceiveResponse(response);
   DocumentLoader* document_loader = MasterDocumentLoader();
