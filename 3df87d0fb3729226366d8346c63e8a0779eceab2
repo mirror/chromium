@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92381b95_9404ca23",
+        "filename": "base/allocator/partition_allocator/address_space_randomization_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-09-30T19:45:29Z",
+      "side": 1,
+      "message": "Would it therefore be better to put these declartions in a/the .h file, then, and include that file in this file?",
+      "revId": "3df87d0fb3729226366d8346c63e8a0779eceab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
