@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39a86190_d5d8543a",
+        "filename": "gpu/ipc/service/gpu_memory_buffer_factory_native_pixmap.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-30T15:09:21Z",
+      "side": 1,
+      "message": "Can all the changes in this file should be replaced by ui::OzonePlatform logic? That would be easier to understand and it generally doesn\u0027t make sense with a USE_OZONE if def here when we use ui::OzonePlatform::GetInstance() below.",
+      "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3510e6d_fa8420e0",
+        "filename": "gpu/ipc/service/protected_gpu_memory_buffer_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-30T15:09:21Z",
+      "side": 1,
+      "message": "I assume we\u0027re not planning to use this for non-ozone platforms. Can you move this to ozone instead and have all special logic live behind the CreateNativePixmapFromHandle API of the SurfaceFactoryOzone? I think that would reduce the amount of platform independent code you need to touch significantly.",
+      "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51df604d_d4cac564",
+        "filename": "ui/gfx/buffer_types.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-30T15:09:21Z",
+      "side": 1,
+      "message": "Usage modes are for client allocation of GMBs. Are we going to allow clients to allocate protected buffers using the GpuMemoryBufferManager API?",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 11
+      },
+      "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eff6d32_18993977",
+        "filename": "ui/gfx/gpu_memory_buffer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-30T15:09:21Z",
+      "side": 1,
+      "message": "This should really be done as a separate CL but I don\u0027t think you\u0027ll need it after moving code into ozone platform.",
+      "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b780b935_4aa35c89",
+        "filename": "ui/ozone/platform/drm/gpu/drm_thread.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-30T15:09:21Z",
+      "side": 1,
+      "message": "we shouldn\u0027t be relying on \"BufferUsage\" for this. BufferUsage is for client side allocation and not for import. Import code shouldn\u0027t in general rely on BufferUsage to work correctly. Everything that is needed to export/import buffers should be part of the native pixmap handle.",
+      "range": {
+        "startLine": 184,
+        "startChar": 4,
+        "endLine": 184,
+        "endChar": 26
+      },
+      "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
