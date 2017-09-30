@@ -11,13 +11,13 @@
 #include "modules/csspaint/CSSPaintDefinition.h"
 #include "modules/csspaint/PaintWorkletGlobalScope.h"
 #include "platform/graphics/Image.h"
+#include "platform/wtf/CryptographicallyRandomNumber.h"
 
 namespace blink {
 
 const size_t PaintWorklet::kNumGlobalScopes = 2u;
+const size_t kMaxPaintCountToSwitch = 30u;
 DocumentPaintDefinition* const kInvalidDocumentDefinition = nullptr;
-// We use each global scope for many frames to try to maximize cache hits.
-const size_t kFrameCountToSwitch = 120u;
 
 // static
 PaintWorklet* PaintWorklet::From(LocalDOMWindow& window) {
@@ -47,13 +47,33 @@ void PaintWorklet::AddPendingGenerator(const String& name,
   pending_generator_registry_->AddPendingGenerator(name, generator);
 }
 
-// For this document, we try to check how many times there is a repaint, which
-// represents how many frames have executed this paint function. Then for every
-// 120 frames, we switch to another global scope, to enforce the constraint that
-// we can't rely on the state of the paint worklet global scope.
-size_t PaintWorklet::SelectGlobalScope() const {
+// We start with a random global scope when a new frame starts. Then within this
+// frame, we switch to the other global scope after certain amount of paint
+// calls (rand(kMaxPaintCountToSwitch)).
+// This approach ensures non-deterministic of global scope selecting, and that
+// there is a max of one switching within one frame.
+size_t PaintWorklet::SelectGlobalScope() {
   size_t current_paint_frame_count = GetFrame()->View()->PaintFrameCount();
-  return (current_paint_frame_count / kFrameCountToSwitch) % kNumGlobalScopes;
+  size_t selected_global_scope = previously_selected_global_scope_;
+  // A new frame starts.
+  if (current_paint_frame_count != previous_paint_frame_cnt_) {
+    // TODO(xidachen): Try to make this variable re-usable for the next frame.
+    // If one frame typically has ~5 paint, then we can switch after a few
+    // frames.
+    paints_before_switching_global_scope_ =
+        CryptographicallyRandomNumber() % kMaxPaintCountToSwitch;
+    selected_global_scope = CryptographicallyRandomNumber() % kNumGlobalScopes;
+    previous_paint_frame_cnt_ = current_paint_frame_count;
+    previously_selected_global_scope_ = selected_global_scope;
+  } else {
+    if (paints_before_switching_global_scope_ == 0) {
+      selected_global_scope =
+          CryptographicallyRandomNumber() % kNumGlobalScopes;
+      previously_selected_global_scope_ = selected_global_scope;
+    }
+  }
+  paints_before_switching_global_scope_--;
+  return selected_global_scope;
 }
 
 RefPtr<Image> PaintWorklet::Paint(const String& name,
