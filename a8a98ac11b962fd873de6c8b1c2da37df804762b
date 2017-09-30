@@ -1,0 +1,343 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49922f6a_8c8f6d0a",
+        "filename": "chrome/browser/previews/previews_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-30T01:24:54Z",
+      "side": 1,
+      "message": "It\u0027s not clear why this class creates this object, and then passes it to PreviewsUIService. Can PreviewsUIService construct the PreviewsLog object itself?",
+      "range": {
+        "startLine": 113,
+        "startChar": 33,
+        "endLine": 113,
+        "endChar": 44
+      },
+      "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a1834f8_25407294",
+        "filename": "components/previews/core/previews_black_list.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-30T01:24:54Z",
+      "side": 1,
+      "message": "Add a comment explaining what the method returns.",
+      "range": {
+        "startLine": 85,
+        "startChar": 2,
+        "endLine": 85,
+        "endChar": 12
+      },
+      "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7a2de4f_9ce23ca6",
+        "filename": "components/previews/core/previews_black_list.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-30T01:24:54Z",
+      "side": 1,
+      "message": "This is slightly confusing. This method has a different signature than AddPreviewNavigation() method: Different number of arguments, different return type.",
+      "range": {
+        "startLine": 113,
+        "startChar": 5,
+        "endLine": 113,
+        "endChar": 48
+      },
+      "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63ca66f6_419986c5",
+        "filename": "components/previews/core/previews_io_data.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-30T01:24:54Z",
+      "side": 1,
+      "message": "I will just say that it logs asynchronously.\nThere is no need to explain all the internal details in the method comments here.",
+      "range": {
+        "startLine": 54,
+        "startChar": 40,
+        "endLine": 55,
+        "endChar": 58
+      },
+      "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c13cb27_4d28a7aa",
+        "filename": "components/previews/core/previews_log.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-30T01:24:54Z",
+      "side": 1,
+      "message": "s/url(GURL(other.url)),/url(other.url),/",
+      "range": {
+        "startLine": 31,
+        "startChar": 6,
+        "endLine": 31,
+        "endChar": 27
+      },
+      "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b484e9c_55f19da1",
+        "filename": "components/previews/core/previews_log.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-30T01:24:54Z",
+      "side": 1,
+      "message": "This will require creating a copy of the messages. Can we avoid extra copies?",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 23
+      },
+      "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c29f2416_28734159",
+        "filename": "components/previews/core/previews_log.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-30T01:24:54Z",
+      "side": 1,
+      "message": "Can this method be a const method?",
+      "range": {
+        "startLine": 38,
+        "startChar": 37,
+        "endLine": 38,
+        "endChar": 51
+      },
+      "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ebf83fe_ad15d68d",
+        "filename": "components/previews/core/previews_log.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-30T01:24:54Z",
+      "side": 1,
+      "message": "Add:\nDCHECK_GE( kMaximumMessageLogs,  log_messages_.size());",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 4
+      },
+      "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6fa5d65_91ec453e",
+        "filename": "components/previews/core/previews_log.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-30T01:24:54Z",
+      "side": 1,
+      "message": "can we just use kPreviewNavigationEventType here instead of first copying the string to a temporary variable?",
+      "range": {
+        "startLine": 55,
+        "startChar": 13,
+        "endLine": 55,
+        "endChar": 23
+      },
+      "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eda48e7c_051fa921",
+        "filename": "components/previews/core/previews_log.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-30T01:24:54Z",
+      "side": 1,
+      "message": "can this be passed as const ref?",
+      "range": {
+        "startLine": 59,
+        "startChar": 4,
+        "endLine": 59,
+        "endChar": 32
+      },
+      "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9336c429_71619c31",
+        "filename": "components/previews/core/previews_log.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-30T01:24:54Z",
+      "side": 1,
+      "message": "Seems like this is not used outside of previews_log.h and previews_log.cc.\nSo, can this be declared as private member of PreviewsLog class?",
+      "range": {
+        "startLine": 20,
+        "startChar": 7,
+        "endLine": 20,
+        "endChar": 17
+      },
+      "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63c7e7fa_9606558d",
+        "filename": "components/previews/core/previews_log.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-30T01:24:54Z",
+      "side": 1,
+      "message": "I would probably rename this to PreviewsLogger or PreviewsLogs since this class holds multiple preview logs messages.",
+      "range": {
+        "startLine": 49,
+        "startChar": 6,
+        "endLine": 49,
+        "endChar": 17
+      },
+      "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eaa3bc9_f5cfbb33",
+        "filename": "components/previews/core/previews_log.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-30T01:24:54Z",
+      "side": 1,
+      "message": "Can this be a private method?",
+      "range": {
+        "startLine": 58,
+        "startChar": 7,
+        "endLine": 58,
+        "endChar": 17
+      },
+      "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e634c209_5ab5dadc",
+        "filename": "components/previews/core/previews_log.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-30T01:24:54Z",
+      "side": 1,
+      "message": "Why is this virtual?",
+      "range": {
+        "startLine": 65,
+        "startChar": 2,
+        "endLine": 65,
+        "endChar": 9
+      },
+      "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be675a0e_f70b853c",
+        "filename": "components/previews/core/previews_ui_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-30T01:24:54Z",
+      "side": 1,
+      "message": "Add:\nDCHECK(logger_);",
+      "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
