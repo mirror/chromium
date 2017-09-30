@@ -16,6 +16,24 @@
       "revId": "b4bc7a2bf9dee342ffa156f8adae1409f0c82ce8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96b138b2_20c790b2",
+        "filename": "chrome/browser/ui/ash/app_list/app_list_interactive_uitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-30T01:35:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "704eee6b_807d640c",
+      "revId": "b4bc7a2bf9dee342ffa156f8adae1409f0c82ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
