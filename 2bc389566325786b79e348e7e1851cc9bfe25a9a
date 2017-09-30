@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "cfe41e98_b1d9745c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/SelectionClientBridge.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-30T15:01:42Z",
+      "side": 1,
+      "message": "\u003e That code is in the manager at\n\u003e https://chromium-review.googlesource.com/c/chromium/src/+/679278/8/chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java#1637\n\u003e \n\u003e I don\u0027t think we should put that business logic in the bridge class because the bridge shouldn\u0027t be interpreting the selection-event stream, just passing events along.  Sorry if I gave you the impression it would all be in one class; I tried to convey that it would all be within contextual search.\n\nSaw that.. the part missing both from here and my earlier description is \"continue with smart selection\". I guess that\u0027s implied else where, but I would have preferred to have them be together. But I don\u0027t own this code.\n\nAlso looks odd this logic does not match exactly the create bridge logic, but I guess the trial is actually supposed to change behavior",
+      "parentUuid": "5565aece_bd7eccfc",
+      "revId": "2bc389566325786b79e348e7e1851cc9bfe25a9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "43e7a7bd_54767a9b",
         "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
         "patchSetId": 8
