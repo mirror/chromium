@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1df8422_34218f63",
+        "filename": "components/autofill/core/browser/autofill_field.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-30T06:22:56Z",
+      "side": 1,
+      "message": "Take this by value. Just saw that the style guide actually forbids rvalue-ref outside of assignment and move constructors.",
+      "revId": "63d36a4411603041743a5d1c42da75066d25d427",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
