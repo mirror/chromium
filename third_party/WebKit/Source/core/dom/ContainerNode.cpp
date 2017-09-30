@@ -1184,8 +1184,7 @@ void ContainerNode::FocusStateChanged() {
   if (IsElementNode() && ToElement(this)->ChildrenOrSiblingsAffectedByFocus())
     ToElement(this)->PseudoStateChanged(CSSSelector::kPseudoFocus);
 
-  LayoutTheme::GetTheme().ControlStateChanged(*GetLayoutObject(),
-                                              kFocusControlState);
+  GetLayoutObject()->InvalidateIfControlStateChanged(kFocusControlState);
   FocusWithinStateChanged();
 }
 
@@ -1293,8 +1292,7 @@ void ContainerNode::SetActive(bool down) {
   if (IsElementNode() && ToElement(this)->ChildrenOrSiblingsAffectedByActive())
     ToElement(this)->PseudoStateChanged(CSSSelector::kPseudoActive);
 
-  LayoutTheme::GetTheme().ControlStateChanged(*GetLayoutObject(),
-                                              kPressedControlState);
+  GetLayoutObject()->InvalidateIfControlStateChanged(kPressedControlState);
 }
 
 void ContainerNode::SetDragged(bool new_value) {
@@ -1351,10 +1349,8 @@ void ContainerNode::SetHovered(bool over) {
   if (IsElementNode() && ToElement(this)->ChildrenOrSiblingsAffectedByHover())
     ToElement(this)->PseudoStateChanged(CSSSelector::kPseudoHover);
 
-  if (GetLayoutObject()) {
-    LayoutTheme::GetTheme().ControlStateChanged(*GetLayoutObject(),
-                                                kHoverControlState);
-  }
+  if (LayoutObject* o = GetLayoutObject())
+    o->InvalidateIfControlStateChanged(kHoverControlState);
 }
 
 HTMLCollection* ContainerNode::Children() {
