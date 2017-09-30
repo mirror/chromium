@@ -64,6 +64,10 @@ declare_args() {
 
   # Whether or not we should use position independent code.
   use_pic = true
+
+  # Optimize for coverage guided fuzzing (balance between speed and number of
+  # branches)
+  optimize_for_fuzzing = false
 }
 
 # Exclude unwind tables for official builds as unwinding can be done from stack
