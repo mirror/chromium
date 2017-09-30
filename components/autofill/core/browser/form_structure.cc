@@ -359,7 +359,7 @@ void FormStructure::DetermineHeuristicTypes(ukm::UkmRecorder* ukm_recorder) {
   // Then if there are enough active fields, and if we are dealing with either a
   // proper <form> or a <form>-less checkout, run the heuristics and server
   // prediction routines.
-  if (active_field_count() >= kRequiredFieldsForPredictionRoutines &&
+  if (active_field_count() >= MinRequiredFieldsForPredictionRoutines() &&
       (is_form_tag_ || is_formless_checkout_)) {
     const FieldCandidatesMap field_type_map =
         FormField::ParseFormFields(fields_, is_form_tag_);
@@ -599,7 +599,7 @@ std::string FormStructure::FormSignatureAsStr() const {
 }
 
 bool FormStructure::IsAutofillable() const {
-  if (autofill_count() < kRequiredFieldsForPredictionRoutines)
+  if (autofill_count() < MinRequiredFieldsForPredictionRoutines())
     return false;
 
   return ShouldBeParsed();
@@ -630,7 +630,7 @@ void FormStructure::UpdateAutofillCount() {
 }
 
 bool FormStructure::ShouldBeParsed() const {
-  if (active_field_count() < kRequiredFieldsForPredictionRoutines &&
+  if (active_field_count() < MinRequiredFieldsForPredictionRoutines() &&
       (!all_fields_are_passwords() ||
        active_field_count() < kRequiredFieldsForFormsWithOnlyPasswordFields) &&
       !is_signin_upload_ && !has_author_specified_types_) {
@@ -653,7 +653,7 @@ bool FormStructure::ShouldBeParsed() const {
 
 bool FormStructure::ShouldBeCrowdsourced() const {
   return (has_password_field_ ||
-          active_field_count() >= kRequiredFieldsForPredictionRoutines) &&
+          active_field_count() >= MinRequiredFieldsForPredictionRoutines()) &&
          ShouldBeParsed();
 }
 
@@ -767,7 +767,7 @@ void FormStructure::LogQualityMetrics(
   // submission event.
   if (observed_submission) {
     AutofillMetrics::AutofillFormSubmittedState state;
-    if (num_detected_field_types < kRequiredFieldsForPredictionRoutines) {
+    if (num_detected_field_types < MinRequiredFieldsForPredictionRoutines()) {
       state = AutofillMetrics::NON_FILLABLE_FORM_OR_NEW_DATA;
     } else {
       if (did_autofill_all_possible_fields) {

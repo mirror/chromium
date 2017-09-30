@@ -8,6 +8,11 @@
 
 namespace autofill {
 
+// TODO(rogerm): Move autofill_experiments from browser to common then relocate
+// this feature flag.
+const base::Feature kAutofillEnforceMinRequiredFields{
+    "AutofillEnforceMinRequiredFields", base::FEATURE_ENABLED_BY_DEFAULT};
+
 const char kHelpURL[] =
 #if defined(OS_CHROMEOS)
     "https://support.google.com/chromebook/?p=settings_autofill";
@@ -16,5 +21,15 @@ const char kHelpURL[] =
 #endif
 
 const char kSettingsOrigin[] = "Chrome settings";
+
+size_t MinRequiredFieldsForPredictionRoutines() {
+  return base::FeatureList::IsEnabled(kAutofillEnforceMinRequiredFields) ? 3
+                                                                         : 1;
+}
+
+size_t MinRequiredFieldsForUpload() {
+  return base::FeatureList::IsEnabled(kAutofillEnforceMinRequiredFields) ? 3
+                                                                         : 1;
+}
 
 }  // namespace autofill
