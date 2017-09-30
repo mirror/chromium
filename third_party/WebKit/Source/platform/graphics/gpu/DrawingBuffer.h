@@ -97,6 +97,15 @@ class PLATFORM_EXPORT DrawingBuffer : public cc::TextureLayerClient,
     virtual void DrawingBufferClientRestoreFramebufferBinding() = 0;
     virtual void DrawingBufferClientRestorePixelUnpackBufferBinding() = 0;
     virtual void DrawingBufferClientRestorePixelPackBufferBinding() = 0;
+    // Captures all of the current GL errors from the underlying context
+    // and stores them for later retrieval, so that the DrawingBuffer
+    // implementation can legally call glGetError() internally and know
+    // that the result is due to a command it called. Returns false if
+    // something went wrong (usually that the context was lost).
+    virtual bool DrawingBufferClientCaptureGLErrorsFromContext() = 0;
+    // Forces the client's context to be lost, likely due to internal
+    // out-of-memory error.
+    virtual void DrawingBufferClientForceLostContext() = 0;
   };
 
   enum PreserveDrawingBuffer {
