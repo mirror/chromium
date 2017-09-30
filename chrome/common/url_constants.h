@@ -240,7 +240,9 @@ extern const char kChromeUISyncHost[];
 extern const char kChromeUISyncFileSystemInternalsHost[];
 extern const char kChromeUISyncInternalsHost[];
 extern const char kChromeUISyncResourcesHost[];
+#if defined(OS_CHROMEOS)
 extern const char kChromeUISysInternalsHost[];
+#endif
 extern const char kChromeUISystemInfoHost[];
 extern const char kChromeUITaskSchedulerInternalsHost[];
 extern const char kChromeUITermsHost[];

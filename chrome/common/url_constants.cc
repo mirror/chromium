@@ -256,7 +256,9 @@ const char kChromeUISyncHost[] = "sync";
 const char kChromeUISyncFileSystemInternalsHost[] = "syncfs-internals";
 const char kChromeUISyncInternalsHost[] = "sync-internals";
 const char kChromeUISyncResourcesHost[] = "syncresources";
+#if defined(OS_CHROMEOS)
 const char kChromeUISysInternalsHost[] = "sys-internals";
+#endif
 const char kChromeUISystemInfoHost[] = "system";
 const char kChromeUITaskSchedulerInternalsHost[] = "taskscheduler-internals";
 const char kChromeUITermsHost[] = "terms";
