@@ -163,17 +163,16 @@ void PopulateRendererMetrics(GlobalMemoryDumpPtr& global_dump,
 
 base::flat_map<const char*, int64_t> GetExpectedRendererMetrics() {
   return base::flat_map<const char*, int64_t>(
-      {
-          {"ProcessType", static_cast<int64_t>(ProcessType::RENDERER)},
-          {"Resident", 110},
-          {"Malloc", 120},
-          {"PrivateMemoryFootprint", 130},
-          {"PartitionAlloc", 140},
-          {"BlinkGC", 150},
-          {"V8", 160},
-          {"NumberOfExtensions", 0},
-          {"Uptime", 10},
-      },
+      {{"ProcessType", static_cast<int64_t>(ProcessType::RENDERER)},
+       {"Resident", 110},
+       {"Malloc", 120},
+       {"PrivateMemoryFootprint", 130},
+       {"PartitionAlloc", 140},
+       {"BlinkGC", 150},
+       {"V8", 160},
+       {"NumberOfExtensions", 0},
+       {"Uptime", 10},
+       {"TimeSinceLastVisible", 42}},
       base::KEEP_FIRST_OF_DUPES);
 }
 
@@ -268,8 +267,13 @@ ProcessInfoVector GetProcessInfo(ukm::UkmRecorder& ukm_recorder) {
     ukm::SourceId first_source_id = ukm::UkmRecorder::GetNewSourceID();
     ukm_recorder.UpdateSourceURL(first_source_id,
                                  GURL("http://www.url201.com/"));
+    PageInfoPtr page_info(resource_coordinator::mojom::PageInfo::New());
 
-    process_info->ukm_source_ids.push_back(first_source_id);
+    page_info->ukm_source_id = first_source_id;
+    page_info->is_visible = true;
+    page_info->time_since_last_visibility_change = 10;  // duration in seconds
+    page_info->time_since_last_navigation = 20;
+    process_info->page_infos.push_back(page_info);
     process_infos.push_back(std::move(process_info));
   }
 
@@ -287,6 +291,10 @@ ProcessInfoVector GetProcessInfo(ukm::UkmRecorder& ukm_recorder) {
 
     process_info->ukm_source_ids.push_back(first_source_id);
     process_info->ukm_source_ids.push_back(second_source_id);
+    process_info->time_since_last_visibility_change.push_back(
+        42);  // duration in seconds
+    process_info->time_since_last_visibility_change.push_back(
+        42);  // duration in seconds
 
     process_infos.push_back(std::move(process_info));
   }
@@ -351,6 +359,7 @@ TEST_F(ProcessMemoryMetricsEmitterTest, CollectsExtensionProcessUKMs) {
   base::flat_map<const char*, int64_t> expected_metrics =
       GetExpectedRendererMetrics();
   expected_metrics["NumberOfExtensions"] = 1;
+  expected_metrics.erase("TimeSinceLastVisible");
   uint64_t dump_guid = 333;
 
   GlobalMemoryDumpPtr global_dump(
@@ -378,6 +387,7 @@ TEST_F(ProcessMemoryMetricsEmitterTest, CollectsManyProcessUKMsSingleDump) {
   std::vector<base::flat_map<const char*, int64_t>> entries_metrics;
   for (const auto& ptype : entries_ptypes) {
     auto expected_metrics = GetExpectedProcessMetrics(ptype);
+    expected_metrics.erase("TimeSinceLastVisible");
     PopulateMetrics(global_dump, ptype, expected_metrics, &uptime_tracker_);
     entries_metrics.push_back(expected_metrics);
   }
@@ -408,6 +418,7 @@ TEST_F(ProcessMemoryMetricsEmitterTest, CollectsManyProcessUKMsManyDumps) {
     for (const auto& ptype : entries_ptypes[i]) {
       auto expected_metrics = GetExpectedProcessMetrics(ptype);
       PopulateMetrics(global_dump, ptype, expected_metrics, &uptime_tracker_);
+      expected_metrics.erase("TimeSinceLastVisible");
       entries_metrics.push_back(expected_metrics);
     }
     emitter->ReceivedProcessInfos(ProcessInfoVector());
