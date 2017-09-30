@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "24709e79_e9504034",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-30T00:08:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f18722c0_a8e889c5",
+      "revId": "9c9b04c3e5314986b0d1e1cc0909be88874c901c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25b0222e_e7f35b58",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-28T22:12:46Z",
       "side": 1,
       "message": "This is only called in OpenChannel - can it be private?",
+      "revId": "9c9b04c3e5314986b0d1e1cc0909be88874c901c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe158591_345b5918",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-30T00:08:47Z",
+      "side": 1,
+      "message": "Sorry for the long TEST_ALL_PREFIXES...It is private...",
+      "parentUuid": "25b0222e_e7f35b58",
       "revId": "9c9b04c3e5314986b0d1e1cc0909be88874c901c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ae582a10_2907ad34",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_params.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-30T00:08:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "808ba4fb_8f60b505",
+      "revId": "9c9b04c3e5314986b0d1e1cc0909be88874c901c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bcdb2fdb_cadb66a6",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_params.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "9c9b04c3e5314986b0d1e1cc0909be88874c901c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fadb0322_3091354d",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_params.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-30T00:08:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcdb2fdb_cadb66a6",
+      "revId": "9c9b04c3e5314986b0d1e1cc0909be88874c901c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ab25731a_c2310530",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_params.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-30T00:08:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea575c1e_94b6ce7d",
+      "revId": "9c9b04c3e5314986b0d1e1cc0909be88874c901c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca8e459a_1e428d2b",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_params.cc",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "9c9b04c3e5314986b0d1e1cc0909be88874c901c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07f3925d_ff38ef89",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_params.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-30T00:08:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca8e459a_1e428d2b",
+      "revId": "9c9b04c3e5314986b0d1e1cc0909be88874c901c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "94638c0b_69fe2a6f",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_params.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-30T00:08:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17953d2a_0e8d08e5",
+      "revId": "9c9b04c3e5314986b0d1e1cc0909be88874c901c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1e3ae8f_b221beb8",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_params.h",
         "patchSetId": 1
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "5627adfe_108c6e78",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_params.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-30T00:08:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1e3ae8f_b221beb8",
+      "revId": "9c9b04c3e5314986b0d1e1cc0909be88874c901c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce39405f_8012e795",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_params.h",
         "patchSetId": 1
@@ -149,6 +293,24 @@
       "writtenOn": "2017-09-28T22:12:46Z",
       "side": 1,
       "message": "These only seem to be used when parsing the field trial parameters.  Should they be declared in the .cc?",
+      "revId": "9c9b04c3e5314986b0d1e1cc0909be88874c901c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2053c684_4bd8a4a1",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_params.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-30T00:08:47Z",
+      "side": 1,
+      "message": "thinking of using them in unit tests... Moved to .cc and use plain str in test instead.",
+      "parentUuid": "ce39405f_8012e795",
       "revId": "9c9b04c3e5314986b0d1e1cc0909be88874c901c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "db50e6a1_d2842532",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_params.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-30T00:08:47Z",
+      "side": 1,
+      "message": "Move it to CastMediaSinkServiceImpl::OpenParams.\n\nI think these values (especially how to do dynamic timeout) are controlled by CastMediaSinkServiceImpl instead of CastSocketService. CastSocketService just takes the open parameters and open Cast channel. CMSSI and CastChannelAPI determine what open parameters to use and pass them to CastSocketService.",
+      "parentUuid": "246eb496_25b924da",
+      "revId": "9c9b04c3e5314986b0d1e1cc0909be88874c901c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6b13063_3b863e78",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_params.h",
         "patchSetId": 1
@@ -186,6 +366,24 @@
       "revId": "9c9b04c3e5314986b0d1e1cc0909be88874c901c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b420244b_c3283fd8",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_params.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-30T00:08:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6b13063_3b863e78",
+      "revId": "9c9b04c3e5314986b0d1e1cc0909be88874c901c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
