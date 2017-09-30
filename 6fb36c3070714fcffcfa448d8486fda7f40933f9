@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f8f02a95_ea55559f",
+        "filename": "chrome_elf/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-09-30T21:03:29Z",
+      "side": 1,
+      "message": "Okay, thanks.",
+      "parentUuid": "0f8e7d60_ede56f5d",
+      "revId": "6fb36c3070714fcffcfa448d8486fda7f40933f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1e7096d_7b3f0e58",
         "filename": "chrome_elf/elf_imports_unittest.cc",
         "patchSetId": 2
