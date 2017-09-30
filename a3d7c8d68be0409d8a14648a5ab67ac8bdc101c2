@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "601c3bf0_70450a72",
+        "filename": "cc/layers/painted_scrollbar_layer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-30T02:40:40Z",
+      "side": 1,
+      "message": "scrolblar is how I feel about them too.",
+      "revId": "a3d7c8d68be0409d8a14648a5ab67ac8bdc101c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
