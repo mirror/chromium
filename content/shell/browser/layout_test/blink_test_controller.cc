@@ -510,8 +510,6 @@ bool BlinkTestController::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_GoToOffset, OnGoToOffset)
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_Reload, OnReload)
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_LoadURLForFrame, OnLoadURLForFrame)
-    IPC_MESSAGE_HANDLER(ShellViewHostMsg_CaptureSessionHistory,
-                        OnCaptureSessionHistory)
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_CloseRemainingWindows,
                         OnCloseRemainingWindows)
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_ResetDone, OnResetDone)
@@ -782,9 +780,12 @@ void BlinkTestController::OnAudioDump(const std::vector<unsigned char>& dump) {
   printer_->PrintAudioFooter();
 }
 
-void BlinkTestController::OnTextDump(const std::string& dump) {
+void BlinkTestController::OnTextDump(const std::string& dump,
+                                     bool should_dump_history) {
   printer_->PrintTextHeader();
   printer_->PrintTextBlock(dump);
+  if (should_dump_history) {
+  }
   printer_->PrintTextFooter();
 }
 
@@ -922,46 +923,6 @@ void BlinkTestController::OnReload() {
 void BlinkTestController::OnLoadURLForFrame(const GURL& url,
                                             const std::string& frame_name) {
   main_window_->LoadURLForFrame(url, frame_name);
-}
-
-void BlinkTestController::OnCaptureSessionHistory() {
-  std::vector<int> routing_ids;
-  std::vector<std::vector<PageState> > session_histories;
-  std::vector<unsigned> current_entry_indexes;
-
-  RenderFrameHost* render_frame_host =
-      main_window_->web_contents()->GetMainFrame();
-
-  for (auto* window : Shell::windows()) {
-    WebContents* web_contents = window->web_contents();
-    // Only capture the history from windows in the same process as the main
-    // window. During layout tests, we only use two processes when an
-    // devtools window is open.
-    auto* process = web_contents->GetMainFrame()->GetProcess();
-    if (render_frame_host->GetProcess() != process)
-      continue;
-
-    routing_ids.push_back(web_contents->GetRenderViewHost()->GetRoutingID());
-    current_entry_indexes.push_back(
-        web_contents->GetController().GetCurrentEntryIndex());
-    std::vector<PageState> history;
-    for (int entry = 0; entry < web_contents->GetController().GetEntryCount();
-         ++entry) {
-      PageState state = web_contents->GetController().GetEntryAtIndex(entry)->
-          GetPageState();
-      if (!state.IsValid()) {
-        state = PageState::CreateFromURL(
-            web_contents->GetController().GetEntryAtIndex(entry)->GetURL());
-      }
-      history.push_back(state);
-    }
-    session_histories.push_back(history);
-  }
-
-  RenderViewHost* rvh = main_window_->web_contents()->GetRenderViewHost();
-  rvh->Send(new ShellViewMsg_SessionHistory(rvh->GetRoutingID(), routing_ids,
-                                            session_histories,
-                                            current_entry_indexes));
 }
 
 void BlinkTestController::OnCloseRemainingWindows() {
