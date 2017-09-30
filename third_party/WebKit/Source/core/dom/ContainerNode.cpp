@@ -1184,8 +1184,13 @@ void ContainerNode::FocusStateChanged() {
   if (IsElementNode() && ToElement(this)->ChildrenOrSiblingsAffectedByFocus())
     ToElement(this)->PseudoStateChanged(CSSSelector::kPseudoFocus);
 
-  LayoutTheme::GetTheme().ControlStateChanged(*GetLayoutObject(),
-                                              kFocusControlState);
+  if (LayoutTheme::GetTheme().ControlStateChanged(GetLayoutObject()->GetNode(),
+                                                  GetLayoutObject()->StyleRef(),
+                                                  kFocusControlState)) {
+    GetLayoutObject()
+        ->SetShouldDoFullPaintInvalidationIncludingNonCompositingDescendants();
+  }
+
   FocusWithinStateChanged();
 }
 
@@ -1293,8 +1298,12 @@ void ContainerNode::SetActive(bool down) {
   if (IsElementNode() && ToElement(this)->ChildrenOrSiblingsAffectedByActive())
     ToElement(this)->PseudoStateChanged(CSSSelector::kPseudoActive);
 
-  LayoutTheme::GetTheme().ControlStateChanged(*GetLayoutObject(),
-                                              kPressedControlState);
+  if (LayoutTheme::GetTheme().ControlStateChanged(GetLayoutObject()->GetNode(),
+                                                  GetLayoutObject()->StyleRef(),
+                                                  kPressedControlState)) {
+    GetLayoutObject()
+        ->SetShouldDoFullPaintInvalidationIncludingNonCompositingDescendants();
+  }
 }
 
 void ContainerNode::SetDragged(bool new_value) {
@@ -1351,9 +1360,11 @@ void ContainerNode::SetHovered(bool over) {
   if (IsElementNode() && ToElement(this)->ChildrenOrSiblingsAffectedByHover())
     ToElement(this)->PseudoStateChanged(CSSSelector::kPseudoHover);
 
-  if (GetLayoutObject()) {
-    LayoutTheme::GetTheme().ControlStateChanged(*GetLayoutObject(),
-                                                kHoverControlState);
+  if (LayoutObject* o = GetLayoutObject()) {
+    if (LayoutTheme::GetTheme().ControlStateChanged(o->GetNode(), o->StyleRef(),
+                                                    kHoverControlState)) {
+      o->SetShouldDoFullPaintInvalidationIncludingNonCompositingDescendants();
+    }
   }
 }
 

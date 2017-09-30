@@ -954,10 +954,12 @@ void HTMLInputElement::setChecked(bool now_checked,
 
   if (RadioButtonGroupScope* scope = GetRadioButtonGroupScope())
     scope->UpdateCheckedState(this);
-  if (GetLayoutObject())
-    LayoutTheme::GetTheme().ControlStateChanged(*GetLayoutObject(),
-                                                kCheckedControlState);
-
+  if (LayoutObject* o = GetLayoutObject()) {
+    if (LayoutTheme::GetTheme().ControlStateChanged(o->GetNode(), o->StyleRef(),
+                                                    kCheckedControlState)) {
+      o->SetShouldDoFullPaintInvalidationIncludingNonCompositingDescendants();
+    }
+  }
   SetNeedsValidityCheck();
 
   // Ideally we'd do this from the layout tree (matching
@@ -991,9 +993,12 @@ void HTMLInputElement::setIndeterminate(bool new_value) {
 
   PseudoStateChanged(CSSSelector::kPseudoIndeterminate);
 
-  if (GetLayoutObject())
-    LayoutTheme::GetTheme().ControlStateChanged(*GetLayoutObject(),
-                                                kCheckedControlState);
+  if (LayoutObject* o = GetLayoutObject()) {
+    if (LayoutTheme::GetTheme().ControlStateChanged(o->GetNode(), o->StyleRef(),
+                                                    kCheckedControlState)) {
+      o->SetShouldDoFullPaintInvalidationIncludingNonCompositingDescendants();
+    }
+  }
 }
 
 int HTMLInputElement::size() const {
