@@ -52,6 +52,24 @@
       "revId": "7358be98649ac37125bef33a2a828264dba91221",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54b3484b_4f0602bb",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1172235
+      },
+      "writtenOn": "2017-10-01T05:54:42Z",
+      "side": 1,
+      "message": "They could be on ES or Core Profile. But still, redundantly setting state should be okay.",
+      "parentUuid": "9679c66d_cc66ed63",
+      "revId": "7358be98649ac37125bef33a2a828264dba91221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
