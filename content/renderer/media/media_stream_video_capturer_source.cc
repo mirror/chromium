@@ -163,7 +163,8 @@ MediaStreamVideoCapturerSource::MediaStreamVideoCapturerSource(
     std::unique_ptr<media::VideoCapturerSource> source)
     : RenderFrameObserver(nullptr),
       dispatcher_host_(nullptr),
-      source_(std::move(source)) {
+      source_(std::move(source)),
+      weak_factory_(this) {
   media::VideoCaptureFormats preferred_formats = source_->GetPreferredFormats();
   if (!preferred_formats.empty())
     capture_params_.requested_format = preferred_formats.front();
@@ -178,7 +179,8 @@ MediaStreamVideoCapturerSource::MediaStreamVideoCapturerSource(
     : RenderFrameObserver(render_frame),
       dispatcher_host_(nullptr),
       source_(new LocalVideoCapturerSource(device.session_id)),
-      capture_params_(capture_params) {
+      capture_params_(capture_params),
+      weak_factory_(this) {
   SetStopCallback(stop_callback);
   SetDevice(device);
   SetDeviceRotationDetection(true /* enabled */);
@@ -212,6 +214,13 @@ void MediaStreamVideoCapturerSource::StartSourceImpl(
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   state_ = STARTING;
   frame_callback_ = frame_callback;
+  base::SequencedTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::Bind(&MediaStreamVideoCapturerSource::StartMediaSource,
+                            weak_factory_.GetWeakPtr()));
+}
+
+void MediaStreamVideoCapturerSource::StartMediaSource() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   source_->StartCapture(
       capture_params_, frame_callback_,
       base::Bind(&MediaStreamVideoCapturerSource::OnRunStateChanged,
@@ -219,6 +228,13 @@ void MediaStreamVideoCapturerSource::StartSourceImpl(
 }
 
 void MediaStreamVideoCapturerSource::StopSourceImpl() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  base::SequencedTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::Bind(&MediaStreamVideoCapturerSource::StopMediaSource,
+                            weak_factory_.GetWeakPtr()));
+}
+
+void MediaStreamVideoCapturerSource::StopMediaSource() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   source_->StopCapture();
 }

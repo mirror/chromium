@@ -68,6 +68,8 @@ class CONTENT_EXPORT MediaStreamVideoCapturerSource
   void OnRunStateChanged(const media::VideoCaptureParams& new_capture_params,
                          bool is_running);
 
+  void StartMediaSource();
+  void StopMediaSource();
   const mojom::MediaStreamDispatcherHostPtr& GetMediaStreamDispatcherHost();
 
   mojom::MediaStreamDispatcherHostPtr dispatcher_host_;
@@ -80,6 +82,7 @@ class CONTENT_EXPORT MediaStreamVideoCapturerSource
 
   media::VideoCaptureParams capture_params_;
   VideoCaptureDeliverFrameCB frame_callback_;
+  base::WeakPtrFactory<MediaStreamVideoCapturerSource> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(MediaStreamVideoCapturerSource);
 };
