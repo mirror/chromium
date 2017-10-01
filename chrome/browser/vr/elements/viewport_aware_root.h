@@ -21,7 +21,9 @@ class ViewportAwareRoot : public UiElement {
   ViewportAwareRoot();
   ~ViewportAwareRoot() override;
 
-  void AdjustRotationForHeadPose(const gfx::Vector3dF& look_at) override;
+  void OnBeginFrame(const base::TimeTicks& time,
+                    const gfx::Vector3dF& pose) override;
+  void AdjustRotationForHeadPose(const gfx::Vector3dF& look_at);
   void Reset();
   bool HasVisibleChildren();
 

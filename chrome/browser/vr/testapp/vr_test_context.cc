@@ -80,7 +80,6 @@ void VrTestContext::DrawFrame() {
 
   // Update the render position of all UI elements (including desktop).
   ui_->scene()->OnBeginFrame(current_time, gfx::Vector3dF(0.f, 0.f, -1.0f));
-  ui_->scene()->PrepareToDraw();
   ui_->OnProjMatrixChanged(render_info.left_eye_info.proj_matrix);
   ui_->ui_renderer()->Draw(render_info, *controller_info_);
 
