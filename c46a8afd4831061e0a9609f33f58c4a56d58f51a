@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "018fa599_719fe34b",
+        "filename": "net/tools/print_certificates.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-01T21:14:51Z",
+      "side": 1,
+      "message": "Another option could be to ascii2der the whole thing, and then have support for input of DER with multiple certificates.",
+      "revId": "c46a8afd4831061e0a9609f33f58c4a56d58f51a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
