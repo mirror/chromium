@@ -340,7 +340,14 @@ static constexpr char const* kGradientQuadFragmentShader = SHADER(
     float mask = smoothstep(1.0 + u_CornerScale,
         1.0 - u_CornerScale,
         length(v_CornerPosition));
-    gl_FragColor = color * u_Opacity * mask;
+    // To avoid banding in the gradient, we'll multiply the x/y components by
+    // some floating point numbers and take the fractional portion to generate
+    // some noise. This is not particularly good noise, but it's efficient,
+    // stable and addresses the artifacts.
+    float noise_channel = fract(dot(v_Position.xy, vec2(12345.67, 2345.45)));
+    noise_channel = (noise_channel - 0.5) / 255.0;
+    vec4 noise = vec4(noise_channel, noise_channel, noise_channel, 1);
+    gl_FragColor = (color + noise) * u_Opacity * mask;
   }
 );
 
@@ -386,7 +393,13 @@ static constexpr char const* kGradientGridFragmentShader = SHADER(
           grid_color.xyz + bg_color.xyz * (1.0 - opacity),
           opacity + bg_color.w * (1.0 - opacity));
     } else {
-      gl_FragColor = bg_color;
+      // Perturb the color to avoid banding. See comments on the gradient quad
+      // fragment shader.
+      float noise_channel =
+          fract(dot(v_GridPosition.xy, vec2(12345.67, 2345.45)));
+      noise_channel = (noise_channel - 0.5) / 255.0;
+      vec4 noise = vec4(noise_channel, noise_channel, noise_channel, 1);
+      gl_FragColor = bg_color + noise;
     }
   }
 );
