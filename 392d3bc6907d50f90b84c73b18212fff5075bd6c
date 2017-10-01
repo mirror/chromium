@@ -1,0 +1,175 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07416fbb_5dc6c2c1",
+        "filename": "components/arc/common/net.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-01T06:37:35Z",
+      "side": 1,
+      "message": "Nit: here and below, I think it\u0027s not necessary to say \"Android\" (since that\u0027s implied as being part of the ARC++ mojom interface)",
+      "range": {
+        "startLine": 204,
+        "startChar": 17,
+        "endLine": 204,
+        "endChar": 36
+      },
+      "revId": "392d3bc6907d50f90b84c73b18212fff5075bd6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "631b52b1_80a21754",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-01T06:37:35Z",
+      "side": 1,
+      "message": "Where does this GUID get set originally? I\u0027m wondering how code in the Mojo handlers can assume that these properties are correct and present (i.e. by dchecking that the service path derived from the GUID is non-empty)",
+      "revId": "392d3bc6907d50f90b84c73b18212fff5075bd6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07692c00_80c1ba0e",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-01T06:37:35Z",
+      "side": 1,
+      "message": "VLOG at least.\n\n(I think the whole logging situation for CrOS is a bit sad--logging strings aren\u0027t free--but that\u0027s a separate story...)",
+      "revId": "392d3bc6907d50f90b84c73b18212fff5075bd6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41f130b7_240867f7",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-01T06:37:35Z",
+      "side": 1,
+      "message": "Consider replacing this with emplace_back",
+      "range": {
+        "startLine": 754,
+        "startChar": 8,
+        "endLine": 754,
+        "endChar": 29
+      },
+      "revId": "392d3bc6907d50f90b84c73b18212fff5075bd6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b348ff0a_df99cea1",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-01T06:37:35Z",
+      "side": 1,
+      "message": "Even though TypeConverter is deprecated, please use it here--it at least helps us track and audit the places that do conversions of untrusted data.",
+      "revId": "392d3bc6907d50f90b84c73b18212fff5075bd6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80507d81_f2e5b396",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-01T06:37:35Z",
+      "side": 1,
+      "message": "Is it OK if app_name is also empty?",
+      "revId": "392d3bc6907d50f90b84c73b18212fff5075bd6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e128fd6_f896f8e8",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-01T06:37:35Z",
+      "side": 1,
+      "message": "Is it safe to assume that other parts of the system handle malformed input well for fields like this (as well as the name servers, search domains, included/excluded routes, et cetera)?",
+      "revId": "392d3bc6907d50f90b84c73b18212fff5075bd6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe984b06_630637a8",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-01T06:37:35Z",
+      "side": 1,
+      "message": "Why set this as a string instead of a bool value?",
+      "range": {
+        "startLine": 810,
+        "startChar": 45,
+        "endLine": 810,
+        "endChar": 61
+      },
+      "revId": "392d3bc6907d50f90b84c73b18212fff5075bd6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cedac638_382ce3b2",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-01T06:37:35Z",
+      "side": 1,
+      "message": "Combine declaration with initialization please.",
+      "revId": "392d3bc6907d50f90b84c73b18212fff5075bd6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
