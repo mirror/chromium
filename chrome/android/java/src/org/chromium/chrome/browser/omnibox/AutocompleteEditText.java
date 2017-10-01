@@ -132,6 +132,7 @@ public class AutocompleteEditText
     protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect) {
         if (mModel != null) mModel.onFocusChanged(focused);
         super.onFocusChanged(focused, direction, previouslyFocusedRect);
+        if (!focused) setCursorVisible(false);
     }
 
     @Override
