@@ -708,6 +708,7 @@ bool LayoutBoxModelObject::HasAutoHeightOrContainingBlockWithAutoHeight()
 }
 
 LayoutSize LayoutBoxModelObject::RelativePositionOffset() const {
+  DCHECK(IsRelPositioned());
   LayoutSize offset = AccumulateInFlowPositionOffsets();
 
   LayoutBlock* containing_block = this->ContainingBlock();
