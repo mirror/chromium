@@ -22,6 +22,30 @@
       "revId": "576d7e6fc2b752956d92222bbdfd263639c4b817",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78f1495d_6ebcb1d8",
+        "filename": "components/arc/common/file_system.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-10-01T15:07:51Z",
+      "side": 1,
+      "message": "Primitive types are not nullable in Mojom IDL.\nhttps://chromium.googlesource.com/chromium/src/+/master/mojo/public/tools/bindings#Primitive-Types",
+      "parentUuid": "3742b6dd_05462476",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 58
+      },
+      "revId": "576d7e6fc2b752956d92222bbdfd263639c4b817",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
