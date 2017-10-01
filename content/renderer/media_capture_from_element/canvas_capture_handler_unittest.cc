@@ -55,6 +55,7 @@ class CanvasCaptureHandlerTest
         blink::WebSize(kTestCanvasCaptureWidth, kTestCanvasCaptureHeight),
         kTestCanvasCaptureFramesPerSecond, message_loop_.task_runner(),
         &track_);
+    base::RunLoop().RunUntilIdle();
   }
 
   void TearDown() override {

@@ -50,10 +50,7 @@ class MockVideoCapturerSource : public media::VideoCapturerSource {
     MockStopCapture();
     SetRunning(false);
   }
-  void SetRunning(bool is_running) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(running_cb_, is_running));
-  }
+  void SetRunning(bool is_running) { running_cb_.Run(is_running); }
   const media::VideoCaptureParams& capture_params() const {
     return capture_params_;
   }
@@ -184,7 +181,6 @@ TEST_F(MediaStreamVideoCapturerSourceTest, StartAndStop) {
   // A bogus notification of running from the delegate when the source has
   // already started should not change the state.
   delegate_->SetRunning(true);
-  base::RunLoop().RunUntilIdle();
   EXPECT_EQ(blink::WebMediaStreamSource::kReadyStateLive,
             webkit_source_.GetReadyState());
   EXPECT_FALSE(source_stopped_);
@@ -209,9 +205,9 @@ TEST_F(MediaStreamVideoCapturerSourceTest, CaptureTimeAndMetadataPlumbing) {
       .WillOnce(testing::DoAll(testing::SaveArg<1>(&deliver_frame_cb),
                                testing::SaveArg<2>(&running_cb)));
   EXPECT_CALL(mock_delegate(), RequestRefreshFrame());
-  EXPECT_CALL(mock_delegate(), MockStopCapture());
   blink::WebMediaStreamTrack track =
       StartSource(VideoTrackAdapterSettings(), base::nullopt, false, 0.0);
+  base::RunLoop().RunUntilIdle();
   running_cb.Run(true);
 
   base::RunLoop run_loop;

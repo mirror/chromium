@@ -163,7 +163,8 @@ MediaStreamVideoCapturerSource::MediaStreamVideoCapturerSource(
     std::unique_ptr<media::VideoCapturerSource> source)
     : RenderFrameObserver(nullptr),
       dispatcher_host_(nullptr),
-      source_(std::move(source)) {
+      source_(std::move(source)),
+      weak_factory_(this) {
   media::VideoCaptureFormats preferred_formats = source_->GetPreferredFormats();
   if (!preferred_formats.empty())
     capture_params_.requested_format = preferred_formats.front();
@@ -178,7 +179,8 @@ MediaStreamVideoCapturerSource::MediaStreamVideoCapturerSource(
     : RenderFrameObserver(render_frame),
       dispatcher_host_(nullptr),
       source_(new LocalVideoCapturerSource(device.session_id)),
-      capture_params_(capture_params) {
+      capture_params_(capture_params),
+      weak_factory_(this) {
   SetStopCallback(stop_callback);
   SetDevice(device);
   SetDeviceRotationDetection(true /* enabled */);
@@ -212,13 +214,28 @@ void MediaStreamVideoCapturerSource::StartSourceImpl(
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   state_ = STARTING;
   frame_callback_ = frame_callback;
+  base::SequencedTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::Bind(&MediaStreamVideoCapturerSource::StartMediaSource,
+                            weak_factory_.GetWeakPtr(), capture_params_));
+}
+
+void MediaStreamVideoCapturerSource::StartMediaSource(
+    const media::VideoCaptureParams& params) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   source_->StartCapture(
-      capture_params_, frame_callback_,
+      params, frame_callback_,
       base::Bind(&MediaStreamVideoCapturerSource::OnRunStateChanged,
-                 base::Unretained(this), capture_params_));
+                 weak_factory_.GetWeakPtr(), params));
 }
 
 void MediaStreamVideoCapturerSource::StopSourceImpl() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  base::SequencedTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::Bind(&MediaStreamVideoCapturerSource::StopMediaSource,
+                            weak_factory_.GetWeakPtr()));
+}
+
+void MediaStreamVideoCapturerSource::StopMediaSource() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   source_->StopCapture();
 }
@@ -238,10 +255,9 @@ void MediaStreamVideoCapturerSource::RestartSourceImpl(
   media::VideoCaptureParams new_capture_params = capture_params_;
   new_capture_params.requested_format = new_format;
   state_ = RESTARTING;
-  source_->StartCapture(
-      new_capture_params, frame_callback_,
-      base::Bind(&MediaStreamVideoCapturerSource::OnRunStateChanged,
-                 base::Unretained(this), new_capture_params));
+  base::SequencedTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::Bind(&MediaStreamVideoCapturerSource::StartMediaSource,
+                            weak_factory_.GetWeakPtr(), new_capture_params));
 }
 
 base::Optional<media::VideoCaptureFormat>
