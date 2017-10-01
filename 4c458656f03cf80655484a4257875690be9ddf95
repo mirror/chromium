@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "37aa4a90_9ee2d60e",
+        "filename": "components/multidevice/service/BUILD.gn",
+        "patchSetId": 17
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-01T06:52:48Z",
+      "side": 1,
+      "message": "What about the service_manifest target on line 108?",
+      "parentUuid": "183831d8_acb2a44a",
+      "revId": "4c458656f03cf80655484a4257875690be9ddf95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "998b5953_27fd7588",
         "filename": "components/multidevice/service/DEPS",
         "patchSetId": 17
@@ -482,6 +500,24 @@
     },
     {
       "key": {
+        "uuid": "6e97fd89_b3a862b4",
+        "filename": "components/multidevice/service/device_sync_impl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-01T06:52:48Z",
+      "side": 1,
+      "message": "Sorry, I think my original question was unclear. Given that MultiDeviceService owns this, and the lifetime of DeviceServiceImpl isn\u0027t bounded by the lifetime of MultiDeviceService, it seems like this is unsafe: once MultiDeviceService is destroyed, these pointers will be dangling.",
+      "parentUuid": "0a888c97_76936302",
+      "revId": "4c458656f03cf80655484a4257875690be9ddf95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3fa7ced_18c51d81",
         "filename": "components/multidevice/service/device_sync_impl.h",
         "patchSetId": 17
@@ -511,6 +547,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "f3fa7ced_18c51d81",
+      "revId": "4c458656f03cf80655484a4257875690be9ddf95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36a2437b_fe7e9249",
+        "filename": "components/multidevice/service/device_sync_impl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-01T06:52:48Z",
+      "side": 1,
+      "message": "What I meant is: there is a constructor overload that sets managers_were_injected to true. However, it also accepts parameters for setting gcm_manager_ and identity_manager_ -- but if these member fields are always supposed to be null, why pass them at all to that ctor overload? Maybe they can just be removed?",
+      "parentUuid": "7e6df361_98e35eba",
       "revId": "4c458656f03cf80655484a4257875690be9ddf95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -599,6 +653,24 @@
     },
     {
       "key": {
+        "uuid": "68057c04_d1c1cd4d",
+        "filename": "components/multidevice/service/device_sync_impl_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-01T06:52:48Z",
+      "side": 1,
+      "message": "GetSyncedDevices is a sync method (since it has the [Sync] annotation). For sync methods, the Mojo compiler generates two signatures (for example, see https://cs.chromium.org/chromium/src/out/Debug/gen/mojo/common/test_common_custom_types.mojom.h?rcl\u003dd95f2a9b0e25e51acd231477e34865da0576543d\u0026l\u003d311). Per the comments in the generated .mojom, we should be using the form that accepts out-arguments when making sync calls.",
+      "parentUuid": "7e71f2b3_6dc5f0ba",
+      "revId": "4c458656f03cf80655484a4257875690be9ddf95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36115cfa_af10b505",
         "filename": "components/multidevice/service/multidevice_service.cc",
         "patchSetId": 17
@@ -658,6 +730,30 @@
       "side": 1,
       "message": "Sorry for the confusion. We are doing an incremental change.\n\nCurrently, there is already a BCKS that holds these members, and we will be constructing the service via that BCKS for now. The users of this Mojo service are BCKSs which depend on the device sync BCKS, so all clients are guaranteed to shut down before these objects are killed.\n\nEventually, we will remove the BCKS implementation and rely solely on the Mojo service. At that point, the DeviceSyncImpl will own these objects itself.",
       "parentUuid": "064d6ba4_b972d1c1",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 26
+      },
+      "revId": "4c458656f03cf80655484a4257875690be9ddf95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7acf4a6_1c1d99b0",
+        "filename": "components/multidevice/service/multidevice_service.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-01T06:52:48Z",
+      "side": 1,
+      "message": "Sorry I don\u0027t quite understand this comment. If the users are BrowserContextKeyedServices, doesn\u0027t that mean they\u0027re in-process? What is the benefit to using Mojo at this point? I think I\u0027m lacking too much of the high-level picture to understand how the pieces fit together here. Is there a design doc I can look at to help me understand?",
+      "parentUuid": "14306aa1_29191716",
       "range": {
         "startLine": 64,
         "startChar": 0,
