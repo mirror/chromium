@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "ash/public/interfaces/constants.mojom.h"
+#include "ash/system/palette/palette_utils.h"
 #include "ash/wm/window_animations.h"
 #include "base/base64.h"
 #include "base/bind.h"
@@ -251,6 +252,26 @@ void StateController::InitializeWithCryptoKey(Profile* profile,
   app_manager_->Initialize(profile, lock_screen_profile_->GetOriginalProfile());
 
   input_devices_observer_.Add(ui::InputDeviceManager::GetInstance());
+
+  // Do not start state controller if stylus input is not present as lock
+  // screen notes apps are geared towards stylus.
+  // State controller will observe inpt device changes and continue
+  // initialization if stylus input is found.
+  if (!ash::palette_utils::HasStylusInput()) {
+    stylus_input_missing_ = true;
+
+    if (!ready_callback_.is_null()) {
+      ready_callback_.Run();
+      ready_callback_.Reset();
+    }
+    return;
+  }
+
+  InitializeWithStylusInputPresent();
+}
+
+void StateController::InitializeWithStylusInputPresent() {
+  stylus_input_missing_ = false;
   power_manager_client_observer_.Add(
       chromeos::DBusThreadManager::Get()->GetPowerManagerClient());
   session_observer_.Add(session_manager::SessionManager::Get());
@@ -354,6 +375,11 @@ void StateController::OnStylusStateChanged(ui::StylusState state) {
 
   if (state == ui::StylusState::REMOVED)
     RequestNewLockScreenNote(LockScreenNoteOrigin::kStylusEject);
+}
+
+void StateController::OnDeviceListsComplete() {
+  if (stylus_input_missing_ && ash::palette_utils::HasStylusInput())
+    InitializeWithStylusInputPresent();
 }
 
 void StateController::BrightnessChanged(int level, bool user_initiated) {
