@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cb51e3d7_c3fb59f6",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRCoordinateSystem.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-01T16:21:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fea12dde_5a9ad7e1",
+      "range": {
+        "startLine": 26,
+        "startChar": 54,
+        "endLine": 26,
+        "endChar": 59
+      },
+      "revId": "84db329a0f970fc0a44b24c7d5d0c5e2ec1bfccf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d17f8cba_d7d340fd",
         "filename": "third_party/WebKit/Source/modules/vr/latest/VRFrameOfReference.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "84db329a0f970fc0a44b24c7d5d0c5e2ec1bfccf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d9dd187_7d890e5f",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRFrameOfReference.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-01T16:21:45Z",
+      "side": 1,
+      "message": "Member is used for objects that inherit from GarbageCollected, unique_ptr and friends for everything else. This is, happily, pretty hard to get wrong. There\u0027s a ton of compiler errors that have been built in to inform you when you\u0027re using Member wrong (or not using it when you should.)",
+      "parentUuid": "d17f8cba_d7d340fd",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 17
+      },
+      "revId": "84db329a0f970fc0a44b24c7d5d0c5e2ec1bfccf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b5fca867_a8a5043b",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRSession.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-01T16:21:45Z",
+      "side": 1,
+      "message": "Huh, last time I tried that (a while ago) I recall it didn\u0027t work, but didn\u0027t give me any complaints this time! Thanks for the tip!",
+      "parentUuid": "14c655a6_eb7072b6",
+      "range": {
+        "startLine": 20,
+        "startChar": 25,
+        "endLine": 20,
+        "endChar": 33
+      },
+      "revId": "84db329a0f970fc0a44b24c7d5d0c5e2ec1bfccf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "075c05bf_04f0e506",
         "filename": "third_party/WebKit/Source/modules/vr/latest/VRSession.idl",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "f5b07cf2_1d3f5b00",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRSession.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-01T16:21:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "075c05bf_04f0e506",
+      "range": {
+        "startLine": 22,
+        "startChar": 25,
+        "endLine": 22,
+        "endChar": 32
+      },
+      "revId": "84db329a0f970fc0a44b24c7d5d0c5e2ec1bfccf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13c1a62f_23968ff1",
         "filename": "third_party/WebKit/Source/modules/vr/latest/VRStageBounds.h",
         "patchSetId": 2
@@ -114,6 +210,30 @@
       "revId": "84db329a0f970fc0a44b24c7d5d0c5e2ec1bfccf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "533c2109_d9ddd1ad",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VRStageBounds.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-10-01T16:21:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13c1a62f_23968ff1",
+      "range": {
+        "startLine": 20,
+        "startChar": 17,
+        "endLine": 20,
+        "endChar": 18
+      },
+      "revId": "84db329a0f970fc0a44b24c7d5d0c5e2ec1bfccf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
