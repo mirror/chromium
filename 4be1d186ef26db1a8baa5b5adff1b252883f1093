@@ -22,6 +22,30 @@
       "revId": "4be1d186ef26db1a8baa5b5adff1b252883f1093",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8138617_26725a1d",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontVariantEastAsian.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1244341
+      },
+      "writtenOn": "2017-10-01T11:02:40Z",
+      "side": 1,
+      "message": "Example breakage, from the jumbo fyi builders: https://luci-logdog.appspot.com/v/?s\u003dchromium%2Fbb%2Fchromium.fyi%2FJumbo_Linux_x64%2F2051%2F%2B%2Frecipes%2Fsteps%2Fcompile%2F0%2Fstdout\n\nIn file included from gen/third_party/WebKit/Source/platform/platform_jumbo_3.cc:69:\ngen/third_party/WebKit/Source/platform/../../../../../../../third_party/WebKit/Source/platform/fonts/FontVariantNumeric.cpp:11:20: error: redefinition of \u0027kUnknownString\u0027\nstatic const char* kUnknownString \u003d \"Unknown\";\n                   ^\ngen/third_party/WebKit/Source/platform/../../../../../../../third_party/WebKit/Source/platform/fonts/FontVariantEastAsian.cpp:11:20: note: previous definition is here\nstatic const char* kUnknownString \u003d \"Unknown\";\n                   ^\n1 error generated.\n\nUnfortunately using the anonymous namespace won\u0027t help, because it is shared with the entire translation unit.  So I will drop the constant...",
+      "parentUuid": "bfdaed3d_0d4afd84",
+      "range": {
+        "startLine": 11,
+        "startChar": 12,
+        "endLine": 11,
+        "endChar": 26
+      },
+      "revId": "4be1d186ef26db1a8baa5b5adff1b252883f1093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
