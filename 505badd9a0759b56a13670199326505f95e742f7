@@ -117,6 +117,24 @@
       "revId": "505badd9a0759b56a13670199326505f95e742f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05e232cd_4771176e",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-01T06:44:51Z",
+      "side": 1,
+      "message": "I wasn\u0027t aware of OnJavascriptAllowed.  That seems like the appropriate place.  It\u0027s a bit difficult to say what\u0027s available in the constructor for the handler so it\u0027s best to wait until everything is initialized.",
+      "parentUuid": "f4589939_a7e6e77f",
+      "revId": "505badd9a0759b56a13670199326505f95e742f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

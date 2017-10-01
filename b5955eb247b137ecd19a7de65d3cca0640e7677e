@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a59142b_c89e64df",
+        "filename": "chrome/browser/chromeos/printing/cups_printers_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-01T06:44:51Z",
+      "side": 1,
+      "message": "Please comment this variable.  What does it mean when it is true or false.",
+      "range": {
+        "startLine": 454,
+        "startChar": 7,
+        "endLine": 454,
+        "endChar": 25
+      },
+      "revId": "b5955eb247b137ecd19a7de65d3cca0640e7677e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0db1d46_7eec8b9a",
+        "filename": "chrome/browser/ui/webui/print_preview/local_printer_handler_chromeos.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-01T06:44:51Z",
+      "side": 1,
+      "message": "Have you tested this thoroughly?  We may need to start this earlier.  GetPrinters(kAutomatic) will almost always be empty if we haven\u0027t fetched mDNS records before this runs.",
+      "range": {
+        "startLine": 106,
+        "startChar": 2,
+        "endLine": 106,
+        "endChar": 29
+      },
+      "revId": "b5955eb247b137ecd19a7de65d3cca0640e7677e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20672344_f47abe2e",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-01T06:44:51Z",
+      "side": 1,
+      "message": "Judging by the WebUI documentation, we should also move the AddObserver call here.",
+      "revId": "b5955eb247b137ecd19a7de65d3cca0640e7677e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
