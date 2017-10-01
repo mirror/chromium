@@ -146,6 +146,11 @@ public class AutocompleteEditTextTest {
         public int getAndResetAccessibilityVerifierCallCount() {
             return mAccessibilityVerifierCallCount.getAndSet(0);
         }
+
+        @Override
+        public String getKeyboardPackageName() {
+            return "dummy.ime";
+        }
     }
 
     public AutocompleteEditTextTest() {
