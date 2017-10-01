@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfdaed3d_0d4afd84",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontVariantEastAsian.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-10-01T00:22:25Z",
+      "side": 1,
+      "message": "Did this actually create a build failure in jumbo? What if instead of using extern or static we put the .cpp defs within an empty namespace in each .cpp file, like:\n\nnamespace {\n\nconst char* kUnknownString \u003d \"Unknown\";\n\n}\n\nDoes that fix jumbo build? Would be preferable since Blink in general doesn\u0027t use many externs and it leaks the internal impl detail in a way and clutters the public namespace with the const.\n\nOr, I would also be supportive of getting rid of the constant and just using the \"Unknown\" literal like you mentioned.",
+      "range": {
+        "startLine": 11,
+        "startChar": 12,
+        "endLine": 11,
+        "endChar": 26
+      },
+      "revId": "4be1d186ef26db1a8baa5b5adff1b252883f1093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
