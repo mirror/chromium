@@ -37,7 +37,6 @@
 #include "platform/bindings/ScriptState.h"
 #include "platform/bindings/V8Binding.h"
 #include "platform/bindings/V8ObjectConstructor.h"
-#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/StringExtras.h"
 
 namespace blink {
@@ -46,7 +45,7 @@ V8PerContextData::V8PerContextData(v8::Local<v8::Context> context)
     : isolate_(context->GetIsolate()),
       wrapper_boilerplates_(isolate_),
       constructor_map_(isolate_),
-      context_holder_(WTF::MakeUnique<gin::ContextHolder>(isolate_)),
+      context_holder_(std::make_unique<gin::ContextHolder>(isolate_)),
       context_(isolate_, context),
       activity_logger_(nullptr) {
   context_holder_->SetContext(context);

@@ -8,7 +8,6 @@
 #include <random>
 
 #include "platform/testing/TestingPlatformSupport.h"
-#include "platform/wtf/PtrUtil.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
@@ -40,7 +39,7 @@ TEST(BufferingDataPipeWriterTest, WriteMany) {
   for (size_t i = 0; i < total; ++i)
     input.push_back(static_cast<char>(engine() % 26 + 'A'));
 
-  auto writer = WTF::MakeUnique<BufferingDataPipeWriter>(
+  auto writer = std::make_unique<BufferingDataPipeWriter>(
       std::move(producer), platform->CurrentThread()->GetWebTaskRunner());
 
   for (size_t i = 0; i < total;) {

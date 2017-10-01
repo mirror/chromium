@@ -4,8 +4,8 @@
 
 #include "platform/heap/SparseHeapBitmap.h"
 
+#include <memory>
 #include "platform/heap/Heap.h"
-#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
@@ -95,7 +95,7 @@ void SparseHeapBitmap::Add(Address address) {
 
 void SparseHeapBitmap::CreateBitmap() {
   DCHECK(!bitmap_ && size() == 1);
-  bitmap_ = WTF::MakeUnique<std::bitset<kBitmapChunkSize>>();
+  bitmap_ = std::make_unique<std::bitset<kBitmapChunkSize>>();
   size_ = kBitmapChunkRange;
   bitmap_->set(0);
 }

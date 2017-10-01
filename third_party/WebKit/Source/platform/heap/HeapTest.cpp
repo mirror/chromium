@@ -46,7 +46,6 @@
 #include "platform/testing/UnitTestHelpers.h"
 #include "platform/wtf/HashTraits.h"
 #include "platform/wtf/LinkedHashSet.h"
-#include "platform/wtf/PtrUtil.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebTraceLocation.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -1201,7 +1200,7 @@ class FinalizationObserverWithHashMap {
     ObserverMap::AddResult result = map.insert(&target, nullptr);
     if (result.is_new_entry) {
       result.stored_value->value =
-          WTF::MakeUnique<FinalizationObserverWithHashMap>(target);
+          std::make_unique<FinalizationObserverWithHashMap>(target);
     } else {
       DCHECK(result.stored_value->value);
     }
@@ -6353,7 +6352,7 @@ class WeakPersistentHolder final {
 TEST(HeapTest, WeakPersistent) {
   Persistent<IntWrapper> object = new IntWrapper(20);
   std::unique_ptr<WeakPersistentHolder> holder =
-      WTF::MakeUnique<WeakPersistentHolder>(object);
+      std::make_unique<WeakPersistentHolder>(object);
   PreciselyCollectGarbage();
   EXPECT_TRUE(holder->Object());
   object = nullptr;

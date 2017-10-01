@@ -8,12 +8,11 @@
 #include "platform/heap/BlinkGC.h"
 #include "platform/heap/ThreadState.h"
 #include "platform/heap/VisitorImpl.h"
-#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
 std::unique_ptr<Visitor> Visitor::Create(ThreadState* state, MarkingMode mode) {
-  return WTF::MakeUnique<Visitor>(state, mode);
+  return std::make_unique<Visitor>(state, mode);
 }
 
 Visitor::Visitor(ThreadState* state, MarkingMode marking_mode)

@@ -304,7 +304,7 @@ bool RawResource::MatchPreload(const FetchParameters& params) {
   // TODO(yhirano): Use the correct task runner.
   WebTaskRunner* task_runner =
       Platform::Current()->CurrentThread()->Scheduler()->LoadingTaskRunner();
-  data_pipe_writer_ = WTF::MakeUnique<BufferingDataPipeWriter>(
+  data_pipe_writer_ = std::make_unique<BufferingDataPipeWriter>(
       std::move(producer), task_runner);
 
   if (Data()) {

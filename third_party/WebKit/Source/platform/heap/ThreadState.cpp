@@ -53,7 +53,6 @@
 #include "platform/scheduler/child/web_scheduler.h"
 #include "platform/wtf/CurrentTime.h"
 #include "platform/wtf/DataLog.h"
-#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/StackUtil.h"
 #include "platform/wtf/ThreadingPrimitives.h"
 #include "platform/wtf/allocator/Partitions.h"
@@ -104,7 +103,7 @@ const char* ThreadState::GcReasonString(BlinkGC::GCReason reason) {
 
 ThreadState::ThreadState()
     : thread_(CurrentThread()),
-      persistent_region_(WTF::MakeUnique<PersistentRegion>()),
+      persistent_region_(std::make_unique<PersistentRegion>()),
       start_of_stack_(reinterpret_cast<intptr_t*>(WTF::GetStackStart())),
       end_of_stack_(reinterpret_cast<intptr_t*>(WTF::GetStackStart())),
       safe_point_scope_marker_(nullptr),

@@ -31,7 +31,6 @@
 #include "platform/network/NetworkUtils.h"
 #include "platform/runtime_enabled_features.h"
 #include "platform/weborigin/SecurityOrigin.h"
-#include "platform/wtf/PtrUtil.h"
 #include "public/platform/WebAddressSpace.h"
 #include "public/platform/WebCachePolicy.h"
 #include "public/platform/WebURLRequest.h"
@@ -132,7 +131,7 @@ ResourceRequest& ResourceRequest::operator=(const ResourceRequest&) = default;
 std::unique_ptr<CrossThreadResourceRequestData> ResourceRequest::CopyData()
     const {
   std::unique_ptr<CrossThreadResourceRequestData> data =
-      WTF::MakeUnique<CrossThreadResourceRequestData>();
+      std::make_unique<CrossThreadResourceRequestData>();
   data->url_ = Url().Copy();
   data->timeout_interval_ = TimeoutInterval();
   data->site_for_cookies_ = SiteForCookies().Copy();

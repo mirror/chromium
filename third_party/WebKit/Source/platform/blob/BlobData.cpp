@@ -39,7 +39,6 @@
 #include "platform/blob/BlobRegistry.h"
 #include "platform/runtime_enabled_features.h"
 #include "platform/text/LineEnding.h"
-#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/RefPtr.h"
 #include "platform/wtf/Vector.h"
 #include "platform/wtf/text/CString.h"
@@ -338,7 +337,7 @@ BlobDataHandle::BlobDataHandle(std::unique_ptr<BlobData> data, long long size)
             last_bytes_provider->AppendData(item.data);
           } else {
             BytesProviderPtr bytes_provider;
-            auto provider = WTF::MakeUnique<BlobBytesProvider>(item.data);
+            auto provider = std::make_unique<BlobBytesProvider>(item.data);
             last_bytes_provider = provider.get();
             if (file_runner) {
               // TODO(mek): Considering binding BytesProvider on the IO thread

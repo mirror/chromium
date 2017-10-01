@@ -8,7 +8,6 @@
 #include "platform/MemoryCoordinator.h"
 #include "platform/heap/SafePoint.h"
 #include "platform/scheduler/child/web_scheduler.h"
-#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/Threading.h"
 
 namespace blink {
@@ -51,7 +50,7 @@ WebThreadSupportingGC::~WebThreadSupportingGC() {
 void WebThreadSupportingGC::InitializeOnThread() {
   DCHECK(thread_->IsCurrentThread());
   ThreadState::AttachCurrentThread();
-  gc_task_runner_ = WTF::MakeUnique<GCTaskRunner>(thread_);
+  gc_task_runner_ = std::make_unique<GCTaskRunner>(thread_);
 }
 
 void WebThreadSupportingGC::ShutdownOnThread() {
