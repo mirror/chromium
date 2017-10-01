@@ -57,25 +57,25 @@ class ClampedNumeric {
 
   // Prototypes for the supported arithmetic operator overloads.
   template <typename Src>
-  ClampedNumeric& operator+=(const Src rhs);
+  constexpr ClampedNumeric& operator+=(const Src rhs);
   template <typename Src>
-  ClampedNumeric& operator-=(const Src rhs);
+  constexpr ClampedNumeric& operator-=(const Src rhs);
   template <typename Src>
-  ClampedNumeric& operator*=(const Src rhs);
+  constexpr ClampedNumeric& operator*=(const Src rhs);
   template <typename Src>
-  ClampedNumeric& operator/=(const Src rhs);
+  constexpr ClampedNumeric& operator/=(const Src rhs);
   template <typename Src>
-  ClampedNumeric& operator%=(const Src rhs);
+  constexpr ClampedNumeric& operator%=(const Src rhs);
   template <typename Src>
-  ClampedNumeric& operator<<=(const Src rhs);
+  constexpr ClampedNumeric& operator<<=(const Src rhs);
   template <typename Src>
-  ClampedNumeric& operator>>=(const Src rhs);
+  constexpr ClampedNumeric& operator>>=(const Src rhs);
   template <typename Src>
-  ClampedNumeric& operator&=(const Src rhs);
+  constexpr ClampedNumeric& operator&=(const Src rhs);
   template <typename Src>
-  ClampedNumeric& operator|=(const Src rhs);
+  constexpr ClampedNumeric& operator|=(const Src rhs);
   template <typename Src>
-  ClampedNumeric& operator^=(const Src rhs);
+  constexpr ClampedNumeric& operator^=(const Src rhs);
 
   constexpr ClampedNumeric operator-() const {
     // The negation of two's complement int min is int min, so that's the
@@ -109,6 +109,11 @@ class ClampedNumeric {
         ClampedMinOp<T, U>::Do(value_, Wrapper<U>::value(rhs)));
   }
 
+  template <typename U, typename V>
+  constexpr ClampedNumeric ToRange(U min, V max) const {
+    return Max(min).Min(max);
+  }
+
   // This function is available only for integral types. It returns an unsigned
   // integer of the same width as the source type, containing the absolute value
   // of the source, and properly handling signed min.
@@ -118,23 +123,23 @@ class ClampedNumeric {
         SafeUnsignedAbs(value_));
   }
 
-  ClampedNumeric& operator++() {
+  constexpr ClampedNumeric& operator++() {
     *this += 1;
     return *this;
   }
 
-  ClampedNumeric operator++(int) {
+  constexpr ClampedNumeric operator++(int) {
     ClampedNumeric value = *this;
     *this += 1;
     return value;
   }
 
-  ClampedNumeric& operator--() {
+  constexpr ClampedNumeric& operator--() {
     *this -= 1;
     return *this;
   }
 
-  ClampedNumeric operator--(int) {
+  constexpr ClampedNumeric operator--(int) {
     ClampedNumeric value = *this;
     *this -= 1;
     return value;
@@ -145,7 +150,7 @@ class ClampedNumeric {
   template <template <typename, typename, typename> class M,
             typename L,
             typename R>
-  static ClampedNumeric MathOp(const L lhs, const R rhs) {
+  static constexpr ClampedNumeric MathOp(const L lhs, const R rhs) {
     using Math = typename MathWrapper<M, L, R>::math;
     return ClampedNumeric<T>(
         Math::template Do<T>(Wrapper<L>::value(lhs), Wrapper<R>::value(rhs)));
@@ -153,7 +158,7 @@ class ClampedNumeric {
 
   // Assignment arithmetic operations.
   template <template <typename, typename, typename> class M, typename R>
-  ClampedNumeric& MathOp(const R rhs) {
+  constexpr ClampedNumeric& MathOp(const R rhs) {
     using Math = typename MathWrapper<M, T, R>::math;
     *this =
         ClampedNumeric<T>(Math::template Do<T>(value_, Wrapper<R>::value(rhs)));
@@ -192,6 +197,12 @@ constexpr ClampedNumeric<typename UnderlyingType<T>::type> MakeClampedNum(
   return value;
 }
 
+// Convenience wrapper for ToRange method.
+template <typename T, typename U, typename V>
+constexpr ClampedNumeric<T> ClampToRange(T value, U min, V max) {
+  return MakeClampedNum(value).ToRange(min, max);
+}
+
 // Overload the ostream output operator to make logging work nicely.
 template <typename T>
 std::ostream& operator<<(std::ostream& os, const ClampedNumeric<T>& value) {
@@ -203,8 +214,9 @@ std::ostream& operator<<(std::ostream& os, const ClampedNumeric<T>& value) {
 template <template <typename, typename, typename> class M,
           typename L,
           typename R>
-ClampedNumeric<typename MathWrapper<M, L, R>::type> ClampMathOp(const L lhs,
-                                                                const R rhs) {
+constexpr ClampedNumeric<typename MathWrapper<M, L, R>::type> ClampMathOp(
+    const L lhs,
+    const R rhs) {
   using Math = typename MathWrapper<M, L, R>::math;
   return ClampedNumeric<typename Math::result_type>::template MathOp<M>(lhs,
                                                                         rhs);
@@ -215,7 +227,7 @@ template <template <typename, typename, typename> class M,
           typename L,
           typename R,
           typename... Args>
-ClampedNumeric<typename ResultType<M, L, R, Args...>::type>
+constexpr ClampedNumeric<typename ResultType<M, L, R, Args...>::type>
 ClampMathOp(const L lhs, const R rhs, const Args... args) {
   return ClampMathOp<M>(ClampMathOp<M>(lhs, rhs), args...);
 }
@@ -245,6 +257,7 @@ using internal::ClampedNumeric;
 using internal::MakeClampedNum;
 using internal::ClampMax;
 using internal::ClampMin;
+using internal::ClampToRange;
 using internal::ClampAdd;
 using internal::ClampSub;
 using internal::ClampMul;
