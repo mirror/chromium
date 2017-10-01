@@ -807,29 +807,21 @@ void BlinkTestRunner::CaptureDump() {
 
   std::string custom_text_dump;
   if (interfaces->TestRunner()->HasCustomTextDump(&custom_text_dump)) {
-    Send(new ShellViewHostMsg_TextDump(routing_id(), custom_text_dump + "\n",
-                                       false));
+    Send(new ShellViewHostMsg_CustomTextDump(routing_id(),
+                                             custom_text_dump + "\n"));
     CaptureDumpContinued();
     return;
   }
 
-  if (!interfaces->TestRunner()->IsRecursiveLayoutDumpRequested()) {
-    std::string layout_dump = interfaces->TestRunner()->DumpLayout(
-        render_view()->GetMainRenderFrame()->GetWebFrame());
-    OnLayoutDumpCompleted(std::move(layout_dump));
-    return;
-  }
-
-  Send(new ShellViewHostMsg_InitiateLayoutDump(routing_id()));
-  // OnLayoutDumpCompleted will be eventually called by an IPC from the browser.
+  // For consistency, always delegate to the browser to perform layout dumps.
+  // The browser will call OnLayoutDumpCompleted once the actual dumps are
+  // complete.
+  Send(new ShellViewHostMsg_InitiateLayoutDump(
+      routing_id(), interfaces->TestRunner()->IsRecursiveLayoutDumpRequested(),
+      interfaces->TestRunner()->ShouldDumpBackForwardList()));
 }
 
-void BlinkTestRunner::OnLayoutDumpCompleted(std::string completed_layout_dump) {
-  test_runner::WebTestInterfaces* interfaces =
-      LayoutTestRenderThreadObserver::GetInstance()->test_interfaces();
-  Send(new ShellViewHostMsg_TextDump(
-      routing_id(), std::move(completed_layout_dump),
-      interfaces->TestRunner()->ShouldDumpBackForwardList()));
+void BlinkTestRunner::OnLayoutDumpCompleted() {
   CaptureDumpContinued();
 }
 

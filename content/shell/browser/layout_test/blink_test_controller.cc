@@ -554,7 +554,7 @@ bool BlinkTestController::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_PrintMessage, OnPrintMessage)
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_PrintMessageToStderr,
                         OnPrintMessageToStderr)
-    IPC_MESSAGE_HANDLER(ShellViewHostMsg_TextDump, OnTextDump)
+    IPC_MESSAGE_HANDLER(ShellViewHostMsg_CustomTextDump, OnCustomTextDump)
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_InitiateLayoutDump,
                         OnInitiateLayoutDump)
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_ImageDump, OnImageDump)
@@ -708,6 +708,31 @@ void BlinkTestController::DiscardMainWindow() {
   current_pid_ = base::kNullProcessId;
 }
 
+void BlinkTestController::DumpText(const std::string& dump,
+                                   bool should_dump_history) {
+  printer_->PrintTextHeader();
+  printer_->PrintTextBlock(dump);
+  if (should_dump_history) {
+    RenderFrameHost* main_rfh = main_window_->web_contents()->GetMainFrame();
+    for (auto* window : Shell::windows()) {
+      WebContents* web_contents = window->web_contents();
+      // Only capture the history from windows in the same process as the main
+      // window. During layout tests, we only use two processes when a devtools
+      // window is open.
+      // TODO(dcheng): This comment can't be right with OOPIF?
+      if (main_rfh->GetProcess() != web_contents->GetMainFrame()->GetProcess())
+        continue;
+
+      printer_->PrintTextBlock(
+          "\n============== Back Forward List ==============\n");
+      printer_->PrintTextBlock(DumpHistoryForWebContents(web_contents));
+      printer_->PrintTextBlock(
+          "===============================================\n");
+    }
+  }
+  printer_->PrintTextFooter();
+}
+
 void BlinkTestController::HandleNewRenderFrameHost(RenderFrameHost* frame) {
   // All RenderFrameHosts in layout tests should get Mojo bindings.
   if (!(frame->GetEnabledBindings() & BINDINGS_POLICY_MOJO))
@@ -843,41 +868,25 @@ void BlinkTestController::OnAudioDump(const std::vector<unsigned char>& dump) {
   printer_->PrintAudioFooter();
 }
 
-void BlinkTestController::OnTextDump(const std::string& dump,
-                                     bool should_dump_history) {
-  printer_->PrintTextHeader();
-  printer_->PrintTextBlock(dump);
-  if (should_dump_history) {
-    RenderFrameHost* main_rfh = main_window_->web_contents()->GetMainFrame();
-    for (auto* window : Shell::windows()) {
-      WebContents* web_contents = window->web_contents();
-      // Only capture the history from windows in the same process as the main
-      // window. During layout tests, we only use two processes when a devtools
-      // window is open.
-      // TODO(dcheng): This comment can't be right with OOPIF?
-      if (main_rfh->GetProcess() != web_contents->GetMainFrame()->GetProcess())
-        continue;
-
-      printer_->PrintTextBlock(
-          "\n============== Back Forward List ==============\n");
-      printer_->PrintTextBlock(DumpHistoryForWebContents(web_contents));
-      printer_->PrintTextBlock(
-          "===============================================\n");
-    }
-  }
-  printer_->PrintTextFooter();
+void BlinkTestController::OnCustomTextDump(const std::string& dump) {
+  DumpText(dump, false /* should_dump_history */);
 }
 
-void BlinkTestController::OnInitiateLayoutDump() {
+void BlinkTestController::OnInitiateLayoutDump(bool should_dump_recursively,
+                                               bool should_dump_history) {
   int number_of_messages = 0;
   for (RenderFrameHost* rfh : main_window_->web_contents()->GetAllFrames()) {
     if (!rfh->IsRenderFrameLive())
       continue;
 
     ++number_of_messages;
-    GetLayoutTestControlPtr(rfh)->DumpFrameLayout(
-        base::BindOnce(&BlinkTestController::OnDumpFrameLayoutResponse,
-                       base::Unretained(this), rfh->GetFrameTreeNodeId()));
+    GetLayoutTestControlPtr(rfh)->DumpFrameLayout(base::BindOnce(
+        &BlinkTestController::OnDumpFrameLayoutResponse, base::Unretained(this),
+        rfh->GetFrameTreeNodeId(), should_dump_history));
+    if (!should_dump_recursively) {
+      DCHECK(!rfh->GetParent());
+      break;
+    }
   }
 
   pending_layout_dumps_ = number_of_messages;
@@ -904,10 +913,10 @@ void BlinkTestController::OnLayoutTestRuntimeFlagsChanged(
 }
 
 void BlinkTestController::OnDumpFrameLayoutResponse(int frame_tree_node_id,
+                                                    bool should_dump_history,
                                                     const std::string& dump) {
   // Store the result.
-  auto pair = frame_to_layout_dump_map_.insert(
-      std::make_pair(frame_tree_node_id, dump));
+  auto pair = frame_to_layout_dump_map_.emplace(frame_tree_node_id, dump);
   bool insertion_took_place = pair.second;
   DCHECK(insertion_took_place);
 
@@ -928,11 +937,13 @@ void BlinkTestController::OnDumpFrameLayoutResponse(int frame_tree_node_id,
     }
   }
 
+  DumpText(dump, should_dump_history);
+
   // Continue finishing the test.
   RenderViewHost* render_view_host =
       main_window_->web_contents()->GetRenderViewHost();
-  render_view_host->Send(new ShellViewMsg_LayoutDumpCompleted(
-      render_view_host->GetRoutingID(), stitched_layout_dump));
+  render_view_host->Send(
+      new ShellViewMsg_LayoutDumpCompleted(render_view_host->GetRoutingID()));
 }
 
 void BlinkTestController::OnPrintMessage(const std::string& message) {

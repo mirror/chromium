@@ -196,13 +196,16 @@ class BlinkTestController : public WebContentsObserver,
   Shell* SecondaryWindow();
   void LoadDevToolsJSTest();
   void DiscardMainWindow();
+  void DumpText(const std::string& dump, bool should_dump_history);
 
   // Message handlers.
   void OnAudioDump(const std::vector<unsigned char>& audio_dump);
   void OnImageDump(const std::string& actual_pixel_hash, const SkBitmap& image);
-  void OnTextDump(const std::string& dump, bool should_dump_history);
-  void OnInitiateLayoutDump();
+  void OnCustomTextDump(const std::string& dump);
+  void OnInitiateLayoutDump(bool should_dump_recursively,
+                            bool should_dump_history);
   void OnDumpFrameLayoutResponse(int frame_tree_node_id,
+                                 bool should_dump_history,
                                  const std::string& dump);
   void OnPrintMessageToStderr(const std::string& message);
   void OnPrintMessage(const std::string& message);

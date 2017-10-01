@@ -33,19 +33,17 @@ IPC_MESSAGE_ROUTED0(ShellViewMsg_TryLeakDetection)
 
 // Notifies BlinkTestRunner that the layout dump has completed
 // (and that it can proceed with finishing up the test).
-IPC_MESSAGE_ROUTED1(ShellViewMsg_LayoutDumpCompleted,
-                    std::string /* completed/stitched layout dump */)
+IPC_MESSAGE_ROUTED0(ShellViewMsg_LayoutDumpCompleted)
 
-// Send a text dump of the WebContents to the render host.
-IPC_MESSAGE_ROUTED2(ShellViewHostMsg_TextDump,
-                    std::string /* dump */,
-                    bool /* should_dump_history */)
+// Send a custom text dump of the WebContents to the render host.
+IPC_MESSAGE_ROUTED1(ShellViewHostMsg_CustomTextDump, std::string /* dump */)
 
-// Asks the browser process to perform a layout dump spanning all the
-// (potentially cross-process) frames.  This goes through multiple
-// LayoutTestControl.DumpFrameLayout calls and ends with sending of
-// ShellViewMsg_LayoutDumpCompleted.
-IPC_MESSAGE_ROUTED0(ShellViewHostMsg_InitiateLayoutDump)
+// Initiates a layout dump. The browser will generate a dump from the required
+// renderers. ShellViewMsg_LayoutDumpCompleted will be sent once all the dumps
+// have been generated.
+IPC_MESSAGE_ROUTED2(ShellViewHostMsg_InitiateLayoutDump,
+                    bool /*should_dump_recursively*/,
+                    bool /*should_dump_history*/)
 
 // Send an image dump of the WebContents to the render host.
 IPC_MESSAGE_ROUTED2(ShellViewHostMsg_ImageDump,

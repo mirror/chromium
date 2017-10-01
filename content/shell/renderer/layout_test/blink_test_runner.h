@@ -206,7 +206,7 @@ class BlinkTestRunner : public RenderViewObserver,
   // After finishing the test, retrieves the audio, text, and pixel dumps from
   // the TestRunner library and sends them to the browser process.
   void CaptureDump();
-  void OnLayoutDumpCompleted(std::string completed_layout_dump);
+  void OnLayoutDumpCompleted();
   void CaptureDumpContinued();
   void OnPixelsDumpCompleted(const SkBitmap& snapshot);
   void CaptureDumpComplete();
