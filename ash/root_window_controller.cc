@@ -505,6 +505,7 @@ void RootWindowController::Shutdown() {
     ash_host_->PrepareForShutdown();
 
   system_wallpaper_.reset();
+  lock_screen_action_background_controller_.reset();
   aura::client::SetScreenPositionClient(root_window, nullptr);
 }
 
@@ -699,6 +700,14 @@ void RootWindowController::Init(RootWindowType root_window_type) {
 
   CreateSystemWallpaper(root_window_type);
 
+  if (IsUsingMdLogin()) {
+    lock_screen_action_background_controller_ =
+        std::make_unique<LockScreenActionBackgroundControllerImpl>();
+  } else {
+    lock_screen_action_background_controller_ =
+        std::make_unique<LockScreenActionBackgroundControllerStub>();
+  }
+
   InitLayoutManagers();
   InitTouchHuds();
 
@@ -772,13 +781,12 @@ void RootWindowController::InitLayoutManagers() {
   aura::Window* lock_action_handler_container =
       GetContainer(kShellWindowId_LockActionHandlerContainer);
   DCHECK(lock_action_handler_container);
-  lock_screen_action_background_controller->SetParentWindow(
+  lock_screen_action_background_controller_->SetParentWindow(
       lock_action_handler_container);
-
   lock_action_handler_container->SetLayoutManager(
       new LockActionHandlerLayoutManager(
           lock_action_handler_container, shelf_.get(),
-          std::move(lock_screen_action_background_controller)));
+          lock_screen_action_background_controller_.get()));
 
   aura::Window* lock_container =
       GetContainer(kShellWindowId_LockScreenContainer);
@@ -929,16 +937,16 @@ void RootWindowController::CreateContainers() {
   wm::SetSnapsChildrenToPhysicalPixelBoundary(lock_container);
   lock_container->SetProperty(kUsesScreenCoordinatesKey, true);
 
-  aura::Window* lock_action_handler_container =
-      CreateContainer(kShellWindowId_LockActionHandlerContainer,
-                      "LockActionHandlerContainer", lock_screen_containers);
+  aura::Window* lock_action_handler_container = CreateContainer(
+      kShellWindowId_LockActionHandlerContainer, "LockActionHandlerContainer",
+      lock_screen_related_containers);
   wm::SetSnapsChildrenToPhysicalPixelBoundary(lock_action_handler_container);
   ::wm::SetChildWindowVisibilityChangesAnimated(lock_action_handler_container);
   lock_action_handler_container->SetProperty(kUsesScreenCoordinatesKey, true);
 
-  aura::Window* lock_modal_container =
-      CreateContainer(kShellWindowId_LockSystemModalContainer,
-                      "LockSystemModalContainer", lock_screen_containers);
+  aura::Window* lock_modal_container = CreateContainer(
+      kShellWindowId_LockSystemModalContainer, "LockSystemModalContainer",
+      lock_screen_related_containers);
   wm::SetSnapsChildrenToPhysicalPixelBoundary(lock_modal_container);
   ::wm::SetChildWindowVisibilityChangesAnimated(lock_modal_container);
   lock_modal_container->SetProperty(kUsesScreenCoordinatesKey, true);

@@ -35,15 +35,14 @@ bool ShowChildWindows(mojom::TrayActionState action_state,
 LockActionHandlerLayoutManager::LockActionHandlerLayoutManager(
     aura::Window* window,
     Shelf* shelf,
-    std::unique_ptr<LockScreenActionBackgroundController>
-        action_background_controller)
+    LockScreenActionBackgroundController* action_background_controller)
     : LockLayoutManager(window, shelf),
-      action_background_controller_(std::move(action_background_controller)),
+      action_background_controller_(action_background_controller),
       tray_action_observer_(this),
       action_background_observer_(this) {
   TrayAction* tray_action = Shell::Get()->tray_action();
   tray_action_observer_.Add(tray_action);
-  action_background_observer_.Add(action_background_controller_.get());
+  action_background_observer_.Add(action_background_controller_);
 }
 
 LockActionHandlerLayoutManager::~LockActionHandlerLayoutManager() = default;
@@ -107,14 +106,25 @@ void LockActionHandlerLayoutManager::OnLockScreenNoteStateChanged(
 
 void LockActionHandlerLayoutManager::OnLockScreenActionBackgroundStateChanged(
     LockScreenActionBackgroundState state) {
+  // Stack the container over the shelf when the background is animating, as the
+  // animation should be seen as covering the shelf..
+  if (state == LockScreenActionBackgroundState::kShowing ||
+      state == LockScreenActionBackgroundState::kHiding) {
+    window()->parent()->StackChildAbove(
+        window(), root_window()->GetChildById(kShellWindowId_ShelfContainer));
+  } else {
+    window()->parent()->StackChildBelow(
+        window(), root_window()->GetChildById(kShellWindowId_ShelfContainer));
+  }
+
   UpdateChildren(Shell::Get()->tray_action()->GetLockScreenNoteState(), state);
 }
 
 void LockActionHandlerLayoutManager::SetBackgroundControllerForTesting(
-    std::unique_ptr<LockScreenActionBackgroundController> controller) {
+    LockScreenActionBackgroundController* controller) {
   action_background_observer_.RemoveAll();
-  action_background_controller_ = std::move(controller);
-  action_background_observer_.Add(action_background_controller_.get());
+  action_background_controller_ = controller;
+  action_background_observer_.Add(action_background_controller_);
 
   OnLockScreenActionBackgroundStateChanged(
       action_background_controller_->state());
