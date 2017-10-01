@@ -220,10 +220,6 @@ class BlinkTestRunner : public RenderViewObserver,
 
   mojom::ShellTestConfigurationPtr test_config_;
 
-  std::vector<int> routing_ids_;
-  std::vector<std::vector<PageState> > session_histories_;
-  std::vector<unsigned> current_entry_indexes_;
-
   base::circular_deque<base::Callback<void(const std::vector<std::string>&)>>
       get_bluetooth_events_callbacks_;
 
