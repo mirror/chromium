@@ -191,6 +191,11 @@ class CheckedNumeric {
         state_.is_valid() && Wrapper<U>::is_valid(rhs));
   }
 
+  template <typename U, typename V>
+  constexpr CheckedNumeric ToRange(U min, V max) const {
+    return Max(min).Min(max);
+  }
+
   // This function is available only for integral types. It returns an unsigned
   // integer of the same width as the source type, containing the absolute value
   // of the source, and properly handling signed min.
@@ -314,6 +319,12 @@ constexpr CheckedNumeric<typename UnderlyingType<T>::type> MakeCheckedNum(
   return value;
 }
 
+// Convenience wrapper for ToRange method.
+template <typename T, typename U, typename V>
+constexpr CheckedNumeric<T> CheckToRange(T value, U min, V max) {
+  return MakeCheckedNum(value).ToRange(min, max);
+}
+
 // These implement the variadic wrapper for the math operations.
 template <template <typename, typename, typename> class M,
           typename L,
@@ -377,6 +388,7 @@ using internal::ValueOrDefaultForType;
 using internal::MakeCheckedNum;
 using internal::CheckMax;
 using internal::CheckMin;
+using internal::CheckToRange;
 using internal::CheckAdd;
 using internal::CheckSub;
 using internal::CheckMul;
