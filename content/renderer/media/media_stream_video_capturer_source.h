@@ -81,6 +81,8 @@ class CONTENT_EXPORT MediaStreamVideoCapturerSource
   media::VideoCaptureParams capture_params_;
   VideoCaptureDeliverFrameCB frame_callback_;
 
+  base::WeakPtrFactory<MediaStreamVideoCapturerSource> weak_factory_;
+
   DISALLOW_COPY_AND_ASSIGN(MediaStreamVideoCapturerSource);
 };
 

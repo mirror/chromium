@@ -163,7 +163,8 @@ MediaStreamVideoCapturerSource::MediaStreamVideoCapturerSource(
     std::unique_ptr<media::VideoCapturerSource> source)
     : RenderFrameObserver(nullptr),
       dispatcher_host_(nullptr),
-      source_(std::move(source)) {
+      source_(std::move(source)),
+      weak_factory_(this) {
   media::VideoCaptureFormats preferred_formats = source_->GetPreferredFormats();
   if (!preferred_formats.empty())
     capture_params_.requested_format = preferred_formats.front();
@@ -178,7 +179,8 @@ MediaStreamVideoCapturerSource::MediaStreamVideoCapturerSource(
     : RenderFrameObserver(render_frame),
       dispatcher_host_(nullptr),
       source_(new LocalVideoCapturerSource(device.session_id)),
-      capture_params_(capture_params) {
+      capture_params_(capture_params),
+      weak_factory_(this) {
   SetStopCallback(stop_callback);
   SetDevice(device);
   SetDeviceRotationDetection(true /* enabled */);
@@ -262,6 +264,8 @@ void MediaStreamVideoCapturerSource::OnRunStateChanged(
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   switch (state_) {
     case STARTING:
+      // OnStartDone is called synchronously because the canvas and element
+      // capture APIs require synchronous setup of the source.
       if (is_running) {
         state_ = STARTED;
         DCHECK(capture_params_ == new_capture_params);
@@ -274,12 +278,17 @@ void MediaStreamVideoCapturerSource::OnRunStateChanged(
     case STARTED:
       if (!is_running) {
         state_ = STOPPED;
-        StopSource();
+        base::SequencedTaskRunnerHandle::Get()->PostTask(
+            FROM_HERE, base::Bind(&MediaStreamVideoCapturerSource::StopSource,
+                                  weak_factory_.GetWeakPtr()));
       }
       break;
     case STOPPING_FOR_RESTART:
       state_ = is_running ? STARTED : STOPPED;
-      OnStopForRestartDone(!is_running);
+      base::SequencedTaskRunnerHandle::Get()->PostTask(
+          FROM_HERE,
+          base::Bind(&MediaStreamVideoCapturerSource::OnStopForRestartDone,
+                     weak_factory_.GetWeakPtr(), !is_running));
       break;
     case RESTARTING:
       if (is_running) {
@@ -288,7 +297,9 @@ void MediaStreamVideoCapturerSource::OnRunStateChanged(
       } else {
         state_ = STOPPED;
       }
-      OnRestartDone(is_running);
+      base::SequencedTaskRunnerHandle::Get()->PostTask(
+          FROM_HERE, base::Bind(&MediaStreamVideoCapturerSource::OnRestartDone,
+                                weak_factory_.GetWeakPtr(), is_running));
       break;
     case STOPPED:
       break;

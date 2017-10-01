@@ -50,10 +50,7 @@ class MockVideoCapturerSource : public media::VideoCapturerSource {
     MockStopCapture();
     SetRunning(false);
   }
-  void SetRunning(bool is_running) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(running_cb_, is_running));
-  }
+  void SetRunning(bool is_running) { running_cb_.Run(is_running); }
   const media::VideoCaptureParams& capture_params() const {
     return capture_params_;
   }
