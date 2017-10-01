@@ -72,11 +72,40 @@ MockMediaStreamVideoSource::GetCurrentFormat() const {
   return base::Optional<media::VideoCaptureFormat>(format_);
 }
 
+base::Optional<media::VideoCaptureParams>
+MockMediaStreamVideoSource::GetCurrentCaptureParams() const {
+  media::VideoCaptureParams params;
+  params.requested_format = format_;
+  return params;
+}
+
 void MockMediaStreamVideoSource::DeliverVideoFrame(
     const scoped_refptr<media::VideoFrame>& frame) {
+  DCHECK(!is_stopped_for_restart_);
   DCHECK(!frame_callback_.is_null());
   io_task_runner()->PostTask(
       FROM_HERE, base::BindOnce(frame_callback_, frame, base::TimeTicks()));
+}
+
+void MockMediaStreamVideoSource::StopSourceForRestartImpl() {
+  if (is_unable_to_stop_for_restart_) {
+    OnStopForRestartDone(false);
+    return;
+  }
+  is_stopped_for_restart_ = true;
+  OnStopForRestartDone(true);
+}
+
+void MockMediaStreamVideoSource::RestartSourceImpl(
+    const media::VideoCaptureFormat& new_format) {
+  DCHECK(is_stopped_for_restart_);
+  if (is_unable_to_restart_after_stop_) {
+    OnRestartDone(false);
+    return;
+  }
+  format_ = new_format;
+  OnRestartDone(true);
+  is_stopped_for_restart_ = false;
 }
 
 }  // namespace content
