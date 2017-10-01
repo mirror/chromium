@@ -304,7 +304,13 @@ void TypingCommand::AdjustSelectionAfterIncrementalInsertion(
   Element* element = frame->Selection()
                          .ComputeVisibleSelectionInDOMTreeDeprecated()
                          .RootEditableElement();
-  DCHECK(element);
+
+  // TODO(editing-dev): The text insertion should probably always leave the
+  // selection in an editable region, but we know of at least one case where it
+  // doesn't (see test case in crbug.com/767599). Return early in this case to
+  // avoid a crash.
+  if (!element)
+    return;
 
   const size_t end = selection_start + text_length;
   const size_t start =
