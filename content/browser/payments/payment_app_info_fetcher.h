@@ -58,6 +58,13 @@ class PaymentAppInfoFetcher
   int context_frame_id_;
   std::unique_ptr<PaymentAppInfo> fetched_payment_app_info_;
 
+  // TODO(gogerald): Choose appropriate icon size dynamically on different
+  // platforms.
+  // Here we choose a large ideal icon size to be big enough for all platforms.
+  // Note that we only scale down for this icon size but not scale up.
+  static const int kPaymentAppIdealIconSize = 0xFFFF;
+  static const int kPaymentAppMinimumIconSize = 0;
+
   DISALLOW_COPY_AND_ASSIGN(PaymentAppInfoFetcher);
 };
 
