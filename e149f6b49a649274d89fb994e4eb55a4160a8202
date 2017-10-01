@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "259d2611_1e358dc1",
+        "filename": "third_party/WebKit/Source/platform/wtf/RefCounted.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-10-01T23:55:41Z",
+      "side": 0,
+      "message": "Yes, we have an equivalent DCHECK: https://cs.chromium.org/chromium/src/base/memory/ref_counted.h?sq\u003dpackage:chromium\u0026dr\u0026l\u003d67",
+      "parentUuid": "efb8d1a5_1901528d",
+      "revId": "e149f6b49a649274d89fb994e4eb55a4160a8202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "456cbd4d_4e20fc76",
         "filename": "third_party/WebKit/Source/platform/wtf/RefCounted.h",
         "patchSetId": 28
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-29T01:44:47Z",
       "side": 0,
       "message": "Ditto.",
+      "revId": "e149f6b49a649274d89fb994e4eb55a4160a8202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad3b7684_1eaf7d12",
+        "filename": "third_party/WebKit/Source/platform/wtf/RefCounted.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-10-01T23:55:41Z",
+      "side": 0,
+      "message": "Yes, as a DCHECK:\nhttps://cs.chromium.org/chromium/src/base/memory/ref_counted.h?sq\u003dpackage:chromium\u0026dr\u0026l\u003d95",
+      "parentUuid": "456cbd4d_4e20fc76",
       "revId": "e149f6b49a649274d89fb994e4eb55a4160a8202",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
