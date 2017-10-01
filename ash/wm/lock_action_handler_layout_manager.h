@@ -45,8 +45,7 @@ class ASH_EXPORT LockActionHandlerLayoutManager
   LockActionHandlerLayoutManager(
       aura::Window* window,
       Shelf* shelf,
-      std::unique_ptr<LockScreenActionBackgroundController>
-          action_background_controller);
+      LockScreenActionBackgroundController* action_background_controller);
   ~LockActionHandlerLayoutManager() override;
 
   // WmSnapToPixelLayoutManager:
@@ -62,14 +61,13 @@ class ASH_EXPORT LockActionHandlerLayoutManager
       LockScreenActionBackgroundState state) override;
 
   void SetBackgroundControllerForTesting(
-      std::unique_ptr<LockScreenActionBackgroundController> controller);
+      LockScreenActionBackgroundController* controller);
 
  private:
   void UpdateChildren(mojom::TrayActionState action_state,
                       LockScreenActionBackgroundState background_state);
 
-  std::unique_ptr<LockScreenActionBackgroundController>
-      action_background_controller_;
+  LockScreenActionBackgroundController* action_background_controller_;
 
   ScopedObserver<TrayAction, TrayActionObserver> tray_action_observer_;
   ScopedObserver<LockScreenActionBackgroundController,
