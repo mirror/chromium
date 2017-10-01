@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06d115a6_54068f54",
+        "filename": "third_party/WebKit/Source/core/editing/Position.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-10-01T18:00:53Z",
+      "side": 1,
+      "message": "Should I add TODO(editing-dev) here?",
+      "range": {
+        "startLine": 196,
+        "startChar": 5,
+        "endLine": 196,
+        "endChar": 12
+      },
+      "revId": "4847ecade0cd269071143164ce2e6d0ebde53cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
