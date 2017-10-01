@@ -253,8 +253,7 @@ void MediaStreamVideoSource::DoStopSource() {
 void MediaStreamVideoSource::OnStartDone(MediaStreamRequestResult result) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DVLOG(3) << "OnStartDone({result =" << result << "})";
-  if (result == MEDIA_DEVICE_OK) {
-    DCHECK_EQ(STARTING, state_);
+  if (state_ == STARTING && result == MEDIA_DEVICE_OK) {
     state_ = STARTED;
     SetReadyState(blink::WebMediaStreamSource::kReadyStateLive);
     StartFrameMonitoring();
