@@ -43,6 +43,7 @@
 #include "core/html/TextControlElement.h"
 #include "core/layout/LayoutImage.h"
 #include "core/layout/LayoutObject.h"
+#include "core/layout/LayoutView.h"
 #include "core/loader/resource/ImageResourceContent.h"
 #include "core/page/ChromeClient.h"
 #include "core/page/Page.h"
@@ -53,6 +54,7 @@
 #include "platform/clipboard/ClipboardMimeTypes.h"
 #include "platform/clipboard/ClipboardUtilities.h"
 #include "platform/graphics/StaticBitmapImage.h"
+#include "platform/graphics/paint/GeometryMapper.h"
 #include "platform/graphics/paint/PaintRecordBuilder.h"
 #include "platform/network/mime/MIMETypeRegistry.h"
 #include "public/platform/WebScreenInfo.h"
@@ -353,11 +355,21 @@ void DataTransfer::SetDragImageElement(Node* node, const IntPoint& loc) {
 
 FloatRect DataTransfer::ClipByVisualViewport(const FloatRect& rect_in_frame,
                                              const LocalFrame& frame) {
-  IntRect viewport_in_root_frame =
-      IntRect(frame.GetPage()->GetVisualViewport().VisibleRect());
-  FloatRect viewport_in_frame =
-      frame.View()->RootFrameToContents(viewport_in_root_frame);
-  return Intersection(viewport_in_frame, rect_in_frame);
+  // Ensure properties are up-to-date because they will be used for mapping.
+  frame.View()->UpdateAllLifecyclePhasesExceptPaint();
+
+  // This root transform should not include the page scale factor because the
+  // visual viewport visible rect (|viewport| below) already includes it and we
+  // should not scale by the page scale factor twice. This may change when the
+  // visual viewport creates properties (https://crbug.com/638473).
+  const auto* root_transform = TransformPaintPropertyNode::Root();
+  const auto* frame_contents_transform =
+      frame.View()->ScrolledContentsProperties().Transform();
+
+  FloatRect viewport = frame.GetPage()->GetVisualViewport().VisibleRect();
+  GeometryMapper::SourceToDestinationRect(root_transform,
+                                          frame_contents_transform, viewport);
+  return Intersection(viewport, rect_in_frame);
 }
 
 // static

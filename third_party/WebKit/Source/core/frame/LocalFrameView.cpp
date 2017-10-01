@@ -1357,6 +1357,14 @@ void LocalFrameView::UpdateLayout() {
   CheckDoesNotNeedLayout();
 }
 
+PropertyTreeState LocalFrameView::ScrolledContentsProperties() const {
+  if (!RuntimeEnabledFeatures::RootLayerScrollingEnabled())
+    return *property_tree_state_for_contents_.get();
+  // Scrollable areas cannot be fragmented so the first fragment is the only
+  // fragment.
+  return GetLayoutView()->FirstFragment()->ContentsProperties();
+}
+
 void LocalFrameView::SetNeedsPaintPropertyUpdate() {
   needs_paint_property_update_ = true;
   if (RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
