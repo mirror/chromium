@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "components/payments/core/address_normalization_manager.h"
+#include "components/autofill/core/browser/address_normalization_manager.h"
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
