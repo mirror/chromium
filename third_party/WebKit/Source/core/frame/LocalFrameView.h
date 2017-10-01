@@ -746,13 +746,13 @@ class CORE_EXPORT LocalFrameView final
   // The property tree state that should be used for painting contents. These
   // properties are either created by this LocalFrameView or are inherited from
   // an ancestor.
-  void SetTotalPropertyTreeStateForContents(
+  void SetPropertyTreeStateForContents(
       std::unique_ptr<PropertyTreeState> state) {
-    total_property_tree_state_for_contents_ = std::move(state);
+    DCHECK(!RuntimeEnabledFeatures::RootLayerScrollingEnabled());
+    property_tree_state_for_contents_ = std::move(state);
   }
-  const PropertyTreeState* TotalPropertyTreeStateForContents() const {
-    return total_property_tree_state_for_contents_.get();
-  }
+  // This is the complete set of property nodes for the scrolled contents.
+  PropertyTreeState ScrolledContentsProperties() const;
 
   // Paint properties (e.g., m_preTranslation, etc.) are built from the
   // LocalFrameView's state (e.g., x(), y(), etc.) as well as inherited context.
@@ -1205,8 +1205,9 @@ class CORE_EXPORT LocalFrameView final
   RefPtr<ClipPaintPropertyNode> content_clip_;
   // The property tree state that should be used for painting contents. These
   // properties are either created by this LocalFrameView or are inherited from
-  // an ancestor.
-  std::unique_ptr<PropertyTreeState> total_property_tree_state_for_contents_;
+  // an ancestor. Should only be set when root layer scrolling is not enabled;
+  // the LayoutView will create/own these properties with root layer scrolling.
+  std::unique_ptr<PropertyTreeState> property_tree_state_for_contents_;
   // Whether the paint properties need to be updated. For more details, see
   // LocalFrameView::needsPaintPropertyUpdate().
   bool needs_paint_property_update_;

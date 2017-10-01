@@ -222,7 +222,7 @@ void BlockPainter::PaintScrollHitTestDisplayItem(const PaintInfo& paint_info) {
   if (!RuntimeEnabledFeatures::RootLayerScrollingEnabled() &&
       layout_block_.IsLayoutView()) {
     auto* view = layout_block_.GetFrame()->View();
-    const auto& contents_state = *view->TotalPropertyTreeStateForContents();
+    const auto& contents_state = view->ScrolledContentsProperties();
     DCHECK(paint_info.context.GetPaintController()
                .CurrentPaintChunkProperties()
                .property_tree_state == contents_state);

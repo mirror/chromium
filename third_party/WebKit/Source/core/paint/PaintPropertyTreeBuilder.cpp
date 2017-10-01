@@ -237,7 +237,7 @@ void PaintPropertyTreeBuilder::UpdateProperties(
 
   std::unique_ptr<PropertyTreeState> contents_state(new PropertyTreeState(
       context.current.transform, context.current.clip, context.current_effect));
-  frame_view.SetTotalPropertyTreeStateForContents(std::move(contents_state));
+  frame_view.SetPropertyTreeStateForContents(std::move(contents_state));
 }
 
 static bool NeedsScrollNode(const LayoutObject& object) {

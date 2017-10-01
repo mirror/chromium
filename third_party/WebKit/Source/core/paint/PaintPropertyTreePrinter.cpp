@@ -438,13 +438,13 @@ class PaintPropertyTreeGraphBuilder {
   }
 
   void WriteFrameViewPaintPropertyNodes(const LocalFrameView& frame_view) {
-    if (const auto* contents_state =
-            frame_view.TotalPropertyTreeStateForContents()) {
-      if (const auto* root = GetRoot(contents_state->Transform()))
+    if (!RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
+      const auto& contents_state = frame_view.ScrolledContentsProperties();
+      if (const auto* root = GetRoot(contents_state.Transform()))
         WritePaintPropertyNode(*root, &frame_view, "rootTransform");
-      if (const auto* root = GetRoot(contents_state->Clip()))
+      if (const auto* root = GetRoot(contents_state.Clip()))
         WritePaintPropertyNode(*root, &frame_view, "rootClip");
-      if (const auto* root = GetRoot(contents_state->Effect()))
+      if (const auto* root = GetRoot(contents_state.Effect()))
         WritePaintPropertyNode(*root, &frame_view, "rootEffect");
     }
     TransformPaintPropertyNode* pre_translation = frame_view.PreTranslation();
