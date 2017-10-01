@@ -293,6 +293,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
         // Just refresh the view if action mode already exists.
         if (isActionModeValid()) {
             // Try/catch necessary for framework bug, crbug.com/446717.
+            hideActionMode(true);
             try {
                 mActionMode.invalidate();
             } catch (NullPointerException e) {
@@ -995,6 +996,9 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
                 break;
 
             case SelectionEventType.SELECTION_HANDLES_MOVED:
+                Rect currentRect = new Rect(left, top, right, bottom);
+                if (mSelectionRect.equals(currentRect)) break;
+
                 mSelectionRect.set(left, top, right, bottom);
                 invalidateContentRect();
                 break;
