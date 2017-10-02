@@ -99,7 +99,7 @@ class SessionDurationUpdaterTest : public testing::Test {
 }  // namespace
 
 // kObservedSessionTime should be 0 on initalization and 50 after simulation.
-TEST_F(SessionDurationUpdaterTest, TestTimeAdded) {
+TEST_F(SessionDurationUpdaterTest, TimeAdded) {
   // Tests the pref is registered to 0 before any session time passes.
   EXPECT_EQ(
       0, test_observer_->GetPrefs()->GetInteger(prefs::kObservedSessionTime));
@@ -114,7 +114,7 @@ TEST_F(SessionDurationUpdaterTest, TestTimeAdded) {
 
 // kObservedSessionTime should not be updated when SessionDurationUpdater has
 // no observers, but should start updating again if another observer is added.
-TEST_F(SessionDurationUpdaterTest, TestAddingAndRemovingObservers) {
+TEST_F(SessionDurationUpdaterTest, AddingAndRemovingObservers) {
   // Tests 50 minutes passing with an observer added.
   test_observer_->GetSessionDurationUpdater()->OnSessionEnded(
       base::TimeDelta::FromMinutes(50));
@@ -141,6 +141,22 @@ TEST_F(SessionDurationUpdaterTest, TestAddingAndRemovingObservers) {
 
   EXPECT_EQ(
       100, test_observer_->GetPrefs()->GetInteger(prefs::kObservedSessionTime));
+}
+
+// Active session time should be 0 on initalization and 50 after simulation.
+TEST_F(SessionDurationUpdaterTest, GetActiveSessionElapsedTime) {
+  // Tests the pref is registered to 0 before any session time passes.
+  EXPECT_EQ(0, test_observer_->GetSessionDurationUpdater()
+                   ->GetActiveSessionElapsedTime()
+                   .InMinutes());
+
+  // Tests 50 minutes passing with an observer added.
+  test_observer_->GetSessionDurationUpdater()->OnSessionEnded(
+      base::TimeDelta::FromMinutes(50));
+
+  EXPECT_EQ(50, test_observer_->GetSessionDurationUpdater()
+                    ->GetActiveSessionElapsedTime()
+                    .InMinutes());
 }
 
 }  // namespace feature_engagement
