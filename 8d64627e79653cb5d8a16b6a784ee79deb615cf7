@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "916aaf9c_9689b2bf",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-02T11:07:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "954614d5_70f52139",
+      "range": {
+        "startLine": 62,
+        "startChar": 8,
+        "endLine": 62,
+        "endChar": 18
+      },
+      "revId": "8d64627e79653cb5d8a16b6a784ee79deb615cf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "719e75c8_95719757",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
         "patchSetId": 10
@@ -36,6 +60,24 @@
       "writtenOn": "2017-10-02T08:55:45Z",
       "side": 1,
       "message": "Does it make sense to move this to the builder and pass an instance of this class?",
+      "revId": "8d64627e79653cb5d8a16b6a784ee79deb615cf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0570d766_e7c2ac95",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-02T11:07:09Z",
+      "side": 1,
+      "message": "Yes, it makes sense.\nDoes the new PS meet your expectation?",
+      "parentUuid": "719e75c8_95719757",
       "revId": "8d64627e79653cb5d8a16b6a784ee79deb615cf7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -62,6 +104,30 @@
       "revId": "8d64627e79653cb5d8a16b6a784ee79deb615cf7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e020b0a1_54dcf788",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/web_idl_builder.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-02T11:07:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e4e6139_974c8a5a",
+      "range": {
+        "startLine": 37,
+        "startChar": 6,
+        "endLine": 37,
+        "endChar": 19
+      },
+      "revId": "8d64627e79653cb5d8a16b6a784ee79deb615cf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
