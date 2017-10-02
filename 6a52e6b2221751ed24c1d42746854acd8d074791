@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74d6016f_4dc83299",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-02T18:35:08Z",
+      "side": 1,
+      "message": "Don\u0027t think you need indexed_db_leveldb_coding.h anymore.",
+      "revId": "6a52e6b2221751ed24c1d42746854acd8d074791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39e96467_b11df813",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-02T18:35:08Z",
+      "side": 1,
+      "message": "What do you think about adding:\n\nusing indexed_db::GetInt;\n\nat the top of this file, along with some other functions? That should simplify this diff quite a bit.",
+      "range": {
+        "startLine": 115,
+        "startChar": 13,
+        "endLine": 115,
+        "endChar": 23
+      },
+      "revId": "6a52e6b2221751ed24c1d42746854acd8d074791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d138e2d2_e5d956e6",
+        "filename": "content/browser/indexed_db/indexed_db_leveldb_coding.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-02T18:35:08Z",
+      "side": 1,
+      "message": "Do you need CONTENT_EXPORT?",
+      "revId": "6a52e6b2221751ed24c1d42746854acd8d074791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d739f0a_257712fa",
+        "filename": "content/browser/indexed_db/indexed_db_leveldb_operations.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-02T18:35:08Z",
+      "side": 1,
+      "message": "This is really more of a file comment instead of a namespace one right? Maybe move it higher up in this file after the includes?",
+      "revId": "6a52e6b2221751ed24c1d42746854acd8d074791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
