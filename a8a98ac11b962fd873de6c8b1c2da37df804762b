@@ -238,6 +238,69 @@
     },
     {
       "key": {
+        "uuid": "66f8d861_15c8f3ec",
+        "filename": "components/previews/core/previews_io_data_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-02T18:35:14Z",
+      "side": 1,
+      "message": "Is this needed?\nMy understanding is that |url_| would be automatically initialized using its default constructor.",
+      "range": {
+        "startLine": 80,
+        "startChar": 8,
+        "endLine": 80,
+        "endChar": 21
+      },
+      "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0159ece_66338169",
+        "filename": "components/previews/core/previews_io_data_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-02T18:35:14Z",
+      "side": 1,
+      "message": "Can this be a private method?",
+      "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2d0bb57_c0f225f8",
+        "filename": "components/previews/core/previews_io_data_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-02T18:35:14Z",
+      "side": 1,
+      "message": "ditto.",
+      "range": {
+        "startLine": 89,
+        "startChar": 3,
+        "endLine": 89,
+        "endChar": 21
+      },
+      "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c13cb27_4d28a7aa",
         "filename": "components/previews/core/previews_log.cc",
         "patchSetId": 12
@@ -615,6 +678,30 @@
     },
     {
       "key": {
+        "uuid": "199ed297_87fcdf2b",
+        "filename": "components/previews/core/previews_log.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-02T18:35:14Z",
+      "side": 1,
+      "message": "Using internal type in .cc SGTM.",
+      "parentUuid": "a3d73479_75e01840",
+      "range": {
+        "startLine": 20,
+        "startChar": 7,
+        "endLine": 20,
+        "endChar": 17
+      },
+      "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63c7e7fa_9606558d",
         "filename": "components/previews/core/previews_log.h",
         "patchSetId": 12
@@ -733,6 +820,30 @@
     },
     {
       "key": {
+        "uuid": "5c73c4d1_c016c001",
+        "filename": "components/previews/core/previews_log.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-02T18:35:14Z",
+      "side": 1,
+      "message": "Thanks for the explanation. public is fine.",
+      "parentUuid": "157cadfd_c8e07904",
+      "range": {
+        "startLine": 58,
+        "startChar": 7,
+        "endLine": 58,
+        "endChar": 17
+      },
+      "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e634c209_5ab5dadc",
         "filename": "components/previews/core/previews_log.h",
         "patchSetId": 12
@@ -801,6 +912,29 @@
       "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e4de8728_efc22da3",
+        "filename": "components/previews/core/previews_log_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-02T18:35:14Z",
+      "side": 1,
+      "message": "s/logger/logger_/",
+      "range": {
+        "startLine": 32,
+        "startChar": 31,
+        "endLine": 32,
+        "endChar": 38
+      },
+      "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {

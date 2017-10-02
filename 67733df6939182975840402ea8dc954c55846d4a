@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc3b9057_a7523520",
+        "filename": "components/previews/core/previews_io_data.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-02T18:35:14Z",
+      "side": 1,
+      "message": "s/Add/Adds/",
+      "range": {
+        "startLine": 54,
+        "startChar": 5,
+        "endLine": 54,
+        "endChar": 8
+      },
+      "revId": "67733df6939182975840402ea8dc954c55846d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "124ecb65_8bea134a",
+        "filename": "components/previews/core/previews_log.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-02T18:35:14Z",
+      "side": 1,
+      "message": "Add sequence checker to the class.\nSee for example:\nhttps://cs.chromium.org/chromium/src/chrome/browser/page_load_metrics/observers/previews_ukm_observer.h?rcl\u003d7f7215e842795d4a989c83afb41b542c9619bf27\u0026l\u003d48",
+      "range": {
+        "startLine": 49,
+        "startChar": 6,
+        "endLine": 49,
+        "endChar": 20
+      },
+      "revId": "67733df6939182975840402ea8dc954c55846d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4cc0125_0abc4566",
+        "filename": "components/previews/core/previews_log.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-02T18:35:14Z",
+      "side": 1,
+      "message": "rm \"Pop out the oldest log if the\n  // size of |log_messages_| grows larger than a threshold.\" since this is an internal detail of the method.\n\nInstead, in the class comments (Line 48), you can say that the class only retains record of recent navigations.",
+      "range": {
+        "startLine": 56,
+        "startChar": 49,
+        "endLine": 57,
+        "endChar": 59
+      },
+      "revId": "67733df6939182975840402ea8dc954c55846d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "665e6927_c8b42a90",
+        "filename": "components/previews/core/previews_log.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-02T18:35:14Z",
+      "side": 1,
+      "message": "Move this to anonymous namespace in .cc file, or make the function static.",
+      "range": {
+        "startLine": 68,
+        "startChar": 14,
+        "endLine": 68,
+        "endChar": 45
+      },
+      "revId": "67733df6939182975840402ea8dc954c55846d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "771df4a9_6e013834",
+        "filename": "components/previews/core/previews_ui_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-02T18:35:14Z",
+      "side": 1,
+      "message": "Add:\nDCHECK(thread_checker_.CalledOnValidThread());",
+      "revId": "67733df6939182975840402ea8dc954c55846d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
