@@ -700,6 +700,7 @@ public class ImeTest {
     @Test
     @SmallTest
     @Feature({"TextInput"})
+    @SuppressWarnings({"AssertionFailureIgnored", "TryFailThrowable"})
     public void testPhysicalKeyboard_AttachDetach() throws Throwable {
         attachPhysicalKeyboard();
         // We still call showSoftKeyboard, which will be ignored by physical keyboard.

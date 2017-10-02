@@ -168,6 +168,7 @@ public class ConnectivityTaskTest {
     @Test
     @MediumTest
     @Feature({"Feedback"})
+    @SuppressWarnings({"AssertionFailureIgnored", "TryFailThrowable"})
     public void testTwoTimeoutsShouldFillInTheRest() {
         final ConnectivityTask task = ThreadUtils.runOnUiThreadBlockingNoException(
                 new Callable<ConnectivityTask>() {
