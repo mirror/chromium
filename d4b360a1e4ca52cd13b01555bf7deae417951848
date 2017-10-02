@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc303b46_3276b4a4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-02T23:16:29Z",
+      "side": 1,
+      "message": "Nit: End sentence with a period.",
+      "revId": "d4b360a1e4ca52cd13b01555bf7deae417951848",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ca6bc66_1a41e1d8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-02T23:16:29Z",
+      "side": 1,
+      "message": "Typo: semantics",
+      "revId": "d4b360a1e4ca52cd13b01555bf7deae417951848",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80133958_4e7a035f",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-02T23:16:29Z",
+      "side": 1,
+      "message": "Nit: \"where the OS is allowed to not swap\"",
+      "revId": "d4b360a1e4ca52cd13b01555bf7deae417951848",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ce725be_51f75a71",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-02T23:16:29Z",
+      "side": 1,
+      "message": "Question: Is\n\n  DCHECK_EQ(0, length \u0026 kSystemPageOffsetMask)\n\nmore clear? I don\u0027t feel strongly, just an idea.",
+      "revId": "d4b360a1e4ca52cd13b01555bf7deae417951848",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c086bfd3_5020fe4f",
+        "filename": "base/allocator/partition_allocator/page_allocator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-02T23:16:29Z",
+      "side": 1,
+      "message": "Typos: system, address\n\nAlso, I\u0027d capitalize \"RAM\".",
+      "revId": "d4b360a1e4ca52cd13b01555bf7deae417951848",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f7ce2c6_1fe25c9e",
+        "filename": "base/allocator/partition_allocator/page_allocator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-02T23:16:29Z",
+      "side": 1,
+      "message": "Nit: Capitalize \"Windows\".",
+      "revId": "d4b360a1e4ca52cd13b01555bf7deae417951848",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
