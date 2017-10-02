@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "571d9f81_01888ed5",
+        "filename": "gpu/ipc/service/pass_through_image_transport_surface.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-10-02T22:58:13Z",
+      "side": 1,
+      "message": "Sounds like a good cleanup.\n\nNow that I understand PassThroughImageTransportSurface better, I think we could also avoid ui/gl\u0027s dependency on ui/latency_info by adding a separate GLLatencyInfo. In addition to better layering, it would:\n1) avoid unnecessary overhead of IPCing a bunch of LatencyInfo to the GPU service only to IPC most of it back unread and untouched.\n2) allow GLLatencyInfo to record each timestamp once per frame rather than once per element of a LatencyInfo vector.\n\nBest of all, we don\u0027t need to pass anything into any flavor of SwapBuffers or IPCs inbound to the GPU Service! The client could just set a surface property indicating they want GLLatencyInfo, then each implementation would create one as needed instead of having to transfer ownership. Then it\u0027s up to the client to merge the GLLatencyInfo with LatencyInfo or whatever else it wants to.",
+      "parentUuid": "a99bb964_b19da059",
+      "revId": "80c23428f7a89ef3176bd7647a5a18bd6b5949cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c4fdd65_a09abaf2",
         "filename": "ui/gl/DEPS",
         "patchSetId": 11
@@ -136,6 +154,24 @@
       "writtenOn": "2017-10-02T18:28:51Z",
       "side": 1,
       "message": "Note, the other versions of SwapBuffers will also need to be changed to be consistent. Namely:\n- SwapBuffersWithBounds, PostSubBuffer and CommitOverlayPlanes\n- the Async version of all 4 of these (or... 3, I don\u0027t think we have an async version of SwapBuffersWithBounds, though it should probably be added).\n\nIn particular, I don\u0027t think the current method fits very well with the Async version. I think SwapBuffersAsync and friends need to take ownership of the vector, and return it with the callback. Keeping in mind that there might be more than 1 SwapBuffers in flight.\nMaybe the way I would approach it is by passing the LatencyInfo by value to SwapBuffersAsync (expecting the caller to explicitly std::move), and pass it back to the callback by value as well (implementation would std::move too). This makes it clear at the callsite about ownership transfers (and moving vectors is very cheap).\n\nIf we go that route, I think I would have SwapBuffers be consistent as well, that is, take the input LatencyInfo by value, and returning the output LatencyInfo by value as well (e.g. introducing a movable SwapBuffersResult value type with the SwapResult and the LatencyInfo - which could also be used by the callback for async versions).",
+      "revId": "80c23428f7a89ef3176bd7647a5a18bd6b5949cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b715475_f583a32c",
+        "filename": "ui/gl/gl_surface.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-10-02T22:58:13Z",
+      "side": 1,
+      "message": "CrOS\u0027s async flavors of swap tie gfx::SwapResult to both the SwapAck and LatencyInfo of the frame. However, for Android, we\u0027ll want to keep them separate (or have something that can contain the SwapAck for one frame and the GLLatencyInfo of another) since we\u0027ll want to ack before the \"reads done\" timestamp is known.\n\nI\u0027ll probably just add a GLSurface::SetGLLatencyInfoCallback() and leave it up to the callback provider to decide what to do with the GLLatencyInfo.",
+      "parentUuid": "15770a4e_3940b2f3",
       "revId": "80c23428f7a89ef3176bd7647a5a18bd6b5949cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
