@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c3836ce_52685609",
+        "filename": "ui/display/manager/managed_display_info.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-02T16:57:02Z",
+      "side": 1,
+      "message": "%u, and just print size()",
+      "range": {
+        "startLine": 492,
+        "startChar": 28,
+        "endLine": 492,
+        "endChar": 29
+      },
+      "revId": "d530a31cd95d9451e5072ead119b0e382f16da67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ff9f937_15aa795e",
+        "filename": "ui/display/manager/managed_display_info.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-02T16:57:02Z",
+      "side": 1,
+      "message": "don\u0027t you have to reset touch_support ?",
+      "revId": "d530a31cd95d9451e5072ead119b0e382f16da67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
