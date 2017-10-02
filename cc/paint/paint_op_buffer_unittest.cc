@@ -1302,7 +1302,11 @@ std::vector<SkIRect> test_irects = {
     SkIRect::MakeXYWH(-1, -1, 0, 0), SkIRect::MakeXYWH(-100, -101, -102, -103)};
 
 std::vector<SkMatrix> test_matrices = {
-    SkMatrix(),
+    [] {
+      SkMatrix identity;
+      identity.setIdentity();
+      return identity;
+    }(),
     SkMatrix::MakeScale(3.91f, 4.31f),
     SkMatrix::MakeTrans(-5.2f, 8.7f),
     [] {
@@ -1848,13 +1852,16 @@ void CompareMatrices(const SkMatrix& original, const SkMatrix& written) {
   // Compare the 3x3 matrix values.
   EXPECT_EQ(original, written);
 
-  // getType will calculate a type but doesn't necessarily figure out that a
-  // matrix is identity (which setting identity will do).  So, verify that
-  // calculating the type on the original ends up with the same as the written,
-  // but not necessarily that the original and written have the same type.
-  SkMatrix orig_copy = original;
-  orig_copy.dirtyMatrixTypeCache();
-  EXPECT_EQ(orig_copy.getType(), written.getType());
+  // If a serialized matrix says it is identity, then the original must have
+  // those values, as the serialization process clobbers the matrix values.
+  if (original.isIdentity()) {
+    SkMatrix identity;
+    identity.setIdentity();
+    EXPECT_EQ(identity, original);
+    EXPECT_EQ(identity, written);
+  }
+
+  EXPECT_EQ(original.getType(), written.getType());
 }
 
 void CompareAnnotateOp(const AnnotateOp* original, const AnnotateOp* written) {
