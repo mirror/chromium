@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a88b2bd6_b4c0d7fc",
+        "filename": "ui/gfx/skia_color_space_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-10-02T18:54:27Z",
+      "side": 1,
+      "message": "https://cs.chromium.org/chromium/src/third_party/skia/include/core/SkColorSpace.h?rcl\u003d3c83668862521b3bbbd628a522c05688348d6e7f\u0026l\u003d32",
+      "parentUuid": "db4d8fdd_3052f5d6",
+      "range": {
+        "startLine": 196,
+        "startChar": 32,
+        "endLine": 196,
+        "endChar": 33
+      },
+      "revId": "2a9ab8e2aa4d9608a6bc80e965793743678537a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a56f345_b169050f",
         "filename": "ui/gfx/skia_color_space_util.cc",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2017-10-02T18:46:04Z",
       "side": 1,
       "message": "What\u0027s fG?",
+      "revId": "2a9ab8e2aa4d9608a6bc80e965793743678537a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7376aed5_955880a1",
+        "filename": "ui/gfx/skia_color_space_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-10-02T18:54:27Z",
+      "side": 1,
+      "message": "https://cs.chromium.org/chromium/src/third_party/skia/include/core/SkColorSpace.h?rcl\u003d3c83668862521b3bbbd628a522c05688348d6e7f\u0026l\u003d32",
+      "parentUuid": "7a56f345_b169050f",
       "revId": "2a9ab8e2aa4d9608a6bc80e965793743678537a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +112,30 @@
       "writtenOn": "2017-10-02T18:46:04Z",
       "side": 1,
       "message": "Ideally we also want to minimize the second derivative at this point, otherwise you get something that looks like a \"fold\" in your gradients.",
+      "range": {
+        "startLine": 287,
+        "startChar": 21,
+        "endLine": 287,
+        "endChar": 37
+      },
+      "revId": "2a9ab8e2aa4d9608a6bc80e965793743678537a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8155c2f_57ece4b4",
+        "filename": "ui/gfx/skia_color_space_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-10-02T18:54:27Z",
+      "side": 1,
+      "message": "We could potentially take that into account when deciding fn-\u003efD (where we switch from linear to nonlinear), to try to minimize the discontinuity in the derivative.\n\nI\u0027d be up for looking into doing that in a follow-on.",
+      "parentUuid": "26d62a5e_f2294837",
       "range": {
         "startLine": 287,
         "startChar": 21,
