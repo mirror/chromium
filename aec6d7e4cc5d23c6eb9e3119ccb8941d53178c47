@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "869701c4_6fa7e62e",
+        "filename": "ui/views/controls/tree/tree_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-02T23:48:03Z",
+      "side": 1,
+      "message": "I think this makes PlatformStyle::kTreeViewUsesOpenIcon obsolete (i.e. it can be removed and replaced with `true` without changing any behavior\n\nOr perhaps we should rename kTreeViewUsesOpenIcon to kTreeViewUsesPlatformIcons so that `kUseMdIcons` is in platform_style.h  (and inverting the condition to say \"platform\" rather than \"md\" makes it easier to grok around IsSecondaryUiMaterial() ~\"why are we checking md twice\")",
+      "revId": "aec6d7e4cc5d23c6eb9e3119ccb8941d53178c47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4321ca9_3c7d5ab7",
+        "filename": "ui/views/controls/tree/tree_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-02T23:48:03Z",
+      "side": 1,
+      "message": "yeah - per the comment on https://chromium-review.googlesource.com/c/chromium/src/+/663405/1/ui/views/controls/tree/tree_view.cc#102 - we can just remove ResourceDelegateMac since it no longer provides these icons, and doesn\u0027t serve any other purpose. Before https://codereview.chromium.org/1585013002 , chrome_browser_main_mac.mm would just use a nullptr ui::ResourceBundle::Delegate on mac.",
+      "revId": "aec6d7e4cc5d23c6eb9e3119ccb8941d53178c47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
