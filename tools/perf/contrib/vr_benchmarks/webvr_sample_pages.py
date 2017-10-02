@@ -8,7 +8,9 @@ from contrib.vr_benchmarks.vr_sample_page import VrSamplePage
 
 class WebVrSamplePage(VrSamplePage):
 
-  def __init__(self, page_set, get_parameters):
+  def __init__(self, page_set, get_parameters, use_standard_size=False):
+    if use_standard_size:
+      get_parameters += ['standardSize=1']
     super(WebVrSamplePage, self).__init__(
         sample_page='test-slow-render',
         page_set=page_set,
@@ -22,7 +24,7 @@ class WebVrSamplePage(VrSamplePage):
 class WebVrSamplePageSet(story.StorySet):
   """A page set using the official WebVR sample with settings tweaked."""
 
-  def __init__(self):
+  def __init__(self, use_standard_size=False):
     super(WebVrSamplePageSet, self).__init__()
 
     # Standard sample app with no changes
@@ -30,13 +32,13 @@ class WebVrSamplePageSet(story.StorySet):
         WebVrSamplePage(self, [
             'canvasClickPresents=1',
             'renderScale=1',
-        ]))
+        ], use_standard_size=use_standard_size))
     # Increased render scale
     self.AddStory(
         WebVrSamplePage(self, [
             'canvasClickPresents=1',
             'renderScale=1.5',
-        ]))
+        ], use_standard_size=use_standard_size))
     # Default render scale, increased load
     self.AddStory(
         WebVrSamplePage(self, [
@@ -45,7 +47,7 @@ class WebVrSamplePageSet(story.StorySet):
             'heavyGpu=1',
             'cubeScale=0.2',
             'workTime=5',
-        ]))
+        ], use_standard_size=use_standard_size))
     # Further increased load
     self.AddStory(
         WebVrSamplePage(self, [
@@ -54,4 +56,13 @@ class WebVrSamplePageSet(story.StorySet):
             'heavyGpu=1',
             'cubeScale=0.3',
             'workTime=10',
-        ]))
+        ], use_standard_size=use_standard_size))
+    # Absurd load for fill-rate testing
+    self.AddStory(
+        WebVrSamplePage(self, [
+            'canvasClickPresents=1',
+            'renderScale=1.6',
+            'heavyGpu=1',
+            'cubeScale=0.3',
+            'workTime=4',
+        ], use_standard_size=use_standard_size))
