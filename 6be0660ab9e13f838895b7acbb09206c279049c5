@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c659ef7b_3c9b2ba9",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2180,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-02T21:57:56Z",
+      "side": 1,
+      "message": "Okay, so it turns out that it does work, but it\u0027s only used in the `interstitial.ssl.expiration_and_decision.[non]overridable` histograms.\n\nIt\u0027s still marked as owned by `jww` (and the data still supports the \"Week to Remember\" results).\nSince we probably won\u0027t plan to revisit this soon, what do you think of just getting rid of the metric?",
+      "parentUuid": "c640cf93_32dcc7aa",
+      "range": {
+        "startLine": 2180,
+        "startChar": 6,
+        "endLine": 2180,
+        "endChar": 31
+      },
+      "revId": "6be0660ab9e13f838895b7acbb09206c279049c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "38897c9e_e2baabd4",
         "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
         "patchSetId": 14
