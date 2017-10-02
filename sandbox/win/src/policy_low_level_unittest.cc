@@ -26,8 +26,8 @@ TEST(PolicyEngineTest, StringPatternsOK) {
   EXPECT_TRUE(pr.AddStringMatch(IF, 0, L"*.tmp", CASE_SENSITIVE));
   EXPECT_TRUE(pr.AddStringMatch(IF, 0, L"c:\\*.doc", CASE_SENSITIVE));
   EXPECT_TRUE(pr.AddStringMatch(IF, 0, L"c:\\windows\\*", CASE_SENSITIVE));
-  EXPECT_TRUE(pr.AddStringMatch(IF, 0, L"d:\\adobe\\acrobat.exe",
-                                CASE_SENSITIVE));
+  EXPECT_TRUE(
+      pr.AddStringMatch(IF, 0, L"d:\\adobe\\acrobat.exe", CASE_SENSITIVE));
 }
 
 // Testing that we signal invalid string patterns.
@@ -42,7 +42,7 @@ TEST(PolicyEngineTest, StringPatternsBAD) {
 
 // Helper function to allocate space (on the heap) for policy.
 PolicyGlobal* MakePolicyMemory() {
-  const size_t kTotalPolicySz = 4096*8;
+  const size_t kTotalPolicySz = 4096 * 8;
   char* mem = new char[kTotalPolicySz];
   memset(mem, 0, kTotalPolicySz);
   PolicyGlobal* policy = reinterpret_cast<PolicyGlobal*>(mem);
@@ -55,8 +55,8 @@ PolicyGlobal* MakePolicyMemory() {
 TEST(PolicyEngineTest, SimpleStrMatch) {
   SetupNtdllImports();
   PolicyRule pr(ASK_BROKER);
-  EXPECT_TRUE(pr.AddStringMatch(IF, 0, L"z:\\Directory\\domo.txt",
-              CASE_INSENSITIVE));
+  EXPECT_TRUE(
+      pr.AddStringMatch(IF, 0, L"z:\\Directory\\domo.txt", CASE_INSENSITIVE));
 
   PolicyGlobal* policy = MakePolicyMemory();
   const uint32_t kFakeService = 2;
@@ -68,7 +68,7 @@ TEST(PolicyEngineTest, SimpleStrMatch) {
   const wchar_t* filename = L"Z:\\Directory\\domo.txt";
 
   POLPARAMS_BEGIN(eval_params)
-    POLPARAM(filename)                // Argument 0
+    POLPARAM(filename)  // Argument 0
   POLPARAMS_END;
 
   PolicyResult result;
@@ -82,14 +82,13 @@ TEST(PolicyEngineTest, SimpleStrMatch) {
   result = pol_ev.Evaluate(kShortEval, eval_params, _countof(eval_params));
   EXPECT_EQ(NO_POLICY_MATCH, result);
 
-  delete [] reinterpret_cast<char*>(policy);
+  delete[] reinterpret_cast<char*>(policy);
 }
 
 TEST(PolicyEngineTest, SimpleIfNotStrMatch) {
   SetupNtdllImports();
   PolicyRule pr(ASK_BROKER);
-  EXPECT_TRUE(pr.AddStringMatch(IF_NOT, 0, L"c:\\Microsoft\\",
-                                CASE_SENSITIVE));
+  EXPECT_TRUE(pr.AddStringMatch(IF_NOT, 0, L"c:\\Microsoft\\", CASE_SENSITIVE));
 
   PolicyGlobal* policy = MakePolicyMemory();
   const uint32_t kFakeService = 2;
@@ -100,7 +99,7 @@ TEST(PolicyEngineTest, SimpleIfNotStrMatch) {
 
   const wchar_t* filename = NULL;
   POLPARAMS_BEGIN(eval_params)
-    POLPARAM(filename)                // Argument 0
+    POLPARAM(filename)  // Argument 0
   POLPARAMS_END;
 
   PolicyResult result;
@@ -120,14 +119,14 @@ TEST(PolicyEngineTest, SimpleIfNotStrMatch) {
   EXPECT_EQ(POLICY_MATCH, result);
   EXPECT_EQ(ASK_BROKER, pol_ev.GetAction());
 
-  delete [] reinterpret_cast<char*>(policy);
+  delete[] reinterpret_cast<char*>(policy);
 }
 
 TEST(PolicyEngineTest, SimpleIfNotStrMatchWild1) {
   SetupNtdllImports();
   PolicyRule pr(ASK_BROKER);
-  EXPECT_TRUE(pr.AddStringMatch(IF_NOT, 0, L"c:\\Microsoft\\*",
-                                CASE_SENSITIVE));
+  EXPECT_TRUE(
+      pr.AddStringMatch(IF_NOT, 0, L"c:\\Microsoft\\*", CASE_SENSITIVE));
 
   PolicyGlobal* policy = MakePolicyMemory();
   const uint32_t kFakeService = 3;
@@ -138,7 +137,7 @@ TEST(PolicyEngineTest, SimpleIfNotStrMatchWild1) {
 
   const wchar_t* filename = NULL;
   POLPARAMS_BEGIN(eval_params)
-    POLPARAM(filename)                // Argument 0
+    POLPARAM(filename)  // Argument 0
   POLPARAMS_END;
 
   PolicyResult result;
@@ -153,14 +152,14 @@ TEST(PolicyEngineTest, SimpleIfNotStrMatchWild1) {
   EXPECT_EQ(POLICY_MATCH, result);
   EXPECT_EQ(ASK_BROKER, pol_ev.GetAction());
 
-  delete [] reinterpret_cast<char*>(policy);
+  delete[] reinterpret_cast<char*>(policy);
 }
 
 TEST(PolicyEngineTest, SimpleIfNotStrMatchWild2) {
   SetupNtdllImports();
   PolicyRule pr(ASK_BROKER);
-  EXPECT_TRUE(pr.AddStringMatch(IF_NOT, 0, L"c:\\Microsoft\\*.txt",
-                                CASE_SENSITIVE));
+  EXPECT_TRUE(
+      pr.AddStringMatch(IF_NOT, 0, L"c:\\Microsoft\\*.txt", CASE_SENSITIVE));
 
   PolicyGlobal* policy = MakePolicyMemory();
   const uint32_t kFakeService = 3;
@@ -171,7 +170,7 @@ TEST(PolicyEngineTest, SimpleIfNotStrMatchWild2) {
 
   const wchar_t* filename = NULL;
   POLPARAMS_BEGIN(eval_params)
-    POLPARAM(filename)                // Argument 0
+    POLPARAM(filename)  // Argument 0
   POLPARAMS_END;
 
   PolicyResult result;
@@ -191,14 +190,14 @@ TEST(PolicyEngineTest, SimpleIfNotStrMatchWild2) {
   EXPECT_EQ(POLICY_MATCH, result);
   EXPECT_EQ(ASK_BROKER, pol_ev.GetAction());
 
-  delete [] reinterpret_cast<char*>(policy);
+  delete[] reinterpret_cast<char*>(policy);
 }
 
 TEST(PolicyEngineTest, IfNotStrMatchTwoRulesWild1) {
   SetupNtdllImports();
   PolicyRule pr(ASK_BROKER);
-  EXPECT_TRUE(pr.AddStringMatch(IF_NOT, 0, L"c:\\Microsoft\\*",
-                                CASE_SENSITIVE));
+  EXPECT_TRUE(
+      pr.AddStringMatch(IF_NOT, 0, L"c:\\Microsoft\\*", CASE_SENSITIVE));
   EXPECT_TRUE(pr.AddNumberMatch(IF, 1, 24, EQUAL));
 
   PolicyGlobal* policy = MakePolicyMemory();
@@ -211,8 +210,8 @@ TEST(PolicyEngineTest, IfNotStrMatchTwoRulesWild1) {
   const wchar_t* filename = NULL;
   uint32_t access = 0;
   POLPARAMS_BEGIN(eval_params)
-    POLPARAM(filename)                // Argument 0
-    POLPARAM(access)                  // Argument 1
+    POLPARAM(filename)  // Argument 0
+    POLPARAM(access)    // Argument 1
   POLPARAMS_END;
 
   PolicyResult result;
@@ -239,15 +238,15 @@ TEST(PolicyEngineTest, IfNotStrMatchTwoRulesWild1) {
   result = pol_ev.Evaluate(kShortEval, eval_params, _countof(eval_params));
   EXPECT_EQ(NO_POLICY_MATCH, result);
 
-  delete [] reinterpret_cast<char*>(policy);
+  delete[] reinterpret_cast<char*>(policy);
 }
 
 TEST(PolicyEngineTest, IfNotStrMatchTwoRulesWild2) {
   SetupNtdllImports();
   PolicyRule pr(ASK_BROKER);
   EXPECT_TRUE(pr.AddNumberMatch(IF, 1, 24, EQUAL));
-  EXPECT_TRUE(pr.AddStringMatch(IF_NOT, 0, L"c:\\GoogleV?\\*.txt",
-                                CASE_SENSITIVE));
+  EXPECT_TRUE(
+      pr.AddStringMatch(IF_NOT, 0, L"c:\\GoogleV?\\*.txt", CASE_SENSITIVE));
   EXPECT_TRUE(pr.AddNumberMatch(IF, 2, 66, EQUAL));
 
   PolicyGlobal* policy = MakePolicyMemory();
@@ -262,9 +261,9 @@ TEST(PolicyEngineTest, IfNotStrMatchTwoRulesWild2) {
   uint32_t sharing = 66;
 
   POLPARAMS_BEGIN(eval_params)
-    POLPARAM(filename)                // Argument 0
-    POLPARAM(access)                  // Argument 1
-    POLPARAM(sharing)                 // Argument 2
+    POLPARAM(filename)  // Argument 0
+    POLPARAM(access)    // Argument 1
+    POLPARAM(sharing)   // Argument 2
   POLPARAMS_END;
 
   PolicyResult result;
@@ -286,7 +285,6 @@ TEST(PolicyEngineTest, IfNotStrMatchTwoRulesWild2) {
   result = pol_ev.Evaluate(kShortEval, eval_params, _countof(eval_params));
   EXPECT_EQ(POLICY_MATCH, result);
   EXPECT_EQ(ASK_BROKER, pol_ev.GetAction());
-
 
   filename = L"c:\\GoogleV2\\domo.txt";
   access = 42;
@@ -310,7 +308,7 @@ TEST(PolicyEngineTest, IfNotStrMatchTwoRulesWild2) {
   result = pol_ev.Evaluate(kShortEval, eval_params, _countof(eval_params));
   EXPECT_EQ(NO_POLICY_MATCH, result);
 
-  delete [] reinterpret_cast<char*>(policy);
+  delete[] reinterpret_cast<char*>(policy);
 }
 
 // Testing one single rule in one single service. The service is made to
@@ -318,8 +316,8 @@ TEST(PolicyEngineTest, IfNotStrMatchTwoRulesWild2) {
 TEST(PolicyEngineTest, OneRuleTest) {
   SetupNtdllImports();
   PolicyRule pr(ASK_BROKER);
-  EXPECT_TRUE(pr.AddStringMatch(IF, 0, L"c:\\*Microsoft*\\*.txt",
-                                CASE_SENSITIVE));
+  EXPECT_TRUE(
+      pr.AddStringMatch(IF, 0, L"c:\\*Microsoft*\\*.txt", CASE_SENSITIVE));
   EXPECT_TRUE(pr.AddNumberMatch(IF_NOT, 1, CREATE_ALWAYS, EQUAL));
   EXPECT_TRUE(pr.AddNumberMatch(IF, 2, FILE_ATTRIBUTE_NORMAL, EQUAL));
 
@@ -337,9 +335,9 @@ TEST(PolicyEngineTest, OneRuleTest) {
   void* security_descriptor = NULL;
 
   POLPARAMS_BEGIN(eval_params)
-    POLPARAM(filename)                // Argument 0
-    POLPARAM(creation_mode)           // Argument 1
-    POLPARAM(flags)                   // Argument 2
+    POLPARAM(filename)       // Argument 0
+    POLPARAM(creation_mode)  // Argument 1
+    POLPARAM(flags)          // Argument 2
     POLPARAM(security_descriptor)
   POLPARAMS_END;
 
@@ -382,7 +380,7 @@ TEST(PolicyEngineTest, OneRuleTest) {
   result = pol_ev.Evaluate(kShortEval, eval_params, _countof(eval_params));
   EXPECT_EQ(NO_POLICY_MATCH, result);
 
-  delete [] reinterpret_cast<char*>(policy);
+  delete[] reinterpret_cast<char*>(policy);
 }
 
 // Testing 3 rules in 3 services. Two of the services resemble File services.
@@ -415,8 +413,8 @@ TEST(PolicyEngineTest, ThreeRulesTest) {
   EXPECT_EQ(3u, opc3);
 
   PolicyRule pr_adobe(GIVE_CACHED);
-  EXPECT_TRUE(pr_adobe.AddStringMatch(IF, 0, L"c:\\adobe\\ver?.?\\",
-                                      CASE_SENSITIVE));
+  EXPECT_TRUE(
+      pr_adobe.AddStringMatch(IF, 0, L"c:\\adobe\\ver?.?\\", CASE_SENSITIVE));
   EXPECT_TRUE(pr_adobe.AddNumberMatch(IF, 2, FILE_ATTRIBUTE_NORMAL, EQUAL));
 
   size_t opc4 = pr_adobe.GetOpcodeCount();
@@ -477,14 +475,15 @@ TEST(PolicyEngineTest, ThreeRulesTest) {
 
   EXPECT_EQ(OP_NUMBER_AND_MATCH,
             policy->entry[kNtFakeNone]->opcodes[0].GetID());
-  EXPECT_EQ(OP_ACTION, policy->entry[kNtFakeNone]->opcodes[tc1-1].GetID());
+  EXPECT_EQ(OP_ACTION, policy->entry[kNtFakeNone]->opcodes[tc1 - 1].GetID());
   EXPECT_EQ(OP_WSTRING_MATCH,
             policy->entry[kNtFakeCreateFile]->opcodes[0].GetID());
   EXPECT_EQ(OP_ACTION,
-            policy->entry[kNtFakeCreateFile]->opcodes[tc2-1].GetID());
+            policy->entry[kNtFakeCreateFile]->opcodes[tc2 - 1].GetID());
   EXPECT_EQ(OP_WSTRING_MATCH,
             policy->entry[kNtFakeOpenFile]->opcodes[0].GetID());
-  EXPECT_EQ(OP_ACTION, policy->entry[kNtFakeOpenFile]->opcodes[tc3-1].GetID());
+  EXPECT_EQ(OP_ACTION,
+            policy->entry[kNtFakeOpenFile]->opcodes[tc3 - 1].GetID());
 
   // Test the policy evaluation.
 
@@ -494,9 +493,9 @@ TEST(PolicyEngineTest, ThreeRulesTest) {
   void* security_descriptor = NULL;
 
   POLPARAMS_BEGIN(params)
-    POLPARAM(filename)                // Argument 0
-    POLPARAM(creation_mode)           // Argument 1
-    POLPARAM(flags)                   // Argument 2
+    POLPARAM(filename)       // Argument 0
+    POLPARAM(creation_mode)  // Argument 1
+    POLPARAM(flags)          // Argument 2
     POLPARAM(security_descriptor)
   POLPARAMS_END;
 
@@ -573,7 +572,7 @@ TEST(PolicyEngineTest, ThreeRulesTest) {
   EXPECT_EQ(POLICY_MATCH, result);
   EXPECT_EQ(FAKE_SUCCESS, eval_OpenFile.GetAction());
 
-  delete [] reinterpret_cast<char*>(policy);
+  delete[] reinterpret_cast<char*>(policy);
 }
 
 TEST(PolicyEngineTest, PolicyRuleCopyConstructorTwoStrings) {

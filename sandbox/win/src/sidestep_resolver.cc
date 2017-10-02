@@ -22,7 +22,7 @@ struct SidestepThunk {
 struct SmartThunk {
   const void* module_base;  // Target module's base.
   const void* interceptor;  // Real interceptor.
-  SidestepThunk sidestep;  // Standard sidestep thunk.
+  SidestepThunk sidestep;   // Standard sidestep thunk.
 };
 
 }  // namespace
@@ -37,9 +37,9 @@ NTSTATUS SidestepResolverThunk::Setup(const void* target_module,
                                       void* thunk_storage,
                                       size_t storage_bytes,
                                       size_t* storage_used) {
-  NTSTATUS ret = Init(target_module, interceptor_module, target_name,
-                      interceptor_name, interceptor_entry_point,
-                      thunk_storage, storage_bytes);
+  NTSTATUS ret =
+      Init(target_module, interceptor_module, target_name, interceptor_name,
+           interceptor_entry_point, thunk_storage, storage_bytes);
   if (!NT_SUCCESS(ret))
     return ret;
 
@@ -148,16 +148,15 @@ size_t SmartSidestepResolverThunk::GetThunkSize() const {
 //  [xxx]                             [saved ebx]                 [xxx]
 //  [xxx]                             [saved ecx]                 [xxx]
 //  [xxx]                             [saved edx]                 [xxx]
-__declspec(naked)
-void SmartSidestepResolverThunk::SmartStub() {
+__declspec(naked) void SmartSidestepResolverThunk::SmartStub() {
   __asm {
-    push eax                  // Space for the jump.
-    push eax                  // Save registers.
+    push eax  // Space for the jump.
+    push eax  // Save registers.
     push ebx
     push ecx
     push edx
-    mov ebx, [esp + 0x18]     // First parameter = SmartThunk.
-    mov edx, [esp + 0x14]     // Get the return address.
+    mov ebx, [esp + 0x18]  // First parameter = SmartThunk.
+    mov edx, [esp + 0x14]  // Get the return address.
     mov eax, [ebx]SmartThunk.module_base
     push edx
     push eax
@@ -165,28 +164,28 @@ void SmartSidestepResolverThunk::SmartStub() {
     add esp, 8
 
     test eax, eax
-    lea edx, [ebx]SmartThunk.sidestep   // The original function.
+    lea edx, [ebx]SmartThunk.sidestep  // The original function.
     jz call_interceptor
 
-    // Skip this call
-    mov ecx, [esp + 0x14]               // Return address.
-    mov [esp + 0x18], ecx               // Remove first parameter.
+            // Skip this call
+    mov ecx, [esp + 0x14]  // Return address.
+    mov [esp + 0x18], ecx  // Remove first parameter.
     mov [esp + 0x10], edx
-    pop edx                             // Restore registers.
+    pop edx  // Restore registers.
     pop ecx
     pop ebx
     pop eax
-    ret 4                               // Jump to original function.
+    ret 4  // Jump to original function.
 
   call_interceptor:
     mov ecx, [ebx]SmartThunk.interceptor
-    mov [esp + 0x18], edx               // Replace first parameter.
+    mov [esp + 0x18], edx  // Replace first parameter.
     mov [esp + 0x10], ecx
-    pop edx                             // Restore registers.
+    pop edx  // Restore registers.
     pop ecx
     pop ebx
     pop eax
-    ret                                 // Jump to original function.
+    ret  // Jump to original function.
   }
 }
 

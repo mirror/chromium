@@ -7,8 +7,7 @@
 #include "sandbox/win/src/win2k_threadpool.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-void __stdcall EmptyCallBack(void*, unsigned char) {
-}
+void __stdcall EmptyCallBack(void*, unsigned char) {}
 
 void __stdcall TestCallBack(void* context, unsigned char) {
   HANDLE event = reinterpret_cast<HANDLE>(context);

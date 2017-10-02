@@ -37,11 +37,11 @@ struct ServiceEntry {
 
   ULONG mov_r10_rcx_mov_eax;  // = 4C 8B D1 B8
   ULONG service_id;
-  USHORT syscall;             // = 0F 05
-  BYTE ret;                   // = C3
-  BYTE pad;                   // = 66
-  USHORT xchg_ax_ax1;         // = 66 90
-  USHORT xchg_ax_ax2;         // = 66 90
+  USHORT syscall;      // = 0F 05
+  BYTE ret;            // = C3
+  BYTE pad;            // = 66
+  USHORT xchg_ax_ax1;  // = 66 90
+  USHORT xchg_ax_ax2;  // = 66 90
 };
 
 // Service code for 64 bit Windows 8.
@@ -62,9 +62,9 @@ struct ServiceEntryW8 {
   ULONG mov_3;                // = 89 4C 24 20
   ULONG mov_r10_rcx_mov_eax;  // = 4C 8B D1 B8
   ULONG service_id;
-  USHORT syscall;             // = 0F 05
-  BYTE ret;                   // = C3
-  BYTE nop;                   // = 90
+  USHORT syscall;  // = 0F 05
+  BYTE ret;        // = C3
+  BYTE nop;        // = 90
 };
 
 // Service code for 64 bit systems with int 2e fallback.
@@ -81,15 +81,15 @@ struct ServiceEntryWithInt2E {
 
   ULONG mov_r10_rcx_mov_eax;  // = 4C 8B D1 B8
   ULONG service_id;
-  USHORT test_byte;           // = F6 04
-  BYTE ptr;                   // = 25
+  USHORT test_byte;  // = F6 04
+  BYTE ptr;          // = 25
   ULONG user_shared_data_ptr;
-  BYTE one;                   // = 01
-  USHORT jne_over_syscall;    // = 75 03
-  USHORT syscall;             // = 0F 05
-  BYTE ret;                   // = C3
-  USHORT int2e;               // = CD 2E
-  BYTE ret2;                  // = C3
+  BYTE one;                 // = 01
+  USHORT jne_over_syscall;  // = 75 03
+  USHORT syscall;           // = 0F 05
+  BYTE ret;                 // = C3
+  USHORT int2e;             // = CD 2E
+  BYTE ret2;                // = C3
 };
 
 // We don't have an internal thunk for x64.
@@ -104,8 +104,7 @@ struct ServiceFullThunk {
 #pragma pack(pop)
 
 bool IsService(const void* source) {
-  const ServiceEntry* service =
-      reinterpret_cast<const ServiceEntry*>(source);
+  const ServiceEntry* service = reinterpret_cast<const ServiceEntry*>(source);
 
   return (kMmovR10EcxMovEax == service->mov_r10_rcx_mov_eax &&
           kSyscall == service->syscall && kRetNp == service->ret);
@@ -150,8 +149,8 @@ NTSTATUS ServiceResolverThunk::Setup(const void* target_module,
 
   size_t thunk_bytes = GetThunkSize();
   std::unique_ptr<char[]> thunk_buffer(new char[thunk_bytes]);
-  ServiceFullThunk* thunk = reinterpret_cast<ServiceFullThunk*>(
-                                thunk_buffer.get());
+  ServiceFullThunk* thunk =
+      reinterpret_cast<ServiceFullThunk*>(thunk_buffer.get());
 
   if (!IsFunctionAService(&thunk->original))
     return STATUS_OBJECT_NAME_COLLISION;

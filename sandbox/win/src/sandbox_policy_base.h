@@ -5,9 +5,9 @@
 #ifndef SANDBOX_WIN_SRC_SANDBOX_POLICY_BASE_H_
 #define SANDBOX_WIN_SRC_SANDBOX_POLICY_BASE_H_
 
-#include <windows.h>
 #include <stddef.h>
 #include <stdint.h>
+#include <windows.h>
 
 #include <list>
 #include <memory>
