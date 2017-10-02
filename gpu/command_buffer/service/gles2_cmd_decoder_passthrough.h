@@ -343,6 +343,8 @@ class GPU_EXPORT GLES2DecoderPassthroughImpl : public GLES2Decoder {
   error::Error ProcessQueries(bool did_finish);
   void RemovePendingQuery(GLuint service_id);
 
+  error::Error ProcessReadPixels(bool did_finish);
+
   void UpdateTextureBinding(GLenum target,
                             GLuint client_id,
                             TexturePassthrough* texture);
@@ -466,6 +468,23 @@ class GPU_EXPORT GLES2DecoderPassthroughImpl : public GLES2Decoder {
     QuerySync* sync = nullptr;
   };
   std::unordered_map<GLenum, ActiveQuery> active_queries_;
+
+  // Pending async ReadPixels calls
+  struct PendingReadPixels {
+    GLsync sync_service_id = nullptr;
+    GLuint fence_nv_service_id = 0;
+    GLuint buffer_service_id = 0;
+    uint32_t pixels_size = 0;
+    uint32_t pixels_shm_id = 0;
+    uint32_t pixels_shm_offset = 0;
+    uint32_t result_shm_id = 0;
+    uint32_t result_shm_offset = 0;
+
+    // Service IDs of GL_ASYNC_PIXEL_PACK_COMPLETED_CHROMIUM queries waiting for
+    // this read pixels operation to complete
+    std::set<GLuint> waiting_async_pack_queries;
+  };
+  base::circular_deque<PendingReadPixels> pending_read_pixels_;
 
   std::set<GLenum> errors_;
 
