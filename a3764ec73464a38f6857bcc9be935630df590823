@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4b2ad72_2950cf3b",
+        "filename": "testing/libfuzzer/reproducing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-02T15:55:15Z",
+      "side": 0,
+      "message": "I\u0027m a little bit worried that we delete all these flags. Can we copy these sections into a separate page e.g. \"Build configurations\"?",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 31
+      },
+      "revId": "a3764ec73464a38f6857bcc9be935630df590823",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
