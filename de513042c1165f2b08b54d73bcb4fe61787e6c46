@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f48ac310_95de04ff",
+        "filename": "content/common/sandbox_mac.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-02T17:53:06Z",
+      "side": 1,
+      "message": "Remove.",
+      "revId": "de513042c1165f2b08b54d73bcb4fe61787e6c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34bea016_fdc60da0",
+        "filename": "services/service_manager/sandbox/mac/BUILD.gn",
+        "patchSetId": 17
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-02T17:53:06Z",
+      "side": 1,
+      "message": "You should be able to skip quoting this and just use target_gen_dir.",
+      "range": {
+        "startLine": 22,
+        "startChar": 16,
+        "endLine": 22,
+        "endChar": 33
+      },
+      "revId": "de513042c1165f2b08b54d73bcb4fe61787e6c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41004eeb_e2ac7112",
+        "filename": "services/service_manager/sandbox/mac/package_sb_file.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-02T17:53:06Z",
+      "side": 1,
+      "message": "\"macOS sandbox seatbelt .sb\"",
+      "range": {
+        "startLine": 9,
+        "startChar": 8,
+        "endLine": 9,
+        "endChar": 11
+      },
+      "revId": "de513042c1165f2b08b54d73bcb4fe61787e6c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e50d708_e1b0210a",
+        "filename": "services/service_manager/sandbox/mac/package_sb_file.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-02T17:53:06Z",
+      "side": 1,
+      "message": "Consider a secondary namespace here?",
+      "revId": "de513042c1165f2b08b54d73bcb4fe61787e6c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e8a3199_daa7da93",
+        "filename": "services/service_manager/sandbox/mac/package_sb_file.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-02T17:53:06Z",
+      "side": 1,
+      "message": "g_ is usually for mutable globals, while kFoo is for constants. Maybe kPolicy_%s ?",
+      "range": {
+        "startLine": 14,
+        "startChar": 34,
+        "endLine": 14,
+        "endChar": 37
+      },
+      "revId": "de513042c1165f2b08b54d73bcb4fe61787e6c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d330e22e_5f96e563",
+        "filename": "services/service_manager/sandbox/mac/package_sb_file.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-02T17:53:06Z",
+      "side": 1,
+      "message": "Usage: package_sb_file.py input_filename output_dir",
+      "range": {
+        "startLine": 26,
+        "startChar": 24,
+        "endLine": 26,
+        "endChar": 51
+      },
+      "revId": "de513042c1165f2b08b54d73bcb4fe61787e6c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2df12898_bfc0f0d5",
+        "filename": "services/service_manager/sandbox/mac/package_sb_file.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-02T17:53:06Z",
+      "side": 1,
+      "message": "Isn\u0027t this just the basename? Maybe pull os.path.basename result intou a local and use that here?",
+      "range": {
+        "startLine": 31,
+        "startChar": 43,
+        "endLine": 31,
+        "endChar": 67
+      },
+      "revId": "de513042c1165f2b08b54d73bcb4fe61787e6c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "336b3998_827105e4",
+        "filename": "services/service_manager/sandbox/mac/package_sb_file.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-02T17:53:06Z",
+      "side": 1,
+      "message": "nit: indent is off",
+      "range": {
+        "startLine": 52,
+        "startChar": 2,
+        "endLine": 52,
+        "endChar": 3
+      },
+      "revId": "de513042c1165f2b08b54d73bcb4fe61787e6c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
