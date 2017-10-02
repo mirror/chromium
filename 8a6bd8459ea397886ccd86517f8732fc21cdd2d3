@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "2a61ce5e_52dafb3c",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-02T22:51:57Z",
+      "side": 1,
+      "message": "It looks like the sync logic changed in https://codereview.chromium.org/1541433003 The \n\nif (!is_in_sync) {}\n\nstatement in particular. It used to be the case that FaviconService::MergeFavicon() would be called for every favicon.\n\nDeferring to zea@ for his judgement on this.\n\nPesonally, I think we should deal with the sync problem. (Though not in this CL) Otherwise, it will be possible for a user to get back the old icon even if the icon does not show up in bookmarks on any of their devices",
+      "parentUuid": "e1eee548_b36c955b",
+      "revId": "8a6bd8459ea397886ccd86517f8732fc21cdd2d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c98e69f_9e3893fc",
         "filename": "components/favicon/core/favicon_handler.cc",
         "patchSetId": 15
