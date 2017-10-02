@@ -25,6 +25,52 @@
     },
     {
       "key": {
+        "uuid": "d62ea368_fc4b9000",
+        "filename": "chrome/browser/vr/animation_player_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-02T20:20:04Z",
+      "side": 1,
+      "message": "I wonder if we can either set a VR-specific lint warning to catch this, or add a Windows-specific build rule to not bark on a missing \u0027f\u0027.  Thinking more about this, we\u0027re liable to have many CLs bounce off the Windows trybot otherwise.  Thoughts on what\u0027s better?",
+      "range": {
+        "startLine": 19,
+        "startChar": 35,
+        "endLine": 19,
+        "endChar": 37
+      },
+      "revId": "175b78f3c0f5209de6a0d1524e045a0eee6e64fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b778dd9_e29e746e",
+        "filename": "chrome/browser/vr/elements/system_indicator_texture.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-02T20:20:04Z",
+      "side": 1,
+      "message": "Might as well make this int an int while you\u0027re at it.",
+      "range": {
+        "startLine": 20,
+        "startChar": 34,
+        "endLine": 20,
+        "endChar": 37
+      },
+      "revId": "175b78f3c0f5209de6a0d1524e045a0eee6e64fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b6ea6b2_3f082cc4",
         "filename": "chrome/browser/vr/font_fallback.cc",
         "patchSetId": 1
@@ -42,6 +88,23 @@
         "endLine": 131,
         "endChar": 23
       },
+      "revId": "175b78f3c0f5209de6a0d1524e045a0eee6e64fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cfdd59b_bfa02e17",
+        "filename": "chrome/browser/vr/ui_renderer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-02T20:20:04Z",
+      "side": 1,
+      "message": "There\u0027s probably a better way now, as of a few weeks ago:\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/658604",
       "revId": "175b78f3c0f5209de6a0d1524e045a0eee6e64fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
