@@ -191,6 +191,24 @@
     },
     {
       "key": {
+        "uuid": "44b89c86_07b27870",
+        "filename": "content/browser/presentation/presentation_service_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-02T20:38:04Z",
+      "side": 1,
+      "message": "OK, that\u0027s fine--but it seems like SetClient() can be bound with the factory pattern, rather than relying on the renderer to get this right. There are some places we use it without checking validity.\n\n(Given that this is a pre-existing problem and the CL doesn\u0027t make it worse, I\u0027m OK with adding a TODO and then fixing it in a followup. But we should fix it)",
+      "parentUuid": "f35d42a5_ad31be5b",
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "754a1674_74511971",
         "filename": "content/renderer/presentation/presentation_dispatcher.cc",
         "patchSetId": 17

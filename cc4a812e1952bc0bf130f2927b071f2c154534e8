@@ -1,0 +1,260 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea5bb383_c72b6fa0",
+        "filename": "content/browser/presentation/presentation_service_impl.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-02T20:38:04Z",
+      "side": 1,
+      "message": "I looked at a bit at how these fields are used; I\u0027d strongly suggest adding a TODO to get rid of the use of routing IDs here and just to use RFH directly for identity. It will simplify a lot of code by not requiring this ID pair to passed around (and reduce the chances that the fields are accidentally mixed up)\n\n(Usually, the reason you\u0027d use routing IDs is you need to pass identity to the IO thread and back, or you need some notion of weak pointer. I think neither is needed here, given that this is owned by RFH and we pre-emptively make sure to clean up various data structures on destruction)",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 54
+      },
+      "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83da38cb_bba92eb5",
+        "filename": "content/browser/presentation/presentation_service_impl.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-02T20:38:04Z",
+      "side": 1,
+      "message": "Is it possible that a presentation is stopped and then initiated again, and that would hit this case? I guess that won\u0027t happen due to the InitIfNeeded() calls (though less clear what happens if the presentation receiver renderer crashes and is restarted).\n\nI\u0027m assuming the presentation receiver renderer also can\u0027t navigate, but not 100% sure about this (again, maybe worth documenting this special restriction somewhere, perhaps in these comments)",
+      "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a3d7cf8_e223e46c",
+        "filename": "content/browser/presentation/presentation_service_impl.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-02T20:38:04Z",
+      "side": 1,
+      "message": "The reason we should be using the factory pattern for PresentationServiceClient is because otherwise, all the unprotected uses of the proxy need to be guarded and call mojo::ReportBadMessage(). It\u0027s much simpler to just create a factory (since that ensures this will always be correct) rather than try to make sure every usage of it is appropriately guarded.",
+      "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae92fe2a_76f5608a",
+        "filename": "content/browser/presentation/presentation_service_impl.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-02T20:38:04Z",
+      "side": 1,
+      "message": "I thought this was per-frame (and the object connecting) is also per-frame?",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 72
+      },
+      "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b5f6b90_bf7ce161",
+        "filename": "content/renderer/presentation/presentation_dispatcher.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-02T20:38:04Z",
+      "side": 1,
+      "message": "Just for my understanding: based on previous comments, it is expected that this will only be called on a main frame, right? If so, maybe add a DCHECK() in SetReceiver() above to make that a bit clearer (and/or mention this on a mojom)",
+      "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b938e6d_afd67750",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-02T20:38:04Z",
+      "side": 1,
+      "message": "This doesn\u0027t actually move since NewData accepts arguments by const ref: https://cs.chromium.org/chromium/src/out/Debug/gen/third_party/WebKit/public/platform/modules/presentation/presentation.mojom-blink.h?rcl\u003dd95f2a9b0e25e51acd231477e34865da0576543d\u0026l\u003d724\n\nTo minimize the number of copies, create a new PresentationConnectionMessage that contains binary data and then mutate get_data() directly \u003d/",
+      "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccdcd821_62c50d58",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-02T20:38:04Z",
+      "side": 1,
+      "message": "Btw, is there a test case that demonstrates this?",
+      "range": {
+        "startLine": 286,
+        "startChar": 0,
+        "endLine": 289,
+        "endChar": 15
+      },
+      "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb16c0d5_dc094b61",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-02T20:38:04Z",
+      "side": 1,
+      "message": "Hmm... my impression is that we can only have one presentation per controller at a time. Could we do something simpler and just close the message pipe in DoClose / DoTerminate? That would allow this to be signalled more easily (and allow to avoid checking that the frame itself is still attached).",
+      "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e92c32b1_9c0a4a09",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-02T20:38:04Z",
+      "side": 1,
+      "message": "I think mfoltz@ removed this limit in another CL.",
+      "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cda97220_412f49cd",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-02T20:38:04Z",
+      "side": 1,
+      "message": "If this isn\u0027t going to be used for anything other than debugging, please remove the callback.\n\n(The receiving side can easily log if needed, and it saves internal bookkeeping in Mojo)",
+      "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd73aceb_cd927cbc",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationReceiver.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-02T20:38:04Z",
+      "side": 1,
+      "message": "AFAICT, this should only be called once (based on the calls from PresentationDispatcher), but it seems like this allows it to be called more than once? When would that happen?\n\nAlso, since this is called through the Blink public API, is it actually possible for client to be null below? Presumably, when we called up into //content (in DidFinishDocumentLoad, the client should not be null? Also, given that the other path to reach this (via SetReceiver) ultimately comes from accessing the JS property (which already checks that the frame is not detached: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/modules/presentation/Presentation.cpp?rcl\u003d9527cb23fb5328b0fef0efbe8147a3adaf876f0a\u0026l\u003d54), it also seems like that case should always have a frame and client as well.",
+      "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcbdab70_b420dc14",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-02T20:38:04Z",
+      "side": 1,
+      "message": "Similar question here to ControllerPresentationConnection: can we just close the Mojo pipe to signal termination?",
+      "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "521135dc_b115b256",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-02T20:38:04Z",
+      "side": 1,
+      "message": "Do we need to clear the binding in ContextDestroyed() here as well?",
+      "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f4a095b_b10bb7b6",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-02T20:38:04Z",
+      "side": 1,
+      "message": "I\u0027m not entirely sure how this class integrates with the presentation API: is this for things like casting media elements?",
+      "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
