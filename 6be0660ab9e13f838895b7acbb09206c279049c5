@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c640cf93_32dcc7aa",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2180,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-02T21:33:38Z",
+      "side": 1,
+      "message": "So, I have this suspicion that `expired_previous_decision` isn\u0027t even working properly right now.\nLet me take a closer look.",
+      "parentUuid": "779ed1b3_7960c6a6",
+      "range": {
+        "startLine": 2180,
+        "startChar": 6,
+        "endLine": 2180,
+        "endChar": 31
+      },
+      "revId": "6be0660ab9e13f838895b7acbb09206c279049c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "38897c9e_e2baabd4",
         "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
         "patchSetId": 14
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b47f27e6_3c1f6147",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-02T21:33:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38897c9e_e2baabd4",
+      "range": {
+        "startLine": 479,
+        "startChar": 28,
+        "endLine": 479,
+        "endChar": 36
+      },
+      "revId": "6be0660ab9e13f838895b7acbb09206c279049c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e7f1dd2_ba86a562",
         "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
         "patchSetId": 14
@@ -68,6 +116,30 @@
       "revId": "6be0660ab9e13f838895b7acbb09206c279049c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e6449ed_734e6d54",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 3515,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-02T21:33:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e7f1dd2_ba86a562",
+      "range": {
+        "startLine": 3514,
+        "startChar": 45,
+        "endLine": 3515,
+        "endChar": 47
+      },
+      "revId": "6be0660ab9e13f838895b7acbb09206c279049c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
