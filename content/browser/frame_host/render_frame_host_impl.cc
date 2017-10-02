@@ -1548,12 +1548,30 @@ void RenderFrameHostImpl::DidCommitProvisionalLoad(
         100);
   }
 
+  // DidCommitProvisionalLoad IPC should only be received while there is a
+  // navigation in progress...
+  if (!navigation_handle_) {
+    // ... unless this is a same-document navigation (this is later verified
+    // more thoroughly in NavigationControllerImpl::IsURLInPageNavigation).
+    bool is_same_doc = validated_params->was_within_same_document;
+
+    // ... and unless this is the first, empty document commit.
+    bool is_first_empty_doc =
+        validated_params->url.IsAboutBlank() &&
+        frame_tree_node_->navigator()->GetController()->IsInitialNavigation();
+
+    if (!is_same_doc && !is_first_empty_doc) {
+      bad_message::ReceivedBadMessage(
+          process, bad_message::RFH_ONLY_COMMIT_DURING_NAVIGATION);
+      return;
+    }
+  }
+
   // Attempts to commit certain off-limits URL should be caught more strictly
   // than our FilterURL checks below.  If a renderer violates this policy, it
   // should be killed.
   if (!CanCommitURL(validated_params->url)) {
     VLOG(1) << "Blocked URL " << validated_params->url.spec();
-    // Kills the process.
     bad_message::ReceivedBadMessage(process,
                                     bad_message::RFH_CAN_COMMIT_URL_BLOCKED);
     return;
