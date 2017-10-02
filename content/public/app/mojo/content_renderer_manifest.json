@@ -83,6 +83,12 @@
         "path": "v8_context_snapshot.bin",
         "platform": "linux"
       }
+    ],
+    "content_pak" : [
+      {
+        "path": "content_shell.pak",
+        "platform": "fuchsia"
+      }
     ]
   }
 }
