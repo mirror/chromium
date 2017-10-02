@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6dd4493e_6dd35817",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_handlers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1326,
+      "author": {
+        "id": 1119849
+      },
+      "writtenOn": "2017-10-02T20:23:16Z",
+      "side": 0,
+      "message": "data_shm was used in GetSharedMemoryAs above",
+      "revId": "bfc91b5bfbc47e8e8b6096f19099c3f611965849",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1432e464_9c58cc24",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_handlers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2102,
+      "author": {
+        "id": 1119849
+      },
+      "writtenOn": "2017-10-02T20:23:16Z",
+      "side": 0,
+      "message": "transformValue_shm could be set back to 0 here.",
+      "revId": "bfc91b5bfbc47e8e8b6096f19099c3f611965849",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dbc829e_17461ed9",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_handlers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2155,
+      "author": {
+        "id": 1119849
+      },
+      "writtenOn": "2017-10-02T20:23:16Z",
+      "side": 0,
+      "message": "ditto",
+      "revId": "bfc91b5bfbc47e8e8b6096f19099c3f611965849",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbebfdb2_d8bd5d91",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_handlers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2205,
+      "author": {
+        "id": 1119849
+      },
+      "writtenOn": "2017-10-02T20:23:16Z",
+      "side": 0,
+      "message": "ditto, and in other places below too.",
+      "revId": "bfc91b5bfbc47e8e8b6096f19099c3f611965849",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3c915ca_1e245e93",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_handlers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2426,
+      "author": {
+        "id": 1119849
+      },
+      "writtenOn": "2017-10-02T20:23:16Z",
+      "side": 0,
+      "message": "coeffs_shm could now be 0",
+      "revId": "bfc91b5bfbc47e8e8b6096f19099c3f611965849",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
