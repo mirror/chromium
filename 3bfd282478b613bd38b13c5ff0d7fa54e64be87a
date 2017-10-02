@@ -25,6 +25,74 @@
     },
     {
       "key": {
+        "uuid": "342f65f6_a033c466",
+        "filename": "content/browser/service_worker/service_worker_provider_host_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-02T07:10:30Z",
+      "side": 1,
+      "message": "Prefer just saying something like \"// Finish the navigation\" for this whole block",
+      "revId": "3bfd282478b613bd38b13c5ff0d7fa54e64be87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60565178_0f0fb2e4",
+        "filename": "content/browser/service_worker/service_worker_provider_host_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-02T07:10:30Z",
+      "side": 1,
+      "message": "avoid these comments that just repeat the code",
+      "revId": "3bfd282478b613bd38b13c5ff0d7fa54e64be87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26c1d65a_ce78a06a",
+        "filename": "content/browser/service_worker/service_worker_provider_host_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-02T07:10:30Z",
+      "side": 1,
+      "message": "just \"Finish the navigation\"",
+      "revId": "3bfd282478b613bd38b13c5ff0d7fa54e64be87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c323d97_9ecdb108",
+        "filename": "content/browser/service_worker/service_worker_provider_host_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-02T07:10:30Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "3bfd282478b613bd38b13c5ff0d7fa54e64be87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4618b7bd_0afe0ce4",
         "filename": "content/child/service_worker/service_worker_provider_context.cc",
         "patchSetId": 8
@@ -36,6 +104,41 @@
       "writtenOn": "2017-10-02T05:15:03Z",
       "side": 1,
       "message": "Btw, it seems a bit unfortunate since we should remove the type. We might be able to keep it as blink::mojom::WebFeature on later patch.",
+      "revId": "3bfd282478b613bd38b13c5ff0d7fa54e64be87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3d38c8a_835a7f4f",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-02T07:10:30Z",
+      "side": 1,
+      "message": "+1 everything should be using the enum, but we can fix in a later patch to keep this patch small",
+      "parentUuid": "4618b7bd_0afe0ce4",
+      "revId": "3bfd282478b613bd38b13c5ff0d7fa54e64be87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "967dedb4_2e917fb2",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-02T07:10:30Z",
+      "side": 1,
+      "message": "The second SetController should be WebServiceWorkerProviderImpl::SetController(). wordsmithing:\n\n// The WebServiceWorkerProviderImpl might not exist yet because the document has not yet been created (as WebServiceWorkerImpl is created for a ServiceWorkerContainer). In that case, once it\u0027s created it will still get the controller from |this| via WebServiceWorkerProviderImpl::SetClient().",
       "revId": "3bfd282478b613bd38b13c5ff0d7fa54e64be87a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -80,6 +183,41 @@
       "revId": "3bfd282478b613bd38b13c5ff0d7fa54e64be87a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0166c82f_307cdf6f",
+        "filename": "content/common/service_worker/service_worker_container.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-02T07:10:30Z",
+      "side": 1,
+      "message": "I\u0027d revise this slightly too:\n\n// Corresponds to setting ServiceWorkerContainer#controller. If |controller| is invalid (its |handle_id| is invalid), then ServiceWorkerContainer#controller is cleared. If |should_notify_controllerchange| is true, instructs the renderer to dispatch a \u0027controllerchange\u0027 event.\n\nI don\u0027t think you need to mention that it\u0027s only used for controllees since someday service workers are also supposed to be ServiceWorkerContainers.",
+      "parentUuid": "959efda4_24591e66",
+      "revId": "3bfd282478b613bd38b13c5ff0d7fa54e64be87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "749dd0c3_9dd65904",
+        "filename": "content/common/service_worker/service_worker_types.typemap",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-02T07:10:30Z",
+      "side": 1,
+      "message": "ServiceWorkerObjectInfo is a pretty basic struct now. Is it possible to make it a Mojo struct in this patch, or are we saving that for later?",
+      "revId": "3bfd282478b613bd38b13c5ff0d7fa54e64be87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
