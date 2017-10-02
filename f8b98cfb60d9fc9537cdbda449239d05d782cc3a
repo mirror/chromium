@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2bfcd81_d71eb66c",
+        "filename": "chrome/browser/chrome_navigation_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-02T21:54:15Z",
+      "side": 1,
+      "message": "TODO is missing (...).",
+      "revId": "f8b98cfb60d9fc9537cdbda449239d05d782cc3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1fe886b_72845a04",
+        "filename": "chrome/browser/chrome_navigation_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-02T21:54:15Z",
+      "side": 1,
+      "message": "nit: Is adding \"Was\" changing the meaning enough to justify the extra changes?",
+      "revId": "f8b98cfb60d9fc9537cdbda449239d05d782cc3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adef6d36_4f391129",
+        "filename": "chrome/browser/chrome_navigation_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-02T21:54:15Z",
+      "side": 1,
+      "message": "What happens if test_throttle_ was deleted in the meantime? This class not owning the throttle is susceptible to use-after-free, so you need to know when to clear the throttle pointer.",
+      "revId": "f8b98cfb60d9fc9537cdbda449239d05d782cc3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a61f51c_096a5838",
+        "filename": "chrome/browser/page_load_metrics/observers/ads_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-02T21:54:15Z",
+      "side": 1,
+      "message": "Will this handle CANCEL_OR_IGNORE?",
+      "revId": "f8b98cfb60d9fc9537cdbda449239d05d782cc3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0f010c6_109c774f",
+        "filename": "content/public/test/browser_test_utils.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1968,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-02T21:54:15Z",
+      "side": 1,
+      "message": "Why do we have DEFER and SYNCHRONOUS here? If this is supposed to be equivalent to the code from line 491 in the old code, then it uses PostTask, which means it is ASYNC, not SYNC. Or am I misreading it?",
+      "revId": "f8b98cfb60d9fc9537cdbda449239d05d782cc3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4520ed43_febfd422",
+        "filename": "content/public/test/browser_test_utils.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1987,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-02T21:54:15Z",
+      "side": 1,
+      "message": "nit: I\u0027m not sure using single method with status is making code more readable for usage of this code. I\u0027d usually trade ease of using the code/API in favor of simpler implementation, since we want to encourage more usage. The cost of implementing the internals is once, but the cost of using more complex API is paid always.",
+      "revId": "f8b98cfb60d9fc9537cdbda449239d05d782cc3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8de005af_0c088d65",
+        "filename": "content/public/test/test_navigation_throttle.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-02T21:54:15Z",
+      "side": 1,
+      "message": "This is just one callback for all the possible methods called?",
+      "revId": "f8b98cfb60d9fc9537cdbda449239d05d782cc3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fa3b4f9_c66b2eee",
+        "filename": "content/public/test/test_navigation_throttle.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-02T21:54:15Z",
+      "side": 1,
+      "message": "Why call Cancel unconditionally? Or is the method incorrectly named?",
+      "revId": "f8b98cfb60d9fc9537cdbda449239d05d782cc3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "868b10d7_11316c13",
+        "filename": "content/public/test/test_navigation_throttle.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-02T21:54:15Z",
+      "side": 1,
+      "message": "What if result is ERROR_BLOCKED_BY_CLIENT? Why is |result| not the right thing to be passing in here?",
+      "revId": "f8b98cfb60d9fc9537cdbda449239d05d782cc3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2aa4420_43276591",
+        "filename": "content/public/test/test_navigation_throttle.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-02T21:54:15Z",
+      "side": 1,
+      "message": "If we allow this to also take ThrottleMethod, it will allow for callback per method to be registered, which in turn will allow consumers to register separate callbacks. I think it will lead to not needing TestNavigationManager::TestThrottleMethodCalled but keep the code as it used to be, allowing it to be a bit easier to read.",
+      "revId": "f8b98cfb60d9fc9537cdbda449239d05d782cc3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

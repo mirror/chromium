@@ -16,6 +16,24 @@
       "revId": "2a9e56ef0a77b52e85b327eadf30673e81beae26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc8e651f_e7155ca6",
+        "filename": "content/public/test/test_navigation_throttle.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-02T21:54:15Z",
+      "side": 1,
+      "message": "I\u0027m not quite sure I follow your question. It shouldn\u0027t be unique_ptr, as base::Callback documentation (https://cs.chromium.org/chromium/src/docs/callback.md?rcl\u003d63d7ff9e01ae5ec15ffb7e463972a7ae7ebb5364\u0026l\u003d49) states:\n\nPass `base::Callback` objects by value if ownership is transferred; otherwise,\npass it by const-reference.",
+      "parentUuid": "5944c466_0829061d",
+      "revId": "2a9e56ef0a77b52e85b327eadf30673e81beae26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
