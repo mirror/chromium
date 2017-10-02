@@ -64,12 +64,10 @@ ChromeDataUseAscriber::ChromeDataUseAscriber() {
 
 ChromeDataUseAscriber::~ChromeDataUseAscriber() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+  DCHECK(main_render_frame_entry_map_.empty());
   DCHECK(subframe_to_mainframe_map_.empty());
-  // DCHECK(pending_navigation_global_request_id_.empty());
-  // |data_use_recorders_| can be non empty, when mainframe url requests are
-  // created but no mainframe navigations take place.
-  // TODO(rajendrant): Enable this check when fixed for unittests.
-  // DCHECK(data_use_recorders_.empty());
+  DCHECK(pending_navigation_data_use_map_.empty());
+  DCHECK(data_use_recorders_.empty());
 }
 
 ChromeDataUseRecorder* ChromeDataUseAscriber::GetOrCreateDataUseRecorder(
