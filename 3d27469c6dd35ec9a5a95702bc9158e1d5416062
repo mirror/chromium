@@ -33,6 +33,24 @@
       "revId": "3d27469c6dd35ec9a5a95702bc9158e1d5416062",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52746d45_798eede1",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3709,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-10-02T21:29:03Z",
+      "side": 0,
+      "message": "Yes, we should try to get rid of this method in a follow up.  Essentially, it is a short cut method to get a the raw non-hypertext.  I was planning on doing that at some point, but removing this method doesn\u0027t have to happen here and this change LGTM.",
+      "parentUuid": "93deaacb_6a7865f7",
+      "revId": "3d27469c6dd35ec9a5a95702bc9158e1d5416062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
