@@ -47,12 +47,17 @@ public class LicenseContentProvider
     @Override
     public void writeDataToPipe(
             ParcelFileDescriptor output, Uri uri, String mimeType, Bundle opts, String filename) {
-        try (InputStream in = getContext().getAssets().open(filename);
-                OutputStream out = new FileOutputStream(output.getFileDescriptor());) {
-            byte[] buf = new byte[8192];
-            int size = -1;
-            while ((size = in.read(buf)) != -1) {
-                out.write(buf, 0, size);
+        // Workaround for https://crbug.com/770782, cannot use SuppressFBWarning in this class.
+        try {
+            OutputStream out = new FileOutputStream(output.getFileDescriptor());
+            try (InputStream in = getContext().getAssets().open(filename);) {
+                byte[] buf = new byte[8192];
+                int size = -1;
+                while ((size = in.read(buf)) != -1) {
+                    out.write(buf, 0, size);
+                }
+            } finally {
+                out.close();
             }
         } catch (IOException e) {
             Log.e(TAG, "Failed to read the license file", e);
