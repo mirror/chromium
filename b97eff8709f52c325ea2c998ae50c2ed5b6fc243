@@ -34,6 +34,24 @@
       "revId": "b97eff8709f52c325ea2c998ae50c2ed5b6fc243",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f172e67e_2a910c4c",
+        "filename": "ui/gfx/image/image_unittest_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-02T15:11:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b285882_43156ab9",
+      "revId": "b97eff8709f52c325ea2c998ae50c2ed5b6fc243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
