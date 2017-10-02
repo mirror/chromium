@@ -22,6 +22,30 @@
       "revId": "c8bbc0cc74e4393a79a8c4800241c38d37c8699e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cc428bf_dd487ace",
+        "filename": "content/browser/webui/web_ui_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-02T23:08:26Z",
+      "side": 1,
+      "message": "Correct.  FWIW, it is considered dangerous to allow webui pages to embed frames with web URLs - see for example https://crbug.com/770313 and https://crbug.com/683418.\n\nOTOH, maybe there are other things we can do to improve the situation here - maybe we can isolate WebUI privileges from arbitrary web subframes by forcing such subframes into OOPIFs?  It seems that without OOPIFs, the renderer can always trick WebUIImpl::OnMessageReceived into thinking that the IPC came from a privileged frame (e.g. by lying about the frame the IPC is sent from).\n\nCharlie - can you please sanity check this?  Is it worth it to consider OOPIFs on WebUI pages (or is it better to simply push toward forbidding web subframe altogether)?",
+      "parentUuid": "429da9dc_d3c521c1",
+      "range": {
+        "startLine": 111,
+        "startChar": 24,
+        "endLine": 111,
+        "endChar": 25
+      },
+      "revId": "c8bbc0cc74e4393a79a8c4800241c38d37c8699e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
