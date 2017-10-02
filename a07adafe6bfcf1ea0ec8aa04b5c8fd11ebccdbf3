@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "bc44ef2f_7fb72147",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-02T20:13:13Z",
+      "side": 1,
+      "message": "Oh sorry, then you probably want this:\n[\u0027-object\u003d\u0027 + binary_path for binary_path in binary_paths[1:]]",
+      "parentUuid": "3980b188_e1c45485",
+      "range": {
+        "startLine": 238,
+        "startChar": 41,
+        "endLine": 238,
+        "endChar": 42
+      },
+      "revId": "a07adafe6bfcf1ea0ec8aa04b5c8fd11ebccdbf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "85bbe5f5_6daf8f06",
         "filename": "ios/tools/coverage/coverage.py",
         "patchSetId": 1
