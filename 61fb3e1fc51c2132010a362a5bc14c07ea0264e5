@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "538698be_b06dab42",
+        "filename": "components/history/content/browser/web_contents_top_sites_observer.cc",
+        "patchSetId": 50
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-02T08:11:21Z",
+      "side": 1,
+      "message": "optional: I\u0027d find this easier to read if the condition were reversed, i.e.:\nif (top_sites_ \u0026\u0026 is_main_frame \u0026\u0026 (type \u003d\u003d NEW_PAGE ¦¦ type \u003d\u003d EXISTING_PAGE)\n  OnNavigationCommitted(...);",
+      "range": {
+        "startLine": 50,
+        "startChar": 3,
+        "endLine": 50,
+        "endChar": 0
+      },
+      "revId": "61fb3e1fc51c2132010a362a5bc14c07ea0264e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "032ba72e_25fbb781",
+        "filename": "components/history/core/browser/top_sites_impl.cc",
+        "patchSetId": 50
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-02T08:11:21Z",
+      "side": 1,
+      "message": "If this is just for the very first delay, maybe call it kFirstDelayAtStartup or something like that?",
+      "range": {
+        "startLine": 90,
+        "startChar": 49,
+        "endLine": 90,
+        "endChar": 0
+      },
+      "revId": "61fb3e1fc51c2132010a362a5bc14c07ea0264e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

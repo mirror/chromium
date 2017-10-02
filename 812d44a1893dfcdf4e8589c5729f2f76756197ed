@@ -140,6 +140,30 @@
       "revId": "812d44a1893dfcdf4e8589c5729f2f76756197ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eceeccc4_e7655e17",
+        "filename": "components/history/core/browser/top_sites_impl.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-02T08:11:21Z",
+      "side": 1,
+      "message": "You\u0027re right that the check currently isn\u0027t required, but now the implementation of this method relies on what values it\u0027ll be called with, which doesn\u0027t seem right to me. Maybe remove the ¦delta¦ param, and call timer_.Start() directly in the one place where the delay is different?\nAnyway, I\u0027ll leave it to you.",
+      "parentUuid": "57c7b1ff_e4fb52fa",
+      "range": {
+        "startLine": 860,
+        "startChar": 25,
+        "endLine": 860,
+        "endChar": 0
+      },
+      "revId": "812d44a1893dfcdf4e8589c5729f2f76756197ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
