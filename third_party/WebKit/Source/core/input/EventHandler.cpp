@@ -1810,7 +1810,7 @@ WebInputEventResult EventHandler::ShowNonLocatedContextMenu(
 #else
   int right_aligned = 0;
 #endif
-  IntPoint location_in_root_frame;
+  FloatPoint location_in_root_frame;
 
   Element* focused_element =
       override_target_element ? override_target_element : doc->FocusedElement();
@@ -1824,17 +1824,17 @@ WebInputEventResult EventHandler::ShowNonLocatedContextMenu(
         selection.ComputeVisibleSelectionInDOMTree()
             .ToNormalizedEphemeralRange());
 
-    int x = right_aligned ? first_rect.MaxX() : first_rect.X();
+    float x = right_aligned ? first_rect.MaxX() : first_rect.X();
     // In a multiline edit, firstRect.maxY() would end up on the next line, so
     // take the midpoint.
-    int y = (first_rect.MaxY() + first_rect.Y()) / 2;
-    location_in_root_frame = view->ContentsToRootFrame(IntPoint(x, y));
+    float y = (first_rect.MaxY() + first_rect.Y()) / 2.0;
+    location_in_root_frame = view->ContentsToRootFrame(FloatPoint(x, y));
   } else if (focused_element) {
     IntRect clipped_rect = focused_element->BoundsInViewport();
     location_in_root_frame =
-        visual_viewport.ViewportToRootFrame(clipped_rect.Center());
+        visual_viewport.ViewportToRootFrame(FloatPoint(clipped_rect.Center()));
   } else {
-    location_in_root_frame = IntPoint(
+    location_in_root_frame = FloatPoint(
         right_aligned
             ? visual_viewport.VisibleRect().MaxX() - kContextMenuMargin
             : visual_viewport.GetScrollOffset().Width() + kContextMenuMargin,
@@ -1842,12 +1842,13 @@ WebInputEventResult EventHandler::ShowNonLocatedContextMenu(
   }
 
   frame_->View()->SetCursor(PointerCursor());
-  IntPoint location_in_viewport =
+  FloatPoint location_in_viewport =
       visual_viewport.RootFrameToViewport(location_in_root_frame);
-  IntPoint global_position =
+  FloatPoint global_position =
       view->GetChromeClient()
-          ->ViewportToScreen(IntRect(location_in_viewport, IntSize()),
-                             frame_->View())
+          ->ViewportToScreen(
+              IntRect(FloatRect(location_in_viewport, FloatSize())),
+              frame_->View())
           .Location();
 
   Node* target_node =
