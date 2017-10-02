@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7e6b09a_52b8852c",
+        "filename": "content/renderer/media/user_media_client_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-02T10:26:44Z",
+      "side": 1,
+      "message": "I guess this doesn\u0027t matter much, but because is_processing_request_ is not set upon posting but at MaybeProcessNextRequestInfo, this only guards against unnecessary posts in the next task and does not guard e.g. against multiple posts in the same task. Those become NO-OP after is_processing_request_ is true but... The usage of is_processing_request_ might be a little misleading.\n\nFeel free to address this by setting is_processing_request_ here and elsewhere, or don\u0027t if it\u0027s not worth the effort.",
+      "revId": "90bcfa1c44fbcf4214c23e8873886aa8e6646747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99cf1232_d4a4a410",
+        "filename": "content/renderer/media/user_media_client_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-02T10:26:44Z",
+      "side": 1,
+      "message": "Add a TODO.",
+      "revId": "90bcfa1c44fbcf4214c23e8873886aa8e6646747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
