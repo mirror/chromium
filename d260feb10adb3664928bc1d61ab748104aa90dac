@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c301a156_e33ee989",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-10-02T18:34:22Z",
+      "side": 1,
+      "message": "Actually the blinking was not very related to the racing condition between unSelectionEvent() and showSelectionMenu(), but inside of showActionModeOrClearOnFailure() itself. Not 100% sure why, but I highly doubt that we have too many operations to do along with mActionMode.invalidate() -\u003e onPrepareActionMode() -\u003e createActionMenu()",
+      "parentUuid": "75915e0c_0c2d3986",
+      "revId": "d260feb10adb3664928bc1d61ab748104aa90dac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b02f087_f5a03755",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
         "patchSetId": 11
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d748835b_a667b5ee",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 999,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-10-02T18:34:22Z",
+      "side": 1,
+      "message": "When reset showSelectionMenu() call comes, there will be a followup SELECTION_HANDLES_MOVED onSelectionEvent() call , we don\u0027t need to invalidate |mSelectionRect| in that case.",
+      "parentUuid": "3b02f087_f5a03755",
+      "revId": "d260feb10adb3664928bc1d61ab748104aa90dac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "845ed02d_9c4d1919",
         "filename": "third_party/WebKit/public/web/WebContextMenuData.h",
         "patchSetId": 11
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-02T17:52:06Z",
       "side": 1,
       "message": "Is this ever used?",
+      "revId": "d260feb10adb3664928bc1d61ab748104aa90dac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00ce065f_8547f8a8",
+        "filename": "third_party/WebKit/public/web/WebContextMenuData.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-10-02T18:34:22Z",
+      "side": 1,
+      "message": "remanent from previous approach.. thank you for catching :)",
+      "parentUuid": "845ed02d_9c4d1919",
       "revId": "d260feb10adb3664928bc1d61ab748104aa90dac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
