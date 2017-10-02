@@ -73,8 +73,8 @@ class ASH_EXPORT LockScreenController : public mojom::LockScreen {
   void OnMaxIncorrectPasswordAttempted(const AccountId& account_id);
 
  private:
-  using PendingAuthenticateUserCall =
-      base::OnceCallback<void(const std::string& system_salt)>;
+  using PendingDoAuthenticateUser =
+      base::RepeatingCallback<void(const std::string& system_salt)>;
 
   void DoAuthenticateUser(
       const AccountId& account_id,
@@ -82,8 +82,12 @@ class ASH_EXPORT LockScreenController : public mojom::LockScreen {
       bool authenticated_by_pin,
       mojom::LockScreenClient::AuthenticateUserCallback callback,
       const std::string& system_salt);
+  void OnAuthenticateComplete(
+      mojom::LockScreenClient::AuthenticateUserCallback callback,
+      bool success);
 
-  void OnGetSystemSalt(const std::string& system_salt);
+  void OnGetSystemSalt(const PendingDoAuthenticateUser& then,
+                       const std::string& system_salt);
 
   // Returns the active data dispatcher or nullptr if there is no lock screen.
   LoginDataDispatcher* DataDispatcher() const;
@@ -95,7 +99,11 @@ class ASH_EXPORT LockScreenController : public mojom::LockScreen {
   mojo::BindingSet<mojom::LockScreen> bindings_;
 
   // User authentication call that will run when we have system salt.
-  PendingAuthenticateUserCall pending_user_auth_;
+  // PendingAuthenticateUserCall pending_user_auth_;
+  // True iff we are currently authentication.
+  bool is_authenticating_ = false;
+
+  base::WeakPtrFactory<LockScreenController> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(LockScreenController);
 };
