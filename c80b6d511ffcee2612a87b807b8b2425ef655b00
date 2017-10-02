@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fb55783_56dccbb9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-10-02T19:15:00Z",
+      "side": 1,
+      "message": "hmm, but this isn\u0027t considering unimportant storage, right? couldn\u0027t we wait for that to finish computing and include it? Why only look at cache?",
+      "range": {
+        "startLine": 182,
+        "startChar": 16,
+        "endLine": 182,
+        "endChar": 54
+      },
+      "revId": "c80b6d511ffcee2612a87b807b8b2425ef655b00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
