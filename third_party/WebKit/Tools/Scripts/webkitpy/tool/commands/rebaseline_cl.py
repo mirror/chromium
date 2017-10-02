@@ -23,8 +23,14 @@ class RebaselineCL(AbstractParallelRebaselineCommand):
     help_text = 'Fetches new baselines for a CL from test runs on try bots.'
     long_help = ('This command downloads new baselines for failing layout '
                  'tests from archived try job test results. Cross-platform '
-                 'baselines are deduplicated after downloading.')
+                 'baselines are deduplicated after downloading.  Without '
+                 'positional parameters, all failing tests are rebaselined. '
+                 'If positional parameters are provided, they are interpreted '
+                 'as either test names, or files containing a list of test '
+                 'names.')
+
     show_in_main_help = True
+    argument_names = '[(testname|file),...]'
 
     def __init__(self):
         super(RebaselineCL, self).__init__(options=[
@@ -214,9 +220,20 @@ class RebaselineCL(AbstractParallelRebaselineCommand):
 
     def _make_test_baseline_set_for_tests(self, tests, builds_to_results):
         test_baseline_set = TestBaselineSet(self._tool)
-        for test in tests:
-            for build in builds_to_results:
-                test_baseline_set.add(test, build)
+        for test_or_file in tests:
+            try:
+                with open(test_or_file) as fh:
+                    _log.info('Reading list of tests to rebaseline '
+                              'from %s', test_or_file)
+                    for test in fh.readlines():
+                        test = test.rstrip().lstrip()
+                        if not test or test.startswith('#'):
+                            continue
+                        for build in builds_to_results:
+                            test_baseline_set.add(test, build)
+            except IOError:
+                for build in builds_to_results:
+                    test_baseline_set.add(test_or_file, build)
         return test_baseline_set
 
     def _make_test_baseline_set(self, builds_to_results, only_changed_tests):
