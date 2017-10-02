@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "991d60a0_3c6ebbb7",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-02T22:22:48Z",
+      "side": 1,
+      "message": "nit: This is only returning the offset if the compositor is responsible for applying it, otherwise we return a zero offset. I\u0027m not sure if there\u0027s a better name for this, maybe OffsetForCompositedStickyPosition and an appropriate comment.",
+      "revId": "81c35ed26bc666cb0993d82217701d2c1747f83d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
