@@ -110,6 +110,115 @@
     },
     {
       "key": {
+        "uuid": "c9f2c832_de1007c7",
+        "filename": "content/browser/frame_host/frame_service_base_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-02T18:10:39Z",
+      "side": 1,
+      "message": "I don\u0027t see where EchoString() is called. Should there be a test to verify that CreateEchoImpl works?\n\nMaybe add a success case where you also verify |origin|. EchoString(\"origin\") returns |origin|.Serialize(), or simply replace EchoString() with GetOrigin()?",
+      "range": {
+        "startLine": 103,
+        "startChar": 2,
+        "endLine": 103,
+        "endChar": 16
+      },
+      "revId": "ed400faf03f3ebcbbe866f10e63bc2b4a1a3ed00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65a82694_3bd86865",
+        "filename": "content/browser/frame_host/frame_service_base_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-02T18:10:39Z",
+      "side": 1,
+      "message": "Maybe add EXPECT_TRUE(is_echo_impl_alive_); as it is expected to be false after ResetConnection(). Same for the other tests below.\n\nOr should OnEchoImplDestructed() be a mock method, and then add an EXPECT_CALL?",
+      "revId": "ed400faf03f3ebcbbe866f10e63bc2b4a1a3ed00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b194f456_8deb3d57",
+        "filename": "content/public/browser/frame_service_base.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-02T18:10:39Z",
+      "side": 1,
+      "message": "Is this needed in the constructor?",
+      "range": {
+        "startLine": 36,
+        "startChar": 4,
+        "endLine": 36,
+        "endChar": 33
+      },
+      "revId": "ed400faf03f3ebcbbe866f10e63bc2b4a1a3ed00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59c096b8_ee15bb4b",
+        "filename": "content/public/browser/frame_service_base.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-02T18:10:39Z",
+      "side": 1,
+      "message": "Isn\u0027t it too late for this? origin_ has already attempted a deref of it.",
+      "range": {
+        "startLine": 37,
+        "startChar": 4,
+        "endLine": 37,
+        "endChar": 10
+      },
+      "revId": "ed400faf03f3ebcbbe866f10e63bc2b4a1a3ed00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b70e303_20f43279",
+        "filename": "content/public/browser/frame_service_base.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-02T18:10:39Z",
+      "side": 1,
+      "message": "PlatformVerificationImpl needs this too. Should this be another property on this class?",
+      "range": {
+        "startLine": 39,
+        "startChar": 17,
+        "endLine": 39,
+        "endChar": 29
+      },
+      "revId": "ed400faf03f3ebcbbe866f10e63bc2b4a1a3ed00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "17f998fb_e3d36dcf",
         "filename": "content/public/browser/frame_service_base.h",
         "patchSetId": 6
@@ -121,6 +230,29 @@
       "writtenOn": "2017-09-30T05:54:41Z",
       "side": 1,
       "message": "I\u0027m not sure that this will work: thread_checker_ shouldn\u0027t even be defined in non-DCHECK builds now.",
+      "revId": "ed400faf03f3ebcbbe866f10e63bc2b4a1a3ed00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16777d0d_a19b5b4d",
+        "filename": "content/public/browser/frame_service_base.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-02T18:10:39Z",
+      "side": 1,
+      "message": "As this is initialized in the constructor, is this needed?",
+      "range": {
+        "startLine": 86,
+        "startChar": 46,
+        "endLine": 86,
+        "endChar": 53
+      },
       "revId": "ed400faf03f3ebcbbe866f10e63bc2b4a1a3ed00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
