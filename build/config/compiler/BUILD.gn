@@ -1233,9 +1233,6 @@ config("default_warnings") {
         # TODO(hans): https://crbug.com/681136
         "-Wno-unused-lambda-capture",
 
-        # TODO(thakis ): https://crbug.com/683349
-        "-Wno-user-defined-warnings",
-
         # TODO(thakis): https://crbug.com/753973
         "-Wno-enum-compare-switch",
 
@@ -1353,6 +1350,15 @@ config("no_chromium_code") {
       # suppressing them individually, we just blanket suppress them here.
       "-Wno-unused-variable",
     ]
+
+    # Flags NaCl (Clang 3.7) and Xcode 7.3 (Clang clang-703.0.31) do not
+    # recognize.
+    if (!is_nacl && (!use_xcode_clang || current_toolchain == host_toolchain)) {
+      cflags += [
+        # TODO(thakis ): https://crbug.com/683349
+        "-Wno-user-defined-warnings",
+      ]
+    }
   }
 
   configs = [ ":default_warnings" ]

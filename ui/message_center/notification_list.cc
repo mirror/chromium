@@ -34,7 +34,7 @@ bool ShouldShowNotificationAsPopup(
 }  // namespace
 
 bool ComparePriorityTimestampSerial::operator()(Notification* n1,
-                                                Notification* n2) {
+                                                Notification* n2) const {
   if (n1->priority() > n2->priority())  // Higher pri go first.
     return true;
   if (n1->priority() < n2->priority())
@@ -42,7 +42,8 @@ bool ComparePriorityTimestampSerial::operator()(Notification* n1,
   return CompareTimestampSerial()(n1, n2);
 }
 
-bool CompareTimestampSerial::operator()(Notification* n1, Notification* n2) {
+bool CompareTimestampSerial::operator()(Notification* n1,
+                                        Notification* n2) const {
   if (n1->timestamp() > n2->timestamp())  // Newer come first.
     return true;
   if (n1->timestamp() < n2->timestamp())
