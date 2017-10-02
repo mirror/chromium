@@ -89,6 +89,10 @@ class InputHandler : public DevToolsDomainHandler,
 
   Response SetIgnoreInputEvents(bool ignore) override;
 
+  void DispatchPointerActions(
+      std::unique_ptr<protocol::Array<Input::PointerAction>> pointer_actions,
+      std::unique_ptr<DispatchPointerActionsCallback> callback) override;
+
   void SynthesizePinchGesture(
       double x,
       double y,
