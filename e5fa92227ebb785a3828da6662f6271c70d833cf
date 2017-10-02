@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cb4ba84_0525bbed",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-02T19:27:17Z",
+      "side": 1,
+      "message": "nit: git cl format",
+      "revId": "e5fa92227ebb785a3828da6662f6271c70d833cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
