@@ -9,10 +9,13 @@ namespace mojo {
 bool StructTraits<arc::mojom::CursorRectDataView, gfx::Rect>::Read(
     arc::mojom::CursorRectDataView data,
     gfx::Rect* out) {
-  out->set_x(data.left());
-  out->set_y(data.top());
-  out->set_width(data.right() - out->x());
-  out->set_height(data.bottom() - out->y());
+  // The logic should be as same as the one in
+  // components/arc/common/app_struct_traits.cc.
+  if (data.right() < data.left() || data.bottom() < data.top())
+    return false;
+
+  out->SetRect(data.left(), data.top(), data.right() - data.left(),
+               data.bottom() - data.top());
   return true;
 }
 
