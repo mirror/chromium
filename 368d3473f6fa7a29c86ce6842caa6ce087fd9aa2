@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "003e02cd_65d4e537",
+        "filename": "services/proxy_resolver/BUILD.gn",
+        "patchSetId": 17
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-02T22:22:02Z",
+      "side": 1,
+      "message": "This temporary, in my next CL there is only 1 lib target.\nhttps://chromium-review.googlesource.com/c/chromium/src/+/651340/12/services/proxy_resolver/BUILD.gn",
+      "parentUuid": "e9d16e3a_2dd8f9a3",
+      "revId": "368d3473f6fa7a29c86ce6842caa6ce087fd9aa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49f3ce9e_a6b539fc",
         "filename": "services/proxy_resolver/OWNERS",
         "patchSetId": 17
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "c2245072_afb89ac6",
+        "filename": "services/proxy_resolver/OWNERS",
+        "patchSetId": 17
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-02T22:22:02Z",
+      "side": 1,
+      "message": "Delegated to content/network/OWNERS (eroman declined ownership)",
+      "parentUuid": "282500c0_bee3f8eb",
+      "revId": "368d3473f6fa7a29c86ce6842caa6ce087fd9aa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "28209dec_6d1da5df",
         "filename": "services/proxy_resolver/public/cpp/BUILD.gn",
         "patchSetId": 17
@@ -65,6 +101,24 @@
       "writtenOn": "2017-10-02T21:37:35Z",
       "side": 1,
       "message": "similar to the private library comments, we should have better names for these targets that reflect meaning to proxy_resolver clients in general rather than meaning specific to content",
+      "revId": "368d3473f6fa7a29c86ce6842caa6ce087fd9aa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21ab63b7_9e15a54d",
+        "filename": "services/proxy_resolver/public/cpp/BUILD.gn",
+        "patchSetId": 17
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-02T22:22:02Z",
+      "side": 1,
+      "message": "This BUILD file goes away in my follow up patch that adds the service:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/651340\nCan we live with it in the short meantime?",
+      "parentUuid": "28209dec_6d1da5df",
       "revId": "368d3473f6fa7a29c86ce6842caa6ce087fd9aa2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "f7ac779a_3b8e377a",
+        "filename": "services/proxy_resolver/public/cpp/BUILD.gn",
+        "patchSetId": 17
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-02T22:22:02Z",
+      "side": 1,
+      "message": "As above, dependency will go shortly.",
+      "parentUuid": "156b6b59_167dd1cf",
+      "revId": "368d3473f6fa7a29c86ce6842caa6ce087fd9aa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c3d07674_5aa7786a",
         "filename": "services/proxy_resolver/public/cpp/BUILD.gn",
         "patchSetId": 17
@@ -99,6 +171,24 @@
       "writtenOn": "2017-10-02T21:37:35Z",
       "side": 1,
       "message": "same issue here. we cannot have the public client library depending on service internals.",
+      "revId": "368d3473f6fa7a29c86ce6842caa6ce087fd9aa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "939b6aab_9e34475e",
+        "filename": "services/proxy_resolver/public/cpp/BUILD.gn",
+        "patchSetId": 17
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-02T22:22:02Z",
+      "side": 1,
+      "message": "Same as above.",
+      "parentUuid": "c3d07674_5aa7786a",
       "revId": "368d3473f6fa7a29c86ce6842caa6ce087fd9aa2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
