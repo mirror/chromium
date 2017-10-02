@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "103103b7_72064d20",
+        "filename": "chrome/browser/favicon/content_favicon_driver_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-02T08:11:36Z",
+      "side": 1,
+      "message": "The test description in my opinion is misleading. You are testing that the mapping is removed if the icon type is changed via JavaScript from type favicon to type touch icon",
+      "revId": "8a6bd8459ea397886ccd86517f8732fc21cdd2d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c388cf33_101df784",
+        "filename": "components/favicon/content/content_favicon_driver.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-02T08:11:36Z",
+      "side": 1,
+      "message": "This change should be in its own CL. This causes changes in behaviour (I don\u0027t think any of these are an issue). For instance, calling window.stop() in window.onload() causes ContentFaviconDriver::DidUpdateWebManifestURL() to be called but not ContentFaviconDriver::DocumentOnLoadCompletedInMainFrame()\n\nIn order to be super safe, we should enumerate the changes in behavior",
+      "revId": "8a6bd8459ea397886ccd86517f8732fc21cdd2d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30d6bcc0_078c9e84",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-02T08:11:36Z",
+      "side": 1,
+      "message": "I thought that we were going to disable deletion for bookmarks because we did not want to deal with sync (Though this is not perfect because a redirect to the current page may be bookmarked)",
+      "revId": "8a6bd8459ea397886ccd86517f8732fc21cdd2d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c98e69f_9e3893fc",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-02T08:11:36Z",
+      "side": 1,
+      "message": "For the sake of simplicity can we call OnFaviconUpdated() instead. The handling that you have for OnFaviconDeleted() and for OnFaviconUpdated() is very similar. I care most about not adding FaviconDriverObserver::OnFaviconDeleted()",
+      "revId": "8a6bd8459ea397886ccd86517f8732fc21cdd2d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e25c8f00_d0df276b",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-02T08:11:36Z",
+      "side": 1,
+      "message": "Nit: \"so check if existing\" -\u003e \"so check if any existing\" and remove the \"(if any)\"",
+      "revId": "8a6bd8459ea397886ccd86517f8732fc21cdd2d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "850a66a2_93018288",
+        "filename": "components/history/core/browser/history_backend.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1617,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-02T08:11:36Z",
+      "side": 1,
+      "message": "This function should return if (!thumbnail_db_ || !db_)\nHaving a corrupted database is surpisingly common",
+      "revId": "8a6bd8459ea397886ccd86517f8732fc21cdd2d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dd5be2c_623aa398",
+        "filename": "components/history/core/browser/history_backend.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1627,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-02T08:11:36Z",
+      "side": 1,
+      "message": "This function should call ScheduleCommit()",
+      "revId": "8a6bd8459ea397886ccd86517f8732fc21cdd2d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
