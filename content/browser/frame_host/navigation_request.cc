@@ -426,14 +426,21 @@ void NavigationRequest::BeginNavigation() {
   state_ = STARTED;
 
 #if defined(OS_ANDROID)
-  if (GetContentClient()->browser()->ShouldOverrideUrlLoading(
+  base::WeakPtr<NavigationRequest> this_ptr(weak_factory_.GetWeakPtr());
+  bool should_override_url_loading =
+      GetContentClient()->browser()->ShouldOverrideUrlLoading(
           frame_tree_node_->frame_tree_node_id(), browser_initiated_,
           request_params_.original_url, request_params_.original_method,
           request_params_.has_user_gesture, false,
-          frame_tree_node_->IsMainFrame(), common_params_.transition)) {
-    // Don't create a NavigationHandle here to simulate what happened with the
-    // old navigation code path (i.e. doesn't fire onPageFinished notification
-    // for aborted loads).
+          frame_tree_node_->IsMainFrame(), common_params_.transition);
+
+  // Webview embedder's can stop any pending navigation inside
+  // ShouldOverrideUrlLoading(), |this| can be deleted.
+  // See https://crbug.com/770157.
+  if (!this_ptr)
+    return;
+
+  if (should_override_url_loading) {
     OnRequestFailed(false, net::ERR_ABORTED, base::nullopt, false);
     return;
   }
