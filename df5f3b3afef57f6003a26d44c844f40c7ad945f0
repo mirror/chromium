@@ -22,6 +22,30 @@
       "revId": "df5f3b3afef57f6003a26d44c844f40c7ad945f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6f7f9de_3a423913",
+        "filename": "third_party/libprotobuf-mutator/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-10-02T16:00:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b723c9cf_f749d855",
+      "range": {
+        "startLine": 1,
+        "startChar": 59,
+        "endLine": 2,
+        "endChar": 0
+      },
+      "revId": "df5f3b3afef57f6003a26d44c844f40c7ad945f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
