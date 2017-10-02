@@ -198,6 +198,29 @@ Resources.IndexedDBModel = class extends SDK.SDKModel {
   }
 
   /**
+   * @param {!Resources.IndexedDBModel.DatabaseId} databaseId
+   * @param {string} objectStoreName
+   * @param {!IDBKeyRange} idbKeyRange
+   * @return {?Promise}
+   */
+  deleteEntries(databaseId, objectStoreName, idbKeyRange) {
+    var keyRange = Resources.IndexedDBModel.keyRangeFromIDBKeyRange(idbKeyRange);
+    if (!keyRange)
+      return null;
+    return this._deleteObjectStoreEntries(databaseId, objectStoreName, keyRange);
+  }
+
+  /**
+   * @param {!Resources.IndexedDBModel.DatabaseId} databaseId
+   * @param {string} objectStoreName
+   * @param {!Protocol.IndexedDB.KeyRange} keyRange
+   * @return {!Promise}
+   */
+  _deleteObjectStoreEntries(databaseId, objectStoreName, keyRange) {
+    return this._agent.deleteObjectStoreEntries(databaseId.securityOrigin, databaseId.name, objectStoreName, keyRange);
+  }
+
+  /**
    * @param {!Common.Event} event
    */
   _securityOriginAdded(event) {
