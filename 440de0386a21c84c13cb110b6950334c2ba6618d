@@ -16,6 +16,24 @@
       "revId": "440de0386a21c84c13cb110b6950334c2ba6618d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "681f81a5_6457db1e",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/LocalWindowProxy.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-10-02T22:38:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83c5dea0_8e624dd4",
+      "revId": "440de0386a21c84c13cb110b6950334c2ba6618d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
