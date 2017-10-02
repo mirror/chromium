@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b784c70_36855fed",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-02T16:11:30Z",
+      "side": 1,
+      "message": "nit: 0.f and 1.f",
+      "range": {
+        "startLine": 560,
+        "startChar": 59,
+        "endLine": 560,
+        "endChar": 63
+      },
+      "revId": "06735a26c97bbc004efa4b3661d42ad8920c23d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
