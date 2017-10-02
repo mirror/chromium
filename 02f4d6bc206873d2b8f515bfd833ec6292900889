@@ -52,6 +52,24 @@
       "revId": "02f4d6bc206873d2b8f515bfd833ec6292900889",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "375033aa_986ca6a8",
+        "filename": "third_party/crc32c/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-02T17:52:07Z",
+      "side": 1,
+      "message": "This is a fair point -- it\u0027s not immediately obvious that the change is correct.\n\nHAVE_WEAK_GETAUXVAL is only used here: https://cs.chromium.org/chromium/src/third_party/crc32c/src/src/crc32c_arm64_linux_check.h?q\u003dHAVE_WEAK_GETAUXVAL\n\nIf HAVE_STRONG_GETAUXVAL\u003d1, the value of HAVE_WEAK_GETAUXVAL doesn\u0027t really matter. I left it out before, in the interest of keeping BUILD.gn smaller (little white lie?). Migrating to 0/1 variables forced me to explicitly state the value of each config macro, at which point there\u0027s no benefit in using the wrong value anymore.\n\nI think I should\u0027ve been clearer earlier. Now that we\u0027re using the 0/1 system, clarity was forced upon me :)",
+      "parentUuid": "ab4d2324_3c752f26",
+      "revId": "02f4d6bc206873d2b8f515bfd833ec6292900889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
