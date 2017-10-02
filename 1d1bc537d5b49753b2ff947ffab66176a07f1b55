@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68359e6e_953f4408",
+        "filename": "components/payments/content/can_make_payment_query_factory.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-10-02T20:00:10Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand this comment. It reads like a description of the following code, yet not creation is happening anywhere. Is it meant to be a TODO?",
+      "revId": "1d1bc537d5b49753b2ff947ffab66176a07f1b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
