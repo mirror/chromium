@@ -866,7 +866,11 @@ void ClientSocketPoolBaseHelper::ReleaseSocket(
     std::unique_ptr<StreamSocket> socket,
     int id) {
   GroupMap::iterator i = group_map_.find(group_name);
-  CHECK(i != group_map_.end());
+  if (i == group_map_.end()) {
+    socket.reset();
+    CheckForStalledSocketGroups();
+    return;
+  }
 
   Group* group = i->second;
 
