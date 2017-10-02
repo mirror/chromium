@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9e597d04_e9011af8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-10-02T22:31:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd5463e5_083f3f40",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "effc2734dcc03a08d98354c062bf3b2945ea0aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f00574a_8c89c5ff",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "effc2734dcc03a08d98354c062bf3b2945ea0aa9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e599b08_bbb0cdd0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-10-02T22:31:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f00574a_8c89c5ff",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 0
+      },
+      "revId": "effc2734dcc03a08d98354c062bf3b2945ea0aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c66b3d49_f407c032",
+        "filename": "components/policy/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-10-02T22:31:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ab63115_0b870134",
+      "range": {
+        "startLine": 187,
+        "startChar": 0,
+        "endLine": 188,
+        "endChar": 35
+      },
+      "revId": "effc2734dcc03a08d98354c062bf3b2945ea0aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "240b2d54_2ede2db1",
         "filename": "components/policy/tools/template_writers/template_formatter.py",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "effc2734dcc03a08d98354c062bf3b2945ea0aa9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b377d855_0bab73e1",
+        "filename": "components/policy/tools/template_writers/template_formatter.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-10-02T22:31:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "240b2d54_2ede2db1",
+      "range": {
+        "startLine": 94,
+        "startChar": 48,
+        "endLine": 94,
+        "endChar": 49
+      },
+      "revId": "effc2734dcc03a08d98354c062bf3b2945ea0aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "bc451376_7093de1c",
+        "filename": "components/policy/tools/template_writers/template_formatter.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-10-02T22:31:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa18dfa3_abc81ced",
+      "range": {
+        "startLine": 97,
+        "startChar": 18,
+        "endLine": 97,
+        "endChar": 63
+      },
+      "revId": "effc2734dcc03a08d98354c062bf3b2945ea0aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8466b3f_fc6aab30",
         "filename": "components/policy/tools/template_writers/template_formatter.py",
         "patchSetId": 3
@@ -128,6 +248,30 @@
       "writtenOn": "2017-09-29T03:35:10Z",
       "side": 1,
       "message": "Simpler: key, major_version \u003d line.split(\u0027\u003d\u0027)",
+      "range": {
+        "startLine": 103,
+        "startChar": 6,
+        "endLine": 103,
+        "endChar": 47
+      },
+      "revId": "effc2734dcc03a08d98354c062bf3b2945ea0aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26898649_ca4edc1f",
+        "filename": "components/policy/tools/template_writers/template_formatter.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-10-02T22:31:41Z",
+      "side": 1,
+      "message": "Personally, I prefer \u0027partition\u0027 if there is only one separator while \u0027split\u0027 for many.",
+      "parentUuid": "a8466b3f_fc6aab30",
       "range": {
         "startLine": 103,
         "startChar": 6,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "08891dbc_a0ed6305",
+        "filename": "components/policy/tools/template_writers/template_formatter.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-10-02T22:31:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd2f83b9_afa28219",
+      "range": {
+        "startLine": 104,
+        "startChar": 9,
+        "endLine": 104,
+        "endChar": 12
+      },
+      "revId": "effc2734dcc03a08d98354c062bf3b2945ea0aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7260b8b_6b64dcb2",
         "filename": "components/policy/tools/template_writers/template_formatter.py",
         "patchSetId": 3
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "945a1029_2de49af4",
+        "filename": "components/policy/tools/template_writers/template_formatter.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-10-02T22:31:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7260b8b_6b64dcb2",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 108,
+        "endChar": 0
+      },
+      "revId": "effc2734dcc03a08d98354c062bf3b2945ea0aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c36f9f78_542e4ef2",
         "filename": "components/policy/tools/template_writers/writers/template_writer.py",
         "patchSetId": 3
@@ -197,6 +389,30 @@
       "writtenOn": "2017-09-29T03:35:10Z",
       "side": 1,
       "message": "Remove",
+      "range": {
+        "startLine": 151,
+        "startChar": 16,
+        "endLine": 151,
+        "endChar": 36
+      },
+      "revId": "effc2734dcc03a08d98354c062bf3b2945ea0aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "557266a0_068b4fe0",
+        "filename": "components/policy/tools/template_writers/writers/template_writer.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-10-02T22:31:41Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "c36f9f78_542e4ef2",
       "range": {
         "startLine": 151,
         "startChar": 16,
@@ -229,6 +445,30 @@
       "revId": "effc2734dcc03a08d98354c062bf3b2945ea0aa9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d2a662e_64e50372",
+        "filename": "components/policy/tools/template_writers/writers/template_writer.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-10-02T22:31:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6403b8c2_46f4f1a2",
+      "range": {
+        "startLine": 156,
+        "startChar": 0,
+        "endLine": 160,
+        "endChar": 1
+      },
+      "revId": "effc2734dcc03a08d98354c062bf3b2945ea0aa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
