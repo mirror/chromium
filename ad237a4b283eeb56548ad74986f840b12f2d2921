@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "446efe13_27a102df",
+        "filename": "content/public/test/layouttest_support.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-02T15:59:28Z",
+      "side": 1,
+      "message": "nit: I think that the include of \u003cvector\u003e is no longer needed.\n(OTOH, after removing \u003cvector\u003e here, you might need to add it to content/test/layouttest_support.cc)",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 17
+      },
+      "revId": "ad237a4b283eeb56548ad74986f840b12f2d2921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "139d2a09_1632c7b4",
+        "filename": "content/shell/browser/layout_test/blink_test_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-02T15:59:28Z",
+      "side": 1,
+      "message": "nit: Would it be worth it to add a DCHECK_GE(indent, 6u) at the top of this function?",
+      "range": {
+        "startLine": 101,
+        "startChar": 4,
+        "endLine": 101,
+        "endChar": 35
+      },
+      "revId": "ad237a4b283eeb56548ad74986f840b12f2d2921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "276e6f69_54532369",
+        "filename": "content/shell/browser/layout_test/blink_test_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-02T15:59:28Z",
+      "side": 1,
+      "message": "nit: Would it be worth it to add a local variable:\n    const std::string curr_prefix \u003d \"curr-\u003e\";\nand\n    use |curr_prefix| instead of \"curr-\u003e\"\nand\n    use |curr_prefix.size()| instead of 6\n?",
+      "range": {
+        "startLine": 101,
+        "startChar": 40,
+        "endLine": 101,
+        "endChar": 41
+      },
+      "revId": "ad237a4b283eeb56548ad74986f840b12f2d2921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f20817d6_422bc3fb",
+        "filename": "content/shell/browser/layout_test/blink_test_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-02T15:59:28Z",
+      "side": 1,
+      "message": "Preserving the old behavior SGTM for this CL.  I hope that no tests depend on dumping history of secondary test windows (and that in a follow-up CL this code can be changed to just dump the history of |main_window_-\u003eweb_contents()| [making it unnecessary to walk the list of all the shell windows]).",
+      "range": {
+        "startLine": 857,
+        "startChar": 6,
+        "endLine": 857,
+        "endChar": 62
+      },
+      "revId": "ad237a4b283eeb56548ad74986f840b12f2d2921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3c18b73d_4a466b34",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/autoplay/resources/test-autoplay.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-02T15:59:28Z",
+      "side": 1,
+      "message": "nit: I am a little-bit surprised that testRunner.waitUntilDone() is required here, even though\n1. testRunner.notifyDone is not needed (I assume that finishJSTest is sufficient)\n2. jsTestIsAsync is set to true (is it not sufficient?).\n\nOTOH, I am not really familiar with the various js harnesses used in layout tests...",
+      "range": {
+        "startLine": 21,
+        "startChar": 4,
+        "endLine": 21,
+        "endChar": 31
+      },
+      "revId": "ad237a4b283eeb56548ad74986f840b12f2d2921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
