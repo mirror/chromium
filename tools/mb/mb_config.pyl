@@ -1890,10 +1890,6 @@
       'gn_args': 'is_lsan=true',
     },
 
-    'lto': {
-       'gn_args': 'allow_posix_link_time_opt=true',
-     },
-
     'mac_strip': {
       'gn_args': 'enable_stripping=true',
     },
@@ -2010,7 +2006,6 @@
 
     'thin_lto': {
       'gn_args': 'use_thin_lto=true',
-      'mixins': ['lto'],
     },
 
     'tsan': {
