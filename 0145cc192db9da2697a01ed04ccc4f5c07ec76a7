@@ -126,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "082c82cf_0a3b7433",
+        "filename": "mojo/public/tools/bindings/pylib/mojom/generate/generator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-02T21:47:22Z",
+      "side": 1,
+      "message": "Actually \"less surprising\" is also my main reason to suggest that EnabledIf work in the same way as C preprocessors (i.e., not trying to skip values for not-enabled fields). :)\n\nNot-enabled things are considered non-existent and shouldn\u0027t have any effect.\nOtherwise, we will also need to answer questions such as \"Do we skip message IDs for not-enabled methods\", etc.\n\nWDYT? Thanks!",
+      "parentUuid": "335e4162_41a9bcf1",
+      "revId": "0145cc192db9da2697a01ed04ccc4f5c07ec76a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aee9ba6d_15b50646",
         "filename": "url/mojo/BUILD.gn",
         "patchSetId": 2
