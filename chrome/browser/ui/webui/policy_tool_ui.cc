@@ -33,12 +33,13 @@ content::WebUIDataSource* CreatePolicyToolUIHtmlSource() {
                              IDS_POLICY_FILTER_PLACEHOLDER);
   source->AddLocalizedString("edit", IDS_POLICY_TOOL_EDIT);
   source->AddLocalizedString("save", IDS_POLICY_TOOL_SAVE);
-  source->AddLocalizedString("errorLoggingDisabled",
-                             IDS_POLICY_TOOL_LOGGING_DISABLED);
+  source->AddLocalizedString("errorSavingDisabled",
+                             IDS_POLICY_TOOL_SAVING_DISABLED);
   source->AddLocalizedString("errorInvalidSessionName",
                              IDS_POLICY_TOOL_INVALID_SESSION_NAME);
   source->AddLocalizedString("errorFileCorrupted",
                              IDS_POLICY_TOOL_CORRUPTED_FILE);
+  source->AddLocalizedString("enableSaving", IDS_POLICY_TOOL_ENABLE_SAVING);
   // Overwrite the title value added by PolicyUIHandler.
   source->AddLocalizedString("title", IDS_POLICY_TOOL_TITLE);
 

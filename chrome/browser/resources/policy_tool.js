@@ -4,6 +4,15 @@
 
 // Override some methods of policy.Page.
 
+/**
+ * Disables saving to disk by hiding the 'load session' form and showing an
+ * error message instead.
+ */
+policy.Page.disableSaving = function() {
+  $('saving').hidden = false;
+  $('session-choice').hidden = true;
+};
+
 /** @override */
 policy.Page.setPolicyValues = function(values) {
   var page = this.getInstance();
@@ -58,13 +67,19 @@ policy.Page.prototype.initialize = function() {
     }
   };
 
+  $('enable-saving').onclick = function() {
+    $('saving').hidden = true;
+    $('session-choice').hidden = false;
+    chrome.send('enableSaving');
+  };
+
   // Notify the browser that the page has loaded, causing it to send the
   // list of all known policies and the values from the default session.
   chrome.send('initialized');
 };
 
 /**
- * Extracts current policy values to send to backend for logging.
+ * Extracts current policy values to send to backend for saving.
  * @return {Object} The dictionary containing policy values.
  */
 policy.Page.prototype.getDictionary = function() {
