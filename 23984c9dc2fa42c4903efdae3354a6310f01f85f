@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "242e75a1_13fecf36",
+        "filename": "testing/libfuzzer/coverage.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-10-02T18:04:50Z",
+      "side": 1,
+      "message": "nit: since this is checked in to the chromium src tree, can we just use\n\nos.path.dirname and __file__ here as a default?",
+      "range": {
+        "startLine": 349,
+        "startChar": 28,
+        "endLine": 349,
+        "endChar": 78
+      },
+      "revId": "23984c9dc2fa42c4903efdae3354a6310f01f85f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
