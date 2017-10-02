@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d23d489d_a08949c2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/ChromeHomePromoIllustration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-02T18:17:00Z",
+      "side": 1,
+      "message": "Can this be done in onAnimationEnd for the set and call cancel in setVisible when applicable?",
+      "range": {
+        "startLine": 102,
+        "startChar": 8,
+        "endLine": 115,
+        "endChar": 10
+      },
+      "revId": "a64ad7a4d65ee6b002311e741ac4cd325cc6ff52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
