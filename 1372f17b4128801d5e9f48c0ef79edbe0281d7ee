@@ -22,6 +22,30 @@
       "revId": "1372f17b4128801d5e9f48c0ef79edbe0281d7ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b29c95fa_c76cff63",
+        "filename": "tools/perf/page_sets/android_screen_restoration_shared_state.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-10-02T22:58:36Z",
+      "side": 1,
+      "message": "\u003eThat might cause problems if a benchmark that should set SUPPORTED_PLATFORMS doesn\u0027t\n\nIf this happens, the benchmark is to blame.",
+      "parentUuid": "b6e8894a_717b5a94",
+      "range": {
+        "startLine": 24,
+        "startChar": 4,
+        "endLine": 24,
+        "endChar": 6
+      },
+      "revId": "1372f17b4128801d5e9f48c0ef79edbe0281d7ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
