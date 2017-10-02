@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "80ef2eb3_d2f6acbf",
+        "filename": "chrome/browser/ui/ash/fake_tablet_mode_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-10-02T17:59:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd1ea9c4_ffe3a07b",
+      "revId": "3f938e1f0a7f90068b02cab5f6bb030cb6a60aa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bda963fd_4ce1328d",
         "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "80bb942b_cf4a29c8",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-10-02T17:59:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bda963fd_4ce1328d",
+      "revId": "3f938e1f0a7f90068b02cab5f6bb030cb6a60aa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5dac99f2_3696baf6",
         "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "3f938e1f0a7f90068b02cab5f6bb030cb6a60aa4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0acff59c_0017dd31",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-10-02T17:59:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5dac99f2_3696baf6",
+      "revId": "3f938e1f0a7f90068b02cab5f6bb030cb6a60aa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
