@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "991ff0f7_f72c4847",
+        "filename": "components/metrics/net/net_metrics_log_uploader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-02T18:06:07Z",
+      "side": 1,
+      "message": "sorry, one more nit: I\u0027d put this on the line below (right above line 44)",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 66
+      },
+      "revId": "f56cc9480d6c9ab062f1b0cd792a157b6c5f58a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccb9b379_51bc9d5d",
+        "filename": "components/metrics/net/net_metrics_log_uploader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-02T18:06:07Z",
+      "side": 1,
+      "message": "nit: Put this at the top of the private section so that the definition order matches the declaration order. (or, alternatively, switch the definition order in the .cc file so that the UploadLogToURL definition is below OnURLFetchComplete, but I think it\u0027ll be easier to read with UploadLoadToURL right underneath UploadLog)",
+      "range": {
+        "startLine": 51,
+        "startChar": 7,
+        "endLine": 51,
+        "endChar": 21
+      },
+      "revId": "f56cc9480d6c9ab062f1b0cd792a157b6c5f58a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
