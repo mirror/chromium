@@ -1131,7 +1131,37 @@ split_static_library("ui") {
       "//services/device/public/interfaces",
       "//third_party/libaddressinput",
       "//third_party/libaddressinput:strings",
-      "//ui/events",
+    ]
+  }
+
+  if (enable_basic_printing || enable_print_preview) {
+    deps += [
+      "//components/printing/browser",
+      "//printing",
+    ]
+  }
+
+  if (enable_nacl) {
+    sources += [
+      "webui/nacl_ui.cc",
+      "webui/nacl_ui.h",
+    ]
+    deps += [ "//components/nacl/browser" ]
+  }
+  if (enable_plugins) {
+    sources += [
+      "hung_plugin_tab_helper.cc",
+      "hung_plugin_tab_helper.h",
+      "webui/flash_ui.cc",
+      "webui/flash_ui.h",
+    ]
+    deps += [ "//ppapi/proxy:ipc" ]
+  }
+  if (safe_browsing_mode == 1) {
+    deps += [
+      "//chrome/browser/safe_browsing:chunk_proto",
+      "//chrome/common/safe_browsing:proto",
+      "//components/safe_browsing:csd_proto",
     ]
   }
 
