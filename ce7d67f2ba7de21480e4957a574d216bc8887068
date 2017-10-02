@@ -22,6 +22,30 @@
       "revId": "ce7d67f2ba7de21480e4957a574d216bc8887068",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12090638_3e51e34b",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/server/getPrimaryService/two-iframes-from-same-origin.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-10-02T21:40:33Z",
+      "side": 1,
+      "message": "The full error message is still useful if we fail on other calls.",
+      "parentUuid": "d3188c9c_0553b377",
+      "range": {
+        "startLine": 50,
+        "startChar": 13,
+        "endLine": 50,
+        "endChar": 26
+      },
+      "revId": "ce7d67f2ba7de21480e4957a574d216bc8887068",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
