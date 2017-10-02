@@ -40,6 +40,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.chromium.base.test.util.CommandLineFlags;
+
 /**
  * Tests for the WebViewClient.shouldOverrideUrlLoading() method.
  */
@@ -825,6 +827,38 @@ public class AwContentsClientShouldOverrideUrlLoadingTest {
         mShouldOverrideUrlLoadingHelper.waitForCallback(shouldOverrideUrlLoadingCallCount);
 
         mActivityTestRule.pollUiThread(() -> AwContents.getNativeInstanceCount() == 0);
+    }
+
+    // @CommandLineFlags.Add("disable-browser-side-navigation")
+    @Test
+    @SmallTest
+    @Feature({"AndroidWebView"})
+    public void testCallLoadInCallback() throws Throwable {
+        final String httpPath = "/page_with_about_blank_navigation";
+        final String httpPathOnServer = mWebServer.getResponseUrl(httpPath);
+        addPageToTestServer(httpPath,
+                CommonResources.makeHtmlPageWithSimpleLinkTo(
+                        ContentUrlConstants.ABOUT_BLANK_DISPLAY_URL));
+        class StopInCallbackClient extends TestAwContentsClient {
+            @Override
+            public boolean shouldOverrideUrlLoading(AwContentsClient.AwWebResourceRequest request) {
+                mAwContents.loadUrl(httpPathOnServer);
+                return super.shouldOverrideUrlLoading(request);
+            }
+        }
+
+        setupWithProvidedContentsClient(new StopInCallbackClient());
+        mShouldOverrideUrlLoadingHelper = mContentsClient.getShouldOverrideUrlLoadingHelper();
+
+        mActivityTestRule.loadDataSync(mAwContents, mContentsClient.getOnPageFinishedHelper(),
+                CommonResources.makeHtmlPageWithSimpleLinkTo("http://foo.com"), "text/html", false);
+
+        int shouldOverrideUrlLoadingCallCount = mShouldOverrideUrlLoadingHelper.getCallCount();
+        int onPageFinishedCallCount = mContentsClient.getOnPageFinishedHelper().getCallCount();
+        setShouldOverrideUrlLoadingReturnValueOnUiThread(true);
+        clickOnLinkUsingJs();
+        mShouldOverrideUrlLoadingHelper.waitForCallback(shouldOverrideUrlLoadingCallCount);
+        mContentsClient.getOnPageFinishedHelper().waitForCallback(onPageFinishedCallCount);
     }
 
     @Test
