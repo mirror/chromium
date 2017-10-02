@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa84626a_06f9484b",
+        "filename": "chrome/browser/android/ntp/most_visited_sites_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-02T15:38:14Z",
+      "side": 1,
+      "message": "Since the struct is also used for clicks, can we find a better name? NTPTileInfo would work, but that\u0027s very generic...",
+      "range": {
+        "startLine": 274,
+        "startChar": 17,
+        "endLine": 274,
+        "endChar": 34
+      },
+      "revId": "7d6b6d9c04131883d87fb987175a0da84ec90a30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49e0d937_df58e6c1",
+        "filename": "chrome/browser/ui/search/ntp_user_data_logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-02T15:38:14Z",
+      "side": 1,
+      "message": "Does\nlogged_impressions_.fill(base::nullopt);\nwork?",
+      "range": {
+        "startLine": 260,
+        "startChar": 5,
+        "endLine": 260,
+        "endChar": 0
+      },
+      "revId": "7d6b6d9c04131883d87fb987175a0da84ec90a30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c857a3e8_d6564cc0",
+        "filename": "components/ntp_tiles/metrics.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-02T15:38:14Z",
+      "side": 1,
+      "message": "s/each/an/",
+      "range": {
+        "startLine": 20,
+        "startChar": 11,
+        "endLine": 20,
+        "endChar": 15
+      },
+      "revId": "7d6b6d9c04131883d87fb987175a0da84ec90a30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57c26e8b_2465e14c",
+        "filename": "components/ntp_tiles/metrics_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-02T15:38:14Z",
+      "side": 1,
+      "message": "s/instantes/instances/",
+      "range": {
+        "startLine": 34,
+        "startChar": 15,
+        "endLine": 34,
+        "endChar": 24
+      },
+      "revId": "7d6b6d9c04131883d87fb987175a0da84ec90a30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6482abcb_9acaddc5",
+        "filename": "components/ntp_tiles/metrics_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-02T15:38:14Z",
+      "side": 1,
+      "message": "This is causing the compile failures.",
+      "range": {
+        "startLine": 42,
+        "startChar": 33,
+        "endLine": 42,
+        "endChar": 0
+      },
+      "revId": "7d6b6d9c04131883d87fb987175a0da84ec90a30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb45d907_f91ed4a1",
+        "filename": "components/ntp_tiles/metrics_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-02T15:38:14Z",
+      "side": 1,
+      "message": "You removed TITLE_TAG here - on purpose?",
+      "range": {
+        "startLine": 204,
+        "startChar": 36,
+        "endLine": 204,
+        "endChar": 0
+      },
+      "revId": "7d6b6d9c04131883d87fb987175a0da84ec90a30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ddf5997_2cf5887d",
+        "filename": "components/ntp_tiles/tile_impression.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-02T15:38:14Z",
+      "side": 1,
+      "message": "nit: struct name should match the file name",
+      "range": {
+        "startLine": 15,
+        "startChar": 7,
+        "endLine": 15,
+        "endChar": 24
+      },
+      "revId": "7d6b6d9c04131883d87fb987175a0da84ec90a30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
