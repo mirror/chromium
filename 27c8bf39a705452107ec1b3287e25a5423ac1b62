@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "764f993d_86b029bf",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 4079,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-02T20:01:13Z",
+      "side": 1,
+      "message": "Lgtm if these parameters are actually unused.  Let\u0027s do a followup to get rid of them, because that will let us remove two functions from WTC!",
+      "parentUuid": "46e91575_cd3105ae",
+      "revId": "27c8bf39a705452107ec1b3287e25a5423ac1b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56047008_efc49138",
         "filename": "ios/chrome/browser/ui/ntp/incognito_view_controller_protocol.h",
         "patchSetId": 2
