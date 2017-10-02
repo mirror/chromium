@@ -62,6 +62,14 @@ const char kBackgroundVideoTrackOptimizationDescription[] =
     "Disable video tracks when the video is played in the background to "
     "optimize performance.";
 
+const char kLeftToRightUrlsName[] =
+    "Render bidirectional URLs from left to right";
+const char kLeftToRightUrlsDescription[] =
+    "An experimental Bidi URL rendering algorithm where the URL components are "
+    "always shown in order from left to right, regardless of any RTL "
+    "characters. (The contents of each component are still rendered with the "
+    "normal Bidi algorithm.)";
+
 const char kBleAdvertisingInExtensionsName[] = "BLE Advertising in Chrome Apps";
 const char kBleAdvertisingInExtensionsDescription[] =
     "Enables BLE Advertising in Chrome Apps. BLE Advertising might interfere "
