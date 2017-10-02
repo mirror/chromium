@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd1e5d60_2d79cb42",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-10-02T12:32:26Z",
+      "side": 1,
+      "message": "Password Manager",
+      "range": {
+        "startLine": 9,
+        "startChar": 10,
+        "endLine": 9,
+        "endChar": 18
+      },
+      "revId": "ee4760b666b7a5286df37e2910945c0702979aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "026ea66e_defad22f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-10-02T12:32:26Z",
+      "side": 1,
+      "message": "Nit: the username",
+      "range": {
+        "startLine": 11,
+        "startChar": 47,
+        "endLine": 11,
+        "endChar": 55
+      },
+      "revId": "ee4760b666b7a5286df37e2910945c0702979aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "250e4279_62de62a4",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-10-02T12:32:26Z",
+      "side": 1,
+      "message": "Please replace to the Password Manager\n\nIn Chrome sources: Autofill - saving/filling user personal information (name, e-mail, addresses etc), Password Manager - saving/filling credentials.",
+      "range": {
+        "startLine": 373,
+        "startChar": 53,
+        "endLine": 373,
+        "endChar": 61
+      },
+      "revId": "ee4760b666b7a5286df37e2910945c0702979aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e02951e_649c03a7",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-10-02T12:32:26Z",
+      "side": 1,
+      "message": "Nit: a script",
+      "range": {
+        "startLine": 373,
+        "startChar": 12,
+        "endLine": 373,
+        "endChar": 18
+      },
+      "revId": "ee4760b666b7a5286df37e2910945c0702979aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc3173df_b144a61f",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-10-02T12:32:26Z",
+      "side": 1,
+      "message": "the username",
+      "range": {
+        "startLine": 393,
+        "startChar": 14,
+        "endLine": 393,
+        "endChar": 23
+      },
+      "revId": "ee4760b666b7a5286df37e2910945c0702979aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdefea1c_993f8b65",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-10-02T12:32:26Z",
+      "side": 1,
+      "message": "It seems that it\u0027s better to take what user typed, not field values, namely |field_prop.second.first|, and then you don\u0027t need to check |prop_mask| for USER_TYPED and AUTOFILLED.",
+      "range": {
+        "startLine": 398,
+        "startChar": 4,
+        "endLine": 402,
+        "endChar": 62
+      },
+      "revId": "ee4760b666b7a5286df37e2910945c0702979aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0da324cf_0e89878e",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-10-02T12:32:26Z",
+      "side": 1,
+      "message": "What\u0027s the reason to check |field_name| against |*_element| names?",
+      "range": {
+        "startLine": 403,
+        "startChar": 48,
+        "endLine": 407,
+        "endChar": 68
+      },
+      "revId": "ee4760b666b7a5286df37e2910945c0702979aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
