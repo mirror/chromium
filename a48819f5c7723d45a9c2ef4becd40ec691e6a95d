@@ -70,6 +70,30 @@
       "revId": "a48819f5c7723d45a9c2ef4becd40ec691e6a95d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "25eab9b1_8e2d34cf",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-10-02T21:40:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca6e295b_7c3e9cc9",
+      "range": {
+        "startLine": 661,
+        "startChar": 10,
+        "endLine": 661,
+        "endChar": 17
+      },
+      "revId": "a48819f5c7723d45a9c2ef4becd40ec691e6a95d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
