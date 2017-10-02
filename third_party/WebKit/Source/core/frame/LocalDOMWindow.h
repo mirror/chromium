@@ -356,8 +356,8 @@ class CORE_EXPORT LocalDOMWindow final : public DOMWindow,
   mutable Member<BarProp> scrollbars_;
   mutable Member<BarProp> statusbar_;
   mutable Member<BarProp> toolbar_;
-  mutable Member<Navigator> navigator_;
   mutable Member<StyleMedia> media_;
+  mutable TraceWrapperMember<Navigator> navigator_;
   mutable TraceWrapperMember<CustomElementRegistry> custom_elements_;
   // We store reference to Modulator here to have it TraceWrapper-ed.
   // This is wrong, as Modulator is per-context, where as LocalDOMWindow is
