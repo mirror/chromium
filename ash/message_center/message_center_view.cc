@@ -50,6 +50,12 @@ const SkColor MessageCenterView::kBackgroundColor =
     SkColorSetRGB(0xee, 0xee, 0xee);
 
 // static
+const SkColor MessageCenterView::kButtonBarBackgroundColor = SK_ColorWHITE;
+
+// static
+const SkColor MessageCenterView::kSettingsBackgroundColor = SK_ColorWHITE;
+
+// static
 const size_t MessageCenterView::kMaxVisibleNotifications = 100;
 
 // static
@@ -247,31 +253,35 @@ void MessageCenterView::Layout() {
   bool animating = settings_transition_animation_ &&
                    settings_transition_animation_->is_animating();
   if (animating && settings_transition_animation_->current_part_index() == 0) {
-    button_bar_->SetBounds(0, height() - button_height, width(), button_height);
+    button_bar_->SetBounds(0, 0, width(), button_height);
     return;
   }
 
   scroller_->SetBounds(0, 0, width(), height() - button_height);
-  settings_view_->SetBounds(0, 0, width(), height() - button_height);
+  settings_view_->SetBounds(0, button_height, width(),
+                            height() - button_height);
 
-  bool is_scrollable = false;
-  if (scroller_->visible())
-    is_scrollable = scroller_->height() < message_list_view_->height();
-  else if (settings_view_->visible())
-    is_scrollable = settings_view_->IsScrollable();
-
-  if (!animating) {
-    if (is_scrollable) {
-      // Draw separator line on the top of the button bar if it is on the bottom
-      // or draw it at the bottom if the bar is on the top.
-      button_bar_->SetBorder(views::CreateSolidSidedBorder(
-          1, 0, 0, 0, SkColorSetRGB(0xcc, 0xcc, 0xcc)));
-    } else {
-      button_bar_->SetBorder(views::CreateEmptyBorder(1, 0, 0, 0));
-    }
-    button_bar_->SchedulePaint();
+  bool is_scrollable = scroller_->height() < message_list_view_->height();
+  if (!animating && scroller_->visible() && is_scrollable) {
+    // Draw separator line on the top of the button bar if it is on the bottom
+    // or draw it at the bottom if the bar is on the top.
+    button_bar_->SetBorder(views::CreateSolidSidedBorder(
+        1, 0, 0, 0, SkColorSetRGB(0xcc, 0xcc, 0xcc)));
+  } else if (!animating && settings_view_->visible()) {
+    button_bar_->SetBorder(views::CreateSolidSidedBorder(
+        0, 0, 1, 0, SkColorSetRGB(0xcc, 0xcc, 0xcc)));
+  } else {
+    button_bar_->SetBorder(views::CreateEmptyBorder(0, 0, 0, 0));
   }
-  button_bar_->SetBounds(0, height() - button_height, width(), button_height);
+
+  if (scroller_->visible())
+    button_bar_->SetBounds(0, height() - button_height, width(), button_height);
+  else
+    button_bar_->SetBounds(0, 0, width(), button_height);
+
+  button_bar_->Layout();
+  button_bar_->SchedulePaint();
+
   if (GetWidget())
     GetWidget()->GetRootView()->SchedulePaint();
 }
@@ -601,6 +611,8 @@ void MessageCenterView::SetVisibilityMode(Mode mode, bool animate) {
   source_height_ = source_view_ ? source_view_->GetHeightForWidth(width()) : 0;
   target_height_ = target_view_ ? target_view_->GetHeightForWidth(width()) : 0;
 
+  settings_view_->UpdateQuietModeState();
+
   if (!animate || disable_animation_for_testing) {
     AnimationEnded(nullptr);
     return;
@@ -643,7 +655,7 @@ void MessageCenterView::UpdateButtonBarStatus() {
   }
 
   button_bar_->SetBackArrowVisible(mode_ == Mode::SETTINGS);
-  button_bar_->SetButtonsVisible(!is_locked_);
+  button_bar_->SetButtonsVisible(!is_locked_ && mode_ != Mode::SETTINGS);
   button_bar_->SetTitle(GetButtonBarTitle());
 
   if (!is_locked_)

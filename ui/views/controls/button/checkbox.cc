@@ -72,9 +72,8 @@ void IconFocusRing::OnPaint(gfx::Canvas* canvas) {
 // static
 const char Checkbox::kViewClassName[] = "Checkbox";
 
-Checkbox::Checkbox(const base::string16& label)
-    : LabelButton(NULL, label),
-      checked_(false) {
+Checkbox::Checkbox(const base::string16& label, bool force_md)
+    : LabelButton(NULL, label), checked_(false), force_md_(force_md) {
   SetHorizontalAlignment(gfx::ALIGN_LEFT);
   SetFocusForPlatform();
   SetFocusPainter(nullptr);
@@ -145,9 +144,8 @@ void Checkbox::SetChecked(bool checked) {
   UpdateImage();
 }
 
-// static
-bool Checkbox::UseMd() {
-  return ui::MaterialDesignController::IsSecondaryUiMaterial();
+bool Checkbox::UseMd() const {
+  return force_md_ || ui::MaterialDesignController::IsSecondaryUiMaterial();
 }
 
 const char* Checkbox::GetClassName() const {
