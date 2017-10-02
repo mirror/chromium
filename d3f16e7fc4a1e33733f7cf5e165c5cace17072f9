@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ff48821_8645381c",
+        "filename": "ash/highlighter/highlighter_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-02T18:17:40Z",
+      "side": 1,
+      "message": "optional: |allow_retries| -\u003e |require_success| or |valid_only| or rewrite comment to emphasize that the callback will *only* be called for successful gesture.",
+      "revId": "d3f16e7fc4a1e33733f7cf5e165c5cace17072f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7395e002_d9099291",
+        "filename": "ash/highlighter/highlighter_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-02T18:17:40Z",
+      "side": 1,
+      "message": "Hooray for OnceClosure!",
+      "revId": "d3f16e7fc4a1e33733f7cf5e165c5cace17072f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e520e28_0062fc5c",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-02T18:17:40Z",
+      "side": 1,
+      "message": "std::make_unique\u003c\u003e",
+      "revId": "d3f16e7fc4a1e33733f7cf5e165c5cace17072f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19fc41d8_f8b5223d",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_highlighter_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-02T18:17:40Z",
+      "side": 1,
+      "message": "nit: std::make_unique\u003c\u003e these days",
+      "revId": "d3f16e7fc4a1e33733f7cf5e165c5cace17072f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6502babd_5d7fbf92",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_highlighter_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-02T18:17:40Z",
+      "side": 1,
+      "message": "#include \"base/time/time.h\" (or wherever this comes from)",
+      "revId": "d3f16e7fc4a1e33733f7cf5e165c5cace17072f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2c9c1d4_698b6e8d",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_highlighter_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-02T18:17:40Z",
+      "side": 1,
+      "message": "super-nit: I usually just document these with the variable name. It\u0027s a little confusing when the comment has negative-sense (this could mean that not-repeating is false).",
+      "revId": "d3f16e7fc4a1e33733f7cf5e165c5cace17072f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce47637a_64c2e149",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_highlighter_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-02T18:17:40Z",
+      "side": 1,
+      "message": "nit: Unless there is going to be more than one kind of production client for HighlighterController, I would just call this HighlighterClient (or HighlighterControllerClient). That better matches the naming convention of our other clients (e.g. LockScreenClient, SystemTrayClient).",
+      "revId": "d3f16e7fc4a1e33733f7cf5e165c5cace17072f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
