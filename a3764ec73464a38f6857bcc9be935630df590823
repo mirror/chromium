@@ -94,6 +94,30 @@
       "revId": "a3764ec73464a38f6857bcc9be935630df590823",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75cb940b_a27e70b7",
+        "filename": "testing/libfuzzer/reproducing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-10-02T16:40:38Z",
+      "side": 0,
+      "message": "\u003e The reproduce tools might not always help, e.g. in case of a broken build issue when we don\u0027t have a testcase with all the flags.\n\nCould you clarify when this would happen?\n\nMy concern with adding this information is that it may not be very useful and make our documentation larger than necessary, and it may be difficult to keep it in sync with our actual build flags too.",
+      "parentUuid": "40aca1d9_39ccda42",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 31
+      },
+      "revId": "a3764ec73464a38f6857bcc9be935630df590823",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
