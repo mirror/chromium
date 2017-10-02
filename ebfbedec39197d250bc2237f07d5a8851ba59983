@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8dcd49d3_3c200409",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_linux.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-02T22:51:21Z",
+      "side": 1,
+      "message": "ui::ResourceBundle",
+      "range": {
+        "startLine": 279,
+        "startChar": 20,
+        "endLine": 279,
+        "endChar": 34
+      },
+      "revId": "ebfbedec39197d250bc2237f07d5a8851ba59983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f7f246a_5d55bcf6",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_linux.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-02T22:51:21Z",
+      "side": 1,
+      "message": "Do we really need to do this explictly?",
+      "revId": "ebfbedec39197d250bc2237f07d5a8851ba59983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
