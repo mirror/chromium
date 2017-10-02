@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "68e1c32c_a5d8761d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-02T17:06:18Z",
+      "side": 1,
+      "message": "The gvr library for VR on Android has some static initializers that weren\u0027t initially detected because static initializer checks weren\u0027t on for Android.\n\nGVR has fixed the static initializers, so they\u0027ll be removed in the next gvr DEPS roll.",
+      "parentUuid": "89a988db_7bbd3ad0",
+      "range": {
+        "startLine": 12,
+        "startChar": 37,
+        "endLine": 12,
+        "endChar": 56
+      },
+      "revId": "eaa5bb139138433a5584a6ab1214d4c738e09b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec3cadf1_b1deb085",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "eaa5bb139138433a5584a6ab1214d4c738e09b49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68c2d180_f7b47429",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-02T17:06:18Z",
+      "side": 1,
+      "message": "Oh, yes bad merge, thanks for catching that.",
+      "parentUuid": "ec3cadf1_b1deb085",
+      "range": {
+        "startLine": 166,
+        "startChar": 0,
+        "endLine": 175,
+        "endChar": 0
+      },
+      "revId": "eaa5bb139138433a5584a6ab1214d4c738e09b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
