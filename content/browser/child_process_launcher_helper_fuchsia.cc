@@ -5,14 +5,22 @@
 #include "content/browser/child_process_launcher_helper.h"
 
 #include "base/command_line.h"
+#include "base/path_service.h"
+#include "base/posix/global_descriptors.h"
 #include "base/process/launch.h"
 #include "content/browser/child_process_launcher.h"
+#include "content/browser/child_process_launcher_helper_posix.h"
 #include "content/common/sandbox_policy_fuchsia.h"
 #include "content/public/common/sandboxed_process_launcher_delegate.h"
 #include "mojo/edk/embedder/platform_channel_pair.h"
 
 namespace content {
 namespace internal {
+namespace {
+
+const char kSharedFileCacheDirName[] = "shared-cache";
+
+}  // namespace
 
 void ChildProcessLauncherHelper::SetProcessPriorityOnLauncherThread(
     base::Process process,
@@ -40,8 +48,7 @@ bool ChildProcessLauncherHelper::TerminateProcess(const base::Process& process,
 void ChildProcessLauncherHelper::SetRegisteredFilesForService(
     const std::string& service_name,
     catalog::RequiredFileMap required_files) {
-  // TODO(fuchsia): Implement this. (crbug.com/707031)
-  NOTIMPLEMENTED();
+  SetFilesToShareForServicePosix(service_name, std::move(required_files));
 }
 
 // static
@@ -66,7 +73,9 @@ ChildProcessLauncherHelper::PrepareMojoPipeHandlesOnClientThread() {
 std::unique_ptr<FileMappedForLaunch>
 ChildProcessLauncherHelper::GetFilesToMap() {
   DCHECK_CURRENTLY_ON(BrowserThread::PROCESS_LAUNCHER);
-  return std::unique_ptr<FileMappedForLaunch>();
+
+  return CreateDefaultPosixFilesToMap(child_process_id(), mojo_client_handle(),
+                                      true, GetProcessType(), command_line());
 }
 
 void ChildProcessLauncherHelper::BeforeLaunchOnLauncherThread(
@@ -76,6 +85,8 @@ void ChildProcessLauncherHelper::BeforeLaunchOnLauncherThread(
 
   mojo::edk::PlatformChannelPair::PrepareToPassHandleToChildProcess(
       mojo_client_handle(), command_line(), &options->handles_to_transfer);
+
+  options->fds_to_remap = files_to_register.GetMapping();
 
   UpdateLaunchOptionsForSandbox(delegate_->GetSandboxType(), options);
 }
@@ -113,6 +124,41 @@ void ChildProcessLauncherHelper::ForceNormalProcessTerminationSync(
     ChildProcessLauncherHelper::Process process) {
   DCHECK_CURRENTLY_ON(BrowserThread::PROCESS_LAUNCHER);
   process.process.Terminate(RESULT_CODE_NORMAL_EXIT, true);
+}
+
+// static
+base::File OpenFileToShare(const base::FilePath& path,
+                           base::MemoryMappedFile::Region* region) {
+  // We must copy shared files from bootfs into tmpfs, because Fuchsia doesn't
+  // support sharing bootfs files across processes (or, more generally, cloning
+  // file descriptors for bootfs files).
+  // TODO(770790): Switch to reading and sharing from PackageFS once it's ready.
+  base::FilePath cached_path;
+  bool result =
+      base::PathService::Get(base::BasePathKey::DIR_TEMP, &cached_path);
+  DCHECK(result);
+  cached_path = cached_path.Append(kSharedFileCacheDirName);
+  if (!DirectoryExists(cached_path)) {
+    CHECK(CreateDirectory(cached_path));
+  }
+  cached_path = cached_path.Append(path);
+
+  // Re-use the tmpfs cached file if one was already created beforehand.
+  if (!PathExists(cached_path)) {
+    base::FilePath src_path;
+
+    bool result = base::PathService::Get(base::BasePathKey::DIR_EXE, &src_path);
+    DCHECK(result);
+    src_path = src_path.Append(path);
+    DCHECK(PathExists(src_path));
+
+    CHECK(CopyFile(src_path, cached_path));
+    DCHECK(PathExists(cached_path));
+  }
+
+  base::File file(cached_path, base::File::FLAG_OPEN | base::File::FLAG_READ);
+  *region = base::MemoryMappedFile::Region::kWholeFile;
+  return file;
 }
 
 }  // namespace internal
