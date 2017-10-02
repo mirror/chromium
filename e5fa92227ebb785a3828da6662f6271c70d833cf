@@ -16,6 +16,24 @@
       "revId": "e5fa92227ebb785a3828da6662f6271c70d833cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0afb9963_8897ee3d",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-10-02T21:40:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cb4ba84_0525bbed",
+      "revId": "e5fa92227ebb785a3828da6662f6271c70d833cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
