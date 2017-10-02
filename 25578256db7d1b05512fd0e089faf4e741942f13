@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62d8fc27_59ce9748",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-02T20:44:26Z",
+      "side": 0,
+      "message": "This seems to be critical in making virtual/threaded/fast/compositorworker/animation-worklet-animator-animate.html pass.",
+      "revId": "25578256db7d1b05512fd0e089faf4e741942f13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
