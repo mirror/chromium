@@ -456,19 +456,7 @@ TEST_F(ImageTest, PlatformToSkiaToCopy) {
   delete bitmap;
 }
 
-#if defined(OS_IOS)
-TEST_F(ImageTest, SkiaToCocoaTouchCopy) {
-  UIImage* ui_image;
-
-  {
-    gfx::Image image(gt::CreateImageSkia(25, 25));
-    ui_image = image.CopyUIImage();
-  }
-
-  EXPECT_TRUE(ui_image);
-  base::mac::NSObjectRelease(ui_image);
-}
-#elif defined(OS_MACOSX)
+#if defined(OS_MACOSX) && !defined(OS_IOS)
 TEST_F(ImageTest, SkiaToCocoaCopy) {
   NSImage* ns_image;
 

@@ -256,7 +256,10 @@ PlatformImage ToPlatformType(const gfx::Image& image) {
 
 PlatformImage CopyPlatformType(const gfx::Image& image) {
 #if defined(OS_IOS)
-  return image.CopyUIImage();
+  // The UIImage* is returned not retained on iOS because the constructor
+  // gfx::Image(UIImage*) does retain the passed UIImage* (doing otherwise
+  // would result in leaks).
+  return ToPlatformType(image);
 #elif defined(OS_MACOSX)
   return image.CopyNSImage();
 #else
