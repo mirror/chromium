@@ -35,6 +35,8 @@ source_set("lib") {
     "observers/coordination_unit_graph_observer.h",
     "observers/metrics_collector.cc",
     "observers/metrics_collector.h",
+    "observers/process_host_signal_observer.cc",
+    "observers/process_host_signal_observer.h",
     "observers/tab_signal_generator_impl.cc",
     "observers/tab_signal_generator_impl.h",
     "resource_coordinator_service.cc",

@@ -12,6 +12,7 @@
           "resource_coordinator::mojom::CoordinationUnitIntrospector"
         ],
         "coordination_unit": [ "resource_coordinator::mojom::CoordinationUnitProvider" ],
+        "process_host_signals": [ "resource_coordinator::mojom::ProcessHostSignalsObserver" ],
         "service_callbacks": [ "resource_coordinator::mojom::ServiceCallbacks" ],
         "tab_signal": [ "resource_coordinator::mojom::TabSignalGenerator" ],
         "tracing": [ "tracing::mojom::Coordinator" ],

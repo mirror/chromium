@@ -11,6 +11,7 @@
 #include "base/callback.h"
 #include "base/observer_list.h"
 #include "base/optional.h"
+#include "base/supports_user_data.h"
 #include "base/values.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
@@ -26,7 +27,8 @@ class CoordinationUnitGraphObserver;
 class FrameCoordinationUnitImpl;
 class PageCoordinationUnitImpl;
 
-class CoordinationUnitImpl : public mojom::CoordinationUnit {
+class CoordinationUnitImpl : public base::SupportsUserData,
+                             public mojom::CoordinationUnit {
  public:
   CoordinationUnitImpl(
       const CoordinationUnitID& id,
@@ -47,6 +49,9 @@ class CoordinationUnitImpl : public mojom::CoordinationUnit {
   static CoordinationUnitImpl* CreateCoordinationUnit(
       const CoordinationUnitID& id,
       std::unique_ptr<service_manager::ServiceContextRef> service_ref);
+
+  static CoordinationUnitImpl* GetCoordinationUnit(
+      const CoordinationUnitID& id);
 
   static void AssertNoActiveCoordinationUnits();
   static void ClearAllCoordinationUnits();
