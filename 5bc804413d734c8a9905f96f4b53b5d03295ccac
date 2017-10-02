@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8268062c_6b5b773a",
+        "filename": "third_party/WebKit/Source/core/dom/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-02T21:01:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "794eabb3_4abad376",
+      "revId": "5bc804413d734c8a9905f96f4b53b5d03295ccac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52eb737b_6e86b0f8",
         "filename": "third_party/WebKit/Source/core/dom/BlinkMessagePortMessage.h",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "5bc804413d734c8a9905f96f4b53b5d03295ccac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1b57dad_5d6f66a5",
+        "filename": "third_party/WebKit/Source/core/dom/BlinkMessagePortMessage.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-02T21:01:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52eb737b_6e86b0f8",
+      "revId": "5bc804413d734c8a9905f96f4b53b5d03295ccac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8e6ed3cd_1b04ac0d",
+        "filename": "third_party/WebKit/Source/core/dom/BlinkMessagePortMessageStructTraits.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-02T21:01:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9819837a_c60f1dae",
+      "revId": "5bc804413d734c8a9905f96f4b53b5d03295ccac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3917da6_69e72766",
         "filename": "third_party/WebKit/Source/core/dom/BlinkMessagePortMessageStructTraits.cpp",
         "patchSetId": 12
@@ -67,6 +121,24 @@
       "revId": "5bc804413d734c8a9905f96f4b53b5d03295ccac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b9ffc4a_bc3da323",
+        "filename": "third_party/WebKit/Source/core/dom/BlinkMessagePortMessageStructTraits.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-02T21:01:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3917da6_69e72766",
+      "revId": "5bc804413d734c8a9905f96f4b53b5d03295ccac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "1ada47df_3316e8e0",
+        "filename": "third_party/WebKit/Source/core/dom/BlinkMessagePortMessageStructTraits.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-02T21:01:18Z",
+      "side": 1,
+      "message": "Filed https://bugs.chromium.org/p/chromium/issues/detail?id\u003d770862",
+      "parentUuid": "3098aad4_1de7204a",
+      "revId": "5bc804413d734c8a9905f96f4b53b5d03295ccac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04701e39_c56c430a",
         "filename": "third_party/WebKit/Source/core/dom/MessagePort.cpp",
         "patchSetId": 12
@@ -101,6 +191,24 @@
       "revId": "5bc804413d734c8a9905f96f4b53b5d03295ccac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f0b51c1_d74c64f7",
+        "filename": "third_party/WebKit/Source/core/dom/MessagePort.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-02T21:01:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04701e39_c56c430a",
+      "revId": "5bc804413d734c8a9905f96f4b53b5d03295ccac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
