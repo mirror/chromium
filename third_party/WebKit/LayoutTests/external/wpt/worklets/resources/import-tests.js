@@ -89,4 +89,16 @@ function runImportTests(worklet) {
         return promise_rejects(t, new DOMException('', 'AbortError'),
                                worklet.addModule(kScriptURL));
     }, 'Importing about:blank should reject the given promise.');
+
+    promise_test(() => {
+        const kCrossOrigin = 'http://{{host}}:{{ports[http][1]}}';
+        // Specify the Access-Control-Allow-Origin header to enable cross origin
+        // access.
+        const kScriptURL =
+            kCrossOrigin + '/worklets/resources/empty-worklet-script.js' +
+            '?pipe=header(Access-Control-Allow-Origin, *)';
+        return worklet.addModule(kScriptURL).then(undefined_arg => {
+            assert_equals(undefined_arg, undefined);
+        });
+    }, 'Importing the cross origin resource should resolve the given promise');
 }
