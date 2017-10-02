@@ -27,6 +27,7 @@
 #define CSSFontFaceSrcValue_h
 
 #include "core/css/CSSValue.h"
+#include "core/dom/ExecutionContext.h"
 #include "core/loader/resource/FontResource.h"
 #include "platform/loader/fetch/ResourceOwner.h"
 #include "platform/weborigin/Referrer.h"
@@ -34,8 +35,6 @@
 #include "platform/wtf/text/WTFString.h"
 
 namespace blink {
-
-class Document;
 
 class CORE_EXPORT CSSFontFaceSrcValue : public CSSValue {
  public:
@@ -68,7 +67,7 @@ class CORE_EXPORT CSSFontFaceSrcValue : public CSSValue {
 
   bool HasFailedOrCanceledSubresources() const;
 
-  FontResource* Fetch(Document*) const;
+  FontResource* Fetch(ExecutionContext*) const;
 
   bool Equals(const CSSFontFaceSrcValue&) const;
 
@@ -92,7 +91,7 @@ class CORE_EXPORT CSSFontFaceSrcValue : public CSSValue {
         should_check_content_security_policy_(
             should_check_content_security_policy) {}
 
-  void RestoreCachedResourceIfNeeded(Document*) const;
+  void RestoreCachedResourceIfNeeded(ExecutionContext*) const;
 
   String absolute_resource_;
   String specified_resource_;
