@@ -247,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "650c00ff_d1f75110",
+        "filename": "extensions/browser/extension_registrar.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-02T23:29:23Z",
+      "side": 1,
+      "message": "I guess with copious sprinkling of crbug.com/708230 TODO\u0027s, we don\u0027t need this function. I\u0027ll consolidate some of the removal/deactivate code.",
+      "parentUuid": "77d3e2a1_fbb8bb6d",
+      "revId": "0b1a533ba0b21a1a6ce98a3873c10c6759391ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d546013_43d6cc10",
         "filename": "extensions/browser/extension_registrar.h",
         "patchSetId": 17
