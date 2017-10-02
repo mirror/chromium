@@ -31,6 +31,7 @@
 #include "media/cdm/cdm_helpers.h"
 #include "media/cdm/cdm_module.h"
 #include "media/cdm/cdm_wrapper.h"
+#include "media/cdm/foo.h"
 #include "ui/gfx/geometry/rect.h"
 
 namespace media {
