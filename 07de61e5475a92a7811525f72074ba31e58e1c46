@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "31588073_e2e8d9d3",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-10-02T18:56:44Z",
+      "side": 1,
+      "message": "In this case, the statement in the for loop is pretty complicated, so I think braces make the code more readable.",
+      "parentUuid": "4b087460_f92ea8cd",
+      "range": {
+        "startLine": 348,
+        "startChar": 21,
+        "endLine": 348,
+        "endChar": 22
+      },
+      "revId": "07de61e5475a92a7811525f72074ba31e58e1c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "03670368_f9d4302e",
         "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "07de61e5475a92a7811525f72074ba31e58e1c46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df2fc411_1b062b9f",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-10-02T18:56:44Z",
+      "side": 1,
+      "message": "I believe this is in jurisdiction of a different CL.",
+      "parentUuid": "03670368_f9d4302e",
+      "range": {
+        "startLine": 159,
+        "startChar": 11,
+        "endLine": 159,
+        "endChar": 17
+      },
+      "revId": "07de61e5475a92a7811525f72074ba31e58e1c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
