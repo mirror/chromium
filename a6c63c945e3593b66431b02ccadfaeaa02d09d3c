@@ -16,6 +16,24 @@
       "revId": "a6c63c945e3593b66431b02ccadfaeaa02d09d3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6febc6c_87db890b",
+        "filename": "chrome/browser/ui/views/location_bar/location_icon_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-10-02T16:17:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d510838_26931ed4",
+      "revId": "a6c63c945e3593b66431b02ccadfaeaa02d09d3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
