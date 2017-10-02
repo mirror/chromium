@@ -16,6 +16,24 @@
       "revId": "6bc740dd02635152df7ae4d72f6c10f1f62a4a51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3491fab_d257f5b9",
+        "filename": "content/browser/indexed_db/indexed_db_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-02T18:06:50Z",
+      "side": 0,
+      "message": "The intent of `exit(0)` here is to exit the process immediately with no stack unwinding/cleanup, simulating a crash. Specifically, the script is busily writing to the database but database code doesn\u0027t get a chance to flush/close files, delete file locks, etc.\n\nThe script file in this case is keeping a transaction busy, writing new data and not letting the transaction commit. With the IDB implementation as it is now, since we terminate the process it never tries to commit, it\u0027ll pass. Basically, this is a regression test for an old bug that would never quite manifest the same way now so the test doesn\u0027t need to be exactly the same.\n\nSo... this change is fine, but we may want to change the name from \"Crash\" to \"Shutdown\". Or just leave a comment in the code, e.g.\n\n// Previously this test would abruptly terminate the browser process\n// to ensure that the version update was not partially committed,\n// which was possible in the very early implementation (circa 2011).\n// This test no longer abruptly terminates the process, but the\n// commit scheme has changed so it\u0027s not plausible any more anyway.\n// TODO(jsbell): Delete or rename the test.",
+      "parentUuid": "1270abb0_e729dc45",
+      "revId": "6bc740dd02635152df7ae4d72f6c10f1f62a4a51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
