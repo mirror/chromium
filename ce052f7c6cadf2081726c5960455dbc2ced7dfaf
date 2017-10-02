@@ -22,6 +22,30 @@
       "revId": "ce052f7c6cadf2081726c5960455dbc2ced7dfaf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a34d5b5_28feb025",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webstorage/storage_enumerate.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-10-02T18:02:42Z",
+      "side": 1,
+      "message": "Done in patch v4. I can\u0027t use a for-of loop because the Storage IDL interface is not iterable (in the sense that it doesn\u0027t have an @@iterator symbol).",
+      "parentUuid": "bab3119c_71ca2813",
+      "range": {
+        "startLine": 28,
+        "startChar": 18,
+        "endLine": 28,
+        "endChar": 39
+      },
+      "revId": "ce052f7c6cadf2081726c5960455dbc2ced7dfaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
