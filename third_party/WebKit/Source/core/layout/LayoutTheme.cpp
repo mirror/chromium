@@ -439,7 +439,7 @@ bool LayoutTheme::ControlStateChanged(LayoutObject& o,
   if (state == kPressedControlState && !IsEnabled(o))
     return false;
 
-  o.SetShouldDoFullPaintInvalidationIncludingNonCompositingDescendants();
+  o.SetSubtreeShouldDoFullPaintInvalidation();
   return true;
 }
 

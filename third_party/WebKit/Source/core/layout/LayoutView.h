@@ -228,11 +228,6 @@ class CORE_EXPORT LayoutView final : public LayoutBlockFlow {
   LayoutRect VisualOverflowRect() const override;
   LayoutRect LocalVisualRectIgnoringVisibility() const override;
 
-  // Invalidates paint for the entire view, including composited descendants,
-  // but not including child frames.
-  // It is very likely you do not want to call this method.
-  void SetShouldDoFullPaintInvalidationForViewAndAllDescendants();
-
   void SetShouldDoFullPaintInvalidationOnResizeIfNeeded(bool width_changed,
                                                         bool height_changed);
 

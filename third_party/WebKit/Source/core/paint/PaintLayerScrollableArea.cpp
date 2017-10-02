@@ -560,7 +560,7 @@ void PaintLayerScrollableArea::InvalidatePaintForScrollOffsetChange(
   }
 
   if (requires_paint_invalidation)
-    Box().SetShouldDoFullPaintInvalidationIncludingNonCompositingDescendants();
+    Box().SetSubtreeShouldDoFullPaintInvalidation();
 }
 
 IntSize PaintLayerScrollableArea::ScrollOffsetInt() const {

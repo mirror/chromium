@@ -465,29 +465,11 @@ void LayoutView::PaintBoxDecorationBackground(const PaintInfo& paint_info,
   ViewPainter(*this).PaintBoxDecorationBackground(paint_info);
 }
 
-static void SetShouldDoFullPaintInvalidationForViewAndAllDescendantsInternal(
-    LayoutObject* object) {
-  object->SetShouldDoFullPaintInvalidation();
-  for (LayoutObject* child = object->SlowFirstChild(); child;
-       child = child->NextSibling()) {
-    SetShouldDoFullPaintInvalidationForViewAndAllDescendantsInternal(child);
-  }
-}
-
-void LayoutView::SetShouldDoFullPaintInvalidationForViewAndAllDescendants() {
-  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled())
-    SetShouldDoFullPaintInvalidationIncludingNonCompositingDescendants();
-  else
-    SetShouldDoFullPaintInvalidationForViewAndAllDescendantsInternal(this);
-}
-
 void LayoutView::InvalidatePaintForViewAndCompositedLayers() {
-  SetShouldDoFullPaintInvalidationIncludingNonCompositingDescendants();
+  SetSubtreeShouldDoFullPaintInvalidation();
 
-  // The only way we know how to hit these ASSERTS below this point is via the
-  // Chromium OS login screen.
+  // We need to access the current compositing data.
   DisableCompositingQueryAsserts disabler;
-
   if (Compositor()->InCompositingMode())
     Compositor()->FullyInvalidatePaint();
 }

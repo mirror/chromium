@@ -1384,7 +1384,12 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   // rect is in the object's coordinate space.
   void InvalidatePaintRectangle(const LayoutRect&);
 
-  void SetShouldDoFullPaintInvalidationIncludingNonCompositingDescendants();
+  // Sets all descendants (including descendant views) should do full paint
+  // invalidation. For SPv1, paint invalidation stops at paint invalidation
+  // containers.
+  void SetSubtreeShouldDoFullPaintInvalidation() {
+    SetShouldDoFullPaintInvalidation(PaintInvalidationReason::kSubtree);
+  }
 
   // Returns the rect that should have paint invalidated whenever this object
   // changes. The rect is in the view's coordinate space. This method deals with

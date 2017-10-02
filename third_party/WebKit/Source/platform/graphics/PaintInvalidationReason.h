@@ -59,6 +59,12 @@ inline bool IsImmediateFullPaintInvalidationReason(
          reason != PaintInvalidationReason::kDelayedFull;
 }
 
+inline bool PaintInvalidationReasonAppliesToSubtree(
+    PaintInvalidationReason reason) {
+  return reason == PaintInvalidationReason::kSubtree ||
+         reason == PaintInvalidationReason::kSVGResource;
+}
+
 PLATFORM_EXPORT std::ostream& operator<<(std::ostream&,
                                          PaintInvalidationReason);
 
