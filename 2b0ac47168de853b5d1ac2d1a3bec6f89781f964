@@ -16,6 +16,24 @@
       "revId": "2b0ac47168de853b5d1ac2d1a3bec6f89781f964",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af814b85_9924d689",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_view_ios.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-10-02T16:10:00Z",
+      "side": 0,
+      "message": "It moved in -[WebToolbarController browserStateDestroyed], because this is the only place where the location bar is destroyed, and omnibox is never destroyed separately.",
+      "parentUuid": "95acabdb_7fab1d7f",
+      "revId": "2b0ac47168de853b5d1ac2d1a3bec6f89781f964",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
