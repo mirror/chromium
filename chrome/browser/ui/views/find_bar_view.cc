@@ -122,7 +122,6 @@ FindBarView::FindBarView(FindBarHost* host)
   AddChildView(find_text_);
 
   find_previous_button_->set_id(VIEW_ID_FIND_IN_PAGE_PREVIOUS_BUTTON);
-  find_previous_button_->SetFocusForPlatform();
   find_previous_button_->SetTooltipText(
       l10n_util::GetStringUTF16(IDS_FIND_IN_PAGE_PREVIOUS_TOOLTIP));
   find_previous_button_->SetAccessibleName(
@@ -130,7 +129,6 @@ FindBarView::FindBarView(FindBarHost* host)
   AddChildView(find_previous_button_);
 
   find_next_button_->set_id(VIEW_ID_FIND_IN_PAGE_NEXT_BUTTON);
-  find_next_button_->SetFocusForPlatform();
   find_next_button_->SetTooltipText(
       l10n_util::GetStringUTF16(IDS_FIND_IN_PAGE_NEXT_TOOLTIP));
   find_next_button_->SetAccessibleName(
@@ -138,7 +136,6 @@ FindBarView::FindBarView(FindBarHost* host)
   AddChildView(find_next_button_);
 
   close_button_->set_id(VIEW_ID_FIND_IN_PAGE_CLOSE_BUTTON);
-  close_button_->SetFocusForPlatform();
   close_button_->SetTooltipText(
       l10n_util::GetStringUTF16(IDS_FIND_IN_PAGE_CLOSE_TOOLTIP));
   close_button_->SetAccessibleName(
