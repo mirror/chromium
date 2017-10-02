@@ -70,7 +70,9 @@ class TriggeredProfileResetter : public KeyedService {
   Profile* profile_;
 
   bool has_reset_trigger_ = false;
+#if DCHECK_IS_ON()
   bool activate_called_ = false;
+#endif  // DCHECK_IS_ON()
 
   base::string16 tool_name_;
 
