@@ -16,6 +16,24 @@
       "revId": "8efacca0a5299a9ceb0d8c106987096348099bf1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4f4325a_948996c3",
+        "filename": "third_party/WebKit/Source/core/loader/IdlenessDetector.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-10-02T22:20:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88dff16f_db47878d",
+      "revId": "8efacca0a5299a9ceb0d8c106987096348099bf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
