@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ea8e53f_dcd3e7c7",
+        "filename": "ash/public/interfaces/new_window.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-02T23:30:17Z",
+      "side": 1,
+      "message": "This is super confusing to me. NewWindowController inherits from  mojom::NewWindowController and mojom::NewWindowClient. The latter already declares ShowKeyboardOverlay, so this will inherit the interface from both, but the C++ class will implement it once?\n\n+jamescook@",
+      "revId": "f61d5e85771924832153974cc2c0932230f69b1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
