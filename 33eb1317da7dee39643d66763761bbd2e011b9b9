@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17159c8f_88aa0731",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 27251,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2017-10-02T10:43:55Z",
+      "side": 1,
+      "message": "Nit: replace \u0027pressed\u0027 with \u0027activated\u0027\n\nPressed is only valid for mobile. On desktop it\u0027s keyboard activated.",
+      "range": {
+        "startLine": 27251,
+        "startChar": 31,
+        "endLine": 27251,
+        "endChar": 0
+      },
+      "revId": "33eb1317da7dee39643d66763761bbd2e011b9b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
