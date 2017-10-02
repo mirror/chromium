@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13328e7a_b3a2ddfb",
+        "filename": "sandbox/mac/sandbox_logging.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-10-02T20:43:23Z",
+      "side": 1,
+      "message": "Can be const.",
+      "range": {
+        "startLine": 96,
+        "startChar": 59,
+        "endLine": 96,
+        "endChar": 70
+      },
+      "revId": "c23f51488f1b027ad9fa8cbbab16353e70c4bbd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
