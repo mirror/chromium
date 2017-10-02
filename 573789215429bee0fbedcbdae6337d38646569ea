@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d060a606_ac6a7987",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-10-02T14:12:15Z",
+      "side": 1,
+      "message": "s/privacy_preserving_response/privacyPreservingResponse/",
+      "range": {
+        "startLine": 719,
+        "startChar": 9,
+        "endLine": 719,
+        "endChar": 36
+      },
+      "revId": "573789215429bee0fbedcbdae6337d38646569ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa3e244c_20384328",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-10-02T14:12:15Z",
+      "side": 1,
+      "message": "q: Shouldn\u0027t we also check to see if the url-based payment methods are non-empty in the second operands? similar to:\nhttps://cs.chromium.org/chromium/src/ios/chrome/browser/ui/payments/payment_request_manager.mm?l\u003d606",
+      "revId": "573789215429bee0fbedcbdae6337d38646569ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
