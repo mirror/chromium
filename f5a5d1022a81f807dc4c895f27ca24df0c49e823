@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c8255a8_64183d2e",
+        "filename": "components/previews/core/previews_io_data.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-02T22:36:52Z",
+      "side": 1,
+      "message": "can this be private?",
+      "range": {
+        "startLine": 55,
+        "startChar": 7,
+        "endLine": 55,
+        "endChar": 27
+      },
+      "revId": "f5a5d1022a81f807dc4c895f27ca24df0c49e823",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "904839cf_6e19a502",
+        "filename": "components/previews/core/previews_log.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-02T22:36:52Z",
+      "side": 1,
+      "message": "Call GetPreviewNavigationDescription(..) directly to avoid temp. copies.",
+      "range": {
+        "startLine": 65,
+        "startChar": 42,
+        "endLine": 65,
+        "endChar": 59
+      },
+      "revId": "f5a5d1022a81f807dc4c895f27ca24df0c49e823",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47273d64_1674b8bd",
+        "filename": "components/previews/core/previews_log.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-02T22:36:52Z",
+      "side": 1,
+      "message": "May be add comments on each of the 4 fields so callers know how to set the values correctly. e.g., |time| is the timestamp when navigation started or when there was an opt-out?",
+      "range": {
+        "startLine": 50,
+        "startChar": 21,
+        "endLine": 50,
+        "endChar": 25
+      },
+      "revId": "f5a5d1022a81f807dc4c895f27ca24df0c49e823",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c21a7b1_5b1afd4f",
+        "filename": "components/previews/core/previews_log.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-02T22:36:52Z",
+      "side": 1,
+      "message": "Make them private.\nAdd private:",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 74,
+        "endChar": 43
+      },
+      "revId": "f5a5d1022a81f807dc4c895f27ca24df0c49e823",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f0b4402_c12ef466",
+        "filename": "components/previews/core/previews_ui_service.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-02T22:36:52Z",
+      "side": 1,
+      "message": "s/t/k/\ntypo",
+      "range": {
+        "startLine": 66,
+        "startChar": 30,
+        "endLine": 66,
+        "endChar": 31
+      },
+      "revId": "f5a5d1022a81f807dc4c895f27ca24df0c49e823",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42e8e58f_007c59db",
+        "filename": "components/previews/core/previews_ui_service_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-02T22:36:52Z",
+      "side": 1,
+      "message": "s/logger_ptr/logger_ptr_/",
+      "range": {
+        "startLine": 104,
+        "startChar": 22,
+        "endLine": 104,
+        "endChar": 32
+      },
+      "revId": "f5a5d1022a81f807dc4c895f27ca24df0c49e823",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
