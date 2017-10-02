@@ -22,6 +22,30 @@
       "revId": "dffdce03f7f1bf869afc3ab49cc1580cd01ad6ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d05aae25_ec763dde",
+        "filename": "chrome/browser/ssl/captive_portal_helper_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-10-02T19:12:00Z",
+      "side": 1,
+      "message": "I accidentally removed items_returned \u003d\u003d 0, it should break in that case. Added back.\n\nRelated: Is there a preferred way to test COM APIs? All I can come up with involves wrapping everything in interfaces and create fake implementations for the tests.",
+      "parentUuid": "850b363b_207dc496",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 19
+      },
+      "revId": "dffdce03f7f1bf869afc3ab49cc1580cd01ad6ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

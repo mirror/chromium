@@ -238,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "ad8b994b_0c211c5f",
+        "filename": "chrome/browser/ssl/captive_portal_helper_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-10-02T19:12:00Z",
+      "side": 1,
+      "message": "SG, added NLM_CONNECTIVITY_*_SUBNET as well.",
+      "parentUuid": "2575796d_499370c0",
+      "range": {
+        "startLine": 53,
+        "startChar": 6,
+        "endLine": 53,
+        "endChar": 36
+      },
+      "revId": "0fca41203f137f1ce58eebd668cf70e5ff159791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "990f5575_cfcacc24",
         "filename": "chrome/browser/ssl/captive_portal_helper_win.cc",
         "patchSetId": 8
@@ -391,6 +415,30 @@
       "side": 1,
       "message": "Yeah, the documentation seems wrong there and on the meaning of S_FALSE (which looks like a copy/paste from the Skip() method).",
       "parentUuid": "560308f0_225e8685",
+      "range": {
+        "startLine": 90,
+        "startChar": 57,
+        "endLine": 90,
+        "endChar": 71
+      },
+      "revId": "0fca41203f137f1ce58eebd668cf70e5ff159791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fca01ba_10879e70",
+        "filename": "chrome/browser/ssl/captive_portal_helper_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-10-02T19:12:00Z",
+      "side": 1,
+      "message": "Added a comment.",
+      "parentUuid": "65c5e15a_231f5926",
       "range": {
         "startLine": 90,
         "startChar": 57,
