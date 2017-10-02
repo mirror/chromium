@@ -312,7 +312,7 @@ source_set("unit_tests") {
     }
   }
 
-  if (media_use_libvpx && !is_cast_audio_only) {
+  if (media_use_libvpx && !is_chromecast) {
     sources += [ "vpx_video_decoder_unittest.cc" ]
   }
 
