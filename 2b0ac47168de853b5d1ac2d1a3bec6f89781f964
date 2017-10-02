@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95acabdb_7fab1d7f",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_view_ios.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-02T12:07:10Z",
+      "side": 0,
+      "message": "Did this logic move to somewhere else?  Do we take steps to disconnect the popup from the editview when either one is destroyed?",
+      "revId": "2b0ac47168de853b5d1ac2d1a3bec6f89781f964",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

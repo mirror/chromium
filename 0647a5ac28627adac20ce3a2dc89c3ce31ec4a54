@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be8cf63e_7fd0fadd",
+        "filename": "ios/chrome/browser/ui/omnibox/location_bar_controller_impl.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-02T12:07:10Z",
+      "side": 1,
+      "message": "How hard is it to make this an argument to CreatePopupView() instead?",
+      "revId": "0647a5ac28627adac20ce3a2dc89c3ce31ec4a54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12450fc7_3d487dd0",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_view_ios.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-02T12:07:10Z",
+      "side": 1,
+      "message": "I think I got rid of this protocol.",
+      "revId": "0647a5ac28627adac20ce3a2dc89c3ce31ec4a54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7751f036_ef848f07",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_view_ios.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-02T12:07:10Z",
+      "side": 1,
+      "message": "Here and elsewhere: should these be conditionals or DCHECKs?",
+      "revId": "0647a5ac28627adac20ce3a2dc89c3ce31ec4a54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85bce8e3_db10b0fc",
+        "filename": "ios/clean/chrome/browser/ui/omnibox/omnibox_popup_coordinator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-02T12:07:10Z",
+      "side": 1,
+      "message": "Drop this file for now, if it isn\u0027t used anywhere?",
+      "revId": "0647a5ac28627adac20ce3a2dc89c3ce31ec4a54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
