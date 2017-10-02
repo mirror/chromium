@@ -882,7 +882,12 @@ IN_PROC_BROWSER_TEST_P(ECKEncryptedMediaTest, StorageIdTest) {
                        kUnitTestSuccess);
 }
 
-IN_PROC_BROWSER_TEST_P(ECKEncryptedMediaTest, MultipleCdmTypes) {
+#if defined(OS_WIN)
+#define MAYBE_MultipleCdmTypes DISABLED_MultipleCdmTypes
+#else
+#define MAYBE_MultipleCdmTypes MultipleCdmTypes
+#endif
+IN_PROC_BROWSER_TEST_P(ECKEncryptedMediaTest, MAYBE_MultipleCdmTypes) {
   if (!IsUsingMojoCdm()) {
     DVLOG(0) << "Skipping test; Mojo CDM specific.";
     return;
