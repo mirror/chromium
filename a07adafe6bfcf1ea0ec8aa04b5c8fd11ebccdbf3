@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "dac82605_cecd2e4e",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-10-02T21:28:48Z",
+      "side": 1,
+      "message": "This is nice! Thanks!",
+      "parentUuid": "bc44ef2f_7fb72147",
+      "range": {
+        "startLine": 238,
+        "startChar": 41,
+        "endLine": 238,
+        "endChar": 42
+      },
+      "revId": "a07adafe6bfcf1ea0ec8aa04b5c8fd11ebccdbf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "85bbe5f5_6daf8f06",
         "filename": "ios/tools/coverage/coverage.py",
         "patchSetId": 1
