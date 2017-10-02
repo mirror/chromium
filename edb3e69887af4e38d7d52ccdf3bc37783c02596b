@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41314d7f_d378a328",
+        "filename": "third_party/WebKit/Source/core/paint/BoxBorderPainter.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-02T20:28:56Z",
+      "side": 1,
+      "message": "We lost a useful comment from the original patch:\n// The stroke is doubled here because the provided path is the\n// outside edge of the border so half the stroke is clipped off.\n// The extra multiplier is so that the clipping mask can antialias\n// the edges to prevent jaggies.\n\nAlso, can you break this into a named variable to make this harder to regress in the future? I\u0027m thinking:\nconst float thickness_multiplier \u003d 2.f * 1.1f;\ngraphics_context.SetStrokeThickness(stroke_thickness * thickness_multiplier);",
+      "revId": "edb3e69887af4e38d7d52ccdf3bc37783c02596b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
