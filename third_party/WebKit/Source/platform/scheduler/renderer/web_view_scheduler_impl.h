@@ -44,6 +44,7 @@ class PLATFORM_EXPORT WebViewSchedulerImpl : public WebViewScheduler {
 
   // WebViewScheduler implementation:
   void SetPageVisible(bool page_visible) override;
+  void OnStoppedInBackground() override;
   std::unique_ptr<WebFrameScheduler> CreateFrameScheduler(
       BlameContext* blame_context) override;
   void EnableVirtualTime() override;

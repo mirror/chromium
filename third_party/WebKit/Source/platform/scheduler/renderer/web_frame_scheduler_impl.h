@@ -46,6 +46,7 @@ class WebFrameSchedulerImpl : public WebFrameScheduler {
   void SetFrameVisible(bool frame_visible) override;
   void SetPageVisible(bool page_visible) override;
   void SetPaused(bool frame_paused) override;
+  void OnStoppedInBackground() override;
   void SetCrossOrigin(bool cross_origin) override;
   RefPtr<WebTaskRunner> LoadingTaskRunner() override;
   RefPtr<WebTaskRunner> LoadingControlTaskRunner() override;
