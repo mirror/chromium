@@ -27,6 +27,7 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import logging
+import os
 import platform
 import re
 import sys
@@ -105,6 +106,13 @@ class User(object):
         return response and response[0] == 'y'
 
     def can_open_url(self):
+        # Probably running inside testing/xvfb.py. Launching a browser to show
+        # test results is pointless--and might get the entire session killed if
+        # dbus is autolaunched, since it seems to send a kill signal to all
+        # killable processes on exit (!!!).
+        if platform.system() == 'Linux' and 'DBUS_SESSION_BUS_ADDRESS' not in os.environ:
+            _log.warning('No running dbus, not showing results...')
+            return False
         try:
             webbrowser.get()
             return True
@@ -114,4 +122,5 @@ class User(object):
     def open_url(self, url):
         if not self.can_open_url():
             _log.warning('Failed to open %s', url)
+            return
         webbrowser.open(url)
