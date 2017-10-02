@@ -34,6 +34,24 @@
       "revId": "ac4c57a3af58ff9b6c50fb87f8cff01e9908a91f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57e1b03e_56d13ac3",
+        "filename": "content/browser/renderer_host/render_widget_host_view_base.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-02T18:15:06Z",
+      "side": 1,
+      "message": "Ok, thanks for confirming.  Hopefully we\u0027ll get both conditions resolved before long.",
+      "parentUuid": "64a33eba_39b5e9d3",
+      "revId": "ac4c57a3af58ff9b6c50fb87f8cff01e9908a91f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
