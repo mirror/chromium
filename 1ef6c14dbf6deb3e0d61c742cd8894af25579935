@@ -16,6 +16,24 @@
       "revId": "1ef6c14dbf6deb3e0d61c742cd8894af25579935",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea5e0187_6810a825",
+        "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1646,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-10-02T20:28:13Z",
+      "side": 1,
+      "message": "We should let the caller know that we can\u0027t fulfill the request. This could happen either when Deregister is called during Register, or when Deregister is called before Register is even called. The first case is a retryable error and the second case is not so we should use different error codes for those cases. However the Android API doesn\u0027t use any error code at all when returning the failure to caller:\nhttps://developer.android.com/reference/android/bluetooth/BluetoothGatt.html#setCharacteristicNotification%28android.bluetooth.BluetoothGattCharacteristic%2C%20boolean%29\n\nSo I am wondering how Android (not Android on ARC++) behaves, and we should mimic that behavior.",
+      "parentUuid": "0d96315a_39d37f66",
+      "revId": "1ef6c14dbf6deb3e0d61c742cd8894af25579935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
