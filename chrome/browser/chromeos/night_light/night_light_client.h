@@ -26,8 +26,11 @@ class URLRequestContextGetter;
 // NightLightController running in ash.
 class NightLightClient : public ash::mojom::NightLightClient {
  public:
-  NightLightClient(net::URLRequestContextGetter* url_context_getter);
+  explicit NightLightClient(net::URLRequestContextGetter* url_context_getter);
   ~NightLightClient() override;
+
+  // Returns whether a NightLightClient has been created.
+  static bool Exists();
 
   // Starts watching changes in the Night Light schedule type in order to begin
   // periodically pushing user's IP-based geoposition to NightLightController as

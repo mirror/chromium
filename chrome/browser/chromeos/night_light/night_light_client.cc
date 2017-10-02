@@ -13,6 +13,8 @@
 
 namespace {
 
+NightLightClient* g_client = nullptr;
+
 // Delay to wait for a response to our geolocation request, if we get a response
 // after which, we will consider the request a failure.
 constexpr base::TimeDelta kGeolocationRequestTimeout =
@@ -35,9 +37,20 @@ NightLightClient::NightLightClient(
           chromeos::SimpleGeolocationProvider::DefaultGeolocationProviderURL()),
       binding_(this),
       backoff_delay_(kMinimumDelayAfterFailure),
-      timer_(base::MakeUnique<base::OneShotTimer>()) {}
+      timer_(base::MakeUnique<base::OneShotTimer>()) {
+  DCHECK(!g_client);
+  g_client = this;
+}
 
-NightLightClient::~NightLightClient() {}
+NightLightClient::~NightLightClient() {
+  DCHECK_EQ(this, g_client);
+  g_client = nullptr;
+}
+
+// static
+bool NightLightClient::Exists() {
+  return !!g_client;
+}
 
 void NightLightClient::Start() {
   if (!night_light_controller_) {
