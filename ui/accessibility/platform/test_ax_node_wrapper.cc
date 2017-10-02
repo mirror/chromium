@@ -211,10 +211,18 @@ bool TestAXNodeWrapper::AccessibilityPerformAction(
   }
 
   if (data.action == ui::AX_ACTION_SET_SELECTION) {
+    AXTreeUpdate update;
+    update.has_tree_data = true;
+    update.tree_data = tree_->data();
+    update.tree_data.sel_anchor_object_id = data.anchor_offset;
+    update.tree_data.sel_focus_object_id = data.focus_offset;
+    tree_->Unserialize(update);
+
     ReplaceIntAttribute(data.anchor_node_id, AX_ATTR_TEXT_SEL_START,
                         data.anchor_offset);
     ReplaceIntAttribute(data.anchor_node_id, AX_ATTR_TEXT_SEL_END,
                         data.focus_offset);
+
     return true;
   }
 

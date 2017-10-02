@@ -193,9 +193,18 @@ class AXPlatformNodeWinTest : public testing::Test {
     content_editable_node.AddBoolAttribute(ui::AX_ATTR_EDITABLE_ROOT, true);
     content_editable_node.SetValue("How now brown cow.");
 
+    AXNodeData child1;
+    child1.id = 2;
+    child1.role = AX_ROLE_STATIC_TEXT;
+    child1.SetName("How now brown cow.");
+
+    content_editable_node.child_ids.push_back(2);
+
     AXTreeUpdate update;
     update.root_id = content_editable_node.id;
     update.nodes.push_back(content_editable_node);
+    update.nodes.push_back(child1);
+
     return update;
   }
 
@@ -1164,11 +1173,7 @@ TEST_F(AXPlatformNodeWinTest, TestIAccessible2TextFieldSetSelection) {
   EXPECT_HRESULT_FAILED(text_field->setSelection(0, 0, 50));
 }
 
-// This test is disabled until UpdateStep2ComputeHypertext is migrated over
-// to AXPlatformNodeWin because |hypertext_| is only initialized
-// on the BrowserAccessibility side.
-TEST_F(AXPlatformNodeWinTest,
-       DISABLED_TestIAccessible2ContentEditableSetSelection) {
+TEST_F(AXPlatformNodeWinTest, TestIAccessible2ContentEditableSetSelection) {
   Init(BuildContentEditable());
 
   ScopedComPtr<IAccessible2> ia2_text_field =
@@ -2626,11 +2631,7 @@ TEST_F(AXPlatformNodeWinTest, TestIAccessibleTextTextFieldAddSelection) {
   EXPECT_EQ(2, end_offset);
 }
 
-// This test is disabled until UpdateStep2ComputeHypertext is migrated over
-// to AXPlatformNodeWin because |hypertext_| is only initialized
-// on the BrowserAccessibility side.
-TEST_F(AXPlatformNodeWinTest,
-       DISABLED_TestIAccessibleTextContentEditableAddSelection) {
+TEST_F(AXPlatformNodeWinTest, TestIAccessibleTextContentEditableAddSelection) {
   Init(BuildContentEditable());
 
   ScopedComPtr<IAccessible2> ia2_text_field =

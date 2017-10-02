@@ -294,8 +294,6 @@ bool AXPlatformNodeBase::IsSimpleTextControl() const {
 bool AXPlatformNodeBase::IsRichTextControl() {
   gfx::NativeViewAccessible parent_accessible = GetParent();
   AXPlatformNodeBase* parent = FromNativeViewAccessible(parent_accessible);
-  if (!parent)
-    return false;
 
   return GetData().HasState(AX_STATE_RICHLY_EDITABLE) &&
          (!parent || !parent->GetData().HasState(AX_STATE_RICHLY_EDITABLE));

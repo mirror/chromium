@@ -626,7 +626,8 @@ base::string16 AXPlatformNodeWin::GetText() {
   if (IsChildOfLeaf())
     return AXPlatformNodeBase::GetText();
 
-  return hypertext_.hypertext;
+  AXHypertext text = ComputeHypertext();
+  return text.hypertext;
 }
 
 //
@@ -3709,6 +3710,7 @@ void AXPlatformNodeWin::RemoveAlertTarget() {
 base::string16 AXPlatformNodeWin::TextForIAccessibleText() {
   if (GetData().role == AX_ROLE_TEXT_FIELD)
     return GetString16Attribute(AX_ATTR_VALUE);
+
   return GetText();
 }
 
