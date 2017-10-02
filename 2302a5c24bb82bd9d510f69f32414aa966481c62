@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74ec370f_0b609647",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-02T18:45:42Z",
+      "side": 1,
+      "message": "Why move this? The comment above seems \u0027far\u0027 away from it now.",
+      "range": {
+        "startLine": 136,
+        "startChar": 2,
+        "endLine": 136,
+        "endChar": 16
+      },
+      "revId": "2302a5c24bb82bd9d510f69f32414aa966481c62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
