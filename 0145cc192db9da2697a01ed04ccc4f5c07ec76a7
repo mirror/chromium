@@ -19,6 +19,41 @@
     },
     {
       "key": {
+        "uuid": "f1c5b2ea_b9c8a2df",
+        "filename": "mojo/public/tools/bindings/mojom.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-02T17:48:54Z",
+      "side": 1,
+      "message": "\u003e It might be nicer if it were possible to use a scope here, so mojom targets could do:\n\nmojom(...) {\n  enable_flags \u003d {\n    is_win \u003d is_win\n    mac_not_ios \u003d is_macosx \u0026\u0026 !is_ios\n  }\n}\n\nThis seems really nice. It would be great if we can support this.\n\n\u003e Alternatively, we could disallow EnableIf from taking a value, under the theory that any mojom file should be using only one EnabledIf unique flag value to disable any needed definitions in the same file. I\u0027m open to alternatives as well.\n\nI imagine that it is convenient sometimes to use multiple values in a file, for example:\nstruct Foo {\n  [EnableIf\u003dis_win]\n  int win_specific_field;\n  [EnableIf\u003dmac_not_ios]\n  bool mac_not_ios_specific_field;\n};\n\nI understand that we could have different Foo defintions in two files, one is used for is_win and the other for mac_not_ios. But it seems easier this way to see the common and platform-specific fields.\n\nWDYT?",
+      "parentUuid": "8de4df93_1ca9d758",
+      "revId": "0145cc192db9da2697a01ed04ccc4f5c07ec76a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1075be55_e7cb9ce2",
+        "filename": "mojo/public/tools/bindings/pylib/mojom/generate/generator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-02T17:48:54Z",
+      "side": 1,
+      "message": "I think we could directly discard interfaces/fields/etc. that are not enabled at the AST construction stage?\n\nThen we don\u0027t see those unwanted things here at all.",
+      "revId": "0145cc192db9da2697a01ed04ccc4f5c07ec76a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aee9ba6d_15b50646",
         "filename": "url/mojo/BUILD.gn",
         "patchSetId": 2
