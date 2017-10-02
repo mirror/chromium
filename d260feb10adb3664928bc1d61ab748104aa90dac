@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "09046bf5_a4e7846a",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-10-02T19:52:35Z",
+      "side": 1,
+      "message": "Still trying to understand the reason.",
+      "parentUuid": "c301a156_e33ee989",
+      "revId": "d260feb10adb3664928bc1d61ab748104aa90dac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b02f087_f5a03755",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
         "patchSetId": 11
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "When reset showSelectionMenu() call comes, there will be a followup SELECTION_HANDLES_MOVED onSelectionEvent() call , we don\u0027t need to invalidate |mSelectionRect| in that case.",
       "parentUuid": "3b02f087_f5a03755",
+      "revId": "d260feb10adb3664928bc1d61ab748104aa90dac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61b9759f_748388f2",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 999,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-10-02T19:52:35Z",
+      "side": 1,
+      "message": "This is probably not necessary, I check android code, they have a similar check inside.",
+      "parentUuid": "d748835b_a667b5ee",
       "revId": "d260feb10adb3664928bc1d61ab748104aa90dac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
