@@ -52,6 +52,24 @@
       "revId": "fa93203f8ec1b2a7122f9c714db637d61d2c9a66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deba4a3c_3457787f",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-02T22:32:03Z",
+      "side": 1,
+      "message": "OK.  Can you add a comment here to the effect that \"This is a temporary workaround to get access to the net::NetLog* from the NetworkService.\"\n\nI assume that this will go away when we refactor our discovery code to use the out-of-process NetworkService.\n\nOur team makes pretty heavy use of sockets (UDP, TCP, SSL) across a variety of protocols.  It would be a good idea for us to take a look at the current plans for NetworkService to see how it fits with our requirements.  Is there a design doc we could get started with?",
+      "parentUuid": "82f5e94e_1abf6310",
+      "revId": "fa93203f8ec1b2a7122f9c714db637d61d2c9a66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
