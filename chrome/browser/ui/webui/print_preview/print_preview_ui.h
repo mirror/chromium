@@ -39,6 +39,10 @@ struct PageSizeMargins;
 class PrintPreviewUI : public ConstrainedWebDialogUI {
  public:
   explicit PrintPreviewUI(content::WebUI* web_ui);
+  // Alternate constructor for tests
+  PrintPreviewUI(content::WebUI* web_ui,
+                 std::unique_ptr<PrintPreviewHandler> handler);
+
   ~PrintPreviewUI() override;
 
   // Gets the print preview |data|. |index| is zero-based, and can be

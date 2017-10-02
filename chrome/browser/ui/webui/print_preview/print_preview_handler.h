@@ -125,15 +125,25 @@ class PrintPreviewHandler
   // Fires the 'manipulate-settings-for-test' WebUI event with |settings|.
   void SendManipulateSettingsForTest(const base::DictionaryValue& settings);
 
+ protected:
+  // Protected so unit tests can override.
+  virtual PrinterHandler* GetPrinterHandler(printing::PrinterType printer_type);
+
+  // Register/unregister from notifications of changes done to the GAIA
+  // cookie.
+  virtual void RegisterForGaiaCookieChanges();
+  virtual void UnregisterForGaiaCookieChanges();
+
+  virtual PrintPreviewUI* print_preview_ui() const;
+
  private:
   friend class PrintPreviewPdfGeneratedBrowserTest;
   FRIEND_TEST_ALL_PREFIXES(PrintPreviewPdfGeneratedBrowserTest,
                            MANUAL_DummyTest);
+  FRIEND_TEST_ALL_PREFIXES(PrintPreviewHandlerTest, InitialSettings);
   class AccessTokenService;
 
   content::WebContents* preview_web_contents() const;
-
-  PrintPreviewUI* print_preview_ui() const;
 
   // Gets the list of printers. First element of |args| is the Javascript
   // callback, second element of |args| is the printer type to fetch.
@@ -282,8 +292,6 @@ class PrintPreviewHandler
       base::DictionaryValue* settings) const;
 #endif
 
-  PrinterHandler* GetPrinterHandler(printing::PrinterType printer_type);
-
   PdfPrinterHandler* GetPdfPrinterHandler();
 
   // Called when printers are detected.
@@ -312,11 +320,6 @@ class PrintPreviewHandler
   void OnPrintResult(const std::string& callback_id,
                      bool success,
                      const base::Value& error);
-
-  // Register/unregister from notifications of changes done to the GAIA
-  // cookie.
-  void RegisterForGaiaCookieChanges();
-  void UnregisterForGaiaCookieChanges();
 
   // A count of how many requests received to regenerate preview data.
   // Initialized to 0 then incremented and emitted to a histogram.
