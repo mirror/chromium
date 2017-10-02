@@ -42,6 +42,8 @@ bool FeatureTracker::IsObserving() {
 }
 
 bool FeatureTracker::ShouldShowPromo() {
+  OnSessionEnded(session_duration_updater_->GetActiveSessionElapsedTime());
+
   return GetTracker()->ShouldTriggerHelpUI(*feature_);
 }
 
@@ -51,8 +53,11 @@ Tracker* FeatureTracker::GetTracker() const {
 
 void FeatureTracker::OnSessionEnded(base::TimeDelta total_session_time) {
   if (HasEnoughSessionTimeElapsed(total_session_time)) {
-    OnSessionTimeMet();
-    RemoveSessionDurationObserver();
+    if (!has_session_time_been_met_) {
+      OnSessionTimeMet();
+      RemoveSessionDurationObserver();
+    }
+    has_session_time_been_met_ = true;
   }
 }
 
