@@ -22,6 +22,30 @@
       "revId": "8bd566fbd3136093254213fc1dd2424db786d421",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1465691_1b74800a",
+        "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000389
+      },
+      "writtenOn": "2017-10-02T20:39:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acfb9821_14b3030e",
+      "range": {
+        "startLine": 94,
+        "startChar": 9,
+        "endLine": 94,
+        "endChar": 13
+      },
+      "revId": "8bd566fbd3136093254213fc1dd2424db786d421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
