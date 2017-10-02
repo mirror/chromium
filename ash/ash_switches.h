@@ -57,9 +57,6 @@ ASH_EXPORT extern const char kSpuriousPowerButtonKeyboardAccel[];
 ASH_EXPORT extern const char kSpuriousPowerButtonLidAngleChange[];
 ASH_EXPORT extern const char kUseIMEService[];
 
-// True if the pointer (cursor) position should be kept inside root windows.
-ASH_EXPORT bool ConstrainPointerToRoot();
-
 }  // namespace switches
 }  // namespace ash
 
