@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "03470d86_5450b757",
+        "filename": "mojo/public/tools/bindings/mojom.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-02T19:20:37Z",
+      "side": 1,
+      "message": "Yeah I agree that it would be nicer, I\u0027m just not sure that there\u0027s a good way to do it: currently, we have to build a list and use if (condition) { ... } to append to it. Which is pretty close, but not quite the same.",
+      "parentUuid": "f1c5b2ea_b9c8a2df",
+      "revId": "0145cc192db9da2697a01ed04ccc4f5c07ec76a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1075be55_e7cb9ce2",
         "filename": "mojo/public/tools/bindings/pylib/mojom/generate/generator.py",
         "patchSetId": 2
@@ -48,6 +66,24 @@
       "writtenOn": "2017-10-02T17:48:54Z",
       "side": 1,
       "message": "I think we could directly discard interfaces/fields/etc. that are not enabled at the AST construction stage?\n\nThen we don\u0027t see those unwanted things here at all.",
+      "revId": "0145cc192db9da2697a01ed04ccc4f5c07ec76a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea84b006_fd1ac11d",
+        "filename": "mojo/public/tools/bindings/pylib/mojom/generate/generator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-02T19:20:37Z",
+      "side": 1,
+      "message": "This was actually somewhat intentional--the idea is that even if someone uses EnableIf inside enum definitions, the enum values themselves should be stable (since they are sometimes used in UMA histograms).\n\nOne alternative is to fold this into AddComputedData, but it\u0027d make things a lot more complicated: it would make enumerator values particularly tricky. Note that even without fixing this TODO, you\u0027ll still end up with a compile error (just a less helpful one).",
+      "parentUuid": "1075be55_e7cb9ce2",
       "revId": "0145cc192db9da2697a01ed04ccc4f5c07ec76a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
