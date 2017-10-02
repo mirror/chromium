@@ -46,6 +46,30 @@
       "revId": "dffdce03f7f1bf869afc3ab49cc1580cd01ad6ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f410b409_3fd4a774",
+        "filename": "chrome/browser/ssl/captive_portal_helper_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-10-02T20:26:35Z",
+      "side": 1,
+      "message": "\u003e I accidentally removed items_returned \u003d\u003d 0, it should break in that case. Added back.\n\nIs Gerrit being weird or is patchset 11 not yet uploaded?\n\n\u003eRelated: Is there a preferred way to test COM APIs? All I can come up with involves wrapping everything in interfaces and create fake implementations for the tests.\n\nI don\u0027t know of a good way of testing COM APIs short of wrapping them up and faking. Given the simplicity of the interface exposed by the NLM and the likely complexity of the underlying implementation, it\u0027s not clear to me whether we\u0027d catch any meaningful ratio of real world problems were we to do that.",
+      "parentUuid": "d05aae25_ec763dde",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 19
+      },
+      "revId": "dffdce03f7f1bf869afc3ab49cc1580cd01ad6ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
