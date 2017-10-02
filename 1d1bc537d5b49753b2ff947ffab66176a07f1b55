@@ -16,6 +16,24 @@
       "revId": "1d1bc537d5b49753b2ff947ffab66176a07f1b55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b312b6a5_ca3b13e8",
+        "filename": "components/payments/content/can_make_payment_query_factory.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-02T20:14:17Z",
+      "side": 1,
+      "message": "The default method implementation returns null, meaning no CanMakePaymentQuery service is being created in incognito mode. This overrides the default method to use the incognito browsing context, meaning a separate instance of CanMakePaymentQuery service is created for incognito mode. It\u0027s confusing, I know. Sorry!",
+      "parentUuid": "68359e6e_953f4408",
+      "revId": "1d1bc537d5b49753b2ff947ffab66176a07f1b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
