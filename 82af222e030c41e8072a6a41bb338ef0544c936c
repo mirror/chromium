@@ -53,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "9770f383_4bb9f6bf",
+        "filename": "ui/message_center/change_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1179631
+      },
+      "writtenOn": "2017-10-02T08:36:48Z",
+      "side": 1,
+      "message": "I think we should be using std::make_unique instead (https://bugs.chromium.org/p/chromium/issues/detail?id\u003d755727)",
+      "revId": "82af222e030c41e8072a6a41bb338ef0544c936c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc877191_f2ca7677",
         "filename": "ui/message_center/change_queue.cc",
         "patchSetId": 1
