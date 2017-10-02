@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "567df39e_8766a3be",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1197,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-02T23:17:14Z",
+      "side": 1,
+      "message": "Sigh.  I knew I didn\u0027t like this cloning behavior.  I just found that we put the view source frame in the main frame\u0027s SiteInstance (with any other state from the NavEntry, like bindings).  I filed https://crbug.com/770946.\n\nNot sure if we want to try to fix that here-- maybe it should be a separate CL.",
+      "revId": "1d666a068c8d4b28fa470de00e9d8d17961cf486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24c4cd35_685c7dec",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1208,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-02T23:17:14Z",
+      "side": 1,
+      "message": "I\u0027m trying to understand why they needed the cloned entry and PageState in the first place.  Maybe it has to do with view source for POST submission pages?  What happens after your change for that case?",
+      "revId": "1d666a068c8d4b28fa470de00e9d8d17961cf486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "856e1502_bbd3e87d",
+        "filename": "content/public/browser/web_contents_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-02T23:17:14Z",
+      "side": 1,
+      "message": "Remove or update comment, if we\u0027re able to proceed.",
+      "revId": "1d666a068c8d4b28fa470de00e9d8d17961cf486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
