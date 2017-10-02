@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "216c5145_91dabc02",
+        "filename": "chrome/common/DEPS",
+        "patchSetId": 22
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-02T21:29:29Z",
+      "side": 1,
+      "message": "nit: let\u0027s make this slightly more specific (include /sandbox), and please consider also adding it to specific_include_rules for the necessary files instead of allowing all of content/common. we should keep the dependencies on SM internals to a bare minimum",
+      "revId": "3462095881238b35e797d65987b6aebaf380efbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
