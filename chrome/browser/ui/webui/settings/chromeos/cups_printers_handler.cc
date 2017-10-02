@@ -237,8 +237,10 @@ std::string GetPrinterQueue(const base::DictionaryValue& printer_dict) {
 }
 
 // Generates a Printer from |printer_dict| where |printer_dict| is a
-// CupsPrinterInfo representation.
-chromeos::Printer DictToPrinter(const base::DictionaryValue& printer_dict) {
+// CupsPrinterInfo representation.  If any of the required fields are missing,
+// returns nullptr.
+std::unique_ptr<chromeos::Printer> DictToPrinter(
+    const base::DictionaryValue& printer_dict) {
   std::string printer_id;
   std::string printer_name;
   std::string printer_description;
@@ -247,14 +249,17 @@ chromeos::Printer DictToPrinter(const base::DictionaryValue& printer_dict) {
   std::string printer_make_and_model;
   std::string printer_address;
   std::string printer_protocol;
-  CHECK(printer_dict.GetString("printerId", &printer_id));
-  CHECK(printer_dict.GetString("printerName", &printer_name));
-  CHECK(printer_dict.GetString("printerDescription", &printer_description));
-  CHECK(printer_dict.GetString("printerManufacturer", &printer_manufacturer));
-  CHECK(printer_dict.GetString("printerModel", &printer_model));
-  CHECK(printer_dict.GetString("printerMakeAndModel", &printer_make_and_model));
-  CHECK(printer_dict.GetString("printerAddress", &printer_address));
-  CHECK(printer_dict.GetString("printerProtocol", &printer_protocol));
+
+  if (!printer_dict.GetString("printerId", &printer_id) ||
+      !printer_dict.GetString("printerName", &printer_name) ||
+      !printer_dict.GetString("printerDescription", &printer_description) ||
+      !printer_dict.GetString("printerManufacturer", &printer_manufacturer) ||
+      !printer_dict.GetString("printerModel", &printer_model) ||
+      !printer_dict.GetString("printerMakeAndModel", &printer_make_and_model) ||
+      !printer_dict.GetString("printerAddress", &printer_address) ||
+      !printer_dict.GetString("printerProtocol", &printer_protocol)) {
+    return nullptr;
+  }
 
   std::string printer_queue = GetPrinterQueue(printer_dict);
 
@@ -264,13 +269,13 @@ chromeos::Printer DictToPrinter(const base::DictionaryValue& printer_dict) {
     printer_uri += "/" + printer_queue;
   }
 
-  Printer printer(printer_id);
-  printer.set_display_name(printer_name);
-  printer.set_description(printer_description);
-  printer.set_manufacturer(printer_manufacturer);
-  printer.set_model(printer_model);
-  printer.set_make_and_model(printer_make_and_model);
-  printer.set_uri(printer_uri);
+  auto printer = base::MakeUnique<chromeos::Printer>(printer_id);
+  printer->set_display_name(printer_name);
+  printer->set_description(printer_description);
+  printer->set_manufacturer(printer_manufacturer);
+  printer->set_model(printer_model);
+  printer->set_make_and_model(printer_make_and_model);
+  printer->set_uri(printer_uri);
 
   return printer;
 }
