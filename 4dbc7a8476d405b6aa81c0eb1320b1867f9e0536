@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c639bca_f6ff642e",
+        "filename": "components/exo/wm_helper_ash.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-02T15:02:37Z",
+      "side": 1,
+      "message": "looks like there is no flag in exo, and here are options I could think of:\n1) use local definition like this.\n2) create switch file in exo.\n3) define one in different place and import.\n4) Define a method to override default device scale factor, and control from either ash/ or chrome/browsr/\n\nMy take is 4), but want to hear your opinion first. Please let me know.",
+      "range": {
+        "startLine": 121,
+        "startChar": 13,
+        "endLine": 121,
+        "endChar": 36
+      },
+      "revId": "4dbc7a8476d405b6aa81c0eb1320b1867f9e0536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
