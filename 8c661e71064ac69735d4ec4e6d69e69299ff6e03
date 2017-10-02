@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a91df41_d46e10d7",
+        "filename": "chrome/browser/extensions/extension_function_test_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-02T17:34:54Z",
+      "side": 0,
+      "message": "Ah this is is the right one, lgtm.",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 48
+      },
+      "revId": "8c661e71064ac69735d4ec4e6d69e69299ff6e03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
