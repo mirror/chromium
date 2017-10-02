@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "f8da14d9_dbbeb484",
+        "filename": "base/task_scheduler/scheduler_worker_pool.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-02T18:19:31Z",
+      "side": 1,
+      "message": "I thought we could use private instead of protected as virtual destruction is implicit (doesn\u0027t require explicit access to destructor, calling delete on Foo* is what demands access to ~Foo() and even subclasses shouldn\u0027t explicitly call this destructor so even protected is over exposing).",
+      "parentUuid": "495af072_fa1ec86e",
+      "revId": "cb6cc5a359149ca604995e0b3ae0df72f83b9594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2bd1bbc3_63b9cead",
         "filename": "base/task_scheduler/scheduler_worker_unittest.cc",
         "patchSetId": 23
@@ -160,6 +178,24 @@
       "side": 1,
       "message": "Let\u0027s say that the maximum number of background tasks that can run concurrently is 1.\n\nTHREAD_1: Post task TASK_A1 in SEQUENCE_A. WillScheduleSequence allows SEQUENCE_A to be scheduled.\nTHREAD_1: Post task TASK_B1 in SEQUENCE_B. WillScheduleSequence preempts SEQUENCE_B.\nTHREAD_1: Post task TASK_A2 in SEQUENCE_A.\nTHREAD_2: Run TASK_A1.\n\nHere, you want RunNextTask to preempt SEQUENCE_A and schedule SEQUENCE_B so that the next task that runs is TASK_B1.\n\nYou can also imagine this scenario, where a sequence that posts to itself starves other sequences without this code:\n\nTHREAD_1: Post task TASK_A1 in SEQUENCE_A. WillScheduleSequence allows SEQUENCE_A to be scheduled.\nTHREAD_1: Post task TASK_B1 in SEQUENCE_B. WillScheduleSequence preempts SEQUENCE_B.\nTHREAD_2: Run TASK_A1.\n          TASK_A1 posts TASK_A2 in SEQUENCE_B.",
       "parentUuid": "f629809b_ec2e32d0",
+      "revId": "cb6cc5a359149ca604995e0b3ae0df72f83b9594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "707b3433_57c1ef35",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-02T18:19:31Z",
+      "side": 1,
+      "message": "But isn\u0027t RunNextTask() called when we already decided this was the right task to run? Shouldn\u0027t these issues already be prevented by not calling RunNextTask() with those sequences? Or maybe RunNextTask() isn\u0027t doing what I think it does (run the task on top of handed sequence per GetWork\u0027s decision). If that\u0027s what it does than I don\u0027t see why it needs to second guess a decision just taken in its assignment.",
+      "parentUuid": "83302a92_5b48e4c7",
       "revId": "cb6cc5a359149ca604995e0b3ae0df72f83b9594",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
