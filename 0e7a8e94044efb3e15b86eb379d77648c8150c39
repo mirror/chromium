@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1ee0c2a_b6e69586",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-02T04:46:58Z",
+      "side": 0,
+      "message": "Looks like the above code is not the only call site of this, should we keep this DCHECK?",
+      "revId": "0e7a8e94044efb3e15b86eb379d77648c8150c39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

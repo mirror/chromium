@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2dac8700_801027ed",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptSourceCode.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-02T04:46:58Z",
+      "side": 1,
+      "message": "nit: explicit here too? (not from your change though)",
+      "revId": "092f42cf377232a7cb04c8a25ad69eca7dd111fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8a64418_e1a6fb38",
+        "filename": "third_party/WebKit/Source/core/exported/WebScriptSource.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-02T04:46:58Z",
+      "side": 1,
+      "message": "nit: the style\u0027s not too consistent across code base, but two popular patterns I often see are\n\"\" /* nonce */ or /*nonce\u003d*/\"\"",
+      "revId": "092f42cf377232a7cb04c8a25ad69eca7dd111fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb67364b_0784b2ff",
+        "filename": "third_party/WebKit/Source/core/loader/WorkletScriptLoader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-02T04:46:58Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "092f42cf377232a7cb04c8a25ad69eca7dd111fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
