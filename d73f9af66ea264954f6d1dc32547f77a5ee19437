@@ -22,6 +22,30 @@
       "revId": "d73f9af66ea264954f6d1dc32547f77a5ee19437",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5cac283_735b90dd",
+        "filename": "chrome/browser/ui/tab_contents/core_tab_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-02T18:01:41Z",
+      "side": 1,
+      "message": "Good catch - not sure how I could have missed it during the previous self-review... :-(\n\nI\u0027ve opened https://crbug.com/770758 to track this issue.",
+      "parentUuid": "2db2431f_007dc4ce",
+      "range": {
+        "startLine": 242,
+        "startChar": 13,
+        "endLine": 242,
+        "endChar": 60
+      },
+      "revId": "d73f9af66ea264954f6d1dc32547f77a5ee19437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
