@@ -13,6 +13,7 @@
 #import "ios/third_party/material_components_ios/src/components/ShadowElevations/src/MaterialShadowElevations.h"
 #import "ios/third_party/material_components_ios/src/components/ShadowLayer/src/MaterialShadowLayer.h"
 #import "remoting/ios/app/host_collection_header_view.h"
+#import "remoting/ios/app/view_utils.h"
 
 #include "remoting/base/string_resources.h"
 #include "ui/base/l10n/l10n_util.h"

@@ -207,9 +207,11 @@ ConnectionType GetConnectionType() {
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
 
-  // Just in case the view controller misses the host list state event before
-  // the listener is registered.
-  [self refreshContent];
+  _appBar.headerViewController.headerView
+
+      // Just in case the view controller misses the host list state event
+      // before the listener is registered.
+      [self refreshContent];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
