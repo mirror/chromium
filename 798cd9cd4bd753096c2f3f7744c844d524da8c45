@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "557ce9bb_e4d17d4c",
+        "filename": "content/browser/service_worker/service_worker_registration_handle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-02T06:24:29Z",
+      "side": 1,
+      "message": "I feel it\u0027s a bit strange because host:client relationship gets unbalanced.\n\nHmm, IIUC, info-\u003ehost_ptr_info is also discarded at SWDispatcher::GetOrAdoptRegistration if the same |handle_id| has already existed?\nhttps://cs.chromium.org/chromium/src/content/child/service_worker/service_worker_dispatcher.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d266\n\nIf so, we might not need to set other members than |handle_id| at second time or later.\n\n// Feel free to correct me if something wrong! :)",
+      "revId": "798cd9cd4bd753096c2f3f7744c844d524da8c45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "129b7ff9_9a20ffcb",
         "filename": "content/browser/service_worker/service_worker_registration_handle.h",
         "patchSetId": 3
