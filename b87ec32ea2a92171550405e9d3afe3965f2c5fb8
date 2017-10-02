@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4e83aec_321ad2ae",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-10-02T21:04:04Z",
+      "side": 1,
+      "message": "When |path| is \u0027base/example.cc\u0027 and |source| is \u0027.\u0027, they should match, however, the original code doesn\u0027t.",
+      "revId": "b87ec32ea2a92171550405e9d3afe3965f2c5fb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
