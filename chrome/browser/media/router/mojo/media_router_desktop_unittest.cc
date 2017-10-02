@@ -30,8 +30,9 @@ namespace media_router {
 
 namespace {
 
-const char kSource[] = "source1";
 const char kOrigin[] = "http://origin/";
+const char kRouteId[] = "routeId";
+const char kSource[] = "source1";
 
 class NullMessageObserver : public RouteMessageObserver {
  public:
@@ -106,8 +107,10 @@ TEST_F(MediaRouterDesktopTest, SyncStateToMediaRouteProvider) {
   std::unique_ptr<MockMediaSinksObserver> sinks_observer;
   std::unique_ptr<MockMediaRoutesObserver> routes_observer;
   std::unique_ptr<NullMessageObserver> messages_observer;
+  ProvideTestRoute();
 
   router()->OnSinkAvailabilityUpdated(
+      mojom::MediaRouteProvider::Id::EXTENSION,
       mojom::MediaRouter::SinkAvailability::PER_SOURCE);
   EXPECT_CALL(mock_media_route_provider_,
               StartObservingMediaSinks(media_source.id()));
@@ -121,9 +124,8 @@ TEST_F(MediaRouterDesktopTest, SyncStateToMediaRouteProvider) {
       base::MakeUnique<MockMediaRoutesObserver>(router(), media_source.id());
 
   EXPECT_CALL(mock_media_route_provider_,
-              StartListeningForRouteMessages(media_source.id()));
-  messages_observer =
-      base::MakeUnique<NullMessageObserver>(router(), media_source.id());
+              StartListeningForRouteMessages(kRouteId));
+  messages_observer = base::MakeUnique<NullMessageObserver>(router(), kRouteId);
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(Mock::VerifyAndClearExpectations(&mock_media_route_provider_));
 }

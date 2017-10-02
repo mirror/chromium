@@ -283,6 +283,9 @@ class MediaRouterMojoTest : public ::testing::Test {
 
   void ProcessEventLoop();
 
+  void ProvideTestRoute();
+  void ProvideTestSink();
+
   void ConnectProviderManagerService();
 
   // Tests that calling MediaRouter methods result in calls to corresponding
@@ -314,6 +317,8 @@ class MediaRouterMojoTest : public ::testing::Test {
   TestingProfile profile_;
   MediaRouterMojoImpl* media_router_ = nullptr;
   std::unique_ptr<mojo::Binding<mojom::MediaRouteProvider>> binding_;
+  std::unique_ptr<MediaRoutesObserver> routes_observer_;
+  std::unique_ptr<MockMediaSinksObserver> sinks_observer_;
 
   DISALLOW_COPY_AND_ASSIGN(MediaRouterMojoTest);
 };
