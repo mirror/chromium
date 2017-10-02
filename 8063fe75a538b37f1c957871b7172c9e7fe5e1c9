@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b38b6e45_ae611791",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_view_scheduler_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-02T08:17:24Z",
+      "side": 1,
+      "message": "nit: no braces for single-line body for consistency",
+      "revId": "8063fe75a538b37f1c957871b7172c9e7fe5e1c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
