@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "366b970e_5a56d885",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-10-02T19:29:48Z",
+      "side": 1,
+      "message": "I added the call to EditingState::Abort() but I don\u0027t know if it actually does anything. The existing markup still gets removed even if we call Abort() here (I am not sure why). What should our behavior here be? Our options are:\n\n1. Remove the selected markup and end up not being able to insert the replacement character\n2. Don\u0027t change the selected markup at all\n\nand neither of these is ideal.",
+      "revId": "30f87d9f6ceec58d8d728bf2cf1982333dc75539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
