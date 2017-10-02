@@ -37,6 +37,8 @@ public class ScrollToLoadListener extends RecyclerView.OnScrollListener {
 
         if (mAdapter.getItemCount() == 0) return;  // Adapter hasn't been populated yet.
 
+        if (true) return;
+
         boolean itemVisible = mLayoutManager.findLastVisibleItemPosition()
                 > mAdapter.getItemCount() - RELOAD_DISTANCE;
 
