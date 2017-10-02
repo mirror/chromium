@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21668d8e_4f17dceb",
+        "filename": "media/gpu/generic_v4l2_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-02T00:56:27Z",
+      "side": 1,
+      "message": "VPLOGF",
+      "revId": "7c986eb72c45a61a08b2e26c5e6ea6abdeba12b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0e25219_0921ce6e",
+        "filename": "media/gpu/generic_v4l2_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-02T00:56:27Z",
+      "side": 1,
+      "message": "VPLOGF",
+      "revId": "7c986eb72c45a61a08b2e26c5e6ea6abdeba12b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13f0d32d_00367e6c",
+        "filename": "media/gpu/generic_v4l2_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-02T00:56:27Z",
+      "side": 1,
+      "message": "VPLOGF",
+      "revId": "7c986eb72c45a61a08b2e26c5e6ea6abdeba12b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84d9aa86_0c346c93",
+        "filename": "media/gpu/generic_v4l2_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-02T00:56:27Z",
+      "side": 1,
+      "message": "Since CreateEGLImage is DVLOGF, should this be DVLOGF as well?",
+      "revId": "7c986eb72c45a61a08b2e26c5e6ea6abdeba12b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "597ea41b_a53194d1",
+        "filename": "media/gpu/generic_v4l2_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-02T00:56:27Z",
+      "side": 1,
+      "message": "Open() is VLOGF(2), should this also be VLOGF(2)?",
+      "revId": "7c986eb72c45a61a08b2e26c5e6ea6abdeba12b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f0fa1ce_68c2bca7",
+        "filename": "media/gpu/tegra_v4l2_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-02T00:56:27Z",
+      "side": 1,
+      "message": "Should we have the same level for Set and Clear?",
+      "revId": "7c986eb72c45a61a08b2e26c5e6ea6abdeba12b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1105f218_fe1a30ae",
+        "filename": "media/gpu/tegra_v4l2_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-02T00:56:27Z",
+      "side": 1,
+      "message": "I\u0027d keep this as DVLOG, this is not a platform error, but I think would be printed out when a type is just not supported on a platform.",
+      "revId": "7c986eb72c45a61a08b2e26c5e6ea6abdeba12b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc02591c_29a9aee8",
+        "filename": "media/gpu/tegra_v4l2_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-02T00:56:27Z",
+      "side": 1,
+      "message": "This is a VLOGF(2) in generic device... I think it would be good to have corresponding calls in this file and generic device match in level/verbosity.",
+      "revId": "7c986eb72c45a61a08b2e26c5e6ea6abdeba12b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4dd3c26_3b4dcb0c",
+        "filename": "media/gpu/v4l2_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-02T00:56:27Z",
+      "side": 1,
+      "message": "Does this happen in expected situations as well, i.e. if no V4L2 are available on a board? I think perhaps we should try this patch on an x86 board with no V4L2 devices to see if we didn\u0027t get any error logs that may be expected?",
+      "revId": "7c986eb72c45a61a08b2e26c5e6ea6abdeba12b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0043875d_de2a0ce5",
+        "filename": "media/gpu/v4l2_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-02T00:56:27Z",
+      "side": 1,
+      "message": "Should these be LOG(FATAL) as well?",
+      "revId": "7c986eb72c45a61a08b2e26c5e6ea6abdeba12b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
