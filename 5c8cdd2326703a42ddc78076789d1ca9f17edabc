@@ -16,6 +16,24 @@
       "revId": "5c8cdd2326703a42ddc78076789d1ca9f17edabc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f20f074_950353d2",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-10-02T15:34:27Z",
+      "side": 1,
+      "message": "DOne.\n\nI\u0027ve re-worded the comment, and renamed the function to try and make this clearer. Let me know if it\u0027s ok.",
+      "parentUuid": "622cc8c7_ef66f7c9",
+      "revId": "5c8cdd2326703a42ddc78076789d1ca9f17edabc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
