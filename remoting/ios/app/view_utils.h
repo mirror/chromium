@@ -16,6 +16,10 @@ UIViewController* TopPresentingVC();
 // guide for older OS versions that exactly matches the anchors of the view.
 UILayoutGuide* SafeAreaLayoutGuideForView(UIView* view);
 
+// Posts an accessibility announcement asynchronously so that it doesn't
+// interrupt with the current announcing speech.
+void PostAsyncAccessibilityNotification(NSString* announcement);
+
 // Sets the a11y label of the UIBarButtonItem according to the image it holds.
 void SetAccessibilityInfoFromImage(UIBarButtonItem* button);
 
