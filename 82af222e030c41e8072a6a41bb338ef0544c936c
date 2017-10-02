@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "289a2f26_5828b72b",
+        "filename": "ui/message_center/change_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1179631
+      },
+      "writtenOn": "2017-10-02T08:01:56Z",
+      "side": 1,
+      "message": "Maybe \u0027previous_id\u0027 is a better name for this? I had to read this comment before I knew that it was the ID before the change.",
+      "revId": "82af222e030c41e8072a6a41bb338ef0544c936c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ec69375_fe9fa2f0",
+        "filename": "ui/message_center/change_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1179631
+      },
+      "writtenOn": "2017-10-02T08:01:56Z",
+      "side": 1,
+      "message": "Calling ApplyChangeInternal can all the message center, which can re-call this function right? Could you put some more comments about why this method is re-entrant, and where the re-entering can come from, to make it harder to accidentally make this function non-reentrant later?",
+      "revId": "82af222e030c41e8072a6a41bb338ef0544c936c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "effff39a_d0829ef7",
+        "filename": "ui/message_center/change_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1179631
+      },
+      "writtenOn": "2017-10-02T08:01:56Z",
+      "side": 1,
+      "message": "This makes this method O(N^2) although I don\u0027t think it matters that much.",
+      "revId": "82af222e030c41e8072a6a41bb338ef0544c936c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc877191_f2ca7677",
+        "filename": "ui/message_center/change_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1179631
+      },
+      "writtenOn": "2017-10-02T08:01:56Z",
+      "side": 1,
+      "message": "Might be worth renaming this to previous_change or existing_change? - I found myself forgetting this was an existing change while reading this code.",
+      "revId": "82af222e030c41e8072a6a41bb338ef0544c936c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1f3271f_0f292e7e",
+        "filename": "ui/message_center/change_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1179631
+      },
+      "writtenOn": "2017-10-02T08:01:56Z",
+      "side": 1,
+      "message": "Why can\u0027t you just do ReplaceNotification like the previous case?",
+      "revId": "82af222e030c41e8072a6a41bb338ef0544c936c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2512d3e_ca6da6cb",
+        "filename": "ui/message_center/change_queue.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1179631
+      },
+      "writtenOn": "2017-10-02T08:01:56Z",
+      "side": 1,
+      "message": "Might be worth explaining why this exists here?",
+      "revId": "82af222e030c41e8072a6a41bb338ef0544c936c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7be6978_1ca939a3",
+        "filename": "ui/message_center/change_queue.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1179631
+      },
+      "writtenOn": "2017-10-02T08:01:56Z",
+      "side": 1,
+      "message": "This function doesn\u0027t seem like it returns a change?",
+      "revId": "82af222e030c41e8072a6a41bb338ef0544c936c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcda1d53_e7c396cb",
+        "filename": "ui/message_center/message_center_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1179631
+      },
+      "writtenOn": "2017-10-02T08:01:56Z",
+      "side": 1,
+      "message": "Maybe |notification_change_queue_| ?",
+      "revId": "82af222e030c41e8072a6a41bb338ef0544c936c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ef00ed4_8653529c",
+        "filename": "ui/message_center/message_center_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1179631
+      },
+      "writtenOn": "2017-10-02T08:01:56Z",
+      "side": 1,
+      "message": "Can |notification_queue_| ever be null?",
+      "revId": "82af222e030c41e8072a6a41bb338ef0544c936c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "020fa354_93dfe61c",
+        "filename": "ui/message_center/message_center_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1179631
+      },
+      "writtenOn": "2017-10-02T08:01:56Z",
+      "side": 1,
+      "message": "What happens in this case: Suppose we call AddNotification, with nothing in the change queue. Then, an observer tries to set the notification icon of the notification that was just added, but nothing is in the change queue so |queued_notification| isn\u0027t found and is null. We then fall through to L429 where we take ScopedNotificationsIterationLock again. When its scope is over |iterating_| is set back to false, and back up the stack the original AddNotification observer loop\u0027s lock is now invalidated. Not sure if I\u0027ve misunderstood something, but it seems like this could happen?",
+      "revId": "82af222e030c41e8072a6a41bb338ef0544c936c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d76533d_9c09a89f",
+        "filename": "ui/message_center/message_center_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1179631
+      },
+      "writtenOn": "2017-10-02T08:01:56Z",
+      "side": 1,
+      "message": "General comment on these locks - these don\u0027t appear to be recursive - if I try to lock these twice, when the second lock is released it seems like it will incorrectly set iterating_ to false. For all of these lock statements, is it guaranteed the function that it is in won\u0027t be re-entered?",
+      "revId": "82af222e030c41e8072a6a41bb338ef0544c936c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
