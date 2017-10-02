@@ -60,6 +60,7 @@ class PointerEventFactoryTest : public ::testing::Test {
       bool is_primary,
       WebInputEvent::Modifiers = WebInputEvent::kNoModifiers);
   void CreateAndCheckPointerTransitionEvent(PointerEvent*, const AtomicString&);
+  void CheckScrollCapablePointers(const std::set<int>& expected);
 
   PointerEventFactory pointer_event_factory_;
   unsigned expected_mouse_id_;
@@ -136,6 +137,15 @@ void PointerEventFactoryTest::CreateAndCheckPointerTransitionEvent(
   EXPECT_EQ(clone_pointer_event->type(), type);
 }
 
+void PointerEventFactoryTest::CheckScrollCapablePointers(
+    const std::set<int>& expected_pointers) {
+  Vector<int> pointers =
+      pointer_event_factory_.GetPointerIdsOfScrollCapablePointers();
+  EXPECT_EQ(pointers.size(), expected_pointers.size());
+  for (int p : pointers) {
+    EXPECT_TRUE(expected_pointers.find(p) != expected_pointers.end());
+  }
+}
 PointerEvent* PointerEventFactoryTest::CreateAndCheckTouchEvent(
     WebPointerProperties::PointerType pointer_type,
     int raw_id,
@@ -285,7 +295,11 @@ TEST_F(PointerEventFactoryTest, TouchPointerPrimaryRemovedWhileAnotherIsThere) {
   CreateAndCheckTouchEvent(WebPointerProperties::PointerType::kTouch, 1,
                            mapped_id_start_ + 1, false);
 
+  CheckScrollCapablePointers({mapped_id_start_, mapped_id_start_ + 1});
+
   pointer_event_factory_.Remove(pointer_event1->pointerId());
+
+  CheckScrollCapablePointers({mapped_id_start_ + 1});
 
   CreateAndCheckTouchEvent(WebPointerProperties::PointerType::kTouch, 2,
                            mapped_id_start_ + 2, false);
@@ -415,12 +429,19 @@ TEST_F(PointerEventFactoryTest, MouseAndTouchAndPen) {
   CreateAndCheckTouchEvent(WebPointerProperties::PointerType::kPen, 47213,
                            mapped_id_start_ + 4, false);
 
+  CheckScrollCapablePointers({mapped_id_start_, mapped_id_start_ + 1,
+                              mapped_id_start_ + 2, mapped_id_start_ + 3,
+                              mapped_id_start_ + 4});
+
   pointer_event_factory_.Remove(pointer_event1->pointerId());
   pointer_event_factory_.Remove(pointer_event2->pointerId());
   pointer_event_factory_.Remove(pointer_event3->pointerId());
 
   CreateAndCheckTouchEvent(WebPointerProperties::PointerType::kTouch, 100,
                            mapped_id_start_ + 5, true);
+
+  CheckScrollCapablePointers(
+      {mapped_id_start_ + 1, mapped_id_start_ + 4, mapped_id_start_ + 5});
 
   pointer_event_factory_.Clear();
 
@@ -430,6 +451,8 @@ TEST_F(PointerEventFactoryTest, MouseAndTouchAndPen) {
                            mapped_id_start_, true);
   CreateAndCheckTouchEvent(WebPointerProperties::PointerType::kPen, 0,
                            mapped_id_start_ + 1, true);
+
+  CheckScrollCapablePointers({mapped_id_start_, mapped_id_start_ + 1});
 }
 
 TEST_F(PointerEventFactoryTest, PenAsTouchAndMouseEvent) {
@@ -443,17 +466,31 @@ TEST_F(PointerEventFactoryTest, PenAsTouchAndMouseEvent) {
                            mapped_id_start_, true);
   CreateAndCheckMouseEvent(WebPointerProperties::PointerType::kPen, 1,
                            mapped_id_start_ + 1, false);
+
+  CheckScrollCapablePointers({});
+
   CreateAndCheckTouchEvent(WebPointerProperties::PointerType::kPen, 0,
                            mapped_id_start_, true);
+
+  CheckScrollCapablePointers({mapped_id_start_});
+
   CreateAndCheckTouchEvent(WebPointerProperties::PointerType::kPen, 1,
                            mapped_id_start_ + 1, false);
+
+  CheckScrollCapablePointers({mapped_id_start_, mapped_id_start_ + 1});
 
   pointer_event_factory_.Remove(pointer_event1->pointerId());
 
   CreateAndCheckTouchEvent(WebPointerProperties::PointerType::kPen, 0,
                            mapped_id_start_ + 3, false);
+
+  CheckScrollCapablePointers({mapped_id_start_ + 1, mapped_id_start_ + 3});
+
   CreateAndCheckMouseEvent(WebPointerProperties::PointerType::kPen, 0,
                            mapped_id_start_ + 3, false);
+
+  CheckScrollCapablePointers({mapped_id_start_ + 1});
+
   CreateAndCheckTouchCancel(WebPointerProperties::PointerType::kPen, 0,
                             mapped_id_start_ + 3, false);
 
