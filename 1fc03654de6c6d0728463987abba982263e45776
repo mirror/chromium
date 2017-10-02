@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b53dbd59_289f55c6",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/cards/AllDismissedItemTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-02T18:08:44Z",
+      "side": 1,
+      "message": "Remove these?",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 0
+      },
+      "revId": "1fc03654de6c6d0728463987abba982263e45776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a42cd436_83c98c16",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/cards/AllDismissedItemTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-02T18:08:44Z",
+      "side": 1,
+      "message": "If you declare this as type TestRule, it will automatically be suppressed (FindBugs sadly doesn\u0027t let you do that for all subtypes of a certain type), and in this case I don\u0027t think you need to access the member through its full type.",
+      "range": {
+        "startLine": 50,
+        "startChar": 11,
+        "endLine": 50,
+        "endChar": 31
+      },
+      "revId": "1fc03654de6c6d0728463987abba982263e45776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a561013_6a916d5f",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/cards/AllDismissedItemTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-02T18:08:44Z",
+      "side": 1,
+      "message": "private?",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 15
+      },
+      "revId": "1fc03654de6c6d0728463987abba982263e45776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e37a5bad_b3901139",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/cards/AllDismissedItemTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-02T18:08:44Z",
+      "side": 1,
+      "message": "Nit: s/called/used/",
+      "range": {
+        "startLine": 69,
+        "startChar": 58,
+        "endLine": 69,
+        "endChar": 64
+      },
+      "revId": "1fc03654de6c6d0728463987abba982263e45776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3056ce03_4fc3d455",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/cards/AllDismissedItemTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-02T18:08:44Z",
+      "side": 1,
+      "message": "Tiny nit: if you declare `SectionList sectionList \u003d null;` you have a self-describing parameter, so you only need to explain _why_ it\u0027s null. The best documentation is code! :-D",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 52
+      },
+      "revId": "1fc03654de6c6d0728463987abba982263e45776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
