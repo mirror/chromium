@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a62749b6_111d54ee",
+        "filename": "third_party/WebKit/Source/core/html/HTMLImageFallbackHelper.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-02T21:27:01Z",
+      "side": 1,
+      "message": "This seems verbose. Would it be valid to rewrite this as:\nif (!alt_is_set \u0026\u0026 !src_is_set)\n  return true;\nreturn alt_is_empty;",
+      "revId": "059ad451543210e99c64e2c186a025d85e1a4e97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
