@@ -68,6 +68,7 @@
 #include "base/numerics/safe_math.h"
 #include "base/single_thread_task_runner.h"
 #include "base/synchronization/waitable_event.h"
+#include "base/threading/thread_restrictions.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/timer/timer.h"
 #include "net/base/load_flags.h"
@@ -82,6 +83,13 @@
 // TODO(eroman): Add NetLog integration.
 
 namespace net {
+
+// CertNetFetcherImplScopedAllowBaseSyncPrimitives is a friend and derived class
+// of base::ScopedAllowBaseSyncPrimitives which can be instantiated by the
+// RequestCore defined in this file. RequestCore can't itself be a friend of
+// base::ScopedAllowBaseSyncPrimitives because it is in the anonymous namespace.
+class CertNetFetcherImplScopedAllowBaseSyncPrimitives
+    : public base::ScopedAllowBaseSyncPrimitives {};
 
 namespace {
 
@@ -239,7 +247,12 @@ class RequestCore : public base::RefCountedThreadSafe<RequestCore> {
   void WaitForResult(Error* error, std::vector<uint8_t>* bytes) {
     DCHECK(!task_runner_->RunsTasksInCurrentSequence());
 
-    completion_event_.Wait();
+    {
+      // This is called from a CertVerifyProc::Verify task.
+      CertNetFetcherImplScopedAllowBaseSyncPrimitives
+          scoped_allow_base_sync_primitives;
+      completion_event_.Wait();
+    }
     *bytes = std::move(bytes_);
     *error = error_;
 
