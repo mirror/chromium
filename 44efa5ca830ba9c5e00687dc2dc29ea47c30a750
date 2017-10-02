@@ -22,6 +22,30 @@
       "revId": "44efa5ca830ba9c5e00687dc2dc29ea47c30a750",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae49c218_aa1b355d",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-02T19:34:43Z",
+      "side": 1,
+      "message": "I checked and it does compile, probably because SelectionPopupControllerTest doesn\u0027t actually use SelectionClientManager, just a plain SelectionClient.  The only thing I needed to change in SelectionPopupControllerTest is the path to SelectionClient since it was moved.",
+      "parentUuid": "d300d1ab_b59a582d",
+      "range": {
+        "startLine": 199,
+        "startChar": 38,
+        "endLine": 199,
+        "endChar": 60
+      },
+      "revId": "44efa5ca830ba9c5e00687dc2dc29ea47c30a750",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
