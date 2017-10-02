@@ -21,12 +21,14 @@
 #include "build/build_config.h"
 #include "components/viz/common/quads/compositor_frame.h"
 #include "content/public/browser/browser_message_filter.h"
+#include "content/public/browser/navigation_throttle.h"
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
 #include "content/public/browser/render_process_host_observer.h"
 #include "content/public/browser/web_contents_delegate.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/page_type.h"
+#include "content/public/test/test_navigation_throttle.h"
 #include "ipc/message_filter.h"
 #include "storage/common/fileapi/file_system_types.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
@@ -805,13 +807,8 @@ class TestNavigationManager : public WebContentsObserver {
   void DidStartNavigation(NavigationHandle* handle) override;
   void DidFinishNavigation(NavigationHandle* handle) override;
 
-  // Called when the NavigationThrottle pauses the navigation in
-  // WillStartRequest.
-  void OnWillStartRequest();
-
-  // Called when the NavigationThrottle pauses the navigation in
-  // WillProcessResponse.
-  void OnWillProcessResponse();
+  // Called when the a method is called on the NavigationThrottle.
+  void TestThrottleMethodCalled(const TestNavigationThrottle::Status& status);
 
   // Waits for the desired state. Returns false if the desired state cannot be
   // reached (eg the navigation finishes before reaching this state).
@@ -845,6 +842,7 @@ class NavigationHandleCommitObserver : public content::WebContentsObserver {
 
  private:
   void DidFinishNavigation(content::NavigationHandle* handle) override;
+  void TestThrottleCallback(const TestNavigationThrottle::Status& status);
 
   const GURL url_;
   bool has_committed_;
