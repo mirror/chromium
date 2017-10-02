@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "6b3ec14a_75f0e6cb",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-10-02T20:57:37Z",
+      "side": 1,
+      "message": "\u003c\u003c1. This signal will conflict with other OnThrottlingStateChanged signal issued in other places in WebFrameScheduler.\nCan you elaborate on this? Not sure I see the conflict yet.\n\n\u003c\u003c 2. We do not issue a signal for when we resume a tab.\nBy \"resume a tab\" do you mean when it comes back in foreground? Or some other definition?\nIf former - then there is a signal and I just re-tested it fires on foreground.\nWe always trigger WebViewSchedulerImpl::SetPageVisible when backgrounding / foregrounding the tab, which in turn calls WebFrameSchedulerImpl::SetPageVisible which invokes OnThrottlingStateChanged on observers.\n\nBTW I\u0027m happy to make the suggested change if it makes the code nicer, but I want to understand the reasoning :)",
+      "parentUuid": "ba53412f_aa1c0b38",
+      "range": {
+        "startLine": 392,
+        "startChar": 28,
+        "endLine": 392,
+        "endChar": 49
+      },
+      "revId": "8063fe75a538b37f1c957871b7172c9e7fe5e1c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b38b6e45_ae611791",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_view_scheduler_impl.cc",
         "patchSetId": 6
@@ -62,6 +86,24 @@
       "revId": "8063fe75a538b37f1c957871b7172c9e7fe5e1c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffdc6bfc_d9a4f658",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_view_scheduler_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-10-02T20:57:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b38b6e45_ae611791",
+      "revId": "8063fe75a538b37f1c957871b7172c9e7fe5e1c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
