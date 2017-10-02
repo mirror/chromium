@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4bf6f4dc_1f1ae3c0",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-02T19:18:05Z",
+      "side": 1,
+      "message": "Since this method is private can it be removed as there won\u0027t be any callers of it?",
+      "revId": "cdf267b2113f4a92774b45be7ce4ce7d01eb26be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "586367a1_8208b61e",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-02T19:18:05Z",
+      "side": 1,
+      "message": "Can\u0027t you just call event-\u003ePositionInWidget()  and not build the gfx::PointF? the operator on WebFloatPoint should take care of it magically.",
+      "range": {
+        "startLine": 625,
+        "startChar": 17,
+        "endLine": 625,
+        "endChar": 23
+      },
+      "revId": "cdf267b2113f4a92774b45be7ce4ce7d01eb26be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db960601_33ac37a2",
+        "filename": "content/browser/web_contents/web_contents_view_aura.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-02T19:18:05Z",
+      "side": 1,
+      "message": "I presume these will be converted to a float later.. If so add a TODO.",
+      "revId": "cdf267b2113f4a92774b45be7ce4ce7d01eb26be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
