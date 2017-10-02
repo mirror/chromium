@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a7b20e1_430fab98",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-10-02T12:55:42Z",
+      "side": 1,
+      "message": "Are you checking for this under the assumption that later frames have already been filled? That\u0027s not entirely true; a later frame might be independent, in which case you\u0027ll still need to do this.\n\nRegardless, rows_decoded takes care of this for you. If the frame has already been covered by a prior frame, rows_decoded will be set to the height.\n\nIt just occurred to me that you may be checking for (!index) because this should never happen for frames beyond the first, since we only attempt to decode them once they\u0027re complete. In that case, we\u0027ll call SetFailed down below (line 297), but we\u0027ll still need to zero any remaining lines (again, if the frame was independent).\n\nAnother factor is that this is only necessary after the first time the frame is incomplete. If we only receive a couple more rows on the second try, we don\u0027t need to zero the rest (which were zeroed the first time). This would have more of an impact on a slow network; although we\u0027ve saved zeroing the whole buffer on the first try, we may end up being slower because we zero a smaller portion each time we get a row.",
+      "range": {
+        "startLine": 290,
+        "startChar": 6,
+        "endLine": 290,
+        "endChar": 19
+      },
+      "revId": "3c021912cf0db5bf771463f4f11a7920910a70e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fff4293_cb77309f",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-10-02T12:55:42Z",
+      "side": 1,
+      "message": "nit: It seems a little unnecessary to call this virtual method, when the size is already stored in image_info. That said, note that line 232 already calls (Size().Width(), Size().Height()).",
+      "range": {
+        "startLine": 291,
+        "startChar": 8,
+        "endLine": 291,
+        "endChar": 36
+      },
+      "revId": "3c021912cf0db5bf771463f4f11a7920910a70e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dcf6fe4_944e6199",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-10-02T12:55:42Z",
+      "side": 1,
+      "message": "This case should look pretty similar to the prior one. How about\n\n    case SkCodec::kIncompleteInput:\n    case SkCodec::kErrorInInput: {\n      IntSize image_size \u003d Size();\n      frame.ZeroFillFrameRect(IntRect(0, rows_decoded, image_size.Width(),\n                                      image_size.Height() - rows_decoded));\n      frame.SetPixelsChanged(true);\n      if (incremental_decode_result \u003d\u003d SkCodec::kErrorInInput) {\n        SetFailed();\n        break;\n      }\n      if (FrameIsReceivedAtIndex(index) || IsAllDataReceived()) {\n        SetFailed();\n      }\n      break;\n    }\n\nYou could even combine those if statements into one:\n\n      if (incremental_decode_result \u003d\u003d SkCodec::kErrorInInput\n          || FrameIsReceivedAtIndex(index) || IsAllDataReceived()) {\n        SetFailed();\n      }\n      break;",
+      "range": {
+        "startLine": 300,
+        "startChar": 4,
+        "endLine": 300,
+        "endChar": 31
+      },
+      "revId": "3c021912cf0db5bf771463f4f11a7920910a70e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2866f93f_446ce676",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-10-02T12:55:42Z",
+      "side": 1,
+      "message": "In the spirit of code sharing, this could go right after your call to incrementalDecode, and save you a line in each case.",
+      "range": {
+        "startLine": 304,
+        "startChar": 6,
+        "endLine": 304,
+        "endChar": 35
+      },
+      "revId": "3c021912cf0db5bf771463f4f11a7920910a70e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
