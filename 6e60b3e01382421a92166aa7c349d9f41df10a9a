@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d2ccad06_4a1d634e",
+        "filename": "third_party/WebKit/Source/bindings/modules/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-02T02:32:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05202830_9b8c9124",
+      "range": {
+        "startLine": 206,
+        "startChar": 29,
+        "endLine": 206,
+        "endChar": 52
+      },
+      "revId": "6e60b3e01382421a92166aa7c349d9f41df10a9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92ca0654_0437bed2",
         "filename": "third_party/WebKit/Source/bindings/scripts/scripts.gni",
         "patchSetId": 9
@@ -39,6 +63,24 @@
       "revId": "6e60b3e01382421a92166aa7c349d9f41df10a9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe5a5845_7279f589",
+        "filename": "third_party/WebKit/Source/bindings/scripts/scripts.gni",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-02T02:32:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92ca0654_0437bed2",
+      "revId": "6e60b3e01382421a92166aa7c349d9f41df10a9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "36e31520_ec9fda44",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/argument.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-02T02:32:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d39a7ff_41ad24c8",
+      "revId": "6e60b3e01382421a92166aa7c349d9f41df10a9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "302f73af_6d0d39ef",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/constant.py",
         "patchSetId": 9
@@ -70,6 +130,24 @@
       "writtenOn": "2017-09-29T05:28:24Z",
       "side": 1,
       "message": "Raising exceptions would be reasonable in this case because this class will be a public class and there are no guarantee that clients of this class won\u0027t pass None.\n\nOr just removing assert would be okay.",
+      "revId": "6e60b3e01382421a92166aa7c349d9f41df10a9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a55f180_d6c1649b",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/constant.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-02T02:32:43Z",
+      "side": 1,
+      "message": "I use assertion in web_idl_builder to check the structure of IdlNodes.\nI removed validations to check arguments without no default values are not None.\nI use ValueError when some arguments violates Web IDL spec.",
+      "parentUuid": "302f73af_6d0d39ef",
       "revId": "6e60b3e01382421a92166aa7c349d9f41df10a9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
