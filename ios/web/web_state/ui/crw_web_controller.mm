@@ -4189,6 +4189,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
     previewingViewControllerForElement:(WKPreviewElementInfo*)elementInfo
                         defaultActions:
                             (NSArray<id<WKPreviewActionItem>>*)previewActions {
+  [_contextMenuController peekActionPerformed];
   return self.webStateImpl->GetPreviewingViewController(
       net::GURLWithNSURL(elementInfo.linkURL));
 }

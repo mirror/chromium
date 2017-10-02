@@ -36,6 +36,8 @@
 
 - (instancetype)init NS_UNAVAILABLE;
 
+- (void)peekActionPerformed;
+
 @end
 
 #endif  // IOS_WEB_WEB_STATE_UI_CRW_CONTEXT_MENU_CONTROLLER_H_
