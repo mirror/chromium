@@ -1,0 +1,3 @@
+[71709:72247:1002/134754.485893:601343199986:ERROR:socket_posix.cc(156)] bind() returned an error, errno=98: Address already in use (98)
+[71709:72247:1002/134754.486062:601343200153:ERROR:devtools_http_handler.cc(249)] Cannot start http server for devtools. Stop devtools.
+Xlib:  extension "RANDR" missing on display ":100".

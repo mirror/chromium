@@ -1,0 +1,3 @@
+CONSOLE ERROR: line 12: Fetch API cannot load SearchTestRunner.js. URL scheme "file" is not supported.
+Unable to execute test script because of error: TypeError: Failed to fetch
+
