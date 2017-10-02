@@ -42,6 +42,40 @@
     },
     {
       "key": {
+        "uuid": "4c1ed0e8_d683ce73",
+        "filename": "chrome/browser/download/download_target_determiner.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-10-02T22:11:21Z",
+      "side": 1,
+      "message": "so if virtual_path_ is empty and there is no forced path, is the virtual_path_ generation going to use download_prefs_ below?",
+      "revId": "73243b228c371d018c498ba11221faa3e9839fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01b3c4a0_6379be3a",
+        "filename": "chrome/browser/download/download_target_determiner.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-10-02T22:11:21Z",
+      "side": 1,
+      "message": "transient download with forced_path is already handled in the else statement below. So no need to add it here.",
+      "revId": "73243b228c371d018c498ba11221faa3e9839fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42a5d346_ceed320b",
         "filename": "chrome/browser/download/download_target_determiner.cc",
         "patchSetId": 5
