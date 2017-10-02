@@ -181,7 +181,8 @@ void ArcImeService::OnWindowDestroying(aura::Window* window) {
 void ArcImeService::OnWindowRemovingFromRootWindow(aura::Window* window,
                                                    aura::Window* new_root) {
   DCHECK_EQ(window, focused_arc_window_);
-  OnWindowFocused(nullptr, focused_arc_window_);
+  if (new_root == nullptr)
+    OnWindowFocused(nullptr, focused_arc_window_);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
