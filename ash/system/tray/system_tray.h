@@ -69,7 +69,7 @@ class ASH_EXPORT SystemTray : public TrayBackgroundView {
   std::vector<SystemTrayItem*> GetTrayItems() const;
 
   // Shows the default view of all items.
-  void ShowDefaultView(BubbleCreationType creation_type);
+  void ShowDefaultView(BubbleCreationType creation_type, bool show_by_click);
 
   // Shows default view that ingnores outside clicks and activation loss.
   void ShowPersistentDefaultView();
@@ -78,7 +78,6 @@ class ASH_EXPORT SystemTray : public TrayBackgroundView {
   // non-zero, then the view is automatically closed after the specified time.
   void ShowDetailedView(SystemTrayItem* item,
                         int close_delay_in_seconds,
-                        bool activate,
                         BubbleCreationType creation_type);
 
   // Continue showing the existing detailed view, if any, for |close_delay|
@@ -132,7 +131,7 @@ class ASH_EXPORT SystemTray : public TrayBackgroundView {
   void ClickedOutsideBubble() override;
   bool PerformAction(const ui::Event& event) override;
   void CloseBubble() override;
-  void ShowBubble() override;
+  void ShowBubble(bool show_by_click) override;
   views::TrayBubbleView* GetBubbleView() override;
 
   // views::TrayBubbleView::Delegate:
@@ -168,16 +167,16 @@ class ASH_EXPORT SystemTray : public TrayBackgroundView {
 
   // Constructs or re-constructs |system_bubble_| and populates it with |items|.
   // Specify |change_tray_status| to true if want to change the tray background
-  // status. The bubble will be opened in inactive state. If |can_activate| is
-  // true, the bubble will be activated by one of following means.
+  // status. The bubble will be opened in inactive state. Specify
+  // |show_by_click| to true if |items| are shown by mouse or gesture click.
   // * When alt/alt-tab acclerator is used to start navigation.
   // * When the bubble is opened by accelerator.
   // * When the tray item is set to be focused.
   void ShowItems(const std::vector<SystemTrayItem*>& items,
                  bool details,
-                 bool can_activate,
                  BubbleCreationType creation_type,
-                 bool persistent);
+                 bool persistent,
+                 bool show_by_click);
 
   // Checks the current status of the system tray and updates the web
   // notification tray according to the current status.

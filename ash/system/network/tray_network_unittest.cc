@@ -64,14 +64,13 @@ class TrayNetworkTest : public AshTestBase {
 TEST_F(TrayNetworkTest, Basics) {
   // Open the system tray menu.
   SystemTray* system_tray = GetPrimarySystemTray();
-  system_tray->ShowDefaultView(BUBBLE_CREATE_NEW);
+  system_tray->ShowDefaultView(BUBBLE_CREATE_NEW, false /* show_by_click */);
   RunAllPendingInMessageLoop();
 
   // Show network details.
   TrayNetwork* tray_network = SystemTrayTestApi(system_tray).tray_network();
   const int close_delay_in_seconds = 0;
-  bool activate = true;
-  system_tray->ShowDetailedView(tray_network, close_delay_in_seconds, activate,
+  system_tray->ShowDetailedView(tray_network, close_delay_in_seconds,
                                 BUBBLE_USE_EXISTING);
   RunAllPendingInMessageLoop();
 
