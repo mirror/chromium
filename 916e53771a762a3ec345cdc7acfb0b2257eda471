@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55372c52_568756cb",
+        "filename": "chrome/browser/notifications/notification_template_builder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-02T11:29:20Z",
+      "side": 1,
+      "message": "Since all these now refer to the same page, I\u0027d remove them and only keep the class-level link.",
+      "revId": "916e53771a762a3ec345cdc7acfb0b2257eda471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
