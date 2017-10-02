@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "827a8828_e8413ca7",
+        "filename": "content/browser/service_worker/service_worker_registration_handle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-02T06:09:31Z",
+      "side": 1,
+      "message": "Is this comment describing something surprising? The code seems to make sense without it.",
+      "revId": "798cd9cd4bd753096c2f3f7744c844d524da8c45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "129b7ff9_9a20ffcb",
+        "filename": "content/browser/service_worker/service_worker_registration_handle.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-02T06:09:31Z",
+      "side": 1,
+      "message": "// Mojo connection to the ServiceWorkerRegistrationObject in the renderer, which corresponds to the ServiceWorkerRegistration JavaScript object.",
+      "revId": "798cd9cd4bd753096c2f3f7744c844d524da8c45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5f58797_8708cf78",
+        "filename": "content/child/service_worker/service_worker_dispatcher_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-02T06:09:31Z",
+      "side": 1,
+      "message": "Prefer calling this remote_registration_ for consistency with SWRegistrationHandle (or else renaming the one there to registration_object_)",
+      "revId": "798cd9cd4bd753096c2f3f7744c844d524da8c45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa088fbf_5cf70fbb",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-02T06:09:31Z",
+      "side": 1,
+      "message": "The |request| -\u003e |request|",
+      "revId": "798cd9cd4bd753096c2f3f7744c844d524da8c45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37c2c9b6_214610aa",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-02T06:09:31Z",
+      "side": 1,
+      "message": "renderer process -\u003e the renderer process",
+      "revId": "798cd9cd4bd753096c2f3f7744c844d524da8c45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41dad8bf_0d90d837",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-02T06:09:31Z",
+      "side": 1,
+      "message": "the browser process",
+      "revId": "798cd9cd4bd753096c2f3f7744c844d524da8c45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
