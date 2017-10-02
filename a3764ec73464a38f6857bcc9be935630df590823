@@ -118,6 +118,30 @@
       "revId": "a3764ec73464a38f6857bcc9be935630df590823",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcf90921_562e7943",
+        "filename": "testing/libfuzzer/reproducing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-02T16:43:40Z",
+      "side": 0,
+      "message": "Imagine someone adds a new target which break UBSan build. We notice that, create a revert and add a comment like \"Your fuzz target cannot be built with UBSan config: %LINK_TO_DOCUMENTATION%\"\n\nOtherwise, we\u0027ll have to manually explain build flags in every case.\n\nOne more scenario (less probable though): somebody wants to test their fuzzer with MSan and UBSan, they simply don\u0027t how to build it properly because:\n1) is_msan\u003dtrue is not enough for MSan\n1) is_ubsan is not correct for UBSan",
+      "parentUuid": "75cb940b_a27e70b7",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 31
+      },
+      "revId": "a3764ec73464a38f6857bcc9be935630df590823",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
