@@ -400,8 +400,8 @@ viz::LocalSurfaceId RenderWidgetHostViewBase::GetLocalSurfaceId() const {
 
 viz::FrameSinkId RenderWidgetHostViewBase::FrameSinkIdAtPoint(
     viz::SurfaceHittestDelegate* delegate,
-    const gfx::Point& point,
-    gfx::Point* transformed_point) {
+    const gfx::PointF& point,
+    gfx::PointF* transformed_point) {
   NOTREACHED();
   return viz::FrameSinkId();
 }
@@ -418,17 +418,17 @@ gfx::PointF RenderWidgetHostViewBase::TransformPointToRootCoordSpaceF(
 }
 
 bool RenderWidgetHostViewBase::TransformPointToLocalCoordSpace(
-    const gfx::Point& point,
+    const gfx::PointF& point,
     const viz::SurfaceId& original_surface,
-    gfx::Point* transformed_point) {
+    gfx::PointF* transformed_point) {
   *transformed_point = point;
   return true;
 }
 
 bool RenderWidgetHostViewBase::TransformPointToCoordSpaceForView(
-    const gfx::Point& point,
+    const gfx::PointF& point,
     RenderWidgetHostViewBase* target_view,
-    gfx::Point* transformed_point) {
+    gfx::PointF* transformed_point) {
   NOTREACHED();
   return true;
 }
