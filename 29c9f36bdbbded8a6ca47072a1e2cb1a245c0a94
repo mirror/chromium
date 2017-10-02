@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52aa1b51_291ae933",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchFieldTrial.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-02T20:07:25Z",
+      "side": 1,
+      "message": "This sentence doesn\u0027t quite make sense. Should \"is disabled\" be removed?",
+      "range": {
+        "startLine": 383,
+        "startChar": 71,
+        "endLine": 384,
+        "endChar": 39
+      },
+      "revId": "29c9f36bdbbded8a6ca47072a1e2cb1a245c0a94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79e966b7_dccae0a1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-02T20:07:25Z",
+      "side": 1,
+      "message": "nit: s/handline/handling",
+      "range": {
+        "startLine": 360,
+        "startChar": 61,
+        "endLine": 360,
+        "endChar": 69
+      },
+      "revId": "29c9f36bdbbded8a6ca47072a1e2cb1a245c0a94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c57b9aed_dbdbda47",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-02T20:07:25Z",
+      "side": 1,
+      "message": "nit: Should the method name mention smart select?",
+      "range": {
+        "startLine": 362,
+        "startChar": 16,
+        "endLine": 362,
+        "endChar": 40
+      },
+      "revId": "29c9f36bdbbded8a6ca47072a1e2cb1a245c0a94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c891be4_e511925e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchUma.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-02T20:07:25Z",
+      "side": 1,
+      "message": "Are these being used in the current patch set?",
+      "range": {
+        "startLine": 215,
+        "startChar": 4,
+        "endLine": 217,
+        "endChar": 50
+      },
+      "revId": "29c9f36bdbbded8a6ca47072a1e2cb1a245c0a94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5975f13_5d01b51c",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionClientManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-02T20:07:25Z",
+      "side": 1,
+      "message": "Can we notify ContextualSearchManager that smart select is active exactly once? Whether smart select is enabled or not shouldn\u0027t change during run time.",
+      "range": {
+        "startLine": 205,
+        "startChar": 12,
+        "endLine": 205,
+        "endChar": 44
+      },
+      "revId": "29c9f36bdbbded8a6ca47072a1e2cb1a245c0a94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
