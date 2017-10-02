@@ -16,6 +16,24 @@
       "revId": "fa93203f8ec1b2a7122f9c714db637d61d2c9a66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02d1ba2e_6fe7cf68",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-02T19:14:33Z",
+      "side": 1,
+      "message": "It is dependent on the NetLog, which is part of the URLRequestContext.  Currently NetLog is owned and created by BrowserProcessImpl, but it\u0027s moving into the network service.  So there will be no way to get it on the UI thread.  Eventually it will be moved completely out of process, but for now, there\u0027s an in-process NetworkService object, which lives on the IOThread and creates URLRequestContexts, so we can grab the NetLog from that, for the moment.  Eventually, we\u0027ll have a cross-process socket wrapper which this class will need to be switched to, but that\u0027s still some ways off.",
+      "parentUuid": "aa13bcaf_e6411ad1",
+      "revId": "fa93203f8ec1b2a7122f9c714db637d61d2c9a66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
