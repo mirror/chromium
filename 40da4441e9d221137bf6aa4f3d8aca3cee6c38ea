@@ -16,6 +16,24 @@
       "revId": "40da4441e9d221137bf6aa4f3d8aca3cee6c38ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5208e72_93e78a9b",
+        "filename": "chrome/browser/predictors/loading_stats_collector.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-10-02T17:34:14Z",
+      "side": 1,
+      "message": "Thanks! I guess I tried to build it only in release mode.",
+      "parentUuid": "4c5a56ce_6de7788c",
+      "revId": "40da4441e9d221137bf6aa4f3d8aca3cee6c38ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
