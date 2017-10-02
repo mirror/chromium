@@ -22,6 +22,30 @@
       "revId": "65e81842fdc138c24bdaedc58c943adb819a64c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecb1cc89_4d1cae36",
+        "filename": "chrome/common/search.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-02T15:51:45Z",
+      "side": 1,
+      "message": "The comment is actually still mostly accurate, only that it\u0027s just a single URL now :)\nComments updated, and method renamed to SetNewTabPageURL.",
+      "parentUuid": "b74588ca_27a90adb",
+      "range": {
+        "startLine": 120,
+        "startChar": 2,
+        "endLine": 122,
+        "endChar": 14
+      },
+      "revId": "65e81842fdc138c24bdaedc58c943adb819a64c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
