@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "7e34d58c_5f2302fb",
+        "filename": "content/renderer/sandbox_mac_v2_unittest.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-10-02T18:20:25Z",
+      "side": 1,
+      "message": "Is this needed anymore?",
+      "revId": "de513042c1165f2b08b54d73bcb4fe61787e6c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34bea016_fdc60da0",
         "filename": "services/service_manager/sandbox/mac/BUILD.gn",
         "patchSetId": 17
