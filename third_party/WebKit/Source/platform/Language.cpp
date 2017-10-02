@@ -26,6 +26,7 @@
 #include "platform/Language.h"
 
 #include "platform/text/PlatformLocale.h"
+#include "platform/wtf/Vector.h"
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/Platform.h"
 

@@ -43,9 +43,7 @@
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/HashTableDeletedValueType.h"
 #include "platform/wtf/RefPtr.h"
-#include "platform/wtf/Vector.h"
 #include "platform/wtf/text/CString.h"
-#include "platform/wtf/text/StringImpl.h"
 #include "third_party/skia/include/core/SkRefCnt.h"
 
 #if defined(OS_LINUX) || defined(OS_ANDROID)

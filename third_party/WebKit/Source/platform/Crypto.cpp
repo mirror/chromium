@@ -4,10 +4,11 @@
 
 #include "platform/Crypto.h"
 
+#include <memory>
+#include "platform/wtf/Vector.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebCrypto.h"
 #include "public/platform/WebCryptoAlgorithm.h"
-#include <memory>
 
 namespace blink {
 

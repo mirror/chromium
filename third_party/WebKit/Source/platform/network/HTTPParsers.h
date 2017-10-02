@@ -36,9 +36,6 @@
 #include "platform/network/ParsedContentType.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Forward.h"
-#include "platform/wtf/HashSet.h"
-#include "platform/wtf/Vector.h"
-#include "platform/wtf/text/StringHash.h"
 
 #include <stdint.h>
 #include <memory>

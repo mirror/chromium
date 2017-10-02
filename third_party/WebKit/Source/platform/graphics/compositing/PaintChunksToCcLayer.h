@@ -9,7 +9,7 @@
 #include "cc/paint/display_item_list.h"
 #include "platform/PlatformExport.h"
 #include "platform/geometry/IntRect.h"
-#include "platform/wtf/Vector.h"
+#include "platform/wtf/Forward.h"
 #include "platform/wtf/text/WTFString.h"
 
 namespace cc {

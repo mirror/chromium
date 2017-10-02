@@ -7,7 +7,7 @@
 
 #include <memory>
 #include "platform/image-decoders/ImageDecoder.h"
-#include "platform/wtf/Vector.h"
+#include "platform/wtf/Forward.h"
 
 class SkBitmap;
 

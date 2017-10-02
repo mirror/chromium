@@ -9,6 +9,8 @@
 #include "cc/animation/keyframed_animation_curve.h"
 #include "cc/animation/timing_function.h"
 #include "platform/wtf/PtrUtil.h"
+#include "platform/wtf/RefPtr.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 

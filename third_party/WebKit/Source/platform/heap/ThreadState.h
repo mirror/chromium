@@ -41,9 +41,11 @@
 #include "platform/wtf/Functional.h"
 #include "platform/wtf/HashMap.h"
 #include "platform/wtf/HashSet.h"
+#include "platform/wtf/ListHashSet.h"
 #include "platform/wtf/ThreadSpecific.h"
 #include "platform/wtf/Threading.h"
 #include "platform/wtf/ThreadingPrimitives.h"
+#include "platform/wtf/Vector.h"
 #include "public/platform/WebThread.h"
 
 namespace v8 {

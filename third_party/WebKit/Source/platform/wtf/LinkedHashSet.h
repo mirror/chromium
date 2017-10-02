@@ -24,6 +24,7 @@
 #define WTF_LinkedHashSet_h
 
 #include "platform/wtf/AddressSanitizer.h"
+#include "platform/wtf/Forward.h"
 #include "platform/wtf/HashSet.h"
 #include "platform/wtf/allocator/PartitionAllocator.h"
 
@@ -37,12 +38,6 @@ namespace WTF {
 
 // Unlike ListHashSet, but like most WTF collections, iteration is NOT safe
 // against mutation of the LinkedHashSet.
-
-template <typename Value,
-          typename HashFunctions,
-          typename HashTraits,
-          typename Allocator>
-class LinkedHashSet;
 
 template <typename LinkedHashSet>
 class LinkedHashSetIterator;
@@ -153,9 +148,9 @@ class LinkedHashSetNode : public LinkedHashSetNodeBase {
 };
 
 template <typename ValueArg,
-          typename HashFunctions = typename DefaultHash<ValueArg>::Hash,
-          typename TraitsArg = HashTraits<ValueArg>,
-          typename Allocator = PartitionAllocator>
+          typename HashFunctions,
+          typename TraitsArg,
+          typename Allocator>
 class LinkedHashSet {
   USE_ALLOCATOR(LinkedHashSet, Allocator);
 

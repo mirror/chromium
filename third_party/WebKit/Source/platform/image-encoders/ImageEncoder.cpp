@@ -4,6 +4,8 @@
 
 #include "platform/image-encoders/ImageEncoder.h"
 
+#include "platform/wtf/Vector.h"
+
 namespace blink {
 
 bool ImageEncoder::Encode(Vector<unsigned char>* dst,

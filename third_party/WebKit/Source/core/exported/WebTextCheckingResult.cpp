@@ -31,6 +31,10 @@
 #include "public/web/WebTextCheckingResult.h"
 
 #include "platform/text/TextCheckerClient.h"
+#include "platform/text/TextChecking.h"
+#include "platform/text/TextDecoration.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 

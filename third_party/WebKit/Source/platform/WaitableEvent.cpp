@@ -10,6 +10,7 @@
 #include "platform/heap/ThreadState.h"
 #include "platform/wtf/Optional.h"
 #include "platform/wtf/PtrUtil.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 

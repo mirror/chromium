@@ -32,7 +32,7 @@
 #define ProfilingCanvas_h
 
 #include "platform/graphics/InterceptingCanvas.h"
-#include "platform/wtf/Vector.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 

@@ -14,9 +14,8 @@
 #include <memory>
 #include "platform/PlatformExport.h"
 #include "platform/wtf/Allocator.h"
-#include "platform/wtf/HashSet.h"
+#include "platform/wtf/Forward.h"
 #include "platform/wtf/StringHasher.h"
-#include "platform/wtf/Vector.h"
 #include "public/platform/WebCrypto.h"
 
 namespace blink {
