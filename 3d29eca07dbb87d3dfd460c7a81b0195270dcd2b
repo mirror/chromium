@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "6a812cba_0a0e75a2",
+        "filename": "chrome/common/url_constants.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-02T21:06:33Z",
+      "side": 1,
+      "message": "+1; this isn\u0027t *that* messy, and this is the obvious place for  kChromeUISysInternalsURL.",
+      "parentUuid": "6f1e8d0a_c148b921",
+      "range": {
+        "startLine": 136,
+        "startChar": 0,
+        "endLine": 136,
+        "endChar": 49
+      },
+      "revId": "3d29eca07dbb87d3dfd460c7a81b0195270dcd2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "579b46a4_28c2c901",
         "filename": "chrome/common/url_constants.cc",
         "patchSetId": 10
@@ -59,6 +83,30 @@
       "writtenOn": "2017-09-30T09:28:20Z",
       "side": 1,
       "message": "it\u0027s better to put kChromeUISysInternalsHost definition after this line",
+      "range": {
+        "startLine": 326,
+        "startChar": 0,
+        "endLine": 326,
+        "endChar": 51
+      },
+      "revId": "3d29eca07dbb87d3dfd460c7a81b0195270dcd2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0857fe78_cc5189e8",
+        "filename": "chrome/common/url_constants.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-02T21:06:33Z",
+      "side": 1,
+      "message": "ditto.",
+      "parentUuid": "579b46a4_28c2c901",
       "range": {
         "startLine": 326,
         "startChar": 0,
