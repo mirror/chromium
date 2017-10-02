@@ -164,6 +164,30 @@
       "revId": "812d44a1893dfcdf4e8589c5729f2f76756197ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2988322a_0717ba00",
+        "filename": "components/history/core/browser/top_sites_impl.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-02T20:09:41Z",
+      "side": 1,
+      "message": "Done. I agree the current implementation is a bit confusing. I\u0027ve removed the |delta| param from this method and called timer_Start() directly where the delay is different (i.e., for the first time at startup).",
+      "parentUuid": "eceeccc4_e7655e17",
+      "range": {
+        "startLine": 860,
+        "startChar": 25,
+        "endLine": 860,
+        "endChar": 0
+      },
+      "revId": "812d44a1893dfcdf4e8589c5729f2f76756197ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
