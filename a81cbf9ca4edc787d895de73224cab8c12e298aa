@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "562e25f8_d206e262",
+        "filename": "base/allocator/partition_allocator/address_space_randomization.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-10-02T22:28:33Z",
+      "side": 1,
+      "message": "It\u0027s trivial. Done.",
+      "parentUuid": "04586b4d_f5b78d2e",
+      "range": {
+        "startLine": 14,
+        "startChar": 20,
+        "endLine": 14,
+        "endChar": 31
+      },
+      "revId": "a81cbf9ca4edc787d895de73224cab8c12e298aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3830ceca_b88bbb0b",
         "filename": "base/allocator/partition_allocator/address_space_randomization.h",
         "patchSetId": 14
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-02T20:52:25Z",
       "side": 1,
       "message": "Should this be ULL?  http://en.cppreference.com/w/cpp/language/types#Integer_types Same comment for every 64-bit integer literal...\n\nCan we explain why these values make sense?",
+      "range": {
+        "startLine": 24,
+        "startChar": 60,
+        "endLine": 24,
+        "endChar": 61
+      },
+      "revId": "a81cbf9ca4edc787d895de73224cab8c12e298aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c0b3866_952fcc8a",
+        "filename": "base/allocator/partition_allocator/address_space_randomization.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-10-02T22:28:33Z",
+      "side": 1,
+      "message": "Changed uintptr_t constants to ULL.\n\nI tracked down the source of the magic numbers, and added comments for sanitizer constants.",
+      "parentUuid": "3830ceca_b88bbb0b",
       "range": {
         "startLine": 24,
         "startChar": 60,
