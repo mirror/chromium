@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5765caf_77fe5a4e",
+        "filename": "components/net_log/net_export_file_writer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-02T20:44:39Z",
+      "side": 1,
+      "message": "I had to refactor this test class so we initialize MessageLoop before ChromeNetLog is created otherwise we would crash when TraceNetLogObserver tries to get the current task runner.",
+      "revId": "529cbb20bd268b3868e68a4d7b295ae98d48d64a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e35da81_2ad10d40",
+        "filename": "net/log/trace_net_log_observer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-02T20:44:39Z",
+      "side": 1,
+      "message": "Matt, I need to add a Flush() here because otherwise we would have left unflushed trace events and that would make the next test fail.",
+      "revId": "529cbb20bd268b3868e68a4d7b295ae98d48d64a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
