@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "09940cd9_c8be9f73",
+        "filename": "content/shell/renderer/layout_test/blink_test_runner.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-02T16:25:47Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "c5729559_1b9aecd4",
+      "range": {
+        "startLine": 213,
+        "startChar": 2,
+        "endLine": 213,
+        "endChar": 61
+      },
+      "revId": "c102ad30ab49e77dbfae2289c0a2a9b9ef51ff97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "baae93cd_80f3d213",
         "filename": "third_party/WebKit/LayoutTests/http/tests/media/autoplay/document-user-activation-navigation-click-expected.txt",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ec0696ef_6ab1f8fb",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/autoplay/document-user-activation-navigation-click-expected.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-02T16:25:47Z",
+      "side": 0,
+      "message": "I believe it\u0027s because the test was completing twice: since jsTestIsAsync wasn\u0027t set in the global scope, js-test.js was causing the test to finish on load completion. Then after the actual JS test code ran (courtesy of the async completion due to requesting the back forward list be dumped), it would call finishJSTest() which again prints the successfully parsed + TEST COMPLETE line.",
+      "parentUuid": "baae93cd_80f3d213",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 13
+      },
+      "revId": "c102ad30ab49e77dbfae2289c0a2a9b9ef51ff97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68a197a9_5c47a830",
         "filename": "third_party/WebKit/LayoutTests/http/tests/media/autoplay/document-user-activation-navigation-click.html",
         "patchSetId": 8
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-02T15:59:28Z",
       "side": 0,
       "message": "Just so that I understand - we can remove |window.testRunner| here, because even before this CL this layout tests was not runnable outside of layout tests harness (because the test depends on window.internals and on eventSender).  Is this correct?",
+      "range": {
+        "startLine": 10,
+        "startChar": 2,
+        "endLine": 10,
+        "endChar": 25
+      },
+      "revId": "c102ad30ab49e77dbfae2289c0a2a9b9ef51ff97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cbc59b0d_93451276",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/autoplay/document-user-activation-navigation-click.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-02T16:25:47Z",
+      "side": 0,
+      "message": "Yes--all these things are only present in layout test runner mode.",
+      "parentUuid": "68a197a9_5c47a830",
       "range": {
         "startLine": 10,
         "startChar": 2,

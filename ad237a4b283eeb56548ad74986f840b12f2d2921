@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7f6f50b4_13702243",
+        "filename": "content/public/test/layouttest_support.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-02T16:25:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "446efe13_27a102df",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 17
+      },
+      "revId": "ad237a4b283eeb56548ad74986f840b12f2d2921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "139d2a09_1632c7b4",
         "filename": "content/shell/browser/layout_test/blink_test_controller.cc",
         "patchSetId": 8
@@ -64,6 +88,54 @@
         "startChar": 40,
         "endLine": 101,
         "endChar": 41
+      },
+      "revId": "ad237a4b283eeb56548ad74986f840b12f2d2921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fce13b9_4aa05360",
+        "filename": "content/shell/browser/layout_test/blink_test_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-02T16:25:47Z",
+      "side": 1,
+      "message": "I guess I\u0027m usually biased against doing this, because the std::string is still constructed on every invocation, even if it is just test code. Let me know if you think the alternative is acceptable.",
+      "parentUuid": "276e6f69_54532369",
+      "range": {
+        "startLine": 101,
+        "startChar": 40,
+        "endLine": 101,
+        "endChar": 41
+      },
+      "revId": "ad237a4b283eeb56548ad74986f840b12f2d2921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "052e1bae_527bc4c0",
+        "filename": "content/shell/browser/layout_test/blink_test_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-02T16:25:47Z",
+      "side": 1,
+      "message": "I could, but we\u0027ll just OOM anyway when we try to allocate near max size_t spaces \u003d)",
+      "parentUuid": "139d2a09_1632c7b4",
+      "range": {
+        "startLine": 101,
+        "startChar": 4,
+        "endLine": 101,
+        "endChar": 35
       },
       "revId": "ad237a4b283eeb56548ad74986f840b12f2d2921",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -138,6 +210,30 @@
       "revId": "ad237a4b283eeb56548ad74986f840b12f2d2921",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9adb3747_9f04d465",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/autoplay/resources/test-autoplay.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-02T16:25:47Z",
+      "side": 1,
+      "message": "This is an oversight, I forgot to remove this after I discovered that this doesn\u0027t work well unless it\u0027s in the main frame.\n\n(Which is also weird... but meh.)",
+      "parentUuid": "3c18b73d_4a466b34",
+      "range": {
+        "startLine": 21,
+        "startChar": 4,
+        "endLine": 21,
+        "endChar": 31
+      },
+      "revId": "ad237a4b283eeb56548ad74986f840b12f2d2921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
