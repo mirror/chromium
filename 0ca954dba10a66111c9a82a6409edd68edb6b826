@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e4f8bd55_75e90b7f",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 2116,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-10-02T22:36:50Z",
+      "side": 1,
+      "message": "Changed to not optional",
+      "parentUuid": "ecdcf674_05a50bd7",
+      "revId": "0ca954dba10a66111c9a82a6409edd68edb6b826",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8bfd4df_fc7cd56a",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "0ca954dba10a66111c9a82a6409edd68edb6b826",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "206ac5aa_56a8393f",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 2120,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-10-02T22:36:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8bfd4df_fc7cd56a",
+      "revId": "0ca954dba10a66111c9a82a6409edd68edb6b826",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2ea1ac62_d435a34b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ApplicationPanelSidebar.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1272,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-10-02T22:36:50Z",
+      "side": 1,
+      "message": "Will do in follow up",
+      "parentUuid": "fd6931de_5e90cf9a",
+      "revId": "0ca954dba10a66111c9a82a6409edd68edb6b826",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da70fb78_35239928",
         "filename": "third_party/WebKit/Source/devtools/front_end/resources/IndexedDBViews.js",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "0ca954dba10a66111c9a82a6409edd68edb6b826",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b40cfe4_0f106b83",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/IndexedDBViews.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-10-02T22:36:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da70fb78_35239928",
+      "revId": "0ca954dba10a66111c9a82a6409edd68edb6b826",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "9d719a41_260ccb67",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/IndexedDBViews.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-10-02T22:36:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "151c5eaf_0adffb56",
+      "revId": "0ca954dba10a66111c9a82a6409edd68edb6b826",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a068a5b3_e9ccb825",
         "filename": "third_party/WebKit/Source/devtools/front_end/resources/IndexedDBViews.js",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "0ca954dba10a66111c9a82a6409edd68edb6b826",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "123aa5fc_09f07525",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/IndexedDBViews.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-10-02T22:36:50Z",
+      "side": 1,
+      "message": "This actually is not correct, so removed",
+      "parentUuid": "a068a5b3_e9ccb825",
+      "revId": "0ca954dba10a66111c9a82a6409edd68edb6b826",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "eb34dde7_a15cb03c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/IndexedDBViews.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-10-02T22:36:50Z",
+      "side": 1,
+      "message": "Whoops, removed!",
+      "parentUuid": "f42b4a49_c16dabee",
+      "revId": "0ca954dba10a66111c9a82a6409edd68edb6b826",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f5fcfeb_ba053076",
         "filename": "third_party/WebKit/Source/devtools/front_end/resources/indexedDBViews.css",
         "patchSetId": 4
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "97fe54d6_bcdfe871",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/indexedDBViews.css",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-10-02T22:36:50Z",
+      "side": 1,
+      "message": "Removed!",
+      "parentUuid": "0f5fcfeb_ba053076",
+      "revId": "0ca954dba10a66111c9a82a6409edd68edb6b826",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4ed6877_d951ac18",
         "filename": "third_party/WebKit/Source/modules/indexeddb/InspectorIndexedDBAgent.cpp",
         "patchSetId": 4
@@ -152,6 +296,24 @@
       "revId": "0ca954dba10a66111c9a82a6409edd68edb6b826",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61c5ba1a_e82165ea",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/InspectorIndexedDBAgent.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-10-02T22:36:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4ed6877_d951ac18",
+      "revId": "0ca954dba10a66111c9a82a6409edd68edb6b826",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
