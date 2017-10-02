@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "179accaf_17f26539",
+        "filename": "chrome/browser/ui/webui/constrained_web_dialog_ui_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-02T09:23:14Z",
+      "side": 1,
+      "message": "Don\u0027t you just inherit the default constructor anyway?",
+      "range": {
+        "startLine": 112,
+        "startChar": 58,
+        "endLine": 112,
+        "endChar": 68
+      },
+      "revId": "a5635ee7cd2c81cb9a35a643636ab8c09d2ec5b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a6a2ccb_33a72cf1",
+        "filename": "chrome/browser/ui/webui/constrained_web_dialog_ui_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-02T09:23:14Z",
+      "side": 1,
+      "message": "nullptr",
+      "range": {
+        "startLine": 271,
+        "startChar": 43,
+        "endLine": 271,
+        "endChar": 47
+      },
+      "revId": "a5635ee7cd2c81cb9a35a643636ab8c09d2ec5b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
