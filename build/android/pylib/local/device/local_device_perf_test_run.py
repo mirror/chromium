@@ -134,7 +134,7 @@ class TestShard(object):
     if self._output_dir:
       cmd.append('--output-dir=%s' % self._output_dir)
     if self._test_instance.collect_json_data:
-      cmd.append('--output-format=json')
+      cmd.append('--output-format=histograms')
     return ' '.join(self._ExtendCmd(cmd))
 
   def _ExtendCmd(self, cmd): # pylint: disable=no-self-use
