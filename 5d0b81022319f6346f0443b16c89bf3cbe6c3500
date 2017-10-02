@@ -46,6 +46,63 @@
       "revId": "5d0b81022319f6346f0443b16c89bf3cbe6c3500",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d31fb980_633de554",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1440,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-02T20:40:59Z",
+      "side": 1,
+      "message": "if form_types.empty(), do you want to return UNKNOWN/OTHER for the form type?",
+      "revId": "5d0b81022319f6346f0443b16c89bf3cbe6c3500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65d48d09_2ea8864e",
+        "filename": "components/autofill/core/browser/form_types.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-02T20:40:59Z",
+      "side": 1,
+      "message": "can I suggest you rename this to UNKNOWN_FORM_TYPE and put it first?",
+      "range": {
+        "startLine": 10,
+        "startChar": 63,
+        "endLine": 10,
+        "endChar": 73
+      },
+      "revId": "5d0b81022319f6346f0443b16c89bf3cbe6c3500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9279533d_886888ae",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 93586,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-02T20:40:59Z",
+      "side": 1,
+      "message": "You might as well add Password and Unknown/Other here.",
+      "revId": "5d0b81022319f6346f0443b16c89bf3cbe6c3500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
