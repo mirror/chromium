@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b7c4812_9f3dc656",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-02T15:39:02Z",
+      "side": 1,
+      "message": "The application of the accumulation state here can occur after a pinch update and then you are applying the incorrect scaling to the transformation pixels. Can\u0027t it?",
+      "revId": "ae263fb4e480a11cee977c5e07133a9ad78b19b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40e4840c_e294fc82",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-02T15:39:02Z",
+      "side": 1,
+      "message": "I\u0027m not clear how this is not allowing/discarding gesture events. Does this handle the case when you get one finger down on one type of touch-action and then another finger down on a different type?\n\nie. If the first finger was auto, but the second finger went down on a pinch-zoom. How does the event stream block for the result of the second finger?",
+      "range": {
+        "startLine": 159,
+        "startChar": 13,
+        "endLine": 159,
+        "endChar": 42
+      },
+      "revId": "ae263fb4e480a11cee977c5e07133a9ad78b19b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33ccc635_ffe5a955",
+        "filename": "ui/events/blink/input_handler_proxy.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 1078,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-02T15:39:02Z",
+      "side": 1,
+      "message": "Can we adjust this comment that a non-passive touchstart/move will always set the whitelisted \n touch action to kTouchActionNone?",
+      "range": {
+        "startLine": 1078,
+        "startChar": 24,
+        "endLine": 1078,
+        "endChar": 29
+      },
+      "revId": "ae263fb4e480a11cee977c5e07133a9ad78b19b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
