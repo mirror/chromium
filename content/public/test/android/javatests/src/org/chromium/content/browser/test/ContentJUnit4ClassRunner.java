@@ -47,4 +47,9 @@ public class ContentJUnit4ClassRunner extends BaseJUnit4ClassRunner {
             CommandLineFlags.getRegistrationHook(),
             new ChildProcessAllocatorSettingsHook()});
     }
+
+    @Override
+    protected void initCommandLineForTest() {
+        BaseChromiumApplication.initCommandLine(InstrumentationRegistry.getTargetContext());
+    }
 }
