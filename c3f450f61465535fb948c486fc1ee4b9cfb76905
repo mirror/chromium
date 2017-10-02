@@ -34,6 +34,24 @@
       "revId": "c3f450f61465535fb948c486fc1ee4b9cfb76905",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b85d07d1_82cb4ccb",
+        "filename": "chromeos/tpm/tpm_token_info_getter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-02T18:18:13Z",
+      "side": 1,
+      "message": "That certainly makes sense, and I guess we can live with the confusion during the transition with the follow-up CL ready to go.",
+      "parentUuid": "232e3fb1_907a1110",
+      "revId": "c3f450f61465535fb948c486fc1ee4b9cfb76905",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
