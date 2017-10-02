@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9cf66fb3_8f6eac43",
+        "filename": "content/renderer/media/user_media_client_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-02T12:25:18Z",
+      "side": 1,
+      "message": "Keeping it as is.\nSetting |is_processing_request_| here would be incorrect because the (getUserMedia) request could be cancelled before MaybeProcessNextRequestInfo() runs.\nThe cost of a potential NOOP MaybeProcessNextRequestInfo() calls in the unlikely case of multiple calls in the same task is negligible compared with the cost of adding a more complex scheme.",
+      "parentUuid": "c7e6b09a_52b8852c",
+      "revId": "90bcfa1c44fbcf4214c23e8873886aa8e6646747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99cf1232_d4a4a410",
         "filename": "content/renderer/media/user_media_client_impl.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "90bcfa1c44fbcf4214c23e8873886aa8e6646747",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1b40053_c2602d97",
+        "filename": "content/renderer/media/user_media_client_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-02T12:25:18Z",
+      "side": 1,
+      "message": "Skipping the TODO, since I expect to replace this with the follow-up CL in a few hours (you\u0027re the reviewer).",
+      "parentUuid": "99cf1232_d4a4a410",
+      "revId": "90bcfa1c44fbcf4214c23e8873886aa8e6646747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
