@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3cd4acfd_79e3aca5",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 878,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-02T22:00:59Z",
+      "side": 1,
+      "message": "PostActivateExtension() is more general. MaybeSpinUpLazyBackgroundPage does not need to happen when an extension is newly added.",
+      "parentUuid": "6b25a69c_a3929b4c",
+      "revId": "0b1a533ba0b21a1a6ce98a3873c10c6759391ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "75ca1353_f51014b6",
         "filename": "chrome/browser/extensions/extension_service.cc",
         "patchSetId": 17
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-02T21:17:57Z",
       "side": 1,
       "message": "Here, too, why not part of ActivateExtension()?",
+      "revId": "0b1a533ba0b21a1a6ce98a3873c10c6759391ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d27f6aa1_0fffaeaf",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1367,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-02T22:00:59Z",
+      "side": 1,
+      "message": "Ditto. ExtensionService knows that an existing extension being replaced by a reloaded version might need its background page started/dev tools reattached.",
+      "parentUuid": "75ca1353_f51014b6",
       "revId": "0b1a533ba0b21a1a6ce98a3873c10c6759391ddf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "babda3e8_03ad12aa",
+        "filename": "extensions/browser/extension_registrar.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-02T22:00:59Z",
+      "side": 1,
+      "message": "It is weird, but it\u0027s the current behavior and currently necessary. crbug.com/708230",
+      "parentUuid": "522cde9c_9515c587",
+      "revId": "0b1a533ba0b21a1a6ce98a3873c10c6759391ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8cc6ff4_b6d9ff86",
         "filename": "extensions/browser/extension_registrar.cc",
         "patchSetId": 17
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-02T21:17:57Z",
       "side": 1,
       "message": "Why not check IsExtensionEnabled() here?",
+      "revId": "0b1a533ba0b21a1a6ce98a3873c10c6759391ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fe52eb7_3e619f8d",
+        "filename": "extensions/browser/extension_registrar.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-02T22:00:59Z",
+      "side": 1,
+      "message": "IsExtensionEnabled() returns true for extensions that haven\u0027t been loaded but aren\u0027t disabled/blacklisted in prefs.",
+      "parentUuid": "f8cc6ff4_b6d9ff86",
       "revId": "0b1a533ba0b21a1a6ce98a3873c10c6759391ddf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "31947c9d_842f4157",
+        "filename": "extensions/browser/extension_registrar.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-02T22:00:59Z",
+      "side": 1,
+      "message": "Ack. Added TODO for a follow-up CL -- I\u0027m reluctant to simultaneously introduce behavioral changes in a refactoring this large.",
+      "parentUuid": "a45fcd32_df87bf15",
+      "revId": "0b1a533ba0b21a1a6ce98a3873c10c6759391ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2205c4cb_e6fbe8b9",
         "filename": "extensions/browser/extension_registrar.cc",
         "patchSetId": 17
@@ -101,6 +191,24 @@
       "revId": "0b1a533ba0b21a1a6ce98a3873c10c6759391ddf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fb97954_a57b7092",
+        "filename": "extensions/browser/extension_registrar.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-02T22:00:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2205c4cb_e6fbe8b9",
+      "revId": "0b1a533ba0b21a1a6ce98a3873c10c6759391ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "77d3e2a1_fbb8bb6d",
+        "filename": "extensions/browser/extension_registrar.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-02T22:00:59Z",
+      "side": 1,
+      "message": "What this function is trying to isolate from the rest of the class is that UnregisterExtensionWithRequestContexts is a confusing name that doesn\u0027t explain what it does, why it\u0027s necessary or when it should be called. Can we rename that instead?",
+      "parentUuid": "07a7f816_f9ccea8c",
+      "revId": "0b1a533ba0b21a1a6ce98a3873c10c6759391ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3d546013_43d6cc10",
         "filename": "extensions/browser/extension_registrar.h",
         "patchSetId": 17
@@ -132,6 +258,24 @@
       "writtenOn": "2017-10-02T21:17:57Z",
       "side": 1,
       "message": "comment on lifetime",
+      "revId": "0b1a533ba0b21a1a6ce98a3873c10c6759391ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da378520_5b43de2e",
+        "filename": "extensions/browser/extension_registrar.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-02T22:00:59Z",
+      "side": 1,
+      "message": "Does the comment above need to be more specific about who should own what?",
+      "parentUuid": "3d546013_43d6cc10",
       "revId": "0b1a533ba0b21a1a6ce98a3873c10c6759391ddf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
