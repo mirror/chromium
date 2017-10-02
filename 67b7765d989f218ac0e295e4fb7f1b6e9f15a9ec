@@ -16,6 +16,24 @@
       "revId": "67b7765d989f218ac0e295e4fb7f1b6e9f15a9ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "951cfb67_cd7ea8df",
+        "filename": "chrome/browser/predictors/loading_stats_collector.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-10-02T16:54:59Z",
+      "side": 1,
+      "message": "Thank you for pointing on that! The fix is already uploaded: http://crrev.com/c/695305",
+      "parentUuid": "89fe86e4_2ec16de2",
+      "revId": "67b7765d989f218ac0e295e4fb7f1b6e9f15a9ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
