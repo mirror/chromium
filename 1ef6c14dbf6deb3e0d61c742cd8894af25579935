@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d96315a_39d37f66",
+        "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1646,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-02T07:24:03Z",
+      "side": 1,
+      "message": "Looks a race?\nSonny what is the expected behavior, when Deregister is called before Register\u0027s callback is called in ARC instance?",
+      "revId": "1ef6c14dbf6deb3e0d61c742cd8894af25579935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
