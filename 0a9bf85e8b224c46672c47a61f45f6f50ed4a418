@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44ea73c5_09e3aa5d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-02T20:27:03Z",
+      "side": 1,
+      "message": "Are you sure on this one?\n\n$ ldd /opt/google/chrome/chrome|grep libz\n        libz.so.1 \u003d\u003e /lib/x86_64-linux-gnu/libz.so.1 (0x...)\n$ ldd /opt/google/chrome-unstable/chrome|grep libz\n        libz.so.1 \u003d\u003e /lib/x86_64-linux-gnu/libz.so.1 (0x...)",
+      "revId": "0a9bf85e8b224c46672c47a61f45f6f50ed4a418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
