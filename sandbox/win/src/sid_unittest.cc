@@ -39,7 +39,8 @@ struct CapabilityTestEntry {
   const wchar_t* capability_name_;
   const wchar_t* sddl_sid_;
 };
-}
+
+}  // namespace
 
 // Tests the creation of a Sid.
 TEST(SidTest, Constructors) {

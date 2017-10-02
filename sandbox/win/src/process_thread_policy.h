@@ -72,9 +72,9 @@ class ProcessPolicy {
   // 'current_dir' : The CWD with which to spawn the child process.
   static DWORD CreateProcessWAction(EvalResult eval_result,
                                     const ClientInfo& client_info,
-                                    const base::string16 &app_name,
-                                    const base::string16 &command_line,
-                                    const base::string16 &current_dir,
+                                    const base::string16& app_name,
+                                    const base::string16& command_line,
+                                    const base::string16& current_dir,
                                     PROCESS_INFORMATION* process_info);
 
   // Processes a 'CreateThread()' request from the target.
@@ -89,6 +89,5 @@ class ProcessPolicy {
 };
 
 }  // namespace sandbox
-
 
 #endif  // SANDBOX_SRC_PROCESS_THREAD_POLICY_H_
