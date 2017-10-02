@@ -257,6 +257,30 @@
       "revId": "29c9f36bdbbded8a6ca47072a1e2cb1a245c0a94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81de64d7_c2570fb0",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionClientManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-02T22:57:57Z",
+      "side": 1,
+      "message": "There is one ContextualSearchManager per activity, so we can service multiple types of activities without setting whether smart select on every selection event (should be a constant per-instance boolean). Also, whether smart select is enabled or not should be consistent between CCTs, herbs, etc. I believe enabling in \"Chrome\" means enabling in all flavors of Chrome activities.",
+      "parentUuid": "631b6d66_239fdff0",
+      "range": {
+        "startLine": 205,
+        "startChar": 12,
+        "endLine": 205,
+        "endChar": 44
+      },
+      "revId": "29c9f36bdbbded8a6ca47072a1e2cb1a245c0a94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
