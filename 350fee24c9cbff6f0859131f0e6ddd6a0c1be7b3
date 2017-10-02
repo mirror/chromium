@@ -16,6 +16,24 @@
       "revId": "350fee24c9cbff6f0859131f0e6ddd6a0c1be7b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40c6f260_d56e8102",
+        "filename": "components/safe_browsing/proto/csd.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-10-02T15:04:52Z",
+      "side": 1,
+      "message": "Tried with these comments. I think it\u0027s harder to read the proto file due to multiple lines having the same number (ex. \nreserved 8; \n// optional SuspiciousModule OBSOLETE_suspicious_module \u003d 8\n) and the variations seed signature incident taking two comment lines due to being over the 80 char limit. \n\nI\u0027ll keep it as-is.",
+      "parentUuid": "c6ce6841_388f03e5",
+      "revId": "350fee24c9cbff6f0859131f0e6ddd6a0c1be7b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
