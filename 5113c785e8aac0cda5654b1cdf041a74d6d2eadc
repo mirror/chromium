@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c1790e61_83b230df",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-02T18:54:11Z",
+      "side": 1,
+      "message": "Yes you\u0027re right. It also needs to be updated.",
+      "parentUuid": "dddfa6d2_eb2e8e35",
+      "revId": "5113c785e8aac0cda5654b1cdf041a74d6d2eadc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4cb86129_c6f838c0",
         "filename": "ash/wm/splitview/split_view_controller.cc",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "5113c785e8aac0cda5654b1cdf041a74d6d2eadc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fc837b4_a35d3378",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-02T18:54:11Z",
+      "side": 1,
+      "message": "The two ways to compare the value are the same. But I\u0027ll modify it to \"!\u003d\" as it\u0027s easier to understand.",
+      "parentUuid": "4cb86129_c6f838c0",
+      "revId": "5113c785e8aac0cda5654b1cdf041a74d6d2eadc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "b267ab21_15dbaf63",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-02T18:54:11Z",
+      "side": 1,
+      "message": "It has been skipped in the beginning of this function.",
+      "parentUuid": "9d2f1248_e21d3546",
+      "revId": "5113c785e8aac0cda5654b1cdf041a74d6d2eadc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c841deb7_419b5bc2",
         "filename": "ash/wm/splitview/split_view_controller.cc",
         "patchSetId": 14
@@ -94,6 +148,30 @@
     },
     {
       "key": {
+        "uuid": "606bf145_5f1c0199",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-02T18:54:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c841deb7_419b5bc2",
+      "range": {
+        "startLine": 445,
+        "startChar": 44,
+        "endLine": 445,
+        "endChar": 60
+      },
+      "revId": "5113c785e8aac0cda5654b1cdf041a74d6d2eadc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e94e0230_20f70ff5",
         "filename": "ash/wm/splitview/split_view_controller.cc",
         "patchSetId": 14
@@ -105,6 +183,24 @@
       "writtenOn": "2017-09-29T23:14:47Z",
       "side": 1,
       "message": "bool activate_left \u003d\n\nthen\nif (activate_left) {\n    StackChildAbove(left, right);\n} else {\n    StackChildAbove(right, left);\n}",
+      "revId": "5113c785e8aac0cda5654b1cdf041a74d6d2eadc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ae08e8d_c79b1f4b",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-02T18:54:11Z",
+      "side": 1,
+      "message": "I don\u0027t think this logic will work. The restack only happens when the divider passes the middle position. Most of the time there is no need to restack. The original logic is:\nif (divider passes the middle position and towards left)\n  if (left window is on top or left)\n    StackChildAbove(right, left);\n  else\n    StackChildAbove(left, right);\nelse if (divider passes the middle position and towards right）\n  if (left window is on top or left)\n    StackChildAbove(left, right);\n  else\n    StackChildAbove(right, left);",
+      "parentUuid": "e94e0230_20f70ff5",
       "revId": "5113c785e8aac0cda5654b1cdf041a74d6d2eadc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
