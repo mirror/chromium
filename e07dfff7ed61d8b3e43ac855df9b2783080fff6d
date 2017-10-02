@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9ef2216f_0fbb934f",
+        "filename": "components/policy/core/common/policy_loader_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1001069
+      },
+      "writtenOn": "2017-10-02T16:17:52Z",
+      "side": 1,
+      "message": "Done\n\nI thought this was allowed because I saw it used here:\nhttps://cs.chromium.org/chromium/src/components/wifi/wifi_service_win.cc?q\u003dWlanConnect_function_\u0026sq\u003dpackage:chromium\u0026l\u003d436",
+      "parentUuid": "ef1e5682_8ac08fbe",
+      "revId": "e07dfff7ed61d8b3e43ac855df9b2783080fff6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ddc46ab_8081c233",
         "filename": "components/policy/core/common/policy_loader_win.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "e07dfff7ed61d8b3e43ac855df9b2783080fff6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25ae0c81_153599bc",
+        "filename": "components/policy/core/common/policy_loader_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1001069
+      },
+      "writtenOn": "2017-10-02T16:17:52Z",
+      "side": 1,
+      "message": "D\u0027Ho... :-/\n\nDone...",
+      "parentUuid": "6ddc46ab_8081c233",
+      "revId": "e07dfff7ed61d8b3e43ac855df9b2783080fff6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
