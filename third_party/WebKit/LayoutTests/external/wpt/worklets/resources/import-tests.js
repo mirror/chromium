@@ -1,3 +1,7 @@
+function dirname(path) {
+  return path.replace(/\/[^\/]*$/, '/');
+}
+
 // Runs a series of tests related to importing scripts on a worklet.
 //
 // Usage:
@@ -89,4 +93,37 @@ function runImportTests(worklet) {
         return promise_rejects(t, new DOMException('', 'AbortError'),
                                worklet.addModule(kScriptURL));
     }, 'Importing about:blank should reject the given promise.');
+
+    promise_test(() => {
+        document.cookie = "cookieName=default";
+        const kScriptURL = 'resources/credentials.py';
+        return worklet.addModule(kScriptURL).then(undefined_arg => {
+            assert_equals(undefined_arg, undefined,
+                          'Promise should resolve with no arguments.');
+        });
+    }, 'Importing a script with the default WorkletOptions should omit the ' +
+       'credentials');
+
+    promise_test(() => {
+        document.cookie = "cookieName=omit";
+        const kScriptURL = 'resources/credentials.py?mode=omit';
+        const kOptions = { credentials: 'omit' };
+        return worklet.addModule(kScriptURL, kOptions).then(undefined_arg => {
+            assert_equals(undefined_arg, undefined,
+                          'Promise should resolve with no arguments.');
+        });
+    }, 'Importing a script with credentials=omit should omit the credentials');
+
+    promise_test(() => {
+        document.cookie = "cookieName=include";
+        const kScriptURL = 'resources/credentials.py?mode=include';
+        const kOptions = { credentials: 'include' };
+        return worklet.addModule(kScriptURL, kOptions).then(undefined_arg => {
+            assert_equals(undefined_arg, undefined,
+                          'Promise should resolve with no arguments.');
+        });
+    }, 'Importing a script with credentials=include should include the ' +
+       ' credentials');
+
+    // TODO(nhiroki): Add tests for "credentials=same-origin"
 }
