@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4282272b_0e0e5db7",
+        "filename": "build/config/BUILDCONFIG.gn",
+        "patchSetId": 15
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-10-02T20:30:00Z",
+      "side": 1,
+      "message": "I think it\u0027s better to rename it to be \".../coverage:default_coverage\" The fact that this is here doesn\u0027t imply that coverage is on, just that you\u0027re getting the defaults (as with the optimization ones above).",
+      "revId": "2f505ad69aad7f4cc73bb7cf6c66929f195a132d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a651350_64daf0a5",
+        "filename": "build/config/compiler/compiler.gni",
+        "patchSetId": 15
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-10-02T20:30:00Z",
+      "side": 1,
+      "message": "I don\u0027t understand why this moved. You didn\u0027t add any uses of this variable other than the assert, so couldn\u0027t it stay in the BUILD file (move the assert) and be more narrowly scoped?",
+      "revId": "2f505ad69aad7f4cc73bb7cf6c66929f195a132d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "900b7da5_3dfa16bf",
+        "filename": "third_party/libFuzzer/BUILD.gn",
+        "patchSetId": 15
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-10-02T20:30:00Z",
+      "side": 1,
+      "message": "The way this works I think is confusing, because things like deps, configs, and any other thing you would normally pass to a target won\u0027t work. You could handle those, but I would recommend this pattern which we use in several places:\n\nAt the top of the file, create \"fuzzer_add_configs\" and fuzzer_remove_configs\" variables containing what you want to change. Then in each target do\n  configs -\u003d fuzzer_remove_configs\n  configs +\u003d fuzzer_add_configs\nThis prevents most duplication while keeping things very explicit and clear.",
+      "revId": "2f505ad69aad7f4cc73bb7cf6c66929f195a132d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
