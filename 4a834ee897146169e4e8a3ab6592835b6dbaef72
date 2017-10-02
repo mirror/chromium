@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "515475c2_a0b452e8",
+        "filename": "components/arc/ime/arc_ime_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-02T03:55:18Z",
+      "side": 1,
+      "message": "Per offline discussion:\n- Yoshiki-san, could you check the event sequence diff between regular ARC window and notification\u0027s?\n- Kinaba-san, it seems we need to re-attach the window from IME for the old root to the new one\u0027s. Could you take a look?",
+      "revId": "4a834ee897146169e4e8a3ab6592835b6dbaef72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
