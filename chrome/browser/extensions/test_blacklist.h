@@ -61,19 +61,15 @@ class TestBlacklist {
 
   // Set the extension state in SafeBrowsingDatabaseManager and
   // BlacklistFetcher.
-  void SetBlacklistState(const std::string& extension_id,
-                         BlacklistState state,
-                         bool notify);
+  void SetBlacklistState(const std::string& extension_id, BlacklistState state);
 
   BlacklistState GetBlacklistState(const std::string& extension_id);
 
-  void Clear(bool notify);
+  void Clear();
 
   void DisableSafeBrowsing();
 
   void EnableSafeBrowsing();
-
-  void NotifyUpdate();
 
   const BlacklistStateFetcherMock* fetcher() { return &state_fetcher_mock_; }
 

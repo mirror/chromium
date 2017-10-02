@@ -60,7 +60,6 @@ class SafeBrowsingDatabaseManager;
 class SafeBrowsingNavigationObserverManager;
 class SafeBrowsingPingManager;
 class SafeBrowsingProtocolManager;
-class SafeBrowsingProtocolManagerDelegate;
 class SafeBrowsingServiceFactory;
 class SafeBrowsingUIManager;
 class SafeBrowsingURLRequestContextGetter;
@@ -160,10 +159,6 @@ class SafeBrowsingService : public base::RefCountedThreadSafe<
 
   SafeBrowsingPingManager* ping_manager() const;
 
-  // This may be NULL if v4 is not enabled by experiment.
-  const scoped_refptr<SafeBrowsingDatabaseManager>& v4_local_database_manager()
-      const;
-
   TriggerManager* trigger_manager() const;
 
   // Gets PasswordProtectionService by profile.
@@ -221,9 +216,6 @@ class SafeBrowsingService : public base::RefCountedThreadSafe<
   // Registers all the delayed analysis with the incident reporting service.
   // This is where you register your process-wide, profile-independent analysis.
   virtual void RegisterAllDelayedAnalysis();
-
-  // Return a ptr to DatabaseManager's delegate, or NULL if it doesn't have one.
-  virtual SafeBrowsingProtocolManagerDelegate* GetProtocolManagerDelegate();
 
   std::unique_ptr<ServicesDelegate> services_delegate_;
 
@@ -293,11 +285,6 @@ class SafeBrowsingService : public base::RefCountedThreadSafe<
   // |url_request_context_|. Accessed on UI thread.
   scoped_refptr<SafeBrowsingURLRequestContextGetter>
       url_request_context_getter_;
-
-#if defined(SAFE_BROWSING_DB_LOCAL)
-  // Handles interaction with SafeBrowsing servers. Accessed on IO thread.
-  std::unique_ptr<SafeBrowsingProtocolManager> protocol_manager_;
-#endif
 
   // Provides phishing and malware statistics. Accessed on IO thread.
   std::unique_ptr<SafeBrowsingPingManager> ping_manager_;
