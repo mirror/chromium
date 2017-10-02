@@ -52,6 +52,7 @@ class StubWebView : public WebView {
                             const std::string& function,
                             const base::ListValue& args,
                             std::string* out_frame) override;
+  Status DispatchPointerActions(base::ListValue& actions) override;
   Status DispatchMouseEvents(const std::list<MouseEvent>& events,
                              const std::string& frame) override;
   Status DispatchTouchEvent(const TouchEvent& event) override;
