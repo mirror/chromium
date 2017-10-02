@@ -432,4 +432,18 @@ TEST_F(LayoutObjectTest, LocationInBackingAndSelectionVisualRect) {
   EXPECT_EQ(LayoutRect(), object->SelectionVisualRect());
 }
 
+TEST_F(LayoutObjectTest, SetSubtreeShouldDoFullPaintInvalidation) {
+  auto* object = GetDocument().body()->GetLayoutObject();
+  EXPECT_EQ(PaintInvalidationReason::kNone,
+            object->FullPaintInvalidationReason());
+
+  object->SetShouldDoFullPaintInvalidation();
+  EXPECT_EQ(PaintInvalidationReason::kFull,
+            object->FullPaintInvalidationReason());
+
+  object->SetSubtreeShouldDoFullPaintInvalidation();
+  EXPECT_EQ(PaintInvalidationReason::kSubtree,
+            object->FullPaintInvalidationReason());
+}
+
 }  // namespace blink

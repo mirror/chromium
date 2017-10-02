@@ -1617,7 +1617,7 @@ void LayoutObject::SetStyle(RefPtr<ComputedStyle> style) {
 
   if (diff.NeedsPaintInvalidationSubtree() ||
       updated_diff.NeedsPaintInvalidationSubtree()) {
-    SetShouldDoFullPaintInvalidationIncludingNonCompositingDescendants();
+    SetSubtreeShouldDoFullPaintInvalidation();
   } else if (diff.NeedsPaintInvalidationObject() ||
              updated_diff.NeedsPaintInvalidationObject()) {
     // TODO(wangxianzhu): For now LayoutSVGRoot::localVisualRect() depends on
@@ -3375,20 +3375,20 @@ void LayoutObject::SetShouldDoFullPaintInvalidationWithoutGeometryChange(
   // Only full invalidation reasons are allowed.
   DCHECK(IsFullPaintInvalidationReason(reason));
 
-  bool is_upgrading_delayed_full_to_full =
-      bitfields_.FullPaintInvalidationReason() ==
-          PaintInvalidationReason::kDelayedFull &&
-      reason != PaintInvalidationReason::kDelayedFull;
+  bool is_upgrading = PaintInvalidationReasonAppliesToSubtree(reason) ||
+                      (bitfields_.FullPaintInvalidationReason() ==
+                           PaintInvalidationReason::kDelayedFull &&
+                       IsImmediateFullPaintInvalidationReason(reason));
 
   if (bitfields_.FullPaintInvalidationReason() ==
           PaintInvalidationReason::kNone ||
-      is_upgrading_delayed_full_to_full) {
+      is_upgrading) {
     if (reason == PaintInvalidationReason::kFull) {
       reason = DocumentLifecycleBasedPaintInvalidationReason(
           GetDocument().Lifecycle());
     }
     bitfields_.SetFullPaintInvalidationReason(reason);
-    if (!is_upgrading_delayed_full_to_full)
+    if (!is_upgrading)
       MarkAncestorsForPaintInvalidation();
   }
 
@@ -3452,14 +3452,6 @@ DeprecatedDisableModifyLayoutTreeStructureAsserts::
 bool DeprecatedDisableModifyLayoutTreeStructureAsserts::
     CanModifyLayoutTreeStateInAnyState() {
   return g_modify_layout_tree_structure_any_state;
-}
-
-void LayoutObject::
-    SetShouldDoFullPaintInvalidationIncludingNonCompositingDescendants() {
-  // Clear first because PaintInvalidationSubtree overrides other full paint
-  // invalidation reasons.
-  ClearShouldDoFullPaintInvalidation();
-  SetShouldDoFullPaintInvalidation(PaintInvalidationReason::kSubtree);
 }
 
 void LayoutObject::SetIsBackgroundAttachmentFixedObject(

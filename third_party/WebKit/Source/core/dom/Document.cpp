@@ -4371,8 +4371,8 @@ void Document::StyleResolverMayHaveChanged() {
     // or style recalc while sheets are still loading to avoid FOUC.
     pending_sheet_layout_ = kIgnoreLayoutWithPendingSheets;
 
-    DCHECK(!GetLayoutViewItem().IsNull() || ImportsController());
-    if (!GetLayoutViewItem().IsNull())
+    DCHECK(GetLayoutViewItem() || ImportsController());
+    if (GetLayoutViewItem())
       GetLayoutViewItem().InvalidatePaintForViewAndCompositedLayers();
   }
 }

@@ -166,9 +166,8 @@ class LayoutItem {
     layout_object_->SetShouldDoFullPaintInvalidation(reason);
   }
 
-  void SetShouldDoFullPaintInvalidationIncludingNonCompositingDescendants() {
-    layout_object_
-        ->SetShouldDoFullPaintInvalidationIncludingNonCompositingDescendants();
+  void SetSubtreeShouldDoFullPaintInvalidation() {
+    layout_object_->SetSubtreeShouldDoFullPaintInvalidation();
   }
 
   void ComputeLayerHitTestRects(LayerHitTestRects& layer_rects,

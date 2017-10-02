@@ -1305,10 +1305,8 @@ void MediaControlsImpl::Invalidate(Element* element) {
   if (!element)
     return;
 
-  if (LayoutObject* layout_object = element->GetLayoutObject()) {
-    layout_object
-        ->SetShouldDoFullPaintInvalidationIncludingNonCompositingDescendants();
-  }
+  if (LayoutObject* layout_object = element->GetLayoutObject())
+    layout_object->SetSubtreeShouldDoFullPaintInvalidation();
 }
 
 void MediaControlsImpl::NetworkStateChanged() {

@@ -341,14 +341,10 @@ inline Element* RangeInputType::SliderTrackElement() const {
 
 void RangeInputType::ListAttributeTargetChanged() {
   tick_mark_values_dirty_ = true;
-  if (GetElement().GetLayoutObject())
-    GetElement()
-        .GetLayoutObject()
-        ->SetShouldDoFullPaintInvalidationIncludingNonCompositingDescendants();
-  Element* slider_track_element = this->SliderTrackElement();
-  if (slider_track_element->GetLayoutObject())
-    slider_track_element->GetLayoutObject()->SetNeedsLayout(
-        LayoutInvalidationReason::kAttributeChanged);
+  if (auto* layout_object = GetElement().GetLayoutObject())
+    layout_object->SetSubtreeShouldDoFullPaintInvalidation();
+  if (auto* layout_object = SliderTrackElement()->GetLayoutObject())
+    layout_object->SetNeedsLayout(LayoutInvalidationReason::kAttributeChanged);
 }
 
 static bool DecimalCompare(const Decimal& a, const Decimal& b) {

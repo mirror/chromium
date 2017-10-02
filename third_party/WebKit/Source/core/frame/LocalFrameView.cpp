@@ -1793,9 +1793,8 @@ bool LocalFrameView::InvalidateViewportConstrainedObjects() {
     if (layer->SubtreeIsInvisible())
       continue;
 
-    // invalidate even if there is an ancestor with a filter that moves pixels.
-    layout_item
-        .SetShouldDoFullPaintInvalidationIncludingNonCompositingDescendants();
+    // Invalidate even if there is an ancestor with a filter that moves pixels.
+    layout_item.SetSubtreeShouldDoFullPaintInvalidation();
 
     TRACE_EVENT_INSTANT1(
         TRACE_DISABLED_BY_DEFAULT("devtools.timeline.invalidationTracking"),
@@ -1837,20 +1836,18 @@ void LocalFrameView::ScrollContentsSlowPath() {
   // all of the objects.
   // FIXME: Find out what are enough to invalidate in slow path scrolling.
   // crbug.com/451090#9.
-  DCHECK(!GetLayoutViewItem().IsNull());
+  DCHECK(GetLayoutViewItem());
   if (ContentsInCompositedLayer()) {
     GetLayoutViewItem()
         .Layer()
         ->GetCompositedLayerMapping()
         ->SetContentsNeedDisplay();
   } else {
-    GetLayoutViewItem()
-        .SetShouldDoFullPaintInvalidationIncludingNonCompositingDescendants();
+    GetLayoutViewItem().SetSubtreeShouldDoFullPaintInvalidation();
   }
 
   if (ContentsInCompositedLayer()) {
     IntRect update_rect = VisibleContentRect();
-    DCHECK(!GetLayoutViewItem().IsNull());
     GetLayoutViewItem().InvalidatePaintRectangle(LayoutRect(update_rect));
   }
   LayoutEmbeddedContentItem frame_layout_item = frame_->OwnerLayoutItem();
@@ -5146,9 +5143,8 @@ void LocalFrameView::UpdateRenderThrottlingStatus(
     // Force a full repaint of this frame to ensure we are not left with a
     // partially painted version of this frame's contents if we skipped
     // painting them while the frame was throttled.
-    LayoutViewItem layout_view_item = this->GetLayoutViewItem();
-    if (!layout_view_item.IsNull())
-      layout_view_item.InvalidatePaintForViewAndCompositedLayers();
+    if (auto layout_view_item = this->GetLayoutViewItem())
+      layout_view_item.SetSubtreeShouldDoFullPaintInvalidation();
     // Also need to update all paint properties that might be skipped while
     // the frame was throttled.
     SetSubtreeNeedsPaintPropertyUpdate();

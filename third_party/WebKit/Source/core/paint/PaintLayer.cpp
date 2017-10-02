@@ -1390,8 +1390,7 @@ void PaintLayer::RemoveOnlyThisLayerAfterStyleChange() {
       DisablePaintInvalidationStateAsserts disabler;
       ObjectPaintInvalidator(GetLayoutObject())
           .InvalidatePaintIncludingNonCompositingDescendants();
-      GetLayoutObject()
-          .SetShouldDoFullPaintInvalidationIncludingNonCompositingDescendants();
+      GetLayoutObject().SetSubtreeShouldDoFullPaintInvalidation();
       did_set_paint_invalidation = true;
     }
   }
