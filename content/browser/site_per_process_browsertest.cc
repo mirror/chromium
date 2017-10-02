@@ -7423,6 +7423,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
     params->widget_params->hidden = true;
     params->replication_state.name = "name";
     params->replication_state.unique_name = "name";
+    params->devtools_frame_token = base::UnguessableToken::Create();
     process->GetRendererInterface()->CreateFrame(std::move(params));
   }
 
@@ -7488,6 +7489,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, ParentDetachRemoteChild) {
     params->widget_params->hidden = true;
     params->replication_state.name = "name";
     params->replication_state.unique_name = "name";
+    params->devtools_frame_token = base::UnguessableToken::Create();
     process->GetRendererInterface()->CreateFrame(std::move(params));
   }
 
