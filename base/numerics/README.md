@@ -242,6 +242,9 @@ with the following unary arithmetic methods, which return a new
     The underlying return type is whichever has can represent the lowest
     number in the smallest width (e.g. int8_t over unsigned, int over
     int8_t, and float over int).
+*   `ToRange(min, max)` - Returns the `CheckedNumeric` type as supplied, clamped
+    to `min` as the lower bound and `max` as the upper bound; equivalent to
+    `Max(min).Min(max)`.
 
 The following are for converting `CheckedNumeric` instances:
 
@@ -303,6 +306,10 @@ or `CheckedNumeric` types, perform arithmetic operations, and return a
 *   `CheckXor()` - Bitwise XOR (integer only with unsigned result).
 *   `CheckMax()` - Maximum of supplied arguments.
 *   `CheckMin()` - Minimum of supplied arguments.
+
+The following is a convenience function for common operations:
+*   `CheckToRange(value, min, max)` - Returns `value` restricted to the supplied
+    `min` and `max`; equivalent to `CheckMin(CheckMax(value, min), max)`.
 
 The following wrapper functions can be used to avoid the template
 disambiguator syntax when converting a destination type.
@@ -372,6 +379,9 @@ with the following unary arithmetic methods, which return a new
     The underlying return type is whichever has can represent the lowest
     number in the smallest width (e.g. int8_t over unsigned, int over
     int8_t, and float over int).
+*   `ToRange(min, max)` - Returns the `ClampedNumeric` type as supplied, clamped
+    to `min` as the lower bound and `max` as the upper bound; equivalent to
+    `Max(min).Min(max)`.
 
 The following are for converting `ClampedNumeric` instances:
 
@@ -401,6 +411,10 @@ or `ClampedNumeric` types, perform arithmetic operations, and return a
 *   `ClampXor()` - Bitwise XOR (integer only with unsigned result).
 *   `ClampMax()` - Maximum of supplied arguments.
 *   `ClampMin()` - Minimum of supplied arguments.
+
+The following is a convenience function for common operations:
+*   `ClampToRange(value, min, max)` - Returns `value` restricted to the supplied
+    `min` and `max`; equivalent to `ClampMin(ClampMax(value, min), max)`.
 
 The following is a general utility method that is useful for converting
 to a `ClampedNumeric` type:
