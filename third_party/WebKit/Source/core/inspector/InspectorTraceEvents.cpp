@@ -1034,8 +1034,51 @@ std::unique_ptr<TracedValue> InspectorParseScriptEvent::Data(
 
 std::unique_ptr<TracedValue> InspectorCompileScriptEvent::Data(
     const String& url,
-    const TextPosition& text_position) {
-  return FillLocation(url, text_position);
+    const TextPosition& text_position,
+    const V8CacheResult& cache_result,
+    bool streamed) {
+  std::unique_ptr<TracedValue> value = FillLocation(url, text_position);
+
+  if (cache_result.produce_result) {
+    switch (cache_result.produce_result->produce_options) {
+      case v8::ScriptCompiler::kProduceParserCache:
+        value->SetString("produceOptions", "parser");
+        break;
+      case v8::ScriptCompiler::kProduceCodeCache:
+        value->SetString("produceOptions", "code");
+        break;
+      case v8::ScriptCompiler::kProduceFullCodeCache:
+        value->SetString("produceOptions", "full code");
+        break;
+      case v8::ScriptCompiler::kNoCompileOptions:
+      case v8::ScriptCompiler::kConsumeParserCache:
+      case v8::ScriptCompiler::kConsumeCodeCache:
+        NOTREACHED();
+    }
+    value->SetInteger("producedCacheSize",
+                      cache_result.produce_result->cache_size);
+  }
+
+  if (cache_result.consume_result) {
+    switch (cache_result.consume_result->consume_options) {
+      case v8::ScriptCompiler::kConsumeParserCache:
+        value->SetString("consumeOptions", "parser");
+        break;
+      case v8::ScriptCompiler::kConsumeCodeCache:
+        value->SetString("consumeOptions", "code");
+        break;
+      case v8::ScriptCompiler::kNoCompileOptions:
+      case v8::ScriptCompiler::kProduceParserCache:
+      case v8::ScriptCompiler::kProduceCodeCache:
+      case v8::ScriptCompiler::kProduceFullCodeCache:
+        NOTREACHED();
+    }
+    value->SetInteger("consumedCacheSize",
+                      cache_result.consume_result->cache_size);
+    value->SetBoolean("cacheRejected", cache_result.consume_result->rejected);
+  }
+  value->SetBoolean("streamed", streamed);
+  return value;
 }
 
 std::unique_ptr<TracedValue> InspectorFunctionCallEvent::Data(
