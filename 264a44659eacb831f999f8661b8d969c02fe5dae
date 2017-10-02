@@ -213,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "2255be37_301a1906",
+        "filename": "ash/login/ui/animated_rounded_image_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-02T21:59:42Z",
+      "side": 1,
+      "message": "sgtm",
+      "parentUuid": "f1b0e5f1_3fbbf15a",
+      "revId": "264a44659eacb831f999f8661b8d969c02fe5dae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cdc2b7b1_1575b541",
         "filename": "ash/login/ui/animated_rounded_image_view.h",
         "patchSetId": 6

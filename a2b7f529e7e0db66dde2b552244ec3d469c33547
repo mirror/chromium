@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c84807d_2a1de73c",
+        "filename": "ash/login/ui/animated_rounded_image_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-02T21:59:42Z",
+      "side": 1,
+      "message": "nit: Add a return after L80 and get rid of \"else\".\nOr get rid of the empty line in L82 and move \"// Start animation.\" inside the block.",
+      "revId": "a2b7f529e7e0db66dde2b552244ec3d469c33547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
