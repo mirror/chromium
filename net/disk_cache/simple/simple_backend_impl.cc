@@ -39,6 +39,7 @@
 #include "net/disk_cache/simple/simple_entry_format.h"
 #include "net/disk_cache/simple/simple_entry_impl.h"
 #include "net/disk_cache/simple/simple_experiment.h"
+#include "net/disk_cache/simple/simple_file_tracker.h"
 #include "net/disk_cache/simple/simple_histogram_macros.h"
 #include "net/disk_cache/simple/simple_index.h"
 #include "net/disk_cache/simple/simple_index_file.h"
@@ -140,6 +141,10 @@ void MaybeHistogramFdLimit(net::CacheType cache_type) {
 
   g_fd_limit_histogram_has_been_populated = true;
 }
+
+// Global context of all the files we have open, so we don't eat all the FDs.
+base::LazyInstance<SimpleFileTracker>::Leaky g_simple_file_tracker =
+    LAZY_INSTANCE_INITIALIZER;
 
 // Detects if the files in the cache directory match the current disk cache
 // backend type and version. If the directory contains no cache, occupies it
@@ -253,11 +258,14 @@ class SimpleBackendImpl::ActiveEntryProxy
 SimpleBackendImpl::SimpleBackendImpl(
     const FilePath& path,
     scoped_refptr<BackendCleanupTracker> cleanup_tracker,
+    SimpleFileTracker* file_tracker,
     int max_bytes,
     net::CacheType cache_type,
     const scoped_refptr<base::SequencedTaskRunner>& cache_runner,
     net::NetLog* net_log)
     : cleanup_tracker_(std::move(cleanup_tracker)),
+      file_tracker_(file_tracker ? file_tracker
+                                 : g_simple_file_tracker.Pointer()),
       path_(path),
       cache_type_(cache_type),
       cache_runner_(FallbackToInternalIfNull(cache_runner)),
@@ -689,9 +697,9 @@ scoped_refptr<SimpleEntryImpl> SimpleBackendImpl::CreateOrFindActiveEntry(
   EntryMap::iterator& it = insert_result.first;
   const bool did_insert = insert_result.second;
   if (did_insert) {
-    SimpleEntryImpl* entry = it->second =
-        new SimpleEntryImpl(cache_type_, path_, cleanup_tracker_.get(),
-                            entry_hash, entry_operations_mode_, this, net_log_);
+    SimpleEntryImpl* entry = it->second = new SimpleEntryImpl(
+        cache_type_, path_, cleanup_tracker_.get(), entry_hash,
+        entry_operations_mode_, this, file_tracker_, net_log_);
     entry->SetKey(key);
     entry->SetActiveEntryProxy(ActiveEntryProxy::Create(entry_hash, this));
   }
@@ -725,9 +733,9 @@ int SimpleBackendImpl::OpenEntryFromHash(uint64_t entry_hash,
     return OpenEntry(has_active->second->key(), entry, callback);
   }
 
-  scoped_refptr<SimpleEntryImpl> simple_entry =
-      new SimpleEntryImpl(cache_type_, path_, cleanup_tracker_.get(),
-                          entry_hash, entry_operations_mode_, this, net_log_);
+  scoped_refptr<SimpleEntryImpl> simple_entry = new SimpleEntryImpl(
+      cache_type_, path_, cleanup_tracker_.get(), entry_hash,
+      entry_operations_mode_, this, file_tracker_, net_log_);
   CompletionCallback backend_callback =
       base::Bind(&SimpleBackendImpl::OnEntryOpenedFromHash,
                  AsWeakPtr(), entry_hash, entry, simple_entry, callback);
