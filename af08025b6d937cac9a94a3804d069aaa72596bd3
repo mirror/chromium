@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7271d50e_fa97717b",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-02T23:04:53Z",
+      "side": 1,
+      "message": "stream_position_samples_ is valid only when the stream is started, i.e. !started_time_.is_null()",
+      "parentUuid": "0a9c0e6a_b85d9437",
+      "revId": "af08025b6d937cac9a94a3804d069aaa72596bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2af3ce5e_bee2effe",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-02T21:20:21Z",
       "side": 1,
       "message": "Internally ATH uses a double for the sample rate to avoid precision loss when dividing, but this method only uses an integer value, seems that should probably be changed to a double or you\u0027ll lose precision here.",
+      "revId": "af08025b6d937cac9a94a3804d069aaa72596bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3f4bc87_398ecfa5",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-02T23:04:53Z",
+      "side": 1,
+      "message": "The way ATH uses double actually looks wrong to me. It uses double for microseconds_per_frame_. Microseconds per frame cannot be represented precisely in double, e.g. 1000000/44100 is an irrational number and floating-point variables can only approximate irrational values. \n\nOTOH AudioTimestampHelper::FramesToTime() should give correct result here. There is always some error (simply because TimeTicks represents the value in microseconds, and samples fall between microseconds), but it won\u0027t accumulate error over time, which is important",
+      "parentUuid": "2af3ce5e_bee2effe",
       "revId": "af08025b6d937cac9a94a3804d069aaa72596bd3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f75acbf7_fb1f299f",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-02T23:04:53Z",
+      "side": 1,
+      "message": "I think it\u0027s still useful if only to avoid passing incorrect delay value to OnMoreData().",
+      "parentUuid": "8323cac8_9d1a4300",
+      "revId": "af08025b6d937cac9a94a3804d069aaa72596bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "21bf124b_aebaa7d0",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
         "patchSetId": 8
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-02T21:20:21Z",
       "side": 1,
       "message": "DCHECK_EQ ZX_OK?",
+      "revId": "af08025b6d937cac9a94a3804d069aaa72596bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fdecbf1_85deeec2",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-02T23:04:53Z",
+      "side": 1,
+      "message": "Removed it.",
+      "parentUuid": "21bf124b_aebaa7d0",
       "revId": "af08025b6d937cac9a94a3804d069aaa72596bd3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
