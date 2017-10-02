@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "01617990_892a274c",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2783,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-02T20:20:00Z",
+      "side": 1,
+      "message": "OK.",
+      "parentUuid": "7898165f_cc9a7cd7",
+      "revId": "dc2e0d7f2e55ee0537dfe40e86596ad072f172f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a32e736c_aea32058",
         "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
         "patchSetId": 10
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "91e0cb21_cd5f1498",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2786,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-02T20:20:00Z",
+      "side": 1,
+      "message": "OK.",
+      "parentUuid": "05f84e27_7c17623b",
+      "revId": "dc2e0d7f2e55ee0537dfe40e86596ad072f172f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60078514_de9a6a50",
         "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
         "patchSetId": 10
@@ -101,6 +137,24 @@
       "side": 1,
       "message": "kInitialJournalCleaningWindowTime?",
       "parentUuid": "60078514_de9a6a50",
+      "revId": "dc2e0d7f2e55ee0537dfe40e86596ad072f172f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30d333cc_420116e6",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2789,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-02T20:20:00Z",
+      "side": 1,
+      "message": "OK.",
+      "parentUuid": "2a62af15_6cb0681f",
       "revId": "dc2e0d7f2e55ee0537dfe40e86596ad072f172f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -241,6 +295,24 @@
       "side": 1,
       "message": "same, I\u0027d like to keep the name descriptive. If we need to make this a formal hook, then we rename it.",
       "parentUuid": "3d74d086_95a9e783",
+      "revId": "dc2e0d7f2e55ee0537dfe40e86596ad072f172f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a09b3d7_6e4b1e9d",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2991,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-02T20:20:00Z",
+      "side": 1,
+      "message": "This method does more than a decrement, though. That\u0027s what I meant when I said its name is a bit misleading. It seems like a hook, in the sense that we want code around to call it whenever a transaction starts committing, and it just happens that the hook implementation is in the same class at the moment.\n\nAlso, this is what prompted to ask for the change in the method name above.",
+      "parentUuid": "c304b8f2_dc73d89c",
       "revId": "dc2e0d7f2e55ee0537dfe40e86596ad072f172f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

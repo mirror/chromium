@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5c51502_e52c3146",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-02T20:20:00Z",
+      "side": 1,
+      "message": "nit: \"garbage\" makes me think of garbage collection. Clarify that we were leaking files that we\u0027d lose track of?",
+      "revId": "ee4591b09df33af1ec9205806793c64e9b722bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b91f19b6_83722cd5",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1015,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-02T20:20:00Z",
+      "side": 1,
+      "message": "I think you\u0027ll need to wrap this assertion around #if DCHECK_IS_ON().",
+      "revId": "ee4591b09df33af1ec9205806793c64e9b722bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7e190b1_f5b2b64f",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1024,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-02T20:20:00Z",
+      "side": 1,
+      "message": "I think you\u0027ll need to wrap this assertion around #if DCHECK_IS_ON().",
+      "revId": "ee4591b09df33af1ec9205806793c64e9b722bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
