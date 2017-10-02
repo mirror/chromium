@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "16c75553_e73c5fdf",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_view_ios.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-02T16:16:22Z",
+      "side": 1,
+      "message": "There\u0027s a balance between being permissive with nullptrs and failing to notice when something gets hooked up improperly \u003d)  I would perhaps lean on the side of being stricter for now.",
+      "parentUuid": "40b985fa_e250a310",
+      "revId": "0647a5ac28627adac20ce3a2dc89c3ce31ec4a54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "85bce8e3_db10b0fc",
         "filename": "ios/clean/chrome/browser/ui/omnibox/omnibox_popup_coordinator.h",
         "patchSetId": 1
