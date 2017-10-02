@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aee9fa7d_87adf98a",
+        "filename": "chrome/browser/notifications/message_center_display_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-02T13:51:37Z",
+      "side": 1,
+      "message": "Maybe worth noting that that happens before profile shutdown?",
+      "revId": "e16dc68c2bbd6a3a1f77388c30b876261a4b71d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e604b71_cb01321f",
+        "filename": "ui/message_center/notification.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-02T13:51:37Z",
+      "side": 1,
+      "message": "This feels semantically wrong. It should be exceptional that you cannot click on a notification, not the other way around. This CL would now change all Web Notifications to lose their mouse cursor (per your TODO in platform_notification_service_impl.cc), and potentially others since there are ~40 delegates, and only 11 that override HasClickedListener().\n\nGoing the opposite direction (defaulting the delegate\u0027s method to TRUE) feels much safer. WDYT?",
+      "revId": "e16dc68c2bbd6a3a1f77388c30b876261a4b71d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
