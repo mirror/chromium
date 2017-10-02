@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aafd6cd_a7a5e008",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaStreamTrack.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-02T10:12:58Z",
+      "side": 1,
+      "message": "Should this be \"or OnlyImageCaptureConstraints\"? Or a pointless optimization?",
+      "revId": "db64188e45cbe93f5537acac021c4c6a5bc6cfa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
