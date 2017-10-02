@@ -850,6 +850,7 @@ error::Error GLES2DecoderPassthroughImpl::HandleReadPixels(
   uint32_t pixels_shm_offset = c.pixels_shm_offset;
   uint32_t result_shm_id = c.result_shm_id;
   uint32_t result_shm_offset = c.result_shm_offset;
+  GLboolean async = static_cast<GLboolean>(c.async);
 
   bool packBufferBound = bound_buffers_[GL_PIXEL_PACK_BUFFER] != 0;
 
@@ -872,13 +873,23 @@ error::Error GLES2DecoderPassthroughImpl::HandleReadPixels(
         reinterpret_cast<uint8_t*>(static_cast<intptr_t>(pixels_shm_offset));
   }
 
+  bool unpackBufferBound = bound_buffers_[GL_PIXEL_UNPACK_BUFFER] != 0;
+
   GLsizei bufsize = buffer_size;
   GLsizei length = 0;
   GLsizei columns = 0;
   GLsizei rows = 0;
   int32_t success = 0;
-  error::Error error = DoReadPixels(x, y, width, height, format, type, bufsize,
-                                    &length, &columns, &rows, pixels, &success);
+  error::Error error = error::kNoError;
+  if (async && feature_info_->feature_flags().use_async_readpixels &&
+      !unpackBufferBound) {
+    error = DoReadPixelsAsync(
+        x, y, width, height, format, type, bufsize, &length, &columns, &rows,
+        pixels_shm_id, pixels_shm_offset, result_shm_id, result_shm_offset);
+  } else {
+    error = DoReadPixels(x, y, width, height, format, type, bufsize, &length,
+                         &columns, &rows, pixels, &success);
+  }
   if (error != error::kNoError) {
     return error;
   }

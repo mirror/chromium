@@ -2286,6 +2286,7 @@ void GLES2DecoderPassthroughTestBase::SetUp() {
   shared_memory_address_ =
       reinterpret_cast<int8_t*>(buffer->memory()) + shared_memory_offset_;
   shared_memory_base_ = buffer->memory();
+  shared_memory_size_ = kSharedBufferSize - shared_memory_offset_;
 
   decoder_->MakeCurrent();
   decoder_->BeginDecoding();
