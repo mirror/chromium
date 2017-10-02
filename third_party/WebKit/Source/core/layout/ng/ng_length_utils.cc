@@ -47,8 +47,11 @@ LayoutUnit ResolveInlineLength(const NGConstraintSpace& constraint_space,
   DCHECK_GE(constraint_space.AvailableSize().inline_size, LayoutUnit());
   DCHECK_GE(constraint_space.PercentageResolutionSize().inline_size,
             LayoutUnit());
-  DCHECK_EQ(constraint_space.WritingMode(),
-            FromPlatformWritingMode(style.GetWritingMode()));
+  if (type != LengthResolveType::kMarginBorderPaddingSize) {
+    // Margins and padding always get computed relative to the inline size.
+    DCHECK_EQ(constraint_space.WritingMode(),
+              FromPlatformWritingMode(style.GetWritingMode()));
+  }
 
   if (constraint_space.IsAnonymous())
     return constraint_space.AvailableSize().inline_size;
@@ -70,9 +73,9 @@ LayoutUnit ResolveInlineLength(const NGConstraintSpace& constraint_space,
     case kAuto:
     case kFillAvailable: {
       LayoutUnit content_size = constraint_space.AvailableSize().inline_size;
-      NGBoxStrut margins = ComputeMargins(
-          constraint_space, style,
-          FromPlatformWritingMode(style.GetWritingMode()), style.Direction());
+      NGBoxStrut margins = ComputeMargins(constraint_space, style,
+                                          constraint_space.WritingMode(),
+                                          constraint_space.Direction());
       return std::max(border_and_padding.InlineSum(),
                       content_size - margins.InlineSum());
     }
@@ -104,7 +107,7 @@ LayoutUnit ResolveInlineLength(const NGConstraintSpace& constraint_space,
       } else {
         NGBoxStrut margins = ComputeMargins(
             constraint_space, style,
-            FromPlatformWritingMode(style.GetWritingMode()), style.Direction());
+            constraint_space.WritingMode()), constraint_space.Direction());
         LayoutUnit fill_available =
             std::max(LayoutUnit(), available_size - margins.InlineSum() -
                                        border_and_padding.InlineSum());
