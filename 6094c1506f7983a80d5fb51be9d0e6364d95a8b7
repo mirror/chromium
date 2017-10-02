@@ -16,6 +16,24 @@
       "revId": "6094c1506f7983a80d5fb51be9d0e6364d95a8b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "557ee7b0_99eb25a4",
+        "filename": "third_party/WebKit/LayoutTests/shadow-dom/focus-navigation-slot-shadow-in-fallback.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1238298
+      },
+      "writtenOn": "2017-10-02T01:53:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94d6ec62_0571058c",
+      "revId": "6094c1506f7983a80d5fb51be9d0e6364d95a8b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
