@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "95fd791e_bd47f15e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkConfigView.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-02T22:44:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1561fbfd_763b03e1",
+      "revId": "50aad33ea2bef0ee9162afef949accaaf73c8a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f51ea9d_f4987f80",
         "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkConfigView.js",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "50aad33ea2bef0ee9162afef949accaaf73c8a86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4aea452_4dc6d293",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkConfigView.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-02T22:44:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f51ea9d_f4987f80",
+      "revId": "50aad33ea2bef0ee9162afef949accaaf73c8a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "31cd1d4d_bc8c089f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkConfigView.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-02T22:44:37Z",
+      "side": 1,
+      "message": "Done. Although to keep it simple for now I am reading directly out of the setting each time. In the future we may want to make a cached map to make it faster to lookup paths for urls.",
+      "parentUuid": "fa047633_7e6c82f4",
+      "revId": "50aad33ea2bef0ee9162afef949accaaf73c8a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5342e19_0953ee28",
         "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkConfigView.js",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "50aad33ea2bef0ee9162afef949accaaf73c8a86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "177ee8df_134058f7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkConfigView.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-10-02T22:44:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5342e19_0953ee28",
+      "revId": "50aad33ea2bef0ee9162afef949accaaf73c8a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
