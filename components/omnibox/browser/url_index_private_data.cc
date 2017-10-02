@@ -506,8 +506,9 @@ HistoryIDVector URLIndexPrivateData::HistoryIDsFromWords(
     if (iter == words.begin()) {
       history_ids = {term_history_set.begin(), term_history_set.end()};
     } else {
-      history_ids = base::STLSetIntersection<HistoryIDVector>(history_ids,
-                                                              term_history_set);
+      base::EraseIf(history_ids, [&](HistoryID history_id) {
+        return !base::ContainsKey(term_history_set, history_id);
+      });
     }
   }
   return history_ids;
@@ -583,8 +584,10 @@ HistoryIDSet URLIndexPrivateData::HistoryIDsForTerm(
 
     // Filter for each remaining, unique character in the term.
     Char16Set leftover_chars = Char16SetFromString16(leftovers);
-    Char16Set unique_chars =
-        base::STLSetDifference<Char16Set>(leftover_chars, prefix_chars);
+    Char16Set unique_chars;
+    std::set_difference(leftovers.begin(), leftovers.end(),
+                        prefix_chars.begin(), prefix_chars.end(),
+                        std::inserter(unique_chars, unique_chars.end()));
 
     // Reduce the word set with any leftover, unprocessed characters.
     if (!unique_chars.empty()) {
@@ -595,9 +598,13 @@ HistoryIDSet URLIndexPrivateData::HistoryIDsForTerm(
         return HistoryIDSet();
       }
       // Or there may not have been a prefix from which to start.
-      word_id_set = prefix_chars.empty() ? std::move(leftover_set)
-                                         : base::STLSetIntersection<WordIDSet>(
-                                               word_id_set, leftover_set);
+      if (prefix_chars.empty()) {
+        word_id_set = std::move(leftover_set);
+      } else {
+        base::EraseIf(word_id_set, [&](WordID word_id) {
+          return !base::ContainsKey(leftover_set, word_id);
+        });
+      }
     }
 
     // We must filter the word list because the resulting word set surely
@@ -654,8 +661,9 @@ WordIDSet URLIndexPrivateData::WordIDSetForTermChars(
     if (c_iter == term_chars.begin()) {
       word_id_set = char_word_id_set;
     } else {
-      word_id_set =
-          base::STLSetIntersection<WordIDSet>(word_id_set, char_word_id_set);
+      base::EraseIf(word_id_set, [&](WordID word_id) {
+        return !base::ContainsKey(char_word_id_set, word_id);
+      });
     }
   }
   return word_id_set;
@@ -809,10 +817,12 @@ void URLIndexPrivateData::AddRowWordsToIndex(const history::URLRow& row,
   const base::string16& title = bookmarks::CleanUpTitleForMatching(row.title());
   String16Set title_words = String16SetFromString16(title,
       word_starts ? &word_starts->title_word_starts_ : nullptr);
-  for (const auto& word :
-       base::STLSetUnion<String16Set>(url_words, title_words))
+  for (const auto& word : url_words)
     AddWordToIndex(word, history_id);
-
+  for (const auto& word : title_words) {
+    if (url_words.find(word) == url_words.end())
+      AddWordToIndex(word, history_id);
+  }
   search_term_cache_.clear();  // Invalidate the term cache.
 }
 
