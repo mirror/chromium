@@ -16,6 +16,24 @@
       "revId": "ffa5fb4f07cb2e26caeaccfcfb16a9d4291b58b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9eb2456_43cabcd8",
+        "filename": "ash/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 923,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-02T16:25:45Z",
+      "side": 1,
+      "message": "Yep, this is for exporting SessionState enum, similar to stuff under ash/public.\n\nI agree it is confusing. Eventually we might want to move SessionManager/UserManager into their own mojo services. But for types, it should be safe to use everywhere. Maybe I should move them into a \"public\" directory to be more clear?",
+      "parentUuid": "6c307a4e_db8431fd",
+      "revId": "ffa5fb4f07cb2e26caeaccfcfb16a9d4291b58b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
