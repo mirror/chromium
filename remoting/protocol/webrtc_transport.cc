@@ -74,9 +74,9 @@ void UpdateCodecParameters(SdpMessage* sdp_message, bool incoming) {
   // frames to webrtc.
   if (sdp_message->has_video()) {
     bool param_added = sdp_message->AddCodecParameter(
-        "VP8", "x-google-min-bitrate=1000; x-google-max-bitrate=100000");
+        "VP8", "x-google-min-bitrate=10000; x-google-max-bitrate=100000");
     param_added |= sdp_message->AddCodecParameter(
-        "VP9", "x-google-min-bitrate=1000; x-google-max-bitrate=100000");
+        "VP9", "x-google-min-bitrate=10000; x-google-max-bitrate=100000");
     if (!param_added) {
       if (incoming) {
         LOG(WARNING) << "Neither of VP8/VP9 is found in an incoming SDP.";

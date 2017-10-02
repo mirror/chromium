@@ -10,6 +10,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
+#include "base/time/time.h"
 #include "third_party/webrtc/modules/desktop_capture/desktop_capturer.h"
 
 namespace remoting {
@@ -48,6 +49,8 @@ class IpcVideoFrameCapturer : public webrtc::DesktopCapturer {
 
   // Used to cancel tasks pending on the capturer when it is stopped.
   base::WeakPtrFactory<IpcVideoFrameCapturer> weak_factory_;
+
+  base::Time capture_start_;
 
   DISALLOW_COPY_AND_ASSIGN(IpcVideoFrameCapturer);
 };

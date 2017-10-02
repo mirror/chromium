@@ -134,6 +134,7 @@ WebrtcFrameSchedulerSimple::~WebrtcFrameSchedulerSimple() {
 
 void WebrtcFrameSchedulerSimple::OnKeyFrameRequested() {
   DCHECK(thread_checker_.CalledOnValidThread());
+  LOG(ERROR) << "OnKeyFrameRequested()";
   encoder_ready_ = true;
   key_frame_request_ = true;
   ScheduleNextFrame(base::TimeTicks::Now());
@@ -143,7 +144,11 @@ void WebrtcFrameSchedulerSimple::OnChannelParameters(int packet_loss,
                                                      base::TimeDelta rtt) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
+  // LOG(ERROR) << "OnChannelParameters(" << rtt << ")";
   rtt_estimate_ = rtt;
+
+  // TODO(zijiehe): Debug
+  ScheduleNextFrame(base::TimeTicks::Now());
 }
 
 void WebrtcFrameSchedulerSimple::OnTargetBitrateChanged(int bandwidth_kbps) {
@@ -151,7 +156,10 @@ void WebrtcFrameSchedulerSimple::OnTargetBitrateChanged(int bandwidth_kbps) {
   base::TimeTicks now = base::TimeTicks::Now();
   pacing_bucket_.UpdateRate(bandwidth_kbps * 1000 / 8, now);
   encoder_bitrate_.SetBandwidthEstimate(bandwidth_kbps, now);
-  ScheduleNextFrame(now);
+  // LOG(ERROR) << "OnTargetBitrateChanged(" << bandwidth_kbps << ")";
+
+  // TODO(zijiehe): Debug
+  // ScheduleNextFrame(now);
 }
 
 void WebrtcFrameSchedulerSimple::Start(
@@ -295,8 +303,8 @@ void WebrtcFrameSchedulerSimple::ScheduleNextFrame(base::TimeTicks now) {
         target_capture_time, last_capture_started_time_ + kTargetFrameInterval);
   }
 
-  if (target_capture_time < now) {
-    target_capture_time = now;
+  if (target_capture_time < now + kTargetFrameInterval) {
+    target_capture_time = now + kTargetFrameInterval;
   }
 
   capture_timer_.Start(FROM_HERE, target_capture_time - now,
