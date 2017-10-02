@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5944c466_0829061d",
+        "filename": "content/public/test/test_navigation_throttle.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-02T21:02:26Z",
+      "side": 1,
+      "message": "I\u0027m not sure about the best way to handle ownership of the callback. Should this be a std::unique_ptr?\n\nAlso, an alternative to SetMethodCalledCallback() and SetMethodWillRespondCallback() would be to create an observer class. However, most uses only need to listen for one or the other right now.\nWould you have a preference for/against an observer?",
+      "revId": "2a9e56ef0a77b52e85b327eadf30673e81beae26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
