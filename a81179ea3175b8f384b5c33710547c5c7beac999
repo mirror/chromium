@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8cdf868a_a3fb7729",
+        "filename": "components/metrics/net/net_metrics_log_uploader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-10-02T17:57:43Z",
+      "side": 1,
+      "message": "Changed the method to private now.",
+      "parentUuid": "53bff779_0bb29792",
+      "range": {
+        "startLine": 120,
+        "startChar": 28,
+        "endLine": 120,
+        "endChar": 42
+      },
+      "revId": "a81179ea3175b8f384b5c33710547c5c7beac999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6eeb9e25_748d7e9f",
         "filename": "components/metrics/net/net_metrics_log_uploader.h",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d46c4a9b_7b01f86f",
+        "filename": "components/metrics/net/net_metrics_log_uploader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-10-02T17:57:43Z",
+      "side": 1,
+      "message": "It is only called from this class (right now from Upload Log, and the future plan is to call it from OnURLFetch complete), so it can. Changed it now.",
+      "parentUuid": "6eeb9e25_748d7e9f",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 21
+      },
+      "revId": "a81179ea3175b8f384b5c33710547c5c7beac999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcdc8cb7_1fe64643",
         "filename": "components/metrics/net/net_metrics_log_uploader.h",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "a81179ea3175b8f384b5c33710547c5c7beac999",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60512ea7_0e04377e",
+        "filename": "components/metrics/net/net_metrics_log_uploader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-10-02T17:57:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcdc8cb7_1fe64643",
+      "range": {
+        "startLine": 50,
+        "startChar": 22,
+        "endLine": 50,
+        "endChar": 26
+      },
+      "revId": "a81179ea3175b8f384b5c33710547c5c7beac999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
