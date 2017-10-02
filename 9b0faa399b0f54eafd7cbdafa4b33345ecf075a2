@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "5f208390_6fded71f",
+        "filename": "build/config/sanitizers/sanitizers.gni",
+        "patchSetId": 8
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-02T19:34:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f364fe27_c4cfed6e",
+      "revId": "9b0faa399b0f54eafd7cbdafa4b33345ecf075a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e211616b_7286a4e1",
         "filename": "third_party/libFuzzer/BUILD.gn",
         "patchSetId": 8
@@ -90,6 +108,30 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "e211616b_7286a4e1",
+      "range": {
+        "startLine": 12,
+        "startChar": 7,
+        "endLine": 12,
+        "endChar": 25
+      },
+      "revId": "9b0faa399b0f54eafd7cbdafa4b33345ecf075a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df8bb0d5_104f817a",
+        "filename": "third_party/libFuzzer/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-02T19:34:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0c29644_d82dc2b7",
       "range": {
         "startLine": 12,
         "startChar": 7,
