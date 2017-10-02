@@ -34,6 +34,24 @@
       "revId": "4a834ee897146169e4e8a3ab6592835b6dbaef72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e629abed_3d2d5c3d",
+        "filename": "components/arc/ime/arc_ime_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-10-02T09:41:49Z",
+      "side": 1,
+      "message": "As I checked, the event sequence of OnWindowFocused and OnWindowRemovingFromRootWindow is same.\n\nActually, OnWindowRemovingFromRootWindow is called only when an arc window is moved among displays, and is never called for notifications (since notifications can\u0027t moved among windows keeping the focus). When I added this change, IIRC OnWindowRemovingFromRootWindow was called when the notification was closed.",
+      "parentUuid": "5436d579_fe12482e",
+      "revId": "4a834ee897146169e4e8a3ab6592835b6dbaef72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
