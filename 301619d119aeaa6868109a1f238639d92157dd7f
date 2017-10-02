@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "00ac9672_0b4409d3",
+        "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-10-02T18:53:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff0ae4b8_754f7d3c",
+      "revId": "301619d119aeaa6868109a1f238639d92157dd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "540eef91_5d70d057",
         "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
         "patchSetId": 7
@@ -210,6 +228,24 @@
       "revId": "301619d119aeaa6868109a1f238639d92157dd7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "547f3aef_9048081c",
+        "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-10-02T18:53:19Z",
+      "side": 1,
+      "message": "Tested it and HasEventListener() always returns true when extension is suspended. Removed TODO.",
+      "parentUuid": "636bdd7d_f701e7f7",
+      "revId": "301619d119aeaa6868109a1f238639d92157dd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
