@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bf3279a_fd68549e",
+        "filename": "components/autofill/content/renderer/form_autofill_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1559,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-10-02T12:57:19Z",
+      "side": 1,
+      "message": "Is there an easy way to add a test for this part of the change?",
+      "range": {
+        "startLine": 1556,
+        "startChar": 2,
+        "endLine": 1559,
+        "endChar": 21
+      },
+      "revId": "a69dad79408d3c7fb3bb0b94ccfd266336b2215b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
