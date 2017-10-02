@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd570335_ea41b28b",
+        "filename": "testing/libfuzzer/coverage.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-10-02T15:20:30Z",
+      "side": 1,
+      "message": "nit again: Should be capitalized (i.e. CapsWord as per https://www.chromium.org/chromium-os/python-style-guidelines)",
+      "range": {
+        "startLine": 53,
+        "startChar": 4,
+        "endLine": 53,
+        "endChar": 5
+      },
+      "revId": "82509dff461146ee21b3c46c745aae34eea577cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38ad334a_3cea586d",
+        "filename": "testing/libfuzzer/coverage.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-10-02T15:20:30Z",
+      "side": 1,
+      "message": "nit: rename this too",
+      "range": {
+        "startLine": 274,
+        "startChar": 4,
+        "endLine": 274,
+        "endChar": 25
+      },
+      "revId": "82509dff461146ee21b3c46c745aae34eea577cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
