@@ -70,6 +70,30 @@
       "revId": "a85d6fb7f66172a10c0fa4857e773dad6e78242b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cdfda37b_ca0b83a9",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-10-02T16:55:02Z",
+      "side": 1,
+      "message": "Thanks for your advice on the Promise. I\u0027ll keep that in mind.",
+      "parentUuid": "878a923b_4b060c36",
+      "range": {
+        "startLine": 303,
+        "startChar": 38,
+        "endLine": 303,
+        "endChar": 58
+      },
+      "revId": "a85d6fb7f66172a10c0fa4857e773dad6e78242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
