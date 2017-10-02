@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89a988db_7bbd3ad0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-02T16:55:43Z",
+      "side": 1,
+      "message": "😦\n\nWhy did we have them in the first place?",
+      "range": {
+        "startLine": 12,
+        "startChar": 37,
+        "endLine": 12,
+        "endChar": 56
+      },
+      "revId": "eaa5bb139138433a5584a6ab1214d4c738e09b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec3cadf1_b1deb085",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-02T16:55:43Z",
+      "side": 1,
+      "message": "This block seems like a bad git merge. This CL should only be changing VR files.",
+      "range": {
+        "startLine": 166,
+        "startChar": 0,
+        "endLine": 175,
+        "endChar": 0
+      },
+      "revId": "eaa5bb139138433a5584a6ab1214d4c738e09b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
