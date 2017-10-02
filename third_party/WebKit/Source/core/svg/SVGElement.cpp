@@ -383,13 +383,13 @@ AffineTransform SVGElement::CalculateTransform(
       reference_box.Scale(zoom);
       transform.Scale(1 / zoom);
       style->ApplyTransform(
-          transform, reference_box, apply_transform_origin,
+          transform, reference_box, GetLayoutObject(), apply_transform_origin,
           ComputedStyle::kIncludeMotionPath,
           ComputedStyle::kIncludeIndependentTransformProperties);
       transform.Scale(zoom);
     } else {
       style->ApplyTransform(
-          transform, reference_box, apply_transform_origin,
+          transform, reference_box, GetLayoutObject(), apply_transform_origin,
           ComputedStyle::kIncludeMotionPath,
           ComputedStyle::kIncludeIndependentTransformProperties);
     }
