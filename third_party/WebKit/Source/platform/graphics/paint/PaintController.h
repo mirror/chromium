@@ -22,7 +22,6 @@
 #include "platform/wtf/Alignment.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/HashMap.h"
-#include "platform/wtf/HashSet.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/Vector.h"
 #include "third_party/skia/include/core/SkRefCnt.h"

@@ -33,6 +33,7 @@
 #include "platform/mhtml/ArchiveResource.h"
 #include "platform/network/ParsedContentType.h"
 #include "platform/text/QuotedPrintable.h"
+#include "platform/weborigin/KURL.h"
 #include "platform/wtf/HashMap.h"
 #include "platform/wtf/text/Base64.h"
 #include "platform/wtf/text/StringBuilder.h"

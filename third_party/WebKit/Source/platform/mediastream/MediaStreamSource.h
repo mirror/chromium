@@ -40,7 +40,6 @@
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Optional.h"
 #include "platform/wtf/ThreadingPrimitives.h"
-#include "platform/wtf/Vector.h"
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebMediaConstraints.h"
 #include "public/platform/WebMediaStreamTrack.h"

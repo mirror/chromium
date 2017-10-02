@@ -23,9 +23,10 @@
 #ifndef WTF_ListHashSet_h
 #define WTF_ListHashSet_h
 
+#include <memory>
+#include "platform/wtf/Forward.h"
 #include "platform/wtf/HashSet.h"
 #include "platform/wtf/allocator/PartitionAllocator.h"
-#include <memory>
 
 namespace WTF {
 
@@ -37,12 +38,6 @@ namespace WTF {
 // Unlike iteration of most WTF Hash data structures, iteration is guaranteed
 // safe against mutation of the ListHashSet, except for removal of the item
 // currently pointed to by a given iterator.
-
-template <typename Value,
-          size_t inlineCapacity,
-          typename HashFunctions,
-          typename Allocator>
-class ListHashSet;
 
 template <typename Set>
 class ListHashSetIterator;
@@ -68,10 +63,9 @@ struct ListHashSetTranslator;
 // Note that for a ListHashSet you cannot specify the HashTraits as a template
 // argument. It uses the default hash traits for the ValueArg type.
 template <typename ValueArg,
-          size_t inlineCapacity = 256,
-          typename HashArg = typename DefaultHash<ValueArg>::Hash,
-          typename AllocatorArg =
-              ListHashSetAllocator<ValueArg, inlineCapacity>>
+          size_t inlineCapacity,
+          typename HashArg,
+          typename AllocatorArg>
 class ListHashSet
     : public ConditionalDestructor<
           ListHashSet<ValueArg, inlineCapacity, HashArg, AllocatorArg>,

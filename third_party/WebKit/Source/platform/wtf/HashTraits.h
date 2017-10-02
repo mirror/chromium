@@ -39,8 +39,6 @@ template <bool isInteger, typename T>
 struct GenericHashTraitsBase;
 template <bool is_enum, typename T>
 struct EnumOrGenericHashTraits;
-template <typename T>
-struct HashTraits;
 
 enum ShouldWeakPointersBeMarkedStrongly {
   kWeakPointersActStrong,

@@ -35,6 +35,7 @@
 
 #include <iterator>
 #include "platform/wtf/Allocator.h"
+#include "platform/wtf/Forward.h"
 #include "platform/wtf/Vector.h"
 
 namespace WTF {
@@ -46,9 +47,7 @@ class DequeIterator;
 template <typename T, size_t inlineCapacity, typename Allocator>
 class DequeConstIterator;
 
-template <typename T,
-          size_t inlineCapacity = 0,
-          typename Allocator = PartitionAllocator>
+template <typename T, size_t inlineCapacity, typename Allocator>
 class Deque : public ConditionalDestructor<Deque<T, INLINE_CAPACITY, Allocator>,
                                            (INLINE_CAPACITY == 0) &&
                                                Allocator::kIsGarbageCollected> {

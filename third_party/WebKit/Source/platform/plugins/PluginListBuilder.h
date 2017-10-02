@@ -33,7 +33,6 @@
 
 #include "platform/plugins/PluginData.h"
 #include "platform/wtf/Allocator.h"
-#include "platform/wtf/Vector.h"
 #include "public/platform/WebPluginListBuilder.h"
 
 namespace blink {

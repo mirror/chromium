@@ -29,6 +29,7 @@
 #include "platform/graphics/ImageFrameGenerator.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/wtf/Threading.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 

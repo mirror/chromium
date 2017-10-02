@@ -9,8 +9,8 @@
 #include "platform/PlatformExport.h"
 #include "platform/loader/fetch/IntegrityMetadata.h"
 #include "platform/wtf/Allocator.h"
+#include "platform/wtf/Forward.h"
 #include "platform/wtf/Vector.h"
-#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 

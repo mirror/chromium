@@ -7,11 +7,8 @@
 
 #include "platform/PlatformExport.h"
 #include "platform/weborigin/SecurityOrigin.h"
-#include "platform/wtf/HashMap.h"
+#include "platform/wtf/Forward.h"
 #include "platform/wtf/RefPtr.h"
-#include "platform/wtf/Vector.h"
-#include "platform/wtf/text/StringHash.h"
-#include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebFeaturePolicy.h"
 
 #include <memory>

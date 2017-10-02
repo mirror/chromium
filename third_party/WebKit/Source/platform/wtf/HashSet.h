@@ -21,9 +21,10 @@
 #ifndef WTF_HashSet_h
 #define WTF_HashSet_h
 
+#include <initializer_list>
+#include "platform/wtf/Forward.h"
 #include "platform/wtf/HashTable.h"
 #include "platform/wtf/allocator/PartitionAllocator.h"
-#include <initializer_list>
 
 namespace WTF {
 
@@ -34,9 +35,9 @@ struct IdentityExtractor;
 // allowed; for integer keys 0 or -1 can't be used as a key. This restriction
 // can be lifted if you supply custom key traits.
 template <typename ValueArg,
-          typename HashArg = typename DefaultHash<ValueArg>::Hash,
-          typename TraitsArg = HashTraits<ValueArg>,
-          typename Allocator = PartitionAllocator>
+          typename HashArg,
+          typename TraitsArg,
+          typename Allocator>
 class HashSet {
   USE_ALLOCATOR(HashSet, Allocator);
 

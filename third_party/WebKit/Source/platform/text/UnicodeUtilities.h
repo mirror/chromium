@@ -27,9 +27,8 @@
 #define UnicodeUtilities_h
 
 #include "platform/PlatformExport.h"
-#include "platform/wtf/Vector.h"
+#include "platform/wtf/Forward.h"
 #include "platform/wtf/text/Unicode.h"
-#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 

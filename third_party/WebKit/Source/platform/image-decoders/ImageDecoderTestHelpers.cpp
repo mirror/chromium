@@ -9,6 +9,7 @@
 #include "platform/image-decoders/ImageFrame.h"
 #include "platform/testing/UnitTestHelpers.h"
 #include "platform/wtf/StringHasher.h"
+#include "platform/wtf/Vector.h"
 #include "platform/wtf/text/StringBuilder.h"
 #include "testing/gtest/include/gtest/gtest.h"
 

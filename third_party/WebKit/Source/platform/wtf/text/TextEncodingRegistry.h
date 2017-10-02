@@ -27,10 +27,9 @@
 #define TextEncodingRegistry_h
 
 #include <memory>
-#include "platform/wtf/Vector.h"
+#include "platform/wtf/Forward.h"
 #include "platform/wtf/WTFExport.h"
 #include "platform/wtf/text/Unicode.h"
-#include "platform/wtf/text/WTFString.h"
 
 namespace WTF {
 

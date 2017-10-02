@@ -25,9 +25,11 @@
 
 #include "platform/wtf/text/TextPosition.h"
 
-#include "platform/wtf/StdLibExtras.h"
 #include <algorithm>
 #include <memory>
+#include "platform/wtf/StdLibExtras.h"
+#include "platform/wtf/Vector.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace WTF {
 
