@@ -34,6 +34,24 @@
       "revId": "d2bb78e9f5ce931dff002c06b33c1965f90d0692",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4dd68cd_c2d109e3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/pointerevents/pointerevent_touch-adjustment_click_target-manual.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-10-02T17:24:55Z",
+      "side": 1,
+      "message": "Technically, testharness tests like this one can also be put outside WPT (http/tests if the test needs a server) and they should just work. Though I\u0027m not sure what is the most sensible choice spec/interop-wise in this case (lacking the context of spec status regarding touch events).",
+      "parentUuid": "a55d9160_6317915e",
+      "revId": "d2bb78e9f5ce931dff002c06b33c1965f90d0692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
