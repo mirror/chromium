@@ -2,6 +2,86 @@
   "comments": [
     {
       "key": {
+        "uuid": "95b14b1a_87b84046",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-02T22:04:19Z",
+      "side": 1,
+      "message": "theoretically (though very unlikely), this might fail (if current ID overflows 32 bits).\n\nso. maybe bail out if the returned resource_id is 0.",
+      "revId": "a3550544969069c47776ec11554136942a2050ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26f46b97_325f1f91",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-02T22:04:19Z",
+      "side": 1,
+      "message": "I\u0027d find this slightly less convoluted if you passed RemoveHandle here instead in the LogSourceResource ctor :)\n\ni.e. something like:\nApiResourceManager::Get(context))-\u003eGet(extension_id, resource_id)-\u003eSetDeletionCallback(\n    base::Bind(RemoveHandle, resource_id));\n\nAdditionally, you could stash a reference to new_resource and use it directly instead of retrieving it from LogSeourceResource.",
+      "range": {
+        "startLine": 166,
+        "startChar": 8,
+        "endLine": 166,
+        "endChar": 23
+      },
+      "revId": "a3550544969069c47776ec11554136942a2050ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e727d507_b0565378",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-02T22:04:19Z",
+      "side": 1,
+      "message": "open_handles_.emplace(resource_id, std::make_unique\u003cSourceAndExtension(source, extension_id)\u003e);",
+      "range": {
+        "startLine": 167,
+        "startChar": 2,
+        "endLine": 168,
+        "endChar": 52
+      },
+      "revId": "a3550544969069c47776ec11554136942a2050ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02c4c45b_5bbc3cde",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-02T22:04:19Z",
+      "side": 1,
+      "message": "would it be worth it caching the num of open handles per source, or mapping open_handles by source (to avoid linear search here).\nIs the the expected number of total open handles small enough that we don\u0027t care?",
+      "revId": "a3550544969069c47776ec11554136942a2050ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2cd05f49_a7bf6e47",
         "filename": "extensions/browser/api/feedback_private/log_source_access_manager.h",
         "patchSetId": 3
@@ -63,6 +143,63 @@
         "startLine": 93,
         "startChar": 7,
         "endLine": 93,
+        "endChar": 24
+      },
+      "revId": "a3550544969069c47776ec11554136942a2050ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff689e65_3f32ad29",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager_chromeos_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-02T22:04:19Z",
+      "side": 1,
+      "message": "you could move this to the for loop (to test that the number is updated on each addition)",
+      "revId": "a3550544969069c47776ec11554136942a2050ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dac5e2de_f068de01",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager_chromeos_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-02T22:04:19Z",
+      "side": 1,
+      "message": "this is pretty much the same as the previous loop, can you extract it into a helper function?",
+      "revId": "a3550544969069c47776ec11554136942a2050ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f56dfce2_ef7ecdbd",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager_chromeos_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-02T22:04:19Z",
+      "side": 1,
+      "message": "shouldn\u0027t one attempt be enough here?",
+      "range": {
+        "startLine": 72,
+        "startChar": 15,
+        "endLine": 72,
         "endChar": 24
       },
       "revId": "a3550544969069c47776ec11554136942a2050ca",
