@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2222cc28_a251ca06",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-10-02T21:15:59Z",
+      "side": 1,
+      "message": "GestureEvent (and some how touch event) are still using the int version FindEventTarget",
+      "parentUuid": "4bf6f4dc_1f1ae3c0",
+      "revId": "cdf267b2113f4a92774b45be7ce4ce7d01eb26be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "586367a1_8208b61e",
         "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
         "patchSetId": 5
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "2d127d60_bf81e6f0",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-10-02T21:15:59Z",
+      "side": 1,
+      "message": "Sorry, I didn\u0027t know that. Done.",
+      "parentUuid": "586367a1_8208b61e",
+      "range": {
+        "startLine": 625,
+        "startChar": 17,
+        "endLine": 625,
+        "endChar": 23
+      },
+      "revId": "cdf267b2113f4a92774b45be7ce4ce7d01eb26be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db960601_33ac37a2",
         "filename": "content/browser/web_contents/web_contents_view_aura.cc",
         "patchSetId": 5
@@ -56,6 +98,24 @@
       "revId": "cdf267b2113f4a92774b45be7ce4ce7d01eb26be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9897fd44_7c9611bf",
+        "filename": "content/browser/web_contents/web_contents_view_aura.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-10-02T21:15:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db960601_33ac37a2",
+      "revId": "cdf267b2113f4a92774b45be7ce4ce7d01eb26be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
