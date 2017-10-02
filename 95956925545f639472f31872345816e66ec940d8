@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e96daf7c_a71c373c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-02T23:03:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f1c4c67_ca8fd95a",
+      "revId": "95956925545f639472f31872345816e66ec940d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bf44957_9141f92c",
         "filename": "components/offline_pages/core/BUILD.gn",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "95956925545f639472f31872345816e66ec940d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6c9ffa5_053ece69",
+        "filename": "components/offline_pages/core/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-02T23:03:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bf44957_9141f92c",
+      "revId": "95956925545f639472f31872345816e66ec940d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b3e0e4fc_cde43473",
+        "filename": "components/offline_pages/core/model/mark_page_accessed_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-02T23:03:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4be6d3aa_20ee8741",
+      "revId": "95956925545f639472f31872345816e66ec940d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82db3b0c_e86d5c33",
         "filename": "components/offline_pages/core/model/temporary_consistency_check_task.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "95956925545f639472f31872345816e66ec940d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5bdf6c8_e368dfe7",
+        "filename": "components/offline_pages/core/model/temporary_consistency_check_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-02T23:03:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82db3b0c_e86d5c33",
+      "revId": "95956925545f639472f31872345816e66ec940d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "afb01260_b2c39f2b",
+        "filename": "components/offline_pages/core/model/temporary_consistency_check_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-02T23:03:09Z",
+      "side": 1,
+      "message": "it sounds great.\nAnd I think it\u0027s reasonable to have To/FromDBTime moved to the same file file as well. Maybe it can be offline_store_utils and we move it to core/...\nI\u0027ve added a blocking issue for the main crbug. I\u0027ll work on it soon.",
+      "parentUuid": "44ad50c4_0f936598",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 65
+      },
+      "revId": "95956925545f639472f31872345816e66ec940d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "687da4af_70bb617b",
         "filename": "components/offline_pages/core/model/temporary_consistency_check_task.cc",
         "patchSetId": 2
@@ -113,6 +209,30 @@
       "revId": "95956925545f639472f31872345816e66ec940d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26db4d04_a51c0acd",
+        "filename": "components/offline_pages/core/model/temporary_consistency_check_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-02T23:03:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "687da4af_70bb617b",
+      "range": {
+        "startLine": 42,
+        "startChar": 16,
+        "endLine": 42,
+        "endChar": 58
+      },
+      "revId": "95956925545f639472f31872345816e66ec940d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "7497677c_8e312742",
+        "filename": "components/offline_pages/core/model/temporary_consistency_check_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-02T23:03:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "908c6c62_d7700b24",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 4
+      },
+      "revId": "95956925545f639472f31872345816e66ec940d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c5454bb_f79412e1",
         "filename": "components/offline_pages/core/model/temporary_consistency_check_task.cc",
         "patchSetId": 2
@@ -159,6 +303,30 @@
       "revId": "95956925545f639472f31872345816e66ec940d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae2ea3ed_7d298045",
+        "filename": "components/offline_pages/core/model/temporary_consistency_check_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-02T23:03:09Z",
+      "side": 1,
+      "message": "Done\nI would rather not to shortcut the loop (based on the assumption that maybe next statement.Run() will succeed even if this one fails, maybe the assumption is nonsense), since I\u0027d like to remove as many entries as possible even if some of them failed.",
+      "parentUuid": "1c5454bb_f79412e1",
+      "range": {
+        "startLine": 86,
+        "startChar": 4,
+        "endLine": 86,
+        "endChar": 30
+      },
+      "revId": "95956925545f639472f31872345816e66ec940d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -185,6 +353,30 @@
     },
     {
       "key": {
+        "uuid": "1923126f_0effc78b",
+        "filename": "components/offline_pages/core/model/temporary_consistency_check_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-02T23:03:09Z",
+      "side": 1,
+      "message": "Ack\nThe method will return false if any file deletion fails.",
+      "parentUuid": "695a2efd_9eb0b0fd",
+      "range": {
+        "startLine": 97,
+        "startChar": 11,
+        "endLine": 97,
+        "endChar": 14
+      },
+      "revId": "95956925545f639472f31872345816e66ec940d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86015f83_304b6d3d",
         "filename": "components/offline_pages/core/model/temporary_consistency_check_task.cc",
         "patchSetId": 2
@@ -199,6 +391,24 @@
       "revId": "95956925545f639472f31872345816e66ec940d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebfc0982_4134edf6",
+        "filename": "components/offline_pages/core/model/temporary_consistency_check_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-02T23:03:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86015f83_304b6d3d",
+      "revId": "95956925545f639472f31872345816e66ec940d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -219,6 +429,24 @@
     },
     {
       "key": {
+        "uuid": "ef63c49d_96678774",
+        "filename": "components/offline_pages/core/model/temporary_consistency_check_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-02T23:03:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50711389_212ec42d",
+      "revId": "95956925545f639472f31872345816e66ec940d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65942c0a_44348a89",
         "filename": "components/offline_pages/core/model/temporary_consistency_check_task.cc",
         "patchSetId": 2
@@ -236,6 +464,24 @@
     },
     {
       "key": {
+        "uuid": "7017d50a_fce4e4d5",
+        "filename": "components/offline_pages/core/model/temporary_consistency_check_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-02T23:03:09Z",
+      "side": 1,
+      "message": "I think 2 can be part of the new task which contains the step 1(mentioned in the header file), that only will be run at the start of Chrome, that does the following things:\n1. Delete all temporary pages (and their files) if the file path is in abandoned dir.\n2. Move files in the abandoned dir that are referenced by persistent pages to the new external directory, and update the persistent page entries.\n3. Delete all the remaining files in the abandoned dir.\nExpectation is after the task, the abandoned dir will be empty.\nThis won\u0027t be resolved in this CL, but this is also part of the TODO crbug mentioned in the header file. WDYT?",
+      "parentUuid": "65942c0a_44348a89",
+      "revId": "95956925545f639472f31872345816e66ec940d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d3d89c26_64d7ee89",
         "filename": "components/offline_pages/core/model/temporary_consistency_check_task.cc",
         "patchSetId": 2
@@ -247,6 +493,24 @@
       "writtenOn": "2017-09-29T22:43:34Z",
       "side": 1,
       "message": "Do we have a separate task to move the files?\nIs the idea that we just kill all the files and wipe the cache?\nWould it not make sense to simply let the pages expire and only delete the files that cannot be matched to an existing page at the time?",
+      "revId": "95956925545f639472f31872345816e66ec940d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3bb9dea_2f07d05e",
+        "filename": "components/offline_pages/core/model/temporary_consistency_check_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-02T23:03:09Z",
+      "side": 1,
+      "message": "- there will be another task to move files as i mentioned above.\n- The idea is better explained in the reply above.\n- I don\u0027t think i understand the suggestion... Are you suggesting towards temporary pages or persistent ones? For temporary pages I believe there is no longer a way to \u0027let the pages expire\u0027. For persistent pages, they\u0027ll be processed in another task wrt the plan. Am I misunderstanding?",
+      "parentUuid": "d3d89c26_64d7ee89",
       "revId": "95956925545f639472f31872345816e66ec940d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -276,6 +540,30 @@
     },
     {
       "key": {
+        "uuid": "f06cd531_61aad0f2",
+        "filename": "components/offline_pages/core/model/temporary_consistency_check_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-02T23:03:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b5df464_13ab3414",
+      "range": {
+        "startLine": 124,
+        "startChar": 34,
+        "endLine": 124,
+        "endChar": 47
+      },
+      "revId": "95956925545f639472f31872345816e66ec940d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a6c3d50_22c5bc1b",
         "filename": "components/offline_pages/core/model/temporary_consistency_check_task.cc",
         "patchSetId": 2
@@ -290,6 +578,24 @@
       "revId": "95956925545f639472f31872345816e66ec940d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b03b4d9c_59f54fa5",
+        "filename": "components/offline_pages/core/model/temporary_consistency_check_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-02T23:03:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a6c3d50_22c5bc1b",
+      "revId": "95956925545f639472f31872345816e66ec940d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -316,6 +622,30 @@
     },
     {
       "key": {
+        "uuid": "50f8bcd1_2487aac0",
+        "filename": "components/offline_pages/core/model/temporary_consistency_check_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-02T23:03:09Z",
+      "side": 1,
+      "message": "Done\nAdded a TODO above, and opened a bug for it.",
+      "parentUuid": "b6e624ed_fa235bb9",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 22,
+        "endChar": 66
+      },
+      "revId": "95956925545f639472f31872345816e66ec940d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86626cc2_280911c4",
         "filename": "components/offline_pages/core/model/temporary_consistency_check_task.h",
         "patchSetId": 2
@@ -339,6 +669,30 @@
     },
     {
       "key": {
+        "uuid": "40737dd9_97d51050",
+        "filename": "components/offline_pages/core/model/temporary_consistency_check_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-02T23:03:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86626cc2_280911c4",
+      "range": {
+        "startLine": 27,
+        "startChar": 3,
+        "endLine": 28,
+        "endChar": 12
+      },
+      "revId": "95956925545f639472f31872345816e66ec940d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5b75835_4a62737c",
         "filename": "components/offline_pages/core/model/temporary_consistency_check_task_unittest.cc",
         "patchSetId": 2
@@ -359,6 +713,30 @@
       "revId": "95956925545f639472f31872345816e66ec940d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e147128_e5a8df95",
+        "filename": "components/offline_pages/core/model/temporary_consistency_check_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-02T23:03:09Z",
+      "side": 1,
+      "message": "the problem isn\u0027t affecting this test only. It\u0027s something better to be fixed not avoided.",
+      "parentUuid": "d5b75835_4a62737c",
+      "range": {
+        "startLine": 122,
+        "startChar": 28,
+        "endLine": 122,
+        "endChar": 52
+      },
+      "revId": "95956925545f639472f31872345816e66ec940d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
