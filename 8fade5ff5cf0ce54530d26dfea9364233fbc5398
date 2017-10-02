@@ -16,6 +16,24 @@
       "revId": "8fade5ff5cf0ce54530d26dfea9364233fbc5398",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5b60c70_d80f5dd5",
+        "filename": "ash/display/mirror_window_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-02T23:59:45Z",
+      "side": 0,
+      "message": "This ends up being called from ::wm::ConvertPointFromScreen() in the case of unified mode only. It is set here:  https://cs.chromium.org/chromium/src/ash/display/mirror_window_controller.cc?q\u003dMirrorWindowController::UpdateWindow\u0026sq\u003dpackage:chromium\u0026l\u003d197-198\n\nThis buggy. It doesn\u0027t work when laying out displays vertically or in a matrix. It produces completely wrong edges or no edges at all when we compute the bounds in the mouse warp code.",
+      "parentUuid": "976e5521_1c0e5884",
+      "revId": "8fade5ff5cf0ce54530d26dfea9364233fbc5398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
