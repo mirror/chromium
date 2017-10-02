@@ -42,11 +42,6 @@ void RecursivelyRemovePasswordData(ExplodedFrameState* state) {
     state->http_body = ExplodedHttpBody();
 }
 
-void RecursivelyRemoveScrollOffset(ExplodedFrameState* state) {
-  state->scroll_offset = gfx::Point();
-  state->visual_viewport_scroll_offset = gfx::PointF();
-}
-
 void RecursivelyRemoveReferrer(ExplodedFrameState* state) {
   state->referrer = base::NullableString16();
   state->referrer_policy = blink::kWebReferrerPolicyDefault;
@@ -152,16 +147,6 @@ PageState PageState::RemovePasswordData() const {
     return PageState();  // Oops!
 
   RecursivelyRemovePasswordData(&state.top);
-
-  return ToPageState(state);
-}
-
-PageState PageState::RemoveScrollOffset() const {
-  ExplodedPageState state;
-  if (!DecodePageState(data_, &state))
-    return PageState();  // Oops!
-
-  RecursivelyRemoveScrollOffset(&state.top);
 
   return ToPageState(state);
 }

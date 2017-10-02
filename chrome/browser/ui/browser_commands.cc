@@ -1187,22 +1187,7 @@ bool IsDebuggerAttachedToCurrentTab(Browser* browser) {
       content::DevToolsAgentHost::IsDebuggerAttached(contents) : false;
 }
 
-void ViewSource(Browser* browser, WebContents* contents) {
-  DCHECK(contents);
-
-  // Use the last committed entry, since the pending entry hasn't loaded yet and
-  // won't be copied into the cloned tab.
-  NavigationEntry* entry = contents->GetController().GetLastCommittedEntry();
-  if (!entry)
-    return;
-
-  ViewSource(browser, contents, entry->GetURL(), entry->GetPageState());
-}
-
-void ViewSource(Browser* browser,
-                WebContents* contents,
-                const GURL& url,
-                const content::PageState& page_state) {
+void ViewSource(Browser* browser, WebContents* contents, const GURL& url) {
   base::RecordAction(UserMetricsAction("ViewSource"));
   DCHECK(contents);
 
@@ -1220,7 +1205,7 @@ void ViewSource(Browser* browser,
   last_committed_entry->SetURL(url);
 
   // Do not restore scroller position.
-  last_committed_entry->SetPageState(page_state.RemoveScrollOffset());
+  last_committed_entry->SetPageState(content::PageState::CreateFromURL(url));
 
   // Do not restore title, derive it from the url.
   view_source_contents->UpdateTitleForEntry(last_committed_entry,
@@ -1264,7 +1249,9 @@ void ViewSource(Browser* browser,
 }
 
 void ViewSelectedSource(Browser* browser) {
-  ViewSource(browser, browser->tab_strip_model()->GetActiveWebContents());
+  WebContents* contents = browser->tab_strip_model()->GetActiveWebContents();
+  ViewSource(browser, contents,
+             contents->GetController().GetLastCommittedEntry()->GetURL());
 }
 
 bool CanViewSource(const Browser* browser) {
