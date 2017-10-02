@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f420d908_3cf3e6d3",
+        "filename": "components/viz/common/gl_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 985,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-10-02T17:34:18Z",
+      "side": 1,
+      "message": "nit: Can these two sizes be calculated here? It seems that they are const in this function and can be passed to EnsureTexturesSizedFor() as two const ref params. Just style preference though. It is up to you to change it or not. :)",
+      "range": {
+        "startLine": 985,
+        "startChar": 12,
+        "endLine": 985,
+        "endChar": 29
+      },
+      "revId": "02ad7f37afe8ffc286d885c0b0bf544da494e47b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0b5a79f_98c9f7e8",
+        "filename": "components/viz/common/gl_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-10-02T17:34:18Z",
+      "side": 1,
+      "message": "nit: return GL_RGBA",
+      "range": {
+        "startLine": 320,
+        "startChar": 7,
+        "endLine": 320,
+        "endChar": 20
+      },
+      "revId": "02ad7f37afe8ffc286d885c0b0bf544da494e47b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
