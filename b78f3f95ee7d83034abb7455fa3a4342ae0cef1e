@@ -2,6 +2,228 @@
   "comments": [
     {
       "key": {
+        "uuid": "f2cb5450_e65ace78",
+        "filename": "chrome/gpu/chrome_arc_video_decode_accelerator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-10-02T07:34:42Z",
+      "side": 1,
+      "message": "Unfortunately, if vda is not initialized, arc_client_ is nullptr as well. We cannot report the error back in this case.",
+      "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f56f7111_b194691b",
+        "filename": "chrome/gpu/chrome_arc_video_decode_accelerator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-10-02T07:34:42Z",
+      "side": 1,
+      "message": "I would prefer to log unaligned size since it provides more information.",
+      "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f18b9454_84793cf3",
+        "filename": "chrome/gpu/chrome_arc_video_decode_accelerator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-10-02T07:34:42Z",
+      "side": 1,
+      "message": "nit: use auto?\nSame for protected_pixmap below.",
+      "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b53f887_aae1fc5a",
+        "filename": "chrome/gpu/chrome_arc_video_decode_accelerator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-10-02T07:34:42Z",
+      "side": 1,
+      "message": "nit: auto input_info \u003d base::MakeUnique\u003cInputBufferInfo\u003e();",
+      "range": {
+        "startLine": 223,
+        "startChar": 37,
+        "endLine": 223,
+        "endChar": 47
+      },
+      "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d35a8fb9_d95c20c6",
+        "filename": "chrome/gpu/chrome_arc_video_decode_accelerator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-10-02T07:34:42Z",
+      "side": 1,
+      "message": "nit: auto?",
+      "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dce38d7c_97e4136c",
+        "filename": "chrome/gpu/chrome_content_gpu_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-10-02T07:34:42Z",
+      "side": 1,
+      "message": "Why not merge the two \"if defined\"?",
+      "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57696878_ab3b0561",
+        "filename": "chrome/gpu/chrome_content_gpu_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-10-02T07:34:42Z",
+      "side": 1,
+      "message": "I am confusing about the two manager. Could you give a brief comments about these two managers and the relations in between?",
+      "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8baa76db_206171dd",
+        "filename": "chrome/gpu/protected_buffer_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-10-02T07:34:42Z",
+      "side": 1,
+      "message": "nit auto",
+      "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf64984f_27fad139",
+        "filename": "chrome/gpu/protected_buffer_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-10-02T07:34:42Z",
+      "side": 1,
+      "message": "mmm.... Why not directly allocate shared memory from base::SharedMemory?",
+      "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59553b86_7c7dd1ea",
+        "filename": "chrome/gpu/protected_buffer_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-10-02T07:34:42Z",
+      "side": 1,
+      "message": "use emplace?",
+      "range": {
+        "startLine": 175,
+        "startChar": 14,
+        "endLine": 175,
+        "endChar": 20
+      },
+      "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "771bc684_77b7871f",
+        "filename": "chrome/gpu/protected_buffer_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-10-02T07:34:42Z",
+      "side": 1,
+      "message": "auto",
+      "range": {
+        "startLine": 281,
+        "startChar": 21,
+        "endLine": 281,
+        "endChar": 33
+      },
+      "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb1ba157_6f4ff37e",
+        "filename": "chrome/gpu/protected_buffer_manager_proxy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-10-02T07:34:42Z",
+      "side": 1,
+      "message": "Why std::move()? I thought it is used for OnceCallback?\n\nWe can enable it but would prefer to do that in a stand along CL.\n\nhttps://groups.google.com/a/chromium.org/forum/#!topic/chromium-reviews/M2T03d0YpbA",
+      "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "671b1795_d667be2d",
         "filename": "components/arc/common/video_decode_accelerator.mojom",
         "patchSetId": 3
@@ -30,6 +252,40 @@
       "writtenOn": "2017-10-02T04:43:33Z",
       "side": 1,
       "message": "MinVersion\u003d1.\nThe version number is counting per struct/interface.",
+      "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "651ca9cc_cd17c4f0",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-10-02T07:34:42Z",
+      "side": 1,
+      "message": "I believe the version is within the struct. The next MinVersion should be 1.\n\nhttps://chromium.googlesource.com/chromium/src/+/master/mojo/public/tools/bindings#Versioning",
+      "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "750280aa_1a7fd930",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-10-02T07:34:42Z",
+      "side": 1,
+      "message": "Document about the return value.",
       "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
