@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Populate backends.
+PASS Clear backend when 'storage' is deleted: Indexed DB
+PASS Clear backend when 'storage' is deleted: filesystems
+PASS Clear backend when 'storage' is deleted: service workers
+FAIL Clear backend when 'storage' is deleted: WebSQL promise_test: Unhandled rejection with value: object "InvalidStateError: Failed to execute 'openDatabase' on 'Window': unable to open database (14 unable to open database file)"
+Harness: the test ran to completion.
+
