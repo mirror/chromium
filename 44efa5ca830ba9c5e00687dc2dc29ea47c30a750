@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d300d1ab_b59a582d",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-10-02T18:59:32Z",
+      "side": 1,
+      "message": "It probably won\u0027t compile for SelectionPopupControllerTest.java since SelectionClientManager imported |TextClassifier|. Need to inject this from |ContentViewCore|.\n\nSelectionPopupControllerTest.java is inside of \"content_junit_tests\" build target.",
+      "range": {
+        "startLine": 199,
+        "startChar": 38,
+        "endLine": 199,
+        "endChar": 60
+      },
+      "revId": "44efa5ca830ba9c5e00687dc2dc29ea47c30a750",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
