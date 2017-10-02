@@ -70,6 +70,24 @@
       "revId": "fa93203f8ec1b2a7122f9c714db637d61d2c9a66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9809547_ab0d8e45",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-02T23:14:43Z",
+      "side": 1,
+      "message": "Will do.  Note that \"URLRequestContext\" is more \"Your gateway to centralized network objects\" rather than just \"Thing you use to make URLRequests\".\n\nWhen you\u0027re using the network service, you won\u0027t need this, since both NetLog and the URLRequestContext will be on the other side of the process divide, though you will need to use either a NetworkContext or NetworkService object to create sockets.\n\nUnfortunately, there\u0027s no single design doc.  Encompassing service worker, TCP/UDP/SSL sockets, appcache, network state monitoring, proxies, cookies, cache configuration, cache access, auth, client certs, iOS, downloads, navigation, mime sniffing, safe browsing, DNS resolution, etc, in a single doc just doesn\u0027t work.  While there was certainly discussion of overall design, that mostly focused on URLRequests, due to the complexities there.\n\nxunjieli plans to work on design and implementation of the socket API for the network service this quarter.  I imagine TCP/UDP/SSL sockets will be a fairly straightforward wrapper around lower level APIs (Though for SSL, our only low level API uses socket pools, so not sure how that will work).",
+      "parentUuid": "deba4a3c_3457787f",
+      "revId": "fa93203f8ec1b2a7122f9c714db637d61d2c9a66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
