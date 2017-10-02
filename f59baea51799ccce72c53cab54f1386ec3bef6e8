@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7ad6ada_44b8cc1f",
+        "filename": "chrome/renderer/chrome_content_renderer_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1684,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-02T18:44:53Z",
+      "side": 1,
+      "message": "Nit: static constexpr",
+      "revId": "f59baea51799ccce72c53cab54f1386ec3bef6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7994dbc1_adefd211",
+        "filename": "chrome/renderer/chrome_content_renderer_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1687,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-02T18:44:53Z",
+      "side": 1,
+      "message": "Nit: (in conjunction with the below StringPrintf comment, then this can become const char* in_future_string \u003d ...; to reduce one temporary std::string)",
+      "revId": "f59baea51799ccce72c53cab54f1386ec3bef6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5181ac3_b828eb0c",
+        "filename": "chrome/renderer/chrome_content_renderer_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1693,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-02T18:44:53Z",
+      "side": 1,
+      "message": "Nit: please use base::StringPrintf, operator+ and std::string is pretty inefficient.",
+      "revId": "f59baea51799ccce72c53cab54f1386ec3bef6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fb9e8e3_c6480037",
+        "filename": "content/public/renderer/content_renderer_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-02T18:44:53Z",
+      "side": 1,
+      "message": "Nit: prefer to pass base::Time by value.",
+      "revId": "f59baea51799ccce72c53cab54f1386ec3bef6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cc41122_0c57d738",
+        "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-02T18:44:53Z",
+      "side": 1,
+      "message": "Let\u0027s just assume that WebFrameClient is always reachable here (since WebFrameClient being unreachable is almost the same thing as LocalFrameClient being unreachable). If that\u0027s the case, do we still need this to be able to return a bool? I can\u0027t think of cases where it\u0027d be useful to report outside a frame attached to a RenderFrameImpl, but maybe I\u0027m missing something.",
+      "revId": "f59baea51799ccce72c53cab54f1386ec3bef6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76293ce7_10bff562",
+        "filename": "third_party/WebKit/public/platform/WebURLResponse.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-02T18:44:53Z",
+      "side": 1,
+      "message": "Same comment here about passing base::Time by value (elsewhere in this CL as well)",
+      "revId": "f59baea51799ccce72c53cab54f1386ec3bef6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
