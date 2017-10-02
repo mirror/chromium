@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "b7171ebf_ab7df8b3",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-02T05:15:03Z",
+      "side": 1,
+      "message": "I\u0027m not familiar with strict_cast/checked_cast, so I investigated the code a bit.\n\nNumeric types are defined by using std::is_arithmetic, so enum or enum class don\u0027t seem applicable to strict_cast or checked_cast.\nWe might be able to change the type of version-\u003eused_features() to std::vector\u003cbase::StrictNumeric\u003cuint32_t\u003e\u003e or something and the we can convert it to blink::mojom::WebFeature with the same check with strict_cast, but IIUC it just checks the maximum of underlying_type (uint32 in this case) but doesn\u0027t check the maximum value of the enum.\n\nHow about DCHECKing by using blink::mojom::WebFeature::kNumberOfFeatures instead?",
+      "parentUuid": "f6e4407e_8e8ed8be",
+      "revId": "301ad2ad3f74d51ae1f89053545b0479731fe39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d25e0c35_665b0fb7",
         "filename": "content/browser/service_worker/service_worker_provider_host_unittest.cc",
         "patchSetId": 7

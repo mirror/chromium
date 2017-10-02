@@ -2,6 +2,69 @@
   "comments": [
     {
       "key": {
+        "uuid": "d724e950_5d5c9f31",
+        "filename": "content/browser/service_worker/service_worker_provider_host_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-02T05:15:03Z",
+      "side": 1,
+      "message": "was_ for consistency?",
+      "range": {
+        "startLine": 375,
+        "startChar": 4,
+        "endLine": 375,
+        "endChar": 7
+      },
+      "revId": "3bfd282478b613bd38b13c5ff0d7fa54e64be87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4618b7bd_0afe0ce4",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-02T05:15:03Z",
+      "side": 1,
+      "message": "Btw, it seems a bit unfortunate since we should remove the type. We might be able to keep it as blink::mojom::WebFeature on later patch.",
+      "revId": "3bfd282478b613bd38b13c5ff0d7fa54e64be87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dee19cc_c2a40ce3",
+        "filename": "content/child/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-02T05:15:03Z",
+      "side": 1,
+      "message": "Could you add a new scope by wrapping brackets \u0027{}\u0027 for each part in order to avoid exposing unnecessary local params?",
+      "range": {
+        "startLine": 179,
+        "startChar": 0,
+        "endLine": 210,
+        "endChar": 40
+      },
+      "revId": "3bfd282478b613bd38b13c5ff0d7fa54e64be87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "959efda4_24591e66",
         "filename": "content/common/service_worker/service_worker_container.mojom",
         "patchSetId": 8
