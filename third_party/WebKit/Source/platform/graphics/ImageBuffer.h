@@ -40,9 +40,6 @@
 #include "platform/graphics/paint/PaintRecord.h"
 #include "platform/transforms/AffineTransform.h"
 #include "platform/wtf/Forward.h"
-#include "platform/wtf/RefPtr.h"
-#include "platform/wtf/Vector.h"
-#include "platform/wtf/text/WTFString.h"
 #include "platform/wtf/typed_arrays/Uint8ClampedArray.h"
 #include "third_party/skia/include/core/SkRefCnt.h"
 

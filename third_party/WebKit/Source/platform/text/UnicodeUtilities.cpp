@@ -28,8 +28,10 @@
 #include "platform/text/UnicodeUtilities.h"
 
 #include <unicode/unorm.h>
+#include "platform/wtf/Vector.h"
 #include "platform/wtf/text/CharacterNames.h"
 #include "platform/wtf/text/StringBuffer.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 

@@ -22,6 +22,7 @@
 #define WTF_HashCountedSet_h
 
 #include "platform/wtf/Assertions.h"
+#include "platform/wtf/Forward.h"
 #include "platform/wtf/HashMap.h"
 #include "platform/wtf/Vector.h"
 #include "platform/wtf/allocator/PartitionAllocator.h"
@@ -32,9 +33,9 @@ namespace WTF {
 // the set. The iterators have fields ->key and ->value that return the set
 // members and their counts, respectively.
 template <typename Value,
-          typename HashFunctions = typename DefaultHash<Value>::Hash,
-          typename Traits = HashTraits<Value>,
-          typename Allocator = PartitionAllocator>
+          typename HashFunctions,
+          typename Traits,
+          typename Allocator>
 class HashCountedSet {
   USE_ALLOCATOR(HashCountedSet, Allocator);
   WTF_MAKE_NONCOPYABLE(HashCountedSet);

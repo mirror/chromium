@@ -6,8 +6,8 @@
 #define PropertyTreeManager_h
 
 #include "platform/graphics/CompositorElementId.h"
+#include "platform/wtf/Forward.h"
 #include "platform/wtf/HashMap.h"
-#include "platform/wtf/HashSet.h"
 #include "platform/wtf/Noncopyable.h"
 #include "platform/wtf/Vector.h"
 #include "third_party/skia/include/core/SkBlendMode.h"

@@ -36,6 +36,7 @@
 #include "platform/fonts/Font.h"
 #include "platform/fonts/shaping/ShapeResultInlineHeaders.h"
 #include "platform/fonts/shaping/ShapeResultSpacing.h"
+#include "platform/wtf/HashSet.h"
 #include "platform/wtf/PtrUtil.h"
 
 namespace blink {

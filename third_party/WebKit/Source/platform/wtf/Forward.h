@@ -31,6 +31,65 @@ class RefPtr;
 template <typename T>
 class StringBuffer;
 class PartitionAllocator;
+template <typename T>
+struct DefaultHash;
+template <typename T>
+struct HashTraits;
+template <typename ValueArg, typename Allocator>
+class LinkedHashSetNode;
+template <typename ValueArg, size_t inlineCapacity>
+struct ListHashSetAllocator;
+
+template <typename T,
+          size_t inlineCapacity = 0,
+          typename Allocator = PartitionAllocator>
+class Deque;
+
+template <typename Value,
+          typename HashFunctions = typename DefaultHash<Value>::Hash,
+          typename Traits = HashTraits<Value>,
+          typename Allocator = PartitionAllocator>
+class HashCountedSet;
+
+template <typename KeyArg,
+          typename MappedArg,
+          typename HashArg = typename DefaultHash<KeyArg>::Hash,
+          typename KeyTraitsArg = HashTraits<KeyArg>,
+          typename MappedTraitsArg = HashTraits<MappedArg>,
+          typename Allocator = PartitionAllocator>
+class HashMap;
+
+template <typename ValueArg,
+          typename HashArg = typename DefaultHash<ValueArg>::Hash,
+          typename TraitsArg = HashTraits<ValueArg>,
+          typename Allocator = PartitionAllocator>
+class HashSet;
+
+template <typename Key,
+          typename Value,
+          typename Extractor,
+          typename HashFunctions,
+          typename Traits,
+          typename KeyTraits,
+          typename Allocator>
+class HashTable;
+
+template <typename KeyTypeArg, typename ValueTypeArg>
+struct KeyValuePair;
+
+template <typename ValueArg,
+          typename HashFunctions = typename DefaultHash<ValueArg>::Hash,
+          typename TraitsArg = HashTraits<ValueArg>,
+          typename Allocator = PartitionAllocator>
+class LinkedHashSet;
+
+template <typename ValueArg,
+          size_t inlineCapacity = 256,
+          typename HashArg = typename DefaultHash<ValueArg>::Hash,
+          typename AllocatorArg =
+              ListHashSetAllocator<ValueArg, inlineCapacity>>
+class ListHashSet;
+
 template <typename T,
           size_t inlineCapacity = 0,
           typename Allocator = PartitionAllocator>
@@ -58,6 +117,13 @@ class Uint32Array;
 
 }  // namespace WTF
 
+using WTF::Deque;
+using WTF::HashCountedSet;
+using WTF::HashMap;
+using WTF::HashSet;
+using WTF::HashTable;
+using WTF::LinkedHashSet;
+using WTF::ListHashSet;
 using WTF::RefPtr;
 using WTF::Vector;
 

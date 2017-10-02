@@ -7,7 +7,6 @@
 
 #include "platform/fonts/FontDataForRangeSet.h"
 #include "platform/fonts/FontFallbackPriority.h"
-#include "platform/wtf/HashMap.h"
 #include "platform/wtf/RefCounted.h"
 #include "platform/wtf/RefPtr.h"
 #include "platform/wtf/Vector.h"

@@ -8,6 +8,7 @@
 #include "core/CoreExport.h"
 #include "core/layout/ng/inline/ng_baseline.h"
 #include "core/layout/ng/ng_physical_container_fragment.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 

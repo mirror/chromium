@@ -27,7 +27,7 @@
 #ifndef Base64_h
 #define Base64_h
 
-#include "platform/wtf/Vector.h"
+#include "platform/wtf/Forward.h"
 #include "platform/wtf/WTFExport.h"
 #include "platform/wtf/text/CString.h"
 #include "platform/wtf/text/WTFString.h"

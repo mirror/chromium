@@ -14,6 +14,7 @@
 #include "platform/graphics/paint/PaintChunk.h"
 #include "platform/graphics/paint/PropertyTreeState.h"
 #include "platform/graphics/paint/RasterInvalidationTracking.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 

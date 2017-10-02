@@ -33,7 +33,7 @@
 
 #include <memory>
 #include "platform/PlatformExport.h"
-#include "platform/wtf/Vector.h"
+#include "platform/wtf/Forward.h"
 
 namespace base {
 class WaitableEvent;

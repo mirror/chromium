@@ -5,6 +5,7 @@
 #include "platform/graphics/ColorSpaceProfileData.h"
 
 #include "platform/wtf/Assertions.h"
+#include "platform/wtf/Vector.h"
 
 struct bt709ColorProfile {
   static char* data()  // BT.709 HDTV ITU
