@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45a7754e_2d4eb413",
+        "filename": "chrome/browser/signin/process_dice_header_observer_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-10-02T09:16:19Z",
+      "side": 1,
+      "message": "Do we need to check for browser being nullptr?",
+      "range": {
+        "startLine": 44,
+        "startChar": 28,
+        "endLine": 44,
+        "endChar": 55
+      },
+      "revId": "d7fada3030178e345d3ed2380c31243a511c4832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
