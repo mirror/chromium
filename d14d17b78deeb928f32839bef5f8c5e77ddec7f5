@@ -94,6 +94,30 @@
       "revId": "d14d17b78deeb928f32839bef5f8c5e77ddec7f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d727818_257154e5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/scene_layer/TabListSceneLayer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1125499
+      },
+      "writtenOn": "2017-10-02T23:14:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75e39f08_f963d905",
+      "range": {
+        "startLine": 77,
+        "startChar": 47,
+        "endLine": 77,
+        "endChar": 48
+      },
+      "revId": "d14d17b78deeb928f32839bef5f8c5e77ddec7f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
