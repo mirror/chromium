@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a14e906a_6ee1735f",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 900,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-02T20:28:33Z",
+      "side": 1,
+      "message": "This is where I think we should subtract the sticky position offset, as we shouldn\u0027t have any sticky offset applied in CLM. This should handle it for both the content offset and the graphics layer offset.",
+      "range": {
+        "startLine": 900,
+        "startChar": 2,
+        "endLine": 900,
+        "endChar": 33
+      },
+      "revId": "114078d22b4ed2d7894a7d1b94bba675316768cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4777bba_f9378bd3",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1210,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-02T20:28:33Z",
+      "side": 1,
+      "message": "This variable should already have the sticky offset removed I think. Otherwise it could be incorrect if we used it for anything else.",
+      "range": {
+        "startLine": 1210,
+        "startChar": 17,
+        "endLine": 1210,
+        "endChar": 55
+      },
+      "revId": "114078d22b4ed2d7894a7d1b94bba675316768cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
