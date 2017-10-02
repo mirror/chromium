@@ -46,6 +46,30 @@
       "revId": "1b23183a1ee86c52c03f278caec8af548af632e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9e96025_9d980bde",
+        "filename": "chrome/browser/vr/elements/content_element.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-10-02T17:05:17Z",
+      "side": 1,
+      "message": "In order to keep the simple setter you could add a struct combining the id and location. I would like it to be together so that we don\u0027t accidentally set the texture ID without updating the location.",
+      "parentUuid": "ec55b5e8_21cda540",
+      "range": {
+        "startLine": 42,
+        "startChar": 7,
+        "endLine": 42,
+        "endChar": 27
+      },
+      "revId": "1b23183a1ee86c52c03f278caec8af548af632e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
