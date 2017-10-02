@@ -341,15 +341,19 @@ AudioParameters AudioManagerAndroid::GetPreferredOutputStreamParameters(
       channel_layout = input_params.channel_layout();
     }
 
+    buffer_size = GetOptimalOutputFrameSize(
+        sample_rate, ChannelLayoutToChannelCount(channel_layout));
+
     // For high latency playback on supported platforms, pass through the
     // requested buffer size; this provides significant power savings (~25%) and
     // reduces the potential for glitches under load.
+    //
+    // We should still consider the platform buffer size if it's larger since
+    // Bluetooth devices may want extremely large buffer sizes.
     if (SupportsPerformanceModeForOutput() &&
-        input_params.latency_tag() == AudioLatency::LATENCY_PLAYBACK) {
+        input_params.latency_tag() == AudioLatency::LATENCY_PLAYBACK &&
+        input_params.frames_per_buffer() > buffer_size) {
       buffer_size = input_params.frames_per_buffer();
-    } else {
-      buffer_size = GetOptimalOutputFrameSize(
-          sample_rate, ChannelLayoutToChannelCount(channel_layout));
     }
   }
 
