@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e74db4d_fbbf14bb",
+        "filename": "ios/chrome/browser/passwords/notify_auto_signin_view_controller.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-10-02T06:49:33Z",
+      "side": 1,
+      "message": "Is this possible to move these 2 lines to the beginning of |beginAppearanceTransition| ?\nIt would make it clearer that they are not supposed to apply the constraint changes.",
+      "range": {
+        "startLine": 218,
+        "startChar": 2,
+        "endLine": 220,
+        "endChar": 39
+      },
+      "revId": "c112d1490f68356824809bf9a53c657940da9090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
