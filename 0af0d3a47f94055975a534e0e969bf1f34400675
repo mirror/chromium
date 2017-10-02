@@ -34,6 +34,24 @@
       "revId": "0af0d3a47f94055975a534e0e969bf1f34400675",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b13db11f_48994444",
+        "filename": "chromeos/tpm/tpm_token_info_getter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-02T20:00:40Z",
+      "side": 1,
+      "message": "I would agree that within a more specific namespace, e.g. chromeos::tpm, \u0027using\u0027 might be appropriate, but here I think we lose context.\n\nIt also seems to me like CryptohomeClient is the right place to put TpmTokenInfo since it is part of that API (i.e. Pkcs11GetTpmTokenInfo).\n\nIf you want to keep the typedef, please put it in the TPMTokenInfGetter class. Otherwise just use CryptohomeClient::TpmTokenInfo, it\u0027s really not that verbose, and it makes it clear where the struct originates.",
+      "parentUuid": "c1a9e2cd_de03794c",
+      "revId": "0af0d3a47f94055975a534e0e969bf1f34400675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
