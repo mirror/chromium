@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f364fe27_c4cfed6e",
+        "filename": "build/config/sanitizers/sanitizers.gni",
+        "patchSetId": 8
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-10-02T18:55:03Z",
+      "side": 1,
+      "message": "coverage.gni sounds cleaner to me. let\u0027s put things where they belong.",
+      "parentUuid": "c4ce6b89_55ad5526",
+      "revId": "9b0faa399b0f54eafd7cbdafa4b33345ecf075a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e211616b_7286a4e1",
         "filename": "third_party/libFuzzer/BUILD.gn",
         "patchSetId": 8
