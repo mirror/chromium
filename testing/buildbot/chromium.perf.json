@@ -29834,11 +29834,6 @@
       "microdump_stackwalk"
     ]
   },
-  "Linux Builder": {
-    "additional_compile_targets": [
-      "telemetry_perf_tests_new"
-    ]
-  },
   "Linux Perf": {
     "isolated_scripts": [
       {
