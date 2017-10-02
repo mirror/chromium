@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2c993eb_2e208641",
+        "filename": "net/cert_net/cert_net_fetcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-02T21:34:09Z",
+      "side": 1,
+      "message": "WaitForResult() is a blocking call, its callers should be allowing the wait in their scope instead of blindly allowing the wait for all callers who may be erroneously calling in (this is the same thing for all such APIs, the caller allows per use case, we never whitelist an entire call).",
+      "revId": "eec96a67fabfe0704e377a43ca4698cb69a544f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
