@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f21b2d23_8045d73d",
+        "filename": "remoting/ios/app/view_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-10-02T22:39:15Z",
+      "side": 1,
+      "message": "This looks like a real confusing name, I would recommend something more like \u0027 \u0027AsyncAccessibilityNotification\u0027 or something like that. Dynamic has a lot of meaning...",
+      "range": {
+        "startLine": 21,
+        "startChar": 5,
+        "endLine": 21,
+        "endChar": 16
+      },
+      "revId": "9437e1b4bd2a8afbfee26444c0e616c7c82c4bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
