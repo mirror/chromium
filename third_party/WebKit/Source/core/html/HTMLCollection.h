@@ -177,9 +177,6 @@ class CORE_EXPORT HTMLCollection
 
   void SetNamedItemCache(NamedItemCache* cache) const {
     DCHECK(!named_item_cache_);
-    // Do not repeat registration for the same invalidation type.
-    if (InvalidationType() != kInvalidateOnIdNameAttrChange)
-      GetDocument().RegisterNodeListWithIdNameCache(this);
     named_item_cache_ = cache;
   }
 
@@ -192,13 +189,6 @@ class CORE_EXPORT HTMLCollection
   void InvalidateIdNameCacheMaps(Document* old_document = 0) const {
     if (!HasValidIdNameCache())
       return;
-
-    // Make sure we decrement the NodeListWithIdNameCache count from
-    // the old document instead of the new one in the case the collection
-    // is moved to a new document.
-    UnregisterIdNameCacheFromDocument(old_document ? *old_document
-                                                   : GetDocument());
-
     named_item_cache_.Clear();
   }
 
