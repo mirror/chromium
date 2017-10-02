@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7496b42c_93734a22",
+        "filename": "chrome/browser/favicon/content_favicon_driver_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-02T14:39:24Z",
+      "side": 1,
+      "message": "Done, renamed.",
+      "parentUuid": "103103b7_72064d20",
+      "revId": "8a6bd8459ea397886ccd86517f8732fc21cdd2d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c388cf33_101df784",
         "filename": "components/favicon/content/content_favicon_driver.cc",
         "patchSetId": 15
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-02T08:11:36Z",
       "side": 1,
       "message": "This change should be in its own CL. This causes changes in behaviour (I don\u0027t think any of these are an issue). For instance, calling window.stop() in window.onload() causes ContentFaviconDriver::DidUpdateWebManifestURL() to be called but not ContentFaviconDriver::DocumentOnLoadCompletedInMainFrame()\n\nIn order to be super safe, we should enumerate the changes in behavior",
+      "revId": "8a6bd8459ea397886ccd86517f8732fc21cdd2d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e46d1f3_2a88ee1d",
+        "filename": "components/favicon/content/content_favicon_driver.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-02T14:39:24Z",
+      "side": 1,
+      "message": "Let me split this once the patch is ready for landing.",
+      "parentUuid": "c388cf33_101df784",
       "revId": "8a6bd8459ea397886ccd86517f8732fc21cdd2d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e1eee548_b36c955b",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-02T14:39:24Z",
+      "side": 1,
+      "message": "As I mentioned in a recent comment, \"I\u0027d prefer if we didn\u0027t special-case bookmarks to avoid deletions for them, and would be willing to trade that with the flip-flop behavior that we already have when desktop and mobile get diverging icons. Assuming the implementation is simple.\".\n\nMy rationale here is that simpler logic should be better. At this stage, I\u0027ll test the behavior with bookmarks and session sync as thoroughly as I can, and we can discuss soon if you really feel strongly about treating bookmarks differently.",
+      "parentUuid": "30d6bcc0_078c9e84",
+      "revId": "8a6bd8459ea397886ccd86517f8732fc21cdd2d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c98e69f_9e3893fc",
         "filename": "components/favicon/core/favicon_handler.cc",
         "patchSetId": 15
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-02T08:11:36Z",
       "side": 1,
       "message": "For the sake of simplicity can we call OnFaviconUpdated() instead. The handling that you have for OnFaviconDeleted() and for OnFaviconUpdated() is very similar. I care most about not adding FaviconDriverObserver::OnFaviconDeleted()",
+      "revId": "8a6bd8459ea397886ccd86517f8732fc21cdd2d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "621ea3ac_3f249c62",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-02T14:39:24Z",
+      "side": 1,
+      "message": "Done. I\u0027m not a big fan of this overloading of sematics and this has IMO subtle implications as per implementations handle this situation well, but I went through the existing code and it seems like they would all handle it correctly.",
+      "parentUuid": "4c98e69f_9e3893fc",
       "revId": "8a6bd8459ea397886ccd86517f8732fc21cdd2d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "61bf58b8_ca1c6cd4",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-02T14:39:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e25c8f00_d0df276b",
+      "revId": "8a6bd8459ea397886ccd86517f8732fc21cdd2d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "850a66a2_93018288",
         "filename": "components/history/core/browser/history_backend.cc",
         "patchSetId": 15
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "4cd31e7a_4df25d19",
+        "filename": "components/history/core/browser/history_backend.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1617,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-02T14:39:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "850a66a2_93018288",
+      "revId": "8a6bd8459ea397886ccd86517f8732fc21cdd2d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0dd5be2c_623aa398",
         "filename": "components/history/core/browser/history_backend.cc",
         "patchSetId": 15
@@ -118,6 +226,24 @@
       "revId": "8a6bd8459ea397886ccd86517f8732fc21cdd2d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e16dcce6_a5ebaa68",
+        "filename": "components/history/core/browser/history_backend.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1627,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-02T14:39:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0dd5be2c_623aa398",
+      "revId": "8a6bd8459ea397886ccd86517f8732fc21cdd2d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
