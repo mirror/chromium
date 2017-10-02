@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bb5b8652_becd12d5",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-10-02T21:27:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3266e381_5e896a1b",
+      "revId": "5f2850893c80e9fe5fdbbf889fbeb80fa86902a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29372405_bb30e16f",
         "filename": "components/viz/service/hit_test/hit_test_aggregator.h",
         "patchSetId": 13
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-02T20:29:47Z",
       "side": 1,
       "message": "Why do we do this?",
+      "revId": "5f2850893c80e9fe5fdbbf889fbeb80fa86902a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40242636_ab035c4d",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-10-02T21:27:07Z",
+      "side": 1,
+      "message": "This was added in the original review to ensure that the work being done for aggregation wasn\u0027t being done synchronously during the call.  Perhaps we can discuss offline to ensure this is required for this case.",
+      "parentUuid": "29372405_bb30e16f",
       "revId": "5f2850893c80e9fe5fdbbf889fbeb80fa86902a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "41d49458_7435726d",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-10-02T21:27:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01d8f636_f9031e12",
+      "revId": "5f2850893c80e9fe5fdbbf889fbeb80fa86902a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87189b72_915400ba",
         "filename": "components/viz/service/hit_test/hit_test_aggregator.h",
         "patchSetId": 13
@@ -67,6 +121,24 @@
       "revId": "5f2850893c80e9fe5fdbbf889fbeb80fa86902a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0393b0ad_14d017fb",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-10-02T21:27:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87189b72_915400ba",
+      "revId": "5f2850893c80e9fe5fdbbf889fbeb80fa86902a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "e107a9de_6c6dee9f",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-10-02T21:27:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18dc147c_fb6605bb",
+      "revId": "5f2850893c80e9fe5fdbbf889fbeb80fa86902a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91bfd32e_4fcadb9b",
         "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
         "patchSetId": 13
@@ -101,6 +191,24 @@
       "revId": "5f2850893c80e9fe5fdbbf889fbeb80fa86902a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7a0a1e3_57f25f92",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-10-02T21:27:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91bfd32e_4fcadb9b",
+      "revId": "5f2850893c80e9fe5fdbbf889fbeb80fa86902a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "e96b1430_4f9c0d45",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-10-02T21:27:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e59ffacb_1e8522ca",
+      "revId": "5f2850893c80e9fe5fdbbf889fbeb80fa86902a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "590445ad_7604c4e2",
         "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
         "patchSetId": 13
@@ -135,6 +261,24 @@
       "revId": "5f2850893c80e9fe5fdbbf889fbeb80fa86902a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c2e4b99_9330ed0c",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-10-02T21:27:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "590445ad_7604c4e2",
+      "revId": "5f2850893c80e9fe5fdbbf889fbeb80fa86902a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "6909906e_0964550d",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-10-02T21:27:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21934619_95acc5d2",
+      "revId": "5f2850893c80e9fe5fdbbf889fbeb80fa86902a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d299c245_168f6f59",
         "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
         "patchSetId": 13
@@ -169,6 +331,24 @@
       "revId": "5f2850893c80e9fe5fdbbf889fbeb80fa86902a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20935c7c_2e787b40",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-10-02T21:27:07Z",
+      "side": 1,
+      "message": "Right.  Good catch.  Thank you ( I thought I had done that :$ ). \n\nDone",
+      "parentUuid": "d299c245_168f6f59",
+      "revId": "5f2850893c80e9fe5fdbbf889fbeb80fa86902a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "d0cfab70_5fbb5a47",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-10-02T21:27:07Z",
+      "side": 1,
+      "message": "There is no active region count anymore.  The original implementation kept track of the total number of regions so that we could pre-allocate an appropriate size.  Now with a HitTestManager we no longer decide which HitTestRegionList objects map to which HitTestAggregator objects so we don\u0027t have a way to estimate the size and instead we re-allocate as required during aggregation ( as you know ).  This test used to be used to ensure that the count was managed correctly, but has now been repurposed to help ensure that the lifetime of HitTestRegionLists is correctly handled when surfaces are removed.",
+      "parentUuid": "9e0b67b3_d7ba06d7",
+      "revId": "5f2850893c80e9fe5fdbbf889fbeb80fa86902a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "992d1e8c_2933c819",
         "filename": "components/viz/service/hit_test/hit_test_manager.cc",
         "patchSetId": 13
@@ -203,6 +401,24 @@
       "revId": "5f2850893c80e9fe5fdbbf889fbeb80fa86902a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa196c61_6cd1fd1e",
+        "filename": "components/viz/service/hit_test/hit_test_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-10-02T21:27:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "992d1e8c_2933c819",
+      "revId": "5f2850893c80e9fe5fdbbf889fbeb80fa86902a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
