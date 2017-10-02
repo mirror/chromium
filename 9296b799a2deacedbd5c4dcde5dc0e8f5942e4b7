@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3b8c7b09_ad612e1d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1041,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-02T23:36:36Z",
+      "side": 1,
+      "message": "Ops, sorry! I will be careful about the typo later.",
+      "parentUuid": "c67a4107_87664c48",
+      "range": {
+        "startLine": 1041,
+        "startChar": 20,
+        "endLine": 1041,
+        "endChar": 32
+      },
+      "revId": "9296b799a2deacedbd5c4dcde5dc0e8f5942e4b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "183cc459_50f081bf",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-02T21:20:43Z",
       "side": 1,
       "message": "why is this happening here? I don\u0027t see us using mIsTabStateDirty below.",
+      "range": {
+        "startLine": 1468,
+        "startChar": 25,
+        "endLine": 1468,
+        "endChar": 26
+      },
+      "revId": "9296b799a2deacedbd5c4dcde5dc0e8f5942e4b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c037aff_9e9552bc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1468,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-02T23:36:36Z",
+      "side": 1,
+      "message": "attachAndFinishReparenting explicitly sets it to true. I guess the right option should be moving this into attachAndFinishReparenting instead of having it here.",
+      "parentUuid": "183cc459_50f081bf",
       "range": {
         "startLine": 1468,
         "startChar": 25,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "ac507141_0190dd56",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1504,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-02T23:36:36Z",
+      "side": 1,
+      "message": "This is because for Browser Actions, we have 3 way to add a tab: 1) if Chrome is available, call through ChromeTabCreator to directly add tab; 2) if Chrome not available, add to BrowserActioions tab model then merge it when Chrome starts (this CL handles); 3) for case 2) Chrome gets killed again, then do tab merging when load and restore tabs. All 3 types create tab using TabLaunchType.FROM_BROWSER_ACTIONS but only case 2) needs attach. But there is no way to tell from construction and initialization, that is why I add this function so BrowserActionsTabCreatorManager could explicitly set it.",
+      "parentUuid": "04f9470a_7ed0b502",
+      "revId": "9296b799a2deacedbd5c4dcde5dc0e8f5942e4b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b047eb32_0e04cad7",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
         "patchSetId": 7
@@ -85,6 +151,30 @@
       "revId": "9296b799a2deacedbd5c4dcde5dc0e8f5942e4b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a80648ab_c313894b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1750,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-02T23:36:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b047eb32_0e04cad7",
+      "range": {
+        "startLine": 1750,
+        "startChar": 34,
+        "endLine": 1750,
+        "endChar": 52
+      },
+      "revId": "9296b799a2deacedbd5c4dcde5dc0e8f5942e4b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
