@@ -34,8 +34,8 @@ class OpenVRDevice : public VRDevice {
       mojom::VRPresentationProviderRequest request,
       mojom::VRDisplay::RequestPresentCallback callback) override;
   void ExitPresent() override;
-  void GetNextMagicWindowPose(
-      mojom::VRDisplay::GetNextMagicWindowPoseCallback callback) override;
+  void GetPose(VRDisplayImpl* display,
+               mojom::VRMagicWindowProvider::GetPoseCallback callback) override;
 
   void OnPollingEvents();
 
