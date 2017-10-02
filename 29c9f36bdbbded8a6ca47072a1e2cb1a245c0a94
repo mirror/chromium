@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7b3a925f_11db8469",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchFieldTrial.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-02T21:09:27Z",
+      "side": 1,
+      "message": "Done -- reworded and changed UX -\u003e UI.",
+      "parentUuid": "52aa1b51_291ae933",
+      "range": {
+        "startLine": 383,
+        "startChar": 71,
+        "endLine": 384,
+        "endChar": 39
+      },
+      "revId": "29c9f36bdbbded8a6ca47072a1e2cb1a245c0a94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79e966b7_dccae0a1",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "29c9f36bdbbded8a6ca47072a1e2cb1a245c0a94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10afc81e_720a6909",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-02T21:09:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79e966b7_dccae0a1",
+      "range": {
+        "startLine": 360,
+        "startChar": 61,
+        "endLine": 360,
+        "endChar": 69
+      },
+      "revId": "29c9f36bdbbded8a6ca47072a1e2cb1a245c0a94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b0cadd88_3a8172d9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-02T21:09:27Z",
+      "side": 1,
+      "message": "Done here, and updated the name all the way through the call chain.",
+      "parentUuid": "c57b9aed_dbdbda47",
+      "range": {
+        "startLine": 362,
+        "startChar": 16,
+        "endLine": 362,
+        "endChar": 40
+      },
+      "revId": "29c9f36bdbbded8a6ca47072a1e2cb1a245c0a94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c891be4_e511925e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchUma.java",
         "patchSetId": 12
@@ -94,6 +166,53 @@
     },
     {
       "key": {
+        "uuid": "61659c76_8a41641b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchUma.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-02T21:09:27Z",
+      "side": 1,
+      "message": "Done -- nice catch!",
+      "parentUuid": "3c891be4_e511925e",
+      "range": {
+        "startLine": 215,
+        "startChar": 4,
+        "endLine": 217,
+        "endChar": 50
+      },
+      "revId": "29c9f36bdbbded8a6ca47072a1e2cb1a245c0a94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "925329a0_707f96b0",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 2139,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-02T21:09:27Z",
+      "side": 1,
+      "message": "Update the second parameter \"howToHide\" to have a more descriptive name and updated the javadoc to provide details for all the parameters.\n\nAlso propagated this change through the call chain.",
+      "range": {
+        "startLine": 2139,
+        "startChar": 77,
+        "endLine": 2139,
+        "endChar": 86
+      },
+      "revId": "29c9f36bdbbded8a6ca47072a1e2cb1a245c0a94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5975f13_5d01b51c",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionClientManager.java",
         "patchSetId": 12
@@ -105,6 +224,30 @@
       "writtenOn": "2017-10-02T20:07:25Z",
       "side": 1,
       "message": "Can we notify ContextualSearchManager that smart select is active exactly once? Whether smart select is enabled or not shouldn\u0027t change during run time.",
+      "range": {
+        "startLine": 205,
+        "startChar": 12,
+        "endLine": 205,
+        "endChar": 44
+      },
+      "revId": "29c9f36bdbbded8a6ca47072a1e2cb1a245c0a94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "631b6d66_239fdff0",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionClientManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-02T21:09:27Z",
+      "side": 1,
+      "message": "You\u0027re sure that Chrome won\u0027t need to service more than one client that might have different settings, right?  I\u0027m thinking about more than one CCT or Herb being spun up and some way the requester might be able to control whether Smart Select is enabled.\n\nDone.",
+      "parentUuid": "c5975f13_5d01b51c",
       "range": {
         "startLine": 205,
         "startChar": 12,
