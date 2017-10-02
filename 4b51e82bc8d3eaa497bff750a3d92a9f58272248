@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aed285f9_ed9f6a5b",
+        "filename": "third_party/errorprone/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-10-02T13:33:13Z",
+      "side": 1,
+      "message": "Not necessary but this way only one version number needs to be updated, the jar_path, rather than both jar_path and bootclasspath.",
+      "parentUuid": "bf0d2885_20055460",
+      "revId": "4b51e82bc8d3eaa497bff750a3d92a9f58272248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "506aec7c_7944a7c6",
         "filename": "third_party/errorprone/OWNERS",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "4b51e82bc8d3eaa497bff750a3d92a9f58272248",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "375655c4_40ceda31",
+        "filename": "third_party/errorprone/OWNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-10-02T13:33:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "506aec7c_7944a7c6",
+      "revId": "4b51e82bc8d3eaa497bff750a3d92a9f58272248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a81dbbb8_f1cedb2d",
+        "filename": "third_party/errorprone/README.chromium",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-10-02T13:33:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43abb068_c7d6d602",
+      "revId": "4b51e82bc8d3eaa497bff750a3d92a9f58272248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63501620_54907bc5",
         "filename": "third_party/errorprone/README.chromium",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "4b51e82bc8d3eaa497bff750a3d92a9f58272248",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3e5a176_92f34102",
+        "filename": "third_party/errorprone/README.chromium",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-10-02T13:33:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63501620_54907bc5",
+      "revId": "4b51e82bc8d3eaa497bff750a3d92a9f58272248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
