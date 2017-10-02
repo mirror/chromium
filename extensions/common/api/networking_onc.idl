@@ -560,7 +560,7 @@ namespace networking.onc {
     // The VPN host.
     DOMString? Host;
     // The VPN type. This can not be an enum because of 'L2TP-IPSec'.
-    DOMString? Type;
+    DOMString Type;
   };
 
   dictionary ManagedVPNProperties {
