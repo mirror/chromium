@@ -250,6 +250,8 @@ class BASE_EXPORT ProcessMetrics {
   // Returns total memory usage of malloc.
   size_t GetMallocUsage();
 
+  size_t GetPrivateMemoryFootprint() const;
+
  private:
 #if !defined(OS_MACOSX) || defined(OS_IOS)
   explicit ProcessMetrics(ProcessHandle process);

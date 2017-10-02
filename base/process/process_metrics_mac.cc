@@ -417,6 +417,14 @@ mach_port_t ProcessMetrics::TaskForPid(ProcessHandle process) const {
   return task;
 }
 
+size_t ProcessMetrics::GetPrivateMemoryFootprint() const {
+  TaskVMInfo vm_info = GetTaskVMInfo();
+  if (base::mac::IsAtLeastOS10_12())
+    return vm_info.phys_footprint;
+
+  return vm_info.internal + vm_info.compressed;
+}
+
 // Bytes committed by the system.
 size_t GetSystemCommitCharge() {
   base::mac::ScopedMachSendRight host(mach_host_self());
