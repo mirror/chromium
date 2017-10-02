@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d7077ab5_6136ef25",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2952,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-10-02T06:37:39Z",
+      "side": 1,
+      "message": "OK, renamed to LeftToRightUrls.",
+      "parentUuid": "6a74a8b0_229963fc",
+      "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ed9c537_478fee6a",
         "filename": "chrome/browser/flag_descriptions.cc",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03c411e6_e5f3c29f",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-10-02T06:37:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ed9c537_478fee6a",
+      "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0b42889c_6e00d4d1",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-10-02T06:37:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56563067_a77bbe8a",
+      "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ead80a0a_365e5568",
         "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view.cc",
         "patchSetId": 13
@@ -67,6 +121,24 @@
       "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8d2c1c9_04bf46f3",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-10-02T06:37:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ead80a0a_365e5568",
+      "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "96a6330c_355e74e8",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-10-02T06:37:39Z",
+      "side": 1,
+      "message": "Combined.",
+      "parentUuid": "3df0e11c_a68b6ab7",
+      "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "353a3712_201fb862",
         "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
         "patchSetId": 13
@@ -101,6 +191,24 @@
       "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95e02b8f_29196479",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-10-02T06:37:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "353a3712_201fb862",
+      "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "d6f25130_09737c40",
+        "filename": "ui/gfx/gfx_features.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-10-02T06:37:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e624955_bd35f1fd",
+      "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf1e51fb_9ed9261b",
         "filename": "ui/gfx/gfx_features.h",
         "patchSetId": 13
@@ -135,6 +261,24 @@
       "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2137f331_13c78f8c",
+        "filename": "ui/gfx/gfx_features.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-10-02T06:37:39Z",
+      "side": 1,
+      "message": "OK. Combined this into ui/gfx/switches.h which has existing switches.\n\nIt didn\u0027t have any features, so I added a features namespace there. I don\u0027t feel comfortable combining color_space_switches into there since there\u0027s a comment in BUILD.gn about moving it elsewhere (and it would also require updating a lot of files unrelated to this CL).",
+      "parentUuid": "bf1e51fb_9ed9261b",
+      "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -161,6 +305,30 @@
     },
     {
       "key": {
+        "uuid": "c9f1e9f1_62001030",
+        "filename": "ui/gfx/gfx_features.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-10-02T06:37:39Z",
+      "side": 1,
+      "message": "Gone.",
+      "parentUuid": "273f47dc_5fd0b361",
+      "range": {
+        "startLine": 14,
+        "startChar": 21,
+        "endLine": 14,
+        "endChar": 29
+      },
+      "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabd2493_ffd41243",
         "filename": "ui/gfx/render_text.cc",
         "patchSetId": 13
@@ -175,6 +343,24 @@
       "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52d6bcfa_8c377836",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-10-02T06:37:39Z",
+      "side": 1,
+      "message": "No longer relevant.",
+      "parentUuid": "dabd2493_ffd41243",
+      "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -195,6 +381,24 @@
     },
     {
       "key": {
+        "uuid": "f46439d4_8bb803f1",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1119,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-10-02T06:37:39Z",
+      "side": 1,
+      "message": "This is up for debate (we are inventing/experimenting with new URL formatting rules here, not implementing an existing standard).\n\nI feel that it\u0027s safer and simpler to keep the same delimiters throughout. For example, a period delimits domain labels in the host, but file extensions in the path: in both cases I would want to treat those as separate components. (e.g., אבג.html, not ‫אבג.html‬).",
+      "parentUuid": "f0b9a5e9_52d57e17",
+      "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9f0a6e0_7c6f8fe8",
         "filename": "ui/gfx/render_text.cc",
         "patchSetId": 13
@@ -209,6 +413,24 @@
       "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56da58ec_059c6ae9",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1134,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-10-02T06:37:39Z",
+      "side": 1,
+      "message": "No longer relevant.",
+      "parentUuid": "a9f0a6e0_7c6f8fe8",
+      "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -229,6 +451,24 @@
     },
     {
       "key": {
+        "uuid": "33025130_fcff0015",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1321,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-10-02T06:37:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "656305af_2c4310d9",
+      "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bb0bf09_ed809b77",
         "filename": "ui/gfx/render_text.h",
         "patchSetId": 13
@@ -243,6 +483,24 @@
       "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a316347c_2d771749",
+        "filename": "ui/gfx/render_text.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-10-02T06:37:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bb0bf09_ed809b77",
+      "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -263,6 +521,24 @@
     },
     {
       "key": {
+        "uuid": "940b93a8_49827cac",
+        "filename": "ui/gfx/render_text.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-10-02T06:37:39Z",
+      "side": 1,
+      "message": "No longer relevant.",
+      "parentUuid": "b3bf5281_da9ba521",
+      "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2696133f_63feee77",
         "filename": "ui/gfx/render_text.h",
         "patchSetId": 13
@@ -277,6 +553,24 @@
       "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56b07aa7_67feb0d3",
+        "filename": "ui/gfx/render_text.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-10-02T06:37:39Z",
+      "side": 1,
+      "message": "No longer relevant.",
+      "parentUuid": "2696133f_63feee77",
+      "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -297,6 +591,24 @@
     },
     {
       "key": {
+        "uuid": "f612c19e_5224a4a1",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 3723,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-10-02T06:37:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1d8502d_0c943938",
+      "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1bc3f7b_8469094f",
         "filename": "ui/gfx/render_text_unittest.cc",
         "patchSetId": 13
@@ -314,6 +626,24 @@
     },
     {
       "key": {
+        "uuid": "3ef667e8_d058642d",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 3764,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-10-02T06:37:39Z",
+      "side": 1,
+      "message": "I\u0027ve added an \"all punctuation\" test which systematically tests all ASCII punctuation characters interspersed with Hebrew characters. This also tests what happens if a non-URL-delimiter character appears in between two RTL characters (that it still obeys the normal Bidi rule of being considered an RTL character).\n\n\u003e 1) Ensure purely LTR urls don\u0027t get run breaks for punctuation/delimiters\n\nBreaks are created for punctuation regardless of my meddling with the algorithm (as shown here with the many redundant runs that are all in the same direction).\n\n\u003e 2) Test urls with various combinations of components\n\u003e 3) Test omitting www. and doing something like ABC.com/DEF\n\nThese two are suggesting tests over the structure of the URL. Now since nothing in the algorithm (at the moment) cares about the structure of the URL (in terms of the URL grammar; the algorithm is purely character based), I don\u0027t see much point to writing tests of various different URL syntaxes. If the algorithm changes to be more sensitive to the structure of the URL, I agree we should add these.\n\n\u003e 4) Test arabic or some other RTL language in addition to hebrew (maybe?)\n\nDone.\n\n\u003e 5) Test leading user/pass components with LTR and RTL.\n\nSimilar to #2 and #3 above.\n\n\u003e It might make sense to add a helper function that checks if all run ranges are in ascending order (even if internally reversed), that would yield false for bidi urls with the new feature turned off, and yield true for the same bidi urls with the feature turned on.\n\nSimilar to #1, this won\u0027t always be true (if there is any punctuation in an RTL run that is *not* considered to delimit a URL component, then you would see a couple of components that all form an RTL run). I\u0027ve added a new test (the \"all punctuation\" test) which demonstrates this being violated.",
+      "parentUuid": "c1bc3f7b_8469094f",
+      "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40b6b1ac_b21d8e73",
         "filename": "ui/gfx/text_constants.h",
         "patchSetId": 13
@@ -328,6 +658,24 @@
       "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "184a87ff_54a3938d",
+        "filename": "ui/gfx/text_constants.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-10-02T06:37:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40b6b1ac_b21d8e73",
+      "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
