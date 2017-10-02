@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "25b55029_acc6b585",
+        "filename": "content/browser/android/tracing_controller_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-10-02T20:35:41Z",
+      "side": 1,
+      "message": "Is it possible that the DCHECK fails when tracing is initialized very early in the life of the Chrome browser process?\n\nThe main thread isn\u0027t registered as the \"BrowserThread::UI\" thread until BrowserMainLoop::InitializeMainThread(). BrowserThread::PostTask(BrowserThread::UI, ...) postpones execution of the task until after this method is called. I don\u0027t think that ThreadUtils.postOnUiThread/getUiThreadHandler do that.\n\nI would try changing DCHECK_CURRENTLY_ON(BrowserThread::UI) to DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_) in content/browser/tracing/tracing_controller_impl.cc. It is important to have mutual exclusion between calls to TracingControllerImpl methods, but it\u0027s not so important that the calls happen on the UI thread.",
+      "parentUuid": "805cd8ba_c713eb54",
+      "range": {
+        "startLine": 50,
+        "startChar": 17,
+        "endLine": 50,
+        "endChar": 25
+      },
+      "revId": "9e178ea00fec064fa0736e32bf476567ec61a0e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c3ae472_6a9e5a22",
         "filename": "content/browser/android/tracing_controller_android.cc",
         "patchSetId": 2
