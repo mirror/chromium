@@ -22,6 +22,30 @@
       "revId": "4ab8aba8d101a73449aeb49e4be8b6c231669e40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaa30771_b377158f",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 5618,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-02T17:14:07Z",
+      "side": 1,
+      "message": "Done. I expanded on these a bit. The user action triggers and \"used events\" may change over time so those are explicitly vague. There are server-side experiment configurations that dictate what these events are.",
+      "parentUuid": "49df9651_e4bc3a95",
+      "range": {
+        "startLine": 5618,
+        "startChar": 4,
+        "endLine": 5618,
+        "endChar": 68
+      },
+      "revId": "4ab8aba8d101a73449aeb49e4be8b6c231669e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
