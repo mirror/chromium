@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64e807d3_8244e28f",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_linux.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 901,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-02T20:40:10Z",
+      "side": 1,
+      "message": "ui::ResourceBundle -\u003e needs to be called on the UI thread, probably?",
+      "revId": "9971d78838f1bc505b481d6ca136af5556fe0fd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
