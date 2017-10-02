@@ -16,6 +16,24 @@
       "revId": "9803d99c9d95606670fc500160ae43cdc719b9d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e88fe80c_7abc4d6e",
+        "filename": "services/resource_coordinator/tracing/recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-10-02T14:31:27Z",
+      "side": 1,
+      "message": "So, we have a recorder per tracing agent. When the coordinator sends StopTracing messages to agents, it also creates a recorder for each agent and sends it to them. So data type is the same among all chunks. That\u0027s why data type is given in ctor when the recorder is created for an agent.\n\nIn future optimizations, we can eliminate recorders and the coordinator can just create data pipes and sends data pipes to agents. Or even better, but harder, the coordinator can allocate the trace buffer for the agent, at StartTracing or earlier at agent registration, and the agent just writes to the trace buffer shared with the coordinator.",
+      "parentUuid": "b13ae994_d2e60ef9",
+      "revId": "9803d99c9d95606670fc500160ae43cdc719b9d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
