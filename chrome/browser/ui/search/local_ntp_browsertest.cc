@@ -12,6 +12,7 @@
 #include "base/json/string_escape.h"
 #include "base/memory/ptr_util.h"
 #include "base/optional.h"
+#include "base/strings/string_number_conversions.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/scoped_feature_list.h"
 #include "base/threading/thread_restrictions.h"
@@ -58,6 +59,7 @@
 #include "ui/base/resource/resource_bundle.h"
 
 using search_provider_logos::EncodedLogo;
+using search_provider_logos::EncodedLogoCallback;
 using search_provider_logos::LogoCallbacks;
 using search_provider_logos::LogoCallbackReason;
 using search_provider_logos::LogoObserver;
@@ -714,34 +716,20 @@ class MockLogoService : public LogoService {
  public:
   MOCK_METHOD1(GetLogoPtr, void(LogoCallbacks* callbacks));
 
-  void GetLogo(LogoCallbacks callbacks) override {
-    GetLogoPtr(&callbacks);
-  }
+  void GetLogo(LogoCallbacks callbacks) override { GetLogoPtr(&callbacks); }
   void GetLogo(LogoObserver* observer) override { NOTREACHED(); }
 };
 
 ACTION_P2(ReturnCachedLogo, reason, logo) {
-  if (!arg0->on_cached_encoded_logo_available) {
-    ADD_FAILURE() << "callbacks.on_cached_encoded_logo_available is null";
-    return;
+  if (arg0->on_cached_encoded_logo_available) {
+    std::move(arg0->on_cached_encoded_logo_available).Run(reason, logo);
   }
-  std::move(arg0->on_cached_encoded_logo_available).Run(reason, logo);
 }
 
 ACTION_P2(ReturnFreshLogo, reason, logo) {
-  if (!arg0->on_fresh_encoded_logo_available) {
-    ADD_FAILURE() << "callbacks.on_fresh_encoded_logo_available is null";
-    return;
+  if (arg0->on_fresh_encoded_logo_available) {
+    std::move(arg0->on_fresh_encoded_logo_available).Run(reason, logo);
   }
-  std::move(arg0->on_fresh_encoded_logo_available).Run(reason, logo);
-}
-
-ACTION_P(SaveFreshLogoCallback, dest) {
-  if (!arg0->on_fresh_encoded_logo_available) {
-    ADD_FAILURE() << "callbacks.on_fresh_encoded_logo_available is null";
-    return;
-  }
-  dest->emplace_back(std::move(arg0->on_fresh_encoded_logo_available));
 }
 
 class LocalNTPDoodleTest : public InProcessBrowserTest {
@@ -753,20 +741,52 @@ class LocalNTPDoodleTest : public InProcessBrowserTest {
         LogoServiceFactory::GetForProfile(browser()->profile()));
   }
 
-  base::Optional<std::string> GetComputedStyle(content::WebContents* tab,
-                                               std::string id,
-                                               std::string css_name) {
+  base::Optional<double> GetComputedStyle(content::WebContents* tab,
+                                          const std::string& id,
+                                          const std::string& css_name) {
     std::string css_value;
+    double double_value;
     if (instant_test_utils::GetStringFromJS(
             tab,
             base::StringPrintf(
                 "getComputedStyle(document.getElementById(%s))[%s]",
                 base::GetQuotedJSONString(id).c_str(),
                 base::GetQuotedJSONString(css_name).c_str()),
-            &css_value)) {
-      return css_value;
+            &css_value) &&
+        base::StringToDouble(css_value, &double_value)) {
+      return double_value;
     }
     return base::nullopt;
+  }
+
+  void WaitForFadeIn(content::WebContents* tab, const std::string& id) {
+    content::ConsoleObserverDelegate console_observer(tab, "WaitForFadeIn");
+    tab->SetDelegate(&console_observer);
+
+    bool result = false;
+    if (!instant_test_utils::GetBoolFromJS(
+            tab,
+            base::StringPrintf(
+                R"js(
+                document.getElementById(%s).addEventListener(
+                    'transitionend',
+                    function() {
+                        console.log('WaitForFadeIn')
+                    }) || true
+            )js",
+                base::GetQuotedJSONString(id).c_str()),
+            &result) &&
+        result) {
+      ADD_FAILURE() << "failed to wait for fade-in";
+      return;
+    }
+    LOG(INFO) << "sent bool";
+
+    // Only wait if the fade-in hasn't already completed.
+    if (GetComputedStyle(tab, id, "opacity") != 1.0) {
+      LOG(INFO) << "waiting";
+      console_observer.Wait();
+    }
   }
 
  private:
@@ -815,15 +835,13 @@ IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest,
   active_tab->SetDelegate(&console_observer);
   ui_test_utils::NavigateToURL(browser(), GURL(chrome::kChromeUINewTabURL));
 
-  EXPECT_THAT(GetComputedStyle(active_tab, "logo-default", "opacity"),
-              Eq<std::string>("1"));
-  EXPECT_THAT(GetComputedStyle(active_tab, "logo-doodle", "opacity"),
-              Eq<std::string>("0"));
+  EXPECT_THAT(GetComputedStyle(active_tab, "logo-default", "opacity"), Eq(1.0));
+  EXPECT_THAT(GetComputedStyle(active_tab, "logo-doodle", "opacity"), Eq(0.0));
   EXPECT_THAT(console_observer.message(), IsEmpty());
 }
 
 IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest,
-                       ShouldBeUnchangedWhenDoodleUnavailable) {
+                       ShouldBeUnchangedWhenDoodleNoCachedOrFreshDoodle) {
   EXPECT_CALL(*logo_service(), GetLogoPtr(_))
       .WillRepeatedly(DoAll(
           ReturnCachedLogo(LogoCallbackReason::DETERMINED, base::nullopt),
@@ -835,14 +853,12 @@ IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest,
   active_tab->SetDelegate(&console_observer);
   ui_test_utils::NavigateToURL(browser(), GURL(chrome::kChromeUINewTabURL));
 
-  EXPECT_THAT(GetComputedStyle(active_tab, "logo-default", "opacity"),
-              Eq<std::string>("1"));
-  EXPECT_THAT(GetComputedStyle(active_tab, "logo-doodle", "opacity"),
-              Eq<std::string>("0"));
+  EXPECT_THAT(GetComputedStyle(active_tab, "logo-default", "opacity"), Eq(1.0));
+  EXPECT_THAT(GetComputedStyle(active_tab, "logo-doodle", "opacity"), Eq(0.0));
   EXPECT_THAT(console_observer.message(), IsEmpty());
 }
 
-IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest, ShouldShowDoodleWhenAvailable) {
+IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest, ShouldShowDoodleWhenCached) {
   EncodedLogo cached_logo;
   std::string encoded_image = "data:image/svg+xml,<svg/>";
   cached_logo.encoded_image =
@@ -861,9 +877,31 @@ IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest, ShouldShowDoodleWhenAvailable) {
   active_tab->SetDelegate(&console_observer);
   ui_test_utils::NavigateToURL(browser(), GURL(chrome::kChromeUINewTabURL));
 
-  EXPECT_THAT(GetComputedStyle(active_tab, "logo-default", "opacity"),
-              Eq<std::string>("0"));
-  EXPECT_THAT(GetComputedStyle(active_tab, "logo-doodle", "opacity"),
-              Eq<std::string>("1"));
+  EXPECT_THAT(GetComputedStyle(active_tab, "logo-default", "opacity"), Eq(0.0));
+  EXPECT_THAT(GetComputedStyle(active_tab, "logo-doodle", "opacity"), Eq(1.0));
   EXPECT_THAT(console_observer.message(), IsEmpty());
+}
+
+IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest, ShouldFadeToDoodleWhenFetched) {
+  EncodedLogo fresh_logo;
+  std::string encoded_image = "data:image/svg+xml,<svg/>";
+  fresh_logo.encoded_image = base::RefCountedString::TakeString(&encoded_image);
+  fresh_logo.metadata.on_click_url = GURL("https://www.chromium.org");
+  fresh_logo.metadata.alt_text = "Chromium";
+
+  EXPECT_CALL(*logo_service(), GetLogoPtr(_))
+      .WillOnce(
+          DoAll(ReturnCachedLogo(LogoCallbackReason::DETERMINED, base::nullopt),
+                ReturnFreshLogo(LogoCallbackReason::DETERMINED, fresh_logo)))
+      .WillRepeatedly(DoAll(
+          ReturnCachedLogo(LogoCallbackReason::DETERMINED, fresh_logo),
+          ReturnFreshLogo(LogoCallbackReason::REVALIDATED, base::nullopt)));
+
+  // Open a new blank tab, then go to NTP and listen for console messages.
+  content::WebContents* active_tab = OpenNewTab(browser(), GURL("about:blank"));
+  ui_test_utils::NavigateToURL(browser(), GURL(chrome::kChromeUINewTabURL));
+
+  WaitForFadeIn(active_tab, "logo-doodle");
+  EXPECT_THAT(GetComputedStyle(active_tab, "logo-default", "opacity"), Eq(0.0));
+  EXPECT_THAT(GetComputedStyle(active_tab, "logo-doodle", "opacity"), Eq(1.0));
 }
