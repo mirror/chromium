@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53bff779_0bb29792",
+        "filename": "components/metrics/net/net_metrics_log_uploader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-02T17:24:06Z",
+      "side": 1,
+      "message": "If this method stays public, then I\u0027d say we should add a unit test for it in this CL. If it can be private, though, I\u0027d say the existing unit test coverage is fine (if it\u0027s private, it\u0027s basically an implementation detail of the class at this point).",
+      "range": {
+        "startLine": 120,
+        "startChar": 28,
+        "endLine": 120,
+        "endChar": 42
+      },
+      "revId": "a81179ea3175b8f384b5c33710547c5c7beac999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eeb9e25_748d7e9f",
+        "filename": "components/metrics/net/net_metrics_log_uploader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-02T17:24:06Z",
+      "side": 1,
+      "message": "Can this be a private method?",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 21
+      },
+      "revId": "a81179ea3175b8f384b5c33710547c5c7beac999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcdc8cb7_1fe64643",
+        "filename": "components/metrics/net/net_metrics_log_uploader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-02T17:24:06Z",
+      "side": 1,
+      "message": "nit: make this a `const GURL\u0026`",
+      "range": {
+        "startLine": 50,
+        "startChar": 22,
+        "endLine": 50,
+        "endChar": 26
+      },
+      "revId": "a81179ea3175b8f384b5c33710547c5c7beac999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
