@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "db4d8fdd_3052f5d6",
+        "filename": "ui/gfx/skia_color_space_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-10-02T18:46:04Z",
+      "side": 1,
+      "message": "What\u0027s fD ?",
+      "range": {
+        "startLine": 196,
+        "startChar": 32,
+        "endLine": 196,
+        "endChar": 33
+      },
+      "revId": "2a9ab8e2aa4d9608a6bc80e965793743678537a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a56f345_b169050f",
+        "filename": "ui/gfx/skia_color_space_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-10-02T18:46:04Z",
+      "side": 1,
+      "message": "What\u0027s fG?",
+      "revId": "2a9ab8e2aa4d9608a6bc80e965793743678537a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "53489691_3536bd70",
         "filename": "ui/gfx/skia_color_space_util.cc",
         "patchSetId": 1
@@ -13,6 +53,29 @@
       "writtenOn": "2017-10-02T08:43:28Z",
       "side": 1,
       "message": "This is the actual change -- do this simple thing instead of the above (now deleted) complicated code.",
+      "revId": "2a9ab8e2aa4d9608a6bc80e965793743678537a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26d62a5e_f2294837",
+        "filename": "ui/gfx/skia_color_space_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-10-02T18:46:04Z",
+      "side": 1,
+      "message": "Ideally we also want to minimize the second derivative at this point, otherwise you get something that looks like a \"fold\" in your gradients.",
+      "range": {
+        "startLine": 287,
+        "startChar": 21,
+        "endLine": 287,
+        "endChar": 37
+      },
       "revId": "2a9ab8e2aa4d9608a6bc80e965793743678537a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
