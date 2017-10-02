@@ -22,7 +22,8 @@ PopupTracker::~PopupTracker() {
 }
 
 PopupTracker::PopupTracker(content::WebContents* web_contents)
-    : content::WebContentsObserver(web_contents) {}
+    : content::WebContentsObserver(web_contents),
+      tick_clock_(base::MakeUnique<base::DefaultTickClock>()) {}
 
 void PopupTracker::DidFinishNavigation(
     content::NavigationHandle* navigation_handle) {
@@ -35,8 +36,7 @@ void PopupTracker::DidFinishNavigation(
   // we've committed the first navigation in this WebContents.
   if (!first_load_visibility_tracker_) {
     first_load_visibility_tracker_ = base::MakeUnique<ScopedVisibilityTracker>(
-        base::MakeUnique<base::DefaultTickClock>(),
-        web_contents()->IsVisible());
+        tick_clock_.get(), web_contents()->IsVisible());
   } else {
     web_contents()->RemoveUserData(UserDataKey());
     // Destroys this object.
