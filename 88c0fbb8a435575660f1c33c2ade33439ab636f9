@@ -46,6 +46,30 @@
       "revId": "88c0fbb8a435575660f1c33c2ade33439ab636f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "014b8bcf_d4125fff",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-02T21:06:30Z",
+      "side": 1,
+      "message": "yeah, makes sense :)",
+      "parentUuid": "abf8e2d8_f671a5b0",
+      "range": {
+        "startLine": 513,
+        "startChar": 12,
+        "endLine": 513,
+        "endChar": 16
+      },
+      "revId": "88c0fbb8a435575660f1c33c2ade33439ab636f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
