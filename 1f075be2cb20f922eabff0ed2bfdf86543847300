@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "497650a6_d4e870f3",
+        "filename": "components/viz/service/hit_test/hit_test_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-02T22:03:57Z",
+      "side": 1,
+      "message": "nit: traditionally the cc team has preferred making these overrides public (to signify that you can\u0027t reduce visibility of overrides because you can always cast to the base type and call) whereas the UI team has preferred making them private (to signify that these are implementation details).\n\nGiven Viz internal details is a GPU team project, it seems appropriate to keep these public.",
+      "revId": "1f075be2cb20f922eabff0ed2bfdf86543847300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
