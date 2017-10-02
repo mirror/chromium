@@ -610,6 +610,34 @@ TEST_F(ArcMigrationTest, IsMigrationAllowedMinimalMigration) {
   EXPECT_TRUE(IsArcMigrationAllowedByPolicyForProfile(profile()));
 }
 
+TEST_F(ArcMigrationTest, IsMigrationAllowedCachedValueForbidden) {
+  ScopedLogIn login(GetFakeUserManager(),
+                    AccountId::AdFromUserEmailObjGuid(
+                        profile()->GetProfileUserName(), kTestGaiaId));
+  profile()->GetTestingPrefService()->SetManagedPref(
+      prefs::kEcryptfsMigrationStrategy, base::MakeUnique<base::Value>(0));
+  EXPECT_FALSE(IsArcMigrationAllowedByPolicyForProfile(profile()));
+  profile()->GetTestingPrefService()->SetManagedPref(
+      prefs::kEcryptfsMigrationStrategy, base::MakeUnique<base::Value>(1));
+
+  // The value of IsArcMigrationAllowedByPolicyForProfile() should be cached.
+  // So, even if the policy is set after the first call, the returned value
+  // should not be changed.
+  EXPECT_FALSE(IsArcMigrationAllowedByPolicyForProfile(profile()));
+}
+
+TEST_F(ArcMigrationTest, IsMigrationAllowedCachedValueAllowed) {
+  ScopedLogIn login(GetFakeUserManager(),
+                    AccountId::AdFromUserEmailObjGuid(
+                        profile()->GetProfileUserName(), kTestGaiaId));
+  profile()->GetTestingPrefService()->SetManagedPref(
+      prefs::kEcryptfsMigrationStrategy, base::MakeUnique<base::Value>(1));
+  EXPECT_TRUE(IsArcMigrationAllowedByPolicyForProfile(profile()));
+  profile()->GetTestingPrefService()->SetManagedPref(
+      prefs::kEcryptfsMigrationStrategy, base::MakeUnique<base::Value>(0));
+  EXPECT_TRUE(IsArcMigrationAllowedByPolicyForProfile(profile()));
+}
+
 // Defines parameters for parametrized test
 // ArcMigrationAskForEcryptfsArcUsersTest.
 struct AskForEcryptfsArcUserTestParam {
