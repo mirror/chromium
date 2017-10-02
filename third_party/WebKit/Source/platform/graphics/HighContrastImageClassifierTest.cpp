@@ -31,13 +31,30 @@ class HighContrastImageClassifierTest : public ::testing::Test {
   HighContrastImageClassifier classifier_;
 };
 
-TEST_F(HighContrastImageClassifierTest, ShouldApplyHighContrastFilterToImage) {
-  RefPtr<BitmapImage> image = LoadImage(
-      "/LayoutTests/images/resources/blue-wheel-srgb-color-profile.png");
-  EXPECT_FALSE(classifier_.ShouldApplyHighContrastFilterToImage(*image.get()));
+TEST_F(HighContrastImageClassifierTest, FeaturesAndClassification) {
+  struct TestCase {
+    std::string file_name;
+    bool expected_result;
+    float features[2];
+  };
 
-  image = LoadImage("/LayoutTests/images/resources/grid.png");
-  EXPECT_TRUE(classifier_.ShouldApplyHighContrastFilterToImage(*image.get()));
+  TestCase test_cases[] = {
+      {"/LayoutTests/images/resources/blue-wheel-srgb-color-profile.png",
+       false,
+       {1, 0.0366914}},
+      {"/LayoutTests/images/resources/grid-large.png", true, {0, 0.1875}},
+  };
+
+  for (const auto& test_case : test_cases) {
+    SCOPED_TRACE(test_case.file_name);
+    RefPtr<BitmapImage> image = LoadImage(test_case.file_name.c_str());
+    std::vector<float> features;
+    EXPECT_TRUE(
+        classifier_.ComputeImageFeaturesForTesting(*image.get(), &features));
+
+    EXPECT_EQ(classifier_.ShouldApplyHighContrastFilterToImage(*image.get()),
+              test_case.expected_result);
+  }
 }
 
 }  // namespace blink
