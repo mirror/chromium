@@ -112,13 +112,12 @@ void LayoutNGBlockFlow::UpdateBlockLayout(bool relayout_children) {
 
 void LayoutNGBlockFlow::UpdateMargins(
     const NGConstraintSpace& constraint_space) {
-  NGBoxStrut margins =
-      ComputeMargins(constraint_space, StyleRef(),
-                     constraint_space.WritingMode(), StyleRef().Direction());
-  SetMarginBefore(margins.block_start);
-  SetMarginAfter(margins.block_end);
-  SetMarginStart(margins.inline_start);
-  SetMarginEnd(margins.inline_end);
+  NGPhysicalBoxStrut margins =
+      ComputePhysicalMargins(constraint_space, StyleRef());
+  SetMarginTop(margins.top);
+  SetMarginRight(margins.right);
+  SetMarginBottom(margins.bottom);
+  SetMarginLeft(margins.left);
 }
 
 NGInlineNodeData* LayoutNGBlockFlow::GetNGInlineNodeData() const {

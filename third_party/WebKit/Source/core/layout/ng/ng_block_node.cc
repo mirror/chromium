@@ -281,13 +281,12 @@ void NGBlockNode::CopyFragmentDataToLayoutBox(
   // good enough for it to work correctly.
   // Set this only for atomic inlines, or we end up adding margins twice.
   if (box_->IsAtomicInlineLevel()) {
-    NGBoxStrut margins =
-        ComputeMargins(constraint_space, Style(),
-                       constraint_space.WritingMode(), Style().Direction());
-    box_->SetMarginBefore(margins.block_start);
-    box_->SetMarginAfter(margins.block_end);
-    box_->SetMarginStart(margins.inline_start);
-    box_->SetMarginEnd(margins.inline_end);
+    NGPhysicalBoxStrut margins =
+        ComputePhysicalMargins(constraint_space, Style());
+    box_->SetMarginTop(margins.top);
+    box_->SetMarginRight(margins.right);
+    box_->SetMarginBottom(margins.bottom);
+    box_->SetMarginLeft(margins.left);
   }
 
   PlaceChildrenInLayoutBox(constraint_space, physical_fragment);
