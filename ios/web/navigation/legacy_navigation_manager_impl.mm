@@ -25,6 +25,12 @@
 #error "This file requires ARC support."
 #endif
 
+// CRWSessionController's readonly properties redefined as readwrite; used to
+// restore session history.
+@interface CRWSessionController (ExposedForSerialization)
+@property(nonatomic, readwrite, assign) NSInteger previousItemIndex;
+@end
+
 namespace web {
 
 LegacyNavigationManagerImpl::LegacyNavigationManagerImpl() = default;
@@ -136,7 +142,7 @@ void LegacyNavigationManagerImpl::DiscardNonCommittedItems() {
 }
 
 int LegacyNavigationManagerImpl::GetItemCount() const {
-  return [session_controller_ items].size();
+  return session_controller_ ? [session_controller_ items].size() : 0;
 }
 
 NavigationItem* LegacyNavigationManagerImpl::GetItemAtIndex(
@@ -216,8 +222,8 @@ void LegacyNavigationManagerImpl::Restore(
     int last_committed_item_index,
     std::vector<std::unique_ptr<NavigationItem>> items) {
   DCHECK(GetItemCount() == 0 && !GetPendingItem());
-  DCHECK_GE(last_committed_item_index, 0);
-  DCHECK_LT(static_cast<size_t>(last_committed_item_index), items.size());
+  DCHECK_LT(last_committed_item_index, static_cast<int>(items.size()));
+  DCHECK(items.empty() || last_committed_item_index >= 0);
   SetSessionController([[CRWSessionController alloc]
         initWithBrowserState:browser_state_
              navigationItems:std::move(items)
@@ -330,6 +336,11 @@ bool LegacyNavigationManagerImpl::IsRedirectItemAtIndex(int index) const {
 
 int LegacyNavigationManagerImpl::GetPreviousItemIndex() const {
   return base::checked_cast<int>([session_controller_ previousItemIndex]);
+}
+
+void LegacyNavigationManagerImpl::SetPreviousItemIndex(
+    int previous_item_index) {
+  [session_controller_ setPreviousItemIndex:previous_item_index];
 }
 
 }  // namespace web
