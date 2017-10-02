@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75915e0c_0c2d3986",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1213235
+      },
+      "writtenOn": "2017-10-02T17:52:06Z",
+      "side": 1,
+      "message": "Why is this needed?",
+      "revId": "d260feb10adb3664928bc1d61ab748104aa90dac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b02f087_f5a03755",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 999,
+      "author": {
+        "id": 1213235
+      },
+      "writtenOn": "2017-10-02T17:52:06Z",
+      "side": 1,
+      "message": "Is this to prevent blinking? What made this necessary?",
+      "revId": "d260feb10adb3664928bc1d61ab748104aa90dac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "845ed02d_9c4d1919",
+        "filename": "third_party/WebKit/public/web/WebContextMenuData.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1213235
+      },
+      "writtenOn": "2017-10-02T17:52:06Z",
+      "side": 1,
+      "message": "Is this ever used?",
+      "revId": "d260feb10adb3664928bc1d61ab748104aa90dac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
