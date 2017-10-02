@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "14c15bdf_a2e1b8f2",
+        "filename": "build/config/BUILDCONFIG.gn",
+        "patchSetId": 15
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-02T20:48:49Z",
+      "side": 1,
+      "message": "Thanks for the explanation! Done.",
+      "parentUuid": "4282272b_0e0e5db7",
+      "revId": "2f505ad69aad7f4cc73bb7cf6c66929f195a132d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a651350_64daf0a5",
         "filename": "build/config/compiler/compiler.gni",
         "patchSetId": 15
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "0ffe51d6_8090610c",
+        "filename": "build/config/compiler/compiler.gni",
+        "patchSetId": 15
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-02T20:48:49Z",
+      "side": 1,
+      "message": "For some reason I\u0027ve been thinking that it\u0027s a bad practice to use asserts in BUILD.gn. Your explanation makes sense! Done.",
+      "parentUuid": "8a651350_64daf0a5",
+      "revId": "2f505ad69aad7f4cc73bb7cf6c66929f195a132d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "900b7da5_3dfa16bf",
         "filename": "third_party/libFuzzer/BUILD.gn",
         "patchSetId": 15
@@ -50,6 +86,24 @@
       "revId": "2f505ad69aad7f4cc73bb7cf6c66929f195a132d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53e25f96_812d16d5",
+        "filename": "third_party/libFuzzer/BUILD.gn",
+        "patchSetId": 15
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-02T20:48:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "900b7da5_3dfa16bf",
+      "revId": "2f505ad69aad7f4cc73bb7cf6c66929f195a132d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
