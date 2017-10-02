@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c67a4107_87664c48",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1041,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-10-02T21:20:43Z",
+      "side": 1,
+      "message": "I think this got unnoticed from previous review. Typo in the name here.",
+      "range": {
+        "startLine": 1041,
+        "startChar": 20,
+        "endLine": 1041,
+        "endChar": 32
+      },
+      "revId": "9296b799a2deacedbd5c4dcde5dc0e8f5942e4b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "183cc459_50f081bf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1468,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-10-02T21:20:43Z",
+      "side": 1,
+      "message": "why is this happening here? I don\u0027t see us using mIsTabStateDirty below.",
+      "range": {
+        "startLine": 1468,
+        "startChar": 25,
+        "endLine": 1468,
+        "endChar": 26
+      },
+      "revId": "9296b799a2deacedbd5c4dcde5dc0e8f5942e4b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04f9470a_7ed0b502",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1504,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-10-02T21:20:43Z",
+      "side": 1,
+      "message": "Why separate this logic to its own call? Being detached or not is a byproduct of construction and initialization and it is not clear at all that you have to set this separately. Separating this makes it possible to call createDetached and setDetached(false) which should not happen.",
+      "revId": "9296b799a2deacedbd5c4dcde5dc0e8f5942e4b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b047eb32_0e04cad7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1750,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-10-02T21:20:43Z",
+      "side": 1,
+      "message": "if we are adding this here, then we shouldn\u0027t be calling it in the constructor or initialize.",
+      "range": {
+        "startLine": 1750,
+        "startChar": 34,
+        "endLine": 1750,
+        "endChar": 52
+      },
+      "revId": "9296b799a2deacedbd5c4dcde5dc0e8f5942e4b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

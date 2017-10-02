@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17bd7c2e_670e3e12",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1032,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-10-02T21:20:43Z",
+      "side": 1,
+      "message": "typo in the name here.",
+      "range": {
+        "startLine": 1032,
+        "startChar": 20,
+        "endLine": 1032,
+        "endChar": 32
+      },
+      "revId": "1f9a0e1b51f52b0724eb4b5f37fdc22394cd221a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
