@@ -11,7 +11,7 @@
 /**
  * @param {!SDK.Target} target
  */
-IntegrationTestRunner._setupTestHelpers = function(target) {
+TestRunner._setupTestHelpers = function(target) {
   TestRunner.CSSAgent = target.cssAgent();
   TestRunner.DeviceOrientationAgent = target.deviceOrientationAgent();
   TestRunner.DOMAgent = target.domAgent();
@@ -830,22 +830,22 @@ TestRunner.waitForUISourceCodeRemoved = function(callback) {
 };
 
 /** @type {boolean} */
-IntegrationTestRunner._startedTest = false;
+TestRunner._startedTest = false;
 
 /**
  * @implements {SDK.TargetManager.Observer}
  */
-IntegrationTestRunner.TestObserver = class {
+TestRunner.TestObserver = class {
   /**
    * @param {!SDK.Target} target
    * @override
    */
   targetAdded(target) {
-    if (IntegrationTestRunner._startedTest)
+    if (TestRunner._startedTest)
       return;
-    IntegrationTestRunner._startedTest = true;
-    IntegrationTestRunner._setupTestHelpers(target);
-    IntegrationTestRunner.runTest();
+    TestRunner._startedTest = true;
+    TestRunner._setupTestHelpers(target);
+    TestRunner.runTest();
   }
 
   /**
@@ -856,7 +856,7 @@ IntegrationTestRunner.TestObserver = class {
   }
 };
 
-IntegrationTestRunner.runTest = async function() {
+TestRunner.runTest = async function() {
   var testScriptURL = /** @type {string} */ (Runtime.queryParam('test'));
   var basePath = testScriptURL + '/../';
   await TestRunner.evaluateInPagePromise(`
@@ -867,4 +867,4 @@ IntegrationTestRunner.runTest = async function() {
   TestRunner.executeTestScript();
 };
 
-SDK.targetManager.observeTargets(new IntegrationTestRunner.TestObserver());
+SDK.targetManager.observeTargets(new TestRunner.TestObserver());
