@@ -69,6 +69,24 @@
       "revId": "92c6ccdc3aeb1d6d6056974c15fc0c14a042c45d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a4c54bf_78306556",
+        "filename": "net/spdy/chromium/http2_push_promise_index.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-02T14:57:15Z",
+      "side": 1,
+      "message": "I thought DISALLOW_COPY_AND_ASSIGN() is exactly for that purpose.\nIs DISALLOW_COPY_AND_ASSIGN being deprecated?",
+      "parentUuid": "96d6792a_8a3f0402",
+      "revId": "92c6ccdc3aeb1d6d6056974c15fc0c14a042c45d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
