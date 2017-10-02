@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10dfd972_a704636d",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 3656,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-02T18:53:29Z",
+      "side": 1,
+      "message": "q: Should this include //ash/public/interfaces?",
+      "revId": "ee85d29b151931b7407a7cadc77dc543ad581a3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba893ef4_c0bb57a1",
+        "filename": "chrome/browser/ui/ash/fake_tablet_mode_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-02T18:53:29Z",
+      "side": 1,
+      "message": "optional nit: \"is_client_set_\", \"was_set_client_called_\", \"size_t set_client_call_count_\", or comment?",
+      "revId": "ee85d29b151931b7407a7cadc77dc543ad581a3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "160ad88d_57ca5016",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-02T18:53:29Z",
+      "side": 1,
+      "message": "nit: cache the tablet_mode_controller, or make a helper to SetEnabled[AndFlush].",
+      "revId": "ee85d29b151931b7407a7cadc77dc543ad581a3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
