@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "afb886d7_68183454",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1243462
+      },
+      "writtenOn": "2017-10-02T18:05:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bd1e5d60_2d79cb42",
+      "range": {
+        "startLine": 9,
+        "startChar": 10,
+        "endLine": 9,
+        "endChar": 18
+      },
+      "revId": "ee4760b666b7a5286df37e2910945c0702979aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "026ea66e_defad22f",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "ee4760b666b7a5286df37e2910945c0702979aab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9cefe89_bfa7ba62",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1243462
+      },
+      "writtenOn": "2017-10-02T18:05:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "026ea66e_defad22f",
+      "range": {
+        "startLine": 11,
+        "startChar": 47,
+        "endLine": 11,
+        "endChar": 55
+      },
+      "revId": "ee4760b666b7a5286df37e2910945c0702979aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,54 @@
     },
     {
       "key": {
+        "uuid": "95594f61_c44e0418",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1243462
+      },
+      "writtenOn": "2017-10-02T18:05:13Z",
+      "side": 1,
+      "message": "Ok, thank you for the explanation!",
+      "parentUuid": "250e4279_62de62a4",
+      "range": {
+        "startLine": 373,
+        "startChar": 53,
+        "endLine": 373,
+        "endChar": 61
+      },
+      "revId": "ee4760b666b7a5286df37e2910945c0702979aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b286475_b19efeb2",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1243462
+      },
+      "writtenOn": "2017-10-02T18:05:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5e02951e_649c03a7",
+      "range": {
+        "startLine": 373,
+        "startChar": 12,
+        "endLine": 373,
+        "endChar": 18
+      },
+      "revId": "ee4760b666b7a5286df37e2910945c0702979aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc3173df_b144a61f",
         "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
         "patchSetId": 1
@@ -114,6 +210,30 @@
       "revId": "ee4760b666b7a5286df37e2910945c0702979aab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "189d2387_e2e39e49",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1243462
+      },
+      "writtenOn": "2017-10-02T18:05:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dc3173df_b144a61f",
+      "range": {
+        "startLine": 393,
+        "startChar": 14,
+        "endLine": 393,
+        "endChar": 23
+      },
+      "revId": "ee4760b666b7a5286df37e2910945c0702979aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "f0ac313b_12809257",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1243462
+      },
+      "writtenOn": "2017-10-02T18:05:13Z",
+      "side": 1,
+      "message": "You are right. Checks for USER_TYPED and AUTOFILLED seems unnecessary here.",
+      "parentUuid": "cdefea1c_993f8b65",
+      "range": {
+        "startLine": 398,
+        "startChar": 4,
+        "endLine": 402,
+        "endChar": 62
+      },
+      "revId": "ee4760b666b7a5286df37e2910945c0702979aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0da324cf_0e89878e",
         "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
         "patchSetId": 1
@@ -151,6 +295,30 @@
       "writtenOn": "2017-10-02T12:32:26Z",
       "side": 1,
       "message": "What\u0027s the reason to check |field_name| against |*_element| names?",
+      "range": {
+        "startLine": 403,
+        "startChar": 48,
+        "endLine": 407,
+        "endChar": 68
+      },
+      "revId": "ee4760b666b7a5286df37e2910945c0702979aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da858ddc_599f9e4b",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1243462
+      },
+      "writtenOn": "2017-10-02T18:05:13Z",
+      "side": 1,
+      "message": "This has been done to avoid comparison with password element value. In fact it is unnecessary\nhere because earlier we are checking if input type is not password. I will remove this checks.",
+      "parentUuid": "0da324cf_0e89878e",
       "range": {
         "startLine": 403,
         "startChar": 48,
