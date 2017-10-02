@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec711d64_efb9cd83",
+        "filename": "build/config/compiler/compiler.gni",
+        "patchSetId": 10
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-10-02T19:42:39Z",
+      "side": 1,
+      "message": "does this need a coverage.gni import as well?",
+      "range": {
+        "startLine": 217,
+        "startChar": 7,
+        "endLine": 217,
+        "endChar": 26
+      },
+      "revId": "badbd0821de24221f1b16099890f1af38a4910da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48543060_07d2fc82",
+        "filename": "third_party/libFuzzer/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-10-02T19:42:39Z",
+      "side": 1,
+      "message": "do we need to import coverage.gni now?",
+      "range": {
+        "startLine": 5,
+        "startChar": 34,
+        "endLine": 5,
+        "endChar": 48
+      },
+      "revId": "badbd0821de24221f1b16099890f1af38a4910da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
