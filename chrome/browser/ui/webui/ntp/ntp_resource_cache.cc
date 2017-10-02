@@ -132,8 +132,8 @@ std::string GetNewTabBackgroundTilingCSS(
 }
 
 bool ShouldShowApps() {
-// Ash shows apps in app list thus should not show apps page in NTP4.
-#if defined(USE_ASH)
+#if defined(OS_CHROMEOS)
+  // Chrome OS shows apps in app list thus should not show apps page in NTP4.
   return false;
 #else
   return true;
