@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee02be39_7cd324c7",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-02T20:35:40Z",
+      "side": 1,
+      "message": "would it make more sense to return bounds in local coordinates and require the caller to offset by origin?",
+      "revId": "e41ce164709accca8961b39536f8b425b1f1ca97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6efd712f_a6b428d5",
+        "filename": "components/exo/surface.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-02T20:35:40Z",
+      "side": 1,
+      "message": "nit: mention what coordinate space bounding box is in.",
+      "range": {
+        "startLine": 148,
+        "startChar": 37,
+        "endLine": 149,
+        "endChar": 25
+      },
+      "revId": "e41ce164709accca8961b39536f8b425b1f1ca97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a17cd5ff_a65dc337",
+        "filename": "components/exo/surface_tree_host.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-02T20:35:40Z",
+      "side": 1,
+      "message": "Should this be gfx::Rect(root_surface_-\u003econtent_size()).Contains(bounds)  or \"gfx::Rect(root_surface_-\u003econtent_size()) \u003d\u003d bounds\" ?",
+      "range": {
+        "startLine": 209,
+        "startChar": 6,
+        "endLine": 209,
+        "endChar": 52
+      },
+      "revId": "e41ce164709accca8961b39536f8b425b1f1ca97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
