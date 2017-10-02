@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cf72039_fb6a3ff1",
+        "filename": "chromecast/media/cma/pipeline/audio_decoder_software_wrapper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1123449
+      },
+      "writtenOn": "2017-10-02T21:03:21Z",
+      "side": 1,
+      "message": "So this should work for Opus mono and FLAC mono, since those go through the software decoder. But will this work correctly when input stream is PCM mono? Do we pass PCM input through sw decoder too?",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 99,
+        "endChar": 10
+      },
+      "revId": "c270b17fff67f15c1bf07aca722dcad1200ee233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
