@@ -4,6 +4,7 @@
 
 #include "content/public/test/test_browser_thread_bundle.h"
 
+#include "base/hack.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
@@ -31,6 +32,10 @@ TestBrowserThreadBundle::TestBrowserThreadBundle(int options)
 
 TestBrowserThreadBundle::~TestBrowserThreadBundle() {
   CHECK(threads_created_);
+
+  LOG(ERROR) << "Starting ~TestBrowserThreadBundle";
+
+  HACK_WaitUntil(base::PostedInit);
 
   // To ensure a clean teardown, each thread's message loop must be flushed
   // just before the thread is destroyed. But stopping a fake thread does not
@@ -61,7 +66,13 @@ TestBrowserThreadBundle::~TestBrowserThreadBundle() {
     // blocked upon it could make a test flaky whereas by flushing we guarantee
     // it will blow up).
     RunAllTasksUntilIdle();
-    CHECK(base::MessageLoop::current()->IsIdleForTesting());
+
+    HACK_AdvanceState(base::PostedInit, base::AboutToCheck);
+
+    HACK_WaitUntil(base::PostedLoadIndexEntriesReply);
+    HACK_AdvanceState(base::PostedLoadIndexEntriesReply, base::NowChecking);
+
+    base::MessageLoop::current()->CheckIsIdleForTesting();
   }
 
   // |scoped_task_environment_| needs to explicitly go away before fake threads
