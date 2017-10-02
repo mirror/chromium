@@ -16,6 +16,24 @@
       "revId": "fcdf8ccce7e8ee3f9071cbf1b43a4696314e2a60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f801330c_5c5ff74d",
+        "filename": "sandbox/mac/sandbox_logging.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-10-02T20:28:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b038fc3e_4b76f368",
+      "revId": "fcdf8ccce7e8ee3f9071cbf1b43a4696314e2a60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
