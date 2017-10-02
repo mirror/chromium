@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ccaac67a_20399084",
+        "filename": "components/ukm/content/source_url_recorder.cc",
+        "patchSetId": 53
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-02T22:04:38Z",
+      "side": 1,
+      "message": "nit: I think technically this can be extracted from NavigationHandle, which has GetRedirectChain() and the initial URL is always the first (and possibly only) entry in that vector.",
+      "revId": "a26c898138b35ef61b1c5370e076cb9485289aa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
