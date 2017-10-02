@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b5a2757d_3c6cb142",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-02T21:13:12Z",
+      "side": 1,
+      "message": "\u003e\u003e Or some other definition?\nThat\u0027s a very good question indeed. There are two different concepts of backgrounding/foregrounding here: renderer-level (RendererSchedulerImpl::SetRendererBackgrounded) and page-level (WebViewScheduler::SetPageVisible).\n\nIn this patch kStopped throttling signal is driven by RSI::SetRendererBackground and kThrottled/kNotThrottled is driven by SetPageVisible. I\u0027m worried about these signals interacting strangely in the miriad of the corner-cases (for example, when renderer starts to play audio in the background, renderer will be brought into foreground by SetRendererBackgrounded(false), but SetPageVisible won\u0027t be called. That\u0027s one example, but there are more, because these signals are fundamentally different).\n\nSo, unfortunately, the \"we always trigger WebViewSchedulerImpl::SetPageVisible when backgrounding / foregrounding the tab\" assumption isn\u0027t always true due to different notions of backgrounding (and bonus points for figuring out what this patch will do when there are multiple WebViewSchedulers inside one RendererScheduler). \n\nSo tldr is that we need to build the system with the assumption that renderer-level and page-level backgrounding are completely independent.",
+      "parentUuid": "6b3ec14a_75f0e6cb",
+      "range": {
+        "startLine": 392,
+        "startChar": 28,
+        "endLine": 392,
+        "endChar": 49
+      },
+      "revId": "8063fe75a538b37f1c957871b7172c9e7fe5e1c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b38b6e45_ae611791",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_view_scheduler_impl.cc",
         "patchSetId": 6
