@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "78dea460_83240e01",
+        "filename": "chrome/common/url_constants.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-02T21:20:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cbd8ffa_435a5f7c",
+      "range": {
+        "startLine": 97,
+        "startChar": 11,
+        "endLine": 97,
+        "endChar": 35
+      },
+      "revId": "3d29eca07dbb87d3dfd460c7a81b0195270dcd2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f1e8d0a_c148b921",
         "filename": "chrome/common/url_constants.cc",
         "patchSetId": 10
@@ -60,6 +84,30 @@
       "side": 1,
       "message": "+1; this isn\u0027t *that* messy, and this is the obvious place for  kChromeUISysInternalsURL.",
       "parentUuid": "6f1e8d0a_c148b921",
+      "range": {
+        "startLine": 136,
+        "startChar": 0,
+        "endLine": 136,
+        "endChar": 49
+      },
+      "revId": "3d29eca07dbb87d3dfd460c7a81b0195270dcd2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "037e19a0_628c3f04",
+        "filename": "chrome/common/url_constants.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-02T21:20:01Z",
+      "side": 1,
+      "message": "OK, done.\n\nSorry, but the file is rather messy. So I will make another pass and clean it up anyway.\n\n- Is the file in alphabetical order? Nope.\n- Is it clearly separated into OS-All followed by OS-specific sections? Nope.\n- Is there documentation to explain how the file is organized? Barely.\n- In the header, the kChromeUI*URL section has kChromeUI*Host entries in it. Sigh.",
+      "parentUuid": "6a812cba_0a0e75a2",
       "range": {
         "startLine": 136,
         "startChar": 0,
@@ -119,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "c8205790_24dbdf91",
+        "filename": "chrome/common/url_constants.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-02T21:20:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0857fe78_cc5189e8",
+      "range": {
+        "startLine": 326,
+        "startChar": 0,
+        "endLine": 326,
+        "endChar": 51
+      },
+      "revId": "3d29eca07dbb87d3dfd460c7a81b0195270dcd2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c888a14_b4fb6cb6",
         "filename": "chrome/common/url_constants.h",
         "patchSetId": 10
@@ -139,6 +211,30 @@
       "revId": "3d29eca07dbb87d3dfd460c7a81b0195270dcd2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd9aa1d2_c61b48f9",
+        "filename": "chrome/common/url_constants.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-02T21:20:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c888a14_b4fb6cb6",
+      "range": {
+        "startLine": 89,
+        "startChar": 18,
+        "endLine": 89,
+        "endChar": 42
+      },
+      "revId": "3d29eca07dbb87d3dfd460c7a81b0195270dcd2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -165,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "d529658b_b3ac9384",
+        "filename": "chrome/common/url_constants.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-02T21:20:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3137bf0e_052ee5d2",
+      "range": {
+        "startLine": 126,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 37
+      },
+      "revId": "3d29eca07dbb87d3dfd460c7a81b0195270dcd2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d9d7cde_3076cbe5",
         "filename": "chrome/common/url_constants.h",
         "patchSetId": 10
@@ -185,6 +305,30 @@
       "revId": "3d29eca07dbb87d3dfd460c7a81b0195270dcd2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bea9cbf2_5d14d5d4",
+        "filename": "chrome/common/url_constants.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-02T21:20:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d9d7cde_3076cbe5",
+      "range": {
+        "startLine": 310,
+        "startChar": 0,
+        "endLine": 310,
+        "endChar": 43
+      },
+      "revId": "3d29eca07dbb87d3dfd460c7a81b0195270dcd2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
