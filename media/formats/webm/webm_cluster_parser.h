@@ -7,12 +7,12 @@
 
 #include <stdint.h>
 
+#include <deque>
 #include <map>
 #include <memory>
 #include <set>
 #include <string>
 
-#include "base/containers/circular_deque.h"
 #include "base/macros.h"
 #include "media/base/audio_decoder_config.h"
 #include "media/base/media_export.h"
@@ -27,7 +27,10 @@ namespace media {
 class MEDIA_EXPORT WebMClusterParser : public WebMParserClient {
  public:
   using TrackId = StreamParser::TrackId;
-  using BufferQueue = base::circular_deque<scoped_refptr<StreamParserBuffer>>;
+  // TODO(http://crbug.com/770253) Convert to a circular_deque or figure out
+  // why a std::deque is faster. Using a std::deque here is an attempt to
+  // fix the above perf regression.
+  using BufferQueue = std::deque<scoped_refptr<StreamParserBuffer>>;
   using TextBufferQueueMap = std::map<TrackId, const BufferQueue>;
 
   // Numbers chosen to estimate the duration of a buffer if none is set and
