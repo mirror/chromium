@@ -66,7 +66,8 @@ IN_PROC_BROWSER_TEST_F(SystemTrayClientEnterpriseTest, TrayEnterprise) {
 
   // Open the system tray menu.
   ash::SystemTray* system_tray = GetSystemTray();
-  system_tray->ShowDefaultView(ash::BUBBLE_CREATE_NEW);
+  system_tray->ShowDefaultView(ash::BUBBLE_CREATE_NEW,
+                               false /* show_by_click */);
 
   // Managed devices show an item in the menu.
   ash::TrayEnterprise* tray_enterprise =
