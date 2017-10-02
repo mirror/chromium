@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "9a7b65a8_e9e4c53b",
+        "filename": "components/ukm/content/source_url_recorder_web_contents_observer.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-10-02T14:46:27Z",
+      "side": 1,
+      "message": "The header is logically exporting a WebContentsObserver - it\u0027s used / invoked from tab_helpers.cc where all other WCOs are registered. So it seems reasonable to me that we name this source_url_recorder_web_contents_observer.h. I\u0027m inclined to defer to components/ukm directory owners for a decision on this.",
+      "parentUuid": "72337577_3a2abbf4",
+      "revId": "6880a0973f6d4bf78e79c6368b3110783ac2829c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7cabec62_74cf10c4",
         "filename": "components/ukm/content/source_url_recorder_web_contents_observer.cc",
         "patchSetId": 49
@@ -173,6 +191,24 @@
       "side": 1,
       "message": "Thanks for outlining your concerns! I\u0027m wondering what is the meaningful difference between \"this is not a download\" vs \"I don\u0027t know\"? The latter case will be only in the case of an error, right? If it is an error, can we conclusively say \"yes, it was supposed to be a download\" or \"no, this wasn\u0027t supposed to be a download\"? If we can, then it will make sense to have base::Optional. I just don\u0027t know how we could distinguish the two cases, so please do share if you know of ways we can classify them.\n\nAlso, if we leave the API as a boolean, then we can give a good description in the public API outlining that false and unknown are currently the same, so whoever calls the API is at least aware of the limitation.",
       "parentUuid": "8b81bf93_5ad2243f",
+      "revId": "6880a0973f6d4bf78e79c6368b3110783ac2829c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "322c354e_1a9110be",
+        "filename": "content/browser/frame_host/navigation_handle_impl.h",
+        "patchSetId": 49
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-10-02T14:46:27Z",
+      "side": 1,
+      "message": "You are right, there is not currently any need to differentiate between unknown and false. I updated the IsDownload comment to note that we return \u0027false\u0027 when download status is not yet known.",
+      "parentUuid": "2696a2cf_d6b198c0",
       "revId": "6880a0973f6d4bf78e79c6368b3110783ac2829c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
