@@ -53,6 +53,7 @@ import org.chromium.chrome.browser.IntentHandler.TabOpenType;
 import org.chromium.chrome.browser.appmenu.AppMenuPropertiesDelegate;
 import org.chromium.chrome.browser.bookmarks.BookmarkUtils;
 import org.chromium.chrome.browser.browseractions.BrowserActionsService;
+import org.chromium.chrome.browser.browseractions.BrowserActionsTabModelSelector;
 import org.chromium.chrome.browser.compositor.CompositorViewHolder;
 import org.chromium.chrome.browser.compositor.layouts.Layout;
 import org.chromium.chrome.browser.compositor.layouts.LayoutManager;
@@ -1037,9 +1038,15 @@ public class ChromeTabbedActivity
                 }
             }
 
+            boolean isIntialized = BrowserActionsTabModelSelector.isInitialized();
             mCreatedTabOnStartup = getCurrentTabModel().getCount() > 0
                     || mTabModelSelectorImpl.getRestoredTabCount() > 0 || mIntentWithEffect
-                    || mDelayedInitialTabBehaviorDuringUiInit != null;
+                    || mDelayedInitialTabBehaviorDuringUiInit != null
+                    || (isIntialized
+                               && BrowserActionsTabModelSelector.getInstance()
+                                               .getCurrentModel()
+                                               .getCount()
+                                       > 0);
 
             // We always need to try to restore tabs. The set of tabs might be empty, but at least
             // it will trigger the notification that tab restore is complete which is needed by
@@ -1048,6 +1055,9 @@ public class ChromeTabbedActivity
 
             mMainIntentMetrics.setIgnoreEvents(true);
             mTabModelSelectorImpl.restoreTabs(activeTabBeingRestored);
+            if (isIntialized) {
+                mergeBrowserActionsTabModel(BrowserActionsTabModelSelector.getInstance());
+            }
             mMainIntentMetrics.setIgnoreEvents(false);
 
             // Only create an initial tab if no tabs were restored and no intent was handled.
@@ -1072,6 +1082,21 @@ public class ChromeTabbedActivity
                     "MobileStartup.ColdStartupIntent", mIntentWithEffect);
         } finally {
             TraceEvent.end("ChromeTabbedActivity.initializeState");
+        }
+    }
+
+    private void mergeBrowserActionsTabModel(BrowserActionsTabModelSelector selector) {
+        TabModel model = selector.getModel(false);
+        while (model.getCount() > 0) {
+            Tab tab = model.getTabAt(0);
+            model.removeTab(tab);
+            tab.attach(this, new TabDelegateFactory(), false);
+            getTabModelSelector().getCurrentModel().addTab(
+                    tab, -1, TabLaunchType.FROM_BROWSER_ACTIONS);
+        }
+        TabModel newModel = getTabModelSelector().getCurrentModel();
+        if (!mIntentWithEffect) {
+            TabModelUtils.setIndex(newModel, newModel.getCount() - 1);
         }
     }
 
