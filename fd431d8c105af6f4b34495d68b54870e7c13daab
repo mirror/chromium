@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a47dfab_efe43d15",
+        "filename": "ash/display/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-02T23:38:17Z",
+      "side": 1,
+      "message": "afakhry.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 6
+      },
+      "revId": "fd431d8c105af6f4b34495d68b54870e7c13daab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
