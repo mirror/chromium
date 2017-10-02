@@ -629,7 +629,7 @@ bool ChromeLauncherController::ContentCanBeHandledByGmailApp(
 
 gfx::Image ChromeLauncherController::GetAppListIcon(
     content::WebContents* web_contents) const {
-  ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
+  ui::ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
   if (IsIncognito(web_contents))
     return rb.GetImageNamed(IDR_ASH_SHELF_LIST_INCOGNITO_BROWSER);
   favicon::FaviconDriver* favicon_driver =
@@ -1088,7 +1088,7 @@ void ChromeLauncherController::CreateBrowserShortcutLauncherItem() {
   ash::ShelfItem browser_shortcut;
   browser_shortcut.type = ash::TYPE_BROWSER_SHORTCUT;
   browser_shortcut.id = ash::ShelfID(kChromeAppId);
-  ResourceBundle& rb = ResourceBundle::GetSharedInstance();
+  ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
   browser_shortcut.image = *rb.GetImageSkiaNamed(IDR_PRODUCT_LOGO_32);
   browser_shortcut.title = l10n_util::GetStringUTF16(IDS_PRODUCT_NAME);
   std::unique_ptr<BrowserShortcutLauncherItemController> item_delegate =
