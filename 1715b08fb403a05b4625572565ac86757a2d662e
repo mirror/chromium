@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "85e4fff2_17d9c071",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerObjectProxy.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-02T05:14:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac58e096_43457094",
+      "revId": "1715b08fb403a05b4625572565ac86757a2d662e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5af99532_6ef82531",
         "filename": "third_party/WebKit/Source/core/workers/ThreadedObjectProxyBase.h",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-02T04:02:25Z",
       "side": 1,
       "message": "Does Worker include SharedWorker or means DedicatedWorker specifically? Should this say \"a Worker or *Worklet object\" maybe?",
+      "revId": "1715b08fb403a05b4625572565ac86757a2d662e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "394ec063_89dd1303",
+        "filename": "third_party/WebKit/Source/core/workers/ThreadedObjectProxyBase.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-02T05:14:10Z",
+      "side": 1,
+      "message": "This doesn\u0027t include SharedWorker. Updated.",
+      "parentUuid": "5af99532_6ef82531",
       "revId": "1715b08fb403a05b4625572565ac86757a2d662e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
