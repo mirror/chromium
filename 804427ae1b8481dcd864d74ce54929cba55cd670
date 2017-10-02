@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "aa85d067_cf5d88b3",
+        "filename": "services/service_manager/sandbox/mac/BUILD.gn",
+        "patchSetId": 20
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-02T21:04:47Z",
+      "side": 1,
+      "message": "Fair enough!",
+      "parentUuid": "ef97723e_4c23ed32",
+      "revId": "804427ae1b8481dcd864d74ce54929cba55cd670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2083a78_e97f5d70",
         "filename": "services/service_manager/sandbox/mac/gpu.sb",
         "patchSetId": 20
