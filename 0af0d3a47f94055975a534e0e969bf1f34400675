@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64682b0a_7c7561b0",
+        "filename": "chromeos/tpm/tpm_token_info_getter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-02T18:17:34Z",
+      "side": 1,
+      "message": "We avoud \u0027using\u0027 in headers. You could put it in the class, but I would make it explicit, at least in the header. (\u0027using\u0027 in the .cc file is fine).",
+      "revId": "0af0d3a47f94055975a534e0e969bf1f34400675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
