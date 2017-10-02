@@ -46,6 +46,30 @@
       "revId": "a48819f5c7723d45a9c2ef4becd40ec691e6a95d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca6e295b_7c3e9cc9",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-10-02T20:52:04Z",
+      "side": 1,
+      "message": "I don\u0027t see an updated patch?",
+      "parentUuid": "b5a05eb2_8c627517",
+      "range": {
+        "startLine": 661,
+        "startChar": 10,
+        "endLine": 661,
+        "endChar": 17
+      },
+      "revId": "a48819f5c7723d45a9c2ef4becd40ec691e6a95d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
