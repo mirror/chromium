@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c524c5ee_cc9c8fa3",
+        "filename": "content/renderer/media/apply_constraints_processor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-02T17:42:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df7d826d_db1af30a",
+      "revId": "cf36aea887d89a0b5951435f6cf0eaf8244f987a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7c47346_e0b63ed0",
         "filename": "content/renderer/media/apply_constraints_processor.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "cf36aea887d89a0b5951435f6cf0eaf8244f987a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b684d0e4_4bdef882",
+        "filename": "content/renderer/media/apply_constraints_processor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-02T17:42:20Z",
+      "side": 1,
+      "message": "No.",
+      "parentUuid": "b7c47346_e0b63ed0",
+      "revId": "cf36aea887d89a0b5951435f6cf0eaf8244f987a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "dcd2f115_fe6ddf40",
+        "filename": "content/renderer/media/apply_constraints_processor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-02T17:42:20Z",
+      "side": 1,
+      "message": "I assume this is clear now with the rename of CheckVideoRequestState() to AbortIfInvalidRequestState().",
+      "parentUuid": "148b7ea7_070dd18b",
+      "revId": "cf36aea887d89a0b5951435f6cf0eaf8244f987a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de03b3f1_aac3f881",
         "filename": "content/renderer/media/apply_constraints_processor.cc",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "cf36aea887d89a0b5951435f6cf0eaf8244f987a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9db8ba86_e554fad9",
+        "filename": "content/renderer/media/apply_constraints_processor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-02T17:42:20Z",
+      "side": 1,
+      "message": "Same answer.",
+      "parentUuid": "de03b3f1_aac3f881",
+      "revId": "cf36aea887d89a0b5951435f6cf0eaf8244f987a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "9c63553b_8728d92e",
+        "filename": "content/renderer/media/apply_constraints_processor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-02T17:42:20Z",
+      "side": 1,
+      "message": "If restart fails, the source will be stopped and all tracks connected to the source will receive the ended event.",
+      "parentUuid": "b4438432_64c6b863",
+      "revId": "cf36aea887d89a0b5951435f6cf0eaf8244f987a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc492527_f43c8538",
         "filename": "content/renderer/media/apply_constraints_processor.cc",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "cf36aea887d89a0b5951435f6cf0eaf8244f987a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75667f23_b673e79e",
+        "filename": "content/renderer/media/apply_constraints_processor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-02T17:42:20Z",
+      "side": 1,
+      "message": "Not worth it at the moment, because, in practice, if the source fails to restart with the old format, it will almost certainly fail with the new one.\nSince it would require another run of the constraints algorithm and another round of error handling, the cost in terms of complexity significantly exceeds the benefit IMO.\nSo, \"F it\".",
+      "parentUuid": "cc492527_f43c8538",
+      "revId": "cf36aea887d89a0b5951435f6cf0eaf8244f987a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "ed17f62d_4777eebe",
+        "filename": "content/renderer/media/apply_constraints_processor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-02T17:42:20Z",
+      "side": 1,
+      "message": "Added a comment to explain why.",
+      "parentUuid": "c1403516_0ee1cce7",
+      "revId": "cf36aea887d89a0b5951435f6cf0eaf8244f987a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17eab416_debff105",
         "filename": "content/renderer/media/apply_constraints_processor.cc",
         "patchSetId": 4
@@ -135,6 +261,24 @@
       "revId": "cf36aea887d89a0b5951435f6cf0eaf8244f987a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d780186c_93f7dea4",
+        "filename": "content/renderer/media/apply_constraints_processor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-02T17:42:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17eab416_debff105",
+      "revId": "cf36aea887d89a0b5951435f6cf0eaf8244f987a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "91354bc5_f9422190",
+        "filename": "content/renderer/media/apply_constraints_processor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-02T17:42:20Z",
+      "side": 1,
+      "message": "Renamed.",
+      "parentUuid": "641a5040_a6c5c630",
+      "revId": "cf36aea887d89a0b5951435f6cf0eaf8244f987a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49c274ed_20dfc2da",
         "filename": "content/test/data/media/getusermedia.html",
         "patchSetId": 4
@@ -166,6 +328,24 @@
       "writtenOn": "2017-10-02T12:28:58Z",
       "side": 1,
       "message": "We should have tests that use multiple tracks using the same source. We should verify that restart doesn\u0027t cause other tracks to be muted etc and that tracks with same device but different settings affect each other as expected.",
+      "revId": "cf36aea887d89a0b5951435f6cf0eaf8244f987a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c46b1441_52c23098",
+        "filename": "content/test/data/media/getusermedia.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-02T17:42:20Z",
+      "side": 1,
+      "message": "Added one such test.",
+      "parentUuid": "49c274ed_20dfc2da",
       "revId": "cf36aea887d89a0b5951435f6cf0eaf8244f987a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
