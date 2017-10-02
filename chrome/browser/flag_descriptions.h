@@ -306,6 +306,9 @@ extern const char kEnableScrollAnchoringDescription[];
 extern const char kEnableSharedArrayBufferName[];
 extern const char kEnableSharedArrayBufferDescription[];
 
+extern const char kEnableSyncingBillingCustomerNumberName[];
+extern const char kEnableSyncingBillingCustomerNumberDescription[];
+
 extern const char kEnableWasmName[];
 extern const char kEnableWasmDescription[];
 
