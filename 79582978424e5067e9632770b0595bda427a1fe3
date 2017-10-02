@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84b48bb9_48855348",
+        "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-02T06:00:15Z",
+      "side": 1,
+      "message": "Could you introduce a class\nDecodeRequestSenderImpl and run this function in SendDecodeRequest(),\nso that the invocation cannot depend on what the sender cannot know?",
+      "revId": "79582978424e5067e9632770b0595bda427a1fe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d029e699_1f0d9c2b",
+        "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-02T06:00:15Z",
+      "side": 1,
+      "message": "Could you add document?",
+      "revId": "79582978424e5067e9632770b0595bda427a1fe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "605bed67_1764bddf",
+        "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-02T06:00:15Z",
+      "side": 1,
+      "message": "In ARC, we don\u0027t use TestApi class.\nCould you replace with SetDecodeRequestSenderForTesting(std::unique_ptr\u003cDecodeRequestSender\u003e ...)?\nPRESUBMIT checks its usage is limted to testing purpose only.",
+      "revId": "79582978424e5067e9632770b0595bda427a1fe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64bd02d5_cbaa72b9",
+        "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-02T06:00:15Z",
+      "side": 1,
+      "message": "#include \u003cstdint.h\u003e\n#include \u003cmemory\u003e\n#include \u003cutility\u003e\n#include \"base/macros.h\"\n\nare missing?",
+      "revId": "79582978424e5067e9632770b0595bda427a1fe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdd188c6_25887dc3",
+        "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-02T06:00:15Z",
+      "side": 1,
+      "message": "nit/style: could you add white spaces around a comment word?\n\n/* width */, /* height */",
+      "revId": "79582978424e5067e9632770b0595bda427a1fe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c4d3616_c8ca1b20",
+        "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-02T06:00:15Z",
+      "side": 1,
+      "message": "Can this be local var?",
+      "revId": "79582978424e5067e9632770b0595bda427a1fe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b5ec9c0_c558e8cc",
+        "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-02T06:00:15Z",
+      "side": 1,
+      "message": "In new code in ARC, could you use std::make_unique?\n\ncf) We\u0027are adding PRESUBMIT check. Sorry for conflicting timing.\nhttps://chromium-review.googlesource.com/c/chromium/src/+/691754",
+      "revId": "79582978424e5067e9632770b0595bda427a1fe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5b9cace_9cf0fc4a",
+        "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-02T06:00:15Z",
+      "side": 1,
+      "message": "leaking. Could you use std::unique_ptr?",
+      "revId": "79582978424e5067e9632770b0595bda427a1fe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "201c32f2_202eaf0e",
+        "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-02T06:00:15Z",
+      "side": 1,
+      "message": "s/unsigned char/uint8_t/\n\nnit/style/optional: As this is used only once, you can inline with lambda.\n\nservice_-\u003eGetWallpaper(base::BindOnce([](std::vector\u003cuint8_t\u003e* out, const std::vector\u003cuint8_t\u003e\u0026 bytes) {\n  *out \u003d bytes;\n},\n\u0026bytes);",
+      "revId": "79582978424e5067e9632770b0595bda427a1fe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "810667e9_89f2ad85",
+        "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-02T06:00:15Z",
+      "side": 1,
+      "message": "s/unsigned char/uint8_t/",
+      "revId": "79582978424e5067e9632770b0595bda427a1fe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "267fdf85_f8807763",
+        "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-02T06:00:15Z",
+      "side": 1,
+      "message": "s/unsigned char/uint8_t\u003e/",
+      "revId": "79582978424e5067e9632770b0595bda427a1fe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9929ef2b_0834cbf7",
+        "filename": "components/arc/test/fake_wallpaper_instance.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-02T06:00:15Z",
+      "side": 1,
+      "message": "#include \u003cstdint.h\u003e\n#include \u003cvector\u003e\n#include \"base/macros.h\"\n\nare missing?",
+      "revId": "79582978424e5067e9632770b0595bda427a1fe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce47b9c8_40eefa8d",
+        "filename": "components/arc/test/fake_wallpaper_instance.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-02T06:00:15Z",
+      "side": 1,
+      "message": "\u0027\u0026\u0027 is missing.",
+      "revId": "79582978424e5067e9632770b0595bda427a1fe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
