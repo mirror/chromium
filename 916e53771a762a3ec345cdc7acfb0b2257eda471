@@ -16,6 +16,24 @@
       "revId": "916e53771a762a3ec345cdc7acfb0b2257eda471",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03e27682_04801eff",
+        "filename": "chrome/browser/notifications/notification_template_builder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-02T13:10:09Z",
+      "side": 1,
+      "message": "Done. Checking in.",
+      "parentUuid": "55372c52_568756cb",
+      "revId": "916e53771a762a3ec345cdc7acfb0b2257eda471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
