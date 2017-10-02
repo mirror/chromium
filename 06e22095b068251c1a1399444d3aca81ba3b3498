@@ -45,6 +45,30 @@
       "revId": "06e22095b068251c1a1399444d3aca81ba3b3498",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6d3c149_24e2a22b",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-10-02T17:44:27Z",
+      "side": 1,
+      "message": "Nope. This is the better function to call which handles partial failed responses and provides an estimate. CalculateEffectiveOCL calls CalculateOCLFromOFCL() for successful responses, and does its own estimation for failed partial responses.\n\nThe other function (CalculateOCLFromOFCL) only calculates OCL from OFCL(adjusting for 206 range responses), and does not handle missing Chrome-Proxy header, failed responses. It is used once in a UMA logging codepath (to just not alter the meaning of UMA).\n\nIf it is still confusing, I could remove this global function and just duplicate the code in the two places its called (UMA logging code and CalculateEffectiveOCL())",
+      "parentUuid": "dea33848_6f544533",
+      "range": {
+        "startLine": 100,
+        "startChar": 8,
+        "endLine": 100,
+        "endChar": 29
+      },
+      "revId": "06e22095b068251c1a1399444d3aca81ba3b3498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
