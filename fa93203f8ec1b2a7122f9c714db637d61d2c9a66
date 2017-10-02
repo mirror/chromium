@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa13bcaf_e6411ad1",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-02T19:07:29Z",
+      "side": 1,
+      "message": "Cast discovery doesn\u0027t need HTTP.  Why is this being added?",
+      "revId": "fa93203f8ec1b2a7122f9c714db637d61d2c9a66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
