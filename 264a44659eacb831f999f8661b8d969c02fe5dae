@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4e79e38c_ea1a6ade",
+        "filename": "ash/animation_frame.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-02T21:31:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cff91028_26146f29",
+      "range": {
+        "startLine": 22,
+        "startChar": 6,
+        "endLine": 22,
+        "endChar": 15
+      },
+      "revId": "264a44659eacb831f999f8661b8d969c02fe5dae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a71873e_8a7bfc0a",
         "filename": "ash/login/ui/animated_rounded_image_view.cc",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-28T22:10:09Z",
       "side": 1,
       "message": "nit: GetContentsBounds() then we don\u0027t need to do Inset on L57.\n\nOr is it important we do ClampToCenteredSize before Inset ?",
+      "range": {
+        "startLine": 55,
+        "startChar": 25,
+        "endLine": 55,
+        "endChar": 31
+      },
+      "revId": "264a44659eacb831f999f8661b8d969c02fe5dae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09d48f2d_7d151e79",
+        "filename": "ash/login/ui/animated_rounded_image_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-02T21:31:09Z",
+      "side": 1,
+      "message": "Done. I\u0027m not sure, this code was copied from RoundedImageView. It looks fine though.",
+      "parentUuid": "2a71873e_8a7bfc0a",
       "range": {
         "startLine": 55,
         "startChar": 25,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4db7df9d_0e6803f3",
+        "filename": "ash/login/ui/animated_rounded_image_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-02T21:31:09Z",
+      "side": 1,
+      "message": "Switched to emplace_back",
+      "parentUuid": "7a366072_2cc8c625",
+      "range": {
+        "startLine": 83,
+        "startChar": 12,
+        "endLine": 83,
+        "endChar": 28
+      },
+      "revId": "264a44659eacb831f999f8661b8d969c02fe5dae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "377d4c78_ee74e8ca",
         "filename": "ash/login/ui/animated_rounded_image_view.cc",
         "patchSetId": 6
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "cccf2549_18c10231",
+        "filename": "ash/login/ui/animated_rounded_image_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-02T21:31:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "377d4c78_ee74e8ca",
+      "revId": "264a44659eacb831f999f8661b8d969c02fe5dae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6451859_94cc6d09",
         "filename": "ash/login/ui/animated_rounded_image_view.h",
         "patchSetId": 6
@@ -99,6 +189,24 @@
       "writtenOn": "2017-09-28T22:10:09Z",
       "side": 1,
       "message": "I could imagine this class would be useful for system tray as well. Find a better home to share the code? Maybe under a new ash/ui/views (not sure whether we should even put it in ui/views/controls along side of ImageView).",
+      "revId": "264a44659eacb831f999f8661b8d969c02fe5dae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1b0e5f1_3fbbf15a",
+        "filename": "ash/login/ui/animated_rounded_image_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-02T21:31:09Z",
+      "side": 1,
+      "message": "I\u0027ve moved ash/animation_frame.h into ash/login/ui/animation_frame.h. If we eventually need to do animation outside of login in views we can move it then - wdyt?",
+      "parentUuid": "b6451859_94cc6d09",
       "revId": "264a44659eacb831f999f8661b8d969c02fe5dae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -122,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "013c800c_bdfa2f37",
+        "filename": "ash/login/ui/animated_rounded_image_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-02T21:31:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cdc2b7b1_1575b541",
+      "revId": "264a44659eacb831f999f8661b8d969c02fe5dae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3d140d4_cd3eec99",
         "filename": "ash/login/ui/image_parser.cc",
         "patchSetId": 6
@@ -136,6 +262,24 @@
       "revId": "264a44659eacb831f999f8661b8d969c02fe5dae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86eeb766_5371508c",
+        "filename": "ash/login/ui/image_parser.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-02T21:31:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3d140d4_cd3eec99",
+      "revId": "264a44659eacb831f999f8661b8d969c02fe5dae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "975bb1c5_7efa573b",
+        "filename": "ash/login/ui/image_parser.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-02T21:31:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edfcc72a_8b19ab18",
+      "revId": "264a44659eacb831f999f8661b8d969c02fe5dae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5f756de_e062211c",
         "filename": "ash/public/interfaces/user_info.mojom",
         "patchSetId": 6
@@ -167,6 +329,24 @@
       "writtenOn": "2017-09-28T22:10:09Z",
       "side": 1,
       "message": "What is the rough size of the data? If more than hundreds of KB, we should consider use shared buffer as transport to avoid congesting the message pipe.\n\nIt seems to be a generic problem though. Maybe we should consider creating a mojo.Blob to for passing around bytes via shared buffer.\n\nWe can do it in a separate CL and leave a TODO here to follow up.",
+      "revId": "264a44659eacb831f999f8661b8d969c02fe5dae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aa3c20d_53bda015",
+        "filename": "ash/public/interfaces/user_info.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-02T21:31:09Z",
+      "side": 1,
+      "message": "Added a TODO",
+      "parentUuid": "e5f756de_e062211c",
       "revId": "264a44659eacb831f999f8661b8d969c02fe5dae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -190,6 +370,24 @@
     },
     {
       "key": {
+        "uuid": "563265c3_d4d6c0b2",
+        "filename": "services/data_decoder/public/cpp/decode_image.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-02T21:31:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43117c6d_00eacf38",
+      "revId": "264a44659eacb831f999f8661b8d969c02fe5dae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5ec9717_c43c779e",
         "filename": "services/data_decoder/public/interfaces/image_decoder.mojom",
         "patchSetId": 6
@@ -207,6 +405,24 @@
     },
     {
       "key": {
+        "uuid": "ef13f630_c919dc3e",
+        "filename": "services/data_decoder/public/interfaces/image_decoder.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-02T21:31:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5ec9717_c43c779e",
+      "revId": "264a44659eacb831f999f8661b8d969c02fe5dae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54af170c_590a2b2b",
         "filename": "third_party/WebKit/Source/platform/exported/WebImage.cpp",
         "patchSetId": 6
@@ -218,6 +434,24 @@
       "writtenOn": "2017-09-28T22:10:09Z",
       "side": 1,
       "message": "Why do we need to do this? Each iteration should have |bitmap| pointing to a different pixel buffer of corresponding frame, right?",
+      "revId": "264a44659eacb831f999f8661b8d969c02fe5dae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef77b991_8cf8f84a",
+        "filename": "third_party/WebKit/Source/platform/exported/WebImage.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-02T21:31:09Z",
+      "side": 1,
+      "message": "See comment above. The underlying pixel buffer is reused. I\u0027ve added an additional sentence to further clarify this.",
+      "parentUuid": "54af170c_590a2b2b",
       "revId": "264a44659eacb831f999f8661b8d969c02fe5dae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
