@@ -87,6 +87,24 @@
       "revId": "35a678b409cb15535381b8d6137d677419463ab3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b46f9d1_319b4b45",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlockFlow.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1143,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-10-02T21:40:33Z",
+      "side": 1,
+      "message": "First of all, why do we keep the old intrinsic padding around? Can\u0027t we reset it at the beginning of cell layout instead?\n\nSecondly, this code here is for line layout. I think we\u0027d need something similar for child block layout. And probably some special code for floats as well.\n\nBut first I\u0027d really like to know if we could reset intrinsic padding before layout.",
+      "parentUuid": "5409b5d5_88a90567",
+      "revId": "35a678b409cb15535381b8d6137d677419463ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
