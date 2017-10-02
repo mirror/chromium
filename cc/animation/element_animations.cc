@@ -10,7 +10,7 @@
 
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
-#include "base/numerics/ranges.h"
+#include "base/numerics/clamped_math.h"
 #include "cc/animation/animation_delegate.h"
 #include "cc/animation/animation_events.h"
 #include "cc/animation/animation_host.h"

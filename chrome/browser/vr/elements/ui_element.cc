@@ -7,7 +7,7 @@
 #include <limits>
 
 #include "base/logging.h"
-#include "base/numerics/ranges.h"
+#include "base/numerics/clamped_math.h"
 #include "base/stl_util.h"
 #include "base/time/time.h"
 #include "chrome/browser/vr/elements/ui_element_transform_operations.h"
