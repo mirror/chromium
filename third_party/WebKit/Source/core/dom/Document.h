@@ -612,6 +612,7 @@ class CORE_EXPORT Document : public ContainerNode,
   PageDismissalType PageDismissalEventBeingDispatched() const;
 
   void CancelParsing();
+  void CancelParsingForNavigation();
 
   void write(const SegmentedString& text,
              Document* entered_document = nullptr,
