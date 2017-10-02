@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3f1f9894_903617af",
+        "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-10-02T06:55:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84b48bb9_48855348",
+      "revId": "79582978424e5067e9632770b0595bda427a1fe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d029e699_1f0d9c2b",
         "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "79582978424e5067e9632770b0595bda427a1fe3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db3f8321_801fb10b",
+        "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-10-02T06:55:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d029e699_1f0d9c2b",
+      "revId": "79582978424e5067e9632770b0595bda427a1fe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "25cce08e_621304ba",
+        "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-10-02T06:55:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "605bed67_1764bddf",
+      "revId": "79582978424e5067e9632770b0595bda427a1fe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64bd02d5_cbaa72b9",
         "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service_unittest.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "79582978424e5067e9632770b0595bda427a1fe3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3a54890_350a42f3",
+        "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-10-02T06:55:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64bd02d5_cbaa72b9",
+      "revId": "79582978424e5067e9632770b0595bda427a1fe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "22499306_e7fe3614",
+        "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-10-02T06:55:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cdd188c6_25887dc3",
+      "revId": "79582978424e5067e9632770b0595bda427a1fe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c4d3616_c8ca1b20",
         "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service_unittest.cc",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "79582978424e5067e9632770b0595bda427a1fe3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4138d5bc_5e3e7361",
+        "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-10-02T06:55:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c4d3616_c8ca1b20",
+      "revId": "79582978424e5067e9632770b0595bda427a1fe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "54c009d9_d9666b9f",
+        "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-10-02T06:55:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b5ec9c0_c558e8cc",
+      "revId": "79582978424e5067e9632770b0595bda427a1fe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5b9cace_9cf0fc4a",
         "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service_unittest.cc",
         "patchSetId": 2
@@ -135,6 +261,24 @@
       "revId": "79582978424e5067e9632770b0595bda427a1fe3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eb533a2_7c1a0102",
+        "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-10-02T06:55:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5b9cace_9cf0fc4a",
+      "revId": "79582978424e5067e9632770b0595bda427a1fe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "3e48c687_8b118d45",
+        "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-10-02T06:55:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "201c32f2_202eaf0e",
+      "revId": "79582978424e5067e9632770b0595bda427a1fe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "810667e9_89f2ad85",
         "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service_unittest.cc",
         "patchSetId": 2
@@ -169,6 +331,24 @@
       "revId": "79582978424e5067e9632770b0595bda427a1fe3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3575660f_1a5280db",
+        "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-10-02T06:55:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "810667e9_89f2ad85",
+      "revId": "79582978424e5067e9632770b0595bda427a1fe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "4edcb6c3_eab390fd",
+        "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-10-02T06:55:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "267fdf85_f8807763",
+      "revId": "79582978424e5067e9632770b0595bda427a1fe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9929ef2b_0834cbf7",
         "filename": "components/arc/test/fake_wallpaper_instance.h",
         "patchSetId": 2
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "c03866bb_a24fc5e5",
+        "filename": "components/arc/test/fake_wallpaper_instance.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-10-02T06:55:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9929ef2b_0834cbf7",
+      "revId": "79582978424e5067e9632770b0595bda427a1fe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce47b9c8_40eefa8d",
         "filename": "components/arc/test/fake_wallpaper_instance.h",
         "patchSetId": 2
@@ -220,6 +436,24 @@
       "revId": "79582978424e5067e9632770b0595bda427a1fe3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c18b45f_b2fc1888",
+        "filename": "components/arc/test/fake_wallpaper_instance.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-10-02T06:55:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce47b9c8_40eefa8d",
+      "revId": "79582978424e5067e9632770b0595bda427a1fe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
