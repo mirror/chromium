@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02a4daf8_5f662073",
+        "filename": "base/win/core_winrt_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-02T08:25:09Z",
+      "side": 1,
+      "message": "Ah, I see. The bug mentioned details about the problematic caller.",
+      "range": {
+        "startLine": 36,
+        "startChar": 54,
+        "endLine": 36,
+        "endChar": 60
+      },
+      "revId": "4ce3642f0e5a2ad46fc1d5f3186d2334b71b2322",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
