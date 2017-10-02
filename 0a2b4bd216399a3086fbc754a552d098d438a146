@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa934c64_259bc459",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-10-02T02:45:14Z",
+      "side": 1,
+      "message": "I don\u0027t think the description of the patch is correct because objects which are the direct parent of text-only objects should paste the text of their text-only children directly in their hypertext. So the length of the hypertext in that case is not equal to the number of embedded object characters or the inner text. It\u0027s the sum of the two.\n(Firefox / Linux accessibility framework ATK compatibility?)",
+      "revId": "0a2b4bd216399a3086fbc754a552d098d438a146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
