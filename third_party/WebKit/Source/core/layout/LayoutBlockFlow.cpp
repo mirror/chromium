@@ -43,6 +43,7 @@
 #include "core/layout/LayoutMultiColumnFlowThread.h"
 #include "core/layout/LayoutMultiColumnSpannerPlaceholder.h"
 #include "core/layout/LayoutPagedFlowThread.h"
+#include "core/layout/LayoutTableCell.h"
 #include "core/layout/LayoutView.h"
 #include "core/layout/TextAutosizer.h"
 #include "core/layout/line/GlyphOverflow.h"
@@ -1139,6 +1140,8 @@ void LayoutBlockFlow::AdjustLinePositionForPagination(RootInlineBox& line_box,
   // to dirty the line and all following lines.
   LayoutUnit logical_offset = line_box.LineTopWithLeading();
   LayoutUnit line_height = line_box.LineBottomWithLeading() - logical_offset;
+  if (IsTableCell())
+    logical_offset -= ToLayoutTableCell(this)->IntrinsicPaddingBefore();
   logical_offset += delta;
   line_box.SetPaginationStrut(LayoutUnit());
   line_box.SetIsFirstAfterPageBreak(false);
