@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8413c946_f86a76db",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-02T09:53:51Z",
+      "side": 1,
+      "message": "We *could* do fancier things, such as starting to load one-google.js immediately, but only calling injectOneGoogleBar after the \u0027loaded\u0027 message, or adding a timeout for the case when loading the tiles takes a long time for some reason, but I\u0027m not sure that\u0027s worth the hassle. WDYT?",
+      "range": {
+        "startLine": 529,
+        "startChar": 28,
+        "endLine": 529,
+        "endChar": 0
+      },
+      "revId": "66ebb39bd25823d28418e13d00d01576d60de7ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
