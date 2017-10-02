@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "1c9572de_7b038d86",
+        "filename": "ios/web_view/internal/signin/web_view_profile_oauth2_token_service_ios_provider_impl.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-02T20:17:12Z",
+      "side": 1,
+      "message": "I still see gaiaID, clientID, clientSecret and other Objective-C names in C++ code.",
+      "parentUuid": "da192857_574a1d97",
+      "range": {
+        "startLine": 34,
+        "startChar": 12,
+        "endLine": 34,
+        "endChar": 18
+      },
+      "revId": "07c2bd3b06f860899b31e8ae13d513d6e3747948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "261a3523_1c111389",
         "filename": "ios/web_view/public/cwv_authentication_controller_delegate.h",
         "patchSetId": 10
@@ -225,6 +249,30 @@
       "side": 1,
       "message": "the properties are readonly.",
       "parentUuid": "a821fea8_5f19059a",
+      "range": {
+        "startLine": 17,
+        "startChar": 16,
+        "endLine": 17,
+        "endChar": 29
+      },
+      "revId": "07c2bd3b06f860899b31e8ae13d513d6e3747948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "965ab434_a6ee01c9",
+        "filename": "ios/web_view/public/cwv_identity.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-02T20:17:12Z",
+      "side": 1,
+      "message": "Sorry, not sure why I thought that they are readwrite.",
+      "parentUuid": "852b7107_91ec7f51",
       "range": {
         "startLine": 17,
         "startChar": 16,
