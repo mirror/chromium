@@ -70,6 +70,30 @@
       "revId": "eaf43ad45985c17f04ffa45d6ac9a3c342045b9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf4f5dbc_4cbcd169",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-02T17:33:14Z",
+      "side": 0,
+      "message": "I would say for the alert icon, you can use CreateSystemNotification; otherwise, you want to stick with what we have. You can set the \"small_image\" directly on the notification.",
+      "parentUuid": "a3b23fd0_2c44bf97",
+      "range": {
+        "startLine": 70,
+        "startChar": 25,
+        "endLine": 70,
+        "endChar": 51
+      },
+      "revId": "eaf43ad45985c17f04ffa45d6ac9a3c342045b9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
