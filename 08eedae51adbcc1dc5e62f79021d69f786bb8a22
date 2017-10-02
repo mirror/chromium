@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2b71b11_ddbb0c62",
+        "filename": "ui/views/controls/button/checkbox.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-02T23:25:48Z",
+      "side": 1,
+      "message": "we could also just set this in the initializer.. I guess this is fine - it might be a nicer reminder to remove this method when IsSecondaryUiMaterial() is a tautology and gets removed.",
+      "revId": "08eedae51adbcc1dc5e62f79021d69f786bb8a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
