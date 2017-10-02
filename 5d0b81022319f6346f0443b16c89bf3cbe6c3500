@@ -22,6 +22,30 @@
       "revId": "5d0b81022319f6346f0443b16c89bf3cbe6c3500",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d49d4c4_ea0563da",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-10-02T17:23:27Z",
+      "side": 1,
+      "message": "We didn\u0027t track password forms, because:\n1) It has it\u0027s own manager.\n2) We can infer password by all - cc - address.",
+      "parentUuid": "b9c32f4f_c4849687",
+      "range": {
+        "startLine": 726,
+        "startChar": 3,
+        "endLine": 726,
+        "endChar": 4
+      },
+      "revId": "5d0b81022319f6346f0443b16c89bf3cbe6c3500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
