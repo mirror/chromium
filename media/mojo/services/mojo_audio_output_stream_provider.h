@@ -46,14 +46,12 @@ class MEDIA_MOJO_EXPORT MojoAudioOutputStreamProvider
   // Called when |audio_output_| had an error.
   void OnError();
 
-  // The callback for the Acquire() must be stored until the response is ready.
-  AcquireCallback acquire_callback_;
+  THREAD_CHECKER(thread_checker_);
 
   base::Optional<MojoAudioOutputStream> audio_output_;
   mojo::Binding<AudioOutputStreamProvider> binding_;
   CreateDelegateCallback create_delegate_callback_;
   DeleterCallback deleter_callback_;
-  base::ThreadChecker thread_checker_;
 
   DISALLOW_COPY_AND_ASSIGN(MojoAudioOutputStreamProvider);
 };

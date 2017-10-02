@@ -56,10 +56,11 @@ class MEDIA_MOJO_EXPORT MojoAudioOutputStream
   // Closes connection to client and notifies owner.
   void OnError();
 
+  THREAD_CHECKER(thread_checker_);
+
   StreamCreatedCallback stream_created_callback_;
   base::OnceClosure deleter_callback_;
   mojo::Binding<AudioOutputStream> binding_;
-  base::ThreadChecker thread_checker_;
   std::unique_ptr<AudioOutputDelegate> delegate_;
   base::WeakPtrFactory<MojoAudioOutputStream> weak_factory_;
 
