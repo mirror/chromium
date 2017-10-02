@@ -344,4 +344,11 @@ void CancelTouches(UIGestureRecognizer* gesture_recognizer) {
         }];
 }
 
+- (void)disableHookForCurrentTouch {
+  // Reset the state of the recognizer so that it doesn't recognize the on-going
+  // touch.
+  _contextMenuRecognizer.enabled = NO;
+  _contextMenuRecognizer.enabled = YES;
+}
+
 @end
