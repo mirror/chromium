@@ -70,6 +70,24 @@
     },
     {
       "key": {
+        "uuid": "11b556eb_eaee8375",
+        "filename": "content/renderer/media/webrtc/rtc_rtp_contributing_source.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-02T09:51:17Z",
+      "side": 1,
+      "message": "If it compiles, use base::Optional :)",
+      "parentUuid": "20f41cae_9e11536c",
+      "revId": "3a0fb0765ca649a33ec52f21448f946a9869d32b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "094bb8ba_7da58067",
         "filename": "content/shell/test_runner/mock_webrtc_peer_connection_handler.cc",
         "patchSetId": 1
@@ -138,6 +156,24 @@
       "writtenOn": "2017-09-29T22:09:42Z",
       "side": 1,
       "message": "If our implementation must be nonstandard, I think returning a null value is preferable to returning silence. That way you can tell the difference between \"no value\" and true silence.",
+      "revId": "3a0fb0765ca649a33ec52f21448f946a9869d32b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dbac678_4c150f20",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpSynchronizationSource.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-02T09:51:17Z",
+      "side": 1,
+      "message": "Sounds good to me.",
+      "parentUuid": "1268a369_c75977d5",
       "revId": "3a0fb0765ca649a33ec52f21448f946a9869d32b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
