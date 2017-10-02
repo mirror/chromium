@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4d4066c_9c25350b",
+        "filename": "ash/system/network/network_row_title_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-02T16:42:04Z",
+      "side": 1,
+      "message": "optional: you could also set the text empty here (I\u0027m not sure if the width changes or wrapping happens when the view is invisible, probably not)",
+      "revId": "dd082b7bd26faf36c7a90da53e91a2653a50b0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a63bacde_36e82a03",
+        "filename": "ash/system/network/network_row_title_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-02T16:42:04Z",
+      "side": 1,
+      "message": "nit: explicit",
+      "revId": "dd082b7bd26faf36c7a90da53e91a2653a50b0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
