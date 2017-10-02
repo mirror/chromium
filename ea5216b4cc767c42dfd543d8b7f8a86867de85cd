@@ -16,6 +16,24 @@
       "revId": "ea5216b4cc767c42dfd543d8b7f8a86867de85cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06e0732f_be7cfb05",
+        "filename": "cc/resources/layer_tree_resource_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-10-02T15:55:33Z",
+      "side": 1,
+      "message": "Hmm... I see what you\u0027re saying. I\u0027m not sure we should worry too much about matching existing  behavior, as it seems like that may have never been correct.\n\nBasically, what I think we want is:\n\n- If a resource is keeping memory alive, it should probably dump it.\n- The guid/shared_memory_guid generated later in the function (https://cs.chromium.org/chromium/src/cc/resources/resource_provider.cc?rcl\u003d6eb43dc33551cb24c7f94e9c8e42ac45d8169fa7\u0026l\u003d1420) should alias these resources across processes so they won\u0027t be double counted.\n- If one process owns the resource \"more\" than the others (is the creator, expects the resource to be returned to it, etc...), it should have a higher kImportance (https://cs.chromium.org/chromium/src/cc/resources/resource_provider.cc?rcl\u003d6eb43dc33551cb24c7f94e9c8e42ac45d8169fa7\u0026l\u003d1446) so that the memory will be attributed there. This more or less works with GL textures and GMBs due to a 2-layered aliasing scheme in the texture manager (% a bug that primiano is fixing in memory-infra). I don\u0027t think this ever worked for software resources.\n\nGiven this, I\u0027m not sure whether we do or do not want to count un-mapped bitmaps - if the resource provider is keeping them alive, we probably do want to count them, but at a lower importance? Happy to adjust in a follow-up CL though.\n\nFeel free to ping me to discuss further.",
+      "parentUuid": "ef8383ea_1e8031e1",
+      "revId": "ea5216b4cc767c42dfd543d8b7f8a86867de85cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
