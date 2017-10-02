@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5972cdf7_631defa1",
+        "filename": "components/signin/core/browser/android/javatests/src/org/chromium/components/signin/test/util/FakeAccountManagerDelegate.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-02T18:01:54Z",
+      "side": 1,
+      "message": "runOnUiThreadBlocking? Otherwise you get a race condition if the client tries to access this object from the instrumentation thread.\n\nThe thread safety story is still a bit shaky in this class, if someone were to mix the test-only methods with the AccountManagerDelegate methods without some additional synchronization (e.g. this method accesses |mAccounts| on the UI thread, but getAccountsSync() is called on a background thread). I suppose that doesn\u0027t actually happen, but we should put up some big honkin\u0027 warning signs to make sure we don\u0027t regress this until The Cleanup is complete.",
+      "range": {
+        "startLine": 188,
+        "startChar": 20,
+        "endLine": 188,
+        "endChar": 33
+      },
+      "revId": "94e301a404ea34f8b1fb8f50235285a36c009ba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

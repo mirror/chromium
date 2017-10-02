@@ -544,6 +544,30 @@
       "revId": "431f968093cd8558bb2129c6eea0e0e9e0fed797",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "285cb572_9eb924c8",
+        "filename": "components/signin/core/browser/android/javatests/src/org/chromium/components/signin/test/util/FakeAccountManagerDelegate.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-02T18:01:54Z",
+      "side": 1,
+      "message": "Fair enough, but could we decide on a concrete plan? Here\u0027s my proposal:\n1) Add a big warning and/or @Deprecated to addAccountHolderExplicitly() that it shouldn\u0027t be used, in favor of addAccountHolderBlocking()\n2) Update the downstream test to set up the AccountManagerFacade, which should already let us use addAccountHolderBlocking()\n3) Remove addAccountHolderExplicitly() from the public interface of this class\n4) _Somehow_ address https://crbug.com/552606#c7\n\nIf you agree with 1)-3), only 1) needs to happen in this CL, and we can discuss 4) later. Deal? :)",
+      "parentUuid": "d335e551_0b94fe10",
+      "range": {
+        "startLine": 218,
+        "startChar": 16,
+        "endLine": 218,
+        "endChar": 93
+      },
+      "revId": "431f968093cd8558bb2129c6eea0e0e9e0fed797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
