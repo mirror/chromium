@@ -4,6 +4,7 @@
 
 import("//build/config/chrome_build.gni")
 import("//build/config/chromecast_build.gni")
+import("//build/config/coverage/coverage.gni")
 import("//build/toolchain/toolchain.gni")
 
 declare_args() {
@@ -139,8 +140,8 @@ if (current_toolchain != default_toolchain) {
 # declare_args block.
 declare_args() {
   # Enable -fsanitize-coverage.
-  use_sanitizer_coverage =
-      use_libfuzzer || use_afl || sanitizer_coverage_flags != ""
+  use_sanitizer_coverage = !use_clang_coverage &&
+      (use_libfuzzer || use_afl || sanitizer_coverage_flags != "")
 
   # Detect overflow/underflow for global objects.
   #
@@ -218,3 +219,8 @@ assert(
     "crbug.com/753445: use_sanitizer_coverage=true is not supported by the " +
         "Chromium mac_clang_x64 toolchain on iOS distribution. Please set " +
         "the argument value to false.")
+
+# Make sure we do not produce over-instrumented builds that are large and slow.
+assert(use_clang_coverage && !using_sanitizer,
+       "It is not recommended to use Clang Source-based Code Coverage " +
+       "with sanitizers. It only adds unnecessary overhead.")
