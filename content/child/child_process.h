@@ -87,6 +87,10 @@ class CONTENT_EXPORT ChildProcess {
   // on the main thread.
   static ChildProcess* current();
 
+  // If this is called, a TaskScheduler instantiated by this ChildProcess will
+  // not be leaked.
+  void SetDoNotLeakTaskSchedulerForTesting();
+
  private:
   int ref_count_;
 
@@ -103,6 +107,11 @@ class CONTENT_EXPORT ChildProcess {
 
   // Whether this ChildProcess initialized TaskScheduler.
   bool initialized_task_scheduler_ = false;
+
+  // Whether a TaskScheduler initialized by this ChildProcess should be leaked.
+  // Always true in production to allow CONTINUE_ON_SHUTDOWN tasks to continue
+  // running after ~ChildProcess.
+  bool should_leak_task_scheduler_ = true;
 
   DISALLOW_COPY_AND_ASSIGN(ChildProcess);
 };
