@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dc0694a6_9be8b89e",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 3656,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-10-02T19:47:54Z",
+      "side": 1,
+      "message": "//ash/public/interfaces/BUILD.gn uses visibility so .../cpp:ash_public_cpp is the only thing that can include it, along with a big comment on why everyone must depend on it instead of ../interfaces.",
+      "parentUuid": "10dfd972_a704636d",
+      "revId": "ee85d29b151931b7407a7cadc77dc543ad581a3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba893ef4_c0bb57a1",
         "filename": "chrome/browser/ui/ash/fake_tablet_mode_controller.h",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "0c6a5c5e_babe8ef7",
+        "filename": "chrome/browser/ui/ash/fake_tablet_mode_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-10-02T19:47:54Z",
+      "side": 1,
+      "message": "changed to |was_client_set_|, made private, added accessor.",
+      "parentUuid": "ba893ef4_c0bb57a1",
+      "revId": "ee85d29b151931b7407a7cadc77dc543ad581a3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "160ad88d_57ca5016",
         "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash_browsertest.cc",
         "patchSetId": 7
@@ -50,6 +86,24 @@
       "revId": "ee85d29b151931b7407a7cadc77dc543ad581a3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eed9a658_0ad114cc",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-10-02T19:47:54Z",
+      "side": 1,
+      "message": "Cached.",
+      "parentUuid": "160ad88d_57ca5016",
+      "revId": "ee85d29b151931b7407a7cadc77dc543ad581a3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
