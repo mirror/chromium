@@ -70,6 +70,30 @@
       "revId": "1b23183a1ee86c52c03f278caec8af548af632e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db043c32_7dc3c165",
+        "filename": "chrome/browser/vr/elements/content_element.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-02T19:38:27Z",
+      "side": 1,
+      "message": "I just de-simpled the setter.  Call sites are updated.",
+      "parentUuid": "e9e96025_9d980bde",
+      "range": {
+        "startLine": 42,
+        "startChar": 7,
+        "endLine": 42,
+        "endChar": 27
+      },
+      "revId": "1b23183a1ee86c52c03f278caec8af548af632e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
