@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9d16e3a_2dd8f9a3",
+        "filename": "services/proxy_resolver/BUILD.gn",
+        "patchSetId": 17
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-02T21:37:35Z",
+      "side": 1,
+      "message": "these names (lib_browser and lib_utility) are unfortunate in that they expose details that are only relevant at the content layer.\n\ncould we make them more meaningful locally for now, e.g.  \"factory_lib\" and \"resolver_lib\" or something? presumably we will someday be in a state where content processes are no longer relevant to the proxy_resolver implementation.",
+      "revId": "368d3473f6fa7a29c86ce6842caa6ce087fd9aa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49f3ce9e_a6b539fc",
+        "filename": "services/proxy_resolver/OWNERS",
+        "patchSetId": 17
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-02T21:37:35Z",
+      "side": 1,
+      "message": "can we add any other owners here? always a shame to have an OWNERS with one line, doubly so when it\u0027s a new OWNERS file",
+      "revId": "368d3473f6fa7a29c86ce6842caa6ce087fd9aa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28209dec_6d1da5df",
+        "filename": "services/proxy_resolver/public/cpp/BUILD.gn",
+        "patchSetId": 17
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-02T21:37:35Z",
+      "side": 1,
+      "message": "similar to the private library comments, we should have better names for these targets that reflect meaning to proxy_resolver clients in general rather than meaning specific to content",
+      "revId": "368d3473f6fa7a29c86ce6842caa6ce087fd9aa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "156b6b59_167dd1cf",
+        "filename": "services/proxy_resolver/public/cpp/BUILD.gn",
+        "patchSetId": 17
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-02T21:37:35Z",
+      "side": 1,
+      "message": "hmm, i think this is not an OK dependency. a service\u0027s public client library should *never* depend on the private service implementation, as that defeats one of the fundamental motivations for introducing service boundaries.",
+      "revId": "368d3473f6fa7a29c86ce6842caa6ce087fd9aa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3d07674_5aa7786a",
+        "filename": "services/proxy_resolver/public/cpp/BUILD.gn",
+        "patchSetId": 17
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-02T21:37:35Z",
+      "side": 1,
+      "message": "same issue here. we cannot have the public client library depending on service internals.",
+      "revId": "368d3473f6fa7a29c86ce6842caa6ce087fd9aa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
