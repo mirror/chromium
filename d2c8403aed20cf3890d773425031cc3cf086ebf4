@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a848ef90_b93459ae",
+        "filename": "chrome/browser/ui/views/location_bar/location_icon_view_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-02T19:41:49Z",
+      "side": 1,
+      "message": "Could you add a Linux-only test for middle click paste-n-go on the location icon when the omnibox is empty for NTP or editing, etc.? (ie. I was hoping for a regression test for the bug itself)",
+      "revId": "d2c8403aed20cf3890d773425031cc3cf086ebf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1ed1f7b_569061fd",
+        "filename": "chrome/browser/ui/views/location_bar/location_icon_view_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-02T19:41:49Z",
+      "side": 1,
+      "message": "It\u0027s a bit unfortunate that we need to specifically call these functions in a browser test, rather than using production-like methods of interacting with the UI elements (or religating more low-level functionality checks to unit tests)... It would be nice if the \u0027entering input\u0027 step automatically caused the icon view to update (how does that normally happen?), can we use an event generator or some higher-level function like OmniboxView::SetUserText?",
+      "revId": "d2c8403aed20cf3890d773425031cc3cf086ebf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
