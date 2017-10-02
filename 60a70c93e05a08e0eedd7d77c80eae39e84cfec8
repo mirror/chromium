@@ -22,6 +22,30 @@
       "revId": "60a70c93e05a08e0eedd7d77c80eae39e84cfec8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c3c676f_6e0c0de1",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 83188,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-02T20:29:27Z",
+      "side": 1,
+      "message": "Can you explain what you mean by a restart? Like session restore? The metric doesn\u0027t handle anything like associating old WebContents with new WebContents.\n\nThe metric is implemented in a very simple way, it just tracks the time from WebContents constructor to destructor, and observes visibility changes.",
+      "parentUuid": "9a14e0fd_e8a25981",
+      "range": {
+        "startLine": 83188,
+        "startChar": 16,
+        "endLine": 83188,
+        "endChar": 0
+      },
+      "revId": "60a70c93e05a08e0eedd7d77c80eae39e84cfec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
