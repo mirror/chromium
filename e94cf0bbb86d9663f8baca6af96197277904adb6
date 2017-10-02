@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "716ed21a_11868890",
+        "filename": "third_party/WebKit/Source/platform/scheduler/util/tracing_helper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1149089
+      },
+      "writtenOn": "2017-10-02T16:57:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb13d6c3_f4a73b40",
+      "range": {
+        "startLine": 16,
+        "startChar": 10,
+        "endLine": 16,
+        "endChar": 27
+      },
+      "revId": "e94cf0bbb86d9663f8baca6af96197277904adb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55b2e79b_8257009b",
         "filename": "third_party/WebKit/Source/platform/scheduler/util/tracing_helper.h",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-02T16:00:56Z",
       "side": 1,
       "message": "I don\u0027t like exposing these variables in a header - it is increasing the probability that someone will start passing non-const strings into TRACE_EVENT.\n\nSo I suggest the following:\n1. Use string literals in static_assert.\n2. Declare a extern const char variable in the place where we want to use StateTracer, preferably keeping visibility to the minimum (private members etc).",
+      "range": {
+        "startLine": 18,
+        "startChar": 18,
+        "endLine": 18,
+        "endChar": 38
+      },
+      "revId": "e94cf0bbb86d9663f8baca6af96197277904adb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1171d9b_1e434f12",
+        "filename": "third_party/WebKit/Source/platform/scheduler/util/tracing_helper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1149089
+      },
+      "writtenOn": "2017-10-02T16:57:12Z",
+      "side": 1,
+      "message": "As discussed offline it\u0027s tricky to compare strings in compile time. Added disclaimer instead.",
+      "parentUuid": "55b2e79b_8257009b",
       "range": {
         "startLine": 18,
         "startChar": 18,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a6556ece_5bf68b83",
+        "filename": "third_party/WebKit/Source/platform/scheduler/util/tracing_helper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1149089
+      },
+      "writtenOn": "2017-10-02T16:57:12Z",
+      "side": 1,
+      "message": "Now it would be weird to put category constants to state_tracer either include both headers to use StateTracer. Also I plan to merge platform/scheduler/base/trace_helper.h here, so it will be a quite compact helper module.",
+      "parentUuid": "e866ef64_da5a888d",
+      "range": {
+        "startLine": 29,
+        "startChar": 6,
+        "endLine": 29,
+        "endChar": 17
+      },
+      "revId": "e94cf0bbb86d9663f8baca6af96197277904adb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5b5cae5e_31f7fb18",
         "filename": "third_party/WebKit/Source/platform/scheduler/util/tracing_helper.h",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "e94cf0bbb86d9663f8baca6af96197277904adb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "483be1bb_c2ae5a3b",
+        "filename": "third_party/WebKit/Source/platform/scheduler/util/tracing_helper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1149089
+      },
+      "writtenOn": "2017-10-02T16:57:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b5cae5e_31f7fb18",
+      "range": {
+        "startLine": 37,
+        "startChar": 50,
+        "endLine": 37,
+        "endChar": 66
+      },
+      "revId": "e94cf0bbb86d9663f8baca6af96197277904adb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
