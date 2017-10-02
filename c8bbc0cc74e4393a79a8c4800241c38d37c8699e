@@ -46,6 +46,30 @@
       "revId": "c8bbc0cc74e4393a79a8c4800241c38d37c8699e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbe524ed_3d6170ea",
+        "filename": "content/browser/webui/web_ui_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-02T23:37:07Z",
+      "side": 1,
+      "message": "Hmm, looks like there may be a few issues here.  First, yes, this check is basically assuming that subframes won\u0027t have different bindings than main frames.  Second, this WebUIImpl class seems like it can be frame-specific (given the |frame_name| parameter to the constructor and TargetFrame() method), but it also has a WebContentsObserver for the main frame.  That\u0027s odd and potentially very inefficient (if we have a WebContentsObserver for every frame on the page).\n\nAt least at the moment, I don\u0027t think we\u0027ll have any OOPIFs on chrome:// WebUI pages, because we have a hack that prevents it.  I was hoping to remove that hack in https://chromium-review.googlesource.com/c/chromium/src/+/685461, but it seems there are multiple things in the way (i.e., this binding check, chrome://terms on OOBE, and https://crbug.com/770313).\n\nIt sounds like we should decide whether we ever want WebUI pages to have frames with different bindings.  If so, we should update this class to support it.  If not, let\u0027s add an enforcement to make sure it doesn\u0027t happen, and then we may be ok here.\n\nRachel, do you know which pages use the |frame_name| parameter?  And do you know if there are cases where we want the bindings to differ?",
+      "parentUuid": "9cc428bf_dd487ace",
+      "range": {
+        "startLine": 111,
+        "startChar": 24,
+        "endLine": 111,
+        "endChar": 25
+      },
+      "revId": "c8bbc0cc74e4393a79a8c4800241c38d37c8699e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
