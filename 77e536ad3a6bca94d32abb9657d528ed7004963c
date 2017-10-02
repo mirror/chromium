@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "1b22d7be_0e68ffc3",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-02T20:34:37Z",
+      "side": 1,
+      "message": "Q: Is there any way the current tab could have navigated away from the page the warning was generated on? That is, after you do the block-navigation thing?",
+      "revId": "77e536ad3a6bca94d32abb9657d528ed7004963c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63cb331e_9691db20",
         "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
         "patchSetId": 4
