@@ -16,6 +16,24 @@
       "revId": "ac4c57a3af58ff9b6c50fb87f8cff01e9908a91f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64a33eba_39b5e9d3",
+        "filename": "content/browser/renderer_host/render_widget_host_view_base.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1228384
+      },
+      "writtenOn": "2017-10-02T18:04:35Z",
+      "side": 1,
+      "message": "Even with latching, it seems that BrowserPlugin based guests still try to consume the scroll. I\u0027ve mostly been looking at latching+OOPIFs recently, so I haven\u0027t really dug into this.",
+      "parentUuid": "e44dd606_81886c29",
+      "revId": "ac4c57a3af58ff9b6c50fb87f8cff01e9908a91f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
