@@ -19,6 +19,40 @@
     },
     {
       "key": {
+        "uuid": "43301b0f_866139ac",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-10-02T16:59:01Z",
+      "side": 1,
+      "message": "why does the viz service need this? Can you remind me of the flow?",
+      "revId": "897d1a7b456bb39e980e823cc45ed3060ab5e6f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32fac126_dc577338",
+        "filename": "content/common/frame_sink_provider.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-10-02T16:59:01Z",
+      "side": 1,
+      "message": "provides a CompositorFrameSink",
+      "revId": "897d1a7b456bb39e980e823cc45ed3060ab5e6f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69c93d39_c842ffd2",
         "filename": "content/renderer/input/render_widget_input_handler.cc",
         "patchSetId": 2
@@ -30,6 +64,23 @@
       "writtenOn": "2017-09-28T21:48:37Z",
       "side": 1,
       "message": "I think we want a FrameSinkId not a routing ID.",
+      "revId": "897d1a7b456bb39e980e823cc45ed3060ab5e6f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0baa14b_14efcca4",
+        "filename": "content/renderer/input/target_frame_for_input_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-10-02T16:59:01Z",
+      "side": 1,
+      "message": "when do we bind on the impl vs main?",
       "revId": "897d1a7b456bb39e980e823cc45ed3060ab5e6f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +121,58 @@
     },
     {
       "key": {
+        "uuid": "3baffd8f_7536d133",
+        "filename": "services/viz/public/interfaces/hit_test/target_frame_for_input_delegate.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-10-02T16:59:01Z",
+      "side": 1,
+      "message": "isn\u0027t this the interface used by the privileged code but implemented by the clients?",
+      "parentUuid": "977c0a99_c5bc5419",
+      "revId": "897d1a7b456bb39e980e823cc45ed3060ab5e6f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1acdd721_378805b8",
+        "filename": "services/viz/public/interfaces/hit_test/target_frame_for_input_delegate.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-10-02T16:59:01Z",
+      "side": 1,
+      "message": "nit: sp",
+      "revId": "897d1a7b456bb39e980e823cc45ed3060ab5e6f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e31b08e_eb55bc4d",
+        "filename": "services/viz/public/interfaces/hit_test/target_frame_for_input_delegate.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-10-02T16:59:01Z",
+      "side": 1,
+      "message": "sp: servcices",
+      "revId": "897d1a7b456bb39e980e823cc45ed3060ab5e6f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "531e30fd_c576c520",
         "filename": "services/viz/public/interfaces/hit_test/target_frame_for_input_delegate.mojom",
         "patchSetId": 2
@@ -98,6 +201,23 @@
       "writtenOn": "2017-09-28T21:48:37Z",
       "side": 1,
       "message": "What\u0027s a frame_id in this context. We shouldn\u0027t expose web details to the viz API.",
+      "revId": "897d1a7b456bb39e980e823cc45ed3060ab5e6f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1786a214_3dff0607",
+        "filename": "services/viz/public/interfaces/hit_test/target_frame_for_input_delegate.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-10-02T16:59:01Z",
+      "side": 1,
+      "message": "This needs a longer explanation of what it does.",
       "revId": "897d1a7b456bb39e980e823cc45ed3060ab5e6f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
