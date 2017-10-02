@@ -54,11 +54,6 @@ class CORE_EXPORT HTMLDocument : public Document {
   const AtomicString& vlinkColor() const;
   void setVlinkColor(const AtomicString&);
 
-  void clear() {}
-
-  void captureEvents() {}
-  void releaseEvents() {}
-
   void AddNamedItem(const AtomicString& name);
   void RemoveNamedItem(const AtomicString& name);
   bool HasNamedItem(const AtomicString& name);

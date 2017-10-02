@@ -32,10 +32,6 @@ interface HTMLDocument : Document {
     [CEReactions, CustomElementCallbacks] attribute [TreatNullAs=EmptyString] DOMString alinkColor;
     [CEReactions, CustomElementCallbacks] attribute [TreatNullAs=EmptyString] DOMString bgColor;
 
-    [MeasureAs=DocumentClear] void clear();
-    [MeasureAs=DocumentCaptureEvents] void captureEvents();
-    [MeasureAs=DocumentReleaseEvents] void releaseEvents();
-
     // FIXME: all should not be [Replaceable].
     [Replaceable, MeasureAs=DocumentAll] readonly attribute HTMLAllCollection all;
 };

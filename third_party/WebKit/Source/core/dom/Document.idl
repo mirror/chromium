@@ -149,7 +149,9 @@ typedef (HTMLScriptElement or SVGScriptElement) HTMLOrSVGScriptElement;
     [Measure] readonly attribute HTMLCollection anchors;
     [Measure] readonly attribute HTMLCollection applets;
 
-    // FIXME: clear(), captureEvents(), releaseEvents() and all are on HTMLDocument.
+    [MeasureAs=DocumentClear] void clear();
+    [MeasureAs=DocumentCaptureEvents] void captureEvents();
+    [MeasureAs=DocumentReleaseEvents] void releaseEvents();
 
     // CSS Object Model (CSSOM)
     // https://drafts.csswg.org/cssom/#extensions-to-the-document-interface

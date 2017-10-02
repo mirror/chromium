@@ -1368,6 +1368,11 @@ class CORE_EXPORT Document : public ContainerNode,
 
   void SetFeaturePolicy(const String& feature_policy_header);
 
+  void clear() {}
+
+  void captureEvents() {}
+  void releaseEvents() {}
+
  protected:
   Document(const DocumentInit&, DocumentClassFlags = kDefaultDocumentClass);
 
