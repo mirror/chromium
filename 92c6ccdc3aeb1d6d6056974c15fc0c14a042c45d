@@ -123,6 +123,24 @@
       "revId": "92c6ccdc3aeb1d6d6056974c15fc0c14a042c45d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a26cd06e_7f41571b",
+        "filename": "net/spdy/chromium/http2_push_promise_index.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-10-02T18:14:49Z",
+      "side": 1,
+      "message": "Well, I certainly meant to delete the copy assignment operator.  This is one more reason to use the macro: it\u0027s easier to get it right.  I\u0027ll address it in https://chromium-review.googlesource.com/c/chromium/src/+/695210/1/net/spdy/chromium/http2_push_promise_index.h.  Thank you.",
+      "parentUuid": "f330e2c0_f89742f0",
+      "revId": "92c6ccdc3aeb1d6d6056974c15fc0c14a042c45d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
