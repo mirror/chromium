@@ -31,8 +31,6 @@ class GURL;
 
 // Model item for HistoryEntriesStatusCell. Manages links added to the cell.
 @interface HistoryEntriesStatusItem : CollectionViewItem
-// Status of currently displayed history entries.
-@property(nonatomic, assign) HistoryEntriesStatus entriesStatus;
 // YES if messages should be hidden.
 @property(nonatomic, assign, getter=isHidden) BOOL hidden;
 // YES if message for other forms of browsing data should be shown.
