@@ -496,6 +496,30 @@
       "revId": "431f968093cd8558bb2129c6eea0e0e9e0fed797",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "605b00ac_4b8e766c",
+        "filename": "components/signin/core/browser/android/javatests/src/org/chromium/components/signin/test/util/FakeAccountManagerDelegate.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-02T13:54:14Z",
+      "side": 1,
+      "message": "Hm, I found one downstream test that uses addAccountHolderExplicitly (http://shortn/_5JcCAHsiUq), correct? If so, two things:\n1) That test currently calls addAccountHolderExplicitly() on the instrumentation thread, so as it is this would cause an assertion error.\n2) The test (and the code it exercises) should probably be updated to use AccountManagerFacade instead of the AccountManagerDelegate directly. But you probably have that on your radar anyway :-D\n\nBut given that it looks like the downstream test needs to be adapted anyway, could we just set up the AccountManagerFacade for the test and then use addAccountHolderBlocking() everywhere? It seems like it would be better to remove the ability completely to misuse the FakeAccountManagerDelegate by mixing addAccountHolderExplicitly() and addAccountHolderBlocking() calls.",
+      "parentUuid": "c75e5a96_8612e542",
+      "range": {
+        "startLine": 218,
+        "startChar": 16,
+        "endLine": 218,
+        "endChar": 93
+      },
+      "revId": "431f968093cd8558bb2129c6eea0e0e9e0fed797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

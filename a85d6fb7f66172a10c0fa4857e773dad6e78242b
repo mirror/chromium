@@ -46,6 +46,30 @@
       "revId": "a85d6fb7f66172a10c0fa4857e773dad6e78242b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "878a923b_4b060c36",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-02T13:54:14Z",
+      "side": 1,
+      "message": "\u003e That\u0027s a good point. Actually, I would like to reimplement async functions in AccountManagerFacade to avoid creating AsyncTasks every time. Something like:\n\u003e \n\u003e AccountManagerResult\u003cAccount[]\u003e maybeAccounts \u003d mMaybeAccounts.get();\n\u003e if (maybeAccounts \u003d\u003d null) {\n\u003e     mCallbacksWaitingForPopulate.add(callback);\n\u003e     return;\n\u003e }\n\u003e ThreadUtils.postOnUiThread(() -\u003e callback(maybeAccounts.get()));\n\nThat would be great, thanks.\n\n(That is BTW almost the same behavior as our current org.chromium.base.Promise has -- might be worth checking if you can use that for at least the asynchronous part.)\n\n\u003e I plan to do that after this CL lands and dust settles. I\u0027m not concerned much about case you\u0027ve described as blocking time for getGoogleAccounts() shouldn\u0027t be longer than a call to getAccountsSync - the same time we already block for. So this CL doesn\u0027t incur any performance hit on thread pools. On the contrary, it actually improves performance, as absolute majority of calls to getGoogleAccounts() will be done after cache is already populated.\n\nYes, I didn\u0027t mean that this CL regresses performance, but the case that I described does seem to happen, so it would be good to get rid of it completely. But yeah, looks like we\u0027re in agreement :)",
+      "parentUuid": "1be7cc86_b6ac9969",
+      "range": {
+        "startLine": 303,
+        "startChar": 38,
+        "endLine": 303,
+        "endChar": 58
+      },
+      "revId": "a85d6fb7f66172a10c0fa4857e773dad6e78242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
