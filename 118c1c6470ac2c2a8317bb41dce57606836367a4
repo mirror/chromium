@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "127a741a_7d912119",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-02T06:05:38Z",
+      "side": 1,
+      "message": "Could you make |AdjustSelectionAfterIncrementalInsertion()| to take\n|EditingState| and calls |EditingStart::Abort()| here instead of just\nreturn?",
+      "revId": "118c1c6470ac2c2a8317bb41dce57606836367a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "084ea272_5b33824e",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommandTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-02T06:05:38Z",
+      "side": 1,
+      "message": "Could you check result HTML markup? I think it is as same as L60 since\n\"InsertText\" command is aborted.",
+      "revId": "118c1c6470ac2c2a8317bb41dce57606836367a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
