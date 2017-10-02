@@ -165,6 +165,10 @@ cr.define('cr.ui', function() {
             this.classList.remove('using-mouse');
           }
           break;
+        case 'blur':
+          // No need to hide the focus ring anymore after losing focus.
+          this.classList.remove('using-mouse');
+          break;
         case 'activate':
           var hideDelayed =
               e.target instanceof cr.ui.MenuItem && e.target.checkable;
