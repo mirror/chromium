@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5850c17e_aaae16b6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/externalauth/UserRecoverableErrorHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-02T14:22:45Z",
+      "side": 1,
+      "message": "You could maybe pull these into a single method on DialogUserActionRecorder that sets everything up. It probably doesn\u0027t make a big difference right now, but if someone pulls this out for general use or copies the pattern, we should make it nice to use :)",
+      "range": {
+        "startLine": 209,
+        "startChar": 16,
+        "endLine": 209,
+        "endChar": 61
+      },
+      "revId": "1bd4f9bf2fc8f34e37f06dcebeff57e792868c9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
