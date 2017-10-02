@@ -3466,6 +3466,9 @@ split_static_library("browser") {
       "//chrome/common/extensions/api:extensions_features",
       "//components/drive",
       "//components/guest_view/browser",
+
+      # chrome_extension_function.h -> extension_function.h
+      "//extensions/browser",
       "//extensions/components/javascript_dialog_extensions_client",
       "//media/cast:net",
       "//services/device/public/interfaces",
