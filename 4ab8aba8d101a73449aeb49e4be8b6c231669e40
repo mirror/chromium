@@ -70,6 +70,30 @@
       "revId": "4ab8aba8d101a73449aeb49e4be8b6c231669e40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c23cbc4_0ec0f388",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 5618,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-02T19:59:57Z",
+      "side": 1,
+      "message": "There\u0027s a general readme for the feature engagement tracker that describes the configuration process and what events are logged: https://cs.chromium.org/chromium/src/components/feature_engagement/README.md?q\u003dfeature_engagement+readme\u0026sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d100",
+      "parentUuid": "3d800335_c5b7d594",
+      "range": {
+        "startLine": 5618,
+        "startChar": 4,
+        "endLine": 5618,
+        "endChar": 68
+      },
+      "revId": "4ab8aba8d101a73449aeb49e4be8b6c231669e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
