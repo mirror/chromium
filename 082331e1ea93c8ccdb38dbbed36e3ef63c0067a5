@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b3544b4_15ad50c2",
+        "filename": "chrome/test/chromedriver/window_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1245450
+      },
+      "writtenOn": "2017-10-02T04:11:59Z",
+      "side": 1,
+      "message": "Use \u0027type\u0027 instead of |type|",
+      "range": {
+        "startLine": 764,
+        "startChar": 9,
+        "endLine": 764,
+        "endChar": 15
+      },
+      "revId": "082331e1ea93c8ccdb38dbbed36e3ef63c0067a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "987f97f2_e64d7302",
+        "filename": "chrome/test/chromedriver/window_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1245450
+      },
+      "writtenOn": "2017-10-02T04:11:59Z",
+      "side": 1,
+      "message": "Surround by \u0027",
+      "range": {
+        "startLine": 777,
+        "startChar": 23,
+        "endLine": 777,
+        "endChar": 34
+      },
+      "revId": "082331e1ea93c8ccdb38dbbed36e3ef63c0067a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92bd50f1_dcb67c0c",
+        "filename": "chrome/test/chromedriver/window_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1245450
+      },
+      "writtenOn": "2017-10-02T04:11:59Z",
+      "side": 1,
+      "message": "This would be a ChromeDriver internal error, not an invalid argument error. An assert would be more appropriate.",
+      "range": {
+        "startLine": 784,
+        "startChar": 6,
+        "endLine": 784,
+        "endChar": 78
+      },
+      "revId": "082331e1ea93c8ccdb38dbbed36e3ef63c0067a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99929148_8f7cd50f",
+        "filename": "chrome/test/chromedriver/window_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1038,
+      "author": {
+        "id": 1245450
+      },
+      "writtenOn": "2017-10-02T04:11:59Z",
+      "side": 1,
+      "message": "ChromeDriver internal error, not invalid argument",
+      "range": {
+        "startLine": 1038,
+        "startChar": 6,
+        "endLine": 1038,
+        "endChar": 70
+      },
+      "revId": "082331e1ea93c8ccdb38dbbed36e3ef63c0067a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91e2a56f_df2ca050",
+        "filename": "chrome/test/chromedriver/window_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1062,
+      "author": {
+        "id": 1245450
+      },
+      "writtenOn": "2017-10-02T04:11:59Z",
+      "side": 1,
+      "message": "By now, action_sequence should have already been validated.",
+      "range": {
+        "startLine": 1062,
+        "startChar": 10,
+        "endLine": 1062,
+        "endChar": 80
+      },
+      "revId": "082331e1ea93c8ccdb38dbbed36e3ef63c0067a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e49c55e1_693e1e1f",
+        "filename": "chrome/test/chromedriver/window_commands_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1245450
+      },
+      "writtenOn": "2017-10-02T04:11:59Z",
+      "side": 1,
+      "message": "2017 :)\nThough I\u0027d rather postpone adding this file until you\u0027re ready to write unit tests.",
+      "range": {
+        "startLine": 1,
+        "startChar": 17,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "082331e1ea93c8ccdb38dbbed36e3ef63c0067a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
