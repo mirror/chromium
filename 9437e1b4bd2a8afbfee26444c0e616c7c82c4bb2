@@ -22,6 +22,30 @@
       "revId": "9437e1b4bd2a8afbfee26444c0e616c7c82c4bb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e175696_a1d279a0",
+        "filename": "remoting/ios/app/view_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-10-02T23:16:34Z",
+      "side": 1,
+      "message": "Done.\n\nThe term comes from the a11y spec though...\nhttps://docs.google.com/document/d/1yVOJwJ_ZDDsn1Ka7-B4w2Fn-2YphMpYEMJzDtQo4G7Q/edit#heading\u003dh.3inuz515pt3n",
+      "parentUuid": "f21b2d23_8045d73d",
+      "range": {
+        "startLine": 21,
+        "startChar": 5,
+        "endLine": 21,
+        "endChar": 16
+      },
+      "revId": "9437e1b4bd2a8afbfee26444c0e616c7c82c4bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
