@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2ecbf46d_a4bd670e",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1148594
+      },
+      "writtenOn": "2017-10-02T20:08:57Z",
+      "side": 1,
+      "message": "No, it was just for the sake of being generic. Removed.",
+      "parentUuid": "a3737a39_56002794",
+      "revId": "145d2416bfabdf13d6a2cfea362814a4c186424d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c331fec_faa55648",
         "filename": "components/exo/surface.h",
         "patchSetId": 12
@@ -30,6 +48,30 @@
       "writtenOn": "2017-10-02T19:40:26Z",
       "side": 1,
       "message": "I\u0027m not a fan of std:pair as return value. I\u0027d prefer parameters but maybe it\u0027s even better to update some state when CommitSurfaceHierarchy is called just like we update content_size_? e.g. hierarchy_content_bounds_ and fills_hierarchy_content_bounds_opaquely_. wdyt?",
+      "range": {
+        "startLine": 150,
+        "startChar": 2,
+        "endLine": 150,
+        "endChar": 28
+      },
+      "revId": "145d2416bfabdf13d6a2cfea362814a4c186424d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0034e5ac_3cec5ef6",
+        "filename": "components/exo/surface.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1148594
+      },
+      "writtenOn": "2017-10-02T20:08:57Z",
+      "side": 1,
+      "message": "I\u0027ve removed the recursive opacity, so this returns gfx::Rect now. Extra state is unnecessary.",
+      "parentUuid": "6c331fec_faa55648",
       "range": {
         "startLine": 150,
         "startChar": 2,
