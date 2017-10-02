@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "75d71215_6e367784",
+        "filename": "components/previews/core/previews_black_list.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-02T17:41:33Z",
+      "side": 1,
+      "message": "I think he just wanted the commented to have more details:\n\n// Synchronous version of AddPreviewNavigation method that accepts a timestamp |time|, and does not return a timestamp.",
+      "parentUuid": "ceebb2bb_54701a46",
+      "range": {
+        "startLine": 113,
+        "startChar": 5,
+        "endLine": 113,
+        "endChar": 48
+      },
+      "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63ca66f6_419986c5",
         "filename": "components/previews/core/previews_io_data.h",
         "patchSetId": 12
@@ -328,6 +352,30 @@
       "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5178c6f_59cbb34f",
+        "filename": "components/previews/core/previews_log.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-02T17:41:33Z",
+      "side": 1,
+      "message": "Agreed with thanh, we will eventually need to duplicate this data for every Mojo call. This is acceptable to me for two reasons: this copy will only happen in production when the interventions page is open, and it will be polled on a schedule (2 secs?); not pushed.",
+      "parentUuid": "9312b00c_dd80812d",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 23
+      },
+      "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -519,6 +567,30 @@
     },
     {
       "key": {
+        "uuid": "a3d73479_75e01840",
+        "filename": "components/previews/core/previews_log.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-02T17:41:33Z",
+      "side": 1,
+      "message": "I\u0027m wondering if this struct will be a mojo type once the PageHandler supports this. If so, I think it would be best to use an internal type in just the .cc for now, and delete the struct once there is a mojo type for it.\n\nWDYT tbansal and thanhdle?",
+      "parentUuid": "4386435a_843f8c5a",
+      "range": {
+        "startLine": 20,
+        "startChar": 7,
+        "endLine": 20,
+        "endChar": 17
+      },
+      "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63c7e7fa_9606558d",
         "filename": "components/previews/core/previews_log.h",
         "patchSetId": 12
@@ -613,6 +685,30 @@
     },
     {
       "key": {
+        "uuid": "157cadfd_c8e07904",
+        "filename": "components/previews/core/previews_log.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-02T17:41:33Z",
+      "side": 1,
+      "message": "I agree it should be public for ease of use later. tbansal, would you prefer it being private in the short-term and having a consumer make it public later?",
+      "parentUuid": "b64bb28f_f7709341",
+      "range": {
+        "startLine": 58,
+        "startChar": 7,
+        "endLine": 58,
+        "endChar": 17
+      },
+      "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e634c209_5ab5dadc",
         "filename": "components/previews/core/previews_log.h",
         "patchSetId": 12
@@ -648,6 +744,30 @@
       "side": 1,
       "message": "This is virtual because it is override later in ui_service_unittest.",
       "parentUuid": "e634c209_5ab5dadc",
+      "range": {
+        "startLine": 65,
+        "startChar": 2,
+        "endLine": 65,
+        "endChar": 9
+      },
+      "revId": "a8a98ac11b962fd873de6c8b1c2da37df804762b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3cea3a50_78478109",
+        "filename": "components/previews/core/previews_log.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-02T17:41:33Z",
+      "side": 1,
+      "message": "Add \"virtual for testing\" in the comment.",
+      "parentUuid": "f1b07aef_0ac48ffa",
       "range": {
         "startLine": 65,
         "startChar": 2,
