@@ -16,6 +16,24 @@
       "revId": "c46a8afd4831061e0a9609f33f58c4a56d58f51a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6934421e_b2f68919",
+        "filename": "net/tools/print_certificates.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-10-02T23:27:18Z",
+      "side": 1,
+      "message": "hm, yeah, that\u0027s not a bad idea. Wouldn\u0027t be too hard to add the minimal amount of DER parsing to split up the certs. I think I\u0027m just gonna commit this but add a TODO to consider doing that in the future.\n(Though one minor advantage of the regex is that it\u0027ll also work if you did output\u003dheader,der2ascii. enh.)",
+      "parentUuid": "018fa599_719fe34b",
+      "revId": "c46a8afd4831061e0a9609f33f58c4a56d58f51a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
