@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5eb975e8_bcffa39f",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-10-02T07:07:54Z",
+      "side": 1,
+      "message": "Top -\u003e Main?",
+      "revId": "06181a979d087b13573092fa28127a93f6e67507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7ff9902_8cce431f",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-10-02T07:07:54Z",
+      "side": 1,
+      "message": "I\u0027d create a helper function for this computation.",
+      "range": {
+        "startLine": 53,
+        "startChar": 35,
+        "endLine": 53,
+        "endChar": 59
+      },
+      "revId": "06181a979d087b13573092fa28127a93f6e67507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
