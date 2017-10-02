@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "0b8ad728_70596dc6",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_printers_browser_proxy.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-02T23:16:57Z",
+      "side": 1,
+      "message": "I\u0027ve updated the comment and I\u0027ll keep the name.  This is a sensible hook if we in-fact do add any cleanup logic on the C++ side.  It\u0027s clear that the handler will be notified and the javascript should care too much about what it\u0027s doing.",
+      "parentUuid": "b112d8bd_6209d0c9",
+      "revId": "f7e6a6bce2ea4fe336d7553b8b238977488beb12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc0d4b4d_dfb99181",
         "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
         "patchSetId": 5
@@ -66,6 +84,24 @@
       "writtenOn": "2017-08-08T19:51:04Z",
       "side": 1,
       "message": "I know it\u0027s not new to this change, exactly, butI \u0027m not entirely clear whether CHECK here is appropriate.  I\u0027m always a little leery when thi ngs-going-wrong-in-javascript can crash the browser.\n\nMaybe consider changing this to\n\nbool DictToPrinter(const ... printer_dict, chromeos::Printer* printer);\n\nand doing something less drastic than crashing the browser if the conversion fails?  What do you think?",
+      "revId": "f7e6a6bce2ea4fe336d7553b8b238977488beb12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a74d91d6_9d54b71f",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-02T23:16:57Z",
+      "side": 1,
+      "message": "I agree.  But I\u0027ll fix it in a separate CL.  https://chromium-review.googlesource.com/696341",
+      "parentUuid": "fc0d4b4d_dfb99181",
       "revId": "f7e6a6bce2ea4fe336d7553b8b238977488beb12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
