@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4ff84ff_ee122122",
+        "filename": "third_party/WebKit/Source/core/events/PointerEventFactory.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-02T20:32:19Z",
+      "side": 1,
+      "message": "This is called only for touch pointers, right?  Why not \"true\" then?\n\nPerhaps it doesn\u0027t matter for pointercancel events but at least the can_scroll bit is eqvt to type\u003d\u003dtouch elsewhere, so let\u0027s be consistent.",
+      "revId": "70261d4213e04fdb0e43ae69b984d8631973dfbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c20be02_d87caded",
+        "filename": "third_party/WebKit/Source/core/events/PointerEventFactory.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-02T20:32:19Z",
+      "side": 1,
+      "message": "I think this comment can be removed now, right?",
+      "revId": "70261d4213e04fdb0e43ae69b984d8631973dfbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4919961_bfe6b3e9",
+        "filename": "third_party/WebKit/Source/core/events/PointerEventFactoryTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-02T20:32:19Z",
+      "side": 1,
+      "message": "Nit: Wouldn\u0027t it be better to test this property in a dedicated TEST_F instead of defusing the focus of existing tests?",
+      "revId": "70261d4213e04fdb0e43ae69b984d8631973dfbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
