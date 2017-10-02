@@ -504,6 +504,7 @@ class CONTENT_EXPORT RenderThreadImpl
     size_t total_allocated_mb;
     size_t non_discardable_total_allocated_mb;
     size_t total_allocated_per_render_view_mb;
+    size_t private_memory_footprint_mb;
   };
   bool GetRendererMemoryMetrics(RendererMemoryMetrics* memory_metrics) const;
 
