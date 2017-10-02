@@ -54,6 +54,7 @@ import org.chromium.content_public.browser.AccessibilitySnapshotNode;
 import org.chromium.content_public.browser.ActionModeCallbackHelper;
 import org.chromium.content_public.browser.GestureStateListener;
 import org.chromium.content_public.browser.ImeEventObserver;
+import org.chromium.content_public.browser.SelectionClient;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_public.browser.WebContentsObserver;
 import org.chromium.device.gamepad.GamepadList;
@@ -2132,6 +2133,30 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
      */
     public void setSelectionClient(SelectionClient selectionClient) {
         mSelectionPopupController.setSelectionClient(selectionClient);
+    }
+
+    /**
+     * Adds the given {@link SelectionClient} to the popup menu controller.
+     * @param selectionClient The {@link SelectionClient} to add.
+     * @param suppressContextualSearchForSmartSelectRunnable A {@link Runnable} that will notify
+     *        Contextual Search that it should suppress its UI, called when Smart Select is active.
+     */
+    public void addSelectionClient(SelectionClient selectionClient,
+            Runnable suppressContextualSearchForSmartSelectRunnable) {
+        mSelectionPopupController.addSelectionClient(
+                selectionClient, suppressContextualSearchForSmartSelectRunnable);
+    }
+
+    /** Removes the given {@link SelectionClient} from the popup menu controller. */
+    public void removeSelectionClient(SelectionClient selectionClient) {
+        mSelectionPopupController.removeSelectionClient(selectionClient);
+    }
+
+    /**
+     * Gets the current {@link SelectionClientManager} from the popup controller.
+     */
+    public SelectionClientManager getSelectionClientManager() {
+        return mSelectionPopupController.getSelectionClientManager();
     }
 
     /**
