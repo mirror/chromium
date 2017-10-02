@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f3a1798_3d7c40a5",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/state_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-02T18:18:11Z",
+      "side": 1,
+      "message": "nit: strip 1 space",
+      "range": {
+        "startLine": 183,
+        "startChar": 64,
+        "endLine": 183,
+        "endChar": 66
+      },
+      "revId": "10cee878a5250e5fbc268b08b926b753d25d075a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
