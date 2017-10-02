@@ -407,4 +407,3 @@ ProcessMitigationsWin32KLockdownPolicy::GetOverrideForTestCallback() {
 }
 
 }  // namespace sandbox
-

@@ -5,8 +5,8 @@
 #ifndef SANDBOX_SRC_WIN_PROCESS_MITIGATIONS_H_
 #define SANDBOX_SRC_WIN_PROCESS_MITIGATIONS_H_
 
-#include <windows.h>
 #include <stddef.h>
+#include <windows.h>
 
 #include "sandbox/win/src/security_level.h"
 
@@ -49,4 +49,3 @@ bool CanSetMitigationsPerThread(MitigationFlags flags);
 }  // namespace sandbox
 
 #endif  // SANDBOX_SRC_WIN_PROCESS_MITIGATIONS_H_
-

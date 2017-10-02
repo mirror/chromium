@@ -42,9 +42,9 @@ struct ServiceEntry {
   // 0a call    dword ptr [edx]
   // 0c ret     2Ch
   // 0f nop
-  BYTE mov_eax;         // = B8
+  BYTE mov_eax;  // = B8
   ULONG service_id;
-  BYTE mov_edx;         // = BA
+  BYTE mov_edx;  // = BA
   ULONG stub;
   USHORT call_ptr_edx;  // = FF 12
   BYTE ret;             // = C2
@@ -62,15 +62,15 @@ struct ServiceEntryW8 {
   // 0f 0f34            sysenter
   // 11 c3              ret
   // 12 8bff            mov     edi,edi
-  BYTE mov_eax;         // = B8
+  BYTE mov_eax;  // = B8
   ULONG service_id;
-  BYTE call_eip;        // = E8
+  BYTE call_eip;  // = E8
   ULONG call_offset;
-  BYTE ret_p;           // = C2
+  BYTE ret_p;  // = C2
   USHORT num_params;
-  USHORT mov_edx_esp;   // = BD D4
-  USHORT sysenter;      // = 0F 34
-  BYTE ret;             // = C3
+  USHORT mov_edx_esp;  // = BD D4
+  USHORT sysenter;     // = 0F 34
+  BYTE ret;            // = C3
   USHORT nop;
 };
 
@@ -93,16 +93,16 @@ struct Wow64Entry {
   // 15 c22c00          ret     2Ch
   //
   // So we base the structure on the bigger one:
-  BYTE mov_eax;         // = B8
+  BYTE mov_eax;  // = B8
   ULONG service_id;
-  USHORT xor_ecx;       // = 33 C9
-  ULONG lea_edx;        // = 8D 54 24 04
-  ULONG call_fs1;       // = 64 FF 15 C0
-  USHORT call_fs2;      // = 00 00
-  BYTE call_fs3;        // = 00
-  BYTE add_esp1;        // = 83             or ret
-  USHORT add_esp2;      // = C4 04          or num_params
-  BYTE ret;             // = C2
+  USHORT xor_ecx;   // = 33 C9
+  ULONG lea_edx;    // = 8D 54 24 04
+  ULONG call_fs1;   // = 64 FF 15 C0
+  USHORT call_fs2;  // = 00 00
+  BYTE call_fs3;    // = 00
+  BYTE add_esp1;    // = 83             or ret
+  USHORT add_esp2;  // = C4 04          or num_params
+  BYTE ret;         // = C2
   USHORT num_params;
 };
 
@@ -112,12 +112,12 @@ struct Wow64EntryW8 {
   // 05 64ff15c0000000  call    dword ptr fs:[0C0h]
   // 0b c22c00          ret     2Ch
   // 0f 90              nop
-  BYTE mov_eax;         // = B8
+  BYTE mov_eax;  // = B8
   ULONG service_id;
-  ULONG call_fs1;       // = 64 FF 15 C0
-  USHORT call_fs2;      // = 00 00
-  BYTE call_fs3;        // = 00
-  BYTE ret;             // = C2
+  ULONG call_fs1;   // = 64 FF 15 C0
+  USHORT call_fs2;  // = 00 00
+  BYTE call_fs3;    // = 00
+  BYTE ret;         // = C2
   USHORT num_params;
   BYTE nop;
 };
@@ -128,12 +128,12 @@ struct Wow64EntryW10 {
   // 05 bab0d54877      mov     edx, 7748D5B0h
   // 09 ffd2            call    edx
   // 0b c22800          ret     28h
-  BYTE mov_eax;         // = B8
+  BYTE mov_eax;  // = B8
   ULONG service_id;
-  BYTE mov_edx;         // = BA
+  BYTE mov_edx;  // = BA
   ULONG mov_edx_param;
-  USHORT call_edx;      // = FF D2
-  BYTE ret;             // = C2
+  USHORT call_edx;  // = FF D2
+  BYTE ret;         // = C2
   USHORT num_params;
 };
 
@@ -168,17 +168,17 @@ NTSTATUS ServiceResolverThunk::Setup(const void* target_module,
                                      void* thunk_storage,
                                      size_t storage_bytes,
                                      size_t* storage_used) {
-  NTSTATUS ret = Init(target_module, interceptor_module, target_name,
-                      interceptor_name, interceptor_entry_point,
-                      thunk_storage, storage_bytes);
+  NTSTATUS ret =
+      Init(target_module, interceptor_module, target_name, interceptor_name,
+           interceptor_entry_point, thunk_storage, storage_bytes);
   if (!NT_SUCCESS(ret))
     return ret;
 
   relative_jump_ = 0;
   size_t thunk_bytes = GetThunkSize();
   std::unique_ptr<char[]> thunk_buffer(new char[thunk_bytes]);
-  ServiceFullThunk* thunk = reinterpret_cast<ServiceFullThunk*>(
-                                thunk_buffer.get());
+  ServiceFullThunk* thunk =
+      reinterpret_cast<ServiceFullThunk*>(thunk_buffer.get());
 
   if (!IsFunctionAService(&thunk->original) &&
       (!relaxed_ || !SaveOriginalFunction(&thunk->original, thunk_storage))) {
@@ -234,8 +234,7 @@ bool ServiceResolverThunk::IsFunctionAService(void* local_thunk) const {
   if (sizeof(function_code) != read)
     return false;
 
-  if (kMovEax != function_code.mov_eax ||
-      kMovEdx != function_code.mov_edx ||
+  if (kMovEax != function_code.mov_eax || kMovEdx != function_code.mov_edx ||
       (kCallPtrEdx != function_code.call_ptr_edx &&
        kCallEdx != function_code.call_ptr_edx) ||
       kRet != function_code.ret) {
@@ -289,10 +288,10 @@ NTSTATUS ServiceResolverThunk::PerformPatch(void* local_thunk,
                                             void* remote_thunk) {
   ServiceEntry intercepted_code;
   size_t bytes_to_write = sizeof(intercepted_code);
-  ServiceFullThunk *full_local_thunk = reinterpret_cast<ServiceFullThunk*>(
-      local_thunk);
-  ServiceFullThunk *full_remote_thunk = reinterpret_cast<ServiceFullThunk*>(
-      remote_thunk);
+  ServiceFullThunk* full_local_thunk =
+      reinterpret_cast<ServiceFullThunk*>(local_thunk);
+  ServiceFullThunk* full_remote_thunk =
+      reinterpret_cast<ServiceFullThunk*>(remote_thunk);
 
   // patch the original code
   memcpy(&intercepted_code, &full_local_thunk->original,
@@ -318,8 +317,8 @@ NTSTATUS ServiceResolverThunk::PerformPatch(void* local_thunk,
 
   // copy the local thunk buffer to the child
   SIZE_T written;
-  if (!::WriteProcessMemory(process_, remote_thunk, local_thunk,
-                            thunk_size, &written)) {
+  if (!::WriteProcessMemory(process_, remote_thunk, local_thunk, thunk_size,
+                            &written)) {
     return STATUS_UNSUCCESSFUL;
   }
 
@@ -363,7 +362,7 @@ bool ServiceResolverThunk::SaveOriginalFunction(void* local_thunk,
     function_code.service_id = relative;
 
     // And now, remember how to re-patch it.
-    ServiceFullThunk *full_thunk =
+    ServiceFullThunk* full_thunk =
         reinterpret_cast<ServiceFullThunk*>(remote_thunk);
 
     const ULONG kJmp32Size = 5;
@@ -397,8 +396,8 @@ bool Wow64ResolverThunk::IsFunctionAService(void* local_thunk) const {
   }
 
   if ((kAddEsp1 == function_code.add_esp1 &&
-       kAddEsp2 == function_code.add_esp2 &&
-       kRet == function_code.ret) || kRet == function_code.add_esp1) {
+       kAddEsp2 == function_code.add_esp2 && kRet == function_code.ret) ||
+      kRet == function_code.add_esp1) {
     // Save the verified code
     memcpy(local_thunk, &function_code, sizeof(function_code));
     return true;
@@ -464,10 +463,8 @@ bool Wow64W10ResolverThunk::IsFunctionAService(void* local_thunk) const {
   if (sizeof(function_code) != read)
     return false;
 
-  if (kMovEax != function_code.mov_eax ||
-      kMovEdx != function_code.mov_edx ||
-      kCallEdx != function_code.call_edx ||
-      kRet != function_code.ret) {
+  if (kMovEax != function_code.mov_eax || kMovEdx != function_code.mov_edx ||
+      kCallEdx != function_code.call_edx || kRet != function_code.ret) {
     return false;
   }
 
