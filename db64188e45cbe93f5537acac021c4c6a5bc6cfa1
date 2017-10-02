@@ -16,6 +16,24 @@
       "revId": "db64188e45cbe93f5537acac021c4c6a5bc6cfa1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23760760_3c57e1fa",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaStreamTrack.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-02T10:38:28Z",
+      "side": 1,
+      "message": "It would be a micro optimization, but not worth it IMO.\nI prefer to delegate as much as possible to the content implementation.\nEmpty constraints is a special case because image_capture constraints are already applied but not yet resolved and I want to make 100% sure that the promise will resolve.\nAdded a comment explaining this.",
+      "parentUuid": "3aafd6cd_a7a5e008",
+      "revId": "db64188e45cbe93f5537acac021c4c6a5bc6cfa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
