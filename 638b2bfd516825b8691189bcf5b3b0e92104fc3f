@@ -227,6 +227,24 @@
     },
     {
       "key": {
+        "uuid": "608ff49c_a835d6c2",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-02T17:34:32Z",
+      "side": 1,
+      "message": "\u003e add LM_MAX to the end of the enum and use this:\n\u003e \n\u003e void RecordLaunchModeHistogram(LaunchMode mode) {\n\u003e   LaunchMode bucket \u003d (mode \u003d\u003d LM_TO_BE_DECIDED) ? GetLaunchMode() : mode;\n\u003e   base::UmaHistogramEnumeration(\"Launch.Modes\", bucket, LM_MAX);\n\u003e }\n\u003e \n\u003e i think this is better than using SPARSE_SLOWLY since an enum is being logged, and better than the macro since HISTOGRAM_POINTER_USE is a pessimization in this case.\n\nSince something that happens only once is not really worth arguing about, but SPARSE_SLOWLY doesn\u0027t use the HISTOGRAM_POINTER_USE macro, so what that macro does is not relevant.",
+      "parentUuid": "70e6e334_1c6ccb05",
+      "revId": "638b2bfd516825b8691189bcf5b3b0e92104fc3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1cd34c1_0086fd4d",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 6
