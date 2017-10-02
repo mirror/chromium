@@ -790,12 +790,14 @@ void FrameFetchContext::AddClientHintsIfNecessary(
   WebEnabledClientHints enabled_hints;
   if (blink::RuntimeEnabledFeatures::ClientHintsPersistentEnabled() &&
       GetContentSettingsClient()) {
-    // TODO(tbansal): crbug.com/735518 This code path is not executed for main
-    // frame navigations when browser side navigation is enabled. For main frame
-    // requests with browser side navigation enabled, the client hints should be
-    // attached by the browser process.
-    GetContentSettingsClient()->GetAllowedClientHintsFromSource(request.Url(),
-                                                                &enabled_hints);
+    if (AllowScriptFromSource(request.Url())) {
+      // TODO(tbansal): crbug.com/735518 This code path is not executed for main
+      // frame navigations when browser side navigation is enabled. For main
+      // frame requests with browser side navigation enabled, the client hints
+      // should be attached by the browser process.
+      GetContentSettingsClient()->GetAllowedClientHintsFromSource(
+          request.Url(), &enabled_hints);
+    }
   }
 
   if (ShouldSendClientHint(mojom::WebClientHintsType::kDeviceMemory,
@@ -1132,6 +1134,10 @@ void FrameFetchContext::ParseAndPersistClientHints(
 
   if (persist_duration.InSeconds() <= 0)
     return;
+
+  if (!AllowScriptFromSource(response.Url())) {
+    return;
+  }
 
   GetContentSettingsClient()->PersistClientHints(
       enabled_client_hints, persist_duration, response.Url());
