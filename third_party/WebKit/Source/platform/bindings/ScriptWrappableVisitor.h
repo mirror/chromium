@@ -206,10 +206,10 @@ class PLATFORM_EXPORT ScriptWrappableVisitor : public v8::EmbedderHeapTracer {
   }
 
   // Catch all handlers needed because of mixins.
-  void DispatchTraceWrappers(const void*) const { CHECK(false); }
+  void DispatchTraceWrappers(const void*) const { /*CHECK(false);*/ }
 
   // Catch all handlers needed because of mixins.
-  void MarkWrappersInAllWorlds(const void*) const { CHECK(false); }
+  void MarkWrappersInAllWorlds(const void*) const { /*CHECK(false);*/ }
 
   // v8::EmbedderHeapTracer interface.
 
