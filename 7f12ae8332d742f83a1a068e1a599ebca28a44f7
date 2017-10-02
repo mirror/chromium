@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20d2a2dd_6318b226",
+        "filename": "third_party/WebKit/LayoutTests/fast/css/sticky/sticky-ancestor-scroller-changed.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-02T18:44:56Z",
+      "side": 1,
+      "message": "FWIW, if you had an expectation about the final top value which changed from it moving to the inner scroller it would be a decent web platform test.",
+      "revId": "7f12ae8332d742f83a1a068e1a599ebca28a44f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
