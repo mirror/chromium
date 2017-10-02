@@ -299,7 +299,7 @@ component("gfx") {
   } else {
     deps += [
       "//cc/paint",
-      "//third_party/harfbuzz-ng",
+      "//third_party/harfbuzz-ng:font",
     ]
   }
 
