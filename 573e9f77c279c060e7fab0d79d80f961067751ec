@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fcd9cd4_619c1e46",
+        "filename": "ash/public/cpp/stylus_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-02T23:17:51Z",
+      "side": 1,
+      "message": "since we\u0027ll be moving ash_switches to the public directory, this should be a reference instead of a literal",
+      "range": {
+        "startLine": 24,
+        "startChar": 6,
+        "endLine": 24,
+        "endChar": 33
+      },
+      "revId": "573e9f77c279c060e7fab0d79d80f961067751ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
