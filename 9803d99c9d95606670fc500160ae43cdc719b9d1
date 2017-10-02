@@ -34,6 +34,24 @@
       "revId": "9803d99c9d95606670fc500160ae43cdc719b9d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "363ac3c5_2468bfa5",
+        "filename": "services/resource_coordinator/tracing/recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-10-02T18:18:07Z",
+      "side": 1,
+      "message": "That makes sense, thanks!",
+      "parentUuid": "e88fe80c_7abc4d6e",
+      "revId": "9803d99c9d95606670fc500160ae43cdc719b9d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
