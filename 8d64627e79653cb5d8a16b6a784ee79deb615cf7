@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "954614d5_70f52139",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-02T08:55:45Z",
+      "side": 1,
+      "message": "nit: get_definition() seems consistent with other getters?",
+      "range": {
+        "startLine": 62,
+        "startChar": 8,
+        "endLine": 62,
+        "endChar": 18
+      },
+      "revId": "8d64627e79653cb5d8a16b6a784ee79deb615cf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "719e75c8_95719757",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-02T08:55:45Z",
+      "side": 1,
+      "message": "Does it make sense to move this to the builder and pass an instance of this class?",
+      "revId": "8d64627e79653cb5d8a16b6a784ee79deb615cf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e4e6139_974c8a5a",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/web_idl_builder.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-10-02T08:55:45Z",
+      "side": 1,
+      "message": "CollectionBuilder?\n\nclass CollectionBuilder(object):\n  def __init__(self):\n    self._collection \u003d Collection()\n\n  def build(self, node):\n    # Similar to Collection._parse_ast()\n    # ...\n    return self._collection",
+      "range": {
+        "startLine": 37,
+        "startChar": 6,
+        "endLine": 37,
+        "endChar": 19
+      },
+      "revId": "8d64627e79653cb5d8a16b6a784ee79deb615cf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
