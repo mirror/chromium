@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df7d826d_db1af30a",
+        "filename": "content/renderer/media/apply_constraints_processor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-02T12:28:58Z",
+      "side": 1,
+      "message": "Add a TODO. And maybe \"for audio tracks\" instead of \"this type of track\"?",
+      "revId": "cf36aea887d89a0b5951435f6cf0eaf8244f987a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7c47346_e0b63ed0",
+        "filename": "content/renderer/media/apply_constraints_processor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-02T12:28:58Z",
+      "side": 1,
+      "message": "Can this operation fail?",
+      "revId": "cf36aea887d89a0b5951435f6cf0eaf8244f987a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "148b7ea7_070dd18b",
+        "filename": "content/renderer/media/apply_constraints_processor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-02T12:28:58Z",
+      "side": 1,
+      "message": "What does this mean. That the request was cancelled? Do we not have to resolve the request? Or should we DCHECK?\n\nIf this can happen, would a race be possible?\napplyConstraints #1, we post MaybeStopSourceForRestart #1.\nMaybeStopSourceForRestart #1 happens, we post MaybeSourceStoppedForRestart #1.\nRequest is cancelled.\nSomething happening affecting whether we need to restart the source.\napplyConstraints #2, we post MaybeStopSourceForRestart #2.\nMaybeSourceStoppedForRestart #1 and CheckVideoRequestState() is true due to applyConstraints #2 even though we shouldn\u0027t be here.\nMaybeStopSourceForRestart #2 happens... ???",
+      "revId": "cf36aea887d89a0b5951435f6cf0eaf8244f987a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de03b3f1_aac3f881",
+        "filename": "content/renderer/media/apply_constraints_processor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-02T12:28:58Z",
+      "side": 1,
+      "message": "Same question here as above and all other places where a posted method starts with an if and not a DCHECK.",
+      "revId": "cf36aea887d89a0b5951435f6cf0eaf8244f987a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4438432_64c6b863",
+        "filename": "content/renderer/media/apply_constraints_processor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-02T12:28:58Z",
+      "side": 1,
+      "message": "If we fail to restart are the other consumers (other tracks or whatnot) informed by appropriate events firing? Like muted.\n\nIf we succeed, are these events not falsely fired, i.e. if its restarted I suspect we shouldn\u0027t do \"mute + unmute\"?",
+      "revId": "cf36aea887d89a0b5951435f6cf0eaf8244f987a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc492527_f43c8538",
+        "filename": "content/renderer/media/apply_constraints_processor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-02T12:28:58Z",
+      "side": 1,
+      "message": "If we fail to restart with the new format, does it make sense to try to fallback and start with the old format again to save other consumers from losing video? Or does a failure to start it in any format most likely mean that it will fail whichever format we use?\n\nI suspect this is either \"F it\" or a \"follow-up feature\".",
+      "revId": "cf36aea887d89a0b5951435f6cf0eaf8244f987a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1403516_0ee1cce7",
+        "filename": "content/renderer/media/apply_constraints_processor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-02T12:28:58Z",
+      "side": 1,
+      "message": "Why are these set to the default ones?",
+      "revId": "cf36aea887d89a0b5951435f6cf0eaf8244f987a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17eab416_debff105",
+        "filename": "content/renderer/media/apply_constraints_processor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-02T12:28:58Z",
+      "side": 1,
+      "message": "This is used in places without a DCHECK. DCHECK in those places or DCHECK here if there are guarantees.",
+      "revId": "cf36aea887d89a0b5951435f6cf0eaf8244f987a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "641a5040_a6c5c630",
+        "filename": "content/renderer/media/apply_constraints_processor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-02T12:28:58Z",
+      "side": 1,
+      "message": "Is this really the place to do this? CheckVideoRequestState() sounds like a check that doesn\u0027t have effects. Move this to the call sites? Or rename to something like AbortIfInvalidRequestState().",
+      "revId": "cf36aea887d89a0b5951435f6cf0eaf8244f987a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49c274ed_20dfc2da",
+        "filename": "content/test/data/media/getusermedia.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-02T12:28:58Z",
+      "side": 1,
+      "message": "We should have tests that use multiple tracks using the same source. We should verify that restart doesn\u0027t cause other tracks to be muted etc and that tracks with same device but different settings affect each other as expected.",
+      "revId": "cf36aea887d89a0b5951435f6cf0eaf8244f987a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
