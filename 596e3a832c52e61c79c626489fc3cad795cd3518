@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "36df257e_893aa004",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_background_task_handler_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-10-02T21:56:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23345aa9_f3064483",
+      "revId": "596e3a832c52e61c79c626489fc3cad795cd3518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d1e5072_382f54fb",
         "filename": "components/offline_pages/core/prefetch/prefetch_background_task.cc",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "89abbced_9f2cf1a0",
+        "filename": "components/offline_pages/core/prefetch/prefetch_background_task.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-10-02T21:56:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0d1e5072_382f54fb",
+      "revId": "596e3a832c52e61c79c626489fc3cad795cd3518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "670ea6e9_fd427f42",
         "filename": "components/offline_pages/core/prefetch/prefetch_background_task_handler.h",
         "patchSetId": 8
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-30T00:01:12Z",
       "side": 1,
       "message": "Can you use something other than \"suspend\" here?  It\u0027s confusing with suspend below.",
+      "revId": "596e3a832c52e61c79c626489fc3cad795cd3518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31516be6_4abb041b",
+        "filename": "components/offline_pages/core/prefetch/prefetch_background_task_handler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-10-02T21:56:54Z",
+      "side": 1,
+      "message": "Renamed to PauseBackoffUntilNextRun per discussion.",
+      "parentUuid": "670ea6e9_fd427f42",
       "revId": "596e3a832c52e61c79c626489fc3cad795cd3518",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "736a2670_5b4515a2",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-10-02T21:56:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a214f0a_bbb48666",
+      "revId": "596e3a832c52e61c79c626489fc3cad795cd3518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbc9794e_e7018501",
         "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher.h",
         "patchSetId": 8
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "5b548ce8_df61c9a1",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-10-02T21:56:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbc9794e_e7018501",
+      "revId": "596e3a832c52e61c79c626489fc3cad795cd3518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ebb7923_20596c6d",
         "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
         "patchSetId": 8
@@ -98,6 +188,24 @@
       "writtenOn": "2017-09-30T00:01:12Z",
       "side": 1,
       "message": "I wonder if these enums should just be the same thing, since this switch is just a 1-1 mapping.",
+      "revId": "596e3a832c52e61c79c626489fc3cad795cd3518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5e4773d_f9f0a6c8",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-10-02T21:56:54Z",
+      "side": 1,
+      "message": "This is not exactly 1-to-1 mapping. The rescheduling could also be triggered when there is something to do, like adding urls, which has nothing to do with requests. Also I added an enum value RESCHEDULE_DUE_TO_SYSTEM.",
+      "parentUuid": "4ebb7923_20596c6d",
       "revId": "596e3a832c52e61c79c626489fc3cad795cd3518",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
