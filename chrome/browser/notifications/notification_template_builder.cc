@@ -25,6 +25,12 @@ const char kBindingElementTemplateAttribute[] = "template";
 const char kButtonIndex[] = "buttonIndex=";
 const char kContent[] = "content";
 const char kForeground[] = "foreground";
+const char kInputElement[] = "input";
+const char kInputId[] = "id";
+const char kInputType[] = "type";
+const char kPlaceholderContent[] = "placeHolderContent";
+const char kText[] = "text";
+const char kTextBox[] = "textBox";
 const char kTextElement[] = "text";
 const char kTextElementIdAttribute[] = "id";
 const char kToastElement[] = "toast";
@@ -163,6 +169,16 @@ void NotificationTemplateBuilder::WriteActionElement(
     const message_center::ButtonInfo& button,
     int index) {
   // TODO(finnur): Implement button images (imageUri).
+
+  if (button.type == message_center::ButtonType::TEXT) {
+    xml_writer_->StartElement(kInputElement);
+    xml_writer_->AddAttribute(kInputId, kTextBox);
+    xml_writer_->AddAttribute(kInputType, kText);
+    xml_writer_->AddAttribute(kPlaceholderContent,
+                              base::UTF16ToUTF8(button.placeholder).c_str());
+    xml_writer_->EndElement();
+  }
+
   xml_writer_->StartElement(kActionElement);
   xml_writer_->AddAttribute(kActivationType, kForeground);
   xml_writer_->AddAttribute(kContent, base::UTF16ToUTF8(button.title).c_str());
