@@ -1,0 +1,23 @@
+<!--
+@WAIT-FOR:Visible
+-->
+<html>
+<head>
+  <script>
+    window.onload=function(unused) {
+      setTimeout(function() {
+        document.getElementById('divToHide').style.display="none";
+        document.getElementById('b1').innerText = "Visible";
+      }, 100);
+    };
+  </script>
+</head>
+<body>
+  <div>
+    <button id="b1">B1</button>
+  </div>
+  <div id="divToHide">
+   <button id="b2">Hidden</button>
+  </div>
+</body>
+</html>
