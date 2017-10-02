@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "54802885_f8b4506e",
+        "filename": "content/app/content_main_runner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-02T09:12:09Z",
+      "side": 1,
+      "message": "It doesn\u0027t happen unless a developer specifies it in gn argument.\n\nUsually, CHROME_MULTIPLE_DLL_BROWSER is set true iff non-component build on Windows.\nhttps://cs.chromium.org/chromium/src/build/config/chrome_build.gni?type\u003dcs\u0026q\u003dis_multi_dll_chrome\u0026l\u003d13",
+      "parentUuid": "5845bc69_0b21b6f4",
+      "revId": "34798d135b478a5659083f3e3ec86e2493deff49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0715c4b4_c5b1472f",
         "filename": "content/app/content_main_runner.cc",
         "patchSetId": 2
