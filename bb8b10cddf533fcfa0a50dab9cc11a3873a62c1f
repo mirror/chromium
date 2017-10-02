@@ -25,6 +25,52 @@
     },
     {
       "key": {
+        "uuid": "add67b4a_8b6415d7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-02T22:58:45Z",
+      "side": 1,
+      "message": "nit: {@link InfoBar}",
+      "range": {
+        "startLine": 23,
+        "startChar": 6,
+        "endLine": 23,
+        "endChar": 14
+      },
+      "revId": "bb8b10cddf533fcfa0a50dab9cc11a3873a62c1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4d80c80_60650b57",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-02T22:58:45Z",
+      "side": 1,
+      "message": "nit: javadoc",
+      "range": {
+        "startLine": 26,
+        "startChar": 4,
+        "endLine": 29,
+        "endChar": 0
+      },
+      "revId": "bb8b10cddf533fcfa0a50dab9cc11a3873a62c1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "101767df_18d55827",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/privacy/ClearBrowsingDataPreferences.java",
         "patchSetId": 18
