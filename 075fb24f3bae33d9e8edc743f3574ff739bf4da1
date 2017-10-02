@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8764668f_8c656465",
+        "filename": "services/ui/gpu/gpu_main.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-02T20:03:52Z",
+      "side": 1,
+      "message": "std::make_unique for clarity.",
+      "revId": "075fb24f3bae33d9e8edc743f3574ff739bf4da1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
