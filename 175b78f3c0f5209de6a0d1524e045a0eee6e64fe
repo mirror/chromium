@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d737e820_9e659753",
+        "filename": "chrome/browser/vr/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-02T19:38:52Z",
+      "side": 1,
+      "message": "file a bug to fix the tests",
+      "range": {
+        "startLine": 211,
+        "startChar": 6,
+        "endLine": 211,
+        "endChar": 12
+      },
+      "revId": "175b78f3c0f5209de6a0d1524e045a0eee6e64fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b6ea6b2_3f082cc4",
+        "filename": "chrome/browser/vr/font_fallback.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-02T19:38:52Z",
+      "side": 1,
+      "message": "file a bug",
+      "range": {
+        "startLine": 131,
+        "startChar": 19,
+        "endLine": 131,
+        "endChar": 23
+      },
+      "revId": "175b78f3c0f5209de6a0d1524e045a0eee6e64fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
