@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a99bb964_b19da059",
+        "filename": "gpu/ipc/service/pass_through_image_transport_surface.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-02T18:28:51Z",
+      "side": 1,
+      "message": "If we\u0027re going to expose LatencyInfo on GLSurface, I would go and refactor this to simplify, to pass the LatencyInfo from the GpuCommandBufferStub/InProcessCommandBuffer via the GLES2Decoder rather than trying to shortcut and pass it to the PassThroughImageTransportSurface via callbacks:\n1- simplifies ImageTransportSurfaceDelegate and implementations (GpuCommandBufferStub/InProcessCommandBuffer), they don\u0027t need to track LatencyInfo and callbacks\n2- removes duplication for a bunch of this logic between PassThroughImageTransportSurface and ImageTransportSurfaceOverlayMac that deals with LatencyInfo. This could just move to GLES2Decoder.\n3- avoids the slight ugliness of passing an empty latency info in the decoder, just to discard it and replace it.\n\nThe idea would be simply to add a AddLatencyInfo to GLES2Decoder, that would track the latency info vector, called directly in GpuCommandBufferStub::OnAsyncFlush and InProcessCommandBuffer::FlushOnGpuThread (instead of calling the callback), and then add a (protected) PrepareTakeLatencyInfo on GLES2Decoder that would take (move and reset) the latency info vector, after adding the INPUT_EVENT_GPU_SWAP_BUFFER_COMPONENT component, that would be called by GLES2DecoderImpl/GLES2DecoderPassthroughImpl implementations before sending to the surface\u0027s SwapBuffer etc.\n\nThe long term goal is that eventually we can reduce PassThroughImageTransportSurface to about nothing at all and actually remove it (along with GLSurfaceAdapter), and leave ImageTransportSurfaceOverlayMac to focus on the specific implementation of the surface, and not the unrelated logic (latency info tracking and related IPCs). But small steps, I think the above would help a lot, and make the code easier to follow.",
+      "revId": "80c23428f7a89ef3176bd7647a5a18bd6b5949cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c4fdd65_a09abaf2",
         "filename": "ui/gl/DEPS",
         "patchSetId": 11
@@ -102,6 +119,23 @@
       "side": 1,
       "message": "I\u0027m no expert this area but having this class optionally take ownership of the LatencyInfos sounds confusing and error-prone, especially since taking ownership of a std::vector leaves the source vector in an \"undefined but consistent state\" -- which you\u0027ve had to account for in one of your patches. It would be problematic if all callers, and subclasses of GLSurface, had to take that into consideration.\n\nAdding member variables to GLSurface sounds like a good idea to me, even if they aren\u0027t touched by most implementations. I don\u0027t understand all of the implications of this patch, but if GLSurface can just have mutable pointers to the LatencyInfo vector, and leave ownership up to the outside world, that might simplify things.",
       "parentUuid": "f0b3c77f_9377e66c",
+      "revId": "80c23428f7a89ef3176bd7647a5a18bd6b5949cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15770a4e_3940b2f3",
+        "filename": "ui/gl/gl_surface.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-02T18:28:51Z",
+      "side": 1,
+      "message": "Note, the other versions of SwapBuffers will also need to be changed to be consistent. Namely:\n- SwapBuffersWithBounds, PostSubBuffer and CommitOverlayPlanes\n- the Async version of all 4 of these (or... 3, I don\u0027t think we have an async version of SwapBuffersWithBounds, though it should probably be added).\n\nIn particular, I don\u0027t think the current method fits very well with the Async version. I think SwapBuffersAsync and friends need to take ownership of the vector, and return it with the callback. Keeping in mind that there might be more than 1 SwapBuffers in flight.\nMaybe the way I would approach it is by passing the LatencyInfo by value to SwapBuffersAsync (expecting the caller to explicitly std::move), and pass it back to the callback by value as well (implementation would std::move too). This makes it clear at the callsite about ownership transfers (and moving vectors is very cheap).\n\nIf we go that route, I think I would have SwapBuffers be consistent as well, that is, take the input LatencyInfo by value, and returning the output LatencyInfo by value as well (e.g. introducing a movable SwapBuffersResult value type with the SwapResult and the LatencyInfo - which could also be used by the callback for async versions).",
       "revId": "80c23428f7a89ef3176bd7647a5a18bd6b5949cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
