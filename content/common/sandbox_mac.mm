@@ -64,6 +64,7 @@ SandboxTypeToResourceIDMapping kDefaultSandboxTypeToResourceIDMapping[] = {
     {service_manager::SANDBOX_TYPE_PPAPI, IDR_PPAPI_SANDBOX_PROFILE},
     {service_manager::SANDBOX_TYPE_NETWORK, -1},
     {service_manager::SANDBOX_TYPE_CDM, IDR_PPAPI_SANDBOX_PROFILE},
+    {service_manager::SANDBOX_TYPE_PDFCOMPOSITOR, IDR_PPAPI_SANDBOX_PROFILE},
 };
 
 static_assert(arraysize(kDefaultSandboxTypeToResourceIDMapping) ==
