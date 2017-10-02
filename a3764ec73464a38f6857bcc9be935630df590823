@@ -46,6 +46,30 @@
       "revId": "a3764ec73464a38f6857bcc9be935630df590823",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a94b2bc_7bd713cb",
+        "filename": "testing/libfuzzer/reproducing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2017-10-02T16:03:10Z",
+      "side": 0,
+      "message": "I think we just need to update https://chromium.googlesource.com/chromium/src/+/master/testing/libfuzzer/getting_started.md#configure-build with the afl flags ?",
+      "parentUuid": "c4b2ad72_2950cf3b",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 31
+      },
+      "revId": "a3764ec73464a38f6857bcc9be935630df590823",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
