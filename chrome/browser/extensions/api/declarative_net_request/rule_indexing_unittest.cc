@@ -21,6 +21,7 @@
 #include "extensions/browser/api/declarative_net_request/constants.h"
 #include "extensions/browser/api/declarative_net_request/parse_info.h"
 #include "extensions/browser/api/declarative_net_request/test_utils.h"
+#include "extensions/browser/extension_prefs.h"
 #include "extensions/browser/test_extension_registry_observer.h"
 #include "extensions/common/api/declarative_net_request/test_utils.h"
 #include "extensions/common/features/feature_channel.h"
@@ -173,6 +174,19 @@ class RuleIndexingTest
       base::WriteFile(file_util::GetIndexedRulesetPath(extension_dir_),
                       data.c_str(), data.size());
     }
+  }
+
+  void VerifyPersistedIndexedRuleset() {
+    std::string data;
+    ASSERT_TRUE(base::ReadFileToString(
+        file_util::GetIndexedRulesetPath(extension_->path()), &data));
+
+    int expected_checksum;
+    ASSERT_TRUE(ExtensionPrefs::Get(profile())->GetDNRRulesetChecksum(
+        extension_->id(), &expected_checksum));
+    EXPECT_TRUE(IsValidRulesetDataForTesting(
+        reinterpret_cast<const uint8_t*>(data.c_str()), data.size(),
+        expected_checksum));
   }
 
   ExtensionErrorReporter* error_reporter() {

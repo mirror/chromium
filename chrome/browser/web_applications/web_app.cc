@@ -158,7 +158,7 @@ base::FilePath GetSanitizedFileName(const base::string16& name) {
 ShortcutInfo::ShortcutInfo() {}
 
 ShortcutInfo::~ShortcutInfo() {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  // DCHECK_CURRENTLY_ON(BrowserThread::UI);
 }
 
 // static

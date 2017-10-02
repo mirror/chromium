@@ -30,8 +30,9 @@ bool IndexAndPersistRules(const base::ListValue& rules,
                           std::vector<InstallWarning>* warnings,
                           int* ruleset_checksum);
 
-// Returns the ruleset checksum of the passed |data| buffer.
-int GetRulesetChecksumForTesting(const uint8_t* data, size_t size);
+bool IsValidRulesetData(const uint8_t* data,
+                        size_t size,
+                        int expected_checksum);
 
 }  // namespace declarative_net_request
 }  // namespace extensions
