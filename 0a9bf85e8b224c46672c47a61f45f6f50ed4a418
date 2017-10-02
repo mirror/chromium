@@ -16,6 +16,24 @@
       "revId": "0a9bf85e8b224c46672c47a61f45f6f50ed4a418",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc5ec856_5f49c906",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-10-02T22:11:53Z",
+      "side": 1,
+      "message": "That\u0027s an indirect dependency.  Chrome does not directly depend on libz:\n$ readelf -d /opt/google/chrome/chrome | grep libz\n\u003cno output\u003e\n\nlddtree shows the dependency is indirectly created by:\nchrome \u003d\u003e libpangocairo-1.0.so.0 \u003d\u003e libfreetype.so.6 \u003d\u003e libz.so.1",
+      "parentUuid": "44ea73c5_09e3aa5d",
+      "revId": "0a9bf85e8b224c46672c47a61f45f6f50ed4a418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
