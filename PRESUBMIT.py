@@ -1321,6 +1321,46 @@ def _CheckForAnonymousVariables(input_api, output_api):
   return []
 
 
+def _CheckUniquePtr(input_api, output_api):
+  """Checks whether std::unique_ptr is not used in unexpected way."""
+
+  # List of directories where this check should be applied to.
+  target_dirs = [
+      'cc',
+      'chrome/browser/chromeos/arc',
+      'components/arc',
+      'components/viz',
+      'ui',
+  ]
+  white_list = r'^(%s)\/.*\.(cc|h|mm)$' % (
+      r'|'.join(input_api.re.escape(target) for target in target_dirs))
+  def SourceFileFilter(affected_file):
+    return input_api.FilterSourceFile(
+        affected_file, [white_list], input_api.DEFAULT_BLACK_LIST)
+  errors = []
+  for f in input_api.AffectedSourceFiles(SourceFileFilter):
+    for line_number, line in f.ChangedContents():
+      # Disallow:
+      # return std::unique_ptr<T>(foo);
+      # bar = std::unique_ptr<T>(foo);
+      # But allow:
+      # return std::unique_ptr<T[]>(foo);
+      # bar = std::unique_ptr<T[]>(foo);
+      if input_api.re.search(
+          r'(=|\breturn)\s*std::unique_ptr<.*?(?<!])>\([^)]+\)', line):
+        errors.append(output_api.PresubmitError(
+          ('%s:%d uses explicit std::unique_ptr constructor. ' +
+           'Use std::make_unique<T>() instead.') %
+          (f.LocalPath(), line_number)))
+      # Disallow:
+      # std::unique_ptr<T>()
+      if input_api.re.search(r'\bstd::unique_ptr<.*?>\(\)', line):
+        errors.append(output_api.PresubmitError(
+          '%s:%d uses std::unique_ptr<T>(). Use nullptr instead.' %
+          (f.LocalPath(), line_number)))
+  return errors
+
+
 def _CheckUserActionUpdate(input_api, output_api):
   """Checks if any new user action has been added."""
   if any('actions.xml' == input_api.os_path.basename(f) for f in
@@ -2425,6 +2465,7 @@ def _CommonChecks(input_api, output_api):
           source_file_filter=lambda x: x.LocalPath().endswith('.grd')))
   results.extend(_CheckSpamLogging(input_api, output_api))
   results.extend(_CheckForAnonymousVariables(input_api, output_api))
+  results.extend(_CheckUniquePtr(input_api, output_api))
   results.extend(_CheckUserActionUpdate(input_api, output_api))
   results.extend(_CheckNoDeprecatedCss(input_api, output_api))
   results.extend(_CheckNoDeprecatedJs(input_api, output_api))
