@@ -70,6 +70,30 @@
       "revId": "a3764ec73464a38f6857bcc9be935630df590823",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40aca1d9_39ccda42",
+        "filename": "testing/libfuzzer/reproducing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-02T16:16:31Z",
+      "side": 0,
+      "message": "My main concern is MSan (since there is a trick with pre-instrumented libraries) and UBSan (since we have multiple configurations, and the most obvious one is_ubsan is not correct, we use is_ubsan_security for libfuzzer).\n\nThe reproduce tools might not always help, e.g. in case of a broken build issue when we don\u0027t have a testcase with all the flags.\n\nI\u0027m not worried about AFL though, as it\u0027s a pain to run locally as discussed on the chat.",
+      "parentUuid": "0a94b2bc_7bd713cb",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 31
+      },
+      "revId": "a3764ec73464a38f6857bcc9be935630df590823",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
