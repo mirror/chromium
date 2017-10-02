@@ -114,6 +114,30 @@
       "revId": "e94cf0bbb86d9663f8baca6af96197277904adb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10bce032_84dc867e",
+        "filename": "third_party/WebKit/Source/platform/scheduler/util/tracing_helper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-02T16:16:13Z",
+      "side": 1,
+      "message": "Ok, nevermind, I didn\u0027t realise that TRACE_EVENT_CATEGORY_GROUP_ENABLED caches the pointer, my bad.",
+      "parentUuid": "5be6c694_16fe333e",
+      "range": {
+        "startLine": 62,
+        "startChar": 8,
+        "endLine": 62,
+        "endChar": 9
+      },
+      "revId": "e94cf0bbb86d9663f8baca6af96197277904adb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
