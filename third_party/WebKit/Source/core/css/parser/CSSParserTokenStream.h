@@ -46,8 +46,13 @@ class CORE_EXPORT CSSParserTokenStream {
     CSSParserTokenStream& stream_;
   };
 
+  // We found that this value works well empirically. It should be slightly
+  // above the expected number of tokens in the prelude of an at rule and
+  // the number of tokens in a declaration.
+  static constexpr size_t InitialBufferSize() { return 128; }
+
   explicit CSSParserTokenStream(CSSTokenizer& tokenizer)
-      : buffer_(512), tokenizer_(tokenizer), next_(kEOFToken) {}
+      : buffer_(InitialBufferSize()), tokenizer_(tokenizer), next_(kEOFToken) {}
 
   CSSParserTokenStream(CSSParserTokenStream&&) = default;
 
