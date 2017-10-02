@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "474e7e29_8b71e3e7",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-02T18:10:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed2bb3cf_b44b6eed",
+      "revId": "a8ac89b5a04e2e0bed9d9b36437df71176f420e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6f883dd_ff143912",
         "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "a8ac89b5a04e2e0bed9d9b36437df71176f420e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f6f149c_9210da46",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-02T18:10:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6f883dd_ff143912",
+      "revId": "a8ac89b5a04e2e0bed9d9b36437df71176f420e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "4a2fb1f0_d3561046",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-02T18:10:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ab4a55b_6fc17bed",
+      "range": {
+        "startLine": 252,
+        "startChar": 24,
+        "endLine": 252,
+        "endChar": 30
+      },
+      "revId": "a8ac89b5a04e2e0bed9d9b36437df71176f420e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b35706f9_65f0b9f7",
         "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
         "patchSetId": 7
@@ -70,6 +130,30 @@
       "writtenOn": "2017-09-29T23:19:41Z",
       "side": 1,
       "message": "can you mention the reason for this\n\nAlso, I\u0027d clarify that this.vpnType_ must be set after this.configProperties_ (as opposed to vpnType itself)",
+      "range": {
+        "startLine": 439,
+        "startChar": 19,
+        "endLine": 439,
+        "endChar": 56
+      },
+      "revId": "a8ac89b5a04e2e0bed9d9b36437df71176f420e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88b9228f_6a38cb59",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-02T18:10:43Z",
+      "side": 1,
+      "message": "Variable + comment not needed after refactor.",
+      "parentUuid": "b35706f9_65f0b9f7",
       "range": {
         "startLine": 439,
         "startChar": 19,
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "3cf4502d_2b930d93",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-02T18:10:43Z",
+      "side": 1,
+      "message": "That requires a typecast, but done.",
+      "parentUuid": "b99a9384_61da01bd",
+      "range": {
+        "startLine": 505,
+        "startChar": 12,
+        "endLine": 508,
+        "endChar": 59
+      },
+      "revId": "a8ac89b5a04e2e0bed9d9b36437df71176f420e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c1296f7e_41906bae",
         "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
         "patchSetId": 7
@@ -116,6 +224,24 @@
       "writtenOn": "2017-09-29T23:19:41Z",
       "side": 1,
       "message": "is this line needed?",
+      "revId": "a8ac89b5a04e2e0bed9d9b36437df71176f420e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e796afd_28198977",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-02T18:10:43Z",
+      "side": 1,
+      "message": "Replaced with an assert (and fixed the .idl - Type should be required)",
+      "parentUuid": "c1296f7e_41906bae",
       "revId": "a8ac89b5a04e2e0bed9d9b36437df71176f420e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -145,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "c30c9752_46192f84",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-02T18:10:43Z",
+      "side": 1,
+      "message": "Sure. Done.",
+      "parentUuid": "4348fce3_1ffd5252",
+      "range": {
+        "startLine": 526,
+        "startChar": 10,
+        "endLine": 526,
+        "endChar": 17
+      },
+      "revId": "a8ac89b5a04e2e0bed9d9b36437df71176f420e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c965a643_0edaa1db",
         "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
         "patchSetId": 7
@@ -156,6 +306,24 @@
       "writtenOn": "2017-09-29T23:19:41Z",
       "side": 1,
       "message": "do we need:\nthis.showVpn_ \u003d null;",
+      "revId": "a8ac89b5a04e2e0bed9d9b36437df71176f420e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71c3d272_d34ab3a8",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-02T18:10:43Z",
+      "side": 1,
+      "message": "This catches an edge case and allows the update logic to be a little less complex, but there\u0027s no harm and that is clearer, so done.",
+      "parentUuid": "c965a643_0edaa1db",
       "revId": "a8ac89b5a04e2e0bed9d9b36437df71176f420e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -179,6 +347,24 @@
     },
     {
       "key": {
+        "uuid": "a29a6f76_0f16e042",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-02T18:10:43Z",
+      "side": 1,
+      "message": "IPsec has AuthenticationType as a required property, so we would have to either do an awkward (and not entirely valid) cast to do that.",
+      "parentUuid": "07d08f59_4417c3c2",
+      "revId": "a8ac89b5a04e2e0bed9d9b36437df71176f420e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db294fd2_4d708d45",
         "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
         "patchSetId": 7
@@ -196,6 +382,24 @@
     },
     {
       "key": {
+        "uuid": "59f68587_d35c5d92",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-02T18:10:43Z",
+      "side": 1,
+      "message": "I actually find that less clear. Let me know if you feel strongly that this is more confusing.",
+      "parentUuid": "db294fd2_4d708d45",
+      "revId": "a8ac89b5a04e2e0bed9d9b36437df71176f420e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba3b7679_824bbdf0",
         "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
         "patchSetId": 7
@@ -210,6 +414,24 @@
       "revId": "a8ac89b5a04e2e0bed9d9b36437df71176f420e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdcaf57d_5e980289",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-02T18:10:43Z",
+      "side": 1,
+      "message": "Done.\n\n(configProperties_.VPN.IPsec.* should never be defined in that case so this shouldn\u0027t get called, but the early exit is more clear).",
+      "parentUuid": "ba3b7679_824bbdf0",
+      "revId": "a8ac89b5a04e2e0bed9d9b36437df71176f420e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -233,6 +455,30 @@
       "revId": "a8ac89b5a04e2e0bed9d9b36437df71176f420e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ec45a6c_d9d8e163",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-02T18:10:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b03c6a6_99606bc5",
+      "range": {
+        "startLine": 700,
+        "startChar": 12,
+        "endLine": 700,
+        "endChar": 17
+      },
+      "revId": "a8ac89b5a04e2e0bed9d9b36437df71176f420e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
