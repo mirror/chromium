@@ -16,6 +16,24 @@
       "revId": "78b886b7abc2d6f4566003e42bd8bb2639e31e2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3db43146_61e6ca0d",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletThread.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-10-02T16:25:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22ec9fba_f09d0479",
+      "revId": "78b886b7abc2d6f4566003e42bd8bb2639e31e2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
