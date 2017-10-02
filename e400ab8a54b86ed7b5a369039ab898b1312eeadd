@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "291aea46_808837ca",
+        "filename": "third_party/WebKit/Source/core/dom/CollectionIndexCache.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-02T18:44:26Z",
+      "side": 1,
+      "message": "nit: Since this is always called with a constant value, why not just make them separate functions?\n\nvoid NodeInserted();\nvoid NodeRemoved();\n\n(performance impact is likely zero since this is inline in the header, so I don\u0027t feels strongly)",
+      "revId": "e400ab8a54b86ed7b5a369039ab898b1312eeadd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19dc2957_e0469a99",
+        "filename": "third_party/WebKit/Source/core/dom/CollectionIndexCache.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-02T18:44:26Z",
+      "side": 1,
+      "message": "I\u0027d have expected the common case for insertion, at least, to be at the end of the collection. If so, can we keep |current_node_| valid, and avoid needing to re-scan the collection?",
+      "revId": "e400ab8a54b86ed7b5a369039ab898b1312eeadd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb45bb4d_d9ba0a7b",
+        "filename": "third_party/WebKit/Source/core/dom/ContainerNode.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-02T18:44:26Z",
+      "side": 1,
+      "message": "comment about what it means for these pointers, particularly the newly added one, to be null?",
+      "revId": "e400ab8a54b86ed7b5a369039ab898b1312eeadd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
