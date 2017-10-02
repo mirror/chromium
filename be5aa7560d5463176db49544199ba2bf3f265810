@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "130074ba_f9879e87",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-02T06:24:41Z",
+      "side": 1,
+      "message": "When |child| is Text node, please crate AXPositon(child, 0) to make\noperator\u003d\u003d() not to be surprised.\n\ne.g. \u003cdiv\u003efoo\u003c/div\u003e\n\nAXPosition(DIV, \"foo\") !\u003d AXPosition(\"foo\", 0)",
+      "revId": "be5aa7560d5463176db49544199ba2bf3f265810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d99ade7_e586935a",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-02T06:24:41Z",
+      "side": 1,
+      "message": "nit: Please use early-return style and avoid to use |previous_sibling|.\n\nif (child.IndexInParent() \u003d\u003d 0)\n  return AXPositon(*parent, nullptr);\nreturn AXPositon(*parent, *(parent-\u003eChildren().begin() + child.IndexInParent() - 1)));",
+      "revId": "be5aa7560d5463176db49544199ba2bf3f265810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32c29530_c0afd34b",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-02T06:24:41Z",
+      "side": 1,
+      "message": "We should check container object is not Text node.",
+      "revId": "be5aa7560d5463176db49544199ba2bf3f265810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e8a394b_2a35d74f",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-02T06:24:41Z",
+      "side": 1,
+      "message": "We should have DCHECK to check |container| is Text node.",
+      "revId": "be5aa7560d5463176db49544199ba2bf3f265810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a847680_2e46942a",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-02T06:24:41Z",
+      "side": 1,
+      "message": "nit: We should not expose |child_before_anchor_|, since it is implementation\ndetails.",
+      "revId": "be5aa7560d5463176db49544199ba2bf3f265810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c839130d_97b5905f",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-02T06:24:41Z",
+      "side": 1,
+      "message": "nit: This function should be:\n\nint Offset() const {\n  DCHECK(container_object_-\u003eIsText());\n  return offset_.value();\n}",
+      "revId": "be5aa7560d5463176db49544199ba2bf3f265810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cf2391c_41d14293",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-02T06:24:41Z",
+      "side": 1,
+      "message": "We should have\nDCHECK(!a.IsNull());\nDCHECK(!b.IsNull());",
+      "revId": "be5aa7560d5463176db49544199ba2bf3f265810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
