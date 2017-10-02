@@ -16,6 +16,24 @@
       "revId": "0af0d3a47f94055975a534e0e969bf1f34400675",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1a9e2cd_de03794c",
+        "filename": "chromeos/tpm/tpm_token_info_getter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-02T18:32:51Z",
+      "side": 1,
+      "message": "It looks ok according to the style guide?\nhttps://google.github.io/styleguide/cppguide.html#Aliases\nI think this is a public interface.\n\nOr an alternative is extracting the struct from CryptohomeClient into a dedicated header file.\nThough, I wonder where to put. Maybe chromeos/dbus/tpm_token_info.{h,cc} ?\n\nchromeos/tpm/tpm_token_info.{h,cc} looks slightly nicer.\nHowever it looks chromeos/dbus does not depend on chromeos/tpm now, though chromeos/tpm depends on chromeos/dbus, so, putting it in chromeos/tpm introduces a circular deps based on directory.\n\nWDYT?",
+      "parentUuid": "64682b0a_7c7561b0",
+      "revId": "0af0d3a47f94055975a534e0e969bf1f34400675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
