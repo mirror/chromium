@@ -145,8 +145,9 @@ class Surface final : public ui::PropertyHandler {
 
   // This will synchronously commit all pending state of the surface and its
   // descendants by recursively calling CommitSurfaceHierarchy() for each
-  // sub-surface with pending state.
-  void CommitSurfaceHierarchy(
+  // sub-surface with pending state. Returns the bounding box of the surface
+  // and its descendants, as well as whether the bounds are filled opaquely.
+  std::pair<gfx::Rect, bool> CommitSurfaceHierarchy(
       const gfx::Point& origin,
       std::list<FrameCallback>* frame_callbacks,
       std::list<PresentationCallback>* presentation_callbacks);
