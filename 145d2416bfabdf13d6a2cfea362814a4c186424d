@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3737a39_56002794",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-02T19:40:26Z",
+      "side": 1,
+      "message": "Do we have a case where this optimization that uses a region is useful? I would prefer to see a simple rect based approach where FillsBoundsOpaquely() is simple true if contents_size matches bounding box until we have a good use case for it.",
+      "revId": "145d2416bfabdf13d6a2cfea362814a4c186424d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c331fec_faa55648",
+        "filename": "components/exo/surface.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-02T19:40:26Z",
+      "side": 1,
+      "message": "I\u0027m not a fan of std:pair as return value. I\u0027d prefer parameters but maybe it\u0027s even better to update some state when CommitSurfaceHierarchy is called just like we update content_size_? e.g. hierarchy_content_bounds_ and fills_hierarchy_content_bounds_opaquely_. wdyt?",
+      "range": {
+        "startLine": 150,
+        "startChar": 2,
+        "endLine": 150,
+        "endChar": 28
+      },
+      "revId": "145d2416bfabdf13d6a2cfea362814a4c186424d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
