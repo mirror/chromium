@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "de814b57_b094b437",
+        "filename": "third_party/WebKit/Source/core/dom/CollectionIndexCache.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-10-02T21:50:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "291aea46_808837ca",
+      "revId": "e400ab8a54b86ed7b5a369039ab898b1312eeadd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19dc2957_e0469a99",
         "filename": "third_party/WebKit/Source/core/dom/CollectionIndexCache.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-02T18:44:26Z",
       "side": 1,
       "message": "I\u0027d have expected the common case for insertion, at least, to be at the end of the collection. If so, can we keep |current_node_| valid, and avoid needing to re-scan the collection?",
+      "revId": "e400ab8a54b86ed7b5a369039ab898b1312eeadd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f6960fc_eb96732a",
+        "filename": "third_party/WebKit/Source/core/dom/CollectionIndexCache.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-10-02T21:50:00Z",
+      "side": 1,
+      "message": "This is something I tried but it increases the complexity of handling the changes (as we would need to figure out where the change has happened), without a significant impact in performance.\n\nMost of the benefits of these change comes from not having to recompute the length cache, not from caching the last accessed node. When the length cache is valid, CollectionIndexCache::NodeAt is able to traverse either from the beginning to the end, or traverse backwards from end to the beginning. Preserving the current_node_ cache would only improve cases where the cached index is in the middle of the array, a node is appended and the next node accessed is also in the middle of the array.",
+      "parentUuid": "19dc2957_e0469a99",
       "revId": "e400ab8a54b86ed7b5a369039ab898b1312eeadd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "e400ab8a54b86ed7b5a369039ab898b1312eeadd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0576e11_def37f5d",
+        "filename": "third_party/WebKit/Source/core/dom/ContainerNode.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-10-02T21:50:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb45bb4d_d9ba0a7b",
+      "revId": "e400ab8a54b86ed7b5a369039ab898b1312eeadd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
