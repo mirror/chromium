@@ -16,6 +16,47 @@
       "revId": "edbfa7c197ec5d5371eb8b342bf4115beada72ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14d5bae3_64cc5650",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 3672,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-02T22:00:28Z",
+      "side": 1,
+      "message": "I\u0027d rather leave it in here, the conversion is implied to be into Frame coordinates and this would break the symmetry with ConvertToLayoutItem above. We could rename the method to be clearer but I think it\u0027s clear enough from context (since we\u0027re calling FrameView.ConvertFromLayoutItem, it\u0027s implied it\u0027ll be into Frame coordinates). Also, there\u0027s a comment in the header so I think this is fine.",
+      "parentUuid": "6bd82f07_99daf2c3",
+      "revId": "edbfa7c197ec5d5371eb8b342bf4115beada72ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c429d3e_39ff95e1",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-02T22:00:28Z",
+      "side": 1,
+      "message": "I don\u0027t think we should change this to FloatPoint. Everything related to layout, which hit testing is, should be in LayoutUnits. LayoutUnit is a fixed point type with 1/64 pixel precision. We prefer to use fixed point in layout since error is is constant and not relative to the number size so it keeps everything aligned nicely.\n\nI would leave this as LayoutPoint. You can leave the mouse event values as FloatPoint since they aren\u0027t related to layout and are web-exposed (we don\u0027t want to leak our fixed-point details to web content). Instead of converting all the callsites to FloatPoint like you do now, convert them to LayoutPoint instead. You may need to add and remove some of the conversion functions in FrameView since I think we only have LayoutUnit versions of some of them. In general, I think more places in Blink should be using LayoutPoint rather than IntPoint/FloatPoint.",
+      "range": {
+        "startLine": 246,
+        "startChar": 10,
+        "endLine": 246,
+        "endChar": 20
+      },
+      "revId": "edbfa7c197ec5d5371eb8b342bf4115beada72ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
