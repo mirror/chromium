@@ -78,6 +78,7 @@ class PaymentsClientTest : public testing::Test, public PaymentsClientDelegate {
     token_service_->AddAccount("example@gmail.com");
     identity_provider_->LogIn("example@gmail.com");
     PaymentsClient::UnmaskRequestDetails request_details;
+    request_details.billingCustomerNumber = 1111222233334444;
     request_details.card = test::GetMaskedServerCard();
     request_details.user_response.cvc = base::ASCIIToUTF16("123");
     request_details.risk_data = "some risk data";

@@ -1083,6 +1083,11 @@ class AutofillManagerTest : public testing::Test {
         kAutofillOfferLocalSaveIfServerCardManuallyEntered);
   }
 
+  void EnableAutofillSendBillingCustomerNumberExperiment() {
+    scoped_feature_list_.InitAndEnableFeature(
+        kAutofillSendBillingCustomerNumber);
+  }
+
   void EnableAutofillUpstreamRequestCvcIfMissingExperiment() {
     scoped_feature_list_.InitAndEnableFeature(
         kAutofillUpstreamRequestCvcIfMissing);
