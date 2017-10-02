@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4050fc3f_3bdaa3d1",
+        "filename": "chrome/browser/vr/elements/textured_element.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-02T14:12:21Z",
+      "side": 1,
+      "message": "Why IsVisible() -\u003e opacity()?  This seems like a perfect use case for the wrapper.",
+      "revId": "9c3dd32734c41fd1c87c67aa3d96c613979a0189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ca97e00_7054fad1",
+        "filename": "chrome/browser/vr/elements/transient_element.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-02T14:12:21Z",
+      "side": 1,
+      "message": "This is \u0027look_at\u0027 elsewhere.  A pose would require a matrix, no?  I think head_direction is more accurate.",
+      "range": {
+        "startLine": 73,
+        "startChar": 42,
+        "endLine": 73,
+        "endChar": 46
+      },
+      "revId": "9c3dd32734c41fd1c87c67aa3d96c613979a0189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f215efb3_8325c148",
+        "filename": "chrome/browser/vr/elements/transient_element_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-02T14:12:21Z",
+      "side": 1,
+      "message": "kForwardVector in empty namespace?",
+      "range": {
+        "startLine": 30,
+        "startChar": 38,
+        "endLine": 30,
+        "endChar": 62
+      },
+      "revId": "9c3dd32734c41fd1c87c67aa3d96c613979a0189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f021c8d5_c9a9ac52",
+        "filename": "chrome/browser/vr/elements/ui_element.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-02T14:12:21Z",
+      "side": 1,
+      "message": "This doesn\u0027t appear to include the \"recompute after input\" bits discussed a month back.  That will come later right?",
+      "revId": "9c3dd32734c41fd1c87c67aa3d96c613979a0189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef04ddcd_f37f0370",
+        "filename": "chrome/browser/vr/elements/ui_element_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-02T14:12:21Z",
+      "side": 1,
+      "message": "Maybe kForwardVector should be in a constants header/module.",
+      "range": {
+        "startLine": 25,
+        "startChar": 32,
+        "endLine": 25,
+        "endChar": 56
+      },
+      "revId": "9c3dd32734c41fd1c87c67aa3d96c613979a0189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bf5382a_5d78f20e",
+        "filename": "chrome/browser/vr/ui_scene.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-02T14:12:21Z",
+      "side": 1,
+      "message": "Could be element.UpdateBindings(), but I guess there\u0027ll be one use, here, so that doesn\u0027t help much.",
+      "revId": "9c3dd32734c41fd1c87c67aa3d96c613979a0189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
