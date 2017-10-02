@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bd82f07_99daf2c3",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 3672,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-02T20:00:51Z",
+      "side": 1,
+      "message": "The name \"ConvertFromLayoutItem\" seems to hide the fact that the function applies the scroll-offset.  May be do the conversion inline in the caller?",
+      "revId": "edbfa7c197ec5d5371eb8b342bf4115beada72ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
