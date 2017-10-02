@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f93fcf6_acd097f7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 25
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-02T05:52:56Z",
+      "side": 1,
+      "message": "nit: Could you reformat description to fit line \u003c 80 chars?",
+      "revId": "3cf41d34767d7c3d7b9aa69d43490a53ec95dca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d148c853_d51a1a73",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 25
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-02T05:52:56Z",
+      "side": 1,
+      "message": "Could you update description? This patch should be focused on refactoring\n|MarkStartAndEndInTwoNodes()|.",
+      "revId": "3cf41d34767d7c3d7b9aa69d43490a53ec95dca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6b9caf3_7592894a",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-02T05:52:56Z",
+      "side": 1,
+      "message": "It seems changes in |MarkStartAndEndInOneNode()| is independent from\nrest of changes. Thus, could you move this in another patch?",
+      "revId": "3cf41d34767d7c3d7b9aa69d43490a53ec95dca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79d617af_bf213f4e",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-02T05:52:56Z",
+      "side": 1,
+      "message": "nit: Please remove this comment since it is redundant, conditional\nexpression denotes it.",
+      "revId": "3cf41d34767d7c3d7b9aa69d43490a53ec95dca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50c85ab7_165c9eed",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-02T05:52:56Z",
+      "side": 1,
+      "message": "nit: Could you insert a blank line to split member variable declarations\nand ctor impl?",
+      "revId": "3cf41d34767d7c3d7b9aa69d43490a53ec95dca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "594a3cf7_a6488adf",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-02T05:52:56Z",
+      "side": 1,
+      "message": "This DCHECK should be at start of function or L459 if |start_offset|\nis meaningless for non-LayoutText.\n\nDCHECK_EQ(start_offset, 0) for non-LayoutText case?",
+      "revId": "3cf41d34767d7c3d7b9aa69d43490a53ec95dca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93b03d18_2d57ae92",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-02T05:52:56Z",
+      "side": 1,
+      "message": "Similar to |start_offset| in |MarkStart()|.",
+      "revId": "3cf41d34767d7c3d7b9aa69d43490a53ec95dca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "892ff915_cd4d99c0",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-02T05:52:56Z",
+      "side": 1,
+      "message": "nit: Please remove this comment since this comment doesn\u0027t relate to\nrefactoring |MarkStartAndEnd()|.",
+      "revId": "3cf41d34767d7c3d7b9aa69d43490a53ec95dca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
