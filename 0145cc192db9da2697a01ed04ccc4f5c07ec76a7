@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "ba8b938e_59d2f8fa",
+        "filename": "mojo/public/tools/bindings/pylib/mojom/generate/generator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-02T19:44:13Z",
+      "side": 1,
+      "message": "\u003e This was actually somewhat intentional--the idea is that even if someone uses EnableIf inside enum definitions, the enum values themselves should be stable (since they are sometimes used in UMA histograms).\n\n\nIf the user would like stable enum values (skipping some platform-specific values on other platforms), they could explicitly assign values:\n\nenum Foo {\n  [EnableIf\u003dis_win] WIN_VALUE \u003d 0,\n  [EnableIf\u003dis_mac] MAC_VALUE \u003d 1\n};\n\nThe user needs to make the decision whether a given enum needs to be stable anyway. For example, even if we take the approach of late-removal-of-fields, the enum still needs a comment by the user saying \"Hey, future maintainers of this enum: Don\u0027t change the order of the values or their values because they are used in UMA histograms\".\n\nWDYT? Thanks!",
+      "parentUuid": "ea84b006_fd1ac11d",
+      "revId": "0145cc192db9da2697a01ed04ccc4f5c07ec76a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aee9ba6d_15b50646",
         "filename": "url/mojo/BUILD.gn",
         "patchSetId": 2
