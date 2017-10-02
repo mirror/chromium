@@ -16,6 +16,24 @@
       "revId": "e115ef81cb0c310a2cca5402ba82398bacb488f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fc7f786_db19a3b3",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-02T11:19:39Z",
+      "side": 0,
+      "message": "Yes, though I\u0027d say a TODO isn\u0027t the proper place for it. I\u0027d put it into the whole \"figure out loading sequence\" bucket, for after the local NTP launch. I\u0027ll file a bug.",
+      "parentUuid": "fa7e0126_7a004a48",
+      "revId": "e115ef81cb0c310a2cca5402ba82398bacb488f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

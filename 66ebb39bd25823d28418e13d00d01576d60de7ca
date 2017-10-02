@@ -46,6 +46,30 @@
       "revId": "66ebb39bd25823d28418e13d00d01576d60de7ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e0d4c4b4_ae907380",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-02T11:19:39Z",
+      "side": 1,
+      "message": "Probably not, though we\u0027ll have to keep most of the wiring around for third-party NTPs anyway...",
+      "parentUuid": "fec8e86c_b581088c",
+      "range": {
+        "startLine": 529,
+        "startChar": 28,
+        "endLine": 529,
+        "endChar": 0
+      },
+      "revId": "66ebb39bd25823d28418e13d00d01576d60de7ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
