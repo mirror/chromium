@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2571d547_1c6c2ff5",
+        "filename": "net/spdy/chromium/http2_push_promise_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-10-02T14:54:09Z",
+      "side": 1,
+      "message": "Done.  It is to avoid doing two searches in case of insertion.  However, I might rework and simplify this whole method in a future CL.",
+      "parentUuid": "a0731b97_f52182a7",
+      "revId": "92c6ccdc3aeb1d6d6056974c15fc0c14a042c45d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4dc3860_7a44d9f9",
         "filename": "net/spdy/chromium/http2_push_promise_index.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "92c6ccdc3aeb1d6d6056974c15fc0c14a042c45d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96d6792a_8a3f0402",
+        "filename": "net/spdy/chromium/http2_push_promise_index.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-10-02T14:54:09Z",
+      "side": 1,
+      "message": "Good catch, thank you.  Done.  My understanding is that nowadays the style guide recommends \u003d delete instead of the older DISALLOW_COPY_AND_ASSIGN macro: https://google.github.io/styleguide/cppguide.html#Copyable_Movable_Types.",
+      "parentUuid": "e4dc3860_7a44d9f9",
+      "revId": "92c6ccdc3aeb1d6d6056974c15fc0c14a042c45d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
