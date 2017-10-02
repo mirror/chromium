@@ -91,6 +91,10 @@ ChildProcess::~ChildProcess() {
   if (initialized_task_scheduler_) {
     DCHECK(base::TaskScheduler::GetInstance());
     base::TaskScheduler::GetInstance()->Shutdown();
+    if (!should_leak_task_scheduler_) {
+      base::TaskScheduler::GetInstance()->JoinForTesting();
+      base::TaskScheduler::SetInstance(nullptr);
+    }
   }
 }
 
@@ -128,6 +132,10 @@ void ChildProcess::SetIOThreadPriority(
 
 ChildProcess* ChildProcess::current() {
   return g_lazy_tls.Pointer()->Get();
+}
+
+void ChildProcess::SetDoNotLeakTaskSchedulerForTesting() {
+  should_leak_task_scheduler_ = false;
 }
 
 base::WaitableEvent* ChildProcess::GetShutDownEvent() {
