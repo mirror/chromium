@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ac362460_4810b8c2",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/system/user.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-02T21:25:49Z",
+      "side": 1,
+      "message": "1) Done for using is_linux. I didn\u0027t do os.environ, but I\u0027m not really sure what the best alternative here is. os.environ is exposed on SystemHost... but the User object is part of SystemHost. I could add an argument, but it seems weird to plumb around two dicts of os.environ (and it seems like the existing ctor argument is basically unused as well?)\n\nIt seems like just using os.environ is probably the most straightforward for now.\n\n2) It doesn\u0027t have a lot to do with it. But as best as I can tell, when we terminate the X instance running in the virtual framebuffer, it also tears down any autolaunched dbus. This autolaunched dbus has the unfortunate habit of signalling termination for *everything*. So we use this as a proxy for whether or not we want to show the results: if dbus is not running, then launching a browser (probably) won\u0027t work anyway--and we want to avoid doing anything that could cause dbus to be autolaunched. DBUS_SESSION_BUS_ADDRESS seems to be the standard way of checking if dbus is running. I tried to clarify the comment, let me know if it helped.",
+      "parentUuid": "2f5ea2fd_d27fd1a0",
+      "revId": "783a7cd17d87e565cde4a79b3fa04a53e87b9f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e5fce838_16f3cd40",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/system/user.py",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-02T20:13:30Z",
       "side": 1,
       "message": "No running -\u003e Not running",
+      "revId": "783a7cd17d87e565cde4a79b3fa04a53e87b9f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad548044_7210d034",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/system/user.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-02T21:25:49Z",
+      "side": 1,
+      "message": "I did mean \"no running\", but I guess that wording is confusing. Rephrased.",
+      "parentUuid": "e5fce838_16f3cd40",
       "revId": "783a7cd17d87e565cde4a79b3fa04a53e87b9f67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
