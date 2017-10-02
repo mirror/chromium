@@ -2973,6 +2973,11 @@ void Document::CancelParsing() {
   SuppressLoadEvent();
 }
 
+void Document::CancelParsingForNavigation() {
+  CancelParsing();
+  RemoveChildren();
+}
+
 DocumentParser* Document::OpenForNavigation(
     ParserSynchronizationPolicy parser_sync_policy,
     const AtomicString& mime_type,
