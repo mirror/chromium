@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1a88e9b5_bd839c22",
+        "filename": "build/config/compiler/compiler.gni",
+        "patchSetId": 10
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-02T19:50:03Z",
+      "side": 1,
+      "message": "It transitively includes coverage.gni via sanitizers.gni, but having it explicitly included should be better. Thanks! Done.",
+      "parentUuid": "ec711d64_efb9cd83",
+      "range": {
+        "startLine": 217,
+        "startChar": 7,
+        "endLine": 217,
+        "endChar": 26
+      },
+      "revId": "badbd0821de24221f1b16099890f1af38a4910da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48543060_07d2fc82",
         "filename": "third_party/libFuzzer/BUILD.gn",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "badbd0821de24221f1b16099890f1af38a4910da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d24cad5_af11ebe6",
+        "filename": "third_party/libFuzzer/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-02T19:50:03Z",
+      "side": 1,
+      "message": "Right! We need coverage.gni explicitly and don\u0027t need sanitizers.gni. Done.",
+      "parentUuid": "48543060_07d2fc82",
+      "range": {
+        "startLine": 5,
+        "startChar": 34,
+        "endLine": 5,
+        "endChar": 48
+      },
+      "revId": "badbd0821de24221f1b16099890f1af38a4910da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
