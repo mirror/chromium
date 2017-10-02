@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8de4df93_1ca9d758",
+        "filename": "mojo/public/tools/bindings/mojom.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-02T07:34:32Z",
+      "side": 1,
+      "message": "It might be nicer if it were possible to use a scope here, so mojom targets could do:\n\nmojom(...) {\n  enable_flags \u003d {\n    is_win \u003d is_win\n    mac_not_ios \u003d is_macosx \u0026\u0026 !is_ios\n  }\n}\n\nAlternatively, we could disallow EnableIf from taking a value, under the theory that any mojom file should be using only one EnabledIf unique flag value to disable any needed definitions in the same file. I\u0027m open to alternatives as well.",
+      "revId": "0145cc192db9da2697a01ed04ccc4f5c07ec76a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
