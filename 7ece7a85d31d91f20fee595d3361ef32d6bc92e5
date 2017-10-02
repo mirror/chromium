@@ -52,6 +52,24 @@
       "revId": "7ece7a85d31d91f20fee595d3361ef32d6bc92e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdb14d8b_490ea999",
+        "filename": "ash/display/screen_position_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-10-02T19:34:37Z",
+      "side": 1,
+      "message": "Sorry, I don\u0027t understand what do you mean by eliminate them. I think we should keep them for now.",
+      "parentUuid": "bbfb3b3c_d13dfa01",
+      "revId": "7ece7a85d31d91f20fee595d3361ef32d6bc92e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
