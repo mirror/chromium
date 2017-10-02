@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "b9bb0fc9_5537b813",
+        "filename": "components/autofill/core/browser/autofill_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-10-02T21:48:33Z",
+      "side": 1,
+      "message": "Why are you removing \n\u003e\u003e\nFRIEND_TEST_ALL_PREFIXES(AutofillMetricsTest, UserHappinessFormInteraction);\n\u003e\u003e",
+      "range": {
+        "startLine": 650,
+        "startChar": 1,
+        "endLine": 650,
+        "endChar": 2
+      },
+      "revId": "5d0b81022319f6346f0443b16c89bf3cbe6c3500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b9c32f4f_c4849687",
         "filename": "components/autofill/core/browser/autofill_metrics.cc",
         "patchSetId": 8
@@ -49,6 +72,53 @@
     },
     {
       "key": {
+        "uuid": "d794ff0b_ebee9fa9",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-10-02T21:48:33Z",
+      "side": 1,
+      "message": "I am not sure whether password forms \u003d (all - cc - address). Roger told me once even facebook comments can be autofilled. But let us not do that as it is adding complexity is other code base.",
+      "parentUuid": "4d49d4c4_ea0563da",
+      "range": {
+        "startLine": 726,
+        "startChar": 3,
+        "endLine": 726,
+        "endChar": 4
+      },
+      "revId": "5d0b81022319f6346f0443b16c89bf3cbe6c3500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a78fa3c_363db6bf",
+        "filename": "components/autofill/core/browser/autofill_metrics_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 4763,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-10-02T21:48:33Z",
+      "side": 1,
+      "message": "I assume there is test some where for forms empty case.",
+      "range": {
+        "startLine": 4763,
+        "startChar": 1,
+        "endLine": 4763,
+        "endChar": 2
+      },
+      "revId": "5d0b81022319f6346f0443b16c89bf3cbe6c3500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d31fb980_633de554",
         "filename": "components/autofill/core/browser/form_structure.cc",
         "patchSetId": 8
@@ -60,6 +130,47 @@
       "writtenOn": "2017-10-02T20:40:59Z",
       "side": 1,
       "message": "if form_types.empty(), do you want to return UNKNOWN/OTHER for the form type?",
+      "revId": "5d0b81022319f6346f0443b16c89bf3cbe6c3500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1263f0e8_4166d0d5",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1440,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-10-02T21:48:33Z",
+      "side": 1,
+      "message": "If form_types.empty() then there are no forms on the page right ? Why logging Unknown/Other here ?",
+      "parentUuid": "d31fb980_633de554",
+      "revId": "5d0b81022319f6346f0443b16c89bf3cbe6c3500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe8353fa_b988f16f",
+        "filename": "components/autofill/core/browser/form_structure.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-10-02T21:48:33Z",
+      "side": 1,
+      "message": "Nit : Suggest to put this above copy constructor (Line 246).",
+      "range": {
+        "startLine": 250,
+        "startChar": 2,
+        "endLine": 250,
+        "endChar": 3
+      },
       "revId": "5d0b81022319f6346f0443b16c89bf3cbe6c3500",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -89,6 +200,30 @@
     },
     {
       "key": {
+        "uuid": "08d0ecc6_62b801e9",
+        "filename": "components/autofill/core/browser/form_types.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-10-02T21:48:33Z",
+      "side": 1,
+      "message": "+1. It is highly recommended here (https://docs.google.com/document/d/1Ef3_sVc2yReSDG2dClOKXTic7uY1g47GP2WTU5QRYqk/edit#heading\u003dh.gqf0nq8t6shk)",
+      "parentUuid": "65d48d09_2ea8864e",
+      "range": {
+        "startLine": 10,
+        "startChar": 63,
+        "endLine": 10,
+        "endChar": 73
+      },
+      "revId": "5d0b81022319f6346f0443b16c89bf3cbe6c3500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9279533d_886888ae",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 8
@@ -100,6 +235,24 @@
       "writtenOn": "2017-10-02T20:40:59Z",
       "side": 1,
       "message": "You might as well add Password and Unknown/Other here.",
+      "revId": "5d0b81022319f6346f0443b16c89bf3cbe6c3500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b345b6f2_8a0e264a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 93586,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-10-02T21:48:33Z",
+      "side": 1,
+      "message": "I am confused here. Are we doing the password logging (I thought we are not as we are not changing password manager).",
+      "parentUuid": "9279533d_886888ae",
       "revId": "5d0b81022319f6346f0443b16c89bf3cbe6c3500",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
