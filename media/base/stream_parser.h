@@ -8,13 +8,13 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <deque>
 #include <map>
 #include <memory>
 #include <string>
 #include <vector>
 
 #include "base/callback_forward.h"
-#include "base/containers/circular_deque.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/time/time.h"
@@ -32,7 +32,10 @@ class TextTrackConfig;
 // Abstract interface for parsing media byte streams.
 class MEDIA_EXPORT StreamParser {
  public:
-  using BufferQueue = base::circular_deque<scoped_refptr<StreamParserBuffer>>;
+  // TODO(http://crbug.com/770253) Convert to a circular_deque or figure out
+  // why a std::deque is faster. Using a std::deque here is an attempt to
+  // fix the above perf regression.
+  using BufferQueue = std::deque<scoped_refptr<StreamParserBuffer>>;
 
   // Range of |TrackId| is dependent upon stream parsers. It is currently
   // the key for the buffer's text track config in the applicable

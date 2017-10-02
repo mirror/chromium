@@ -7,11 +7,11 @@
 
 #include <stdint.h>
 
+#include <deque>
 #include <list>
 #include <utility>
 
 #include "base/callback.h"
-#include "base/containers/circular_deque.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/time/time.h"
@@ -56,7 +56,10 @@ class MEDIA_EXPORT EsAdapterVideo {
       const scoped_refptr<StreamParserBuffer>& stream_parser_buffer);
 
  private:
-  using BufferQueue = base::circular_deque<scoped_refptr<StreamParserBuffer>>;
+  // TODO(http://crbug.com/770253) Convert to a circular_deque or figure out
+  // why a std::deque is faster. Using a std::deque here is an attempt to
+  // fix the above perf regression.
+  using BufferQueue = std::deque<scoped_refptr<StreamParserBuffer>>;
   using ConfigEntry = std::pair<int64_t, VideoDecoderConfig>;
 
   void ProcessPendingBuffers(bool flush);
