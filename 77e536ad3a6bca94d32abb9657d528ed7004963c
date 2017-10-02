@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25d07e33_eaee8dea",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-02T20:22:46Z",
+      "side": 1,
+      "message": "Can this be const?",
+      "range": {
+        "startLine": 586,
+        "startChar": 26,
+        "endLine": 586,
+        "endChar": 38
+      },
+      "revId": "77e536ad3a6bca94d32abb9657d528ed7004963c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63cb331e_9691db20",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-02T20:22:46Z",
+      "side": 1,
+      "message": "Super optional ignoreable OCD nit: :)\nYou can reduce the indentation by inverting the condition.",
+      "range": {
+        "startLine": 588,
+        "startChar": 0,
+        "endLine": 592,
+        "endChar": 59
+      },
+      "revId": "77e536ad3a6bca94d32abb9657d528ed7004963c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59ed83e0_7274a6e4",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-02T20:22:46Z",
+      "side": 1,
+      "message": "nit: this is in safe_browsing code. We probably don\u0027t need the \"SB\" prefix for the interstitial.",
+      "range": {
+        "startLine": 119,
+        "startChar": 25,
+        "endLine": 119,
+        "endChar": 27
+      },
+      "revId": "77e536ad3a6bca94d32abb9657d528ed7004963c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ba8f9c2_4fe54574",
+        "filename": "components/safe_browsing/password_protection/password_protection_request.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-02T20:22:46Z",
+      "side": 1,
+      "message": "use a const char* for this since it is repeated in 4 places.",
+      "range": {
+        "startLine": 201,
+        "startChar": 13,
+        "endLine": 201,
+        "endChar": 64
+      },
+      "revId": "77e536ad3a6bca94d32abb9657d528ed7004963c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
