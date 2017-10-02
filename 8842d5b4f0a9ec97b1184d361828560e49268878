@@ -22,6 +22,30 @@
       "revId": "8842d5b4f0a9ec97b1184d361828560e49268878",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3a53b3c_3592dbd7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-10-02T08:33:57Z",
+      "side": 1,
+      "message": "Oops, I\u0027m even not sure where this wrong number came from.\nFixed.",
+      "parentUuid": "7fe5c3f1_c8051f37",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 11
+      },
+      "revId": "8842d5b4f0a9ec97b1184d361828560e49268878",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
