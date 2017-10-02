@@ -4,9 +4,19 @@
 
 // Override some methods of policy.Page.
 
+/**
+ * Disables editing policy values by hiding the main section and showing an
+ * error message instead.
+ */
+policy.Page.disableEditing = function() {
+  $('disable-editing-error').hidden = false;
+  $('main-section').hidden = true;
+};
+
 /** @override */
 policy.Page.setPolicyValues = function(values) {
   var page = this.getInstance();
+  page.enableEditing();
   var table = page.policyTables['chrome'];
   table.setPolicyValues(values.chromePolicies || {});
   if (values.hasOwnProperty('extensionPolicies')) {
@@ -58,9 +68,18 @@ policy.Page.prototype.initialize = function() {
     }
   };
 
+  $('enable-editing').onclick = () => {
+    this.enableEditing();
+    chrome.send('resetSession');
+  };
   // Notify the browser that the page has loaded, causing it to send the
   // list of all known policies and the values from the default session.
   chrome.send('initialized');
+};
+
+policy.Page.prototype.enableEditing = function() {
+  $('main-section').hidden = false;
+  $('disable-editing-error').hidden = true;
 };
 
 /**
