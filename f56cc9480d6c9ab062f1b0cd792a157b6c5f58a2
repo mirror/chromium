@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "4531be74_11c46b1c",
+        "filename": "components/metrics/net/net_metrics_log_uploader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-02T18:22:36Z",
+      "side": 1,
+      "message": "Yep, I\u0027d say keep that -- it\u0027s part of the Chromium style guide to group inherited methods together and preface them with the base class where they\u0027re inherited from.",
+      "parentUuid": "9c48a303_33a830af",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 66
+      },
+      "revId": "f56cc9480d6c9ab062f1b0cd792a157b6c5f58a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ccb9b379_51bc9d5d",
         "filename": "components/metrics/net/net_metrics_log_uploader.h",
         "patchSetId": 2
