@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "ff0ae4b8_754f7d3c",
+        "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-02T16:43:12Z",
+      "side": 1,
+      "message": "Yeah, I think event_router *should* always exist, so a DCHECK here would probably be better.",
+      "parentUuid": "1d504f5a_b8234dac",
+      "revId": "301619d119aeaa6868109a1f238639d92157dd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "540eef91_5d70d057",
         "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
         "patchSetId": 7
@@ -171,6 +189,24 @@
       "side": 1,
       "message": "When extension suspends, would EventRouter::HasEventListener() return true?\n\nWe tried to use a simple count to record number of listeners instead of using EventRouter::HasEventListner(). We did +1 in OnListenerAdded() and -1 in OnListenerRemoved. Saw  the number becomes 0 when extension suspends. That is unexpected as we think the number should be 0 only if cast.channel.onMessage listener is explicitly removed. So we added a TODO here..\n\nThat would be great if EventRouter::HasEventListener() is what we are looking for.",
       "parentUuid": "367ac73d_1fa130a5",
+      "revId": "301619d119aeaa6868109a1f238639d92157dd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "636bdd7d_f701e7f7",
+        "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-02T16:43:12Z",
+      "side": 1,
+      "message": "HasEventListener() *should* return true if there is any registered event listener for the event.  My guess is that the reason the counting approach (+1 in listener added, -1 in listener removed) didn\u0027t work is because the lazy listeners are loaded during initialization, so this object might not have been constructed at that time.  But HasEventListener() should always return the correct answer, including event listeners for suspended event pages.\n\nIf you test this out and it\u0027s not the case, lemme know, because that\u0027d likely be indicative of a bug in our code.",
+      "parentUuid": "f0357b21_c13a558e",
       "revId": "301619d119aeaa6868109a1f238639d92157dd7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
