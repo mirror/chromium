@@ -85,82 +85,95 @@ void ComponentInstaller::OnUpdateError(int error) {
   LOG(ERROR) << "Component update error: " << error;
 }
 
-Result ComponentInstaller::InstallHelper(const base::DictionaryValue& manifest,
-                                         const base::FilePath& unpack_path,
-                                         const base::FilePath& install_path) {
-  VLOG(1) << "InstallHelper: unpack_path=" << unpack_path.AsUTF8Unsafe()
-          << " install_path=" << install_path.AsUTF8Unsafe();
+update_client::CrxInstaller::Result ComponentInstaller::InstallHelper(
+    const base::DictionaryValue& manifest,
+    const base::FilePath& unpack_path,
+    base::Version* version,
+    base::FilePath* install_path) {
+  std::string version_ascii;
+  manifest.GetStringASCII("version", &version_ascii);
+  const base::Version manifest_version(version_ascii);
 
-  if (!base::Move(unpack_path, install_path)) {
+  VLOG(1) << "Install: version=" << manifest_version.GetString()
+          << " current version=" << current_version_.GetString();
+
+  if (!manifest_version.IsValid())
+    return Result(InstallError::INVALID_VERSION);
+  if (current_version_.CompareTo(manifest_version) > 0)
+    return Result(InstallError::VERSION_NOT_UPGRADED);
+  base::FilePath local_install_path;
+  if (!PathService::Get(DIR_COMPONENT_USER, &local_install_path))
+    return Result(InstallError::NO_DIR_COMPONENT_USER);
+  local_install_path =
+      local_install_path.Append(installer_policy_->GetRelativeInstallDir())
+          .AppendASCII(manifest_version.GetString());
+  if (base::PathExists(local_install_path)) {
+    if (!base::DeleteFile(local_install_path, true))
+      return Result(InstallError::CLEAN_INSTALL_DIR_FAILED);
+  }
+
+  VLOG(1) << "unpack_path=" << unpack_path.AsUTF8Unsafe()
+          << " install_path=" << local_install_path.AsUTF8Unsafe();
+
+  if (!base::Move(unpack_path, local_install_path)) {
     PLOG(ERROR) << "Move failed.";
     return Result(InstallError::MOVE_FILES_ERROR);
   }
 
 #if defined(OS_CHROMEOS)
-  if (!base::SetPosixFilePermissions(install_path, 0755)) {
-    PLOG(ERROR) << "SetPosixFilePermissions failed: " << install_path.value();
+  if (!base::SetPosixFilePermissions(local_install_path, 0755)) {
+    PLOG(ERROR) << "SetPosixFilePermissions failed: "
+                << local_install_path.value();
     return Result(InstallError::SET_PERMISSIONS_FAILED);
   }
 #endif  // defined(OS_CHROMEOS)
 
-  const auto result =
-      installer_policy_->OnCustomInstall(manifest, install_path);
+  DCHECK(!base::PathExists(unpack_path));
+  DCHECK(base::PathExists(local_install_path));
+
+  // Acquire the ownership of the |local_install_path|.
+  base::ScopedTempDir install_path_owner;
+  ignore_result(install_path_owner.Set(local_install_path));
+
+  const Result result =
+      installer_policy_->OnCustomInstall(manifest, local_install_path);
   if (result.error) {
-    PLOG(ERROR) << "CustomInstall failed.";
     return result;
   }
-  if (!installer_policy_->VerifyInstallation(manifest, install_path)) {
+
+  if (!installer_policy_->VerifyInstallation(manifest, local_install_path)) {
     return Result(InstallError::INSTALL_VERIFICATION_FAILED);
   }
+
+  *version = manifest_version;
+  *install_path = local_install_path;
+
+  install_path_owner.Take();
 
   return Result(InstallError::NONE);
 }
 
-Result ComponentInstaller::Install(
+void ComponentInstaller::Install(
     std::unique_ptr<base::DictionaryValue> manifest,
-    const base::FilePath& unpack_path) {
-  std::string manifest_version;
-  manifest->GetStringASCII("version", &manifest_version);
-  base::Version version(manifest_version);
-
-  VLOG(1) << "Install: version=" << version.GetString()
-          << " current version=" << current_version_.GetString();
-
-  // Take the ownership of the |unpack_path| to enforce its deletion.
-  DCHECK(DirectoryExists(unpack_path));
-  base::ScopedTempDir unpack_path_owner;
-  ignore_result(unpack_path_owner.Set(unpack_path));
-
-  if (!version.IsValid())
-    return Result(InstallError::INVALID_VERSION);
-  if (current_version_.CompareTo(version) > 0)
-    return Result(InstallError::VERSION_NOT_UPGRADED);
+    const base::FilePath& unpack_path,
+    const Callback& callback) {
+  base::Version version;
   base::FilePath install_path;
-  if (!PathService::Get(DIR_COMPONENT_USER, &install_path))
-    return Result(InstallError::NO_DIR_COMPONENT_USER);
-  install_path = install_path.Append(installer_policy_->GetRelativeInstallDir())
-                     .AppendASCII(version.GetString());
-  if (base::PathExists(install_path)) {
-    if (!base::DeleteFile(install_path, true))
-      return Result(InstallError::CLEAN_INSTALL_DIR_FAILED);
-  }
-  const auto result = InstallHelper(*manifest, unpack_path, install_path);
+  const Result result =
+      InstallHelper(*manifest, unpack_path, &version, &install_path);
   if (result.error) {
-    base::DeleteFile(install_path, true);
-    return result;
+    main_task_runner_->PostTask(FROM_HERE, base::Bind(callback, result));
+    return;
   }
-
-  // If install has been successful, the installer has deleted the unpack path.
-  DCHECK(!base::PathExists(unpack_path));
 
   current_version_ = version;
   current_install_dir_ = install_path;
 
-  main_task_runner_->PostTask(
-      FROM_HERE, base::Bind(&ComponentInstaller::ComponentReady, this,
-                            base::Passed(std::move(manifest))));
-
-  return result;
+  main_task_runner_->PostTaskAndReply(
+      FROM_HERE,
+      base::Bind(&ComponentInstaller::ComponentReady, this,
+                 base::Passed(std::move(manifest))),
+      base::Bind(callback, result));
 }
 
 bool ComponentInstaller::GetInstalledFile(const std::string& file,
