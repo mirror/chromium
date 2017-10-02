@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "6d6e37a5_5702cff6",
+        "filename": "gpu/ipc/service/pass_through_image_transport_surface.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-02T23:28:54Z",
+      "side": 1,
+      "message": "Oh, that sounds appealing!",
+      "parentUuid": "571d9f81_01888ed5",
+      "revId": "80c23428f7a89ef3176bd7647a5a18bd6b5949cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c4fdd65_a09abaf2",
         "filename": "ui/gl/DEPS",
         "patchSetId": 11
