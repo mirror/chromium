@@ -81,6 +81,24 @@
       "revId": "1af79c27bedf0d01b44df87cc8bbe68aaed18f6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "639aca9a_78204b0d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/OfflineGroupHeaderView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-02T15:09:04Z",
+      "side": 1,
+      "message": "This looks pretty similar to DownloadItemView\u0027s code. Ideally both would share a common (static?) function to avoid duplicate code and the need to update multiple locations when design/spec\u0027s change as they inevitably will at some point in the future. I\u0027m OK with this for now.",
+      "parentUuid": "5d8641a8_69a96224",
+      "revId": "1af79c27bedf0d01b44df87cc8bbe68aaed18f6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
