@@ -4,6 +4,8 @@
 
 #include "modules/media_controls/elements/MediaControlElementBase.h"
 
+#include "core/dom/DOMTokenList.h"
+#include "core/html/HTMLDivElement.h"
 #include "core/html/HTMLMediaElement.h"
 #include "core/layout/LayoutObject.h"
 #include "modules/media_controls/MediaControlsImpl.h"
@@ -73,6 +75,14 @@ void MediaControlElementBase::SetDisplayType(
   display_type_ = display_type;
   if (LayoutObject* object = element_->GetLayoutObject())
     object->SetShouldDoFullPaintInvalidation();
+}
+
+HTMLDivElement* MediaControlElementBase::CreateDiv(const AtomicString& id,
+                                                   ContainerNode* parent) {
+  HTMLDivElement* element = HTMLDivElement::Create(parent->GetDocument());
+  element->SetShadowPseudoId(id);
+  parent->AppendChild(element);
+  return element;
 }
 
 DEFINE_TRACE(MediaControlElementBase) {

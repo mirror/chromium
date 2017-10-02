@@ -99,19 +99,12 @@ void MediaControlSliderElement::SetupBarSegments() {
   // div::internal-track-segment-background (container)
   //   - div::internal-track-segment-highlight-before (blue highlight)
   //   - div::internal-track-segment-highlight-after (dark gray highlight)
-  HTMLDivElement* background = HTMLDivElement::Create(GetDocument());
-  background->SetShadowPseudoId("-internal-track-segment-background");
-  track->appendChild(background);
-
-  segment_highlight_before_ = HTMLDivElement::Create(GetDocument());
-  segment_highlight_before_->SetShadowPseudoId(
-      "-internal-track-segment-highlight-before");
-  background->appendChild(segment_highlight_before_);
-
-  segment_highlight_after_ = HTMLDivElement::Create(GetDocument());
-  segment_highlight_after_->SetShadowPseudoId(
-      "-internal-track-segment-highlight-after");
-  background->appendChild(segment_highlight_after_);
+  HTMLDivElement* background =
+      CreateDiv("-internal-track-segment-background", track);
+  segment_highlight_before_ =
+      CreateDiv("-internal-track-segment-highlight-before", background);
+  segment_highlight_after_ =
+      CreateDiv("-internal-track-segment-highlight-after", background);
 }
 
 void MediaControlSliderElement::SetBeforeSegmentPosition(
