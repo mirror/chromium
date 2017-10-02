@@ -46,6 +46,30 @@
       "revId": "60a70c93e05a08e0eedd7d77c80eae39e84cfec8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb6f1133_4684fd94",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 83188,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-02T21:35:53Z",
+      "side": 1,
+      "message": "Yes, I mean session restore.  Maybe just add a note along the lines of \"This metric does not attempt to handle session restore.\"?",
+      "parentUuid": "1c3c676f_6e0c0de1",
+      "range": {
+        "startLine": 83188,
+        "startChar": 16,
+        "endLine": 83188,
+        "endChar": 0
+      },
+      "revId": "60a70c93e05a08e0eedd7d77c80eae39e84cfec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
