@@ -40,6 +40,9 @@ class PrefetchBackgroundTaskHandlerImpl : public PrefetchBackgroundTaskHandler {
   // Backoff control.  These functions directly modify/read prefs.
   void Backoff() override;
   void ResetBackoff() override;
+  void PauseBackoffUntilNextRun() override;
+  void Suspend() override;
+  void RemoveSuspension() override;
   int GetAdditionalBackoffSeconds() const override;
 
   // This is used to construct the backoff value.
