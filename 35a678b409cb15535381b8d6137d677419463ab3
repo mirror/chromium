@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efd2fcb9_590c1047",
+        "filename": "third_party/WebKit/LayoutTests/fragmentation/table-cell-intrinsic-padding-pagintation-strut.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-10-02T08:36:33Z",
+      "side": 1,
+      "message": "I really hope it\u0027s possible to come up with a more simple test than this.",
+      "revId": "35a678b409cb15535381b8d6137d677419463ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7f554bb_742a2445",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlockFlow.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1143,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-10-02T08:36:33Z",
+      "side": 1,
+      "message": "Cells in rows that cross fragmentainer boundaries should never have intrinsic padding [1], so I don\u0027t understand what\u0027s going on here.\n\nI think we need a simpler test to understand the problem.\n\n[1] See how we force top-alignment in LayoutTableSection::LayoutRows(), if CrossesPageBoundary() is true.",
+      "revId": "35a678b409cb15535381b8d6137d677419463ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
