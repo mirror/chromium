@@ -2,11 +2,28 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-source_set("libfuzzer") {
-  # libfuzzer should be compiled without coverage (infinite loop in trace_cmp).
-  configs -= [ "//build/config/sanitizers:default_sanitizer_flags" ]
-  configs +=
-      [ "//build/config/sanitizers:default_sanitizer_flags_but_coverage" ]
+import("//build/config/coverage/coverage.gni")
+
+template("fuzzing_engine") {
+  source_set(target_name) {
+    sources = invoker.sources
+
+    # Engine should be compiled without coverage (infinite loop in trace_cmp).
+    configs -= [ "//build/config/sanitizers:default_sanitizer_flags" ]
+    configs -= [ "//build/config/coverage:coverage" ]
+
+    # Coverage build is slower than regular fuzzing build. Due to that, it's not
+    # intended to be used for fuzzing. Sanitizer coverage is needed for fuzzing.
+    # We do not use it for coverage build, beucase it adds unnecessary overhead.
+    if (!use_clang_coverage) {
+      configs +=
+          [ "//build/config/sanitizers:default_sanitizer_flags_but_coverage" ]
+    }
+
+  }
+}
+
+fuzzing_engine("libfuzzer") {
   sources = [
     "src/FuzzerClangCounters.cpp",
     "src/FuzzerCrossOver.cpp",
@@ -35,12 +52,7 @@ source_set("libfuzzer") {
   ]
 }
 
-source_set("afl_driver") {
-  # AFL should be compiled without coverage (infinite loop in trace_cmp).
-  configs -= [ "//build/config/sanitizers:default_sanitizer_flags" ]
-  configs +=
-      [ "//build/config/sanitizers:default_sanitizer_flags_but_coverage" ]
-
+fuzzing_engine("afl_driver") {
   sources = [
     "src/afl/afl_driver.cpp",
   ]
