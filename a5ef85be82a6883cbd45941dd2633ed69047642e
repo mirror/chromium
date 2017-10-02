@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2152cc57_0aac3528",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-10-02T23:11:21Z",
+      "side": 1,
+      "message": "Merged, however sounds a bit weird to be calling OnSessionEnded from a method that is called only when the session is active. It seems like it may be better to refactor to have this method be a method called something like \"CheckAndNotifyElapsedSessionTime\" and have both methods call this?",
+      "parentUuid": "fa2bb773_5bebfa73",
+      "revId": "a5ef85be82a6883cbd45941dd2633ed69047642e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ea4f9b9_1c163323",
         "filename": "chrome/browser/feature_engagement/feature_tracker.cc",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "917e25aa_5abb8266",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-10-02T23:11:21Z",
+      "side": 1,
+      "message": "good catch! I initialized the elapsed_time_ variable to the kObservedSessionTime perf in the session_duration_updater",
+      "parentUuid": "0ea4f9b9_1c163323",
+      "range": {
+        "startLine": 46,
+        "startChar": 10,
+        "endLine": 46,
+        "endChar": 66
+      },
+      "revId": "a5ef85be82a6883cbd45941dd2633ed69047642e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4116fb0b_005cc7ff",
         "filename": "chrome/browser/feature_engagement/session_duration_updater.cc",
         "patchSetId": 2
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "5b86bc9c_285bd4d2",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-10-02T23:11:21Z",
+      "side": 1,
+      "message": "Changed the variable name. Also, removed this line and let the AddObserver handle it. I reset the timers only when there was previously no DesktopSessionDurationTracker observed at all. This only happens when there is no in-product help feature active.",
+      "parentUuid": "4116fb0b_005cc7ff",
+      "revId": "a5ef85be82a6883cbd45941dd2633ed69047642e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89d99f30_ee819d63",
         "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
         "patchSetId": 2
@@ -73,6 +133,24 @@
       "revId": "a5ef85be82a6883cbd45941dd2633ed69047642e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da541dca_0b68001a",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-10-02T23:11:21Z",
+      "side": 1,
+      "message": "Added some comments, tell me if they\u0027re not satisfactory",
+      "parentUuid": "89d99f30_ee819d63",
+      "revId": "a5ef85be82a6883cbd45941dd2633ed69047642e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
