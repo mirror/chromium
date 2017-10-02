@@ -297,6 +297,20 @@ bool CompositedLayerMapping::UsesCompositedStickyPosition() const {
                     ->NeedsCompositedScrolling());
 }
 
+FloatSize CompositedLayerMapping::OffsetForStickyPosition() const {
+  if (!UsesCompositedStickyPosition())
+    return FloatSize();
+
+  const StickyConstraintsMap& constraints_map =
+      owning_layer_.AncestorOverflowLayer()
+          ->GetScrollableArea()
+          ->GetStickyConstraintsMap();
+  const StickyPositionScrollingConstraints& constraints =
+      constraints_map.at(&owning_layer_);
+
+  return constraints.GetOffsetForStickyPosition(constraints_map);
+}
+
 void CompositedLayerMapping::UpdateStickyConstraints(
     const ComputedStyle& style) {
   WebLayerStickyPositionConstraint web_constraint;
@@ -1190,25 +1204,12 @@ void CompositedLayerMapping::UpdateMainGraphicsLayerGeometry(
     const IntRect& relative_compositing_bounds,
     const IntRect& local_compositing_bounds,
     const IntPoint& graphics_layer_parent_location) {
-  // Find and remove the offset applied for sticky position if the compositor
-  // will shift the layer for sticky position to avoid offsetting the layer
-  // twice.
-  FloatSize offset_for_sticky_position;
-  if (UsesCompositedStickyPosition()) {
-    const StickyConstraintsMap& constraints_map =
-        owning_layer_.AncestorOverflowLayer()
-            ->GetScrollableArea()
-            ->GetStickyConstraintsMap();
-    const StickyPositionScrollingConstraints& constraints =
-        constraints_map.at(&owning_layer_);
-
-    offset_for_sticky_position =
-        constraints.GetOffsetForStickyPosition(constraints_map);
-  }
+  // We have to remove the offset Blink applied for sticky position, because the
+  // compositor will also compute sticky positions and shift the layer for them.
   graphics_layer_->SetPosition(
       FloatPoint(relative_compositing_bounds.Location() -
                  graphics_layer_parent_location) -
-      offset_for_sticky_position);
+      OffsetForStickyPosition());
   graphics_layer_->SetOffsetFromLayoutObject(
       ToIntSize(local_compositing_bounds.Location()));
 
@@ -1840,9 +1841,9 @@ void CompositedLayerMapping::UpdateContentsOffsetInCompositingLayer(
   // graphicsLayerParentLocation it appears).
   FloatPoint offset_due_to_ancestor_graphics_layers =
       graphics_layer_->GetPosition() + graphics_layer_parent_location;
-  content_offset_in_compositing_layer_ =
-      LayoutSize(snapped_offset_from_composited_ancestor -
-                 offset_due_to_ancestor_graphics_layers);
+  content_offset_in_compositing_layer_ = LayoutSize(
+      snapped_offset_from_composited_ancestor -
+      offset_due_to_ancestor_graphics_layers - OffsetForStickyPosition());
   content_offset_in_compositing_layer_dirty_ = false;
 }
 
