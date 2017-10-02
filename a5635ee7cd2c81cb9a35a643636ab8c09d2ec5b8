@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dcc3699f_045fc9e3",
+        "filename": "chrome/browser/ui/webui/constrained_web_dialog_ui_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-02T13:14:28Z",
+      "side": 1,
+      "message": "Removed. Not sure what our style guide says about not explicitly specifying any constructors. I couldn\u0027t find anything about it. I just typically see code where we explicitly list at least one.",
+      "parentUuid": "179accaf_17f26539",
+      "range": {
+        "startLine": 112,
+        "startChar": 58,
+        "endLine": 112,
+        "endChar": 68
+      },
+      "revId": "a5635ee7cd2c81cb9a35a643636ab8c09d2ec5b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a6a2ccb_33a72cf1",
         "filename": "chrome/browser/ui/webui/constrained_web_dialog_ui_browsertest.cc",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "a5635ee7cd2c81cb9a35a643636ab8c09d2ec5b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46930044_61dd57a2",
+        "filename": "chrome/browser/ui/webui/constrained_web_dialog_ui_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-02T13:14:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a6a2ccb_33a72cf1",
+      "range": {
+        "startLine": 271,
+        "startChar": 43,
+        "endLine": 271,
+        "endChar": 47
+      },
+      "revId": "a5635ee7cd2c81cb9a35a643636ab8c09d2ec5b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
