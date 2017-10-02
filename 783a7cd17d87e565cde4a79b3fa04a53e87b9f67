@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b3f5f8d1_972a2527",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/system/user.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-02T22:18:51Z",
+      "side": 1,
+      "message": "(1) I agree, just using os.environ seems alright here.\n\n(2) Yep, I think it\u0027s a bit clearer now.",
+      "parentUuid": "ac362460_4810b8c2",
+      "revId": "783a7cd17d87e565cde4a79b3fa04a53e87b9f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5fce838_16f3cd40",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/system/user.py",
         "patchSetId": 1
@@ -69,6 +87,24 @@
       "revId": "783a7cd17d87e565cde4a79b3fa04a53e87b9f67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "356de1cf_5d5a60bb",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/system/user.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-02T22:18:51Z",
+      "side": 1,
+      "message": "Oh, I see -- it was \"there is no currently running instance of dbus, ...\". Alright :-)",
+      "parentUuid": "ad548044_7210d034",
+      "revId": "783a7cd17d87e565cde4a79b3fa04a53e87b9f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
