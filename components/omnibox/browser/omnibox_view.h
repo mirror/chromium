@@ -58,6 +58,10 @@ class OmniboxView {
   // Called when any relevant state changes other than changing tabs.
   virtual void Update() = 0;
 
+  virtual void SwitchToTabWithURL(const std::string& url,
+                                  bool incognito,
+                                  bool close_this) = 0;
+
   // Asks the browser to load the specified match, using the supplied
   // disposition. |alternate_nav_url|, if non-empty, contains the
   // alternate navigation URL for for this match. See comments on

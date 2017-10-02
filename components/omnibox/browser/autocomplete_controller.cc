@@ -31,6 +31,7 @@
 #include "components/omnibox/browser/physical_web_provider.h"
 #include "components/omnibox/browser/search_provider.h"
 #include "components/omnibox/browser/shortcuts_provider.h"
+#include "components/omnibox/browser/tab_search_provider.h"
 #include "components/omnibox/browser/zero_suggest_provider.h"
 #include "components/open_from_clipboard/clipboard_recent_content.h"
 #include "components/search_engines/template_url.h"
@@ -150,6 +151,7 @@ void AutocompleteMatchToAssistedQuery(
       *subtype = 191;
       return;
     }
+    // TODO: Do we need something here?
     default: {
       // This value indicates a native chrome suggestion with no named subtype
       // (yet).
@@ -262,6 +264,8 @@ AutocompleteController::AutocompleteController(
     if (physical_web_provider)
       providers_.push_back(physical_web_provider);
   }
+  if (provider_types & AutocompleteProvider::TYPE_TAB_SEARCH)
+    providers_.push_back(new TabSearchProvider(provider_client_.get()));
 }
 
 AutocompleteController::~AutocompleteController() {

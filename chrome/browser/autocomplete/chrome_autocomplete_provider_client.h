@@ -63,6 +63,8 @@ class ChromeAutocompleteProviderClient : public AutocompleteProviderClient {
   void OnAutocompleteControllerResultReady(
       AutocompleteController* controller) override;
 
+  void IterateBrowserTabs(TabCallback* cb) override;
+
   // For testing.
   void set_storage_partition(content::StoragePartition* storage_partition) {
     storage_partition_ = storage_partition;
