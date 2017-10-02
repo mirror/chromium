@@ -94,6 +94,29 @@
     },
     {
       "key": {
+        "uuid": "3a01ed97_8cf536db",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-02T20:44:32Z",
+      "side": 1,
+      "message": "Does this ever change? Can we just hard-code it into the infobar logic?",
+      "range": {
+        "startLine": 58,
+        "startChar": 12,
+        "endLine": 58,
+        "endChar": 55
+      },
+      "revId": "5083263ffab0ada41f6bcf439bcac216a7644fe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a08c2b8e_e0e559fb",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
         "patchSetId": 14
