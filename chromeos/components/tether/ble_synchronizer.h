@@ -9,6 +9,7 @@
 
 #include "base/callback_forward.h"
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "base/time/clock.h"
 #include "base/time/time.h"
@@ -20,6 +21,10 @@
 namespace chromeos {
 
 namespace tether {
+
+namespace base {
+class TaskRunner;
+}  // namespace base
 
 // Ensures that BLE advertisement registration/unregistration commands and
 // discovery start/stop are not sent too close to each other. Because Bluetooth
@@ -131,7 +136,8 @@ class BleSynchronizer {
   friend class BleSynchronizerTest;
 
   void SetTestDoubles(std::unique_ptr<base::Timer> test_timer,
-                      std::unique_ptr<base::Clock> test_clock);
+                      std::unique_ptr<base::Clock> test_clock,
+                      scoped_refptr<base::TaskRunner> test_task_runner);
 
   void OnAdvertisementRegistered(
       scoped_refptr<device::BluetoothAdvertisement> advertisement);
@@ -146,6 +152,7 @@ class BleSynchronizer {
   void OnDiscoverySessionStopped();
   void OnErrorStoppingDiscoverySession();
 
+  void ScheduleCommandCompletion();
   void CompleteCurrentCommand();
 
   scoped_refptr<device::BluetoothAdapter> bluetooth_adapter_;
@@ -154,6 +161,7 @@ class BleSynchronizer {
   std::deque<std::unique_ptr<Command>> command_queue_;
   std::unique_ptr<base::Timer> timer_;
   std::unique_ptr<base::Clock> clock_;
+  scoped_refptr<base::TaskRunner> task_runner_;
   base::Time last_command_end_timestamp_;
   base::WeakPtrFactory<BleSynchronizer> weak_ptr_factory_;
 
