@@ -27,6 +27,7 @@
 #import "ios/chrome/browser/ui/payments/cells/payments_text_item.h"
 #import "ios/chrome/browser/ui/payments/cells/price_item.h"
 #import "ios/chrome/browser/ui/payments/payment_request_unittest_base.h"
+#include "ios/web/public/test/test_web_thread.h"
 #include "testing/platform_test.h"
 #include "ui/base/l10n/l10n_util.h"
 
@@ -44,6 +45,13 @@ using ::payment_request_util::GetShippingAddressLabelFromAutofillProfile;
 
 class PaymentRequestMediatorTest : public PaymentRequestUnitTestBase,
                                    public PlatformTest {
+ public:
+  PaymentRequestMediatorTest()
+      : PaymentRequestUnitTestBase(),
+        PlatformTest(),
+        ui_thread_(new web::TestWebThread(web::WebThread::UI,
+                                          base::MessageLoop::current())) {}
+
  protected:
   void SetUp() override {
     PaymentRequestUnitTestBase::SetUp();
@@ -66,6 +74,7 @@ class PaymentRequestMediatorTest : public PaymentRequestUnitTestBase,
 
  private:
   PaymentRequestMediator* mediator_;
+  std::unique_ptr<web::TestWebThread> ui_thread_;
 };
 
 // Tests whether payment can be completed when expected.
