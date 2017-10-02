@@ -400,6 +400,24 @@
     },
     {
       "key": {
+        "uuid": "47dd6ec2_b63b435e",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-02T20:34:44Z",
+      "side": 1,
+      "message": "no, I don\u0027t feel that strongly about it.",
+      "parentUuid": "59f68587_d35c5d92",
+      "revId": "a8ac89b5a04e2e0bed9d9b36437df71176f420e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba3b7679_824bbdf0",
         "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
         "patchSetId": 7

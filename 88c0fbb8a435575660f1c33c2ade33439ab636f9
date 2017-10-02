@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae2fd647_07fea964",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-02T20:34:44Z",
+      "side": 1,
+      "message": "Do you plan to add ThirdPartyVPN support to this, or is that handled by a completely separate UI?",
+      "range": {
+        "startLine": 513,
+        "startChar": 12,
+        "endLine": 513,
+        "endChar": 16
+      },
+      "revId": "88c0fbb8a435575660f1c33c2ade33439ab636f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
