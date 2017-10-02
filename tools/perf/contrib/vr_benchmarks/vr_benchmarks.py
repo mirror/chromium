@@ -32,8 +32,10 @@ class XrWebVrStatic(_BaseVRBenchmark):
   def CreateCoreTimelineBasedMeasurementOptions(self):
     memory_categories = ['blink.console', 'disabled-by-default-memory-infra']
     gpu_categories = ['gpu']
+    debug_categories = ['toplevel', 'viz']
     category_filter = chrome_trace_category_filter.ChromeTraceCategoryFilter(
-        ','.join(['-*'] + memory_categories + gpu_categories))
+        ','.join(['-*'] + memory_categories + gpu_categories
+            + debug_categories))
     options = timeline_based_measurement.Options(category_filter)
     options.config.enable_android_graphics_memtrack = True
     options.config.enable_platform_display_trace = True
@@ -61,12 +63,30 @@ class XrWebVrStatic(_BaseVRBenchmark):
     return memory.DefaultValueCanBeAddedPredicateForMemoryMeasurement(value)
 
 
+@benchmark.Owner(emails=['bsheedy@chromium.org'])
+class XrWebVrStaticStandardSize(XrWebVrStatic):
+  """XrWebVrStatic w/ standardized render resolution and no VSync alignment."""
+
+  def CreateStorySet(self, options):
+    return webvr_sample_pages.WebVrSamplePageSet(use_standard_size=True)
+
+  def SetExtraBrowserOptions(self, options):
+    super(XrWebVrStaticStandardSize, self).SetExtraBrowserOptions(options)
+    options.AppendExtraBrowserArgs([
+        '--disable-features=WebVrVsyncAlign',
+    ])
+
+  @classmethod
+  def Name(cls):
+    return 'xr.webvr.static.standard_size'
+
+
 @benchmark.Owner(emails=['tiborg@chromium.org'])
 class XrBrowsingStatic(_BaseVRBenchmark):
   """Benchmark for testing the VR performance in VR Browsing Mode."""
 
   def CreateTimelineBasedMeasurementOptions(self):
-    custom_categories = ['gpu']
+    custom_categories = ['gpu', 'toplevel', 'viz']
     category_filter = chrome_trace_category_filter.ChromeTraceCategoryFilter(
         ','.join(custom_categories))
     options = timeline_based_measurement.Options(category_filter)
