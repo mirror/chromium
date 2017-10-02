@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "e357fde2_6da6dc58",
+        "filename": "chrome/browser/resources/policy_tool.css",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2017-10-02T15:53:20Z",
+      "side": 1,
+      "message": "FYI: This looks to be duplicate of another CL I reviewed. You\u0027ll have merge conflicts, but should be easy to fix.",
+      "range": {
+        "startLine": 8,
+        "startChar": 11,
+        "endLine": 8,
+        "endChar": 15
+      },
+      "revId": "ac81fc0d56cfcd2482abae62927054116b566680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50ec16f9_c42d37c1",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2017-10-02T15:53:20Z",
+      "side": 1,
+      "message": "nit: init variable.",
+      "range": {
+        "startLine": 157,
+        "startChar": 6,
+        "endLine": 157,
+        "endChar": 12
+      },
+      "revId": "ac81fc0d56cfcd2482abae62927054116b566680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5c8af5b8_71377a60",
         "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
         "patchSetId": 6
@@ -13,6 +59,29 @@
       "writtenOn": "2017-09-29T21:18:31Z",
       "side": 1,
       "message": "Because of the change below, could you please update this comment as well?",
+      "revId": "ac81fc0d56cfcd2482abae62927054116b566680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45bf656a_d459f63a",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2017-10-02T15:53:20Z",
+      "side": 1,
+      "message": "nit: init variable (sorry I missed this).",
+      "range": {
+        "startLine": 159,
+        "startChar": 9,
+        "endLine": 159,
+        "endChar": 15
+      },
       "revId": "ac81fc0d56cfcd2482abae62927054116b566680",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
