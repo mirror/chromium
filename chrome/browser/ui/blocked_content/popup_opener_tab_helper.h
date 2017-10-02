@@ -6,13 +6,16 @@
 #define CHROME_BROWSER_UI_BLOCKED_CONTENT_POPUP_OPENER_TAB_HELPER_H_
 
 #include <memory>
-#include <utility>
 
 #include "base/containers/flat_set.h"
 #include "base/macros.h"
 #include "base/time/tick_clock.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_contents_user_data.h"
+
+namespace base {
+class TickClock;
+}
 
 namespace content {
 class NavigationHandle;
@@ -27,16 +30,15 @@ class PopupOpenerTabHelper
     : public content::WebContentsObserver,
       public content::WebContentsUserData<PopupOpenerTabHelper> {
  public:
+  static void CreateForWebContents(content::WebContents* contents,
+                                   std::unique_ptr<base::TickClock> tick_clock);
   ~PopupOpenerTabHelper() override;
-
-  void set_tick_clock_for_testing(std::unique_ptr<base::TickClock> tick_clock) {
-    tick_clock_ = std::move(tick_clock);
-  }
 
  private:
   friend class content::WebContentsUserData<PopupOpenerTabHelper>;
 
-  explicit PopupOpenerTabHelper(content::WebContents* web_contents);
+  explicit PopupOpenerTabHelper(content::WebContents* web_contents,
+                                std::unique_ptr<base::TickClock> tick_clock);
 
   // content::WebContentsObserver:
   void DidStartNavigation(
@@ -50,12 +52,15 @@ class PopupOpenerTabHelper
   // WebContents is not visible.
   base::flat_set<content::NavigationHandle*> pending_background_navigations_;
 
-  // The clock which gets passed to the |visibility_tracker_|.
+  // The clock which is used by the visibility trackers.
   std::unique_ptr<base::TickClock> tick_clock_;
 
   // The |visibility_tracker| tracks the time this WebContents is in the
   // foreground. Will be nullptr until we redirect cross-origin in the
   // background.
+  std::unique_ptr<ScopedVisibilityTracker> visibility_tracker_after_redirect_;
+
+  // Keeps track of the total foreground time for this tab.
   std::unique_ptr<ScopedVisibilityTracker> visibility_tracker_;
 
   DISALLOW_COPY_AND_ASSIGN(PopupOpenerTabHelper);
