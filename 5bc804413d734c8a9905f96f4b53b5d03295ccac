@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "794eabb3_4abad376",
+        "filename": "third_party/WebKit/Source/core/dom/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-02T20:38:28Z",
+      "side": 1,
+      "message": "Should probably go in public_deps, since this is used in a header.",
+      "revId": "5bc804413d734c8a9905f96f4b53b5d03295ccac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52eb737b_6e86b0f8",
+        "filename": "third_party/WebKit/Source/core/dom/BlinkMessagePortMessage.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-02T20:38:28Z",
+      "side": 1,
+      "message": "Comment about what this is, and what mojom type it corresponds to?",
+      "revId": "5bc804413d734c8a9905f96f4b53b5d03295ccac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9819837a_c60f1dae",
+        "filename": "third_party/WebKit/Source/core/dom/BlinkMessagePortMessageStructTraits.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-02T20:38:28Z",
+      "side": 1,
+      "message": "nit: Any reason not to put this next to the ReadPorts logic above? Seems clearer.",
+      "revId": "5bc804413d734c8a9905f96f4b53b5d03295ccac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3917da6_69e72766",
+        "filename": "third_party/WebKit/Source/core/dom/BlinkMessagePortMessageStructTraits.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-02T20:38:28Z",
+      "side": 1,
+      "message": "nit: probably safe to assume that out-\u003eports starts enpty, in which case you don\u0027t need to Shrink(0), and can use ReserveInitialCapacity instead of ReserveCapacity.",
+      "revId": "5bc804413d734c8a9905f96f4b53b5d03295ccac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3098aad4_1de7204a",
+        "filename": "third_party/WebKit/Source/core/dom/BlinkMessagePortMessageStructTraits.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-02T20:38:28Z",
+      "side": 1,
+      "message": "nit: Really we should just make GetWireData return a base::span\u003cconst uint8_t\u003e. StringView isn\u0027t really the right type, but was just the closest thing available at the time.",
+      "revId": "5bc804413d734c8a9905f96f4b53b5d03295ccac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04701e39_c56c430a",
+        "filename": "third_party/WebKit/Source/core/dom/MessagePort.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-02T20:38:28Z",
+      "side": 1,
+      "message": "nit: probably makes sense for this function to just take a BlinkMessagePortMessage\u0026 (or return an Optional\u003cBlinkMessagePortMessage\u003e, but I\u0027m fine with keeping the bool+ref). That\u0027ll skip the need to separately move the arguments out",
+      "revId": "5bc804413d734c8a9905f96f4b53b5d03295ccac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
