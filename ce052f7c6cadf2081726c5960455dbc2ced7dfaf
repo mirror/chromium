@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bab3119c_71ca2813",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webstorage/storage_enumerate.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-02T17:49:58Z",
+      "side": 1,
+      "message": "Could you change the loop to `for (let n of storage)` instead to avoid needing this filter? Or even just enumeratedArray \u003d Object.keys(storage) ? \n\nIf not, we should have a test asserting when those would yield different results. (My brain is still starting up this morning so I may be missing something...)",
+      "range": {
+        "startLine": 28,
+        "startChar": 18,
+        "endLine": 28,
+        "endChar": 39
+      },
+      "revId": "ce052f7c6cadf2081726c5960455dbc2ced7dfaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
