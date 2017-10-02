@@ -16,6 +16,24 @@
       "revId": "7ece7a85d31d91f20fee595d3361ef32d6bc92e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afb4b609_e7d9ae02",
+        "filename": "ash/display/screen_position_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-10-02T14:32:01Z",
+      "side": 1,
+      "message": "There are 19 and 24 use of the To/From function, most of them are using the int. It\u0027s passing the value by reference, I can make them float but it just adding more ugliness. I think it\u0027s better to use both float and int function for now. And we can remove the int usage later.",
+      "parentUuid": "6154e96f_3f872a9a",
+      "revId": "7ece7a85d31d91f20fee595d3361ef32d6bc92e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
