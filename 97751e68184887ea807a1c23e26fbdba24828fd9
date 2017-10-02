@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dee3a3e7_7e907faa",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 4588,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-02T19:06:48Z",
+      "side": 1,
+      "message": "can we fix the description here?",
+      "revId": "97751e68184887ea807a1c23e26fbdba24828fd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
