@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a58eb512_8b8744c0",
+        "filename": "chrome/common/search/ntp_logging_events.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-10-02T08:14:10Z",
+      "side": 1,
+      "message": "only by (matching previous enum value\u0027s docs)",
+      "range": {
+        "startLine": 32,
+        "startChar": 57,
+        "endLine": 32,
+        "endChar": 59
+      },
+      "revId": "8ccfae6fdb6f07e7699acff5381fafa6f911cdad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
