@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f66b3d68_2ba54d3e",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-10-02T18:31:00Z",
+      "side": 1,
+      "message": "Done. Did not know that wrapping counts as multiline.",
+      "parentUuid": "0d4e48d6_0f3ec6a6",
+      "range": {
+        "startLine": 131,
+        "startChar": 33,
+        "endLine": 131,
+        "endChar": 34
+      },
+      "revId": "5f79cd3c468577ddcfe1b748add126e85a027410",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45cd4b89_ba43bc13",
         "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "5f79cd3c468577ddcfe1b748add126e85a027410",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9faa4c94_57642328",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-10-02T18:31:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45cd4b89_ba43bc13",
+      "range": {
+        "startLine": 135,
+        "startChar": 31,
+        "endLine": 135,
+        "endChar": 32
+      },
+      "revId": "5f79cd3c468577ddcfe1b748add126e85a027410",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "fb389711_41be9ca9",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-10-02T18:31:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42509fbb_5a333bce",
+      "range": {
+        "startLine": 141,
+        "startChar": 50,
+        "endLine": 141,
+        "endChar": 51
+      },
+      "revId": "5f79cd3c468577ddcfe1b748add126e85a027410",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51865ff9_b39ef3f0",
         "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
         "patchSetId": 9
@@ -91,6 +163,30 @@
       "revId": "5f79cd3c468577ddcfe1b748add126e85a027410",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff25ddaa_efbc4ceb",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-10-02T18:31:00Z",
+      "side": 1,
+      "message": "Done. I\u0027ve added comments to static_inline/block variables. It is a tough thing to explain, merging logical and physical in a single variable.",
+      "parentUuid": "51865ff9_b39ef3f0",
+      "range": {
+        "startLine": 146,
+        "startChar": 9,
+        "endLine": 147,
+        "endChar": 58
+      },
+      "revId": "5f79cd3c468577ddcfe1b748add126e85a027410",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "bfe8032b_9cdfb695",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-10-02T18:31:00Z",
+      "side": 1,
+      "message": "Done \u0026 gone. It was there to signal ending of static computation.",
+      "parentUuid": "1d4887ea_ec123025",
+      "range": {
+        "startLine": 151,
+        "startChar": 2,
+        "endLine": 151,
+        "endChar": 31
+      },
+      "revId": "5f79cd3c468577ddcfe1b748add126e85a027410",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21cac90b_38bf017d",
         "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
         "patchSetId": 9
@@ -137,6 +257,30 @@
       "revId": "5f79cd3c468577ddcfe1b748add126e85a027410",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0680d76_730603cd",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-10-02T18:31:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21cac90b_38bf017d",
+      "range": {
+        "startLine": 172,
+        "startChar": 46,
+        "endLine": 172,
+        "endChar": 66
+      },
+      "revId": "5f79cd3c468577ddcfe1b748add126e85a027410",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
