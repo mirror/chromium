@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "ef176166_ea6ca7e4",
+        "filename": "chrome/browser/vr/animation_player_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-02T21:40:21Z",
+      "side": 1,
+      "message": "As discussed in chat, lets just go with this for now.",
+      "parentUuid": "d62ea368_fc4b9000",
+      "range": {
+        "startLine": 19,
+        "startChar": 35,
+        "endLine": 19,
+        "endChar": 37
+      },
+      "revId": "175b78f3c0f5209de6a0d1524e045a0eee6e64fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5b778dd9_e29e746e",
         "filename": "chrome/browser/vr/elements/system_indicator_texture.cc",
         "patchSetId": 1
