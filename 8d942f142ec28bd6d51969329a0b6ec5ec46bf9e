@@ -16,6 +16,24 @@
       "revId": "8d942f142ec28bd6d51969329a0b6ec5ec46bf9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e0b1e21_3dfcc90b",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 6339,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-10-02T17:09:28Z",
+      "side": 1,
+      "message": "Nathanael fixed this in PatchSet2",
+      "parentUuid": "0758026d_b0b5434b",
+      "revId": "8d942f142ec28bd6d51969329a0b6ec5ec46bf9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
