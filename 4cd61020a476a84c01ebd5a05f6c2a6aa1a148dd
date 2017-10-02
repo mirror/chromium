@@ -34,6 +34,24 @@
       "revId": "4cd61020a476a84c01ebd5a05f6c2a6aa1a148dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c3ea797_b74d5802",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-02T02:09:35Z",
+      "side": 1,
+      "message": "Ah, you\u0027re right. But I\u0027m planning to add \"keepalive\" property in Fetch API. Also, we are planning to support AbortController which enables user-initiated abort for such requests.\n\nI still think that we need to choose the \"right\" task runner for each loader and asking each loader of it would be a reasonable way.",
+      "parentUuid": "f7ffa53d_04ab2f19",
+      "revId": "4cd61020a476a84c01ebd5a05f6c2a6aa1a148dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
