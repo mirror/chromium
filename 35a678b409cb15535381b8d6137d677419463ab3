@@ -69,6 +69,24 @@
       "revId": "35a678b409cb15535381b8d6137d677419463ab3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5409b5d5_88a90567",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlockFlow.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1143,
+      "author": {
+        "id": 1115755
+      },
+      "writtenOn": "2017-10-02T19:04:45Z",
+      "side": 1,
+      "message": "My notes on table layout and baseline alignment are here, if they\u0027re useful to you.\n\nhttps://docs.google.com/document/d/16i5yJ4EWeJDYn5dwHcp9rusjyn6H32YnnhaN9Gw60_M/edit?usp\u003dsharing",
+      "parentUuid": "3549d801_79e2bc6a",
+      "revId": "35a678b409cb15535381b8d6137d677419463ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
