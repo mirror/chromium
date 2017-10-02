@@ -10,6 +10,7 @@
 
 #include <memory>
 #include <string>
+#include <vector>
 
 #include "base/bind.h"
 #include "base/containers/mru_cache.h"
@@ -21,6 +22,7 @@
 #include "base/time/time.h"
 #include "net/base/net_export.h"
 #include "third_party/boringssl/src/include/openssl/base.h"
+#include "third_party/boringssl/src/include/openssl/ssl.h"
 
 namespace base {
 class Clock;
@@ -46,10 +48,8 @@ class NET_EXPORT SSLClientSessionCache : public base::MemoryCoordinatorClient {
   size_t size() const;
 
   // Returns the session associated with |cache_key| and moves it to the front
-  // of the MRU list. Returns nullptr if there is none. If |count| is non-null,
-  // |*count| will contain the number of times this session has been looked up
-  // (including this call).
-  bssl::UniquePtr<SSL_SESSION> Lookup(const std::string& cache_key, int* count);
+  // of the MRU list. Returns nullptr if there is none.
+  bssl::UniquePtr<SSL_SESSION> Lookup(const std::string& cache_key);
 
   // Resets the count returned by Lookup to 0 for the session associated with
   // |cache_key|.
@@ -75,8 +75,11 @@ class NET_EXPORT SSLClientSessionCache : public base::MemoryCoordinatorClient {
     Entry(Entry&&);
     ~Entry();
 
-    int lookups;
-    bssl::UniquePtr<SSL_SESSION> session;
+    void Push(bssl::UniquePtr<SSL_SESSION> session);
+    bssl::UniquePtr<SSL_SESSION> Pop();
+    SSL_SESSION* Peek();
+
+    bssl::UniquePtr<SSL_SESSION> sessions[2] = {nullptr};
   };
 
   // base::MemoryCoordinatorClient implementation:
