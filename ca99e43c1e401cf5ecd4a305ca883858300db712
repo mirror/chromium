@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "db2e37b8_86eff9c8",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-10-02T18:45:48Z",
+      "side": 1,
+      "message": "Good point. Done",
+      "parentUuid": "73bc4948_a9f4b4fd",
+      "revId": "ca99e43c1e401cf5ecd4a305ca883858300db712",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4158211e_676b6487",
         "filename": "ash/message_center/message_list_view.h",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "ca99e43c1e401cf5ecd4a305ca883858300db712",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "921ec250_f92a105a",
+        "filename": "ash/message_center/message_list_view.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-10-02T18:45:48Z",
+      "side": 1,
+      "message": "I thought it should be same as View::child_count(). But I just realized not and changed it to size_t. Thanks.",
+      "parentUuid": "4158211e_676b6487",
+      "revId": "ca99e43c1e401cf5ecd4a305ca883858300db712",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
