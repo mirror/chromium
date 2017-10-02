@@ -40,7 +40,12 @@ struct CONTENT_EXPORT VideoDeviceCaptureCapabilities {
 };
 
 // This function performs source, source-settings and track-settings selection
-// based on the given |capabilities| and |constraints|.
+// based on the given |capabilities| and |constraints| and |extra_constraints|.
+// |capabilities| represents the capabilities of all the devices to be
+// considered as candidate sources. |constraints| represent user-provided
+// constraints for the track this algorithm selects settings for.
+// |extra_constraints| represents user-provided constraints for other tracks
+// this algorithm is not selecting settings for.
 // Chromium performs constraint resolution in two steps. First, a source and its
 // settings are selected, then track settings are selected based on the source
 // settings. This function implements both steps. Sources are not a user-visible
@@ -55,12 +60,12 @@ struct CONTENT_EXPORT VideoDeviceCaptureCapabilities {
 // properties while a candidate track supports a single value. For example,
 // cropping allows a source with native resolution AxB to support the range of
 // resolutions from 1x1 to AxB.
-// Only candidates that satisfy the basic constraint set are valid. If no
-// candidate can satisfy the basic constraint set, this function returns
-// a result without value and with the name of a failed constraint accessible
-// via the failed_constraint_name() method. If at least one candidate that
-// satisfies the basic constraint set can be found, this function returns a
-// result with a valid value.
+// Only candidates that satisfy the basic constraint sets for |constraints| and
+// |extra_constraints| are valid. If no candidate can satisfy all the basic
+// constraint sets, this function returns a result without value and with the
+// name of a failed constraint accessible via the failed_constraint_name()
+// method. If at least one candidate that satisfies all the basic constraint
+// sets can be found, this function returns a result with a valid value.
 // If there are no candidates at all, this function returns a result without
 // value and an empty failed constraint name.
 // The criteria to decide if a valid candidate is better than another one are as
@@ -68,6 +73,10 @@ struct CONTENT_EXPORT VideoDeviceCaptureCapabilities {
 // 1. Given advanced constraint sets A[0],A[1]...,A[n], candidate C1 is better
 //    than candidate C2 if C1 supports the first advanced set for which C1's
 //    support is different than C2's support.
+//    Advanced constraint sets are sorted such that all the advanced constraint
+//    sets from |constraints| come first, then the advanced sets from
+//    |extra_constraints[0]| if it exists, then the advanced sets of
+//    |extra_constraints[1]|, and so on.
 //    Examples:
 //    * One advanced set, C1 supports it, and C2 does not. C1 is better.
 //    * Two sets, C1 supports both, C2 supports only the first. C1 is better.
@@ -75,10 +84,10 @@ struct CONTENT_EXPORT VideoDeviceCaptureCapabilities {
 //      and third set. C1 is better.
 // 2. C1 is better than C2 if C1 has a smaller fitness distance than C2. The
 //    fitness distance depends on the ability of the candidate to support ideal
-//    values in the basic constraint set. This is the final criterion defined in
-//    the spec.
+//    values in the basic constraint sets. This is the final criterion defined
+//    in the spec.
 // 3. C1 is better than C2 if C1 has a lower Chromium-specific custom distance
-//    from the basic constraint set. This custom distance is the sum of various
+//    from the basic constraint sets. This custom distance is the sum of various
 //    constraint-specific custom distances.
 //    For example, if the constraint set specifies a resolution of exactly
 //    1000x1000 for a track, then a candidate with a resolution of 1200x1200
@@ -86,7 +95,7 @@ struct CONTENT_EXPORT VideoDeviceCaptureCapabilities {
 //    satisfy the constraint set because cropping can be used to produce the
 //    track setting of 1000x1000, but 1200x1200 is considered better because it
 //    has lower resource usage. The same criteria applies for each advanced
-//    constraint set.
+//    constraint set of |constraints| and |extra_constraints|.
 // 4. C1 is better than C2 if its native settings have a smaller fitness
 //    distance. For example, if the ideal resolution is 1000x1000 and C1 has a
 //    native resolution of 1200x1200, while C2 has a native resolution of
@@ -109,7 +118,8 @@ VideoCaptureSettings CONTENT_EXPORT SelectSettingsVideoDeviceCapture(
     const blink::WebMediaConstraints& constraints,
     int default_width,
     int default_height,
-    double default_frame_rate);
+    double default_frame_rate,
+    const std::vector<blink::WebMediaConstraints>& extra_constraints = {});
 
 }  // namespace content
 

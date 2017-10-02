@@ -61,7 +61,7 @@ VideoCaptureSettings SelectSettingsVideoDeviceCapture(
   return SelectSettingsVideoDeviceCapture(
       capabilities, constraints, MediaStreamVideoSource::kDefaultWidth,
       MediaStreamVideoSource::kDefaultHeight,
-      MediaStreamVideoSource::kDefaultFrameRate);
+      MediaStreamVideoSource::kDefaultFrameRate, {});
 }
 
 }  // namespace
@@ -185,6 +185,15 @@ class MediaStreamConstraintsUtilVideoDeviceTest : public testing::Test {
     blink::WebMediaConstraints constraints =
         constraint_factory_.CreateWebMediaConstraints();
     return SelectSettingsVideoDeviceCapture(capabilities_, constraints);
+  }
+
+  VideoCaptureSettings SelectSettingsExtraConstraints(
+      const blink::WebMediaConstraints& constraints,
+      const std::vector<blink::WebMediaConstraints>& extra_constraints) {
+    return SelectSettingsVideoDeviceCapture(
+        capabilities_, constraints, MediaStreamVideoSource::kDefaultWidth,
+        MediaStreamVideoSource::kDefaultHeight,
+        MediaStreamVideoSource::kDefaultFrameRate, extra_constraints);
   }
 
   VideoDeviceCaptureCapabilities capabilities_;
@@ -2303,6 +2312,233 @@ TEST_F(MediaStreamConstraintsUtilVideoDeviceTest, InvertedDefaultResolution) {
   EXPECT_EQ(high_res_device_->device_id, result.device_id());
   EXPECT_EQ(result.Width(), MediaStreamVideoSource::kDefaultWidth);
   EXPECT_EQ(result.Height(), MediaStreamVideoSource::kDefaultHeight);
+}
+
+// This test verifies that extra basic constraints are satisfied.
+TEST_F(MediaStreamConstraintsUtilVideoDeviceTest, ExtraBasic) {
+  constraint_factory_.Reset();
+  auto constraints = constraint_factory_.CreateWebMediaConstraints();
+
+  std::vector<blink::WebMediaConstraints> extra_constraints;
+  constraint_factory_.basic().width.SetExact(640);
+  extra_constraints.push_back(constraint_factory_.CreateWebMediaConstraints());
+
+  constraint_factory_.Reset();
+  constraint_factory_.basic().frame_rate.SetExact(10.0);
+  extra_constraints.push_back(constraint_factory_.CreateWebMediaConstraints());
+
+  auto result = SelectSettingsExtraConstraints(constraints, extra_constraints);
+  EXPECT_TRUE(result.HasValue());
+  // The high-res device at 640x480@10Hz matches all basic constraints.
+  EXPECT_EQ(high_res_device_->device_id, result.device_id());
+  EXPECT_EQ(result.Width(), 640);
+  EXPECT_EQ(result.Height(), 480);
+  EXPECT_EQ(result.FrameRate(), 10.0);
+  // The track uses the native mode since it is unconstrained.
+  EXPECT_EQ(result.track_adapter_settings().max_width, 640);
+  EXPECT_EQ(result.track_adapter_settings().max_height, 480);
+  EXPECT_EQ(result.track_adapter_settings().max_frame_rate, 0.0);
+}
+
+// This test verifies that extra ideal constraints are taken into account.
+TEST_F(MediaStreamConstraintsUtilVideoDeviceTest, ExtraIdeal) {
+  constraint_factory_.Reset();
+  auto constraints = constraint_factory_.CreateWebMediaConstraints();
+
+  std::vector<blink::WebMediaConstraints> extra_constraints;
+  constraint_factory_.basic().width.SetIdeal(1920);
+  extra_constraints.push_back(constraint_factory_.CreateWebMediaConstraints());
+
+  auto result = SelectSettingsExtraConstraints(constraints, extra_constraints);
+  EXPECT_TRUE(result.HasValue());
+  // The high-res device in 1920x1080@60Hz is the best match.
+  EXPECT_EQ(high_res_device_->device_id, result.device_id());
+  EXPECT_EQ(result.Width(), 1920);
+  EXPECT_EQ(result.Height(), 1080);
+  EXPECT_EQ(result.FrameRate(), 60.0);
+  // The track uses the native mode since it is unconstrained.
+  EXPECT_EQ(result.track_adapter_settings().max_width, 1920);
+  EXPECT_EQ(result.track_adapter_settings().max_height, 1080);
+  EXPECT_EQ(result.track_adapter_settings().max_frame_rate, 0.0);
+}
+
+// This test verifies that extra advanced constraints are satisfied if possible.
+TEST_F(MediaStreamConstraintsUtilVideoDeviceTest, ExtraAdvanced) {
+  constraint_factory_.Reset();
+  auto constraints = constraint_factory_.CreateWebMediaConstraints();
+
+  std::vector<blink::WebMediaConstraints> extra_constraints;
+  constraint_factory_.AddAdvanced().width.SetExact(1280);
+  extra_constraints.push_back(constraint_factory_.CreateWebMediaConstraints());
+
+  constraint_factory_.Reset();
+  constraint_factory_.AddAdvanced().frame_rate.SetExact(10.0);
+  extra_constraints.push_back(constraint_factory_.CreateWebMediaConstraints());
+
+  auto result = SelectSettingsExtraConstraints(constraints, extra_constraints);
+  EXPECT_TRUE(result.HasValue());
+  // The high-res device in 1280x720@60Hz is the best choice for these
+  // constraints.
+  EXPECT_EQ(high_res_device_->device_id, result.device_id());
+  EXPECT_EQ(result.Width(), 1280);
+  EXPECT_EQ(result.Height(), 720);
+  EXPECT_EQ(result.FrameRate(), 60.0);
+  // The track uses the native mode since it is unconstrained.
+  EXPECT_EQ(result.track_adapter_settings().max_width, 1280);
+  EXPECT_EQ(result.track_adapter_settings().max_height, 720);
+  EXPECT_EQ(result.track_adapter_settings().max_frame_rate, 0.0);
+}
+
+// This test verifies that main advanced constraints are all satisfied if
+// possible.
+TEST_F(MediaStreamConstraintsUtilVideoDeviceTest, MainAndExtraExactAdvanced) {
+  constraint_factory_.Reset();
+  constraint_factory_.AddAdvanced().width.SetExact(640);
+  auto constraints = constraint_factory_.CreateWebMediaConstraints();
+
+  std::vector<blink::WebMediaConstraints> extra_constraints;
+  constraint_factory_.Reset();
+  constraint_factory_.AddAdvanced().width.SetExact(1920);
+  extra_constraints.push_back(constraint_factory_.CreateWebMediaConstraints());
+
+  constraint_factory_.Reset();
+  // This advanced extra set can and should be satisfied.
+  constraint_factory_.AddAdvanced().frame_rate.SetExact(10.0);
+  extra_constraints.push_back(constraint_factory_.CreateWebMediaConstraints());
+
+  auto result = SelectSettingsExtraConstraints(constraints, extra_constraints);
+  EXPECT_TRUE(result.HasValue());
+  // The high-res device in 1920x1080@60Hz native mode is the best choice to
+  // satisfy all advanced constraints sets.
+  EXPECT_EQ(high_res_device_->device_id, result.device_id());
+  EXPECT_EQ(result.Width(), 1920);
+  EXPECT_EQ(result.Height(), 1080);
+  EXPECT_EQ(result.FrameRate(), 60.0);
+  // The track uses the required width of 640.
+  EXPECT_EQ(result.track_adapter_settings().max_width, 640);
+  // The track uses a height that preserves the native aspect ratio.
+  EXPECT_EQ(result.track_adapter_settings().max_height, 360);
+  // Track frame rate is 0.0 because it is unconstrained.
+  EXPECT_EQ(result.track_adapter_settings().max_frame_rate, 0.0);
+}
+
+// This test verifies that the main ideal constraints are satisfied and that
+// extra advanced constraints that are satisfied do not interfere with the
+// main track settings.
+TEST_F(MediaStreamConstraintsUtilVideoDeviceTest, MainIdealExtraAdvancedExact) {
+  constraint_factory_.Reset();
+  constraint_factory_.basic().width.SetIdeal(1920);
+  constraint_factory_.basic().height.SetIdeal(1080);
+  auto constraints = constraint_factory_.CreateWebMediaConstraints();
+
+  std::vector<blink::WebMediaConstraints> extra_constraints;
+  constraint_factory_.Reset();
+  constraint_factory_.AddAdvanced().frame_rate.SetExact(10.0);
+  extra_constraints.push_back(constraint_factory_.CreateWebMediaConstraints());
+
+  auto result = SelectSettingsExtraConstraints(constraints, extra_constraints);
+  EXPECT_TRUE(result.HasValue());
+  // The high-res device in 2304x1536@10Hz is the one that best satisfies
+  // since it can satisfy the ideal value and is an exact match for the
+  // frame rate of the extra constraints.
+  EXPECT_EQ(high_res_device_->device_id, result.device_id());
+  EXPECT_EQ(result.Width(), 2304);
+  EXPECT_EQ(result.Height(), 1536);
+  EXPECT_EQ(result.FrameRate(), 10.0);
+  // The track resolution matches the ideal value.
+  EXPECT_EQ(result.track_adapter_settings().max_width, 1920);
+  EXPECT_EQ(result.track_adapter_settings().max_height, 1080);
+  // Track frame rate is 0.0 because it is unconstrained.
+  EXPECT_EQ(result.track_adapter_settings().max_frame_rate, 0.0);
+}
+
+// This test verifies that the main exact constraints are satisfied and that
+// extra advanced constraints that are satisfied do not interfere with the
+// main track settings.
+TEST_F(MediaStreamConstraintsUtilVideoDeviceTest,
+       MainBasicExactExtraAdvancedExact) {
+  constraint_factory_.Reset();
+  constraint_factory_.basic().width.SetExact(1920);
+  auto constraints = constraint_factory_.CreateWebMediaConstraints();
+
+  std::vector<blink::WebMediaConstraints> extra_constraints;
+  constraint_factory_.Reset();
+  constraint_factory_.AddAdvanced().frame_rate.SetExact(10.0);
+  extra_constraints.push_back(constraint_factory_.CreateWebMediaConstraints());
+
+  auto result = SelectSettingsExtraConstraints(constraints, extra_constraints);
+  EXPECT_TRUE(result.HasValue());
+  // The high-res device has a native mode that matches the exact basic
+  // constraint natively and can satisfy the exact advanced constraint with
+  // resolution adjustment.
+  EXPECT_EQ(high_res_device_->device_id, result.device_id());
+  EXPECT_EQ(result.Width(), 1920);
+  EXPECT_EQ(result.Height(), 1080);
+  EXPECT_EQ(result.FrameRate(), 60.0);
+  // Track width matches the ideal value.
+  EXPECT_EQ(result.track_adapter_settings().max_width, 1920);
+  // Track height has the value that matches the native aspect ratio.
+  EXPECT_EQ(result.track_adapter_settings().max_height, 1080);
+  // Track frame rate is 0.0 because it is unconstrained.
+  EXPECT_EQ(result.track_adapter_settings().max_frame_rate, 0.0);
+}
+
+// These tests verify that extra basic constraints that can be satisfied do not
+// interfere with track settings.
+TEST_F(MediaStreamConstraintsUtilVideoDeviceTest,
+       MainBasicExactLessThanExtraBasicExact) {
+  constraint_factory_.Reset();
+  constraint_factory_.basic().width.SetExact(400);
+  constraint_factory_.basic().frame_rate.SetExact(10);
+  auto constraints = constraint_factory_.CreateWebMediaConstraints();
+
+  std::vector<blink::WebMediaConstraints> extra_constraints;
+  constraint_factory_.Reset();
+  constraint_factory_.basic().width.SetExact(800);
+  constraint_factory_.basic().frame_rate.SetExact(20);
+  extra_constraints.push_back(constraint_factory_.CreateWebMediaConstraints());
+
+  auto result = SelectSettingsExtraConstraints(constraints, extra_constraints);
+  EXPECT_TRUE(result.HasValue());
+  // The low-res device at 800x600@20Hz is the best match.
+  EXPECT_EQ(low_res_device_->device_id, result.device_id());
+  EXPECT_EQ(result.Width(), 800);
+  EXPECT_EQ(result.Height(), 600);
+  EXPECT_EQ(result.FrameRate(), 20.0);
+  // Track width matches the exact value.
+  EXPECT_EQ(result.track_adapter_settings().max_width, 400);
+  // Track height has a value that matches the native aspect ratio.
+  EXPECT_EQ(result.track_adapter_settings().max_height, 300);
+  // Track frame rate matches the exact value.
+  EXPECT_EQ(result.track_adapter_settings().max_frame_rate, 10.0);
+}
+
+TEST_F(MediaStreamConstraintsUtilVideoDeviceTest,
+       MainBasicExactGreaterThanExtraBasicExact) {
+  constraint_factory_.Reset();
+  constraint_factory_.basic().width.SetExact(800);
+  constraint_factory_.basic().frame_rate.SetExact(20);
+  auto constraints = constraint_factory_.CreateWebMediaConstraints();
+
+  std::vector<blink::WebMediaConstraints> extra_constraints;
+  constraint_factory_.Reset();
+  constraint_factory_.basic().width.SetExact(400);
+  constraint_factory_.basic().frame_rate.SetExact(10);
+  extra_constraints.push_back(constraint_factory_.CreateWebMediaConstraints());
+
+  auto result = SelectSettingsExtraConstraints(constraints, extra_constraints);
+  EXPECT_TRUE(result.HasValue());
+  // The low-res device at 800x600@20Hz is the best match.
+  EXPECT_EQ(low_res_device_->device_id, result.device_id());
+  EXPECT_EQ(result.Width(), 800);
+  EXPECT_EQ(result.Height(), 600);
+  EXPECT_EQ(result.FrameRate(), 20.0);
+  // Track width matches the exact native value.
+  EXPECT_EQ(result.track_adapter_settings().max_width, 800);
+  // Track height uses the native value.
+  EXPECT_EQ(result.track_adapter_settings().max_height, 600);
+  // Track frame rate is 0.0 because it matches the native value.
+  EXPECT_EQ(result.track_adapter_settings().max_frame_rate, 0.0);
 }
 
 }  // namespace content

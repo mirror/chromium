@@ -173,22 +173,23 @@ class ConstrainedFormat {
   NumericRangeSet<double> constrained_frame_rate_;
 };
 
-VideoCaptureSettings ComputeVideoDeviceCaptureSettings(
+VideoCaptureSettings ComputeVideoCaptureSettings(
     const Candidate& candidate,
-    const ConstrainedFormat& constrained_format,
+    const ConstrainedFormat& main_constrained_format,
     const blink::WebMediaTrackConstraintSet& basic_constraint_set) {
   media::VideoCaptureParams capture_params;
   capture_params.requested_format = candidate.format();
   capture_params.power_line_frequency = candidate.power_line_frequency();
   auto track_adapter_settings = SelectVideoTrackAdapterSettings(
-      basic_constraint_set, constrained_format.constrained_resolution(),
-      constrained_format.constrained_frame_rate(),
+      basic_constraint_set, main_constrained_format.constrained_resolution(),
+      main_constrained_format.constrained_frame_rate(),
       capture_params.requested_format);
 
   return VideoCaptureSettings(
       candidate.device_id(), capture_params, candidate.noise_reduction(),
-      track_adapter_settings, constrained_format.constrained_frame_rate().Min(),
-      constrained_format.constrained_frame_rate().Max());
+      track_adapter_settings,
+      main_constrained_format.constrained_frame_rate().Min(),
+      main_constrained_format.constrained_frame_rate().Max());
 }
 
 // Returns a pair with the minimum and maximum aspect ratios supported by the
@@ -761,7 +762,8 @@ VideoCaptureSettings SelectSettingsVideoDeviceCapture(
     const blink::WebMediaConstraints& constraints,
     int default_width,
     int default_height,
-    double default_frame_rate) {
+    double default_frame_rate,
+    const std::vector<blink::WebMediaConstraints>& extra_constraints) {
   DCHECK_GT(default_width, 0);
   DCHECK_GT(default_height, 0);
   DCHECK_GE(default_frame_rate, 0.0);
@@ -772,17 +774,22 @@ VideoCaptureSettings SelectSettingsVideoDeviceCapture(
   // a) For each advanced constraint set, a 0/1 value indicating if the
   //    candidate satisfies the corresponding constraint set.
   // b) Fitness distance for the candidate based on support for the ideal values
-  //    of the basic constraint set.
+  //    of the basic constraint sets.
   // c) A custom distance value based on how "well" a candidate satisfies each
   //    constraint set, including basic and advanced sets.
   // d) Native fitness distance for the candidate based on support for the
-  //    ideal values of the basic constraint set using native values for
+  //    ideal values of the basic constraint sets using native values for
   //    settings that can support a range of values.
   // e) A custom distance value based on how close the candidate is to default
   //    settings.
   // Parts (a) and (b) are according to spec. Parts (c) to (e) are
   // implementation specific and used to break ties.
+  size_t num_extra_advanced_sets = 0U;
+  for (auto& extra : extra_constraints) {
+    num_extra_advanced_sets += extra.Advanced().size();
+  }
   DistanceVector best_distance(2 * constraints.Advanced().size() + 3 +
+                               2 * num_extra_advanced_sets +
                                kNumDefaultDistanceEntries);
   std::fill(best_distance.begin(), best_distance.end(), HUGE_VAL);
   VideoCaptureSettings result;
@@ -792,17 +799,46 @@ VideoCaptureSettings SelectSettingsVideoDeviceCapture(
     double basic_device_distance =
         DeviceSourceDistance(device->device_id, device->facing_mode,
                              constraints.Basic(), &failed_constraint_name);
+    // Since all basic constraint sets must be satisfied, use a single device
+    // distance consisting in the sum of the device distances for all basic
+    // sets. Apply the same criterion for other distances for basic sets.
+    for (auto& extra : extra_constraints) {
+      basic_device_distance +=
+          DeviceSourceDistance(device->device_id, device->facing_mode,
+                               extra.Basic(), &failed_constraint_name);
+    }
     if (!std::isfinite(basic_device_distance))
       continue;
 
     for (auto& format : device->formats) {
       ConstrainedFormat constrained_format(format);
+      std::vector<ConstrainedFormat> extra_constrained_formats;
+      extra_constrained_formats.reserve(extra_constraints.size());
+      for (size_t i = 0; i < extra_constraints.size(); ++i)
+        extra_constrained_formats.emplace_back(format);
+
       double basic_format_distance =
           FormatSourceDistance(format, constrained_format, constraints.Basic(),
                                &failed_constraint_name);
+      for (size_t i = 0; i < extra_constraints.size(); ++i) {
+        basic_format_distance += FormatSourceDistance(
+            format, extra_constrained_formats[i], extra_constraints[i].Basic(),
+            &failed_constraint_name);
+      }
       if (!std::isfinite(basic_format_distance))
         continue;
+
       if (!constrained_format.ApplyConstraintSet(constraints.Basic()))
+        continue;
+      bool extra_satisfied = true;
+      for (size_t i = 0; i < extra_constraints.size(); ++i) {
+        if (!extra_constrained_formats[i].ApplyConstraintSet(
+                extra_constraints[i].Basic())) {
+          extra_satisfied = false;
+          break;
+        }
+      }
+      if (!extra_satisfied)
         continue;
 
       for (auto& power_line_frequency : capabilities.power_line_capabilities) {
@@ -810,6 +846,12 @@ VideoCaptureSettings SelectSettingsVideoDeviceCapture(
             PowerLineFrequencyConstraintSourceDistance(
                 constraints.Basic().goog_power_line_frequency,
                 power_line_frequency, &failed_constraint_name);
+        for (auto& extra : extra_constraints) {
+          basic_power_line_frequency_distance +=
+              PowerLineFrequencyConstraintSourceDistance(
+                  extra.Basic().goog_power_line_frequency, power_line_frequency,
+                  &failed_constraint_name);
+        }
         if (!std::isfinite(basic_power_line_frequency_distance))
           continue;
 
@@ -819,10 +861,16 @@ VideoCaptureSettings SelectSettingsVideoDeviceCapture(
               NoiseReductionConstraintSourceDistance(
                   constraints.Basic().goog_noise_reduction, noise_reduction,
                   &failed_constraint_name);
+          for (auto& extra : extra_constraints) {
+            basic_noise_reduction_distance +=
+                NoiseReductionConstraintSourceDistance(
+                    extra.Basic().goog_noise_reduction, noise_reduction,
+                    &failed_constraint_name);
+          }
           if (!std::isfinite(basic_noise_reduction_distance))
             continue;
 
-          // The candidate satisfies the basic constraint set.
+          // The candidate satisfies the basic constraint sets.
           double candidate_basic_custom_distance =
               basic_device_distance + basic_format_distance +
               basic_power_line_frequency_distance +
@@ -837,7 +885,8 @@ VideoCaptureSettings SelectSettingsVideoDeviceCapture(
                               power_line_frequency, noise_reduction);
           DistanceVector candidate_distance_vector;
           // First criteria for valid candidates is satisfaction of advanced
-          // constraint sets.
+          // constraint sets. Start with main constraints and follow with extra
+          // constraints.
           for (const auto& advanced_set : constraints.Advanced()) {
             double custom_distance = CandidateSourceDistance(
                 candidate, constrained_format, advanced_set, nullptr);
@@ -847,10 +896,30 @@ VideoCaptureSettings SelectSettingsVideoDeviceCapture(
             double spec_distance = std::isfinite(custom_distance) ? 0 : 1;
             candidate_distance_vector.push_back(spec_distance);
           }
+          for (size_t i = 0; i < extra_constraints.size(); ++i) {
+            for (auto& advanced_set : extra_constraints[i].Advanced()) {
+              double custom_distance = CandidateSourceDistance(
+                  candidate, extra_constrained_formats[i], advanced_set,
+                  nullptr);
+              if (!extra_constrained_formats[i].ApplyConstraintSet(
+                      advanced_set)) {
+                custom_distance = HUGE_VAL;
+              }
+              advanced_custom_distance_vector.push_back(custom_distance);
+              double spec_distance = std::isfinite(custom_distance) ? 0 : 1;
+              candidate_distance_vector.push_back(spec_distance);
+            }
+          }
 
           // Second criterion is fitness distance.
-          candidate_distance_vector.push_back(CandidateFitnessDistance(
-              candidate, constrained_format, constraints.Basic()));
+          double fitness_distance = CandidateFitnessDistance(
+              candidate, constrained_format, constraints.Basic());
+          for (size_t i = 0; i < extra_constraints.size(); ++i) {
+            fitness_distance += CandidateFitnessDistance(
+                candidate, extra_constrained_formats[i],
+                extra_constraints[i].Basic());
+          }
+          candidate_distance_vector.push_back(fitness_distance);
 
           // Third criteria are custom distances to constraint sets.
           candidate_distance_vector.push_back(candidate_basic_custom_distance);
@@ -859,8 +928,13 @@ VideoCaptureSettings SelectSettingsVideoDeviceCapture(
                     std::back_inserter(candidate_distance_vector));
 
           // Fourth criteria is native fitness distance.
-          candidate_distance_vector.push_back(CandidateNativeFitnessDistance(
-              constrained_format, constraints.Basic()));
+          double native_fitness_distance = CandidateNativeFitnessDistance(
+              constrained_format, constraints.Basic());
+          for (size_t i = 0; i < extra_constraints.size(); ++i) {
+            native_fitness_distance += CandidateNativeFitnessDistance(
+                extra_constrained_formats[i], extra_constraints[i].Basic());
+          }
+          candidate_distance_vector.push_back(native_fitness_distance);
 
           // Final criteria are custom distances to default settings.
           AppendDistanceFromDefault(candidate, capabilities, default_width,
@@ -870,8 +944,8 @@ VideoCaptureSettings SelectSettingsVideoDeviceCapture(
           DCHECK_EQ(best_distance.size(), candidate_distance_vector.size());
           if (candidate_distance_vector < best_distance) {
             best_distance = candidate_distance_vector;
-            result = ComputeVideoDeviceCaptureSettings(
-                candidate, constrained_format, constraints.Basic());
+            result = ComputeVideoCaptureSettings(candidate, constrained_format,
+                                                 constraints.Basic());
           }
         }
       }

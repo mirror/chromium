@@ -494,7 +494,8 @@ void UserMediaProcessor::SelectVideoDeviceSettings(
                  web_request.VideoConstraints(),
                  MediaStreamVideoSource::kDefaultWidth,
                  MediaStreamVideoSource::kDefaultHeight,
-                 MediaStreamVideoSource::kDefaultFrameRate),
+                 MediaStreamVideoSource::kDefaultFrameRate,
+                 std::vector<blink::WebMediaConstraints>()),
       base::Bind(&UserMediaProcessor::FinalizeSelectVideoDeviceSettings,
                  weak_factory_.GetWeakPtr(), web_request));
 }
