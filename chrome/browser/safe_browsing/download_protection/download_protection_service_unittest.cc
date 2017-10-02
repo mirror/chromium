@@ -34,7 +34,6 @@
 #include "chrome/browser/safe_browsing/download_protection/download_protection_util.h"
 #include "chrome/browser/safe_browsing/download_protection/ppapi_download_request.h"
 #include "chrome/browser/safe_browsing/incident_reporting/incident_reporting_service.h"
-#include "chrome/browser/safe_browsing/local_database_manager.h"
 #include "chrome/browser/safe_browsing/safe_browsing_service.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/safe_browsing/binary_feature_extractor.h"
@@ -229,27 +228,14 @@ ACTION_P(TrustSignature, contents) {
   chain->add_element()->set_certificate(contents.data(), contents.size());
 }
 
-// We can't call OnSafeBrowsingResult directly because SafeBrowsingCheck does
-// not have any copy constructor which means it can't be stored in a callback
-// easily.  Note: check will be deleted automatically when the callback is
-// deleted.
-void OnSafeBrowsingResult(
-    LocalSafeBrowsingDatabaseManager::SafeBrowsingCheck* check) {
-  check->OnSafeBrowsingResult();
-}
-
 ACTION_P(CheckDownloadUrlDone, threat_type) {
-  // TODO(nparker): Remove use of SafeBrowsingCheck and instead call
-  // client->OnCheckDownloadUrlResult(..) directly.
-  LocalSafeBrowsingDatabaseManager::SafeBrowsingCheck* check =
-      new LocalSafeBrowsingDatabaseManager::SafeBrowsingCheck(
-          arg0, std::vector<SBFullHash>(), arg1, BINURL,
-          CreateSBThreatTypeSet({SB_THREAT_TYPE_URL_BINARY_MALWARE}));
-  for (size_t i = 0; i < check->url_results.size(); ++i)
-    check->url_results[i] = threat_type;
+  // |arg0| is the vector of URLs to check.
+  // |arg1| is a raw pointer to SafeBrowsingDatabaseManager::Client.
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&OnSafeBrowsingResult, base::Owned(check)));
+      base::BindOnce(
+          &SafeBrowsingDatabaseManager::Client::OnCheckDownloadUrlResult,
+          base::Unretained(arg1), arg0, threat_type));
 }
 
 class DownloadProtectionServiceTest : public testing::Test {
