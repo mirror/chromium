@@ -16,6 +16,24 @@
       "revId": "0c5df4c5969a81b51c172cd45dd72390a5104744",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ade08178_39e18169",
+        "filename": "DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2017-10-02T17:05:38Z",
+      "side": 1,
+      "message": "Done: https://chromium-review.googlesource.com/c/chromium/src/+/695545",
+      "parentUuid": "ecd2a316_db54ab1d",
+      "revId": "0c5df4c5969a81b51c172cd45dd72390a5104744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
