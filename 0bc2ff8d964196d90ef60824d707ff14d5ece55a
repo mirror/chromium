@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd01099f_436d55a0",
+        "filename": "chrome/browser/android/compositor/compositor_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-02T22:18:25Z",
+      "side": 1,
+      "message": "Could you add a TODO to set the background on the compositor_? This makes sure that we always use the best possible color, instead of having multiple places that could affect what is used. Right now the root_layer_ would use the page background (coming from content), but the compositor_ uses the default white. It would be better to isolate this logic to one place.",
+      "range": {
+        "startLine": 186,
+        "startChar": 0,
+        "endLine": 186,
+        "endChar": 65
+      },
+      "revId": "0bc2ff8d964196d90ef60824d707ff14d5ece55a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
