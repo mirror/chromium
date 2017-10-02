@@ -22,6 +22,30 @@
       "revId": "0b680d53b39e6a3c10f9b4549df71929d3cefd11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96ef26de_656ebd61",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1158814
+      },
+      "writtenOn": "2017-10-02T14:38:53Z",
+      "side": 1,
+      "message": "With this change reverted, when \"install -s\" is called instead of eu-strip, there is this failure:\n\n[14/40] ACTION //chrome/installer/linux:beta_rpm(//build/toolchain/linux:clang_mipsel)\nFAILED: chromium-browser-beta-63.0.3231.0-1.mipsel.rpm \npython ../../build/gn_run_binary.py installer/rpm/build.sh -a mipsel -b . -c beta -d chromium -o .\nstrip: Unable to recognise the format of the input file `/scratch1/work/Chrome_06052015/src/out/mips32r2/rpm-staging-beta//opt/chromium.org/chromium-beta/chrome-sandbox\u0027\ninstall: strip process terminated abnormally\ninstaller/rpm/build.sh failed with exit code 1\n\ninstall -s will call strip from host, and it does not work with mipsel files.",
+      "parentUuid": "382cc61f_99f0016b",
+      "range": {
+        "startLine": 176,
+        "startChar": 32,
+        "endLine": 176,
+        "endChar": 40
+      },
+      "revId": "0b680d53b39e6a3c10f9b4549df71929d3cefd11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
