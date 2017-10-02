@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "19d73820_92b16e5e",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-10-02T22:56:19Z",
+      "side": 1,
+      "message": "I think I\u0027m getting confused here, I don\u0027t have enough history with windows.h versioning to put the comments in there to begin with. Can you lend me a hand here, since I\u0027m just moving code around?\n\nIsn\u0027t using decltype(::SetProcessDpiAwareness) implying availability and that we could also call it directly? Or can ::SetProcessDpiAwareness ever be meaningfully different from SetProcessDpiAwarenessInternal? E.g. if this current state compiles on all builders we care about, can we nuke the wrappers, or will we get runtime linker errors from unsupported platforms?",
+      "parentUuid": "78536d66_ffba2e99",
+      "revId": "ba63e7756305a5747b3dc637dd9a06d112bb4e84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7f648b7_4ee4e86b",
         "filename": "base/win/win_util.cc",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-02T08:07:02Z",
       "side": 1,
       "message": "since we no longer support XP and Vista, can\u0027t this function be simplified to:\n  return SetProcessDPIAware();",
+      "revId": "ba63e7756305a5747b3dc637dd9a06d112bb4e84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adae065b_9dc1f1dc",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-10-02T22:56:19Z",
+      "side": 1,
+      "message": "Makes sense to me, how do I figure that out? Is that translating to using a certain Windows SDK version or is this a runtime-linking thing?",
+      "parentUuid": "f7f648b7_4ee4e86b",
       "revId": "ba63e7756305a5747b3dc637dd9a06d112bb4e84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -56,6 +92,30 @@
       "revId": "ba63e7756305a5747b3dc637dd9a06d112bb4e84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f158acc8_212fae54",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-10-02T22:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da3dc6d5_5c7fc388",
+      "range": {
+        "startLine": 705,
+        "startChar": 22,
+        "endLine": 705,
+        "endChar": 33
+      },
+      "revId": "ba63e7756305a5747b3dc637dd9a06d112bb4e84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
