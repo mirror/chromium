@@ -1059,6 +1059,7 @@ std::unique_ptr<TracedValue> InspectorFunctionCallEvent::Data(
   value->SetString("scriptId", String::Number(location->ScriptId()));
   value->SetString("url", location->Url());
   value->SetInteger("lineNumber", location->LineNumber());
+  value->SetBoolean("deserialized", original_function->Deserialized());
   return value;
 }
 

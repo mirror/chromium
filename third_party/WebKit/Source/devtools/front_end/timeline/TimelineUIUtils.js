@@ -798,6 +798,8 @@ Timeline.TimelineUIUtils = class {
             Timeline.TimelineUIUtils.buildDetailsNodeForTraceEvent(event, model.targetByEvent(event), linkifier);
         if (detailsNode)
           contentHelper.appendElementRow(Common.UIString('Function'), detailsNode);
+        if (eventData && eventData['deserialized'])
+          contentHelper.appendElementRow(Common.UIString('Deserialized'), 'true');
         break;
       case recordTypes.TimerFire:
       case recordTypes.TimerInstall:
