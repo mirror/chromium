@@ -599,6 +599,18 @@ BoxBorderPainter::BoxBorderPainter(const LayoutRect& border_rect,
   inner_ = style_.GetRoundedInnerBorderFor(
       border_rect, include_logical_left_edge, include_logical_right_edge);
 
+  // Make sure that the border width isn't larger than the border box, which
+  // can pixel snap smaller.
+  float max_width = std::min(outer_.Rect().Width(), outer_.Rect().Height());
+
+  for (unsigned i = 0; i < WTF_ARRAY_LENGTH(edges_); ++i) {
+    BorderEdge& edge = edges_[i];
+    if (edge.Width() > max_width) {
+      edge = BorderEdge(max_width, edge.color, edge.BorderStyle(),
+                        edge.is_present);
+    }
+  }
+
   is_rounded_ = outer_.IsRounded();
 }
 
