@@ -18,9 +18,9 @@ namespace vr {
 namespace {
 
 constexpr int kHeightWidthRatio = 8.0;
-constexpr float kBorderFactor = 0.1;
-constexpr float kIconSizeFactor = 0.7;
-constexpr float kFontSizeFactor = 0.40;
+constexpr float kBorderFactor = 0.1f;
+constexpr float kIconSizeFactor = 0.7f;
+constexpr float kFontSizeFactor = 0.40f;
 
 }  // namespace
 
