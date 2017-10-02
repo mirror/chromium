@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "add06ffa_ecac46cb",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-10-02T19:39:59Z",
+      "side": 1,
+      "message": "Based on our offline discussion the TODO has been removed and Swap will occur immediately after aggregation instead of waiting on another signal.",
+      "parentUuid": "627d177b_9a74deb7",
+      "revId": "97fa502e94daba47c55a1473821a87f8ba266eab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "07db9e86_d978e890",
         "filename": "components/viz/service/hit_test/hit_test_manager.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-26T09:00:34Z",
       "side": 1,
       "message": "I wonder if it\u0027d be cheaper to simply clear the map and just stick in the latest frame index?",
+      "revId": "97fa502e94daba47c55a1473821a87f8ba266eab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3a6e545_e92526a9",
+        "filename": "components/viz/service/hit_test/hit_test_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-10-02T19:39:59Z",
+      "side": 1,
+      "message": "A good question.  Most of the time there will likely only be one old entry that needs to be cleaned up.  I tried clearing and re-adding but the code was more complicated than I had hoped because we don\u0027t actually have a reference to the hit_test_region_list that needs to be re-added so we have to pull it from the collection and then re-add it. \n\nSo given that the benefit is minor - if there is any benefit, I propose we keep the current implementation.",
+      "parentUuid": "07db9e86_d978e890",
       "revId": "97fa502e94daba47c55a1473821a87f8ba266eab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5224e1d8_70c7dd02",
+        "filename": "components/viz/service/hit_test/hit_test_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-10-02T19:39:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0f11b6d_d7697b31",
+      "revId": "97fa502e94daba47c55a1473821a87f8ba266eab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1c1667d_e6321d08",
         "filename": "components/viz/service/hit_test/hit_test_manager.h",
         "patchSetId": 6
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "60420bb8_802fc614",
+        "filename": "components/viz/service/hit_test/hit_test_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-10-02T19:39:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1c1667d_e6321d08",
+      "revId": "97fa502e94daba47c55a1473821a87f8ba266eab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32ee89eb_dc15ebde",
         "filename": "components/viz/service/hit_test/hit_test_manager.h",
         "patchSetId": 6
@@ -81,6 +153,24 @@
       "writtenOn": "2017-09-26T09:00:34Z",
       "side": 1,
       "message": "My usual expectation is a map will be fairly sparse and so we want to maximize spatial locality over asymptotic complexity. Please use base::flat_map instead of std::map. Maybe in the future we\u0027ll decide to use another type of map but usually flat_map is preferred.",
+      "revId": "97fa502e94daba47c55a1473821a87f8ba266eab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74ef06e6_bf52ec2a",
+        "filename": "components/viz/service/hit_test/hit_test_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-10-02T19:39:59Z",
+      "side": 1,
+      "message": "Using base::flat_map for the inner map works ok, but using it for both creates a copy constructor compiler error and I could not find a solution.  Is using a flat_map for the inner map and a std::map for the outer ok?\n\ncall to implicitly-deleted copy constructor of \u0027std::__1::pair\u003cunsigned long, mojo::StructPtr\u003cviz::mojom::HitTestRegionList\u003e \u003e",
+      "parentUuid": "32ee89eb_dc15ebde",
       "revId": "97fa502e94daba47c55a1473821a87f8ba266eab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

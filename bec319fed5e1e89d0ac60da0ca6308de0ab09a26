@@ -22,6 +22,30 @@
       "revId": "bec319fed5e1e89d0ac60da0ca6308de0ab09a26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9437468_6a142895",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-10-02T19:39:59Z",
+      "side": 1,
+      "message": "I agree - I moved the null check to ValidateHitTestRegion so that if and when we decide that a nullptr means keep the last one then the changes would be in HitTestManager - but I am concerned that you are hitting the null ptr there - I will follow up offline to fix.",
+      "parentUuid": "f59fb20a_b1255d14",
+      "range": {
+        "startLine": 207,
+        "startChar": 2,
+        "endLine": 207,
+        "endChar": 48
+      },
+      "revId": "bec319fed5e1e89d0ac60da0ca6308de0ab09a26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
