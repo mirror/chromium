@@ -22,6 +22,30 @@
       "revId": "88c0fbb8a435575660f1c33c2ade33439ab636f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abf8e2d8_f671a5b0",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-02T20:38:53Z",
+      "side": 1,
+      "message": "That\u0027s handled by the extension, i.e. the extension provides the UI. (You\u0027ll note that there is a separate \u0027onAddThirdPartyVpnTap_\u0027 method in internet_page.js which still makes a chrome.send call for Third Party VPNs).",
+      "parentUuid": "ae2fd647_07fea964",
+      "range": {
+        "startLine": 513,
+        "startChar": 12,
+        "endLine": 513,
+        "endChar": 16
+      },
+      "revId": "88c0fbb8a435575660f1c33c2ade33439ab636f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
