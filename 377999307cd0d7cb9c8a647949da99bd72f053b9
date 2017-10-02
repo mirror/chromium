@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43c6dbc8_d56b5342",
+        "filename": "content/browser/frame_host/navigation_controller_android.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-02T06:17:05Z",
+      "side": 1,
+      "message": "Here and below, we assume that the Java code hands off a valid, already-canonicalized URL.",
+      "revId": "377999307cd0d7cb9c8a647949da99bd72f053b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84cd1d0e_d00d5054",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-02T06:17:05Z",
+      "side": 1,
+      "message": "I\u0027ll clean up various checks against kMaxURLChars if people are comfortable with this approach.",
+      "revId": "377999307cd0d7cb9c8a647949da99bd72f053b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f76c8eb5_c63ead7d",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 6567,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-02T06:17:05Z",
+      "side": 1,
+      "message": "We copy data URLs less now, which is nice.",
+      "revId": "377999307cd0d7cb9c8a647949da99bd72f053b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
