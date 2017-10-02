@@ -8,7 +8,7 @@
 #include "services/service_manager/sandbox/switches.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-namespace content {
+namespace service_manager {
 
 TEST(SandboxTypeTest, Empty) {
   base::CommandLine command_line(base::CommandLine::NO_PROGRAM);
@@ -127,4 +127,4 @@ TEST(SandboxTypeTest, Nonesuch) {
   EXPECT_EQ(SANDBOX_TYPE_NO_SANDBOX, SandboxTypeFromCommandLine(command_line));
 }
 
-}  // namespace content
+}  // namespace service_manager
