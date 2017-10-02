@@ -301,6 +301,10 @@ void WebSettingsImpl::SetPreferHiddenVolumeControls(bool enabled) {
   settings_->SetPreferHiddenVolumeControls(enabled);
 }
 
+void WebSettingsImpl::SetPushStateThrottle(bool enabled) {
+  settings_->SetPushStateThrottle(enabled);
+}
+
 void WebSettingsImpl::SetDOMPasteAllowed(bool enabled) {
   settings_->SetDOMPasteAllowed(enabled);
 }
