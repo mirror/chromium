@@ -750,6 +750,63 @@
       failTest("Unexpected error: " + e)
     });
   }
+
+  function applyConstraintsVideo() {
+    navigator.mediaDevices.getUserMedia({video:true})
+      .then(stream => {
+        assertEquals(stream.getVideoTracks().length, 1);
+        var track = stream.getVideoTracks()[0];
+        var settings = track.getSettings();
+        var default_device_id = settings.deviceId;
+        var default_width = settings.width;
+        var default_height = settings.height;
+        return track.applyConstraints({
+          width: default_width-1,
+          height: default_height-1
+        }).then(()=> {
+          settings = track.getSettings();
+          console.l
+          assertEquals(settings.deviceId, default_device_id);
+          assertEquals(settings.width, default_width - 1);
+          assertEquals(settings.height, default_height - 1);
+          track.stop();
+          reportTestSuccess();
+        });
+      })
+      .catch(_=>{
+        failTest("Unexpected failure")
+      });
+  }
+
+  function applyConstraintsVideoOverconstrained() {
+    navigator.mediaDevices.getUserMedia({video:true})
+      .then(stream => {
+        assertEquals(stream.getVideoTracks().length, 1);
+        var track = stream.getVideoTracks()[0];
+        var settings = track.getSettings();
+        var default_device_id = settings.deviceId;
+        var default_width = settings.width;
+        var default_height = settings.height;
+        track.applyConstraints({
+          width: {exact: 1000000},
+        }).then(()=> {
+          failTest("applyConstraints succeeded with impossible constraints");
+        }).catch(e => {
+          assertEquals(e.name, "OverconstrainedError");
+          assertEquals(e.constraint, "width");
+          assertTrue(!!e.message);
+          settings = track.getSettings();
+          assertEquals(settings.deviceId, default_device_id);
+          assertEquals(settings.width, default_width);
+          assertEquals(settings.height, default_height);
+          track.stop();
+          reportTestSuccess();
+        });
+      })
+      .catch(_=>{
+        failTest("getUserMedia failed")
+      });
+  }
   </script>
 </head>
 <body>
