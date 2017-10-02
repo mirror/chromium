@@ -199,6 +199,17 @@ viz::SurfaceId DelegatedFrameHost::SurfaceIdAtPoint(
   return target_local_surface_id;
 }
 
+viz::Target DelegatedFrameHost::HitTestTargetAtPoint(
+    viz::EventSource event_source,
+    const gfx::Point& point) {
+  // TODO(kenrb): Use viz::HitTestQuery to perform a hit test when that code
+  // is ready. https://crbug.com/750755
+  viz::Target target;
+  target.frame_sink_id = frame_sink_id_;
+  target.location_in_target = point;
+  return target;
+}
+
 bool DelegatedFrameHost::TransformPointToLocalCoordSpace(
     const gfx::Point& point,
     const viz::SurfaceId& original_surface,
@@ -422,7 +433,8 @@ void DelegatedFrameHost::DidCreateNewRendererCompositorFrameSink(
 
 void DelegatedFrameHost::SubmitCompositorFrame(
     const viz::LocalSurfaceId& local_surface_id,
-    viz::CompositorFrame frame) {
+    viz::CompositorFrame frame,
+    viz::mojom::HitTestRegionListPtr hit_test_region_list) {
 #if defined(OS_CHROMEOS)
   DCHECK(!resize_lock_ || !client_->IsAutoResizeEnabled());
 #endif
@@ -487,10 +499,8 @@ void DelegatedFrameHost::SubmitCompositorFrame(
 
     // If surface synchronization is off, then OnFirstSurfaceActivation will be
     // called in the same call stack.
-    // TODO(kenrb): Supply HitTestRegionList data here as described in
-    // crbug.com/750755.
-    bool result = support_->SubmitCompositorFrame(local_surface_id,
-                                                  std::move(frame), nullptr);
+    bool result = support_->SubmitCompositorFrame(
+        local_surface_id, std::move(frame), std::move(hit_test_region_list));
     DCHECK(result);
 
     DCHECK(enable_surface_synchronization_ || has_primary_surface_);
