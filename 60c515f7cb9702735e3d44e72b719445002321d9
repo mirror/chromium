@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59f108b8_c2d85aff",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/origin_trials.h.tmpl",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-02T12:43:10Z",
+      "side": 1,
+      "message": "Drive-by question -- should the include guards be changed to match Chromium style as well? (Or at least to match the new filename?)",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 22
+      },
+      "revId": "60c515f7cb9702735e3d44e72b719445002321d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
