@@ -5,6 +5,7 @@
 #ifndef THIRD_PARTY_WEBKIT_SOURCE_PLATFORM_SCHEDULER_RENDERER_RENDERER_SCHEDULER_IMPL_H_
 #define THIRD_PARTY_WEBKIT_SOURCE_PLATFORM_SCHEDULER_RENDERER_RENDERER_SCHEDULER_IMPL_H_
 
+#include <memory>
 #include "base/atomicops.h"
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
@@ -29,7 +30,7 @@
 #include "platform/scheduler/renderer/task_cost_estimator.h"
 #include "platform/scheduler/renderer/user_model.h"
 #include "platform/scheduler/renderer/web_view_scheduler_impl.h"
-#include "platform/scheduler/util/state_tracer.h"
+#include "platform/scheduler/util/tracing_helper.h"
 #include "public/platform/scheduler/renderer/renderer_scheduler.h"
 
 namespace base {
@@ -602,9 +603,9 @@ class PLATFORM_EXPORT RendererSchedulerImpl
     WakeUpBudgetPool* wake_up_budget_pool;                // Not owned.
     RendererMetricsHelper metrics_helper;
     RendererProcessType process_type;
-    StateTracer use_case_tracer;
-    StateTracer backgrounding_tracer;
-    StateTracer audio_playing_tracer;
+    std::unique_ptr<scheduler_tracing::StateTracer> use_case_tracer;
+    std::unique_ptr<scheduler_tracing::StateTracer> backgrounding_tracer;
+    std::unique_ptr<scheduler_tracing::StateTracer> audio_playing_tracer;
   };
 
   struct AnyThread {

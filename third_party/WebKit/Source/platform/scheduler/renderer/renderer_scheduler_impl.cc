@@ -4,7 +4,6 @@
 
 #include "platform/scheduler/renderer/renderer_scheduler_impl.h"
 
-#include <memory>
 #include "base/bind.h"
 #include "base/debug/stack_trace.h"
 #include "base/logging.h"
@@ -214,11 +213,12 @@ RendererSchedulerImpl::MainThreadOnly::MainThreadOnly(
       wake_up_budget_pool(nullptr),
       metrics_helper(renderer_scheduler_impl, now, renderer_backgrounded),
       process_type(RendererProcessType::kRenderer),
-      use_case_tracer("RendererScheduler.UseCase", renderer_scheduler_impl),
-      backgrounding_tracer("RendererScheduler.Backgrounded",
-                           renderer_scheduler_impl),
-      audio_playing_tracer("RendererScheduler.AudioPlaying",
-                           renderer_scheduler_impl) {}
+      use_case_tracer(scheduler_tracing::StateTracers::CreateUseCase(
+          renderer_scheduler_impl)),
+      backgrounding_tracer(scheduler_tracing::StateTracers::CreateBackgrounding(
+          renderer_scheduler_impl)),
+      audio_playing_tracer(scheduler_tracing::StateTracers::CreateAudioPlaying(
+          renderer_scheduler_impl)) {}
 
 RendererSchedulerImpl::MainThreadOnly::~MainThreadOnly() {}
 
@@ -551,7 +551,7 @@ void RendererSchedulerImpl::SetRendererBackgrounded(bool backgrounded) {
   if (helper_.IsShutdown() ||
       main_thread_only().renderer_backgrounded == backgrounded)
     return;
-  main_thread_only().backgrounding_tracer.SetState(
+  main_thread_only().backgrounding_tracer->SetState(
       BackgroundStateToString(backgrounded));
 
   main_thread_only().renderer_backgrounded = backgrounded;
@@ -587,7 +587,7 @@ void RendererSchedulerImpl::OnAudioStateChanged() {
   main_thread_only().last_audio_state_change =
       helper_.scheduler_tqm_delegate()->NowTicks();
   main_thread_only().is_audio_playing = is_audio_playing;
-  main_thread_only().audio_playing_tracer.SetState(
+  main_thread_only().audio_playing_tracer->SetState(
       AudioPlayingToString(is_audio_playing));
 
   UpdatePolicy();
@@ -949,7 +949,7 @@ void RendererSchedulerImpl::UpdatePolicyLocked(UpdateType update_type) {
   base::TimeDelta expected_use_case_duration;
   UseCase use_case = ComputeCurrentUseCase(now, &expected_use_case_duration);
   if (main_thread_only().current_use_case != use_case)
-    main_thread_only().use_case_tracer.SetState(UseCaseToString(use_case));
+    main_thread_only().use_case_tracer->SetState(UseCaseToString(use_case));
   main_thread_only().current_use_case = use_case;
 
   base::TimeDelta touchstart_expected_flag_valid_for_duration;
@@ -2086,11 +2086,11 @@ TimeDomain* RendererSchedulerImpl::GetActiveTimeDomain() {
 void RendererSchedulerImpl::OnTraceLogEnabled() {
   CreateTraceEventObjectSnapshot();
 
-  main_thread_only().use_case_tracer.Start(
+  main_thread_only().use_case_tracer->SetState(
       UseCaseToString(main_thread_only().current_use_case));
-  main_thread_only().backgrounding_tracer.Start(
+  main_thread_only().backgrounding_tracer->SetState(
       BackgroundStateToString(main_thread_only().renderer_backgrounded));
-  main_thread_only().audio_playing_tracer.Start(
+  main_thread_only().audio_playing_tracer->SetState(
       AudioPlayingToString(main_thread_only().is_audio_playing));
 }
 
