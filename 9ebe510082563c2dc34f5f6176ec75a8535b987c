@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "641e6b06_3810498e",
+        "filename": "content/browser/webrtc/webrtc_audio_debug_recordings_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-02T16:24:02Z",
+      "side": 1,
+      "message": "Do we really need two identical functions for this?",
+      "revId": "9ebe510082563c2dc34f5f6176ec75a8535b987c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d407832c_9477923f",
+        "filename": "media/audio/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-02T16:24:02Z",
+      "side": 1,
+      "message": "Build it for WebRtc-enabled builds only?",
+      "revId": "9ebe510082563c2dc34f5f6176ec75a8535b987c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9553b77_660f588a",
+        "filename": "media/audio/audio_manager_base.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-02T16:24:02Z",
+      "side": 1,
+      "message": "Ownership of this stream vs stream created above requires explanation and a reference to AudioInputStreamDataInterceptor::Close().\nAlso, we\u0027ll be leaking them on Mac, see AudioManagerMac::ShutdownOnAudioThread() where we manually close streams [1], which also may worth a comment.\n\n[1] https://cs.chromium.org/chromium/src/media/audio/mac/audio_manager_mac.cc?type\u003dcs\u0026l\u003d527",
+      "revId": "9ebe510082563c2dc34f5f6176ec75a8535b987c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

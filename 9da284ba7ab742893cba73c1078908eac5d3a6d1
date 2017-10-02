@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3796c437_65131816",
+        "filename": "content/browser/renderer_host/render_process_host_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-02T16:24:02Z",
+      "side": 0,
+      "message": "Have you verified that AudioInputRendererHost lifetime change is safe? Could you add the reasoning into CL description for posterity?",
+      "revId": "9da284ba7ab742893cba73c1078908eac5d3a6d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
