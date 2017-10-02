@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5cb66d8d_7d25344f",
+        "filename": "chrome/browser/resources/policy_tool.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-10-02T22:40:43Z",
+      "side": 1,
+      "message": "Ok, grab me tomorrow as I\u0027d like to see the UI.",
+      "parentUuid": "e44a2342_ce96f236",
+      "revId": "08800fd657cb51d9989eb8b48f380eed467b8bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad9f9547_de7fa0ae",
         "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
         "patchSetId": 6
