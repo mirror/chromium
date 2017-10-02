@@ -3510,7 +3510,7 @@ void WebContentsImpl::ViewFrameSource(const GURL& url,
   if (!delegate_)
     return;
 
-  delegate_->ViewSourceForFrame(this, url, page_state);
+  delegate_->ViewSourceForFrame(this, url);
 }
 
 int WebContentsImpl::GetMinimumZoomPercent() const {

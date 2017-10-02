@@ -41,7 +41,6 @@ class ListValue;
 namespace content {
 class ColorChooser;
 class JavaScriptDialogManager;
-class PageState;
 class RenderFrameHost;
 class RenderWidgetHost;
 class SessionStorageNamespace;
@@ -243,9 +242,7 @@ class CONTENT_EXPORT WebContentsDelegate {
   virtual void ViewSourceForTab(WebContents* source, const GURL& page_url);
 
   // Opens source view for the given subframe.
-  virtual void ViewSourceForFrame(WebContents* source,
-                                  const GURL& url,
-                                  const PageState& page_state);
+  virtual void ViewSourceForFrame(WebContents* source, const GURL& url);
 
   // Allows delegates to handle keyboard events before sending to the renderer.
   // See enum for description of return values.

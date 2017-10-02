@@ -1640,11 +1640,11 @@ void Browser::ViewSourceForTab(WebContents* source, const GURL& page_url) {
   chrome::ViewSource(this, source);
 }
 
-void Browser::ViewSourceForFrame(WebContents* source,
-                                 const GURL& frame_url,
-                                 const content::PageState& frame_page_state) {
+void Browser::ViewSourceForFrame(WebContents* source, const GURL& frame_url) {
   DCHECK(source);
-  chrome::ViewSource(this, source, frame_url, frame_page_state);
+  // TODO(dcheng): Combine this with ViewSourceForTab() which has almost the
+  // same signature...
+  chrome::ViewSource(this, source, frame_url);
 }
 
 void Browser::ShowRepostFormWarningDialog(WebContents* source) {

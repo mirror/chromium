@@ -1196,13 +1196,10 @@ void ViewSource(Browser* browser, WebContents* contents) {
   if (!entry)
     return;
 
-  ViewSource(browser, contents, entry->GetURL(), entry->GetPageState());
+  ViewSource(browser, contents, entry->GetURL());
 }
 
-void ViewSource(Browser* browser,
-                WebContents* contents,
-                const GURL& url,
-                const content::PageState& page_state) {
+void ViewSource(Browser* browser, WebContents* contents, const GURL& url) {
   base::RecordAction(UserMetricsAction("ViewSource"));
   DCHECK(contents);
 
@@ -1220,7 +1217,7 @@ void ViewSource(Browser* browser,
   last_committed_entry->SetURL(url);
 
   // Do not restore scroller position.
-  last_committed_entry->SetPageState(page_state.RemoveScrollOffset());
+  last_committed_entry->SetPageState(content::PageState::CreateFromURL(url));
 
   // Do not restore title, derive it from the url.
   view_source_contents->UpdateTitleForEntry(last_committed_entry,
