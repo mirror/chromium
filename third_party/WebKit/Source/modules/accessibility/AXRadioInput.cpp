@@ -6,7 +6,7 @@
 
 #include "core/InputTypeNames.h"
 #include "core/dom/AccessibleNode.h"
-#include "core/html/HTMLInputElement.h"
+#include "core/html/forms/HTMLInputElement.h"
 #include "core/html/forms/RadioInputType.h"
 #include "core/layout/LayoutObject.h"
 #include "modules/accessibility/AXObjectCacheImpl.h"

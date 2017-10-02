@@ -53,7 +53,7 @@
 #include "core/editing/spellcheck/TextCheckingParagraph.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/Settings.h"
-#include "core/html/HTMLInputElement.h"
+#include "core/html/forms/HTMLInputElement.h"
 #include "core/layout/LayoutTextControl.h"
 #include "core/loader/EmptyClients.h"
 #include "core/page/Page.h"

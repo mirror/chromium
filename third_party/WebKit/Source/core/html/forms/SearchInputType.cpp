@@ -37,7 +37,7 @@
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/events/KeyboardEvent.h"
 #include "core/frame/WebFeature.h"
-#include "core/html/HTMLInputElement.h"
+#include "core/html/forms/HTMLInputElement.h"
 #include "core/html/forms/TextControlInnerElements.h"
 #include "core/html/shadow/ShadowElementNames.h"
 #include "core/layout/LayoutSearchField.h"

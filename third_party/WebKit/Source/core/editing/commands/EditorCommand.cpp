@@ -65,7 +65,7 @@
 #include "core/html/HTMLFontElement.h"
 #include "core/html/HTMLHRElement.h"
 #include "core/html/HTMLImageElement.h"
-#include "core/html/TextControlElement.h"
+#include "core/html/forms/TextControlElement.h"
 #include "core/input/EventHandler.h"
 #include "core/layout/LayoutBox.h"
 #include "core/page/ChromeClient.h"

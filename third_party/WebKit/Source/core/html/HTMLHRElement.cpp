@@ -27,8 +27,8 @@
 #include "core/HTMLNames.h"
 #include "core/css/CSSColorValue.h"
 #include "core/css/StylePropertySet.h"
-#include "core/html/HTMLOptGroupElement.h"
-#include "core/html/HTMLSelectElement.h"
+#include "core/html/forms/HTMLOptGroupElement.h"
+#include "core/html/forms/HTMLSelectElement.h"
 
 namespace blink {
 
