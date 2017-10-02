@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5cf3643f_523c13e0",
+        "filename": "chrome/browser/vr/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-02T21:55:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d737e820_9e659753",
+      "range": {
+        "startLine": 211,
+        "startChar": 6,
+        "endLine": 211,
+        "endChar": 12
+      },
+      "revId": "175b78f3c0f5209de6a0d1524e045a0eee6e64fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d62ea368_fc4b9000",
         "filename": "chrome/browser/vr/animation_player_unittest.cc",
         "patchSetId": 1
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "64877453_65416f28",
+        "filename": "chrome/browser/vr/animation_player_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-02T21:55:25Z",
+      "side": 1,
+      "message": "The warning can catch real bugs sometimes, and adding an f doesn\u0027t cause much trouble if we get into the pattern of it.  There might be a few bounced CLs at first, but I think it should be fine long-term.  The warnings on the bots should be easy to fix as we incrementally add a few floats, just this change introduces many changes to fix up existing code.\n\nI tried -Wconversion (which caught many other things unrelated to the float warning), and -Wnarrowing, which didn\u0027t catch this.  Neither of these seemed helpful to get the same behavior between MSVC and clang.\n\nRather than disable the warning for Windows, I\u0027m going to leave it on.  If this does seem to be too troublesome moving forwards we can revisit.",
+      "parentUuid": "d62ea368_fc4b9000",
+      "range": {
+        "startLine": 19,
+        "startChar": 35,
+        "endLine": 19,
+        "endChar": 37
+      },
+      "revId": "175b78f3c0f5209de6a0d1524e045a0eee6e64fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b778dd9_e29e746e",
         "filename": "chrome/browser/vr/elements/system_indicator_texture.cc",
         "patchSetId": 1
@@ -92,6 +140,30 @@
       "revId": "175b78f3c0f5209de6a0d1524e045a0eee6e64fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87570a71_e1b6f27e",
+        "filename": "chrome/browser/vr/elements/system_indicator_texture.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-02T21:55:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b778dd9_e29e746e",
+      "range": {
+        "startLine": 20,
+        "startChar": 34,
+        "endLine": 20,
+        "endChar": 37
+      },
+      "revId": "175b78f3c0f5209de6a0d1524e045a0eee6e64fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -118,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "6cd28d48_cf1a1098",
+        "filename": "chrome/browser/vr/font_fallback.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-02T21:55:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b6ea6b2_3f082cc4",
+      "range": {
+        "startLine": 131,
+        "startChar": 19,
+        "endLine": 131,
+        "endChar": 23
+      },
+      "revId": "175b78f3c0f5209de6a0d1524e045a0eee6e64fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cfdd59b_bfa02e17",
         "filename": "chrome/browser/vr/ui_renderer.cc",
         "patchSetId": 1
@@ -132,6 +228,24 @@
       "revId": "175b78f3c0f5209de6a0d1524e045a0eee6e64fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1e0cf99_7c4d689d",
+        "filename": "chrome/browser/vr/ui_renderer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-02T21:55:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cfdd59b_bfa02e17",
+      "revId": "175b78f3c0f5209de6a0d1524e045a0eee6e64fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
