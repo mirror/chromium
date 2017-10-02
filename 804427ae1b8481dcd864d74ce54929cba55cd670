@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f10f0444_baae7a94",
+        "filename": "services/service_manager/sandbox/mac/BUILD.gn",
+        "patchSetId": 20
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-02T20:24:25Z",
+      "side": 1,
+      "message": "optional: add |visibility \u003d [ \":*\" ]| so nothing depends on this target.",
+      "revId": "804427ae1b8481dcd864d74ce54929cba55cd670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10b80d2c_f84ba978",
+        "filename": "services/service_manager/sandbox/mac/BUILD.gn",
+        "patchSetId": 20
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-02T20:24:25Z",
+      "side": 1,
+      "message": "Maybe declare this in |if (is_mac)| so no non-Mac targets depend on it.",
+      "revId": "804427ae1b8481dcd864d74ce54929cba55cd670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2083a78_e97f5d70",
+        "filename": "services/service_manager/sandbox/mac/gpu.sb",
+        "patchSetId": 20
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-02T20:24:25Z",
+      "side": 1,
+      "message": "Remove this and just leave it as \"common.sb\" since they\u0027re all in the same directory now?\n\n(And in all the other .sb files).",
+      "range": {
+        "startLine": 7,
+        "startChar": 22,
+        "endLine": 7,
+        "endChar": 37
+      },
+      "revId": "804427ae1b8481dcd864d74ce54929cba55cd670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
