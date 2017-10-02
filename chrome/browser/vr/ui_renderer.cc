@@ -4,6 +4,7 @@
 
 #include "chrome/browser/vr/ui_renderer.h"
 
+#include "base/numerics/math_constants.h"
 #include "base/trace_event/trace_event.h"
 #include "chrome/browser/vr/elements/ui_element.h"
 #include "chrome/browser/vr/ui_scene.h"
@@ -252,7 +253,8 @@ void UiRenderer::DrawLaser(const gfx::Transform& render_matrix,
   mat.matrix().postScale(kLaserWidth, laser_length, 1);
 
   // Tip back 90 degrees to flat, pointing at the scene.
-  const gfx::Quaternion quat(gfx::Vector3dF(1.0f, 0.0f, 0.0f), -M_PI / 2);
+  const gfx::Quaternion quat(gfx::Vector3dF(1.0f, 0.0f, 0.0f),
+                             -base::kPiDouble / 2);
   gfx::Transform rotation_mat(quat);
   mat = rotation_mat * mat;
 
