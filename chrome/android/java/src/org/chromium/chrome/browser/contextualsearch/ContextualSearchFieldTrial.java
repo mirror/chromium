@@ -77,6 +77,8 @@ public class ContextualSearchFieldTrial {
     private static final String DISABLE_AMP_AS_SEPARATE_TAB = "disable_amp_as_separate_tab";
     // Disable logging for Machine Learning
     private static final String DISABLE_RANKER_LOGGING = "disable_ranker_logging";
+    private static final String DISABLE_SUPPRESS_FOR_SMART_SELECT =
+            "disable_suppress_for_smart_select";
 
     // ----------------------
     // Privacy-related flags.
@@ -110,6 +112,7 @@ public class ContextualSearchFieldTrial {
     private static Boolean sIsPageContentNotificationDisabled;
     private static Boolean sContextualSearchUrlActionsEnabled;
     private static Boolean sIsRankerLoggingDisabled;
+    private static Boolean sIsSuppressForSmartSelectDisabled;
     private static Integer sWaitAfterTapDelayMs;
     private static Integer sTapDurationThresholdMs;
     private static Integer sRecentScrollDurationMs;
@@ -374,6 +377,20 @@ public class ContextualSearchFieldTrial {
         }
 
         return sIsRankerLoggingDisabled;
+    }
+
+    /**
+     * @return Whether we suppress our UX when Smart Select is active.  This applies to long-press
+     *         on Android O is disabled. If this returns true, the Contextual Search Bar will be
+     *         allowed to show in response to a long-press gesture on Android O, in addition to the
+     *         Smart Select UX.
+     */
+    static boolean isSuppressForSmartSelectDisabled() {
+        if (sIsSuppressForSmartSelectDisabled == null) {
+            sIsSuppressForSmartSelectDisabled = getBooleanParam(DISABLE_SUPPRESS_FOR_SMART_SELECT);
+        }
+
+        return sIsSuppressForSmartSelectDisabled;
     }
 
     /**
