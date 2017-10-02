@@ -41,7 +41,7 @@ namespace views {
 
 // Insets around the view.
 static const int kHorizontalInset = 2;
-static const int kVerticalInset = 2;
+static const int kVerticalInset = 0;
 // Padding before/after the image.
 static const int kImagePadding = 4;
 // Size of the arrow region.
