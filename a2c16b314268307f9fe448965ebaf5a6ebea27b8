@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b288bc2_099ec08d",
+        "filename": "third_party/WebKit/Source/core/exported/WebScriptSource.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-02T05:20:46Z",
+      "side": 1,
+      "message": "I prefer String() to \"\" (unless the difference is important).",
+      "revId": "a2c16b314268307f9fe448965ebaf5a6ebea27b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ba6cebd_9230ea80",
+        "filename": "third_party/WebKit/Source/core/loader/WorkletScriptLoader.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-02T05:20:46Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "a2c16b314268307f9fe448965ebaf5a6ebea27b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
