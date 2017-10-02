@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bc84481_7699ec21",
+        "filename": "build/config/compiler/compiler.gni",
+        "patchSetId": 12
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-10-02T19:52:24Z",
+      "side": 1,
+      "message": "is this assert correct?\n\nif we don\u0027t set use_clang_coverage in a build, wouldn\u0027t this always fail the assert?",
+      "range": {
+        "startLine": 218,
+        "startChar": 7,
+        "endLine": 218,
+        "endChar": 25
+      },
+      "revId": "a5a666f0f47a58480c257ee26594c0c800bf0c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e73a7785_d738cc76",
+        "filename": "build/config/sanitizers/sanitizers.gni",
+        "patchSetId": 12
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-10-02T19:52:24Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 224,
+        "startChar": 7,
+        "endLine": 224,
+        "endChar": 25
+      },
+      "revId": "a5a666f0f47a58480c257ee26594c0c800bf0c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
