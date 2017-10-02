@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5090142d_8e113093",
+        "filename": "chrome/browser/resources/policy_tool.css",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-10-02T17:31:53Z",
+      "side": 1,
+      "message": "Actually, not anymore, I followed Dave\u0027s advise from another CL and replaced \u0027disabled\u0027 class with a \u0027hidden\u0027 attribute",
+      "parentUuid": "e357fde2_6da6dc58",
+      "range": {
+        "startLine": 8,
+        "startChar": 11,
+        "endLine": 8,
+        "endChar": 15
+      },
+      "revId": "ac81fc0d56cfcd2482abae62927054116b566680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50ec16f9_c42d37c1",
         "filename": "chrome/browser/ui/webui/policy_tool_ui_browsertest.cc",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "5ed3f308_df1ddce3",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-10-02T17:31:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50ec16f9_c42d37c1",
+      "range": {
+        "startLine": 157,
+        "startChar": 6,
+        "endLine": 157,
+        "endChar": 12
+      },
+      "revId": "ac81fc0d56cfcd2482abae62927054116b566680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c8af5b8_71377a60",
         "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
         "patchSetId": 6
@@ -62,6 +110,24 @@
       "revId": "ac81fc0d56cfcd2482abae62927054116b566680",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c66c0bf_28216711",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-10-02T17:31:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c8af5b8_71377a60",
+      "revId": "ac81fc0d56cfcd2482abae62927054116b566680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "912a8593_0683c422",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-10-02T17:31:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45bf656a_d459f63a",
+      "range": {
+        "startLine": 159,
+        "startChar": 9,
+        "endLine": 159,
+        "endChar": 15
+      },
+      "revId": "ac81fc0d56cfcd2482abae62927054116b566680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5092ec15_2b09758d",
         "filename": "components/policy_strings.grdp",
         "patchSetId": 6
@@ -102,6 +192,24 @@
       "revId": "ac81fc0d56cfcd2482abae62927054116b566680",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "067fd23b_5070f4a4",
+        "filename": "components/policy_strings.grdp",
+        "patchSetId": 6
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-10-02T17:31:53Z",
+      "side": 1,
+      "message": "Done\n\nAlso, to avoid confusion, I\u0027ll add actual reset of the session in the backend when the button is clicked.",
+      "parentUuid": "5092ec15_2b09758d",
+      "revId": "ac81fc0d56cfcd2482abae62927054116b566680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
