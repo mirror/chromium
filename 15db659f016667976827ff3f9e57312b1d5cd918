@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a33ac47e_6c8f34ea",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-02T22:05:30Z",
+      "side": 1,
+      "message": "FYI: I\u0027m not sure this does anything in Gerrit anymore (Mark isn\u0027t listed as a reviewer, which is probably why he hasn\u0027t responded).",
+      "revId": "15db659f016667976827ff3f9e57312b1d5cd918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00eca535_3eb3c4aa",
+        "filename": "chrome/browser/ui/cocoa/color_chooser_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-02T22:05:30Z",
+      "side": 1,
+      "message": "spelling",
+      "range": {
+        "startLine": 135,
+        "startChar": 71,
+        "endLine": 135,
+        "endChar": 79
+      },
+      "revId": "15db659f016667976827ff3f9e57312b1d5cd918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3da22ed4_38fde542",
+        "filename": "chrome/browser/ui/cocoa/color_chooser_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-02T22:05:30Z",
+      "side": 1,
+      "message": "Does the [panel target] still reference |self|? If so, could the condition on line 129 be changed to check if either the delegate or target are us, nil both out?",
+      "revId": "15db659f016667976827ff3f9e57312b1d5cd918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
