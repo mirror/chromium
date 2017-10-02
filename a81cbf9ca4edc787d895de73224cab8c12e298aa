@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04586b4d_f5b78d2e",
+        "filename": "base/allocator/partition_allocator/address_space_randomization.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-10-02T20:52:25Z",
+      "side": 1,
+      "message": "How hard would it be to dump this and a bunch of the constants below into a `namespace internal`?\n\nI was in the middle of trying to do that for other bits of PA.\n\nIf it\u0027s even medium hard, don\u0027t worry about it...but if it\u0027s easy, would love to not continue polluting the main namespace in base with bits that are effectively internal implementation details.",
+      "range": {
+        "startLine": 14,
+        "startChar": 20,
+        "endLine": 14,
+        "endChar": 31
+      },
+      "revId": "a81cbf9ca4edc787d895de73224cab8c12e298aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3830ceca_b88bbb0b",
+        "filename": "base/allocator/partition_allocator/address_space_randomization.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-10-02T20:52:25Z",
+      "side": 1,
+      "message": "Should this be ULL?  http://en.cppreference.com/w/cpp/language/types#Integer_types Same comment for every 64-bit integer literal...\n\nCan we explain why these values make sense?",
+      "range": {
+        "startLine": 24,
+        "startChar": 60,
+        "endLine": 24,
+        "endChar": 61
+      },
+      "revId": "a81cbf9ca4edc787d895de73224cab8c12e298aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
