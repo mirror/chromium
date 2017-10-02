@@ -163,6 +163,29 @@
     },
     {
       "key": {
+        "uuid": "69d8c3fc_77811b57",
+        "filename": "components/history/core/browser/top_sites_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-02T08:42:56Z",
+      "side": 1,
+      "message": "This being the only place where logic is influenced, couldn\u0027t we simply subclass TopSitesImpl and override this particular function, without the need to introduce the new class hierarchy (MostEngagedProvider) which IMO introduces unnecessary abstraction?\n\nI\u0027m not a big fan of class subclassing impl classes and probably your design is cleaner, but for a experimentation phase I\u0027d say a less intrusive change could be preferable. WDYT?",
+      "range": {
+        "startLine": 417,
+        "startChar": 47,
+        "endLine": 417,
+        "endChar": 0
+      },
+      "revId": "1b57be288c43243155d79dfd1994451fd3d4680c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0678eb64_ab874378",
         "filename": "components/history/core/browser/top_sites_most_visited_provider.h",
         "patchSetId": 2
