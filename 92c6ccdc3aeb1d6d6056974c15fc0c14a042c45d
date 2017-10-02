@@ -87,6 +87,24 @@
       "revId": "92c6ccdc3aeb1d6d6056974c15fc0c14a042c45d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0aa3144f_87bac849",
+        "filename": "net/spdy/chromium/http2_push_promise_index.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-10-02T15:22:43Z",
+      "side": 1,
+      "message": "I thought so, but the old centithread on this topic in inconclusive: https://groups.google.com/a/chromium.org/forum/#!topic/chromium-dev/XcUjdy24kmA.  My reading of the Google style guide is that \u003d delete is preferred.  The Chromium style guide at https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md does not say anything about it.  Neither of them mentions DISALLOW_COPY_AND_ASSIGN at all, making me think that it is deprecated.  However, https://cs.chromium.org/chromium/src/base/macros.h?q\u003dDISALLOW_COPY_AND_ASSIGN does not say anything about that, suggesting that it is okay to use it in new code.\n\nIn src/net, we have \"\u003d delete\" in 34 files:\nhttps://cs.chromium.org/search/?q\u003df:src/net+%22%3D+delete%22\n\nAnd we have DISALLOW_COPY_AND_ASSIGN in 732:\nhttps://cs.chromium.org/search/?q\u003df:src/net+DISALLOW_COPY_AND_ASSIGN\n\nI have no strong preference, and since you are my reviewer, you have the final word.  Would you like me to change this class to use DISALLOW_COPY_AND_ASSIGN?",
+      "parentUuid": "2a4c54bf_78306556",
+      "revId": "92c6ccdc3aeb1d6d6056974c15fc0c14a042c45d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
