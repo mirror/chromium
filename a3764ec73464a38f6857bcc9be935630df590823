@@ -142,6 +142,30 @@
       "revId": "a3764ec73464a38f6857bcc9be935630df590823",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05a93d10_0463373e",
+        "filename": "testing/libfuzzer/reproducing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-10-02T17:00:27Z",
+      "side": 0,
+      "message": "Ok fair point. \n\nFor MSan, we already have a note here about instrumented libs: https://chromium.googlesource.com/chromium/src/+/master/testing/libfuzzer/getting_started.md#notes\n\nI\u0027ll add a page giving MB commands which will generate the exact args.gn that we use to build.",
+      "parentUuid": "dcf90921_562e7943",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 31
+      },
+      "revId": "a3764ec73464a38f6857bcc9be935630df590823",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
