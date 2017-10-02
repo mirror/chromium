@@ -8,6 +8,7 @@
 
 #include "base/bind.h"
 #include "base/debug/leak_annotations.h"
+#include "base/hack.h"
 #include "base/logging.h"
 #include "base/memory/ref_counted.h"
 #include "base/sequence_checker.h"
@@ -42,10 +43,30 @@ class PostTaskAndReplyRelay {
   }
 
   void RunTaskAndPostReply() {
+    //LOG(ERROR) << "Running original:" << from_here_.ToString();
     std::move(task_).Run();
+    from_here2_.reset(new Location(
+        from_here_.function_name(), from_here_.file_name(),
+        from_here_.line_number() + 1000000, from_here_.program_counter()));
+    LOG(ERROR) << "Running reply:" << from_here2_->ToString() << " on "
+               << origin_task_runner_.get();
+    bool is_load_index_entries = false;
+    if (from_here2_->function_name() == std::string("LoadIndexEntries")) {
+      HACK_WaitUntil(base::AboutToCheck);
+      HACK_AdvanceState(base::AboutToCheck,
+                        base::GoingToPostLoadIndexEntriesReply);
+      is_load_index_entries = true;
+    }
+
     origin_task_runner_->PostTask(
-        from_here_, BindOnce(&PostTaskAndReplyRelay::RunReplyAndSelfDestruct,
-                             base::Unretained(this)));
+        *from_here2_, BindOnce(&PostTaskAndReplyRelay::RunReplyAndSelfDestruct,
+                               base::Unretained(this)));
+    // |this| has been deleted.
+    if (is_load_index_entries) {
+      HACK_AdvanceState(base::GoingToPostLoadIndexEntriesReply,
+                        base::PostedLoadIndexEntriesReply);
+    }
+    //LOG(ERROR) << "  was posted";
   }
 
  private:
@@ -65,6 +86,7 @@ class PostTaskAndReplyRelay {
 
   const SequenceChecker sequence_checker_;
   const Location from_here_;
+  std::unique_ptr<Location> from_here2_;
   const scoped_refptr<SequencedTaskRunner> origin_task_runner_;
   OnceClosure reply_;
   OnceClosure task_;
