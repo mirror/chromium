@@ -118,4 +118,8 @@ DEFINE_TRACE(Navigator) {
   Supplementable<Navigator>::Trace(visitor);
 }
 
+DEFINE_TRACE_WRAPPERS(Navigator) {
+  Supplementable<Navigator>::TraceWrappers(visitor);
+}
+
 }  // namespace blink
