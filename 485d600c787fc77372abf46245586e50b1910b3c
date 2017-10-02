@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5cda3e7b_abec737f",
+        "filename": "components/flags_ui/resources/flags.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2017-10-02T20:11:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d722bb36_894cecf2",
+      "range": {
+        "startLine": 15,
+        "startChar": 4,
+        "endLine": 15,
+        "endChar": 14
+      },
+      "revId": "485d600c787fc77372abf46245586e50b1910b3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0f68e71_2260b238",
         "filename": "components/flags_ui/resources/flags.css",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "485d600c787fc77372abf46245586e50b1910b3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62a4204f_1d48ba00",
+        "filename": "components/flags_ui/resources/flags.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2017-10-02T20:11:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0f68e71_2260b238",
+      "range": {
+        "startLine": 16,
+        "startChar": 27,
+        "endLine": 16,
+        "endChar": 28
+      },
+      "revId": "485d600c787fc77372abf46245586e50b1910b3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1f3cbe8f_840ba52f",
+        "filename": "components/flags_ui/resources/flags.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2017-10-02T20:11:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b44cb927_94fbd9bf",
+      "range": {
+        "startLine": 102,
+        "startChar": 14,
+        "endLine": 102,
+        "endChar": 21
+      },
+      "revId": "485d600c787fc77372abf46245586e50b1910b3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb3ff6fa_e948e434",
         "filename": "components/flags_ui/resources/flags.html",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-02T12:58:41Z",
       "side": 1,
       "message": "Is this comment a leftover?",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 26
+      },
+      "revId": "485d600c787fc77372abf46245586e50b1910b3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d31fd464_f5f3f709",
+        "filename": "components/flags_ui/resources/flags.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2017-10-02T20:11:08Z",
+      "side": 1,
+      "message": "Removed. This allows page scaling on mobile devices.",
+      "parentUuid": "cb3ff6fa_e948e434",
       "range": {
         "startLine": 5,
         "startChar": 0,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "f378e64f_b692beda",
+        "filename": "components/flags_ui/resources/flags.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2017-10-02T20:11:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9c2cd30_f1502595",
+      "range": {
+        "startLine": 23,
+        "startChar": 7,
+        "endLine": 23,
+        "endChar": 65
+      },
+      "revId": "485d600c787fc77372abf46245586e50b1910b3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "834ed546_6856e331",
         "filename": "components/flags_ui/resources/flags.html",
         "patchSetId": 2
@@ -128,6 +248,30 @@
       "writtenOn": "2017-10-02T12:58:41Z",
       "side": 1,
       "message": "Indentation is weird throughout this file. Indent four spaces for wrapped lines (the aligned attributes in the old version are wrong).",
+      "range": {
+        "startLine": 54,
+        "startChar": 6,
+        "endLine": 54,
+        "endChar": 13
+      },
+      "revId": "485d600c787fc77372abf46245586e50b1910b3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6856d933_65685098",
+        "filename": "components/flags_ui/resources/flags.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2017-10-02T20:11:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "834ed546_6856e331",
       "range": {
         "startLine": 54,
         "startChar": 6,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "f500ded4_3f552af6",
+        "filename": "components/flags_ui/resources/flags.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2017-10-02T20:11:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2cc03d7_61cd5bf8",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 40
+      },
+      "revId": "485d600c787fc77372abf46245586e50b1910b3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d86c686a_3ef32ef8",
         "filename": "components/flags_ui/resources/flags.js",
         "patchSetId": 2
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "4a2ade8a_c264db96",
+        "filename": "components/flags_ui/resources/flags.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2017-10-02T20:11:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d86c686a_3ef32ef8",
+      "range": {
+        "startLine": 230,
+        "startChar": 2,
+        "endLine": 230,
+        "endChar": 18
+      },
+      "revId": "485d600c787fc77372abf46245586e50b1910b3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81014e8f_0904a313",
         "filename": "components/flags_ui/resources/flags.js",
         "patchSetId": 2
@@ -197,6 +389,30 @@
       "writtenOn": "2017-10-02T12:58:41Z",
       "side": 1,
       "message": "Can you do this without messing with innerHTML? Using innerHTML always makes me feel somewhat queasy...",
+      "range": {
+        "startLine": 253,
+        "startChar": 7,
+        "endLine": 253,
+        "endChar": 16
+      },
+      "revId": "485d600c787fc77372abf46245586e50b1910b3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55350bcf_a9ad2b28",
+        "filename": "components/flags_ui/resources/flags.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2017-10-02T20:11:08Z",
+      "side": 1,
+      "message": "Agreed. I\u0027ve switched to use textContent for resetting.\n\nHowever for highlighting the match, I\u0027m not sure there is a way to do this cleanly and simply without creating the DOM elements from scratch each time / having a bunch of placeholders in the template code. I can switch to that method if you want.",
+      "parentUuid": "81014e8f_0904a313",
       "range": {
         "startLine": 253,
         "startChar": 7,
