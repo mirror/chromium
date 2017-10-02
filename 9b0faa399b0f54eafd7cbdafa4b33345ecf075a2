@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c4ce6b89_55ad5526",
+        "filename": "build/config/sanitizers/sanitizers.gni",
+        "patchSetId": 8
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-02T18:53:22Z",
+      "side": 1,
+      "message": "Good question! The better place would be compiler.gni, as this thing is literally related to compilation flags, but we need this variable here to be used below. In that case, we have to include compiler.gni, which already includes sanitizers.gni --\u003e we end up with a recursive dependency. This is why I ended up declaring it here.\n\nI might create coverage.gni though and put it in there, but I didn\u0027t like the idea of creating a new file for a single variable definition. What do you think about it?",
+      "parentUuid": "370305fe_a2860289",
+      "revId": "9b0faa399b0f54eafd7cbdafa4b33345ecf075a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e211616b_7286a4e1",
         "filename": "third_party/libFuzzer/BUILD.gn",
         "patchSetId": 8
@@ -39,6 +57,30 @@
       "revId": "9b0faa399b0f54eafd7cbdafa4b33345ecf075a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0c29644_d82dc2b7",
+        "filename": "third_party/libFuzzer/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-02T18:53:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e211616b_7286a4e1",
+      "range": {
+        "startLine": 12,
+        "startChar": 7,
+        "endLine": 12,
+        "endChar": 25
+      },
+      "revId": "9b0faa399b0f54eafd7cbdafa4b33345ecf075a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
