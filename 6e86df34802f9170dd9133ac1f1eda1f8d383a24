@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00897d23_8a1bbb95",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwContentsClientShouldOverrideUrlLoadingTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-02T22:19:03Z",
+      "side": 1,
+      "message": "Let\u0027s use another URL, since about:blank is special cased in a bunch of places and I\u0027d rather us avoid depending on such behavior. Any web URL (test server?) would be better.",
+      "revId": "6e86df34802f9170dd9133ac1f1eda1f8d383a24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
