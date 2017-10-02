@@ -49,6 +49,31 @@ Polymer({
     },
   },
 
+  /** @override */
+  attached: function() {
+    if (!!this.searchLabel) {
+      // The this.searchLabel should not change dynamically.
+      this.listen(this, 'clear-subpage-search', 'onClearSubpageSearchTerm_');
+    }
+  },
+
+  /** @override */
+  detached: function() {
+    if (!!this.searchLabel) {
+      // The this.searchLabel should not change dynamically.
+      this.unlisten(this, 'clear-subpage-search', 'onClearSubpageSearchTerm_');
+    }
+  },
+
+  /**
+   * Clear the value of the search field.
+   * @param {!Event} e
+   */
+  onClearSubpageSearchTerm_: function(e) {
+    e.stopPropagation();
+    this.$$('settings-subpage-search').setValue('');
+  },
+
   /** @private */
   onTapBack_: function() {
     settings.navigateToPreviousRoute();
