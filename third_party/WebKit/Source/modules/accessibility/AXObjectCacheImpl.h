@@ -53,6 +53,7 @@ class MODULES_EXPORT AXObjectCacheImpl
     : public AXObjectCacheBase,
       public mojom::blink::PermissionObserver {
   WTF_MAKE_NONCOPYABLE(AXObjectCacheImpl);
+  USING_GARBAGE_COLLECTED_MIXIN(AXObjectCacheImpl);
 
  public:
   static AXObjectCache* Create(Document&);
