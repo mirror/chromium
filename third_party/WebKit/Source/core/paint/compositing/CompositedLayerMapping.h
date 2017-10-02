@@ -374,6 +374,9 @@ class CORE_EXPORT CompositedLayerMapping final : public GraphicsLayerClient {
   // position offset for this composited layer.
   bool UsesCompositedStickyPosition() const;
 
+  // Returns the offset that Blink has calculated for sticky position.
+  FloatSize OffsetForStickyPosition() const;
+
   void CreatePrimaryGraphicsLayer();
   void DestroyGraphicsLayers();
 
