@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "354ce9c8_a0e1495e",
+        "filename": "chrome/browser/chromeos/login/active_directory_login_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-10-02T11:54:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "231c688c_901a6ec1",
+      "revId": "687b3e4b59a214b878d318f953289ad548642499",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e1c9724_5a2682fe",
         "filename": "chrome/browser/chromeos/login/active_directory_login_browsertest.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "687b3e4b59a214b878d318f953289ad548642499",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a7d7dd5_302225d7",
+        "filename": "chrome/browser/chromeos/login/active_directory_login_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-10-02T11:54:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e1c9724_5a2682fe",
+      "revId": "687b3e4b59a214b878d318f953289ad548642499",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a76cee1c_476c9081",
+        "filename": "chrome/browser/chromeos/login/active_directory_login_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-10-02T11:54:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd2da999_2c30a4b8",
+      "revId": "687b3e4b59a214b878d318f953289ad548642499",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5d52170_cdff7bab",
         "filename": "chrome/browser/chromeos/login/active_directory_login_browsertest.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "687b3e4b59a214b878d318f953289ad548642499",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "181cd11c_775afb35",
+        "filename": "chrome/browser/chromeos/login/active_directory_login_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-10-02T11:54:27Z",
+      "side": 1,
+      "message": "Seems like it was left from debugging. Removed.",
+      "parentUuid": "a5d52170_cdff7bab",
+      "revId": "687b3e4b59a214b878d318f953289ad548642499",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
