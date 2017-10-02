@@ -12,9 +12,9 @@
 #include "core/html/HTMLElement.h"
 #include "core/html/HTMLImageElement.h"
 #include "core/html/HTMLImageLoader.h"
-#include "core/html/HTMLInputElement.h"
 #include "core/html/HTMLSpanElement.h"
 #include "core/html/HTMLStyleElement.h"
+#include "core/html/forms/HTMLInputElement.h"
 #include "core/style/ComputedStyle.h"
 #include "platform/wtf/text/StringBuilder.h"
 

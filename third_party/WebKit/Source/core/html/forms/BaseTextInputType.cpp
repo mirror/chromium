@@ -26,7 +26,7 @@
 #include "bindings/core/v8/ScriptRegexp.h"
 #include "core/HTMLNames.h"
 #include "core/dom/Document.h"
-#include "core/html/HTMLInputElement.h"
+#include "core/html/forms/HTMLInputElement.h"
 #include "core/inspector/ConsoleMessage.h"
 
 namespace blink {

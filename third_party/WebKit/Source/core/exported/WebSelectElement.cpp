@@ -31,8 +31,8 @@
 #include "public/web/WebSelectElement.h"
 
 #include "core/HTMLNames.h"
-#include "core/html/HTMLOptionElement.h"
-#include "core/html/HTMLSelectElement.h"
+#include "core/html/forms/HTMLOptionElement.h"
+#include "core/html/forms/HTMLSelectElement.h"
 #include "platform/wtf/RefPtr.h"
 #include "public/platform/WebString.h"
 
