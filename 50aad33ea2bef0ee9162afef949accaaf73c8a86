@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1561fbfd_763b03e1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkConfigView.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-02T18:30:45Z",
+      "side": 1,
+      "message": "That\u0027s unfortunate, ListWidget should either host light dom elements or its elements should be web components.",
+      "revId": "50aad33ea2bef0ee9162afef949accaaf73c8a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f51ea9d_f4987f80",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkConfigView.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-02T18:30:45Z",
+      "side": 1,
+      "message": "No need for tooltip.",
+      "revId": "50aad33ea2bef0ee9162afef949accaaf73c8a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa047633_7e6c82f4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkConfigView.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-02T18:30:45Z",
+      "side": 1,
+      "message": "Persist as array of pairs to make sure you are immune to keys like \u0027__proto__\u0027. Then you can use Map for the files map variable.",
+      "revId": "50aad33ea2bef0ee9162afef949accaaf73c8a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5342e19_0953ee28",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkConfigView.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-02T18:30:45Z",
+      "side": 1,
+      "message": "your method does not await.",
+      "revId": "50aad33ea2bef0ee9162afef949accaaf73c8a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
