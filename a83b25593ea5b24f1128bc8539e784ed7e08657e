@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45bad381_e7f1acfd",
+        "filename": "third_party/WebKit/LayoutTests/animations/responsive/resources/top-left-border.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-02T15:57:47Z",
+      "side": 1,
+      "message": "nit: maybe zoom-responsive.css makes more sense since it\u0027s fairly specific to these tests right?",
+      "revId": "a83b25593ea5b24f1128bc8539e784ed7e08657e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
