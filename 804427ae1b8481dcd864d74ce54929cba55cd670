@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "ef97723e_4c23ed32",
+        "filename": "services/service_manager/sandbox/mac/BUILD.gn",
+        "patchSetId": 20
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-02T20:49:46Z",
+      "side": 1,
+      "message": "Actually, I like being able to comment the one is_mac in the BUILD.gn in the diretory above it, and run the .py on my linux box ...",
+      "parentUuid": "10b80d2c_f84ba978",
+      "revId": "804427ae1b8481dcd864d74ce54929cba55cd670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c2083a78_e97f5d70",
         "filename": "services/service_manager/sandbox/mac/gpu.sb",
         "patchSetId": 20
@@ -56,6 +74,30 @@
       "revId": "804427ae1b8481dcd864d74ce54929cba55cd670",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a4ccba5_396b0ecb",
+        "filename": "services/service_manager/sandbox/mac/gpu.sb",
+        "patchSetId": 20
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-02T20:49:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2083a78_e97f5d70",
+      "range": {
+        "startLine": 7,
+        "startChar": 22,
+        "endLine": 7,
+        "endChar": 37
+      },
+      "revId": "804427ae1b8481dcd864d74ce54929cba55cd670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
