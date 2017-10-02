@@ -40,12 +40,12 @@
         },
         {
           "object": "LayoutBlockFlow (positioned) DIV id='thumb'",
-          "rect": [597, 485, 36, 48],
+          "rect": [597, 491, 36, 36],
           "reason": "full"
         },
         {
           "object": "LayoutBlockFlow (positioned) DIV id='thumb'",
-          "rect": [562, 485, 36, 48],
+          "rect": [562, 491, 36, 36],
           "reason": "full"
         },
         {
