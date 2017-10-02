@@ -9,6 +9,7 @@
 #include "base/cpu.h"
 #include "base/files/file.h"
 #include "base/files/file_path.h"
+#include "base/files/file_util.h"
 #include "base/lazy_instance.h"
 #include "base/logging.h"
 #include "base/path_service.h"
@@ -77,14 +78,24 @@
 #include "content/shell/common/v8_breakpad_support_win.h"
 #endif
 
-#if defined(OS_POSIX) && !defined(OS_MACOSX)
+#if defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_FUCHSIA)
 #include "components/crash/content/app/breakpad_linux.h"
+#endif
+
+#if defined(OS_FUCHSIA)
+#include "base/file_descriptor_store.h"
 #endif
 
 namespace {
 
+#if !defined(OS_FUCHSIA)
 base::LazyInstance<content::ShellCrashReporterClient>::Leaky
     g_shell_crash_client = LAZY_INSTANCE_INITIALIZER;
+#endif
+
+#if defined(OS_FUCHSIA)
+const char kContentPakId[] = "content_pak";
+#endif
 
 #if defined(OS_WIN)
 // If "Content Shell" doesn't show up in your list of trace providers in
@@ -143,7 +154,7 @@ bool ShellMainDelegate::BasicStartupComplete(int* exit_code) {
 
   v8_breakpad_support::SetUp();
 #endif
-#if defined(OS_LINUX) && !defined(OS_ANDROID)
+#if defined(OS_LINUX) && !defined(OS_ANDROID) && !defined(OS_FUCHSIA)
   breakpad::SetFirstChanceExceptionHandler(v8::V8::TryHandleSignal);
 #endif
 #if defined(OS_MACOSX)
@@ -260,6 +271,7 @@ bool ShellMainDelegate::BasicStartupComplete(int* exit_code) {
 }
 
 void ShellMainDelegate::PreSandboxStartup() {
+#if !defined(OS_FUCHSIA)
 #if defined(ARCH_CPU_ARM_FAMILY) && (defined(OS_ANDROID) || defined(OS_LINUX))
   // Create an instance of the CPU class to parse /proc/cpuinfo and cache
   // cpu_brand info.
@@ -294,6 +306,7 @@ void ShellMainDelegate::PreSandboxStartup() {
     breakpad::InitCrashReporter(process_type);
 #endif
   }
+#endif  // !defined(OS_FUCHSIA)
 
   InitializeResourceBundle();
 }
@@ -322,7 +335,8 @@ int ShellMainDelegate::RunProcess(
              : ShellBrowserMain(main_function_params, browser_runner_);
 }
 
-#if defined(OS_POSIX) && !defined(OS_ANDROID) && !defined(OS_MACOSX)
+#if defined(OS_POSIX) && !defined(OS_ANDROID) && !defined(OS_MACOSX) && \
+    !defined(OS_FUCHSIA)
 void ShellMainDelegate::ZygoteForked() {
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kEnableCrashReporter)) {
@@ -365,7 +379,8 @@ void ShellMainDelegate::InitializeResourceBundle() {
                                                           pak_region);
   ui::ResourceBundle::GetSharedInstance().AddDataPackFromFileRegion(
       base::File(pak_fd), pak_region, ui::SCALE_FACTOR_100P);
-#else  // defined(OS_ANDROID)
+#else
+
 #if defined(OS_MACOSX)
   base::FilePath pak_file = GetResourcesPakFilePath();
 #else
@@ -374,6 +389,34 @@ void ShellMainDelegate::InitializeResourceBundle() {
   DCHECK(r);
   pak_file = pak_file.Append(FILE_PATH_LITERAL("content_shell.pak"));
 #endif  // defined(OS_MACOSX)
+
+#if defined(OS_FUCHSIA)
+  // Sandboxed processes: read the resource file from the "shared-files"
+  // descriptor store.
+  // Browser process: read the resource file directly from the filesystem.
+
+  base::MemoryMappedFile::Region pak_region;
+  base::ScopedFD fd = base::FileDescriptorStore::GetInstance().MaybeTakeFD(
+      kContentPakId, &pak_region);
+  if (fd.is_valid()) {
+    // The shared file is available, so use it.
+    base::File pak_file = base::File(fd.release());
+    ui::ResourceBundle::InitSharedInstanceWithPakFileRegion(
+        pak_file.Duplicate(), pak_region);
+    ui::ResourceBundle::GetSharedInstance().AddDataPackFromFileRegion(
+        pak_file.Duplicate(), pak_region, ui::SCALE_FACTOR_100P);
+    return;
+  } else if (!base::PathExists(pak_file)) {
+    // Can't fall back to reading the resource file from the filesystem.
+    // The embedder doesn't have access to the resource pak through either
+    // direct filesystem access or the shared-files system.
+    // If this is an issue, then "content_pak" should be added to list of
+    // required files in the embedder services's manifest.
+    DLOG(WARNING) << "Resource pak not available to embedder; ignoring.";
+    return;
+  }
+#endif  // defined(OS_FUCHSIA)
+
   ui::ResourceBundle::InitSharedInstanceWithPakPath(pak_file);
 #endif  // defined(OS_ANDROID)
 }
