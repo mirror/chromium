@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "base/bind.h"
+#include "base/hack.h"
 #include "base/memory/ptr_util.h"
 #include "base/stl_util.h"
 #include "content/browser/payments/payment_manager.h"
@@ -32,10 +33,13 @@ void PaymentAppContextImpl::Init(
 void PaymentAppContextImpl::Shutdown() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
+  LOG(ERROR) << "PaymentAppContextImpl::Shutdown";
+  //HACK_WaitUntil(base::FlushedWorkerPool);
   BrowserThread::PostTaskAndReply(
       BrowserThread::IO, FROM_HERE,
       base::BindOnce(&PaymentAppContextImpl::ShutdownOnIO, this),
       base::BindOnce(&PaymentAppContextImpl::DidShutdown, this));
+  //HACK_AdvanceState(base::FlushedWorkerPool, base::PostedPaymentsShutdown);
 }
 
 void PaymentAppContextImpl::CreatePaymentManager(
@@ -84,12 +88,14 @@ void PaymentAppContextImpl::CreatePaymentManagerOnIO(
 void PaymentAppContextImpl::ShutdownOnIO() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
+  LOG(ERROR) << "PaymentAppContextImpl::ShutdownOnIO";
   payment_managers_.clear();
   payment_app_database_.reset();
 }
 
 void PaymentAppContextImpl::DidShutdown() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  LOG(ERROR) << "PaymentAppContextImpl::DidShutdown";
 
   is_shutdown_ = true;
 }
