@@ -8,6 +8,7 @@ include_rules = [
   "+chrome_elf/nt_registry/nt_registry.h",
   "+chrome_elf/whitelist/whitelist.h",
   "+chrome_elf/whitelist/whitelist_ime.h",
+  "+chrome_elf/whitelist/whitelist_ms.h",
 ]
 specific_include_rules = {
   ".*_unittest\.cc": [

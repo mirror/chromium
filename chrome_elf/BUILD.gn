@@ -225,6 +225,8 @@ static_library("whitelist") {
     "whitelist/whitelist.h",
     "whitelist/whitelist_ime.cc",
     "whitelist/whitelist_ime.h",
+    "whitelist/whitelist_ms.cc",
+    "whitelist/whitelist_ms.h",
   ]
   deps = [
     ":nt_registry",
@@ -245,6 +247,7 @@ test("chrome_elf_unittests") {
     "nt_registry/nt_registry_unittest.cc",
     "run_all_unittests.cc",
     "whitelist/whitelist_ime_unittest.cc",
+    "whitelist/whitelist_ms_unittest.cc",
   ]
   include_dirs = [ "$target_gen_dir" ]
   deps = [
