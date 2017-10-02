@@ -171,7 +171,6 @@ void InfoBarView::ViewHierarchyChanged(
                                   GetInfobarTextColor());
     close_button_->SetAccessibleName(
         l10n_util::GetStringUTF16(IDS_ACCNAME_CLOSE));
-    close_button_->SetFocusForPlatform();
     // Subclasses should already be done adding child views by this point (see
     // related DCHECK in Layout()).
     child_container_->AddChildView(close_button_);

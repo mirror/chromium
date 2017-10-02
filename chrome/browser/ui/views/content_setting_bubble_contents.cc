@@ -566,7 +566,6 @@ views::View* ContentSettingBubbleContents::CreateExtraView() {
   // Optionally add a help icon if the view wants to link to a help page.
   if (bubble_content.show_learn_more) {
     learn_more_button_ = views::CreateVectorImageButton(this);
-    learn_more_button_->SetFocusForPlatform();
     learn_more_button_->SetTooltipText(
         l10n_util::GetStringUTF16(IDS_LEARN_MORE));
     StyleLearnMoreButton(GetNativeTheme());
