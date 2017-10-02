@@ -4,6 +4,7 @@
 
 #include "ash/wm/overview/overview_window_drag_controller.h"
 
+#include "ash/display/screen_orientation_controller_chromeos.h"
 #include "ash/screen_util.h"
 #include "ash/shell.h"
 #include "ash/wm/overview/scoped_transform_overview_window.h"
@@ -27,6 +28,16 @@ constexpr int kMinimiumDragOffset = 5;
 // Snapping distance between the dragged window with the screen edge. It's
 // useful especially for touch events.
 constexpr int kScreenEdgeInsetForDrag = 200;
+
+// Returns true if |screen_orientation| is a primary orientation.
+bool IsPrimaryScreenOrientation(
+    blink::WebScreenOrientationLockType screen_orientation) {
+  if (screen_orientation == blink::kWebScreenOrientationLockLandscapePrimary ||
+      screen_orientation == blink::kWebScreenOrientationLockPortraitPrimary) {
+    return true;
+  }
+  return false;
+}
 
 }  // namespace
 
@@ -72,7 +83,11 @@ void OverviewWindowDragController::Drag(const gfx::Point& location_in_screen) {
                                                        location_in_screen);
 }
 
-void OverviewWindowDragController::CompleteDrag() {
+void OverviewWindowDragController::CompleteDrag(
+    const gfx::Point& location_in_screen) {
+  // Update window grid bounds and |snap_position_| in case the screen
+  // orientation was changed.
+  UpdatePhantomWindowAndWindowGrid(location_in_screen);
   phantom_window_controller_.reset();
   window_selector_->SetSplitViewOverviewOverlayVisible(false, gfx::Point());
 
@@ -150,13 +165,40 @@ SplitViewController::SnapPosition OverviewWindowDragController::GetSnapPosition(
   gfx::Rect area(
       ScreenUtil::GetDisplayWorkAreaBoundsInParent(item_->GetWindow()));
   ::wm::ConvertRectToScreen(item_->GetWindow()->GetRootWindow(), &area);
-  area.Inset(kScreenEdgeInsetForDrag, 0);
 
-  if (location_in_screen.x() <= area.x())
-    return SplitViewController::LEFT;
-  if (location_in_screen.x() >= area.right() - 1)
-    return SplitViewController::RIGHT;
-  return SplitViewController::NONE;
+  blink::WebScreenOrientationLockType screen_orientation =
+      Shell::Get()->screen_orientation_controller()->GetCurrentOrientation();
+  switch (screen_orientation) {
+    case blink::kWebScreenOrientationLockLandscapePrimary:
+    case blink::kWebScreenOrientationLockLandscapeSecondary:
+      area.Inset(kScreenEdgeInsetForDrag, 0);
+      if (location_in_screen.x() <= area.x())
+        return IsPrimaryScreenOrientation(screen_orientation)
+                   ? SplitViewController::LEFT
+                   : SplitViewController::RIGHT;
+      if (location_in_screen.x() >= area.right() - 1)
+        return IsPrimaryScreenOrientation(screen_orientation)
+                   ? SplitViewController::RIGHT
+                   : SplitViewController::LEFT;
+      return SplitViewController::NONE;
+
+    case blink::kWebScreenOrientationLockPortraitPrimary:
+    case blink::kWebScreenOrientationLockPortraitSecondary:
+      area.Inset(0, kScreenEdgeInsetForDrag);
+      if (location_in_screen.y() <= area.y())
+        return IsPrimaryScreenOrientation(screen_orientation)
+                   ? SplitViewController::RIGHT
+                   : SplitViewController::LEFT;
+      if (location_in_screen.y() >= area.bottom() - 1)
+        return IsPrimaryScreenOrientation(screen_orientation)
+                   ? SplitViewController::LEFT
+                   : SplitViewController::RIGHT;
+      return SplitViewController::NONE;
+
+    default:
+      NOTREACHED();
+      return SplitViewController::NONE;
+  }
 }
 
 gfx::Rect OverviewWindowDragController::GetGridBounds(
