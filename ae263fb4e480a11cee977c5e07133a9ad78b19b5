@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "62350fed_ca125eec",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-02T17:48:14Z",
+      "side": 1,
+      "message": "On that note, should we be allowing panning the visual viewport, just not panning which results in a scroll of the target element\u0027s scroller? Otherwise it seems like the pinch-zoom behavior would be unintuitive.",
+      "parentUuid": "6b7c4812_9f3dc656",
+      "revId": "ae263fb4e480a11cee977c5e07133a9ad78b19b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40e4840c_e294fc82",
         "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
         "patchSetId": 40
