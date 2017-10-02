@@ -27,6 +27,7 @@ class PLATFORM_EXPORT OffscreenCanvasResourceProvider {
                                                  RefPtr<StaticBitmapImage>);
   void SetTransferableResourceToStaticBitmapImage(viz::TransferableResource&,
                                                   RefPtr<StaticBitmapImage>);
+
   void ReclaimResource(unsigned resource_id);
   void ReclaimResources(const WTF::Vector<viz::ReturnedResource>& resources);
   void IncNextResourceId() { next_resource_id_++; }
@@ -40,6 +41,7 @@ class PLATFORM_EXPORT OffscreenCanvasResourceProvider {
  private:
   int width_;
   int height_;
+
   unsigned next_resource_id_;
 
   struct FrameResource {
@@ -52,13 +54,14 @@ class PLATFORM_EXPORT OffscreenCanvasResourceProvider {
     GLuint image_id_ = 0;
 
     bool spare_lock_ = true;
+
     gpu::Mailbox mailbox_;
 
     FrameResource() {}
     ~FrameResource();
   };
 
-  std::unique_ptr<FrameResource> recycleable_resource_;
+  std::unique_ptr<FrameResource> recyclable_resource_;
   std::unique_ptr<FrameResource> CreateOrRecycleFrameResource();
 
   void SetNeedsBeginFrameInternal();
