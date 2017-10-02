@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b87a44f4_eef1b38d",
+        "filename": "breakpad/src",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-02T17:18:02Z",
+      "side": 1,
+      "message": "This looks like an accidental change",
+      "range": {
+        "startLine": 1,
+        "startChar": 18,
+        "endLine": 1,
+        "endChar": 58
+      },
+      "revId": "71e7e89858c9d2e32a374491b39592f0d96e131c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa456a47_8778f29b",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-02T17:18:02Z",
+      "side": 1,
+      "message": "mock_wk_list_.backList.firstObject\n\n[0] may throw an exception if the list is empty. Same comment for other places.",
+      "range": {
+        "startLine": 328,
+        "startChar": 30,
+        "endLine": 328,
+        "endChar": 52
+      },
+      "revId": "71e7e89858c9d2e32a374491b39592f0d96e131c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10828520_79ead392",
+        "filename": "sdch/open-vcdiff",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-02T17:18:02Z",
+      "side": 1,
+      "message": "Accidental chance?",
+      "range": {
+        "startLine": 1,
+        "startChar": 18,
+        "endLine": 1,
+        "endChar": 58
+      },
+      "revId": "71e7e89858c9d2e32a374491b39592f0d96e131c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
