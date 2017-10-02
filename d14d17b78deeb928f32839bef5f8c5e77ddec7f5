@@ -46,6 +46,30 @@
       "revId": "d14d17b78deeb928f32839bef5f8c5e77ddec7f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8408dc7b_1103553b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/scene_layer/TabListSceneLayer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1125499
+      },
+      "writtenOn": "2017-10-02T21:56:46Z",
+      "side": 1,
+      "message": "I had considered that but saw getBorderAlpha() seems to be called to get the raw values [1]. Maybe it isn\u0027t supposed to be getting the raw values and I interpreted it wrong. But if that is true, the size would change here. Maybe that needs to be changed as well.\n\n[1] https://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/phone/stack/Stack.java?q\u003dgetBorderAlpha\u0026sq\u003dpackage:chromium\u0026l\u003d1743\u0026dr\u003dC\n\ngetBorderInnerShadowAlpha() is only called here so we can clearly alter it.\nAnd even if getBorderAlpha() is called for the raw values in [1], I could perhaps add getComputedBorderAlpha().\n\nSo,\n1.) Do you know if [1] was supposed to get the non-raw value? And if not,\n2.) Do you like the getComputedBorderAlpha() idea?",
+      "parentUuid": "3bbcc7d0_2f4f888c",
+      "range": {
+        "startLine": 77,
+        "startChar": 47,
+        "endLine": 77,
+        "endChar": 48
+      },
+      "revId": "d14d17b78deeb928f32839bef5f8c5e77ddec7f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
