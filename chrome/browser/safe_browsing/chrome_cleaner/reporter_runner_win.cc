@@ -606,6 +606,8 @@ void MaybeScanAndPrompt(const SwReporterInvocation& reporter_invocation) {
   PrefService* prefs = profile->GetPrefs();
   DCHECK(prefs);
 
+#if 0
+  // DO NOT SUBMIT: this is to force to prompt to show-up.
   // Don't show the prompt again if it's been shown before for this profile and
   // for the current variations seed. The seed preference will be updated once
   // the prompt is shown.
@@ -621,6 +623,7 @@ void MaybeScanAndPrompt(const SwReporterInvocation& reporter_invocation) {
     g_testing_delegate_->TriggerPrompt();
     return;
   }
+#endif
 
   cleaner_controller->Scan(reporter_invocation);
   DCHECK_EQ(ChromeCleanerController::State::kScanning,
