@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89fe86e4_2ec16de2",
+        "filename": "chrome/browser/predictors/loading_stats_collector.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-02T16:30:10Z",
+      "side": 1,
+      "message": "This calculation is malformed because if there were no preconnected requests then the denominator will be zero.\n\nSee: crash/e3f69952d2279f1b",
+      "revId": "67b7765d989f218ac0e295e4fb7f1b6e9f15a9ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
