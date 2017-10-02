@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53489691_3536bd70",
+        "filename": "ui/gfx/skia_color_space_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-10-02T08:43:28Z",
+      "side": 1,
+      "message": "This is the actual change -- do this simple thing instead of the above (now deleted) complicated code.",
+      "revId": "2a9ab8e2aa4d9608a6bc80e965793743678537a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
