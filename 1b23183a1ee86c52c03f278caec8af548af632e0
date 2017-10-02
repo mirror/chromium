@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f1dfcc3_cba02cd5",
+        "filename": "chrome/browser/vr/elements/content_element.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-10-02T15:18:13Z",
+      "side": 1,
+      "message": "Would it make sense to combine set_texture_id and set_texture_location to SetContentTexture(unsigned int texture_id, unsigned int texture_id)? I don\u0027t think we ever want to set them separately.",
+      "range": {
+        "startLine": 42,
+        "startChar": 7,
+        "endLine": 42,
+        "endChar": 27
+      },
+      "revId": "1b23183a1ee86c52c03f278caec8af548af632e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
