@@ -174,6 +174,24 @@
       "revId": "97fa502e94daba47c55a1473821a87f8ba266eab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba38935e_6304f992",
+        "filename": "components/viz/service/hit_test/hit_test_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-02T20:29:47Z",
+      "side": 1,
+      "message": "I see no reason to block for that minor issue so sure it\u0027s OK. We can figure out what\u0027s going on here in a separate CL.",
+      "parentUuid": "74ef06e6_bf52ec2a",
+      "revId": "97fa502e94daba47c55a1473821a87f8ba266eab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

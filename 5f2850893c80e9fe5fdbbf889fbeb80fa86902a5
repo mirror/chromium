@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3266e381_5e896a1b",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-02T20:29:47Z",
+      "side": 1,
+      "message": "Remove explicit. Only for one parameter constructors.",
+      "revId": "5f2850893c80e9fe5fdbbf889fbeb80fa86902a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29372405_bb30e16f",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-02T20:29:47Z",
+      "side": 1,
+      "message": "Why do we do this?",
+      "revId": "5f2850893c80e9fe5fdbbf889fbeb80fa86902a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01d8f636_f9031e12",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-02T20:29:47Z",
+      "side": 1,
+      "message": "HitTestManager* const hit_test_manager_;",
+      "revId": "5f2850893c80e9fe5fdbbf889fbeb80fa86902a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87189b72_915400ba",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-02T20:29:47Z",
+      "side": 1,
+      "message": "Comment explaining what this does? It\u0027s not immediately obvious given the name.",
+      "revId": "5f2850893c80e9fe5fdbbf889fbeb80fa86902a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18dc147c_fb6605bb",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-02T20:29:47Z",
+      "side": 1,
+      "message": "Comment explaining what this does? It\u0027s not immediately obvious given the name.",
+      "revId": "5f2850893c80e9fe5fdbbf889fbeb80fa86902a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91bfd32e_4fcadb9b",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-02T20:29:47Z",
+      "side": 1,
+      "message": "Remove explicit.",
+      "revId": "5f2850893c80e9fe5fdbbf889fbeb80fa86902a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e59ffacb_1e8522ca",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-02T20:29:47Z",
+      "side": 1,
+      "message": "int Count() const?",
+      "revId": "5f2850893c80e9fe5fdbbf889fbeb80fa86902a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "590445ad_7604c4e2",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-02T20:29:47Z",
+      "side": 1,
+      "message": "nit: const SurfaceId\u0026",
+      "revId": "5f2850893c80e9fe5fdbbf889fbeb80fa86902a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21934619_95acc5d2",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-02T20:29:47Z",
+      "side": 1,
+      "message": "nit: const SurfaceId\u0026",
+      "revId": "5f2850893c80e9fe5fdbbf889fbeb80fa86902a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d299c245_168f6f59",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-02T20:29:47Z",
+      "side": 1,
+      "message": "Ahh I guess you need this to override it in unit tests. Please use this throughout in HitTestAggregator.",
+      "revId": "5f2850893c80e9fe5fdbbf889fbeb80fa86902a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e0b67b3_d7ba06d7",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-02T20:29:47Z",
+      "side": 1,
+      "message": "Why is this no longer activeregioncount?",
+      "revId": "5f2850893c80e9fe5fdbbf889fbeb80fa86902a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "992d1e8c_2933c819",
+        "filename": "components/viz/service/hit_test/hit_test_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-02T20:29:47Z",
+      "side": 1,
+      "message": "I think this is probably a useful helper. Do you need this on FrameSinkManagerImpl? If not maybe move it here? Also use it on line 88-90?",
+      "revId": "5f2850893c80e9fe5fdbbf889fbeb80fa86902a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
