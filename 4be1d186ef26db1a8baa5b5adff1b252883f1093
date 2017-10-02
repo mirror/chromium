@@ -46,6 +46,30 @@
       "revId": "4be1d186ef26db1a8baa5b5adff1b252883f1093",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f77752f2_2cf06ba6",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontVariantEastAsian.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1244341
+      },
+      "writtenOn": "2017-10-02T06:49:38Z",
+      "side": 1,
+      "message": "Marking resolved.",
+      "parentUuid": "a8138617_26725a1d",
+      "range": {
+        "startLine": 11,
+        "startChar": 12,
+        "endLine": 11,
+        "endChar": 26
+      },
+      "revId": "4be1d186ef26db1a8baa5b5adff1b252883f1093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
