@@ -70,6 +70,24 @@
       "revId": "4e8f4d56687553b8bc02a361ddae04428e1316ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2082bfca_57f2a6f7",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1147,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-02T17:00:48Z",
+      "side": 1,
+      "message": "I see. It may still show even if it is rejected for different reason (modal window case). Is that concern? Maybe we GetAcceleratorProcessingRestriction should returun the reason?",
+      "parentUuid": "c0d6c70e_0738e775",
+      "revId": "4e8f4d56687553b8bc02a361ddae04428e1316ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
