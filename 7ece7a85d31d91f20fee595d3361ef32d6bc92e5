@@ -70,6 +70,24 @@
       "revId": "7ece7a85d31d91f20fee595d3361ef32d6bc92e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "955df59e_10412c4e",
+        "filename": "ash/display/screen_position_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-10-02T20:45:24Z",
+      "side": 1,
+      "message": "This cl only use the float version. The int version can be remove later(if the other usages are not using it). We don\u0027t need to keep both",
+      "parentUuid": "fdb14d8b_490ea999",
+      "revId": "7ece7a85d31d91f20fee595d3361ef32d6bc92e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
