@@ -236,6 +236,45 @@ std::string GetPrinterQueue(const base::DictionaryValue& printer_dict) {
   return queue;
 }
 
+// Generates a Printer from |printer_dict| where |printer_dict| is a
+// CupsPrinterInfo representation.
+chromeos::Printer DictToPrinter(const base::DictionaryValue& printer_dict) {
+  std::string printer_id;
+  std::string printer_name;
+  std::string printer_description;
+  std::string printer_manufacturer;
+  std::string printer_model;
+  std::string printer_make_and_model;
+  std::string printer_address;
+  std::string printer_protocol;
+  CHECK(printer_dict.GetString("printerId", &printer_id));
+  CHECK(printer_dict.GetString("printerName", &printer_name));
+  CHECK(printer_dict.GetString("printerDescription", &printer_description));
+  CHECK(printer_dict.GetString("printerManufacturer", &printer_manufacturer));
+  CHECK(printer_dict.GetString("printerModel", &printer_model));
+  CHECK(printer_dict.GetString("printerMakeAndModel", &printer_make_and_model));
+  CHECK(printer_dict.GetString("printerAddress", &printer_address));
+  CHECK(printer_dict.GetString("printerProtocol", &printer_protocol));
+
+  std::string printer_queue = GetPrinterQueue(printer_dict);
+
+  std::string printer_uri =
+      printer_protocol + url::kStandardSchemeSeparator + printer_address;
+  if (!printer_queue.empty()) {
+    printer_uri += "/" + printer_queue;
+  }
+
+  Printer printer(printer_id);
+  printer.set_display_name(printer_name);
+  printer.set_description(printer_description);
+  printer.set_manufacturer(printer_manufacturer);
+  printer.set_model(printer_model);
+  printer.set_make_and_model(printer_make_and_model);
+  printer.set_uri(printer_uri);
+
+  return printer;
+}
+
 }  // namespace
 
 CupsPrintersHandler::CupsPrintersHandler(content::WebUI* webui)
@@ -293,6 +332,9 @@ void CupsPrintersHandler::RegisterMessages() {
       "addDiscoveredPrinter",
       base::Bind(&CupsPrintersHandler::HandleAddDiscoveredPrinter,
                  base::Unretained(this)));
+  web_ui()->RegisterMessageCallback(
+      "cancelPrinterSetUp", base::Bind(&CupsPrintersHandler::HandleSetUpCancel,
+                                       base::Unretained(this)));
 }
 
 void CupsPrintersHandler::HandleGetCupsPrintersList(
@@ -469,31 +511,7 @@ void CupsPrintersHandler::HandleAddCupsPrinter(const base::ListValue* args) {
   const base::DictionaryValue* printer_dict = nullptr;
   CHECK(args->GetDictionary(0, &printer_dict));
 
-  std::string printer_id;
-  std::string printer_name;
-  std::string printer_description;
-  std::string printer_manufacturer;
-  std::string printer_model;
-  std::string printer_make_and_model;
-  std::string printer_address;
-  std::string printer_protocol;
-  CHECK(printer_dict->GetString("printerId", &printer_id));
-  CHECK(printer_dict->GetString("printerName", &printer_name));
-  CHECK(printer_dict->GetString("printerDescription", &printer_description));
-  CHECK(printer_dict->GetString("printerManufacturer", &printer_manufacturer));
-  CHECK(printer_dict->GetString("printerModel", &printer_model));
-  CHECK(
-      printer_dict->GetString("printerMakeAndModel", &printer_make_and_model));
-  CHECK(printer_dict->GetString("printerAddress", &printer_address));
-  CHECK(printer_dict->GetString("printerProtocol", &printer_protocol));
-
-  std::string printer_queue = GetPrinterQueue(*printer_dict);
-
-  std::string printer_uri =
-      printer_protocol + url::kStandardSchemeSeparator + printer_address;
-  if (!printer_queue.empty()) {
-    printer_uri += "/" + printer_queue;
-  }
+  Printer printer = DictToPrinter(*printer_dict);
 
   // Read PPD selection if it was used.
   std::string ppd_manufacturer;
@@ -504,14 +522,6 @@ void CupsPrintersHandler::HandleAddCupsPrinter(const base::ListValue* args) {
   // Read user provided PPD if it was used.
   std::string printer_ppd_path;
   printer_dict->GetString("printerPPDPath", &printer_ppd_path);
-
-  Printer printer(printer_id);
-  printer.set_display_name(printer_name);
-  printer.set_description(printer_description);
-  printer.set_manufacturer(printer_manufacturer);
-  printer.set_model(printer_model);
-  printer.set_make_and_model(printer_make_and_model);
-  printer.set_uri(printer_uri);
 
   bool autoconf = false;
   printer_dict->GetBoolean("printerAutoconf", &autoconf);
@@ -751,6 +761,14 @@ void CupsPrintersHandler::HandleStopDiscovery(const base::ListValue* args) {
   discovered_printers_.shrink_to_fit();
   automatic_printers_.shrink_to_fit();
   discovery_active_ = false;
+}
+
+void CupsPrintersHandler::HandleSetUpCancel(const base::ListValue* args) {
+  const base::DictionaryValue* printer_dict;
+  CHECK(args->GetDictionary(0, &printer_dict));
+
+  Printer printer = DictToPrinter(*printer_dict);
+  printers_manager_->RecordSetupAbandoned(printer);
 }
 
 void CupsPrintersHandler::OnPrintersChanged(
