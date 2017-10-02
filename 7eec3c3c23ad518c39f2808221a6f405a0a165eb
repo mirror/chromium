@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e53fcc0_20050541",
+        "filename": "build/config/compiler/compiler.gni",
+        "patchSetId": 14
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-10-02T20:00:27Z",
+      "side": 1,
+      "message": "I think this second use_clang_coverage is redundant. Can be simplified as:\n\n!use_clang_coverage || !optimize_for_fuzzing",
+      "range": {
+        "startLine": 218,
+        "startChar": 30,
+        "endLine": 218,
+        "endChar": 48
+      },
+      "revId": "7eec3c3c23ad518c39f2808221a6f405a0a165eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02a3c9e5_c4a2bdaa",
+        "filename": "build/config/sanitizers/sanitizers.gni",
+        "patchSetId": 14
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-10-02T20:00:27Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 224,
+        "startChar": 30,
+        "endLine": 224,
+        "endChar": 48
+      },
+      "revId": "7eec3c3c23ad518c39f2808221a6f405a0a165eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
