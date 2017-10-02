@@ -11,6 +11,7 @@ include_rules = [
   "+services/service_manager/sandbox",
   "+services/video_capture/public/interfaces",
   "+services/viz/public/interfaces",
+  "+storage/public/interfaces",
 
   # No inclusion of WebKit from the browser, other than strictly enum/POD,
   # header-only types, and some selected common code.
