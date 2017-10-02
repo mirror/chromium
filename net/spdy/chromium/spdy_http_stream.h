@@ -20,6 +20,7 @@
 #include "net/spdy/chromium/spdy_read_queue.h"
 #include "net/spdy/chromium/spdy_session.h"
 #include "net/spdy/chromium/spdy_stream.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -53,6 +54,7 @@ class NET_EXPORT_PRIVATE SpdyHttpStream : public SpdyStream::Delegate,
                        const CompletionCallback& callback) override;
 
   int SendRequest(const HttpRequestHeaders& headers,
+                  const net::NetworkTrafficAnnotationTag& traffic_annotation,
                   HttpResponseInfo* response,
                   const CompletionCallback& callback) override;
   int ReadResponseHeaders(const CompletionCallback& callback) override;

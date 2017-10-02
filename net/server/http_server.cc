@@ -25,6 +25,7 @@
 #include "net/socket/server_socket.h"
 #include "net/socket/stream_socket.h"
 #include "net/socket/tcp_server_socket.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -55,52 +56,71 @@ void HttpServer::AcceptWebSocket(
   connection->web_socket()->Accept(request);
 }
 
-void HttpServer::SendOverWebSocket(int connection_id,
-                                   const std::string& data) {
+void HttpServer::SendOverWebSocket(
+    int connection_id,
+    const std::string& data,
+    const NetworkTrafficAnnotationTag& traffic_annotation) {
   HttpConnection* connection = FindConnection(connection_id);
   if (connection == NULL)
     return;
   DCHECK(connection->web_socket());
-  connection->web_socket()->Send(data);
+  connection->web_socket()->Send(data, traffic_annotation);
 }
 
-void HttpServer::SendRaw(int connection_id, const std::string& data) {
+void HttpServer::SendRaw(
+    int connection_id,
+    const std::string& data,
+    const NetworkTrafficAnnotationTag& traffic_annotation) {
   HttpConnection* connection = FindConnection(connection_id);
   if (connection == NULL)
     return;
+
+  traffic_annotation_ = MutableNetworkTrafficAnnotationTag(traffic_annotation);
 
   bool writing_in_progress = !connection->write_buf()->IsEmpty();
   if (connection->write_buf()->Append(data) && !writing_in_progress)
     DoWriteLoop(connection);
 }
 
-void HttpServer::SendResponse(int connection_id,
-                              const HttpServerResponseInfo& response) {
-  SendRaw(connection_id, response.Serialize());
+void HttpServer::SendResponse(
+    int connection_id,
+    const HttpServerResponseInfo& response,
+    const NetworkTrafficAnnotationTag& traffic_annotation) {
+  SendRaw(connection_id, response.Serialize(), traffic_annotation);
 }
 
 void HttpServer::Send(int connection_id,
                       HttpStatusCode status_code,
                       const std::string& data,
-                      const std::string& content_type) {
+                      const std::string& content_type,
+                      const NetworkTrafficAnnotationTag& traffic_annotation) {
   HttpServerResponseInfo response(status_code);
   response.SetContentHeaders(data.size(), content_type);
-  SendResponse(connection_id, response);
-  SendRaw(connection_id, data);
+  SendResponse(connection_id, response, traffic_annotation);
+  SendRaw(connection_id, data, traffic_annotation);
 }
 
-void HttpServer::Send200(int connection_id,
-                         const std::string& data,
-                         const std::string& content_type) {
-  Send(connection_id, HTTP_OK, data, content_type);
+void HttpServer::Send200(
+    int connection_id,
+    const std::string& data,
+    const std::string& content_type,
+    const NetworkTrafficAnnotationTag& traffic_annotation) {
+  Send(connection_id, HTTP_OK, data, content_type, traffic_annotation);
 }
 
-void HttpServer::Send404(int connection_id) {
-  SendResponse(connection_id, HttpServerResponseInfo::CreateFor404());
+void HttpServer::Send404(
+    int connection_id,
+    const NetworkTrafficAnnotationTag& traffic_annotation) {
+  SendResponse(connection_id, HttpServerResponseInfo::CreateFor404(),
+               traffic_annotation);
 }
 
-void HttpServer::Send500(int connection_id, const std::string& message) {
-  SendResponse(connection_id, HttpServerResponseInfo::CreateFor500(message));
+void HttpServer::Send500(
+    int connection_id,
+    const std::string& message,
+    const NetworkTrafficAnnotationTag& traffic_annotation) {
+  SendResponse(connection_id, HttpServerResponseInfo::CreateFor500(message),
+               traffic_annotation);
 }
 
 void HttpServer::Close(int connection_id) {
@@ -260,10 +280,12 @@ int HttpServer::HandleReadResult(HttpConnection* connection, int rv) {
       if (!base::StringToSizeT(request.GetHeaderValue(kContentLength),
                                &content_length) ||
           content_length > kMaxBodySize) {
+        // TODO(rhalavati): Origin of annotation? HttpServerInternals.
         SendResponse(connection->id(),
                      HttpServerResponseInfo::CreateFor500(
                          "request content-length too big or unknown: " +
-                         request.GetHeaderValue(kContentLength)));
+                         request.GetHeaderValue(kContentLength)),
+                     NO_TRAFFIC_ANNOTATION_YET);
         Close(connection->id());
         return ERR_CONNECTION_CLOSED;
       }
@@ -288,8 +310,7 @@ void HttpServer::DoWriteLoop(HttpConnection* connection) {
   HttpConnection::QueuedWriteIOBuffer* write_buf = connection->write_buf();
   while (rv == OK && write_buf->GetSizeToWrite() > 0) {
     rv = connection->socket()->Write(
-        write_buf,
-        write_buf->GetSizeToWrite(),
+        NO_TRAFFIC_ANNOTATION_YET, write_buf, write_buf->GetSizeToWrite(),
         base::Bind(&HttpServer::OnWriteCompleted,
                    weak_ptr_factory_.GetWeakPtr(), connection->id()));
     if (rv == ERR_IO_PENDING || rv == OK)

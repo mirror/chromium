@@ -48,6 +48,9 @@ namespace net {
 
 namespace {
 
+constexpr NetworkTrafficAnnotationTag kTrafficAnnotation =
+    NO_TRAFFIC_ANNOTATION_YET;
+
 // Count labels in the fully-qualified name in DNS format.
 int CountLabels(const std::string& name) {
   size_t count = 0;
@@ -222,10 +225,9 @@ class DnsUDPAttempt : public DnsAttempt {
 
   int DoSendQuery() {
     next_state_ = STATE_SEND_QUERY_COMPLETE;
-    return socket()->Write(query_->io_buffer(),
-                           query_->io_buffer()->size(),
-                           base::Bind(&DnsUDPAttempt::OnIOComplete,
-                                      base::Unretained(this)));
+    return socket()->Write(
+        kTrafficAnnotation, query_->io_buffer(), query_->io_buffer()->size(),
+        base::Bind(&DnsUDPAttempt::OnIOComplete, base::Unretained(this)));
   }
 
   int DoSendQueryComplete(int rv) {
@@ -417,8 +419,7 @@ class DnsTCPAttempt : public DnsAttempt {
     if (buffer_->BytesRemaining() > 0) {
       next_state_ = STATE_SEND_LENGTH;
       return socket_->Write(
-          buffer_.get(),
-          buffer_->BytesRemaining(),
+          kTrafficAnnotation, buffer_.get(), buffer_->BytesRemaining(),
           base::Bind(&DnsTCPAttempt::OnIOComplete, base::Unretained(this)));
     }
     buffer_ = new DrainableIOBuffer(query_->io_buffer(),
@@ -436,8 +437,7 @@ class DnsTCPAttempt : public DnsAttempt {
     if (buffer_->BytesRemaining() > 0) {
       next_state_ = STATE_SEND_QUERY;
       return socket_->Write(
-          buffer_.get(),
-          buffer_->BytesRemaining(),
+          kTrafficAnnotation, buffer_.get(), buffer_->BytesRemaining(),
           base::Bind(&DnsTCPAttempt::OnIOComplete, base::Unretained(this)));
     }
     buffer_ =

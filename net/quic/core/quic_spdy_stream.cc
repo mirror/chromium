@@ -15,9 +15,18 @@
 #include "net/quic/platform/api/quic_string_piece.h"
 #include "net/quic/platform/api/quic_text_utils.h"
 #include "net/spdy/core/spdy_protocol.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 using base::IntToString;
 using std::string;
+
+namespace {
+
+// TODO(rhalavati): To be updated. Use only when no data is transferred.
+constexpr net::NetworkTrafficAnnotationTag
+    kTrafficAnntoationForQuicSpdyInternals = NO_TRAFFIC_ANNOTATION_YET;
+
+}  // namespace
 
 namespace net {
 #define ENDPOINT                                                               \
@@ -60,10 +69,11 @@ size_t QuicSpdyStream::WriteHeaders(
 }
 
 void QuicSpdyStream::WriteOrBufferBody(
+    const NetworkTrafficAnnotationTag& traffic_annotation,
     const string& data,
     bool fin,
     QuicReferenceCountedPointer<QuicAckListenerInterface> ack_listener) {
-  WriteOrBufferData(data, fin, std::move(ack_listener));
+  WriteOrBufferData(traffic_annotation, data, fin, std::move(ack_listener));
 }
 
 size_t QuicSpdyStream::WriteTrailers(
@@ -180,7 +190,8 @@ void QuicSpdyStream::OnInitialHeadersComplete(
   headers_decompressed_ = true;
   header_list_ = header_list;
   if (fin) {
-    OnStreamFrame(QuicStreamFrame(id(), fin, 0, QuicStringPiece()));
+    OnStreamFrame(QuicStreamFrame(id(), fin, 0, QuicStringPiece(),
+                                  kTrafficAnntoationForQuicSpdyInternals));
   }
   if (FinishedReadingHeaders()) {
     sequencer()->SetUnblocked();
@@ -229,8 +240,8 @@ void QuicSpdyStream::OnTrailingHeadersComplete(
     return;
   }
   trailers_decompressed_ = true;
-  OnStreamFrame(
-      QuicStreamFrame(id(), fin, final_byte_offset, QuicStringPiece()));
+  OnStreamFrame(QuicStreamFrame(id(), fin, final_byte_offset, QuicStringPiece(),
+                                kTrafficAnntoationForQuicSpdyInternals));
 }
 
 void QuicSpdyStream::OnStreamReset(const QuicRstStreamFrame& frame) {

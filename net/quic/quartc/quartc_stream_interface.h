@@ -9,6 +9,7 @@
 #include <stdint.h>
 
 #include "net/quic/platform/api/quic_export.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -44,7 +45,8 @@ class QUIC_EXPORT_PRIVATE QuartcStreamInterface {
 
   // Sends data reliably and in-order.  Returns the amount sent.
   // Does not buffer data.
-  virtual void Write(const char* data,
+  virtual void Write(const NetworkTrafficAnnotationTag& traffic_annotation,
+                     const char* data,
                      size_t size,
                      const WriteParameters& param) = 0;
 

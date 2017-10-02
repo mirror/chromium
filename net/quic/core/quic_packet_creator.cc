@@ -18,11 +18,21 @@
 #include "net/quic/platform/api/quic_logging.h"
 #include "net/quic/platform/api/quic_ptr_util.h"
 #include "net/quic/platform/api/quic_string_piece.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 using std::string;
 
 // If true, enforce that QUIC CHLOs fit in one packet.
 bool FLAGS_quic_enforce_single_packet_chlo = true;
+
+namespace {
+// TODO(rhalavati): Update with text specifying this is used for internal quic
+// packet processes and all frames and data are ensured to have traffic
+// annotation.
+net::NetworkTrafficAnnotationTag kTrafficAnntoationForAnnotatedFrames =
+    NO_TRAFFIC_ANNOTATION_YET;
+
+}  // namespace
 
 namespace net {
 
@@ -116,17 +126,20 @@ void QuicPacketCreator::UpdatePacketNumberLength(
       QuicFramer::GetMinPacketNumberLength(framer_->version(), delta * 4);
 }
 
-bool QuicPacketCreator::ConsumeData(QuicStreamId id,
-                                    QuicIOVector iov,
-                                    size_t iov_offset,
-                                    QuicStreamOffset offset,
-                                    bool fin,
-                                    bool needs_full_padding,
-                                    QuicFrame* frame) {
+bool QuicPacketCreator::ConsumeData(
+    const NetworkTrafficAnnotationTag& traffic_annotation,
+    QuicStreamId id,
+    QuicIOVector iov,
+    size_t iov_offset,
+    QuicStreamOffset offset,
+    bool fin,
+    bool needs_full_padding,
+    QuicFrame* frame) {
   if (!HasRoomForStreamFrame(id, offset)) {
     return false;
   }
-  CreateStreamFrame(id, iov, iov_offset, offset, fin, frame);
+  CreateStreamFrame(traffic_annotation, id, iov, iov_offset, offset, fin,
+                    frame);
   // Explicitly disallow multi-packet CHLOs.
   if (FLAGS_quic_enforce_single_packet_chlo &&
       StreamFrameStartsWithChlo(iov, iov_offset, *frame->stream_frame) &&
@@ -173,12 +186,14 @@ size_t QuicPacketCreator::StreamFramePacketOverhead(
          QuicFramer::GetMinStreamFrameSize(version, 1u, offset, true);
 }
 
-void QuicPacketCreator::CreateStreamFrame(QuicStreamId id,
-                                          QuicIOVector iov,
-                                          size_t iov_offset,
-                                          QuicStreamOffset offset,
-                                          bool fin,
-                                          QuicFrame* frame) {
+void QuicPacketCreator::CreateStreamFrame(
+    const NetworkTrafficAnnotationTag& traffic_annotation,
+    QuicStreamId id,
+    QuicIOVector iov,
+    size_t iov_offset,
+    QuicStreamOffset offset,
+    bool fin,
+    QuicFrame* frame) {
   DCHECK_GT(
       max_packet_length_,
       StreamFramePacketOverhead(framer_->version(), connection_id_length_,
@@ -194,8 +209,8 @@ void QuicPacketCreator::CreateStreamFrame(QuicStreamId id,
   if (iov_offset == iov.total_length) {
     QUIC_BUG_IF(!fin) << "Creating a stream frame with no data or fin.";
     // Create a new packet for the fin, if necessary.
-    *frame =
-        QuicFrame(new QuicStreamFrame(id, true, offset, QuicStringPiece()));
+    *frame = QuicFrame(new QuicStreamFrame(id, true, offset, QuicStringPiece(),
+                                           traffic_annotation));
     return;
   }
 
@@ -207,15 +222,16 @@ void QuicPacketCreator::CreateStreamFrame(QuicStreamId id,
 
   bool set_fin = fin && bytes_consumed == data_size;  // Last frame.
   if (framer_->HasDataProducer()) {
-    *frame =
-        QuicFrame(new QuicStreamFrame(id, set_fin, offset, bytes_consumed));
+    *frame = QuicFrame(new QuicStreamFrame(id, set_fin, offset, bytes_consumed,
+                                           traffic_annotation));
     return;
   }
   UniqueStreamBuffer buffer =
       NewStreamBuffer(buffer_allocator_, bytes_consumed);
   QuicUtils::CopyToBuffer(iov, iov_offset, bytes_consumed, buffer.get());
-  *frame = QuicFrame(new QuicStreamFrame(id, set_fin, offset, bytes_consumed,
-                                         std::move(buffer)));
+  *frame =
+      QuicFrame(new QuicStreamFrame(id, set_fin, offset, bytes_consumed,
+                                    std::move(buffer), traffic_annotation));
 }
 
 void QuicPacketCreator::ReserializeAllFrames(
@@ -253,7 +269,7 @@ void QuicPacketCreator::ReserializeAllFrames(
                           << " packet_.packet_number_length:"
                           << packet_.packet_number_length;
   }
-  SerializePacket(buffer, buffer_len);
+  SerializePacket(kTrafficAnntoationForAnnotatedFrames, buffer, buffer_len);
   packet_.original_packet_number = retransmission.packet_number;
   packet_.transmission_type = retransmission.transmission_type;
   OnSerializedPacket();
@@ -267,13 +283,22 @@ void QuicPacketCreator::Flush() {
   }
 
   QUIC_CACHELINE_ALIGNED char serialized_packet_buffer[kMaxPacketSize];
-  SerializePacket(serialized_packet_buffer, kMaxPacketSize);
+  SerializePacket(kTrafficAnntoationForAnnotatedFrames,
+                  serialized_packet_buffer, kMaxPacketSize);
   OnSerializedPacket();
 }
 
 void QuicPacketCreator::OnSerializedPacket() {
   if (packet_.encrypted_buffer == nullptr) {
     const string error_details = "Failed to SerializePacket.";
+    QUIC_BUG << error_details;
+    delegate_->OnUnrecoverableError(QUIC_FAILED_TO_SERIALIZE_PACKET,
+                                    error_details,
+                                    ConnectionCloseSource::FROM_SELF);
+    return;
+  }
+  if (!packet_.HasTrafficAnnotation()) {
+    const string error_details = "SerializePacket has no traffic annotation.";
     QUIC_BUG << error_details;
     delegate_->OnUnrecoverableError(QUIC_FAILED_TO_SERIALIZE_PACKET,
                                     error_details,
@@ -302,6 +327,7 @@ void QuicPacketCreator::ClearPacket() {
 }
 
 void QuicPacketCreator::CreateAndSerializeStreamFrame(
+    const NetworkTrafficAnnotationTag& traffic_annotation,
     QuicStreamId id,
     const QuicIOVector& iov,
     QuicStreamOffset iov_offset,
@@ -336,14 +362,15 @@ void QuicPacketCreator::CreateAndSerializeStreamFrame(
   std::unique_ptr<QuicStreamFrame> frame;
   if (framer_->HasDataProducer()) {
     frame = QuicMakeUnique<QuicStreamFrame>(id, set_fin, stream_offset,
-                                            bytes_consumed);
+                                            bytes_consumed, traffic_annotation);
   } else {
     UniqueStreamBuffer stream_buffer =
         NewStreamBuffer(buffer_allocator_, bytes_consumed);
     QuicUtils::CopyToBuffer(iov, iov_offset, bytes_consumed,
                             stream_buffer.get());
     frame = QuicMakeUnique<QuicStreamFrame>(
-        id, set_fin, stream_offset, bytes_consumed, std::move(stream_buffer));
+        id, set_fin, stream_offset, bytes_consumed, std::move(stream_buffer),
+        traffic_annotation);
   }
   QUIC_DVLOG(1) << ENDPOINT << "Adding frame: " << *frame;
 
@@ -432,8 +459,10 @@ void QuicPacketCreator::AddAckListener(
   packet_.listeners.emplace_back(std::move(ack_listener), length);
 }
 
-void QuicPacketCreator::SerializePacket(char* encrypted_buffer,
-                                        size_t encrypted_buffer_len) {
+void QuicPacketCreator::SerializePacket(
+    const NetworkTrafficAnnotationTag& traffic_annotation,
+    char* encrypted_buffer,
+    size_t encrypted_buffer_len) {
   DCHECK_LT(0u, encrypted_buffer_len);
   QUIC_BUG_IF(queued_frames_.empty() && pending_padding_bytes_ == 0)
       << "Attempt to serialize empty packet";
@@ -476,6 +505,7 @@ void QuicPacketCreator::SerializePacket(char* encrypted_buffer,
 
   packet_size_ = 0;
   queued_frames_.clear();
+  packet_.SetTrafficAnnotation(traffic_annotation);
   packet_.encrypted_buffer = encrypted_buffer;
   packet_.encrypted_length = encrypted_length;
 }
@@ -529,9 +559,11 @@ bool QuicPacketCreator::AddFrame(const QuicFrame& frame,
                                  bool save_retransmittable_frames) {
   QUIC_DVLOG(1) << ENDPOINT << "Adding frame: " << frame;
   if (frame.type == STREAM_FRAME &&
-      frame.stream_frame->stream_id != kCryptoStreamId &&
-      packet_.encryption_level == ENCRYPTION_NONE) {
-    const string error_details = "Cannot send stream data without encryption.";
+      ((frame.stream_frame->stream_id != kCryptoStreamId &&
+        packet_.encryption_level == ENCRYPTION_NONE) ||
+       !frame.stream_frame->has_traffic_annotation)) {
+    const string error_details =
+        "Cannot send stream data without encryption or traffic annotation.";
     QUIC_BUG << error_details;
     delegate_->OnUnrecoverableError(
         QUIC_ATTEMPT_TO_SEND_UNENCRYPTED_STREAM_DATA, error_details,

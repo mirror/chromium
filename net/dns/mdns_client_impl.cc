@@ -40,6 +40,10 @@ const unsigned MDnsTransactionTimeoutSeconds = 3;
 const double kListenerRefreshRatio1 = 0.85;
 const double kListenerRefreshRatio2 = 0.95;
 
+// TODO(rhalavati): To be updated: Traffic annotation for MDnsClient internals.
+constexpr NetworkTrafficAnnotationTag kTrafficAnnotation =
+    NO_TRAFFIC_ANNOTATION_YET;
+
 }  // namespace
 
 void MDnsSocketFactoryImpl::CreateSockets(
@@ -102,17 +106,18 @@ void MDnsConnection::SocketHandler::OnDatagramReceived(int rv) {
     connection_->PostOnError(this, rv);
 }
 
-void MDnsConnection::SocketHandler::Send(const scoped_refptr<IOBuffer>& buffer,
-                                         unsigned size) {
+void MDnsConnection::SocketHandler::Send(
+    const NetworkTrafficAnnotationTag& traffic_annotation,
+    const scoped_refptr<IOBuffer>& buffer,
+    unsigned size) {
   if (send_in_progress_) {
     send_queue_.push(std::make_pair(buffer, size));
     return;
   }
-  int rv = socket_->SendTo(buffer.get(),
-                           size,
-                           multicast_addr_,
-                           base::Bind(&MDnsConnection::SocketHandler::SendDone,
-                                      base::Unretained(this)));
+  int rv =
+      socket_->SendTo(traffic_annotation, buffer.get(), size, multicast_addr_,
+                      base::Bind(&MDnsConnection::SocketHandler::SendDone,
+                                 base::Unretained(this)));
   if (rv == ERR_IO_PENDING) {
     send_in_progress_ = true;
   } else if (rv < OK) {
@@ -128,7 +133,7 @@ void MDnsConnection::SocketHandler::SendDone(int rv) {
   while (!send_in_progress_ && !send_queue_.empty()) {
     std::pair<scoped_refptr<IOBuffer>, unsigned> buffer = send_queue_.front();
     send_queue_.pop();
-    Send(buffer.first, buffer.second);
+    Send(kTrafficAnnotation, buffer.first, buffer.second);
   }
 }
 
@@ -164,10 +169,11 @@ bool MDnsConnection::Init(MDnsSocketFactory* socket_factory) {
   return !socket_handlers_.empty();
 }
 
-void MDnsConnection::Send(const scoped_refptr<IOBuffer>& buffer,
+void MDnsConnection::Send(const NetworkTrafficAnnotationTag& traffic_annotation,
+                          const scoped_refptr<IOBuffer>& buffer,
                           unsigned size) {
   for (std::unique_ptr<SocketHandler>& handler : socket_handlers_)
-    handler->Send(buffer, size);
+    handler->Send(traffic_annotation, buffer, size);
 }
 
 void MDnsConnection::PostOnError(SocketHandler* loop, int rv) {
@@ -220,7 +226,8 @@ bool MDnsClientImpl::Core::SendQuery(uint16_t rrtype, const std::string& name) {
   DnsQuery query(0, name_dns, rrtype);
   query.set_flags(0);  // Remove the RD flag from the query. It is unneeded.
 
-  connection_->Send(query.io_buffer(), query.io_buffer()->size());
+  connection_->Send(kTrafficAnnotation, query.io_buffer(),
+                    query.io_buffer()->size());
   return true;
 }
 

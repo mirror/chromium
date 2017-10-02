@@ -204,9 +204,8 @@ void URLRequestFtpJob::StartHttpTransaction() {
       priority_, &http_transaction_);
   if (rv == OK) {
     rv = http_transaction_->Start(
-        &http_request_info_,
-        base::Bind(&URLRequestFtpJob::OnStartCompleted,
-                  base::Unretained(this)),
+        &http_request_info_, request_->traffic_annotation(),
+        base::Bind(&URLRequestFtpJob::OnStartCompleted, base::Unretained(this)),
         request_->net_log());
     if (rv == ERR_IO_PENDING)
       return;
