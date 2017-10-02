@@ -46,6 +46,30 @@
       "revId": "4ab8aba8d101a73449aeb49e4be8b6c231669e40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d800335_c5b7d594",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 5618,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-10-02T19:47:43Z",
+      "side": 1,
+      "message": "If you have a doc that describes your configuration process, maybe link that and whatever key this relates to in that config.",
+      "parentUuid": "aaa30771_b377158f",
+      "range": {
+        "startLine": 5618,
+        "startChar": 4,
+        "endLine": 5618,
+        "endChar": 68
+      },
+      "revId": "4ab8aba8d101a73449aeb49e4be8b6c231669e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
