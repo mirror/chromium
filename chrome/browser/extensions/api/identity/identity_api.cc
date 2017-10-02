@@ -35,7 +35,6 @@
 #include "chrome/common/url_constants.h"
 #include "components/signin/core/browser/account_tracker_service.h"
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
-#include "components/signin/core/browser/signin_manager.h"
 #include "extensions/browser/extension_function_dispatcher.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/extension_l10n_util.h"
@@ -103,17 +102,9 @@ const base::Time& IdentityTokenCacheValue::expiration_time() const {
 }
 
 IdentityAPI::IdentityAPI(content::BrowserContext* context)
-    : browser_context_(context),
-      profile_identity_provider_(
-          SigninManagerFactory::GetForProfile(
-              Profile::FromBrowserContext(context)),
-          ProfileOAuth2TokenServiceFactory::GetForProfile(
-              Profile::FromBrowserContext(context)),
-          LoginUIServiceFactory::GetShowLoginPopupCallbackForProfile(
-              Profile::FromBrowserContext(context))),
-      account_tracker_(&profile_identity_provider_,
-                       g_browser_process->system_request_context()) {
-  account_tracker_.AddObserver(this);
+    : profile_(Profile::FromBrowserContext(context)) {
+  SigninManagerFactory::GetForProfile(profile_)->AddObserver(this);
+  ProfileOAuth2TokenServiceFactory::GetForProfile(profile_)->AddObserver(this);
 }
 
 IdentityAPI::~IdentityAPI() {}
@@ -155,8 +146,9 @@ const IdentityAPI::CachedTokens& IdentityAPI::GetAllCachedTokens() {
 
 void IdentityAPI::Shutdown() {
   on_shutdown_callback_list_.Notify();
-  account_tracker_.RemoveObserver(this);
-  account_tracker_.Shutdown();
+  SigninManagerFactory::GetForProfile(profile_)->RemoveObserver(this);
+  ProfileOAuth2TokenServiceFactory::GetForProfile(profile_)->RemoveObserver(
+      this);
 }
 
 static base::LazyInstance<
@@ -168,31 +160,84 @@ BrowserContextKeyedAPIFactory<IdentityAPI>* IdentityAPI::GetFactoryInstance() {
   return g_factory.Pointer();
 }
 
-void IdentityAPI::OnAccountSignInChanged(const gaia::AccountIds& ids,
-                                         bool is_signed_in) {
+void IdentityAPI::OnRefreshTokenAvailable(const std::string& account_id) {
+  // The identity API fires signin events for secondary accounts only when a
+  // primary account is available (note that these semantics aren't documented,
+  // but as chrome.identity.onSignInChanged's semantics aren't precisely
+  // documented in general for safety we preserved this behavior from the prior
+  // implementation during a refactoring).
+  // TODO(769700): Re-evaluate this semantics post-AccountConsistency.
+  if (SigninManagerFactory::GetForProfile(profile_)
+          ->GetAuthenticatedAccountId()
+          .empty())
+    return;
+
+  // Start tracking this account.
+  // TODO(769704): This is necessary only because it's not possible to get the
+  // AccountInfo in OnRefreshTokenRevoked(). Change that, and then eliminate
+  // this map.
+  std::string gaia_id = AccountTrackerServiceFactory::GetForProfile(profile_)
+                            ->GetAccountInfo(account_id)
+                            .gaia;
+
+  // Refresh tokens are sometimes made available in contexts where
+  // AccountTrackerService is not tracking the account in question (one example
+  // is SupervisedUserService::InitSync()). Bail out in these cases.
+  if (gaia_id.empty())
+    return;
+
+  account_id_to_gaia_id_[account_id] = gaia_id;
+  FireOnAccountSignInChanged(account_id, true);
+}
+
+void IdentityAPI::OnRefreshTokenRevoked(const std::string& account_id) {
+  // Ignore this event if the refresh token wasn't made available at a time when
+  // the primary account was signed in (note that these semantics aren't
+  // documented, but as chrome.identity.onSignInChanged's semantics aren't
+  // precisely documented in general for safety we preserved this behavior from
+  // the prior implementation during a refactoring).
+  // TODO(769700): Re-evaluate this semantics post-AccountConsistency.
+  if (!account_id_to_gaia_id_.count(account_id))
+    return;
+
+  FireOnAccountSignInChanged(account_id, false);
+
+  // Stop tracking this account.
+  account_id_to_gaia_id_.erase(account_id);
+}
+
+void IdentityAPI::GoogleSigninSucceeded(const std::string& primary_account_id,
+                                        const std::string& username) {
+  // NOTE: By the semantics of this API, signin events should be fired for
+  // *all* accounts with tokens when the primary account signs in. Here we fire
+  // events for all known secondary accounts. The primary account event will be
+  // fired when its corresponding OnRefreshTokenAvailable() callback comes in.
+  // TODO(769700): Re-evaluate this semantics post-AccountConsistency.
+  for (const auto& account_id :
+       ProfileOAuth2TokenServiceFactory::GetForProfile(profile_)
+           ->GetAccounts()) {
+    if (account_id == primary_account_id)
+      continue;
+    OnRefreshTokenAvailable(account_id);
+  }
+}
+
+void IdentityAPI::FireOnAccountSignInChanged(const std::string& account_id,
+                                             bool is_signed_in) {
   api::identity::AccountInfo account_info;
-  account_info.id = ids.gaia;
+  account_info.id = account_id_to_gaia_id_[account_id];
+  DCHECK(!account_info.id.empty());
 
   std::unique_ptr<base::ListValue> args =
       api::identity::OnSignInChanged::Create(account_info, is_signed_in);
-  std::unique_ptr<Event> event(
-      new Event(events::IDENTITY_ON_SIGN_IN_CHANGED,
-                api::identity::OnSignInChanged::kEventName, std::move(args),
-                browser_context_));
+  std::unique_ptr<Event> event(new Event(
+      events::IDENTITY_ON_SIGN_IN_CHANGED,
+      api::identity::OnSignInChanged::kEventName, std::move(args), profile_));
 
   if (on_signin_changed_callback_for_testing_)
     on_signin_changed_callback_for_testing_.Run(event.get());
 
-  EventRouter::Get(browser_context_)->BroadcastEvent(std::move(event));
-}
-
-void IdentityAPI::SetAccountStateForTesting(const std::string& account_id,
-                                         bool signed_in) {
-  gaia::AccountIds ids;
-  ids.account_key = account_id;
-  ids.email = account_id;
-  ids.gaia = account_id;
-  account_tracker_.SetAccountStateForTest(ids, signed_in);
+  EventRouter::Get(profile_)->BroadcastEvent(std::move(event));
 }
 
 template <>
