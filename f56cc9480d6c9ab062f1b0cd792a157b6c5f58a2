@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9c48a303_33a830af",
+        "filename": "components/metrics/net/net_metrics_log_uploader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-10-02T18:19:17Z",
+      "side": 1,
+      "message": "Done. Would you suggest keeping the \"// MetricsLogUploader:\" comment above this one, or getting rid of it?",
+      "parentUuid": "991ff0f7_f72c4847",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 66
+      },
+      "revId": "f56cc9480d6c9ab062f1b0cd792a157b6c5f58a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ccb9b379_51bc9d5d",
         "filename": "components/metrics/net/net_metrics_log_uploader.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "f56cc9480d6c9ab062f1b0cd792a157b6c5f58a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afb40cd0_d1b01173",
+        "filename": "components/metrics/net/net_metrics_log_uploader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-10-02T18:19:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccb9b379_51bc9d5d",
+      "range": {
+        "startLine": 51,
+        "startChar": 7,
+        "endLine": 51,
+        "endChar": 21
+      },
+      "revId": "f56cc9480d6c9ab062f1b0cd792a157b6c5f58a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
