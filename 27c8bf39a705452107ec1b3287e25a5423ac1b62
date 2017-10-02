@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dd9a7ccd_cb92e1ac",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1841,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-10-02T19:56:18Z",
+      "side": 1,
+      "message": "Agree, just didn\u0027t want to move the urlLoader into the coordinator on this CL.",
+      "parentUuid": "43547300_4c72723a",
+      "revId": "27c8bf39a705452107ec1b3287e25a5423ac1b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7fae09d_8a521ea4",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-02T12:38:15Z",
       "side": 1,
       "message": "This looks like something that needs to be exposed or reimplemented?",
+      "revId": "27c8bf39a705452107ec1b3287e25a5423ac1b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46e91575_cd3105ae",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 4079,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-10-02T19:56:18Z",
+      "side": 1,
+      "message": "Yes, these parameters weren\u0027t being used at all. So I was thinking of refactoring bookmarksInteractionController in a followup CL to remove them.",
+      "parentUuid": "e7fae09d_8a521ea4",
       "revId": "27c8bf39a705452107ec1b3287e25a5423ac1b62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "03fcb4fa_a0541758",
+        "filename": "ios/chrome/browser/ui/ntp/incognito_view_controller_protocol.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-10-02T19:56:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56047008_efc49138",
+      "revId": "27c8bf39a705452107ec1b3287e25a5423ac1b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6352fca8_b48f554f",
         "filename": "ios/chrome/browser/ui/toolbar/toolbar_coordinator.h",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "1d067b07_ae9c90fb",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_coordinator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-10-02T19:56:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6352fca8_b48f554f",
+      "revId": "27c8bf39a705452107ec1b3287e25a5423ac1b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81d63203_6e792b40",
         "filename": "ios/chrome/browser/ui/toolbar/toolbar_coordinator.mm",
         "patchSetId": 2
@@ -81,6 +153,24 @@
       "writtenOn": "2017-10-02T12:38:15Z",
       "side": 1,
       "message": "Does _view need to be an ivar?  Can you just return [self.webToolbarController view] here and remove the @synthesize line?",
+      "revId": "27c8bf39a705452107ec1b3287e25a5423ac1b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "326ba0b5_ade6a3c2",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-10-02T19:56:18Z",
+      "side": 1,
+      "message": "You\u0027re right, we don\u0027t need the ivar right now. Done.",
+      "parentUuid": "81d63203_6e792b40",
       "revId": "27c8bf39a705452107ec1b3287e25a5423ac1b62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
