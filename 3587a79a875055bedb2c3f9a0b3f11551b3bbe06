@@ -201,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "b9cc947c_e594d8a7",
+        "filename": "chrome/browser/ui/cocoa/share_menu_controller_browsertest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-02T21:23:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "05c1026e_119e4f83",
+      "range": {
+        "startLine": 103,
+        "startChar": 5,
+        "endLine": 103,
+        "endChar": 24
+      },
+      "revId": "3587a79a875055bedb2c3f9a0b3f11551b3bbe06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f584f0d_3c28f59c",
         "filename": "chrome/browser/ui/cocoa/share_menu_controller_browsertest.mm",
         "patchSetId": 7
@@ -353,6 +377,30 @@
       "side": 1,
       "message": "Done. Is there a better way to express non-nil, which is what I was really getting at?",
       "parentUuid": "69540115_1ddda9ae",
+      "range": {
+        "startLine": 183,
+        "startChar": 15,
+        "endLine": 183,
+        "endChar": 27
+      },
+      "revId": "3587a79a875055bedb2c3f9a0b3f11551b3bbe06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b2fb9aa0_0641a7f6",
+        "filename": "chrome/browser/ui/cocoa/share_menu_controller_browsertest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-02T21:23:23Z",
+      "side": 1,
+      "message": "EXPECT_TRUE(blah_is_not_nullptr_or_nil) is the chromium-y way of doing that (it\u0027s basically the same implicit boolean conversion thing we do for |if ()|).",
+      "parentUuid": "3ef4542f_5f9b3c9d",
       "range": {
         "startLine": 183,
         "startChar": 15,
