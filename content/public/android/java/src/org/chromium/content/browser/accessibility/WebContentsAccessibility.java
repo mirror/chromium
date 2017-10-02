@@ -410,11 +410,12 @@ public class WebContentsAccessibility extends AccessibilityNodeProvider {
     }
 
     private void setGranularityAndUpdateSelection(int granularity) {
+        mSelectionGranularity = granularity;
         if (mSelectionGranularity == 0) {
             mSelectionStartIndex = -1;
             mSelectionEndIndex = -1;
         }
-        mSelectionGranularity = granularity;
+
         if (nativeIsEditableText(mNativeObj, mAccessibilityFocusId)
                 && nativeIsFocused(mNativeObj, mAccessibilityFocusId)) {
             mSelectionStartIndex =
@@ -428,7 +429,7 @@ public class WebContentsAccessibility extends AccessibilityNodeProvider {
         setGranularityAndUpdateSelection(granularity);
         // This calls finishGranularityMove when it's done.
         return nativeNextAtGranularity(mNativeObj, mSelectionGranularity, extendSelection,
-                mAccessibilityFocusId, mSelectionEndIndex);
+                mAccessibilityFocusId, mSelectionStartIndex);
     }
 
     private boolean previousAtGranularity(int granularity, boolean extendSelection) {
@@ -515,8 +516,8 @@ public class WebContentsAccessibility extends AccessibilityNodeProvider {
         mAccessibilityFocusId = newAccessibilityFocusId;
         mAccessibilityFocusRect = null;
         mSelectionGranularity = 0;
-        mSelectionStartIndex = 0;
-        mSelectionEndIndex = 0;
+        mSelectionStartIndex = -1;
+        mSelectionEndIndex = nativeGetEndIndex(mNativeObj, newAccessibilityFocusId);
 
         // Calling nativeSetAccessibilityFocus will asynchronously load inline text boxes for
         // this node and its subtree. If accessibility focus is on anything other than
@@ -1258,4 +1259,5 @@ public class WebContentsAccessibility extends AccessibilityNodeProvider {
             long nativeWebContentsAccessibilityAndroid, int id);
     protected native int[] nativeGetCharacterBoundingBoxes(
             long nativeWebContentsAccessibilityAndroid, int id, int start, int len);
+    private native int nativeGetEndIndex(long nativeWebContentsAccessibilityAndroid, int id);
 }
