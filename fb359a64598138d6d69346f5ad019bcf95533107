@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95ad3285_1aa109e0",
+        "filename": "content/child/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-02T17:24:01Z",
+      "side": 0,
+      "message": "I think it might be better to keep two headers - one for the public interface and another for the content-internal one.  These two files could become dwrite_font_proxy_init_impl_win.*.  E.g., see how content::MatchFontWithFallback does this across content/public/child/child_process_sandbox_support_linux.h and content/child/child_process_sandbox_support_impl_linux.h.",
+      "revId": "fb359a64598138d6d69346f5ad019bcf95533107",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

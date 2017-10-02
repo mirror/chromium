@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "208c7004_975ee698",
+        "filename": "content/ppapi_plugin/DEPS",
+        "patchSetId": 6
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-02T17:24:01Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be needed anymore if we do the change above.",
+      "revId": "168426bd94ffccbd7e2905ac95fac24c35a1747f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
