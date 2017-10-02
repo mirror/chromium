@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "041e5244_b654e2d8",
+        "filename": "chrome/browser/android/download/download_manager_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-02T20:49:21Z",
+      "side": 1,
+      "message": "Let\u0027s update the comment over IsTransient() in DownloadUrlParameters and DownloadItem.",
+      "range": {
+        "startLine": 72,
+        "startChar": 20,
+        "endLine": 72,
+        "endChar": 31
+      },
+      "revId": "73243b228c371d018c498ba11221faa3e9839fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b1d7d7c_41ac18fd",
+        "filename": "chrome/browser/download/download_target_determiner.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-02T20:49:21Z",
+      "side": 1,
+      "message": "Remove?",
+      "revId": "73243b228c371d018c498ba11221faa3e9839fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42a5d346_ceed320b",
+        "filename": "chrome/browser/download/download_target_determiner.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-02T20:49:21Z",
+      "side": 1,
+      "message": "What happens if this block fails?  Do we have to set virtual_path_?",
+      "range": {
+        "startLine": 331,
+        "startChar": 4,
+        "endLine": 335,
+        "endChar": 5
+      },
+      "revId": "73243b228c371d018c498ba11221faa3e9839fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbdfcd5e_a27d0ebe",
+        "filename": "chrome/browser/download/download_target_determiner.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-02T20:49:21Z",
+      "side": 1,
+      "message": "Can you roll this into the block below?",
+      "range": {
+        "startLine": 739,
+        "startChar": 2,
+        "endLine": 744,
+        "endChar": 3
+      },
+      "revId": "73243b228c371d018c498ba11221faa3e9839fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
