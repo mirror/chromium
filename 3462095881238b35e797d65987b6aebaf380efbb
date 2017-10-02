@@ -16,6 +16,24 @@
       "revId": "3462095881238b35e797d65987b6aebaf380efbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd7a010f_7d9f87d4",
+        "filename": "chrome/common/DEPS",
+        "patchSetId": 22
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-02T21:51:16Z",
+      "side": 1,
+      "message": "I think this will be going away in a future CL.",
+      "parentUuid": "216c5145_91dabc02",
+      "revId": "3462095881238b35e797d65987b6aebaf380efbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
