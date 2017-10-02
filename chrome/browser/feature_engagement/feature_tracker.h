@@ -91,6 +91,9 @@ class FeatureTracker : public SessionDurationUpdater::Observer,
   // reading from the field trial multiple times for the same param.
   bool has_retrieved_field_trial_minutes_ = false;
 
+  // Whether the "x_session_time" requirement has already been met.
+  bool has_session_time_been_met_ = false;
+
   DISALLOW_COPY_AND_ASSIGN(FeatureTracker);
 };
 
