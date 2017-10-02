@@ -4,6 +4,7 @@
 
 #include "content/public/test/test_browser_thread_bundle.h"
 
+#include "base/hack.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
@@ -61,7 +62,9 @@ TestBrowserThreadBundle::~TestBrowserThreadBundle() {
     // blocked upon it could make a test flaky whereas by flushing we guarantee
     // it will blow up).
     RunAllTasksUntilIdle();
-    CHECK(base::MessageLoop::current()->IsIdleForTesting());
+    HACK_WaitUntil(base::PostedLoadIndexEntriesReply);
+    HACK_AdvanceState(base::PostedLoadIndexEntriesReply, base::AboutToCheck);
+    base::MessageLoop::current()->CheckIsIdleForTesting();
   }
 
   // |scoped_task_environment_| needs to explicitly go away before fake threads

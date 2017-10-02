@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "base/bind.h"
+#include "base/hack.h"
 #include "base/memory/ptr_util.h"
 #include "base/stl_util.h"
 #include "content/browser/payments/payment_manager.h"
@@ -84,8 +85,12 @@ void PaymentAppContextImpl::CreatePaymentManagerOnIO(
 void PaymentAppContextImpl::ShutdownOnIO() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
+  HACK_WaitUntil(base::Starting);
+
   payment_managers_.clear();
   payment_app_database_.reset();
+
+  HACK_AdvanceState(base::Starting, base::InPaymentsShutdownOnIO);
 }
 
 void PaymentAppContextImpl::DidShutdown() {

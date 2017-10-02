@@ -18,6 +18,7 @@
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/files/file_util.h"
+#include "base/hack.h"
 #include "base/lazy_instance.h"
 #include "base/location.h"
 #include "base/macros.h"
@@ -75,7 +76,13 @@ class LeakySequencedWorkerPool {
                                     kThreadNamePrefix,
                                     base::TaskPriority::USER_BLOCKING)) {}
 
-  void FlushForTesting() { sequenced_worker_pool_->FlushForTesting(); }
+  void FlushForTesting() {
+    HACK_WaitUntil(base::InPaymentsShutdownOnIO);
+    HACK_AdvanceState(base::InPaymentsShutdownOnIO,
+                      base::GoingToFlushWorkerPool);
+    sequenced_worker_pool_->FlushForTesting();
+    HACK_AdvanceState(base::GoingToFlushWorkerPool, base::FlushedWorkerPool);
+  }
 
   scoped_refptr<base::TaskRunner> GetTaskRunner() {
     return sequenced_worker_pool_->GetTaskRunnerWithShutdownBehavior(

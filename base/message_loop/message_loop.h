@@ -280,6 +280,8 @@ class BASE_EXPORT MessageLoop : public MessagePump::Delegate,
   // Returns true if the message loop is "idle". Provided for testing.
   bool IsIdleForTesting();
 
+  void CheckIsIdleForTesting();
+
   // Runs the specified PendingTask.
   void RunTask(PendingTask* pending_task);
 
