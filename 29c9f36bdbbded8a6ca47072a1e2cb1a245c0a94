@@ -281,6 +281,30 @@
       "revId": "29c9f36bdbbded8a6ca47072a1e2cb1a245c0a94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4244cd6d_057f0030",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionClientManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-02T23:07:40Z",
+      "side": 1,
+      "message": "Thanks for the detailed explanation!  That helps reinforce my model of our architecture. :-)",
+      "parentUuid": "81de64d7_c2570fb0",
+      "range": {
+        "startLine": 205,
+        "startChar": 12,
+        "endLine": 205,
+        "endChar": 44
+      },
+      "revId": "29c9f36bdbbded8a6ca47072a1e2cb1a245c0a94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
