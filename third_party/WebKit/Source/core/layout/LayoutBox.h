@@ -1432,10 +1432,12 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
       LayoutUnit intrinsic_content_height,
       LayoutUnit border_and_padding) const;
 
+ public:
   virtual bool ShouldComputeSizeAsReplaced() const {
     return IsAtomicInlineLevel() && !IsInlineBlockOrInlineTable();
   }
 
+ protected:
   LayoutObject* SplitAnonymousBoxesAroundChild(LayoutObject* before_child);
 
   virtual bool HitTestOverflowControl(HitTestResult&,
