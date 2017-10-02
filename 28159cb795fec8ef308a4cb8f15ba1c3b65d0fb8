@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6b4d64e_90940ef4",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-02T04:53:50Z",
+      "side": 1,
+      "message": "(I remember I did something similar once before, but) \u0027k\u0027 prefix means constant, should we go with standard static variable naming?\n\nI read the previous comment thread, but if we go with this approach I slightly prefer having SetReadBufferSizeForTesting approach, though not too strongly.",
+      "revId": "28159cb795fec8ef308a4cb8f15ba1c3b65d0fb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
