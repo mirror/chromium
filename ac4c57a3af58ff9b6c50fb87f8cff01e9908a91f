@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e44dd606_81886c29",
+        "filename": "content/browser/renderer_host/render_widget_host_view_base.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-02T16:44:40Z",
+      "side": 1,
+      "message": "Are both of those requirements?  (I\u0027m curious why BrowserPlugin removal matters once scroll-latching is enabled.)",
+      "revId": "ac4c57a3af58ff9b6c50fb87f8cff01e9908a91f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
