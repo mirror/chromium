@@ -22,6 +22,30 @@
       "revId": "23984c9dc2fa42c4903efdae3354a6310f01f85f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0017cf4f_b7b8733f",
+        "filename": "testing/libfuzzer/coverage.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-02T20:30:23Z",
+      "side": 1,
+      "message": "Yeah, that would simplify usage. Done.",
+      "parentUuid": "242e75a1_13fecf36",
+      "range": {
+        "startLine": 349,
+        "startChar": 28,
+        "endLine": 349,
+        "endChar": 78
+      },
+      "revId": "23984c9dc2fa42c4903efdae3354a6310f01f85f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
