@@ -7,6 +7,8 @@
 
 #include "bindings/core/v8/serialization/SerializedScriptValue.h"
 #include "core/dom/BlinkMessagePortMessage.h"
+#include "mojo/public/cpp/bindings/array_traits_wtf_vector.h"
+#include "mojo/public/cpp/bindings/string_traits_wtf.h"
 #include "third_party/WebKit/common/message_port/message_port.mojom-blink.h"
 #include "third_party/WebKit/common/message_port/message_port_channel.h"
 
@@ -29,6 +31,9 @@ struct StructTraits<blink::mojom::blink::MessagePortMessage::DataView,
                                                     input.ports.end());
     return blink::MessagePortChannel::ReleaseHandles(std::move(channels));
   }
+
+  static Vector<blink::mojom::blink::SerializedBlobPtr> blobs(
+      blink::BlinkMessagePortMessage& input);
 
   static bool Read(blink::mojom::blink::MessagePortMessage::DataView,
                    blink::BlinkMessagePortMessage* out);
