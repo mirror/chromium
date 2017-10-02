@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "632aae53_304847b5",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1226,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-02T15:52:51Z",
+      "side": 1,
+      "message": "Should it be if (new_policy.loading_queue_policy().is_stopped \u0026\u0026 !main_thread_only().current_policy.loading_queue_policy.is_stopped) to avoid reissuing signals each time the policy is updated?\n\nTaking into account my comment below,\n\nif (new_policy.is_stopped !\u003d old_policy.is_stopped) {\n  web_view_scheduler-\u003eSetStoppedInBackground(new_policy.is_stopped);\n}",
+      "range": {
+        "startLine": 1226,
+        "startChar": 6,
+        "endLine": 1226,
+        "endChar": 50
+      },
+      "revId": "8063fe75a538b37f1c957871b7172c9e7fe5e1c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba53412f_aa1c0b38",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-02T15:52:51Z",
+      "side": 1,
+      "message": "I believe that there is a problem with this approach:\n1. This signal will conflict with other OnThrottlingStateChanged signal issued in other places in WebFrameScheduler.\n2. We do not issue a signal for when we resume a tab.\n\nTherefore I suggest the following:\n1. Instead of OnStoppedInBackground have SetStoppedInBackground (see my comment in renderer_scheduler_impl.cc)\n2. Have CalculateThrottlingState() helper function in WebFrameSchedulerImpl, which will look like this:\n\nThrottlingState CalculateThrottlingState() const {\n  if (page_stopped_)\n    return kStopped;\n  if (!page_visible)\n    return kThrottled;\n  return kNotThrottled;\n}\n\n3. Use CalculateThrottlingState for every OnThrottlingStateChanged call.",
+      "range": {
+        "startLine": 392,
+        "startChar": 28,
+        "endLine": 392,
+        "endChar": 49
+      },
+      "revId": "8063fe75a538b37f1c957871b7172c9e7fe5e1c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b38b6e45_ae611791",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_view_scheduler_impl.cc",
         "patchSetId": 6
