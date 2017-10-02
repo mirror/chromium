@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0731b97_f52182a7",
+        "filename": "net/spdy/chromium/http2_push_promise_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-02T14:00:59Z",
+      "side": 1,
+      "message": "Can we add a comment on the use of std::map::lower_bound here?\n\nI am not sure I understand why this is a lower_bound() instead of a simple find()",
+      "revId": "92c6ccdc3aeb1d6d6056974c15fc0c14a042c45d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4dc3860_7a44d9f9",
+        "filename": "net/spdy/chromium/http2_push_promise_index.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-02T14:00:59Z",
+      "side": 1,
+      "message": "nit: Quic\u0027s version has a  DISALLOW_COPY_AND_ASSIGN(). Maybe consider matching that?",
+      "revId": "92c6ccdc3aeb1d6d6056974c15fc0c14a042c45d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
