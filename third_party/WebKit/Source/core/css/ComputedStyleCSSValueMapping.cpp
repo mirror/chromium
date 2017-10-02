@@ -1561,7 +1561,7 @@ static CSSValue* ComputedTransform(const LayoutObject* layout_object,
     box = PixelSnappedIntRect(ToLayoutBox(layout_object)->BorderBoxRect());
 
   TransformationMatrix transform;
-  style.ApplyTransform(transform, LayoutSize(box.Size()),
+  style.ApplyTransform(transform, LayoutSize(box.Size()), layout_object,
                        ComputedStyle::kExcludeTransformOrigin,
                        ComputedStyle::kExcludeMotionPath,
                        ComputedStyle::kExcludeIndependentTransformProperties);
