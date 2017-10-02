@@ -16,6 +16,24 @@
       "revId": "c3f450f61465535fb948c486fc1ee4b9cfb76905",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "232e3fb1_907a1110",
+        "filename": "chromeos/tpm/tpm_token_info_getter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-02T07:50:40Z",
+      "side": 1,
+      "message": "Rather than that, I\u0027d like to use the same structure, like this.\nhttps://chromium-review.googlesource.com/c/chromium/src/+/694763\nbecause both represents the almost same thing conceptually.\nI\u0027d just like to split the work, to clear each step.\n\nWDYT?",
+      "parentUuid": "fcf0dcf2_de92bdae",
+      "revId": "c3f450f61465535fb948c486fc1ee4b9cfb76905",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
