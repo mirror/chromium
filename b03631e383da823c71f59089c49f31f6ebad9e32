@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e66a393a_9fd0a156",
+        "filename": "components/cronet/ios/test/cronet_http_test.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-10-02T21:24:13Z",
+      "side": 1,
+      "message": "Should this go into installIntoSessionConfiguration or is it needed for testing only?",
+      "range": {
+        "startLine": 44,
+        "startChar": 11,
+        "endLine": 44,
+        "endChar": 29
+      },
+      "revId": "b03631e383da823c71f59089c49f31f6ebad9e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d18c5d38_96ffaf02",
+        "filename": "components/cronet/ios/test/cronet_http_test.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-10-02T21:24:13Z",
+      "side": 1,
+      "message": "- Why do you need to create one dynamically?\n- Can it be something like a string format \"Post Data \u003ctimestamp\u003e\"?",
+      "range": {
+        "startLine": 423,
+        "startChar": 15,
+        "endLine": 423,
+        "endChar": 24
+      },
+      "revId": "b03631e383da823c71f59089c49f31f6ebad9e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e267f50a_2d9debcf",
+        "filename": "components/cronet/ios/test/cronet_http_test.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-10-02T21:24:13Z",
+      "side": 1,
+      "message": "nit: ++i",
+      "range": {
+        "startLine": 427,
+        "startChar": 37,
+        "endLine": 427,
+        "endChar": 38
+      },
+      "revId": "b03631e383da823c71f59089c49f31f6ebad9e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a622a50a_c937cc98",
+        "filename": "components/cronet/ios/test/cronet_http_test.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-10-02T21:24:13Z",
+      "side": 1,
+      "message": "Would it make sense to have \u0027EchoRequestBody()\u0027 instead?",
+      "range": {
+        "startLine": 434,
+        "startChar": 51,
+        "endLine": 434,
+        "endChar": 68
+      },
+      "revId": "b03631e383da823c71f59089c49f31f6ebad9e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aec27b25_95337439",
+        "filename": "components/cronet/ios/test/cronet_http_test.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-10-02T21:24:13Z",
+      "side": 1,
+      "message": "Can |expected_hash| and |received_hash| be longLongs to avoid static_cast?",
+      "range": {
+        "startLine": 455,
+        "startChar": 7,
+        "endLine": 455,
+        "endChar": 20
+      },
+      "revId": "b03631e383da823c71f59089c49f31f6ebad9e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c53ba8f4_37c878b6",
+        "filename": "components/cronet/ios/test/test_server.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-10-02T21:24:13Z",
+      "side": 1,
+      "message": "Do we need set_code() in order responses as well?",
+      "range": {
+        "startLine": 82,
+        "startChar": 17,
+        "endLine": 82,
+        "endChar": 25
+      },
+      "revId": "b03631e383da823c71f59089c49f31f6ebad9e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb6acac0_74a50610",
+        "filename": "components/cronet/ios/test/test_server.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-10-02T21:24:13Z",
+      "side": 1,
+      "message": "Would it be simpler / better to just echo the entire request_content?",
+      "range": {
+        "startLine": 83,
+        "startChar": 17,
+        "endLine": 83,
+        "endChar": 28
+      },
+      "revId": "b03631e383da823c71f59089c49f31f6ebad9e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61c35df6_f7b18272",
+        "filename": "components/cronet/ios/test/test_server.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-10-02T21:24:13Z",
+      "side": 1,
+      "message": "Can we use base::Hash() instead?",
+      "range": {
+        "startLine": 196,
+        "startChar": 17,
+        "endLine": 196,
+        "endChar": 35
+      },
+      "revId": "b03631e383da823c71f59089c49f31f6ebad9e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
