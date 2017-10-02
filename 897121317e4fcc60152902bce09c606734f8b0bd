@@ -22,6 +22,30 @@
       "revId": "897121317e4fcc60152902bce09c606734f8b0bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41ec5640_65e8cc28",
+        "filename": "content/test/fuzzer/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-02T15:48:45Z",
+      "side": 1,
+      "message": "I realized that even though it\u0027s slow, it works more or less stable: https://clusterfuzz.com/v2/fuzzer-stats/by-day/2017-09-25/2017-10-01/fuzzer/libFuzzer_renderer_fuzzer/job/libfuzzer_chrome_asan\n\nPlus it has found several bugs: https://clusterfuzz.com/v2/crash-stats?block\u003dday\u0026days\u003d7\u0026end\u003d418599\u0026fuzzer\u003dlibFuzzer_renderer_fuzzer\u0026group\u003dplatform\u0026number\u003dcount\u0026sort\u003dtotal_count\n\nWith that, I could not disable it :)",
+      "parentUuid": "d84b3f7f_640390d9",
+      "range": {
+        "startLine": 41,
+        "startChar": 13,
+        "endLine": 41,
+        "endChar": 28
+      },
+      "revId": "897121317e4fcc60152902bce09c606734f8b0bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
