@@ -184,7 +184,7 @@ class NameSourceRelatedObject
   WTF_MAKE_NONCOPYABLE(NameSourceRelatedObject);
 
  public:
-  WeakMember<AXObject> object;
+  Member<AXObject> object;
   String text;
 
   NameSourceRelatedObject(AXObject* object, String text)
@@ -194,7 +194,7 @@ class NameSourceRelatedObject
 };
 
 typedef HeapVector<Member<NameSourceRelatedObject>> AXRelatedObjectVector;
-class NameSource {
+class NameSource : public GarbageCollectedFinalized<NameSource> {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
  public:
@@ -216,7 +216,7 @@ class NameSource {
   DEFINE_INLINE_TRACE() { visitor->Trace(related_objects); }
 };
 
-class DescriptionSource {
+class DescriptionSource : public GarbageCollectedFinalized<DescriptionSource> {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
  public:
