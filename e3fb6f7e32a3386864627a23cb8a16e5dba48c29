@@ -22,6 +22,30 @@
       "revId": "e3fb6f7e32a3386864627a23cb8a16e5dba48c29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79be4f74_0d77115f",
+        "filename": "chrome/browser/resources/settings/device_page/night_light_slider.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-02T19:16:17Z",
+      "side": 0,
+      "message": "We should make this more clear. When ready() is called, pref values should allready be set, so customTimesChanged_ and hourFormatChanged_ should both have been called.\n\nHowever, the element may not be fully rendered when those initial pref values are set, so changes to elements prior to ready() may get lost.\n\nHere is what I would suggest:\n1. Set this.startKnob_ \u003d this.$.startKnob and this.endKnob_ \u003d this.$.endKnob here. [*]\n2. Modify customTimesChanged_ to just set this.startTime_ and this.endTime_.\n3. Add an updateKnobs() observer that takes as input all members that it needs, including startKnob_ and endKnob_. Then it will ge triggered once everything has been defined (or when anything changes).\n\n[*] (You could also just define a single isReady_ property to indicate that foo.$.* is ready and use that in your observer if that seems more clear).",
+      "parentUuid": "10311d24_11c0155b",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 7
+      },
+      "revId": "e3fb6f7e32a3386864627a23cb8a16e5dba48c29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
