@@ -6,15 +6,30 @@ import("//testing/test.gni")
 
 defines = [ "LEVELDB_PLATFORM_CHROMIUM=1" ]
 
-config("leveldatabase_config") {
+config("leveldb_config") {
   include_dirs = [
     ".",
     "src",
     "src/include",
   ]
+  if (is_component_build) {
+    defines += [ "LEVELDB_SHARED_LIBRARY" ]
+  }
 }
 
-static_library("leveldatabase") {
+component("leveldatabase") {
+  public_configs = [ ":leveldb_config" ]
+  public_deps = [
+    ":leveldb",
+  ]
+  deps = [
+    "//base",
+  ]
+}
+
+source_set("leveldb") {
+  defines += [ "LEVELDB_COMPILE_LIBRARY" ]
+
   sources = [
     "env_chromium.cc",
     "env_chromium.h",
@@ -107,7 +122,7 @@ static_library("leveldatabase") {
   configs -= [ "//build/config/compiler:chromium_code" ]
   configs += [ "//build/config/compiler:no_chromium_code" ]
 
-  public_configs = [ ":leveldatabase_config" ]
+  public_configs = [ ":leveldb_config" ]
 
   deps = [
     "//base",
@@ -115,6 +130,8 @@ static_library("leveldatabase") {
     "//third_party/re2",
     "//third_party/snappy",
   ]
+
+  defines += [ "LEVELDB_COMPILE_LIBRARY" ]
 
   if (is_win) {
     # leveldb compiles with a limited set of warnings enabled, and is not
@@ -154,7 +171,7 @@ if (!is_ios && !is_android) {
     configs += [ "//build/config/compiler:no_chromium_code" ]
 
     public_deps = [
-      ":leveldatabase",
+      ":leveldb",
     ]
     deps = [
       "//base",
@@ -295,7 +312,7 @@ if (!is_ios && !is_android) {
     configs -= [ "//build/config/compiler:chromium_code" ]
     configs += [ "//build/config/compiler:no_chromium_code" ]
     deps = [
-      ":leveldatabase",
+      ":leveldb",
       "//build/config:exe_and_shlib_deps",
     ]
   }

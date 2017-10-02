@@ -85,4 +85,10 @@ Cache* GetSharedBrowserBlockCache() {
   return Globals::GetInstance()->browser_block_cache();
 }
 
+bool ParseFileName(const std::string& filename,
+                   uint64_t* number,
+                   leveldb::FileType* type) {
+  return leveldb::ParseFileName(filename, number, type);
+}
+
 }  // namespace leveldb_chrome
