@@ -9,6 +9,11 @@ mojom("url_mojom_gurl") {
     "url.mojom",
   ]
 
+  enabled_flags = []
+  if (is_linux) {
+    enabled_flags += [ "foo" ]
+  }
+
   # TODO(crbug.com/699569): Convert to use the new JS bindings.
   js_bindings_mode = "both"
 }

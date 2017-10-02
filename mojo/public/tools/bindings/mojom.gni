@@ -202,6 +202,9 @@ if (enable_mojom_typemapping) {
 #       EXPORT macro depends on whether the corresponding IMPL macro is defined,
 #       per standard practice with Chromium component exports.
 #
+#   enabled_flags (options)
+#       TODO(dcheng): Document.
+#
 # The following parameters are used to support the component build. They are
 # needed so that bindings which are linked with a component can use the same
 # export settings for classes. The first three are for the chromium variant, and
@@ -325,6 +328,15 @@ template("mojom") {
 
     if (!defined(invoker.allow_native_structs) || invoker.allow_native_structs) {
       common_generator_args += [ "--allow_native_structs" ]
+    }
+
+    if (defined(invoker.enabled_flags)) {
+      foreach(enabled_flag, invoker.enabled_flags) {
+        common_generator_args += [
+          "--enabled_flag",
+          enabled_flag,
+        ]
+      }
     }
 
     if (defined(invoker.import_dirs)) {

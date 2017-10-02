@@ -150,6 +150,72 @@ def AddComputedData(module):
     _AddInterfaceComputedData(interface)
 
 
+# TODO(dcheng): This is somewhat unfortunate: because this happens as late as
+# possible in the process, after the AST is translated, this could return a
+# module that tries to reference pruned features.
+# TODO(dcheng): Double-check if enums need to be resolved as well.
+def RemoveDisabledDefinitions(module, enabled_flags):
+  if not enabled_flags:
+    enabled_flags = []
+
+  def _Enabled(definition):
+    """Returns true if a definition is enabled.
+
+    A definition is enabled if it has no EnabledIf attribute, or if the value of
+    the EnableIf attribute is in enabled_flags.
+    """
+    return (not definition.attributes or
+            "EnableIf" not in definition.attributes or
+            definition.attributes.get("EnableIf") in enabled_flags)
+
+  # TODO(dcheng): Filter constants too?
+  # TODO(dcheng): What about method parameters?
+  def _FilterEnums(definition):
+    definition.enums = [enum for enum in definition.enums if _Enabled(enum)]
+    for enum in definition.enums:
+      # Note: these would normally be called enumerators (in C++) or enum values
+      # (elsewhere in the mojom parser/generator).
+      _FilterFields(enum)
+
+  def _FilterFields(definition):
+    definition.fields = [
+        field for field in definition.fields if _Enabled(field)
+    ]
+
+  def _FilterInterfaces(definition):
+    definition.interfaces = [
+        interface for interface in definition.interfaces if _Enabled(interface)
+    ]
+    for interface in definition.interfaces:
+      _FilterEnums(interface)
+      _FilterMethods(interface)
+
+  def _FilterMethods(interface):
+    interface.methods = [
+        method for method in interface.methods if _Enabled(method)
+    ]
+
+  def _FilterStructs(definition):
+    definition.structs = [
+        struct for struct in definition.structs if _Enabled(struct)
+    ]
+    for struct in definition.structs:
+      _FilterEnums(struct)
+      _FilterFields(struct)
+
+  def _FilterUnions(definition):
+    definition.unions = [
+        union for union in definition.unions if _Enabled(union)
+    ]
+    for union in definition.unions:
+      _FilterFields(union)
+
+  _FilterEnums(module)
+  _FilterInterfaces(module)
+  _FilterStructs(module)
+  _FilterUnions(module)
+
+
 class Generator(object):
   # Pass |output_dir| to emit files to disk. Omit |output_dir| to echo all
   # files to stdout.
@@ -189,4 +255,3 @@ class Generator(object):
   def GetGlobals(self):
     """Returns global mappings for the template generation."""
     return {}
-
