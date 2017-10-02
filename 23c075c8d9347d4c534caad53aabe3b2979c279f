@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "809e9c8b_5be5f7d7",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-02T18:32:05Z",
+      "side": 1,
+      "message": "nit: match order of code in header",
+      "revId": "23c075c8d9347d4c534caad53aabe3b2979c279f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43f9c4f4_a17c2c9a",
+        "filename": "ash/highlighter/highlighter_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-02T18:32:05Z",
+      "side": 1,
+      "message": "nit: blank line above",
+      "revId": "23c075c8d9347d4c534caad53aabe3b2979c279f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4c1d666_b9b221e6",
+        "filename": "ash/highlighter/highlighter_controller_test_api.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-02T18:32:05Z",
+      "side": 1,
+      "message": "nit: update comment, and say that it binds itself as the client",
+      "revId": "23c075c8d9347d4c534caad53aabe3b2979c279f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40bd22dd_51d5187e",
+        "filename": "ash/mojo_interface_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-02T18:32:05Z",
+      "side": 1,
+      "message": "nit: alphabetize these functions",
+      "revId": "23c075c8d9347d4c534caad53aabe3b2979c279f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b5d4ce7_c7d4d93b",
+        "filename": "ash/mojo_interface_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-02T18:32:05Z",
+      "side": 1,
+      "message": "nit: alphabetize these calls",
+      "revId": "23c075c8d9347d4c534caad53aabe3b2979c279f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd61e74a_85977575",
+        "filename": "ash/public/interfaces/highlighter_controller.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-02T18:32:05Z",
+      "side": 1,
+      "message": "nit: document what the \"highlighter controller\" is",
+      "revId": "23c075c8d9347d4c534caad53aabe3b2979c279f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9346289d_9df4f971",
+        "filename": "ash/public/interfaces/highlighter_controller.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-02T18:32:05Z",
+      "side": 1,
+      "message": "nit: docs",
+      "revId": "23c075c8d9347d4c534caad53aabe3b2979c279f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22b47312_36d3f4e4",
+        "filename": "ash/public/interfaces/highlighter_controller.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-02T18:32:05Z",
+      "side": 1,
+      "message": "nit: docs",
+      "revId": "23c075c8d9347d4c534caad53aabe3b2979c279f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dc2ceaf_30334316",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-02T18:32:05Z",
+      "side": 1,
+      "message": "nit: comment why it has to be flushed",
+      "revId": "23c075c8d9347d4c534caad53aabe3b2979c279f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2662d5c6_649ab144",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_highlighter_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-02T18:32:05Z",
+      "side": 1,
+      "message": "Is it possible to write some kind of small test for this? It doesn\u0027t do much, but it might grow, and it would be nice to either have a unit test that shows how to instantiate it, or a browser test showing how to access it.",
+      "revId": "23c075c8d9347d4c534caad53aabe3b2979c279f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2f282fd_ac4e5bbf",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_highlighter_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-02T18:32:05Z",
+      "side": 1,
+      "message": "nit: blank line above\n\nAlso, remove the sentence about mojo return values. That only applies if you\u0027re trying to do this:\n\n{\n  ui::mojom::AccessibilityManagerPtr accessibility_ptr;\n  connector_-\u003eBindInterface(ui::mojom::kServiceName, \u0026accessibility_ptr);\n  accessibility_ptr-\u003eDoFooReturnsAValue(base::Bind(\u0026CallMeBackWithValue));\n  // accessibility_ptr goes out of scope\n\n}\n\nCallMeBack won\u0027t be called, because the binding went out of scope and was dropped.\n\n(It\u0027s possible the place you copied the comment from is wrong.)",
+      "revId": "23c075c8d9347d4c534caad53aabe3b2979c279f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
