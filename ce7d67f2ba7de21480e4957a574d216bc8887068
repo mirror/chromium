@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3188c9c_0553b377",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/server/getPrimaryService/two-iframes-from-same-origin.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-10-02T20:59:12Z",
+      "side": 1,
+      "message": "Not using the error message, so can remove that. And disambiguate other failures but being specific:\nassert_equals(msg, \"FAIL getPrimaryService\")",
+      "range": {
+        "startLine": 50,
+        "startChar": 13,
+        "endLine": 50,
+        "endChar": 26
+      },
+      "revId": "ce7d67f2ba7de21480e4957a574d216bc8887068",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
