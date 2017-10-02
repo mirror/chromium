@@ -70,6 +70,30 @@
       "revId": "dffdce03f7f1bf869afc3ab49cc1580cd01ad6ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "451db896_c21b7c25",
+        "filename": "chrome/browser/ssl/captive_portal_helper_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-10-02T20:33:03Z",
+      "side": 1,
+      "message": "\u003e Is Gerrit being weird or is patchset 11 not yet uploaded?\n\nSorry, my fault. Done now.\n\n\u003e Given the simplicity of the interface exposed by the NLM and the likely complexity of the underlying implementation, it\u0027s not clear to me whether we\u0027d catch any meaningful ratio of real world problems were we to do that.\n\nAgreed, I don\u0027t think the complexity outweighs the benefits here.",
+      "parentUuid": "f410b409_3fd4a774",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 19
+      },
+      "revId": "dffdce03f7f1bf869afc3ab49cc1580cd01ad6ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
