@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "a0eecabb_8fe303f8",
+        "filename": "base/metrics/dummy_histogram.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-02T18:23:59Z",
+      "side": 1,
+      "message": "Up to you.",
+      "parentUuid": "73e93d95_da8f85dd",
+      "revId": "301c517587ddf597268f49dd0cd334d126c52d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e095ca9a_4175cbf8",
         "filename": "base/metrics/dummy_histogram.cc",
         "patchSetId": 12
@@ -329,6 +347,24 @@
     },
     {
       "key": {
+        "uuid": "3ba2aa39_04a033a5",
+        "filename": "base/metrics/statistics_recorder.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-02T18:23:59Z",
+      "side": 1,
+      "message": "Does that mean the record checker will be set more than once in an upcoming CL? Or is it something that\u0027s theoretically possible, but not something anyone will actually do?",
+      "parentUuid": "595ea3c5_ef71ef06",
+      "revId": "301c517587ddf597268f49dd0cd334d126c52d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a81cbbab_463be47a",
         "filename": "base/metrics/statistics_recorder.h",
         "patchSetId": 12
@@ -358,6 +394,24 @@
       "side": 1,
       "message": "This method will be used later to disable record checker in tests because with enabled one some tests can fail.",
       "parentUuid": "a81cbbab_463be47a",
+      "revId": "301c517587ddf597268f49dd0cd334d126c52d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdb0d0b9_cbb611ba",
+        "filename": "base/metrics/statistics_recorder.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-02T18:23:59Z",
+      "side": 1,
+      "message": "Why not add it later when you need it?",
+      "parentUuid": "760c8601_3c66cfe4",
       "revId": "301c517587ddf597268f49dd0cd334d126c52d24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
