@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "efe72a1f_7eb4013c",
+        "filename": "base/allocator/partition_allocator/address_space_randomization.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-10-02T23:37:39Z",
+      "side": 1,
+      "message": "Nope. Deleted.",
+      "parentUuid": "85f96a35_db9e130f",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 6
+      },
+      "revId": "2f83e79af801be59f94ed0019e89c238ef228ac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e90ab634_7fb375bb",
         "filename": "base/allocator/partition_allocator/address_space_randomization_unittest.cc",
         "patchSetId": 15
@@ -45,6 +69,30 @@
       "revId": "2f83e79af801be59f94ed0019e89c238ef228ac8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8233f472_de3254f3",
+        "filename": "base/allocator/partition_allocator/address_space_randomization_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-10-02T23:37:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e90ab634_7fb375bb",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "2f83e79af801be59f94ed0019e89c238ef228ac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
