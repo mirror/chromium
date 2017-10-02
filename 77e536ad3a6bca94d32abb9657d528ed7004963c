@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a025a46c_f37cc0c8",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-10-02T21:10:31Z",
+      "side": 1,
+      "message": "ACK.\nUnfortunately no. Tried and compiler complaint.\nThe down-stream function requires a non-const.",
+      "parentUuid": "25d07e33_eaee8dea",
+      "range": {
+        "startLine": 586,
+        "startChar": 26,
+        "endLine": 586,
+        "endChar": 38
+      },
+      "revId": "77e536ad3a6bca94d32abb9657d528ed7004963c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b22d7be_0e68ffc3",
         "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "77e536ad3a6bca94d32abb9657d528ed7004963c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "926b4b3d_d4a93f83",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-10-02T21:10:31Z",
+      "side": 1,
+      "message": "Discussed in person. To summarize, there are 2 phrase of a warning.\n1. when a ping is in-flight \u003d\u003d\u003e Yes we need to specifically block navigations (on my todo list)\n2. when a modal warning is showing \u003d\u003e no, since it is a modal dialog, navigations are already blocked by the UI framework.\n\nAnd UserClickedThroughSBInterstitial() called during phrase 1. I\u0027ll implement NavigationThrottle to make sure affending page cannot navigate away.",
+      "parentUuid": "1b22d7be_0e68ffc3",
+      "revId": "77e536ad3a6bca94d32abb9657d528ed7004963c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "f29b46c3_ef5b9b3b",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-10-02T21:10:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63cb331e_9691db20",
+      "range": {
+        "startLine": 588,
+        "startChar": 0,
+        "endLine": 592,
+        "endChar": 59
+      },
+      "revId": "77e536ad3a6bca94d32abb9657d528ed7004963c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59ed83e0_7274a6e4",
         "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.h",
         "patchSetId": 4
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "3b4d9ed8_b0197e28",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-10-02T21:10:31Z",
+      "side": 1,
+      "message": "ACK.\nSince there are other kinds of interstitials (ssl, captive portal, etc), I want to make it clear that we only care of SB interstitial here.",
+      "parentUuid": "59ed83e0_7274a6e4",
+      "range": {
+        "startLine": 119,
+        "startChar": 25,
+        "endLine": 119,
+        "endChar": 27
+      },
+      "revId": "77e536ad3a6bca94d32abb9657d528ed7004963c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ba8f9c2_4fe54574",
         "filename": "components/safe_browsing/password_protection/password_protection_request.cc",
         "patchSetId": 4
@@ -108,6 +198,30 @@
       "revId": "77e536ad3a6bca94d32abb9657d528ed7004963c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f7cb64d_b5299b60",
+        "filename": "components/safe_browsing/password_protection/password_protection_request.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-10-02T21:10:31Z",
+      "side": 1,
+      "message": "ACK. \nThese are 4 different strings (with same prefix) happen to be broken into 2 lines. I believe histogram name must be a run time constant, and should not be computed dynamically.",
+      "parentUuid": "6ba8f9c2_4fe54574",
+      "range": {
+        "startLine": 201,
+        "startChar": 13,
+        "endLine": 201,
+        "endChar": 64
+      },
+      "revId": "77e536ad3a6bca94d32abb9657d528ed7004963c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
