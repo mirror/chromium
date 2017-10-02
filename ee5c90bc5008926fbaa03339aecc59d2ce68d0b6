@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "0306bdf5_1db6a042",
+        "filename": "chrome_elf/nt_registry/nt_registry.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1107,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-02T07:54:48Z",
+      "side": 1,
+      "message": "We should not return BAD_ARGUMENT under any circumstance -- we should be building a perfectly capable foot-gun with documentation and debug asserts to help the caller not shoot themselves in the foot.\n\nSince we have full control over the callers of this function, it\u0027s perfectly reasonable to document it as \"don\u0027t be a goofball and pass in null for the output param\" and then assert (debug builds) /crash (release builds) in that case. This is the general philosophy in Chrome -- we don\u0027t want the extra weight of debug checks in release code.",
+      "parentUuid": "985c385a_7805661e",
+      "range": {
+        "startLine": 1107,
+        "startChar": 15,
+        "endLine": 1107,
+        "endChar": 31
+      },
+      "revId": "ee5c90bc5008926fbaa03339aecc59d2ce68d0b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74fb1a53_bb2a754c",
         "filename": "chrome_elf/nt_registry/nt_registry_unittest.cc",
         "patchSetId": 7
@@ -312,6 +336,24 @@
       "side": 1,
       "message": "Done.  Just curious... should every constant string in a function be static?",
       "parentUuid": "256735bb_0e50b71b",
+      "revId": "ee5c90bc5008926fbaa03339aecc59d2ce68d0b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b164c7b3_d9512feb",
+        "filename": "chrome_elf/nt_registry/nt_registry_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-02T07:54:48Z",
+      "side": 1,
+      "message": "I don\u0027t see why not. Otherwise it\u0027s likely getting pushed onto the stack byte by byte. \"static constexpr\" results in code in the function just using a pointer to the string in .rdata.",
+      "parentUuid": "06520404_b6914c87",
       "revId": "ee5c90bc5008926fbaa03339aecc59d2ce68d0b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "668f164f_9a71a44e",
+        "filename": "chrome_elf/nt_registry/nt_registry_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-02T07:54:48Z",
+      "side": 1,
+      "message": "sorry i missed this earlier. please make all of these proper function names (e.g., ApiMultiSZ).",
+      "range": {
+        "startLine": 408,
+        "startChar": 23,
+        "endLine": 408,
+        "endChar": 34
+      },
+      "revId": "480455a3e4c74d980b4ff52d7e24a4337e75de4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
