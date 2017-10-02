@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f23b4d5_dcfd9863",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_test_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-02T20:58:00Z",
+      "side": 1,
+      "message": "Why not use a copy constructor, but rather assignment operator?\n*out_page \u003d new OfflinePageItem(*cb_page);",
+      "range": {
+        "startLine": 93,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 48
+      },
+      "revId": "67abe331d7a40fcc19df9cd82cc7bdc4f64fd28d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c37ac59b_72926eb6",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_test_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-02T20:58:00Z",
+      "side": 1,
+      "message": "I think we do that using base::WrapUnique(page); in Chrome.\nResult is the same.",
+      "range": {
+        "startLine": 101,
+        "startChar": 9,
+        "endLine": 101,
+        "endChar": 41
+      },
+      "revId": "67abe331d7a40fcc19df9cd82cc7bdc4f64fd28d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
