@@ -47,6 +47,7 @@
 #include "ios/chrome/browser/ui/omnibox/location_bar_controller.h"
 #include "ios/chrome/browser/ui/omnibox/location_bar_controller_impl.h"
 #include "ios/chrome/browser/ui/omnibox/location_bar_delegate.h"
+#include "ios/chrome/browser/ui/omnibox/omnibox_popup_view_ios.h"
 #include "ios/chrome/browser/ui/omnibox/omnibox_view_ios.h"
 #import "ios/chrome/browser/ui/popup_menu/popup_menu_view.h"
 #import "ios/chrome/browser/ui/reversed_animation.h"
@@ -250,7 +251,8 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   UIImageView* _incognitoIcon;
   UIView* _clippingView;
 
-  std::unique_ptr<LocationBarController> _locationBar;
+  std::unique_ptr<LocationBarControllerImpl> _locationBar;
+  std::unique_ptr<OmniboxPopupViewIOS> _popupView;
   BOOL _initialLayoutComplete;
   // If |YES|, toolbar is incognito.
   BOOL _incognito;
@@ -620,7 +622,8 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
                                    UIViewAutoresizingFlexibleBottomMargin];
   [_webToolbar setFrame:[self specificControlsArea]];
   _locationBar = base::MakeUnique<LocationBarControllerImpl>(
-      _omniBox, _browserState, self, self, self.dispatcher);
+      _omniBox, _browserState, self, self.dispatcher);
+  _popupView = _locationBar->CreatePopupView(self);
 
   // Create the determinate progress bar (phone only).
   if (idiom == IPHONE_IDIOM) {
@@ -681,7 +684,8 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
 
 - (void)browserStateDestroyed {
   // The location bar has a browser state reference, so must be destroyed at
-  // this point.
+  // this point. The popup has to be destroyed before the location bar.
+  _popupView.reset();
   _locationBar.reset();
   _browserState = nullptr;
 }
