@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "16d8caf8_bdd1c949",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 1234,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-10-02T20:31:05Z",
+      "side": 1,
+      "message": "Thanks for the explanation. Moved this to \"ServiceManagerConnectionStarted\", which is the earliest time that Mojo is initialized and tracing controller can be created. It is close to what it was before and it is still before \"PreProfileInit\". Does this look good?\n\nNote that in \"SetActiveScenario\" I could not use BrowserThread::IsThreadInitialized(BrowserThread::IO) to check if we are in a startup scenario anymore, since mojo initialization is after creation of threads. That\u0027s why I added the new \"IsProfileLoaded\" method in the delegate for checking if we are in the startup scenario.",
+      "parentUuid": "c25b8817_b7eb17c1",
+      "revId": "a4a9fc3bf70dfa1b05d13ce7c28ebed5ab12f2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7687d4c_2ca57383",
         "filename": "content/browser/tracing/background_tracing_manager_impl.cc",
         "patchSetId": 46
@@ -33,6 +51,24 @@
       "revId": "a4a9fc3bf70dfa1b05d13ce7c28ebed5ab12f2a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19860079_447faeb3",
+        "filename": "content/browser/tracing/background_tracing_manager_impl.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-10-02T20:31:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7687d4c_2ca57383",
+      "revId": "a4a9fc3bf70dfa1b05d13ce7c28ebed5ab12f2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2fe8540a_9579fdb7",
+        "filename": "content/browser/tracing/background_tracing_manager_impl.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-10-02T20:31:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "024649ef_00d6c009",
+      "revId": "a4a9fc3bf70dfa1b05d13ce7c28ebed5ab12f2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17031808_401640bd",
         "filename": "content/browser/tracing/etw_tracing_agent_win.cc",
         "patchSetId": 46
@@ -67,6 +121,24 @@
       "revId": "a4a9fc3bf70dfa1b05d13ce7c28ebed5ab12f2a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d1aac2c_4effaaf1",
+        "filename": "content/browser/tracing/etw_tracing_agent_win.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-10-02T20:31:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17031808_401640bd",
+      "revId": "a4a9fc3bf70dfa1b05d13ce7c28ebed5ab12f2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "cfb28958_76e11c85",
+        "filename": "content/browser/tracing/etw_tracing_agent_win.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-10-02T20:31:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b042ed87_964b890d",
+      "revId": "a4a9fc3bf70dfa1b05d13ce7c28ebed5ab12f2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34e0ef20_7029ab16",
         "filename": "content/browser/tracing/etw_tracing_agent_win.cc",
         "patchSetId": 46
@@ -98,6 +188,24 @@
       "writtenOn": "2017-09-29T23:58:02Z",
       "side": 1,
       "message": "Is there a specific reason for dropping base::Singleton? (new style discussions etc)",
+      "revId": "a4a9fc3bf70dfa1b05d13ce7c28ebed5ab12f2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3afe369_cdefaabf",
+        "filename": "content/browser/tracing/etw_tracing_agent_win.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-10-02T20:31:05Z",
+      "side": 1,
+      "message": "Generally, I tried to make the ownership/initialization path/lifetime of objects more clear when possible. For example, now it is clear that the tracing controller owns the ETW agent and the ETW agent is created in TracingControllerImpl::AddAgents. Before if we had several EtwTracingAgent::GetInstance() calls in the code, it was not clear which one is actually creating the agent (it could even be different each time, depending on which call is run first). Not having a clear lifetime make code changes and specially writing tests unnecessarily complicated. Does this look reasonable?",
+      "parentUuid": "34e0ef20_7029ab16",
       "revId": "a4a9fc3bf70dfa1b05d13ce7c28ebed5ab12f2a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "89aa230d_a9140d87",
+        "filename": "content/browser/tracing/tracing_controller_impl.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-10-02T20:31:05Z",
+      "side": 1,
+      "message": "Note that this CL is not changing the logic here. Looking at the original CL that introduced this part of the code (https://codereview.chromium.org/127703002), my understanding is that each chrome://tracing tab is a tracing UI and so we can have several of them. That said, it looks like the tracing controller does not use tracing_uis_ anywhere. Maybe we can just get rid of RegisterTracingUI and UnregisterTracingUI in a future CL?",
+      "parentUuid": "80fdea99_01102a8e",
+      "revId": "a4a9fc3bf70dfa1b05d13ce7c28ebed5ab12f2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "091b8ad0_6878e48a",
         "filename": "content/public/browser/tracing_delegate.cc",
         "patchSetId": 46
@@ -132,6 +258,24 @@
       "writtenOn": "2017-09-29T23:58:02Z",
       "side": 1,
       "message": "Remind me: Do we actually set a default delegate in the BackgroundTracingManager in any situations (like unit tests). If not, should this have a NOTREACHED(), and if we do, maybe it\u0027d be nicer to return an empty dict rather than a null, to be consistent with the other metadata generators.",
+      "revId": "a4a9fc3bf70dfa1b05d13ce7c28ebed5ab12f2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ec831db_9f79e4f2",
+        "filename": "content/public/browser/tracing_delegate.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-10-02T20:31:05Z",
+      "side": 1,
+      "message": "- content::TracingDelegate is an abstract class.\n- This is the default behaviour for GenerateMetadataDict in subclasses. Note that returning a null pointer is not unexpected and is handled correctly: https://cs.chromium.org/chromium/src/services/resource_coordinator/public/cpp/tracing/chrome_trace_event_agent.cc?l\u003d97.\n- Other GenerateMetadataDict methods return nullptr, too, when they don\u0027t want to add anything to the metadata, e.g. BackgroundTracingManagerImpl::GenerateMetadataDict().\n\nDid I answer the question or did I misunderstood it?",
+      "parentUuid": "091b8ad0_6878e48a",
       "revId": "a4a9fc3bf70dfa1b05d13ce7c28ebed5ab12f2a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
