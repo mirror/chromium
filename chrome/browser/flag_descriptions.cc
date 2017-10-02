@@ -470,6 +470,11 @@ const char kEnableSharedArrayBufferName[] =
 const char kEnableSharedArrayBufferDescription[] =
     "Enable SharedArrayBuffer support in JavaScript.";
 
+const char kEnableSyncingBillingCustomerNumberName[] =
+    "Enable syncing billing customer number for chrome payments";
+const char kEnableSyncingBillingCustomerNumberDescription[] =
+    "If enabled, syncing billing customer number for chrome payments";
+
 const char kEnableWasmName[] = "WebAssembly structured cloning support.";
 const char kEnableWasmDescription[] =
     "Enable web pages to use WebAssembly structured cloning.";
