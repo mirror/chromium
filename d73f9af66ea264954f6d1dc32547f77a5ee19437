@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2db2431f_007dc4ce",
+        "filename": "chrome/browser/ui/tab_contents/core_tab_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-02T17:19:44Z",
+      "side": 1,
+      "message": "Do we have a bug about WebCacheManager::ObserveActivity()?",
+      "range": {
+        "startLine": 242,
+        "startChar": 13,
+        "endLine": 242,
+        "endChar": 60
+      },
+      "revId": "d73f9af66ea264954f6d1dc32547f77a5ee19437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
