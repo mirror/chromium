@@ -49,20 +49,7 @@ class CastSocketService {
   // |open_cb|: OnOpenCallback invoked when cast socket is opened.
   // |observer|: Observer handles messages and errors on newly opened socket.
   // Does not take ownership of |observer|.
-  int OpenSocket(const CastSocketOpenParams& open_params,
-                 CastSocket::OnOpenCallback open_cb,
-                 CastSocket::Observer* observer);
-
-  // Opens cast socket with |ip_endpoint| and invokes |open_cb| when opening
-  // operation finishes. If cast socket with |ip_endpoint| already exists,
-  // invoke |open_cb| directly with existing socket's channel ID.
-  // |ip_endpoint|: IP address and port of the remote host.
-  // |net_log|: Log of socket events.
-  // |open_cb|: OnOpenCallback invoked when cast socket is opened.
-  // |observer|: Observer handles messages and errors on newly opened socket.
-  // Does not take ownership of |observer|.
-  virtual int OpenSocket(const net::IPEndPoint& ip_endpoint,
-                         net::NetLog* net_log,
+  virtual int OpenSocket(const CastSocketOpenParams& open_params,
                          CastSocket::OnOpenCallback open_cb,
                          CastSocket::Observer* observer);
 
