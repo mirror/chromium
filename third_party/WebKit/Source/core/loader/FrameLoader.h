@@ -144,6 +144,8 @@ class CORE_EXPORT FrameLoader final {
 
   Frame* Opener();
   void SetOpener(LocalFrame*);
+  bool WasCreatedWithOpener();
+  void SetWasCreatedWithOpener(bool was_created_with_opener);
 
   const AtomicString& RequiredCSP() const { return required_csp_; }
   void RecordLatestRequiredCSP();

@@ -76,6 +76,10 @@ bool WebFrame::Swap(WebFrame* frame) {
     frame->SetOpener(opener_);
     SetOpener(nullptr);
   }
+  if (was_created_with_opener_) {
+    frame->SetWasCreatedWithOpener(true);
+    SetWasCreatedWithOpener(false);
+  }
   opened_frame_tracker_->TransferTo(frame);
 
   Page* page = old_frame->GetPage();
@@ -200,6 +204,14 @@ void WebFrame::SetOpener(WebFrame* opener) {
   opener_ = opener;
 }
 
+void WebFrame::SetWasCreatedWithOpener(bool was_created_with_opener) {
+  was_created_with_opener_ = was_created_with_opener;
+}
+
+bool WebFrame::WasCreatedWithOpener() {
+  return was_created_with_opener_;
+}
+
 void WebFrame::ClearOpener() {
   SetOpener(nullptr);
 }
@@ -315,6 +327,7 @@ WebFrame::WebFrame(WebTreeScopeType scope)
       first_child_(0),
       last_child_(0),
       opener_(0),
+      was_created_with_opener_(false),
       opened_frame_tracker_(new OpenedFrameTracker) {}
 
 WebFrame::~WebFrame() {

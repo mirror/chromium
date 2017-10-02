@@ -1560,9 +1560,11 @@ WebLocalFrame* WebLocalFrame::CreateMainFrame(
     InterfaceRegistry* interface_registry,
     WebFrame* opener,
     const WebString& name,
-    WebSandboxFlags sandbox_flags) {
+    WebSandboxFlags sandbox_flags,
+    bool was_created_with_opener) {
   return WebLocalFrameImpl::CreateMainFrame(
-      web_view, client, interface_registry, opener, name, sandbox_flags);
+      web_view, client, interface_registry, opener, name, sandbox_flags,
+      was_created_with_opener);
 }
 
 WebLocalFrame* WebLocalFrame::CreateProvisional(
@@ -1592,10 +1594,12 @@ WebLocalFrameImpl* WebLocalFrameImpl::CreateMainFrame(
     InterfaceRegistry* interface_registry,
     WebFrame* opener,
     const WebString& name,
-    WebSandboxFlags sandbox_flags) {
+    WebSandboxFlags sandbox_flags,
+    bool was_created_with_opener) {
   WebLocalFrameImpl* frame = new WebLocalFrameImpl(WebTreeScopeType::kDocument,
                                                    client, interface_registry);
   frame->SetOpener(opener);
+  frame->SetWasCreatedWithOpener(was_created_with_opener);
   Page& page = *static_cast<WebViewImpl*>(web_view)->GetPage();
   DCHECK(!page.MainFrame());
   frame->InitializeCoreFrame(page, nullptr, name);
