@@ -263,6 +263,24 @@
     },
     {
       "key": {
+        "uuid": "4966484f_8beadaa1",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-02T19:52:06Z",
+      "side": 1,
+      "message": "\u003e Nice, TIL!\n\u003e \n\u003e I maintain that we should be using the \"Enumeration\" function since the name of the function makes it clear what is going on. Will this cause a discontinuity in the bucketing?\n\nNormally it might, but in this case I don\u0027t think it does.  (See earlier on this thread.)",
+      "parentUuid": "68cde25f_297e43dd",
+      "revId": "638b2bfd516825b8691189bcf5b3b0e92104fc3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1cd34c1_0086fd4d",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 6
