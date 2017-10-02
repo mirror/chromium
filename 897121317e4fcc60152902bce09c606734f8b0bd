@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d84b3f7f_640390d9",
+        "filename": "content/test/fuzzer/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-10-02T15:44:23Z",
+      "side": 1,
+      "message": "what about this fuzzer?",
+      "range": {
+        "startLine": 41,
+        "startChar": 13,
+        "endLine": 41,
+        "endChar": 28
+      },
+      "revId": "897121317e4fcc60152902bce09c606734f8b0bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
