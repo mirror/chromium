@@ -1670,12 +1670,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="3" label="Audio and silence"/>
 </enum>
 
-<enum name="AudioOutputStreamCreationResult">
-  <int value="0" label="OK"/>
-  <int value="1" label="Failed to create stream"/>
-  <int value="2" label="Failed to open stream"/>
-</enum>
-
 <enum name="AudioRendererEvents">
   <int value="0" label="Initialized"/>
   <int value="1" label="Runtime error"/>
@@ -3547,11 +3541,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="1" label="FMP not OK, network was already quiet"/>
 </enum>
 
-<enum name="BooleanNull">
-  <int value="0" label="Is not a nullptr"/>
-  <int value="1" label="Is a nullptr"/>
-</enum>
-
 <enum name="BooleanNullStream">
   <int value="0" label="Stream is not a nullptr"/>
   <int value="1" label="Stream is a nullptr"/>
@@ -3850,11 +3839,6 @@ uploading your change for review.  These are checked by presubmit scripts.
 <enum name="BooleanWasted">
   <int value="0" label="Not wasted"/>
   <int value="1" label="Wasted"/>
-</enum>
-
-<enum name="BooleanWebApkNotificationPermission">
-  <int value="0" label="WebAPK notification permission disabled"/>
-  <int value="1" label="WebAPK notification permission enabled"/>
 </enum>
 
 <enum name="BooleanWiped">
@@ -5767,8 +5751,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="8" label="FAILURE_SESSION_RATE_PARSE"/>
   <int value="9" label="FAILURE_AVAILABILITY_PARSE"/>
   <int value="10" label="FAILURE_UNKNOWN_KEY"/>
-  <int value="11" label="FAILURE_SESSION_RATE_IMPACT_PARSE"/>
-  <int value="12" label="FAILURE_SESSION_RATE_IMPACT_UNKNOWN_FEATURE"/>
 </enum>
 
 <enum name="ConnectionDiagnosticsIssue">
@@ -8695,14 +8677,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="2" label="UNMETERED"/>
 </enum>
 
-<enum name="Download.Service.PauseReason">
-  <int value="0" label="ANY"/>
-  <int value="1" label="UNMET_DEVICE_CRITERIA"/>
-  <int value="2" label="PAUSE_BY_CLIENT"/>
-  <int value="3" label="EXTERNAL_DOWNLOAD"/>
-  <int value="4" label="EXTERNAL_NAVIGATION"/>
-</enum>
-
 <enum name="Download.Service.Priority">
   <int value="0" label="LOW"/>
   <int value="1" label="NORMAL"/>
@@ -11457,8 +11431,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="387" label="DeviceNativePrintersAccessMode"/>
   <int value="388" label="DeviceNativePrintersBlacklist"/>
   <int value="389" label="DeviceNativePrintersWhitelist"/>
-  <int value="390" label="DeviceTPMFirmwareUpdateSettings"/>
-  <int value="391" label="RunAllFlashInAllowMode"/>
 </enum>
 
 <enum name="EnterprisePolicyInvalidations">
@@ -11878,7 +11850,7 @@ uploading your change for review.  These are checked by presubmit scripts.
 </enum>
 
 <enum name="ExtensionEvents">
-<!-- Generated from extensions/browser/extension_event_histogram_value.h.-->
+<!-- Generated from extensions/browser/extension_event_histogram_value.h -->
 
   <int value="0" label="UNKNOWN"/>
   <int value="1" label="FOR_TEST"/>
@@ -12302,7 +12274,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="411" label="WEB_VIEW_INTERNAL_ON_AUDIO_STATE_CHANGED"/>
   <int value="412" label="AUTOMATION_INTERNAL_ON_ACTION_RESULT"/>
   <int value="413" label="OMNIBOX_ON_DELETE_SUGGESTION"/>
-  <int value="414" label="VIRTUAL_KEYBOARD_PRIVATE_ON_KEYBOARD_CONFIG_CHANGED"/>
+  <int value="414" label="PASSWORDS_PRIVATE_ON_SHOW_IMPORT_EXPORT_BUTTONS"/>
 </enum>
 
 <enum name="ExtensionFileWriteResult">
@@ -12321,7 +12293,7 @@ uploading your change for review.  These are checked by presubmit scripts.
 </enum>
 
 <enum name="ExtensionFunctions">
-<!-- Generated from extensions/browser/extension_function_histogram_value.h.-->
+<!-- Generated from extensions/browser/extension_function_histogram_value.h -->
 
   <int value="0" label="UNKNOWN"/>
   <int value="1" label="WEBNAVIGATION_GETALLFRAMES"/>
@@ -12828,9 +12800,9 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="500" label="DELETED_WEBVIEW_STOP"/>
   <int value="501" label="DELETED_WEBVIEW_RELOAD"/>
   <int value="502" label="DELETED_WEBVIEW_TERMINATE"/>
-  <int value="503" label="DELETED_TYPES_PRIVATE_CHROMEDIRECTSETTING_GET"/>
-  <int value="504" label="DELETED_TYPES_PRIVATE_CHROMEDIRECTSETTING_SET"/>
-  <int value="505" label="DELETED_TYPES_PRIVATE_CHROMEDIRECTSETTING_CLEAR"/>
+  <int value="503" label="TYPES_PRIVATE_CHROMEDIRECTSETTING_GET"/>
+  <int value="504" label="TYPES_PRIVATE_CHROMEDIRECTSETTING_SET"/>
+  <int value="505" label="TYPES_PRIVATE_CHROMEDIRECTSETTING_CLEAR"/>
   <int value="506" label="DELETED_EXPERIMENTAL_SYSTEMINFO_STORAGE_EJECTDEVICE"/>
   <int value="507" label="SYSTEM_CPU_GETINFO"/>
   <int value="508" label="BOOKMARKMANAGERPRIVATE_REMOVETREES"/>
@@ -13549,8 +13521,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="1194" label="PASSWORDSPRIVATE_IMPORTPASSWORDS"/>
   <int value="1195" label="PASSWORDSPRIVATE_EXPORTPASSWORDS"/>
   <int value="1196" label="LANGUAGESETTINGSPRIVATE_SETTRANSLATEFORLANGUAGE"/>
-  <int value="1197"
-      label="PASSWORDSPRIVATE_UNDOREMOVESAVEDPASSWORDOREXCEPTION"/>
 </enum>
 
 <enum name="ExtensionIconState">
@@ -16411,7 +16381,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="2155" label="WebAudioDezipperBiquadFilterNodeQ"/>
   <int value="2156" label="WebAudioDezipperBiquadFilterNodeGain"/>
   <int value="2157" label="PerformanceServerTiming"/>
-  <int value="2158" label="FileReaderResultBeforeCompletion"/>
 </enum>
 
 <enum name="FeedbackSource">
@@ -17278,8 +17247,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="5" label="File has invalid contents."/>
   <int value="6" label="File could not be exclusively opened."/>
   <int value="7" label="File contents internally deleted."/>
-  <int value="8" label="File processing was postponed due to filtering."/>
-  <int value="9" label="File was skipped/deleted due to filtering."/>
 </enum>
 
 <enum name="FileMetricsProviderEmbeddedProfileResult">
@@ -23210,7 +23177,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-1964261747" label="WebVrVsyncAlign:disabled"/>
   <int value="-1963427770" label="EmojiHandwritingVoiceInput:disabled"/>
   <int value="-1963402827" label="enable-topchrome-md"/>
-  <int value="-1962588488" label="SpeculativePreconnect:disabled"/>
   <int value="-1961648833" label="show_summary"/>
   <int value="-1960567385" label="KeepPrefetchedContentSuggestions:enabled"/>
   <int value="-1957328398" label="MacSystemShareMenu:disabled"/>
@@ -23410,7 +23376,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-1426034869" label="NoCreditCardAbort:enabled"/>
   <int value="-1419788257" label="enable-experimental-hotwording"/>
   <int value="-1416754663" label="enable-mac-views-native-app-windows"/>
-  <int value="-1416184931" label="TranslateRankerEnforcement:enabled"/>
   <int value="-1411003295" label="disable-encrypted-media"/>
   <int value="-1409643943" label="enable-child-account-detection"/>
   <int value="-1408288176" label="enable-account-consistency"/>
@@ -23507,7 +23472,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-1107762575" label="enable-data-reduction-proxy-config-client"/>
   <int value="-1102212525" label="enable-tcp-fastopen"/>
   <int value="-1099142083" label="V8Ignition:disabled"/>
-  <int value="-1099135056" label="AsyncDns:enabled"/>
   <int value="-1096595907" label="disable-new-virtual-keyboard-behavior"/>
   <int value="-1085492638" label="FetchKeepaliveTimeoutSetting:enabled"/>
   <int value="-1084055006" label="disable-web-notification-custom-layouts"/>
@@ -23578,7 +23542,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-894214299" label="fill-on-account-select:enabled"/>
   <int value="-894185031" label="HighDynamicRange:disabled"/>
   <int value="-891856063" label="MidiManagerAndroid:enabled"/>
-  <int value="-886912558" label="ChromeHomePromo:enabled"/>
   <int value="-885601782" label="enable-contextual-search"/>
   <int value="-884864731" label="WebPaymentsSingleAppUiSkip:enabled"/>
   <int value="-881854123" label="enable-heap-profiling"/>
@@ -23650,7 +23613,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-684900739" label="disable-merge-key-char-events"/>
   <int value="-684223908" label="enable-android-wallpapers-app"/>
   <int value="-680589442" label="MacRTL:disabled"/>
-  <int value="-671992446" label="TranslateRankerEnforcement:disabled"/>
   <int value="-667517406" label="overscroll-history-navigation"/>
   <int value="-666508951" label="CrOSContainer:enabled"/>
   <int value="-663476391" label="enable-pixel-canvas-recording:enabled"/>
@@ -23849,8 +23811,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-55944747" label="disable-child-account-detection"/>
   <int value="-52483823" label="disable-new-video-renderer"/>
   <int value="-52241456" label="enable-single-click-autofill"/>
-  <int value="-50628385"
-      label="ContentSuggestionsThumbnailDominantColor:enabled"/>
   <int value="-50021298" label="ash-adjustable-large-cursor"/>
   <int value="-48920737" label="enable-smooth-scrolling"/>
   <int value="-45532639" label="enable-default-media-session"/>
@@ -23880,7 +23840,7 @@ Don't remove entries when removing a flag, they are still used to decode data
 from previous Chrome versions.
 -->
 
-  <summary>Chrome flags that lead to Chrome restart on Chrome OS.</summary>
+<summary>Chrome flags that lead to Chrome restart on Chrome OS.</summary>
   <int value="7444737" label="NTPSuggestionsStandaloneUI:disabled"/>
   <int value="7533886" label="disable-offer-store-unmasked-wallet-cards"/>
   <int value="10458238" label="disable-print-preview-simplify"/>
@@ -23899,7 +23859,6 @@ from previous Chrome versions.
   <int value="59784035" label="ImeThread:disabled"/>
   <int value="59964519" label="OmniboxEnableClipboardProvider:disabled"/>
   <int value="61205887" label="enable-text-input-focus-manager"/>
-  <int value="61466986" label="AsyncDns:disabled"/>
   <int value="64942701" label="OfflinePagesSvelteConcurrentLoading:disabled"/>
   <int value="70878462" label="WebAssembly:disabled"/>
   <int value="75747474" label="disable-webview-signin-flow"/>
@@ -24187,8 +24146,6 @@ from previous Chrome versions.
   <int value="1000706989" label="AutomaticTabDiscarding:disabled"/>
   <int value="1002585107" label="emphasize-titles-in-omnibox-dropdown"/>
   <int value="1003002105" label="MaterialDesignBookmarks:disabled"/>
-  <int value="1004909189"
-      label="ContentSuggestionsThumbnailDominantColor:disabled"/>
   <int value="1007444341" label="enable-prefixed-encrypted-media"/>
   <int value="1015895665" label="drop-sync-credential:enabled"/>
   <int value="1018998019" label="memlog"/>
@@ -24402,7 +24359,6 @@ from previous Chrome versions.
   <int value="1579461102" label="MemoryCoordinator:disabled"/>
   <int value="1586022426" label="AutofillCreditCardAssist:enabled"/>
   <int value="1589341623" label="disable-easy-unlock"/>
-  <int value="1591653786" label="SpeculativePreconnect:enabled"/>
   <int value="1594247626" label="ContentSuggestionsSettings:enabled"/>
   <int value="1600926040" label="TranslateCompactUI:enabled"/>
   <int value="1605611615" label="enable-webrtc-srtp-aes-gcm"/>
@@ -24475,7 +24431,6 @@ from previous Chrome versions.
   <int value="1820317896" label="NTPShowGoogleGInOmnibox:disabled"/>
   <int value="1820451991" label="enable-offline-auto-reload"/>
   <int value="1821723343" label="disable-saml-signin"/>
-  <int value="1825940786" label="ChromeHomePromo:disabled"/>
   <int value="1827369558" label="AndroidPayIntegrationV1:disabled"/>
   <int value="1828660283" label="enable-webfonts-intervention-trigger"/>
   <int value="1831835753" label="MaterialDesignIncognitoNTP:enabled"/>
@@ -25890,24 +25845,11 @@ from previous Chrome versions.
   <int value="2" label="ErrorTooManyRetries"/>
 </enum>
 
-<enum name="MediaRouterCastChannelError">
-  <int value="0" label="Unknown"/>
-  <int value="1" label="Authentication"/>
-  <int value="2" label="Connect"/>
-  <int value="3" label="General Certificate"/>
-  <int value="4" label="Certificate timing"/>
-  <int value="5" label="Network"/>
-  <int value="6" label="Connect Timeout"/>
-  <int value="7" label="Ping Timeout"/>
-</enum>
-
 <enum name="MediaRouterCastSinkSource">
   <int value="0" label="NetworkCache"/>
   <int value="1" label="mDNS"/>
   <int value="2" label="DIAL"/>
   <int value="3" label="Connection retry"/>
-  <int value="4" label="First by mDNS, then by DIAL"/>
-  <int value="5" label="First by DIAL, then by mDNS"/>
 </enum>
 
 <enum name="MediaRouterCreateRouteOutcome">
@@ -28055,28 +27997,6 @@ from previous Chrome versions.
   <int value="1" label="Didn't remove URL, too few suggestions in MV"/>
   <int value="2" label="Too few URLs, didn't flip tiles 1 and 8"/>
   <int value="3" label="Too few URLs, didn't flip tiles 1 and 4"/>
-</enum>
-
-<enum name="NTPTileTitleSource">
-  <summary>
-    The source where the displayed title of an NTP tile originates from.
-  </summary>
-  <int value="0" label="Unknown">
-    The title might be invalid, aggregated, user-set, extracted from history,
-    not loaded or simply not known.
-  </int>
-  <int value="1" label="Manifest">
-    The site's manifest contained a usable &quot;(short_)name&quot; attribute.
-  </int>
-  <int value="2" label="MetaTag">
-    The site provided a meta tag (e.g. OpenGraph's site_name).
-  </int>
-  <int value="3" label="TitleTag">
-    The site's title is used as tile title, extracted from the title tag.
-  </int>
-  <int value="4" label="InferredTitle">
-    The title was inferred from multiple signals (e.g. meta tags, url, title).
-  </int>
 </enum>
 
 <enum name="NTPTileVisualType">
@@ -32871,14 +32791,6 @@ from previous Chrome versions.
   <int value="2" label="REF_COUNT"/>
 </enum>
 
-<enum name="QuicPlatformNotification">
-  <int value="0" label="NETWORK_CONNECTED"/>
-  <int value="1" label="NETWORK_MADE_DEFAULT"/>
-  <int value="2" label="NETWORK_DISCONNECTED"/>
-  <int value="3" label="NETWORK_SOON_TO_DISCONNECT"/>
-  <int value="4" label="NETWORK_IP_ADDRESS_CHANGED"/>
-</enum>
-
 <enum name="QuicRejectReasons">
   <int value="1" label="CLIENT_NONCE_UNKNOWN_FAILURE"/>
   <int value="2" label="CLIENT_NONCE_INVALID_FAILURE"/>
@@ -33144,10 +33056,6 @@ from previous Chrome versions.
   <int value="9" label="Idle"/>
   <int value="10" label="Test"/>
   <int value="11" label="FrameLoadingControl"/>
-  <int value="12" label="FrameThrottleable"/>
-  <int value="13" label="FrameDeferrable"/>
-  <int value="14" label="FramePausable"/>
-  <int value="15" label="FrameUnpausable"/>
 </enum>
 
 <enum name="RendererType">
@@ -33259,7 +33167,6 @@ from previous Chrome versions.
   <int value="87" label="IDC_CONTENT_CONTEXT_OPEN_WITH14"/>
   <int value="88" label="IDC_CONTENT_CONTEXT_EXIT_FULLSCREEN"/>
   <int value="89" label="IDC_CONTENT_CONTEXT_OPENLINKBOOKMARKAPP"/>
-  <int value="90" label="IDC_CONTENT_CONTEXT_SHOWALLSAVEDPASSWORDS"/>
 </enum>
 
 <enum name="ReportingHeaderEndpointOutcome">
@@ -35804,7 +35711,6 @@ from previous Chrome versions.
   <int value="18" label="TRANSLATE_ALWAYS"/>
   <int value="19" label="TRANSLATE_NEVER"/>
   <int value="20" label="TRANSLATE_NEVER_SITE"/>
-  <int value="21" label="SNIPPET_FETCH_FAILED"/>
 </enum>
 
 <enum name="SnippetOpenMethod">
@@ -36794,7 +36700,6 @@ from previous Chrome versions.
   <int value="9" label="CAPTIVE_PORTAL_CERT_FOUND"/>
   <int value="10" label="WWW_MISMATCH_FOUND_IN_SAN"/>
   <int value="11" label="SHOW_MITM_SOFTWARE_INTERSTITIAL"/>
-  <int value="12" label="OS_REPORTS_CAPTIVE_PORTAL"/>
 </enum>
 
 <enum name="SSLErrorTypes">
@@ -39200,7 +39105,6 @@ Called by update_traffic_annotation_histograms.py.-->
   <int value="125596241" label="component_updater_utils"/>
   <int value="126122632" label="web_history_expire_between_dates"/>
   <int value="129652775" label="devtools_network_resource"/>
-  <int value="129872904" label="service_worker_navigation_preload"/>
   <int value="131180348" label="indexed_db_internals_handler"/>
   <int value="131236802" label="data_reduction_proxy_secure_proxy_check"/>
   <int value="131741641" label="permission_reporting"/>
@@ -40004,9 +39908,7 @@ Called by update_traffic_annotation_histograms.py.-->
 <enum name="VPNDriver">
   <int value="0" label="OpenVPN"/>
   <int value="1" label="L2TP/IPSec"/>
-  <int value="2" label="Third Party (CrOS)"/>
-  <int value="3" label="Third Party (Android)"/>
-  <int value="4" label="PPTP"/>
+  <int value="2" label="Third Party"/>
 </enum>
 
 <enum name="VPNRemoteAuthenticationType">
