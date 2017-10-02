@@ -68,7 +68,6 @@ std::unique_ptr<views::Button> CreateZoomButton(views::ButtonListener* listener,
   std::unique_ptr<views::ImageButton> button(
       views::CreateVectorImageButton(listener));
   views::SetImageFromVectorIcon(button.get(), icon);
-  button->SetFocusForPlatform();
   button->SetTooltipText(l10n_util::GetStringUTF16(tooltip_id));
   return std::move(button);
 }

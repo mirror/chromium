@@ -22,6 +22,7 @@ ImageButton* CreateVectorImageButton(ButtonListener* listener) {
   button->SetImageAlignment(ImageButton::ALIGN_CENTER,
                             ImageButton::ALIGN_MIDDLE);
   button->SetFocusPainter(nullptr);
+  button->SetFocusForPlatform();
   button->SetBorder(CreateEmptyBorder(
       LayoutProvider::Get()->GetInsetsMetric(INSETS_VECTOR_IMAGE_BUTTON)));
   return button;
