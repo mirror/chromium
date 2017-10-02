@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78536d66_ffba2e99",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-02T08:07:02Z",
+      "side": 1,
+      "message": "is it worth dropping a comment explaining why the \"Internal\" function is used?\n\ni also wonder if the logic here is really the right thing. we\u0027ll likely not notice if this function is renamed or moved to a different dll in a future version of Windows. should this function DCHECK and/or debug::DumpWithoutCrashing if GetVersion() \u003e\u003d VERSION_WIN8? if no, how will we know if this GetProcAddress starts returning nullptr when we expect otherwise?",
+      "revId": "ba63e7756305a5747b3dc637dd9a06d112bb4e84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7f648b7_4ee4e86b",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-02T08:07:02Z",
+      "side": 1,
+      "message": "since we no longer support XP and Vista, can\u0027t this function be simplified to:\n  return SetProcessDPIAware();",
+      "revId": "ba63e7756305a5747b3dc637dd9a06d112bb4e84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da3dc6d5_5c7fc388",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-02T08:07:02Z",
+      "side": 1,
+      "message": "omit \"base::win::\"",
+      "range": {
+        "startLine": 705,
+        "startChar": 22,
+        "endLine": 705,
+        "endChar": 33
+      },
+      "revId": "ba63e7756305a5747b3dc637dd9a06d112bb4e84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
