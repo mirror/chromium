@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edc7576d_bc15ed4f",
+        "filename": "ui/gfx/image/image_unittest_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-02T09:12:51Z",
+      "side": 1,
+      "message": "Note: this method is only called in unit tests to just pass the returned value to gfx::Image constructor, and gfx::Image constructor does retain the passed value on iOS, so this is fixing a memory leak\n\nUsage is usually the following:\n\n  gfx::Image from_platform(gt::CopyPlatformType(from_png))\n\nI\u0027m a bit uncomfortable with this change though, and I think it may be better to instead change this helper function to return a gfx::Image and rename it to CopyViaPlatformType, something like this:\n\n  gfx::Image CopyViaPlatformType(const gfx::Image\u0026 image) {\n  # if defined(OS_IOS)\n    return gfx::Image(image.ToUIImage());\n  #elif defined(OS_MACOSX)\n    return gfx::Image(image.CopyNSImage());\n  #else\n    return gfx::Image(AsImageSkia());\n  #endif\n  }\n\nWDYT?",
+      "revId": "b97eff8709f52c325ea2c998ae50c2ed5b6fc243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
