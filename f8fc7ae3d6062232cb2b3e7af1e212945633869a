@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "71468f52_c70a8693",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 5806,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-02T21:57:38Z",
+      "side": 1,
+      "message": "I mean some code can store a pointer to IdlenessDetector object that will become out of date.",
+      "parentUuid": "96a97516_374e904d",
+      "revId": "f8fc7ae3d6062232cb2b3e7af1e212945633869a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9073bbb0_9c858884",
         "filename": "third_party/WebKit/Source/core/loader/IdlenessDetector.cpp",
         "patchSetId": 13
