@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cd7f0ec_107f1763",
+        "filename": "components/translate/core/browser/translate_ranker_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1104796
+      },
+      "writtenOn": "2017-10-02T22:38:42Z",
+      "side": 1,
+      "message": "since the features are disabled by default, shouldn\u0027t this also be false by default?",
+      "range": {
+        "startLine": 155,
+        "startChar": 7,
+        "endLine": 155,
+        "endChar": 42
+      },
+      "revId": "a61e48ab800c8d4ddb5f6720b699fbf5c58c0ec0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
