@@ -55,6 +55,13 @@ void SetCommandLineFlagsForSandboxType(base::CommandLine* command_line,
       command_line->AppendSwitchASCII(switches::kServiceSandboxType,
                                       switches::kCdmSandbox);
       break;
+    case SANDBOX_TYPE_PDFCOMPOSITOR:
+      DCHECK(command_line->GetSwitchValueASCII(switches::kProcessType) ==
+             switches::kUtilityProcess);
+      DCHECK(!command_line->HasSwitch(switches::kServiceSandboxType));
+      command_line->AppendSwitchASCII(switches::kServiceSandboxType,
+                                      switches::kPdfcompositorSandbox);
+      break;
     default:
       break;
   }
@@ -102,6 +109,8 @@ SandboxType UtilitySandboxTypeFromString(const std::string& sandbox_string) {
     return SANDBOX_TYPE_PPAPI;
   if (sandbox_string == switches::kCdmSandbox)
     return SANDBOX_TYPE_CDM;
+  if (sandbox_string == switches::kPdfcompositorSandbox)
+    return SANDBOX_TYPE_PDFCOMPOSITOR;
   return SANDBOX_TYPE_UTILITY;
 }
 
