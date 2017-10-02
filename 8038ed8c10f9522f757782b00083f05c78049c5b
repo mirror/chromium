@@ -16,6 +16,254 @@
       "revId": "8038ed8c10f9522f757782b00083f05c78049c5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "290600d6_0c330bd7",
+        "filename": "content/renderer/media/mock_peer_connection_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-02T14:37:12Z",
+      "side": 1,
+      "message": "It\u0027s OK to keep it in this CL.",
+      "parentUuid": "9347a23b_52753723",
+      "revId": "8038ed8c10f9522f757782b00083f05c78049c5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8f55439a_2adec85a",
+        "filename": "content/renderer/media/rtc_peer_connection_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1070,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-02T14:37:12Z",
+      "side": 1,
+      "message": "crbug reference",
+      "range": {
+        "startLine": 1070,
+        "startChar": 24,
+        "endLine": 1070,
+        "endChar": 0
+      },
+      "revId": "8038ed8c10f9522f757782b00083f05c78049c5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b21ab7dc_9e4b41bb",
+        "filename": "content/renderer/media/rtc_peer_connection_handler_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1321,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-02T14:37:12Z",
+      "side": 1,
+      "message": "nit: EXPECT_EQ does not use Joda coding, even if error messages initially give that impression. If it fails it will say \nExpected: 2 to be equal to: receivers_added.size().\nWhich means the expectation is on the right side :)",
+      "range": {
+        "startLine": 1321,
+        "startChar": 12,
+        "endLine": 1321,
+        "endChar": 14
+      },
+      "revId": "8038ed8c10f9522f757782b00083f05c78049c5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1139579_9ebbaf22",
+        "filename": "content/renderer/media/webrtc/rtc_rtp_receiver.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-02T14:37:12Z",
+      "side": 1,
+      "message": "At first sight this copy doesn\u0027t look so shallow, unless the Copy() methods are shallow as well. If so, can you rename them? Otherwise explain why it\u0027s actually shallow.",
+      "range": {
+        "startLine": 37,
+        "startChar": 52,
+        "endLine": 37,
+        "endChar": 56
+      },
+      "revId": "8038ed8c10f9522f757782b00083f05c78049c5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c55f1e55_e9cf2af7",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1174,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-02T14:37:12Z",
+      "side": 1,
+      "message": "braces unnecessary here, but up to you.",
+      "range": {
+        "startLine": 1174,
+        "startChar": 32,
+        "endLine": 1174,
+        "endChar": 33
+      },
+      "revId": "8038ed8c10f9522f757782b00083f05c78049c5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7289341b_33faada8",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1520,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-02T14:37:12Z",
+      "side": 1,
+      "message": "Still not clear to me why this new method of creating a MediaStream is needed. Will wait for the reply to the previous CL.",
+      "range": {
+        "startLine": 1520,
+        "startChar": 28,
+        "endLine": 1520,
+        "endChar": 34
+      },
+      "revId": "8038ed8c10f9522f757782b00083f05c78049c5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8429ad5f_2e0e6e88",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1527,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-02T14:37:12Z",
+      "side": 1,
+      "message": "what is wired up?",
+      "range": {
+        "startLine": 1527,
+        "startChar": 44,
+        "endLine": 1527,
+        "endChar": 46
+      },
+      "revId": "8038ed8c10f9522f757782b00083f05c78049c5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "704dca1a_4c9980e2",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1531,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-02T14:37:12Z",
+      "side": 1,
+      "message": "is be -\u003e is",
+      "range": {
+        "startLine": 1531,
+        "startChar": 33,
+        "endLine": 1531,
+        "endChar": 35
+      },
+      "revId": "8038ed8c10f9522f757782b00083f05c78049c5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e2988fc_cd381c8a",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1534,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-02T14:37:12Z",
+      "side": 1,
+      "message": "The last sentence does not help clarify what the solution really is.",
+      "range": {
+        "startLine": 1534,
+        "startChar": 29,
+        "endLine": 1534,
+        "endChar": 32
+      },
+      "revId": "8038ed8c10f9522f757782b00083f05c78049c5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb66d1ac_d33180cf",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-02T14:37:12Z",
+      "side": 1,
+      "message": "Add a comments explaining what these methods do, since it\u0027s not obvious from their names.",
+      "range": {
+        "startLine": 142,
+        "startChar": 15,
+        "endLine": 142,
+        "endChar": 30
+      },
+      "revId": "8038ed8c10f9522f757782b00083f05c78049c5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdc726ce_97aec359",
+        "filename": "third_party/WebKit/public/platform/WebRTCPeerConnectionHandlerClient.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-02T14:37:12Z",
+      "side": 1,
+      "message": "Is it possible to implement the workaround in the test?",
+      "range": {
+        "startLine": 84,
+        "startChar": 15,
+        "endLine": 84,
+        "endChar": 32
+      },
+      "revId": "8038ed8c10f9522f757782b00083f05c78049c5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
