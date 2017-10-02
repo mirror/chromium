@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6ce6841_388f03e5",
+        "filename": "components/safe_browsing/proto/csd.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-02T12:37:24Z",
+      "side": 1,
+      "message": "how about also leaving behind comments like:\n    // optional BlacklistLoadIncident OBSOLETE_blacklist_load \u003d 4;\n\n\"OBSOLETE_\" prefix because it seems to be used here and there in this file. including it gives an easy string for readers to search for.",
+      "revId": "350fee24c9cbff6f0859131f0e6ddd6a0c1be7b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
