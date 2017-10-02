@@ -76,13 +76,6 @@ class NonActivatableActivationDelegate : public ::wm::ActivationDelegate {
   bool ShouldActivate() const override { return false; }
 };
 
-void CancelDrag(DragDropController* controller, bool* canceled) {
-  if (controller->IsDragDropInProgress()) {
-    *canceled = true;
-    controller->DragCancel();
-  }
-}
-
 float GetItemScale(const gfx::Rect& source,
                    const gfx::Rect& target,
                    int top_view_inset,
@@ -1312,31 +1305,32 @@ TEST_F(WindowSelectorTest, RemoveDisplayWithAnimation) {
   EXPECT_FALSE(IsSelecting());
 }
 
-// Tests starting overview during a drag and drop tracking operation.
-// TODO(flackr): Fix memory corruption crash when running locally (not failing
-// on bots). See http://crbug.com/342528.
-TEST_F(WindowSelectorTest, DISABLED_DragDropInProgress) {
-  bool drag_canceled_by_test = false;
+// Tests that overview doesnot cancel a drag and drop tracking.
+TEST_F(WindowSelectorTest, DragDropInProgress) {
+  // in mash drag and drop is handled by mus. See Shell::Init().
+  if (Shell::GetAshConfig() == Config::MASH)
+    return;
+
   gfx::Rect bounds(0, 0, 400, 400);
   std::unique_ptr<aura::Window> window(CreateWindow(bounds));
   ShellTestApi shell_test_api(Shell::Get());
   DragDropController* drag_drop_controller =
       shell_test_api.drag_drop_controller();
+  LOG(ERROR) << __FUNCTION__ << " cont=" << drag_drop_controller;
   ui::OSExchangeData data;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE,
-      base::Bind(&WindowSelectorTest::ToggleOverview, base::Unretained(this)));
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE,
-      base::Bind(&CancelDrag, drag_drop_controller, &drag_canceled_by_test));
   data.SetString(base::UTF8ToUTF16("I am being dragged"));
+  drag_drop_controller->set_should_block_during_drag_drop(false);
   drag_drop_controller->StartDragAndDrop(
       data, window->GetRootWindow(), window.get(), gfx::Point(5, 5),
       ui::DragDropTypes::DRAG_MOVE, ui::DragDropTypes::DRAG_EVENT_SOURCE_MOUSE);
-  RunAllPendingInMessageLoop();
-  EXPECT_FALSE(drag_canceled_by_test);
+
+  ToggleOverview();
   ASSERT_TRUE(IsSelecting());
-  RunAllPendingInMessageLoop();
+  EXPECT_TRUE(drag_drop_controller->IsDragDropInProgress());
+  ToggleOverview();
+  ASSERT_FALSE(IsSelecting());
+  EXPECT_TRUE(drag_drop_controller->IsDragDropInProgress());
+  return;
 }
 
 // Test that a label is created under the window on entering overview mode.
