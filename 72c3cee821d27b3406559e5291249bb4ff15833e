@@ -16,6 +16,24 @@
       "revId": "72c3cee821d27b3406559e5291249bb4ff15833e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b29ce376_5075c1ce",
+        "filename": "content/browser/shared_worker/shared_worker_service_impl_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2017-10-02T13:20:26Z",
+      "side": 1,
+      "message": "Oooh, that looks great! I can just incorporate that change into this CL. Sounds good?",
+      "parentUuid": "c2626024_6dc9b736",
+      "revId": "72c3cee821d27b3406559e5291249bb4ff15833e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
