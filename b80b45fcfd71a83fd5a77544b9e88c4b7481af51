@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd645529_eda1a748",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-02T04:05:59Z",
+      "side": 1,
+      "message": "workerBackingThread() -\u003e \"the backing thread\" (since workerBackingThread() doesn\u0027t exist and for consistency with previous sentence",
+      "revId": "b80b45fcfd71a83fd5a77544b9e88c4b7481af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
