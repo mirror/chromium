@@ -183,6 +183,15 @@ bool OscillatorHandler::CalculateSampleAccuratePhaseIncrements(
     // They will be converted to phase increments below.
     frequency_->CalculateSampleAccurateValues(phase_increments,
                                               frames_to_process);
+#if 0
+    if (Context()->currentTime() >= 0.325) {
+      fprintf(stderr, "FREQUENCY incr:");
+      for (int k = 0; k < 128; ++k) {
+        fprintf(stderr, " %a\n", phase_increments[k]);
+      }
+      fprintf(stderr, "\n");
+    }
+#endif
   } else {
     // Handle ordinary parameter smoothing/de-zippering if there are no
     // scheduled changes.
@@ -221,6 +230,9 @@ bool OscillatorHandler::CalculateSampleAccuratePhaseIncrements(
   }
 
   if (has_sample_accurate_values) {
+#if 0
+    fprintf(stderr, "Converting: final_scale = %g (%a)\n", final_scale, final_scale);
+#endif
     // Convert from frequency to wavetable increment.
     Vsmul(phase_increments, 1, &final_scale, phase_increments, 1,
           frames_to_process);
@@ -319,6 +331,17 @@ void OscillatorHandler::Process(size_t frames_to_process) {
   } else if (start_frame_offset < 0) {
     virtual_read_index = -start_frame_offset * frequency * rate_scale;
   }
+
+#if 0
+  if (Context()->currentTime() >= 0) {
+    fprintf(stderr, "time = %.15g (frame %zu)\n", Context()->currentTime(), Context()->CurrentSampleFrame());
+    fprintf(stderr, " phase_incremants:");
+    for (int k = 0; k < 128; ++k) {
+      fprintf(stderr, " %a", phase_increments[k]);
+    }
+    fprintf(stderr, "\n");
+  }
+#endif
 
   while (n--) {
     unsigned read_index = static_cast<unsigned>(virtual_read_index);

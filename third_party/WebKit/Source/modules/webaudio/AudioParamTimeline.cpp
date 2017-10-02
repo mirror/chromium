@@ -830,6 +830,10 @@ float AudioParamTimeline::ValuesForFrameRangeImpl(size_t start_frame,
   size_t current_frame = start_frame;
   unsigned write_index = 0;
 
+#if 0
+  fprintf(stderr, "ValuesForFrameRangeImpl start = %zu, end = %zu\n", start_frame, end_frame);
+#endif
+
   // If first event is after startFrame then fill initial part of values buffer
   // with defaultValue until we reach the first event time.
   std::tie(current_frame, write_index) =
@@ -1404,9 +1408,34 @@ std::tuple<size_t, float, unsigned> AudioParamTimeline::ProcessExponentialRamp(
     // Compute the per-sample multiplier.
     float multiplier = powf(value2 / value1, 1 / num_sample_frames);
     // Set the starting value of the exponential ramp.
+#if 0
     value = value1 * powf(value2 / value1,
                           (current_frame / sample_rate - time1) / delta_time);
-
+#else
+    value = value1 * pow(value2 / static_cast<double>(value1),
+                         (current_frame / sample_rate - time1) / delta_time);
+#endif
+#if 0
+    fprintf(stderr, "ProcessExponentialRamp: current_frame = %zu, time1 = %a delta_time = %a\n",
+            current_frame, time1, delta_time);
+    fprintf(stderr, "  value1 = %a value2 = %a value = %a (%g)\n",
+            value1, value2, value, value);
+    fprintf(stderr, "  v2/v1 = %a (%g), time = %a (%g)\n",
+            value2 / value1,
+            value2 / value1,
+            (current_frame / sample_rate - time1) / delta_time,
+            (current_frame / sample_rate - time1) / delta_time);
+    {
+      double vd = value1 * pow(value2 / static_cast<double>(value1),
+                      (current_frame / sample_rate - time1) / delta_time);
+      fprintf(stderr, "  v2/v1 = %a (%g), t = %a (%g)\n  v<d> = %a, rounded = %a (%g %g)\n",
+              value2 / static_cast<double>(value1),
+              value2 / static_cast<double>(value1),
+              (current_frame / sample_rate - time1) / delta_time,
+              (current_frame / sample_rate - time1) / delta_time,
+              vd, static_cast<float>(vd), vd, static_cast<float>(vd));
+    }
+#endif
     for (; write_index < fill_to_frame; ++write_index) {
       values[write_index] = value;
       value *= multiplier;
