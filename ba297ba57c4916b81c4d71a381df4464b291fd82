@@ -195,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "25be2deb_9c5dabb8",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-02T18:20:33Z",
+      "side": 1,
+      "message": "\u003e Huh, that\u0027s not a delay as Chrome is expecting it then unless there\u0027s some additional restrictions. I.e. time required to guarantee a gapless playout is not necessarily equivalent to the current delay. Will this return 10ms if there is 10ms of buffer remaining? Or is this returning |buffer_remaining| + |buffer_processing_time|? Delay as Chrome expects it should only be |buffer_remaining|.\n\u003e \n\u003e Per the docs I think you should only have pts \u003d zx_time_get() + min_delay_ns here.\n\nI did that initially, but I don\u0027t think that would be right. We need to account for the time it takes to call OnMoreData(). if we set pts \u003d zx_time_get() + min_delay_ns here, then we would be calling write with (pts - zx_time_get()) \u003c min_delay_ns, which means that we can\u0027t be sure that the mixer will get that data on time to be mixed for the specified PTS. We do need to add some extra delay to min_delay. \n\n\u003e Otherwise you\u0027re baking in buffer_duration of delay until playback starts, which can be 20-500ms+ (BT) on other platforms.\n\nWhy would buffer_duration be as high as 500 ms? I don\u0027t think it\u0027s related to the total playback delay for the target device. E.g. on windows we use GetDevicePeriod(), which returns \"interval between periodic processing passes by the audio engine\". On Fuchsia fuchsia_audio_parameters.buffer_size is effectively the same thing. It\u0027s not related to the total presentation delay for the target device. Normally presentation delay will be many times higher than the period.\n\nbuffer_duration is essentially the interval between consecutive OnMoreData() calls, so it\u0027s maximum amount of time we can allow for each OnMoreData() call. Potentially we could use some fixed value (e.g. 2ms) instead of period duration. That would make this code more sensitive to timer error than necessary.\n\nIt might be better to rename AudioParamters::buffer_size to AudioParamters::period_size, to reflect the actual usage of that field. WDYT?\n\n\u003e Which would be unfortunate given the importance of playback startup speed. Before ::Start() is called we request a buffer from the renderer, so the first fill should already be ready. The first call uses 0 for delay and delay timestamp.",
+      "parentUuid": "c6a7765e_005d3029",
+      "revId": "ba297ba57c4916b81c4d71a381df4464b291fd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "554cf5b7_e19270e1",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
         "patchSetId": 6
@@ -283,6 +301,24 @@
     },
     {
       "key": {
+        "uuid": "18ec4987_37878489",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-02T18:20:33Z",
+      "side": 1,
+      "message": "Ok, since delay_timestamp is not used properly, I updated this code to pass now as delay_timestamp and adjusted delay accordingly. I don\u0027t think matters much since GetCurrentStreamTime() is expected to be always close to Now() and delay is just an approximation.",
+      "parentUuid": "0d431534_02a4e75f",
+      "revId": "ba297ba57c4916b81c4d71a381df4464b291fd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9637fde9_8c45ae21",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
         "patchSetId": 6
@@ -333,6 +369,24 @@
       "revId": "ba297ba57c4916b81c4d71a381df4464b291fd82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d104f2ad_1961e488",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-02T18:20:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c97e11e_7757e193",
+      "revId": "ba297ba57c4916b81c4d71a381df4464b291fd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
