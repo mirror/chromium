@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa7e0126_7a004a48",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-10-02T11:05:35Z",
+      "side": 0,
+      "message": "The second half of this TODO still seems relevant.",
+      "revId": "e115ef81cb0c310a2cca5402ba82398bacb488f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
