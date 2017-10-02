@@ -1,0 +1,210 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e58af3d6_f1041106",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-02T02:28:46Z",
+      "side": 1,
+      "message": "nit: Change this internal URL to the publicly available Chrome OS source repository URL:\nhttps://chromium.googlesource.com/chromiumos/platform2/+/ed23f71c21cbe9bb01ee1418592b89ebbd55c208/login_manager/session_manager_impl.cc#963",
+      "range": {
+        "startLine": 13,
+        "startChar": 42,
+        "endLine": 13,
+        "endChar": 209
+      },
+      "revId": "2d4f6dbeec868ef83e3290b1dc8a95b1becd1a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eafcae5_adb4c372",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-02T02:28:46Z",
+      "side": 1,
+      "message": "Not sure this condition qualifies for the ERROR logging - this may potentially lead to log spamming under testing environment.",
+      "revId": "2d4f6dbeec868ef83e3290b1dc8a95b1becd1a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5af623c9_c33ced3d",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-02T02:28:46Z",
+      "side": 1,
+      "message": "nit: \"The system time isn\u0027t network synchronized.\"",
+      "range": {
+        "startLine": 168,
+        "startChar": 17,
+        "endLine": 168,
+        "endChar": 44
+      },
+      "revId": "2d4f6dbeec868ef83e3290b1dc8a95b1becd1a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09128e00_c9193372",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-02T02:28:46Z",
+      "side": 1,
+      "message": "nit: Please move the method definition below, so that the definition order matches the declaration order in the header file.",
+      "revId": "2d4f6dbeec868ef83e3290b1dc8a95b1becd1a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25b9b668_648b21a6",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-02T02:28:46Z",
+      "side": 1,
+      "message": "nit: Probably,\ns/can\u0027t be used when/is never on until/\nas that\u0027s not a requirement for the class user, but rather a description of the class behavior.",
+      "range": {
+        "startLine": 58,
+        "startChar": 19,
+        "endLine": 58,
+        "endChar": 32
+      },
+      "revId": "2d4f6dbeec868ef83e3290b1dc8a95b1becd1a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f236d90_3cfd82ef",
+        "filename": "chromeos/dbus/system_clock_client.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-02T02:28:46Z",
+      "side": 1,
+      "message": "nit: Is this needed?",
+      "revId": "2d4f6dbeec868ef83e3290b1dc8a95b1becd1a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cf3d136_39873c2a",
+        "filename": "chromeos/dbus/system_clock_client.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-02T02:28:46Z",
+      "side": 1,
+      "message": "nit: The function name is too generic - it\u0027s really about the \"network synchronized\" flag, but nothing in its name hints about that.",
+      "range": {
+        "startLine": 23,
+        "startChar": 5,
+        "endLine": 23,
+        "endChar": 28
+      },
+      "revId": "2d4f6dbeec868ef83e3290b1dc8a95b1becd1a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "427f5aae_2f2760c8",
+        "filename": "chromeos/dbus/system_clock_client.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-02T02:28:46Z",
+      "side": 1,
+      "message": "nit: Perhaps add a small helper method that calls these two? It\u0027s error-prone to have this sequence of calls being duplicated across the class code.",
+      "range": {
+        "startLine": 100,
+        "startChar": 6,
+        "endLine": 101,
+        "endChar": 35
+      },
+      "revId": "2d4f6dbeec868ef83e3290b1dc8a95b1becd1a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e69246ab_402df485",
+        "filename": "chromeos/dbus/system_clock_client.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-02T02:28:46Z",
+      "side": 1,
+      "message": "nit: Please move to the public session, where it was declared in the parent class.",
+      "revId": "2d4f6dbeec868ef83e3290b1dc8a95b1becd1a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cc76bbe_8089d676",
+        "filename": "chromeos/dbus/system_clock_client.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-10-02T02:28:46Z",
+      "side": 1,
+      "message": "nit: Maybe \"network_synchronized_\"?",
+      "range": {
+        "startLine": 188,
+        "startChar": 7,
+        "endLine": 188,
+        "endChar": 33
+      },
+      "revId": "2d4f6dbeec868ef83e3290b1dc8a95b1becd1a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
