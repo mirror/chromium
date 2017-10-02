@@ -238,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "3403d3cc_8dcba55f",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-10-02T13:18:07Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "cb85ee01_2dbd2a7b",
+      "range": {
+        "startLine": 128,
+        "startChar": 4,
+        "endLine": 128,
+        "endChar": 14
+      },
+      "revId": "431f968093cd8558bb2129c6eea0e0e9e0fed797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50048840_24680828",
         "filename": "components/signin/core/browser/android/javatests/src/org/chromium/components/signin/test/util/FakeAccountManagerDelegate.java",
         "patchSetId": 12
@@ -356,6 +380,30 @@
     },
     {
       "key": {
+        "uuid": "f04c7a5e_916c30a6",
+        "filename": "components/signin/core/browser/android/javatests/src/org/chromium/components/signin/test/util/FakeAccountManagerDelegate.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-10-02T13:18:07Z",
+      "side": 1,
+      "message": "Done.\n\nI agree that implementing a full version of CompletableFuture is probably an overkill, but having some kind of future implementation in base still makes sense to me.",
+      "parentUuid": "b900d516_558e860f",
+      "range": {
+        "startLine": 216,
+        "startChar": 8,
+        "endLine": 216,
+        "endChar": 26
+      },
+      "revId": "431f968093cd8558bb2129c6eea0e0e9e0fed797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23ab6dd2_b7194bab",
         "filename": "components/signin/core/browser/android/javatests/src/org/chromium/components/signin/test/util/FakeAccountManagerDelegate.java",
         "patchSetId": 12
@@ -415,6 +463,30 @@
       "side": 1,
       "message": "Hm, are there even going to be calls to addAccountHolderExplicitly() left? If not, we could just inline it and we would be guaranteed that the cache is always going to be up to date.",
       "parentUuid": "ca7b360c_5fc8d451",
+      "range": {
+        "startLine": 218,
+        "startChar": 16,
+        "endLine": 218,
+        "endChar": 93
+      },
+      "revId": "431f968093cd8558bb2129c6eea0e0e9e0fed797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c75e5a96_8612e542",
+        "filename": "components/signin/core/browser/android/javatests/src/org/chromium/components/signin/test/util/FakeAccountManagerDelegate.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-10-02T13:18:07Z",
+      "side": 1,
+      "message": "addAccountHolderExplicitly() is still used in downstream tests. Generally speaking, addAccountHolderExplicitly is still needed for cases when AccountManagerFacade is not initialized. I\u0027ve extended addAccountHolderBlocking JavaDoc to make that clearer.",
+      "parentUuid": "f3091810_1bcef9e2",
       "range": {
         "startLine": 218,
         "startChar": 16,

@@ -22,6 +22,30 @@
       "revId": "a85d6fb7f66172a10c0fa4857e773dad6e78242b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1be7cc86_b6ac9969",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-10-02T13:18:07Z",
+      "side": 1,
+      "message": "That\u0027s a good point. Actually, I would like to reimplement async functions in AccountManagerFacade to avoid creating AsyncTasks every time. Something like:\n\nAccountManagerResult\u003cAccount[]\u003e maybeAccounts \u003d mMaybeAccounts.get();\nif (maybeAccounts \u003d\u003d null) {\n    mCallbacksWaitingForPopulate.add(callback);\n    return;\n}\nThreadUtils.postOnUiThread(() -\u003e callback(maybeAccounts.get()));\n\nI plan to do that after this CL lands and dust settles. I\u0027m not concerned much about case you\u0027ve described as blocking time for getGoogleAccounts() shouldn\u0027t be longer than a call to getAccountsSync - the same time we already block for. So this CL doesn\u0027t incur any performance hit on thread pools. On the contrary, it actually improves performance, as absolute majority of calls to getGoogleAccounts() will be done after cache is already populated.",
+      "parentUuid": "71b5b87a_45c96813",
+      "range": {
+        "startLine": 303,
+        "startChar": 38,
+        "endLine": 303,
+        "endChar": 58
+      },
+      "revId": "a85d6fb7f66172a10c0fa4857e773dad6e78242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
