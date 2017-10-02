@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f313a636_7251eebb",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_background_task_handler_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-02T23:46:30Z",
+      "side": 1,
+      "message": "This is not the right place for the comment, should be in header file.\n\nAlso doesn\u0027t explain how backoffentry (and in particular CustomReleaseTime) are used in this file.",
+      "revId": "9911c99c15578d888cb689c0bb0f6548d17fc9f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
