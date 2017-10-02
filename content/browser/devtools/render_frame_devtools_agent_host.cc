@@ -700,6 +700,8 @@ void RenderFrameDevToolsAgentHost::DidFinishNavigation(
   scoped_refptr<RenderFrameDevToolsAgentHost> protect(this);
   if (handle->HasCommitted() && !handle->IsErrorPage())
     UpdateFrameHost(handle->GetRenderFrameHost());
+  else
+    UpdateFrameHost(frame_tree_node_->current_frame_host());
   DCHECK(CheckConsistency());
   if (navigation_handles_.empty()) {
     for (auto& pair : suspended_messages_by_session_id_) {
