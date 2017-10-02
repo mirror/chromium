@@ -715,19 +715,6 @@ paymentRequestFromMessage:(const base::DictionaryValue&)message
     return YES;
   }
 
-  if (paymentRequest->IsIncognito()) {
-    BOOL privacy_preserving_response =
-        !paymentRequest->supported_card_networks_set().empty() ||
-        base::FeatureList::IsEnabled(
-            payments::features::kWebPaymentsNativeApps);
-    [_paymentRequestJsManager
-        resolveCanMakePaymentPromiseWithValue:privacy_preserving_response
-                            completionHandler:nil];
-    paymentRequest->journey_logger().SetCanMakePaymentValue(
-        privacy_preserving_response);
-    return YES;
-  }
-
   BOOL canMakePayment = paymentRequest->CanMakePayment();
 
   payments::CanMakePaymentQuery* canMakePaymentQuery =
@@ -741,6 +728,12 @@ paymentRequestFromMessage:(const base::DictionaryValue&)message
           GURL(url_formatter::FormatUrlForSecurityDisplay(
               _activeWebState->GetLastCommittedURL())),
           paymentRequest->stringified_method_data())) {
+    if (paymentRequest->IsIncognito()) {
+      canMakePayment = !paymentRequest->supported_card_networks_set().empty() ||
+                       base::FeatureList::IsEnabled(
+                           payments::features::kWebPaymentsNativeApps);
+    }
+
     [_paymentRequestJsManager
         resolveCanMakePaymentPromiseWithValue:canMakePayment
                             completionHandler:nil];
