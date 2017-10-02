@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa2bb773_5bebfa73",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-02T21:31:41Z",
+      "side": 1,
+      "message": "Should this part be merged with the code in OnSessionEnded? (invoke it with different values maybe?)",
+      "revId": "a5ef85be82a6883cbd45941dd2633ed69047642e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ea4f9b9_1c163323",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-02T21:31:41Z",
+      "side": 1,
+      "message": "What about time from previous sessions? Shouldn\u0027t they be added to be able to get a total time including the elapsed time?",
+      "range": {
+        "startLine": 46,
+        "startChar": 10,
+        "endLine": 46,
+        "endChar": 66
+      },
+      "revId": "a5ef85be82a6883cbd45941dd2633ed69047642e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4116fb0b_005cc7ff",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-02T21:31:41Z",
+      "side": 1,
+      "message": "So it looks like we\u0027re starting off with a counting elapsed timer, but is_session_inactive_ to be false. So if I\u0027d ask GetActiveSessionElapsedTime() after constructing this class, I\u0027d get a delta until I add an observer, at which point it\u0027d be reset to 0 again? That seems a little bit confusing.\n\nMaybe we want to start off by renaming to |is_session_active| and have that as false?",
+      "revId": "a5ef85be82a6883cbd45941dd2633ed69047642e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89d99f30_ee819d63",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-02T21:31:41Z",
+      "side": 1,
+      "message": "This method sounds like it only refers to the current active session whereas the lest of the class also relates to the total time. Could you maybe add a clarifying comment about this method so it\u0027s totally clear to readers?\n\nAlso maybe document how it interacts with the TimeDelta when there are temporarily no observers? It behaves differently from the rest of the class as it seems to reset the elapsed time?",
+      "revId": "a5ef85be82a6883cbd45941dd2633ed69047642e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
