@@ -72,7 +72,6 @@ target(link_target_type, "child") {
     "content_child_helpers.cc",
     "content_child_helpers.h",
     "dwrite_font_proxy/dwrite_font_proxy_init_win.cc",
-    "dwrite_font_proxy/dwrite_font_proxy_init_win.h",
     "dwrite_font_proxy/dwrite_font_proxy_win.cc",
     "dwrite_font_proxy/dwrite_font_proxy_win.h",
     "dwrite_font_proxy/dwrite_localized_strings_win.cc",
