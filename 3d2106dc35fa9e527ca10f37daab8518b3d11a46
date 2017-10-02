@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f83d5e7_bf001f1c",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2017-10-02T01:04:43Z",
+      "side": 1,
+      "message": "copy-pasta from chromium.linux",
+      "range": {
+        "startLine": 381,
+        "startChar": 4,
+        "endLine": 385,
+        "endChar": 6
+      },
+      "revId": "3d2106dc35fa9e527ca10f37daab8518b3d11a46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
