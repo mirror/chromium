@@ -46,6 +46,30 @@
       "revId": "053981076c977f4db8481a213a9e9d732c6a1d47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31d08196_5de53827",
+        "filename": "ios/chrome/browser/ui/settings/accounts_collection_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-02T11:57:09Z",
+      "side": 1,
+      "message": "We\u0027re trying to get rid of calls to TopmostViewController().  Will this change make it harder to do so?",
+      "parentUuid": "97bdd844_6cd94d4e",
+      "range": {
+        "startLine": 496,
+        "startChar": 36,
+        "endLine": 496,
+        "endChar": 56
+      },
+      "revId": "053981076c977f4db8481a213a9e9d732c6a1d47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
