@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b002c0b3_abe9aaf9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/historyreport/AppIndexingReporter.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-02T22:38:29Z",
+      "side": 1,
+      "message": "nit: remove this line since there\u0027s no longer a param",
+      "range": {
+        "startLine": 44,
+        "startChar": 7,
+        "endLine": 44,
+        "endChar": 74
+      },
+      "revId": "bb8b10cddf533fcfa0a50dab9cc11a3873a62c1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "101767df_18d55827",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/privacy/ClearBrowsingDataPreferences.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-02T22:38:29Z",
+      "side": 1,
+      "message": "nit: remove this blank line",
+      "revId": "bb8b10cddf533fcfa0a50dab9cc11a3873a62c1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ba24147_8d5dee64",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/privacy/ClearBrowsingDataPreferences.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-02T22:38:29Z",
+      "side": 1,
+      "message": "Should we remove this for now while we wait for a resolution on the email thread?",
+      "range": {
+        "startLine": 352,
+        "startChar": 7,
+        "endLine": 354,
+        "endChar": 9
+      },
+      "revId": "bb8b10cddf533fcfa0a50dab9cc11a3873a62c1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22a581a7_eed5ec32",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-02T22:38:29Z",
+      "side": 1,
+      "message": "nit: add a blank line after this early return.",
+      "range": {
+        "startLine": 46,
+        "startChar": 8,
+        "endLine": 46,
+        "endChar": 47
+      },
+      "revId": "bb8b10cddf533fcfa0a50dab9cc11a3873a62c1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82a5bbf8_c034f725",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-02T22:38:29Z",
+      "side": 1,
+      "message": "nit: add a blank line before this one",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 13
+      },
+      "revId": "bb8b10cddf533fcfa0a50dab9cc11a3873a62c1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2a1c279_d9fd0741",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-02T22:38:29Z",
+      "side": 1,
+      "message": "nit: How about \"commandLine\" instead of \"instance\"?",
+      "range": {
+        "startLine": 49,
+        "startChar": 20,
+        "endLine": 49,
+        "endChar": 28
+      },
+      "revId": "bb8b10cddf533fcfa0a50dab9cc11a3873a62c1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86586a77_09625f25",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-02T22:38:29Z",
+      "side": 1,
+      "message": "Let\u0027s remove the observer after calling #showSurveyInfoBar",
+      "range": {
+        "startLine": 95,
+        "startChar": 32,
+        "endLine": 95,
+        "endChar": 88
+      },
+      "revId": "bb8b10cddf533fcfa0a50dab9cc11a3873a62c1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2e1b159_4c1b9bc5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/SurveyController.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-02T22:38:29Z",
+      "side": 1,
+      "message": "Can we make it more clear that the client needs to wait for a callback after initialization?\n\ne.g.  Clients should call #downloadSurvey() and register a callback to be notified when the survey is available. After downloading the survey, call #showSurveyIfAvailable() to display the survey.",
+      "range": {
+        "startLine": 14,
+        "startChar": 93,
+        "endLine": 15,
+        "endChar": 86
+      },
+      "revId": "bb8b10cddf533fcfa0a50dab9cc11a3873a62c1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8bb1cbc_0052590c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/SurveyController.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-02T22:38:29Z",
+      "side": 1,
+      "message": "nit: Put this method above showSurveyIfAvailable()",
+      "range": {
+        "startLine": 52,
+        "startChar": 3,
+        "endLine": 56,
+        "endChar": 0
+      },
+      "revId": "bb8b10cddf533fcfa0a50dab9cc11a3873a62c1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
