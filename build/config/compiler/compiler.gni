@@ -64,6 +64,10 @@ declare_args() {
 
   # Whether or not we should use position independent code.
   use_pic = true
+
+  # Optimize for coverage guided fuzzing (balance between speed and number of
+  # branches)
+  optimize_for_fuzzing = false
 }
 
 # Exclude unwind tables for official builds as unwinding can be done from stack
@@ -207,3 +211,9 @@ assert(ignore_elf32_limitations || !is_android ||
            "due to 4GiB file size limit, see https://crbug.com/648948. " +
            "If you really want to try this out, " +
            "set ignore_elf32_limitations=true.")
+
+# Coverage build is quite slow. Using "optimize_for_fuzzing" makes it even
+# slower as it uses "-O1" instead of "-O3". Prevent that from happening.
+assert(use_clang_coverage && !optimize_for_fuzzing,
+       "optimize_for_fuzzing=true is not compatible with " +
+       "use_clang_coverage=true.")
