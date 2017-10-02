@@ -160,17 +160,18 @@ TestRunner.loadHTML = function(html) {
 
 /**
  * @param {string} path
- * @return {!Promise<!SDK.RemoteObject>}
+ * @return {!Promise<!SDK.RemoteObject|undefined>}
  */
 TestRunner.addScriptTag = function(path) {
   var testScriptURL = /** @type {string} */ (Runtime.queryParam('test'));
   var resolvedPath = testScriptURL + '/../' + path;
 
-  return TestRunner.evaluateInPagePromise(`
+  return TestRunner.evaluateInPageAsync(`
     (function(){
       var script = document.createElement('script');
       script.src = '${resolvedPath}';
       document.head.append(script);
+      return new Promise(f => script.onload = f);
     })();
   `);
 };
@@ -215,19 +216,25 @@ TestRunner.addIframe = function(path) {
     (function(){
       var iframe = document.createElement('iframe');
       iframe.src = '${resolvedPath}';
-      iframe.onload = onload;
       document.body.appendChild(iframe);
-
-      var resolve;
-      var promise = new Promise(r => resolve = r);
-      function onload() {
-        resolve();
-      }
-      return promise;
+      return new Promise(f => iframe.onload = f);
     })();
   `);
 };
 
+/** @type {number} */
+TestRunner._pendingInits = 0;
+
+/**
+ * @param {string} code
+ */
+TestRunner.initAsync = async function(code) {
+  TestRunner._pendingInits++;
+  await TestRunner.RuntimeAgent.invoke_evaluate({expression: code, objectGroup: 'console'});
+  TestRunner._pendingInits--;
+  if (!TestRunner._pendingInits)
+    TestRunner._resolveOnFinishInits();
+};
 
 /**
  * @param {string} title
@@ -859,11 +866,12 @@ IntegrationTestRunner.TestObserver = class {
 IntegrationTestRunner.runTest = async function() {
   var testScriptURL = /** @type {string} */ (Runtime.queryParam('test'));
   var basePath = testScriptURL + '/../';
-  await TestRunner.evaluateInPagePromise(`
+  var code = `
     function relativeToTest(relativePath) {
       return '${basePath}' + relativePath;
     }
-  `);
+  `;
+  await TestRunner.RuntimeAgent.invoke_evaluate({expression: code, objectGroup: 'console'});
   TestRunner.executeTestScript();
 };
 
