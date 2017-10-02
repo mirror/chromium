@@ -34,6 +34,24 @@
       "revId": "fa93203f8ec1b2a7122f9c714db637d61d2c9a66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82f5e94e_1abf6310",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-02T19:16:49Z",
+      "side": 1,
+      "message": "Oh, and \"service\" in this context means an out-of-process Mojo service, not a BrowserContextKeyedService.",
+      "parentUuid": "02d1ba2e_6fe7cf68",
+      "revId": "fa93203f8ec1b2a7122f9c714db637d61d2c9a66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
