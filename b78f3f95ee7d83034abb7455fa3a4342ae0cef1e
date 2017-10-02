@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "f568fd82_b2d91d9b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-10-02T16:21:11Z",
+      "side": 1,
+      "message": "Can you make sure that the commit message is line-broken to 72 chars?",
+      "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2cb5450_e65ace78",
         "filename": "chrome/gpu/chrome_arc_video_decode_accelerator.cc",
         "patchSetId": 3
