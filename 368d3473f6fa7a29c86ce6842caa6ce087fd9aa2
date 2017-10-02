@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "282500c0_bee3f8eb",
+        "filename": "services/proxy_resolver/OWNERS",
+        "patchSetId": 17
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-02T21:43:50Z",
+      "side": 1,
+      "message": "Oops, completely missed this.  Can we just delegate to content/network/OWNERS?  (Could add eroman, too, with his signoff, though not sure he\u0027d support that)",
+      "parentUuid": "49f3ce9e_a6b539fc",
+      "revId": "368d3473f6fa7a29c86ce6842caa6ce087fd9aa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "28209dec_6d1da5df",
         "filename": "services/proxy_resolver/public/cpp/BUILD.gn",
         "patchSetId": 17
