@@ -31,6 +31,8 @@ static_library("ntp_tiles") {
     "section_type.h",
     "switches.cc",
     "switches.h",
+    "tile_impression.cc",
+    "tile_impression.h",
     "tile_source.h",
     "tile_title_source.h",
     "tile_visual_type.h",
