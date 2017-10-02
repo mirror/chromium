@@ -37,18 +37,19 @@ struct NotifierId;
 
 // Comparers used to auto-sort the lists of Notifications.
 struct MESSAGE_CENTER_EXPORT ComparePriorityTimestampSerial {
-  bool operator()(Notification* n1, Notification* n2);
+  bool operator()(Notification* n1, Notification* n2) const;
 };
 
 struct MESSAGE_CENTER_EXPORT CompareTimestampSerial {
-  bool operator()(Notification* n1, Notification* n2);
+  bool operator()(Notification* n1, Notification* n2) const;
 };
 
 // An adapter to allow use of the comparers above with std::unique_ptr.
 template <typename PlainCompare>
 struct UniquePtrCompare {
   template <typename T>
-  bool operator()(const std::unique_ptr<T>& n1, const std::unique_ptr<T>& n2) {
+  bool operator()(const std::unique_ptr<T>& n1,
+                  const std::unique_ptr<T>& n2) const {
     return PlainCompare()(n1.get(), n2.get());
   }
 };
