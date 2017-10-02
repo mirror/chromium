@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b3dfbb35_a539c9cb",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-02T17:06:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c33f12bd_05a9860f",
+      "revId": "ac4c1c3533065c4725f8d835601f7a99671d1897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a236e35c_a1b323ff",
         "filename": "chrome/browser/vr/testapp/vr_test_context.h",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-02T15:10:56Z",
       "side": 1,
       "message": "Include this in the .cc file.",
+      "revId": "ac4c1c3533065c4725f8d835601f7a99671d1897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "600f40d4_9804e755",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-02T17:06:16Z",
+      "side": 1,
+      "message": "Needed here for the private transform member.",
+      "parentUuid": "a236e35c_a1b323ff",
       "revId": "ac4c1c3533065c4725f8d835601f7a99671d1897",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
