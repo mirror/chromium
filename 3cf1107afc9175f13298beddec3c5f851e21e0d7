@@ -2,6 +2,142 @@
   "comments": [
     {
       "key": {
+        "uuid": "c05bb957_84667731",
+        "filename": "content/browser/service_worker/service_worker_registration_handle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-02T06:38:59Z",
+      "side": 1,
+      "message": "don\u0027t think we need that comment",
+      "revId": "3cf1107afc9175f13298beddec3c5f851e21e0d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b819d87e_5d25b4aa",
+        "filename": "content/browser/service_worker/service_worker_registration_handle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-02T06:38:59Z",
+      "side": 1,
+      "message": "maintain same order as .h file",
+      "revId": "3cf1107afc9175f13298beddec3c5f851e21e0d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc6dd261_f9b257ee",
+        "filename": "content/browser/service_worker/service_worker_registration_handle.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-02T06:38:59Z",
+      "side": 1,
+      "message": "// Called back from ServiceWorkerContextCore when an update is complete.",
+      "revId": "3cf1107afc9175f13298beddec3c5f851e21e0d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04ae691f_59f40a69",
+        "filename": "content/child/service_worker/service_worker_dispatcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-02T06:38:59Z",
+      "side": 1,
+      "message": "std::move(binding_task_runner)",
+      "revId": "3cf1107afc9175f13298beddec3c5f851e21e0d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f686729_65556f61",
+        "filename": "content/child/service_worker/service_worker_dispatcher.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-02T06:38:59Z",
+      "side": 1,
+      "message": "Can you help me understand why Controller vs Controllee has different behavior about whether it adopts or creates?",
+      "revId": "3cf1107afc9175f13298beddec3c5f851e21e0d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f268c69f_e199f9e6",
+        "filename": "content/child/service_worker/service_worker_dispatcher.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-02T06:38:59Z",
+      "side": 1,
+      "message": "Let\u0027s not use Controller vs Controllee teminology outside of the \"Provider\" classes where it\u0027s quite baked in. I\u0027d call it ServiceWorkerGlobalScope and ServiceWorkerClient.",
+      "revId": "3cf1107afc9175f13298beddec3c5f851e21e0d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ccbfdd2_875d1830",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-02T06:38:59Z",
+      "side": 1,
+      "message": "FromUTF8?",
+      "revId": "3cf1107afc9175f13298beddec3c5f851e21e0d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3449cf13_8e7d494c",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-02T06:38:59Z",
+      "side": 1,
+      "message": "why is the default arg needed?",
+      "revId": "3cf1107afc9175f13298beddec3c5f851e21e0d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d15334ab_d9865a08",
         "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
         "patchSetId": 4
