@@ -25,6 +25,53 @@
     },
     {
       "key": {
+        "uuid": "6aaa462e_f9909c4f",
+        "filename": "build/config/compiler/compiler.gni",
+        "patchSetId": 14
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-02T20:04:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e53fcc0_20050541",
+      "range": {
+        "startLine": 218,
+        "startChar": 30,
+        "endLine": 218,
+        "endChar": 48
+      },
+      "revId": "7eec3c3c23ad518c39f2808221a6f405a0a165eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9f2cbf3a_b54dec65",
+        "filename": "build/config/coverage/coverage.gni",
+        "patchSetId": 14
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-02T20:04:13Z",
+      "side": 1,
+      "message": "Here as well! Done.",
+      "range": {
+        "startLine": 12,
+        "startChar": 30,
+        "endLine": 12,
+        "endChar": 48
+      },
+      "revId": "7eec3c3c23ad518c39f2808221a6f405a0a165eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02a3c9e5_c4a2bdaa",
         "filename": "build/config/sanitizers/sanitizers.gni",
         "patchSetId": 14
@@ -45,6 +92,30 @@
       "revId": "7eec3c3c23ad518c39f2808221a6f405a0a165eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c5a6ebb_012cd091",
+        "filename": "build/config/sanitizers/sanitizers.gni",
+        "patchSetId": 14
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-02T20:04:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02a3c9e5_c4a2bdaa",
+      "range": {
+        "startLine": 224,
+        "startChar": 30,
+        "endLine": 224,
+        "endChar": 48
+      },
+      "revId": "7eec3c3c23ad518c39f2808221a6f405a0a165eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
