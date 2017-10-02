@@ -62,6 +62,8 @@ using search_provider_logos::LogoCallbacks;
 using search_provider_logos::LogoCallbackReason;
 using search_provider_logos::LogoObserver;
 using search_provider_logos::LogoService;
+using testing::_;
+using testing::DoAll;
 using testing::Eq;
 using testing::IsEmpty;
 
@@ -708,37 +710,46 @@ IN_PROC_BROWSER_TEST_F(LocalNTPVoiceSearchSmokeTest, MicrophonePermission) {
   EXPECT_EQ(CONTENT_SETTING_ALLOW, mic_permission_after.content_setting);
 }
 
-// Returns configured logos.
-class FakeLogoService : public LogoService {
+class MockLogoService : public LogoService {
  public:
-  void GetLogo(search_provider_logos::LogoCallbacks callbacks) override {
-    DCHECK(!callbacks.on_cached_decoded_logo_available);
-    DCHECK(!callbacks.on_fresh_decoded_logo_available);
+  MOCK_METHOD1(GetLogoPtr, void(LogoCallbacks* callbacks));
 
-    if (callbacks.on_cached_encoded_logo_available) {
-      std::move(callbacks.on_cached_encoded_logo_available)
-          .Run(cached_reason, cached_logo);
-    }
-    if (callbacks.on_fresh_encoded_logo_available) {
-      std::move(callbacks.on_fresh_encoded_logo_available)
-          .Run(fresh_reason, fresh_logo);
-    }
+  void GetLogo(LogoCallbacks callbacks) override {
+    GetLogoPtr(&callbacks);
   }
-
   void GetLogo(LogoObserver* observer) override { NOTREACHED(); }
-
-  LogoCallbackReason cached_reason = LogoCallbackReason::CANCELED;
-  base::Optional<EncodedLogo> cached_logo;
-  LogoCallbackReason fresh_reason = LogoCallbackReason::CANCELED;
-  base::Optional<EncodedLogo> fresh_logo;
 };
+
+ACTION_P2(ReturnCachedLogo, reason, logo) {
+  if (!arg0->on_cached_encoded_logo_available) {
+    ADD_FAILURE() << "callbacks.on_cached_encoded_logo_available is null";
+    return;
+  }
+  std::move(arg0->on_cached_encoded_logo_available).Run(reason, logo);
+}
+
+ACTION_P2(ReturnFreshLogo, reason, logo) {
+  if (!arg0->on_fresh_encoded_logo_available) {
+    ADD_FAILURE() << "callbacks.on_fresh_encoded_logo_available is null";
+    return;
+  }
+  std::move(arg0->on_fresh_encoded_logo_available).Run(reason, logo);
+}
+
+ACTION_P(SaveFreshLogoCallback, dest) {
+  if (!arg0->on_fresh_encoded_logo_available) {
+    ADD_FAILURE() << "callbacks.on_fresh_encoded_logo_available is null";
+    return;
+  }
+  dest->emplace_back(std::move(arg0->on_fresh_encoded_logo_available));
+}
 
 class LocalNTPDoodleTest : public InProcessBrowserTest {
  protected:
   LocalNTPDoodleTest() {}
 
-  FakeLogoService* logo_service() {
-    return static_cast<FakeLogoService*>(
+  MockLogoService* logo_service() {
+    return static_cast<MockLogoService*>(
         LogoServiceFactory::GetForProfile(browser()->profile()));
   }
 
@@ -776,7 +787,7 @@ class LocalNTPDoodleTest : public InProcessBrowserTest {
 
   static std::unique_ptr<KeyedService> CreateLogoService(
       content::BrowserContext* context) {
-    return base::MakeUnique<FakeLogoService>();
+    return base::MakeUnique<MockLogoService>();
   }
 
   void OnWillCreateBrowserContextServices(content::BrowserContext* context) {
@@ -793,8 +804,10 @@ class LocalNTPDoodleTest : public InProcessBrowserTest {
 
 IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest,
                        ShouldBeUnchangedOnLogoFetchCancelled) {
-  logo_service()->cached_reason = LogoCallbackReason::CANCELED;
-  logo_service()->fresh_reason = LogoCallbackReason::CANCELED;
+  EXPECT_CALL(*logo_service(), GetLogoPtr(_))
+      .WillRepeatedly(
+          DoAll(ReturnCachedLogo(LogoCallbackReason::CANCELED, base::nullopt),
+                ReturnFreshLogo(LogoCallbackReason::CANCELED, base::nullopt)));
 
   // Open a new blank tab, then go to NTP and listen for console messages.
   content::WebContents* active_tab = OpenNewTab(browser(), GURL("about:blank"));
@@ -811,8 +824,10 @@ IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest,
 
 IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest,
                        ShouldBeUnchangedWhenDoodleUnavailable) {
-  logo_service()->cached_reason = LogoCallbackReason::DETERMINED;
-  logo_service()->fresh_reason = LogoCallbackReason::REVALIDATED;
+  EXPECT_CALL(*logo_service(), GetLogoPtr(_))
+      .WillRepeatedly(DoAll(
+          ReturnCachedLogo(LogoCallbackReason::DETERMINED, base::nullopt),
+          ReturnFreshLogo(LogoCallbackReason::REVALIDATED, base::nullopt)));
 
   // Open a new blank tab, then go to NTP and listen for console messages.
   content::WebContents* active_tab = OpenNewTab(browser(), GURL("about:blank"));
@@ -828,17 +843,17 @@ IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest,
 }
 
 IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest, ShouldShowDoodleWhenAvailable) {
-  logo_service()->cached_reason = LogoCallbackReason::DETERMINED;
-
-  logo_service()->cached_logo = EncodedLogo();
+  EncodedLogo cached_logo;
   std::string encoded_image = "data:image/svg+xml,<svg/>";
-  logo_service()->cached_logo->encoded_image =
+  cached_logo.encoded_image =
       base::RefCountedString::TakeString(&encoded_image);
-  logo_service()->cached_logo->metadata.on_click_url =
-      GURL("https://www.chromium.org");
-  logo_service()->cached_logo->metadata.alt_text = "Chromium";
+  cached_logo.metadata.on_click_url = GURL("https://www.chromium.org");
+  cached_logo.metadata.alt_text = "Chromium";
 
-  logo_service()->fresh_reason = LogoCallbackReason::REVALIDATED;
+  EXPECT_CALL(*logo_service(), GetLogoPtr(_))
+      .WillRepeatedly(DoAll(
+          ReturnCachedLogo(LogoCallbackReason::DETERMINED, cached_logo),
+          ReturnFreshLogo(LogoCallbackReason::REVALIDATED, base::nullopt)));
 
   // Open a new blank tab, then go to NTP and listen for console messages.
   content::WebContents* active_tab = OpenNewTab(browser(), GURL("about:blank"));
