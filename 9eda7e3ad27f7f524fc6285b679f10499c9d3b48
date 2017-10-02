@@ -16,6 +16,24 @@
       "revId": "9eda7e3ad27f7f524fc6285b679f10499c9d3b48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ba56b38_12b0377c",
+        "filename": "ios/web/navigation/navigation_manager_impl.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-10-02T17:45:41Z",
+      "side": 1,
+      "message": "You\u0027re right. Thanks for catching this. I\u0027ll remove this line and add the fix separate in a different CL, because it affects behavior of current navigation manager as well.",
+      "parentUuid": "8aaef92a_40623767",
+      "revId": "9eda7e3ad27f7f524fc6285b679f10499c9d3b48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

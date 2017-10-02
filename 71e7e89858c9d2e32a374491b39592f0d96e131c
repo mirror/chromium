@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4734f0ce_8900e395",
+        "filename": "breakpad/src",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-10-02T17:45:41Z",
+      "side": 1,
+      "message": "Yeah it was introduced in rebase. Trying to make it go away...",
+      "parentUuid": "b87a44f4_eef1b38d",
+      "range": {
+        "startLine": 1,
+        "startChar": 18,
+        "endLine": 1,
+        "endChar": 58
+      },
+      "revId": "71e7e89858c9d2e32a374491b39592f0d96e131c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa456a47_8778f29b",
         "filename": "ios/web/navigation/wk_based_navigation_manager_impl_unittest.mm",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "0abac2ef_723e4dcd",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-10-02T17:45:41Z",
+      "side": 1,
+      "message": "As part of setting up this test case (lines 306-320), we know that mock_wk_list_.backList as this point is empty. If an exception occurs, it would cause the test case to fail and it should be fairly straight forward to pinpoint the cause in the same CL. So I don\u0027t think it\u0027d be necessary to ASSERT on that condition.",
+      "parentUuid": "fa456a47_8778f29b",
+      "range": {
+        "startLine": 328,
+        "startChar": 30,
+        "endLine": 328,
+        "endChar": 52
+      },
+      "revId": "71e7e89858c9d2e32a374491b39592f0d96e131c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10828520_79ead392",
         "filename": "sdch/open-vcdiff",
         "patchSetId": 6
@@ -68,6 +116,30 @@
       "revId": "71e7e89858c9d2e32a374491b39592f0d96e131c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37976d3b_0718c42b",
+        "filename": "sdch/open-vcdiff",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-10-02T17:45:41Z",
+      "side": 1,
+      "message": "Yep.",
+      "parentUuid": "10828520_79ead392",
+      "range": {
+        "startLine": 1,
+        "startChar": 18,
+        "endLine": 1,
+        "endChar": 58
+      },
+      "revId": "71e7e89858c9d2e32a374491b39592f0d96e131c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
