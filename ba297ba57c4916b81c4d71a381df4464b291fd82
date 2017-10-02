@@ -213,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "71e14a66_92eae0fb",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-02T21:20:21Z",
+      "side": 1,
+      "message": "\u003e \u003e Per the docs I think you should only have pts \u003d zx_time_get() + min_delay_ns here.\n\u003e \n\u003e I did that initially, but I don\u0027t think that would be right. We need to account for the time it takes to call OnMoreData(). if we set pts \u003d zx_time_get() + min_delay_ns here, then we would be calling write with (pts - zx_time_get()) \u003c min_delay_ns, which means that we can\u0027t be sure that the mixer will get that data on time to be mixed for the specified PTS. We do need to add some extra delay to min_delay. \n\nHow about the first call uses (0, now) for delay information and you choose the pts based on zx_time_get() after OnMoreData completes? In any case, you definitely can\u0027t use buffer duration here unless you want a bad experience or are guaranteed that value is always small.\n\n\u003e \n\u003e \u003e Otherwise you\u0027re baking in buffer_duration of delay until playback starts, which can be 20-500ms+ (BT) on other platforms.\n\u003e \n\u003e Why would buffer_duration be as high as 500 ms? I don\u0027t think it\u0027s related to the total playback delay for the target device. E.g. on windows we use GetDevicePeriod(), which returns \"interval between periodic processing passes by the audio engine\". On Fuchsia fuchsia_audio_parameters.buffer_size is effectively the same thing. It\u0027s not related to the total presentation delay for the target device. Normally presentation delay will be many times higher than the period.\n\nI don\u0027t really understand your question here. It\u0027s arbitrary in size. When connected to bluetooth devices you may be required to field very large buffers. It\u0027s possible Fuschia will rebuffer this internally somehow, but you probably shouldn\u0027t count on it. Just assume that buffer_duration could be anything.\n\n\u003e \n\u003e buffer_duration is essentially the interval between consecutive OnMoreData() calls, so it\u0027s maximum amount of time we can allow for each OnMoreData() call. Potentially we could use some fixed value (e.g. 2ms) instead of period duration. That would make this code more sensitive to timer error than necessary.\n\nThis isn\u0027t quite true, buffer duration is the _maximum_ allowed duration between calls, but the underlying platform may want the data ahead of time; so you can only consider it as an upper limit.\n\n\u003e \n\u003e It might be better to rename AudioParamters::buffer_size to AudioParamters::period_size, to reflect the actual usage of that field. WDYT?\n\nI don\u0027t think that\u0027s a worthwhile change; it just makes things more complicated when they\u0027re already quite complicated. We need less things on AudioParameters, not more :)",
+      "parentUuid": "25be2deb_9c5dabb8",
+      "revId": "ba297ba57c4916b81c4d71a381df4464b291fd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "554cf5b7_e19270e1",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
         "patchSetId": 6

@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a9c0e6a_b85d9437",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-02T21:20:21Z",
+      "side": 1,
+      "message": "Stream position samples needs reset too",
+      "revId": "af08025b6d937cac9a94a3804d069aaa72596bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2af3ce5e_bee2effe",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-02T21:20:21Z",
+      "side": 1,
+      "message": "Internally ATH uses a double for the sample rate to avoid precision loss when dividing, but this method only uses an integer value, seems that should probably be changed to a double or you\u0027ll lose precision here.",
+      "revId": "af08025b6d937cac9a94a3804d069aaa72596bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8323cac8_9d1a4300",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-02T21:20:21Z",
+      "side": 1,
+      "message": "I think we can actually forgo this entirely and just let fuschia tell us when it misses via ZX_ERR_IO_MISSED_DEADLINE.",
+      "revId": "af08025b6d937cac9a94a3804d069aaa72596bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21bf124b_aebaa7d0",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-02T21:20:21Z",
+      "side": 1,
+      "message": "DCHECK_EQ ZX_OK?",
+      "revId": "af08025b6d937cac9a94a3804d069aaa72596bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
