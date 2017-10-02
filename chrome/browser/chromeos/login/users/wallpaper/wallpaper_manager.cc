@@ -414,6 +414,12 @@ void WallpaperManager::Initialize() {
 }
 
 // static
+void WallpaperManager::SetForTesting(WallpaperManager* test_instnace) {
+  CHECK(!wallpaper_manager);
+  wallpaper_manager = test_instnace;
+}
+
+// static
 WallpaperManager* WallpaperManager::Get() {
   DCHECK(wallpaper_manager);
   return wallpaper_manager;

@@ -12,6 +12,7 @@
 
 #include "ash/wallpaper/wallpaper_controller_observer.h"
 #include "base/macros.h"
+#include "chrome/browser/image_decoder.h"
 #include "components/arc/common/wallpaper.mojom.h"
 #include "components/arc/instance_holder.h"
 #include "components/keyed_service/core/keyed_service.h"
@@ -56,7 +57,23 @@ class ArcWallpaperService
   // WallpaperControllerObserver implementation.
   void OnWallpaperDataChanged() override;
 
+  class DecodeRequestSender {
+   public:
+    virtual ~DecodeRequestSender();
+    virtual void SendDecodeRequest(ImageDecoder::ImageRequest* request,
+                                   const std::vector<uint8_t>& data) = 0;
+  };
+
+  class TestApi {
+   public:
+    // Replace a way to decode images for unittests. Originally it uses
+    // ImageDecoder which communicates with the external process.
+    static void SetDecodeRequestSender(ArcWallpaperService* service,
+                                       DecodeRequestSender* sender);
+  };
+
  private:
+  friend class TestApi;
   class AndroidIdStore;
   class DecodeRequest;
   struct WallpaperIdPair;
@@ -71,6 +88,8 @@ class ArcWallpaperService
   mojo::Binding<mojom::WallpaperHost> binding_;
   std::unique_ptr<DecodeRequest> decode_request_;
   std::vector<WallpaperIdPair> id_pairs_;
+
+  DecodeRequestSender* decode_request_sender_;
 
   DISALLOW_COPY_AND_ASSIGN(ArcWallpaperService);
 };

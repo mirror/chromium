@@ -25,6 +25,8 @@
 #include "ui/wm/public/activation_change_observer.h"
 #include "ui/wm/public/activation_client.h"
 
+class FakeWallpaperManager;
+
 namespace gfx {
 class ImageSkia;
 }
@@ -50,6 +52,9 @@ class WallpaperManager
 
   // Expects there is no instance of WallpaperManager and create one.
   static void Initialize();
+
+  // Sets test WallpaperManager instance.
+  static void SetForTesting(WallpaperManager* instance);
 
   // Gets pointer to singleton WallpaperManager instance.
   static WallpaperManager* Get();
@@ -123,6 +128,7 @@ class WallpaperManager
   friend class WallpaperManagerBrowserTest;
   friend class WallpaperManagerBrowserTestDefaultWallpaper;
   friend class WallpaperManagerPolicyTest;
+  friend class ::FakeWallpaperManager;
 
   WallpaperManager();
 
