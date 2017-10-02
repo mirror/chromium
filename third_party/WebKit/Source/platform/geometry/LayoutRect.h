@@ -37,7 +37,6 @@
 #include "platform/geometry/LayoutRectOutsets.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Forward.h"
-#include "platform/wtf/Vector.h"
 
 namespace blink {
 

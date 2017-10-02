@@ -32,7 +32,7 @@
 #define QuotedPrintable_h
 
 #include "platform/PlatformExport.h"
-#include "platform/wtf/Vector.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 

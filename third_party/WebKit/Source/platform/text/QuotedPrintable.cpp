@@ -31,6 +31,7 @@
 #include "platform/text/QuotedPrintable.h"
 
 #include "platform/wtf/ASCIICType.h"
+#include "platform/wtf/Vector.h"
 
 namespace blink {
 

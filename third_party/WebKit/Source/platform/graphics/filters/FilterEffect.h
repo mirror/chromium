@@ -30,7 +30,6 @@
 #include "platform/graphics/InterpolationSpace.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Noncopyable.h"
-#include "platform/wtf/Vector.h"
 #include "third_party/skia/include/core/SkImageFilter.h"
 
 namespace blink {

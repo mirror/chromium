@@ -10,10 +10,9 @@
 #include "platform/animation/CompositorAnimationCurve.h"
 #include "platform/animation/CompositorFloatKeyframe.h"
 #include "platform/animation/TimingFunction.h"
+#include "platform/wtf/Forward.h"
 #include "platform/wtf/Noncopyable.h"
 #include "platform/wtf/PtrUtil.h"
-#include "platform/wtf/RefPtr.h"
-#include "platform/wtf/Vector.h"
 
 namespace cc {
 class KeyframedFloatAnimationCurve;

@@ -49,6 +49,7 @@
 #include "platform/wtf/Deque.h"
 #include "platform/wtf/MathExtras.h"
 #include "platform/wtf/PtrUtil.h"
+#include "platform/wtf/Vector.h"
 #include "platform/wtf/text/StringBuilder.h"
 #include "platform/wtf/text/Unicode.h"
 

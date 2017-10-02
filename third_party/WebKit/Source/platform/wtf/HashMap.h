@@ -21,9 +21,10 @@
 #ifndef WTF_HashMap_h
 #define WTF_HashMap_h
 
+#include <initializer_list>
+#include "platform/wtf/Forward.h"
 #include "platform/wtf/HashTable.h"
 #include "platform/wtf/allocator/PartitionAllocator.h"
-#include <initializer_list>
 
 namespace WTF {
 
@@ -44,10 +45,10 @@ struct KeyValuePairKeyExtractor {
 // can be lifted if you supply custom key traits.
 template <typename KeyArg,
           typename MappedArg,
-          typename HashArg = typename DefaultHash<KeyArg>::Hash,
-          typename KeyTraitsArg = HashTraits<KeyArg>,
-          typename MappedTraitsArg = HashTraits<MappedArg>,
-          typename Allocator = PartitionAllocator>
+          typename HashArg,
+          typename KeyTraitsArg,
+          typename MappedTraitsArg,
+          typename Allocator>
 class HashMap {
   USE_ALLOCATOR(HashMap, Allocator);
 

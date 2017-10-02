@@ -23,6 +23,7 @@
 #define OverflowModel_h
 
 #include "platform/geometry/LayoutRect.h"
+#include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 

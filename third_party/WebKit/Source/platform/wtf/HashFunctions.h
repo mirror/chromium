@@ -25,6 +25,7 @@
 #include <memory>
 #include <type_traits>
 #include "build/build_config.h"
+#include "platform/wtf/Forward.h"
 #include "platform/wtf/RefPtr.h"
 #include "platform/wtf/StdLibExtras.h"
 
@@ -181,10 +182,6 @@ inline void AddIntToHash(unsigned& hash, unsigned key) {
 inline void AddFloatToHash(unsigned& hash, float value) {
   AddIntToHash(hash, FloatHash<float>::GetHash(value));
 };
-
-// Default hash function for each type.
-template <typename T>
-struct DefaultHash;
 
 // Actual implementation of DefaultHash.
 //

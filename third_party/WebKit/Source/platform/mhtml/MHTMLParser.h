@@ -33,17 +33,13 @@
 
 #include "platform/SharedBufferChunkReader.h"
 #include "platform/heap/Handle.h"
-#include "platform/weborigin/KURL.h"
+#include "platform/wtf/Forward.h"
 #include "platform/wtf/RefPtr.h"
-#include "platform/wtf/Vector.h"
-
-namespace WTF {
-class String;
-}
 
 namespace blink {
 
 class ArchiveResource;
+class KURL;
 class MIMEHeader;
 class SharedBuffer;
 

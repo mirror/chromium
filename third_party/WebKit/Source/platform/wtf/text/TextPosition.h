@@ -26,12 +26,11 @@
 #ifndef TextPosition_h
 #define TextPosition_h
 
+#include <memory>
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Assertions.h"
-#include "platform/wtf/Vector.h"
+#include "platform/wtf/Forward.h"
 #include "platform/wtf/WTFExport.h"
-#include "platform/wtf/text/WTFString.h"
-#include <memory>
 
 namespace WTF {
 
