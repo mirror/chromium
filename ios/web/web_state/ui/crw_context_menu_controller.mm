@@ -100,6 +100,7 @@ void CancelTouches(UIGestureRecognizer* gesture_recognizer) {
   BOOL _contextMenuNeedsDisplay;
   // The location of the last reconized long press in the |webView|.
   CGPoint _locationForLastTouch;
+  UIGestureRecognizer* _systemPeekGestureRecognizer;
 }
 
 @synthesize delegate = _delegate;
@@ -127,6 +128,11 @@ void CancelTouches(UIGestureRecognizer* gesture_recognizer) {
     [_contextMenuRecognizer setAllowableMovement:kLongPressMoveDeltaPixels];
     [_contextMenuRecognizer setDelegate:self];
     [_webView addGestureRecognizer:_contextMenuRecognizer];
+
+    _systemPeekGestureRecognizer =
+        [self gestureRecognizerWithDescriptionFragment:
+                  @"action=_handleRevealGesture:"];
+    NSLog(@"gimite systemPeekGR = %@", _systemPeekGestureRecognizer);
 
     if (base::ios::IsRunningOnIOS11OrLater()) {
       // WKWebView's default context menu gesture recognizer interferes with
@@ -204,6 +210,7 @@ void CancelTouches(UIGestureRecognizer* gesture_recognizer) {
 }
 
 - (void)longPressGestureRecognizerBegan {
+  NSLog(@"gimite longPressGestureRecognizerBegan");
   if ([_DOMElementForLastTouch count]) {
     // User long pressed on a link or an image. Cancelling all touches will
     // intentionally suppress system context menu UI.
@@ -291,6 +298,14 @@ void CancelTouches(UIGestureRecognizer* gesture_recognizer) {
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer*)gestureRecognizer
+    shouldRequireFailureOfGestureRecognizer:
+        (UIGestureRecognizer*)otherGestureRecognizer {
+  NSLog(@"gimite shouldFail: %d",
+        (int)(otherGestureRecognizer == _systemPeekGestureRecognizer));
+  return otherGestureRecognizer == _systemPeekGestureRecognizer;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer*)gestureRecognizer
        shouldReceiveTouch:(UITouch*)touch {
   // Expect only _contextMenuRecognizer.
   DCHECK([gestureRecognizer isEqual:_contextMenuRecognizer]);
@@ -342,6 +357,11 @@ void CancelTouches(UIGestureRecognizer* gesture_recognizer) {
         completionHandler:^(id element, NSError*) {
           handler(base::mac::ObjCCastStrict<NSDictionary>(element));
         }];
+}
+
+- (void)peekActionPerformed {
+  //  _contextMenuRecognizer.enabled = NO;
+  //  _contextMenuRecognizer.enabled = YES;
 }
 
 @end
