@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9217f95d_e0c33570",
+        "filename": "third_party/libxml/src/parser.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 3383,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-02T22:27:12Z",
+      "side": 1,
+      "message": "Per README.chromium, this third-party directory is maintained by importing the upstream repo and applying a set of patches via a script. This change would be overwritten by the next roll.\n\nThe typo should be fixed in the upstream repo:\n\nhttps://git.gnome.org/browse/libxml2/tree/parser.c#n3374",
+      "range": {
+        "startLine": 3383,
+        "startChar": 19,
+        "endLine": 3383,
+        "endChar": 25
+      },
+      "revId": "b78f20b506a5d05ade66183f18a3b5ddf5774bcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

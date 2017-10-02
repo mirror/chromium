@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d153efcf_247fd677",
+        "filename": "third_party/WebKit/PerformanceTests/Dromaeo/resources/dromaeo/web/lib/dojo-1.6.1.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1323,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-02T22:27:12Z",
+      "side": 0,
+      "message": "Typo is present in the upstream repo. This is a snapshot of a historical version (maybe?). I\u0027m not sure it\u0027s good to fix - do we want to make our snapshot diverge?\n\nUpstream: https://github.com/jeresig/dromaeo/blob/master/dep/web/lib/dojo.js#L1199",
+      "range": {
+        "startLine": 1323,
+        "startChar": 77,
+        "endLine": 1323,
+        "endChar": 84
+      },
+      "revId": "357bdbf7f33061d9ecf3052813cced0e9da45498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
