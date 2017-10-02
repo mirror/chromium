@@ -31,8 +31,8 @@
 #include "core/SVGNames.h"
 #include "core/dom/Element.h"
 #include "core/html/HTMLElement.h"
-#include "core/html/HTMLFormControlElement.h"
-#include "core/html/HTMLSelectElement.h"
+#include "core/html/forms/HTMLFormControlElement.h"
+#include "core/html/forms/HTMLSelectElement.h"
 
 namespace blink {
 

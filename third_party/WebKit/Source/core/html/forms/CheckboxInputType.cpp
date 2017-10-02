@@ -33,7 +33,7 @@
 
 #include "core/InputTypeNames.h"
 #include "core/events/KeyboardEvent.h"
-#include "core/html/HTMLInputElement.h"
+#include "core/html/forms/HTMLInputElement.h"
 #include "platform/text/PlatformLocale.h"
 
 namespace blink {

@@ -26,12 +26,13 @@
 #ifndef AXMenuListOption_h
 #define AXMenuListOption_h
 
-#include "core/html/HTMLOptionElement.h"
+#include "core/html/forms/HTMLOptionElement.h"
 #include "modules/accessibility/AXMockObject.h"
 
 namespace blink {
 
 class AXObjectCacheImpl;
+class HTMLOptionElement;
 
 class AXMenuListOption final : public AXMockObject {
   WTF_MAKE_NONCOPYABLE(AXMenuListOption);

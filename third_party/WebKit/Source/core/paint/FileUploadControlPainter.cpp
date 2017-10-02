@@ -4,6 +4,7 @@
 
 #include "core/paint/FileUploadControlPainter.h"
 
+#include "core/html/forms/HTMLInputElement.h"
 #include "core/layout/LayoutButton.h"
 #include "core/layout/LayoutFileUploadControl.h"
 #include "core/layout/TextRunConstructor.h"

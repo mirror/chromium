@@ -9,7 +9,7 @@
 #include "core/frame/FrameTestHelpers.h"
 #include "core/frame/VisualViewport.h"
 #include "core/frame/WebLocalFrameImpl.h"
-#include "core/html/HTMLSelectElement.h"
+#include "core/html/forms/HTMLSelectElement.h"
 #include "core/html/forms/PopupMenu.h"
 #include "core/layout/LayoutMenuList.h"
 #include "core/page/Page.h"

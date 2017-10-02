@@ -31,7 +31,7 @@
 #include "public/web/WebOptionElement.h"
 
 #include "core/HTMLNames.h"
-#include "core/html/HTMLOptionElement.h"
+#include "core/html/forms/HTMLOptionElement.h"
 #include "platform/wtf/RefPtr.h"
 #include "public/platform/WebString.h"
 
