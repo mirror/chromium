@@ -100,6 +100,9 @@ void CancelTouches(UIGestureRecognizer* gesture_recognizer) {
   BOOL _contextMenuNeedsDisplay;
   // The location of the last reconized long press in the |webView|.
   CGPoint _locationForLastTouch;
+
+  UIGestureRecognizer* _previewRecognizer;
+  UIGestureRecognizer* _revealRecognizer;
 }
 
 @synthesize delegate = _delegate;
@@ -127,6 +130,13 @@ void CancelTouches(UIGestureRecognizer* gesture_recognizer) {
     [_contextMenuRecognizer setAllowableMovement:kLongPressMoveDeltaPixels];
     [_contextMenuRecognizer setDelegate:self];
     [_webView addGestureRecognizer:_contextMenuRecognizer];
+
+    _previewRecognizer = [self gestureRecognizerWithDescriptionFragment:
+                                   @"_UIPreviewGestureRecognizer"];
+    _revealRecognizer = [self
+        gestureRecognizerWithDescriptionFragment:@"_UIRevealGestureRecognizer"];
+    [_contextMenuRecognizer requireGestureRecognizerToFail:_previewRecognizer];
+    [_contextMenuRecognizer requireGestureRecognizerToFail:_revealRecognizer];
 
     if (base::ios::IsRunningOnIOS11OrLater()) {
       // WKWebView's default context menu gesture recognizer interferes with
@@ -342,6 +352,13 @@ void CancelTouches(UIGestureRecognizer* gesture_recognizer) {
         completionHandler:^(id element, NSError*) {
           handler(base::mac::ObjCCastStrict<NSDictionary>(element));
         }];
+}
+
+- (void)disableHookForCurrentTouch {
+  // Reset the state of the recognizer so that it doesn't recognize the on-going
+  // touch.
+  //  _contextMenuRecognizer.enabled = NO;
+  //  _contextMenuRecognizer.enabled = YES;
 }
 
 @end
