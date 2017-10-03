@@ -51,6 +51,24 @@
       "revId": "0197be8d1e411bdb48316dc7b670d2ca243da0f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e64c4897_8892496d",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-03T20:34:33Z",
+      "side": 1,
+      "message": "Flipping a flag should at least create compiler errors and not a more subtle failure.\n\nIf there\u0027s no other obvious place to own a helper method, there is precident for a function in switches .cc files, e.g. ash::ConstrainPointerToRoot() (chromeos_switches.cc has more examples than ash_switches.cc).",
+      "parentUuid": "02e0ae9d_20f71b19",
+      "revId": "0197be8d1e411bdb48316dc7b670d2ca243da0f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
