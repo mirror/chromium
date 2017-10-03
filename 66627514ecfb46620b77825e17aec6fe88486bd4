@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1a679f78_91914583",
+        "filename": "components/previews/core/previews_black_list.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-03T01:20:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e65cb79d_ec13fc37",
+      "range": {
+        "startLine": 84,
+        "startChar": 59,
+        "endLine": 84,
+        "endChar": 64
+      },
+      "revId": "66627514ecfb46620b77825e17aec6fe88486bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a9371c3_34dc7eb7",
         "filename": "components/previews/core/previews_io_data.cc",
         "patchSetId": 15
@@ -36,6 +60,24 @@
       "writtenOn": "2017-10-02T23:19:55Z",
       "side": 1,
       "message": "Is this called by anything else? If not, you can probably call the PostTask directly from  AddPreviewNavigation",
+      "revId": "66627514ecfb46620b77825e17aec6fe88486bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b7c1778_a16b0f9a",
+        "filename": "components/previews/core/previews_io_data.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-03T01:20:41Z",
+      "side": 1,
+      "message": "This is mainly for testing purposes so that we can inject the time parameter.",
+      "parentUuid": "2a9371c3_34dc7eb7",
       "revId": "66627514ecfb46620b77825e17aec6fe88486bd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -56,6 +98,24 @@
       "revId": "66627514ecfb46620b77825e17aec6fe88486bd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57c964b0_b7255c30",
+        "filename": "components/previews/core/previews_io_data.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-10-03T01:20:41Z",
+      "side": 1,
+      "message": "My mistake.",
+      "parentUuid": "a2197525_2cc8e323",
+      "revId": "66627514ecfb46620b77825e17aec6fe88486bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
