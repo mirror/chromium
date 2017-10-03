@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "53d92316_223bb22f",
+        "filename": "third_party/WebKit/Source/core/events/PointerEventFactory.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-10-03T19:28:03Z",
+      "side": 1,
+      "message": "I guess Mustaq was referring to the second false (that I added in this CL). Correct me if I\u0027m wrong Mustaq.\nDave, regarding the first bool parameter (i.e. is_active_buttons) I changed the type to be bool as your comment in the header file.\n\nIn case Mustaq is referring to can_scroll bit for pointercancel, here is the answer. It is a little tricky. I remember we were talking about sending pointercancel for mouse as well say for context menu. But all in all after every pointercancel the pointer will be deleted by the caller. Ideally it should have been deleted in this very function but I remember I couldn\u0027t get that deleted here due to some checks somewhere else if I recall.\n\nbtw, can_scroll bit it not eqvt to type\u003d\u003dtouch. It is true for the events that come from the WebTouchEvent path and false for the WebMouseEvent path. Right now we send both touch events and sometimes pen events through WebTouchEvent (which cause scrolling) and this bit is designed to capture that.\n\nLet me know if you still think we need to change this. I don\u0027t think either false or true is correct and I should redesign the flow in a way that as soon as we create pointercancel we remove it from the data structures here.",
+      "parentUuid": "1a404080_4d9d2b18",
+      "revId": "70261d4213e04fdb0e43ae69b984d8631973dfbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b33c70e_9711cfd8",
         "filename": "third_party/WebKit/Source/core/events/PointerEventFactory.cpp",
         "patchSetId": 2
@@ -60,6 +78,30 @@
     },
     {
       "key": {
+        "uuid": "1ca3d79c_b936ec58",
+        "filename": "third_party/WebKit/Source/core/events/PointerEventFactory.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-10-03T19:28:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b33c70e_9711cfd8",
+      "range": {
+        "startLine": 499,
+        "startChar": 49,
+        "endLine": 499,
+        "endChar": 66
+      },
+      "revId": "70261d4213e04fdb0e43ae69b984d8631973dfbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c20be02_d87caded",
         "filename": "third_party/WebKit/Source/core/events/PointerEventFactory.cpp",
         "patchSetId": 2
@@ -74,6 +116,24 @@
       "revId": "70261d4213e04fdb0e43ae69b984d8631973dfbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd91ba6c_ec83d0e5",
+        "filename": "third_party/WebKit/Source/core/events/PointerEventFactory.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-10-03T19:28:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c20be02_d87caded",
+      "revId": "70261d4213e04fdb0e43ae69b984d8631973dfbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -100,6 +160,30 @@
     },
     {
       "key": {
+        "uuid": "9cdb685a_0772c787",
+        "filename": "third_party/WebKit/Source/core/events/PointerEventFactory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-10-03T19:28:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d3e5026_e64a6db0",
+      "range": {
+        "startLine": 102,
+        "startChar": 9,
+        "endLine": 102,
+        "endChar": 19
+      },
+      "revId": "70261d4213e04fdb0e43ae69b984d8631973dfbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9dd41f46_a886013b",
         "filename": "third_party/WebKit/Source/core/events/PointerEventFactory.h",
         "patchSetId": 2
@@ -111,6 +195,30 @@
       "writtenOn": "2017-10-03T03:52:08Z",
       "side": 1,
       "message": "This implicit unsigned to bool conversion is weird and it isn\u0027t really is_active_buttons because it is buttons unsigned value isn\u0027t it?",
+      "range": {
+        "startLine": 108,
+        "startChar": 28,
+        "endLine": 108,
+        "endChar": 45
+      },
+      "revId": "70261d4213e04fdb0e43ae69b984d8631973dfbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a1babcf_33f40bd0",
+        "filename": "third_party/WebKit/Source/core/events/PointerEventFactory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-10-03T19:28:03Z",
+      "side": 1,
+      "message": "Yeah. I remember I was storing the active buttons at the time but we only needed whether it is not zero or not. I got a comment about it but I guess I missed to convert all the types to bool.",
+      "parentUuid": "9dd41f46_a886013b",
       "range": {
         "startLine": 108,
         "startChar": 28,
@@ -137,6 +245,24 @@
       "revId": "70261d4213e04fdb0e43ae69b984d8631973dfbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac9844fb_73851270",
+        "filename": "third_party/WebKit/Source/core/events/PointerEventFactoryTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-10-03T19:28:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4919961_bfe6b3e9",
+      "revId": "70261d4213e04fdb0e43ae69b984d8631973dfbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
