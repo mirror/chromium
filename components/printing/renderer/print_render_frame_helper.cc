@@ -115,15 +115,18 @@ int GetDPI(const PrintMsg_Print_Params* print_params) {
   // on dpi.
   return kPointsPerInch;
 #else
-  return static_cast<int>(print_params->dpi);
+  // Use min to avoid laying out the page into too large an area.
+  return static_cast<int>(
+      std::min(print_params->dpi.width(), print_params->dpi.height()));
 #endif  // defined(OS_MACOSX)
 }
 
 bool PrintMsg_Print_Params_IsValid(const PrintMsg_Print_Params& params) {
   return !params.content_size.IsEmpty() && !params.page_size.IsEmpty() &&
          !params.printable_area.IsEmpty() && params.document_cookie &&
-         params.dpi && params.margin_top >= 0 && params.margin_left >= 0 &&
-         params.dpi > kMinDpi && params.document_cookie != 0;
+         !params.dpi.IsEmpty() && params.margin_top >= 0 &&
+         params.margin_left >= 0 && params.dpi.width() > kMinDpi &&
+         params.dpi.height() > kMinDpi && params.document_cookie != 0;
 }
 
 // Helper function to check for fit to page
@@ -1599,7 +1602,8 @@ void PrintRenderFrameHelper::Print(blink::WebLocalFrame* frame,
 
     print_settings.params.print_scaling_option = scaling_option;
     SetPrintPagesParams(print_settings);
-    if (!print_settings.params.dpi || !print_settings.params.document_cookie) {
+    if (!!print_settings.params.dpi.IsEmpty() ||
+        !print_settings.params.document_cookie) {
       DidFinishPrinting(OK);  // Release resources and fail silently on failure.
       return;
     }

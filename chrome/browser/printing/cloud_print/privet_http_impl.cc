@@ -460,8 +460,8 @@ void PrivetLocalPrintOperationImpl::StartInitialRequest() {
   use_pdf_ = false;
   cloud_devices::printer::ContentTypesCapability content_types;
   if (content_types.LoadFrom(capabilities_)) {
-    use_pdf_ = content_types.Contains(kPrivetContentTypePDF) ||
-               content_types.Contains(kPrivetContentTypeAny);
+    use_pdf_ = false;  // content_types.Contains(kPrivetContentTypePDF) ||
+                       // content_types.Contains(kPrivetContentTypeAny);
   }
 
   if (use_pdf_) {
