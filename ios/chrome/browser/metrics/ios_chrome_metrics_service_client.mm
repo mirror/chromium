@@ -159,7 +159,7 @@ void IOSChromeMetricsServiceClient::OnRendererProcessCrash() {
 }
 
 void IOSChromeMetricsServiceClient::WebStateDidStartLoading(
-    web::WebState* web_state) {
+    web::WebStateSetMetricsClientId* web_state) {
   metrics_service_->OnApplicationNotIdle();
 }
 

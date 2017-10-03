@@ -33,6 +33,9 @@ message ChromeUserMetricsExtension {
     // UMA metrics from Android Webview.
     ANDROID_WEBVIEW = 20;
 
+    // UMA metrics from iOS Webview.
+    IOS_WEBVIEW = 21;
+
     // Cast receivers, e.g. Chromecast
     CAST = 35;
   }
