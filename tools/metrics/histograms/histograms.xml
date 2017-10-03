@@ -64266,6 +64266,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="ProtocolHandler.DefaultHandlerCountWin7">
+  <owner>chengx@chromium.org</owner>
+  <summary>
+    Count of registered default protocols at startup in Windows 7 machines.
+  </summary>
+</histogram>
+
 <histogram name="ProxyOverriddenBubble.ExtensionCount" units="Extensions">
   <obsolete>
     Deprecated 9/2016. Never added to histograms.xml and value is always 1.
