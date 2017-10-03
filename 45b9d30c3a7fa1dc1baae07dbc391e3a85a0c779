@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "322abbf6_159f82d1",
+        "filename": "components/translate/core/browser/translate_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-10-03T04:19:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d3580597_09548d76",
+      "revId": "45b9d30c3a7fa1dc1baae07dbc391e3a85a0c779",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b3a2262_94826c51",
         "filename": "components/translate/core/browser/translate_manager_unittest.cc",
         "patchSetId": 5
