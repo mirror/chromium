@@ -3,7 +3,9 @@
 // found in the LICENSE file.
 
 #include "media/mojo/services/video_decode_perf_history.h"
+
 #include "base/callback.h"
+#include "base/format_macros.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/stringprintf.h"
@@ -86,7 +88,7 @@ void VideoDecodePerfHistory::OnGotPerfInfo(
                                  entry.frame_rate())
            << (info.get()
                    ? base::StringPrintf(
-                         "smooth:%d frames_decoded:%d pcnt_dropped:%f",
+                         "smooth:%d frames_decoded:%" PRIu64 " pcnt_dropped:%f",
                          is_smooth, info->frames_decoded, percent_dropped)
                    : (database_success ? "no info" : "query FAILED"));
 
@@ -115,7 +117,7 @@ void VideoDecodePerfHistory::GetPerfInfo(VideoCodecProfile profile,
   MediaCapabilitiesDatabase::Entry db_entry(profile, natural_size, frame_rate);
 
   // Unretained is safe because this is a leaky singleton.
-  g_database->GetInfo(
+  g_database->GetDecodingInfo(
       db_entry,
       base::BindOnce(&VideoDecodePerfHistory::OnGotPerfInfo,
                      base::Unretained(this), db_entry, std::move(callback)));

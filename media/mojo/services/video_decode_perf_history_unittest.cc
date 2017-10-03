@@ -31,7 +31,8 @@ class FakeCapabilitiesDatabase : public MediaCapabilitiesDatabase {
     }
   }
 
-  void GetInfo(const Entry& entry, GetInfoCallback callback) override {
+  void GetDecodingInfo(const Entry& entry,
+                       GetDecodingInfoCb callback) override {
     auto entry_it = entries_.find(MakeEntryKey(entry));
     if (entry_it == entries_.end()) {
       std::move(callback).Run(true, nullptr);

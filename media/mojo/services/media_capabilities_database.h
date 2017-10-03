@@ -37,11 +37,11 @@ class MEDIA_MOJO_EXPORT MediaCapabilitiesDatabase {
     int frame_rate_;
   };
 
-  // Information saves to identify the capabilities related to a given |Entry|.
+  // Information saved to identify the capabilities related to a given |Entry|.
   struct MEDIA_MOJO_EXPORT Info {
-    Info(uint32_t frames_decoded, uint32_t frames_dropped);
-    uint32_t frames_decoded;
-    uint32_t frames_dropped;
+    Info(uint64_t frames_decoded, uint64_t frames_dropped);
+    uint64_t frames_decoded;
+    uint64_t frames_dropped;
   };
 
   virtual ~MediaCapabilitiesDatabase() {}
@@ -55,8 +55,10 @@ class MEDIA_MOJO_EXPORT MediaCapabilitiesDatabase {
   // Returns the `info` associated with `entry`. The `callback` will received
   // the `info` in addition to a boolean signaling if the call was successful.
   // `info` can be nullptr if there was no data associated with `entry`.
-  using GetInfoCallback = base::OnceCallback<void(bool, std::unique_ptr<Info>)>;
-  virtual void GetInfo(const Entry& entry, GetInfoCallback callback) = 0;
+  using GetDecodingInfoCb =
+      base::OnceCallback<void(bool, std::unique_ptr<Info>)>;
+  virtual void GetDecodingInfo(const Entry& entry,
+                               GetDecodingInfoCb callback) = 0;
 };
 
 }  // namespace media
