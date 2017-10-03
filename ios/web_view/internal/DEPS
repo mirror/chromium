@@ -5,6 +5,7 @@ include_rules = [
   "+components/infobars/core",
   "+components/keyed_service/core",
   "+components/keyed_service/ios",
+  "+components/metrics",
   "+components/net_log",
   "+components/pref_registry",
   "+components/prefs",
