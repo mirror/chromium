@@ -74,7 +74,8 @@ class CORE_EXPORT NGBlockLayoutAlgorithm
   RefPtr<NGConstraintSpace> CreateConstraintSpaceForChild(
       const NGLayoutInputNode child,
       const NGInflowChildData& child_data,
-      const WTF::Optional<NGBfcOffset> floats_bfc_offset = WTF::nullopt);
+      const WTF::Optional<NGBfcOffset> floats_bfc_offset = WTF::nullopt,
+      const WTF::Optional<LayoutUnit> fixed_inline_size = WTF::nullopt);
 
   // @return Estimated BFC offset for the "to be layout" child.
   NGInflowChildData ComputeChildData(const NGPreviousInflowPosition&,
@@ -90,7 +91,6 @@ class CORE_EXPORT NGBlockLayoutAlgorithm
       const NGLayoutResult& layout_result,
       const NGFragment& fragment,
       bool empty_block_affected_by_clearance);
-
 
   // Positions the fragment that knows its BFC offset.
   WTF::Optional<NGBfcOffset> PositionWithBfcOffset(
@@ -137,6 +137,12 @@ class CORE_EXPORT NGBlockLayoutAlgorithm
                                   NGBreakToken* child_break_token,
                                   NGPreviousInflowPosition*);
 
+  std::pair<RefPtr<NGLayoutResult>, NGLayoutOpportunity>
+  LayoutNewFormattingContext(NGLayoutInputNode child,
+                             NGBreakToken* child_break_token,
+                             bool is_auto_inline_size,
+                             const NGInflowChildData& child_data,
+                             LayoutUnit child_origin_block_offset);
   // Handle an in-flow child.
   // Returns false if we need to abort layout, because a previously unknown BFC
   // offset has now been resolved. (Same as HandleNewFormattingContext).
