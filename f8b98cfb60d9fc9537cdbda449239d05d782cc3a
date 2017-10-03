@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "be659d95_0c8965fa",
+        "filename": "chrome/browser/chrome_navigation_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-03T20:38:58Z",
+      "side": 1,
+      "message": "I want to resolve this before landing. I\u0027ve attached the CL\u0027s main bug (crbug.com/770292) for now.",
+      "parentUuid": "c2bfcd81_d71eb66c",
+      "revId": "f8b98cfb60d9fc9537cdbda449239d05d782cc3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1fe886b_72845a04",
         "filename": "chrome/browser/chrome_navigation_browsertest.cc",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "0732ed20_1cb2ce45",
+        "filename": "chrome/browser/chrome_navigation_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-03T20:38:58Z",
+      "side": 1,
+      "message": "Feels to me like it?\n\nWillProcessResponseCalled() sounds like a listener to me. But then, WillProcessResponseWasCalled() also sounds a bit like it.\n\nAnyhow, I\u0027ve reverted.",
+      "parentUuid": "d1fe886b_72845a04",
+      "revId": "f8b98cfb60d9fc9537cdbda449239d05d782cc3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "adef6d36_4f391129",
         "filename": "chrome/browser/chrome_navigation_browsertest.cc",
         "patchSetId": 9
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-02T21:54:15Z",
       "side": 1,
       "message": "What happens if test_throttle_ was deleted in the meantime? This class not owning the throttle is susceptible to use-after-free, so you need to know when to clear the throttle pointer.",
+      "revId": "f8b98cfb60d9fc9537cdbda449239d05d782cc3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f52f0bc6_83446688",
+        "filename": "chrome/browser/chrome_navigation_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-03T20:38:58Z",
+      "side": 1,
+      "message": "I actually don\u0027t know how to handle this. NavigationHandle::RegisterThrottleForTesting() wants a std::unique_ptr, so I can\u0027t use a std::shared_ptr for the classes to share ownership, right?\n\nIf that\u0027s correct, I don\u0027t know a great approach, and would probably just revert the implementation of this class.",
+      "parentUuid": "adef6d36_4f391129",
       "revId": "f8b98cfb60d9fc9537cdbda449239d05d782cc3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "f6f08f57_991e761c",
+        "filename": "chrome/browser/page_load_metrics/observers/ads_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-03T20:38:58Z",
+      "side": 1,
+      "message": "No, since `SetResponse()` above only sets CANCEL.",
+      "parentUuid": "3a61f51c_096a5838",
+      "revId": "f8b98cfb60d9fc9537cdbda449239d05d782cc3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0f010c6_109c774f",
         "filename": "content/public/test/browser_test_utils.cc",
         "patchSetId": 9
@@ -81,6 +153,24 @@
       "writtenOn": "2017-10-02T21:54:15Z",
       "side": 1,
       "message": "Why do we have DEFER and SYNCHRONOUS here? If this is supposed to be equivalent to the code from line 491 in the old code, then it uses PostTask, which means it is ASYNC, not SYNC. Or am I misreading it?",
+      "revId": "f8b98cfb60d9fc9537cdbda449239d05d782cc3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58fc23b2_3f766ce5",
+        "filename": "content/public/test/browser_test_utils.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1968,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-03T20:38:58Z",
+      "side": 1,
+      "message": "The test previously did not respond to the handle asynchronously. That is, it didn\u0027t call Cancel() or Resume() on the handle.\n\nI see two options:\n- Provide a way for the TestNavigationThrottle to have an asynchronous callback on the UI thread without responding to the handle.\n- Split TestNavigationManager::TestThrottleMethodCalled() into two methods, one of which calls the other on the UI thread.\n  -  (Or do that for both of OnWillStartRequest() and OnWillProcessResponse(), depending on the outcome below.)\n\nDoes the latter sound alright to you?",
+      "parentUuid": "b0f010c6_109c774f",
       "revId": "f8b98cfb60d9fc9537cdbda449239d05d782cc3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "2a5913a1_2a86fdef",
+        "filename": "content/public/test/browser_test_utils.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1987,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-03T20:38:58Z",
+      "side": 1,
+      "message": "Sounds reasonable to me. Let\u0027s continue that discussion on the class below.",
+      "parentUuid": "4520ed43_febfd422",
+      "revId": "f8b98cfb60d9fc9537cdbda449239d05d782cc3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8de005af_0c088d65",
         "filename": "content/public/test/test_navigation_throttle.cc",
         "patchSetId": 9
@@ -115,6 +223,24 @@
       "writtenOn": "2017-10-02T21:54:15Z",
       "side": 1,
       "message": "This is just one callback for all the possible methods called?",
+      "revId": "f8b98cfb60d9fc9537cdbda449239d05d782cc3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2adbfcf7_acf700de",
+        "filename": "content/public/test/test_navigation_throttle.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-03T20:38:58Z",
+      "side": 1,
+      "message": "Yes, that\u0027s why the argument of StatusCallback() contains information about the status of the throttle at the time of callback.",
+      "parentUuid": "8de005af_0c088d65",
       "revId": "f8b98cfb60d9fc9537cdbda449239d05d782cc3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "cec49e55_695128c5",
+        "filename": "content/public/test/test_navigation_throttle.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-03T20:38:58Z",
+      "side": 1,
+      "message": "As described in the |.h| file, the only asynchronously supported actions right now are cancelling actions.",
+      "parentUuid": "9fa3b4f9_c66b2eee",
+      "revId": "f8b98cfb60d9fc9537cdbda449239d05d782cc3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "868b10d7_11316c13",
         "filename": "content/public/test/test_navigation_throttle.cc",
         "patchSetId": 9
@@ -152,6 +296,24 @@
       "revId": "f8b98cfb60d9fc9537cdbda449239d05d782cc3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcee7f78_1bfad0e9",
+        "filename": "content/public/test/test_navigation_throttle.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-03T20:38:58Z",
+      "side": 1,
+      "message": "Good catch, I definitely forgot to update this code. :-(\n\nReplace with `result`.",
+      "parentUuid": "868b10d7_11316c13",
+      "revId": "f8b98cfb60d9fc9537cdbda449239d05d782cc3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
