@@ -22,6 +22,30 @@
       "revId": "0b209013a4ef1d3ad00dd8eebf1f008942d1689b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd908e25_7ebd3fc6",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/omnibox/AutocompleteEditTextTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1221,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-10-03T16:29:12Z",
+      "side": 1,
+      "message": "Yeah, testDelete_SetComposingTextWithSpannableModel in L801 is the matching test, so moved this up next to that.",
+      "parentUuid": "cb60b056_2df77574",
+      "range": {
+        "startLine": 1221,
+        "startChar": 16,
+        "endLine": 1221,
+        "endChar": 60
+      },
+      "revId": "0b209013a4ef1d3ad00dd8eebf1f008942d1689b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
