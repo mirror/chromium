@@ -100,6 +100,9 @@ class VIZ_SERVICE_EXPORT GpuServiceImpl : public gpu::GpuChannelManagerDelegate,
   void set_start_time(base::Time start_time) { start_time_ = start_time; }
 
   const gpu::GPUInfo& gpu_info() const { return gpu_info_; }
+  const gpu::GpuPreferences& gpu_preferences() const {
+    return gpu_preferences_;
+  }
 
  private:
   void RecordLogMessage(int severity,
