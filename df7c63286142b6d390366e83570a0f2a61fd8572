@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05efb7e0_3f08e6bd",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-03T20:42:21Z",
+      "side": 1,
+      "message": "pass by value, not const ref.",
+      "revId": "df7c63286142b6d390366e83570a0f2a61fd8572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c082072_bca2fe75",
+        "filename": "components/autofill/core/browser/autofill_metrics_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 4830,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-03T20:42:21Z",
+      "side": 1,
+      "message": "add a test scenario for suggestions shown twicwith separate popups?\n\ni.e., same as this, but pass true to DidShowSuggestion both times and expect 2 SUGGESTIONS_SHOW events.",
+      "revId": "df7c63286142b6d390366e83570a0f2a61fd8572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

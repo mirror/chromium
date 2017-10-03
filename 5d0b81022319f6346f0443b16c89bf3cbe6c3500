@@ -388,6 +388,24 @@
       "revId": "5d0b81022319f6346f0443b16c89bf3cbe6c3500",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee4e1c0b_aa72e9a6",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 93586,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-03T20:42:21Z",
+      "side": 1,
+      "message": "if there is code that offers the possibility to generate the metric, we should declare it here",
+      "parentUuid": "738c3aae_eb1e37ef",
+      "revId": "5d0b81022319f6346f0443b16c89bf3cbe6c3500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
