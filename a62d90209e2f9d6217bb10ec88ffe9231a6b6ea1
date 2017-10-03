@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0143b5a7_14c02bdf",
+        "filename": "chrome/profiling/allocation_tracker.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-03T18:07:54Z",
+      "side": 1,
+      "message": "before destroying the tracker, we should make sure all registered_snapshot_callbacks_ are run. Otherwise, if a dump is requested for a process that is destroyed shortly thereafter, the callback will never run.",
+      "revId": "a62d90209e2f9d6217bb10ec88ffe9231a6b6ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
