@@ -103,6 +103,31 @@ def baseline_name(filesystem, test_name, suffix):
     return '%s%s.%s' % (base, TestResultWriter.FILENAME_SUFFIX_EXPECTED, suffix)
 
 
+def output_filename(filename, modifier):
+    """Returns a filename inside the output dir that contains modifier.
+
+    For example, if test name is "fast/dom/foo.html" and modifier is "-expected.txt",
+    the return value is "/<path-to-root-output-dir>/fast/dom/foo-expected.txt".
+
+    Args:
+      filename: A string representing a file name
+      modifier: A string to replace the extension of filename with
+
+    Return:
+      The absolute path to the output filename
+    """
+
+    # Below is an affordance for WPT test files that become multiple tests using different URL params,
+    # For example,
+    # - html/syntax/parsing/html5lib_adoption01.html
+    # Becomes two tests:
+    # - html/syntax/parsing/html5lib_adoption01.html?run_type=write
+    # - html/syntax/parsing/html5lib_adoption01.html?run_type=uri
+
+    # Question marks are reserved characters in Windows filenames.
+    sanitized_filename = filename.replace('?', '_')
+    return sanitized_filename + modifier
+
 class TestResultWriter(object):
     """A class which handles all writing operations to the result directory."""
 
@@ -132,35 +157,9 @@ class TestResultWriter(object):
         fs.maybe_make_directory(fs.dirname(output_filename))
 
     def output_filename(self, modifier):
-        """Returns a filename inside the output dir that contains modifier.
-
-        For example, if test name is "fast/dom/foo.html" and modifier is "-expected.txt",
-        the return value is "/<path-to-root-output-dir>/fast/dom/foo-expected.txt".
-
-        Args:
-          modifier: a string to replace the extension of filename with
-
-        Return:
-          The absolute path to the output filename
-        """
         fs = self._filesystem
-        output_filename = fs.join(self._root_output_dir, self._test_name)
-        base, extension = fs.splitext(output_filename)
-
-        # Below is an affordance for WPT test files that become multiple tests using different URL params,
-        # For example,
-        # - html/syntax/parsing/html5lib_adoption01.html
-        # Becomes two tests:
-        # - html/syntax/parsing/html5lib_adoption01.html?run_type=write
-        # - html/syntax/parsing/html5lib_adoption01.html?run_type=uri
-        # But previously their result file would be the same, since everything after the extension
-        # is removed. Instead, for files with URL params, we use the whole filename for writing results.
-        if '?' in extension:
-            # Question marks are reserved characters in Windows filenames.
-            sanitized_filename = output_filename.replace('?', '_')
-            return sanitized_filename + modifier
-
-        return base + modifier
+        filename = fs.join(self._root_output_dir, self._test_name)
+        return output_filename(filename, modifier)
 
     def _write_file(self, path, contents):
         if contents is not None:
