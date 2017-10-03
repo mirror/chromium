@@ -314,6 +314,8 @@ class VIEWS_EXPORT FocusManager : public ViewObserver {
   // necessary.
   void SetKeyboardAccessible(bool keyboard_accessible);
 
+  Widget* widget() const { return widget_; }
+
  private:
   // Returns the focusable view found in the FocusTraversable specified starting
   // at the specified view. This traverses down along the FocusTraversable

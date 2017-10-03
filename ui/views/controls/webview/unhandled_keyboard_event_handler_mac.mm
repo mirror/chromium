@@ -6,6 +6,7 @@
 
 #import "base/mac/foundation_util.h"
 #import "ui/views/cocoa/native_widget_mac_nswindow.h"
+#include "ui/views/widget/widget.h"
 
 namespace views {
 
@@ -13,7 +14,10 @@ namespace views {
 void UnhandledKeyboardEventHandler::HandleNativeKeyboardEvent(
     gfx::NativeEvent event,
     FocusManager* focus_manager) {
-  [base::mac::ObjCCastStrict<NativeWidgetMacNSWindow>([event window])
+  NSWindow* window = [event window];
+  if (!window)
+    window = focus_manager->widget()->GetNativeWindow();
+  [base::mac::ObjCCastStrict<NativeWidgetMacNSWindow>(window)
       redispatchKeyEvent:event];
 }
 
