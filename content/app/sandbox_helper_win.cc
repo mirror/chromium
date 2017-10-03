@@ -13,16 +13,15 @@ void InitializeSandboxInfo(sandbox::SandboxInterfaceInfo* info) {
   info->broker_services = sandbox::SandboxFactory::GetBrokerServices();
   if (!info->broker_services) {
     info->target_services = sandbox::SandboxFactory::GetTargetServices();
-  } else {
-    // Ensure the proper mitigations are enforced for the browser process.
-    sandbox::ApplyProcessMitigationsToCurrentProcess(
-        sandbox::MITIGATION_DEP |
-        sandbox::MITIGATION_DEP_NO_ATL_THUNK |
-        sandbox::MITIGATION_HARDEN_TOKEN_IL_POLICY);
-    // Note: these mitigations are "post-startup".  Some mitigations that need
-    // to be enabled sooner (e.g. MITIGATION_EXTENSION_POINT_DISABLE) are done
-    // so in Chrome_ELF.
+    return;
   }
+  // Ensure the proper mitigations are enforced for the browser process.
+  // Note: these mitigations are "post-startup".  Some mitigations that need
+  // to be enabled sooner (e.g. MITIGATION_EXTENSION_POINT_DISABLE) are done
+  // so in Chrome_ELF.
+  sandbox::ApplyProcessMitigationsToCurrentProcess(
+      sandbox::MITIGATION_DEP | sandbox::MITIGATION_DEP_NO_ATL_THUNK |
+      sandbox::MITIGATION_HARDEN_TOKEN_IL_POLICY);
 }
 
 }  // namespace content
