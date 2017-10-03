@@ -57,6 +57,30 @@
       "revId": "edbfa7c197ec5d5371eb8b342bf4115beada72ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a122710_6ede47af",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-10-03T14:07:05Z",
+      "side": 1,
+      "message": "I was thinking this function has some coordinate conversion, so using FloatPoint in this function maybe more precise. The FloatPoint is converted to LayoutPoint when pass to HitTestResult (Line 273).\nWhen this is using LayoutPoint, some places use it is like \"Float value-\u003eIntPoint-\u003eLayoutPoint\" (eg Line 261), which I think is not good. \nDo you think using LayoutPoint and try not using IntPoint on call sites is better?",
+      "parentUuid": "8c429d3e_39ff95e1",
+      "range": {
+        "startLine": 246,
+        "startChar": 10,
+        "endLine": 246,
+        "endChar": 20
+      },
+      "revId": "edbfa7c197ec5d5371eb8b342bf4115beada72ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
