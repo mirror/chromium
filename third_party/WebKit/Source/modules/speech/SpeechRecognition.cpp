@@ -36,11 +36,19 @@
 
 namespace blink {
 
-SpeechRecognition* SpeechRecognition::Create(ExecutionContext* context) {
+SpeechRecognition* SpeechRecognition::Create(ExecutionContext* context,
+                                             ExceptionState& exception_state) {
   DCHECK(context);
   DCHECK(context->IsDocument());
   Document* document = ToDocument(context);
   DCHECK(document);
+
+  String error_message;
+  if (!IsSecureContext(document, error_message)) {
+    exception_state.ThrowDOMException(kNotSupportedError, error_message);
+    return nullptr;
+  }
+
   return new SpeechRecognition(document->GetPage(), context);
 }
 
@@ -177,6 +185,24 @@ SpeechRecognition::SpeechRecognition(Page* page, ExecutionContext* context)
 }
 
 SpeechRecognition::~SpeechRecognition() {}
+
+// static
+bool SpeechRecognition::IsSecureContext(Document* document,
+                                        String& error_message) {
+  if (document->IsSecureContext(error_message)) {
+    UseCounter::Count(document->GetFrame(),
+                      WebFeature::kSpeechRecognitionSecureOrigin);
+    Deprecation::CountDeprecationFeaturePolicy(
+        *document, WebFeaturePolicyFeature::kMicrophone);
+    return true;
+  }
+
+  // While SpeechRecognition is blocked on insecure origins, we still want to
+  // count attempts to use it.
+  Deprecation::CountDeprecation(document->GetFrame(),
+                                WebFeature::kSpeechRecognitionInsecureOrigin);
+  return false;
+}
 
 DEFINE_TRACE(SpeechRecognition) {
   visitor->Trace(grammars_);
