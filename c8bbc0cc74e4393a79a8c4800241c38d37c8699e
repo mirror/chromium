@@ -70,6 +70,30 @@
       "revId": "c8bbc0cc74e4393a79a8c4800241c38d37c8699e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "546a3945_9dcf307c",
+        "filename": "content/browser/webui/web_ui_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1104796
+      },
+      "writtenOn": "2017-10-03T02:03:22Z",
+      "side": 1,
+      "message": "There are... many comments. Let me try:\n\n#\n# Where do we use |frame_name_|?\n#\nAs far as I can tell, we only use |frame_name_| within WebUIImpl::TargetFrame().\n\nWhich means we can probably get away with TargetFrame()-\u003eGetProcess()-\u003eGetID() here. This then looks suspiciously similar to WebUIImpl::CanCallJavascript() - with the one exemption that we\u0027re also fine with calling JS on about:blank. I won\u0027t pretend to understand if that\u0027s safe to use here :)\n\n#\n# Do we ever set a non-empty |frame_name_|?\n#\nAFAICT, no. The only place that would happen is CreateSubframeWebUI, and that\u0027s never called. Curve ball: It\u0027s a method embedders rely on, so... I don\u0027t quite know.\n\nHistorically, we\u0027ve been using this for Uber pages. Which, with the launch of MD settings, we thankfully killed dead and for good. So I\u0027d very much want to rip this out with prejudice.\n\n#\n# Do we ever want to have frames with different bindings?\n#\nPersonally? http://www.reactiongifs.com/r/2013/02/nope.gif\n\nBut I\u0027ll loop in the WebUI TL for the wider concern of subframes with differing bindings. Just in case he has plans to weave some magic.\n\n#\n# So what should we do?\n#\nIdeally: Remove CreateSubframeWebUI() and |frame_name_| (as well as the ctor param), add enforcement (I\u0027m not clear on how to do that part), and call CanCallJavascript() here.\n\nSorry for ballooning the CL :(",
+      "parentUuid": "dbe524ed_3d6170ea",
+      "range": {
+        "startLine": 111,
+        "startChar": 24,
+        "endLine": 111,
+        "endChar": 25
+      },
+      "revId": "c8bbc0cc74e4393a79a8c4800241c38d37c8699e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
