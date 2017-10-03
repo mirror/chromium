@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8509d9d8_4541ca37",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1229,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-03T00:41:28Z",
+      "side": 1,
+      "message": "What do we gain by creating a new ContextualSearchSelectionClient each time rather than implementing the interface directly? Or creating once and returning the same object when requested?",
+      "range": {
+        "startLine": 1228,
+        "startChar": 4,
+        "endLine": 1229,
+        "endChar": 53
+      },
+      "revId": "21331708c8568b8f3f68f28a4874f890a8c458ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bb409d6_00753d82",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchTabHelper.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-03T00:41:28Z",
+      "side": 1,
+      "message": "This still feels like overkill. There\u0027s going to be one place for Chrome where we call SmartSelectionClient#setEnabled(), right? Can we make a single call to ContextualSearchManager#suppressContextualsearchForSmartSelect() in the same place and avoid plumbing through a runnable that sometimes gets called?",
+      "range": {
+        "startLine": 203,
+        "startChar": 12,
+        "endLine": 208,
+        "endChar": 15
+      },
+      "revId": "21331708c8568b8f3f68f28a4874f890a8c458ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92a517b3_6b31659d",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionClientManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-03T00:41:28Z",
+      "side": 1,
+      "message": "Currently this supports 1 client of any type or 2 clients that must be SmartSelectClient and ContextualSearchClient, is that correct?",
+      "range": {
+        "startLine": 14,
+        "startChar": 58,
+        "endLine": 15,
+        "endChar": 48
+      },
+      "revId": "21331708c8568b8f3f68f28a4874f890a8c458ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13882f55_c0e8af21",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionClientManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-03T00:41:28Z",
+      "side": 1,
+      "message": "Is \"optional\" used here to re-enforce the @Nullable?",
+      "range": {
+        "startLine": 35,
+        "startChar": 38,
+        "endLine": 35,
+        "endChar": 62
+      },
+      "revId": "21331708c8568b8f3f68f28a4874f890a8c458ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
