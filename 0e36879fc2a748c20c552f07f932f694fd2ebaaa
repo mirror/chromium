@@ -228,6 +228,30 @@
     },
     {
       "key": {
+        "uuid": "909451db_89578761",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-03T19:04:22Z",
+      "side": 1,
+      "message": "We need some field trial to get the survey id from, which I had assumed was going to the  ChromeHome experiment. We will also show a survey to users in the control group.\n\nDaniel, this is probably worth worth starting a thread w/ Kingston to iron out how he plans to turn on the survey.",
+      "parentUuid": "1d540b48_859d6e3e",
+      "range": {
+        "startLine": 75,
+        "startChar": 60,
+        "endLine": 75,
+        "endChar": 64
+      },
+      "revId": "0e36879fc2a748c20c552f07f932f694fd2ebaaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5fe86a47_f5262eb9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
         "patchSetId": 23
@@ -308,6 +332,30 @@
       "writtenOn": "2017-10-03T18:56:10Z",
       "side": 1,
       "message": "Should we only be logging this if the user has interacted with the infobar?  Maybe we should file another bug with a TODO here to refine this logic.  My off the cuff thoughts would be:\n\n1.) Don\u0027t show the infobar if the user ever clicked the action before\n2.) If the user ignored the infobar, defer for a week or something sane.\n   * After 3 ignores, back off for a month",
+      "range": {
+        "startLine": 111,
+        "startChar": 17,
+        "endLine": 111,
+        "endChar": 36
+      },
+      "revId": "0e36879fc2a748c20c552f07f932f694fd2ebaaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3af529b_c0cc554b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-03T19:04:22Z",
+      "side": 1,
+      "message": "I advised that for v1 we go the conservative route and treat any infobar show as a survey show for v1 since the user may be intentionally ignoring the infobar.\n\nI agree that for v2 we should develop better heuristics around whether the user has actually seen the infobar (e.g. no other infobars were showing and it was visible for at least X seconds). A follow-up bug or TODO sounds good to me.\n\nI think we also have follow-up items for:\n1. Generating user id\u0027s\n2. Clearing survey cache (either w/ app data or when clearing browsing data)\n3. Adding UMA metrics\n4. Tests",
+      "parentUuid": "5c62ca20_5e2f2782",
       "range": {
         "startLine": 111,
         "startChar": 17,
