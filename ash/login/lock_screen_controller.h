@@ -51,6 +51,7 @@ class ASH_EXPORT LockScreenController : public mojom::LockScreen {
                  bool show_guest) override;
   void SetPinEnabledForUser(const AccountId& account_id,
                             bool is_enabled) override;
+  void HandleFocusLeavingLockScreenApps(bool reverse) override;
 
   // Wrappers around the mojom::LockScreenClient interface.
   // Hash the password and send AuthenticateUser request to LockScreenClient.
@@ -71,6 +72,7 @@ class ASH_EXPORT LockScreenController : public mojom::LockScreen {
   void SignOutUser();
   void CancelAddUser();
   void OnMaxIncorrectPasswordAttempted(const AccountId& account_id);
+  void FocusLockScreenApps(bool reverse);
 
  private:
   using PendingAuthenticateUserCall =

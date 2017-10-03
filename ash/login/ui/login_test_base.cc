@@ -26,6 +26,7 @@ class LoginTestBase::WidgetDelegate : public views::WidgetDelegate {
   ~WidgetDelegate() override = default;
 
   // views::WidgetDelegate:
+  void DeleteDelegate() override { delete this; }
   views::View* GetInitiallyFocusedView() override { return content_; }
   views::Widget* GetWidget() override { return content_->GetWidget(); }
   const views::Widget* GetWidget() const override {
@@ -43,15 +44,20 @@ LoginTestBase::LoginTestBase() = default;
 LoginTestBase::~LoginTestBase() = default;
 
 void LoginTestBase::ShowWidgetWithContent(views::View* content) {
-  EXPECT_FALSE(widget_) << "CreateWidget can only be called once.";
+  EXPECT_FALSE(widget_) << "ShowWidgetWithContent can only be called once.";
 
-  delegate_ = base::MakeUnique<WidgetDelegate>(content);
+  widget_ = CreateWidgetWithContent(content);
+  widget_->Show();
 
+  ASSERT_TRUE(widget()->IsActive());
+}
+
+views::Widget* LoginTestBase::CreateWidgetWithContent(views::View* content) {
   views::Widget::InitParams params(
       views::Widget::InitParams::TYPE_WINDOW_FRAMELESS);
   params.context = CurrentContext();
   params.bounds = gfx::Rect(0, 0, 800, 800);
-  params.delegate = delegate_.get();
+  params.delegate = new WidgetDelegate(content);
 
   // Set the widget to the lock screen container, since a test may change the
   // session state to locked, which will hide all widgets not associated with
@@ -59,11 +65,10 @@ void LoginTestBase::ShowWidgetWithContent(views::View* content) {
   params.parent = Shell::GetContainer(Shell::GetPrimaryRootWindow(),
                                       kShellWindowId_LockScreenContainer);
 
-  widget_ = new views::Widget();
-  widget_->Init(params);
-  widget_->SetContentsView(content);
-  widget_->Show();
-  ASSERT_TRUE(widget()->IsActive());
+  views::Widget* new_widget = new views::Widget();
+  new_widget->Init(params);
+  new_widget->SetContentsView(content);
+  return new_widget;
 }
 
 mojom::UserInfoPtr LoginTestBase::CreateUser(const std::string& name) const {
