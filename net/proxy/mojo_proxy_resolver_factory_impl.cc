@@ -4,11 +4,11 @@
 
 #include "net/proxy/mojo_proxy_resolver_factory_impl.h"
 
+#include <memory>
 #include <string>
 #include <utility>
 
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "net/base/net_errors.h"
 #include "net/proxy/mojo_proxy_resolver_impl.h"

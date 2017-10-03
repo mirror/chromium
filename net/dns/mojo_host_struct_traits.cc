@@ -4,9 +4,9 @@
 
 #include "net/dns/mojo_host_struct_traits.h"
 
+#include <memory>
 #include <utility>
 
-#include "base/memory/ptr_util.h"
 #include "net/base/address_list.h"
 #include "net/interfaces/ip_endpoint_struct_traits.h"
 
