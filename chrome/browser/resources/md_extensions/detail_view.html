@@ -88,6 +88,11 @@
         color: var(--paper-red-700);
       }
 
+      #learn-more-link {
+        color: var(--google-blue-500);
+        text-decoration: none;
+      }
+
       .section {
         @apply(--cr-section);
       }
@@ -195,6 +200,10 @@
                 </span>
                 <span class="suspicious-warn-text">
                   $i18n{itemSuspiciousInstall}
+                  <a target="_blank" id="learn-more-link"
+                      href="$i18n{suspiciousInstallHelpUrl}">
+                    $i18n{learnMore}
+                  </a>
                 </span>
             </span>
           </div>
