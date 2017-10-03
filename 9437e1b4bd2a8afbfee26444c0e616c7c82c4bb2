@@ -70,6 +70,30 @@
       "revId": "9437e1b4bd2a8afbfee26444c0e616c7c82c4bb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f71f6d00_96e30469",
+        "filename": "remoting/ios/app/view_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-10-03T18:28:47Z",
+      "side": 1,
+      "message": "Looks like what it does is just to delay the announcement by a second. I guess calling it `PostDelayedAccessibilityNotification` makes more sense.",
+      "parentUuid": "a29064af_69f5515a",
+      "range": {
+        "startLine": 21,
+        "startChar": 5,
+        "endLine": 21,
+        "endChar": 16
+      },
+      "revId": "9437e1b4bd2a8afbfee26444c0e616c7c82c4bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
