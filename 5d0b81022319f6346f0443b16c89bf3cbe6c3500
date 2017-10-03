@@ -406,6 +406,24 @@
       "revId": "5d0b81022319f6346f0443b16c89bf3cbe6c3500",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "097f369e_1d5f7679",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 93586,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-10-03T22:33:51Z",
+      "side": 1,
+      "message": "This cl doesn\u0027t have the possibility to generate the Password and Unknown metrics.",
+      "parentUuid": "ee4e1c0b_aa72e9a6",
+      "revId": "5d0b81022319f6346f0443b16c89bf3cbe6c3500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
