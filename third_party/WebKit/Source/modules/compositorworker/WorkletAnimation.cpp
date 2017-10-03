@@ -99,7 +99,9 @@ WorkletAnimation::WorkletAnimation(
   DCHECK(IsMainThread());
   DCHECK(Platform::Current()->IsThreadedAnimationEnabled());
   DCHECK(Platform::Current()->CompositorSupport());
-  compositor_player_ = CompositorAnimationPlayer::Create();
+
+  compositor_player_ =
+      CompositorAnimationPlayer::CreateWorkletPlayer(animator_name_);
   compositor_player_->SetAnimationDelegate(this);
 }
 
@@ -126,16 +128,34 @@ void WorkletAnimation::cancel() {
 
 bool WorkletAnimation::StartOnCompositor() {
   DCHECK(IsMainThread());
+  Element& target = *effects_.at(0)->Target();
+
+  // Attach compositor layers before starting the animation
+  CompositorAnimations::AttachCompositedLayers(target,
+                                               compositor_player_.get());
+
   // TODO(smcgruer): We need to start all of the effects, not just the first.
   double animation_playback_rate = 1;
-  Element& target = *effects_.at(0)->Target();
   ToKeyframeEffectModelBase(effects_.at(0)->Model())
       ->SnapshotAllCompositorKeyframes(target, target.ComputedStyleRef(),
                                        target.ParentComputedStyle());
-  bool success =
-      effects_.at(0)
-          ->CheckCanStartAnimationOnCompositor(animation_playback_rate)
-          .Ok();
+
+  CompositorAnimations::FailureCode code =
+      effects_.at(0)->CheckCanStartAnimationOnCompositor(
+          animation_playback_rate);
+
+  bool success = code.Ok();
+
+  if (success) {
+    double start_time = std::numeric_limits<double>::quiet_NaN();
+    double time_offset = 0;
+    int group = 0;
+
+    effects_.at(0)->StartAnimationOnCompositor(group, start_time, time_offset,
+                                               animation_playback_rate,
+                                               compositor_player_.get());
+  }
+
   // Currently |StartAnimationOnCompositor| is unable to propagate a
   // WorkletAnimation effect to the compositor, so this method is a no-op.
   // TODO(smcgruer): Actually create the element animations on the compositor.

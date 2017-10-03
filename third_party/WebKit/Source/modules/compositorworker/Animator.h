@@ -27,15 +27,13 @@ class Animator final : public GarbageCollectedFinalized<Animator>,
   DECLARE_TRACE();
   DECLARE_TRACE_WRAPPERS();
 
-  // Returns true if it successfully invoked animate callback in JS. It receives
-  // latest state coming from |AnimationHost| as input and fills
-  // the output state with new updates.
-  bool Animate(ScriptState*,
-               const CompositorMutatorInputState::AnimationState&,
-               CompositorMutatorOutputState::AnimationState*);
+  // Updates the animator with latest state coming from |AnimationHost|.
+  void PushInputState(const CompositorMutatorInputState::AnimationState&);
 
-  bool did_animate() const { return did_animate_; }
-  void clear_did_animate() { did_animate_ = false; }
+  // Returns true if it successfully invoked animate callback in JS and fills
+  // the output state with new state.
+  bool Animate(ScriptState*,
+               CompositorMutatorOutputState::AnimationState*) const;
 
  private:
   // This object keeps the definition object, and animator instance alive.
@@ -43,7 +41,6 @@ class Animator final : public GarbageCollectedFinalized<Animator>,
   TraceWrapperMember<AnimatorDefinition> definition_;
   TraceWrapperV8Reference<v8::Object> instance_;
 
-  bool did_animate_ = false;
   WTF::TimeTicks current_time_;
   Member<EffectProxy> effect_;
 };

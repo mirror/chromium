@@ -32,11 +32,9 @@ DEFINE_TRACE_WRAPPERS(Animator) {
   visitor->TraceWrappers(instance_.Cast<v8::Value>());
 }
 
-bool Animator::Animate(ScriptState* script_state,
-                       const CompositorMutatorInputState::AnimationState& input,
-                       CompositorMutatorOutputState::AnimationState* output) {
-  did_animate_ = true;
-
+bool Animator::Animate(
+    ScriptState* script_state,
+    CompositorMutatorOutputState::AnimationState* output) const {
   v8::Isolate* isolate = script_state->GetIsolate();
 
   v8::Local<v8::Object> instance = instance_.NewLocal(isolate);
@@ -44,9 +42,6 @@ bool Animator::Animate(ScriptState* script_state,
 
   if (IsUndefinedOrNull(instance) || IsUndefinedOrNull(animate))
     return false;
-
-  // Update local time
-  current_time_ = WTF::TimeTicks(input.current_time);
 
   ScriptState::Scope scope(script_state);
   v8::TryCatch block(isolate);
@@ -73,6 +68,11 @@ bool Animator::Animate(ScriptState* script_state,
 
   output->local_time = effect_->GetLocalTime();
   return true;
+}
+
+void Animator::PushInputState(
+    const CompositorMutatorInputState::AnimationState& state) {
+  current_time_ = WTF::TimeTicks(state.current_time);
 }
 
 }  // namespace blink

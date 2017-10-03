@@ -72,8 +72,8 @@ class CC_EXPORT LayerTreeMutator {
  public:
   virtual ~LayerTreeMutator() {}
 
-  // TODO(petermayo): get rid of |now| since each animator now receives its own
-  // current time. http://crbug.com/746212
+  // TODO(majidvp): get rid of |now| since each animator now receives its own
+  // current time.
   virtual void Mutate(base::TimeTicks now,
                       std::unique_ptr<MutatorInputState> input_state) = 0;
   virtual void SetClient(LayerTreeMutatorClient* client) = 0;

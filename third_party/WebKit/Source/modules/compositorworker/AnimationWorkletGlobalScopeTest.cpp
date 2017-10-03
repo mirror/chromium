@@ -218,14 +218,6 @@ class AnimationWorkletGlobalScopeTest : public ::testing::Test {
     EXPECT_EQ(output->animations[0].local_time,
               WTF::TimeDelta::FromSecondsD(123));
 
-    // Passing a new empty input state should cause the worklet
-    // to remove the previously constructed animator.
-    CompositorMutatorInputState empty_state;
-    output = global_scope->Mutate(empty_state);
-    EXPECT_TRUE(output);
-    EXPECT_EQ(output->animations.size(), 0ul);
-    EXPECT_EQ(global_scope->GetAnimatorsSizeForTest(), 0u);
-
     waitable_event->Signal();
   }
 

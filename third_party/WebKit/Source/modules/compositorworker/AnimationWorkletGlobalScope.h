@@ -47,7 +47,6 @@ class MODULES_EXPORT AnimationWorkletGlobalScope
   void createAnimatorForTest(int player_id, const String& name);
 
   AnimatorDefinition* FindDefinitionForTest(const String& name);
-  unsigned GetAnimatorsSizeForTest() { return animators_.size(); }
 
  private:
   AnimationWorkletGlobalScope(const KURL&,
@@ -57,7 +56,10 @@ class MODULES_EXPORT AnimationWorkletGlobalScope
                               WorkerThread*,
                               WorkerClients*);
 
-  Animator* EnsureAnimator(int player_id, const String& name);
+  Animator* FindAnimatorByPlayerId(int player_id) const;
+
+  void PushInputState(const CompositorMutatorInputState&);
+
   typedef HeapHashMap<String, TraceWrapperMember<AnimatorDefinition>>
       DefinitionMap;
   DefinitionMap animator_definitions_;

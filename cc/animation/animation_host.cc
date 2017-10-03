@@ -187,7 +187,6 @@ void AnimationHost::SetNeedsPushProperties() {
 
 void AnimationHost::PushPropertiesTo(MutatorHost* mutator_host_impl) {
   auto* host_impl = static_cast<AnimationHost*>(mutator_host_impl);
-
   if (needs_push_properties_) {
     needs_push_properties_ = false;
     PushTimelinesToImplThread(host_impl);
@@ -338,14 +337,17 @@ void AnimationHost::TickScrollAnimations(base::TimeTicks monotonic_time) {
 
 std::unique_ptr<MutatorInputState> AnimationHost::CollectAnimatorsState(
     base::TimeTicks timeline_time) {
+  PlayersList ticking_worklet_players;
+
+  std::copy_if(ticking_players_.begin(), ticking_players_.end(),
+               std::back_inserter(ticking_worklet_players),
+               [](auto& it) { return it->IsWorkletAnimationPlayer(); });
+
   std::unique_ptr<MutatorInputState> result =
       base::MakeUnique<MutatorInputState>();
-  result->animations.reserve(ticking_players_.size());
+  result->animations.reserve(ticking_worklet_players.size());
 
-  for (auto& player : ticking_players_) {
-    if (!player->IsWorkletAnimationPlayer())
-      continue;
-
+  for (auto& player : ticking_worklet_players) {
     WorkletAnimationPlayer* worklet_player =
         static_cast<WorkletAnimationPlayer*>(player.get());
     // TODO(majidvp): Do not assume timeline time to be the worklet player's
@@ -620,14 +622,14 @@ void AnimationHost::SetMutationUpdate(
     int id = animation_state.animation_player_id;
 
     // TODO(majidvp): Use a map to make lookup O(1)
-    auto to_update =
-        std::find_if(ticking_players_.begin(), ticking_players_.end(),
-                     [id](auto& it) { return it->id() == id; });
+    auto to_update = std::find_if(
+        ticking_players_.begin(), ticking_players_.end(), [id](auto& it) {
+          return it->IsWorkletAnimationPlayer() && it->id() == id;
+        });
 
     if (to_update == ticking_players_.end())
       continue;
 
-    DCHECK(to_update->get()->IsWorkletAnimationPlayer());
     WorkletAnimationPlayer* worklet_player_to_update =
         static_cast<WorkletAnimationPlayer*>(to_update->get());
 
