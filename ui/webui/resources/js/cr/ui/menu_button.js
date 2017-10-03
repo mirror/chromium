@@ -35,6 +35,11 @@ cr.define('cr.ui', function() {
    */
   var MenuButton = cr.ui.define('button');
 
+  MenuButton.EventType = {
+    // Menu has been closed and don't need to keep focus on the button.
+    FINISHED: 'finished'
+  };
+
   MenuButton.prototype = {
     __proto__: HTMLButtonElement.prototype,
 
@@ -119,19 +124,22 @@ cr.define('cr.ui', function() {
           // Touch on the menu button itself is ignored to avoid that the menu
           // opened again by the mousedown event following the touch events.
           if (this.shouldDismissMenu_(e)) {
-            this.hideMenu();
+            this.hideMenu(false);
+            cr.dispatchSimpleEvent(this, MenuButton.EventType.FINISHED);
           }
           break;
         case 'mousedown':
           if (e.currentTarget == this.ownerDocument) {
             if (this.shouldDismissMenu_(e)) {
-              this.hideMenu();
+              this.hideMenu(false);
+              cr.dispatchSimpleEvent(this, MenuButton.EventType.FINISHED);
             } else {
               e.preventDefault();
             }
           } else {
             if (this.isMenuShown()) {
-              this.hideMenu();
+              this.hideMenu(false);
+              cr.dispatchSimpleEvent(this, MenuButton.EventType.FINISHED);
             } else if (e.button == 0) {  // Only show the menu when using left
                                          // mouse button.
               this.showMenu(false, {x: e.screenX, y: e.screenY});
@@ -140,9 +148,6 @@ cr.define('cr.ui', function() {
               e.preventDefault();
             }
           }
-
-          // Hide the focus ring on mouse click.
-          this.classList.add('using-mouse');
           break;
         case 'keydown':
           this.handleKeyDown(e);
@@ -152,31 +157,26 @@ cr.define('cr.ui', function() {
             e.preventDefault();
             e.stopPropagation();
           }
-
-          // Show the focus ring on keypress.
-          this.classList.remove('using-mouse');
           break;
         case 'focus':
           if (this.shouldDismissMenu_(e)) {
-            this.hideMenu();
-            // Show the focus ring on focus - if it's come from a mouse event,
-            // the focus ring will be hidden in the mousedown event handler,
-            // executed after this.
-            this.classList.remove('using-mouse');
+            this.hideMenu(false);
           }
           break;
         case 'activate':
           var hideDelayed =
               e.target instanceof cr.ui.MenuItem && e.target.checkable;
-          this.hideMenu(hideDelayed ? HideType.DELAYED : HideType.INSTANT);
+          this.hideMenu(
+              false, hideDelayed ? HideType.DELAYED : HideType.INSTANT);
+          cr.dispatchSimpleEvent(this, MenuButton.EventType.FINISHED);
           break;
         case 'scroll':
           if (!(e.target == this.menu || this.menu.contains(e.target)))
-            this.hideMenu();
+            this.hideMenu(true);
           break;
         case 'popstate':
         case 'resize':
-          this.hideMenu();
+          this.hideMenu(true);
           break;
         case 'contextmenu':
           if ((!this.menu || !this.menu.contains(e.target)) &&
@@ -202,7 +202,7 @@ cr.define('cr.ui', function() {
      *     when shown (in screen coordinates).
      */
     showMenu: function(shouldSetFocus, opt_mousePos) {
-      this.hideMenu();
+      this.hideMenu(true);
 
       this.menu.updateCommands(this);
 
@@ -235,10 +235,11 @@ cr.define('cr.ui', function() {
     /**
      * Hides the menu. If your menu can go out of scope, make sure to call this
      * first.
+     * @param {boolean} shouldTakeFocus Moves the focus to the button if true.
      * @param {cr.ui.HideType=} opt_hideType Type of hide.
      *     default: cr.ui.HideType.INSTANT.
      */
-    hideMenu: function(opt_hideType) {
+    hideMenu: function(shouldTakeFocus, opt_hideType) {
       if (!this.isMenuShown())
         return;
 
@@ -250,7 +251,8 @@ cr.define('cr.ui', function() {
       this.menu.hide();
 
       this.showingEvents_.removeAll();
-      this.focus();
+      if (shouldTakeFocus)
+        this.focus();
 
       var event = new UIEvent(
           'menuhide', {bubbles: true, cancelable: false, view: window});
@@ -296,7 +298,7 @@ cr.define('cr.ui', function() {
           break;
         case 'Escape':
         case 'Tab':
-          this.hideMenu();
+          this.hideMenu(true);
           break;
       }
     }
