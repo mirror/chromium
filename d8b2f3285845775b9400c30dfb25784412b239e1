@@ -16,6 +16,24 @@
       "revId": "d8b2f3285845775b9400c30dfb25784412b239e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61c676f6_c293856d",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_mediator_unittest.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-10-03T18:06:25Z",
+      "side": 1,
+      "message": "Thanks! PTAL",
+      "parentUuid": "775cf54f_2aa7881c",
+      "revId": "d8b2f3285845775b9400c30dfb25784412b239e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
