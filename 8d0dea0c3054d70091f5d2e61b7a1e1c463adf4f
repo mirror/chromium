@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c09bf828_0099c1cd",
+        "filename": "ui/views/animation/ink_drop.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-03T20:21:52Z",
+      "side": 1,
+      "message": "nit: ended\noptional: just inline the implementation instead of creating a helper fn",
+      "range": {
+        "startLine": 71,
+        "startChar": 68,
+        "endLine": 71,
+        "endChar": 74
+      },
+      "revId": "8d0dea0c3054d70091f5d2e61b7a1e1c463adf4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcfb77ab_512078ef",
+        "filename": "ui/views/animation/ink_drop_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-03T20:21:52Z",
+      "side": 1,
+      "message": "nit: note about what this param is",
+      "range": {
+        "startLine": 30,
+        "startChar": 56,
+        "endLine": 30,
+        "endChar": 70
+      },
+      "revId": "8d0dea0c3054d70091f5d2e61b7a1e1c463adf4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
