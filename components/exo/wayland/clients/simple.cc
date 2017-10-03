@@ -25,11 +25,11 @@ void FrameCallback(void* data, wl_callback* callback, uint32_t time) {
 
 Simple::Simple() = default;
 
-void Simple::Run(int frames) {
+void Simple::Run(size_t frames) {
   bool callback_pending = false;
   std::unique_ptr<wl_callback> frame_callback;
   wl_callback_listener frame_listener = {FrameCallback};
-  int frame_count = 0;
+  size_t frame_count = 0;
   do {
     if (callback_pending)
       continue;

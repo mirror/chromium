@@ -6,29 +6,17 @@
 // buffers when receiving pointer/touch events. RGB contains the lower
 // 24 bits of the event timestamp and A is 0xff.
 
-#include <linux-dmabuf-unstable-v1-client-protocol.h>
-#include <presentation-time-client-protocol.h>
-#include <wayland-client-core.h>
-#include <wayland-client-protocol.h>
+#include "components/exo/wayland/clients/rects.h"
 
 #include <cmath>
 #include <iostream>
 #include <string>
 #include <vector>
 
-#include "base/at_exit.h"
-#include "base/command_line.h"
 #include "base/containers/circular_deque.h"
 #include "base/logging.h"
-#include "base/macros.h"
-#include "base/memory/ptr_util.h"
-#include "base/memory/shared_memory.h"
-#include "base/scoped_generic.h"
 #include "base/strings/string_number_conversions.h"
-#include "base/strings/stringprintf.h"
 #include "base/time/time.h"
-#include "components/exo/wayland/clients/client_base.h"
-#include "components/exo/wayland/clients/client_helper.h"
 #include "third_party/skia/include/core/SkCanvas.h"
 #include "third_party/skia/include/core/SkRefCnt.h"
 #include "third_party/skia/include/core/SkSurface.h"
@@ -203,41 +191,21 @@ void FeedbackDiscarded(void* data,
 
 }  // namespace
 
-////////////////////////////////////////////////////////////////////////////////
-// RectsClient:
+Rects::Rects() = default;
 
-class RectsClient : public ClientBase {
- public:
-  RectsClient() {}
-
-  // Initialize and run client main loop.
-  int Run(const ClientBase::InitParams& params,
-          size_t max_frames_pending,
-          size_t num_rects,
-          size_t num_benchmark_runs,
-          base::TimeDelta benchmark_interval,
-          bool show_fps_counter);
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(RectsClient);
-};
-
-int RectsClient::Run(const ClientBase::InitParams& params,
-                     size_t max_frames_pending,
-                     size_t num_rects,
-                     size_t num_benchmark_runs,
-                     base::TimeDelta benchmark_interval,
-                     bool show_fps_counter) {
-  if (!ClientBase::Init(params))
-    return 1;
-
+bool Rects::Run(size_t frames,
+                size_t max_frames_pending,
+                size_t num_rects,
+                size_t num_benchmark_runs,
+                base::TimeDelta benchmark_interval,
+                bool show_fps_counter) {
   EventTimeStack event_times;
 
   std::unique_ptr<wl_pointer> pointer(
       static_cast<wl_pointer*>(wl_seat_get_pointer(globals_.seat.get())));
   if (!pointer) {
     LOG(ERROR) << "Can't get pointer";
-    return 1;
+    return false;
   }
 
   wl_pointer_listener pointer_listener = {
@@ -250,7 +218,7 @@ int RectsClient::Run(const ClientBase::InitParams& params,
       static_cast<wl_touch*>(wl_seat_get_touch(globals_.seat.get())));
   if (!touch) {
     LOG(ERROR) << "Can't get touch";
-    return 1;
+    return false;
   }
   wl_touch_listener touch_listener = {TouchDown, TouchUp, TouchMotion,
                                       TouchFrame, TouchCancel};
@@ -276,10 +244,17 @@ int RectsClient::Run(const ClientBase::InitParams& params,
   text_paint.setStyle(SkPaint::kFill_Style);
 
   int dispatch_status = 0;
+  size_t frame_count = 0;
   do {
     bool enqueue_frame = schedule.callback_pending
                              ? pending_frames.size() < max_frames_pending
                              : pending_frames.empty();
+    if (frame_count == frames) {
+      enqueue_frame = false;
+      if (pending_frames.empty() && !schedule.callback_pending)
+        break;
+    }
+
     if (enqueue_frame) {
       auto buffer_it =
           std::find_if(buffers_.begin(), buffers_.end(),
@@ -288,7 +263,7 @@ int RectsClient::Run(const ClientBase::InitParams& params,
                        });
       if (buffer_it == buffers_.end()) {
         LOG(ERROR) << "Can't find free buffer";
-        return 1;
+        return false;
       }
       auto* buffer = buffer_it->get();
 
@@ -316,7 +291,7 @@ int RectsClient::Run(const ClientBase::InitParams& params,
                       << presentation.latency_time.InMilliseconds() << '\t'
                       << std::endl;
             if (!--num_benchmark_runs_left)
-              return 0;
+              return true;
           }
 
           // Set FPS counter text in case it's being shown.
@@ -408,6 +383,7 @@ int RectsClient::Run(const ClientBase::InitParams& params,
         frame->cpu_time = base::ThreadTicks::Now() - cpu_time_start;
       }
       pending_frames.push_back(std::move(frame));
+      ++frame_count;
       continue;
     }
 
@@ -449,82 +425,8 @@ int RectsClient::Run(const ClientBase::InitParams& params,
 
     dispatch_status = wl_display_dispatch(display_.get());
   } while (dispatch_status != -1);
-  return 0;
+  return true;
 }
 }  // namespace clients
 }  // namespace wayland
 }  // namespace exo
-
-namespace switches {
-
-// Specifies the maximum number of pending frames.
-const char kMaxFramesPending[] = "max-frames-pending";
-
-// Specifies the number of rotating rects to draw.
-const char kNumRects[] = "num-rects";
-
-// Enables benchmark mode and specifies the number of benchmark runs to
-// perform before client will exit. Client will print the results to
-// standard output as a tab seperated list.
-//
-//  The output format is:
-//   "frames wall-time-ms cpu-time-ms"
-const char kBenchmark[] = "benchmark";
-
-// Specifies the number of milliseconds to use as benchmark interval.
-const char kBenchmarkInterval[] = "benchmark-interval";
-
-// Specifies if FPS counter should be shown.
-const char kShowFpsCounter[] = "show-fps-counter";
-
-}  // namespace switches
-
-int main(int argc, char* argv[]) {
-  base::AtExitManager exit_manager;
-  base::CommandLine::Init(argc, argv);
-  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
-
-  exo::wayland::clients::ClientBase::InitParams params;
-  if (!params.FromCommandLine(*command_line))
-    return 1;
-
-  size_t max_frames_pending = 0;
-  if (command_line->HasSwitch(switches::kMaxFramesPending) &&
-      (!base::StringToSizeT(
-          command_line->GetSwitchValueASCII(switches::kMaxFramesPending),
-          &max_frames_pending))) {
-    LOG(ERROR) << "Invalid value for " << switches::kMaxFramesPending;
-    return 1;
-  }
-
-  size_t num_rects = 1;
-  if (command_line->HasSwitch(switches::kNumRects) &&
-      !base::StringToSizeT(
-          command_line->GetSwitchValueASCII(switches::kNumRects), &num_rects)) {
-    LOG(ERROR) << "Invalid value for " << switches::kNumRects;
-    return 1;
-  }
-
-  size_t num_benchmark_runs = 0;
-  if (command_line->HasSwitch(switches::kBenchmark) &&
-      (!base::StringToSizeT(
-          command_line->GetSwitchValueASCII(switches::kBenchmark),
-          &num_benchmark_runs))) {
-    LOG(ERROR) << "Invalid value for " << switches::kBenchmark;
-    return 1;
-  }
-
-  size_t benchmark_interval_ms = 5000;  // 5 seconds.
-  if (command_line->HasSwitch(switches::kBenchmarkInterval) &&
-      (!base::StringToSizeT(
-          command_line->GetSwitchValueASCII(switches::kBenchmarkInterval),
-          &benchmark_interval_ms))) {
-    LOG(ERROR) << "Invalid value for " << switches::kBenchmarkInterval;
-    return 1;
-  }
-
-  exo::wayland::clients::RectsClient client;
-  return client.Run(params, max_frames_pending, num_rects, num_benchmark_runs,
-                    base::TimeDelta::FromMilliseconds(benchmark_interval_ms),
-                    command_line->HasSwitch(switches::kShowFpsCounter));
-}
