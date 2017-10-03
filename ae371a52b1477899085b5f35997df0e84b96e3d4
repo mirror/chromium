@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2f50e33_b4fcf2de",
+        "filename": "cc/resources/resource_provider.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-03T23:41:16Z",
+      "side": 1,
+      "message": "nit: we could add a DCHECK that if TEXTURE_HINT_OVERLAY is set, TEXTURE_HINT_MIPMAP is not, since they don\u0027t work together (GMB textures don\u0027t have mipmaps).",
+      "revId": "ae371a52b1477899085b5f35997df0e84b96e3d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b1c0fca_497a3588",
+        "filename": "gpu/command_buffer/service/texture_manager.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-03T23:41:16Z",
+      "side": 1,
+      "message": "I don\u0027t think this is ever set, or used. Remove?",
+      "revId": "ae371a52b1477899085b5f35997df0e84b96e3d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
