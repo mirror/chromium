@@ -39,6 +39,7 @@
 #include "core/dom/NthIndexCache.h"
 #include "core/dom/ShadowRoot.h"
 #include "core/dom/StaticNodeList.h"
+#include "core/frame/UseCounter.h"
 #include "platform/wtf/PtrUtil.h"
 
 // Uncomment to run the SelectorQueryTests for stats in a release build.
@@ -311,8 +312,8 @@ void SelectorQuery::ExecuteSlow(
   }
 }
 
-// FIXME: Move the following helper functions, authorShadowRootOf,
-// firstWithinTraversingShadowTree, nextTraversingShadowTree to the best place,
+// FIXME: Move the following helper functions, AuthorShadowRootOf,
+// FirstWithinTraversingShadowTree, NextTraversingShadowTree to the best place,
 // e.g. NodeTraversal.
 static ShadowRoot* AuthorShadowRootOf(const ContainerNode& node) {
   if (!node.IsElementNode())
@@ -486,11 +487,13 @@ void SelectorQuery::Execute(
 }
 
 std::unique_ptr<SelectorQuery> SelectorQuery::Adopt(
+    const Document& document,
     CSSSelectorList selector_list) {
-  return WTF::WrapUnique(new SelectorQuery(std::move(selector_list)));
+  return WTF::WrapUnique(new SelectorQuery(document, std::move(selector_list)));
 }
 
-SelectorQuery::SelectorQuery(CSSSelectorList selector_list)
+SelectorQuery::SelectorQuery(const Document& document,
+                             CSSSelectorList selector_list)
     : selector_list_(std::move(selector_list)),
       selector_id_is_rightmost_(true),
       selector_id_affected_by_sibling_combinator_(false),
@@ -506,6 +509,10 @@ SelectorQuery::SelectorQuery(CSSSelectorList selector_list)
     uses_deep_combinator_or_shadow_pseudo_ |=
         selector->HasDeepCombinatorOrShadowPseudo();
     needs_updated_distribution_ |= selector->NeedsUpdatedDistribution();
+  }
+
+  if (uses_deep_combinator_or_shadow_pseudo_) {
+    UseCounter::Count(document, WebFeature::kDeepOrShadowInStaticProfile);
   }
 
   if (selectors_.size() == 1 && !uses_deep_combinator_or_shadow_pseudo_ &&
@@ -566,7 +573,8 @@ SelectorQuery* SelectorQueryCache::Add(const AtomicString& selectors,
     entries_.erase(entries_.begin());
 
   return entries_
-      .insert(selectors, SelectorQuery::Adopt(std::move(selector_list)))
+      .insert(selectors,
+              SelectorQuery::Adopt(document, std::move(selector_list)))
       .stored_value->value.get();
 }
 
