@@ -33,6 +33,24 @@
       "revId": "0197be8d1e411bdb48316dc7b670d2ca243da0f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02e0ae9d_20f71b19",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-03T17:49:34Z",
+      "side": 1,
+      "message": "oops\n\nWe already check the flag in more than one place, which is also fragile imo because flags are notorious for being flipped around, i.e. default switches and --enable becomes --disable, or both flags exist with a default that depends on some other factor, etc. So a helper function is preferable, but it would have to go in ash/public/cpp to concentrate all the flag checks in one place, which is annoying because it would necessitate a very short utility file. Thoughts?",
+      "parentUuid": "5fcc82a7_c74e00b2",
+      "revId": "0197be8d1e411bdb48316dc7b670d2ca243da0f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
