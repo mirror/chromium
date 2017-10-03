@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3ec5f28c_d30d9c9a",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-10-03T21:31:13Z",
+      "side": 1,
+      "message": "I like this.\nI was planning to have all errors zero-fill or previous-fill.\n\nI made a little change to only ZeroFillFrameRect() if the frame was independent (matching what we do today).",
+      "parentUuid": "b0b2ff7f_da3381a0",
+      "range": {
+        "startLine": 299,
+        "startChar": 4,
+        "endLine": 299,
+        "endChar": 11
+      },
+      "revId": "254393986307d7ea1b2b767ab773b3a3311d4e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e99ce60_12f24875",
         "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoder.cpp",
         "patchSetId": 5
