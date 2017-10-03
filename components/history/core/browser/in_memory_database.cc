@@ -48,6 +48,13 @@ bool InMemoryDatabase::InitDB() {
     return false;
   }
 
+  // Create the known intranet domains table.
+  if (!InitKnownIntranetDomainsTable()) {
+    NOTREACHED() << "Unable to create known intranet domains";
+    db_.Close();
+    return false;
+  }
+
   return true;
 }
 
