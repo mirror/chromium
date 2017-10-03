@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71627d8e_74b9eae6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/locale/ChromeLocaleUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-03T23:34:50Z",
+      "side": 1,
+      "message": "Interestingly, TextUtilsCompat#getLayoutDirectionFromFirstChar() has a specific note about \"Urdu\". \n\nI assume this works because native returns the locale that was loaded rather than the device locale?",
+      "range": {
+        "startLine": 34,
+        "startChar": 15,
+        "endLine": 34,
+        "endChar": 59
+      },
+      "revId": "1a1b42299b69ebf2050c385bd8b1617681e58b21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
