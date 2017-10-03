@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8571a686_ef552bf7",
+        "filename": "device/hid/hid_manager_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-03T22:37:27Z",
+      "side": 1,
+      "message": "This is unsafe because if we ever tried to create two instances of HidManagerImpl then we could end up with a use-after-free.\n\nWhat I recommend is making g_hid_service a base::LazyInstance\u003cstd::unique_ptr\u003cHidService\u003e\u003e and moving its value here. Then document that SetHidServiceForTesting only effects the next call to HidManagerImpl\u0027s constructor.",
+      "revId": "a8e5d67214379e268752c488ab591153a94e26e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edd8af64_9a3b2fbe",
+        "filename": "device/hid/hid_service.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-03T22:37:27Z",
+      "side": 1,
+      "message": "I don\u0027t think this method is implemented anymore.",
+      "revId": "a8e5d67214379e268752c488ab591153a94e26e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aa2e970_ac1ff122",
+        "filename": "device/hid/hid_service.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-03T22:37:27Z",
+      "side": 1,
+      "message": "false is the default so you can just remove this template parameter.",
+      "range": {
+        "startLine": 99,
+        "startChar": 29,
+        "endLine": 99,
+        "endChar": 36
+      },
+      "revId": "a8e5d67214379e268752c488ab591153a94e26e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e7590e5_83d5a804",
+        "filename": "device/hid/mock_hid_connection.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-03T22:37:27Z",
+      "side": 1,
+      "message": "auto buffer \u003d base::MakeRefCounted\u003cnet::IOBuffer\u003e(sizeof(data));",
+      "revId": "a8e5d67214379e268752c488ab591153a94e26e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb90cd6e_ad92eb97",
+        "filename": "device/hid/mock_hid_connection.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-03T22:37:27Z",
+      "side": 1,
+      "message": "auto buffer \u003d base::MakeRefCounted\u003cnet::IOBuffer\u003e(sizeof(data) - 1);",
+      "revId": "a8e5d67214379e268752c488ab591153a94e26e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c65bd1f3_cea356aa",
+        "filename": "device/hid/mock_hid_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-03T22:37:27Z",
+      "side": 1,
+      "message": "callback.Run(base::MakeRefCounted\u003cMockHidConnection\u003e(map_entry-\u003esecond));",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 32
+      },
+      "revId": "a8e5d67214379e268752c488ab591153a94e26e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
