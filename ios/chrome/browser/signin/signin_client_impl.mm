@@ -20,6 +20,7 @@
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
 #include "components/signin/core/browser/signin_cookie_changed_subscription.h"
 #include "components/signin/core/browser/signin_header_helper.h"
+#include "components/signin/ios/browser/account_consistency_service.h"
 #include "components/signin/ios/browser/profile_oauth2_token_service_ios_provider.h"
 #include "google_apis/gaia/gaia_constants.h"
 #include "google_apis/gaia/gaia_urls.h"
@@ -29,6 +30,7 @@
 #include "ios/chrome/browser/browser_state/chrome_browser_state_manager.h"
 #include "ios/chrome/browser/content_settings/cookie_settings_factory.h"
 #include "ios/chrome/browser/content_settings/host_content_settings_map_factory.h"
+#include "ios/chrome/browser/signin/account_consistency_service_factory.h"
 #include "ios/chrome/browser/signin/gaia_auth_fetcher_ios.h"
 #include "ios/chrome/browser/web_data_service_factory.h"
 #include "ios/chrome/common/channel_info.h"
@@ -165,6 +167,12 @@ void SigninClientImpl::OnSignedIn(const std::string& account_id,
     cache->SetAuthInfoOfBrowserStateAtIndex(index, gaia_id,
                                             base::UTF8ToUTF16(username));
   }
+}
+
+void SigninClientImpl::PreGaiaLogout(base::OnceClosure callback) {
+  AccountConsistencyService* accountConsistencyService =
+      ios::AccountConsistencyServiceFactory::GetForBrowserState(browser_state_);
+  accountConsistencyService->RemoveChromeConnectedCookies(std::move(callback));
 }
 
 void SigninClientImpl::OnErrorChanged() {
