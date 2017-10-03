@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c1676f2_31ee6da0",
+        "filename": "ash/system/tray_accessibility.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-03T17:22:49Z",
+      "side": 1,
+      "message": "Ratther than doing the static cast here, make this take a HoverHighlightView*, it\u0027s easier/safer to ensure that the cast is valid at the call sight, even if it\u0027s more verbose that way.",
+      "revId": "6168397a8c83aac6f1fe46f7bb3c76664f61b5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49b15e39_2d233148",
+        "filename": "ash/system/tray_accessibility.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-03T17:22:49Z",
+      "side": 1,
+      "message": "This actually returns a HoverHighlightView*, so if these are stored as HoverHighlightView* instead of View*, no static cast should be required.",
+      "revId": "6168397a8c83aac6f1fe46f7bb3c76664f61b5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
