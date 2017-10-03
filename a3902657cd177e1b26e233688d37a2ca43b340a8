@@ -16,6 +16,24 @@
       "revId": "a3902657cd177e1b26e233688d37a2ca43b340a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68a14190_6640ccde",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-10-03T11:32:21Z",
+      "side": 1,
+      "message": "Yup, we\u0027ll need a mojo interface as discussed in https://chromium-review.googlesource.com/c/chromium/src/+/558252. Filed https://crbug.com/771138 :)",
+      "parentUuid": "7fadef9e_074eff60",
+      "revId": "a3902657cd177e1b26e233688d37a2ca43b340a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
