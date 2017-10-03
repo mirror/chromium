@@ -731,21 +731,110 @@ void AppListView::EndDrag(const gfx::Point& location) {
   initial_drag_point_ = gfx::Point();
 }
 
-void AppListView::CreateAccessibilityEvent(AppListState new_state) {
-  if (new_state != PEEKING && new_state != FULLSCREEN_ALL_APPS)
+void AppListView::SetChildViewsForStateTransition(AppListState target_state) {
+  if (target_state != PEEKING && target_state != FULLSCREEN_ALL_APPS)
     return;
 
-  DCHECK(state_announcement_ == base::string16());
+  AppsContainerView* apps_container_view =
+      app_list_main_view_->contents_view()->apps_container_view();
 
-  if (new_state == PEEKING) {
-    state_announcement_ = l10n_util::GetStringUTF16(
-        IDS_APP_LIST_SUGGESTED_APPS_ACCESSIBILITY_ANNOUNCEMENT);
+    if (apps_container_view->IsInFolderView())
+      apps_container_view->app_list_folder_view()->CloseFolderPage();
+
+  if (target_state == PEEKING) {
+    app_list_main_view_->contents_view()->SetActiveState(
+        AppListModel::STATE_START);
+    // Set the apps to first page at STATE_START state.
+    PaginationModel* pagination_model = GetAppsPaginationModel();
+    if (pagination_model->total_pages() > 0 &&
+        pagination_model->selected_page() != 0) {
+      pagination_model->SelectPage(0, false /* animate */);
+    }
   } else {
-    state_announcement_ = l10n_util::GetStringUTF16(
-        IDS_APP_LIST_ALL_APPS_ACCESSIBILITY_ANNOUNCEMENT);
+    // Set timer to ignore further scroll events for this transition.
+    GetAppsGridView()->StartTimerToIgnoreScrollEvents();
+
+    app_list_main_view_->contents_view()->SetActiveState(
+        AppListModel::STATE_APPS, !is_side_shelf_);
   }
-  NotifyAccessibilityEvent(ui::AX_EVENT_ALERT, true);
-  state_announcement_ = base::string16();
+}
+
+void AppListView::ConvertAppListStateToFullscreenEquivalent(
+    AppListState& target_state) {
+  if (!(is_side_shelf_ || is_tablet_mode_))
+    return;
+
+  // If side shelf or tablet mode are active, all transitions should be
+  // made to the tablet mode/side shelf friendly versions.
+  if (target_state == HALF) {
+    target_state = FULLSCREEN_SEARCH;
+  } else if (target_state == PEEKING) {
+    // FULLSCREEN_ALL_APPS->PEEKING in tablet/side shelf mode should close
+    // instead of going to PEEKING.
+    target_state =
+        app_list_state_ == FULLSCREEN_ALL_APPS ? CLOSED : FULLSCREEN_ALL_APPS;
+  }
+}
+
+void AppListView::StartAnimationForState(AppListState target_state) {
+  if (is_side_shelf_)
+    return;
+
+  const int display_height = GetDisplayNearestView().size().height();
+  int target_state_y = 0;
+
+  switch (target_state) {
+    case PEEKING:
+      target_state_y = display_height - kPeekingAppListHeight;
+      break;
+    case HALF:
+      target_state_y = display_height - kHalfAppListHeight;
+      break;
+    case CLOSED:
+      // The close animation is handled by the delegate.
+      return;
+    default:
+      break;
+  }
+
+  gfx::Rect target_bounds = fullscreen_widget_->GetNativeView()->bounds();
+  target_bounds.set_y(target_state_y);
+
+  int animation_duration;
+  // If animating to or from a fullscreen state, animate over 250ms, else
+  // animate over 200 ms.
+  if (short_animations_for_testing_) {
+    animation_duration = kAppListAnimationDurationTestMs;
+  } else if (is_fullscreen() || target_state == FULLSCREEN_ALL_APPS ||
+             target_state == FULLSCREEN_SEARCH) {
+    animation_duration = kAppListAnimationDurationFromFullscreenMs;
+  } else {
+    animation_duration = kAppListAnimationDurationMs;
+  }
+
+  std::unique_ptr<ui::LayerAnimationElement> bounds_animation_element =
+      ui::LayerAnimationElement::CreateBoundsElement(
+          target_bounds, base::TimeDelta::FromMilliseconds(animation_duration));
+
+  bounds_animation_element->set_tween_type(gfx::Tween::EASE_OUT);
+
+  ui::LayerAnimator* animator = fullscreen_widget_->GetLayer()->GetAnimator();
+  animator->set_preemption_strategy(
+      ui::LayerAnimator::IMMEDIATELY_ANIMATE_TO_NEW_TARGET);
+  animator->StopAnimating();
+  animator->ScheduleAnimation(
+      new ui::LayerAnimationSequence(std::move(bounds_animation_element)));
+}
+
+void AppListView::StartCloseAnimation(base::TimeDelta animation_duration) {
+  DCHECK(is_fullscreen_app_list_enabled_);
+  if (is_side_shelf_ || !is_fullscreen_app_list_enabled_)
+    return;
+
+  if (app_list_state_ != CLOSED)
+    SetState(CLOSED);
+
+  app_list_main_view_->contents_view()->FadeOutOnClose(animation_duration);
 }
 
 void AppListView::RecordStateTransitionForUma(AppListState new_state) {
@@ -761,6 +850,23 @@ void AppListView::RecordStateTransitionForUma(AppListState new_state) {
 
   UMA_HISTOGRAM_ENUMERATION(kAppListStateTransitionSourceHistogram, transition,
                             kMaxAppListStateTransition);
+}
+
+void AppListView::MaybeCreateAccessibilityEvent(AppListState new_state) {
+  if (new_state != PEEKING && new_state != FULLSCREEN_ALL_APPS)
+    return;
+
+  DCHECK(state_announcement_ == base::string16());
+
+  if (new_state == PEEKING) {
+    state_announcement_ = l10n_util::GetStringUTF16(
+        IDS_APP_LIST_SUGGESTED_APPS_ACCESSIBILITY_ANNOUNCEMENT);
+  } else {
+    state_announcement_ = l10n_util::GetStringUTF16(
+        IDS_APP_LIST_ALL_APPS_ACCESSIBILITY_ANNOUNCEMENT);
+  }
+  NotifyAccessibilityEvent(ui::AX_EVENT_ALERT, true);
+  state_announcement_ = base::string16();
 }
 
 display::Display AppListView::GetDisplayNearestView() const {
@@ -1132,74 +1238,9 @@ void AppListView::SetState(AppListState new_state) {
     return;
 
   AppListState new_state_override = new_state;
-  if (is_side_shelf_ || is_tablet_mode_) {
-    // If side shelf or tablet mode are active, all transitions should be
-    // made to the tablet mode/side shelf friendly versions.
-    if (new_state == HALF) {
-      new_state_override = FULLSCREEN_SEARCH;
-    } else if (new_state == PEEKING) {
-      // If the old state was already FULLSCREEN_ALL_APPS, then we should
-      // close.
-      new_state_override =
-          app_list_state_ == FULLSCREEN_ALL_APPS ? CLOSED : FULLSCREEN_ALL_APPS;
-    }
-  }
-
-  // Notify ChromeVox if the state transition warrants a notification.
-  CreateAccessibilityEvent(new_state_override);
-
-  switch (new_state_override) {
-    case PEEKING: {
-      switch (app_list_state_) {
-        case HALF:
-        case PEEKING:
-        case FULLSCREEN_ALL_APPS: {
-          app_list_main_view_->contents_view()->SetActiveState(
-              AppListModel::STATE_START);
-          // Set the apps to first page at STATE_START state.
-          PaginationModel* pagination_model = GetAppsPaginationModel();
-          if (pagination_model->total_pages() > 0 &&
-              pagination_model->selected_page() != 0) {
-            pagination_model->SelectPage(0, false /* animate */);
-          }
-          break;
-        }
-        case FULLSCREEN_SEARCH:
-        case CLOSED:
-          NOTREACHED();
-          break;
-      }
-      break;
-    }
-    case HALF:
-      break;
-    case FULLSCREEN_ALL_APPS: {
-      // Set timer to ignore further scroll events for this transition.
-      GetAppsGridView()->StartTimerToIgnoreScrollEvents();
-
-      AppsContainerView* apps_container_view =
-          app_list_main_view_->contents_view()->apps_container_view();
-
-      if (apps_container_view->IsInFolderView())
-        apps_container_view->app_list_folder_view()->CloseFolderPage();
-
-      app_list_main_view_->contents_view()->SetActiveState(
-          AppListModel::STATE_APPS, !is_side_shelf_);
-      break;
-    }
-    case FULLSCREEN_SEARCH:
-      break;
-    case CLOSED:
-      switch (app_list_state_) {
-        case CLOSED:
-          return;
-        case HALF:
-        case PEEKING:
-        case FULLSCREEN_ALL_APPS:
-        case FULLSCREEN_SEARCH:
-          break;
-      }
-  }
+  ConvertAppListStateToFullscreenEquivalent(new_state_override);
+  MaybeCreateAccessibilityEvent(new_state_override);
+  SetChildViewsForStateTransition(new_state_override);
   StartAnimationForState(new_state_override);
   RecordStateTransitionForUma(new_state_override);
   model_->SetStateFullscreen(new_state_override);
@@ -1220,67 +1261,6 @@ void AppListView::SetState(AppListState new_state) {
       ->apps_container_view()
       ->apps_grid_view()
       ->UpdateControlVisibility(app_list_state_, is_in_drag_);
-}
-
-void AppListView::StartAnimationForState(AppListState target_state) {
-  if (is_side_shelf_)
-    return;
-
-  const int display_height = GetDisplayNearestView().size().height();
-  int target_state_y = 0;
-
-  switch (target_state) {
-    case PEEKING:
-      target_state_y = display_height - kPeekingAppListHeight;
-      break;
-    case HALF:
-      target_state_y = display_height - kHalfAppListHeight;
-      break;
-    case CLOSED:
-      // The close animation is handled by the delegate.
-      return;
-    default:
-      break;
-  }
-
-  gfx::Rect target_bounds = fullscreen_widget_->GetNativeView()->bounds();
-  target_bounds.set_y(target_state_y);
-
-  int animation_duration;
-  // If animating to or from a fullscreen state, animate over 250ms, else
-  // animate over 200 ms.
-  if (short_animations_for_testing_) {
-    animation_duration = kAppListAnimationDurationTestMs;
-  } else if (is_fullscreen() || target_state == FULLSCREEN_ALL_APPS ||
-             target_state == FULLSCREEN_SEARCH) {
-    animation_duration = kAppListAnimationDurationFromFullscreenMs;
-  } else {
-    animation_duration = kAppListAnimationDurationMs;
-  }
-
-  std::unique_ptr<ui::LayerAnimationElement> bounds_animation_element =
-      ui::LayerAnimationElement::CreateBoundsElement(
-          target_bounds, base::TimeDelta::FromMilliseconds(animation_duration));
-
-  bounds_animation_element->set_tween_type(gfx::Tween::EASE_OUT);
-
-  ui::LayerAnimator* animator = fullscreen_widget_->GetLayer()->GetAnimator();
-  animator->set_preemption_strategy(
-      ui::LayerAnimator::IMMEDIATELY_ANIMATE_TO_NEW_TARGET);
-  animator->StopAnimating();
-  animator->ScheduleAnimation(
-      new ui::LayerAnimationSequence(std::move(bounds_animation_element)));
-}
-
-void AppListView::StartCloseAnimation(base::TimeDelta animation_duration) {
-  DCHECK(is_fullscreen_app_list_enabled_);
-  if (is_side_shelf_ || !is_fullscreen_app_list_enabled_)
-    return;
-
-  if (app_list_state_ != CLOSED)
-    SetState(CLOSED);
-
-  app_list_main_view_->contents_view()->FadeOutOnClose(animation_duration);
 }
 
 void AppListView::SetStateFromSearchBoxView(bool search_box_is_empty) {
