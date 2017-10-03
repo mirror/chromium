@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cc7abbce_a7327a68",
+        "filename": "chrome/browser/android/download/download_manager_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-10-03T04:21:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "041e5244_b654e2d8",
+      "range": {
+        "startLine": 72,
+        "startChar": 20,
+        "endLine": 72,
+        "endChar": 31
+      },
+      "revId": "73243b228c371d018c498ba11221faa3e9839fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b1d7d7c_41ac18fd",
         "filename": "chrome/browser/download/download_target_determiner.cc",
         "patchSetId": 5
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "8191a873_b6b9888d",
+        "filename": "chrome/browser/download/download_target_determiner.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-10-03T04:21:56Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "6b1d7d7c_41ac18fd",
+      "revId": "73243b228c371d018c498ba11221faa3e9839fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c1ed0e8_d683ce73",
         "filename": "chrome/browser/download/download_target_determiner.cc",
         "patchSetId": 5
@@ -53,6 +95,24 @@
       "writtenOn": "2017-10-02T22:11:21Z",
       "side": 1,
       "message": "so if virtual_path_ is empty and there is no forced path, is the virtual_path_ generation going to use download_prefs_ below?",
+      "revId": "73243b228c371d018c498ba11221faa3e9839fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7e47b48_950352ec",
+        "filename": "chrome/browser/download/download_target_determiner.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-10-03T04:21:56Z",
+      "side": 1,
+      "message": "Done, makes sense, in this case we probably should directly fail. Changed to directly fail.\n\nAlso added metrics here.\n\nThis case do happen if we start a download but shut down browser(or maybe pause download) very soon, the history db will have neither current_path nor target_path.",
+      "parentUuid": "4c1ed0e8_d683ce73",
       "revId": "73243b228c371d018c498ba11221faa3e9839fad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "03f9c4f8_6dfe38f7",
+        "filename": "chrome/browser/download/download_target_determiner.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-10-03T04:21:56Z",
+      "side": 1,
+      "message": "Ack, We will directly return in this block. Maybe I should put this block into a separate function, wdyt? \n\nWe\u0027d rather not to fall into next big block I think.",
+      "parentUuid": "01b3c4a0_6379be3a",
+      "revId": "73243b228c371d018c498ba11221faa3e9839fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42a5d346_ceed320b",
         "filename": "chrome/browser/download/download_target_determiner.cc",
         "patchSetId": 5
@@ -87,6 +165,30 @@
       "writtenOn": "2017-10-02T20:49:21Z",
       "side": 1,
       "message": "What happens if this block fails?  Do we have to set virtual_path_?",
+      "range": {
+        "startLine": 331,
+        "startChar": 4,
+        "endLine": 335,
+        "endChar": 5
+      },
+      "revId": "73243b228c371d018c498ba11221faa3e9839fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec11bf09_692c5764",
+        "filename": "chrome/browser/download/download_target_determiner.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-10-03T04:21:56Z",
+      "side": 1,
+      "message": "Changed to a big switch block. Also added histograms here.\n\nThe |path| passed into this function can be a different directory. We shouldn\u0027t use a new dir. This happens when PATH_NOT_WRITABLE or NAME_TOO_LONG is passed in. \n\nPATH_NOT_WRITABLE: A new dir in chrome::DIR_USER_DOCUMENTS is returned, should not use.\n\nNAME_TOO_LONG: The path is truncated based on length limitation but failed.\n\nWhat happens if truncate success: We probably will get download failure error FILE_NAME_TOO_LONG download interrupt reason, I think that\u0027s ok. \n\nCONFLICT: This won\u0027t happen since we set this in DoGenerateTargetPath function.\nconflict_action_ \u003d DownloadPathReservationTracker::OVERWRITE;",
+      "parentUuid": "42a5d346_ceed320b",
       "range": {
         "startLine": 331,
         "startChar": 4,
@@ -119,6 +221,30 @@
       "revId": "73243b228c371d018c498ba11221faa3e9839fad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc580b66_34fe345b",
+        "filename": "chrome/browser/download/download_target_determiner.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-10-03T04:21:56Z",
+      "side": 1,
+      "message": "Ack, tried to merge to block above, but found the DCHECK logic will still be different.\n\nThe block below will add \".crdownload\" to file name.",
+      "parentUuid": "dbdfcd5e_a27d0ebe",
+      "range": {
+        "startLine": 739,
+        "startChar": 2,
+        "endLine": 744,
+        "endChar": 3
+      },
+      "revId": "73243b228c371d018c498ba11221faa3e9839fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
