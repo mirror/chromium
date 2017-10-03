@@ -811,6 +811,10 @@ const char kForceShowUpdateMenuItem[] = "force-show-update-menu-item";
 // Forces a custom summary to be displayed below the update menu item.
 const char kForceShowUpdateMenuItemCustomSummary[] = "custom_summary";
 
+// Switch to grant geolocation permission to all origins for testing.
+const char kGrantGeolocationPermissionToAllOriginsForTesting[] =
+    "grant-geolocation-permission-to-all-origins-for-testing";
+
 // Sets the market URL for Chrome for use in testing.
 const char kMarketUrlForTesting[] = "market-url-for-testing";
 
