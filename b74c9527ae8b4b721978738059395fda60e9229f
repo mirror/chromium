@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1630d66b_2a05a7c0",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_camera.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-03T16:57:12Z",
+      "side": 1,
+      "message": "Huh. Nice.",
+      "revId": "b74c9527ae8b4b721978738059395fda60e9229f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
