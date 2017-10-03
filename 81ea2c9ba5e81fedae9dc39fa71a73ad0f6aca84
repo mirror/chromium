@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51e6f8dc_57574c63",
+        "filename": "build/android/gyp/javac.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-03T00:21:57Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think we should need this since Desugar transforms calls to Object.requireNotNull()\nhttps://github.com/bazelbuild/bazel/blob/67d817405eb7ec0004bcf9178f0b18afb9ae084a/src/tools/android/java/com/google/devtools/build/android/desugar/Desugar.java#L566",
+      "revId": "81ea2c9ba5e81fedae9dc39fa71a73ad0f6aca84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
