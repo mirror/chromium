@@ -936,13 +936,9 @@ bool IsInternalURL(const GURL& url) {
                       sectionTitle:l10n_util::GetStringUTF16(
                                        IDS_PAGE_INFO_CERTIFICATE)
                           linkText:linkText];
-    if (isValid) {
-      [certificateView_
-          setLinkToolTip:l10n_util::GetNSStringF(
-                             IDS_PAGE_INFO_CERTIFICATE_VALID_LINK_TOOLTIP,
-                             base::UTF8ToUTF16(
-                                 certificate_->issuer().GetDisplayName()))];
-    }
+    [certificateView_
+        setLinkToolTip:l10n_util::GetNSString(
+                           IDS_PAGE_INFO_CERTIFICATE_LINK_TOOLTIP)];
 
     [certificateView_ setLinkTarget:self
                          withAction:@selector(showCertificateInfo:)];
