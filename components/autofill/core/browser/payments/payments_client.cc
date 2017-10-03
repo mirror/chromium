@@ -75,6 +75,15 @@ GURL GetRequestUrl(const std::string& path) {
   return GetBaseSecureUrl().Resolve(path);
 }
 
+std::unique_ptr<base::DictionaryValue> BuildCustomerContextDictionary(
+    int64_t external_customer_id) {
+  std::unique_ptr<base::DictionaryValue> customer_context(
+      new base::DictionaryValue());
+  customer_context->SetString("external_customer_id",
+                              std::to_string(external_customer_id));
+  return customer_context;
+}
+
 std::unique_ptr<base::DictionaryValue> BuildRiskDictionary(
     const std::string& encoded_risk_data) {
   std::unique_ptr<base::DictionaryValue> risk_data(new base::DictionaryValue());
@@ -199,7 +208,15 @@ class UnmaskCardRequest : public PaymentsRequest {
     request_dict.SetString("credit_card_id", request_details_.card.server_id());
     request_dict.Set("risk_data_encoded",
                      BuildRiskDictionary(request_details_.risk_data));
-    request_dict.Set("context", base::MakeUnique<base::DictionaryValue>());
+    int billable_service_number = 70154;
+    std::unique_ptr<base::DictionaryValue> context(new base::DictionaryValue());
+    context->SetInteger("billable_service", billable_service_number);
+    if (request_details_.billing_customer_number != 0) {
+      context->Set("customer_context",
+                   BuildCustomerContextDictionary(
+                       request_details_.billing_customer_number));
+    }
+    request_dict.Set("context", std::move(context));
 
     int value = 0;
     if (base::StringToInt(request_details_.user_response.exp_month, &value))
@@ -215,6 +232,7 @@ class UnmaskCardRequest : public PaymentsRequest {
         net::EscapeUrlEncodedData(
             base::UTF16ToASCII(request_details_.user_response.cvc), true)
             .c_str());
+    DLOG(WARNING) << "getrealpan request body: " << request_content;
     VLOG(3) << "getrealpan request body: " << request_content;
     return request_content;
   }
@@ -253,9 +271,6 @@ class GetUploadDetailsRequest : public PaymentsRequest {
 
   std::string GetRequestContent() override {
     base::DictionaryValue request_dict;
-    std::unique_ptr<base::DictionaryValue> context(new base::DictionaryValue());
-    context->SetString("language_code", app_locale_);
-    request_dict.Set("context", std::move(context));
 
     std::unique_ptr<base::ListValue> addresses(new base::ListValue());
     for (const AutofillProfile& profile : addresses_) {
@@ -322,8 +337,15 @@ class UploadCardRequest : public PaymentsRequest {
                      BuildRiskDictionary(request_details_.risk_data));
 
     const std::string& app_locale = request_details_.app_locale;
+    int billable_service_number = 70073;
     std::unique_ptr<base::DictionaryValue> context(new base::DictionaryValue());
     context->SetString("language_code", app_locale);
+    context->SetInteger("billable_service", billable_service_number);
+    if (request_details_.billing_customer_number != 0) {
+      context->Set("customer_context",
+                   BuildCustomerContextDictionary(
+                       request_details_.billing_customer_number));
+    }
     request_dict.Set("context", std::move(context));
 
     SetStringIfNotEmpty(request_details_.card, CREDIT_CARD_NAME_FULL,
@@ -360,6 +382,7 @@ class UploadCardRequest : public PaymentsRequest {
         net::EscapeUrlEncodedData(base::UTF16ToASCII(request_details_.cvc),
                                   true)
             .c_str());
+    DLOG(WARNING) << "savecard request body: " << request_content;
     VLOG(3) << "savecard request body: " << request_content;
     return request_content;
   }
@@ -386,6 +409,8 @@ const char PaymentsClient::kRecipientName[] = "recipient_name";
 const char PaymentsClient::kPhoneNumber[] = "phone_number";
 
 PaymentsClient::UnmaskRequestDetails::UnmaskRequestDetails() {}
+PaymentsClient::UnmaskRequestDetails::UnmaskRequestDetails(
+    const UnmaskRequestDetails& other) = default;
 PaymentsClient::UnmaskRequestDetails::~UnmaskRequestDetails() {}
 
 PaymentsClient::UploadRequestDetails::UploadRequestDetails() {}
@@ -394,12 +419,15 @@ PaymentsClient::UploadRequestDetails::UploadRequestDetails(
 PaymentsClient::UploadRequestDetails::~UploadRequestDetails() {}
 
 PaymentsClient::PaymentsClient(net::URLRequestContextGetter* context_getter,
+                               PrefService* pref_service,
                                PaymentsClientDelegate* delegate)
     : OAuth2TokenService::Consumer(kTokenServiceConsumerId),
       context_getter_(context_getter),
+      pref_service_(pref_service),
       delegate_(delegate),
       has_retried_authorization_(false),
       weak_ptr_factory_(this) {
+  DCHECK(pref_service);
   DCHECK(delegate);
 }
 
@@ -408,6 +436,10 @@ PaymentsClient::~PaymentsClient() {}
 void PaymentsClient::Prepare() {
   if (access_token_.empty())
     StartTokenFetch(false);
+}
+
+PrefService* PaymentsClient::GetPrefService() const {
+  return pref_service_;
 }
 
 void PaymentsClient::UnmaskCard(
