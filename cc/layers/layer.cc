@@ -211,6 +211,10 @@ sk_sp<SkPicture> Layer::GetPicture() const {
   return nullptr;
 }
 
+bool Layer::IsPictureLayer() {
+  return false;
+}
+
 void Layer::SetParent(Layer* layer) {
   DCHECK(!layer || !layer->HasAncestor(this));
 
