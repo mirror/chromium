@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bcea91d_d06cbdbb",
+        "filename": "ash/wm/overview/window_selector_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1319,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-10-03T14:37:49Z",
+      "side": 1,
+      "message": "self: remove before landing.",
+      "range": {
+        "startLine": 1319,
+        "startChar": 2,
+        "endLine": 1319,
+        "endChar": 12
+      },
+      "revId": "8ed12a8bc23673e2c47d6ed57d7ed3dac9b7f5f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
