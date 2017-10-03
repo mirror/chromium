@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d86973e5_3f72a37c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-03T22:43:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f21d6cd7_9712e9b1",
+      "revId": "f59baea51799ccce72c53cab54f1386ec3bef6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7ad6ada_44b8cc1f",
         "filename": "chrome/renderer/chrome_content_renderer_client.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-02T18:44:53Z",
       "side": 1,
       "message": "Nit: static constexpr",
+      "revId": "f59baea51799ccce72c53cab54f1386ec3bef6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4de71ea_4a916731",
+        "filename": "chrome/renderer/chrome_content_renderer_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1684,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-03T22:43:21Z",
+      "side": 1,
+      "message": "Doesn\u0027t seem to work with base::Time? \"\u0027Time\u0027 is not literal because it is not an aggregate and has no constexpr constructors other than copy or move constructors\"",
+      "parentUuid": "f7ad6ada_44b8cc1f",
       "revId": "f59baea51799ccce72c53cab54f1386ec3bef6e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f1796a63_b21de742",
+        "filename": "chrome/renderer/chrome_content_renderer_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1687,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-03T22:43:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7994dbc1_adefd211",
+      "revId": "f59baea51799ccce72c53cab54f1386ec3bef6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5181ac3_b828eb0c",
         "filename": "chrome/renderer/chrome_content_renderer_client.cc",
         "patchSetId": 3
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "8f84a9ac_1e27360f",
+        "filename": "chrome/renderer/chrome_content_renderer_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1693,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-03T22:43:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5181ac3_b828eb0c",
+      "revId": "f59baea51799ccce72c53cab54f1386ec3bef6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0fb9e8e3_c6480037",
         "filename": "content/public/renderer/content_renderer_client.h",
         "patchSetId": 3
@@ -84,6 +156,24 @@
       "revId": "f59baea51799ccce72c53cab54f1386ec3bef6e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef7f8f19_2221e1a5",
+        "filename": "content/public/renderer/content_renderer_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-03T22:43:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fb9e8e3_c6480037",
+      "revId": "f59baea51799ccce72c53cab54f1386ec3bef6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "204c6dc7_33a6ac11",
+        "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-03T22:43:21Z",
+      "side": 1,
+      "message": "Yeah, what Kinuko said.",
+      "parentUuid": "793ee771_bb1f1a74",
+      "revId": "f59baea51799ccce72c53cab54f1386ec3bef6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e902c40c_0c09d9f3",
         "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
         "patchSetId": 3
@@ -133,6 +241,24 @@
       "writtenOn": "2017-10-03T03:46:35Z",
       "side": 1,
       "message": "We could be showing tons of messages if all the subresources have such cert. Would that be just fine or would we want to suppress subsequent errors if the frame has already shown one?",
+      "revId": "f59baea51799ccce72c53cab54f1386ec3bef6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cf73704_0329f4b3",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-03T22:43:21Z",
+      "side": 1,
+      "message": "Yes, I\u0027m not sure what to do about this. On the one hand, the point of this message is to help site owners find all problematic subresources that they need to fix, so capping the messages would make that harder for them. On the other hand, it will get a little ridiculous for sites that have hundreds of subresources all loaded with Symantec certs.\n\nI think it would probably make sense to cap out at 20 or so, and after that just print something like \"This page loads additional subresources with legacy certificates...\" If it\u0027s okay with you I\u0027d like to implement that in a separate CL, though, since this one is so large already.",
+      "parentUuid": "e902c40c_0c09d9f3",
       "revId": "f59baea51799ccce72c53cab54f1386ec3bef6e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
