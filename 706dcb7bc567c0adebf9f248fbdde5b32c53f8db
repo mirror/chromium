@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a45832d0_faef0f57",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1814,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-03T14:15:35Z",
+      "side": 1,
+      "message": "private memory footprint is defined for all OSes. Please use memory_instrumentation::MemoryInstrumentation::GetInstance()\n        -\u003eRequestGlobalDump(), see https://chromium-review.googlesource.com/c/chromium/src/+/646047/12/chrome/browser/task_manager/sampling/task_manager_impl.cc for an example of how to do this.",
+      "revId": "706dcb7bc567c0adebf9f248fbdde5b32c53f8db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
