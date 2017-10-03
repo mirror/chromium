@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include <string>
+#include <tuple>
 #include <vector>
 
 #include "base/callback.h"
@@ -65,10 +66,10 @@ class CHROMEOS_EXPORT CryptohomeClient : public DBusClient {
 
   // A callback to handle LowDiskSpace signals.
   typedef base::Callback<void(uint64_t disk_free_bytes)> LowDiskSpaceHandler;
+
   // A callback for methods which return both a bool result and data.
-  typedef base::Callback<void(DBusMethodCallStatus call_status,
-                              bool result,
-                              const std::string& data)> DataMethodCallback;
+  using DataMethodCallback = DBusMethodCallback<
+      std::tuple<bool /* success */, std::string /* data */>>;
 
   // A callback to handle DircryptoMigrationProgress signals.
   typedef base::Callback<void(cryptohome::DircryptoMigrationStatus status,
@@ -391,7 +392,7 @@ class CHROMEOS_EXPORT CryptohomeClient : public DBusClient {
       attestation::AttestationKeyType key_type,
       const cryptohome::Identification& cryptohome_id,
       const std::string& key_name,
-      const DataMethodCallback& callback) = 0;
+      DataMethodCallback callback) = 0;
 
   // Gets the public key for the key specified by |key_type| and |key_name|.
   // |callback| will be called when the operation completes.  If the key does
@@ -402,7 +403,7 @@ class CHROMEOS_EXPORT CryptohomeClient : public DBusClient {
       attestation::AttestationKeyType key_type,
       const cryptohome::Identification& cryptohome_id,
       const std::string& key_name,
-      const DataMethodCallback& callback) = 0;
+      DataMethodCallback callback) = 0;
 
   // Asynchronously registers an attestation key with the current user's
   // PKCS #11 token.  The |callback| will be called when the dbus call
@@ -460,7 +461,7 @@ class CHROMEOS_EXPORT CryptohomeClient : public DBusClient {
       attestation::AttestationKeyType key_type,
       const cryptohome::Identification& cryptohome_id,
       const std::string& key_name,
-      const DataMethodCallback& callback) = 0;
+      DataMethodCallback callback) = 0;
 
   // Sets the |payload| associated with the key specified by |key_type| and
   // |key_name|.  The |callback| will be called when the operation completes.

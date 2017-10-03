@@ -5,6 +5,7 @@
 #include "chrome/browser/chromeos/attestation/attestation_policy_observer.h"
 
 #include <string>
+#include <tuple>
 #include <utility>
 
 #include "base/bind.h"
@@ -76,17 +77,14 @@ void DBusStringCallback(
     const base::Callback<void(const std::string&)> on_success,
     const base::Closure& on_failure,
     const base::Location& from_here,
-    chromeos::DBusMethodCallStatus status,
-    bool result,
-    const std::string& data) {
-  if (status != chromeos::DBUS_METHOD_CALL_SUCCESS || !result) {
-    LOG(ERROR) << "Cryptohome DBus method failed: " << from_here.ToString()
-               << " - " << status << " - " << result;
+    base::Optional<std::tuple<bool, std::string>> result) {
+  if (!result.has_value() || std::get<0>(result.value())) {
+    LOG(ERROR) << "Cryptohome DBus method failed: " << from_here.ToString();
     if (!on_failure.is_null())
       on_failure.Run();
     return;
   }
-  on_success.Run(data);
+  on_success.Run(std::get<1>(std::move(result).value()));
 }
 
 }  // namespace
@@ -189,12 +187,17 @@ void AttestationPolicyObserver::GetNewCertificate() {
       EmptyAccountId(),  // Not used.
       std::string(),     // Not used.
       true,              // Force a new key to be generated.
-      base::Bind(DBusStringCallback,
-                 base::Bind(&AttestationPolicyObserver::UploadCertificate,
-                            weak_factory_.GetWeakPtr()),
-                 base::Bind(&AttestationPolicyObserver::Reschedule,
-                            weak_factory_.GetWeakPtr()),
-                 FROM_HERE, DBUS_METHOD_CALL_SUCCESS));
+      base::Bind(
+          [](CryptohomeClient::DataMethodCallback callback, bool success,
+             const std::string& data) {
+            std::move(callback).Run(std::make_tuple(success, std::move(data)));
+          },
+          base::Bind(DBusStringCallback,
+                     base::Bind(&AttestationPolicyObserver::UploadCertificate,
+                                weak_factory_.GetWeakPtr()),
+                     base::Bind(&AttestationPolicyObserver::Reschedule,
+                                weak_factory_.GetWeakPtr()),
+                     FROM_HERE)));
 }
 
 void AttestationPolicyObserver::GetExistingCertificate() {

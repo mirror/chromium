@@ -450,14 +450,14 @@ void FakeCryptohomeClient::TpmAttestationGetCertificate(
     attestation::AttestationKeyType key_type,
     const cryptohome::Identification& cryptohome_id,
     const std::string& key_name,
-    const DataMethodCallback& callback) {
-  bool result = false;
+    DataMethodCallback callback) {
+  bool success = false;
   std::string certificate;
   switch (key_type) {
     case attestation::KEY_DEVICE: {
       const auto it = device_certificate_map_.find(key_name);
       if (it != device_certificate_map_.end()) {
-        result = true;
+        success = true;
         certificate = it->second;
       }
       break;
@@ -465,7 +465,7 @@ void FakeCryptohomeClient::TpmAttestationGetCertificate(
     case attestation::KEY_USER: {
       const auto it = user_certificate_map_.find({cryptohome_id, key_name});
       if (it != user_certificate_map_.end()) {
-        result = true;
+        success = true;
         certificate = it->second;
       }
       break;
@@ -473,18 +473,18 @@ void FakeCryptohomeClient::TpmAttestationGetCertificate(
   }
 
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE,
-      base::BindOnce(callback, DBUS_METHOD_CALL_SUCCESS, result, certificate));
+      FROM_HERE, base::BindOnce(std::move(callback),
+                                std::make_tuple(success, certificate)));
 }
 
 void FakeCryptohomeClient::TpmAttestationGetPublicKey(
     attestation::AttestationKeyType key_type,
     const cryptohome::Identification& cryptohome_id,
     const std::string& key_name,
-    const DataMethodCallback& callback) {
+    DataMethodCallback callback) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE,
-      base::Bind(callback, DBUS_METHOD_CALL_SUCCESS, false, std::string()));
+      FROM_HERE, base::BindOnce(std::move(callback),
+                                std::make_tuple(false, std::string())));
 }
 
 void FakeCryptohomeClient::TpmAttestationRegisterKey(
@@ -523,20 +523,20 @@ void FakeCryptohomeClient::TpmAttestationGetKeyPayload(
     attestation::AttestationKeyType key_type,
     const cryptohome::Identification& cryptohome_id,
     const std::string& key_name,
-    const DataMethodCallback& callback) {
-  bool result = false;
+    DataMethodCallback callback) {
+  bool success = false;
   std::string payload;
   if (key_type == attestation::KEY_DEVICE) {
     const auto it = device_key_payload_map_.find(key_name);
     if (it != device_key_payload_map_.end()) {
-      result = true;
+      success = true;
       payload = it->second;
     }
   }
 
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,
-      base::BindOnce(callback, DBUS_METHOD_CALL_SUCCESS, result, payload));
+      base::BindOnce(std::move(callback), std::make_tuple(success, payload)));
 }
 
 void FakeCryptohomeClient::TpmAttestationSetKeyPayload(
