@@ -12,6 +12,8 @@
 
 #include "base/auto_reset.h"
 #include "base/bind.h"
+#include "base/bind_helpers.h"
+#include "base/callback_helpers.h"
 #include "base/command_line.h"
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
@@ -169,6 +171,16 @@ void OnAckMustSucceed(bool success) {
 
 Id GetServerIdForWindow(Window* window) {
   return window ? WindowMus::Get(window)->server_id() : kInvalidServerId;
+}
+
+void OnScheduleEmbed(
+    base::OnceCallback<void(const base::UnguessableToken&)> callback,
+    const base::Optional<base::UnguessableToken>& token) {
+  if (!token) {
+    DVLOG(1) << "ScheduleEmbed failed";
+    return;
+  }
+  std::move(callback).Run(*token);
 }
 
 }  // namespace
@@ -343,6 +355,14 @@ void WindowTreeClient::Embed(
 
   tree_->Embed(WindowMus::Get(window)->server_id(), std::move(client), flags,
                callback);
+}
+
+void WindowTreeClient::ScheduleEmbed(
+    ui::mojom::WindowTreeClientPtr client,
+    base::OnceCallback<void(const base::UnguessableToken&)> callback) {
+  tree_->ScheduleEmbed(std::move(client),
+                       base::AdaptCallbackForRepeating(base::BindOnce(
+                           &OnScheduleEmbed, std::move(callback))));
 }
 
 void WindowTreeClient::AttachCompositorFrameSink(
