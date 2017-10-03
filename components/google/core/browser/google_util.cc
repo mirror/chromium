@@ -177,6 +177,12 @@ std::string GetGoogleCountryCode(const GURL& google_homepage_url) {
   // TODO(igorcov): This needs a fix for case when the host has a trailing dot,
   // like "google.com./". https://crbug.com/720295.
   const size_t last_dot = google_hostname.find_last_of('.');
+  if (last_dot == std::string::npos && google_homepage_url.is_valid() &&
+      google_homepage_url == CommandLineGoogleBaseURL()) {
+    // The Google base URL is overriden via a flag and a country code cannot
+    // be parsed from it, assume US.
+    return "us";
+  }
   DCHECK_NE(std::string::npos, last_dot);
   base::StringPiece country_code = google_hostname.substr(last_dot + 1);
   // Assume the com TLD implies the US.
