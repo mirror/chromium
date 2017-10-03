@@ -22,6 +22,30 @@
       "revId": "33c9937c65cb79f22998eb9a7dda206d4d08c595",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0f200a1_d5b89a29",
+        "filename": "chrome/browser/usb/usb_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-10-03T22:30:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d1d0460_d315d6df",
+      "range": {
+        "startLine": 27,
+        "startChar": 34,
+        "endLine": 27,
+        "endChar": 63
+      },
+      "revId": "33c9937c65cb79f22998eb9a7dda206d4d08c595",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
