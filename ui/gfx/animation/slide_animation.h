@@ -47,7 +47,8 @@ namespace gfx {
 // }
 class ANIMATION_EXPORT SlideAnimation : public LinearAnimation {
  public:
-  explicit SlideAnimation(AnimationDelegate* target);
+  explicit SlideAnimation(AnimationDelegate* target,
+                          bool constant_duration = false);
   ~SlideAnimation() override;
 
   // Set the animation back to the 0 state.
@@ -87,6 +88,9 @@ class ANIMATION_EXPORT SlideAnimation : public LinearAnimation {
 
   // Used to determine which way the animation is going.
   bool showing_;
+  // Whether to derive duration from the animations progress or use a constant
+  // duration.
+  bool constant_duration_;
 
   // Animation values. These are a layer on top of Animation::state_ to
   // provide the reversability.

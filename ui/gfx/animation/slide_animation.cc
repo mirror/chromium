@@ -5,24 +5,26 @@
 #include "ui/gfx/animation/slide_animation.h"
 
 #include <math.h>
+#include <iostream>
 
 namespace gfx {
 
 // How long animations should take by default.
 static const int kDefaultDurationMs = 120;
 
-SlideAnimation::SlideAnimation(AnimationDelegate* target)
+SlideAnimation::SlideAnimation(AnimationDelegate* target,
+                               bool constant_duration)
     : LinearAnimation(target),
       target_(target),
       tween_type_(Tween::EASE_OUT),
       showing_(false),
+      constant_duration_(constant_duration),
       value_start_(0),
       value_end_(0),
       value_current_(0),
       slide_duration_(kDefaultDurationMs) {}
 
-SlideAnimation::~SlideAnimation() {
-}
+SlideAnimation::~SlideAnimation() {}
 
 void SlideAnimation::Reset() {
   Reset(0);
@@ -47,13 +49,14 @@ void SlideAnimation::Show() {
   if (slide_duration_ == 0) {
     AnimateToState(1.0);  // Skip to the end of the animation.
     return;
-  } else if (value_current_ == value_end_)  {
+  } else if (value_current_ == value_end_) {
     return;
   }
 
   // This will also reset the currently-occurring animation.
-  SetDuration(base::TimeDelta::FromMilliseconds(
-      static_cast<int>(slide_duration_ * (1 - value_current_))));
+  int duration = constant_duration_ ? slide_duration_
+                                    : (slide_duration_ * (1 - value_current_));
+  SetDuration(base::TimeDelta::FromMilliseconds(duration));
   Start();
 }
 
@@ -77,8 +80,10 @@ void SlideAnimation::Hide() {
   }
 
   // This will also reset the currently-occurring animation.
-  SetDuration(base::TimeDelta::FromMilliseconds(
-      static_cast<int>(slide_duration_ * value_current_)));
+  int duration = constant_duration_ ? slide_duration_
+                                    : (slide_duration_ * (1 - value_current_));
+  std::cout << duration << std::endl;
+  SetDuration(base::TimeDelta::FromMilliseconds(duration));
   Start();
 }
 
