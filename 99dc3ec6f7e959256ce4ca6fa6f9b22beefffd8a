@@ -16,6 +16,24 @@
       "revId": "99dc3ec6f7e959256ce4ca6fa6f9b22beefffd8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d81f1b6_8b777d81",
+        "filename": "third_party/WebKit/Source/core/dom/FlatTreeTraversal.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-03T05:07:07Z",
+      "side": 1,
+      "message": "Yes, TraversalChildrenIterator\u003cT\u003e uses FirstWithin().\nAnother user of FirstWithin() is  TraversalDescendantIterator\u003cT\u003e.\n\nSince FirstWithin() is an alias of FirstChild(), we can replace\nthem to FirstChild().\n\nFirstWithin() is introduced by the patch[1]. I\u0027m not sure why the\nauthor of the patch[1] introduced FirstWithin() for\nTraversalChildrenIterator\u003cT\u003e, event if description of\nTraversalChildrenIterator\u003cT\u003e uses firstChild().\n\nFirstWithin() may be introduced for pairing with LastWithin().\n\nDo you want to move remove FirstWithin() from NodeTraversal.h\"?\n\n\n[1] http://crrev.com/642973003: Introduce typed Node/Element iterators for range-based for loops of C++11.",
+      "parentUuid": "081d6659_a1e2b8d4",
+      "revId": "99dc3ec6f7e959256ce4ca6fa6f9b22beefffd8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
