@@ -36,6 +36,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 
+import org.chromium.base.test.util.CommandLineFlags;
+
 /**
  * Tests for the WebViewClient.shouldInterceptRequest() method.
  */
@@ -965,5 +967,52 @@ public class AwContentsClientShouldInterceptRequestTest {
         mShouldInterceptRequestHelper.waitForCallback(callCount, 2);
         Assert.assertEquals(2, mShouldInterceptRequestHelper.getUrls().size());
         Assert.assertEquals(iframeContentIdUrl, mShouldInterceptRequestHelper.getUrls().get(1));
+    }
+
+    // @CommandLineFlags.Add("disable-browser-side-navigation")
+    @Test
+    @SmallTest
+    @Feature({"AndroidWebView"})
+    public void testLoadDataWithBaseUrlShouldNotTriggerShouldInterceptRequest() throws Throwable {
+        String data = "foo";
+        String mimeType = "text/plain";
+        boolean isBase64Encoded = false;
+        String baseUrl = "http://foo.bar";
+        String historyUrl = "http://foo.bar";
+
+        int callCount = mShouldInterceptRequestHelper.getCallCount();
+        mActivityTestRule.loadDataWithBaseUrlSync(mAwContents,
+                mContentsClient.getOnPageFinishedHelper(), data, mimeType, isBase64Encoded, baseUrl,
+                historyUrl);
+        Assert.assertEquals(callCount, mShouldInterceptRequestHelper.getCallCount());
+    }
+
+    // @CommandLineFlags.Add("disable-browser-side-navigation")
+    @Test
+    @SmallTest
+    @Feature({"AndroidWebView"})
+    public void testLoadDataShouldTriggerShouldInterceptRequest() throws Throwable {
+        String data = "foo";
+        String mimeType = "text/plain";
+        boolean isBase64Encoded = false;
+
+        int callCount = mShouldInterceptRequestHelper.getCallCount();
+        mActivityTestRule.loadDataSync(mAwContents, mContentsClient.getOnPageFinishedHelper(), data,
+                mimeType, isBase64Encoded);
+        Assert.assertEquals(callCount + 1, mShouldInterceptRequestHelper.getCallCount());
+        Assert.assertTrue(mShouldInterceptRequestHelper.getUrls().get(0).contains(data));
+    }
+
+    // @CommandLineFlags.Add("disable-browser-side-navigation")
+    @Test
+    @SmallTest
+    @Feature({"AndroidWebView"})
+    public void testLoadDataUrlShouldTriggerShouldInterceptRequest() throws Throwable {
+        String url = "data:text/plain,foo";
+
+        int callCount = mShouldInterceptRequestHelper.getCallCount();
+        mActivityTestRule.loadUrlSync(mAwContents, mContentsClient.getOnPageFinishedHelper(), url);
+        Assert.assertEquals(callCount + 1, mShouldInterceptRequestHelper.getCallCount());
+        Assert.assertEquals(url, mShouldInterceptRequestHelper.getUrls().get(0));
     }
 }
