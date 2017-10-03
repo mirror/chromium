@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4dd9a52_7f9606e5",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/table-with-presentation-role.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-10-03T04:30:36Z",
+      "side": 1,
+      "message": "\u003c!DOCTYPE html\u003e\n\"html\" is lower case.",
+      "revId": "5ded27cd2156b19b5547f1623b0ab9e8594de160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85a1473c_500f6a29",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/table-with-presentation-role.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-10-03T04:30:36Z",
+      "side": 1,
+      "message": "You don\u0027t need this any more.",
+      "revId": "5ded27cd2156b19b5547f1623b0ab9e8594de160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e099e86_0f72a734",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/table-with-presentation-role.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-10-03T04:30:36Z",
+      "side": 1,
+      "message": "Modern way of declaring functions is\ntest(() \u003d\u003e {\nAlso, remove the \"t\" argument since it\u0027s not used.",
+      "revId": "5ded27cd2156b19b5547f1623b0ab9e8594de160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
