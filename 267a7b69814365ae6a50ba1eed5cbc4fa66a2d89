@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "264d6aad_2d355097",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionClientManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-03T23:42:18Z",
+      "side": 1,
+      "message": "you need to split this up into an interface and an implementation, and put the interface in content_public for embedder to consume. embedders are not supposed to directly import things from content.browser even though there is no DEPS rule enforcing it",
+      "revId": "267a7b69814365ae6a50ba1eed5cbc4fa66a2d89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "731b0fda_40ff9fd9",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionClientManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-03T23:42:18Z",
+      "side": 1,
+      "message": "whole constructor is redundant?",
+      "revId": "267a7b69814365ae6a50ba1eed5cbc4fa66a2d89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c37d703_35f2ae02",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionClientManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-03T23:42:18Z",
+      "side": 1,
+      "message": "this seems really odd, what if CS client is added first, and smart selection client is added second? content should not assume any order here\n\nalso contextual search logic is leaking into content, and that seems bad as well",
+      "revId": "267a7b69814365ae6a50ba1eed5cbc4fa66a2d89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b68e521e_23e2c0c7",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionClientManager.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-03T23:42:18Z",
+      "side": 1,
+      "message": "yeah, this class that explicitly knows both contextual search and smart selection should not be in content. smart selection is a chrome feature, so it should live in chrome code\n\nand if this bridge is in chrome, then there isn\u0027t really any need for the bridge manager at all in content",
+      "revId": "267a7b69814365ae6a50ba1eed5cbc4fa66a2d89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8530883c_6ad22507",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionClient.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-03T23:42:18Z",
+      "side": 1,
+      "message": "this should check sIsSmartSelectionEnabled, don\u0027t spread this logic around",
+      "revId": "267a7b69814365ae6a50ba1eed5cbc4fa66a2d89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
