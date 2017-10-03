@@ -116,6 +116,24 @@
       "revId": "65b7d4418b037088319c56d28877225e9db34881",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10acff7f_fe867522",
+        "filename": "ui/views/animation/ink_drop_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-10-03T19:39:35Z",
+      "side": 1,
+      "message": "I see. I think both suggestions would be equally good then: Renaming to InkDropRippleAnimationEnded or only calling InkDropAnimationEnded for successfully finished animations.",
+      "parentUuid": "2b90e76f_e82fb9b7",
+      "revId": "65b7d4418b037088319c56d28877225e9db34881",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
