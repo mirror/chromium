@@ -22,9 +22,10 @@
     setBluetoothFakeAdapter('HeartRateAdapter')
       .then(() => {
         let iframe = document.createElement('iframe');
-        iframe.src = 'https://localhost:8443/js-test-resources/bluetooth/requestDevice-in-iframe.html';
+        iframe.src = '/js-test-resources/bluetooth/requestDevice-in-iframe.html';
+        iframe.allow = "bluetooth none";
         document.body.appendChild(iframe);
       });
-  }, 'Request device from a unique origin. Should reject with SecurityError.');
+  }, 'Request device from a different origin with allow=bluetooth. Should succeed.');
   </script>
 </body>
