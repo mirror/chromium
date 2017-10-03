@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "2a22aa6e_1ae8835c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-10-03T03:08:36Z",
+      "side": 1,
+      "message": "CryptohomeClient is not tested, so this line provides false sense of security.\nProbably this line should be removed or replaced w/ just \"build\".",
+      "range": {
+        "startLine": 10,
+        "startChar": 5,
+        "endLine": 10,
+        "endChar": 16
+      },
+      "revId": "c640d5726800a606b133cee3f2eb17889ce45d5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0003c941_79ed863a",
         "filename": "chromeos/dbus/cryptohome_client.h",
         "patchSetId": 2
