@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "331890ef_1373958b",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-03T23:53:04Z",
+      "side": 1,
+      "message": "Update comment.",
+      "revId": "6a327c549a93bec0fdf5d34e3b49f1d6e78e4638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90656467_259739e4",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1236,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-03T23:53:04Z",
+      "side": 1,
+      "message": "This doesn\u0027t follow the initialization pattern for other variables nearby.",
+      "revId": "6a327c549a93bec0fdf5d34e3b49f1d6e78e4638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
