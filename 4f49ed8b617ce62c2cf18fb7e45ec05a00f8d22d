@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "8f7d579a_eb093e34",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-03T22:39:45Z",
+      "side": 1,
+      "message": "Do you think is worth trying to make such assertions about fired WebUI events easier? Two approaches come in mind:\n\n1) Wrap this logic to a helper method assertWebUIEventFired(CallData\u0026, std::string), or\n2) Override FireWebUIListener in TestPrintPreviewHandler and have it store all calls, similar to what TestWebUI does (https://cs.chromium.org/chromium/src/content/public/test/test_web_ui.cc?l\u003d57)",
+      "revId": "4f49ed8b617ce62c2cf18fb7e45ec05a00f8d22d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c8e5698e_0ea5b41b",
         "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler_unittest.cc",
         "patchSetId": 5
