@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "9208c3ff_0501a4c4",
+        "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-10-03T21:01:34Z",
+      "side": 1,
+      "message": "do we need this one?",
+      "range": {
+        "startLine": 19,
+        "startChar": 45,
+        "endLine": 19,
+        "endChar": 78
+      },
+      "revId": "7fba487aa9e1f8b983e5f1aa8190c4519de1d8d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34c5a4b7_7b967065",
         "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.h",
         "patchSetId": 18
@@ -41,6 +64,98 @@
         "startChar": 24,
         "endLine": 116,
         "endChar": 40
+      },
+      "revId": "7fba487aa9e1f8b983e5f1aa8190c4519de1d8d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "966cc3f0_8cbcf373",
+        "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-10-03T21:01:34Z",
+      "side": 1,
+      "message": "could you explain why this function needs to be virtual?",
+      "range": {
+        "startLine": 152,
+        "startChar": 2,
+        "endLine": 152,
+        "endChar": 9
+      },
+      "revId": "7fba487aa9e1f8b983e5f1aa8190c4519de1d8d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b04b157b_52ad8fc6",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-10-03T21:01:34Z",
+      "side": 1,
+      "message": "int32_t",
+      "range": {
+        "startLine": 120,
+        "startChar": 2,
+        "endLine": 120,
+        "endChar": 5
+      },
+      "revId": "7fba487aa9e1f8b983e5f1aa8190c4519de1d8d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33b28b20_0815bc4b",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-10-03T21:01:34Z",
+      "side": 1,
+      "message": "uint32_t",
+      "range": {
+        "startLine": 139,
+        "startChar": 2,
+        "endLine": 139,
+        "endChar": 5
+      },
+      "revId": "7fba487aa9e1f8b983e5f1aa8190c4519de1d8d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d86c9e9c_4d5fed1b",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-10-03T21:01:34Z",
+      "side": 1,
+      "message": "int32_t",
+      "range": {
+        "startLine": 168,
+        "startChar": 2,
+        "endLine": 168,
+        "endChar": 5
       },
       "revId": "7fba487aa9e1f8b983e5f1aa8190c4519de1d8d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -225,6 +340,52 @@
         "startChar": 5,
         "endLine": 89,
         "endChar": 13
+      },
+      "revId": "7fba487aa9e1f8b983e5f1aa8190c4519de1d8d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c0a3412_67e7e63f",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-10-03T21:01:34Z",
+      "side": 1,
+      "message": "uint32_t from AggregatedHitTestRegion?",
+      "range": {
+        "startLine": 93,
+        "startChar": 19,
+        "endLine": 93,
+        "endChar": 22
+      },
+      "revId": "7fba487aa9e1f8b983e5f1aa8190c4519de1d8d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f80fe5c9_07046b8d",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-10-03T21:01:34Z",
+      "side": 1,
+      "message": "int32_t from AggregatedHitTestRegion?",
+      "range": {
+        "startLine": 96,
+        "startChar": 19,
+        "endLine": 96,
+        "endChar": 22
       },
       "revId": "7fba487aa9e1f8b983e5f1aa8190c4519de1d8d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -439,6 +600,75 @@
     },
     {
       "key": {
+        "uuid": "0a08bcaa_c5fa5382",
+        "filename": "components/viz/service/hit_test/hit_test_manager.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-10-03T21:01:34Z",
+      "side": 1,
+      "message": "can we add a TODO to verify that this client is allowed to submit hit-test data for the region associated with this |frame_sink_id|?",
+      "range": {
+        "startLine": 56,
+        "startChar": 23,
+        "endLine": 56,
+        "endChar": 36
+      },
+      "revId": "7fba487aa9e1f8b983e5f1aa8190c4519de1d8d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2c55d2a_3161bc0a",
+        "filename": "components/viz/service/hit_test/hit_test_manager.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-10-03T21:01:34Z",
+      "side": 1,
+      "message": "nit: add {} since it\u0027s multi-line?",
+      "range": {
+        "startLine": 65,
+        "startChar": 54,
+        "endLine": 65,
+        "endChar": 55
+      },
+      "revId": "7fba487aa9e1f8b983e5f1aa8190c4519de1d8d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff55a3dd_596b1b77",
+        "filename": "components/viz/service/hit_test/hit_test_manager.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-10-03T21:01:34Z",
+      "side": 1,
+      "message": "nit: activated",
+      "range": {
+        "startLine": 81,
+        "startChar": 23,
+        "endLine": 81,
+        "endChar": 32
+      },
+      "revId": "7fba487aa9e1f8b983e5f1aa8190c4519de1d8d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24c2987a_db65e840",
         "filename": "components/viz/service/hit_test/hit_test_manager.cc",
         "patchSetId": 18
@@ -450,6 +680,75 @@
       "writtenOn": "2017-10-03T17:15:04Z",
       "side": 1,
       "message": "Delete the empty line.",
+      "revId": "7fba487aa9e1f8b983e5f1aa8190c4519de1d8d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0ecc1ba_eb5696a9",
+        "filename": "components/viz/service/hit_test/hit_test_manager.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-10-03T21:01:34Z",
+      "side": 1,
+      "message": "nit: maybe hit_test_region_list_map or something that\u0027s a bit more descriptive?",
+      "range": {
+        "startLine": 90,
+        "startChar": 8,
+        "endLine": 90,
+        "endChar": 11
+      },
+      "revId": "7fba487aa9e1f8b983e5f1aa8190c4519de1d8d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0702282a_95774498",
+        "filename": "components/viz/service/hit_test/hit_test_manager.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-10-03T21:01:34Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 107,
+        "startChar": 8,
+        "endLine": 107,
+        "endChar": 11
+      },
+      "revId": "7fba487aa9e1f8b983e5f1aa8190c4519de1d8d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4553dfa_466eb589",
+        "filename": "components/viz/service/hit_test/hit_test_manager.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-10-03T21:01:34Z",
+      "side": 1,
+      "message": "should it be AggregatedHitTestRegion?",
+      "range": {
+        "startLine": 21,
+        "startChar": 43,
+        "endLine": 21,
+        "endChar": 60
+      },
       "revId": "7fba487aa9e1f8b983e5f1aa8190c4519de1d8d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
