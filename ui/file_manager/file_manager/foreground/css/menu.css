@@ -87,3 +87,7 @@ cr-menu.files-menu > cr-menu-item > paper-ripple {
   width: 150%;
   z-index: 0;
 }
+
+div[menu='#add-new-services-menu'] {
+    overflow: hidden;
+}
