@@ -32,10 +32,15 @@ def _GetDirAbove(dirname):
 # Manually check for the command-line flag. (This isn't quite right, since it
 # ignores, e.g., "--", but it's close enough.)
 if "--use_bundled_pylibs" in sys.argv[1:]:
-  sys.path.insert(0, os.path.join(_GetDirAbove("mojo"), "third_party"))
+  sys.path.insert(0, os.path.join(_GetDirAbove("components"), "third_party"))
 
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                "pylib"))
+mojo_pylib_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                               "../../../..",
+                               "mojo/public/tools/bindings/pylib")
+
+print os.path.abspath(mojo_pylib_path)
+
+sys.path.insert(0, os.path.abspath(mojo_pylib_path))
 
 from mojom.error import Error
 import mojom.fileutil as fileutil
@@ -47,9 +52,6 @@ from mojom.parse.parser import Parse
 
 _BUILTIN_GENERATORS = {
   "c": "cronet_c_generator.py",
-  "c++": "mojom_cpp_generator.py",
-  "javascript": "mojom_js_generator.py",
-  "java": "mojom_java_generator.py",
 }
 
 
@@ -62,11 +64,12 @@ def LoadGenerators(generators_string):
   for generator_name in [s.strip() for s in generators_string.split(",")]:
     language = generator_name.lower()
     if language in _BUILTIN_GENERATORS:
-      generator_name = os.path.join(script_dir, "generators",
+      generator_name = os.path.join(script_dir,
                                     _BUILTIN_GENERATORS[language])
     else:
       print "Unknown generator name %s" % generator_name
       sys.exit(1)
+    print generator_name
     generator_module = imp.load_source(os.path.basename(generator_name)[:-3],
                                        generator_name)
     generators[language] = generator_module
