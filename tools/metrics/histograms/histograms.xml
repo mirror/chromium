@@ -50017,6 +50017,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Notifications.Linux.NativeNotificationsEnabled"
+    enum="BooleanEnabled">
+  <owner>thomasanderson@chromium.org</owner>
+  <summary>
+    Whether the enable-native-notifications flag is set to &quot;Enabled&quot;.
+    (Linux only) Logged on each start up.
+  </summary>
+</histogram>
+
 <histogram name="Notifications.LoadFailTime" units="ms">
 <!-- Name completed by histogram_suffixes name="NotificationImageTypes" -->
 

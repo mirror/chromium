@@ -6,6 +6,7 @@
 
 #include "base/command_line.h"
 #include "base/memory/singleton.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/win/windows_version.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
@@ -66,7 +67,11 @@ KeyedService* NotificationDisplayServiceFactory::BuildServiceInstanceFor(
       Profile::FromBrowserContext(context),
       g_browser_process->notification_platform_bridge());
 #endif
-  if (base::FeatureList::IsEnabled(features::kNativeNotifications) &&
+  bool native_notifications_enabled =
+      base::FeatureList::IsEnabled(features::kNativeNotifications);
+  UMA_HISTOGRAM_BOOLEAN("Notifications.Linux.NativeNotificationsEnabled",
+                        native_notifications_enabled);
+  if (native_notifications_enabled &&
       g_browser_process->notification_platform_bridge()) {
     return new NativeNotificationDisplayService(
         Profile::FromBrowserContext(context),
