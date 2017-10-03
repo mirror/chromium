@@ -46,6 +46,30 @@
       "revId": "e6a20ce7bd282872710784cb1e4849f3fb3635fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54ccfe92_2624c377",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_safe_media_webview_content.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-10-03T11:12:57Z",
+      "side": 1,
+      "message": "Oops, sorry! It seems I was reading different place...",
+      "parentUuid": "30a74fd1_965cd30b",
+      "range": {
+        "startLine": 23,
+        "startChar": 12,
+        "endLine": 23,
+        "endChar": 51
+      },
+      "revId": "e6a20ce7bd282872710784cb1e4849f3fb3635fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
