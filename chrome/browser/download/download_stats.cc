@@ -54,3 +54,25 @@ void RecordDownloadOpenMethod(ChromeDownloadOpenMethod open_method) {
 void RecordDatabaseAvailability(bool is_available) {
   UMA_HISTOGRAM_BOOLEAN("Download.Database.IsAvailable", is_available);
 }
+
+void RecordDownloadPathGeneration(DownloadPathGenerationEvent event,
+                                  bool is_transient) {
+  if (is_transient) {
+    UMA_HISTOGRAM_ENUMERATION("Download.PathGenerationEvent.Transient", event,
+                              DownloadPathGenerationEvent::MAX);
+  } else {
+    UMA_HISTOGRAM_ENUMERATION("Download.PathGenerationEvent.UserDownload",
+                              event, DownloadPathGenerationEvent::MAX);
+  }
+}
+
+void RecordDownloadPathValidation(PathValidationResult result,
+                                  bool is_transient) {
+  if (is_transient) {
+    UMA_HISTOGRAM_ENUMERATION("Download.PathValidationResult.Transient", result,
+                              PathValidationResult::MAX);
+  } else {
+    UMA_HISTOGRAM_ENUMERATION("Download.PathValidationResult.UserDownload",
+                              result, PathValidationResult::MAX);
+  }
+}

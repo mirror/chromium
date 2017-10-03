@@ -17,12 +17,15 @@ namespace content {
 class DownloadItem;
 }
 
+// Used in histograms, update histograms.xml and enums.xml when adding entry.
+// Do not remove entries.
 enum class PathValidationResult {
-  SUCCESS,
+  SUCCESS = 0,
   PATH_NOT_WRITABLE,
   NAME_TOO_LONG,
   CONFLICT,
-  SAME_AS_SOURCE
+  SAME_AS_SOURCE,
+  MAX,
 };
 
 // Chrome attempts to uniquify filenames that are assigned to downloads in order
