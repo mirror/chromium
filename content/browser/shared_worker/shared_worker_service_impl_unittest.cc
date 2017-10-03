@@ -244,6 +244,7 @@ class MockSharedWorkerFactory : public mojom::SharedWorkerFactory {
               create_params->info->content_security_policy_type);
     *host = std::move(create_params->host);
     *request = std::move(create_params->request);
+    EXPECT_TRUE(create_params->interface_provider);
   }
 
   void CheckNotReceivedCreateSharedWorker() { EXPECT_FALSE(create_params_); }
@@ -256,7 +257,9 @@ class MockSharedWorkerFactory : public mojom::SharedWorkerFactory {
       int32_t route_id,
       blink::mojom::WorkerContentSettingsProxyPtr content_settings,
       mojom::SharedWorkerHostPtr host,
-      mojom::SharedWorkerRequest request) override {
+      mojom::SharedWorkerRequest request,
+      service_manager::mojom::InterfaceProviderPtr interface_provider)
+      override {
     CHECK(!create_params_);
     create_params_ = std::make_unique<CreateParams>();
     create_params_->info = std::move(info);
@@ -265,6 +268,7 @@ class MockSharedWorkerFactory : public mojom::SharedWorkerFactory {
     create_params_->content_settings = std::move(content_settings);
     create_params_->host = std::move(host);
     create_params_->request = std::move(request);
+    create_params_->interface_provider = std::move(interface_provider);
   }
 
   struct CreateParams {
@@ -274,6 +278,7 @@ class MockSharedWorkerFactory : public mojom::SharedWorkerFactory {
     blink::mojom::WorkerContentSettingsProxyPtr content_settings;
     mojom::SharedWorkerHostPtr host;
     mojom::SharedWorkerRequest request;
+    service_manager::mojom::InterfaceProviderPtr interface_provider;
   };
 
   mojo::Binding<mojom::SharedWorkerFactory> binding_;
