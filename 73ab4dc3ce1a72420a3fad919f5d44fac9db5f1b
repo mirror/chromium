@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd2e280d_2e409eaa",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 3031,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-03T14:44:59Z",
+      "side": 1,
+      "message": "UpdateDisplays doesn\u0027t use DisplayConfigurator/DisplayChangeObserver.\nI filed 771178 to fix the test harness so that we can add such test.",
+      "revId": "73ab4dc3ce1a72420a3fad919f5d44fac9db5f1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
