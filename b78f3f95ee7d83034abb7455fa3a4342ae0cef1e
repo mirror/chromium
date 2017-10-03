@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "afde45b2_dff45cc0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-03T08:37:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f568fd82_b2d91d9b",
+      "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2cb5450_e65ace78",
         "filename": "chrome/gpu/chrome_arc_video_decode_accelerator.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-02T07:34:42Z",
       "side": 1,
       "message": "Unfortunately, if vda is not initialized, arc_client_ is nullptr as well. We cannot report the error back in this case.",
+      "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80227698_6a6e7672",
+        "filename": "chrome/gpu/chrome_arc_video_decode_accelerator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-03T08:37:49Z",
+      "side": 1,
+      "message": "That\u0027s true, sorry, reverting.",
+      "parentUuid": "f2cb5450_e65ace78",
       "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c1300d5b_03440a94",
+        "filename": "chrome/gpu/chrome_arc_video_decode_accelerator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-03T08:37:49Z",
+      "side": 1,
+      "message": "Let\u0027s have both :)",
+      "parentUuid": "f56f7111_b194691b",
+      "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f18b9454_84793cf3",
         "filename": "chrome/gpu/chrome_arc_video_decode_accelerator.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "644c85a8_8995395d",
+        "filename": "chrome/gpu/chrome_arc_video_decode_accelerator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-03T08:37:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f18b9454_84793cf3",
+      "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "3eb551d0_7fddefaf",
+        "filename": "chrome/gpu/chrome_arc_video_decode_accelerator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-03T08:37:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b53f887_aae1fc5a",
+      "range": {
+        "startLine": 223,
+        "startChar": 37,
+        "endLine": 223,
+        "endChar": 47
+      },
+      "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d35a8fb9_d95c20c6",
         "filename": "chrome/gpu/chrome_arc_video_decode_accelerator.cc",
         "patchSetId": 3
@@ -107,6 +203,24 @@
       "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4e27c11_0a080dcc",
+        "filename": "chrome/gpu/chrome_arc_video_decode_accelerator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-03T08:37:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d35a8fb9_d95c20c6",
+      "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "df9b2eec_822b35c6",
+        "filename": "chrome/gpu/chrome_content_gpu_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-03T08:37:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dce38d7c_97e4136c",
+      "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57696878_ab3b0561",
         "filename": "chrome/gpu/chrome_content_gpu_client.h",
         "patchSetId": 3
@@ -138,6 +270,24 @@
       "writtenOn": "2017-10-02T07:34:42Z",
       "side": 1,
       "message": "I am confusing about the two manager. Could you give a brief comments about these two managers and the relations in between?",
+      "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c570c59c_29e8e49f",
+        "filename": "chrome/gpu/chrome_content_gpu_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-03T08:37:49Z",
+      "side": 1,
+      "message": "gpu::ProtectedGpuMemoryBufferManager is a GPU process interface (also a service for privileged clients of GPU process), which provides access to protected GpuMemoryBuffers. A client can pass a GpuMemoryBufferHandle to it, and if the handle is backed by a protected buffer, this will return another GpuMemoryBufferHandle, which would allow access to the contents.\n\nchromeos::arc::ProtectedBufferManager is a cros/arc implementation of gpu::ProtectedGpuMemoryBufferManager interface, which also provides additional functionality, including protected buffer allocation.",
+      "parentUuid": "57696878_ab3b0561",
       "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "c2a7f1f4_92c29d1d",
+        "filename": "chrome/gpu/protected_buffer_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-03T08:37:49Z",
+      "side": 1,
+      "message": "I would prefer to leave \"Scoped\" here explicitly to indicate that this will be released on further failures.",
+      "parentUuid": "8baa76db_206171dd",
+      "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf64984f_27fad139",
         "filename": "chrome/gpu/protected_buffer_manager.cc",
         "patchSetId": 3
@@ -172,6 +340,24 @@
       "writtenOn": "2017-10-02T07:34:42Z",
       "side": 1,
       "message": "mmm.... Why not directly allocate shared memory from base::SharedMemory?",
+      "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0041631e_0cb711a1",
+        "filename": "chrome/gpu/protected_buffer_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-03T08:37:49Z",
+      "side": 1,
+      "message": "GPU process does not have rights to allocate shared memory, only the Browser process can do that. This actually results in Browser allocating and sharing the memory with us.",
+      "parentUuid": "bf64984f_27fad139",
       "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -201,6 +387,30 @@
     },
     {
       "key": {
+        "uuid": "535b7841_03610192",
+        "filename": "chrome/gpu/protected_buffer_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-03T08:37:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59553b86_7c7dd1ea",
+      "range": {
+        "startLine": 175,
+        "startChar": 14,
+        "endLine": 175,
+        "endChar": 20
+      },
+      "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "771bc684_77b7871f",
         "filename": "chrome/gpu/protected_buffer_manager.cc",
         "patchSetId": 3
@@ -212,6 +422,30 @@
       "writtenOn": "2017-10-02T07:34:42Z",
       "side": 1,
       "message": "auto",
+      "range": {
+        "startLine": 281,
+        "startChar": 21,
+        "endLine": 281,
+        "endChar": 33
+      },
+      "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d780df14_e6febdfa",
+        "filename": "chrome/gpu/protected_buffer_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-03T08:37:49Z",
+      "side": 1,
+      "message": "Here as well would prefer to make this explicit.",
+      "parentUuid": "771bc684_77b7871f",
       "range": {
         "startLine": 281,
         "startChar": 21,
@@ -241,6 +475,24 @@
     },
     {
       "key": {
+        "uuid": "8b362360_e7a3e0e2",
+        "filename": "chrome/gpu/protected_buffer_manager_proxy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-03T08:37:49Z",
+      "side": 1,
+      "message": "Hm, sorry, not sure what happened here, perhaps a rebase artifact. This is a OnceCallback in ToT already.",
+      "parentUuid": "bb1ba157_6f4ff37e",
+      "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "671b1795_d667be2d",
         "filename": "components/arc/common/video_decode_accelerator.mojom",
         "patchSetId": 3
@@ -255,6 +507,24 @@
       "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca62b52d_3a887473",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-03T08:37:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "671b1795_d667be2d",
+      "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -292,6 +562,24 @@
     },
     {
       "key": {
+        "uuid": "be5ffb73_8dbdf759",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-03T08:37:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "651ca9cc_cd17c4f0",
+      "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "750280aa_1a7fd930",
         "filename": "components/arc/common/video_decode_accelerator.mojom",
         "patchSetId": 3
@@ -303,6 +591,24 @@
       "writtenOn": "2017-10-02T07:34:42Z",
       "side": 1,
       "message": "Document about the return value.",
+      "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa252c7c_1871ab7d",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-03T08:37:49Z",
+      "side": 1,
+      "message": "Per offline discussion, documentation is in the .h file.",
+      "parentUuid": "750280aa_1a7fd930",
       "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -326,6 +632,24 @@
     },
     {
       "key": {
+        "uuid": "ea8d4dfb_71bc7c66",
+        "filename": "gpu/ipc/service/gpu_memory_buffer_factory_native_pixmap.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-03T08:37:49Z",
+      "side": 1,
+      "message": "Yes, that\u0027s another approach we could have taken. This is trying to make minimal changes to Ozone however.",
+      "parentUuid": "39a86190_d5d8543a",
+      "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8462b4d_29419e85",
         "filename": "gpu/ipc/service/protected_gpu_memory_buffer_manager.h",
         "patchSetId": 3
@@ -337,6 +661,30 @@
       "writtenOn": "2017-10-03T01:38:57Z",
       "side": 1,
       "message": "The term \"protectedbuffer\" is a bit confusing sometimes. I think of it as the buffer instance that doesn\u0027t provide access to the real contents (the unprivileged part) and the buffer returned by the function below as not protected as it can be used to access the real contents.\n\nDoes Android framework not refer to the gralloc buffer holding the unprivileged handle as a \"protected buffer\" in our case? That could be a bit confusing in that case.",
+      "range": {
+        "startLine": 14,
+        "startChar": 3,
+        "endLine": 17,
+        "endChar": 31
+      },
+      "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0895fa17_c9d9ef75",
+        "filename": "gpu/ipc/service/protected_gpu_memory_buffer_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-03T08:37:49Z",
+      "side": 1,
+      "message": "The intention here is to have a platform-agnostic GPU process service. A protected buffer in Chrome terms is a buffer that only privileged clients can access via this service.\n\nThe idea is that a client can query this service with a GpuMemoryBufferHandle that gives no access to a buffer, and get a different GpuMemoryBufferHandle that gives access to the buffer. Any implementation details are a separate issue, the client\u0027s view is that it\u0027s one buffer, and there are two types of handles to it - one that gives access, and one that does not.",
+      "parentUuid": "a8462b4d_29419e85",
       "range": {
         "startLine": 14,
         "startChar": 3,
@@ -381,6 +729,24 @@
       "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a20fc778_287b227e",
+        "filename": "gpu/ipc/service/protected_gpu_memory_buffer_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-03T08:37:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "49e85b0f_ce035d37",
+      "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -458,6 +824,30 @@
       "writtenOn": "2017-09-30T15:09:21Z",
       "side": 1,
       "message": "we shouldn\u0027t be relying on \"BufferUsage\" for this. BufferUsage is for client side allocation and not for import. Import code shouldn\u0027t in general rely on BufferUsage to work correctly. Everything that is needed to export/import buffers should be part of the native pixmap handle.",
+      "range": {
+        "startLine": 184,
+        "startChar": 4,
+        "endLine": 184,
+        "endChar": 26
+      },
+      "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7f1f337_0323eeaf",
+        "filename": "ui/ozone/platform/drm/gpu/drm_thread.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-10-03T08:37:49Z",
+      "side": 1,
+      "message": "GbmBuffer::CreateBufferFromFds() won\u0027t gbm_bo_import() a buffer unless it can have SCANOUT.\nThis is added so we would attempt an import for dummy handles as well.\n\nAn alternative could perhaps be to have a new ozone call, something like CreateNativePixmapFromProtectedBufferHandle(), which would always import. But then, perhaps it shouldn\u0027t be a native pixmap at all, but really, as you suggest, we could have a ProtectedBuffer implementation in ozone itself, and have a CreateProtectedBufferFromHandle() call in ozone, returning a ProtectedBuffer object, instead of a NativePixmap...",
+      "parentUuid": "b780b935_4aa35c89",
       "range": {
         "startLine": 184,
         "startChar": 4,
