@@ -16,6 +16,24 @@
       "revId": "50c40c96f541bc185ec487095b2995b4f1cb1acd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac7bfbda_3a02b215",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/omnibox/AutocompleteEditTextTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-10-03T06:56:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b73b088c_01122abf",
+      "revId": "50c40c96f541bc185ec487095b2995b4f1cb1acd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
