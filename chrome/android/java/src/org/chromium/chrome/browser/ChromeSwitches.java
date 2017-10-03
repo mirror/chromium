@@ -72,6 +72,12 @@ public abstract class ChromeSwitches {
     public static final String FORCE_SHOW_UPDATE_MENU_BADGE = "force-show-update-menu-badge";
 
     /**
+     * Switch to grant geolocation permission to all origins for testing.
+     */
+    public static final String GRANT_GEOLOCATION_PERMISSION_TO_ALL_ORIGINS_FOR_TESTING =
+            "grant-geolocation-permission-to-all-origins-for-testing";
+
+    /**
      * Sets the market URL for Chrome for use in testing.
      */
     public static final String MARKET_URL_FOR_TESTING = "market-url-for-testing";
