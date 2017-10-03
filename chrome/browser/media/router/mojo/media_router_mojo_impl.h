@@ -85,12 +85,14 @@ class MediaRouterMojoImpl : public MediaRouterBase,
   scoped_refptr<MediaRouteController> GetRouteController(
       const MediaRoute::Id& route_id) final;
   void RegisterMediaRouteProvider(
+      mojom::MediaRouteProvider::Id provider_id,
       mojom::MediaRouteProviderPtr media_route_provider_ptr,
       mojom::MediaRouter::RegisterMediaRouteProviderCallback callback) override;
 
-  // Issues 0+ calls to |media_route_provider_| to ensure its state is in sync
+  // Issues 0+ calls to the provider to ensure its state is in sync
   // with MediaRouter on a best-effort basis.
-  virtual void SyncStateToMediaRouteProvider();
+  virtual void SyncStateToMediaRouteProvider(
+      mojom::MediaRouteProvider::Id provider_id);
 
   const std::string& instance_id() const { return instance_id_; }
 
@@ -98,18 +100,10 @@ class MediaRouterMojoImpl : public MediaRouterBase,
     instance_id_ = instance_id;
   }
 
-  void set_media_route_provider_for_test(
-      mojom::MediaRouteProviderPtr media_route_provider) {
-    media_route_provider_ = std::move(media_route_provider);
-  }
-
  protected:
   // Standard constructor, used by
   // MediaRouterMojoImplFactory::GetApiForBrowserContext.
   explicit MediaRouterMojoImpl(content::BrowserContext* context);
-
-  // Error handler callback for |media_route_provider_|.
-  virtual void OnConnectionError();
 
   // Requests MRPM to update media sinks.  This allows MRPs that only do
   // discovery on sink queries an opportunity to update discovery results
@@ -119,20 +113,40 @@ class MediaRouterMojoImpl : public MediaRouterBase,
   // Callback called by MRP's CreateMediaRouteController().
   void OnMediaControllerCreated(const MediaRoute::Id& route_id, bool success);
 
-  // Binds |this| to a Mojo interface request.
-  void BindToMojoRequest(mojo::InterfaceRequest<mojom::MediaRouter> request);
+  // Called when the Mojo pointer for |provider_name| is invalidated. Removes
+  // the pointer from |media_route_providers_|.
+  void OnProviderInvalidated(mojom::MediaRouteProvider::Id provider_id);
+
+  // Creates a binding between |this| and |request|. If such a binding was
+  // previously made for the same |provider_name|, that is invalidated.
+  void BindToMojoRequest(mojom::MediaRouteProvider::Id provider_id,
+                         mojo::InterfaceRequest<mojom::MediaRouter> request);
+
+  // Methods for obtaining the name of the provider associated with the given
+  // object. They return an empty string when such a provider is not found.
+  mojom::MediaRouteProvider* GetProviderForRoute(
+      const MediaRoute::Id& route_id);
+  mojom::MediaRouteProvider* GetProviderForSink(
+      const MediaSink::Id& sink_id,
+      const MediaSource::Id& source_id);
+  virtual mojom::MediaRouteProvider* GetProviderForPresentation(
+      const std::string& presentation_id);
+
+  // Gets the name that a provider is registered under in
+  // |media_route_providers_|. E.g. the registered name for "cast" or "dial"
+  // provider may be "extension".
+  virtual mojom::MediaRouteProvider* GetCanonicalProvider(
+      const std::string& provider_name);
 
   content::BrowserContext* context() const { return context_; }
 
-  // Mojo proxy object for the Media Route Provider Manager.
-  // Set to null initially, and later set to the Provider Manager proxy object
-  // passed in via |RegisterMediaRouteProvider()|.
-  // This is set to null again when the component extension is suspended
-  // if or a Mojo channel error occured.
-  mojom::MediaRouteProviderPtr media_route_provider_;
+  // Mojo pointers to media route providers. Providers are added via
+  // RegisterMediaRouteProvider().
+  base::flat_map<mojom::MediaRouteProvider::Id, mojom::MediaRouteProviderPtr>
+      media_route_providers_;
 
   // Stores route controllers that can be used to send media commands.
-  std::unordered_map<MediaRoute::Id, MediaRouteController*> route_controllers_;
+  base::flat_map<MediaRoute::Id, MediaRouteController*> route_controllers_;
 
  private:
   friend class MediaRouterFactory;
@@ -173,44 +187,121 @@ class MediaRouterMojoImpl : public MediaRouterBase,
                            PresentationConnectionStateChangedCallback);
   FRIEND_TEST_ALL_PREFIXES(MediaRouterMojoImplTest,
                            PresentationConnectionStateChangedCallbackRemoved);
+  FRIEND_TEST_ALL_PREFIXES(MediaRouterMojoImplTest,
+                           SendSinkRequestsToMultipleProviders);
+  FRIEND_TEST_ALL_PREFIXES(MediaRouterMojoImplTest,
+                           SendRouteRequestsToMultipleProviders);
+  FRIEND_TEST_ALL_PREFIXES(MediaRouterMojoImplTest,
+                           ObserveSinksFromMultipleProviders);
+  FRIEND_TEST_ALL_PREFIXES(MediaRouterMojoImplTest,
+                           ObserveRoutesFromMultipleProviders);
   FRIEND_TEST_ALL_PREFIXES(MediaRouterDesktopTest,
                            SyncStateToMediaRouteProvider);
   FRIEND_TEST_ALL_PREFIXES(ExtensionMediaRouteProviderProxyTest,
                            StartAndStopObservingMediaSinks);
 
-  // Represents a query to the MRPM for media sinks and holds observers for the
+  // Represents a query to the MRPs for media sinks and holds observers for the
   // query.
-  struct MediaSinksQuery {
+  class MediaSinksQuery {
    public:
     MediaSinksQuery();
     ~MediaSinksQuery();
 
-    // True if the query has been sent to the MRPM.
-    bool is_active = false;
+    // Caches the list of sinks for the provider returned from the query.
+    void CacheSinksForProvider(mojom::MediaRouteProvider::Id provider_id,
+                               const std::vector<MediaSink>& sinks);
 
-    // Cached list of sinks and origins for the query.
-    base::Optional<std::vector<MediaSink>> cached_sink_list;
+    // Resets the internal state, including the cache for all the providers.
+    void Reset();
+
+    const std::vector<MediaSink>& cached_sink_list() const {
+      return cached_sink_list_;
+    }
+    const base::flat_map<mojom::MediaRouteProvider::Id, std::vector<MediaSink>>&
+    providers_to_sinks() const {
+      return providers_to_sinks_;
+    }
+    base::ObserverList<MediaSinksObserver>& observers() { return observers_; }
+
+    // Cached list of origins for the query.
+    // TODO(takumif): The list of supported origins may differ between MRPs, so
+    // we need more fine-grained associations between sinks and origins.
     std::vector<url::Origin> origins;
 
-    base::ObserverList<MediaSinksObserver> observers;
-
    private:
+    // Cached list of sinks for the query.
+    std::vector<MediaSink> cached_sink_list_;
+
+    // Lists of sinks for each MRP.
+    base::flat_map<mojom::MediaRouteProvider::Id, std::vector<MediaSink>>
+        providers_to_sinks_;
+
+    base::ObserverList<MediaSinksObserver> observers_;
+
     DISALLOW_COPY_AND_ASSIGN(MediaSinksQuery);
   };
 
-  struct MediaRoutesQuery {
+  class MediaRoutesQuery {
    public:
     MediaRoutesQuery();
     ~MediaRoutesQuery();
 
-    // Cached list of routes and joinable route IDs for the query.
-    base::Optional<std::vector<MediaRoute>> cached_route_list;
-    std::vector<std::string> joinable_route_ids;
+    // Caches the list of routes and joinable route IDs for the provider
+    // returned from the query.
+    void CacheRoutesForProvider(
+        mojom::MediaRouteProvider::Id provider_id,
+        const std::vector<MediaRoute>& routes,
+        const std::vector<MediaRoute::Id>& joinable_route_ids);
 
-    base::ObserverList<MediaRoutesObserver> observers;
+    const base::Optional<std::vector<MediaRoute>>& cached_route_list() const {
+      return cached_route_list_;
+    }
+    const std::vector<MediaRoute::Id>& joinable_route_ids() const {
+      return joinable_route_ids_;
+    }
+    const base::flat_map<mojom::MediaRouteProvider::Id,
+                         std::vector<MediaRoute>>&
+    providers_to_routes() const {
+      return providers_to_routes_;
+    }
+    base::ObserverList<MediaRoutesObserver>& observers() { return observers_; }
 
    private:
+    // Cached list of routes and joinable route IDs for the query.
+    base::Optional<std::vector<MediaRoute>> cached_route_list_;
+    std::vector<MediaRoute::Id> joinable_route_ids_;
+
+    // Per-MRP lists of routes and joinable route IDs for the query.
+    base::flat_map<mojom::MediaRouteProvider::Id, std::vector<MediaRoute>>
+        providers_to_routes_;
+    base::flat_map<mojom::MediaRouteProvider::Id, std::vector<MediaRoute::Id>>
+        providers_to_joinable_routes_;
+
+    base::ObserverList<MediaRoutesObserver> observers_;
+
     DISALLOW_COPY_AND_ASSIGN(MediaRoutesQuery);
+  };
+
+  class ProviderSinkAvailability {
+   public:
+    ProviderSinkAvailability();
+    virtual ~ProviderSinkAvailability();
+
+    // Sets the sink availability for |provider_name|. Returns true if
+    // |availability| is different from that already recorded.
+    bool SetAvailabilityForProvider(mojom::MediaRouteProvider::Id provider_id,
+                                    SinkAvailability availability);
+
+    // Returns true if there is a provider whose sink availability isn't
+    // UNAVAILABLE.
+    bool IsAvailable() const;
+
+   private:
+    void UpdateOverallAvailability();
+
+    base::flat_map<mojom::MediaRouteProvider::Id, SinkAvailability>
+        availabilities_;
+    SinkAvailability overall_availability_ = SinkAvailability::UNAVAILABLE;
   };
 
   // MediaRouter implementation.
@@ -230,15 +321,17 @@ class MediaRouterMojoImpl : public MediaRouterBase,
 
   // mojom::MediaRouter implementation.
   void OnIssue(const IssueInfo& issue) override;
-  void OnSinksReceived(const std::string& media_source,
+  void OnSinksReceived(mojom::MediaRouteProvider::Id provider_id,
+                       const std::string& media_source,
                        const std::vector<MediaSinkInternal>& internal_sinks,
                        const std::vector<url::Origin>& origins) override;
   void OnRoutesUpdated(
+      mojom::MediaRouteProvider::Id provider_id,
       const std::vector<MediaRoute>& routes,
       const std::string& media_source,
       const std::vector<std::string>& joinable_route_ids) override;
-  void OnSinkAvailabilityUpdated(
-      mojom::MediaRouter::SinkAvailability availability) override;
+  void OnSinkAvailabilityUpdated(mojom::MediaRouteProvider::Id provider_id,
+                                 SinkAvailability availability) override;
   void OnPresentationConnectionStateChanged(
       const std::string& route_id,
       content::PresentationConnectionState state) override;
@@ -275,14 +368,18 @@ class MediaRouterMojoImpl : public MediaRouterBase,
   // routes do not appear in |routes|.
   void RemoveInvalidRouteControllers(const std::vector<MediaRoute>& routes);
 
-  std::unordered_map<MediaSource::Id, std::unique_ptr<MediaSinksQuery>>
+  // Called when the binding for |provider_name| in |bindings_| is invalidated.
+  // Removes the binding from the map.
+  void OnBindingInvalidated(mojom::MediaRouteProvider::Id provider_id);
+
+  base::flat_map<MediaSource::Id, std::unique_ptr<MediaSinksQuery>>
       sinks_queries_;
 
-  std::unordered_map<MediaSource::Id, std::unique_ptr<MediaRoutesQuery>>
+  base::flat_map<MediaSource::Id, std::unique_ptr<MediaRoutesQuery>>
       routes_queries_;
 
-  std::unordered_map<MediaRoute::Id,
-                     std::unique_ptr<base::ObserverList<RouteMessageObserver>>>
+  base::flat_map<MediaRoute::Id,
+                 std::unique_ptr<base::ObserverList<RouteMessageObserver>>>
       message_observers_;
 
   // GUID unique to each browser run. Component extension uses this to detect
@@ -290,11 +387,13 @@ class MediaRouterMojoImpl : public MediaRouterBase,
   // therefore stale.
   std::string instance_id_;
 
-  // The last reported sink availability from the media route provider manager.
-  mojom::MediaRouter::SinkAvailability availability_;
+  // The last reported sink availability from the media route providers.
+  ProviderSinkAvailability availability_;
 
-  // Binds |this| to a Mojo connection stub for mojom::MediaRouter.
-  mojo::Binding<mojom::MediaRouter> binding_;
+  // Bindings for Mojo pointers to |this| held by media route providers.
+  base::flat_map<mojom::MediaRouteProvider::Id,
+                 std::unique_ptr<mojo::Binding<mojom::MediaRouter>>>
+      bindings_;
 
   content::BrowserContext* const context_;
 
