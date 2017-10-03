@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a5d080b9_c1ec91dc",
+        "filename": "third_party/WebKit/Source/platform/heap/Heap.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-10-03T06:27:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ad4ca5b_6812dc88",
+      "revId": "648fa731b09cedb143f40141392333a77e37d8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b336dd18_0aa3c2c3",
         "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "648fa731b09cedb143f40141392333a77e37d8a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7396602e_a1fb11bf",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1557,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-10-03T06:27:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b336dd18_0aa3c2c3",
+      "revId": "648fa731b09cedb143f40141392333a77e37d8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "47356ba6_c35d3103",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1571,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-10-03T06:27:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acd2b9d8_0ec22831",
+      "revId": "648fa731b09cedb143f40141392333a77e37d8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "229450ed_4db79251",
         "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "648fa731b09cedb143f40141392333a77e37d8a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89128a69_a575eb1e",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1610,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-10-03T06:27:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "229450ed_4db79251",
+      "revId": "648fa731b09cedb143f40141392333a77e37d8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "1c19e0e1_c4b578a3",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1615,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-10-03T06:27:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dda353aa_c713280e",
+      "revId": "648fa731b09cedb143f40141392333a77e37d8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a8906e0_cf608ff7",
         "filename": "third_party/WebKit/Source/platform/heap/ThreadState.h",
         "patchSetId": 4
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "444cee2e_1d0818ba",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-10-03T06:27:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a8906e0_cf608ff7",
+      "revId": "648fa731b09cedb143f40141392333a77e37d8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a29621d_b3da7483",
         "filename": "third_party/WebKit/Source/platform/heap/ThreadState.h",
         "patchSetId": 4
@@ -115,6 +223,24 @@
       "writtenOn": "2017-09-04T12:28:54Z",
       "side": 1,
       "message": "What do you think about putting GCData\u0027s members to Visitor?\n\nThen ThreadState can just hold a pointer to Visitor.",
+      "revId": "648fa731b09cedb143f40141392333a77e37d8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46cbc523_beccd709",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 766,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-10-03T06:27:04Z",
+      "side": 1,
+      "message": "Looking at how simple Visitor is compared to ScriptWrappableVisitor, I propose that we keep Visitor small as it is now. And grow GCData into a class that handles everything related to the current GC over time. Here is my rough proposal:\nhttps://drive.google.com/a/chromium.org/file/d/0BwRi59l_ri74WVcyaVZyRURaZEE/view?usp\u003dsharing",
+      "parentUuid": "6a29621d_b3da7483",
       "revId": "648fa731b09cedb143f40141392333a77e37d8a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
