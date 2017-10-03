@@ -18,6 +18,7 @@
 #include "core/frame/UseCounter.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/page/FrameTree.h"
+#include "modules/credentialmanager/AuthenticatorAssertionResponse.h"
 #include "modules/credentialmanager/AuthenticatorAttestationResponse.h"
 #include "modules/credentialmanager/AuthenticatorResponse.h"
 #include "modules/credentialmanager/Credential.h"
@@ -29,6 +30,7 @@
 #include "modules/credentialmanager/MakeCredentialOptions.h"
 #include "modules/credentialmanager/PasswordCredential.h"
 #include "modules/credentialmanager/PublicKeyCredential.h"
+#include "modules/credentialmanager/PublicKeyCredentialRequestOptions.h"
 #include "platform/credentialmanager/PlatformFederatedCredential.h"
 #include "platform/credentialmanager/PlatformPasswordCredential.h"
 #include "platform/weborigin/SecurityOrigin.h"
@@ -71,10 +73,6 @@ void RejectDueToCredentialManagerError(ScriptPromiseResolver* resolver,
     case kWebCredentialManagerCancelledError:
       resolver->Reject(DOMException::Create(
           kNotAllowedError, "The user cancelled the operation."));
-      break;
-    case kWebCredentialManagerNotImplementedError:
-      resolver->Reject(DOMException::Create(
-          kNotAllowedError, "The operation is not implemented."));
       break;
     case kWebCredentialManagerUnknownError:
     default:
@@ -222,30 +220,49 @@ class PublicKeyCallbacks : public WebAuthenticationClient::PublicKeyCallbacks {
     if (!context)
       return;
     Frame* frame = ToDocument(context)->GetFrame();
-    SECURITY_CHECK(!frame || frame == frame->Tree().Top());
+    // SECURITY_CHECK(!frame || frame == frame->Tree().Top());
 
     if (!credential || !frame) {
       resolver_->Resolve();
       return;
     }
 
-    if (credential->client_data_json.IsEmpty() ||
-        credential->response->attestation_object.IsEmpty()) {
+    if (credential->client_data_json.IsEmpty()) {
       resolver_->Resolve();
       return;
     }
 
     DOMArrayBuffer* client_data_buffer =
         VectorToDOMArrayBuffer(std::move(credential->client_data_json));
-    DOMArrayBuffer* attestation_buffer = VectorToDOMArrayBuffer(
-        std::move(credential->response->attestation_object));
     DOMArrayBuffer* raw_id =
         VectorToDOMArrayBuffer(std::move(credential->raw_id));
-    AuthenticatorAttestationResponse* authenticator_response =
-        AuthenticatorAttestationResponse::Create(client_data_buffer,
-                                                 attestation_buffer);
-    resolver_->Resolve(PublicKeyCredential::Create(credential->id, raw_id,
-                                                   authenticator_response));
+
+    // Return the approprirate AuthenticatorAttestationResponse or
+    // an AuthenticatorAssertionResponse.
+    if (!credential->response->signature.IsEmpty() &&
+        !credential->response->authenticator_data.IsEmpty()) {
+      DOMArrayBuffer* authenticator_buffer = VectorToDOMArrayBuffer(
+          std::move(credential->response->authenticator_data));
+      DOMArrayBuffer* signature_buffer =
+          VectorToDOMArrayBuffer(std::move(credential->response->signature));
+      AuthenticatorAssertionResponse* authenticator_response =
+          AuthenticatorAssertionResponse::Create(
+              client_data_buffer, authenticator_buffer, signature_buffer);
+      resolver_->Resolve(PublicKeyCredential::Create(credential->id, raw_id,
+                                                     authenticator_response));
+
+    } else if (!credential->response->attestation_object.IsEmpty()) {
+      DOMArrayBuffer* attestation_buffer = VectorToDOMArrayBuffer(
+          std::move(credential->response->attestation_object));
+      AuthenticatorAttestationResponse* authenticator_response =
+          AuthenticatorAttestationResponse::Create(client_data_buffer,
+                                                   attestation_buffer);
+      resolver_->Resolve(PublicKeyCredential::Create(credential->id, raw_id,
+                                                     authenticator_response));
+    }
+
+    resolver_->Resolve();
+    return;
   }
 
   void OnError(WebCredentialManagerError reason) override {
@@ -276,6 +293,19 @@ ScriptPromise CredentialsContainer::get(
     return promise;
 
   ExecutionContext* context = ExecutionContext::From(script_state);
+
+  if (options.hasPublicKey()) {
+    // Dispatch the publicKey credential getAssertion operation.
+    // TODO(https://crbug.com/740081): Eventually unify with CredMan's mojo.
+    // TODO(engedy): Make frame checks more efficient in the refactor.
+    LocalFrame* frame =
+        ToDocument(ExecutionContext::From(script_state))->GetFrame();
+    CredentialManagerClient::From(ExecutionContext::From(script_state))
+        ->DispatchGetAssertion(*frame, options.publicKey(),
+                               WTF::MakeUnique<PublicKeyCallbacks>(resolver));
+    return promise;
+  }
+
   // Set the default mediation option if none is provided.
   // If both 'unmediated' and 'mediation' are set log a warning if they are
   // contradicting.

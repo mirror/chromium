@@ -36,7 +36,26 @@ const char* kOrigin1 = "https://google.com";
 
 namespace {
 
-const int32_t algorithm_identifier = -7;
+const int32_t kEs256 = -7;
+
+/*
+template <typename Fun>
+std::unique_ptr<ScopedFunctionOverride<Fun>> OverrideFunctionForScope(
+    Fun* target,
+    Fun replacement) {
+  return base::MakeUnique<ScopedFunctionOverride<Fun>>(target, replacement);
+}
+
+class MockU2fRegister : public device::u2f::U2fRegister {
+ public:
+  MOCK_METHOD3(TryRegistration, std::unique_ptr<U2fRequest>(
+    const std::vector<uint8_t>& challenge_hash,
+    const std::vector<uint8_t>& app_param,
+    const ResponseCallback& cb));
+};
+//EXPECT_CALL(mockU2fRegister, TryRegistration())
+    //.WillOnce(Return(TestU2fResponse))
+*/
 
 PublicKeyCredentialEntityPtr GetTestPublicKeyCredentialRPEntity() {
   auto entity = PublicKeyCredentialEntity::New();
@@ -55,7 +74,7 @@ PublicKeyCredentialEntityPtr GetTestPublicKeyCredentialUserEntity() {
 }
 
 std::vector<PublicKeyCredentialParametersPtr>
-GetTestPublicKeyCredentialParameters() {
+GetTestPublicKeyCredentialParameters(int32_t algorithm_identifier) {
   std::vector<PublicKeyCredentialParametersPtr> parameters;
   auto fake_parameter = PublicKeyCredentialParameters::New();
   fake_parameter->type = webauth::mojom::PublicKeyCredentialType::PUBLIC_KEY;
@@ -69,7 +88,7 @@ MakeCredentialOptionsPtr GetTestMakeCredentialOptions() {
   std::vector<uint8_t> buffer(32, 0x0A);
   options->relying_party = GetTestPublicKeyCredentialRPEntity();
   options->user = GetTestPublicKeyCredentialUserEntity();
-  options->crypto_parameters = GetTestPublicKeyCredentialParameters();
+  options->crypto_parameters = GetTestPublicKeyCredentialParameters(kEs256);
   options->challenge = std::move(buffer);
   options->adjusted_timeout = base::TimeDelta::FromMinutes(1);
   return options;
@@ -132,27 +151,11 @@ class TestMakeCredentialCallback {
 
 }  // namespace
 
-// Test that service returns NOT_IMPLEMENTED on a call to MakeCredential.
-TEST_F(AuthenticatorImplTest, MakeCredentialNotImplemented) {
-  SimulateNavigation(GURL(kOrigin1));
-  AuthenticatorPtr authenticator = ConnectToAuthenticator();
-  MakeCredentialOptionsPtr options = GetTestMakeCredentialOptions();
-
-  TestMakeCredentialCallback cb;
-  authenticator->MakeCredential(std::move(options), cb.callback());
-  std::pair<webauth::mojom::AuthenticatorStatus,
-            webauth::mojom::PublicKeyCredentialInfoPtr>& response =
-      cb.WaitForCallback();
-  EXPECT_EQ(webauth::mojom::AuthenticatorStatus::NOT_IMPLEMENTED,
-            response.first);
-}
-
 // Test that service returns NOT_ALLOWED_ERROR on a call to MakeCredential with
 // an opaque origin.
 TEST_F(AuthenticatorImplTest, MakeCredentialOpaqueOrigin) {
   NavigateAndCommit(GURL("data:text/html,opaque"));
   AuthenticatorPtr authenticator = ConnectToAuthenticator();
-
   MakeCredentialOptionsPtr options = GetTestMakeCredentialOptions();
 
   TestMakeCredentialCallback cb;
@@ -161,6 +164,24 @@ TEST_F(AuthenticatorImplTest, MakeCredentialOpaqueOrigin) {
             webauth::mojom::PublicKeyCredentialInfoPtr>& response =
       cb.WaitForCallback();
   EXPECT_EQ(webauth::mojom::AuthenticatorStatus::NOT_ALLOWED_ERROR,
+            response.first);
+}
+
+// Test that service returns NOT_SUPPORTED_ERROR if no parameters contain
+// a supported algorithm.
+TEST_F(AuthenticatorImplTest, MakeCredentialNoSupportedAlgorithm) {
+  SimulateNavigation(GURL(kOrigin1));
+  AuthenticatorPtr authenticator = ConnectToAuthenticator();
+
+  MakeCredentialOptionsPtr options = GetTestMakeCredentialOptions();
+  options->crypto_parameters = GetTestPublicKeyCredentialParameters(123);
+
+  TestMakeCredentialCallback cb;
+  authenticator->MakeCredential(std::move(options), cb.callback());
+  std::pair<webauth::mojom::AuthenticatorStatus,
+            webauth::mojom::PublicKeyCredentialInfoPtr>& response =
+      cb.WaitForCallback();
+  EXPECT_EQ(webauth::mojom::AuthenticatorStatus::NOT_SUPPORTED_ERROR,
             response.first);
 }
 }  // namespace content

@@ -56,7 +56,7 @@ void U2fSign::OnTryDevice(std::vector<std::vector<uint8_t>>::const_iterator it,
   switch (return_code) {
     case U2fReturnCode::SUCCESS:
       state_ = State::COMPLETE;
-      cb_.Run(return_code, response_data);
+      cb_.Run(return_code, response_data, *it);
       break;
     case U2fReturnCode::CONDITIONS_NOT_SATISFIED: {
       // Key handle is accepted by this device, but waiting on user touch. Move

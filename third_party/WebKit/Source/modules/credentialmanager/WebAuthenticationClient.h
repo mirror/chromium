@@ -33,8 +33,8 @@ class WebAuthenticationClient final
   void DispatchMakeCredential(const MakeCredentialOptions&,
                               std::unique_ptr<PublicKeyCallbacks>);
 
-  void GetAssertion(const PublicKeyCredentialRequestOptions&,
-                    PublicKeyCallbacks*);
+  void DispatchGetAssertion(const PublicKeyCredentialRequestOptions&,
+                            std::unique_ptr<PublicKeyCallbacks>);
 
   DECLARE_VIRTUAL_TRACE();
 
