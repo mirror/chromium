@@ -30,7 +30,7 @@ class MockExternalProvider : public ExternalProviderInterface {
   void UpdateOrAddExtension(const ExtensionId& id,
                             const std::string& version,
                             const base::FilePath& path);
-  void UpdateOrAddExtension(std::unique_ptr<ExternalInstallInfoFile> info);
+  void UpdateOrAddExtension(ExternalInstallInfoFile info);
   void RemoveExtension(const ExtensionId& id);
 
   // ExternalProviderInterface implementation:
@@ -47,8 +47,7 @@ class MockExternalProvider : public ExternalProviderInterface {
   void set_visit_count(int visit_count) { visit_count_ = visit_count; }
 
  private:
-  using DataMap =
-      std::map<ExtensionId, std::unique_ptr<ExternalInstallInfoFile>>;
+  using DataMap = std::map<ExtensionId, ExternalInstallInfoFile>;
   DataMap extension_map_;
   Manifest::Location location_;
   VisitorInterface* visitor_;

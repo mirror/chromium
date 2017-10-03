@@ -21,16 +21,14 @@ MockExternalProvider::~MockExternalProvider() {}
 void MockExternalProvider::UpdateOrAddExtension(const ExtensionId& id,
                                                 const std::string& version_str,
                                                 const base::FilePath& path) {
-  auto info = std::make_unique<ExternalInstallInfoFile>(
-      id, base::Version(version_str), path, location_, Extension::NO_FLAGS,
-      false, false);
-  extension_map_[id] = std::move(info);
+  extension_map_.emplace(std::make_pair(
+      id,
+      ExternalInstallInfoFile(id, base::Version(version_str), path, location_,
+                              Extension::NO_FLAGS, false, false)));
 }
 
-void MockExternalProvider::UpdateOrAddExtension(
-    std::unique_ptr<ExternalInstallInfoFile> info) {
-  std::string id = info->extension_id;
-  extension_map_[id] = std::move(info);
+void MockExternalProvider::UpdateOrAddExtension(ExternalInstallInfoFile info) {
+  extension_map_.emplace(std::make_pair(info.extension_id, std::move(info)));
 }
 
 void MockExternalProvider::RemoveExtension(const ExtensionId& id) {
@@ -40,7 +38,7 @@ void MockExternalProvider::RemoveExtension(const ExtensionId& id) {
 void MockExternalProvider::VisitRegisteredExtension() {
   visit_count_++;
   for (const auto& extension_kv : extension_map_)
-    visitor_->OnExternalExtensionFileFound(*extension_kv.second);
+    visitor_->OnExternalExtensionFileFound(extension_kv.second);
   visitor_->OnExternalProviderReady(this);
 }
 
@@ -57,7 +55,7 @@ bool MockExternalProvider::GetExtensionDetails(
     return false;
 
   if (version)
-    version->reset(new base::Version(it->second->version));
+    version->reset(new base::Version(it->second.version));
 
   if (location)
     *location = location_;

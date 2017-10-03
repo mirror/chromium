@@ -270,15 +270,14 @@ scoped_refptr<Extension> CreateExtension(const base::string16& name,
   return extension;
 }
 
-std::unique_ptr<ExternalInstallInfoFile> CreateExternalExtension(
+ExternalInstallInfoFile CreateExternalExtension(
     const extensions::ExtensionId& extension_id,
     const std::string& version_str,
     const base::FilePath& path,
     Manifest::Location location,
     Extension::InitFromValueFlags flags) {
-  return base::MakeUnique<ExternalInstallInfoFile>(
-      extension_id, base::Version(version_str), path, location, flags, false,
-      false);
+  return ExternalInstallInfoFile(extension_id, base::Version(version_str), path,
+                                 location, flags, false, false);
 }
 
 // Helper function to persist the passed directories and file paths in
@@ -1148,12 +1147,11 @@ TEST_F(ExtensionServiceTest, InstallingExternalExtensionWithFlags) {
 
   // Register and install an external extension.
   std::string version_str = "1.0.0.0";
-  std::unique_ptr<ExternalInstallInfoFile> info = CreateExternalExtension(
-      good_crx, version_str, path, Manifest::EXTERNAL_PREF,
-      Extension::FROM_BOOKMARK);
   MockExternalProvider* provider =
       AddMockExternalProvider(Manifest::EXTERNAL_POLICY_DOWNLOAD);
-  provider->UpdateOrAddExtension(std::move(info));
+  provider->UpdateOrAddExtension(CreateExternalExtension(
+      good_crx, version_str, path, Manifest::EXTERNAL_PREF,
+      Extension::FROM_BOOKMARK));
   WaitForExternalExtensionInstalled();
 
   const Extension* extension = service()->GetExtensionById(good_crx, false);
@@ -1178,12 +1176,11 @@ TEST_F(ExtensionServiceTest, UninstallingExternalExtensions) {
 
   std::string version_str = "1.0.0.0";
   // Install an external extension.
-  std::unique_ptr<ExternalInstallInfoFile> info =
-      CreateExternalExtension(good_crx, version_str, path,
-                              Manifest::EXTERNAL_PREF, Extension::NO_FLAGS);
   MockExternalProvider* provider =
       AddMockExternalProvider(Manifest::EXTERNAL_PREF);
-  provider->UpdateOrAddExtension(std::move(info));
+  provider->UpdateOrAddExtension(
+      CreateExternalExtension(good_crx, version_str, path,
+                              Manifest::EXTERNAL_PREF, Extension::NO_FLAGS));
   WaitForExternalExtensionInstalled();
 
   ASSERT_TRUE(service()->GetExtensionById(good_crx, false));
@@ -1194,9 +1191,9 @@ TEST_F(ExtensionServiceTest, UninstallingExternalExtensions) {
                       Extension::EXTERNAL_EXTENSION_UNINSTALLED);
 
   // Try to re-install it externally. This should fail because of the killbit.
-  info = CreateExternalExtension(good_crx, version_str, path,
-                                 Manifest::EXTERNAL_PREF, Extension::NO_FLAGS);
-  provider->UpdateOrAddExtension(std::move(info));
+  provider->UpdateOrAddExtension(
+      CreateExternalExtension(good_crx, version_str, path,
+                              Manifest::EXTERNAL_PREF, Extension::NO_FLAGS));
   content::RunAllTasksUntilIdle();
   ASSERT_TRUE(NULL == service()->GetExtensionById(good_crx, false));
   ValidateIntegerPref(good_crx, "state",
@@ -1205,9 +1202,9 @@ TEST_F(ExtensionServiceTest, UninstallingExternalExtensions) {
   std::string newer_version = "1.0.0.1";
   // Repeat the same thing with a newer version of the extension.
   path = data_dir().AppendASCII("good2.crx");
-  info = CreateExternalExtension(good_crx, newer_version, path,
-                                 Manifest::EXTERNAL_PREF, Extension::NO_FLAGS);
-  provider->UpdateOrAddExtension(std::move(info));
+  provider->UpdateOrAddExtension(
+      CreateExternalExtension(good_crx, newer_version, path,
+                              Manifest::EXTERNAL_PREF, Extension::NO_FLAGS));
   content::RunAllTasksUntilIdle();
   ASSERT_TRUE(NULL == service()->GetExtensionById(good_crx, false));
   ValidateIntegerPref(good_crx, "state",
@@ -1279,17 +1276,16 @@ TEST_F(ExtensionServiceTest, FailOnWrongId) {
 
   // Install an external extension with an ID from the external
   // source that is not equal to the ID in the extension manifest.
-  std::unique_ptr<ExternalInstallInfoFile> info =
+  provider->UpdateOrAddExtension(
       CreateExternalExtension(wrong_id, version_str, path,
-                              Manifest::EXTERNAL_PREF, Extension::NO_FLAGS);
-  provider->UpdateOrAddExtension(std::move(info));
+                              Manifest::EXTERNAL_PREF, Extension::NO_FLAGS));
   WaitForExternalExtensionInstalled();
   ASSERT_FALSE(service()->GetExtensionById(good_crx, false));
 
   // Try again with the right ID. Expect success.
-  info = CreateExternalExtension(correct_id, version_str, path,
-                                 Manifest::EXTERNAL_PREF, Extension::NO_FLAGS);
-  provider->UpdateOrAddExtension(std::move(info));
+  provider->UpdateOrAddExtension(
+      CreateExternalExtension(correct_id, version_str, path,
+                              Manifest::EXTERNAL_PREF, Extension::NO_FLAGS));
   WaitForExternalExtensionInstalled();
   ASSERT_TRUE(service()->GetExtensionById(good_crx, false));
 }
@@ -1304,19 +1300,16 @@ TEST_F(ExtensionServiceTest, FailOnWrongVersion) {
   // Install an external extension with a version from the external
   // source that is not equal to the version in the extension manifest.
   std::string wrong_version_str = "1.2.3.4";
-  std::unique_ptr<ExternalInstallInfoFile> wrong_info =
+  provider->UpdateOrAddExtension(
       CreateExternalExtension(good_crx, wrong_version_str, path,
-                              Manifest::EXTERNAL_PREF, Extension::NO_FLAGS);
-  provider->UpdateOrAddExtension(std::move(wrong_info));
+                              Manifest::EXTERNAL_PREF, Extension::NO_FLAGS));
   WaitForExternalExtensionInstalled();
   ASSERT_FALSE(service()->GetExtensionById(good_crx, false));
 
   // Try again with the right version. Expect success.
   service()->pending_extension_manager()->Remove(good_crx);
-  std::unique_ptr<ExternalInstallInfoFile> correct_info =
-      CreateExternalExtension(good_crx, "1.0.0.0", path,
-                              Manifest::EXTERNAL_PREF, Extension::NO_FLAGS);
-  provider->UpdateOrAddExtension(std::move(correct_info));
+  provider->UpdateOrAddExtension(CreateExternalExtension(
+      good_crx, "1.0.0.0", path, Manifest::EXTERNAL_PREF, Extension::NO_FLAGS));
   WaitForExternalExtensionInstalled();
   ASSERT_TRUE(service()->GetExtensionById(good_crx, false));
 }
