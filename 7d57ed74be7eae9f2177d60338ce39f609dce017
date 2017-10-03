@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d00cab12_5a2ebf67",
+        "filename": "chrome/browser/resources/settings/device_page/night_light_slider.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-03T22:48:45Z",
+      "side": 1,
+      "message": "set isReady_ here instead of calling this directly, see comment below.",
+      "revId": "7d57ed74be7eae9f2177d60338ce39f609dce017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a5d5e59_692c51f6",
+        "filename": "chrome/browser/resources/settings/device_page/night_light_slider.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-03T22:48:45Z",
+      "side": 1,
+      "message": "Having attached() and ready() is generally confusing as the differences are subtle. ready() is called before attached() so this ordering is particularly confusing. I would combine the two.\n\nAlso, the code below is probabaly why you need the async() call. It will insert elements into the DOM, but the new elements may not be stamped immedeately, so attached() is likely getting called before they are, which is why the async() is necessary. Combining these methods and calling async() last with a comment like \"Set isReady_ after the marker elements are rendered\" will make this more clear.",
+      "revId": "7d57ed74be7eae9f2177d60338ce39f609dce017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0b8983c_68cf9810",
+        "filename": "chrome/browser/resources/settings/device_page/night_light_slider.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-03T22:48:45Z",
+      "side": 1,
+      "message": "This should not need to be called explicitly here.",
+      "revId": "7d57ed74be7eae9f2177d60338ce39f609dce017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dc8e131_bfaf8551",
+        "filename": "chrome/browser/resources/settings/device_page/night_light_slider.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-03T22:48:45Z",
+      "side": 1,
+      "message": "This method does two things:\n1. Sets startTime_ and endTime_\n2. Calls updateKnobLeft_ for startKnob and endKnob, which has no dependencies on startTime_ or endTime_.\n\nCombining these is confusing, so we should start by separating the functions.\n\nI would suggest:\n\n1. Eliminate startTime_ and endTime_ and add a getTimeString_() helper and use that directly in the html, i.e.\n\u003cdiv id\u003d\"startLabel\" class\u003d\"label\" ...\u003e\n   [[offsetMinutesToTimeString_(\n     prefs.ash.night_light.custom_start_time.value, shouldUse24Hours_)]]\n\u003c/div\u003e\n\n(FWIW I would also rename offsetMinutesToTimeString something like \u0027getTimeString_\u0027 - the fact that custom_start_time represents \"offset minutes\" is an implementation detail that can be commented in the implementation)\n\n2. updateKbobs_ should also depend on isRTL_ and a new isReady_ property which should be set in the async method above. Otherwise this could get called before prefs.ash.night_light.custom_start_time has been set. i.e.\n\n  observers: [\n    \u0027updateKnobs_(prefs.ash.night_light.custom_start_time.*, \u0027 +\n        \u0027prefs.ash.night_light.custom_end_time.*, isRTL_, isReady_)\u0027,\n    ...\n  ]",
+      "revId": "7d57ed74be7eae9f2177d60338ce39f609dce017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
