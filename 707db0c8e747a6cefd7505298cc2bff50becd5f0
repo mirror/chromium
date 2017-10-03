@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85de2788_812632e2",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-03T17:56:20Z",
+      "side": 1,
+      "message": "should probably be GetImageForSignalStrength to avoid confusion (icon suggests vector icon)",
+      "range": {
+        "startLine": 56,
+        "startChar": 21,
+        "endLine": 56,
+        "endChar": 45
+      },
+      "revId": "707db0c8e747a6cefd7505298cc2bff50becd5f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eafb254_88bfb22b",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-03T17:56:20Z",
+      "side": 1,
+      "message": "is this check ever false? Having so many versions of CreateNotification is confusing and this one is only called once, so could we inline the impl?",
+      "range": {
+        "startLine": 96,
+        "startChar": 6,
+        "endLine": 96,
+        "endChar": 54
+      },
+      "revId": "707db0c8e747a6cefd7505298cc2bff50becd5f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
