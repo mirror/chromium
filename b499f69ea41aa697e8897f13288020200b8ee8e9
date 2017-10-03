@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16a91af1_80e8857c",
+        "filename": "chrome/browser/ui/javascript_dialogs/javascript_dialog_tab_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-10-03T02:00:35Z",
+      "side": 1,
+      "message": "nit: Would default values make sense here?",
+      "range": {
+        "startLine": 77,
+        "startChar": 19,
+        "endLine": 78,
+        "endChar": 51
+      },
+      "revId": "b499f69ea41aa697e8897f13288020200b8ee8e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
