@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "178f91fc_6a392d4a",
+        "filename": "chrome/browser/apps/platform_app_url_redirector.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-10-03T05:28:09Z",
+      "side": 1,
+      "message": ":(",
+      "parentUuid": "1bac4f86_0f3acdc4",
+      "revId": "e7f5c56d72ad1e9a6ef7cb97dfd3dcdd61e8ce84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d3180f7_bc702189",
         "filename": "chrome/browser/apps/platform_app_url_redirector.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "e7f5c56d72ad1e9a6ef7cb97dfd3dcdd61e8ce84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05533c02_5a7ec9bc",
+        "filename": "chrome/browser/apps/platform_app_url_redirector.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-10-03T05:28:09Z",
+      "side": 1,
+      "message": "The call that creates the Throttle is guarded by an if(handle-\u003eIsInMainFrame()) statement[1]. That said, I think it\u0027s weird that the logic is split and it would be nice if all the logic was in a single place but since this is mainly a file rename for this part of the code I kept it as is.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/chrome_content_browser_client.cc?q\u003dchrome_content_browser_client.cc\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d3235",
+      "parentUuid": "1d3180f7_bc702189",
+      "revId": "e7f5c56d72ad1e9a6ef7cb97dfd3dcdd61e8ce84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2f1098b9_4f76c6a3",
+        "filename": "chrome/browser/apps/platform_app_url_redirector.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-10-03T05:28:09Z",
+      "side": 1,
+      "message": "This patch just renames this file and removes some logic for non-platform apps. All the checks for platform apps are left unchanged. I agree that capturing same-document navigations is weird but I don\u0027t think it should be fixed in this patch.",
+      "parentUuid": "a4a4f5fc_a404617f",
+      "revId": "e7f5c56d72ad1e9a6ef7cb97dfd3dcdd61e8ce84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "110907d2_22ad5f3f",
         "filename": "chrome/browser/apps/platform_app_url_redirector.cc",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "e7f5c56d72ad1e9a6ef7cb97dfd3dcdd61e8ce84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e3da1cf_c8ede9f2",
+        "filename": "chrome/browser/apps/platform_app_url_redirector.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-10-03T05:28:09Z",
+      "side": 1,
+      "message": "I agree. I removed it from the BookmarkAppNavigationThrottle, but leaving this as is since it\u0027s just a rename.",
+      "parentUuid": "110907d2_22ad5f3f",
+      "revId": "e7f5c56d72ad1e9a6ef7cb97dfd3dcdd61e8ce84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "82927944_b92b110d",
+        "filename": "chrome/browser/apps/platform_app_url_redirector.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-10-03T05:28:09Z",
+      "side": 1,
+      "message": "Yup, BookmarkAppNavigationThrottle does it in this method. For PlatformAppNavigationThrottle this is done in chrome_content_browser_client.cc[1].\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/chrome_content_browser_client.cc?q\u003dchrome_content_browser_client.cc\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d3235",
+      "parentUuid": "a4cdc7e3_17de7b3c",
+      "revId": "e7f5c56d72ad1e9a6ef7cb97dfd3dcdd61e8ce84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44ef6748_7ecba7bc",
         "filename": "chrome/browser/apps/platform_app_url_redirector.h",
         "patchSetId": 8
@@ -101,6 +191,24 @@
       "revId": "e7f5c56d72ad1e9a6ef7cb97dfd3dcdd61e8ce84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "400c8c11_408978aa",
+        "filename": "chrome/browser/apps/platform_app_url_redirector.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-10-03T05:28:09Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "44ef6748_7ecba7bc",
+      "revId": "e7f5c56d72ad1e9a6ef7cb97dfd3dcdd61e8ce84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "c2f43514_c6f1f71a",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 3197,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-10-03T05:28:09Z",
+      "side": 1,
+      "message": "Yeah, that flag name was a mistake of mine. I added it when it wasn\u0027t clear how Desktop PWAs were going to be implemented. We usually try to steer away from the name PWA in our code since it\u0027s mainly a marketing name. The flag should now be kBookmarkAppsWindowing.",
+      "parentUuid": "9716b155_b321c90d",
+      "revId": "e7f5c56d72ad1e9a6ef7cb97dfd3dcdd61e8ce84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "942e6917_9382995d",
         "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
         "patchSetId": 8
@@ -135,6 +261,24 @@
       "revId": "e7f5c56d72ad1e9a6ef7cb97dfd3dcdd61e8ce84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9af3732_ec06acb3",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-10-03T05:28:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "942e6917_9382995d",
+      "revId": "e7f5c56d72ad1e9a6ef7cb97dfd3dcdd61e8ce84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -158,6 +302,30 @@
       "revId": "e7f5c56d72ad1e9a6ef7cb97dfd3dcdd61e8ce84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "187ad14e_905137fa",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-10-03T05:28:09Z",
+      "side": 1,
+      "message": "It opens a new Browser, it doesn\u0027t navigate the WebContents. That said, posting a task is coming in a follow up patch[1] :) since we need to close the WebContents and also there are some bugs in which the new Browser is opened while the WebContents is being created causing the new Browser to end up in the background.\n\n[1] https://crrev.com/c/691635",
+      "parentUuid": "eb14bb7e_e0cd2390",
+      "range": {
+        "startLine": 132,
+        "startChar": 2,
+        "endLine": 132,
+        "endChar": 17
+      },
+      "revId": "e7f5c56d72ad1e9a6ef7cb97dfd3dcdd61e8ce84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
