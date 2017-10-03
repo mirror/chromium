@@ -26,6 +26,7 @@
 #ifndef Supplementable_h
 #define Supplementable_h
 
+#include "platform/bindings/TraceWrapperMember.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/HashMap.h"
@@ -89,14 +90,53 @@ namespace blink {
 // Note that reattachThread() does nothing if assertion is not enabled.
 //
 
+class TraceWrapperBase;
+
 template <typename T>
 class Supplementable;
+
+template <typename T>
+class Supplement;
+
+// Utilities to support both cases that typename T inherits from
+// TraceWrapperBase and T does not.
+template <typename T, bool is_trace_wrappable_base>
+struct SupplementTraitImpl;
+
+template <typename T>
+using SupplementTrait =
+    // Intentionally using std::is_convertible instead of std::is_base_of
+    // because the latter requires complete types as arguments.  However,
+    // T is now being defined as
+    //   class T : public Supplementable<T> { ... };
+    // so T is yet an incomplete type.  std::is_convertible<Derived*, Base*>
+    // works even when Derived is an incomplete type.
+    SupplementTraitImpl<T, std::is_convertible<T*, TraceWrapperBase*>::value>;
+
+template <typename T>
+struct SupplementTraitImpl<T, false> {
+  using MapMemberType = Member<Supplement<T>>;
+  using MapType = HeapHashMap<const char*, MapMemberType, PtrHash<const char>>;
+  static void TraceWrappers(const ScriptWrappableVisitor* visitor,
+                            const MapType& map) {}
+};
+
+template <typename T>
+struct SupplementTraitImpl<T, true> {
+  using MapMemberType = TraceWrapperMember<Supplement<T>>;
+  using MapType = HeapHashMap<const char*, MapMemberType, PtrHash<const char>>;
+  static void TraceWrappers(const ScriptWrappableVisitor* visitor,
+                            const MapType& map) {
+    for (const auto& supplement : map.Values())
+      visitor->TraceWrappers(supplement);
+  }
+};
 
 template <typename T>
 class Supplement : public GarbageCollectedMixin {
  public:
   // TODO(haraken): Remove the default constructor.
-  // All Supplement objects should be instantiated with m_host.
+  // All Supplement objects should be instantiated with |supplementable_|.
   Supplement() {}
 
   explicit Supplement(T& supplementable) : supplementable_(&supplementable) {}
@@ -123,6 +163,7 @@ class Supplement : public GarbageCollectedMixin {
   }
 
   DEFINE_INLINE_VIRTUAL_TRACE() { visitor->Trace(supplementable_); }
+  DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {}
 
  private:
   Member<T> supplementable_;
@@ -163,10 +204,12 @@ class Supplementable : public virtual GarbageCollectedMixin {
   }
 
   DEFINE_INLINE_VIRTUAL_TRACE() { visitor->Trace(supplements_); }
+  DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {
+    SupplementTrait<T>::TraceWrappers(visitor, supplements_);
+  }
 
  protected:
-  using SupplementMap =
-      HeapHashMap<const char*, Member<Supplement<T>>, PtrHash<const char>>;
+  using SupplementMap = typename SupplementTrait<T>::MapType;
   SupplementMap supplements_;
 
   Supplementable()

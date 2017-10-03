@@ -32,13 +32,10 @@ V8VoidCallbackFunctionTestInterfaceSequenceArg* V8VoidCallbackFunctionTestInterf
 }
 
 V8VoidCallbackFunctionTestInterfaceSequenceArg::V8VoidCallbackFunctionTestInterfaceSequenceArg(ScriptState* scriptState, v8::Local<v8::Function> callback)
-    : script_state_(scriptState),
-    callback_(scriptState->GetIsolate(), this, callback) {
-  DCHECK(!callback_.IsEmpty());
-}
+    : CallbackFunctionBase(scriptState, callback) {}
 
 DEFINE_TRACE_WRAPPERS(V8VoidCallbackFunctionTestInterfaceSequenceArg) {
-  visitor->TraceWrappers(callback_.Cast<v8::Value>());
+  CallbackFunctionBase::TraceWrappers(visitor);
 }
 
 bool V8VoidCallbackFunctionTestInterfaceSequenceArg::call(ScriptWrappable* scriptWrappable, const HeapVector<Member<TestInterfaceImplementation>>& arg) {
@@ -64,7 +61,6 @@ bool V8VoidCallbackFunctionTestInterfaceSequenceArg::call(ScriptWrappable* scrip
       scriptWrappable,
       script_state_->GetContext()->Global(),
       isolate);
-
   v8::Local<v8::Value> v8_arg = ToV8(arg, script_state_->GetContext()->Global(), script_state_->GetIsolate());
   v8::Local<v8::Value> argv[] = { v8_arg };
   v8::TryCatch exceptionCatcher(isolate);

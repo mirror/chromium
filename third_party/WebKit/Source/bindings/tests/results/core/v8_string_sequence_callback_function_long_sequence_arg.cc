@@ -31,13 +31,10 @@ V8StringSequenceCallbackFunctionLongSequenceArg* V8StringSequenceCallbackFunctio
 }
 
 V8StringSequenceCallbackFunctionLongSequenceArg::V8StringSequenceCallbackFunctionLongSequenceArg(ScriptState* scriptState, v8::Local<v8::Function> callback)
-    : script_state_(scriptState),
-    callback_(scriptState->GetIsolate(), this, callback) {
-  DCHECK(!callback_.IsEmpty());
-}
+    : CallbackFunctionBase(scriptState, callback) {}
 
 DEFINE_TRACE_WRAPPERS(V8StringSequenceCallbackFunctionLongSequenceArg) {
-  visitor->TraceWrappers(callback_.Cast<v8::Value>());
+  CallbackFunctionBase::TraceWrappers(visitor);
 }
 
 bool V8StringSequenceCallbackFunctionLongSequenceArg::call(ScriptWrappable* scriptWrappable, const Vector<int32_t>& arg, Vector<String>& returnValue) {
@@ -63,7 +60,6 @@ bool V8StringSequenceCallbackFunctionLongSequenceArg::call(ScriptWrappable* scri
       scriptWrappable,
       script_state_->GetContext()->Global(),
       isolate);
-
   v8::Local<v8::Value> v8_arg = ToV8(arg, script_state_->GetContext()->Global(), script_state_->GetIsolate());
   v8::Local<v8::Value> argv[] = { v8_arg };
   v8::TryCatch exceptionCatcher(isolate);
