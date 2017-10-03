@@ -8,6 +8,8 @@
 
 #include "base/logging.h"
 #include "base/metrics/histogram_macros.h"
+#include "build/build_config.h"
+#include "content/browser/android/webview_navigation_throttle.h"
 #include "content/browser/appcache/appcache_navigation_handle.h"
 #include "content/browser/appcache/appcache_service_impl.h"
 #include "content/browser/child_process_security_policy_impl.h"
@@ -1188,6 +1190,10 @@ void NavigationHandleImpl::RegisterNavigationThrottles() {
       std::move(throttles_);
 
   throttles_ = GetDelegate()->CreateThrottlesForNavigation(this);
+
+#if defined(OS_ANDROID)
+  AddThrottle(WebViewNavigationThrottle::MaybeCreateThrottleFor(this));
+#endif
 
   // Check for renderer-inititated main frame navigations to data URLs. This is
   // done first as it may block the main frame navigation altogether.
