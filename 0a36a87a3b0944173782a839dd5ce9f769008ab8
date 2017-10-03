@@ -52,6 +52,24 @@
       "revId": "0a36a87a3b0944173782a839dd5ce9f769008ab8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a6fb2330_9e66f123",
+        "filename": "chrome/browser/extensions/extension_browsertest.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-10-03T18:48:46Z",
+      "side": 1,
+      "message": "Done.\n\nIs it just me or is it harder to grok that extension_browsertest.cc:201 is disabling content verification?",
+      "parentUuid": "99c54a3f_b934e4ec",
+      "revId": "0a36a87a3b0944173782a839dd5ce9f769008ab8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
