@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0470f0ba_430b1693",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-03T16:07:06Z",
+      "side": 1,
+      "message": "I think I find this code hard to read as there are several arguments that are hard to reason about (for example invalid_first_gaia_account is false when there are no accounts in the GAIA cookies).\n\nI was thinking that maybe we can simplify the code if we make it more verbose. Here would be my proposals:\nOption 1: Let\u0027s build a vector with potential first run candidates and then just iterate and return the first one that is valid:\n  std::string std::string first_gaia_account \u003d (!gaia_accounts_.empty() \u0026\u0026 gaia_accounts_[0].valid)? gaia_accounts_[0].id: \"\";\n  std::vector\u003cstring\u003e first_accounts_candidates;\n  if (first_execution_) {\n    first_accounts_candidates.push_back(primary_accounts);\n    first_accounts_candidates.push_back(first_gaia_account );   \n  } else {\n    first_accounts_candidates.push_back(first_gaia_account );   \n    first_accounts_candidates.push_back(primary_accounts);\n  }\n  first_accounts_candidates.push_back(last_known_first_account_);\n  for (const auto\u0026 candidate : first_accounts_candidates) {\n   if (candidate !\u003d \"\" \u0026\u0026 base::ContainsValue(chrome_accounts_, candidate ))\n     return candidate;\n  }\n\n\nOption 2. I think it would be good to eliminate early the case when there is no first GAIA account\nbool valid_primary_account \u003d ...\n\nif (gaia_accounts_.empty()) {\n  if (valid_primary_account)\n    return primary_account_;\n} else {\n  std::string first_gaia_account \u003d gaia_accounts_[0];\n  bool valid_first_gaia_account \u003d gaia_accounts_[0].valid \u0026\u0026 \n    base::ContainsValue(chrome_accounts_, first_gaia_account ));\n  if (first_execution_) {\n    if (valid_primary_account)\n      return primary_accounts_;\n    if (valid_first_gaia_account_)\n      return first_gaia_account;\n  } else {\n    if (valid_first_gaia_account)\n      return first_gaia_account;\n    if (valid_primary_account_)\n      return primary_account_;\n    if (!)\n}\n\n// keep the code from\nif (base::ContainsValue(chrome_accounts_, last_known_first_account_))",
+      "revId": "171e5ccffce8a0b8d2a937c5bb3c3d02b0a6acc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa2c25f6_6969011b",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-03T16:07:06Z",
+      "side": 1,
+      "message": "I find this hard to understand (even with the comment).",
+      "range": {
+        "startLine": 453,
+        "startChar": 37,
+        "endLine": 453,
+        "endChar": 54
+      },
+      "revId": "171e5ccffce8a0b8d2a937c5bb3c3d02b0a6acc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b24dddb1_2e82f2ad",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-03T16:07:06Z",
+      "side": 1,
+      "message": "I find this hard to understand even with the comment.",
+      "range": {
+        "startLine": 473,
+        "startChar": 25,
+        "endLine": 473,
+        "endChar": 33
+      },
+      "revId": "171e5ccffce8a0b8d2a937c5bb3c3d02b0a6acc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
