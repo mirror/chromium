@@ -92,30 +92,19 @@ class WinPort(base.Port):
         return flags
 
     def check_httpd(self):
-        for var in sorted(self.host.environ):
-            _log.info('%s: %s', var, self.host.environ[var])
-        try:
-            windir = self.host.environ.get('windir', 'C:\\WINDOWS')
-            system32_contents = self._filesystem.listdir(self._filesystem.join(windir, 'System32'))
-            _log.info('System32 contents:')
-            for filename in sorted(system32_contents):
-                _log.info(filename)
-        except OSError as err:
-            _log.error('OSError %s', err)
-
-        res = super(WinPort, self).check_httpd()
+        result = super(WinPort, self).check_httpd()
         if self.uses_apache():
             # In order to run CGI scripts on Win32 that use unix shebang lines, we need to
             # create entries in the registry that remap the extensions (.pl and .cgi) to the
             # appropriate Win32 paths. The command line arguments must match the command
             # line arguments in the shebang line exactly.
             if _winreg:
-                res = self._check_reg(r'.cgi\Shell\ExecCGI\Command') and res
-                res = self._check_reg(r'.pl\Shell\ExecCGI\Command') and res
+                result = self._check_reg(r'.cgi\Shell\ExecCGI\Command') and result
+                result = self._check_reg(r'.pl\Shell\ExecCGI\Command') and result
             else:
                 _log.warning('Could not check the registry; http may not work correctly.')
 
-        return res
+        return result
 
     def _check_reg(self, sub_key):
         # see comments in check_httpd(), above, for why this routine exists and what it's doing.
