@@ -34,6 +34,24 @@
       "revId": "5eef5b0aac3f50e5a1b41c3a5ebb5c266aae2b71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10fff173_d80df980",
+        "filename": "components/arc/ime/arc_ime_struct_traits.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-03T03:28:06Z",
+      "side": 1,
+      "message": "I don\u0027t think we\u0027d like to migrate twice, as commented in the linked bug and in ime.mojom?\nAlso cf) crbug.com/723224.",
+      "parentUuid": "c948628a_fdd0713f",
+      "revId": "5eef5b0aac3f50e5a1b41c3a5ebb5c266aae2b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
