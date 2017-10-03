@@ -344,6 +344,9 @@ void AXTreeSourceArc::NotifyAccessibilityEvent(
     if (parent_map_.find(id) == parent_map_.end()) {
       CHECK_EQ(-1, root_id_) << "Duplicated root";
       root_id_ = id;
+      GetStringProperty(event_data->node_data[i].get(),
+                        arc::mojom::AccessibilityStringProperty::PACKAGE_NAME,
+                        &package_name_);
     }
 
     if (GetBooleanProperty(event_data->node_data[i].get(),
@@ -381,6 +384,9 @@ void AXTreeSourceArc::NotifyActionResult(const ui::AXActionData& data,
 }
 
 void AXTreeSourceArc::Focus(aura::Window* window) {
+  if (focus_stealer_->HasFocus())
+    return;
+
   views::Widget* widget = views::Widget::GetWidgetForNativeView(window);
   if (!widget || !widget->GetContentsView())
     return;
