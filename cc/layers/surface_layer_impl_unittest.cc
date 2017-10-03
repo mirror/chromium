@@ -167,8 +167,7 @@ TEST(SurfaceLayerImplTest, SurfaceStretchedToLayerBounds) {
   viz::SurfaceId surface_id2(kArbitraryFrameSinkId, kArbitraryLocalSurfaceId2);
   surface_layer_impl->SetPrimarySurfaceInfo(
       viz::SurfaceInfo(surface_id, surface_scale, surface_size));
-  surface_layer_impl->SetFallbackSurfaceInfo(
-      viz::SurfaceInfo(surface_id2, surface_scale, surface_size));
+  surface_layer_impl->SetFallbackSurfaceId(surface_id2);
   surface_layer_impl->SetStretchContentToFillBounds(true);
 
   impl.CalcDrawProps(viewport_size);
@@ -242,7 +241,7 @@ TEST(SurfaceLayerImplTest, SurfaceLayerImplEmitsTwoDrawQuadsIfUniqueFallback) {
   surface_layer_impl->SetBounds(layer_size);
   surface_layer_impl->SetDrawsContent(true);
   surface_layer_impl->SetPrimarySurfaceInfo(primary_surface_info);
-  surface_layer_impl->SetFallbackSurfaceInfo(fallback_surface_info);
+  surface_layer_impl->SetFallbackSurfaceId(surface_id2);
   surface_layer_impl->SetDefaultBackgroundColor(SK_ColorBLUE);
 
   gfx::Size viewport_size(1000, 1000);
@@ -263,7 +262,7 @@ TEST(SurfaceLayerImplTest, SurfaceLayerImplEmitsTwoDrawQuadsIfUniqueFallback) {
   // viz::SurfaceInfo.
   {
     AppendQuadsData data;
-    surface_layer_impl->SetFallbackSurfaceInfo(viz::SurfaceInfo());
+    surface_layer_impl->SetFallbackSurfaceId(viz::SurfaceId());
     surface_layer_impl->AppendQuads(render_pass.get(), &data);
     // The primary viz::SurfaceInfo should not be added to
     // activation_dependencies.
@@ -274,7 +273,7 @@ TEST(SurfaceLayerImplTest, SurfaceLayerImplEmitsTwoDrawQuadsIfUniqueFallback) {
   // Update the fallback viz::SurfaceInfo and re-emit DrawQuads.
   {
     AppendQuadsData data;
-    surface_layer_impl->SetFallbackSurfaceInfo(fallback_surface_info2);
+    surface_layer_impl->SetFallbackSurfaceId(surface_id2);
     surface_layer_impl->AppendQuads(render_pass.get(), &data);
     // The the primary viz::SurfaceInfo will be added to
     // activation_dependencies.
@@ -359,7 +358,7 @@ TEST(SurfaceLayerImplTest,
   surface_layer_impl->SetBounds(layer_size);
   surface_layer_impl->SetDrawsContent(true);
   surface_layer_impl->SetPrimarySurfaceInfo(primary_surface_info);
-  surface_layer_impl->SetFallbackSurfaceInfo(primary_surface_info);
+  surface_layer_impl->SetFallbackSurfaceId(primary_surface_info.id());
   surface_layer_impl->SetDefaultBackgroundColor(SK_ColorBLUE);
 
   gfx::Size viewport_size(1000, 1000);
