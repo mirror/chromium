@@ -87,6 +87,24 @@
       "revId": "db82efcbfa21a4036a96fc9f1ec33dc03e7c2a58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f46f345_903a889a",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperty.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-10-03T23:28:46Z",
+      "side": 1,
+      "message": "I think you should be able to move CSSProperty::ResolveToPhysicalProperty as well - it\u0027s only used by ResolveDirectionAwareProperty anyway.",
+      "parentUuid": "e1920de2_fc817641",
+      "revId": "db82efcbfa21a4036a96fc9f1ec33dc03e7c2a58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
