@@ -396,6 +396,8 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
 
   // The content area of the box (excludes padding - and intrinsic padding for
   // table cells, etc... - and border).
+  // The box is in a coordinate space where (0,0) is at the top-left of the
+  // BorderBoxRect().
   DISABLE_CFI_PERF LayoutRect ContentBoxRect() const {
     return LayoutRect(BorderLeft() + PaddingLeft(), BorderTop() + PaddingTop(),
                       ContentWidth(), ContentHeight());

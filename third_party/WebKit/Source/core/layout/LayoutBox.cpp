@@ -2428,6 +2428,9 @@ bool LayoutBox::PaintedOutputOfObjectHasNoEffectRegardlessOfSize() const {
 }
 
 LayoutRect LayoutBox::LocalVisualRectIgnoringVisibility() const {
+  if (!StyleRef().HasBoxDecorations() && !StyleRef().HasBackground() &&
+      !overflow_)
+    return ContentBoxRect();
   return SelfVisualOverflowRect();
 }
 
