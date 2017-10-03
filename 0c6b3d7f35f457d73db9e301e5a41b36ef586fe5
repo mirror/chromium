@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f76c8bc5_3895f1dd",
+        "filename": "ui/message_center/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-03T16:18:08Z",
+      "side": 1,
+      "message": "Actually, maybe +estade@ also? He\u0027s gotten to know this code as well as anyone in his re-factoring (probably better than me anyway :) ).",
+      "revId": "0c6b3d7f35f457d73db9e301e5a41b36ef586fe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
