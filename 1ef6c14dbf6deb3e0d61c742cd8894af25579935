@@ -34,6 +34,24 @@
       "revId": "1ef6c14dbf6deb3e0d61c742cd8894af25579935",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aab9bfe7_27bb91e6",
+        "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1646,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-10-03T01:40:51Z",
+      "side": 1,
+      "message": "Nevertheless, returning any error (e.g. GATT_ERROR_FAILED) is better than crash, so we can worry about the error code later.",
+      "parentUuid": "ea5e0187_6810a825",
+      "revId": "1ef6c14dbf6deb3e0d61c742cd8894af25579935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
