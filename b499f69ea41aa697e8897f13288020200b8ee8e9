@@ -22,6 +22,30 @@
       "revId": "b499f69ea41aa697e8897f13288020200b8ee8e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b55772c0_75a29758",
+        "filename": "chrome/browser/ui/javascript_dialogs/javascript_dialog_tab_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-03T02:03:08Z",
+      "side": 1,
+      "message": "I\u0027m not comfortable with the idea. If it\u0027s auto-dismissed then one set of default values are right, sure, but I like making sure that every caller is explicit in what they provide.",
+      "parentUuid": "16a91af1_80e8857c",
+      "range": {
+        "startLine": 77,
+        "startChar": 19,
+        "endLine": 78,
+        "endChar": 51
+      },
+      "revId": "b499f69ea41aa697e8897f13288020200b8ee8e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
