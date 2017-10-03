@@ -140,7 +140,10 @@ div.splitter {
 }
 
 #directory-tree .tree-row > .button {
-  display: flex;
+  display: flex;}
+
+#directory-tree .tree-row > .button[menu='#add-new-services-menu'] {
+  overflow: hidden;
 }
 
 #directory-tree .tree-row > .expand-icon {
