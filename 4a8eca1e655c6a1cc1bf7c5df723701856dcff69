@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3afcfa7_c5e3f3d9",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-03T19:58:41Z",
+      "side": 1,
+      "message": "ticking_players_ could be much larger than worklet players, given the code in patchset 19 expanded a temporary vector (ticking_worklet_players) I\u0027d say let\u0027s not pre-reserve space.",
+      "revId": "4a8eca1e655c6a1cc1bf7c5df723701856dcff69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cf866ae_3964307e",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimator.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-03T19:58:41Z",
+      "side": 1,
+      "message": "nit: This can be a forward declaration.\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#forward-declarations-vs_includes",
+      "revId": "4a8eca1e655c6a1cc1bf7c5df723701856dcff69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0bea1a8_e5c8f028",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-03T19:58:41Z",
+      "side": 1,
+      "message": "It seems like it\u0027d be more efficient to iterate and remove using the iterator rather than build an intermediate collection.",
+      "revId": "4a8eca1e655c6a1cc1bf7c5df723701856dcff69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e3c4da5_ce0b2b16",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-03T19:58:41Z",
+      "side": 1,
+      "message": "Maybe just GetAnimator or GetAnimatorFor? Ensure implies that it should always create one.",
+      "range": {
+        "startLine": 108,
+        "startChar": 39,
+        "endLine": 108,
+        "endChar": 45
+      },
+      "revId": "4a8eca1e655c6a1cc1bf7c5df723701856dcff69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47062552_ac3ae35e",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/CompositorWorkerProxyClientImpl.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-03T19:58:41Z",
+      "side": 1,
+      "message": "This doesn\u0027t really add clarity over the type, but also if you were going to we would just include the name rather than putting it in a comment.\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/blink-c++.md#leave-obvious-parameter-names-out-of-function-declarations",
+      "range": {
+        "startLine": 41,
+        "startChar": 48,
+        "endLine": 41,
+        "endChar": 60
+      },
+      "revId": "4a8eca1e655c6a1cc1bf7c5df723701856dcff69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51575af7_b39a084b",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/EffectProxy.idl",
+        "patchSetId": 20
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-03T19:58:41Z",
+      "side": 1,
+      "message": "Maybe just AnimationWorklet?",
+      "range": {
+        "startLine": 7,
+        "startChar": 12,
+        "endLine": 7,
+        "endChar": 19
+      },
+      "revId": "4a8eca1e655c6a1cc1bf7c5df723701856dcff69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
