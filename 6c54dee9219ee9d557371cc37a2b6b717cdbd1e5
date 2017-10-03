@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27bef297_a6e7c567",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_background_task_handler_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-03T19:49:59Z",
+      "side": 1,
+      "message": "nit: could you please write this:\n\ncurrent-\u003efailure_count() \u003d\u003d 0",
+      "revId": "6c54dee9219ee9d557371cc37a2b6b717cdbd1e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b55e60b_8a7c88fa",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_background_task_handler_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-03T19:49:59Z",
+      "side": 1,
+      "message": "nit: add comment - This erases any existing delay but retains the failure count so that the next time we run if backoff is requested again we will continue the exponential backoff from where we left off.",
+      "revId": "6c54dee9219ee9d557371cc37a2b6b717cdbd1e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89ddc697_6781b53b",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_background_task_handler_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-03T19:49:59Z",
+      "side": 1,
+      "message": "nit: add comment - Resets the failure counter to 0 and sets a custom delay to be a 1 day interval.  After the day passes, the next backoff value will be 30s",
+      "revId": "6c54dee9219ee9d557371cc37a2b6b717cdbd1e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b234e55_f4929f29",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_background_task_handler_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-03T19:49:59Z",
+      "side": 1,
+      "message": "nit: add comment - Resets backoff completely, but only if the failure counter is 0 and there is a custom delay.  This should only happen when |suspend| has been called.",
+      "revId": "6c54dee9219ee9d557371cc37a2b6b717cdbd1e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
