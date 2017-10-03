@@ -21,6 +21,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/test/scoped_feature_list.h"
 #include "base/test/scoped_task_environment.h"
 #include "build/build_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -38,6 +39,7 @@
 #include "ui/gfx/range/range.h"
 #include "ui/gfx/range/range_f.h"
 #include "ui/gfx/render_text_harfbuzz.h"
+#include "ui/gfx/switches.h"
 #include "ui/gfx/text_utils.h"
 
 #if defined(OS_WIN)
@@ -1558,6 +1560,9 @@ TEST_P(RenderTextTest, GetDisplayTextDirection) {
       render_text->SetDirectionalityMode(DIRECTIONALITY_FORCE_RTL);
       EXPECT_EQ(render_text->GetDisplayTextDirection(),
                 base::i18n::RIGHT_TO_LEFT);
+      render_text->SetDirectionalityMode(DIRECTIONALITY_AS_URL);
+      EXPECT_EQ(render_text->GetDisplayTextDirection(),
+                base::i18n::LEFT_TO_RIGHT);
     }
   }
 
@@ -3711,6 +3716,99 @@ TEST_P(RenderTextHarfBuzzTest, HarfBuzz_RunDirection) {
   render_text->SetDirectionalityMode(DIRECTIONALITY_FORCE_RTL);
   test_api()->EnsureLayout();
   EXPECT_EQ("[8->10][7<-6][2->5][1<-0]", GetRunListStructureString());
+}
+
+TEST_P(RenderTextHarfBuzzTest, HarfBuzz_RunDirection_URLs) {
+  RenderTextHarfBuzz* render_text = GetRenderTextHarfBuzz();
+  // This string, unescaped (logical order): www.אב.גד/הוabc/def?זח=טי
+  const base::string16 mixed = WideToUTF16(
+      L"www.\x05D0\x05D1.\x05D2\x05D3/\x05D4\x05D5"
+      L"abc/def?\x05D6\x05D7=\x05D8\x05D9");
+  render_text->SetText(mixed);
+
+  // Normal LTR text should treat URL syntax as weak (as per the normal Bidi
+  // algorithm).
+  render_text->SetDirectionalityMode(DIRECTIONALITY_FORCE_LTR);
+  test_api()->EnsureLayout();
+
+  // This is complex because a new run is created for each punctuation mark, but
+  // it simplifies down to: [0->3][11<-4][12->19][24<-20]
+  // Should render as: www.וה/דג.באabc/def?יט=חז
+  const char kExpectedRunListNormalBidi[] =
+      "[0->2][3][11<-10][9][8<-7][6][5<-4][12->14][15][16->18][19][24<-23][22]"
+      "[21<-20]";
+  EXPECT_EQ(kExpectedRunListNormalBidi, GetRunListStructureString());
+
+  // DIRECTIONALITY_AS_URL should be exactly the same as
+  // DIRECTIONALITY_FORCE_LTR by default.
+  render_text->SetDirectionalityMode(DIRECTIONALITY_AS_URL);
+  test_api()->EnsureLayout();
+  EXPECT_EQ(kExpectedRunListNormalBidi, GetRunListStructureString());
+
+  // Test the above again, but with LeftToRightUrls feature enabled.
+  base::test::ScopedFeatureList scoped_list;
+  scoped_list.InitAndEnableFeature(features::kLeftToRightUrls);
+
+  // DIRECTIONALITY_FORCE_LTR should be the same as above.
+  render_text->SetDirectionalityMode(DIRECTIONALITY_FORCE_LTR);
+  test_api()->EnsureLayout();
+  EXPECT_EQ(kExpectedRunListNormalBidi, GetRunListStructureString());
+
+  // DIRECTIONALITY_AS_URL should treat URL syntax as strong LTR, to ensure
+  // isolation between RTL characters in different components of the URL.
+  render_text->SetDirectionalityMode(DIRECTIONALITY_AS_URL);
+  test_api()->EnsureLayout();
+  // TODO(mgiuca): Consider whether the rule should instead be "treat URL syntax
+  // as delimiters for FIRST STRONG ISOLATEs", which would result in [12->14]
+  // appearing to the left of [11<-10] (because the first strong character in
+  // the range 10--14 is RTL).
+  // Should render as: www.בא.דג/והabc/def?חז=יט
+  const char kExpectedRunListURLLayout[] =
+      "[0->2][3][5<-4][6][8<-7][9][11<-10][12->14][15][16->18][19][21<-20][22]"
+      "[24<-23]";
+  EXPECT_EQ(kExpectedRunListURLLayout, GetRunListStructureString());
+}
+
+// More detailed tests of the LeftToRightUrls flag.
+TEST_P(RenderTextHarfBuzzTest, HarfBuzz_RunDirection_URLs_LeftToRight) {
+  base::test::ScopedFeatureList scoped_list;
+  scoped_list.InitAndEnableFeature(features::kLeftToRightUrls);
+
+  RenderTextHarfBuzz* render_text = GetRenderTextHarfBuzz();
+  render_text->SetDirectionalityMode(DIRECTIONALITY_AS_URL);
+
+  // Systematic test of all ASCII punctuation marks, interleaved with the Hebrew
+  // alphabet. Those that count as delimiters (#&./:=?@) should break up the RTL
+  // run, while those that don't should be treated as RTL characters.
+  render_text->SetText(WideToUTF16(
+      L"\x05d0!\x05d1\"\x05d2#\x05d3$\x05d4%\x05d5&\x05d6'\x05d7(\x05d8)\x05d9*"
+      L"\x05da+\x05db,\x05dc-\x05dd.\x05de/\x05df:\x05e0;\x05e1<\x05e2=\x05e3>"
+      L"\x05e4?\x05e5@\x05e6[\x05e7\\\x05e8]\x05e9^\x05ea_\x05d0`\x05d1{\x05d2|"
+      L"\x05d3}\x05d4~\x05d5"));
+  test_api()->EnsureLayout();
+
+  // This simplifies as:
+  // "[4<-0][5][10<-6][11][26<-12][27->31][36<-32][37][40<-38][41->43][64<-44]";
+  const char kExpectedRunListAllPunctuation[] =
+      "[4][3][2][1][0][5][10][9][8][7][6][11][26][25][24][23][22][21][20][19]"
+      "[18][17][16][15][14][13][12][27][28][29][30][31][36][35][34][33][32][37]"
+      "[40][39][38][41][42][43][64][63][62][61][60][59][58][57][56][55][54][53]"
+      "[52][51][50][49][48][47][46][45][44]";
+  EXPECT_EQ(kExpectedRunListAllPunctuation, GetRunListStructureString());
+
+  // Test Arabic instead of Hebrew.
+  // This string, unescaped (logical order): www.ؠء.آأ/ؤإabc/def?ئا=بة
+  render_text->SetText(
+      WideToUTF16(L"www.\x0620\x0621.\x0622\x0623/\x0624\x0625"
+                  L"abc/def?\x0626\x0627=\x0628\x0629"));
+  test_api()->EnsureLayout();
+
+  // Should render as: www.ءؠ.أآ/إؤabc/def?ائ=ةب
+  // Same expected run list as in HarfBuzz_RunDirection_URLs.
+  const char kExpectedRunListArabic[] =
+      "[0->2][3][5<-4][6][8<-7][9][11<-10][12->14][15][16->18][19][21<-20][22]"
+      "[24<-23]";
+  EXPECT_EQ(kExpectedRunListArabic, GetRunListStructureString());
 }
 
 TEST_P(RenderTextHarfBuzzTest, HarfBuzz_BreakRunsByUnicodeBlocks) {
