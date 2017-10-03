@@ -79,8 +79,8 @@ TEST_F(BlacklistTest, OnlyIncludesRequestedIDs) {
 
   Blacklist blacklist(prefs());
   TestBlacklist tester(&blacklist);
-  tester.SetBlacklistState(a, BLACKLISTED_MALWARE, false);
-  tester.SetBlacklistState(b, BLACKLISTED_MALWARE, false);
+  tester.SetBlacklistState(a, BLACKLISTED_MALWARE);
+  tester.SetBlacklistState(b, BLACKLISTED_MALWARE);
 
   EXPECT_EQ(BLACKLISTED_MALWARE, tester.GetBlacklistState(a));
   EXPECT_EQ(BLACKLISTED_MALWARE, tester.GetBlacklistState(b));
@@ -103,17 +103,16 @@ TEST_F(BlacklistTest, SafeBrowsing) {
 
   EXPECT_EQ(NOT_BLACKLISTED, tester.GetBlacklistState(a));
 
-  tester.SetBlacklistState(a, BLACKLISTED_MALWARE, false);
+  tester.SetBlacklistState(a, BLACKLISTED_MALWARE);
   // The manager is still disabled at this point, so it won't be blacklisted.
   EXPECT_EQ(NOT_BLACKLISTED, tester.GetBlacklistState(a));
 
   tester.EnableSafeBrowsing();
-  tester.NotifyUpdate();
   base::RunLoop().RunUntilIdle();
   // Now it should be.
   EXPECT_EQ(BLACKLISTED_MALWARE, tester.GetBlacklistState(a));
 
-  tester.Clear(true);
+  tester.Clear();
   // Safe browsing blacklist empty, now enabled.
   EXPECT_EQ(NOT_BLACKLISTED, tester.GetBlacklistState(a));
 }
@@ -171,10 +170,10 @@ TEST_F(BlacklistTest, GetBlacklistStates) {
   std::string d = AddExtension("d");
   std::string e = AddExtension("e");
 
-  tester.SetBlacklistState(a, BLACKLISTED_MALWARE, false);
-  tester.SetBlacklistState(b, BLACKLISTED_SECURITY_VULNERABILITY, false);
-  tester.SetBlacklistState(c, BLACKLISTED_CWS_POLICY_VIOLATION, false);
-  tester.SetBlacklistState(d, BLACKLISTED_POTENTIALLY_UNWANTED, false);
+  tester.SetBlacklistState(a, BLACKLISTED_MALWARE);
+  tester.SetBlacklistState(b, BLACKLISTED_SECURITY_VULNERABILITY);
+  tester.SetBlacklistState(c, BLACKLISTED_CWS_POLICY_VIOLATION);
+  tester.SetBlacklistState(d, BLACKLISTED_POTENTIALLY_UNWANTED);
 
   Blacklist::BlacklistStateMap states_abc;
   Blacklist::BlacklistStateMap states_bcd;

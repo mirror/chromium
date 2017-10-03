@@ -8,7 +8,7 @@
 #include <set>
 #include <string>
 
-#include "chrome/browser/safe_browsing/local_database_manager.h"
+#include "components/safe_browsing/db/test_database_manager.h"
 
 namespace extensions {
 
@@ -17,7 +17,7 @@ namespace extensions {
 // By default it is disabled (returning true and ignoring |unsafe_ids_|);
 // call set_enabled to enable it.
 class FakeSafeBrowsingDatabaseManager
-    : public safe_browsing::LocalSafeBrowsingDatabaseManager {
+    : public safe_browsing::TestSafeBrowsingDatabaseManager {
  public:
   explicit FakeSafeBrowsingDatabaseManager(bool enabled);
 
@@ -27,31 +27,23 @@ class FakeSafeBrowsingDatabaseManager
   bool CheckExtensionIDs(const std::set<std::string>& extension_ids,
                          Client* client) override;
 
-  // Return |this| to chain together SetUnsafe(...).NotifyUpdate() conveniently.
-  FakeSafeBrowsingDatabaseManager& Enable();
-  FakeSafeBrowsingDatabaseManager& Disable();
-  FakeSafeBrowsingDatabaseManager& ClearUnsafe();
-  FakeSafeBrowsingDatabaseManager& SetUnsafe(const std::string& a);
-  FakeSafeBrowsingDatabaseManager& SetUnsafe(const std::string& a,
-                                             const std::string& b);
-  FakeSafeBrowsingDatabaseManager& SetUnsafe(const std::string& a,
-                                             const std::string& b,
-                                             const std::string& c);
-  FakeSafeBrowsingDatabaseManager& SetUnsafe(const std::string& a,
-                                             const std::string& b,
-                                             const std::string& c,
-                                             const std::string& d);
-  FakeSafeBrowsingDatabaseManager& AddUnsafe(const std::string& a);
-  FakeSafeBrowsingDatabaseManager& RemoveUnsafe(const std::string& a);
-
-  // Send the update notification.
-  void NotifyUpdate();
+  void Enable();
+  void Disable();
+  void ClearUnsafe();
+  void SetUnsafe(const std::string& a);
+  void SetUnsafe(const std::string& a, const std::string& b);
+  void SetUnsafe(const std::string& a,
+                 const std::string& b,
+                 const std::string& c);
+  void SetUnsafe(const std::string& a,
+                 const std::string& b,
+                 const std::string& c,
+                 const std::string& d);
+  void AddUnsafe(const std::string& a);
+  void RemoveUnsafe(const std::string& a);
 
  private:
   ~FakeSafeBrowsingDatabaseManager() override;
-
-  // Runs result->SafeBrowsingResult().
-  void OnSafeBrowsingResult(std::unique_ptr<SafeBrowsingCheck> result);
 
   // Whether to respond to CheckExtensionIDs immediately with true (indicating
   // that there is definitely no extension ID match).

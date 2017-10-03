@@ -18,7 +18,6 @@ namespace safe_browsing {
 TestSafeBrowsingService::TestSafeBrowsingService(
     V4FeatureList::V4UsageStatus v4_usage_status)
     : SafeBrowsingService(v4_usage_status),
-      protocol_manager_delegate_disabled_(false),
       serialized_download_report_(base::EmptyString()) {}
 
 TestSafeBrowsingService::~TestSafeBrowsingService() {}
@@ -46,10 +45,6 @@ void TestSafeBrowsingService::ClearDownloadReport() {
 void TestSafeBrowsingService::SetDatabaseManager(
     TestSafeBrowsingDatabaseManager* database_manager) {
   database_manager_ = database_manager;
-  // Since TestSafeBrowsingDatabaseManager does not implement
-  // SafeBrowsingProtocolManagerDelegate, when it is used we need to disable
-  // protocol_manager_delegate.
-  protocol_manager_delegate_disabled_ = true;
 }
 
 void TestSafeBrowsingService::SetUIManager(
@@ -68,13 +63,6 @@ SafeBrowsingUIManager* TestSafeBrowsingService::CreateUIManager() {
   if (ui_manager_)
     return ui_manager_.get();
   return SafeBrowsingService::CreateUIManager();
-}
-
-SafeBrowsingProtocolManagerDelegate*
-TestSafeBrowsingService::GetProtocolManagerDelegate() {
-  if (protocol_manager_delegate_disabled_)
-    return nullptr;
-  return SafeBrowsingService::GetProtocolManagerDelegate();
 }
 
 void TestSafeBrowsingService::SendSerializedDownloadReport(
