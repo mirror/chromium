@@ -26,13 +26,34 @@ constexpr char kClientLoFiDescription[] = "Client LoFi Previews";
 constexpr char kOfflineDesciption[] = "Offline Previews";
 
 std::unordered_map<std::string, mojom::PreviewsStatusPtr> passedInParams;
+std::vector<mojom::MessageLogPtr> passedInLogs;
 
 void MockGetPreviewsEnabledCallback(
     std::unordered_map<std::string, mojom::PreviewsStatusPtr> params) {
   passedInParams = std::move(params);
 }
 
-}  // namespace
+void MockGetMessageLogsCallback(std::vector<mojom::MessageLogPtr> params) {
+  passedInLogs = std::move(params);
+}
+
+class TestPreviewsLogger : public previews::PreviewsLogger {
+ public:
+  TestPreviewsLogger() {}
+
+  std::vector<previews::PreviewsLogger::MessageLog> log_messages()
+      const override {
+    return logs_;
+  }
+
+  void SetLoggerMessageLogs(
+      std::vector<previews::PreviewsLogger::MessageLog> logs) {
+    logs_ = std::move(logs);
+  }
+
+ private:
+  std::vector<previews::PreviewsLogger::MessageLog> logs_;
+};
 
 class InterventionsInternalsPageHandlerTest : public testing::Test {
  public:
@@ -46,19 +67,23 @@ class InterventionsInternalsPageHandlerTest : public testing::Test {
     scoped_task_environment_.RunUntilIdle();
 
     request = mojo::MakeRequest(&pageHandlerPtr);
+    logger_ = new TestPreviewsLogger();
     pageHandler.reset(
-        new InterventionsInternalsPageHandler(std::move(request)));
+        new InterventionsInternalsPageHandler(std::move(request), logger_));
 
     scoped_feature_list_ = base::MakeUnique<base::test::ScopedFeatureList>();
   }
 
  protected:
   base::test::ScopedTaskEnvironment scoped_task_environment_;
+  TestPreviewsLogger* logger_;
   mojom::InterventionsInternalsPageHandlerPtr pageHandlerPtr;
   mojom::InterventionsInternalsPageHandlerRequest request;
   std::unique_ptr<InterventionsInternalsPageHandler> pageHandler;
   std::unique_ptr<base::test::ScopedFeatureList> scoped_feature_list_;
 };
+
+}  // namespace
 
 TEST_F(InterventionsInternalsPageHandlerTest, CorrectSizeOfPassingParameters) {
   pageHandler->GetPreviewsEnabled(
@@ -143,4 +168,34 @@ TEST_F(InterventionsInternalsPageHandlerTest, OfflinePreviewsEnabled) {
   EXPECT_TRUE(offline_previews->second);
   EXPECT_EQ(kOfflineDesciption, offline_previews->second->description);
   EXPECT_TRUE(offline_previews->second->enabled);
+}
+
+TEST_F(InterventionsInternalsPageHandlerTest, GetMessageLogsPassCorrectParams) {
+  previews::PreviewsLogger::MessageLog messages[] = {
+      previews::PreviewsLogger::MessageLog("Event_a", "Description a",
+                                           GURL("http://www.url_a.com/url_a"),
+                                           base::Time::Now()),
+      previews::PreviewsLogger::MessageLog("Event_b", "Description b",
+                                           GURL("http://www.url_b.com/url_b"),
+                                           base::Time::Now()),
+      previews::PreviewsLogger::MessageLog("Event_c", "Description c",
+                                           GURL("http://www.url_c.com/url_c"),
+                                           base::Time::Now()),
+  };
+
+  std::vector<previews::PreviewsLogger::MessageLog> logs;
+  for (auto message : messages) {
+    logs.push_back(message);
+  }
+  logger_->SetLoggerMessageLogs(logs);
+
+  pageHandler->GetMessageLogs(base::Bind(&MockGetMessageLogsCallback));
+  const size_t expected_size = 3;
+  EXPECT_EQ(expected_size, passedInLogs.size());
+
+  for (size_t i = 0; i < passedInLogs.size(); i++) {
+    EXPECT_EQ(messages[i].event_type, passedInLogs[i]->type);
+    EXPECT_EQ(messages[i].event_description, passedInLogs[i]->description);
+    EXPECT_EQ(messages[i].url.spec(), passedInLogs[i]->url);
+  }
 }

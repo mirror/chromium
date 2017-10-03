@@ -54,6 +54,9 @@ class PreviewsUIService {
                                     bool opt_out,
                                     base::Time time);
 
+  // Returns the log messages recorded.
+  PreviewsLogger* previews_logger() const;
+
  private:
   // The IO thread portion of the inter-thread communication for previews/.
   base::WeakPtr<previews::PreviewsIOData> io_data_;
