@@ -464,7 +464,7 @@ class InfiniteResponse : public BasicHttpResponse {
 
 std::unique_ptr<HttpResponse> HandleInfiniteRequest(
     const HttpRequest& request) {
-  return base::WrapUnique(new InfiniteResponse);
+  return std::make_unique<InfiniteResponse>();
 }
 
 }  // anonymous namespace

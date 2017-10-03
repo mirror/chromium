@@ -197,7 +197,7 @@ class BrotliSourceStream : public FilterSourceStream {
 
 std::unique_ptr<FilterSourceStream> CreateBrotliSourceStream(
     std::unique_ptr<SourceStream> previous) {
-  return base::WrapUnique(new BrotliSourceStream(std::move(previous)));
+  return std::make_unique<BrotliSourceStream>(std::move(previous));
 }
 
 }  // namespace net

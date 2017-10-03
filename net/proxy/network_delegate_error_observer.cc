@@ -81,8 +81,8 @@ std::unique_ptr<ProxyResolverErrorObserver>
 NetworkDelegateErrorObserver::Create(
     NetworkDelegate* network_delegate,
     const scoped_refptr<base::SingleThreadTaskRunner>& origin_runner) {
-  return base::WrapUnique(
-      new NetworkDelegateErrorObserver(network_delegate, origin_runner.get()));
+  return std::make_unique<NetworkDelegateErrorObserver>(network_delegate,
+                                                        origin_runner.get());
 }
 
 void NetworkDelegateErrorObserver::OnPACScriptError(

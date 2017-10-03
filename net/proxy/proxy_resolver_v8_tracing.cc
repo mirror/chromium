@@ -1114,7 +1114,7 @@ void ProxyResolverV8TracingFactoryImpl::RemoveJob(
 // static
 std::unique_ptr<ProxyResolverV8TracingFactory>
 ProxyResolverV8TracingFactory::Create() {
-  return base::WrapUnique(new ProxyResolverV8TracingFactoryImpl());
+  return std::make_unique<ProxyResolverV8TracingFactoryImpl>();
 }
 
 }  // namespace net

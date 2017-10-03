@@ -456,7 +456,7 @@ TEST_F(ElementsUploadDataStreamTest, InitAsyncFailureSync) {
 // Read with a buffer whose size is same as the data.
 TEST_F(ElementsUploadDataStreamTest, ReadAsyncWithExactSizeBuffer) {
   element_readers_.push_back(
-      base::WrapUnique(new UploadBytesElementReader(kTestData, kTestDataSize)));
+      std::make_unique<UploadBytesElementReader>(kTestData, kTestDataSize));
   std::unique_ptr<UploadDataStream> stream(
       new ElementsUploadDataStream(std::move(element_readers_), 0));
 

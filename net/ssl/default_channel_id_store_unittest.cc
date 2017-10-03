@@ -172,9 +172,9 @@ TEST(DefaultChannelIDStoreTest, TestSettingAndGetting) {
             store.GetChannelID("verisign.com", &key,
                                base::Bind(&GetChannelIDCallbackNotCalled)));
   EXPECT_FALSE(key);
-  store.SetChannelID(base::WrapUnique(new ChannelIDStore::ChannelID(
+  store.SetChannelID(std::make_unique<ChannelIDStore::ChannelID>(
       "verisign.com", base::Time::FromInternalValue(123),
-      expected_key->Copy())));
+      expected_key->Copy()));
   EXPECT_EQ(OK, store.GetChannelID("verisign.com", &key,
                                    base::Bind(&GetChannelIDCallbackNotCalled)));
   EXPECT_TRUE(KeysEqual(expected_key.get(), key.get()));
