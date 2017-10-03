@@ -6,7 +6,7 @@
 
 #include <algorithm>
 
-#include "base/numerics/ranges.h"
+#include "base/numerics/clamped_math.h"
 #include "base/trace_event/trace_event_argument.h"
 #include "base/values.h"
 #include "cc/base/filter_operation.h"

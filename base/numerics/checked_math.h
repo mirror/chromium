@@ -117,25 +117,25 @@ class CheckedNumeric {
 
   // Prototypes for the supported arithmetic operator overloads.
   template <typename Src>
-  CheckedNumeric& operator+=(const Src rhs);
+  constexpr CheckedNumeric& operator+=(const Src rhs);
   template <typename Src>
-  CheckedNumeric& operator-=(const Src rhs);
+  constexpr CheckedNumeric& operator-=(const Src rhs);
   template <typename Src>
-  CheckedNumeric& operator*=(const Src rhs);
+  constexpr CheckedNumeric& operator*=(const Src rhs);
   template <typename Src>
-  CheckedNumeric& operator/=(const Src rhs);
+  constexpr CheckedNumeric& operator/=(const Src rhs);
   template <typename Src>
-  CheckedNumeric& operator%=(const Src rhs);
+  constexpr CheckedNumeric& operator%=(const Src rhs);
   template <typename Src>
-  CheckedNumeric& operator<<=(const Src rhs);
+  constexpr CheckedNumeric& operator<<=(const Src rhs);
   template <typename Src>
-  CheckedNumeric& operator>>=(const Src rhs);
+  constexpr CheckedNumeric& operator>>=(const Src rhs);
   template <typename Src>
-  CheckedNumeric& operator&=(const Src rhs);
+  constexpr CheckedNumeric& operator&=(const Src rhs);
   template <typename Src>
-  CheckedNumeric& operator|=(const Src rhs);
+  constexpr CheckedNumeric& operator|=(const Src rhs);
   template <typename Src>
-  CheckedNumeric& operator^=(const Src rhs);
+  constexpr CheckedNumeric& operator^=(const Src rhs);
 
   constexpr CheckedNumeric operator-() const {
     // The negation of two's complement int min is int min, so we simply
@@ -191,6 +191,18 @@ class CheckedNumeric {
         state_.is_valid() && Wrapper<U>::is_valid(rhs));
   }
 
+  template <typename U, typename V>
+  constexpr CheckedNumeric ToRange(U min, V max) const {
+    static_assert(std::is_same<typename UnderlyingType<T>::type,
+                               typename UnderlyingType<U>::type>::value &&
+                      std::is_same<typename UnderlyingType<U>::type,
+                                   typename UnderlyingType<V>::type>::value,
+                  "The base arithmetic types of all arguments must match the "
+                  "source type.");
+    assert(min < max);
+    return Max(min).Min(max);
+  }
+
   // This function is available only for integral types. It returns an unsigned
   // integer of the same width as the source type, containing the absolute value
   // of the source, and properly handling signed min.
@@ -200,23 +212,23 @@ class CheckedNumeric {
         SafeUnsignedAbs(state_.value()), state_.is_valid());
   }
 
-  CheckedNumeric& operator++() {
+  constexpr CheckedNumeric& operator++() {
     *this += 1;
     return *this;
   }
 
-  CheckedNumeric operator++(int) {
+  constexpr CheckedNumeric operator++(int) {
     CheckedNumeric value = *this;
     *this += 1;
     return value;
   }
 
-  CheckedNumeric& operator--() {
+  constexpr CheckedNumeric& operator--() {
     *this -= 1;
     return *this;
   }
 
-  CheckedNumeric operator--(int) {
+  constexpr CheckedNumeric operator--(int) {
     CheckedNumeric value = *this;
     *this -= 1;
     return value;
@@ -227,7 +239,7 @@ class CheckedNumeric {
   template <template <typename, typename, typename> class M,
             typename L,
             typename R>
-  static CheckedNumeric MathOp(const L lhs, const R rhs) {
+  static constexpr CheckedNumeric MathOp(const L lhs, const R rhs) {
     using Math = typename MathWrapper<M, L, R>::math;
     T result = 0;
     bool is_valid =
@@ -238,7 +250,7 @@ class CheckedNumeric {
 
   // Assignment arithmetic operations.
   template <template <typename, typename, typename> class M, typename R>
-  CheckedNumeric& MathOp(const R rhs) {
+  constexpr CheckedNumeric& MathOp(const R rhs) {
     using Math = typename MathWrapper<M, T, R>::math;
     T result = 0;  // Using T as the destination saves a range check.
     bool is_valid = state_.is_valid() && Wrapper<R>::is_valid(rhs) &&
@@ -314,12 +326,19 @@ constexpr CheckedNumeric<typename UnderlyingType<T>::type> MakeCheckedNum(
   return value;
 }
 
+// Convenience wrapper for ToRange method.
+template <typename T, typename U, typename V>
+constexpr CheckedNumeric<T> CheckToRange(T value, U min, V max) {
+  return MakeCheckedNum(value).ToRange(min, max);
+}
+
 // These implement the variadic wrapper for the math operations.
 template <template <typename, typename, typename> class M,
           typename L,
           typename R>
-CheckedNumeric<typename MathWrapper<M, L, R>::type> CheckMathOp(const L lhs,
-                                                                const R rhs) {
+constexpr CheckedNumeric<typename MathWrapper<M, L, R>::type> CheckMathOp(
+    const L lhs,
+    const R rhs) {
   using Math = typename MathWrapper<M, L, R>::math;
   return CheckedNumeric<typename Math::result_type>::template MathOp<M>(lhs,
                                                                         rhs);
@@ -330,7 +349,7 @@ template <template <typename, typename, typename> class M,
           typename L,
           typename R,
           typename... Args>
-CheckedNumeric<typename ResultType<M, L, R, Args...>::type>
+constexpr CheckedNumeric<typename ResultType<M, L, R, Args...>::type>
 CheckMathOp(const L lhs, const R rhs, const Args... args) {
   return CheckMathOp<M>(CheckMathOp<M>(lhs, rhs), args...);
 }
@@ -376,6 +395,7 @@ using internal::ValueOrDefaultForType;
 using internal::MakeCheckedNum;
 using internal::CheckMax;
 using internal::CheckMin;
+using internal::CheckToRange;
 using internal::CheckAdd;
 using internal::CheckSub;
 using internal::CheckMul;
