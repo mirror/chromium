@@ -11,6 +11,7 @@
 
 #include <map>
 
+#include "base/feature_list.h"
 #import "base/mac/scoped_nsobject.h"
 #import "ios/chrome/browser/ui/activity_services/requirements/activity_service_positioner.h"
 #import "ios/chrome/browser/ui/bubble/bubble_view_anchor_point_provider.h"
@@ -18,6 +19,8 @@
 #import "ios/chrome/browser/ui/tools_menu/tools_popup_controller.h"
 #include "ios/chrome/browser/ui/ui_util.h"
 #import "ios/chrome/browser/ui/util/relaxed_bounds_constraints_hittest.h"
+
+extern const base::Feature kSafeAreaCompatibleToolbar;
 
 @protocol ApplicationCommands;
 @protocol BrowserCommands;
@@ -216,7 +219,10 @@ extern const CGRect kToolbarFrame[INTERFACE_IDIOM_COUNT];
 // if the toolbar shouldn't extend through the status bar.
 - (CGFloat)statusBarOffset;
 
-- (void)traitCollectionDidChange:(UITraitCollection*)previousTraitCollection;
+- (void)fakeTraitCollectionDidChange:
+    (UITraitCollection*)previousTraitCollection;
+
+- (void)fakeViewSafeAreaInsetsDidChange;
 
 @end
 
