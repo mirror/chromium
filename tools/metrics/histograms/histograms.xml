@@ -79192,6 +79192,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Startup.CountDefaultProtocolHandlerWin7">
+  <owner>chengx@chromium.org</owner>
+  <summary>
+    Count of registered default protocols at startup in Windows 7 machines.
+  </summary>
+</histogram>
+
 <histogram name="Startup.CreateFirstProfile" units="ms">
   <owner>fdoray@chromium.org</owner>
   <summary>
