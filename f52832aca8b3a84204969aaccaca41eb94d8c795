@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe710d4c_181dd702",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-03T07:19:45Z",
+      "side": 1,
+      "message": "Having this test looks great.",
+      "revId": "f52832aca8b3a84204969aaccaca41eb94d8c795",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22941cec_c99b9270",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-03T07:19:45Z",
+      "side": 1,
+      "message": "Wonder if we could use mojo::common::BlockingCopyToString() here?",
+      "revId": "f52832aca8b3a84204969aaccaca41eb94d8c795",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
