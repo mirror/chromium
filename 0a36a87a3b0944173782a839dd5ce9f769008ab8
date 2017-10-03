@@ -34,6 +34,24 @@
       "revId": "0a36a87a3b0944173782a839dd5ce9f769008ab8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "99c54a3f_b934e4ec",
+        "filename": "chrome/browser/extensions/extension_browsertest.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-03T18:06:58Z",
+      "side": 1,
+      "message": "There\u0027s very few uses of base::Optional :)  We were only recently allowed to use it, so it\u0027s still catching on.",
+      "parentUuid": "90465a97_314e5cd6",
+      "revId": "0a36a87a3b0944173782a839dd5ce9f769008ab8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
