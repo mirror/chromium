@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9163335a_e30e36ef",
+        "filename": "ash/login/lock_screen_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-03T21:47:11Z",
+      "side": 1,
+      "message": "yeah, that\u0027s a good point. added an observer interface.",
+      "parentUuid": "49ec91f2_d167a51f",
+      "revId": "1007950b2501809342923a172230bb5427149267",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69732134_4ebc529f",
         "filename": "ash/login/ui/login_test_base.h",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "1007950b2501809342923a172230bb5427149267",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5af09eb2_428af222",
+        "filename": "ash/login/ui/login_test_base.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-03T21:47:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69732134_4ebc529f",
+      "revId": "1007950b2501809342923a172230bb5427149267",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
