@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "base/files/file_path.h"
+#include "content/common/devtools/devtools_network_conditions.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/resource_context.h"
@@ -109,6 +110,9 @@ class HeadlessBrowserContextImpl : public HeadlessBrowserContext,
                               int net_error,
                               bool canceled_by_devtools);
 
+  void SetNetworkConditions(
+      std::unique_ptr<content::DevToolsNetworkConditions> conditions);
+
  private:
   HeadlessBrowserContextImpl(
       HeadlessBrowserImpl* browser,
@@ -138,6 +142,8 @@ class HeadlessBrowserContextImpl : public HeadlessBrowserContext,
   std::unique_ptr<content::PermissionManager> permission_manager_;
 
   std::string id_;
+
+  std::unique_ptr<content::DevToolsNetworkConditions> network_conditions_;
 
   DISALLOW_COPY_AND_ASSIGN(HeadlessBrowserContextImpl);
 };
