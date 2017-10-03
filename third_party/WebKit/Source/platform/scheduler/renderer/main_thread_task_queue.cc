@@ -42,6 +42,8 @@ const char* MainThreadTaskQueue::NameForQueueType(
       return "test_tq";
     case MainThreadTaskQueue::QueueType::FRAME_LOADING_CONTROL:
       return "frame_loading_control_tq";
+    case MainThreadTaskQueue::QueueType::V8:
+      return "v8";
     case MainThreadTaskQueue::QueueType::COUNT:
       NOTREACHED();
       return nullptr;
@@ -71,6 +73,11 @@ MainThreadTaskQueue::QueueClass MainThreadTaskQueue::QueueClassForQueueType(
       return QueueClass::TIMER;
     case QueueType::COMPOSITOR:
       return QueueClass::COMPOSITOR;
+    case QueueType::V8:
+      // TODO(hajimehoshi): As loading task queue was used before V8 task queue
+      // was instroduced, use LOADING for compatibility. This should be replaced
+      // with another QueueClass in the future.
+      return QueueClass::LOADING;
     case QueueType::COUNT:
       DCHECK(false);
       return QueueClass::COUNT;
