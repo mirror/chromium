@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "06bab630_74d9bd6c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/motion-1/closest-corner-001-ref.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-10-03T23:05:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c53bb9a1_bfbc80ab",
+      "revId": "4139ffcd038871aed9dc8b7b066a1693e9195ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f855e3e_228807e8",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/motion-1/closest-corner-002-ref.html",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-21T02:45:40Z",
       "side": 1,
       "message": "i\u0027m confused about where 50 came from here. by my calculation the closest-corner should be 42px away from the offset-distance",
+      "revId": "4139ffcd038871aed9dc8b7b066a1693e9195ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e08bc80b_d7aeaa57",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/motion-1/closest-corner-002-ref.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-10-03T23:05:18Z",
+      "side": 1,
+      "message": "This tests closest-corner ray lengths, with right-top corner closest.\n\nsqrt(40**2 + 30**2) \u003d 50.",
+      "parentUuid": "1f855e3e_228807e8",
       "revId": "4139ffcd038871aed9dc8b7b066a1693e9195ee2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "371f9024_49a227e4",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/motion-1/closest-corner-002.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-10-03T23:05:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "446f6d6c_4b256238",
+      "revId": "4139ffcd038871aed9dc8b7b066a1693e9195ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db47cd95_b5c473bf",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/motion-1/closest-side-004.html",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-20T08:57:21Z",
       "side": 1,
       "message": "Is this absolute positioning intended?\nIf it\u0027s not, I guess this part could be omitted.",
+      "revId": "4139ffcd038871aed9dc8b7b066a1693e9195ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3677b6e_64d16121",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/motion-1/closest-side-004.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-10-03T23:05:18Z",
+      "side": 1,
+      "message": "My in-progress implementation sometimes needs this to detect the position relative to the containing block.\n\nWhen the implementation progresses, these lines will be removed from the non ref files that have offset-position.\n\nFIXME added.",
+      "parentUuid": "db47cd95_b5c473bf",
       "revId": "4139ffcd038871aed9dc8b7b066a1693e9195ee2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "2794bdb7_d9874722",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/motion-1/farthest-side-001-ref.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-10-03T23:05:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c64b98b4_292da8c0",
+      "revId": "4139ffcd038871aed9dc8b7b066a1693e9195ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0242f0cb_9992bb07",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/motion-1/farthest-side-002-ref.html",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "4139ffcd038871aed9dc8b7b066a1693e9195ee2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4c0a093_7bded637",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/motion-1/farthest-side-002-ref.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-10-03T23:05:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0242f0cb_9992bb07",
+      "revId": "4139ffcd038871aed9dc8b7b066a1693e9195ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "b0212854_cca9f523",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/motion-1/farthest-side-003-ref.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-10-03T23:05:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98a16bbc_2f30adb4",
+      "revId": "4139ffcd038871aed9dc8b7b066a1693e9195ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0425bd49_824e2f23",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/motion-1/farthest-side-004-ref.html",
         "patchSetId": 1
@@ -135,6 +261,24 @@
       "revId": "4139ffcd038871aed9dc8b7b066a1693e9195ee2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "776dd7f0_93dcedaa",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/motion-1/farthest-side-004-ref.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-10-03T23:05:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0425bd49_824e2f23",
+      "revId": "4139ffcd038871aed9dc8b7b066a1693e9195ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "96013141_0e3f4ce8",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-10-03T23:05:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8efee9b4_2563f25f",
+      "revId": "4139ffcd038871aed9dc8b7b066a1693e9195ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df5e99d3_73f1ddfb",
         "filename": "third_party/WebKit/Source/core/style/ComputedStyle.cpp",
         "patchSetId": 1
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "ee68a07d_d4bf83a6",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 952,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-10-03T23:05:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df5e99d3_73f1ddfb",
+      "revId": "4139ffcd038871aed9dc8b7b066a1693e9195ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d13d5f8a_6b106d70",
         "filename": "third_party/WebKit/Source/core/style/ComputedStyle.cpp",
         "patchSetId": 1
@@ -183,6 +363,24 @@
       "writtenOn": "2017-09-21T02:45:40Z",
       "side": 1,
       "message": "why abs? seems like it would mess up the distances when the initial position is not within the containing box",
+      "revId": "4139ffcd038871aed9dc8b7b066a1693e9195ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16c6d7b6_33f12343",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 956,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-10-03T23:05:18Z",
+      "side": 1,
+      "message": "I have added tests with the initial position outside the containing box,\nand proposed a spec clarification\nhttps://github.com/w3c/fxtf-drafts/pull/227\n\nThe abs is only relevant for kClosestSide and kFarthestSide.",
+      "parentUuid": "d13d5f8a_6b106d70",
       "revId": "4139ffcd038871aed9dc8b7b066a1693e9195ee2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "16a9c90a_f6345c24",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-10-03T23:05:18Z",
+      "side": 1,
+      "message": "Now fixed. Comment also added.",
+      "parentUuid": "975df3d4_fd47229f",
+      "revId": "4139ffcd038871aed9dc8b7b066a1693e9195ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18b8b8ed_94a4cf43",
         "filename": "third_party/WebKit/Source/core/style/ComputedStyle.cpp",
         "patchSetId": 1
@@ -217,6 +433,24 @@
       "writtenOn": "2017-09-21T02:45:40Z",
       "side": 1,
       "message": "is this the correct maximum? does it take into account the parent not being on the far left?",
+      "revId": "4139ffcd038871aed9dc8b7b066a1693e9195ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "579a3894_5fb595e0",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1069,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-10-03T23:05:18Z",
+      "side": 1,
+      "message": "This isn\u0027t about maximums, but converting percentages to pixels.\n\ne.g. offset-position-005.html\n\nparent_absolute_bounding_box.Width() \u003d #offsetParent width \u003d 500px\n\nposition.X() \u003d #target offset-position x \u003d calc(50% - 40px)\n\nFloatValueForLength(position.X(), parent_absolute_bounding_box.Width())\ngives 50% * 500px - 40px \u003d 210px\n\n\n\n\nI have now copied the caveat from the parent CL\u0027s description:\nFor this initial implementation, we use the parent layout object\ninstead of the true containing block.\n\n(The containing block is by definition at the \"far left\".)",
+      "parentUuid": "18b8b8ed_94a4cf43",
       "revId": "4139ffcd038871aed9dc8b7b066a1693e9195ee2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
