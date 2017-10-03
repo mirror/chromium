@@ -46,6 +46,15 @@ class PhysicalWebDataSource;
 class SearchTermsData;
 class TemplateURLService;
 
+class TabCallback {
+ public:
+  // The AutocompleteProvider tab iterator calls this with each tab's data.
+  // Returns true on match.
+  virtual bool TabMatches(bool incognito,
+                          const GURL& url,
+                          const base::string16& title) = 0;
+};
+
 class AutocompleteProviderClient {
  public:
   virtual ~AutocompleteProviderClient() {}
@@ -132,6 +141,8 @@ class AutocompleteProviderClient {
   // Called after creation of |keyword_provider| to allow the client to
   // configure the provider if desired.
   virtual void ConfigureKeywordProvider(KeywordProvider* keyword_provider) {}
+
+  virtual void IterateBrowserTabs(TabCallback* cb) = 0;
 };
 
 #endif  // COMPONENTS_OMNIBOX_BROWSER_AUTOCOMPLETE_PROVIDER_CLIENT_H_

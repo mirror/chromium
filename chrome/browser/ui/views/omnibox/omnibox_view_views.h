@@ -88,6 +88,9 @@ class OmniboxViewViews : public OmniboxView,
 
   // OmniboxView:
   void Update() override;
+  void SwitchToTabWithURL(const std::string& url,
+                          bool incognito,
+                          bool close_this) override;
   base::string16 GetText() const override;
   using OmniboxView::SetUserText;
   void SetUserText(const base::string16& text,

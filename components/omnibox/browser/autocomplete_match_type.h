@@ -54,6 +54,7 @@ struct AutocompleteMatchType {
     PHYSICAL_WEB                = 21,  // A Physical Web nearby URL.
     PHYSICAL_WEB_OVERFLOW       = 22,  // An item representing multiple
                                        // Physical Web nearby URLs.
+    TAB_SEARCH                  = 23,  // URL or title of another tab
     NUM_TYPES,
   };
 

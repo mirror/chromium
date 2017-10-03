@@ -25,6 +25,9 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/search_engines/template_url_service_factory.h"
 #include "chrome/browser/sync/profile_sync_service_factory.h"
+#include "chrome/browser/ui/browser.h"
+#include "chrome/browser/ui/browser_list.h"
+#include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
 #include "components/browser_sync/profile_sync_service.h"
@@ -35,6 +38,7 @@
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/service_worker_context.h"
 #include "content/public/browser/storage_partition.h"
+#include "content/public/browser/web_contents.h"
 #include "extensions/features/features.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 
@@ -327,4 +331,21 @@ void ChromeAutocompleteProviderClient::OnAutocompleteControllerResultReady(
       chrome::NOTIFICATION_AUTOCOMPLETE_CONTROLLER_RESULT_READY,
       content::Source<AutocompleteController>(controller),
       content::NotificationService::NoDetails());
+}
+
+void ChromeAutocompleteProviderClient::IterateBrowserTabs(TabCallback* cb) {
+  BrowserList* browser_list = BrowserList::GetInstance();
+  for (BrowserList::const_iterator b = browser_list->begin();
+       b != browser_list->end(); ++b) {
+    Browser* browser = *b;
+
+    for (int i = 0; i < browser->tab_strip_model()->count(); ++i) {
+      content::WebContents* web_contents =
+          browser->tab_strip_model()->GetWebContentsAt(i);
+      if (cb->TabMatches(browser->profile()->IsOffTheRecord(),
+                         web_contents->GetURL(), web_contents->GetTitle()))
+        // Found what looking for.
+        return;
+    }
+  }
 }
