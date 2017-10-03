@@ -2,10 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "chrome/browser/feature_engagement/new_tab/new_tab_tracker.h"
+#include "chrome/browser/feature_engagement/new_tab/new_tab_tracker_factory.h"
+#include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/test/test_browser_dialog.h"
-#include "chrome/browser/ui/views/frame/browser_view.h"
-#include "chrome/browser/ui/views/tabs/new_tab_button.h"
-#include "chrome/browser/ui/views/tabs/tab_strip.h"
 
 class NewTabPromoDialogTest : public DialogBrowserTest {
  public:
@@ -13,9 +13,9 @@ class NewTabPromoDialogTest : public DialogBrowserTest {
 
   // DialogBrowserTest:
   void ShowDialog(const std::string& name) override {
-    BrowserView* browser_view =
-        BrowserView::GetBrowserViewForBrowser(browser());
-    browser_view->tabstrip()->new_tab_button()->ShowPromo();
+    feature_engagement::NewTabTrackerFactory::GetInstance()
+        ->GetForProfile(browser()->profile())
+        ->ShowPromo();
   }
 
  private:
