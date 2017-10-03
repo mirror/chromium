@@ -6,6 +6,7 @@
 
 #include <string>
 
+#include "build/build_config.h"
 #include "services/service_manager/sandbox/switches.h"
 
 namespace service_manager {
@@ -58,6 +59,14 @@ void SetCommandLineFlagsForSandboxType(base::CommandLine* command_line,
     default:
       break;
   }
+}
+
+bool IsUnsandboxedSandboxType(SandboxType sandbox_type) {
+  return
+#if !defined(OS_LINUX)
+      sandbox_type == SANDBOX_TYPE_NETWORK ||
+#endif
+      sandbox_type == SANDBOX_TYPE_NO_SANDBOX;
 }
 
 SandboxType SandboxTypeFromCommandLine(const base::CommandLine& command_line) {

@@ -29,6 +29,7 @@
 #include "content/common/sandbox_linux/bpf_cros_amd_gpu_policy_linux.h"
 #include "content/common/sandbox_linux/bpf_cros_arm_gpu_policy_linux.h"
 #include "content/common/sandbox_linux/bpf_gpu_policy_linux.h"
+#include "content/common/sandbox_linux/bpf_network_policy_linux.h"
 #include "content/common/sandbox_linux/bpf_ppapi_policy_linux.h"
 #include "content/common/sandbox_linux/bpf_renderer_policy_linux.h"
 #include "content/common/sandbox_linux/bpf_utility_policy_linux.h"
@@ -200,6 +201,9 @@ bool StartBPFSandbox(service_manager::SandboxType sandbox_type,
       break;
     case service_manager::SANDBOX_TYPE_CDM:
       policy = std::make_unique<CdmProcessPolicy>();
+      break;
+    case service_manager::SANDBOX_TYPE_NETWORK:
+      policy = std::make_unique<NetworkProcessPolicy>();
       break;
     case service_manager::SANDBOX_TYPE_NO_SANDBOX:
     default:
