@@ -185,6 +185,10 @@ class CORE_EXPORT LocalFrameView final
   // Marks this frame, and ancestor frames, as needing one intersection
   // observervation. This overrides throttling for one frame.
   void SetNeedsIntersectionObservation();
+  void ResetNeedsForcedCompositingUpdate() {
+    needs_forced_compositing_update_ = false;
+  }
+  void SetNeedsForcedCompositingUpdate();
 
   // Methods for getting/setting the size Blink should use to layout the
   // contents.
@@ -1229,6 +1233,7 @@ class CORE_EXPORT LocalFrameView final
   bool allows_layout_invalidation_after_layout_clean_;
   bool forcing_layout_parent_view_;
   bool needs_intersection_observation_;
+  bool needs_forced_compositing_update_ = false;
 
   Member<ElementVisibilityObserver> visibility_observer_;
 
