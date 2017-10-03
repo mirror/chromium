@@ -45,6 +45,30 @@
       "revId": "79e754387c23b9906d559b03a97c4f428ab98204",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5240a504_7d223bca",
+        "filename": "gpu/ipc/service/gpu_vsync_provider_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1117489
+      },
+      "writtenOn": "2017-10-03T17:10:37Z",
+      "side": 1,
+      "message": "This is also Thread class override which is called after exiting the message loop. It would probably be OK to not null out task_runner_. According to the docs calling PostMessage on such task runner would simply fail. But I thought that nulling it out would make it easier to troubleshoot an issue if there is any crash in this code.",
+      "parentUuid": "0cc27f2f_da24926f",
+      "range": {
+        "startLine": 259,
+        "startChar": 21,
+        "endLine": 259,
+        "endChar": 28
+      },
+      "revId": "79e754387c23b9906d559b03a97c4f428ab98204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
