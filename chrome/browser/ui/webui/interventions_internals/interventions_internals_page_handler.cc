@@ -5,6 +5,7 @@
 #include "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.h"
 
 #include <unordered_map>
+#include <vector>
 
 #include "components/previews/core/previews_experiments.h"
 
@@ -23,8 +24,9 @@ const char kOfflineDesciption[] = "Offline Previews";
 }  // namespace
 
 InterventionsInternalsPageHandler::InterventionsInternalsPageHandler(
-    mojom::InterventionsInternalsPageHandlerRequest request)
-    : binding_(this, std::move(request)) {}
+    mojom::InterventionsInternalsPageHandlerRequest request,
+    previews::PreviewsLogger* logger)
+    : binding_(this, std::move(request)), logger_(logger) {}
 
 InterventionsInternalsPageHandler::~InterventionsInternalsPageHandler() {}
 
@@ -48,4 +50,22 @@ void InterventionsInternalsPageHandler::GetPreviewsEnabled(
   statuses[kOfflinePreviews] = std::move(offline_status);
 
   std::move(callback).Run(std::move(statuses));
+}
+
+void InterventionsInternalsPageHandler::GetMessageLogs(
+    GetMessageLogsCallback callback) {
+  std::vector<previews::PreviewsLogger::MessageLog> messages =
+      logger_->log_messages();
+
+  std::vector<mojom::MessageLogPtr> result;
+  for (auto message : messages) {
+    auto log = mojom::MessageLog::New();
+    log->type = message.event_type;
+    log->description = message.event_description;
+    log->url = message.url.spec();
+
+    result.push_back(std::move(log));
+  }
+
+  std::move(callback).Run(std::move(result));
 }

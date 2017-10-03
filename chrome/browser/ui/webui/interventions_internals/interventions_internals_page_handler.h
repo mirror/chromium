@@ -8,6 +8,7 @@
 #include "base/macros.h"
 #include "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom.h"
 #include "chrome/browser/ui/webui/mojo_web_ui_handler.h"
+#include "components/previews/core/previews_log.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
 class InterventionsInternalsPageHandler
@@ -15,14 +16,19 @@ class InterventionsInternalsPageHandler
       public MojoWebUIHandler {
  public:
   explicit InterventionsInternalsPageHandler(
-      mojom::InterventionsInternalsPageHandlerRequest request);
+      mojom::InterventionsInternalsPageHandlerRequest request,
+      previews::PreviewsLogger* logger);
   ~InterventionsInternalsPageHandler() override;
 
   // mojom::InterventionsInternalsPageHandler.
   void GetPreviewsEnabled(GetPreviewsEnabledCallback callback) override;
 
+  // mojom::InterventionsInternalsPageHandler:
+  void GetMessageLogs(GetMessageLogsCallback callback) override;
+
  private:
   mojo::Binding<mojom::InterventionsInternalsPageHandler> binding_;
+  previews::PreviewsLogger* logger_;
 
   DISALLOW_COPY_AND_ASSIGN(InterventionsInternalsPageHandler);
 };
