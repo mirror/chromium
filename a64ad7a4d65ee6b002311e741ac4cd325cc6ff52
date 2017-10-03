@@ -22,6 +22,30 @@
       "revId": "a64ad7a4d65ee6b002311e741ac4cd325cc6ff52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90be61f4_177875ef",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/ChromeHomePromoIllustration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-03T17:19:02Z",
+      "side": 1,
+      "message": "Done...moved entirely into the animation listener.",
+      "parentUuid": "d23d489d_a08949c2",
+      "range": {
+        "startLine": 102,
+        "startChar": 8,
+        "endLine": 115,
+        "endChar": 10
+      },
+      "revId": "a64ad7a4d65ee6b002311e741ac4cd325cc6ff52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
