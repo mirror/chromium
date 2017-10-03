@@ -46,6 +46,30 @@
       "revId": "0ae23adcfc7364517ae563535402302cab2cd489",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed411879_6ab52224",
+        "filename": "chrome/app/chrome_main.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2017-10-03T22:28:40Z",
+      "side": 1,
+      "message": "Thanks.",
+      "parentUuid": "bf1683d9_bf304468",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 41
+      },
+      "revId": "0ae23adcfc7364517ae563535402302cab2cd489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
