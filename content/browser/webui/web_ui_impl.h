@@ -8,11 +8,13 @@
 #include <map>
 #include <memory>
 #include <set>
+#include <string>
 #include <vector>
 
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_ui.h"
 #include "ipc/ipc_listener.h"
 
@@ -20,8 +22,8 @@ namespace content {
 class RenderFrameHost;
 
 class CONTENT_EXPORT WebUIImpl : public WebUI,
-                                 public IPC::Listener,
-                                 public base::SupportsWeakPtr<WebUIImpl> {
+                                 public base::SupportsWeakPtr<WebUIImpl>,
+                                 private WebContentsObserver {
  public:
   WebUIImpl(WebContents* contents, const std::string& frame_name);
   ~WebUIImpl() override;
@@ -30,7 +32,8 @@ class CONTENT_EXPORT WebUIImpl : public WebUI,
   // crash) or when a WebUI is created for a RenderFrame (i.e. navigating from
   // chrome://downloads to chrome://bookmarks) or when both are new (i.e.
   // opening a new tab).
-  void RenderFrameCreated(RenderFrameHost* render_frame_host);
+  // TODO(lukasza): Override WebContentsObserver::RenderFrameCreated instead?
+  void WebUIRenderFrameCreated(RenderFrameHost* render_frame_host);
 
   // Called when a RenderFrame is reused for the same WebUI type (i.e. reload).
   void RenderFrameReused(RenderFrameHost* render_frame_host);
@@ -77,14 +80,14 @@ class CONTENT_EXPORT WebUIImpl : public WebUI,
   std::vector<std::unique_ptr<WebUIMessageHandler>>* GetHandlersForTesting()
       override;
 
-  // IPC::Listener implementation:
-  bool OnMessageReceived(const IPC::Message& message) override;
+  // WebContentsObserver implementation:
+  bool OnMessageReceived(const IPC::Message& message,
+                         RenderFrameHost* sender) override;
+  void DidFinishNavigation(NavigationHandle* navigation_handle) override;
 
  private:
-  class MainFrameNavigationObserver;
-
   // IPC message handling.
-  void OnWebUISend(const GURL& source_url,
+  void OnWebUISend(RenderFrameHost* sender,
                    const std::string& message,
                    const base::ListValue& args);
 
@@ -96,7 +99,7 @@ class CONTENT_EXPORT WebUIImpl : public WebUI,
   // frame of the specified name exists in the page.
   RenderFrameHost* TargetFrame();
 
-  // Called internally and by the owned MainFrameNavigationObserver.
+  // Called from DidFinishNavigation when main frame is navigated away.
   void DisallowJavascriptOnAllHandlers();
 
   // A map of message name -> message handling callback.
@@ -111,12 +114,6 @@ class CONTENT_EXPORT WebUIImpl : public WebUI,
 
   // The WebUIMessageHandlers we own.
   std::vector<std::unique_ptr<WebUIMessageHandler>> handlers_;
-
-  // Non-owning pointer to the WebContents this WebUI is associated with.
-  WebContents* web_contents_;
-
-  // Notifies this WebUI about notifications in the main frame.
-  std::unique_ptr<MainFrameNavigationObserver> web_contents_observer_;
 
   // The name of the frame this WebUI is embedded in. If empty, the main frame
   // is used.

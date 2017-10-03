@@ -1687,6 +1687,12 @@ IPC_MESSAGE_ROUTED1(FrameHostMsg_RunFileChooser, content::FileChooserParams)
 IPC_MESSAGE_ROUTED1(FrameHostMsg_UpdateFaviconURL,
                     std::vector<content::FaviconURL> /* candidates */)
 
+// A message from HTML-based UI.  When (trusted) Javascript calls
+// send(message, args), this message is sent to the browser.
+IPC_MESSAGE_ROUTED2(FrameHostMsg_WebUISend,
+                    std::string /* message */,
+                    base::ListValue /* args */)
+
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
 
 // Message to show/hide a popup menu using native controls.
