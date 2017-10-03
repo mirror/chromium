@@ -22,6 +22,30 @@
       "revId": "3b47271eabb9e517bf7016860dc11e23a3ead5ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "241875b8_d1326dd0",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-10-03T18:56:35Z",
+      "side": 1,
+      "message": "Done\n\nI skipped doing these refactors initially because I am not sure if adding peekPixels() is worth it. I couldn\u0027t find a JS example where this code path is triggered(on Linux desktop). Unittests cover this, i.e. CanvasCaptureHandlerTest; but all web pages seem to be texture backed. WDYT?",
+      "parentUuid": "a2c9fa9e_63d5b9d6",
+      "range": {
+        "startLine": 213,
+        "startChar": 15,
+        "endLine": 213,
+        "endChar": 21
+      },
+      "revId": "3b47271eabb9e517bf7016860dc11e23a3ead5ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
