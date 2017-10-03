@@ -164,7 +164,12 @@ const base::Feature kMojoBlobs{"MojoBlobs", base::FEATURE_DISABLED_BY_DEFAULT};
 
 // Mojo-based Input Event routing.
 const base::Feature kMojoInputMessages{"MojoInputMessages",
-                                       base::FEATURE_DISABLED_BY_DEFAULT};
+#if defined(OS_ANDROID)
+      base::FEATURE_DISABLED_BY_DEFAULT
+#else
+      base::FEATURE_ENABLED_BY_DEFAULT
+#endif
+};
 
 // Enables/disables hardware video encode acceleration using Mojo (falls back).
 const base::Feature kMojoVideoEncodeAccelerator{
