@@ -26,6 +26,10 @@ class CORE_EXPORT DedicatedWorkerMessagingProxy final
       v8::Isolate*) override;
 
   std::unique_ptr<WorkerThread> CreateWorkerThread() override;
+
+  service_manager::mojom::blink::InterfaceProviderPtrInfo
+  ConnectToWorkerInterfaceProvider(
+      const RefPtr<SecurityOrigin>& script_origin) override;
 };
 
 }  // namespace blink

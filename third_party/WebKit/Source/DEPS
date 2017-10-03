@@ -4,6 +4,7 @@ include_rules = [
     "+build",
     "+services/service_manager/public/cpp/connector.h",
     "+services/service_manager/public/cpp/interface_provider.h",
+    "+services/service_manager/public/interfaces/interface_provider.mojom-blink.h",
     "+testing/gmock/include/gmock",
     "+testing/gtest/include/gtest",
     "+third_party/WebKit/common",
