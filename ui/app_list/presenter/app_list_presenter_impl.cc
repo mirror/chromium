@@ -109,6 +109,7 @@ void AppListPresenterImpl::Dismiss() {
 }
 
 void AppListPresenterImpl::ToggleAppList(int64_t display_id) {
+  // LOG(ERROR) << "MSW AppListPresenterImpl::ToggleAppList";
   if (IsVisible()) {
     Dismiss();
     return;

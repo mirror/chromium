@@ -22,6 +22,7 @@ void AppListShelfItemDelegate::ItemSelected(std::unique_ptr<ui::Event> event,
                                             int64_t display_id,
                                             ShelfLaunchSource source,
                                             ItemSelectedCallback callback) {
+  // LOG(ERROR) << "MSW AppListShelfItemDelegate::ItemSelected";
   Shell::Get()->app_list()->ToggleAppList(display_id, app_list::kShelfButton);
   std::move(callback).Run(SHELF_ACTION_APP_LIST_SHOWN, base::nullopt);
 }

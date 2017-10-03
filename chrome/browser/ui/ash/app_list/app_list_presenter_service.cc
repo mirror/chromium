@@ -40,14 +40,17 @@ void AppListPresenterService::Init() {
 }
 
 void AppListPresenterService::Show(int64_t display_id) {
+  // LOG(ERROR) << "MSW AppListPresenterService::Show";
   GetPresenter()->Show(display_id);
 }
 
 void AppListPresenterService::Dismiss() {
+  // LOG(ERROR) << "MSW AppListPresenterService::Dismiss";
   GetPresenter()->Dismiss();
 }
 
 void AppListPresenterService::ToggleAppList(int64_t display_id) {
+  // LOG(ERROR) << "MSW AppListPresenterService::ToggleAppList";
   GetPresenter()->ToggleAppList(display_id);
 }
 

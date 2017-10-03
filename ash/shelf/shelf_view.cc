@@ -411,6 +411,7 @@ gfx::Rect ShelfView::GetVisibleItemsBoundsInScreen() {
 void ShelfView::ButtonPressed(views::Button* sender,
                               const ui::Event& event,
                               views::InkDrop* ink_drop) {
+  // LOG(ERROR) << "MSW ShelfView::ButtonPressed A";
   if (sender == overflow_button_) {
     ToggleOverflowBubble();
     shelf_button_pressed_metric_tracker_.ButtonPressed(event, sender,
@@ -472,12 +473,14 @@ void ShelfView::ButtonPressed(views::Button* sender,
   // Run AfterItemSelected directly if the item has no delegate (ie. in tests).
   const ShelfItem& item = model_->items()[last_pressed_index_];
   if (!model_->GetShelfItemDelegate(item.id)) {
+    // LOG(ERROR) << "MSW ShelfView::ButtonPressed B";
     AfterItemSelected(item, sender, ui::Event::Clone(event), ink_drop,
                       SHELF_ACTION_NONE, base::nullopt);
     return;
   }
 
   // Notify the item of its selection; handle the result in AfterItemSelected.
+  // LOG(ERROR) << "MSW ShelfView::ButtonPressed C";
   model_->GetShelfItemDelegate(item.id)->ItemSelected(
       ui::Event::Clone(event), GetDisplayIdForView(this), LAUNCH_FROM_UNKNOWN,
       base::Bind(&ShelfView::AfterItemSelected, weak_factory_.GetWeakPtr(),

@@ -26,6 +26,7 @@ mojom::AppListPresenter* AppList::GetAppListPresenter() {
 }
 
 void AppList::Show(int64_t display_id, AppListShowSource show_source) {
+  // LOG(ERROR) << "MSW AppList::Show";
   if (presenter_) {
     UMA_HISTOGRAM_ENUMERATION(app_list::kAppListToggleMethodHistogram,
                               show_source, app_list::kMaxAppListToggleMethod);
@@ -52,11 +53,13 @@ void AppList::ProcessMouseWheelEvent(const ui::MouseWheelEvent& event) {
 }
 
 void AppList::Dismiss() {
+  // LOG(ERROR) << "MSW AppList::Dismiss";
   if (presenter_)
     presenter_->Dismiss();
 }
 
 void AppList::ToggleAppList(int64_t display_id, AppListShowSource show_source) {
+  // LOG(ERROR) << "MSW AppList::ToggleAppList";
   if (presenter_) {
     if (!IsVisible()) {
       UMA_HISTOGRAM_ENUMERATION(app_list::kAppListToggleMethodHistogram,
@@ -99,6 +102,10 @@ void AppList::OnVisibilityChanged(bool visible, int64_t display_id) {
   visible_ = visible;
   if (delegate_)
     delegate_->OnAppListVisibilityChanged(visible, display_id);
+}
+
+void AppList::FlushForTesting() {
+  bindings_.FlushForTesting();
 }
 
 }  // namespace app_list

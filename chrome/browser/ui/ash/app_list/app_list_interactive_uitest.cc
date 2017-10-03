@@ -78,20 +78,33 @@ IN_PROC_BROWSER_TEST_F(AppListTest,
   EXPECT_FALSE(app_list_button->is_showing_app_list());
   generator.set_current_location(
       app_list_button->GetBoundsInScreen().CenterPoint());
+  // base::RunLoop().RunUntilIdle();
   generator.ClickLeftButton();
-  AppListWaiter().WaitForOpen();
-  EXPECT_TRUE(presenter->GetTargetVisibility());
+  // base::RunLoop().RunUntilIdle();
+
+  // LOG(ERROR) << "MSW TEST A";
+  shell->app_list()->FlushForTesting();
+  // LOG(ERROR) << "MSW TEST B";
+
   base::RunLoop().RunUntilIdle();
+  // AppListWaiter().WaitForOpen();
+  EXPECT_TRUE(presenter->GetTargetVisibility());
   EXPECT_TRUE(shell->app_list()->GetTargetVisibility());
   EXPECT_EQ(1u, app_list_container->children().size());
   EXPECT_TRUE(app_list_button->is_showing_app_list());
 
-  // Click the button again to dismiss the app list.
+  // Click the button again to dismiss the app list; it will animate to close.
+  // base::RunLoop().RunUntilIdle();
   generator.ClickLeftButton();
-  AppListWaiter().WaitForClose();
-  EXPECT_FALSE(presenter->GetTargetVisibility());
+  // base::RunLoop().RunUntilIdle();
+
+  // LOG(ERROR) << "MSW TEST C";
+  shell->app_list()->FlushForTesting();
+  // LOG(ERROR) << "MSW TEST D";
   base::RunLoop().RunUntilIdle();
+  // AppListWaiter().WaitForClose();
+  EXPECT_FALSE(presenter->GetTargetVisibility());
   EXPECT_FALSE(shell->app_list()->GetTargetVisibility());
-  EXPECT_EQ(0u, app_list_container->children().size());
+  EXPECT_EQ(1u, app_list_container->children().size());
   EXPECT_FALSE(app_list_button->is_showing_app_list());
 }
