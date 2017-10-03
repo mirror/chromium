@@ -43,6 +43,7 @@ extern const base::Feature kAutofillUpstreamShowGoogleLogo;
 extern const base::Feature kAutofillUpstreamShowNewUi;
 extern const base::Feature kAutofillUpstreamUseAutofillProfileComparator;
 extern const base::Feature kAutofillUpstreamUseNotRecentlyUsedAutofillProfile;
+extern const base::Feature kAutofillSendBillingCustomerNumber;
 extern const char kCreditCardSigninPromoImpressionLimitParamKey[];
 extern const char kAutofillCreditCardLastUsedDateShowExpirationDateKey[];
 extern const char kAutofillUpstreamMaxMinutesSinceAutofillProfileUseKey[];
@@ -139,6 +140,11 @@ bool IsAutofillUpstreamShowGoogleLogoExperimentEnabled();
 // Returns whether the experiment is enabled where Chrome Upstream displays a
 // new save card bubble/infobar design.
 bool IsAutofillUpstreamShowNewUiExperimentEnabled();
+
+// Returns whether the experiment is enabled where Chrome reads billing customer
+// number from priority preference and send along with UploadCardRequest and
+// FullCardRequest.
+bool IsAutofillSendBillingCustomerNumberExperimentEnabled();
 
 // Returns the maximum time that could have elapsed since an address profile's
 // most recent use for the adress profile to be included in the candidate set
