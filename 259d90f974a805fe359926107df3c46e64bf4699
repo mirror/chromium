@@ -387,6 +387,24 @@
     },
     {
       "key": {
+        "uuid": "dc7358b0_60cef877",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-10-03T21:27:34Z",
+      "side": 1,
+      "message": "Since the following CL was landed to use NAN to mark a sensor data field not available:\n\"Set unavailable sensor data field Not-A-Number\":\nhttps://chromium-review.googlesource.com/c/chromium/src/+/682557\nI updated code here to check if the data is NAN and set the |has_*| fields accordingly.\n\nDone.",
+      "parentUuid": "793da78c_a4ee0526",
+      "revId": "259d90f974a805fe359926107df3c46e64bf4699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "66d3a80a_15d994e2",
         "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
         "patchSetId": 9
