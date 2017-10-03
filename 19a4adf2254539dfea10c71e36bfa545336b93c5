@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a344fb5_fd12d6a2",
+        "filename": "cc/scheduler/scheduler_state_machine.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1088,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-10-03T01:21:00Z",
+      "side": 1,
+      "message": "nit: Can you add a comment saying that you block in the above cases even if can_draw_ is false in case we are waiting for the first active tree?\n\nAn alternative to looking at can_draw_ here is to block if layer_tree_frame_sink_state_ ! LAYER_TREE_FRAME_SINK_STATE_ACTIVE, though I think the way you\u0027ve implemented this is cleaner.",
+      "range": {
+        "startLine": 1088,
+        "startChar": 11,
+        "endLine": 1088,
+        "endChar": 19
+      },
+      "revId": "19a4adf2254539dfea10c71e36bfa545336b93c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
