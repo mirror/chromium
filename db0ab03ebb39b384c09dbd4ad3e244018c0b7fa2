@@ -51,6 +51,24 @@
       "revId": "db0ab03ebb39b384c09dbd4ad3e244018c0b7fa2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aee9c147_c30cdba4",
+        "filename": "third_party/WebKit/Source/core/page/ChromeClient.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-10-03T21:47:34Z",
+      "side": 1,
+      "message": "Done. Don\u0027t know if I like FrameType as the name, but wanted to avoid \"Is\" for an enum class and potentially we would change the enum class to a struct once we need more than one attribute.",
+      "parentUuid": "3a427288_01deaee6",
+      "revId": "db0ab03ebb39b384c09dbd4ad3e244018c0b7fa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
