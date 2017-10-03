@@ -26,8 +26,8 @@ const int kReadBufferSize = 1024 * 64;
 
 }  // namespace
 
-MemlogReceiverPipe::MemlogReceiverPipe(base::ScopedPlatformFile file)
-    : handle_(mojo::edk::PlatformHandle(file.release())),
+MemlogReceiverPipe::MemlogReceiverPipe(mojo::edk::ScopedPlatformHandle handle)
+    : MemlogReceiverPipeBase(std::move(handle)),
       controller_(FROM_HERE),
       read_buffer_(new char[kReadBufferSize]) {
   base::MessageLoopForIO::current()->WatchFileDescriptor(
@@ -41,17 +41,6 @@ void MemlogReceiverPipe::StartReadingOnIOThread() {
   OnFileCanReadWithoutBlocking(handle_.get().handle);
 }
 
-void MemlogReceiverPipe::SetReceiver(
-    scoped_refptr<base::TaskRunner> task_runner,
-    scoped_refptr<MemlogStreamReceiver> receiver) {
-  receiver_task_runner_ = task_runner;
-  receiver_ = receiver;
-}
-
-void MemlogReceiverPipe::ReportError() {
-  handle_.reset();
-}
-
 void MemlogReceiverPipe::OnFileCanReadWithoutBlocking(int fd) {
   ssize_t bytes_read = 0;
   do {
@@ -60,11 +49,11 @@ void MemlogReceiverPipe::OnFileCanReadWithoutBlocking(int fd) {
         handle_.get(), read_buffer_.get(), kReadBufferSize, &dummy_for_receive);
     if (bytes_read > 0) {
       receiver_task_runner_->PostTask(
-          FROM_HERE, base::BindOnce(&ReceiverPipeStreamDataThunk,
-                                    base::MessageLoop::current()->task_runner(),
-                                    scoped_refptr<MemlogReceiverPipe>(this),
-                                    receiver_, std::move(read_buffer_),
-                                    static_cast<size_t>(bytes_read)));
+          FROM_HERE,
+          base::BindOnce(&MemlogReceiverPipe::OnStreamDataThunk, this,
+                         base::MessageLoop::current()->task_runner(),
+                         std::move(read_buffer_),
+                         static_cast<size_t>(bytes_read)));
       read_buffer_.reset(new char[kReadBufferSize]);
       return;
     } else if (bytes_read == 0) {
