@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "295cce46_a63621a5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-03T17:07:18Z",
+      "side": 1,
+      "message": "When/how does that happen again? I have the vague feeling you already showed me a stack trace, but I can\u0027t find it anymore... It might be good to try and avoid that in the first place. Not blocking this CL though.",
+      "range": {
+        "startLine": 15,
+        "startChar": 32,
+        "endLine": 17,
+        "endChar": 11
+      },
+      "revId": "f89cc8af0716b5db03a7a756c20626503ae9cf15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e80d3677_84eb4a7c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/AllDismissedItem.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-03T17:07:18Z",
+      "side": 1,
+      "message": "This is an interface now, so you can use a lambda 😊",
+      "range": {
+        "startLine": 27,
+        "startChar": 12,
+        "endLine": 27,
+        "endChar": 44
+      },
+      "revId": "f89cc8af0716b5db03a7a756c20626503ae9cf15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
