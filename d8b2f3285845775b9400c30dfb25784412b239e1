@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "775cf54f_2aa7881c",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_mediator_unittest.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-03T08:14:45Z",
+      "side": 1,
+      "message": "You should not use web::TestWebThread, instead prefer to use web::TestWebThreadBundle. However, it looks like PaymentRequestUnitTestBase uses a ScopedTaskScheduler which conflicts with web::TestWebThreadBundle.\n\nChanging PaymentRequestUnitTestBase ScopedTaskScheduler to web::TestWebThreadBundle should do the trick (no need for a std::unique_ptr\u003c\u003e there). Replace:\n\n  base::test::ScopedTaskEnvironment scoped_task_evironment_;\n\nwith:\n\n  web::TestWebThreadBundle thread_bundle_;",
+      "revId": "d8b2f3285845775b9400c30dfb25784412b239e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
