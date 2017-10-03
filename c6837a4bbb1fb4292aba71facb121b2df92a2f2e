@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fcd20b3c_ea1aa859",
+        "filename": "components/printing/service/pdf_compositor_manifest.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-10-03T23:46:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcd186db_e25d7ce5",
+      "revId": "c6837a4bbb1fb4292aba71facb121b2df92a2f2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c30e4166_750bc82f",
         "filename": "content/common/sandbox_linux/bpf_pdfcompositor_policy_linux.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-03T20:32:52Z",
       "side": 1,
       "message": "This looks copied from the utility process policy, but does this need to use the PPAPI one instead? Do you know if you need all of these, or can you trim the list to just whichever syscall you need?",
+      "revId": "c6837a4bbb1fb4292aba71facb121b2df92a2f2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "150c244b_70751321",
+        "filename": "content/common/sandbox_linux/bpf_pdfcompositor_policy_linux.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-10-03T23:46:37Z",
+      "side": 1,
+      "message": "Our utility service needs to convert skia drawings to pdf. The reason it uses ppapi policy on Mac is due to the need for accessing fonts, and services/service_manager/sandbox/mac/ppapi.sb has no other accesses except fonts. On linux, iiuc the font accesses are thru ipc instead. So the default type (utility process policy) should be good enough. \n\nSince the service is still working in process, I don\u0027t know the exact set of calls we need. Add a TODO to trim later. Since utility process policy is applied to any mojo service by default, we should be good for now.",
+      "parentUuid": "c30e4166_750bc82f",
       "revId": "c6837a4bbb1fb4292aba71facb121b2df92a2f2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ecd6a3e3_89490bca",
+        "filename": "content/common/sandbox_linux/bpf_pdfcompositor_policy_linux.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-10-03T23:46:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8204b2f4_b51c0446",
+      "revId": "c6837a4bbb1fb4292aba71facb121b2df92a2f2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15db3470_3e363c9f",
         "filename": "content/common/sandbox_linux/bpf_pdfcompositor_policy_linux.h",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "c6837a4bbb1fb4292aba71facb121b2df92a2f2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "045e25b4_d483b202",
+        "filename": "content/common/sandbox_linux/bpf_pdfcompositor_policy_linux.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-10-03T23:46:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15db3470_3e363c9f",
+      "revId": "c6837a4bbb1fb4292aba71facb121b2df92a2f2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
