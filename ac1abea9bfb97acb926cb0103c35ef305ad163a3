@@ -22,6 +22,30 @@
       "revId": "ac1abea9bfb97acb926cb0103c35ef305ad163a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92af6062_05ec7490",
+        "filename": "ios/net/cookies/cookie_store_ios.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 766,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-10-03T14:26:41Z",
+      "side": 1,
+      "message": "True, but to avoid issues the bug intention is to simply ban UTF8String from our code, hence this fix is more appropriate.",
+      "parentUuid": "0cb53770_439ead34",
+      "range": {
+        "startLine": 766,
+        "startChar": 8,
+        "endLine": 766,
+        "endChar": 46
+      },
+      "revId": "ac1abea9bfb97acb926cb0103c35ef305ad163a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
