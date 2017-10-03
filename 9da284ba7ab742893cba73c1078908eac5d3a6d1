@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3918d2d_999a9ff1",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-03T12:31:54Z",
+      "side": 0,
+      "message": "Oh... I\u0027m surprised that all V8 tasks are posted to the loading task runner...",
+      "revId": "9da284ba7ab742893cba73c1078908eac5d3a6d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
