@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e322ec58_32d9d25d",
+        "filename": "components/cronet/ios/test/cronet_http_test.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-03T19:43:08Z",
+      "side": 1,
+      "message": "Ideally, it is up to the client to decide what caching policy should be used.\nCronet code that handles the policy is here:\nhttps://cs.chromium.org/chromium/src/ios/net/crn_http_protocol_handler.mm?q\u003d%22switch+(%5Brequest_+cachePolicy%5D)%22\u0026l\u003d613\n\nIt looks that Cronet doesn\u0027t rely on the iOS caching layer but handles caching itself. I guess this makes some NSURLSession delegate methods non-functional, e.g. https://developer.apple.com/documentation/foundation/nsurlsessiondatadelegate/1411612-urlsession?language\u003dobjc\n\nI guess it would be great if the client could select which caching layer should be used for Cronet.\n\nFor the tests, we should disable caching since ephemeralSessionConfiguration doesn\u0027t disable it by default.",
+      "parentUuid": "e66a393a_9fd0a156",
+      "range": {
+        "startLine": 44,
+        "startChar": 11,
+        "endLine": 44,
+        "endChar": 29
+      },
+      "revId": "b03631e383da823c71f59089c49f31f6ebad9e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d18c5d38_96ffaf02",
         "filename": "components/cronet/ios/test/cronet_http_test.mm",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "b03631e383da823c71f59089c49f31f6ebad9e32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "318fbbc2_e94d4233",
+        "filename": "components/cronet/ios/test/cronet_http_test.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-03T19:43:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d18c5d38_96ffaf02",
+      "range": {
+        "startLine": 423,
+        "startChar": 15,
+        "endLine": 423,
+        "endChar": 24
+      },
+      "revId": "b03631e383da823c71f59089c49f31f6ebad9e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c03910de_cc933f71",
+        "filename": "components/cronet/ios/test/cronet_http_test.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-03T19:43:08Z",
+      "side": 1,
+      "message": "Removed. Not needed anymore.",
+      "parentUuid": "e267f50a_2d9debcf",
+      "range": {
+        "startLine": 427,
+        "startChar": 37,
+        "endLine": 427,
+        "endChar": 38
+      },
+      "revId": "b03631e383da823c71f59089c49f31f6ebad9e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a622a50a_c937cc98",
         "filename": "components/cronet/ios/test/cronet_http_test.mm",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "b03631e383da823c71f59089c49f31f6ebad9e32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa75ddd7_e86911f5",
+        "filename": "components/cronet/ios/test/cronet_http_test.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-03T19:43:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a622a50a_c937cc98",
+      "range": {
+        "startLine": 434,
+        "startChar": 51,
+        "endLine": 434,
+        "endChar": 68
+      },
+      "revId": "b03631e383da823c71f59089c49f31f6ebad9e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "8c77652b_37532f94",
+        "filename": "components/cronet/ios/test/cronet_http_test.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-03T19:43:08Z",
+      "side": 1,
+      "message": "Removed. Not needed anymore.",
+      "parentUuid": "aec27b25_95337439",
+      "range": {
+        "startLine": 455,
+        "startChar": 7,
+        "endLine": 455,
+        "endChar": 20
+      },
+      "revId": "b03631e383da823c71f59089c49f31f6ebad9e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c53ba8f4_37c878b6",
         "filename": "components/cronet/ios/test/test_server.cc",
         "patchSetId": 2
@@ -137,6 +257,30 @@
       "revId": "b03631e383da823c71f59089c49f31f6ebad9e32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "730a51e7_25d60904",
+        "filename": "components/cronet/ios/test/test_server.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-03T19:43:08Z",
+      "side": 1,
+      "message": "HTTP_OK is the default status but I prefer to be more explicit that it is successful response. I added it everywhere else.",
+      "parentUuid": "c53ba8f4_37c878b6",
+      "range": {
+        "startLine": 82,
+        "startChar": 17,
+        "endLine": 82,
+        "endChar": 25
+      },
+      "revId": "b03631e383da823c71f59089c49f31f6ebad9e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "c581ab24_0f33d9c0",
+        "filename": "components/cronet/ios/test/test_server.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-03T19:43:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb6acac0_74a50610",
+      "range": {
+        "startLine": 83,
+        "startChar": 17,
+        "endLine": 83,
+        "endChar": 28
+      },
+      "revId": "b03631e383da823c71f59089c49f31f6ebad9e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61c35df6_f7b18272",
         "filename": "components/cronet/ios/test/test_server.cc",
         "patchSetId": 2
@@ -174,6 +342,30 @@
       "writtenOn": "2017-10-02T21:24:13Z",
       "side": 1,
       "message": "Can we use base::Hash() instead?",
+      "range": {
+        "startLine": 196,
+        "startChar": 17,
+        "endLine": 196,
+        "endChar": 35
+      },
+      "revId": "b03631e383da823c71f59089c49f31f6ebad9e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "442140ef_6e177520",
+        "filename": "components/cronet/ios/test/test_server.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-03T19:43:08Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "61c35df6_f7b18272",
       "range": {
         "startLine": 196,
         "startChar": 17,
