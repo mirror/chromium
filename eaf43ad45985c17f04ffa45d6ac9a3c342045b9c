@@ -166,6 +166,30 @@
       "revId": "eaf43ad45985c17f04ffa45d6ac9a3c342045b9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4818acb1_828f4701",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-03T17:49:10Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "cf130a81_706a4930",
+      "range": {
+        "startLine": 70,
+        "startChar": 25,
+        "endLine": 70,
+        "endChar": 51
+      },
+      "revId": "eaf43ad45985c17f04ffa45d6ac9a3c342045b9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
