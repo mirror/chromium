@@ -326,6 +326,29 @@
     },
     {
       "key": {
+        "uuid": "a8462b4d_29419e85",
+        "filename": "gpu/ipc/service/protected_gpu_memory_buffer_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-03T01:38:57Z",
+      "side": 1,
+      "message": "The term \"protectedbuffer\" is a bit confusing sometimes. I think of it as the buffer instance that doesn\u0027t provide access to the real contents (the unprivileged part) and the buffer returned by the function below as not protected as it can be used to access the real contents.\n\nDoes Android framework not refer to the gralloc buffer holding the unprivileged handle as a \"protected buffer\" in our case? That could be a bit confusing in that case.",
+      "range": {
+        "startLine": 14,
+        "startChar": 3,
+        "endLine": 17,
+        "endChar": 31
+      },
+      "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d3510e6d_fa8420e0",
         "filename": "gpu/ipc/service/protected_gpu_memory_buffer_manager.h",
         "patchSetId": 3
@@ -337,6 +360,47 @@
       "writtenOn": "2017-09-30T15:09:21Z",
       "side": 1,
       "message": "I assume we\u0027re not planning to use this for non-ozone platforms. Can you move this to ozone instead and have all special logic live behind the CreateNativePixmapFromHandle API of the SurfaceFactoryOzone? I think that would reduce the amount of platform independent code you need to touch significantly.",
+      "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49e85b0f_ce035d37",
+        "filename": "gpu/ipc/service/protected_gpu_memory_buffer_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-03T01:38:57Z",
+      "side": 1,
+      "message": "Ignore this comment as I know understand why this needs to be a service and not ozone specific. The implementation should be able live in ozone specific code though as the GLImage factory code should not have to be aware of this on other platforms.",
+      "parentUuid": "d3510e6d_fa8420e0",
+      "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65811fac_03f389be",
+        "filename": "gpu/ipc/service/protected_gpu_memory_buffer_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-03T01:38:57Z",
+      "side": 1,
+      "message": "nit: GetProtectedContents() as that makes it clear that it is returning the contents that is protected and not the other way around. Maybe ShareProtectedContents() is this is acquiring a handle that can be used to share the contents.",
+      "range": {
+        "startLine": 32,
+        "startChar": 37,
+        "endLine": 32,
+        "endChar": 67
+      },
       "revId": "b78f3f95ee7d83034abb7455fa3a4342ae0cef1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
