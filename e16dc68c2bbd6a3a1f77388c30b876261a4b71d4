@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "98cddb5e_a0525474",
+        "filename": "chrome/browser/notifications/message_center_display_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-03T16:21:53Z",
+      "side": 1,
+      "message": "The crash does, but the fact that something on g_browser_process shuts down before the profiles is uncommon.",
+      "parentUuid": "4af0840e_9fae5392",
+      "revId": "e16dc68c2bbd6a3a1f77388c30b876261a4b71d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e604b71_cb01321f",
         "filename": "ui/message_center/notification.h",
         "patchSetId": 4
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "\u003e This feels semantically wrong. It should be exceptional that you cannot click on a notification, not the other way around.\n\nI don\u0027t share this intuition as many notifications have buttons but less than half in Chrome do something when you click on the notification itself. Even if you normally did handle a click, you couldn\u0027t default this to true because then it\u0027s too easy to show a hand that does nothing.\n\n\u003e This CL would now change all Web Notifications to lose their mouse cursor (per your TODO in platform_notification_service_impl.cc),\n\nWeb notifications already don\u0027t have hand cursors because they don\u0027t override HasClickedListener.\n\n\u003e and potentially others since there are ~40 delegates, and only 11 that override HasClickedListener().\n\nHasClickedListener defaults to false, so only 11 show a hand currently. They\u0027ll continue to do so.\n\n\u003e \n\u003e Going the opposite direction (defaulting the delegate\u0027s method to TRUE) feels much safer. WDYT?\n\nI don\u0027t agree. The delegate is way more popular than this clickable field, so instead of updating 39 delegates we should change this field.",
       "parentUuid": "5e604b71_cb01321f",
+      "revId": "e16dc68c2bbd6a3a1f77388c30b876261a4b71d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68b81e1a_c0158170",
+        "filename": "ui/message_center/notification.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-03T16:21:53Z",
+      "side": 1,
+      "message": "\u003e \u003e This feels semantically wrong. It should be exceptional that you cannot click on a notification, not the other way around.\n\u003e \n\u003e I don\u0027t share this intuition as many notifications have buttons but less than half in Chrome do something when you click on the notification itself. Even if you normally did handle a click, you couldn\u0027t default this to true because then it\u0027s too easy to show a hand that does nothing.\n\nI guess my concern is more about the \"should\". There\u0027s a user expectation to meet, and I\u0027ll check with Sebastien to see if we should reconsider this.\n\n\u003e \u003e This CL would now change all Web Notifications to lose their mouse cursor (per your TODO in platform_notification_service_impl.cc),\n\u003e \n\u003e Web notifications already don\u0027t have hand cursors because they don\u0027t override HasClickedListener.\n\u003e \n\u003e \u003e and potentially others since there are ~40 delegates, and only 11 that override HasClickedListener().\n\u003e \n\u003e HasClickedListener defaults to false, so only 11 show a hand currently. They\u0027ll continue to do so.\n\u003e \n\u003e \u003e \n\u003e \u003e Going the opposite direction (defaulting the delegate\u0027s method to TRUE) feels much safer. WDYT?\n\u003e \n\u003e I don\u0027t agree. The delegate is way more popular than this clickable field, so instead of updating 39 delegates we should change this field.\n\nOk.",
+      "parentUuid": "a14cbf2e_50e006f7",
       "revId": "e16dc68c2bbd6a3a1f77388c30b876261a4b71d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
