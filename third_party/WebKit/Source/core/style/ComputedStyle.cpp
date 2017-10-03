@@ -24,6 +24,7 @@
 #include "core/style/ComputedStyle.h"
 
 #include <algorithm>
+#include <cmath>
 #include <memory>
 
 #include "build/build_config.h"
@@ -968,6 +969,80 @@ bool ComputedStyle::HasFilters() const {
   return FilterInternal().Get() && !FilterInternal()->operations_.IsEmpty();
 }
 
+namespace {
+
+float ComputeRayRadius(const FloatRect& parent_absolute_bounding_box,
+                       const FloatPoint& center,
+                       StyleRay::RaySize size,
+                       float bearing) {
+  float dist_left = std::abs(center.X());
+  float dist_top = std::abs(center.Y());
+  float dist_right =
+      std::abs(parent_absolute_bounding_box.Width() - center.X());
+  float dist_bottom =
+      std::abs(parent_absolute_bounding_box.Height() - center.Y());
+
+  switch (size) {
+    case StyleRay::RaySize::kClosestSide:
+      return std::min(std::min(dist_left, dist_top),
+                      std::min(dist_right, dist_bottom));
+    case StyleRay::RaySize::kFarthestSide:
+      return std::max(std::max(dist_left, dist_top),
+                      std::max(dist_right, dist_bottom));
+    case StyleRay::RaySize::kClosestCorner:
+    case StyleRay::RaySize::kFarthestCorner: {
+      float dist_top_left_corner = hypot(dist_left, dist_top);
+      float dist_top_right_corner = hypot(dist_right, dist_top);
+      float dist_bottom_left_corner = hypot(dist_left, dist_bottom);
+      float dist_bottom_right_corner = hypot(dist_right, dist_bottom);
+      if (size == StyleRay::RaySize::kClosestCorner) {
+        return std::min(
+            std::min(dist_top_left_corner, dist_top_right_corner),
+            std::min(dist_bottom_left_corner, dist_bottom_right_corner));
+      }
+      return std::max(
+          std::max(dist_top_left_corner, dist_top_right_corner),
+          std::max(dist_bottom_left_corner, dist_bottom_right_corner));
+    }
+    case StyleRay::RaySize::kSides: {
+      if (center.X() <= 0 || center.Y() <= 0 ||
+          center.X() >= parent_absolute_bounding_box.Width() ||
+          center.Y() >= parent_absolute_bounding_box.Height()) {
+        // The initial position is not within the containing box.
+        return 0;
+      }
+
+      // Find the distance between the initial position and the intersection of
+      // the ray with the box.
+
+      float sine = sin(deg2rad(bearing));
+      float cosine = cos(deg2rad(bearing));
+
+      float dist_horizontal;
+      if (sine >= 0) {
+        dist_horizontal = dist_right;
+      } else {
+        dist_horizontal = dist_left;
+        sine = -sine;
+      }
+
+      float dist_vertical;
+      if (cosine >= 0) {
+        dist_vertical = dist_top;
+      } else {
+        dist_vertical = dist_bottom;
+        cosine = -cosine;
+      }
+
+      if (dist_vertical * sine <= dist_horizontal * cosine)
+        return dist_vertical / cosine;
+      return dist_horizontal / sine;
+    }
+  }
+}
+
+}  // anonymous namespace
+
 void ComputedStyle::ApplyMotionPathTransform(
     float origin_x,
     float origin_y,
@@ -1014,10 +1089,24 @@ void ComputedStyle::ApplyMotionPathTransform(
   FloatPoint point;
   float angle;
   if (path->GetType() == BasicShape::kStyleRayType) {
-    // TODO(ericwilligers): crbug.com/641245 Support <size> for ray paths.
-    float float_distance = FloatValueForLength(distance, 0);
+    const StyleRay& ray = ToStyleRay(*path);
 
-    angle = ToStyleRay(*path).Angle() - 90;
+    FloatPoint center;
+    if (position.X() == Length(kAuto)) {
+      center = FloatPoint(offset_from_container.Width().ToFloat(),
+                          offset_from_container.Height().ToFloat());
+    } else {
+      center =
+          FloatPoint(FloatValueForLength(position.X(),
+                                         parent_absolute_bounding_box.Width()),
+                     FloatValueForLength(
+                         position.Y(), parent_absolute_bounding_box.Height()));
+    }
+    float radius = ComputeRayRadius(parent_absolute_bounding_box, center,
+                                    ray.Size(), ray.Angle());
+    float float_distance = FloatValueForLength(distance, radius);
+
+    angle = ray.Angle() - 90;
     point.SetX(float_distance * cos(deg2rad(angle)));
     point.SetY(float_distance * sin(deg2rad(angle)));
   } else {
