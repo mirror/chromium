@@ -191,6 +191,7 @@
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/FrameFetchContext.h"
 #include "core/loader/FrameLoader.h"
+#include "core/loader/IdlenessDetector.h"
 #include "core/loader/NavigationScheduler.h"
 #include "core/loader/PrerendererClient.h"
 #include "core/loader/TextResourceDecoderBuilder.h"
@@ -2640,6 +2641,9 @@ void Document::Shutdown() {
   CHECK(!frame_ || frame_->Tree().ChildCount() == 0);
   if (!IsActive())
     return;
+
+  if (idleness_detector_)
+    idleness_detector_->ShutDown();
 
   // Frame navigation can cause a new Document to be attached. Don't allow that,
   // since that will cause a situation where LocalFrame still has a Document
@@ -5798,6 +5802,10 @@ void Document::FinishedParsing() {
                          TRACE_EVENT_SCOPE_THREAD, "data",
                          InspectorMarkLoadEvent::Data(frame));
     probe::domContentLoadedEventFired(frame);
+    if (!idleness_detector_) {
+      idleness_detector_ = new IdlenessDetector(this);
+    }
+    idleness_detector_->DomContentLoadedEventFired();
   }
 
   // Schedule dropping of the ElementDataCache. We keep it alive for a while
@@ -7123,6 +7131,7 @@ DEFINE_TRACE(Document) {
   visitor->Trace(resize_observer_controller_);
   visitor->Trace(property_registry_);
   visitor->Trace(network_state_observer_);
+  visitor->Trace(idleness_detector_);
   Supplementable<Document>::Trace(visitor);
   TreeScope::Trace(visitor);
   ContainerNode::Trace(visitor);
