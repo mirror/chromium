@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9b22f99e_98e2930a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-10-03T05:35:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c96fc1e0_f5d8fc7f",
+      "range": {
+        "startLine": 14,
+        "startChar": 13,
+        "endLine": 14,
+        "endChar": 15
+      },
+      "revId": "6ac3050cfa5f5f71e5e7196fda3189e762cd8dfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ab859b5_75ed78f7",
         "filename": "ui/file_manager/file_manager/foreground/css/menu.css",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "6ac3050cfa5f5f71e5e7196fda3189e762cd8dfb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36748124_4f087a02",
+        "filename": "ui/file_manager/file_manager/foreground/css/menu.css",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-10-03T05:35:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ab859b5_75ed78f7",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 34
+      },
+      "revId": "6ac3050cfa5f5f71e5e7196fda3189e762cd8dfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
