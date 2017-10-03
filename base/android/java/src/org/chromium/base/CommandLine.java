@@ -232,6 +232,7 @@ public abstract class CommandLine {
         CommandLine oldCommandLine = sCommandLine.getAndSet(commandLine);
         if (oldCommandLine != null && oldCommandLine.isNativeImplementation()) {
             nativeReset();
+            throw new RuntimeException("native has been started!");
         }
     }
 
