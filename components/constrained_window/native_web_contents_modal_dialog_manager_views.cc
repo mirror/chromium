@@ -99,7 +99,14 @@ void NativeWebContentsModalDialogManagerViews::Show() {
   }
 #endif
   ShowWidget(widget);
-  Focus();
+  // Don't activate the window if it's not in front.
+  if (widget->CanActivate()) {
+    widget->widget_delegate()->set_can_activate(false);
+    Focus();
+    widget->widget_delegate()->set_can_activate(true);
+  } else {
+    Focus();
+  }
 
 #if defined(USE_AURA)
   // TODO(pkotwicz): Control the z-order of the constrained dialog via
