@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1e8de7c4_dcda2a93",
+        "filename": "components/autofill/core/browser/autofill_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-10-03T17:31:30Z",
+      "side": 1,
+      "message": "Oh. Convert the original test into UserHappinessFormInteraction_AddressForm because the original test is based on an address form.",
+      "parentUuid": "b9bb0fc9_5537b813",
+      "range": {
+        "startLine": 650,
+        "startChar": 1,
+        "endLine": 650,
+        "endChar": 2
+      },
+      "revId": "5d0b81022319f6346f0443b16c89bf3cbe6c3500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9c32f4f_c4849687",
         "filename": "components/autofill/core/browser/autofill_metrics.cc",
         "patchSetId": 8
@@ -119,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "1647ad9a_89b542da",
+        "filename": "components/autofill/core/browser/autofill_metrics_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 4763,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-10-03T17:31:30Z",
+      "side": 1,
+      "message": "Do you mean nothing logged for form with no field? Added.",
+      "parentUuid": "1a78fa3c_363db6bf",
+      "range": {
+        "startLine": 4763,
+        "startChar": 1,
+        "endLine": 4763,
+        "endChar": 2
+      },
+      "revId": "5d0b81022319f6346f0443b16c89bf3cbe6c3500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d31fb980_633de554",
         "filename": "components/autofill/core/browser/form_structure.cc",
         "patchSetId": 8
@@ -154,6 +202,24 @@
     },
     {
       "key": {
+        "uuid": "68960e17_3bbbb3e3",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1440,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-10-03T17:31:30Z",
+      "side": 1,
+      "message": "Yeah. We don\u0027t need to log return UNKNOWN/OTHER. An empty set will indicate no field in the form.",
+      "parentUuid": "1263f0e8_4166d0d5",
+      "revId": "5d0b81022319f6346f0443b16c89bf3cbe6c3500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe8353fa_b988f16f",
         "filename": "components/autofill/core/browser/form_structure.h",
         "patchSetId": 8
@@ -174,6 +240,30 @@
       "revId": "5d0b81022319f6346f0443b16c89bf3cbe6c3500",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeea2081_26428159",
+        "filename": "components/autofill/core/browser/form_structure.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-10-03T17:31:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe8353fa_b988f16f",
+      "range": {
+        "startLine": 250,
+        "startChar": 2,
+        "endLine": 250,
+        "endChar": 3
+      },
+      "revId": "5d0b81022319f6346f0443b16c89bf3cbe6c3500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -224,6 +314,30 @@
     },
     {
       "key": {
+        "uuid": "121c3a3f_b824e672",
+        "filename": "components/autofill/core/browser/form_types.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-10-03T17:31:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08d0ecc6_62b801e9",
+      "range": {
+        "startLine": 10,
+        "startChar": 63,
+        "endLine": 10,
+        "endChar": 73
+      },
+      "revId": "5d0b81022319f6346f0443b16c89bf3cbe6c3500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9279533d_886888ae",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 8
@@ -253,6 +367,24 @@
       "side": 1,
       "message": "I am confused here. Are we doing the password logging (I thought we are not as we are not changing password manager).",
       "parentUuid": "9279533d_886888ae",
+      "revId": "5d0b81022319f6346f0443b16c89bf3cbe6c3500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "738c3aae_eb1e37ef",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 93586,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-10-03T17:31:30Z",
+      "side": 1,
+      "message": "Yeah. I think you suggested not worry about password since it\u0027s handled by another manager?",
+      "parentUuid": "b345b6f2_8a0e264a",
       "revId": "5d0b81022319f6346f0443b16c89bf3cbe6c3500",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
