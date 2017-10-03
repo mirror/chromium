@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2e8f07fb_6225ed6b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-03T11:38:35Z",
+      "side": 1,
+      "message": "There are TaskQueue::UnregisterTaskQueue and TaskQueueImpl::UnregisterTaskQueue. They are essentially the same, given that TaskQueue::UnregisterTaskQueue calls TaskQueueImpl::UnregisterTaskQueue, so I think we\u0027re good with naming in that aspect.\n\nTaking about explicit states: at the moment TaskQueue can be active or unregistered. TaskQueue becomes unregistered when TaskQueue::Unregister is called or TaskQueueManager goes away. At the moment TaskQueue should be unregistered before deletion (e.g. there should be at least one place calling UnregisterTaskQueue before resetting the reference).\n\nIt would change and become slightly more complex in the future patch and I\u0027ll describe it there.",
+      "parentUuid": "827b4d59_2f70ee0f",
+      "range": {
+        "startLine": 15,
+        "startChar": 26,
+        "endLine": 15,
+        "endChar": 38
+      },
+      "revId": "2302a5c24bb82bd9d510f69f32414aa966481c62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab471d5c_1dce561d",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "2302a5c24bb82bd9d510f69f32414aa966481c62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8fe9630_a64db410",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-03T11:38:35Z",
+      "side": 1,
+      "message": "This patch does not change existing semantics (the best is yet to come) and UnregisterTaskQueue is called during frame deletion.\n\nIn the future, task queue may opt into graceful shutdown mode by providing an async task runner. In this case, TaskQueue may be deleted without calling UnregisterTaskQueue and a cleanup task will be posted, transferring ownership of TaskQueueImpl to TaskQueueManager. TaskQueueManager will keep the TaskQueueImpl while it contains tasks and will delete it when it becomes empty.",
+      "parentUuid": "ab471d5c_1dce561d",
+      "range": {
+        "startLine": 20,
+        "startChar": 13,
+        "endLine": 20,
+        "endChar": 32
+      },
+      "revId": "2302a5c24bb82bd9d510f69f32414aa966481c62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c2f16b78_89cad976",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-03T11:38:35Z",
+      "side": 1,
+      "message": "We can\u0027t access |task_queue| after std::move call, so I wanted to move it to the end and avoid having to store a raw pointer. Moved the comment too, thanks.",
+      "parentUuid": "74ec370f_0b609647",
+      "range": {
+        "startLine": 136,
+        "startChar": 2,
+        "endLine": 136,
+        "endChar": 16
+      },
+      "revId": "2302a5c24bb82bd9d510f69f32414aa966481c62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f2502c6_7a912845",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-03T05:54:45Z",
       "side": 1,
       "message": "This seems oddly asymmetric -- you can get a TaskQueue from CreateTaskQueue but how is the client (not knowing any TaskQueue internals) supposed to call this?",
+      "range": {
+        "startLine": 160,
+        "startChar": 7,
+        "endLine": 160,
+        "endChar": 26
+      },
+      "revId": "2302a5c24bb82bd9d510f69f32414aa966481c62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "945098bc_7d8f073c",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-03T11:38:35Z",
+      "side": 1,
+      "message": "TaskQueue will call this automatically when TaskQueue::UnregisterTaskQueue is called. It matches CreateTaskQueueImpl, but should we make it private and make TaskQueue a friend?",
+      "parentUuid": "3f2502c6_7a912845",
       "range": {
         "startLine": 160,
         "startChar": 7,
@@ -114,6 +210,30 @@
       "revId": "2302a5c24bb82bd9d510f69f32414aa966481c62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4a854a5_e7737c43",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-03T11:38:35Z",
+      "side": 1,
+      "message": "Doesn\u0027t exist yet. :)",
+      "parentUuid": "e1ac6a11_616a0b85",
+      "range": {
+        "startLine": 326,
+        "startChar": 7,
+        "endLine": 326,
+        "endChar": 36
+      },
+      "revId": "2302a5c24bb82bd9d510f69f32414aa966481c62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
