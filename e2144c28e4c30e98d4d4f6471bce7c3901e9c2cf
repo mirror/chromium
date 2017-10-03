@@ -16,6 +16,24 @@
       "revId": "e2144c28e4c30e98d4d4f6471bce7c3901e9c2cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99b37570_c5c017fe",
+        "filename": "third_party/WebKit/Source/core/frame/LocalDOMWindow.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1240975
+      },
+      "writtenOn": "2017-10-03T11:48:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3878f53f_c55769d3",
+      "revId": "e2144c28e4c30e98d4d4f6471bce7c3901e9c2cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
