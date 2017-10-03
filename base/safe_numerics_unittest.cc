@@ -900,6 +900,15 @@ void TestStrictComparison(const char* dst, const char* src, int line) {
   EXPECT_EQ(DstLimits::max(), CheckMax(MakeStrictNum(1), MakeCheckedNum(0),
                                        DstLimits::max(), SrcLimits::lowest())
                                   .ValueOrDie());
+  EXPECT_EQ(
+      Dst(2),
+      MakeCheckedNum(DstLimits::max()).ToRange(Dst(1), Dst(2)).ValueOrDie());
+  EXPECT_EQ(
+      Dst(1),
+      MakeCheckedNum(DstLimits::lowest()).ToRange(Dst(1), Dst(2)).ValueOrDie());
+  EXPECT_EQ(Dst(1), MakeCheckedNum(Dst(1))
+                        .ToRange(DstLimits::lowest(), DstLimits::max())
+                        .ValueOrDie());
 
   EXPECT_EQ(SrcLimits::max(),
             MakeClampedNum(SrcLimits::max()).Max(DstLimits::lowest()));
@@ -914,6 +923,11 @@ void TestStrictComparison(const char* dst, const char* src, int line) {
                      SrcLimits::lowest()));
   EXPECT_EQ(DstLimits::max(), ClampMax(MakeStrictNum(1), MakeClampedNum(0),
                                        DstLimits::max(), SrcLimits::lowest()));
+  EXPECT_EQ(Dst(2), MakeClampedNum(DstLimits::max()).ToRange(Dst(1), Dst(2)));
+  EXPECT_EQ(Dst(1),
+            MakeClampedNum(DstLimits::lowest()).ToRange(Dst(1), Dst(2)));
+  EXPECT_EQ(Dst(1), MakeClampedNum(Dst(1)).ToRange(DstLimits::lowest(),
+                                                   DstLimits::max()));
 
   if (IsValueInRangeForNumericType<Dst>(SrcLimits::max())) {
     TEST_EXPECTED_VALUE(Dst(SrcLimits::max()), (CommonMax<Dst, Src>()));

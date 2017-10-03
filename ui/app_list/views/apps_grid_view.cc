@@ -11,7 +11,7 @@
 #include "base/guid.h"
 #include "base/macros.h"
 #include "base/metrics/histogram_macros.h"
-#include "base/numerics/ranges.h"
+#include "base/numerics/clamped_math.h"
 #include "build/build_config.h"
 #include "ui/app_list/app_list_constants.h"
 #include "ui/app_list/app_list_features.h"

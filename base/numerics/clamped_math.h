@@ -109,6 +109,18 @@ class ClampedNumeric {
         ClampedMinOp<T, U>::Do(value_, Wrapper<U>::value(rhs)));
   }
 
+  template <typename U, typename V>
+  constexpr ClampedNumeric ToRange(U min, V max) const {
+    static_assert(std::is_same<typename UnderlyingType<T>::type,
+                               typename UnderlyingType<U>::type>::value &&
+                      std::is_same<typename UnderlyingType<U>::type,
+                                   typename UnderlyingType<V>::type>::value,
+                  "The base arithmetic types of all arguments must match the "
+                  "source type.");
+    assert(min < max);
+    return Max(min).Min(max);
+  }
+
   // This function is available only for integral types. It returns an unsigned
   // integer of the same width as the source type, containing the absolute value
   // of the source, and properly handling signed min.
@@ -192,6 +204,12 @@ constexpr ClampedNumeric<typename UnderlyingType<T>::type> MakeClampedNum(
   return value;
 }
 
+// Convenience wrapper for ToRange method.
+template <typename T, typename U, typename V>
+constexpr ClampedNumeric<T> ClampToRange(T value, U min, V max) {
+  return MakeClampedNum(value).ToRange(min, max);
+}
+
 // Overload the ostream output operator to make logging work nicely.
 template <typename T>
 std::ostream& operator<<(std::ostream& os, const ClampedNumeric<T>& value) {
@@ -246,6 +264,7 @@ using internal::ClampedNumeric;
 using internal::MakeClampedNum;
 using internal::ClampMax;
 using internal::ClampMin;
+using internal::ClampToRange;
 using internal::ClampAdd;
 using internal::ClampSub;
 using internal::ClampMul;
