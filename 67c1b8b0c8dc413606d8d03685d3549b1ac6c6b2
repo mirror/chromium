@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a570e4a9_df6210a3",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-10-03T20:33:03Z",
+      "side": 0,
+      "message": "about:flags is dumb, so you\u0027ll need to rename the about:flags setting. :-/",
+      "revId": "67c1b8b0c8dc413606d8d03685d3549b1ac6c6b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1527ec14_221f7052",
+        "filename": "DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-10-03T20:33:03Z",
+      "side": 1,
+      "message": "(Feel free to roll ever-so-slightly further to pick up SSL_SESSION_set_protocol_version for your other CL.)",
+      "revId": "70d7408badbae333a61cd4747be1457322cb4ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
