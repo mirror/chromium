@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "740397f9_f8cc0c51",
+        "filename": "chrome/browser/ui/views/location_bar/find_bar_icon.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-10-03T18:10:42Z",
+      "side": 1,
+      "message": "I\u0027d brought up the whole click icon to close issue and the UX folks wanted the behavior to remain the same as before.\n\nWe can look into using a real bubble once this phase of the Harmony project is complete.",
+      "parentUuid": "1d47248e_f34ca9f5",
+      "range": {
+        "startLine": 18,
+        "startChar": 9,
+        "endLine": 18,
+        "endChar": 16
+      },
+      "revId": "27561a5fbd6dd70b60da137daefcb1a8e534b60c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c09f7a4_519d6f16",
         "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
         "patchSetId": 8
