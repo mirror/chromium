@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d6d249d1_38f04d95",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-10-03T17:57:43Z",
+      "side": 1,
+      "message": "At least it seemed to work for me when I tried it. Let me double check.",
+      "parentUuid": "14be95d6_e412d0a7",
+      "revId": "0ad8d82a30d801e8de2703d9c22db5374095a980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "12e9a2ea_281657d2",
         "filename": "build/config/compiler/BUILD.gn",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2017-10-03T17:38:48Z",
       "side": 1,
       "message": "Can you comment on where this flag comes from? (I remember blaikie telling me about it, but it appears without comment in this patch, which is a bit surprising)",
+      "range": {
+        "startLine": 1817,
+        "startChar": 19,
+        "endLine": 1817,
+        "endChar": 33
+      },
+      "revId": "0ad8d82a30d801e8de2703d9c22db5374095a980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb0554f9_25d4cc0f",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1817,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-10-03T17:57:43Z",
+      "side": 1,
+      "message": "Added comment.",
+      "parentUuid": "12e9a2ea_281657d2",
       "range": {
         "startLine": 1817,
         "startChar": 19,
