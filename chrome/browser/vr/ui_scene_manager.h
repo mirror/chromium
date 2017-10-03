@@ -96,7 +96,6 @@ class UiSceneManager : public UiInterface, public BrowserUiInterface {
   void SetFullscreen(bool fullscreen) override;
   void SetIncognito(bool incognito) override;
   void SetToolbarState(const ToolbarState& state) override;
-  void SetWebVrSecureOrigin(bool secure) override;
   void SetWebVrMode(bool web_vr, bool show_toast) override;
   void SetIsExiting() override;
   void SetVideoCapturingIndicator(bool enabled) override;
@@ -136,7 +135,7 @@ class UiSceneManager : public UiInterface, public BrowserUiInterface {
   void Create2dBrowsingSubtreeRoots();
   void CreateWebVrRoot();
   void CreateScreenDimmer();
-  void CreateSecurityWarnings();
+  void CreateWebVRExitWarning();
   void CreateSystemIndicators();
   void CreateContentQuad(ContentInputDelegate* delegate);
   void CreateSplashScreen();
@@ -150,7 +149,6 @@ class UiSceneManager : public UiInterface, public BrowserUiInterface {
   void CreateToasts();
 
   void ConfigureScene();
-  void ConfigureSecurityWarnings();
   void ConfigureExclusiveScreenToast();
   void ConfigureIndicators();
   void ConfigureBackgroundColor();
@@ -171,8 +169,6 @@ class UiSceneManager : public UiInterface, public BrowserUiInterface {
   UiScene* scene_;
 
   // UI element pointers (not owned by the scene manager).
-  UiElement* permanent_security_warning_ = nullptr;
-  TransientElement* security_warning_transient_parent_ = nullptr;
   TransientElement* exclusive_screen_toast_transient_parent_ = nullptr;
   TransientElement* exclusive_screen_toast_viewport_aware_transient_parent_ =
       nullptr;
@@ -207,7 +203,6 @@ class UiSceneManager : public UiInterface, public BrowserUiInterface {
   bool prompting_to_exit_ = false;
   bool exiting_ = false;
 
-  bool secure_origin_ = false;
   bool fullscreen_ = false;
   bool incognito_ = false;
   bool audio_capturing_ = false;
