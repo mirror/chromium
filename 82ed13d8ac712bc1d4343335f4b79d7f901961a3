@@ -69,6 +69,24 @@
       "revId": "82ed13d8ac712bc1d4343335f4b79d7f901961a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7d5791c_3afa944f",
+        "filename": "chrome/browser/ui/window_sizer/window_sizer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-03T20:31:05Z",
+      "side": 1,
+      "message": "Oops, I didn\u0027t notice you changed that file (and I didn\u0027t even know we had a whitelist until this CL!).\n\nNever mind.",
+      "parentUuid": "4787608d_4c463fc7",
+      "revId": "82ed13d8ac712bc1d4343335f4b79d7f901961a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
