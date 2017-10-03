@@ -8,9 +8,9 @@
 #include "ash/public/interfaces/shelf.mojom.h"
 #include "base/strings/utf_string_conversions.h"
 #include "mojo/common/common_custom_types_struct_traits.h"
-#include "skia/public/interfaces/bitmap_skbitmap_struct_traits.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/gfx/image/image_unittest_util.h"
+#include "ui/gfx/image/mojo/image_skia_struct_traits.h"
 
 namespace ash {
 namespace {
