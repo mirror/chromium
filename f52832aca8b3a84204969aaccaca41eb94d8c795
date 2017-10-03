@@ -51,6 +51,24 @@
       "revId": "f52832aca8b3a84204969aaccaca41eb94d8c795",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57526886_356654d2",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-03T07:31:25Z",
+      "side": 1,
+      "message": "I think it calls multiple BeginReadData\u0027s within a loop?\nhttps://cs.chromium.org/chromium/src/mojo/common/data_pipe_utils.cc?q\u003dBlockingCopyHelper\u0026sq\u003dpackage:chromium\u0026l\u003d16\n\nBut the latter seems to be true that it blocks the thread which is shared with the URLLoader, which could probably be a problematic as you say.",
+      "parentUuid": "f1b158ae_8f22fb74",
+      "revId": "f52832aca8b3a84204969aaccaca41eb94d8c795",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
