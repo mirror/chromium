@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfc85d73_5be151da",
+        "filename": "chrome/browser/chromeos/printing/cups_print_job_manager_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-03T22:43:31Z",
+      "side": 1,
+      "message": "Chrome style is to use the parameter name here.  So |job|.",
+      "range": {
+        "startLine": 128,
+        "startChar": 20,
+        "endLine": 128,
+        "endChar": 27
+      },
+      "revId": "fbc84150244497ecd9d79b791a5891ef48ddd219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02cf3052_dd4c7343",
+        "filename": "chrome/browser/chromeos/printing/cups_print_job_manager_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-03T22:43:31Z",
+      "side": 1,
+      "message": "use base::StringPiece.  It\u0027s our standard wrapper for read only strings.",
+      "range": {
+        "startLine": 129,
+        "startChar": 55,
+        "endLine": 129,
+        "endChar": 73
+      },
+      "revId": "fbc84150244497ecd9d79b791a5891ef48ddd219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e96a7986_e89f09c9",
+        "filename": "chrome/browser/chromeos/printing/cups_print_job_manager_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-03T22:43:31Z",
+      "side": 1,
+      "message": "nit: just say ERROR",
+      "range": {
+        "startLine": 211,
+        "startChar": 63,
+        "endLine": 211,
+        "endChar": 66
+      },
+      "revId": "fbc84150244497ecd9d79b791a5891ef48ddd219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd1afdba_aa6137ca",
+        "filename": "chrome/browser/chromeos/printing/cups_print_job_manager_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-03T22:43:31Z",
+      "side": 1,
+      "message": "nit: make this a constant",
+      "range": {
+        "startLine": 212,
+        "startChar": 33,
+        "endLine": 212,
+        "endChar": 60
+      },
+      "revId": "fbc84150244497ecd9d79b791a5891ef48ddd219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bda8d3da_74a5ea4c",
+        "filename": "chrome/browser/chromeos/printing/cups_print_job_manager_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-03T22:43:31Z",
+      "side": 1,
+      "message": "Yes please.  You\u0027ll also need to edit PrintJobResult here https://cs.chromium.org/chromium/src/tools/metrics/histograms/enums.xml?rcl\u003df0a1291ef7f97e23743b562812d0427f5ca48c45\u0026l\u003d31728\n\nand the JobResultForHistogram enum.",
+      "range": {
+        "startLine": 475,
+        "startChar": 10,
+        "endLine": 475,
+        "endChar": 41
+      },
+      "revId": "fbc84150244497ecd9d79b791a5891ef48ddd219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcaea386_24f8fe37",
+        "filename": "chrome/browser/chromeos/printing/cups_print_job_manager_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-03T22:43:31Z",
+      "side": 1,
+      "message": "Do you intend to leave this?  Also, endl is unnecessary.",
+      "range": {
+        "startLine": 479,
+        "startChar": 8,
+        "endLine": 480,
+        "endChar": 36
+      },
+      "revId": "fbc84150244497ecd9d79b791a5891ef48ddd219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
