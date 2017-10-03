@@ -30,7 +30,7 @@
 vars = {
   # By default, do not check out src-internal. This can be overridden e.g. with
   # custom_vars.
-  'checkout_src_internal': 'False',
+  'checkout_src_internal': False,
 
   'chromium_git': 'https://chromium.googlesource.com',
   'swiftshader_git': 'https://swiftshader.googlesource.com',
