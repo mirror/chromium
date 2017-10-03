@@ -53,6 +53,9 @@
 
 - (void)applicationDidBecomeActive:(UIApplication*)application {
   startup_loggers::RegisterAppDidBecomeActiveTime();
+  if ([[[NSProcessInfo processInfo] arguments] containsObject:@"testMode"]) {
+    startup_loggers::LogXCUITestData(@"testWarmSrartUp");
+  }
 }
 
 - (void)applicationWillResignActive:(UIApplication*)application {
@@ -62,6 +65,7 @@
 }
 
 - (void)applicationWillEnterForeground:(UIApplication*)application {
+  startup_loggers::RegisterAppWillEnterForegroundTime();
 }
 
 - (void)applicationWillTerminate:(UIApplication*)application {

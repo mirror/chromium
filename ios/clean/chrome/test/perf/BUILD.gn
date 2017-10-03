@@ -87,3 +87,31 @@ ios_eg_test("ios_clean_skeleton_perf_egtests") {
     extra_substitutions += [ "ENCRYPTION_EXPORT_COMPLIANCE_CODE=$ios_encryption_export_compliance_code" ]
   }
 }
+
+source_set("xcuitests_sources") {
+  testonly = true
+  sources = [
+    "warm_startup_xctest.mm",
+  ]
+
+  deps = [
+    "//base",
+  ]
+
+  libs = [
+    "XCTest.framework",
+    "Foundation.framework",
+    "UIKit.framework",
+  ]
+
+  configs += [ "//build/config/ios:xctest_config" ]
+  configs += [ "//build/config/compiler:enable_arc" ]
+}
+
+ios_xcuitest_test("ios_clean_chrome_perf_xcuitests") {
+  xcode_test_application_name = "chrome_clean_skeleton"
+
+  deps = [
+    ":xcuitests_sources",
+  ]
+}
