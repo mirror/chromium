@@ -74,6 +74,7 @@ class SigninClientImpl
                   const std::string& gaia_id,
                   const std::string& username,
                   const std::string& password) override;
+  void PreGaiaLogout(base::OnceClosure callback) override;
 
   // SigninErrorController::Observer implementation.
   void OnErrorChanged() override;
