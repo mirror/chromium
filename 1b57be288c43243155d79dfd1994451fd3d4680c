@@ -186,6 +186,30 @@
     },
     {
       "key": {
+        "uuid": "4c194ed5_d94f5af8",
+        "filename": "components/history/core/browser/top_sites_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-03T05:12:59Z",
+      "side": 1,
+      "message": "The thought of subclassing an Impl class was really unclean to me, though I agree that the extra abstraction is unfortunate.\n\nWhat do you think of Marc\u0027s suggestion of having a HistoryFrecencyProvider and a SiteEngagementProvider, which provide the QueryMostVisitedURLs() method? I initially didn\u0027t choose that because it looked a bit weird in the Factory (you\u0027d pass history_service twice in the default case - once as the HistoryService, and the second time as the HistoryFrecencyProvider).\n\nAs OWNERs though I will defer to your preferences here on subclassing TopSitesImpl versus introducing the new hierarchy. :)",
+      "parentUuid": "69d8c3fc_77811b57",
+      "range": {
+        "startLine": 417,
+        "startChar": 47,
+        "endLine": 417,
+        "endChar": 0
+      },
+      "revId": "1b57be288c43243155d79dfd1994451fd3d4680c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0678eb64_ab874378",
         "filename": "components/history/core/browser/top_sites_most_visited_provider.h",
         "patchSetId": 2
