@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ec31071_26ba542e",
+        "filename": "content/browser/service_worker/service_worker_registration.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-03T07:49:50Z",
+      "side": 1,
+      "message": "Just curious; which part does require the utility?",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 17
+      },
+      "revId": "37c55bed029aaa8350a600bf3a480098f28ac8f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
