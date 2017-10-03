@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da7b396d_121a7f8c",
+        "filename": "base/files/file_descriptor_watcher_posix_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-10-03T17:22:31Z",
+      "side": 1,
+      "message": "The watch will be canceled after on the MessageLoopForIO after the file descriptor has been closed. MessageLoopForIO implementations seem to support that without any error.",
+      "revId": "8796a714d2b15e422e4d43209e0b02999176f4ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
