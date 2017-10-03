@@ -393,7 +393,7 @@
     },
     {
       name: "FeaturePolicyForEncryptedMedia",
-      status: "experimental"
+      status: "stable"
     },
     {
       name: "FetchRequestCache",
