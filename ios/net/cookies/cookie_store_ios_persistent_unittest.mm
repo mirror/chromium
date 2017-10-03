@@ -46,6 +46,9 @@ struct InactiveCookieStoreIOSTestTraits {
 INSTANTIATE_TYPED_TEST_CASE_P(InactiveCookieStoreIOS,
                               CookieStoreTest,
                               InactiveCookieStoreIOSTestTraits);
+INSTANTIATE_TYPED_TEST_CASE_P(InactiveCookieStoreIOS,
+                              CookieStoreTest_0,
+                              InactiveCookieStoreIOSTestTraits);
 
 namespace {
 

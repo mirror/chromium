@@ -363,7 +363,15 @@ class CookieStoreTest : public testing::Test {
   std::unique_ptr<CookieStore> cookie_store_;
 };
 
+template <class CookieStoreTestTraits>
+class CookieStoreTest_0 : public CookieStoreTest<CookieStoreTestTraits> {
+ public:
+  CookieStoreTest_0() {}
+  ~CookieStoreTest_0() {}
+};
+
 TYPED_TEST_CASE_P(CookieStoreTest);
+TYPED_TEST_CASE_P(CookieStoreTest_0);
 
 TYPED_TEST_P(CookieStoreTest, SetCookieWithDetailsAsync) {
   CookieStore* cs = this->GetCookieStore();
@@ -1686,7 +1694,157 @@ void OnCookieChanged(std::vector<CookieNotification>* changes,
 
 }  // namespace
 
-TYPED_TEST_P(CookieStoreTest, GlobalChangeTracking_Insert) {
+TYPED_TEST_P(CookieStoreTest, NoNotifyWithNoCookie) {
+  CookieStore* cs = this->GetCookieStore();
+  std::vector<CookieNotification> cookie_changes;
+  std::unique_ptr<CookieStore::CookieChangedSubscription> subscription(
+      cs->AddCallbackForCookie(
+          this->http_www_foo_.url(), "abc",
+          base::Bind(&OnCookieChanged, base::Unretained(&cookie_changes))));
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(0u, cookie_changes.size());
+}
+
+TYPED_TEST_P(CookieStoreTest, NoNotifyWithInitialCookie) {
+  CookieStore* cs = this->GetCookieStore();
+  std::vector<CookieNotification> cookie_changes;
+  this->SetCookie(cs, this->http_www_foo_.url(), "abc=def");
+  base::RunLoop().RunUntilIdle();
+  std::unique_ptr<CookieStore::CookieChangedSubscription> subscription(
+      cs->AddCallbackForCookie(
+          this->http_www_foo_.url(), "abc",
+          base::Bind(&OnCookieChanged, base::Unretained(&cookie_changes))));
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(0u, cookie_changes.size());
+}
+
+TYPED_TEST_P(CookieStoreTest, NotifyOnSet) {
+  CookieStore* cs = this->GetCookieStore();
+  std::vector<CookieNotification> cookie_changes;
+  std::unique_ptr<CookieStore::CookieChangedSubscription> subscription(
+      cs->AddCallbackForCookie(
+          this->http_www_foo_.url(), "abc",
+          base::Bind(&OnCookieChanged, base::Unretained(&cookie_changes))));
+  this->SetCookie(cs, this->http_www_foo_.url(), "abc=def");
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(1u, cookie_changes.size());
+  EXPECT_EQ("abc", cookie_changes[0].first.Name());
+  EXPECT_EQ("def", cookie_changes[0].first.Value());
+  EXPECT_EQ(CookieStore::ChangeCause::INSERTED, cookie_changes[0].second);
+}
+
+TYPED_TEST_P(CookieStoreTest, NotifyOnDelete) {
+  CookieStore* cs = this->GetCookieStore();
+  std::vector<CookieNotification> cookie_changes;
+  std::unique_ptr<CookieStore::CookieChangedSubscription> subscription(
+      cs->AddCallbackForCookie(
+          this->http_www_foo_.url(), "abc",
+          base::Bind(&OnCookieChanged, base::Unretained(&cookie_changes))));
+  this->SetCookie(cs, this->http_www_foo_.url(), "abc=def");
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(1u, cookie_changes.size());
+
+  this->DeleteCookie(cs, this->http_www_foo_.url(), "abc");
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(2u, cookie_changes.size());
+  EXPECT_EQ("abc", cookie_changes[1].first.Name());
+  EXPECT_EQ("def", cookie_changes[1].first.Value());
+  EXPECT_EQ(CookieStore::ChangeCause::EXPLICIT_DELETE_SINGLE,
+            cookie_changes[1].second);
+}
+
+TYPED_TEST_P(CookieStoreTest, NotifyOnUpdate) {
+  CookieStore* cs = this->GetCookieStore();
+  std::vector<CookieNotification> cookie_changes;
+  std::unique_ptr<CookieStore::CookieChangedSubscription> subscription(
+      cs->AddCallbackForCookie(
+          this->http_www_foo_.url(), "abc",
+          base::Bind(&OnCookieChanged, base::Unretained(&cookie_changes))));
+  this->SetCookie(cs, this->http_www_foo_.url(), "abc=def");
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(1u, cookie_changes.size());
+
+  // Replacing an existing cookie is actually a two-phase delete + set
+  // operation, so there is an extra notification.
+  this->SetCookie(cs, this->http_www_foo_.url(), "abc=ghi");
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(3u, cookie_changes.size());
+  EXPECT_EQ("abc", cookie_changes[1].first.Name());
+  EXPECT_EQ("def", cookie_changes[1].first.Value());
+  EXPECT_EQ(CookieStore::ChangeCause::OVERWRITE, cookie_changes[1].second);
+
+  EXPECT_EQ("abc", cookie_changes[2].first.Name());
+  EXPECT_EQ("ghi", cookie_changes[2].first.Value());
+  EXPECT_EQ(CookieStore::ChangeCause::INSERTED, cookie_changes[2].second);
+}
+
+TYPED_TEST_P(CookieStoreTest, NotifyDestroyRace) {
+  CookieStore* cs = this->GetCookieStore();
+  std::vector<CookieNotification> cookie_changes;
+  std::unique_ptr<CookieStore::CookieChangedSubscription> subscription(
+      cs->AddCallbackForCookie(
+          this->http_www_foo_.url(), "abc",
+          base::Bind(&OnCookieChanged, base::Unretained(&cookie_changes))));
+  this->SetCookie(cs, this->http_www_foo_.url(), "abc=def");
+
+  // The notification may be synchronous.  If so, there's nothing to test.
+  if (1u == cookie_changes.size())
+    return;
+
+  // At this point a task has been posted to execute the callback,
+  // but the callback has not yet been executed.  If the subscription was
+  // alive when the callback was executed, that would also be valid
+  // behavior.  If the subscription is destroyed, and the posted task is
+  // let run, and the callback actually happens, that is invalid behavior.
+  subscription.reset();
+  base::RunLoop().RunUntilIdle();
+
+  // Subscription reset should have blocked delivery.
+  EXPECT_EQ(0u, cookie_changes.size());
+}
+
+TYPED_TEST_P(CookieStoreTest, MultipleNotifies) {
+  CookieStore* cs = this->GetCookieStore();
+  std::vector<CookieNotification> cookie_changes_0;
+  std::vector<CookieNotification> cookie_changes_1;
+  std::unique_ptr<CookieStore::CookieChangedSubscription> subscription0(
+      cs->AddCallbackForCookie(
+          this->http_www_foo_.url(), "abc",
+          base::Bind(&OnCookieChanged, base::Unretained(&cookie_changes_0))));
+  std::unique_ptr<CookieStore::CookieChangedSubscription> subscription1(
+      cs->AddCallbackForCookie(
+          this->http_www_foo_.url(), "def",
+          base::Bind(&OnCookieChanged, base::Unretained(&cookie_changes_1))));
+  this->SetCookie(cs, this->http_www_foo_.url(), "abc=def");
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(1u, cookie_changes_0.size());
+  EXPECT_EQ(0u, cookie_changes_1.size());
+
+  this->SetCookie(cs, this->http_www_foo_.url(), "def=abc");
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(1u, cookie_changes_0.size());
+  EXPECT_EQ(1u, cookie_changes_1.size());
+}
+
+TYPED_TEST_P(CookieStoreTest, MultipleSameNotifies) {
+  CookieStore* cs = this->GetCookieStore();
+  std::vector<CookieNotification> cookie_changes_0;
+  std::vector<CookieNotification> cookie_changes_1;
+  std::unique_ptr<CookieStore::CookieChangedSubscription> subscription0(
+      cs->AddCallbackForCookie(
+          this->http_www_foo_.url(), "abc",
+          base::Bind(&OnCookieChanged, base::Unretained(&cookie_changes_0))));
+  std::unique_ptr<CookieStore::CookieChangedSubscription> subscription1(
+      cs->AddCallbackForCookie(
+          this->http_www_foo_.url(), "abc",
+          base::Bind(&OnCookieChanged, base::Unretained(&cookie_changes_1))));
+  this->SetCookie(cs, this->http_www_foo_.url(), "abc=def");
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(1u, cookie_changes_0.size());
+  EXPECT_EQ(1u, cookie_changes_1.size());
+}
+
+TYPED_TEST_P(CookieStoreTest_0, GlobalChangeTracking_Insert) {
   if (!TypeParam::supports_global_cookie_tracking)
     return;
 
@@ -1715,7 +1873,7 @@ TYPED_TEST_P(CookieStoreTest, GlobalChangeTracking_Insert) {
   EXPECT_EQ("F", cookie_changes[2].first.Value());
 }
 
-TYPED_TEST_P(CookieStoreTest, GlobalChangeTracking_Delete) {
+TYPED_TEST_P(CookieStoreTest_0, GlobalChangeTracking_Delete) {
   if (!TypeParam::supports_global_cookie_tracking)
     return;
 
@@ -1743,7 +1901,7 @@ TYPED_TEST_P(CookieStoreTest, GlobalChangeTracking_Delete) {
   EXPECT_EQ("D", cookie_changes[0].first.Value());
 }
 
-TYPED_TEST_P(CookieStoreTest, GlobalChangeTracking_Overwrite) {
+TYPED_TEST_P(CookieStoreTest_0, GlobalChangeTracking_Overwrite) {
   if (!TypeParam::supports_global_cookie_tracking)
     return;
 
@@ -1787,7 +1945,7 @@ TYPED_TEST_P(CookieStoreTest, GlobalChangeTracking_Overwrite) {
   EXPECT_EQ("val2", cookie_changes[1].first.Value());
 }
 
-TYPED_TEST_P(CookieStoreTest, GlobalChangeTracking_Deregister) {
+TYPED_TEST_P(CookieStoreTest_0, GlobalChangeTracking_Deregister) {
   if (!TypeParam::supports_global_cookie_tracking)
     return;
 
@@ -1838,7 +1996,7 @@ TYPED_TEST_P(CookieStoreTest, GlobalChangeTracking_Deregister) {
 // Confirm that deregistering a subscription blocks the notification
 // if the deregistration happened after the change but before the
 // notification was received.
-TYPED_TEST_P(CookieStoreTest, GlobalChangeTracking_DeregisterRace) {
+TYPED_TEST_P(CookieStoreTest_0, GlobalChangeTracking_DeregisterRace) {
   if (!TypeParam::supports_global_cookie_tracking)
     return;
 
@@ -1930,6 +2088,17 @@ REGISTER_TYPED_TEST_CASE_P(CookieStoreTest,
                            DeleteCookieAsync,
                            DeleteCanonicalCookieAsync,
                            DeleteSessionCookie,
+                           NoNotifyWithNoCookie,
+                           NoNotifyWithInitialCookie,
+                           NotifyOnSet,
+                           NotifyOnDelete,
+                           NotifyOnUpdate,
+                           NotifyDestroyRace,
+                           MultipleNotifies,
+                           MultipleSameNotifies);
+
+// Secondary list to get around 50 test limit.
+REGISTER_TYPED_TEST_CASE_P(CookieStoreTest_0,
                            GlobalChangeTracking_Insert,
                            GlobalChangeTracking_Delete,
                            GlobalChangeTracking_Overwrite,

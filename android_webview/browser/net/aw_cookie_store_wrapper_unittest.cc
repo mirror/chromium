@@ -49,4 +49,7 @@ namespace net {
 INSTANTIATE_TYPED_TEST_CASE_P(AwCookieStoreWrapper,
                               CookieStoreTest,
                               android_webview::AwCookieStoreWrapperTestTraits);
+INSTANTIATE_TYPED_TEST_CASE_P(AwCookieStoreWrapper,
+                              CookieStoreTest_0,
+                              android_webview::AwCookieStoreWrapperTestTraits);
 }  // namespace net
