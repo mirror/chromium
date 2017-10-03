@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1ec5c63e_01f71cf9",
+        "filename": "content/network/network_change_manager_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-03T20:33:20Z",
+      "side": 1,
+      "message": "These few are mojo APIs. I think they are fine? I followed other examples like Randy\u0027s cookie_manager_impl.cc",
+      "parentUuid": "5eda7cf2_de7f5e88",
+      "revId": "6a3fb5a9b68a4040dd2070b3f406cbcb17aae837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1733149e_17d9406a",
         "filename": "content/network/network_change_manager_impl.h",
         "patchSetId": 12
@@ -30,6 +48,30 @@
       "writtenOn": "2017-10-03T14:44:34Z",
       "side": 1,
       "message": "I love this explicit ownership.",
+      "range": {
+        "startLine": 54,
+        "startChar": 71,
+        "endLine": 54,
+        "endChar": 0
+      },
+      "revId": "6a3fb5a9b68a4040dd2070b3f406cbcb17aae837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "59c46677_be1c9f59",
+        "filename": "content/network/network_change_manager_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-03T20:33:20Z",
+      "side": 1,
+      "message": "My reviewers are happy, I am happy :)",
+      "parentUuid": "1733149e_17d9406a",
       "range": {
         "startLine": 54,
         "startChar": 71,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "6bb8fbde_ec53b93a",
+        "filename": "content/public/common/network_change_manager.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-03T20:33:20Z",
+      "side": 1,
+      "message": "Done. Talked offline. Because mojo consumers will depend on mojo types and the translation code should be able to catch that. I also added a unit test.",
+      "parentUuid": "594e9e53_3d008ab7",
+      "range": {
+        "startLine": 7,
+        "startChar": 61,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "6a3fb5a9b68a4040dd2070b3f406cbcb17aae837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2af29665_b95e0ba8",
         "filename": "content/public/common/network_change_manager.mojom",
         "patchSetId": 12
@@ -85,6 +151,30 @@
       "revId": "6a3fb5a9b68a4040dd2070b3f406cbcb17aae837",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c184d797_ee6b2b68",
+        "filename": "content/public/common/network_change_manager.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-03T20:33:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2af29665_b95e0ba8",
+      "range": {
+        "startLine": 24,
+        "startChar": 40,
+        "endLine": 24,
+        "endChar": 0
+      },
+      "revId": "6a3fb5a9b68a4040dd2070b3f406cbcb17aae837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "6e27ac52_4e5caea3",
+        "filename": "content/public/common/network_connection_tracker.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-03T20:33:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf13f04f_357ac06d",
+      "range": {
+        "startLine": 46,
+        "startChar": 52,
+        "endLine": 46,
+        "endChar": 0
+      },
+      "revId": "6a3fb5a9b68a4040dd2070b3f406cbcb17aae837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b103fff5_71b3f009",
         "filename": "content/public/common/network_connection_tracker.h",
         "patchSetId": 12
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "bf886f19_00dca57a",
+        "filename": "content/public/common/network_connection_tracker.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-03T20:33:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b103fff5_71b3f009",
+      "range": {
+        "startLine": 47,
+        "startChar": 50,
+        "endLine": 47,
+        "endChar": 0
+      },
+      "revId": "6a3fb5a9b68a4040dd2070b3f406cbcb17aae837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a62ccd9_fd95d55b",
         "filename": "content/public/common/network_connection_tracker.h",
         "patchSetId": 12
@@ -145,6 +283,30 @@
       "writtenOn": "2017-10-03T14:44:34Z",
       "side": 1,
       "message": "should this be volatile as it\u0027s read and written on different threads?",
+      "range": {
+        "startLine": 67,
+        "startChar": 41,
+        "endLine": 67,
+        "endChar": 0
+      },
+      "revId": "6a3fb5a9b68a4040dd2070b3f406cbcb17aae837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88b63627_9637e6c1",
+        "filename": "content/public/common/network_connection_tracker.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-03T20:33:20Z",
+      "side": 1,
+      "message": "I am not sure if we should use \"volatile\" keyword here. We already specified that the connection_type() might be stale.\n The variable is written on one thread, though read on many threads.",
+      "parentUuid": "1a62ccd9_fd95d55b",
       "range": {
         "startLine": 67,
         "startChar": 41,
