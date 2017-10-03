@@ -16,6 +16,24 @@
       "revId": "691d23d9683f608b3e6f15e87b9b0ec2f8e9bda4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38579307_8d446443",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_interaction_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-10-03T17:24:02Z",
+      "side": 1,
+      "message": "Sounds good, I agree its a good name. Done.",
+      "parentUuid": "856eafea_2122d809",
+      "revId": "691d23d9683f608b3e6f15e87b9b0ec2f8e9bda4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
