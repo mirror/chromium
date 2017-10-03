@@ -82,6 +82,16 @@ typedef NS_ENUM(NSInteger, ItemType) {
   ItemTypeErrorMessage,   // This is a repeated item type.
 };
 
+// Returns an error PaymentTextItem with the specified |errorMessage|.
+PaymentsTextItem* GetErrorMessageItem(NSString* errorMessage) {
+  PaymentsTextItem* errorMessageItem =
+      [[PaymentsTextItem alloc] initWithType:ItemTypeErrorMessage];
+  errorMessageItem.text = errorMessage;
+  errorMessageItem.image = NativeImage(IDR_IOS_PAYMENTS_WARNING);
+  errorMessageItem.accessibilityIdentifier = kWarningMessageAccessibilityID;
+  return errorMessageItem;
+}
+
 }  // namespace
 
 @interface PaymentRequestEditViewController ()<
@@ -112,6 +122,10 @@ typedef NS_ENUM(NSInteger, ItemType) {
 @property(nonatomic, strong)
     NSMutableDictionary<NSNumber*, UIPickerView*>* pickerViews;
 
+// The field, if any, that is currently being edited. Will return nil if no
+// field is currently being edited.
+- (EditorField*)currentEditingField;
+
 // Returns the indexPath for the same row as that of |indexPath| in a section
 // with the given offset relative to that of |indexPath|. May return nil.
 - (NSIndexPath*)indexPathWithSectionOffset:(NSInteger)offset
@@ -131,11 +145,19 @@ typedef NS_ENUM(NSInteger, ItemType) {
 - (void)addOrRemoveErrorMessage:(NSString*)errorMessage
         inSectionWithIdentifier:(NSInteger)sectionIdentifier;
 
-// Validates each field. If there is a validation error, displays an error
+// Validates a specific field. If there is a validation error, displays an error
 // message item in the same section as the field and returns NO. Otherwise
 // removes the error message item in that section if one exists and sets the
-// value on the field. Returns YES if all the fields are validated successfully.
+// value on the field.
+- (BOOL)validateField:(EditorField*)field;
+
+// Validates each field using |validateField|. Returns YES if all the fields are
+// validated successfully.
 - (BOOL)validateForm;
+
+// Returns whether all the fields in the form are valid or not. Does not update
+// error messages.
+- (BOOL)isFormValid;
 
 // Returns the index path for the cell associated with the currently focused
 // text field.
@@ -220,6 +242,19 @@ typedef NS_ENUM(NSInteger, ItemType) {
               object:nil];
 }
 
+- (EditorField*)currentEditingField {
+  if (!_currentEditingCell)
+    return nil;
+
+  CollectionViewModel* model = self.collectionViewModel;
+
+  NSIndexPath* indexPath = [self indexPathForCurrentTextField];
+  NSInteger sectionIdentifier =
+      [model sectionIdentifierForSection:[indexPath section]];
+  NSNumber* key = [NSNumber numberWithInt:sectionIdentifier];
+  return self.fieldsMap[key];
+}
+
 #pragma mark - CollectionViewController methods
 
 - (void)loadModel {
@@ -299,6 +334,23 @@ typedef NS_ENUM(NSInteger, ItemType) {
       [[CollectionViewFooterItem alloc] initWithType:ItemTypeFooter];
   footerItem.text = l10n_util::GetNSString(IDS_PAYMENTS_REQUIRED_FIELD_MESSAGE);
   [model addItem:footerItem toSectionWithIdentifier:SectionIdentifierFooter];
+
+  // Validate the non-pristine fields. Cannot call [self validateField:...], as
+  // that calls |addOrRemoveErrorMessage:...|, which mutates the CollectionView
+  // directly.
+  for (EditorField* field in self.fields) {
+    if (!field.isPristine) {
+      NSString* errorMessage =
+          [_validatorDelegate paymentRequestEditViewController:self
+                                                 validateField:field];
+      if (errorMessage.length) {
+        [model addItem:GetErrorMessageItem(errorMessage)
+            toSectionWithIdentifier:field.sectionIdentifier];
+      }
+    }
+  }
+
+  [self navigationItem].rightBarButtonItem.enabled = [self isFormValid];
 }
 
 - (void)viewDidLoad {
@@ -379,10 +431,10 @@ typedef NS_ENUM(NSInteger, ItemType) {
       sectionIdentifierForSection:[indexPath section]];
 
   // Find the respective editor field, update its value, and validate it.
-  NSNumber* key = [NSNumber numberWithInt:sectionIdentifier];
-  EditorField* field = self.fieldsMap[key];
+  EditorField* field = [self currentEditingField];
   DCHECK(field);
   field.value = textField.text;
+  field.pristine = NO;
   NSString* errorMessage =
       [_validatorDelegate paymentRequestEditViewController:self
                                              validateField:field];
@@ -391,6 +443,8 @@ typedef NS_ENUM(NSInteger, ItemType) {
 
   [textField setInputAccessoryView:nil];
   _currentEditingCell = nil;
+
+  [self navigationItem].rightBarButtonItem.enabled = [self isFormValid];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField*)textField {
@@ -417,18 +471,15 @@ typedef NS_ENUM(NSInteger, ItemType) {
   DCHECK(_currentEditingCell == AutofillEditCellForTextField(textField));
 
   NSIndexPath* indexPath = [self indexPathForCurrentTextField];
-  NSInteger sectionIdentifier =
-      [model sectionIdentifierForSection:[indexPath section]];
   AutofillEditItem* item = base::mac::ObjCCastStrict<AutofillEditItem>(
       [model itemAtIndexPath:indexPath]);
 
   // Find the respective editor field and update its value to the proposed text
   // only if the editor field does not have an associated UIPickerView. This
   // prevents users from altering the text unless it is via the UIPickerView.
-  NSNumber* key = [NSNumber numberWithInt:sectionIdentifier];
-  EditorField* field = self.fieldsMap[key];
+  EditorField* field = [self currentEditingField];
   DCHECK(field);
-  key = [NSNumber numberWithInt:field.autofillUIType];
+  NSNumber* key = [NSNumber numberWithInt:field.autofillUIType];
   if ([self.pickerViews objectForKey:key])
     return NO;
 
@@ -449,6 +500,10 @@ typedef NS_ENUM(NSInteger, ItemType) {
     item.textFieldValue = field.value;
     [self reconfigureCellsForItems:@[ item ]];
   }
+
+  if (!field.isPristine)
+    [self validateField:field];
+  [self navigationItem].rightBarButtonItem.enabled = [self isFormValid];
 
   return NO;
 }
@@ -517,6 +572,13 @@ typedef NS_ENUM(NSInteger, ItemType) {
       [self pickerView:pickerView titleForRow:row forComponent:component];
   _currentEditingCell.textField.text =
       [fieldComponents componentsJoinedByString:@" / "];
+
+  EditorField* field = [self currentEditingField];
+  field.value = _currentEditingCell.textField.text;
+
+  // Always validate picker views when they change.
+  [self validateField:field];
+  [self navigationItem].rightBarButtonItem.enabled = [self isFormValid];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -601,6 +663,10 @@ typedef NS_ENUM(NSInteger, ItemType) {
                      (paymentRequestEditViewController:didSelectField:)]) {
     [_delegate paymentRequestEditViewController:self didSelectField:field];
   }
+
+  if (!field.isPristine)
+    [self validateField:field];
+  [self navigationItem].rightBarButtonItem.enabled = [self isFormValid];
 }
 
 #pragma mark MDCCollectionViewStylingDelegate
@@ -709,27 +775,37 @@ typedef NS_ENUM(NSInteger, ItemType) {
     }
   } else if (errorMessage.length) {
     // Insert an item at the index path.
-    PaymentsTextItem* errorMessageItem =
-        [[PaymentsTextItem alloc] initWithType:ItemTypeErrorMessage];
-    errorMessageItem.text = errorMessage;
-    errorMessageItem.image = NativeImage(IDR_IOS_PAYMENTS_WARNING);
-    errorMessageItem.accessibilityIdentifier = kWarningMessageAccessibilityID;
-    [model addItem:errorMessageItem toSectionWithIdentifier:sectionIdentifier];
+    [model addItem:GetErrorMessageItem(errorMessage)
+        toSectionWithIdentifier:sectionIdentifier];
     NSIndexPath* indexPath = [model indexPathForItemType:ItemTypeErrorMessage
                                        sectionIdentifier:sectionIdentifier];
     [self.collectionView insertItemsAtIndexPaths:@[ indexPath ]];
   }
 }
 
+- (BOOL)validateField:(EditorField*)field {
+  NSString* errorMessage =
+      [_validatorDelegate paymentRequestEditViewController:self
+                                             validateField:field];
+  [self addOrRemoveErrorMessage:errorMessage
+        inSectionWithIdentifier:field.sectionIdentifier];
+  return errorMessage.length == 0;
+}
+
 - (BOOL)validateForm {
   for (EditorField* field in self.fields) {
-    NSString* errorMessage =
-        [_validatorDelegate paymentRequestEditViewController:self
-                                               validateField:field];
-    [self addOrRemoveErrorMessage:errorMessage
-          inSectionWithIdentifier:field.sectionIdentifier];
-    if (errorMessage.length)
+    if (![self validateField:field])
       return NO;
+  }
+  return YES;
+}
+
+- (BOOL)isFormValid {
+  for (EditorField* field in self.fields) {
+    if ([_validatorDelegate paymentRequestEditViewController:self
+                                               validateField:field]) {
+      return NO;
+    }
   }
   return YES;
 }
