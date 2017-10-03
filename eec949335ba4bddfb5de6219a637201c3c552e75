@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9cf2316_1dd7ed7c",
+        "filename": "cc/paint/paint_op_buffer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1860,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-03T23:11:57Z",
+      "side": 1,
+      "message": "nit: You can use SkMatrix::I() here.",
+      "range": {
+        "startLine": 1860,
+        "startChar": 14,
+        "endLine": 1860,
+        "endChar": 22
+      },
+      "revId": "eec949335ba4bddfb5de6219a637201c3c552e75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
