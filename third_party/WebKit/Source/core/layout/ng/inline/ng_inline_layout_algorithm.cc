@@ -14,6 +14,7 @@
 #include "core/layout/ng/inline/ng_line_breaker.h"
 #include "core/layout/ng/inline/ng_text_fragment.h"
 #include "core/layout/ng/inline/ng_text_fragment_builder.h"
+#include "core/layout/ng/layout_ng_list_item.h"
 #include "core/layout/ng/ng_block_layout_algorithm.h"
 #include "core/layout/ng/ng_box_fragment.h"
 #include "core/layout/ng/ng_constraint_space.h"
@@ -222,7 +223,12 @@ bool NGInlineLayoutAlgorithm::PlaceItems(
     } else if (item.Type() == NGInlineItem::kAtomicInline) {
       box = PlaceAtomicInline(item, &item_result, *line_info, position,
                               &line_box);
+    } else if (item.Type() == NGInlineItem::kListMarker) {
+      PlaceListMarker(item, &item_result, *line_info, &line_box);
     } else if (item.Type() == NGInlineItem::kOutOfFlowPositioned) {
+      if (LayoutNGListItem::IsListMarker(item.GetLayoutObject())) {
+        LOG(INFO) << "list";
+      }
       // TODO(layout-dev): Report the correct static position for the out of
       // flow descendant. We can't do this here yet as it doesn't know the
       // size of the line box.
@@ -305,15 +311,35 @@ NGInlineBoxState* NGInlineLayoutAlgorithm::PlaceAtomicInline(
 
   NGInlineBoxState* box =
       box_states_.OnOpenTag(item, *item_result, line_box, position);
+  PlaceLayoutResult(item_result, position, box, line_box);
+  return box_states_.OnCloseTag(item, line_box, box, baseline_type_);
+}
 
+void NGInlineLayoutAlgorithm::PlaceListMarker(
+    const NGInlineItem& item,
+    NGInlineItemResult* item_result,
+    const NGLineInfo& line_info,
+    NGLineBoxFragmentBuilder* line_box) {
+  if (quirks_mode_)
+    box_states_.LineBoxState().ActivateTextMetrics();
+  PlaceLayoutResult(item_result, LayoutUnit(-10), nullptr, line_box);
+}
+
+void NGInlineLayoutAlgorithm::PlaceLayoutResult(
+    NGInlineItemResult* item_result,
+    LayoutUnit position,
+    NGInlineBoxState* box,
+    NGLineBoxFragmentBuilder* line_box) {
   DCHECK(item_result->layout_result);
   DCHECK(item_result->layout_result->PhysicalFragment());
+  const ComputedStyle& style = *item_result->item->Style();
   NGBoxFragment fragment(
       ConstraintSpace().WritingMode(),
       ToNGPhysicalBoxFragment(*item_result->layout_result->PhysicalFragment()));
   NGLineHeightMetrics metrics = fragment.BaselineMetrics(
       {NGBaselineAlgorithmType::kAtomicInline, baseline_type_});
-  box->metrics.Unite(metrics);
+  if (box)
+    box->metrics.Unite(metrics);
 
   LayoutUnit line_top = item_result->margins.block_start - metrics.ascent;
   if (!RuntimeEnabledFeatures::LayoutNGPaintFragmentsEnabled()) {
@@ -331,8 +357,6 @@ NGInlineBoxState* NGInlineLayoutAlgorithm::PlaceAtomicInline(
 
   line_box->AddChild(std::move(item_result->layout_result),
                      {position, line_top});
-
-  return box_states_.OnCloseTag(item, line_box, box, baseline_type_);
 }
 
 // Justify the line. This changes the size of items by adding spacing.
