@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff20cf16_dc71ffd8",
+        "filename": "media/mojo/services/media_capabilities_database.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-03T23:48:51Z",
+      "side": 1,
+      "message": "CB is the typical suffix.",
+      "revId": "708bc87a1e89b06d50457101253218fa6c42c317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30cfa98c_66e11280",
+        "filename": "media/mojo/services/media_capabilities_database_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-03T23:48:51Z",
+      "side": 1,
+      "message": "Combine this with the one below?",
+      "revId": "708bc87a1e89b06d50457101253218fa6c42c317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
