@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "f3ff3985_a546d1bb",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-03T13:04:19Z",
+      "side": 1,
+      "message": "Let\u0027s make it a unique_ptr then as I (and most of the net/ team that I\u0027ve spoken to about it) have a strong preference for it.",
+      "parentUuid": "319f3cac_f2fec15c",
+      "range": {
+        "startLine": 95,
+        "startChar": 16,
+        "endLine": 95,
+        "endChar": 31
+      },
+      "revId": "4551f6ce7dde3e8bd89b3b78b1b487d598a79594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca9558e1_4465f707",
         "filename": "net/disk_cache/simple/simple_file_tracker.h",
         "patchSetId": 23
