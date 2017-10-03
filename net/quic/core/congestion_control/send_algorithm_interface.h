@@ -99,9 +99,9 @@ class QUIC_EXPORT_PRIVATE SendAlgorithmInterface {
   // Called when connection migrates and cwnd needs to be reset.
   virtual void OnConnectionMigration() = 0;
 
-  // Calculate the time until we can send the next packet.
-  virtual QuicTime::Delta TimeUntilSend(QuicTime now,
-                                        QuicByteCount bytes_in_flight) = 0;
+  // Make decision on whether the sender can send right now.  Note that even
+  // when this method returns true, the sending can be delayed due to pacing.
+  virtual bool CanSend(QuicByteCount bytes_in_flight) = 0;
 
   // The pacing rate of the send algorithm.  May be zero if the rate is unknown.
   virtual QuicBandwidth PacingRate(QuicByteCount bytes_in_flight) const = 0;

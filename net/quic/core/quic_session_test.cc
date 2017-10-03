@@ -587,8 +587,7 @@ TEST_P(QuicSessionTestServer, OnCanWriteBundlesStreams) {
   session_.MarkConnectionLevelWriteBlocked(stream6->id());
   session_.MarkConnectionLevelWriteBlocked(stream4->id());
 
-  EXPECT_CALL(*send_algorithm, TimeUntilSend(_, _))
-      .WillRepeatedly(Return(QuicTime::Delta::Zero()));
+  EXPECT_CALL(*send_algorithm, CanSend(_)).WillRepeatedly(Return(true));
   EXPECT_CALL(*send_algorithm, GetCongestionWindow())
       .WillRepeatedly(Return(kMaxPacketSize * 10));
   EXPECT_CALL(*send_algorithm, InRecovery()).WillRepeatedly(Return(false));
@@ -632,35 +631,30 @@ TEST_P(QuicSessionTestServer, OnCanWriteCongestionControlBlocks) {
   session_.MarkConnectionLevelWriteBlocked(stream4->id());
 
   StreamBlocker stream2_blocker(&session_, stream2->id());
-  EXPECT_CALL(*send_algorithm, TimeUntilSend(_, _))
-      .WillOnce(Return(QuicTime::Delta::Zero()));
+  EXPECT_CALL(*send_algorithm, CanSend(_)).WillOnce(Return(true));
   EXPECT_CALL(*stream2, OnCanWrite())
       .WillOnce(testing::IgnoreResult(
           Invoke(CreateFunctor(&TestSession::SendStreamData,
                                base::Unretained(&session_), stream2))));
-  EXPECT_CALL(*send_algorithm, TimeUntilSend(_, _))
-      .WillOnce(Return(QuicTime::Delta::Zero()));
+  EXPECT_CALL(*send_algorithm, CanSend(_)).WillOnce(Return(true));
   EXPECT_CALL(*stream6, OnCanWrite())
       .WillOnce(testing::IgnoreResult(
           Invoke(CreateFunctor(&TestSession::SendStreamData,
                                base::Unretained(&session_), stream6))));
-  EXPECT_CALL(*send_algorithm, TimeUntilSend(_, _))
-      .WillOnce(Return(QuicTime::Delta::Infinite()));
+  EXPECT_CALL(*send_algorithm, CanSend(_)).WillOnce(Return(false));
   // stream4->OnCanWrite is not called.
 
   session_.OnCanWrite();
   EXPECT_TRUE(session_.WillingAndAbleToWrite());
 
   // Still congestion-control blocked.
-  EXPECT_CALL(*send_algorithm, TimeUntilSend(_, _))
-      .WillOnce(Return(QuicTime::Delta::Infinite()));
+  EXPECT_CALL(*send_algorithm, CanSend(_)).WillOnce(Return(false));
   session_.OnCanWrite();
   EXPECT_TRUE(session_.WillingAndAbleToWrite());
 
   // stream4->OnCanWrite is called once the connection stops being
   // congestion-control blocked.
-  EXPECT_CALL(*send_algorithm, TimeUntilSend(_, _))
-      .WillOnce(Return(QuicTime::Delta::Zero()));
+  EXPECT_CALL(*send_algorithm, CanSend(_)).WillOnce(Return(true));
   EXPECT_CALL(*stream4, OnCanWrite())
       .WillOnce(testing::IgnoreResult(
           Invoke(CreateFunctor(&TestSession::SendStreamData,
@@ -675,8 +669,7 @@ TEST_P(QuicSessionTestServer, OnCanWriteWriterBlocks) {
   // application-limited signaling is handled correctly.
   MockSendAlgorithm* send_algorithm = new StrictMock<MockSendAlgorithm>;
   QuicConnectionPeer::SetSendAlgorithm(session_.connection(), send_algorithm);
-  EXPECT_CALL(*send_algorithm, TimeUntilSend(_, _))
-      .WillRepeatedly(Return(QuicTime::Delta::Zero()));
+  EXPECT_CALL(*send_algorithm, CanSend(_)).WillRepeatedly(Return(true));
 
   // Drive packet writer manually.
   MockPacketWriter* writer = static_cast<MockPacketWriter*>(
@@ -780,8 +773,7 @@ TEST_P(QuicSessionTestServer, OnCanWriteLimitsNumWritesIfFlowControlBlocked) {
   // application-limited signaling is handled correctly.
   MockSendAlgorithm* send_algorithm = new StrictMock<MockSendAlgorithm>;
   QuicConnectionPeer::SetSendAlgorithm(session_.connection(), send_algorithm);
-  EXPECT_CALL(*send_algorithm, TimeUntilSend(_, _))
-      .WillRepeatedly(Return(QuicTime::Delta::Zero()));
+  EXPECT_CALL(*send_algorithm, CanSend(_)).WillRepeatedly(Return(true));
 
   // Ensure connection level flow control blockage.
   QuicFlowControllerPeer::SetSendWindowOffset(session_.flow_controller(), 0);

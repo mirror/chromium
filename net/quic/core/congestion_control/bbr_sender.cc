@@ -142,12 +142,8 @@ void BbrSender::OnPacketSent(QuicTime sent_time,
                          is_retransmittable);
 }
 
-QuicTime::Delta BbrSender::TimeUntilSend(QuicTime /* now */,
-                                         QuicByteCount bytes_in_flight) {
-  if (bytes_in_flight < GetCongestionWindow()) {
-    return QuicTime::Delta::Zero();
-  }
-  return QuicTime::Delta::Infinite();
+bool BbrSender::CanSend(QuicByteCount bytes_in_flight) {
+  return bytes_in_flight < GetCongestionWindow();
 }
 
 QuicBandwidth BbrSender::PacingRate(QuicByteCount bytes_in_flight) const {

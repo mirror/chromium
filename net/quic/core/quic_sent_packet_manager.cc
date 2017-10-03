@@ -717,19 +717,20 @@ bool QuicSentPacketManager::MaybeUpdateRTT(const QuicAckFrame& ack_frame,
 }
 
 QuicTime::Delta QuicSentPacketManager::TimeUntilSend(QuicTime now) {
-  QuicTime::Delta delay = QuicTime::Delta::Infinite();
   // The TLP logic is entirely contained within QuicSentPacketManager, so the
   // send algorithm does not need to be consulted.
   if (pending_timer_transmission_count_ > 0) {
-    delay = QuicTime::Delta::Zero();
-  } else if (using_pacing_) {
-    delay =
-        pacing_sender_.TimeUntilSend(now, unacked_packets_.bytes_in_flight());
-  } else {
-    delay =
-        send_algorithm_->TimeUntilSend(now, unacked_packets_.bytes_in_flight());
+    return QuicTime::Delta::Zero();
   }
-  return delay;
+
+  if (using_pacing_) {
+    return pacing_sender_.TimeUntilSend(now,
+                                        unacked_packets_.bytes_in_flight());
+  }
+
+  return send_algorithm_->CanSend(unacked_packets_.bytes_in_flight())
+             ? QuicTime::Delta::Zero()
+             : QuicTime::Delta::Infinite();
 }
 
 const QuicTime QuicSentPacketManager::GetRetransmissionTime() const {

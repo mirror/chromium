@@ -67,15 +67,13 @@ class TcpCubicSenderBytesTest : public QuicTest {
   int SendAvailableSendWindow(QuicPacketLength packet_length) {
     // Send as long as TimeUntilSend returns Zero.
     int packets_sent = 0;
-    bool can_send =
-        sender_->TimeUntilSend(clock_.Now(), bytes_in_flight_).IsZero();
+    bool can_send = sender_->CanSend(bytes_in_flight_);
     while (can_send) {
       sender_->OnPacketSent(clock_.Now(), bytes_in_flight_, packet_number_++,
                             kDefaultTCPMSS, HAS_RETRANSMITTABLE_DATA);
       ++packets_sent;
       bytes_in_flight_ += kDefaultTCPMSS;
-      can_send =
-          sender_->TimeUntilSend(clock_.Now(), bytes_in_flight_).IsZero();
+      can_send = sender_->CanSend(bytes_in_flight_);
     }
     return packets_sent;
   }
@@ -134,26 +132,24 @@ TEST_F(TcpCubicSenderBytesTest, SimpleSender) {
   // At startup make sure we are at the default.
   EXPECT_EQ(kDefaultWindowTCP, sender_->GetCongestionWindow());
   // At startup make sure we can send.
-  EXPECT_TRUE(sender_->TimeUntilSend(clock_.Now(), 0).IsZero());
+  EXPECT_TRUE(sender_->CanSend(0));
   // Make sure we can send.
-  EXPECT_TRUE(sender_->TimeUntilSend(clock_.Now(), 0).IsZero());
+  EXPECT_TRUE(sender_->CanSend(0));
   // And that window is un-affected.
   EXPECT_EQ(kDefaultWindowTCP, sender_->GetCongestionWindow());
 
   // Fill the send window with data, then verify that we can't send.
   SendAvailableSendWindow();
-  EXPECT_FALSE(
-      sender_->TimeUntilSend(clock_.Now(), sender_->GetCongestionWindow())
-          .IsZero());
+  EXPECT_FALSE(sender_->CanSend(sender_->GetCongestionWindow()));
 }
 
 TEST_F(TcpCubicSenderBytesTest, ApplicationLimitedSlowStart) {
   // Send exactly 10 packets and ensure the CWND ends at 14 packets.
   const int kNumberOfAcks = 5;
   // At startup make sure we can send.
-  EXPECT_TRUE(sender_->TimeUntilSend(clock_.Now(), 0).IsZero());
+  EXPECT_TRUE(sender_->CanSend(0));
   // Make sure we can send.
-  EXPECT_TRUE(sender_->TimeUntilSend(clock_.Now(), 0).IsZero());
+  EXPECT_TRUE(sender_->CanSend(0));
 
   SendAvailableSendWindow();
   for (int i = 0; i < kNumberOfAcks; ++i) {
@@ -168,10 +164,10 @@ TEST_F(TcpCubicSenderBytesTest, ApplicationLimitedSlowStart) {
 TEST_F(TcpCubicSenderBytesTest, ExponentialSlowStart) {
   const int kNumberOfAcks = 20;
   // At startup make sure we can send.
-  EXPECT_TRUE(sender_->TimeUntilSend(clock_.Now(), 0).IsZero());
+  EXPECT_TRUE(sender_->CanSend(0));
   EXPECT_EQ(QuicBandwidth::Zero(), sender_->BandwidthEstimate());
   // Make sure we can send.
-  EXPECT_TRUE(sender_->TimeUntilSend(clock_.Now(), 0).IsZero());
+  EXPECT_TRUE(sender_->CanSend(0));
 
   for (int i = 0; i < kNumberOfAcks; ++i) {
     // Send our full send window.
@@ -367,7 +363,7 @@ TEST_F(TcpCubicSenderBytesTest, NoPRRWhenLessThanOnePacketInFlight) {
   // Simulate abandoning all packets by supplying a bytes_in_flight of 0.
   // PRR should now allow a packet to be sent, even though prr's state variables
   // believe it has sent enough packets.
-  EXPECT_EQ(QuicTime::Delta::Zero(), sender_->TimeUntilSend(clock_.Now(), 0));
+  EXPECT_TRUE(sender_->CanSend(0));
 }
 
 TEST_F(TcpCubicSenderBytesTest, SlowStartPacketLossPRR) {
@@ -444,7 +440,7 @@ TEST_F(TcpCubicSenderBytesTest, SlowStartBurstPacketLossPRR) {
   LoseNPackets(num_packets_to_lose);
   // Immediately after the loss, ensure at least one packet can be sent.
   // Losses without subsequent acks can occur with timer based loss detection.
-  EXPECT_TRUE(sender_->TimeUntilSend(clock_.Now(), bytes_in_flight_).IsZero());
+  EXPECT_TRUE(sender_->CanSend(bytes_in_flight_));
   AckNPackets(1);
 
   // We should now have fallen out of slow start with a reduced window.
@@ -699,14 +695,10 @@ TEST_F(TcpCubicSenderBytesTest, PaceBelowCWND) {
   sender_->SetFromConfig(config, Perspective::IS_SERVER);
   sender_->OnRetransmissionTimeout(true);
   EXPECT_EQ(kDefaultTCPMSS, sender_->GetCongestionWindow());
-  EXPECT_TRUE(
-      sender_->TimeUntilSend(QuicTime::Zero(), kDefaultTCPMSS).IsZero());
-  EXPECT_TRUE(
-      sender_->TimeUntilSend(QuicTime::Zero(), 2 * kDefaultTCPMSS).IsZero());
-  EXPECT_TRUE(
-      sender_->TimeUntilSend(QuicTime::Zero(), 3 * kDefaultTCPMSS).IsZero());
-  EXPECT_FALSE(
-      sender_->TimeUntilSend(QuicTime::Zero(), 4 * kDefaultTCPMSS).IsZero());
+  EXPECT_TRUE(sender_->CanSend(kDefaultTCPMSS));
+  EXPECT_TRUE(sender_->CanSend(2 * kDefaultTCPMSS));
+  EXPECT_TRUE(sender_->CanSend(3 * kDefaultTCPMSS));
+  EXPECT_FALSE(sender_->CanSend(4 * kDefaultTCPMSS));
 }
 
 TEST_F(TcpCubicSenderBytesTest, NoPRR) {

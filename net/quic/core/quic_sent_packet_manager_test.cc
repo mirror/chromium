@@ -637,8 +637,7 @@ TEST_F(QuicSentPacketManagerTest, TailLossProbeTimeout) {
   manager_.MaybeRetransmitTailLossProbe();
   EXPECT_TRUE(manager_.HasPendingRetransmissions());
   RetransmitNextPacket(3);
-  EXPECT_CALL(*send_algorithm_, TimeUntilSend(_, _))
-      .WillOnce(Return(QuicTime::Delta::Infinite()));
+  EXPECT_CALL(*send_algorithm_, CanSend(_)).WillOnce(Return(false));
   EXPECT_EQ(QuicTime::Delta::Infinite(), manager_.TimeUntilSend(clock_.Now()));
   EXPECT_FALSE(manager_.HasPendingRetransmissions());
 
@@ -684,8 +683,7 @@ TEST_F(QuicSentPacketManagerTest, TailLossProbeThenRTO) {
   manager_.MaybeRetransmitTailLossProbe();
   EXPECT_TRUE(manager_.HasPendingRetransmissions());
   RetransmitNextPacket(101);
-  EXPECT_CALL(*send_algorithm_, TimeUntilSend(_, _))
-      .WillOnce(Return(QuicTime::Delta::Infinite()));
+  EXPECT_CALL(*send_algorithm_, CanSend(_)).WillOnce(Return(false));
   EXPECT_EQ(QuicTime::Delta::Infinite(), manager_.TimeUntilSend(clock_.Now()));
   EXPECT_FALSE(manager_.HasPendingRetransmissions());
   clock_.AdvanceTime(manager_.GetRetransmissionTime() - clock_.Now());
@@ -697,8 +695,7 @@ TEST_F(QuicSentPacketManagerTest, TailLossProbeThenRTO) {
   EXPECT_TRUE(manager_.MaybeRetransmitTailLossProbe());
   EXPECT_TRUE(manager_.HasPendingRetransmissions());
   RetransmitNextPacket(102);
-  EXPECT_CALL(*send_algorithm_, TimeUntilSend(_, _))
-      .WillOnce(Return(QuicTime::Delta::Infinite()));
+  EXPECT_CALL(*send_algorithm_, CanSend(_)).WillOnce(Return(false));
   EXPECT_EQ(QuicTime::Delta::Infinite(), manager_.TimeUntilSend(clock_.Now()));
 
   // Ensure the RTO is set based on the correct packet.
@@ -1171,8 +1168,7 @@ TEST_F(QuicSentPacketManagerTest, GetTransmissionTimeTailLossProbe) {
   EXPECT_TRUE(manager_.MaybeRetransmitTailLossProbe());
   EXPECT_TRUE(manager_.HasPendingRetransmissions());
   RetransmitNextPacket(3);
-  EXPECT_CALL(*send_algorithm_, TimeUntilSend(_, _))
-      .WillOnce(Return(QuicTime::Delta::Infinite()));
+  EXPECT_CALL(*send_algorithm_, CanSend(_)).WillOnce(Return(false));
   EXPECT_EQ(QuicTime::Delta::Infinite(), manager_.TimeUntilSend(clock_.Now()));
   EXPECT_FALSE(manager_.HasPendingRetransmissions());
 

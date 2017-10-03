@@ -730,8 +730,7 @@ class QuicConnectionTest : public QuicTestWithParam<TestParams> {
     connection_.set_visitor(&visitor_);
     connection_.SetSendAlgorithm(send_algorithm_);
     connection_.SetLossAlgorithm(loss_algorithm_.get());
-    EXPECT_CALL(*send_algorithm_, TimeUntilSend(_, _))
-        .WillRepeatedly(Return(QuicTime::Delta::Zero()));
+    EXPECT_CALL(*send_algorithm_, CanSend(_)).WillRepeatedly(Return(true));
     EXPECT_CALL(*send_algorithm_, OnPacketSent(_, _, _, _, _))
         .Times(AnyNumber());
     EXPECT_CALL(*send_algorithm_, GetCongestionWindow())
@@ -1060,13 +1059,13 @@ class QuicConnectionTest : public QuicTestWithParam<TestParams> {
   }
 
   void CongestionBlockWrites() {
-    EXPECT_CALL(*send_algorithm_, TimeUntilSend(_, _))
-        .WillRepeatedly(testing::Return(QuicTime::Delta::FromSeconds(1)));
+    EXPECT_CALL(*send_algorithm_, CanSend(_))
+        .WillRepeatedly(testing::Return(false));
   }
 
   void CongestionUnblockWrites() {
-    EXPECT_CALL(*send_algorithm_, TimeUntilSend(_, _))
-        .WillRepeatedly(testing::Return(QuicTime::Delta::Zero()));
+    EXPECT_CALL(*send_algorithm_, CanSend(_))
+        .WillRepeatedly(testing::Return(true));
   }
 
   void set_perspective(Perspective perspective) {
@@ -2082,8 +2081,8 @@ TEST_P(QuicConnectionTest, OnCanWrite) {
         .WillRepeatedly(Return(false));
   }
 
-  EXPECT_CALL(*send_algorithm_, TimeUntilSend(_, _))
-      .WillRepeatedly(testing::Return(QuicTime::Delta::Zero()));
+  EXPECT_CALL(*send_algorithm_, CanSend(_))
+      .WillRepeatedly(testing::Return(true));
 
   connection_.OnCanWrite();
 
@@ -2674,8 +2673,7 @@ TEST_P(QuicConnectionTest, SendHandshakeMessages) {
   connection_.SetEncrypter(ENCRYPTION_NONE, new TaggingEncrypter(0x01));
 
   // Attempt to send a handshake message and have the socket block.
-  EXPECT_CALL(*send_algorithm_, TimeUntilSend(_, _))
-      .WillRepeatedly(testing::Return(QuicTime::Delta::Zero()));
+  EXPECT_CALL(*send_algorithm_, CanSend(_)).WillRepeatedly(Return(true));
   BlockOnNextWrite();
   connection_.SendStreamDataWithString(1, "foo", 0, NO_FIN, nullptr);
   // The packet should be serialized, but not queued.
@@ -3745,8 +3743,7 @@ TEST_P(QuicConnectionTest, TestQueueLimitsOnSendStreamData) {
   connection_.SetMaxPacketLength(length);
 
   // Queue the first packet.
-  EXPECT_CALL(*send_algorithm_, TimeUntilSend(_, _))
-      .WillOnce(testing::Return(QuicTime::Delta::FromMicroseconds(10)));
+  EXPECT_CALL(*send_algorithm_, CanSend(_)).WillOnce(testing::Return(false));
   const string payload(payload_length, 'a');
   EXPECT_EQ(0u,
             connection_.SendStreamDataWithString(3, payload, 0, NO_FIN, nullptr)
@@ -5133,30 +5130,45 @@ TEST_P(QuicConnectionTest, DoNotSendGoAwayTwice) {
 }
 
 TEST_P(QuicConnectionTest, ReevaluateTimeUntilSendOnAck) {
+  // Enable pacing.
+  EXPECT_CALL(*send_algorithm_, SetFromConfig(_, _));
+  QuicConfig config;
+  connection_.SetFromConfig(config);
+
+  // Send two packets.  One packet is not sufficient because if it gets acked,
+  // there will be no packets in flight after that and the pacer will always
+  // allow the next packet in that situation.
   EXPECT_CALL(visitor_, OnSuccessfulVersionNegotiation(_));
+  EXPECT_CALL(*send_algorithm_, CanSend(_)).WillRepeatedly(Return(true));
   connection_.SendStreamDataWithString(kClientDataStreamId1, "foo", 0, NO_FIN,
                                        nullptr);
-
-  // Evaluate CanWrite, and have it return a non-Zero value.
-  EXPECT_CALL(*send_algorithm_, TimeUntilSend(_, _))
-      .WillRepeatedly(Return(QuicTime::Delta::FromMilliseconds(1)));
+  connection_.SendStreamDataWithString(kClientDataStreamId1, "bar", 3, NO_FIN,
+                                       nullptr);
   connection_.OnCanWrite();
-  EXPECT_TRUE(connection_.GetSendAlarm()->IsSet());
-  EXPECT_EQ(clock_.Now() + QuicTime::Delta::FromMilliseconds(1),
-            connection_.GetSendAlarm()->deadline());
 
-  // Process an ack and the send alarm will be set to the  new 2ms delay.
+  // Schedule the next packet for a few milliseconds in future.
+  QuicSentPacketManagerPeer::DisablePacerBursts(manager_);
+  QuicTime scheduled_pacing_time =
+      clock_.Now() + QuicTime::Delta::FromMilliseconds(5);
+  QuicSentPacketManagerPeer::SetNextPacedPacketTime(manager_,
+                                                    scheduled_pacing_time);
+
+  // Send a packet and have it be blocked by congestion control.
+  EXPECT_CALL(*send_algorithm_, CanSend(_)).WillRepeatedly(Return(false));
+  connection_.SendStreamDataWithString(kClientDataStreamId1, "baz", 6, NO_FIN,
+                                       nullptr);
+  EXPECT_FALSE(connection_.GetSendAlarm()->IsSet());
+
+  // Process an ack and the send alarm will be set to the new 5ms delay.
   QuicAckFrame ack = InitAckFrame(1);
   EXPECT_CALL(*loss_algorithm_, DetectLosses(_, _, _, _, _));
   EXPECT_CALL(*send_algorithm_, OnCongestionEvent(true, _, _, _, _));
-  EXPECT_CALL(*send_algorithm_, TimeUntilSend(_, _))
-      .WillRepeatedly(Return(QuicTime::Delta::FromMilliseconds(2)));
+  EXPECT_CALL(*send_algorithm_, CanSend(_)).WillRepeatedly(Return(true));
   ProcessAckPacket(&ack);
   EXPECT_EQ(1u, writer_->frame_count());
   EXPECT_EQ(1u, writer_->stream_frames().size());
   EXPECT_TRUE(connection_.GetSendAlarm()->IsSet());
-  EXPECT_EQ(clock_.Now() + QuicTime::Delta::FromMilliseconds(2),
-            connection_.GetSendAlarm()->deadline());
+  EXPECT_EQ(scheduled_pacing_time, connection_.GetSendAlarm()->deadline());
   writer_->Reset();
 }
 

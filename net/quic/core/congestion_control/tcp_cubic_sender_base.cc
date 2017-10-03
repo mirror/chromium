@@ -173,21 +173,19 @@ void TcpCubicSenderBase::OnPacketSent(
   hybrid_slow_start_.OnPacketSent(packet_number);
 }
 
-QuicTime::Delta TcpCubicSenderBase::TimeUntilSend(
-    QuicTime /* now */,
-    QuicByteCount bytes_in_flight) {
+bool TcpCubicSenderBase::CanSend(QuicByteCount bytes_in_flight) {
   if (!no_prr_ && InRecovery()) {
     // PRR is used when in recovery.
-    return prr_.TimeUntilSend(GetCongestionWindow(), bytes_in_flight,
-                              GetSlowStartThreshold());
+    return prr_.CanSend(GetCongestionWindow(), bytes_in_flight,
+                        GetSlowStartThreshold());
   }
   if (GetCongestionWindow() > bytes_in_flight) {
-    return QuicTime::Delta::Zero();
+    return true;
   }
   if (min4_mode_ && bytes_in_flight < 4 * kDefaultTCPMSS) {
-    return QuicTime::Delta::Zero();
+    return true;
   }
-  return QuicTime::Delta::Infinite();
+  return false;
 }
 
 QuicBandwidth TcpCubicSenderBase::PacingRate(
