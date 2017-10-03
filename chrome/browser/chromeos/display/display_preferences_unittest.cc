@@ -79,6 +79,8 @@ class DisplayPreferencesTest : public ash::AshTestBase {
     RegisterDisplayLocalStatePrefs(local_state_.registry());
     TestingBrowserProcess::GetGlobal()->SetLocalState(&local_state_);
     observer_.reset(new DisplayConfigurationObserver());
+    static_cast<ash::WindowTreeHostManager::Observer*>(observer_.get())
+        ->OnDisplaysInitialized();
   }
 
   void TearDown() override {
@@ -129,8 +131,27 @@ class DisplayPreferencesTest : public ash::AshTestBase {
       pref_data->Set(name, std::move(layout_value));
   }
 
+  bool GetDisplayPropertyFromList(const display::DisplayIdList& list,
+                                  const std::string& key,
+                                  base::Value** out_value) {
+    std::string name = display::DisplayIdListToString(list);
+
+    DictionaryPrefUpdate update(&local_state_, prefs::kSecondaryDisplays);
+    base::DictionaryValue* pref_data = update.Get();
+
+    if (pref_data->HasKey(name)) {
+      base::Value* layout_value = nullptr;
+      pref_data->Get(name, &layout_value);
+      if (layout_value) {
+        return static_cast<base::DictionaryValue*>(layout_value)
+            ->Get(key, out_value);
+      }
+    }
+    return false;
+  }
+
   void StoreDisplayPropertyForList(const display::DisplayIdList& list,
-                                   std::string key,
+                                   const std::string& key,
                                    std::unique_ptr<base::Value> value) {
     std::string name = display::DisplayIdListToString(list);
 
@@ -1136,6 +1157,33 @@ TEST_F(DisplayPreferencesTest, RestoreThreeDisplays) {
             display_manager()->GetDisplayForId(list[1]).bounds());
   EXPECT_EQ(gfx::Rect(-100, 200, 300, 300),
             display_manager()->GetDisplayForId(list[2]).bounds());
+}
+
+TEST_F(DisplayPreferencesTest, MirrorWhenEnterTableMode) {
+  display::Display::SetInternalDisplayId(
+      display::Screen::GetScreen()->GetPrimaryDisplay().id());
+  LoggedInAsUser();
+  UpdateDisplay("800x600,1200x800");
+  EXPECT_FALSE(display_manager()->IsInMirrorMode());
+  ash::TabletModeController* controller =
+      ash::Shell::Get()->tablet_mode_controller();
+  controller->EnableTabletModeWindowManager(true);
+  ASSERT_TRUE(controller->IsTabletModeWindowManagerEnabled());
+  EXPECT_TRUE(display_manager()->IsInMirrorMode());
+
+  // Make sure the mirror mode is not saved in the preference.
+  display::DisplayIdList list = display_manager()->GetCurrentDisplayIdList();
+  ASSERT_EQ(2u, list.size());
+  base::Value* value;
+  EXPECT_TRUE(GetDisplayPropertyFromList(list, "mirrored", &value));
+  bool mirrored;
+  EXPECT_TRUE(value->GetAsBoolean(&mirrored));
+  EXPECT_FALSE(mirrored);
+
+  // Exiting the tablet mode should exit mirror mode.
+  controller->EnableTabletModeWindowManager(false);
+  ASSERT_FALSE(controller->IsTabletModeWindowManagerEnabled());
+  EXPECT_FALSE(display_manager()->IsInMirrorMode());
 }
 
 }  // namespace chromeos
