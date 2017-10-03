@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "b0b2ff7f_da3381a0",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-10-03T19:55:35Z",
+      "side": 1,
+      "message": "Honestly, this should never be reached, but if it were, I think we\u0027d still want to zero-fill. Here\u0027s how I\u0027d write this block.\n\n  int rows_decoded;\n  auto result \u003d codec_-\u003eincrementalDecode(\u0026rows_decoded);\n  frame.SetPixelsChanged(true);  // Arguably not true in your \"default\" case, which shouldn\u0027t\n                                 // happen anyway. FWIW, it\u0027s also not true in kIncomplete if\n                                 // no more full rows were decoded, but we don\u0027t check for that\n                                 // either.\n  if (kSuccess \u003d\u003d result) {\n    ...\n    frame.SetHasAlpha(...);\n    frame.SetStatus(ImageFrame::kFrameComplete);\n    PostDecodeProcessing(index);\n  } else {\n    if (frame.GetStatus() \u003d\u003d ImageFrame::kFrameAllocated) {\n      frame.ZeroFillFrameRect(IntRect(...));\n      frame.SetStatus(ImageFrame::kFramePartial);\n    }\n    if (result !\u003d kIncompleteInput || FrameIsReceivedAtIndex(index) || IsAllDataReceived())\n      SetFailed();\n   }",
+      "range": {
+        "startLine": 299,
+        "startChar": 4,
+        "endLine": 299,
+        "endChar": 11
+      },
+      "revId": "254393986307d7ea1b2b767ab773b3a3311d4e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e99ce60_12f24875",
         "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoder.cpp",
         "patchSetId": 5
@@ -13,6 +36,24 @@
       "writtenOn": "2017-10-03T19:08:21Z",
       "side": 1,
       "message": "Previously, I set kFramePartial after startIncrementalDecode() is called. That way we don\u0027t call it a second time.\n\nI moved it here so we also don\u0027t zero-fill a second time.",
+      "revId": "254393986307d7ea1b2b767ab773b3a3311d4e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c81a459f_43895e4f",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-10-03T19:55:35Z",
+      "side": 1,
+      "message": "Good thinking. I merged that change in above.",
+      "parentUuid": "2e99ce60_12f24875",
       "revId": "254393986307d7ea1b2b767ab773b3a3311d4e69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b885d4c5_e9402362",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-10-03T19:55:35Z",
+      "side": 1,
+      "message": "\u003e My intention is to only fill the 0th frame, since all other frames will not be displayed until they are fully decoded (and thus the fill is unneeded). That is, unless there is an error. Good call. :)\n\u003e \n\u003e It seems to me like there are 2 cases where we should zero-fill the remaining pixels:\n\u003e 1.) Any time there is an error (so we can display the portion of the frame)\n\u003e 2.) On the first kIncompleteInput of the 0th frame\n\nAgain, I think the only thing that\u0027s special about the 0th frame is that it\u0027s independent. Checking the index seems an unnecessary complication. Later frames could still be incomplete and return kIncompleteInput; we check for the error below. (if (FrameIsReceivedAtIndex(index))\n\n\u003e \n\u003e (That should handle the problem with re-zero-filling.)\n\u003e \n\u003e Although, it sounds you like feel we shouldn\u0027t zero-fill if the frame already contains prior frame contents? I\u0027m okay with that idea. But before I do it, I just want to make sure I understand that correctly.\n\nFirst off, keep in mind that this is an error case, and likely uncommon. Today, we wouldn\u0027t zero-fill; we would just leave whatever was there before. It may be zero-ed memory (e.g. if the frame was independent), or it may be a prior frame. Showing a torn frame like this is not ideal, but again, this is an error case, so I think it\u0027s fine to stick with the existing behavior of leaving the old frame in there.\n\n\u003e \n\u003e I think a way I can avoid re-zero-filling and handle the prior-contents at the same time is by leveraging the Partial status.\n\nMakes sense. Will take a look.",
+      "parentUuid": "504199dc_4a7ebe30",
+      "range": {
+        "startLine": 290,
+        "startChar": 6,
+        "endLine": 290,
+        "endChar": 19
+      },
+      "revId": "3c021912cf0db5bf771463f4f11a7920910a70e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0fff4293_cb77309f",
         "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoder.cpp",
         "patchSetId": 3
