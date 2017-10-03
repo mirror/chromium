@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "72e60462_2b63919a",
+        "filename": "base/trace_event/trace_log.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1654,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-10-03T05:02:34Z",
+      "side": 1,
+      "message": "Can you add a \"AutoLock lock(lock_);\" here? I know it shouldn\u0027t matter for this test, but just to avoid future users of this getting unexpected races.",
+      "revId": "529cbb20bd268b3868e68a4d7b295ae98d48d64a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d514b46_f9c20a7e",
         "filename": "components/net_log/net_export_file_writer_unittest.cc",
         "patchSetId": 5
