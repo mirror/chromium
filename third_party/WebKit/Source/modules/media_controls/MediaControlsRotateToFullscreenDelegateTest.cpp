@@ -22,6 +22,7 @@
 #include "modules/media_controls/MediaControlsImpl.h"
 #include "modules/screen_orientation/ScreenOrientationControllerImpl.h"
 #include "platform/testing/EmptyWebMediaPlayer.h"
+#include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
 #include "platform/wtf/text/AtomicString.h"
 #include "public/platform/WebSize.h"
@@ -97,12 +98,10 @@ class MediaControlsRotateToFullscreenDelegateTest : public ::testing::Test {
       MediaControlsRotateToFullscreenDelegate::SimpleOrientation;
 
   void SetUp() override {
-    previous_video_fullscreen_orientation_lock_value_ =
-        RuntimeEnabledFeatures::VideoFullscreenOrientationLockEnabled();
-    previous_video_rotate_to_fullscreen_value_ =
-        RuntimeEnabledFeatures::VideoRotateToFullscreenEnabled();
-    RuntimeEnabledFeatures::SetVideoFullscreenOrientationLockEnabled(true);
-    RuntimeEnabledFeatures::SetVideoRotateToFullscreenEnabled(true);
+    video_fullscreen_orientation_lock_.reset(
+        new ScopedVideoFullscreenOrientationLockForTest(true));
+    video_rotate_to_fullscreen_.reset(
+        new ScopedVideoRotateToFullscreenForTest(true));
 
     chrome_client_ = new MockChromeClient();
 
@@ -117,13 +116,6 @@ class MediaControlsRotateToFullscreenDelegateTest : public ::testing::Test {
     GetVideo().setAttribute(controlsAttr, g_empty_atom);
     // Most tests should call GetDocument().body()->AppendChild(&GetVideo());
     // This is not done automatically, so that tests control timing of `Attach`.
-  }
-
-  void TearDown() override {
-    RuntimeEnabledFeatures::SetVideoFullscreenOrientationLockEnabled(
-        previous_video_fullscreen_orientation_lock_value_);
-    RuntimeEnabledFeatures::SetVideoRotateToFullscreenEnabled(
-        previous_video_rotate_to_fullscreen_value_);
   }
 
   static bool HasDelegate(const MediaControls& media_controls) {
@@ -192,11 +184,13 @@ class MediaControlsRotateToFullscreenDelegateTest : public ::testing::Test {
   }
 
  private:
-  bool previous_video_fullscreen_orientation_lock_value_;
-  bool previous_video_rotate_to_fullscreen_value_;
   Persistent<MockChromeClient> chrome_client_;
   std::unique_ptr<DummyPageHolder> page_holder_;
   Persistent<HTMLVideoElement> video_;
+  std::unique_ptr<ScopedVideoFullscreenOrientationLockForTest>
+      video_fullscreen_orientation_lock_;
+  std::unique_ptr<ScopedVideoRotateToFullscreenForTest>
+      video_rotate_to_fullscreen_;
 };
 
 void MediaControlsRotateToFullscreenDelegateTest::InitScreenAndVideo(
@@ -260,7 +254,7 @@ TEST_F(MediaControlsRotateToFullscreenDelegateTest, DelegateRequiresFlag) {
   EXPECT_TRUE(HasDelegate(GetMediaControls()));
 
   // No delegate when flag is off.
-  RuntimeEnabledFeatures::SetVideoRotateToFullscreenEnabled(false);
+  ScopedVideoRotateToFullscreenForTest video_rotate_to_fullscreen(false);
   HTMLVideoElement* video = HTMLVideoElement::Create(GetDocument());
   GetDocument().body()->AppendChild(video);
   EXPECT_FALSE(HasDelegate(*video->GetMediaControls()));

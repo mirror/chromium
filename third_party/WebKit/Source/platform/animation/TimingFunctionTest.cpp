@@ -32,7 +32,7 @@
 
 #include <sstream>
 #include <string>
-#include "platform/runtime_enabled_features.h"
+#include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 #include "platform/wtf/text/WTFString.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -53,7 +53,7 @@ namespace {
 class TimingFunctionTest : public ::testing::Test {
  public:
   TimingFunctionTest() {
-    RuntimeEnabledFeatures::SetFramesTimingFunctionEnabled(true);
+    frames_timing_function_.reset(new ScopedFramesTimingFunctionForTest(true));
   }
 
   void NotEqualHelperLoop(
@@ -66,6 +66,9 @@ class TimingFunctionTest : public ::testing::Test {
       }
     }
   }
+
+ private:
+  std::unique_ptr<ScopedFramesTimingFunctionForTest> frames_timing_function_;
 };
 
 TEST_F(TimingFunctionTest, LinearToString) {

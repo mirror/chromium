@@ -45,7 +45,6 @@
 #include "platform/loader/fetch/UniqueIdentifier.h"
 #include "platform/loader/testing/MockFetchContext.h"
 #include "platform/loader/testing/MockResourceClient.h"
-#include "platform/runtime_enabled_features.h"
 #include "platform/scheduler/test/fake_web_task_runner.h"
 #include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 #include "platform/testing/ScopedMockedURL.h"
@@ -346,11 +345,6 @@ ResourceFetcher* CreateFetcher() {
       MockFetchContext::Create(MockFetchContext::kShouldLoadNewResource));
 }
 
-using ScopedClientPlaceholderForServerLoFiForTest =
-    ScopedRuntimeEnabledFeatureForTest<
-        RuntimeEnabledFeatures::ClientPlaceholdersForServerLoFiEnabled,
-        RuntimeEnabledFeatures::SetClientPlaceholdersForServerLoFiEnabled>;
-
 TEST(ImageResourceTest, MultipartImage) {
   ResourceFetcher* fetcher = CreateFetcher();
   KURL test_url(kParsedURLString, kTestURL);
@@ -634,11 +628,11 @@ class ImageResourceReloadTest : public ::testing::TestWithParam<bool> {
 
   void SetUp() override {
     scoped_show_placeholder_.reset(
-        new ScopedClientPlaceholderForServerLoFiForTest(GetParam()));
+        new ScopedClientPlaceholdersForServerLoFiForTest(GetParam()));
   }
 
  private:
-  std::unique_ptr<ScopedClientPlaceholderForServerLoFiForTest>
+  std::unique_ptr<ScopedClientPlaceholdersForServerLoFiForTest>
       scoped_show_placeholder_;
 };
 

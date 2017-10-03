@@ -41,6 +41,7 @@
 #include "platform/graphics/ImageBuffer.h"
 #include "platform/graphics/UnacceleratedImageBufferSurface.h"
 #include "platform/graphics/gpu/DrawingBufferTestHelpers.h"
+#include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 #include "platform/testing/TestingPlatformSupport.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/RefPtr.h"
@@ -401,7 +402,7 @@ class DrawingBufferImageChromiumTest : public DrawingBufferTest {
     std::unique_ptr<WebGraphicsContext3DProviderForTests> provider =
         WTF::WrapUnique(
             new WebGraphicsContext3DProviderForTests(std::move(gl)));
-    RuntimeEnabledFeatures::SetWebGLImageChromiumEnabled(true);
+    webgl_image_chromium_.reset(new ScopedWebGLImageChromiumForTest(true));
     GLES2InterfaceForTests* gl_ =
         static_cast<GLES2InterfaceForTests*>(provider->ContextGL());
     image_id0_ = gl_->NextImageIdToBeCreated();
@@ -415,12 +416,12 @@ class DrawingBufferImageChromiumTest : public DrawingBufferTest {
   }
 
   void TearDown() override {
-    RuntimeEnabledFeatures::SetWebGLImageChromiumEnabled(false);
     platform_.reset();
   }
 
   GLuint image_id0_;
   std::unique_ptr<ScopedTestingPlatformSupport<FakePlatformSupport>> platform_;
+  std::unique_ptr<ScopedWebGLImageChromiumForTest> webgl_image_chromium_;
 };
 
 TEST_F(DrawingBufferImageChromiumTest, verifyResizingReallocatesImages) {
