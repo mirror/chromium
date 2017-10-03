@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "514bc8fd_89b5bf6f",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-10-03T14:39:02Z",
+      "side": 1,
+      "message": "VisiblePositionOfHitTestResult here assumes that inner_node aka |hit_test_result.InnerNode()| isn\u0027t null (it calls methods from that Node pointer).\nSo I believe we can deference that pointer without additional checks.",
+      "revId": "1f2a08519b79c28a3134628d96a22b2aae109268",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
