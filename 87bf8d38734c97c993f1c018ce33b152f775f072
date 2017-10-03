@@ -243,6 +243,24 @@
     },
     {
       "key": {
+        "uuid": "fbb600f5_d05891b1",
+        "filename": "media/filters/source_buffer_range_by_pts.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-03T18:42:23Z",
+      "side": 1,
+      "message": "It\u0027s neither busted nor are you incorrect :)\n\nProbably, GetFirstKeyframeAtOrBefore() needs a better name (like GetFirstKeyframeAtOrBeforeOrAtStartOfRangeIfTimestampIsBeforeThatKeyframe).\nWhen used for seeking, callers first do CanSeekTo() which ensures that the |timestamp| is \"within\" this range (or near enough to the start of this range to allow a seek to return its first keyframe).\n\nI\u0027d rather not hold up this larger CL to find the right name though, especially since this is not a regression in this CL IIUC. \n\nP2 bug filed: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d771260",
+      "parentUuid": "4acb1d35_c112fb4e",
+      "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abba9b0f_f84eb1df",
         "filename": "media/filters/source_buffer_range_by_pts.cc",
         "patchSetId": 36
@@ -851,6 +869,30 @@
       "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75203ccd_0c7b2bd7",
+        "filename": "media/filters/source_buffer_stream_unittest.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 5177,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-03T18:42:23Z",
+      "side": 1,
+      "message": "This is simulating what FrameProcessor \u0026 SBS should do, explicitly (picking the PTS 60 as the CFG start when buffering by PTS. I see though, that I could make this implicit since logic in this PS\u0027s ~l.763 picks the right one (PTS vs DTS based on buffering). Net result of test is the PTS buffered range result doesn\u0027t begin at 0 (and instead is for the presentation interval, not decode interval).",
+      "parentUuid": "e23645a6_24e47fdc",
+      "range": {
+        "startLine": 5177,
+        "startChar": 46,
+        "endLine": 5177,
+        "endChar": 62
+      },
+      "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
