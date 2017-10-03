@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f83cea9a_d4bdbccc",
+        "filename": "chromeos/dbus/fake_session_manager_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-03T17:15:05Z",
+      "side": 1,
+      "message": "nit: ... should report success or not.",
+      "revId": "0b153f0584d07f9c2580184bfd2a9d04a9d288f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
