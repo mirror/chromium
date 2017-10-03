@@ -31,13 +31,10 @@ V8AnyCallbackFunctionOptionalAnyArg* V8AnyCallbackFunctionOptionalAnyArg::Create
 }
 
 V8AnyCallbackFunctionOptionalAnyArg::V8AnyCallbackFunctionOptionalAnyArg(ScriptState* scriptState, v8::Local<v8::Function> callback)
-    : script_state_(scriptState),
-    callback_(scriptState->GetIsolate(), this, callback) {
-  DCHECK(!callback_.IsEmpty());
-}
+    : CallbackFunctionBase(scriptState, callback) {}
 
 DEFINE_TRACE_WRAPPERS(V8AnyCallbackFunctionOptionalAnyArg) {
-  visitor->TraceWrappers(callback_.Cast<v8::Value>());
+  CallbackFunctionBase::TraceWrappers(visitor);
 }
 
 bool V8AnyCallbackFunctionOptionalAnyArg::call(ScriptWrappable* scriptWrappable, ScriptValue optionalAnyArg, ScriptValue& returnValue) {
@@ -63,7 +60,6 @@ bool V8AnyCallbackFunctionOptionalAnyArg::call(ScriptWrappable* scriptWrappable,
       scriptWrappable,
       script_state_->GetContext()->Global(),
       isolate);
-
   v8::Local<v8::Value> v8_optionalAnyArg = optionalAnyArg.V8Value();
   v8::Local<v8::Value> argv[] = { v8_optionalAnyArg };
   v8::TryCatch exceptionCatcher(isolate);

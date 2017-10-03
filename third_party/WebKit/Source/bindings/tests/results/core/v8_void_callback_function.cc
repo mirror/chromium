@@ -30,13 +30,10 @@ V8VoidCallbackFunction* V8VoidCallbackFunction::Create(ScriptState* scriptState,
 }
 
 V8VoidCallbackFunction::V8VoidCallbackFunction(ScriptState* scriptState, v8::Local<v8::Function> callback)
-    : script_state_(scriptState),
-    callback_(scriptState->GetIsolate(), this, callback) {
-  DCHECK(!callback_.IsEmpty());
-}
+    : CallbackFunctionBase(scriptState, callback) {}
 
 DEFINE_TRACE_WRAPPERS(V8VoidCallbackFunction) {
-  visitor->TraceWrappers(callback_.Cast<v8::Value>());
+  CallbackFunctionBase::TraceWrappers(visitor);
 }
 
 bool V8VoidCallbackFunction::call(ScriptWrappable* scriptWrappable) {
@@ -62,7 +59,6 @@ bool V8VoidCallbackFunction::call(ScriptWrappable* scriptWrappable) {
       scriptWrappable,
       script_state_->GetContext()->Global(),
       isolate);
-
   v8::Local<v8::Value> *argv = nullptr;
   v8::TryCatch exceptionCatcher(isolate);
   exceptionCatcher.SetVerbose(true);
