@@ -1,0 +1,348 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df659d39_569c9445",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-10-03T00:41:55Z",
+      "side": 1,
+      "message": "nit: DelegateImpl -\u003e PromptDelegateImpl",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 18
+      },
+      "revId": "4fd736bd7edeafa5b2d5fc555e239311d9e4570a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f95bf1c_e968d914",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-10-03T00:41:55Z",
+      "side": 1,
+      "message": "This is inconsistent with the comments about the class: \"Implementations manage their own lifetimes and delete themselves once they decide that no dialog should be shown\". From this it looks like the class should only be instantiated when it is already known that the dialog will be shown.",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 48,
+        "endChar": 42
+      },
+      "revId": "4fd736bd7edeafa5b2d5fc555e239311d9e4570a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1176af06_653a88d0",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-10-03T00:41:55Z",
+      "side": 1,
+      "message": "Just to be extra extra super cautious in case of future changes, maybe call cleaner_controller_-\u003eRemoveObserver(this) before calling Reboot()?",
+      "revId": "4fd736bd7edeafa5b2d5fc555e239311d9e4570a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aa8d4c4_48e79096",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-10-03T00:41:55Z",
+      "side": 1,
+      "message": "As currently implemented, without registering to show the prompt when a window becomes available, if this case is hit then the prompt will never be shown and the controller will never be destroyed.",
+      "range": {
+        "startLine": 85,
+        "startChar": 4,
+        "endLine": 85,
+        "endChar": 10
+      },
+      "revId": "4fd736bd7edeafa5b2d5fc555e239311d9e4570a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edea6eac_8a8f7edf",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-10-03T00:41:55Z",
+      "side": 1,
+      "message": "remove?",
+      "revId": "4fd736bd7edeafa5b2d5fc555e239311d9e4570a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dc2387f_ee6a9229",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-10-03T00:41:55Z",
+      "side": 1,
+      "message": "Please also define a virtual destructor for this class.",
+      "range": {
+        "startLine": 21,
+        "startChar": 8,
+        "endLine": 21,
+        "endChar": 22
+      },
+      "revId": "4fd736bd7edeafa5b2d5fc555e239311d9e4570a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e31257c_440a5708",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-10-03T00:41:55Z",
+      "side": 1,
+      "message": "Don\u0027t you need to also override OnIdle() in order to be able to delete this instance when no reboot is required?",
+      "revId": "4fd736bd7edeafa5b2d5fc555e239311d9e4570a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "361e3f58_83f3de6e",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-10-03T00:41:55Z",
+      "side": 1,
+      "message": "Please use \"SetPromptDelegateForTesting\" instead since the \"ForTesting\" suffix is checked at presubmit time (https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#naming)",
+      "range": {
+        "startLine": 42,
+        "startChar": 7,
+        "endLine": 42,
+        "endChar": 32
+      },
+      "revId": "4fd736bd7edeafa5b2d5fc555e239311d9e4570a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbdec965_7a0d6c84",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-10-03T00:41:55Z",
+      "side": 1,
+      "message": "nit: dialog",
+      "range": {
+        "startLine": 49,
+        "startChar": 5,
+        "endLine": 49,
+        "endChar": 11
+      },
+      "revId": "4fd736bd7edeafa5b2d5fc555e239311d9e4570a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "053df03e_ceeb0178",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-10-03T00:41:55Z",
+      "side": 1,
+      "message": "I found this to be a little confusing. WDYT about\n\"Shows the reboot prompt dialog if the reboot prompt experiment is on and the Settings page is not the currently active tab. Otherwise, this will reopen the Settings page on a background tab.\"",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 79
+      },
+      "revId": "4fd736bd7edeafa5b2d5fc555e239311d9e4570a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57300463_8ecda890",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-10-03T00:41:55Z",
+      "side": 1,
+      "message": "nit: shown -\u003e has been shown",
+      "range": {
+        "startLine": 15,
+        "startChar": 59,
+        "endLine": 15,
+        "endChar": 64
+      },
+      "revId": "4fd736bd7edeafa5b2d5fc555e239311d9e4570a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab4f0250_3d032ad1",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_reboot_dialog_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-10-03T00:41:55Z",
+      "side": 1,
+      "message": "nit: remove empty line.",
+      "revId": "4fd736bd7edeafa5b2d5fc555e239311d9e4570a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6df64cfd_597e2c3e",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_reboot_dialog_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-10-03T00:41:55Z",
+      "side": 1,
+      "message": "This be Close() instead since in this case the cancel button was not used.",
+      "range": {
+        "startLine": 67,
+        "startChar": 24,
+        "endLine": 67,
+        "endChar": 30
+      },
+      "revId": "4fd736bd7edeafa5b2d5fc555e239311d9e4570a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ee5a087_4d029cb2",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_reboot_dialog_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-10-03T00:41:55Z",
+      "side": 1,
+      "message": "remove?",
+      "range": {
+        "startLine": 9,
+        "startChar": 17,
+        "endLine": 9,
+        "endChar": 0
+      },
+      "revId": "4fd736bd7edeafa5b2d5fc555e239311d9e4570a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1f19b86_845c98f3",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_reboot_dialog_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-10-03T00:41:55Z",
+      "side": 1,
+      "message": "Please also add a DialogBrowserTest the dialog. See https://cs.chromium.org/chromium/src/docs/testing/test_browser_dialog.md for details.",
+      "range": {
+        "startLine": 28,
+        "startChar": 6,
+        "endLine": 28,
+        "endChar": 31
+      },
+      "revId": "4fd736bd7edeafa5b2d5fc555e239311d9e4570a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1989e9dc_849546ca",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_reboot_dialog_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-10-03T00:41:55Z",
+      "side": 1,
+      "message": "nit: controller -\u003e dialog_controller",
+      "range": {
+        "startLine": 30,
+        "startChar": 10,
+        "endLine": 30,
+        "endChar": 20
+      },
+      "revId": "4fd736bd7edeafa5b2d5fc555e239311d9e4570a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
