@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f48f9ac5_8a76079e",
+        "filename": "content/test/gpu/gpu_tests/pixel_expectations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-03T17:55:09Z",
+      "side": 1,
+      "message": "Don\u0027t forget to remove these if you haven\u0027t already",
+      "range": {
+        "startLine": 36,
+        "startChar": 9,
+        "endLine": 36,
+        "endChar": 13
+      },
+      "revId": "e6575a5abcfc49bfcac977ab038c51866ca7a324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
