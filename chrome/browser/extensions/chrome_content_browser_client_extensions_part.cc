@@ -372,20 +372,21 @@ bool ChromeContentBrowserClientExtensionsPart::ShouldLockToOrigin(
   return true;
 }
 
-// static
-bool ChromeContentBrowserClientExtensionsPart::CanCommitURL(
-    content::RenderProcessHost* process_host, const GURL& url) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+namespace {
+
+bool CanCommitExtensionURL(content::RenderProcessHost* process_host,
+                           const GURL& url) {
+  DCHECK(url.SchemeIs(kExtensionScheme));
 
   ExtensionRegistry* registry =
       ExtensionRegistry::Get(process_host->GetBrowserContext());
   if (!registry)
-    return true;
+    return false;
 
   const Extension* new_extension =
       registry->enabled_extensions().GetExtensionOrAppByURL(url);
   if (!new_extension)
-    return true;
+    return false;
 
   // The Chrome Web Store should never be requested outside of its process.
   // Therefore - only consider the explicitly relaxed cases below if the
@@ -405,6 +406,35 @@ bool ChromeContentBrowserClientExtensionsPart::CanCommitURL(
   // notification told us that the |process_host| can host the |new_extension|.
   return ProcessMap::Get(process_host->GetBrowserContext())
       ->Contains(new_extension->id(), process_host->GetID());
+}
+
+bool CanCommitOtherURL(content::RenderProcessHost* process_host,
+                       const GURL& url) {
+  DCHECK(!url.SchemeIs(kExtensionScheme));
+
+  // TODO(lukasza): https://crbug.com/770946: Remove the exception below once
+  // frames with the view-source: scheme are put into the right process.
+  if (url.SchemeIs(content::kViewSourceScheme))
+    return true;
+
+  // Non-extension URLs (e.g. web URLs) should not be able to commit in an
+  // extension process.
+  bool is_extension_process = ProcessMap::Get(process_host->GetBrowserContext())
+                                  ->Contains(process_host->GetID());
+  return !is_extension_process;
+}
+
+}  // namespace
+
+// static
+bool ChromeContentBrowserClientExtensionsPart::CanCommitURL(
+    content::RenderProcessHost* process_host,
+    const GURL& url) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+  return url.SchemeIs(kExtensionScheme)
+             ? CanCommitExtensionURL(process_host, url)
+             : CanCommitOtherURL(process_host, url);
 }
 
 // static
