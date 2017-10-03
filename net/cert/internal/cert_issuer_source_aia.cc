@@ -4,6 +4,7 @@
 
 #include "net/cert/internal/cert_issuer_source_aia.h"
 
+#include "base/threading/thread_restrictions.h"
 #include "net/cert/cert_net_fetcher.h"
 #include "net/cert/internal/cert_errors.h"
 #include "net/cert/x509_util.h"
@@ -49,7 +50,10 @@ void AiaRequest::GetNext(ParsedCertificateList* out_certs) {
     Error error;
     std::vector<uint8_t> bytes;
     auto req = std::move(cert_fetcher_requests_[current_request_++]);
-    req->WaitForResult(&error, &bytes);
+    {
+      base::ScopedAllowBaseSyncPrimitives allow_base_sync_primitives;
+      req->WaitForResult(&error, &bytes);
+    }
 
     if (AddCompletedFetchToResults(error, std::move(bytes), out_certs))
       return;
