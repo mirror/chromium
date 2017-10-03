@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "938721ee_263b2bfc",
+        "filename": "components/feedback/tracing_manager.cc",
+        "patchSetId": 48
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-03T18:13:45Z",
+      "side": 1,
+      "message": "All these newly added includes already exist in `tracing_manager.h`.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 24
+      },
+      "revId": "5a99186f1cf5f073c0f60a4ba3d09884712db862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
