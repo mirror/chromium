@@ -120,6 +120,9 @@
   "chrome/browser/resources/webapks_ui_resources.grd": {
     "includes": [12640],
   },
+  "chrome/browser/resources/md_extensions/extensions_resources.grd": {
+    "structures": [12660],
+  },
   # END chrome/browser section.
 
   # START chrome/ miscellaneous section.
