@@ -22,6 +22,30 @@
       "revId": "4c45a01e85197077cff1e7d8816c3607d9939fc9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c1f4a3a_64ac639e",
+        "filename": "third_party/protobuf/README.chromium",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-10-03T18:04:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b44169e6_34f68b84",
+      "range": {
+        "startLine": 111,
+        "startChar": 70,
+        "endLine": 111,
+        "endChar": 78
+      },
+      "revId": "4c45a01e85197077cff1e7d8816c3607d9939fc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
