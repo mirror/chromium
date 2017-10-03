@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "48e7c7e7_89fc63de",
+        "filename": "chrome/browser/net/system_network_context_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-03T15:20:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5f370aa_2c2c695a",
+      "revId": "143306760dbe501fba92bba7db3622041e6e939d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0baead16_df972d4a",
         "filename": "content/browser/storage_partition_impl.h",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "08047a66_9d974f1b",
+        "filename": "content/browser/storage_partition_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-03T15:20:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0baead16_df972d4a",
+      "revId": "143306760dbe501fba92bba7db3622041e6e939d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "689fc9d5_e8bcbd81",
         "filename": "content/public/browser/storage_partition.h",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-03T06:09:26Z",
       "side": 1,
       "message": "Wondered if we should have some assertion to check if this isn\u0027t sent to child processes, while I\u0027m not sure if there\u0027s a good way to do so in mojo land.",
+      "revId": "143306760dbe501fba92bba7db3622041e6e939d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6328058_a93138b1",
+        "filename": "content/public/browser/storage_partition.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-03T15:20:16Z",
+      "side": 1,
+      "message": "I\u0027m not sure if this is currently possible.  This object itself can\u0027t be passed (Since the caller can\u0027t take ownership), but objects Cloned() from it could be.  We\u0027d have to either have some way of saying, in the URLLoader code, that Cloned() objects / objects bound to a particular object can\u0027t be passed between processes, or we\u0027d need a way to tell Mojo that no interface created from a particular URLLoaderFactory can be passed between processes.\n\nWe could also give NetworkContext the ability to create some other class that\u0027s similar to URLLoader factory, except forbid passing it between processes (Not sure if there\u0027s a way to declare an interface not-passable, but I think there may be?), or make a class that wraps a URLLoaderFactory, and makes the URLLoaderFactory itself, or at least its clone method, inaccessible, to prevent copying and passing between processes.\n\nI\u0027m not seeing a great solution here, but may a Mojo expert would have better ideas.",
+      "parentUuid": "689fc9d5_e8bcbd81",
       "revId": "143306760dbe501fba92bba7db3622041e6e939d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
