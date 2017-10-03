@@ -6076,6 +6076,8 @@ class SymantecMessageSSLUITest : public CertVerifierBrowserTest {
   void SetUpOnMainThread() override {
     CertVerifierBrowserTest::SetUpOnMainThread();
 
+    https_server_.AddDefaultHandlers(base::FilePath(kDocRoot));
+
     require_ct_delegate_ = base::MakeUnique<NoRequireCTDelegate>();
     content::BrowserThread::PostTask(
         content::BrowserThread::IO, FROM_HERE,
@@ -6133,12 +6135,12 @@ IN_PROC_BROWSER_TEST_F(SymantecMessageSSLUITest, PreJune2016) {
   GURL url(https_server()->GetURL("/ssl/google.html"));
   WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
   content::ConsoleObserverDelegate console_observer(
-      tab, "*distrusted in Chrome 66*");
+      tab, "*ssl/google.html uses an SSL certificate*");
   tab->SetDelegate(&console_observer);
   ui_test_utils::NavigateToURL(browser(), url);
   console_observer.Wait();
   EXPECT_TRUE(base::MatchPattern(console_observer.message(),
-                                 "*The certificate used to load*"));
+                                 "*distrusted in Chrome 66*"));
 }
 
 // Tests that the Symantec console message is properly overridden for post-June
@@ -6150,7 +6152,24 @@ IN_PROC_BROWSER_TEST_F(SymantecMessageSSLUITest, PostJune2016) {
   GURL url(https_server()->GetURL("/ssl/google.html"));
   WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
   content::ConsoleObserverDelegate console_observer(
-      tab, "*distrusted in Chrome 66*");
+      tab, "*/ssl/google.html uses an SSL certificate*");
+  tab->SetDelegate(&console_observer);
+  ui_test_utils::NavigateToURL(browser(), url);
+  console_observer.Wait();
+  EXPECT_TRUE(
+      base::MatchPattern(console_observer.message(),
+                         "*distrusted in an upcoming release of Chrome*"));
+}
+
+// Tests that the Symantec console message is logged for subresources.
+IN_PROC_BROWSER_TEST_F(SymantecMessageSSLUITest, Subresource) {
+  ASSERT_NO_FATAL_FAILURE(
+      SetUpCertVerifier(false /* use Chrome 66 distrust date */));
+  ASSERT_TRUE(https_server()->Start());
+  GURL url(https_server()->GetURL("/ssl/page_with_subresource.html"));
+  WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
+  content::ConsoleObserverDelegate console_observer(tab,
+                                                    "*google_files/logo.gif*");
   tab->SetDelegate(&console_observer);
   ui_test_utils::NavigateToURL(browser(), url);
   console_observer.Wait();
