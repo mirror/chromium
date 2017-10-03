@@ -50,8 +50,9 @@ class LevelDB {
   virtual bool Load(std::vector<std::string>* entries);
   virtual bool LoadKeys(std::vector<std::string>* keys);
   virtual bool Get(const std::string& key, bool* found, std::string* entry);
-
-  static bool Destroy(const base::FilePath& database_dir);
+  // Close (if currently open) and then destroy (ie delete) the database
+  // directory.
+  bool Destroy();
 
  private:
   FRIEND_TEST_ALL_PREFIXES(ProtoDatabaseImplLevelDBTest, TestDBInitFail);
@@ -63,7 +64,10 @@ class LevelDB {
   std::unique_ptr<leveldb::Env> env_;
   std::unique_ptr<leveldb::Cache> custom_block_cache_;
   std::unique_ptr<leveldb::DB> db_;
+  base::FilePath database_dir_;
+  leveldb_env::Options open_options_;
   base::HistogramBase* open_histogram_;
+  base::HistogramBase* destroy_histogram_;
 
   DISALLOW_COPY_AND_ASSIGN(LevelDB);
 };
