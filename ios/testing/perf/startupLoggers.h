@@ -16,8 +16,12 @@ void RegisterAppDidFinishLaunchingTime();
 // after the app gets didFinishLaunchingWithOptions notification. This function
 // should be called when the app gets applicationDidBecomeActive notification.
 void RegisterAppDidBecomeActiveTime();
+// Registers the current time variable. This function should be called when the
+// app gets applicationWillEnterForeground notification.
+void RegisterAppWillEnterForegroundTime();
 // Returns whether data is successfully stored in the output json file.  This
 // function stores the time variables into a json file.
 bool LogData(NSString* testName);
-
+// Stores data in the output json file for XCUITest.
+void LogXCUITestData(NSString* testName);
 }  // namespace startup_loggers
