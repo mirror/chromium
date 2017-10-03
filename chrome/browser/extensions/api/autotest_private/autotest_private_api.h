@@ -205,6 +205,17 @@ class AutotestPrivateSetPlayStoreEnabledFunction
   ResponseAction Run() override;
 };
 
+class AutotestPrivateGetLauncherAppsFunction
+    : public UIThreadExtensionFunction {
+ public:
+  DECLARE_EXTENSION_FUNCTION("autotestPrivate.getLauncherApps",
+                             AUTOTESTPRIVATE_GETLAUNCHERAPPS)
+
+ private:
+  ~AutotestPrivateGetLauncherAppsFunction() override {}
+  ResponseAction Run() override;
+};
+
 // Don't kill the browser when we're in a browser test.
 void SetAutotestPrivateTest();
 
