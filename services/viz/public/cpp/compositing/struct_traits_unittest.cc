@@ -804,7 +804,7 @@ TEST_F(StructTraitsTest, RenderPass) {
       shared_state_2, surface_quad_rect, surface_quad_rect,
       SurfaceId(FrameSinkId(1337, 1234),
                 LocalSurfaceId(1234, base::UnguessableToken::Create())),
-      SurfaceDrawQuadType::PRIMARY, SK_ColorYELLOW, nullptr);
+      base::nullopt, SurfaceDrawQuadType::PRIMARY, SK_ColorYELLOW, nullptr);
 
   std::unique_ptr<RenderPass> output;
   SerializeAndDeserialize<mojom::RenderPass>(input, &output);
@@ -943,9 +943,11 @@ TEST_F(StructTraitsTest, QuadListBasic) {
   SurfaceDrawQuad* fallback_surface_quad =
       render_pass->CreateAndAppendDrawQuad<SurfaceDrawQuad>();
   primary_surface_quad->SetNew(sqs, rect3, rect3, primary_surface_id,
+                               base::Optional<SurfaceId>(fallback_surface_id),
                                SurfaceDrawQuadType::PRIMARY, SK_ColorBLUE,
                                fallback_surface_quad);
   fallback_surface_quad->SetNew(sqs, rect3, rect3, fallback_surface_id,
+                                base::Optional<SurfaceId>(fallback_surface_id),
                                 SurfaceDrawQuadType::FALLBACK, SK_ColorGREEN,
                                 nullptr);
 

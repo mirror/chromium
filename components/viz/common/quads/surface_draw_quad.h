@@ -7,6 +7,7 @@
 
 #include <memory>
 
+#include "base/optional.h"
 #include "components/viz/common/quads/draw_quad.h"
 #include "components/viz/common/surfaces/surface_id.h"
 #include "components/viz/common/viz_common_export.h"
@@ -19,11 +20,14 @@ enum class SurfaceDrawQuadType { PRIMARY, FALLBACK, LAST = FALLBACK };
 class VIZ_COMMON_EXPORT SurfaceDrawQuad : public DrawQuad {
  public:
   SurfaceDrawQuad();
+  SurfaceDrawQuad(const SurfaceDrawQuad& other);
+  ~SurfaceDrawQuad() override;
 
   void SetNew(const SharedQuadState* shared_quad_state,
               const gfx::Rect& rect,
               const gfx::Rect& visible_rect,
               const SurfaceId& surface_id,
+              const base::Optional<SurfaceId>& fallback_surface_id,
               SurfaceDrawQuadType surface_draw_quad_type,
               SkColor default_background_color,
               SurfaceDrawQuad* fallback_quad);
@@ -33,11 +37,13 @@ class VIZ_COMMON_EXPORT SurfaceDrawQuad : public DrawQuad {
               const gfx::Rect& visible_rect,
               bool needs_blending,
               const SurfaceId& surface_id,
+              const base::Optional<SurfaceId>& fallback_surface_id,
               SurfaceDrawQuadType surface_draw_quad_type,
               SkColor default_background_color,
               SurfaceDrawQuad* fallback_quad);
 
   SurfaceId surface_id;
+  base::Optional<SurfaceId> fallback_surface_id;
   SurfaceDrawQuadType surface_draw_quad_type;
   SkColor default_background_color = SK_ColorWHITE;
   const SurfaceDrawQuad* fallback_quad = nullptr;
