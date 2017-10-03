@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90ac14be_dbe26d62",
+        "filename": "chrome/browser/ui/webui/chrome_web_ui_controller_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-10-03T02:49:14Z",
+      "side": 0,
+      "message": "this was the only used of HasRenderFrame(), and the code seemed fairly self-explanatory still (the new version)",
+      "range": {
+        "startLine": 660,
+        "startChar": 14,
+        "endLine": 660,
+        "endChar": 28
+      },
+      "revId": "31885d177b085f6f815e466cddba75c36d652f6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
