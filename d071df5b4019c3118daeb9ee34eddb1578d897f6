@@ -34,6 +34,24 @@
       "revId": "d071df5b4019c3118daeb9ee34eddb1578d897f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4605df2_abfc694c",
+        "filename": "tools/gritsettings/resource_ids",
+        "patchSetId": 8
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-03T21:49:29Z",
+      "side": 1,
+      "message": "Maybe. Someone will have to write the tool though. It\u0027s also not trivial since there are intentional overlaps between desktop and mobile. e.g. See ios sections below.",
+      "parentUuid": "417c7ceb_d37eaaee",
+      "revId": "d071df5b4019c3118daeb9ee34eddb1578d897f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
