@@ -16,6 +16,24 @@
       "revId": "d071df5b4019c3118daeb9ee34eddb1578d897f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "417c7ceb_d37eaaee",
+        "filename": "tools/gritsettings/resource_ids",
+        "patchSetId": 8
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-03T21:32:07Z",
+      "side": 1,
+      "message": "Done. I left room for N\u003d100.\n\nHaving said that, could this be automated somehow? Either \n - calculating the IDs automatically during build time, or\n - having a tool that updates the IDs and auto-generates resource_ids. The input to the tool would be a list of GRD files. It would read each grd file calculated N for that file, assign N+1 as the start of the next file in the list.",
+      "parentUuid": "831b7255_4dbbcd91",
+      "revId": "d071df5b4019c3118daeb9ee34eddb1578d897f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
