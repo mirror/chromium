@@ -14,6 +14,8 @@ namespace startup_loggers {
 base::Time* g_start_time;
 base::Time* g_finish_launching_time;
 base::Time* g_become_active_time;
+base::Time* g_will_enter_foreground_time;
+base::Time* g_relaunch_become_active_time;
 
 void RegisterAppStartTime() {
   DCHECK(!g_start_time);
@@ -25,7 +27,14 @@ void RegisterAppDidFinishLaunchingTime() {
 }
 
 void RegisterAppDidBecomeActiveTime() {
+  if (g_will_enter_foreground_time) {
+    g_relaunch_become_active_time = new base::Time(base::Time::Now());
+  }
   g_become_active_time = new base::Time(base::Time::Now());
+}
+
+void RegisterAppWillEnterForegroundTime() {
+  g_will_enter_foreground_time = new base::Time(base::Time::Now());
 }
 
 bool LogData(NSString* testName) {
@@ -34,10 +43,17 @@ bool LogData(NSString* testName) {
       g_finish_launching_time->ToDoubleT() - g_start_time->ToDoubleT();
   double becomeActiveDuration =
       g_become_active_time->ToDoubleT() - g_start_time->ToDoubleT();
-  NSDictionary* values = @{
-    @"AppDidFinishLaunchingTime" : @(finishLaunchingDuration),
-    @"AppDidBecomeActiveTime" : @(becomeActiveDuration)
-  };
+
+  NSMutableDictionary* values = [[NSMutableDictionary alloc] init];
+  values[@"AppDidFinishLaunchingTime"] = @(finishLaunchingDuration);
+  values[@"AppDidBecomeActiveTime"] = @(becomeActiveDuration);
+  if (g_will_enter_foreground_time && g_relaunch_become_active_time) {
+    double relaunchBecomeActiveDuration =
+        g_relaunch_become_active_time->ToDoubleT() -
+        g_will_enter_foreground_time->ToDoubleT();
+    values[@"AppRelaunchDidBecomeActiveTime"] = @(relaunchBecomeActiveDuration);
+  }
+
   NSDictionary* timingData =
       @{ testName : @{@"unit" : @"seconds", @"value" : values} };
   NSDictionary* summary = @{@"Perf Data" : timingData};
@@ -62,5 +78,11 @@ bool LogData(NSString* testName) {
   NSString* outputPath =
       [outputDirectories[0] stringByAppendingPathComponent:fileName];
   return [jsonData writeToFile:outputPath atomically:YES];
+}
+
+void LogXCUITestData(NSString* testName) {
+  if (g_relaunch_become_active_time && g_will_enter_foreground_time) {
+    LogData(testName);
+  }
 }
 }
