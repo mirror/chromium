@@ -31,11 +31,12 @@
 #ifndef DedicatedWorkerGlobalScope_h
 #define DedicatedWorkerGlobalScope_h
 
+#include <memory>
+
 #include "core/CoreExport.h"
 #include "core/dom/MessagePort.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "platform/heap/Visitor.h"
-#include <memory>
 
 namespace blink {
 
