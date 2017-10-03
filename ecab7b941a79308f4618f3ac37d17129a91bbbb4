@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a250d9b4_9c452bcc",
+        "filename": "chrome/browser/chromeos/device/input_service_proxy.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-03T01:37:22Z",
+      "side": 1,
+      "message": "It is not necessary to repeat this here.",
+      "revId": "ecab7b941a79308f4618f3ac37d17129a91bbbb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "478bd38e_fef5d047",
+        "filename": "chrome/browser/chromeos/device/input_service_test_helper.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-03T01:37:22Z",
+      "side": 1,
+      "message": "Move this into the .cc file.",
+      "revId": "ecab7b941a79308f4618f3ac37d17129a91bbbb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb16fcb2_0f9beb15",
+        "filename": "chrome/browser/chromeos/login/hid_detection_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-03T01:37:22Z",
+      "side": 1,
+      "message": "This and the next method are cases where auto is preferred.",
+      "range": {
+        "startLine": 76,
+        "startChar": 4,
+        "endLine": 76,
+        "endChar": 22
+      },
+      "revId": "ecab7b941a79308f4618f3ac37d17129a91bbbb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f8476b1_df34ede7",
+        "filename": "device/hid/input_service_linux.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-03T01:37:22Z",
+      "side": 1,
+      "message": "This is a context in which you can use auto.",
+      "range": {
+        "startLine": 125,
+        "startChar": 2,
+        "endLine": 125,
+        "endChar": 35
+      },
+      "revId": "ecab7b941a79308f4618f3ac37d17129a91bbbb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63851d88_029832d4",
+        "filename": "device/hid/input_service_linux.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-03T01:37:22Z",
+      "side": 1,
+      "message": "base::hash_map is just std::unordered_map and we generally prefer std::map unless it will be a very large map with frequent lookups which this is not.",
+      "range": {
+        "startLine": 29,
+        "startChar": 6,
+        "endLine": 29,
+        "endChar": 20
+      },
+      "revId": "ecab7b941a79308f4618f3ac37d17129a91bbbb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4752033_d8e3bd50",
+        "filename": "device/hid/input_service_linux.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-03T01:37:22Z",
+      "side": 1,
+      "message": "The generated Mojo bindings will use a const std::string\u0026.",
+      "revId": "ecab7b941a79308f4618f3ac37d17129a91bbbb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
