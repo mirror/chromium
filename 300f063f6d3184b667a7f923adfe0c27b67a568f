@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "06b69cc9_e0f43a76",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-03T05:32:13Z",
+      "side": 1,
+      "message": "Added the class-level comment instead of the TODO. \n\n\u003e bug is about service worker. wrong bug link?\n\nOops, I added a wrong link...",
+      "parentUuid": "c1ff609f_b07a3eaf",
+      "revId": "300f063f6d3184b667a7f923adfe0c27b67a568f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b38856a_4540009b",
         "filename": "third_party/WebKit/Source/core/workers/DedicatedWorker.h",
         "patchSetId": 3
@@ -68,6 +86,24 @@
       "revId": "300f063f6d3184b667a7f923adfe0c27b67a568f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73e38862_6a9ee173",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-03T05:32:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b38856a_4540009b",
+      "revId": "300f063f6d3184b667a7f923adfe0c27b67a568f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "dd63e779_4c0991d7",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-03T05:32:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "224f242b_a4ae5564",
+      "revId": "300f063f6d3184b667a7f923adfe0c27b67a568f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd803511_0885586e",
         "filename": "third_party/WebKit/Source/core/workers/DedicatedWorker.h",
         "patchSetId": 3
@@ -102,6 +156,24 @@
       "revId": "300f063f6d3184b667a7f923adfe0c27b67a568f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "150b3c86_4fc8d42a",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-03T05:32:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd803511_0885586e",
+      "revId": "300f063f6d3184b667a7f923adfe0c27b67a568f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
